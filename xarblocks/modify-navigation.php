@@ -108,7 +108,7 @@ function articles_navigationblock_modify($blockinfo)
                 } else {
                     // Item types at one level deeper
                     $indent_level = 1;
-                    $itemtypelabel = ' -&gt; ' . xarML('#(1)', $itemtypecatbase['itemtype']['label']);
+                    $itemtypelabel = ' -&gt; ' . $itemtypecatbase['itemtype']['label'];
                 }
 
                 // Module-Itemtype [all cats]
