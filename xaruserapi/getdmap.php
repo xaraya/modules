@@ -25,7 +25,7 @@ function xmlrpcvalidatorapi_userapi_getdmap()
 
     $v1_arrayOfStructs_sig=array(array($xmlrpcInt, $xmlrpcArray));
     $v1_arrayOfStructs_doc='This handler takes a single parameter, an array of structs, 
-each of which contains at least three elements named moe, larry and curly, all <i4>s. 
+each of which contains at least three elements named moe, &lt;larry&gt; and curly, all &lt;i4&gt;s. 
 Your handler must add all the struct elements named curly and return the result.';
     
 
@@ -66,7 +66,7 @@ result.';
     $v1_countTheEntities_sig=array(array($xmlrpcStruct, $xmlrpcString));
     $v1_countTheEntities_doc='This handler takes a single parameter, a string, 
 that contains any number of predefined entities, namely &lt;, &gt;, &amp; \' 
-and ".<br />Your handler must return a struct that contains five fields, all numbers:  
+and ". Your handler must return a struct that contains five fields, all numbers:  
 ctLeftAngleBrackets, ctRightAngleBrackets, ctAmpersands, ctApostrophes, ctQuotes.';
     
     
