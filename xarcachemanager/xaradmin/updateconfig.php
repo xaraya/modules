@@ -22,34 +22,39 @@ function xarcachemanager_admin_updateconfig()
 
     // set the cache dir
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $outputCacheDir = $varCacheDir . '/output';
 
     // turn output caching system on or off
     if(!empty($cacheenabled)) {
-        if(!file_exists($varCacheDir . '/output/cache.touch')) {
-            touch($varCacheDir . '/output/cache.touch');
+        if(!file_exists($outputCacheDir . '/cache.touch')) {
+            touch($outputCacheDir . '/cache.touch');
         }
     } else {
-        if(file_exists($varCacheDir . '/output/cache.touch')) {
-            unlink($varCacheDir . '/output/cache.touch');
+        if(file_exists($outputCacheDir . '/cache.touch')) {
+            unlink($outputCacheDir . '/cache.touch');
         }
     }
 
     // turn page level oupt caching on or off
     if(!empty($cachepages)) {
-        if(!file_exists($varCacheDir . '/output/cache.pagelevel')) {
-            touch($varCacheDir . '/output/cache.pagelevel');
+        if(!file_exists($outputCacheDir . '/cache.pagelevel')) {
+            touch($outputCacheDir . '/cache.pagelevel');
         }
     } else {
-        if(file_exists($varCacheDir . '/output/cache.pagelevel')) {
-            unlink($varCacheDir . '/output/cache.pagelevel');
+        if(file_exists($outputCacheDir . '/cache.pagelevel')) {
+            unlink($outputCacheDir . '/cache.pagelevel');
         }
     }
 
-    // turn block level oupt caching on or off
+    // turn block level ouput caching on or off
     xarVarFetch('cacheblocks', 'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED);
     if ($cacheblocks && $cacheenabled) {
         xarModSetVar('xarcachemanager','CacheBlockOutput', 1);
         // flush adminpanels blocks to show new options if necessary
+        if (!file_exists($outputCacheDir . 'cache.touch')) {
+            include_once('includes/xarCache.php');
+            xarCache_init(array('cacheDir' => $outputCacheDir));
+        }
         $cacheKey = "adminpanels-blockid";
         xarPageFlushCached($cacheKey);
     } else {
