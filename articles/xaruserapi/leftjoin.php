@@ -108,6 +108,11 @@ function articles_userapi_leftjoin($args)
     if (!empty($enddate) && is_numeric($enddate)) {
         $whereclauses[] = $leftjoin['pubdate'] . ' < ' . $enddate;
     }
+/* Example: automatically filter by the current locale - cfr. bug 3454
+    if (empty($language)) {
+        $language = xarMLSGetCurrentLocale();
+    }
+*/
     if (!empty($language) && is_string($language)) {
         $whereclauses[] = $leftjoin['language'] . " = " . $dbconn->qstr($language);
     }
