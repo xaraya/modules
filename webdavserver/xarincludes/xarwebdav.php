@@ -101,7 +101,7 @@ class xarwebdav extends HTTP_WebDAV_Server
         
         // information for contained resources requested?
         if (!empty($options["depth"]))  { // TODO: check for is_collection first?
-            //xarLogMessage('WebDAV: there is more in ' . $options['path']);
+            // xarLogMessage('WebDAV: there is more in ' . $options['path']);
             // make sure path ends with '/'
             if (substr($options["path"],-1) != "/") $options["path"] .= "/";
             $slashes =  substr_count ($options['path'], '/');
@@ -117,6 +117,7 @@ class xarwebdav extends HTTP_WebDAV_Server
                 $module = trim($options['path'],'/');
                 if(xarModIsAvailable($module)) {
                     // See if we can get the itemtypes
+                    // FIXME: as this is using the lable it might contain spaces, not sure if that is a problem
                     if($itemtypes = xarModAPIFunc($module,'user','getitemtypes')) {
                         // Add them as collections
                         foreach($itemtypes as $itemtype) {
@@ -126,6 +127,7 @@ class xarwebdav extends HTTP_WebDAV_Server
                 }
                 break;
             case 3: // '/modulename/itemtype/' - get a list of items for this itemtype
+                
                 break;
             default:
                 // zilch

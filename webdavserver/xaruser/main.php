@@ -24,7 +24,7 @@ function webdavserver_user_main() {
     // anything and so we refuse access altogether.  The lowest level of
     // access for administration depends on the particular module, but it is
     // generally either 'edit' or 'delete'. 
-    if (!xarSecurityCheck( 'Usewebdavserver')) return;
+    //if (!xarSecurityCheck( 'Usewebdavserver')) return;
 
     $data = xarModAPIFunc(
         'webdavserver'

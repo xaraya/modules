@@ -93,4 +93,16 @@ which is of course kinda ugly and certainly not something an end user is used to
 For the moment we could use this and let sensible admins use redirect option in web
 server to define a more friendly location.
 
+The construction of the first level isnt that hard, we construct directories (collections)
+based on the names of the modules. The second level (itemtypes) can be constructed in a 
+similar way.
+At the second level we have to take into account that some (most in fact) modules
+do not expose a getitemtypes like concept, so we have to cope wiht that somehow.
+(either by defining a 'default' itemtype of falling back to item display.
+
+Theoretically each module should expose a get or getall function for its items, these
+functions can return exactly one item or a list of items. 
+
+An array of items is then returned, but the problem here is that each module returns a 
+different type of array. 
 
