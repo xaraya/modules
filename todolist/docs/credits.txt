@@ -1,0 +1,9 @@
+"Todolist" module was inspired by "todolist" script
+written by Jörg Menke <jhm@gmx.net>.
+Jörg begin his work in early 2000 already.
+Second todolist script author - Max Hammond joined to team in April 2001.
+
+"todolist" script - very good software, many users use it with pleasure.
+
+In one's turn, "todolist" script  was inspired some CGI-Scripts,
+written by Marc Bayerkohler and Joel Thomas.

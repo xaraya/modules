@@ -1,0 +1,63 @@
+<?php // $Id$
+/******************************************************************************
+* Maintained by Jörg Menke <jhm@gmx.net>                                      *
+*******************************************************************************/
+define('_TODOLIST_ALL','all');
+define('_TODOLIST_BACK','back');
+define('_TODOLIST_CHANGE','change');
+define('_TODOLIST_CHANGED_BY','changed by');
+define('_TODOLIST_CHANGED_ON','changed');
+define('_TODOLIST_CREATED_BY','created by');
+define('_TODOLIST_CREATED_ON','created on');
+define('_TODOLIST_DATASET_CHANGED','dataset changed.');
+define('_TODOLIST_DATASET_DELETED','dataset deleted!');
+define('_TODOLIST_DATE','date');
+define('_TODOLIST_DATEFORMAT','YYYY-MM-DD');
+define('_TODOLIST_DATE_FROM','from date');
+define('_TODOLIST_DATE_TO','to date');
+define('_TODOLIST_DELETE','delete');
+define('_TODOLIST_DETAILS','detail');
+define('_TODOLIST_DUE','due date');
+define('_TODOLIST_EMAIL_NOTIFY','Notify changes via email?');
+define('_TODOLIST_LOADFAILED','Load of module failed');
+define('_TODOLIST_LOGIN_NO_PROJECT',"You are not a member in any projects, so you can't use this software. Contact administrator.");
+define('_TODOLIST_LOGIN_USER_UNKNOWN1','You are anonymous user!');
+define('_TODOLIST_LOGIN_USER_UNKNOWN2','User unknown!');
+define('_TODOLIST_NEW','new');
+define('_TODOLIST_NOSUCHUSER','No such user');
+define('_TODOLIST_NOTE','note');
+define('_TODOLIST_NO_DATA_FOUND','No data found!');
+define('_TODOLIST_PERCENTAGE','percentage');
+define('_TODOLIST_PREFERENCES','preferences');
+define('_TODOLIST_PRINTLAYOUT','printlayout');
+define('_TODOLIST_PRIORITY','priority');
+define('_TODOLIST_PRIORITY_DONE','done');
+define('_TODOLIST_PRIORITY_HIGH','high');
+define('_TODOLIST_PRIORITY_LOW','low');
+define('_TODOLIST_PRIORITY_MEDIUM','med');
+define('_TODOLIST_PROJECT','project');
+define('_TODOLIST_PROJECT_PRIMARY','primary project');
+define('_TODOLIST_RELOAD','reload');
+define('_TODOLIST_RESPONSIBLE','responsible');
+define('_TODOLIST_SEARCH','search');
+define('_TODOLIST_SHOW_CAL','show calendar');
+define('_TODOLIST_SHOW_ICONS','Show icons?');
+define('_TODOLIST_SHOW_MY_TASKS','Show only my tasks');
+define('_TODOLIST_STATUS','Status');
+define('_TODOLIST_STATUS_DONE','done');
+define('_TODOLIST_STATUS_IN_PROGRESS','in progress');
+define('_TODOLIST_STATUS_OBSOLETE','obsolete');
+define('_TODOLIST_STATUS_OPEN','open');
+define('_TODOLIST_SUBMIT','submit');
+define('_TODOLIST_TASKS_ALL','all tasks');
+define('_TODOLIST_TASKS_MY','my tasks');
+define('_TODOLIST_TEXT','Text');
+define('_TODOLIST_THE_SEARCH','Search');
+define('_TODOLIST_TODO','things to do');
+define('_TODOLIST_TODO_ADDED1','ToDo');
+define('_TODOLIST_TODO_ADDED2',' added to database');
+define('_TODOLIST_TOP','top');
+define('_TODOLIST_UPDATED','Updated');
+define('_TODOLIST_USER','user');
+define('_TODOLIST_USERNAME','username');
+?>

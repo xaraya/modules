@@ -1,0 +1,94 @@
+<?
+/******************************************************************************
+*                                                                             *
+* This is the danish-language file for ToDoList.php                           *
+* Maintained by René Haagensen <rha@linkwatch.dk>                             *
+*                                                                             *
+*******************************************************************************/
+define(_TODOLIST_ADMIN		,"Admin");
+define(_TODOLIST_ADMINISTRATOR	,"Administrator?");
+define(_TODOLIST_ADMIN_MODULES	,"Admin-Moduler");
+define(_TODOLIST_ALL	,"alle");
+define(_TODOLIST_BACK	,"tilbage");
+define(_TODOLIST_CHANGE	,"skift");
+define(_TODOLIST_CHANGED_BY,"ændret af");
+define(_TODOLIST_CHANGED_ON,"ændret");
+define(_TODOLIST_CHOOSE_EXISTING_PROJECT,"Vælg et eksisterende projekt");
+define(_TODOLIST_CHOOSE_EXISTING_USER	,"Vælg en eksisterende bruger");
+define(_TODOLIST_CHOOSE_MODULE	,"Vælg venligst et Admin-modul");
+define(_TODOLIST_CREATED_BY,"Oprettet af");
+define(_TODOLIST_CREATED_ON,"Oprettet på");
+define(_TODOLIST_CREATE_NEW_PROJECT,"Opret nyt projekt");
+define(_TODOLIST_CREATE_NEW_USER	,"Opret ny bruger");
+define(_TODOLIST_DATASET_CHANGED	,"dataset ændret.");
+define(_TODOLIST_DATASET_DELETED	,"dataset slettet!");
+define(_TODOLIST_DATE	,"dato");
+define(_TODOLIST_DATEFORMAT,"DD-MM-YYYY");
+define(_TODOLIST_DATE_FROM ,"fra dato");
+define(_TODOLIST_DATE_TO   ,"til dato");
+define(_TODOLIST_DELETE	,"slet");
+define(_TODOLIST_DETAILS	,"detaljer");
+define(_TODOLIST_DUE	,"forfalden dato");
+define(_TODOLIST_EMAIL 		,"email");
+define(_TODOLIST_EMAIL_NOTIFY	,"Giv besked om ændringer via email?");
+define(_TODOLIST_GROUPS		,"grupper");
+define(_TODOLIST_ID	,"ID");
+define(_TODOLIST_LANGUAGE	,"sprog");
+define(_TODOLIST_LOGIN_DISABLE	,"Deaktiver konto?");
+define(_TODOLIST_LOGIN_DISABLED	,"Konto deaktiveret. Kontakt administrator.");
+define(_TODOLIST_LOGIN_NAME	,"login navn");
+define(_TODOLIST_LOGIN_NO_PROJECT	,"Du er ikke tilknyttet nogle projekter, så du kan ikke anvende denne funktion. Kontakt venligst administrator.");
+define(_TODOLIST_LOGIN_REMEMBER_USER ,"Husk brugernavn?");
+define(_TODOLIST_LOGIN_USER_UNKNOWN,"Ukendt bruger!");
+define(_TODOLIST_LOGIN_WRONG_PW	,"Forkert kodeord!");
+define(_TODOLIST_LOGOUT	,"log af");
+define(_TODOLIST_MONTH_NAMES, "januar februar marts april maj juni juli august september oktober november december");
+define(_TODOLIST_NAME_FIRST	,"fornavn");
+define(_TODOLIST_NAME_LAST		,"efternavn");
+define(_TODOLIST_NEW	,"ny");
+define(_TODOLIST_NOTE	,"note");
+define(_TODOLIST_NO_DATA_FOUND		,"Ingen data fundet!");
+define(_TODOLIST_PASSWORD		,"kodeord");
+define(_TODOLIST_PASSWORDS_DONT_MATCH,"kodeord stemmer ikke overens!");
+define(_TODOLIST_PASSWORD_RETYPE,"genindtast kodeord");
+define(_TODOLIST_PERCENTAGE,"procentdel");
+define(_TODOLIST_PREFERENCES  ,"indstillinger");
+define(_TODOLIST_PRINTLAYOUT,"printlayout");
+define(_TODOLIST_PRIORITY	,"prioritet");
+define(_TODOLIST_PRIORITY_HIGH	,"høj");
+define(_TODOLIST_PRIORITY_LOW	,"lav");
+define(_TODOLIST_PRIORITY_MEDIUM	,"med");
+define(_TODOLIST_PROJECT   ,"projekt");
+define(_TODOLIST_PROJECTS   ,"projekter");
+define(_TODOLIST_PROJECT_CREATED ,"projekt oprettet");
+define(_TODOLIST_PROJECT_DELETED ,"projekt slettet");
+define(_TODOLIST_PROJECT_DESCRIPTION ,"projekt beskrivelse");
+define(_TODOLIST_PROJECT_LEADER ,"projektansvarlig ");
+define(_TODOLIST_PROJECT_MEMBERS ,"projekt medlemmer");
+define(_TODOLIST_PROJECT_NAME ,"projekt navn");
+define(_TODOLIST_PROJECT_PRIMARY ,"primære projekt");
+define(_TODOLIST_PROJECT_UPDATED ,"projekt opdateret");
+define(_TODOLIST_RELOAD	,"genindlæs");
+define(_TODOLIST_RESPONSIBLE,"ansvarlig");
+define(_TODOLIST_SEARCH	,"søg");
+define(_TODOLIST_SELECT		,"vælg");
+define(_TODOLIST_SHORT_DAY_NAMES, "man tir ons tor fre lør søn");
+define(_TODOLIST_SHOW_CAL	,"Vis kalender");
+define(_TODOLIST_SHOW_ICONS,"Vis ikoner?");
+define(_TODOLIST_SHOW_MY_TASKS ,"Vis kun mine opgaver");
+define(_TODOLIST_STATUS_DONE	,"ordnet");
+define(_TODOLIST_SUBMIT	,"godkend");
+define(_TODOLIST_TASKS_ALL ,"alle opgaver");
+define(_TODOLIST_TASKS_MY ,"mine opgaver");
+define(_TODOLIST_TEXT	,"Tekst");
+define(_TODOLIST_THE_SEARCH,"Søg");
+define(_TODOLIST_TODO	,"opgaver");
+define(_TODOLIST_TODO_ADDED1,"ToDo ");
+define(_TODOLIST_TODO_ADDED2," tilføjet til database");
+define(_TODOLIST_TOP	,"top");
+define(_TODOLIST_USER	,"bruger");
+define(_TODOLIST_USERS		,"brugere");
+define(_TODOLIST_USER_CREATED,"Bruger oprettet.");
+define(_TODOLIST_USER_DELETED,"Bruger slettet.");
+define(_TODOLIST_USER_UPDATED,"Bruger opdateret.");
+?>
