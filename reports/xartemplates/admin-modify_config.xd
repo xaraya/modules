@@ -19,13 +19,18 @@
     <td>
       <select name="config_pdfbackend">
         <xar:loop name="$backends">
-          <option <xar:if condition="$selectedbackend==$id">selected="selected"</xar:if> value="#$id#">#$name#</option>
+          <xar:if condition="$selectedbackend==$id">
+            <option selected="selected" value="#$id#">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
         </xar:loop>
       </select>
     </td>
   </tr>
   <tr>
-    <td><input type="submit" value="<xar:mlstring>Update config</xar:mlstring>"/></td>
+    <xar:set name="$buttonlabel"><xar:mlstring>Update config</xar:mlstring></xar:set>
+    <td><input type="submit" value="#$buttonlabel#"/></td>
     <td>&nbsp;</td>
   </tr>
   </form>
