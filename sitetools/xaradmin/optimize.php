@@ -86,9 +86,17 @@ function sitetools_admin_optimize()
 
       if (!isset($optid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
 
-       //get total number of times this script has run
-       $runtimes = xarModAPIFunc('sitetools', 'admin', 'countitems');
+       //get total number of times this script has run and total kbs
+      $items = xarModAPIFunc('sitetools', 'admin', 'getall');
+       $gaintd=0;
+       $runtimes=0;
+       foreach ($items as $item) {
+            $gaintd += $item['stgain'];
+            $runtimes += 1;
+       }
+
        $data['totalruns']=$runtimes;
+       $data['gaintd']=$gaintd;
 
     //return
     return $data;
