@@ -103,9 +103,9 @@ function xarbb_admin_privileges($args)
     $numitems = xarModAPIFunc('xarbb','user','countforums',array("filter" => $filter));
 
 	if($cid != 'All')
-		$fids = xarModAPIFunc('xarBB','user','getforums',array("assoc" => "fid", "catid" => $cid));
+		$fids = xarModAPIFunc('xarbb','user','getallforums',array("assoc" => "fid", "catid" => $cid));
     else
-		$fids = xarModAPIFunc('xarBB','user','getforums',array("assoc" => "fid"));
+		$fids = xarModAPIFunc('xarbb','user','getallforums',array("assoc" => "fid"));
 
 
 
