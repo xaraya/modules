@@ -102,6 +102,7 @@ function xarbb_user_viewforum()
         if (isset($read_topic)){
             $cookie_time_compare = $read_topic;
         } else {
+            $cookie_name_last_visit = xarModGetVar('xarbb', 'cookiename') . 'lastvisit';
             if (isset($_COOKIE["$cookie_name_last_visit"])){
                 $data['lastvisitdate'] = unserialize($_COOKIE["$cookie_name_last_visit"]);
             } else {
