@@ -458,6 +458,48 @@ function release_userapi_getallnotes($args)
     return $releaseinfo;
 }
 
+function release_userapi_getallrssmodsnotes($args)
+{
+    extract($args);
+
+    $releaseinfo = array();
+
+    // Security Check
+    if(!xarSecurityCheck('OverviewRelease')) return;
+
+    // Get database setup
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+
+    $releasenotes = $xartable['release_notes'];
+
+    $query = "SELECT xar_rnid,
+                     xar_rid,
+                     xar_version
+            FROM $releasenotes
+            WHERE xar_certified = 2
+            AND xar_type = '" . xarVarPrepForStore($type) . "'
+            ORDER by xar_time DESC";
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // Put users into result array
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($rnid, $rid, $version) = $result->fields;
+        if (xarSecurityCheck('OverviewRelease', 0)) {
+            $releaseinfo[] = array('rnid'       => $rnid,
+                                   'rid'        => $rid,
+                                   'version'    => $version);
+        }
+    }
+
+    $result->Close();
+
+    // Return the users
+    return $releaseinfo;
+}
+
 function release_userapi_getnote($args)
 {
     extract($args);
@@ -572,7 +614,8 @@ function release_userapi_createnote($args)
                      xar_notes,
                      xar_time,
                      xar_certified,
-                     xar_approved
+                     xar_approved,
+                     xar_type
               )
             VALUES (
               $nextId,
@@ -589,7 +632,8 @@ function release_userapi_createnote($args)
               '" . xarVarPrepForStore($notes) . "',
               '$time',
               '" . xarVarPrepForStore($certified) . "',
-              '" . xarVarPrepForStore($approved) . "')";
+              '" . xarVarPrepForStore($approved) . "',
+              '" . xarVarPrepForStore($type) . "')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

@@ -117,6 +117,10 @@ function release_init()
                                                                  'default'     => '0000-00-00 00:00:00'),
                                    'xar_enotes'         => array('type'        => 'text',
                                                                  'default'     => ''),
+                                       'xar_type'        => array('type'        => 'varchar',
+                                                                  'size'        => 100,
+                                                                  'null'        => false,
+                                                                  'default'     => ''),
                                    'xar_certified'      => array('type'        => 'integer',
                                                                  'null'        => false,
                                                                  'default'     => '1',
@@ -177,30 +181,34 @@ function release_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 0.02:
+        case 0.04:
 
             list($dbconn) = xarDBGetConn();
             $xartable = xarDBGetTables();
-            $releaseidtable = $xartable['release_id'];
+            $releaseidtable = $xartable['release_notes'];
 
             // Add a column to the table
 
             xarDBLoadTableMaintenanceAPI();
 
-            $query = xarDBAlterTable(array('table' => $releaseidtable,
+            $query = xarDBAlterTable($releaseidtable,
+                array(
                                            'command' => 'add',
-                                           'field' => 'xar_uid',
-                                           'type' => 'integer',
-                                           'null' => false,
-                                           'default' => '0'));
+                                           'field' => 'xar_type',
+                                           'type'  => 'varchar',
+                                           'size'        => 100,
+                                           'null'        => false,
+                                           'default'     => 'module'));
 
             // Pass to ADODB, and send exception if the result isn't valid.
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            return example_upgrade(0.02);
+        break;
 
     }
+
+    return true;
 }
 /**
  * delete the send to friend module

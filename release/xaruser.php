@@ -849,6 +849,11 @@ function release_user_addnotes()
                                                 'notes');
             
            //if (!xarSecConfirmAuthKey()) return;
+            // The user API function is called.
+            $data = xarModAPIFunc('release',
+                                  'user',
+                                  'getid',
+                                  array('rid' => $rid));
 
             // The user API function is called. 
             if (!xarModAPIFunc('release',
@@ -864,6 +869,7 @@ function release_user_addnotes()
                                       'demolink'    => $demolink,
                                       'supportlink' => $supportlink,
                                       'changelog'   => $changelog,
+                                      'type'        => $data['type'],
                                       'notes'       => $notes))) return;
 
             xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
@@ -1075,25 +1081,14 @@ function release_user_rssviewnotes()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    // Get parameters
-    $startnum = xarVarCleanFromInput('startnum');
-    
-    $uid = xarUserGetVar('uid');
     $data['items'] = array();
 
     // The user API function is called.
     $items = xarModAPIFunc('release',
                            'user',
-                           'getallnotes',
-                          array('startnum' => $startnum,
-                                'numitems' => xarModGetVar('roles',
-                                                          'itemsperpage'),
-                                'certified'=> $filter));
+                           'getallrssmodsnotes',
+                            array('type' => 'module'));
     
-    if ($items == false){
-        $data['message'] = xarML('There are no releases based on your filters');
-    }
-
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
@@ -1104,7 +1099,6 @@ function release_user_rssviewnotes()
                                'getid',
                                array('rid' => $items[$i]['rid']));
 
-        $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
         $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
 
         $items[$i]['displaylink'] =  xarModURL('release',
@@ -1113,21 +1107,7 @@ function release_user_rssviewnotes()
                                                 array('rnid' => $item['rnid']),
                                                 '1');
 
-        $getuser = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
-                                  array('uid' => $getid['uid']));
-
-        $items[$i]['contacturl'] = xarModURL('roles',
-                                             'user',
-                                             'display',
-                                              array('uid' => $getid['uid']));
-
-
-        $items[$i]['realname'] = $getuser['name'];
-        $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
-        $items[$i]['changelog'] = nl2br($item['changelog']);
-        $items[$i]['notes'] = nl2br($item['notes']);
+        $items[$i]['desc'] = nl2br(xarVarPrepForDisplay($getid['desc']));
 
     }
 
@@ -1135,8 +1115,49 @@ function release_user_rssviewnotes()
     // Add the array of items to the template variables
     $data['items'] = $items;
 
-    // TODO : add a pager (once it exists in BL)
-    $data['pager'] = '';
+    // Return the template variables defined in this function
+    return $data;
+
+}
+
+function release_user_rssviewthemes()
+{
+    // Security Check
+    if(!xarSecurityCheck('OverviewRelease')) return;
+
+    $data['items'] = array();
+
+    // The user API function is called.
+    $items = xarModAPIFunc('release',
+                           'user',
+                           'getallrssmodsnotes',
+                            array('type' => 'theme'));
+    
+    // Check individual permissions for Edit / Delete
+    for ($i = 0; $i < count($items); $i++) {
+        $item = $items[$i];
+
+        // The user API function is called.
+        $getid = xarModAPIFunc('release',
+                               'user',
+                               'getid',
+                               array('rid' => $items[$i]['rid']));
+
+        $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
+
+        $items[$i]['displaylink'] =  xarModURL('release',
+                                               'user',
+                                               'displaynote',
+                                                array('rnid' => $item['rnid']),
+                                                '1');
+
+        $items[$i]['desc'] = nl2br(xarVarPrepForDisplay($getid['desc']));
+
+    }
+
+
+    // Add the array of items to the template variables
+    $data['items'] = $items;
 
     // Return the template variables defined in this function
     return $data;
