@@ -222,7 +222,7 @@ function articles_user_display($args)
     if (isset($prevnextart)) {
         $settings['prevnextart'] = $prevnextart;
     }
-    if (!empty($settings['prevnextart'])) {
+    if (!empty($settings['prevnextart']) && ($preview == 0)) {
         if(!array_key_exists('defaultsort',$settings)) {
             $settings['defaultsort'] = 'aid';
         }
