@@ -95,4 +95,3 @@ function translations_admin_show_status()
 
 
 ?>
-
