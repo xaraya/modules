@@ -31,6 +31,22 @@ function uploads_adminapi_showinput($args)
         $methods = null;
     }
 
+    // Check to see if an old value is present. Old values just file names
+    // and do not start with a semicolon (our delimiter)
+    if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
+        $newValue = xarModAPIFunc('uplodas', 'admin', 'dd_convert_value', array('value' =>$value));
+
+        // if we were unable to convert the value, then go ahead and and return
+        // an empty string instead of processing the value and bombing out
+        if ($newValue == $value) {
+            $value = null;
+            unset($newValue);
+        } else {
+            $value = $newValue;
+            unset($newValue);
+        }
+    }
+
     $data = array();
 
     xarModAPILoad('uploads','user');
@@ -88,6 +104,7 @@ function uploads_adminapi_showinput($args)
             }
         }
     }
+
 
 // TODO: different formats ?
     return (isset($list) ? $list : '') . xarTplModule('uploads', 'user', 'attach_files', $data, NULL);

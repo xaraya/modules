@@ -1,7 +1,7 @@
 <?php
 /**
  * validate input values for uploads module (used in DD properties)
- * 
+ *
  * @param  $args ['id'] string id of the upload field(s)
  * @param  $args ['value'] string the current value(s)
  * @param  $args ['format'] string format specifying 'fileupload', 'textupload' or 'upload' (future ?)
@@ -35,6 +35,24 @@ function uploads_adminapi_validatevalue($args)
         $methods = null;
     }
 
+
+    // Check to see if an old value is present. Old values just file names
+    // and do not start with a semicolon (our delimiter)
+    if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
+        $newValue = xarModAPIFunc('uplodas', 'admin', 'dd_convert_value', array('value' =>$value));
+
+        // if we were unable to convert the value, then go ahead and and return
+        // an empty string instead of processing the value and bombing out
+        if ($newValue == $value) {
+            $value = null;
+            unset($newValue);
+        } else {
+            $value = $newValue;
+            unset($newValue);
+        }
+    }
+
+
     xarModAPILoad('uploads','user');
 
     if (isset($methods) && count($methods) > 0) {
@@ -61,7 +79,7 @@ function uploads_adminapi_validatevalue($args)
 
     switch ($action) {
         case _UPLOADS_GET_UPLOAD:
-              
+
             $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
             $file_maxsize = $file_maxsize > 0 ? $file_maxsize : $maxsize;
 
@@ -99,13 +117,13 @@ function uploads_adminapi_validatevalue($args)
 
             if (!xarVarFetch($id . '_attach_stored', 'list:str:1:', $fileList, XARVAR_NOT_REQUIRED)) return;
 
-            // If we've made it this far, then fileList was empty to start, 
+            // If we've made it this far, then fileList was empty to start,
             // so don't complain about it being empty now
             if (empty($fileList) || !is_array($fileList)) {
                 return array(true,NULL);
             }
             // We prepend a semicolon onto the list of fileId's so that
-            // we can tell, in the future, that this is a list of fileIds 
+            // we can tell, in the future, that this is a list of fileIds
             // and not just a filename
             $value = ';' . implode(';', $fileList);
 
@@ -113,7 +131,7 @@ function uploads_adminapi_validatevalue($args)
             break;
         case '-1':
             return array(true,$value);
-        default: 
+        default:
             if (isset($value)) {
                 if (strlen($value) && $value{0} == ';') {
                     return array(true,$value);
@@ -129,8 +147,8 @@ function uploads_adminapi_validatevalue($args)
             break;
     }
 
-    if (!empty($action)) { 
-            
+    if (!empty($action)) {
+
         if (isset($storeType)) {
             $args['storeType'] = $storeType;
         }
@@ -146,10 +164,10 @@ function uploads_adminapi_validatevalue($args)
 
                 return;
             }
-        } 
+        }
         if (is_array($storeList) && count($storeList)) {
             // We prepend a semicolon onto the list of fileId's so that
-            // we can tell, in the future, that this is a list of fileIds 
+            // we can tell, in the future, that this is a list of fileIds
             // and not just a filename
             $value = ';' . implode(';', $storeList);
         } else {
