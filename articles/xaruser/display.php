@@ -95,7 +95,10 @@ function articles_user_display($args)
                                     array('aid' => $article['aid']));
     // don't show unapproved articles to non-editors
     } elseif (!$preview && $article['status'] < 2) {
-        return xarML('You have no permission to view this item');
+	
+		$status = xarModAPIFunc('articles', 'user', 'getstatusname', array('status' => $article['status']));
+	
+        return xarML('You have no permission to view this item [Status: '.$status.']');
     }
     $data['edittitle'] = xarML('Edit');
 
