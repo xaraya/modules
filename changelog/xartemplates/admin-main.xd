@@ -11,7 +11,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-        <p><em><xar:mlstring>Keywords is a Xaraya Utility Module.</xar:mlstring></em>
+        <p><em><xar:mlstring>ChangeLog is a Xaraya Utility Module.</xar:mlstring></em>
         <xar:mlstring>that allows you to keep track of changes in module items.</xar:mlstring></p>
         </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -31,8 +31,8 @@
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ul>
-                <li><xar:mlstring>new/create/modify/update/delete -- Allows you to create/update keywords</xar:mlstring></li>
-                <li><xar:mlstring>display/search -- Allows you to display/search keywords</xar:mlstring></li>
+                <li><xar:mlstring>create/modify/update/delete -- Allows you to create/update change logs</xar:mlstring></li>
+                <li><xar:mlstring>display -- Allows you to display change logs</xar:mlstring></li>
             </ul>
         </div>
         <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
