@@ -117,6 +117,7 @@ function translations_grab_source_code($references, $maxReferences = NULL)
         $ref = $references[$i];
         if (!isset($files[$ref['file']])) {
             if (file_exists($ref['file']))  {
+                // FIXME: this is potentially very memory hungry, cant we do this more efficient?
                 $files[$ref['file']] = file($ref['file']);
             } else {
             	// FIXME need more information about outdated references
