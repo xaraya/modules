@@ -8,7 +8,7 @@
 </xar:if>
 </h2>
 <div style="margin: auto;">
-<form action="#xarModURL('categories','admin','updatecat',array())#" method="post">
+<form action="#xarModURL('categories','admin','updatecat',array())#" method="post" name="post" id="post">
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 <xar:for iter="$i++" start="$i=0" test="$i lt $repeat">
     <h3><xar:mlstring>Category</xar:mlstring> #$i+1#</h3>
