@@ -154,15 +154,39 @@ function categories_navigationblock_display($blockinfo)
     // Get current category counts (optional array of cid => count)
     if (empty($showcatcount)) {
         $catcount = array();
-    } elseif (empty($catcount)) {
-        if (xarVarIsCached('Blocks.categories','catcount')) {
-            $catcount = xarVarGetCached('Blocks.categories','catcount');
+    }
+    if (empty($showempty) || !empty($showcatcount)) {
+        // A 'deep count' sums the totals at each node with the totals of all descendants.
+        if (xarVarIsCached('Blocks.categories', 'deepcount')) {
+            $deepcount = xarVarGetCached('Blocks.categories', 'deepcount');
         } else {
-            // get number of items per category (for this module)
-            $catcount = xarModAPIFunc('categories','user','groupcount',
-                                     array('modid' => $modid,
-                                           'itemtype' => $itemtype));
-            xarVarSetCached('Blocks.categories','catcount',$catcount);
+            $deepcount = xarModAPIFunc(
+                'categories', 'user', 'deepcount',
+                array('modid' => $modid, 'itemtype' => $itemtype)
+            );
+            xarVarSetCached('Blocks.categories','deepcount', $deepcount);
+        }
+    }
+
+    if (!empty($showcatcount)) {
+        if (xarVarIsCached('Blocks.categories', 'catcount')) {
+            $catcount = xarVarGetCached('Blocks.categories', 'catcount');
+        } else {
+            // Get number of items per category (for this module).
+            // If showcatcount == 2 then add in all descendants too.
+
+            if ($showcatcount == 1) {
+                // We want to display only children category counts.
+                $catcount = xarModAPIFunc(
+                    'categories','user', 'groupcount',
+                    array('modid' => $modid, 'itemtype' => $itemtype)
+                );
+            } else {
+                // We want to display the deep counts.
+                $catcount =& $deepcount;
+            }
+
+            xarVarSetCached('Blocks.categories', 'catcount', $catcount);
         }
     }
 
@@ -634,16 +658,26 @@ function categories_navigationblock_display($blockinfo)
                                              array('cid' => $cid,
                                                    'return_itself' => true));
                     foreach ($children as $cat) {
-                        $label = xarVarPrepForDisplay($cat['name']);
-                    // TODO: now this is a tricky part...
-                        $link = xarModURL($modname,$type,$func,
-                                         array('itemtype' => $itemtype,
-                                               'catid' => $cat['cid']));
+                        // TODO: now this is a tricky part...
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
                             $count = 0;
+
+                            if (!empty($showempty) || !empty($deepcount[$cat['cid']])) {
+                                // We are not hiding empty categories - set count to zero.
+                                $count = 0;
+                            } else {
+                                // We want to hide empty categories - so skip this loop.
+                                continue;
+                            }
                         }
+
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
+
+                        $label = xarVarPrepForDisplay($cat['name']);
                         if ($cat['cid'] == $cid) {
                             $catparents[] = array('catlabel' => $label,
                                                   'catid' => $cat['cid'],
@@ -668,22 +702,36 @@ function categories_navigationblock_display($blockinfo)
                                              array('cid' => $cid,
                                                    'return_itself' => true));
                     foreach ($children as $cat) {
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+
+                            // Note: when hiding empty categories, check the deep count
+                            // as a child category may be empty, but it could still have
+                            // descendants with items.
+
+                            if (!empty($showempty) || !empty($deepcount[$cat['cid']])) {
+                                // We are not hiding empty categories - set count to zero.
+                                $count = 0;
+                            } else {
+                                // We want to hide empty categories - so skip this loop.
+                                continue;
+                            }
+                        }
+
                         $label = xarVarPrepForDisplay($cat['name']);
                     // TODO: now this is a tricky part...
                         $link = xarModURL($modname,$type,$func,
                                          array('itemtype' => $itemtype,
                                                'catid' => $cat['cid']));
-                        if (!empty($catcount[$cat['cid']])) {
-                            $count = $catcount[$cat['cid']];
-                        } else {
-                            $count = 0;
-                        }
+
                         if ($cat['cid'] == $cid) {
                             $catparents[] = array('catlabel' => $label,
                                                   'catid' => $cat['cid'],
                                                   'catlink' => $link,
                                                   'catcount' => $count);
-                        } else {
+                        } elseif ($showchildren > 0) {
                             $catitems[] = array('catlabel' => $label,
                                                 'catid' => $cat['cid'],
                                                 'catlink' => $link,
@@ -824,7 +872,16 @@ function categories_navigationblock_modify($blockinfo)
     if (empty($vars['startmodule'])) {
         $vars['startmodule'] = '';
     }
+    if (empty($vars['showempty'])) {
+        $vars['showempty'] = 0;
+    }
 
+    $vars['catcounts'] = array(array('id' => 0,
+                                   'name' => 'None'),
+                             array('id' => 1,
+                                   'name' => 'Simple count'),
+                             array('id' => 2,
+                                   'name' => 'Cascading count'));
     $vars['layouts'] = array(array('id' => 1,
                                    'name' => 'Tree (Side Block)'),
                              array('id' => 2,
@@ -973,6 +1030,7 @@ function categories_navigationblock_update($blockinfo)
     if(!xarVarFetch('layout',       'isset', $vars['layout'],        NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showcatcount', 'isset', $vars['showcatcount'],  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showchildren', 'isset', $vars['showchildren'],  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('showempty', 'isset', $vars['showempty'],  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('startmodule',  'isset', $vars['startmodule'],   NULL, XARVAR_DONT_SET)) {return;}
 
     $blockinfo['content'] = serialize($vars);
