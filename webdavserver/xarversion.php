@@ -15,7 +15,7 @@
 
 
 $modversion['name']           = 'webdavserver';
-$modversion['id']             = '4703';
+$modversion['id']             = '4705';
 $modversion['version']        = '0.0.1';
 $modversion['description']    = 'Implementation of WebDAV protocol for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
