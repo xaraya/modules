@@ -23,6 +23,9 @@
 
     if(!xarVarFetch('manufacturers_id',   'int',  $manufacturers_id, 0, XARVAR_DONT_SET)) {return;}
 
+    //Force this
+    $category_depth = 'top';
+
     if ($category_depth == 'nested') {
         $category_query = new xenQuery("select cd.categories_description,cd.categories_name, c.categories_image from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_id = '" . $current_category_id . "' and cd.categories_id = '" . $current_category_id . "' and cd.language_id = '" . $_SESSION['languages_id'] . "'");
         $q = new xenQuery();

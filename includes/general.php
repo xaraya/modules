@@ -46,7 +46,8 @@
     }
   }
 
-  // Set Categorie Status
+/*
+// Set Categorie Status
   function xtc_set_categories_status($categories_id, $status) {
     if ($status == '1') {
       return new xenQuery("update " . TABLE_CATEGORIES . " set categories_status = '1' where categories_id = '" . $categories_id . "'");
@@ -56,7 +57,7 @@
       return -1;
     }
   }
-
+*/
   // Set Admin Access Rights
   function xtc_set_admin_access($fieldname, $status, $cID) {
     if ($status == '1') {
@@ -874,7 +875,8 @@
         }
   }
 
-  ////
+/*
+////
   // Sets the status of a banner
   function xtc_set_banner_status($banners_id, $status) {
     if ($status == '1') {
@@ -909,7 +911,7 @@
       return -1;
     }
   }
-
+*/
   ////
   // Sets timeout for the current script.
   // Cant be used in safe mode.
@@ -972,6 +974,7 @@
                  'db_date' => xtc_datetime_short($db['datetime']));
   }
 
+/*
   function xtc_array_shift(&$array) {
     if (function_exists('array_shift')) {
       return array_shift($array);
@@ -992,7 +995,6 @@
       return $return;
     }
   }
-
   function xtc_array_reverse($array) {
     if (function_exists('array_reverse')) {
       return array_reverse($array);
@@ -1081,7 +1083,7 @@
       xtc_reset_cache_block('also_purchased');
     }
   }
-
+*/
   function xtc_remove_product($product_id) {
     $product_image_query = new xenQuery("select products_image from " . TABLE_PRODUCTS . " where products_id = '" . xtc_db_input($product_id) . "'");
       $q = new xenQuery();

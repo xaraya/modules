@@ -99,8 +99,8 @@
   if ($error == 1) {
     xarRedirectResponse(xarModURL('commerce','user','advanced_search', 'errorno=' . $errorno . '&' . xtc_get_all_get_params(array('x', 'y'))));
   } else {
-    $breadcrumb->add(NAVBAR_TITLE1_ADVANCED_SEARCH, xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH));
-    $breadcrumb->add(NAVBAR_TITLE2_ADVANCED_SEARCH, xarModURL('commerce','user','advanced_search_result', 'keywords=' . $_GET['keywords'] . '&search_in_description=' . $_GET['search_in_description'] . '&categories_id=' . $_GET['categories_id'] . '&inc_subcat=' . $_GET['inc_subcat'] . '&manufacturers_id=' . $_GET['manufacturers_id'] . '&pfrom=' . $_GET['pfrom'] . '&pto=' . $_GET['pto'] . '&dfrom=' . $_GET['dfrom'] . '&dto=' . $_GET['dto']));
+    $breadcrumb->add(NAVBAR_TITLE1_ADVANCED_SEARCH, xarModURL('commerce','user','advanced_search');
+    $breadcrumb->add(NAVBAR_TITLE2_ADVANCED_SEARCH, xarModURL('commerce','user','advanced_search_result', array('keywords=' => $_GET['keywords'], 'search_in_description' => $_GET['search_in_description'], 'categories_id' => $_GET['categories_id'], 'inc_subcat' => $_GET['inc_subcat'], 'manufacturers_id' => $_GET['manufacturers_id'], 'pfrom' => $_GET['pfrom'], 'pto' => $_GET['pto'], 'dfrom' => $_GET['dfrom'], 'dto' => $_GET['dto']));
 
  require(DIR_WS_INCLUDES . 'header.php');
 

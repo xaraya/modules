@@ -59,9 +59,9 @@ function commerce_admin_configuration()
     if (!$q->run()) return;
 
     $configuration = $q->row();
-    if(!xarVarFetch('cID',      'int',  $cID,    $configuration['configuration_id'],  XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_STORE)) {return;}
-    $configurations = $q->output();
+    if(!xarVarFetch('cID',      'int',  $cID,    $configuration['configuration_id'])) {return;}
 
+    $configurations = $q->output();
     foreach ($configurations as $configuration) {
         if ($gID == 6) {
           switch ($configuration['configuration_key']) {

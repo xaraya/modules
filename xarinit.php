@@ -197,7 +197,12 @@ function commerce_init()
       categories_image varchar(64),
       parent_id int DEFAULT '0' NOT NULL,
       categories_status TINYint (1)  UNSIGNED DEFAULT '1' NOT NULL,
+      categories_template varchar(64),
+      group_ids TEXT,
+      listing_template varchar(64),
       sort_order int(3),
+      products_sorting varchar(32),
+      products_sorting2 varchar(32),
       date_added datetime,
       last_modified datetime,
       PRIMARY KEY (categories_id),
@@ -636,7 +641,10 @@ function commerce_init()
     $query = "CREATE TABLE " . $prefix . "_commerce_products (
       products_id int NOT NULL auto_increment,
       products_quantity int(4) NOT NULL,
+      products_shippingtime int(4) NOT NULL,
       products_model varchar(12),
+      group_ids TEXT,
+      products_sort int(4),
       products_image varchar(64),
       products_price decimal(15,4) NOT NULL,
       products_discount_allowed decimal(3,2) DEFAULT '0' NOT NULL,
@@ -650,6 +658,7 @@ function commerce_init()
       options_template varchar (64),
       manufacturers_id int NULL,
       products_ordered int NOT NULL default '0',
+      products_fsk18 int(1) NOT NULL DEFAULT '0',
       PRIMARY KEY (products_id),
       KEY idx_products_date_added (products_date_added)
     )";
@@ -2438,6 +2447,16 @@ function commerce_init()
     $show_price2 = '1';
     $show_tax2 = '1';
 
+    $query = "INSERT INTO " . $prefix . "_commerce_customers_info (
+                                        customers_info_id,
+                                        customers_info_date_of_last_logon,
+                                        customers_info_number_of_logons,
+                                        customers_info_date_account_created,
+                                        customers_info_date_account_last_modified,
+                                        global_product_notifications) VALUES
+                                        ('3','','','','','')";
+    if (!$q->run($query)) return;
+
     // status Admin
     $query = "INSERT INTO " . $prefix . "_commerce_customers_status (customers_status_id, language_id, customers_status_name, customers_status_public, customers_status_image, customers_status_discount, customers_status_ot_discount_flag, customers_status_ot_discount, customers_status_graduated_prices, customers_status_show_price, customers_status_show_price_tax) VALUES ('0', '1', 'Admin', 1, 'admin_status.gif', '0.00', '1', '0.00', '1', '1', '1')";
     if (!$q->run($query)) return;
@@ -2470,20 +2489,20 @@ function commerce_init()
     xarRegisterMask('ReadCommerce','All','commerce','All','All','ACCESS_READ');
     xarRegisterMask('AdminCommerce','All','commerce','All','All','ACCESS_ADMIN');
 
-    // Register blocks
+// Register some block types
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'commerce',
                              'blockType'=> 'configmenu'))) return;
 
-    $adminBlockType = xarModAPIFunc('blocks', 'user', 'getblocktype',
+/*     $adminBlockType = xarModAPIFunc('blocks', 'user', 'getblocktype',
                                     array('module'  => 'commerce',
                                           'type'    => 'configmenu'));
 
     $adminBlockTypeId = $adminBlockType['tid'];
 
-/*    if (!xarModAPIFunc('blocks', 'admin', 'create_instance',
+   if (!xarModAPIFunc('blocks', 'admin', 'create_instance',
                        array('title'    => 'Admin',
                              'name'     => 'adminpanel',
                              'type'     => $adminBlockTypeId,
@@ -2494,7 +2513,6 @@ function commerce_init()
         return;
     }
 */
-// Register some block types
     if (!xarModAPIFunc('blocks',
             'admin',
             'register_block_type',
@@ -2603,10 +2621,23 @@ function commerce_init()
             array('modName' => 'commerce',
                 'blockType' => 'whats_new'))) return;
 
+    if (!xarModAPIFunc('blocks',
+            'admin',
+            'register_block_type',
+            array('modName' => 'commerce',
+                'blockType' => 'admin'))) return;
+
     xarModSetVar('commerce', 'itemsperpage', 20);
 
 // Create some block instances
 
+// Put a config menu in the 'left' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'configmenu'));
+    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commerceconfig',
+                                                                  'state' => 0,
+                                                                  'groups' => array($leftgroup)));
 // Put an exit menu in the 'left' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'base', 'type'=>'menu'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
@@ -2663,6 +2694,14 @@ function commerce_init()
     $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
     $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
                                                                   'name' => 'commercecart',
+                                                                  'state' => 0,
+                                                                  'groups' => array($rightgroup)));
+
+// Put a admin info block in the 'right' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'admin'));
+    $rightgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'right'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commerceadmininfo',
                                                                   'state' => 0,
                                                                   'groups' => array($rightgroup)));
 
