@@ -52,7 +52,7 @@ function uploads_userapi_prepare_uploads( &$args ) {
              !isset($fileInfo['tmp_name']))  {
                 $msg = xarML('Invalid data format for upload ID: [#(1)]', $uploadId);
                 xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                return FALSE;
+                return;
         }
 
         $fileInfo['fileType'] = $fileInfo['type'];
@@ -115,10 +115,10 @@ function uploads_userapi_prepare_uploads( &$args ) {
             $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
         }
 
-        // File list created - return it :)
-        return $fileInfo;
+        $fileList[] =  $fileInfo;
     }    
-    return FALSE;
+    
+    return $fileList;
 }
  
 ?>
