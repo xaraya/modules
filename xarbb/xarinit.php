@@ -277,7 +277,7 @@ function xarbb_delete()
     //Now if there are forums, let's identify all the topics associated with each forum
     // and delete al the replies associated with each topic
     foreach($forums as $forum) {
-           xarModAPIFunc('xarbb','user','deletealltopics',
+           xarModAPIFunc('xarbb','admin','deletealltopics',
                                   array('fid'=>$forum['fid']));
     }
 
