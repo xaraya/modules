@@ -110,6 +110,16 @@ function newsletter_userapi_decode_shorturl($params)
         }
         return array('viewarchives', $args);
 
+    } elseif (preg_match('/^preview/i',$params[1])) {
+        // something that starts with 'archive' is probably for the
+        // viewarchives function
+        // Note : make sure your encoding/decoding is consistent ! :-)
+        if (isset($params[2])) {
+            $issueId = $params[2];
+            $args['issueId'] = $issueId;
+        }
+        return array('previewissue', $args);
+
     } else {
         // the first part might be something variable like a category name
         // In order to match that, you'll have to retrieve all relevant

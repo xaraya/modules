@@ -147,6 +147,24 @@ function newsletter_userapi_encode_shorturl($args)
             $path = '/' . $module . '/archives';
         }
 
+    } elseif ($func == 'previewissue') {
+        // check for required parameters
+        if (isset($issueId) && is_numeric($issueId)) {
+            $path = '/' . $module . '/preview/' . $issueId;
+
+            // you might have some additional parameter that you want to use to
+            // create different virtual paths here - for newsletter a category name
+            // See above for an newsletter...
+
+        } else {
+            // we don't know how to handle that -> don't create a path here
+
+            // Note : this generally means that someone tried to create a
+            // link to your module, but used invalid parameters for xarModURL
+            // -> you might want to provide a default path to return to
+            $path = '/' . $module . '/preview';
+        }
+
     } else {
         // anything else that you haven't defined a short URL equivalent for
         // -> don't create a path here
