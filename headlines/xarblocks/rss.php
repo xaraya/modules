@@ -68,32 +68,22 @@ function headlines_rssblock_display($blockinfo)
     // Require the feedParser class
     require_once('modules/base/xarclass/feedParser.php');
 
-    // Create Cache File
-    $refresh = (time() - 3600);
-    $varDir = xarCoreGetVarDirPath();
-    $cacheKey = md5($feedfile);
-    $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
-    if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
-        $fp = @fopen($cachedFileName, 'r');
-        // Create a need feedParser object
-        $p = new feedParser();
-        // Read From Our Cache
-        $data = fread($fp, filesize($cachedFileName));
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($data);
-    } else {
-        // Create a need feedParser object
-        $p = new feedParser();
-
-        // Read in our sample feed file
-        $data = @implode("",@file($feedfile));
-
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($data);
-        $fp = fopen("$cachedFileName", "wt");
-        fwrite($fp, $data);
-        fclose($fp);    
+    // Get the feed file (from cache or from the remote site)
+    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
+                              array('url' => $feedfile,
+                                    'cached' => true,
+                                    'cachedir' => 'cache/rss',
+                                    'refresh' => 3600,
+                                    'extension' => '.xml'));
+    if (!$feeddata) {
+        return; // throw back
     }
+
+    // Create a need feedParser object
+    $p = new feedParser();
+
+    // Tell feedParser to parse the data
+    $info = $p->parseFeed($feeddata);
 
     // DEBUG INFO  Shows array when uncommented.
     // print_r($info);

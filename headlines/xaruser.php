@@ -53,50 +53,22 @@ function headlines_user_main()
         $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
         $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
 
-        // Grab Cache File
-        $refresh = (time() - 3600);
-        $varDir = xarCoreGetVarDirPath();
-        $cacheKey = md5($feedfile);
-
-        // We are just going to read from the cache, since the cache should have been updated
-        // when we choose the headlines to view.
-        $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
- /**
-  * David Parvin - 06/25/03 - Removed this code and copied the if block from
-  *   below so that I would stop getting errors if I had to delete my cashe
-  *   files
-
-        $fp = @fopen($cachedFileName, 'r');
-        // Create a need feedParser object
-        $p = new feedParser();
-        // Read From Our Cache
-        $feeddata = fread($fp, filesize($cachedFileName));
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($feeddata);
-*/
-        if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
-            $fp = @fopen($cachedFileName, 'r');
-            // Create a need feedParser object
-            $p = new feedParser();
-            // Read From Our Cache
-            $feeddata = fread($fp, filesize($cachedFileName));
-            // Tell feedParser to parse the data
-            $info = $p->parseFeed($feeddata);
-        } else {
-            // Create a need feedParser object
-            $p = new feedParser();
-
-            // Read in our sample feed file
-            $feeddata = @implode("",@file($feedfile));
-
-            // Tell feedParser to parse the data
-            $info = $p->parseFeed($feeddata);
-            $fp = fopen("$cachedFileName", "wt");
-            fwrite($fp, $feeddata);
-            fclose($fp);    
+        // Get the feed file (from cache or from the remote site)
+        $feeddata = xarModAPIFunc('base', 'user', 'getfile',
+                                  array('url' => $feedfile,
+                                        'cached' => true,
+                                        'cachedir' => 'cache/rss',
+                                        'refresh' => 3600,
+                                        'extension' => '.xml'));
+        if (!$feeddata) {
+            return; // throw back
         }
 
- // DP End of changes
+        // Create a need feedParser object
+        $p = new feedParser();
+
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($feeddata);
 
         if (empty($info['warning'])){
             if (!empty($link['title'])){
@@ -213,32 +185,22 @@ function headlines_user_view()
     $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
     $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
 
-    // Create Cache File
-    $refresh = (time() - 3600);
-    $varDir = xarCoreGetVarDirPath();
-    $cacheKey = md5($feedfile);
-    $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
-    if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
-        $fp = @fopen($cachedFileName, 'r');
-        // Create a need feedParser object
-        $p = new feedParser();
-        // Read From Our Cache
-        $feeddata = fread($fp, filesize($cachedFileName));
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($feeddata);
-    } else {
-        // Create a need feedParser object
-        $p = new feedParser();
-
-        // Read in our sample feed file
-        $feeddata = @implode("",@file($feedfile));
-
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($feeddata);
-        $fp = fopen("$cachedFileName", "wt");
-        fwrite($fp, $feeddata);
-        fclose($fp);    
+    // Get the feed file (from cache or from the remote site)
+    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
+                              array('url' => $feedfile,
+                                    'cached' => true,
+                                    'cachedir' => 'cache/rss',
+                                    'refresh' => 3600,
+                                    'extension' => '.xml'));
+    if (!$feeddata) {
+        return; // throw back
     }
+
+    // Create a need feedParser object
+    $p = new feedParser();
+
+    // Tell feedParser to parse the data
+    $info = $p->parseFeed($feeddata);
 
     if (empty($info['warning'])){
         foreach ($info as $content){

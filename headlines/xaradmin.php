@@ -58,33 +58,28 @@ function headlines_admin_create($args)
     require_once('modules/base/xarclass/feedParser.php');
 
     $feedfile = $url;
-    // Create Cache File
-    $refresh = (time() - 3600);
-    $varDir = xarCoreGetVarDirPath();
-    $cacheKey = md5($feedfile);
-    $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
-    if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
-        $fp = fopen($cachedFileName, 'r');
-        // Create a need feedParser object
-        $p = new feedParser();
-        // Read From Our Cache
-        $feeddata = fread($fp, filesize($cachedFileName));
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($feeddata);
-    } else {
-        xarLogMessage("Creating RSS feed cache file : $cachedFileName");
-        // Create a need feedParser object
-        $p = new feedParser();
-        
-        // Read in our sample feed file
-        // FIXME: can we omit the @?
-        $feeddata = @implode("",file($feedfile));
-        
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($feeddata);
-        $fp = fopen("$cachedFileName", "wt");
-        fwrite($fp, $feeddata);
-        fclose($fp);    
+
+    // Get the feed file (from cache or from the remote site)
+    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
+                              array('url' => $feedfile,
+                                    'cached' => true,
+                                    'cachedir' => 'cache/rss',
+                                    'refresh' => 3600,
+                                    'extension' => '.xml'));
+    if (!$feeddata) {
+        return; // throw back
+    }
+
+    // Create a need feedParser object
+    $p = new feedParser();
+
+    // Tell feedParser to parse the data
+    $info = $p->parseFeed($feeddata);
+
+    if (!empty($info['warning'])){
+        $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
     }
 
     xarResponseRedirect(xarModURL('headlines', 'admin', 'view'));
@@ -126,32 +121,22 @@ function headlines_admin_import()
     $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
     $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
 
-    // Create Cache File
-    $refresh = (time() - 3600);
-    $varDir = xarCoreGetVarDirPath();
-    $cacheKey = md5($feedfile);
-    $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
-    if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
-        $fp = @fopen($cachedFileName, 'r');
-        // Create a need feedParser object
-        $p = new feedParser();
-        // Read From Our Cache
-        $feeddata = fread($fp, filesize($cachedFileName));
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($feeddata);
-    } else {
-        // Create a need feedParser object
-        $p = new feedParser();
-
-        // Read in our sample feed file
-        $feeddata = @implode("",@file($feedfile));
-
-        // Tell feedParser to parse the data
-        $info = $p->parseFeed($feeddata);
-        $fp = fopen("$cachedFileName", "wt");
-        fwrite($fp, $feeddata);
-        fclose($fp);    
+    // Get the feed file (from cache or from the remote site)
+    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
+                              array('url' => $feedfile,
+                                    'cached' => true,
+                                    'cachedir' => 'cache/rss',
+                                    'refresh' => 3600,
+                                    'extension' => '.xml'));
+    if (!$feeddata) {
+        return; // throw back
     }
+
+    // Create a need feedParser object
+    $p = new feedParser();
+
+    // Tell feedParser to parse the data
+    $info = $p->parseFeed($feeddata);
 
     if (empty($info['warning'])){
         foreach ($info as $content){
@@ -191,7 +176,7 @@ function headlines_admin_import()
         $data['chanlink']   =   $info['channel']['link'];
 
     } else {
-        $msg = xarML('There is a problem with a feed.');
+        $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
