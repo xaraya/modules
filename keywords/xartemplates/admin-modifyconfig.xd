@@ -89,11 +89,14 @@
 <xar:foreach in="$settings" key="$modname" value="$config">
     <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 100%;  text-align: left;"><b>#$config['label']#</b></span>
-        <span style="float: left; width: 15%; text-align: left;">
+        <span style="float: left; width: 18%; text-align: left;">
               <span class="help" title="#xarML('Define keywords for the hooked module.')#"><label for="keywords[#$modname#]"><xar:mlstring>Allowed Keywords</xar:mlstring> :</label></span>
         </span>
-        <span style="float: right; width: 83%; text-align: left;">
+        <span style="float: right; width: 80%; text-align: left;">
+       <xar:comment>       
               <input type="text" name="keywords[#$modname#]" id="keywords[#$modname#]" value="#$config['keywords']#" size="40" />
+       </xar:comment>       
+           <textarea name="keywords[#$modname#]" id="keywords[#$modname#]" cols="32" rows="3" >#xarVarPrepForDisplay($config['keywords'])#</textarea>
         </span>
     </div>
 </xar:foreach>
@@ -107,7 +110,10 @@
                 <span class="help" title="#xarML('Define keywords for the itemtype.')#"><xar:mlstring>Allowed Keywords</xar:mlstring> :</span>
             </span>
             <span style="float: right; width: 78%; text-align: left;">
+        <xar:comment>         
                 <input type="text" name="keywords[#$modname#.#$itemtype#]" id="keywords[#$modname#]" value="#$item['keywords']#" size="40" />
+        </xar:comment>             
+               <textarea name="keywords[#$modname#.#$itemtype#]" id="keywords[#$modname#]" cols="32" rows="2" >#xarVarPrepForDisplay($item['keywords'])#</textarea>
             </span>
         </xar:foreach>
     </div>
