@@ -58,7 +58,7 @@ function pubsub_init()
         'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_userid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0'),
-        'xar_subdate'=>array('type'=>'int','size'=>11,'null'=>FALSE)
+        'xar_subdate'=>array('type'=>'integer','size'=>'medium','null'=>FALSE, 'default'=>'0')
     );
     $query = xarDBCreateTable($pubsubregtable,$regfields);
     $result =& $dbconn->Execute($query);
@@ -183,7 +183,7 @@ function pubsub_upgrade($oldversion)
 			
 			// Add a column to the register table
 		    $sql= "ALTER TABLE $pubsubregtable 
-		                ADD xar_subdate INT(11) NOT NULL";
+		           ADD COLUMN xar_subdate INTEGER NOT NULL";
 		    $result =& $dbconn->Execute($sql);
 		    if (!$result) return;
 
