@@ -108,7 +108,7 @@
 </xar:if>
 
 <xar:if condition="$action eq 'view'">
-<h3 style="text-align: left;"><a href="#$newurl#"><xar:mlstring>New</xar:mlstring></a></h3>
+<h3 style="text-align: left;"><a href="#$newurl#"><xar:mlstring>Create New Publication Type</xar:mlstring></a></h3>
 <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
     <tr>
         <th><xar:mlstring>Name</xar:mlstring></th>

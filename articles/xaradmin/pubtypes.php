@@ -200,7 +200,6 @@ function articles_admin_pubtypes()
                                'admin',
                                'pubtypes',
                                array('action' => 'new'));
-    $data['newtitle'] = xarML('New');
 
 /*
     // Get the list of defined field formats
