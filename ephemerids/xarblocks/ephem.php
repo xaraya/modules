@@ -42,6 +42,7 @@ function ephemerids_ephemblock_display($blockinfo)
 	if(!xarSecurityCheck('ReadEphemerids', 0)) return;
 
     $data['items'] = array();
+    $data['emptycontent'] = false;
 
     // The admin API function is called. 
     $ephemlist = xarModAPIFunc('ephemerids',
@@ -49,21 +50,20 @@ function ephemerids_ephemblock_display($blockinfo)
                                'getalltoday');
 
     $data['items'] = $ephemlist;
+    if (empty($data['items'])) {
+        $data['emptycontent'] = true;
+    }
 
     if (empty($blockinfo['title'])){
         $blockinfo['title'] = xarML('Historical Reference');
     }
 
-    if (empty($data['items'])){
-        $blockinfo['content'] = xarML('No Historical Reference for this date in history');
+    if (empty($blockinfo['template'])) {
+        $template = 'ephem';
     } else {
-        if (empty($blockinfo['template'])) {
-            $template = 'ephem';
-        } else {
-            $template = $blockinfo['template'];
-        }
-        $blockinfo['content'] = xarTplBlock('ephemerids',$template, $data);
+        $template = $blockinfo['template'];
     }
+    $blockinfo['content'] = xarTplBlock('ephemerids',$template, $data);
 
     return $blockinfo;
 }
