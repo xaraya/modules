@@ -37,7 +37,13 @@ function messages_user_delete() {
              * First, make sure we remove the message id from
              * the read messages list, if this message has been seen.
              */
-            $read_messages = unserialize(xarModGetUserVar('messages','read_messages'));
+            $read_messages = xarModGetUserVar('messages','read_messages');
+            if (!empty($read_messages)) {
+                $read_messages = unserialize($read_messages);
+            } else {
+                $read_messages = array();
+            }
+
 
             if ( ($key = array_search($mid, $read_messages)) !== FALSE) {
                 unset($read_messages[$key]);
