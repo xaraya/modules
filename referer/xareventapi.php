@@ -27,7 +27,7 @@ function referer_eventapi_OnServerRequest()
     $HTTP_HOST = getenv('HTTP_HOST');
 
     if (empty($HTTP_HOST)) {
-        $HTTP_HOST = 'http://' . $_SERVER['HTTP_HOST'];
+        $HTTP_HOST = 'http://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
         $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
     }
 
