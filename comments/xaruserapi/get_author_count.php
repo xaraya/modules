@@ -49,14 +49,22 @@ function comments_userapi_get_author_count($args)
 
     $sql = "SELECT  COUNT($ctable[cid]) as numitems
               FROM  $xartable[comments]
-             WHERE  ($ctable[author]='$author' AND $ctable[modid]='$modid')
-               AND  $ctable[status]='$status'";
+             WHERE  ($ctable[author]=? AND $ctable[modid]=?)
+               AND  $ctable[status]=?";
+    $bindvars = array((int) $author, (int) $modid, (int) $status);
 
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]='$itemtype'";
+        $sql .= " AND $ctable[itemtype]=?";
+        $bindvars[] = (int) $itemtype;
     }
 
-    $result =& $dbconn->Execute($sql);
+// cfr. xarcachemanager - this approach might change later
+    $expire = xarModGetVar('comments','cache.userapi.get_author_count');
+    if (!empty($expire)){
+        $result =& $dbconn->CacheExecute($expire,$sql,$bindvars);
+    } else {
+        $result =& $dbconn->Execute($sql,$bindvars);
+    }
     if (!$result)
         return;
 

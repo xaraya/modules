@@ -22,6 +22,7 @@
  */
 function comments_userapi_get_multiple($args) 
 {
+
     extract($args);
 
     if ( !isset($modid) || empty($modid) ) {
@@ -87,36 +88,53 @@ function comments_userapi_get_multiple($args)
                     $ctable[right] AS xar_right,
                     $ctable[postanon] AS xar_postanon
               FROM  $xartable[comments]
-             WHERE  $ctable[modid]='$modid'
-               AND  $ctable[status]='$status'";
+             WHERE  $ctable[modid]=?
+               AND  $ctable[status]=?";
+    $bindvars = array();
+    $bindvars[] = (int) $modid;
+    $bindvars[] = (int) $status;
 
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]='$itemtype'";
+        $sql .= " AND $ctable[itemtype]=?";
+        $bindvars[] = (int) $itemtype;
     }
 
     if (isset($objectid) && !empty($objectid)) {
-        $sql .= " AND $ctable[objectid]='$objectid'";
+        $sql .= " AND $ctable[objectid]=?";
+        $bindvars[] = (string) $objectid; // yes, this is a string in the table
     }
 
     if (isset($author) && $author > 0) {
-        $sql .= " AND $ctable[author] = '$author'";
+        $sql .= " AND $ctable[author] = ?";
+        $bindvars[] = (int) $author;
     }
 
     if ($cid > 0) {
-        $sql .= " AND ($ctable[left] >= $nodelr[xar_left]";
-        $sql .= " AND  $ctable[right] <= $nodelr[xar_right])";
+        $sql .= " AND ($ctable[left] >= ?";
+        $sql .= " AND  $ctable[right] <= ?)";
+        $bindvars[] = (int) $nodelr['xar_left'];
+        $bindvars[] = (int) $nodelr['xar_right'];
     }
-
 
     $sql .= " ORDER BY $ctable[left]";
 
+// cfr. xarcachemanager - this approach might change later
+    $expire = xarModGetVar('comments','cache.userapi.get_multiple');
+
     //Add select limit for modules that call this function and need Pager
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+        if (!empty($expire)){
+            $result =& $dbconn->CacheSelectLimit($expire, $sql, $numitems, $startnum-1,$bindvars);
+        } else {
+            $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1,$bindvars);
+        }
     } else {
-       $result =& $dbconn->Execute($query);
+        if (!empty($expire)){
+            $result =& $dbconn->CacheExecute($expire,$query,$bindvars);
+        } else {
+            $result =& $dbconn->Execute($query,$bindvars);
+        }
     }
-    //$result =& $dbconn->Execute($sql);
     if (!$result) return;
 
     // if we have nothing to return
