@@ -94,7 +94,7 @@
                         </xar:if>
                         
                         
-                        <xar:if condition="!empty($loop:item['commentarySource']) && !empty($loop:item['commentary'])">
+                        <xar:if condition="!empty($loop:item['commentarySource']) and !empty($loop:item['commentary'])">
                             #$loop:item['commentarySource']#:
                             <br /><i>#$loop:item['commentary']#</i><br />
                         </xar:if>

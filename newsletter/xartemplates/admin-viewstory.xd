@@ -111,7 +111,7 @@
                     <xar:loop name="$stories">
                 <tr>
                     <td>
-                    <xar:if condition="!empty($loop:item['article']['title']) && empty($loop:item['title'])">
+                    <xar:if condition="!empty($loop:item['article']['title']) and empty($loop:item['title'])">
                         #$loop:item['article']['title']#
                     <xar:else/>
                         #$loop:item['title']#

@@ -99,7 +99,7 @@ window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',re
                     <td>
                         <select name="categoryId" tabindex="6">
                             <xar:loop name="$categories">
-                                <xar:if condition="!empty($categoryId) && $categoryId eq $loop:item['cid']">
+                                <xar:if condition="!empty($categoryId) and $categoryId eq $loop:item['cid']">
                                     <option name="cid" value="#$loop:item['cid']#" selected>#$loop:item['name']#</option>
                                 <xar:else/>
                                     <option name="cid" value="#$loop:item['cid']#">#$loop:item['name']#</option>
