@@ -158,14 +158,20 @@ function xarbb_user__getforuminfo($args)
         $forum = $forums[$i];
         //bug #4070 - all posts, topics deleted by last poster still there
         if ($forum['ftopics']>0) {
-            // Get the name of the poster.  Does it make sense to split this
-            // to the API, since it is called so often?
-            $getname = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
-                                 array('uid' => $forum['fposter']));
-
-            $forums[$i]['name'] = $getname['name'];
+            $getname = array();
+            if (!empty($forum['fposter'])) {
+                // Get the name of the poster.  Does it make sense to split this
+                // to the API, since it is called so often?
+                $getname = xarModAPIFunc('roles',
+                                     'user',
+                                     'get',
+                                     array('uid' => $forum['fposter']));
+            }
+            if (!empty($getname['name'])) {
+                $forums[$i]['name'] = $getname['name'];
+            } else {
+                $forums[$i]['name'] = '-';
+            }
         }
         if (!empty($forum['foptions']) && is_string($forum['foptions'])){
             $forums[$i]['foptions'] = unserialize($forum['foptions']);
