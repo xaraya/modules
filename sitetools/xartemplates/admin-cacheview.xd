@@ -1,0 +1,57 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>SiteTools Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Cache Files</xar:mlstring></h2>
+<div style="margin: auto; width:100%;">
+<xar:set name="$goback"><xar:mlstring>Go back</xar:mlstring></xar:set>
+<xar:if condition="$showfiles eq false">
+	<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <th><xar:mlstring>Cache File</xar:mlstring></th>
+        <th><xar:mlstring>Template Name</xar:mlstring></th>
+    </tr>
+    <xar:if condition="empty($items)">
+          <tr><td colspan="2">
+	   	    <xar:mlstring>NO CACHE FILES TO DISPLAY</xar:mlstring>
+          </td>
+       </tr>
+       <xar:else />
+        <xar:foreach in="$items" key="$key" value="$name">
+		    <tr><td style="text-align:left">
+		<xar:if condition="$popup eq true">
+            <a href="#$name['fullnurl']#" onclick="window.open(this.href, 'popupwindow', 'width=640,height=300,scrollbars,resizable'); return false;">#$name['hashn']#</a>
+        <xar:else />
+              <a href="#$name['fullnurl']#">#$name['hashn']#</a>
+        </xar:if>
+            </td>
+	   	    <td style="text-align:left">#$name['templn']#</td>
+            </tr>
+         </xar:foreach>
+     </xar:if>
+     </table>
+<xar:elseif condition="$showfiles eq true" />
+		<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+		<xar:if condition="$popup eq false">
+			<p><a href="javascript:history.back(-1)">#$goback#</a></p>
+		</xar:if>
+        </div>
+
+<table width="100%" border="0" cellspacing="2" cellpadding="0" valign="top">
+	<tr> <td colspan="2" style="font-weight:bold;"><xar:mlstring>Browsing:&nbsp;</xar:mlstring>#$hashfile#</td></tr>
+     <tr><td colspan="2"style="font-weight:bold;"><xar:mlstring>Cache file for:&nbsp;</xar:mlstring>#$templn#</td><tr>
+      <xar:foreach in="$items" key="$key" value="$line">
+		    <tr><td valign="top" style="text-align:left; font-size:smaller; color:red">
+             #$line['lineno']#:&nbsp;&nbsp;
+            </td>
+	   	    <td valign="top" style="text-align:left; font-size:smaller">
+               #$line['linetxt']#
+               </td>
+           </tr>
+      </xar:foreach>
+    </table>
+		<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+		<xar:if condition="$popup eq false">
+			<p><a href="javascript:history.back(-1)">#$goback#</a></p>
+		</xar:if>
+        </div>
+</xar:if>
+	</div>
+</div>

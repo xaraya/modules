@@ -1,6 +1,6 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id: getmenulinks.php,v 1.1 2003/09/19 09:16:03 jojodee Exp $
  *
  * SiteTools Module
  *
@@ -48,6 +48,15 @@ function sitetools_adminapi_getmenulinks()
                 'deletecache'),
             'title' => xarML('Clear cache files'),
             'label' => xarML('Clear cache files'));
+    }
+    // Security Check
+    if (xarSecurityCheck('AdminSiteTools', 0)) {
+
+        $menulinks[] = Array('url' => xarModURL('sitetools',
+                'admin',
+                'cacheview'),
+            'title' => xarML('Browse cache files'),
+            'label' => xarML('Browse cache files'));
     }
     // Security Check
     if (xarSecurityCheck('AdminSiteTools', 0)) {
