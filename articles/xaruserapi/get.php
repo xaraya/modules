@@ -1,9 +1,18 @@
 <?php
 
 /**
- * get a specific article
+ * get a specific article by aid, or by a combination of other fields
  *
- * @param $args['aid'] id of article to get
+ * @param $args['aid'] id of article to get, or
+ * @param $args['pubtypeid'] pubtype id of article to get, and optional
+ * @param $args['title'] title of article to get, and optional
+ * @param $args['summary'] summary of article to get, and optional
+ * @param $args['body'] body of article to get, and optional
+ * @param $args['authorid'] notes of article to get, and optional
+ * @param $args['pubdate'] pubdate of article to get, and optional
+ * @param $args['notes'] notes of article to get, and optional
+ * @param $args['status'] status of article to get, and optional
+ * @param $args['language'] language of article to get
  * @param $args['withcids'] (optional) if we want the cids too (default false)
 // TODO
  * @param $args['fields'] array with all the fields to return per article
@@ -23,7 +32,7 @@ function articles_userapi_get($args)
     extract($args);
 
     // Argument check
-    if (!isset($aid) || !is_numeric($aid) || $aid < 1) {
+    if (isset($aid) && (!is_numeric($aid) || $aid < 1)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'article ID', 'user', 'get',
                     'Articles');
@@ -34,14 +43,23 @@ function articles_userapi_get($args)
 
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
-// TODO: is anyone using arrays for this ?
-    // Handle aid being an array
-//    if (is_array($aid)) {
-//        $aid = join(',', $aid);
-//        $where = " IN (" . xarVarPrepForStore($aid) . ")";
-//    } else {
-        $where = " = " . xarVarPrepForStore($aid);
-//    }
+    if (!empty($aid)) {
+        $where = "WHERE xar_aid = " . xarVarPrepForStore($aid);
+    } else {
+        $wherelist = array();
+        $fieldlist = array('title','summary','authorid','pubdate','pubtypeid',
+                           'notes','status','body','language');
+        foreach ($fieldlist as $field) {
+            if (isset($$field)) {
+                $wherelist[] = "xar_$field = '" . xarVarPrepForStore($$field) . "'";
+            }
+        }
+        if (count($wherelist) > 0) {
+            $where = "WHERE " . join(' AND ',$wherelist);
+        } else {
+            $where = '';
+        }
+    }
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -49,7 +67,8 @@ function articles_userapi_get($args)
     $articlestable = $xartable['articles'];
 
     // Get item
-    $query = "SELECT xar_title,
+    $query = "SELECT xar_aid,
+                   xar_title,
                    xar_summary,
                    xar_body,
                    xar_authorid,
@@ -59,15 +78,19 @@ function articles_userapi_get($args)
                    xar_status,
                    xar_language
             FROM $articlestable
-            WHERE xar_aid $where";
-    $result =& $dbconn->Execute($query);
+            $where";
+    if (!empty($aid)) {
+        $result =& $dbconn->Execute($query);
+    } else {
+        $result =& $dbconn->SelectLimit($query,1,0);
+    }
     if (!$result) return;
 
     if ($result->EOF) {
         return false;
     }
 
-    list($title, $summary, $body, $authorid, $pubdate, $pubtypeid, $notes,
+    list($aid, $title, $summary, $body, $authorid, $pubdate, $pubtypeid, $notes,
          $status, $language) = $result->fields;
 
     $article = array('aid' => $aid,
