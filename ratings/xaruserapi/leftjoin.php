@@ -61,49 +61,23 @@ function ratings_userapi_leftjoin($args)
     $leftjoin['table'] = $xartable['ratings'];
     $leftjoin['field'] = '';
     if (!empty($modid)) {
-        $leftjoin['field'] .= $xartable['ratings'] . ".xar_moduleid = '" .
-                             xarVarPrepForStore($modid) . "'";
+        $leftjoin['field'] .= $xartable['ratings'] . ".xar_moduleid = ?";
         $leftjoin['field'] .= ' AND ';
+        $bindvars[] = $modid;
     }
     if (!empty($itemtype)) {
-        $leftjoin['field'] .= $xartable['ratings'] . ".xar_itemtype = '" .
-                             xarVarPrepForStore($itemtype) . "'";
+        $leftjoin['field'] .= $xartable['ratings'] . ".xar_itemtype = ?";
         $leftjoin['field'] .= ' AND ';
+        $bindvars[] = $itemtype;
     }
     $leftjoin['field'] .= $xartable['ratings'] . '.xar_itemid';
 
     if (count($itemids) > 0) {
         $allids = join(', ', $itemids);
-        $leftjoin['where'] = $xartable['ratings'] . '.xar_itemid IN (' .
-                             xarVarPrepForStore($allids) . ')';
-/*
-        if (!empty($modname)) {
-            $leftjoin['where'] .= ' AND ' .
-                                  $xartable['ratings'] . ".xar_moduleid = '" .
-                                  xarVarPrepForStore($modid) . "'";
-        }
-        if (!empty($itemtype)) {
-            $leftjoin['where'] .= ' AND ' .
-                                  $xartable['ratings'] . ".xar_itemtype = '" .
-                                  xarVarPrepForStore($itemtype) . "'";
-        }
-*/
+        $leftjoin['where'] = $xartable['ratings'] . '.xar_itemid IN (?)';
+        $bindvars[] = $allids;
     } else {
         $leftjoin['where'] = '';
-/*
-        if (!empty($modid)) {
-            $leftjoin['where'] = $xartable['ratings'] . ".xar_moduleid = '" .
-                                 xarVarPrepForStore($modid) . "'";
-        } else {
-            $leftjoin['where'] = '';
-        }
-        if (!empty($itemtype)) {
-            $leftjoin['where'] = $xartable['ratings'] . ".xar_itemtype = '" .
-                                 xarVarPrepForStore($itemtype) . "'";
-        } else {
-            $leftjoin['where'] = '';
-        }
-*/
     }
 
     // Add available columns in the ratings table
@@ -111,8 +85,6 @@ function ratings_userapi_leftjoin($args)
     foreach ($columns as $column) {
         $leftjoin[$column] = $xartable['ratings'] . '.xar_' . $column;
     }
-
     return $leftjoin;
 }
-
 ?>

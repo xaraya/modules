@@ -53,11 +53,16 @@ function ratings_userapi_getitems($args)
     // Get items
     $query = "SELECT xar_itemid, xar_rating, xar_numratings
             FROM $ratingstable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
+            WHERE xar_moduleid = ?
+              AND xar_itemtype = ?";
+
+    $bindvars[] = (int) $modid;
+    $bindvars[] = (int) $itemtype;
+
     if (isset($itemids) && count($itemids) > 0) {
         $allids = join(', ',$itemids);
-        $query .= " AND xar_itemid IN ('" . xarVarPrepForStore($allids) . "')";
+        $query .= " AND xar_itemid IN (?)";
+        $bindvars[] = $allids;
     }
     if ($sort == 'rating') {
         $query .= " ORDER BY xar_rating DESC, xar_numratings DESC";
@@ -67,7 +72,7 @@ function ratings_userapi_getitems($args)
         $query .= " ORDER BY xar_itemid ASC";
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     $getitems = array();

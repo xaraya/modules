@@ -47,10 +47,10 @@ function ratings_userapi_topitems($args)
     // Get items
     $query = "SELECT xar_itemid, xar_rating
             FROM $ratingstable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
+            WHERE xar_moduleid = ?
+              AND xar_itemtype = ?
             ORDER BY xar_rating DESC";
-
+    $bindvars = array($modid, $itemtype);
     if (!isset($numitems) || !is_numeric($numitems)) {
         $numitems = 10;
     }
@@ -59,7 +59,7 @@ function ratings_userapi_topitems($args)
     }
 
     //$result =& $dbconn->Execute($query);
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1, $bindvars);
     if (!$result) return;
 
     $topitems = array();
@@ -69,8 +69,6 @@ function ratings_userapi_topitems($args)
         $result->MoveNext();
     }
     $result->close();
-
     return $topitems;
 }
-
 ?>

@@ -87,10 +87,11 @@ function ratings_userapi_rate($args)
                    xar_rating,
                    xar_numratings
             FROM $ratingstable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
-    $result =& $dbconn->Execute($query);
+            WHERE xar_moduleid = ?
+              AND xar_itemid = ?
+              AND xar_itemtype = ?";
+    $bindvars = array($modid, $objectid, $itemtype);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     if (!$result->EOF) {
@@ -104,10 +105,11 @@ function ratings_userapi_rate($args)
 
         // Insert new rating
         $query = "UPDATE $ratingstable
-                SET xar_rating = " . xarVarPrepForStore($newrating) . ",
-                    xar_numratings = $newnumratings
-                WHERE xar_rid = $rid";
-        $result =& $dbconn->Execute($query);
+                SET xar_rating = ?,
+                    xar_numratings = ?
+                WHERE xar_rid = ?";
+        $bindvars = array($newrating, $newnumratings, $rid);
+        $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
     } else {
@@ -122,14 +124,14 @@ function ratings_userapi_rate($args)
                                           xar_itemtype,
                                           xar_rating,
                                           xar_numratings)
-                VALUES ($rid,
-                        '" . xarVarPrepForStore($modid) . "',
-                        '" . xarVarPrepForStore($objectid) . "',
-                        '" . xarVarPrepForStore($itemtype) . "',
-                        " . xarVarPrepForStore($rating) . ",
-                        1)";
-
-        $result =& $dbconn->Execute($query);
+                VALUES (?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?)";
+        $bindvars = array($rid, $modid, $objectid, $itemtype, $rating, 1);
+        $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
 
         $newrating = $rating;
@@ -159,5 +161,4 @@ function ratings_userapi_rate($args)
     }    
     return $newrating;
 }
-
 ?>
