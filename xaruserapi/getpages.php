@@ -13,6 +13,7 @@
 // count: boolean return just a count of records if true
 // tree_contains_name: limit the search to the tree of pages containing the page(s) of the given name
 // tree_contains_pid: limit the search to the tree of pages containing the page of the given ID
+// tree_ancestors: boolean, when fetching trees, will limit to just ancestors (and self) of the page name or ID
 
 function xarpages_userapi_getpages($args)
 {
@@ -128,12 +129,20 @@ function xarpages_userapi_getpages($args)
             array_unshift($bind, (string)$tree_contains_name);
         }
 
-        // Join to find the root page of the tree containing the required page.
-        $query .= ' INNER JOIN ' . $xartable['xarpages_pages'] . ' AS tpages_root'
-            . ' ON tpages_root.xar_left <= tpages_member.xar_left'
-            . ' AND tpages_root.xar_right >= tpages_member.xar_right'
-            . ' AND tpages.xar_left BETWEEN tpages_root.xar_left AND tpages_root.xar_right'
-            . ' AND tpages_root.xar_parent = 0';
+        if (!empty($tree_ancestors)) {
+            // We don't want the complete tree for the matching pages - just
+            // their ancestors. This is useful for checking paths, without
+            // fetching complete trees.
+            $query .= ' AND tpages_member.xar_left BETWEEN tpages.xar_left AND tpages.xar_right';
+        } else {
+            // Join to find the root page of the tree containing the required page.
+            // This matches the complete tree for the root under the selected page.
+            $query .= ' INNER JOIN ' . $xartable['xarpages_pages'] . ' AS tpages_root'
+                . ' ON tpages_root.xar_left <= tpages_member.xar_left'
+                . ' AND tpages_root.xar_right >= tpages_member.xar_right'
+                . ' AND tpages.xar_left BETWEEN tpages_root.xar_left AND tpages_root.xar_right'
+                . ' AND tpages_root.xar_parent = 0';
+        }
     }
 
     $query .= (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
