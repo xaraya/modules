@@ -1,5 +1,5 @@
 <div style="margin: auto;">
-<form method="post" action="#xarModURL('autolinks', 'util', 'samples')#" method="post" enctype="application/x-www-form-urlencoded">
+<form method="post" action="#xarModURL('autolinks', 'util', 'samples')#" enctype="application/x-www-form-urlencoded">
 
     <xar:if condition="isset($status)">
         <xar:if condition="!empty($status)">
@@ -30,8 +30,8 @@
             <th><xar:mlstring>Autolink Type Name</xar:mlstring></th>
             <th><xar:mlstring>Template Name</xar:mlstring></th>
         </tr>
-        <tr>
-            <xar:foreach in="$sample_data" key="$samplekey">
+        <xar:foreach in="$sample_data" key="$samplekey">
+            <tr>
                 <td>#$sample_data[$samplekey]['type_name']#</td>
                 <td>#$sample_data[$samplekey]['template_name']#</td>
             </tr>

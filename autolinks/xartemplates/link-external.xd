@@ -21,12 +21,12 @@
     <xar:if condition="empty($imgurl)">
         <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay(xarML($title))#">#$match#</a>
     <xar:else/>
-        <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay(xarML($title))#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" hspace="4">#$match#</a>
+        <a href="#$url#" target="#$target#" title="#xarVarPrepForDisplay(xarML($title))#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" hspace="4"/>#$match#</a>
     </xar:if>
 <xar:else/>
     <xar:if condition="empty($imgurl)">
         <a href="#$url#" title="#xarVarPrepForDisplay(xarML($title))#">#$match#</a>
     <xar:else/>
-        <a href="#$url#" title="#xarVarPrepForDisplay(xarML($title))#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" hspace="4">#$match#</a>
+        <a href="#$url#" title="#xarVarPrepForDisplay(xarML($title))#"><img src="#$imgurl#" alt="#xarVarPrepForDisplay(xarML($imgalt))#" hspace="4"/>#$match#</a>
     </xar:if>
 </xar:if>
