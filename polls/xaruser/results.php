@@ -42,6 +42,10 @@ function polls_user_results($args)
         return;
     }
 
+    if ($canvote && !xarSecurityCheck('VotePolls',0,'All',"$poll[title]:All:$poll[pid]")) {
+        $canvote = 0;
+    }
+
     $data['pid'] = $poll['pid'];
     $data['title'] = $poll['title'];
     $data['private'] = $poll['private'];

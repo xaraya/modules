@@ -57,11 +57,14 @@ function polls_user_list($args)
         else {
             $poll['open'] = 0;
         }
-        $poll['canvote'] = xarModAPIFunc('polls',
-                                 'user',
-                                 'usercanvote',
-                                 array('pid' => $item['pid']));
-
+        if (xarSecurityCheck('VotePolls',0,'All',"$item[title]:All:$item[pid]")) {
+            $poll['canvote'] = xarModAPIFunc('polls',
+                                             'user',
+                                             'usercanvote',
+                                             array('pid' => $item['pid']));
+        } else {
+            $poll['canvote'] = 0;
+        }
 
         $poll['action_vote'] = xarModURL('polls', 'user', 'display',
                                array('pid' => $item['pid']));
