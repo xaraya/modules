@@ -11,17 +11,12 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Add Bookmark</xar:mlstring></h2>
     <div style="margin: auto;">
     <xar:if condition="!empty($submitted)">
+        <meta http-equiv="refresh" content="2; url=javascript:window.close();">
         <p>
             <xar:mlstring>
                 Bookmark Added!
             </xar:mlstring>
         </p>
-        <p>
-            <a href="javascript:window.close();">
-                <xar:mlstring>
-                    Click here to close window
-                </xar:mlstring>
-            </a>
     <xar:else />
         <form action="#xarModURL('mybookmarks', 'user', 'new')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
             
