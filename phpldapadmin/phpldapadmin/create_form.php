@@ -102,3 +102,4 @@ include 'header.php'; ?>
 
 </body>
 </html>
+<?php ?>

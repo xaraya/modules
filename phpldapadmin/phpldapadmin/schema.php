@@ -384,3 +384,4 @@ if( $view == 'syntaxes' ) {
 </body>
 
 </html>
+<?php ?>

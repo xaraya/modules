@@ -20,7 +20,8 @@
  */
 
 
-class LdifEntry{
+class LdifEntry
+{
 
   var $dn;
   var $changeType;
@@ -34,13 +35,15 @@ class LdifEntry{
    * @param String[] $atts the attributes of the entry
    */
   
-  function LdifEntry($dn="",$changeType="add",$atts = array()){
+  function LdifEntry($dn="",$changeType="add",$atts = array())
+  {
     $this->dn=$dn;
     $this->changeType=$changeType;
     $this->attributes=$atts;
   }
 
-  function getDn(){
+  function getDn()
+  {
     return $this->dn;
   }
 
@@ -51,7 +54,8 @@ class LdifEntry{
    */
 
 
-  function setDn($dn){
+  function setDn($dn)
+  {
     $this->dn = $dn;
   }
 
@@ -62,7 +66,8 @@ class LdifEntry{
    *
    */
 
-  function getChangeType(){
+  function getChangeType()
+  {
     return $this->changeType;
   }
   
@@ -72,7 +77,8 @@ class LdifEntry{
    * @return String the distinguished name of the entry
    */
 
-  function setChangeType($changeType){
+  function setChangeType($changeType)
+  {
         $this->changeType = $changeType;
   }
 
@@ -81,7 +87,8 @@ class LdifEntry{
    *
    */
 
-  function setAttributes($atts){
+  function setAttributes($atts)
+  {
     $this->attributes = $atts;
   }
 
@@ -91,7 +98,8 @@ class LdifEntry{
    *
    * @return String[][] the attributes of the entry
    */
-  function getAttributes(){
+  function getAttributes()
+  {
     return $this->attributes;
     
   }
@@ -106,7 +114,8 @@ class LdifEntry{
  *
  */
 
-class LdifEntryReaderException{
+class LdifEntryReaderException
+{
   
 
   var $lineNumber;
@@ -122,7 +131,8 @@ class LdifEntryReaderException{
    * @param String the message associated the exception
    */
 
-  function LdifEntryReaderException($lineNumber,$currentLine,$message){
+  function LdifEntryReaderException($lineNumber,$currentLine,$message)
+  {
     $this->lineNumber = $lineNumber;
     $this->currentLine =$currentLine;
     $this->message = $message;
@@ -145,7 +155,8 @@ class LdifEntryReaderException{
 
 
 
-class LdifEntryReader{
+class LdifEntryReader
+{
 
   //the entry
   var $entry;
@@ -160,7 +171,8 @@ class LdifEntryReader{
    */
   
 
-  function LdifEntryReader(&$lines){
+  function LdifEntryReader(&$lines)
+  {
     $this->lines = &$lines;
 //need to change the following lines
 //    $this->_currentLineNumber =  $currentLineNumber- count($this->lines);
@@ -177,7 +189,8 @@ class LdifEntryReader{
    */
 
 
-  function _readChangeType(){
+  function _readChangeType()
+  {
     $changeType ="add";
     $arr = array();
     if(count($this->lines)==0){
@@ -198,7 +211,8 @@ class LdifEntryReader{
    * @return bool true if the dn is base 64 encoded
    */
   
-  function _isDnBase64Encoded($dn){
+  function _isDnBase64Encoded($dn)
+  {
      return  ereg("dn::",$dn)?1:0;
   }
   
@@ -210,7 +224,8 @@ class LdifEntryReader{
    * @return String base64 decoded value of an attribute
    */
   
-  function _getBase64DecodedValue($attr){
+  function _getBase64DecodedValue($attr)
+  {
     return base64_decode(trim($attr));
   }
   
@@ -223,7 +238,8 @@ class LdifEntryReader{
    */
 
 
-  function _getDnValue(){
+  function _getDnValue()
+  {
     $currentDnLine=$this->lines[0];
     if($this->_isDNBase64Encoded($currentDnLine)){
       $currentDnValue = $this->_getBase64DecodedValue(substr($currentDnLine,4,strlen($currentDnLine)-1));
@@ -243,7 +259,8 @@ class LdifEntryReader{
    */
 
 
-  function getEntry(){
+  function getEntry()
+  {
 
     $changeType = $this->entry->getChangeType();
     if($changeType=="add"){
@@ -270,7 +287,8 @@ class LdifEntryReader{
    *
    */
   
-  function  hasRaisedException(){
+  function  hasRaisedException()
+  {
     return $this->_error;
 
   }
@@ -283,7 +301,8 @@ class LdifEntryReader{
    */
 
   
-  function setLdifEntryReaderException($ldifEntryReaderException){
+  function setLdifEntryReaderException($ldifEntryReaderException)
+  {
     $this->_error=1;
     $this->_ldifEntryReaderException= $ldifEntryReaderException;
   }
@@ -295,7 +314,8 @@ class LdifEntryReader{
    * @return Ldap_LdifEntryReaderException the exception associate with 
    * the exception wich occur during parsing the file.
    */
-  function getLdifEntryReaderException(){
+  function getLdifEntryReaderException()
+  {
     return $this->_ldifEntryReaderException;
   }
 
@@ -308,7 +328,8 @@ class LdifEntryReader{
    */
 
 
-  function _getAttributeValue($attributeValuePart){
+  function _getAttributeValue($attributeValuePart)
+  {
     $attribute_value="";
     if(substr($attributeValuePart,0,1)==":"){
       $attribute_value = $this->_getBase64DecodedValue(trim(substr($attributeValuePart,1)));
@@ -343,7 +364,8 @@ class LdifEntryReader{
   }
   
 
-  function _getAddAttributes(){
+  function _getAddAttributes()
+  {
 
     if(count($this->lines)==0){
       $this->lines[0]="";
@@ -382,7 +404,8 @@ class LdifEntryReader{
 
   }
   
-  function _getModifyAttributes(){
+  function _getModifyAttributes()
+  {
     if(count($this->lines)==0){
       $this->lines[0]="";
       $this->setLdifEntryReaderException(new LdifEntryReaderException($this->_currentLineNumber,$this->lines[0],"Missing attributes for the entry",$this->entry));
@@ -466,7 +489,8 @@ class LdifEntryReader{
   }
 
 
-  function _getModrdnAttributes(){
+  function _getModrdnAttributes()
+  {
 
   $attrs = array();
   $numLines = count($this->lines);
@@ -539,7 +563,8 @@ $arr=array();
  */
 
 
-class LdifReaderException{
+class LdifReaderException
+{
   
   var $lineNumber;
   var $message;
@@ -555,7 +580,8 @@ class LdifReaderException{
    */
 
 
-  function LdifReaderException($lineNumber,$currentLine,$message){
+  function LdifReaderException($lineNumber,$currentLine,$message)
+  {
     $this->lineNumber = $lineNumber;
     $this->currentLine =$currentLine;
     $this->message = $message;
@@ -563,7 +589,8 @@ class LdifReaderException{
 }
 
 
-class FileReader{
+class FileReader
+{
   
   //the file pointer  
   var $_fp;
@@ -579,7 +606,8 @@ class FileReader{
    * @param $path2File
    */
 
-  function FileReader($path2File){
+  function FileReader($path2File)
+  {
      $this->_fp = fopen ($path2File, "r");
   }
 
@@ -589,7 +617,8 @@ class FileReader{
    * @return bool  true if it's the end of file, false otherwise.
    */
   
-  function eof(){
+  function eof()
+  {
     return feof($this->_fp);
   }
 
@@ -599,7 +628,8 @@ class FileReader{
    * @static 
    */
   
-  function _nextLine(){
+  function _nextLine()
+  {
     
     //$nextLine="";
     $this->_currentLineNumber++;
@@ -619,11 +649,13 @@ class FileReader{
    * @return bool  if it is a blank line,false otherwise.
    */
   
-  function _isBlankLine(){
+  function _isBlankLine()
+  {
     return(trim($this->_currentLine)=="")?1:0;
   }
   
-  function close(){
+  function close()
+  {
     return @fclose($this->_fp);
     
   }
@@ -637,7 +669,8 @@ class FileReader{
  * @package Ldap
  */
 
-class LdifReader extends FileReader{
+class LdifReader extends FileReader
+{
   
   // the current entry
   var $_currentEntry;
@@ -665,7 +698,8 @@ class LdifReader extends FileReader{
    * Use to initialize instance members.
    */
   
-  function _LdifReader(){
+  function _LdifReader()
+  {
     $this->_error=0;
     $this->_warning=0;
     $this->_currentLineNumber=0;
@@ -681,7 +715,8 @@ class LdifReader extends FileReader{
    *
    * @param String $path2File path of the ldif file to read
    */
-    function  LdifReader($path2File){
+  function  LdifReader($path2File)
+  {
       parent::FileReader($path2File);
       $this->_LdifReader();
   }
@@ -692,7 +727,8 @@ class LdifReader extends FileReader{
    * @return String[] The lines from the entry.
    */
 
-  function getCurrentLines(){
+  function getCurrentLines()
+  {
     return $this->_currentLines;
   }
 
@@ -703,7 +739,8 @@ class LdifReader extends FileReader{
    * @return bool true if it's a comment line,false otherwise
    */
   
-  function _isCommentLine(){
+  function _isCommentLine()
+  {
     return substr(trim($this->_currentLine),0,1)=="#"?1:0;
   }
 
@@ -715,7 +752,8 @@ class LdifReader extends FileReader{
    * @return bool true if the line contains a dn line, false otherwise.
    */
   
-  function _isDnLine(){
+  function _isDnLine()
+  {
     return ereg("^dn:",$this->_currentLine)?1:0;
   }
 
@@ -726,7 +764,8 @@ class LdifReader extends FileReader{
    *
    */
 
-  function getCurrentEntry(){
+  function getCurrentEntry()
+  {
 
     return $this->_currentEntry;
 
@@ -739,7 +778,8 @@ class LdifReader extends FileReader{
    *
    */
 
-  function nextLines(){
+  function nextLines()
+  {
     $endEntryFound=0;    
     //free the array (instance member)
     unset($this->_currentLines);
@@ -796,7 +836,8 @@ class LdifReader extends FileReader{
    * @return true if a version line was found,false otherwise
    */
   
-  function hasVersionNumber(){
+  function hasVersionNumber()
+  {
     $ldifLineFound = 0;
 
     while(!$this->eof() && !$ldifLineFound){
@@ -832,7 +873,8 @@ class LdifReader extends FileReader{
    */
 
 
-  function _hasValidDnLine(){
+  function _hasValidDnLine()
+  {
         $dn_found=0;
     while(!$this->_ldifHasError() && !$this->eof() && !$dn_found  ){
     
@@ -867,7 +909,8 @@ class LdifReader extends FileReader{
    */
 
 
-  function setLdapLdifReaderException($ldifReaderException){
+  function setLdapLdifReaderException($ldifReaderException)
+  {
     $this->_ldifReaderException= $ldifReaderException;
     $this->done();
     $this->_error=1;
@@ -879,7 +922,8 @@ class LdifReader extends FileReader{
    * @return Ldap_ldifReaderException
    */
   
-  function getLdapLdifReaderException(){
+  function getLdapLdifReaderException()
+  {
     return $this->_ldifReaderException;
   }
   
@@ -891,11 +935,13 @@ class LdifReader extends FileReader{
    */
 
 
-  function _ldifHasError(){
+  function _ldifHasError()
+  {
     return  $this->_error;
   }
 
-  function hasRaisedException(){
+  function hasRaisedException()
+  {
      return  $this->_error;
 
   }
@@ -907,7 +953,8 @@ class LdifReader extends FileReader{
    */
 
   
-  function done(){
+  function done()
+  {
     if (!$this->_ldifHasError()){
       @fclose($this->_fp);
     }
@@ -920,7 +967,8 @@ class LdifReader extends FileReader{
    * 
    */
 
-  function readEntry(){
+  function readEntry()
+  {
 
 
     if($lines = $this->nextLines()){
@@ -942,7 +990,8 @@ class LdifReader extends FileReader{
     }
   }
 
-  function getWarningMessage(){
+  function getWarningMessage()
+  {
       return $this->_warningMessage;
     
   }
@@ -956,7 +1005,8 @@ class LdifReader extends FileReader{
  */
 
 
-class LdapWriter{
+class LdapWriter
+{
   
   var $ldapConnexion;
   var $_writeError=0;
@@ -967,16 +1017,19 @@ class LdapWriter{
    *
    */
   
-  function LdapWriter(&$conn){
+  function LdapWriter(&$conn)
+  {
     $this->ldapConnexion = &$conn;
   }
 
-  function ldapAdd($entry){
+  function ldapAdd($entry)
+  {
     return @ldap_add($this->ldapConnexion,$entry->dn,$entry->attributes);
   }
 
 
-  function ldapModify($entry){
+  function ldapModify($entry)
+  {
     $changeType = $entry->getChangeType();
     
     switch($changeType){
@@ -1017,7 +1070,8 @@ class LdapWriter{
     return $this->_writeError;
   }
   
-  function ldapClose(){
+  function ldapClose()
+  {
    return @ldap_close($this->ldapConnexion);
   }
 }

@@ -23,7 +23,8 @@
 
 <script type="text/javascript">
     <!--
-    function autoFillUserName( form ) {
+    function autoFillUserName( form ) 
+    {
         var first_name;
         var last_name;
         var user_name;
@@ -38,7 +39,8 @@
         form.user_name.value = user_name;
         autoFillHomeDir( form );
     }
-    function autoFillHomeDir( form ){
+    function autoFillHomeDir( form )
+    {
         var user_name;
         var home_dir;
 
@@ -49,7 +51,8 @@
         form.home_dir.value = home_dir;
 
     }
-    function autoFillSambaRID( form ){
+    function autoFillSambaRID( form )
+    {
         var sambaRID;
         var uidNumber;
 

@@ -28,7 +28,8 @@ if( get_schema_objectclass( $server_id, 'sambaGroupMapping' ) == null )
  * Populate the display name field from the group name field
  */
 
-function autoFillDisplayName( form ){
+function autoFillDisplayName( form )
+{
     var samba_group_name
     samba_group_name = form.samba_group_name.value;
         form.display_name.value = samba_group_name;
@@ -43,7 +44,8 @@ function autoFillDisplayName( form ){
  *
  **/
 
-function autoFillSambaRID( form ){
+function autoFillSambaRID( form )
+{
    var sambaRID;
    var gidNumber;
 

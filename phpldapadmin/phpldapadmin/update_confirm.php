@@ -210,6 +210,4 @@ foreach( $update_array as $attr => $val ) {
 <?php } ?>
 
 </form>
-
-
-
+<?php ?>

@@ -118,7 +118,8 @@ $templates['custom'] =
 // PHP install is configured to automatically addslashes()
 if ( get_magic_quotes_gpc() && ( ! isset( $slashes_stripped ) || ! $slashes_stripped ) ) {
     if( ! function_exists( "array_stripslashes" ) ) {
-        function array_stripslashes(&$array) {
+        function array_stripslashes(&$array) 
+        {
             if( is_array( $array ) )
                 while ( list( $key ) = each( $array ) ) 
                     if ( is_array( $array[$key] ) && $key != $array ) 

@@ -156,7 +156,8 @@ function get_template( $server_id, $dn )
  *  
  */
 
-function get_samba3_domains(){
+function get_samba3_domains()
+{
   global $default_samba3_domains;
 
   // do the search for the sambadomainname object here

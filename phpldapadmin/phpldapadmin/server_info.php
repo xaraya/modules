@@ -82,3 +82,4 @@ for( $i=0; $i<$attrs['count']; $i++ ) {
 
 
 </table>
+<?php ?>

@@ -15,3 +15,4 @@ for( $i=0; $i<count($dns1); $i++ ) {
 // TESTING PLA_EXPLODE_DN()
 var_dump( pla_explode_dn( "cn=<stuff>,dc=example,dc=<com>" ) );
 var_dump( ldap_explode_dn( "cn=<stuff>,dc=example,dc=<com>", 0 ) );
+?>

@@ -114,7 +114,8 @@ display_pla_parse_error($exception,$currentEntry);
 reload_left_frame();
 
 
-function reload_left_frame(){
+function reload_left_frame()
+{
   global $server_id;
   
   echo "<script>\r\n";
@@ -122,14 +123,17 @@ function reload_left_frame(){
   echo "</script>\r\n";
 }
 
-function display_error_message($error_message){
+function display_error_message($error_message)
+{
   echo "<div style=\"color:red;\"><small>".$error_message."</small></div>";
 }
-function display_warning($warning){
+function display_warning($warning)
+{
   echo "<div style=\"color:orange\"><small>".$warning."</small></div>";
 }
 
-function display_pla_parse_error($exception,$faultyEntry){
+function display_pla_parse_error($exception,$faultyEntry)
+{
   global $lang;
   global $actionErrorMsg;
   $errorMessage =  $actionErrorMsg[$faultyEntry->getChangeType()];
@@ -164,5 +168,4 @@ function display_pla_parse_error($exception,$faultyEntry){
 ?>
 </body>
 </html>
-
-
+<?php ?>

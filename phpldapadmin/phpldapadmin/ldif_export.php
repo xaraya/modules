@@ -113,7 +113,8 @@ function is_safe_ascii( $str )
 }
 
 
-function multi_lines_display($str){
+function multi_lines_display($str)
+{
   global $br;
   
   $length_string = strlen($str);

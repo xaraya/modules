@@ -41,5 +41,4 @@ switch( $view ) {
 
 <h3 class="doc">Modification Templates</h3>
 <p class="doc">TODO: Write me.</p>
-
-
+<?php ?>

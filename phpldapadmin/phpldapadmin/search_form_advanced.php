@@ -1,10 +1,10 @@
 <script>
-<?
+<?php
 $num_server = count($server_info_list);
 for($i=0;$i<$num_server;$i++){
 ?>
  addToServersList(new server(<?=$i?>,"<?=$server_info_list[$i]['name']?>","<?=$server_info_list[$i]['base_dn']?>"));
-<? 
+<?php
 }
 ?>
 </script>
@@ -65,5 +65,4 @@ for($i=0;$i<$num_server;$i++){
     </tr>
 </table>
 </form>
-
-
+<?php ?>

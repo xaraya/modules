@@ -761,7 +761,8 @@ function get_object_attrs( $server_id, $dn, $lower_case_attr_names = false )
  * ASCII characters. Otherwise (like if it contains binary data),
  * returns false.
  */
-function is_printable_str($temp) {
+function is_printable_str($temp) 
+{
     $len = strlen($temp);
     for ($i=0; $i<$len; $i++) {
         $ascii_val = ord( substr( $temp,$i,1 ) );
@@ -1356,7 +1357,8 @@ function draw_chooser_link( $form_element )
     echo "<a href=\"$href\" title=\"$title\">". $lang['fbrowse'] ."</a>\n";
 }
 
-function get_values($link_id,$entry_id,$attr){
+function get_values($link_id,$entry_id,$attr)
+{
     if( 0 == strcasecmp( $attr, 'jpegPhoto' ) ) {
         $values = ldap_get_values_len($link_id,$entry_id,$attr);
     } else {
@@ -1426,7 +1428,8 @@ function pla_explode_dn( $dn, $with_attributes=0 )
 /*
  * Convenience function for fetching project HREFs (like bugs)
  */
-function get_href( $type ) {
+function get_href( $type ) 
+{
     $group_id = "61828";
     $bug_atid = "498546";
     $rfe_atid = "498549";

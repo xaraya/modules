@@ -232,4 +232,3 @@ if( $step == 2 )
     </center>
 
 <?php } ?>
-

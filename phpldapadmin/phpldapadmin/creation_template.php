@@ -47,5 +47,4 @@ if( file_exists( $handler ) )
 else
     pla_error( $lang['ctemplate_config_handler'] . " <b>" . htmlspecialchars( $template['handler'] ) .
         "</b> " . $lang['ctemplate_handler_does_not_exist']);
-
-
+?>
