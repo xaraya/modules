@@ -61,6 +61,10 @@ function headlines_rssblock_display($blockinfo)
         $feedfile = $vars['rssurl'];
     }
 
+    if (!isset($vars['maxitems'])) {
+        $vars['maxitems'] = 5;
+    }
+
     // Sanitize the URL provided to us since
     // some people can be very mean.
     $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
