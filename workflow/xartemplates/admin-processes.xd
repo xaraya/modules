@@ -1,14 +1,14 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#xarML('Admin processes')#
 <xar:if condition="$feature_help eq 'y'">
-<!-- the help link info --->
+<!-- the help link info </xar:comment>
 <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia Admin Processes')#">
 <img border='0' src='modules/workflow/lib/Galaxia/img/icons/help.gif' alt='help' />
 </a></xar:if>
 
 </h2><br />
 <div style="margin: auto;">
-<!--- beginning of next bit --->
+<xar:comment> beginning of next bit </xar:comment>
 
 <xar:if condition="$pid gt 0">
 <xar:template file="proc_bar" type="module"/>

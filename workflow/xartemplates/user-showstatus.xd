@@ -86,7 +86,7 @@
 </div>
 
 <xar:else/>
-<!--- you can provide different layouts here, or use separate templates --->
+<xar:comment> you can provide different layouts here, or use separate templates </xar:comment>
 <xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showstatus.xd</xar:mlstring>
 
 </xar:if>

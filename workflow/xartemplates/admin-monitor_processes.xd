@@ -1,6 +1,6 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#xarML('Monitor processes')#
-<!-- the help link info --->
+<!-- the help link info </xar:comment>
   
       <xar:if condition="$feature_help eq 'y'">
 <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaMonitorProcesses" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia Monitor Processes')#">
@@ -10,7 +10,7 @@
 
 </h2><br />
 <div style="margin: auto;">
-<!--- beginning of next bit --->
+<xar:comment> beginning of next bit </xar:comment>
 
 
 
