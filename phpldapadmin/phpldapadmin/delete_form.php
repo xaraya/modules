@@ -19,7 +19,7 @@ $rdn = $rdn[0];
 $server_name = $servers[$server_id]['name'];
 
 if( is_server_read_only( $server_id ) )
-	pla_error( "You cannot perform updates while server is in read-only mode" );
+    pla_error( "You cannot perform updates while server is in read-only mode" );
 
 check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars( $server_id ) );
 have_auth_info( $server_id ) or pla_error( "Not enough information to login to server. Please check your configuration." );
@@ -36,10 +36,10 @@ include 'header.php'; ?>
 
 <?php if( 0 == strcasecmp( $dn, $servers[$server_id]['base'] ) ) { ?>
 
-	<center><b>You cannot delete the base <acronym title="Distinguished Name">DN</acronym> entry of the LDAP server.</b></center>
-	</body>
-	</html>
-	<?php exit; ?>
+    <center><b>You cannot delete the base <acronym title="Distinguished Name">DN</acronym> entry of the LDAP server.</b></center>
+    </body>
+    </html>
+    <?php exit; ?>
 
 <?php } ?>
 
@@ -51,9 +51,9 @@ include 'header.php'; ?>
 <?php
 flush(); // so the user can get something on their screen while we figure out how many children this object has
 if( $has_children ) {
-	// get the total number of child objects (whole sub-tree)
-	$s = pla_ldap_search( $server_id, 'objectClass=*', $dn, array('dn'), 'sub' );
-	$sub_tree_count = count( $s );
+    // get the total number of child objects (whole sub-tree)
+    $s = pla_ldap_search( $server_id, 'objectClass=*', $dn, array('dn'), 'sub' );
+    $sub_tree_count = count( $s );
 }
 ?>
 
@@ -71,24 +71,24 @@ Take into consideration aliases and other such things that may cause problems.</
 <br />
 <table width="100%">
 <tr>
-	<td>
-	<center>
-	<form action="rdelete.php" method="post">
-	<input type="hidden" name="dn" value="<?php echo $dn; ?>" />
-	<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-	<input type="submit" class="scary" value="Delete all <?php echo ($sub_tree_count); ?> objects" />
-	</form>
-	</td>
-	
-	<td>
-	<center>
-	<form action="edit.php" method="get">
-	<input type="hidden" name="dn" value="<?php echo $dn; ?>" />
-	<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-	<input type="submit" name="submit" value="Cancel" class="cancel" />
-	</form>
-	</center>
-	</td>
+    <td>
+    <center>
+    <form action="rdelete.php" method="post">
+    <input type="hidden" name="dn" value="<?php echo $dn; ?>" />
+    <input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
+    <input type="submit" class="scary" value="Delete all <?php echo ($sub_tree_count); ?> objects" />
+    </form>
+    </td>
+    
+    <td>
+    <center>
+    <form action="edit.php" method="get">
+    <input type="hidden" name="dn" value="<?php echo $dn; ?>" />
+    <input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
+    <input type="submit" name="submit" value="Cancel" class="cancel" />
+    </form>
+    </center>
+    </td>
 </tr>
 </table>
 </td>
@@ -100,8 +100,8 @@ A list of all the <?php echo ($sub_tree_count); ?> <acronym title="Distinguished
 <select size="<?php echo min( 10, $sub_tree_count );?>" multiple disabled style="background:white; color:black;width:500px" >
 <?php $i=0; ?>
 <?php foreach( $s as $dn => $junk ) { ?>
-	<?php $i++; ?>
-	<option><?php echo $i; ?>. <?php echo htmlspecialchars( ( $dn ) ); ?></option>
+    <?php $i++; ?>
+    <option><?php echo $i; ?>. <?php echo htmlspecialchars( ( $dn ) ); ?></option>
 <?php } ?>
 
 </select>
@@ -122,25 +122,25 @@ Are you sure you want to permanently delete this object?<br />
 <br />
 <table width="100%">
 <tr>
-	<td>
-	<center>
-	<form action="delete.php" method="post">
-	<input type="hidden" name="dn" value="<?php echo $dn; ?>" />
-	<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-	<input type="submit" name="submit" value="Delete It" class="scary" />
-	</center>
-	</form>
-	</td>
-	
-	<td>
-	<center>
-	<form action="edit.php" method="get">
-	<input type="hidden" name="dn" value="<?php echo $dn; ?>" />
-	<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-	<input type="submit" name="submit" value="Cancel" class="cancel" />
-	</form>
-	</center>
-	</td>
+    <td>
+    <center>
+    <form action="delete.php" method="post">
+    <input type="hidden" name="dn" value="<?php echo $dn; ?>" />
+    <input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
+    <input type="submit" name="submit" value="Delete It" class="scary" />
+    </center>
+    </form>
+    </td>
+    
+    <td>
+    <center>
+    <form action="edit.php" method="get">
+    <input type="hidden" name="dn" value="<?php echo $dn; ?>" />
+    <input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
+    <input type="submit" name="submit" value="Cancel" class="cancel" />
+    </form>
+    </center>
+    </td>
 </tr>
 </table>
 

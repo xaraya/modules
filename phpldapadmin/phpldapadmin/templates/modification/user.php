@@ -24,15 +24,15 @@ include 'header.php';
 
 <h3 class="title">Editing User: <b><?php echo htmlspecialchars( utf8_decode( $user_name ) ); ?></b></h3>
 <h3 class="subtitle">
-	Server: <b><?php echo $server_name; ?></b> &nbsp;&nbsp;&nbsp; 
-	LDAP <acronym title="Distinguished Name">DN</acronym>: 
-		<b><?php echo htmlspecialchars( utf8_decode( $dn ) ); ?></b>
+    Server: <b><?php echo $server_name; ?></b> &nbsp;&nbsp;&nbsp; 
+    LDAP <acronym title="Distinguished Name">DN</acronym>: 
+        <b><?php echo htmlspecialchars( utf8_decode( $dn ) ); ?></b>
 </h3>
 
 <?php $default_href = "edit.php?server_id=$server_id&amp;dn=$encoded_dn&amp;use_default_template=true"; ?>
 <center><small>
-	Using the <b>user</b> template. 
-	You may switch to the <a href="<?php echo $default_href; ?>">default template</a>
+    Using the <b>user</b> template. 
+    You may switch to the <a href="<?php echo $default_href; ?>">default template</a>
 </small></center>
 
 

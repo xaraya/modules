@@ -31,16 +31,16 @@ include 'header.php'; ?>
 
 <h3 class="title">Import LDIF File</h3>
 <h3 class="subtitle">
-	Server: <b><?php echo htmlspecialchars( $server_name ); ?></b>
-	File: <b><?php echo htmlspecialchars( $remote_file ); ?>
-	(<?php echo number_format( $file_len ); ?> bytes)</b>
+    Server: <b><?php echo htmlspecialchars( $server_name ); ?></b>
+    File: <b><?php echo htmlspecialchars( $remote_file ); ?>
+    (<?php echo number_format( $file_len ); ?> bytes)</b>
 </h3>
 
 <br />
 <br />
 
 <?php 
-include("ldif_functions.php");	
+include("ldif_functions.php");    
 @set_time_limit( 0 );
 
 // String associated to the operation on the ldap server

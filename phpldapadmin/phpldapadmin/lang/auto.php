@@ -6,23 +6,23 @@ $useLang="en"; // default use english encoding, a Option in Config would be nice
 
 // keep the beginning and ending spaces, they are used for finding the best language
 $langSupport=array(" ca "=>"ca" // catalan 
-		   ," ca-"=>"ca" // 
-		   ," de "=>"de" // german
-		   ," de-"=>"de" // for de-at, de-ch...
-		   ," German "=>"de" // the browser Moz (1.5)submit German instead of de
-		   ," en "=>"en" // englisch
-		   ," en-"=>"en" // for en-us,en-gb,en-ca,..
-		   ," es "=>"es" // spainish
-		   ," es-"=>"es" // es-cr, es-co,....
-		   ," fr "=>"fr" // french
-		   ," fr-"=>"fr" // fr-lu,fr-ca,...
-		   ," it "=>"it" // italien
-		   ," it-"=>"it" // for it-ch (italien swiss)..
-		   ," nl "=>"nl" // dutch 
-		   ," nl-"=>"nl" // for ne-be, only one?  
-		   ," ru "=>"ru" // russian
-		   ," ru-"=>"ru" // ru- exits?
-		  );// all supported languages in this array
+           ," ca-"=>"ca" // 
+           ," de "=>"de" // german
+           ," de-"=>"de" // for de-at, de-ch...
+           ," German "=>"de" // the browser Moz (1.5)submit German instead of de
+           ," en "=>"en" // englisch
+           ," en-"=>"en" // for en-us,en-gb,en-ca,..
+           ," es "=>"es" // spainish
+           ," es-"=>"es" // es-cr, es-co,....
+           ," fr "=>"fr" // french
+           ," fr-"=>"fr" // fr-lu,fr-ca,...
+           ," it "=>"it" // italien
+           ," it-"=>"it" // for it-ch (italien swiss)..
+           ," nl "=>"nl" // dutch 
+           ," nl-"=>"nl" // for ne-be, only one?  
+           ," ru "=>"ru" // russian
+           ," ru-"=>"ru" // ru- exits?
+          );// all supported languages in this array
 // test 
 
 $aHTTP_ACCEPT_LANGUAGE=" ".$HTTP_ACCEPT_LANGUAGE." ";

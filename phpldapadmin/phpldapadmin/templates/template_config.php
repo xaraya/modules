@@ -28,10 +28,10 @@ $templates[] =
         array(  'desc'    => 'User Account',
                 'icon'    => 'images/user.png',
                 'handler' => 'new_user_template.php' );
-		// You can use the 'regexp' directive to restrict where
-		// entries can be created for this template
+        // You can use the 'regexp' directive to restrict where
+        // entries can be created for this template
                 //'regexp' => '^ou=People,o=.*,c=.*$'
-		//'regexp' => '^ou=People,dc=.*,dc=.*$'
+        //'regexp' => '^ou=People,dc=.*,dc=.*$'
 
 $templates[] =
         array(  'desc'    => 'Address Book Entry (inetOrgPerson)',
@@ -76,14 +76,14 @@ $templates[] =
                 'handler' => 'new_dns_entry.php' );
 
 $templates[] =
-	array(  'desc'    => 'Simple Security Object',
-		'icon'    => 'images/user.png',
-		'handler' => 'new_security_object_template.php' ); 
+    array(  'desc'    => 'Simple Security Object',
+        'icon'    => 'images/user.png',
+        'handler' => 'new_security_object_template.php' ); 
 
 $templates[] =
-	array(  'desc'    => 'Custom',
-		'icon'    => 'images/object.png',
-		'handler' => 'custom.php' ); 
+    array(  'desc'    => 'Custom',
+        'icon'    => 'images/object.png',
+        'handler' => 'custom.php' ); 
 
 
 /*######################################################################################
@@ -124,9 +124,9 @@ $default_samba3_domains[] =
 function get_template( $server_id, $dn )
 {
 
-	// For now, just use default. We will add more templates for 0.9.2.
-	// If you have custom modification templates, just modify this.
-	return 'default';
+    // For now, just use default. We will add more templates for 0.9.2.
+    // If you have custom modification templates, just modify this.
+    return 'default';
 
         // fetch and lowercase all the objectClasses in an array
         $object_classes = get_object_attr( $server_id, $dn, 'objectClass', true );
@@ -141,14 +141,14 @@ function get_template( $server_id, $dn )
         if( in_array( 'person', $object_classes ) &&
             in_array( 'posixaccount', $object_classes ) )
                 return 'user';
-	// TODO: Write other templates and criteria therefor
-	// else if ...
-	//    return 'some other template';
-	// else if ...
-	//    return 'some other template';
-	// etc.
+    // TODO: Write other templates and criteria therefor
+    // else if ...
+    //    return 'some other template';
+    // else if ...
+    //    return 'some other template';
+    // etc.
 
-	return 'default';
+    return 'default';
 }
 
 /**

@@ -1,6 +1,6 @@
 <?php 
-	include 'common.php'; 
-	include 'header.php'; 
+    include 'common.php'; 
+    include 'header.php'; 
 ?>
 
 <center>

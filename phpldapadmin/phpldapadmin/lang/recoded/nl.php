@@ -300,12 +300,12 @@ $lang['ferror_unrecognized_num'] = 'Onbekend foutnummer:';//"Unrecognized error 
 $lang['ferror_nonfatil_bug'] = '<center><table class=\'notice\'><tr><td colspan=\'2\'><center><img src=\'images/warning.png\' height=\'12\' width=\'13\' /><b>Een niet fatale fout in phpLDAPadmin gevonden!</b></td></tr><tr><td>Fout:</td><td><b>%s</b> (<b>%s</b>)</td></tr><tr><td>Bestand:</td><td><b>%s</b>Regel:<b>%s</b>, aangeroepen door <b>%s</b></td></tr><tr><td>Versie:</td><td>PLA: <b>%s</b>, PHP: <b>%s</b>, SAPI: <b>%s</b></td></tr><tr><td>Web server:</td><td><b>%s</b></td></tr><tr><td colspan=\'2\'><center>Graag een <a target=\'new\' href=\'%s\'>bugreport</a> invullen.</center></td></tr></table></center><br />';//"<center><table class=\'notice\'><tr><td colspan=\'2\'><center><img src=\'images/warning.png\' height=\'12\' width=\'13\' /><b>You found a non-fatal phpLDAPadmin bug!</b></td></tr><tr><td>Error:</td><td><b>%s</b> (<b>%s</b>)</td></tr><tr><td>File:</td><td><b>%s</b> line <b>%s</b>, caller <b>%s</b></td></tr><tr><td>Versions:</td><td>PLA: <b>%s</b>, PHP: <b>%s</b>, SAPI: <b>%s</b></td></tr><tr><td>Web server:</td><td><b>%s</b></td></tr><tr><td colspan=\'2\'><center><a target=\'new\' href=\'%s\'>Please report this bug by clicking here</a>.</center></td></tr></table></center><br />';
 
 $lang['ferror_congrats_found_bug'] = '<center><table class=\'notice\'>
-			<tr><td colspan=\'2\'><center><img src=\'images/warning.png\' height=\'12\' width=\'13\' /><b>Gefeliciteerd! Een fout in phpLDAPadmin gevonden!</b></td></tr>
-			<tr><td>Fout:</td><td><b>%s</b> (<b>%s</b>)</td></tr><tr><td>Bestand:</td><td><b>%s</b>, aangeroepen door <b>%s</b></td></tr>
-			<tr><td>Versie:</td><td>PLA: <b>%s</b>, PHP: <b>%s</b>, SAPI: <b>%s</b></td></tr>
-			<tr><td>Web server:</td><td><b>%s</b></td></tr>
-			<tr><td colspan=\'2\'><center>Graag een bugreport invullen.</center></td></tr>
-			</table></center><br />';//"Congratulations! You found a bug in phpLDAPadmin.<br /><br /><table class=\'bug\'><tr><td>Error:</td><td><b>%s</b></td></tr><tr><td>Level:</td><td><b>%s</b></td></tr><tr><td>File:</td><td><b>%s</b></td></tr><tr><td>Line:</td><td><b>%s</b></td></tr><tr><td>Caller:</td><td><b>%s</b></td></tr><tr><td>PLA Version:</td><td><b>%s</b></td></tr><tr><td>PHP Version:</td><td><b>%s</b></td></tr><tr><td>PHP SAPI:</td><td><b>%s</b></td></tr><tr><td>Web server:</td><td><b>%s</b></td></tr></table><br /> Please report this bug by clicking below!';
+            <tr><td colspan=\'2\'><center><img src=\'images/warning.png\' height=\'12\' width=\'13\' /><b>Gefeliciteerd! Een fout in phpLDAPadmin gevonden!</b></td></tr>
+            <tr><td>Fout:</td><td><b>%s</b> (<b>%s</b>)</td></tr><tr><td>Bestand:</td><td><b>%s</b>, aangeroepen door <b>%s</b></td></tr>
+            <tr><td>Versie:</td><td>PLA: <b>%s</b>, PHP: <b>%s</b>, SAPI: <b>%s</b></td></tr>
+            <tr><td>Web server:</td><td><b>%s</b></td></tr>
+            <tr><td colspan=\'2\'><center>Graag een bugreport invullen.</center></td></tr>
+            </table></center><br />';//"Congratulations! You found a bug in phpLDAPadmin.<br /><br /><table class=\'bug\'><tr><td>Error:</td><td><b>%s</b></td></tr><tr><td>Level:</td><td><b>%s</b></td></tr><tr><td>File:</td><td><b>%s</b></td></tr><tr><td>Line:</td><td><b>%s</b></td></tr><tr><td>Caller:</td><td><b>%s</b></td></tr><tr><td>PLA Version:</td><td><b>%s</b></td></tr><tr><td>PHP Version:</td><td><b>%s</b></td></tr><tr><td>PHP SAPI:</td><td><b>%s</b></td></tr><tr><td>Web server:</td><td><b>%s</b></td></tr></table><br /> Please report this bug by clicking below!';
 
 // extra strings:
 

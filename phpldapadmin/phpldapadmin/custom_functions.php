@@ -67,13 +67,13 @@
  */
 function postAttrModify( $server_id, $dn, $attr_name, $new_value )
 {
-	// Fill me in
-	//
-	// A very simple (and lame) example:
-	// if( 0 == strcasecmp( $attr_name, "userPassword" ) ) {
-	//     mail( "user@example.com", "Password change notification", 
-	//           "User '$dn' has changed their password." );
-	// }
+    // Fill me in
+    //
+    // A very simple (and lame) example:
+    // if( 0 == strcasecmp( $attr_name, "userPassword" ) ) {
+    //     mail( "user@example.com", "Password change notification", 
+    //           "User '$dn' has changed their password." );
+    // }
 }
 
 /*
@@ -87,8 +87,8 @@ function postAttrModify( $server_id, $dn, $attr_name, $new_value )
  */
 function preAttrModify( $server_id, $dn, $attr_name, $new_value )
 {
-	// Fill me in
-	return true;
+    // Fill me in
+    return true;
 }
 
 /*
@@ -102,15 +102,15 @@ function preAttrModify( $server_id, $dn, $attr_name, $new_value )
  */
 function postEntryCreate( $server_id, $dn, $attrs )
 {
-	// Fill me in
-	//
-	// A very simple example:
-	// if( preg_match( "/^uid=(\w+),/", $dn, $user_name ) ) {
-	//     $user_name = $user_name[1];
-	//     mkdir( "/home/$user_name" );
-	// } else {
-	//     // not a user account
-	// }
+    // Fill me in
+    //
+    // A very simple example:
+    // if( preg_match( "/^uid=(\w+),/", $dn, $user_name ) ) {
+    //     $user_name = $user_name[1];
+    //     mkdir( "/home/$user_name" );
+    // } else {
+    //     // not a user account
+    // }
 }
 
 /*
@@ -135,8 +135,8 @@ function postEntryCreate( $server_id, $dn, $attrs )
  */
 function preEntryCreate( $server_id, $dn, $attrs )
 {
-	// Fill me in
-	return true;
+    // Fill me in
+    return true;
 }
 
 /*
@@ -146,8 +146,8 @@ function preEntryCreate( $server_id, $dn, $attrs )
  */
 function preEntryDelete( $server_id, $dn )
 {
-	// Fill me in
-	return true;
+    // Fill me in
+    return true;
 }
 
 /*
@@ -157,6 +157,6 @@ function preEntryDelete( $server_id, $dn )
  */
 function postEntryDelete( $server_id, $dn )
 {
-	// Fill me in
+    // Fill me in
 }
 

@@ -25,22 +25,22 @@ $old_values = $_POST['old_values'];
 $new_values = $_POST['new_values'];
 $server_name = $servers[$server_id]['name'];
 if( is_server_read_only( $server_id ) )
-	pla_error( $lang['no_updates_in_read_only_mode'] );
+    pla_error( $lang['no_updates_in_read_only_mode'] );
 
 // utf8_decode all the incoming new_values and old_values as they were input 
 // from a utf8 page.
 foreach( $old_values as $attr => $vals )
-	if( is_array( $vals ) )
-		foreach( $vals as $i => $v )
-			$old_values[ $attr ][ $i ] = utf8_decode( $v );
-	else
-		$old_values[ $attr ] = utf8_decode( $vals );
+    if( is_array( $vals ) )
+        foreach( $vals as $i => $v )
+            $old_values[ $attr ][ $i ] = utf8_decode( $v );
+    else
+        $old_values[ $attr ] = utf8_decode( $vals );
 foreach( $new_values as $attr => $vals )
-	if( is_array( $vals ) )
-		foreach( $vals as $i => $v )
-			$new_values[ $attr ][ $i ] = utf8_decode( $v );
-	else
-		$new_values[ $attr ] = utf8_decode( $vals );
+    if( is_array( $vals ) )
+        foreach( $vals as $i => $v )
+            $new_values[ $attr ][ $i ] = utf8_decode( $v );
+    else
+        $new_values[ $attr ] = utf8_decode( $vals );
 
 ?>
 
@@ -53,40 +53,40 @@ foreach( $new_values as $attr => $vals )
 $update_array = array();
 foreach( $old_values as $attr => $old_val )
 {
-	// Did the user delete the field?
-	if( ! isset( $new_values[ $attr ] ) ) {
-		$update_array[ $attr ] = '';
-	}
-	// did the user change the field?
-	elseif( $old_val != $new_values[ $attr ] ) {
+    // Did the user delete the field?
+    if( ! isset( $new_values[ $attr ] ) ) {
+        $update_array[ $attr ] = '';
+    }
+    // did the user change the field?
+    elseif( $old_val != $new_values[ $attr ] ) {
 
-		$new_val = $new_values[ $attr ];
+        $new_val = $new_values[ $attr ];
 
-		// special case for userPassword attributes
-		if( 0 == strcasecmp( $attr, 'userPassword' ) && $new_val != '' )
-			$new_val = password_hash( $new_val, $_POST['enc_type'] );
-		$update_array[ $attr ] = $new_val;
-	}
+        // special case for userPassword attributes
+        if( 0 == strcasecmp( $attr, 'userPassword' ) && $new_val != '' )
+            $new_val = password_hash( $new_val, $_POST['enc_type'] );
+        $update_array[ $attr ] = $new_val;
+    }
 }
 
 // special case check for a new enc_type for userPassword (not otherwise detected)
-if(	isset( $_POST['enc_type'] ) && 
-	$_POST['enc_type'] != $_POST['old_enc_type'] && 
-	$_POST['enc_type'] != 'clear' &&
-	$_POST['new_values']['userpassword'] != '' ) {
+if(    isset( $_POST['enc_type'] ) && 
+    $_POST['enc_type'] != $_POST['old_enc_type'] && 
+    $_POST['enc_type'] != 'clear' &&
+    $_POST['new_values']['userpassword'] != '' ) {
 
-	$new_password = password_hash( $_POST['new_values']['userpassword'], $_POST['enc_type'] );
-	$update_array[ 'userpassword' ] = $new_password;
+    $new_password = password_hash( $_POST['new_values']['userpassword'], $_POST['enc_type'] );
+    $update_array[ 'userpassword' ] = $new_password;
 }
 
 // strip empty vals from update_array and ensure consecutive indices for each attribute
 foreach( $update_array as $attr => $val ) {
-	if( is_array( $val ) ) {
-		foreach( $val as $i => $v )
-			if( null == $v || 0 == strlen( $v ) )
-				unset( $update_array[$attr][$i] );
-		$update_array[$attr] = array_values( $update_array[$attr] );
-	}
+    if( is_array( $val ) ) {
+        foreach( $val as $i => $v )
+            if( null == $v || 0 == strlen( $v ) )
+                unset( $update_array[$attr][$i] );
+        $update_array[$attr] = array_values( $update_array[$attr] );
+    }
 }
 
 // at this point, the update_array should look like this (example):
@@ -101,111 +101,111 @@ foreach( $update_array as $attr => $val ) {
 ?>
 <?php if( count( $update_array ) > 0 ) { ?>
 
-	<br />
-	<center>
-	<?php echo $lang['do_you_want_to_make_these_changes']; ?>
-	<br />
-	<br />
+    <br />
+    <center>
+    <?php echo $lang['do_you_want_to_make_these_changes']; ?>
+    <br />
+    <br />
 
-	<table class="confirm">
-	<tr>
-		<th><?php echo $lang['attribute']; ?></th>
-		<th><?php echo $lang['old_value']; ?></th>
-		<th><?php echo $lang['new_value']; ?></th>
-	</tr>
+    <table class="confirm">
+    <tr>
+        <th><?php echo $lang['attribute']; ?></th>
+        <th><?php echo $lang['old_value']; ?></th>
+        <th><?php echo $lang['new_value']; ?></th>
+    </tr>
 
-	<?php $counter=0; foreach( $update_array as $attr => $new_val ) { $counter++ ?>
-	
-		<tr class="<?php echo $counter%2 ? 'even' : 'odd'; ?>">
-		<td><b><?php echo htmlspecialchars( $attr ); ?></b></td>
-		<td><nobr>
-		<?php
-		if( is_array( $old_values[ $attr ] ) ) 
-			foreach( $old_values[ $attr ] as $v )
-				echo htmlspecialchars( utf8_encode( $v ) ) . "<br />";
-		else  
-			echo htmlspecialchars( utf8_encode( $old_values[ $attr ] ) ) . "<br />";
-		echo "</nobr></td><td><nobr>";
+    <?php $counter=0; foreach( $update_array as $attr => $new_val ) { $counter++ ?>
+    
+        <tr class="<?php echo $counter%2 ? 'even' : 'odd'; ?>">
+        <td><b><?php echo htmlspecialchars( $attr ); ?></b></td>
+        <td><nobr>
+        <?php
+        if( is_array( $old_values[ $attr ] ) ) 
+            foreach( $old_values[ $attr ] as $v )
+                echo htmlspecialchars( utf8_encode( $v ) ) . "<br />";
+        else  
+            echo htmlspecialchars( utf8_encode( $old_values[ $attr ] ) ) . "<br />";
+        echo "</nobr></td><td><nobr>";
 
-		// is this a multi-valued attribute?
-		if( is_array( $new_val ) ) {
-			foreach( $new_val as $i => $v ) {
-				if( $v == '' ) {
-					// remove it from the update array if it's empty
-					unset( $update_array[ $attr ][ $i ] );
-					$update_array[ $attr ] = array_values( $update_array[ $attr ] );
-				} else {
-					echo htmlspecialchars( utf8_encode( $v ) ) . "<br />";
-				}
-			}
+        // is this a multi-valued attribute?
+        if( is_array( $new_val ) ) {
+            foreach( $new_val as $i => $v ) {
+                if( $v == '' ) {
+                    // remove it from the update array if it's empty
+                    unset( $update_array[ $attr ][ $i ] );
+                    $update_array[ $attr ] = array_values( $update_array[ $attr ] );
+                } else {
+                    echo htmlspecialchars( utf8_encode( $v ) ) . "<br />";
+                }
+            }
 
-			// was this a multi-valued attribute deletion? If so,
-			// fix the $update_array to reflect that per update_confirm.php's
-			// expectations
-			if( $update_array[ $attr ] == array( 0 => '' ) || $update_array[ $attr ] == array() ) {
-				$update_array[ $attr ] = '';
-				echo '<span style="color: red">' . $lang['attr_deleted'] . '</span>';
-			}
-		}
-		else 
-			if( $new_val != '' ) 
-				echo htmlspecialchars( $new_val ) . "<br />";
-			else 
-				echo '<span style="color: red">' . $lang['attr_deleted'] . '</span>';
-		echo "</nobr></td></tr>\n\n";
-	}
+            // was this a multi-valued attribute deletion? If so,
+            // fix the $update_array to reflect that per update_confirm.php's
+            // expectations
+            if( $update_array[ $attr ] == array( 0 => '' ) || $update_array[ $attr ] == array() ) {
+                $update_array[ $attr ] = '';
+                echo '<span style="color: red">' . $lang['attr_deleted'] . '</span>';
+            }
+        }
+        else 
+            if( $new_val != '' ) 
+                echo htmlspecialchars( $new_val ) . "<br />";
+            else 
+                echo '<span style="color: red">' . $lang['attr_deleted'] . '</span>';
+        echo "</nobr></td></tr>\n\n";
+    }
 
-	?>
+    ?>
 
-	</table>
-	<br />
+    </table>
+    <br />
 
-	<table>
-	<tr>
-		<td>
-			<!-- Commit button and acompanying form -->
-			<form action="update.php" method="post">
-			<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-			<input type="hidden" name="dn" value="<?php echo $dn; ?>" />
-			<?php foreach( $update_array as $attr => $val ) { ?>
-				<?php if( is_array( $val ) ) { ?>				
-					<?php foreach( $val as $i => $v ) { ?>
+    <table>
+    <tr>
+        <td>
+            <!-- Commit button and acompanying form -->
+            <form action="update.php" method="post">
+            <input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
+            <input type="hidden" name="dn" value="<?php echo $dn; ?>" />
+            <?php foreach( $update_array as $attr => $val ) { ?>
+                <?php if( is_array( $val ) ) { ?>                
+                    <?php foreach( $val as $i => $v ) { ?>
 
-						<input  type="hidden"
-							name="update_array[<?php echo htmlspecialchars( utf8_encode( $attr ) ); ?>][<?php echo $i; ?>]"
-							value="<?php echo htmlspecialchars( utf8_encode( $v ) ); ?>" />
-					<?php } ?> 
-				<?php } else { ?>				
+                        <input  type="hidden"
+                            name="update_array[<?php echo htmlspecialchars( utf8_encode( $attr ) ); ?>][<?php echo $i; ?>]"
+                            value="<?php echo htmlspecialchars( utf8_encode( $v ) ); ?>" />
+                    <?php } ?> 
+                <?php } else { ?>                
 
-					<input  type="hidden"
-						name="update_array[<?php echo htmlspecialchars( utf8_encode( $attr ) ); ?>]"
-						value="<?php echo htmlspecialchars( utf8_encode( $val ) ); ?>" />
-				<?php } ?>				
-			<?php } ?>
-			<input type="submit" value="<?php echo $lang['commit']; ?>" class="happy" />
-			</form>
-		</td>
-		<td>
-			<!-- Cancel button -->
-			<form action="edit.php" method="get">
-			<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-			<input type="hidden" name="dn" value="<?php echo $dn; ?>" />
-			<input type="submit" value="<?php echo $lang['cancel']; ?>" class="scary" />
-			</form>
-		</td>
-	</tr>
-	</table>		
-	</center>
-	</body>
+                    <input  type="hidden"
+                        name="update_array[<?php echo htmlspecialchars( utf8_encode( $attr ) ); ?>]"
+                        value="<?php echo htmlspecialchars( utf8_encode( $val ) ); ?>" />
+                <?php } ?>                
+            <?php } ?>
+            <input type="submit" value="<?php echo $lang['commit']; ?>" class="happy" />
+            </form>
+        </td>
+        <td>
+            <!-- Cancel button -->
+            <form action="edit.php" method="get">
+            <input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
+            <input type="hidden" name="dn" value="<?php echo $dn; ?>" />
+            <input type="submit" value="<?php echo $lang['cancel']; ?>" class="scary" />
+            </form>
+        </td>
+    </tr>
+    </table>        
+    </center>
+    </body>
 
-	<?php
+    <?php
 
 } else { ?>
-	
-	<center>
-	<?php echo $lang['you_made_no_changes']; ?>
-	<a href="edit.php?server_id=<?php echo $server_id; ?>&amp;dn=<?php echo $encoded_dn; ?>"><?php echo $lang['go_back']; ?></a>.
-	</center>
+    
+    <center>
+    <?php echo $lang['you_made_no_changes']; ?>
+    <a href="edit.php?server_id=<?php echo $server_id; ?>&amp;dn=<?php echo $encoded_dn; ?>"><?php echo $lang['go_back']; ?></a>.
+    </center>
 
 <?php } ?>
 

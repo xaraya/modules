@@ -24,7 +24,7 @@ pla_ldap_connect( $server_id ) or pla_error( $lang['could_not_connect'] );
 $server_name = $servers[ $server_id ][ 'name' ];
 
 if( is_server_read_only( $server_id ) )
-	pla_error( $lang['no_updates_in_read_only_mode'] );
+    pla_error( $lang['no_updates_in_read_only_mode'] );
 
 include 'header.php';
 
@@ -33,19 +33,19 @@ include 'header.php';
 <body>
 <h3 class="title"><?php echo $lang['createf_create_object']?></h3>
 <h3 class="subtitle"><?php echo $lang['ctemplate_on_server']?> '<?php echo htmlspecialchars( $server_name ); ?>',
-	using template '<?php echo htmlspecialchars( $template['desc'] ); ?>'</h3>
+    using template '<?php echo htmlspecialchars( $template['desc'] ); ?>'</h3>
 
 <?php
 
 if( ! isset( $_POST['template'] ) )
-	pla_error( $lang['ctemplate_no_template'] );
+    pla_error( $lang['ctemplate_no_template'] );
 
 $handler = 'templates/creation/' . $template['handler'];
 $handler = realpath( $handler );
 if( file_exists( $handler ) )
-	include $handler;
+    include $handler;
 else
-	pla_error( $lang['ctemplate_config_handler'] . " <b>" . htmlspecialchars( $template['handler'] ) .
-		"</b> " . $lang['ctemplate_handler_does_not_exist']);
+    pla_error( $lang['ctemplate_config_handler'] . " <b>" . htmlspecialchars( $template['handler'] ) .
+        "</b> " . $lang['ctemplate_handler_does_not_exist']);
 
 

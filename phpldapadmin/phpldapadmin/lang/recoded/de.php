@@ -164,7 +164,7 @@ $lang['distinguished_name'] = 'Distinguished Name (eindeutiger Name)';// 'Distin
 $lang['current_list_of'] = 'Aktuelle Liste von';//'Current list of';
 $lang['values_for_attribute'] = 'Werte des Attributes';//'values for attribute';
 $lang['inappropriate_matching_note'] = 'Info: Sie werden einen "inappropriate matching" Fehler erhalten, falls sie nicht<br />'; //'Note: You will get an "inappropriate matching" error if you have not<br />' .
-			'eine <tt>EQUALITY</tt> Regel f&uuml;r dieses Attribut auf ihren LDAP Server eingerichtet haben.';//'setup an <tt>EQUALITY</tt> rule on your LDAP server for this attribute.';
+            'eine <tt>EQUALITY</tt> Regel f&uuml;r dieses Attribut auf ihren LDAP Server eingerichtet haben.';//'setup an <tt>EQUALITY</tt> rule on your LDAP server for this attribute.';
 $lang['enter_value_to_add'] = 'Geben sie den Wert ein den sie hinzuf&uuml;gen m&ouml;chten:';//'Enter the value you would like to add:';
 $lang['new_required_attrs_note'] = 'Info: Sie werden gegebenenfalles gezwungen sein neue Attribute hinzuzuf&uuml;gen.';//'Note: you may be required to enter new attributes<br />that this objectClass requires.';
 $lang['syntax'] = 'Syntax';//'Syntax';

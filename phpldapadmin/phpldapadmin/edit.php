@@ -32,21 +32,21 @@ have_auth_info( $server_id ) or pla_error( $lang['not_enough_login_info'] );
 pla_ldap_connect( $server_id ) or pla_error( $lang['could_not_connect'] );
 
 if( $use_default_template ) {
-	require realpath( 'templates/modification/default.php' );
+    require realpath( 'templates/modification/default.php' );
 } else {
 
-	$template = get_template( $server_id, $dn );
-	$template_file = "templates/modification/$template.php";
-	if( file_exists( realpath( $template_file ) ) )
-		require realpath( $template_file );
-	else {
-		echo "\n\n";
-		echo $lang['missing_template_file']; 
-		echo " <b>$template_file</b>. ";
-		echo $lang['using_default'];
-		echo "<br />\n\n";
-		require realpath( 'templates/modification/default.php' );
-	}
+    $template = get_template( $server_id, $dn );
+    $template_file = "templates/modification/$template.php";
+    if( file_exists( realpath( $template_file ) ) )
+        require realpath( $template_file );
+    else {
+        echo "\n\n";
+        echo $lang['missing_template_file']; 
+        echo " <b>$template_file</b>. ";
+        echo $lang['using_default'];
+        echo "<br />\n\n";
+        require realpath( 'templates/modification/default.php' );
+    }
 }
 
 ?>

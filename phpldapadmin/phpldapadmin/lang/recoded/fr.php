@@ -174,7 +174,7 @@ $lang['distinguished_name'] = 'Distinguished Name';
 $lang['current_list_of'] = 'Liste actuelle de';
 $lang['values_for_attribute'] = 'valeur(s) pour l\' attribut';
 $lang['inappropriate_matching_note'] = 'Note: Vous obtiendrez une erreur de type "inappropriate matching" si vous n\'avez pas<br />' .
-			'd&eacute;fini une r&egrave;gle <tt>EQUALITY</tt> pour cet attribut aupr&egrave;s du serveur LDAP.';
+            'd&eacute;fini une r&egrave;gle <tt>EQUALITY</tt> pour cet attribut aupr&egrave;s du serveur LDAP.';
 $lang['enter_value_to_add'] = 'Entrez la valeur que vous voulez ajouter:';
 $lang['new_required_attrs_note'] = 'Note: vous aurez peut-&ecirc;tre besoin d\'introduire de nouveaux attributs requis pour cette classe d\'objet';
 $lang['syntax'] = 'Syntaxe';
@@ -319,18 +319,18 @@ $lang['ferror_nonfatil_bug'] = '<center><table class=\'notice\'><tr><td colspan=
              </td></tr><tr><td>Serveur Web:</td><td><b>%s</b></td></tr><tr><td colspan=\'2\'><center><a target=\'new\' href=\'%s\'>
              S\'il vous pla&icirc;t, veuillez rapporter ce bogue en cliquant ici</a>.</center></td></tr></table></center><br />';
 $lang['ferror_congrats_found_bug'] = 'F&eacute;licitations! Vous avez trouv&eacute; un bogue dans phpLDAPadmin.<br /><br />
-	     <table class=\'bug\'>
-	     <tr><td>Erreur:</td><td><b>%s</b></td></tr>
-	     <tr><td>Niveau:</td><td><b>%s</b></td></tr>
-	     <tr><td>Fichier:</td><td><b>%s</b></td></tr>
-	     <tr><td>Ligne:</td><td><b>%s</b></td></tr>
-        	 <tr><td>Origine de l\'appel:</td><td><b>%s</b></td></tr>
-	     <tr><td>PLA Version:</td><td><b>%s</b></td></tr>
-	     <tr><td>PHP Version:</td><td><b>%s</b></td></tr>
-	     <tr><td>PHP SAPI:</td><td><b>%s</b></td></tr>
-	     <tr><td>Serveur Webr:</td><td><b>%s</b></td></tr>
-	     </table>
-	     <br />
+         <table class=\'bug\'>
+         <tr><td>Erreur:</td><td><b>%s</b></td></tr>
+         <tr><td>Niveau:</td><td><b>%s</b></td></tr>
+         <tr><td>Fichier:</td><td><b>%s</b></td></tr>
+         <tr><td>Ligne:</td><td><b>%s</b></td></tr>
+             <tr><td>Origine de l\'appel:</td><td><b>%s</b></td></tr>
+         <tr><td>PLA Version:</td><td><b>%s</b></td></tr>
+         <tr><td>PHP Version:</td><td><b>%s</b></td></tr>
+         <tr><td>PHP SAPI:</td><td><b>%s</b></td></tr>
+         <tr><td>Serveur Webr:</td><td><b>%s</b></td></tr>
+         </table>
+         <br />
              S\'il vous pla&icirc;t, veuillez rapporter ce bogue en cliquant ici!';
 
 //ldif_import_form

@@ -24,18 +24,18 @@ include realpath( 'header.php' );
 <html>
 <head>
 <script language="javascript">
-	parent.left_frame.location.reload();
+    parent.left_frame.location.reload();
 </script>
 <link rel="stylesheet" href="style.css" />
 
 </head>
 <body>
 
-	<center>
-	<br />
-	<br />
-	Logged out successfully from <b><?php echo htmlspecialchars($servers[$server_id]['name']); ?></b><br />
-	</center>
+    <center>
+    <br />
+    <br />
+    Logged out successfully from <b><?php echo htmlspecialchars($servers[$server_id]['name']); ?></b><br />
+    </center>
 
 </body>
 </html>

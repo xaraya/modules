@@ -28,7 +28,7 @@ require realpath( 'common.php' );
 $server_id = $_POST['server_id'];
 
 if( is_server_read_only( $server_id ) )
-	pla_error( $lang['no_updates_in_read_only_mode'] );
+    pla_error( $lang['no_updates_in_read_only_mode'] );
 
 $dn = $_POST['dn'];
 $encoded_dn = rawurlencode( $dn );
@@ -41,72 +41,72 @@ pla_ldap_connect( $server_id ) or pla_error( $lang['could_not_connect'] );
 
 // check for delete attributes (indicated by the attribute entry appearing like this: attr => '' 
 foreach( $update_array as $attr => $val )
-	if( ! is_array( $val ) )
-		if( $val == '' )
-			$update_array[ $attr ] = array();
-		else
-			$update_array[ $attr ] = $val;
-	else
-		foreach( $val as $i => $v )
-			$update_array[ $attr ][ $i ] = $v;
-			
+    if( ! is_array( $val ) )
+        if( $val == '' )
+            $update_array[ $attr ] = array();
+        else
+            $update_array[ $attr ] = $val;
+    else
+        foreach( $val as $i => $v )
+            $update_array[ $attr ][ $i ] = $v;
+            
 // Call the custom callback for each attribute modification 
 // and verify that it should be modified.
 foreach( $update_array as $attr_name => $val )
-		if( true !== preAttrModify( $server_id, $dn, $attr_name, $val ) )
-			unset( $update_array[ $attr_name ] );
+        if( true !== preAttrModify( $server_id, $dn, $attr_name, $val ) )
+            unset( $update_array[ $attr_name ] );
 
 $ds = pla_ldap_connect( $server_id );
 $res = @ldap_modify( $ds, $dn, $update_array );
 if( $res )
 {
-	// Fire the post modification event to the user's custom
-	// callback function.
-	foreach( $update_array as $attr_name => $val ) {
-		postAttrModify( $server_id, $dn, $attr_name, $val );
+    // Fire the post modification event to the user's custom
+    // callback function.
+    foreach( $update_array as $attr_name => $val ) {
+        postAttrModify( $server_id, $dn, $attr_name, $val );
 
-		// Was this a user's password modification who is currently
-		// logged in? If so, they need to logout and log back in
-		// with the new password.
-		if( 0 === strcasecmp( $attr_name, 'userPassword' ) &&
-			check_server_id( $server_id ) &&
-			isset( $servers[ $server_id ][ 'auth_type' ] ) && 
-			$servers[ $server_id ][ 'auth_type' ] == 'form' &&
-			0 === pla_compare_dns( get_logged_in_dn( $server_id ), $dn ) )
-		{
-			unset_cookie_login_dn( $server_id );
-			include realpath( 'header.php' );
+        // Was this a user's password modification who is currently
+        // logged in? If so, they need to logout and log back in
+        // with the new password.
+        if( 0 === strcasecmp( $attr_name, 'userPassword' ) &&
+            check_server_id( $server_id ) &&
+            isset( $servers[ $server_id ][ 'auth_type' ] ) && 
+            $servers[ $server_id ][ 'auth_type' ] == 'form' &&
+            0 === pla_compare_dns( get_logged_in_dn( $server_id ), $dn ) )
+        {
+            unset_cookie_login_dn( $server_id );
+            include realpath( 'header.php' );
 
-			?>
+            ?>
 
-			<script language="javascript">
-				parent.left_frame.location.reload();
-			</script>
-			<br />
-			<center>
-			<b>Modification successful!</b><br />
-			<br />
-			Since you changed your password, you must <br />
-			now <a href="login_form.php?server_id=<?php echo $server_id; ?>">login again</a> with your new password.
-			</center>
-			</body>
-			</html>
+            <script language="javascript">
+                parent.left_frame.location.reload();
+            </script>
+            <br />
+            <center>
+            <b>Modification successful!</b><br />
+            <br />
+            Since you changed your password, you must <br />
+            now <a href="login_form.php?server_id=<?php echo $server_id; ?>">login again</a> with your new password.
+            </center>
+            </body>
+            </html>
 
-			<?php
+            <?php
 
-			exit;
+            exit;
 
-		}
-	}
+        }
+    }
 
-	$redirect_url = "edit.php?server_id=$server_id&dn=$encoded_dn";
-	foreach( $update_array as $attr => $junk )
-		$redirect_url .= "&modified_attrs[]=$attr";
-	header( "Location: $redirect_url" );
+    $redirect_url = "edit.php?server_id=$server_id&dn=$encoded_dn";
+    foreach( $update_array as $attr => $junk )
+        $redirect_url .= "&modified_attrs[]=$attr";
+    header( "Location: $redirect_url" );
 }
 else
 {
-	pla_error( $lang['could_not_perform_ldap_modify'], ldap_error( $ds ), ldap_errno( $ds ) );
+    pla_error( $lang['could_not_perform_ldap_modify'], ldap_error( $ds ), ldap_errno( $ds ) );
 }
 
 ?>

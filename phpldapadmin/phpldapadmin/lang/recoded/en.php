@@ -173,7 +173,7 @@ $lang['distinguished_name'] = 'Distinguished Name';
 $lang['current_list_of'] = 'Current list of';
 $lang['values_for_attribute'] = 'values for attribute';
 $lang['inappropriate_matching_note'] = 'Note: You will get an "inappropriate matching" error if you have not<br />' .
-			'setup an <tt>EQUALITY</tt> rule on your LDAP server for this attribute.';
+            'setup an <tt>EQUALITY</tt> rule on your LDAP server for this attribute.';
 $lang['enter_value_to_add'] = 'Enter the value you would like to add:';
 $lang['new_required_attrs_note'] = 'Note: you may be required to enter new attributes that this objectClass requires';
 $lang['syntax'] = 'Syntax';
@@ -321,19 +321,19 @@ $lang['ferror_nonfatil_bug'] = '<center><table class=\'notice\'><tr><td colspan=
              </td></tr><tr><td>Web server:</td><td><b>%s</b></td></tr><tr><td colspan=\'2\'><center><a target=\'new\' href=\'%s\'>
              Please report this bug by clicking here</a>.</center></td></tr></table></center><br />';
 $lang['ferror_congrats_found_bug'] = 'Congratulations! You found a bug in phpLDAPadmin.<br /><br />
-	     <table class=\'bug\'>
-	     <tr><td>Error:</td><td><b>%s</b></td></tr>
-	     <tr><td>Level:</td><td><b>%s</b></td></tr>
-	     <tr><td>File:</td><td><b>%s</b></td></tr>
-	     <tr><td>Line:</td><td><b>%s</b></td></tr>
-		 <tr><td>Caller:</td><td><b>%s</b></td></tr>
-	     <tr><td>PLA Version:</td><td><b>%s</b></td></tr>
-	     <tr><td>PHP Version:</td><td><b>%s</b></td></tr>
-	     <tr><td>PHP SAPI:</td><td><b>%s</b></td></tr>
-	     <tr><td>Web server:</td><td><b>%s</b></td></tr>
-	     </table>
-	     <br />
-	     Please report this bug by clicking below!';
+         <table class=\'bug\'>
+         <tr><td>Error:</td><td><b>%s</b></td></tr>
+         <tr><td>Level:</td><td><b>%s</b></td></tr>
+         <tr><td>File:</td><td><b>%s</b></td></tr>
+         <tr><td>Line:</td><td><b>%s</b></td></tr>
+         <tr><td>Caller:</td><td><b>%s</b></td></tr>
+         <tr><td>PLA Version:</td><td><b>%s</b></td></tr>
+         <tr><td>PHP Version:</td><td><b>%s</b></td></tr>
+         <tr><td>PHP SAPI:</td><td><b>%s</b></td></tr>
+         <tr><td>Web server:</td><td><b>%s</b></td></tr>
+         </table>
+         <br />
+         Please report this bug by clicking below!';
 
 //ldif_import_form
 $lang['import_ldif_file_title'] = 'Import LDIF File';

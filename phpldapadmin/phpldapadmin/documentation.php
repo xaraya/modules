@@ -5,28 +5,28 @@ include 'header.php';
 
 $view = isset( $_GET['view'] ) ? $_GET['view'] : false;
 switch( $view ) {
-	case 'credits':
-		echo "<h3 class=\"title\">phpLDAPadmin Credits</h3>";
-		echo "<pre>";
-		echo "<small>";
-		include 'doc/CREDITS';
-		echo "</small>";
-		echo "</pre>";
-		echo "</body>";
-		echo "</html>";
-		exit;
-		break;
-	case 'changelog':
-		echo "<h3 class=\"title\">phpLDAPadmin ChangeLog</h3>";
-		echo "<pre>";
-		echo "<small>";
-		include 'doc/ChangeLog';
-		echo "</small>";
-		echo "</pre>";
-		echo "</body>";
-		echo "</html>";
-		exit;
-		break;
+    case 'credits':
+        echo "<h3 class=\"title\">phpLDAPadmin Credits</h3>";
+        echo "<pre>";
+        echo "<small>";
+        include 'doc/CREDITS';
+        echo "</small>";
+        echo "</pre>";
+        echo "</body>";
+        echo "</html>";
+        exit;
+        break;
+    case 'changelog':
+        echo "<h3 class=\"title\">phpLDAPadmin ChangeLog</h3>";
+        echo "<pre>";
+        echo "<small>";
+        include 'doc/ChangeLog';
+        echo "</small>";
+        echo "</pre>";
+        echo "</body>";
+        echo "</html>";
+        exit;
+        break;
 }
 
 ?>

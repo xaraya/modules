@@ -32,7 +32,7 @@ session_start();
 
 // dave commented this out since it was being triggered without reason in rare cases
 //session_is_registered( 'tree' ) or pla_error( "Your session tree is not registered. That's weird. Should never happen".
-//							". Just go back and it should be fixed automagically." );
+//                            ". Just go back and it should be fixed automagically." );
 
 $tree = $_SESSION['tree'];
 $tree_icons = $_SESSION['tree_icons'];
@@ -48,7 +48,7 @@ usort( $contents, 'pla_compare_dns' );
 $tree[$server_id][$dn] = $contents;
 
 foreach( $contents as $dn )
-	$tree_icons[$server_id][$dn] = get_icon( $server_id, $dn );
+    $tree_icons[$server_id][$dn] = get_icon( $server_id, $dn );
 
 $_SESSION['tree'] = $tree;
 $_SESSION['tree_icons'] = $tree_icons;

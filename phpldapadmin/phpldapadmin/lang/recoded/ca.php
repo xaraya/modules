@@ -306,19 +306,19 @@ $lang['ferror_nonfatil_bug'] = '<center><table class=\'notice\'><tr><td colspan=
              </td></tr><tr><td>Servidor Web:</td><td><b>%s</b></td></tr><tr><td colspan=\'2\'><center><a target=\'new\' href=\'%s\'>
              Envía aquesta errada fent click aquí</a>.</center></td></tr></table></center><br />';
 $lang['ferror_congrats_found_bug'] = 'Felicitats! Has trobat una errada al phpLDAPadmin.<br /><br />
-	     <table class=\'bug\'>
-	     <tr><td>Error:</td><td><b>%s</b></td></tr>
-	     <tr><td>Nivell:</td><td><b>%s</b></td></tr>
-	     <tr><td>Arxiu:</td><td><b>%s</b></td></tr>
-	     <tr><td>Línia:</td><td><b>%s</b></td></tr>
-	     <tr><td>Caller:</td><td><b>%s</b></td></tr>
-	     <tr><td>Versió PLA:</td><td><b>%s</b></td></tr>
-	     <tr><td>Versió PHP:</td><td><b>%s</b></td></tr>
-	     <tr><td>PHP SAPI:</td><td><b>%s</b></td></tr>
-	     <tr><td>Servidor Web:</td><td><b>%s</b></td></tr>
-	     </table>
-	     <br />
-	     Si us plau envía aquesta errada fent click abaix!';
+         <table class=\'bug\'>
+         <tr><td>Error:</td><td><b>%s</b></td></tr>
+         <tr><td>Nivell:</td><td><b>%s</b></td></tr>
+         <tr><td>Arxiu:</td><td><b>%s</b></td></tr>
+         <tr><td>Línia:</td><td><b>%s</b></td></tr>
+         <tr><td>Caller:</td><td><b>%s</b></td></tr>
+         <tr><td>Versió PLA:</td><td><b>%s</b></td></tr>
+         <tr><td>Versió PHP:</td><td><b>%s</b></td></tr>
+         <tr><td>PHP SAPI:</td><td><b>%s</b></td></tr>
+         <tr><td>Servidor Web:</td><td><b>%s</b></td></tr>
+         </table>
+         <br />
+         Si us plau envía aquesta errada fent click abaix!';
 
 //ldif_import_form
 $lang['import_ldif_file_title'] = 'Importar arxiu LDIF';

@@ -24,7 +24,7 @@ session_start();
 
 // dave commented this out since it was being triggered for weird reasons
 //session_is_registered( 'tree' ) or pla_error( "Your session tree is not registered. That's weird. Shouldn't ever happen".
-//							". Just go back and it should be fixed automagically." );
+//                            ". Just go back and it should be fixed automagically." );
 
 $tree = $_SESSION['tree'];
 

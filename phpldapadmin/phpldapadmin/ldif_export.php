@@ -33,14 +33,14 @@ $rdn = get_rdn( $dn );
 $friendly_rdn = get_rdn( $dn, 1 );
 
 switch( $format ) {
-	case 'win': 	$br = "\r\n"; break;
-	case 'mac': 	$br = "\r"; break;
-	case 'unix': 
-	default:	$br = "\n"; break;
+    case 'win':     $br = "\r\n"; break;
+    case 'mac':     $br = "\r"; break;
+    case 'unix': 
+    default:    $br = "\n"; break;
 }
-		
+        
 if( ! $objects )
-	pla_error( "Search on dn (" . htmlspecialchars($dn) . ") came back empty" );
+    pla_error( "Search on dn (" . htmlspecialchars($dn) . ") came back empty" );
 
 // define the max length of a ldif line to 76
 // as it is suggested (implicitely) for (some) binary
@@ -65,51 +65,51 @@ echo $br;
 $counter = 0;
 foreach( $objects as $dn => $attrs )
 {
-	$counter++;
-	unset( $attrs['dn'] );
-	unset( $attrs['count'] );
+    $counter++;
+    unset( $attrs['dn'] );
+    unset( $attrs['count'] );
 
 
-	// display "# Entry 3: cn=test,dc=example,dc=com..."
-	$title_string = "# Entry $counter: " . utf8_decode( $dn ); 
-	if( strlen( $title_string ) > MAX_LDIF_LINE_LENGTH-3 )
-		$title_string = substr( $title_string, 0, MAX_LDIF_LINE_LENGTH-3 ) . "...";
-	echo "$title_string$br";
+    // display "# Entry 3: cn=test,dc=example,dc=com..."
+    $title_string = "# Entry $counter: " . utf8_decode( $dn ); 
+    if( strlen( $title_string ) > MAX_LDIF_LINE_LENGTH-3 )
+        $title_string = substr( $title_string, 0, MAX_LDIF_LINE_LENGTH-3 ) . "...";
+    echo "$title_string$br";
 
-	// display the DN
-	if( is_safe_ascii( $dn ) )
-	  multi_lines_display("dn: $dn");
-	else
-	  multi_lines_display("dn:: " . base64_encode( $dn ));
+    // display the DN
+    if( is_safe_ascii( $dn ) )
+      multi_lines_display("dn: $dn");
+    else
+      multi_lines_display("dn:: " . base64_encode( $dn ));
 
-	// display all the attrs/values
-	foreach( $attrs as $attr => $val ) {
-		if( is_array( $val ) ) {
-			foreach( $val as $v ) {
-				if( is_safe_ascii( $v ) ) {
-				  multi_lines_display("$attr: $v");
-				} else {
-				  multi_lines_display("$attr:: " . base64_encode( $v ));
-				}
-			}
-		} else {
-			$v = $val;
-			if( is_safe_ascii( $v ) ) {
-			  multi_lines_display("$attr: $v");
-			} else {
-			  multi_lines_display("$attr:: " . base64_encode( $v ));
-			}
-		}
-	}
-	echo $br;
+    // display all the attrs/values
+    foreach( $attrs as $attr => $val ) {
+        if( is_array( $val ) ) {
+            foreach( $val as $v ) {
+                if( is_safe_ascii( $v ) ) {
+                  multi_lines_display("$attr: $v");
+                } else {
+                  multi_lines_display("$attr:: " . base64_encode( $v ));
+                }
+            }
+        } else {
+            $v = $val;
+            if( is_safe_ascii( $v ) ) {
+              multi_lines_display("$attr: $v");
+            } else {
+              multi_lines_display("$attr:: " . base64_encode( $v ));
+            }
+        }
+    }
+    echo $br;
 }
 
 function is_safe_ascii( $str )
 {
-	for( $i=0; $i<strlen($str); $i++ )
-		if( ord( $str{$i} ) < 32 || ord( $str{$i} ) > 127 )
-			return false;
-	return true;
+    for( $i=0; $i<strlen($str); $i++ )
+        if( ord( $str{$i} ) < 32 || ord( $str{$i} ) > 127 )
+            return false;
+    return true;
 }
 
 

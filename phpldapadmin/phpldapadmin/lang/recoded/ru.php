@@ -136,7 +136,7 @@ $lang['distinguished_name'] = 'Distinguished Name';
 $lang['current_list_of'] = 'Текущий список';//'Current list of';
 $lang['values_for_attribute'] = 'значение для атрибута';//'values for attribute';
 $lang['inappropriate_matching_note'] = 'Note: You will get an "inappropriate matching" error if you have not<br />' .
-			'setup an <tt>EQUALITY</tt> rule on your LDAP server for this attribute.';
+            'setup an <tt>EQUALITY</tt> rule on your LDAP server for this attribute.';
 $lang['enter_value_to_add'] = 'Enter the value you would like to add:';
 $lang['new_required_attrs_note'] = 'Note: you may be required to enter new attributes<br />that this objectClass requires.';
 $lang['syntax'] = 'Синтаксис';//'Syntax';

@@ -25,11 +25,11 @@ $encoded_attr = rawurlencode( $attr );
 $is_binary_val = isset( $_POST['binary'] ) ? true : false;
 
 if( ! $is_binary_val && $val == "" ) {
-	pla_error( "You left the attribute value blank. Please go back and try again." );
+    pla_error( "You left the attribute value blank. Please go back and try again." );
 }
 
 if( is_server_read_only( $server_id ) )
-	pla_error( "You cannot perform updates while server is in read-only mode" );
+    pla_error( "You cannot perform updates while server is in read-only mode" );
 
 check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars( $server_id ) );
 have_auth_info( $server_id ) or pla_error( "Not enough information to login to server. Please check your configuration." );
@@ -37,23 +37,23 @@ have_auth_info( $server_id ) or pla_error( "Not enough information to login to s
 // special case for binary attributes (like jpegPhoto and userCertificate): 
 // we must go read the data from the file and override $val with the binary data
 if( $is_binary_val ) {
-	$file = $_FILES['val']['tmp_name'];
-	$f = fopen( $file, 'r' );
-	$binary_data = fread( $f, filesize( $file ) );
-	fclose( $f );
-	$val = $binary_data;
+    $file = $_FILES['val']['tmp_name'];
+    $f = fopen( $file, 'r' );
+    $binary_data = fread( $f, filesize( $file ) );
+    fclose( $f );
+    $val = $binary_data;
 }
 
 // Automagically hash new userPassword attributes according to the 
 // chosen in config.php. 
 if( 0 == strcasecmp( $attr, 'userpassword' ) )
 {
-	if( isset( $servers[$server_id]['default_hash'] ) &&
-		$servers[$server_id]['default_hash'] != '' )
-	{
-		$enc_type = $servers[$server_id]['default_hash'];
-		$val = password_hash( $val, $enc_type );
-	}
+    if( isset( $servers[$server_id]['default_hash'] ) &&
+        $servers[$server_id]['default_hash'] != '' )
+    {
+        $enc_type = $servers[$server_id]['default_hash'];
+        $val = password_hash( $val, $enc_type );
+    }
 }
 
 
@@ -62,6 +62,6 @@ $new_entry = array( $attr => $val );
 $result = @ldap_mod_add( $ds, $dn, $new_entry );
 
 if( $result )
-	header( "Location: edit.php?server_id=$server_id&dn=$encoded_dn&modified_attrs[]=$encoded_attr" );
+    header( "Location: edit.php?server_id=$server_id&dn=$encoded_dn&modified_attrs[]=$encoded_attr" );
 else
-	pla_error( "Failed to add the attribute.", ldap_error( $ds ) , ldap_errno( $ds ) );
+    pla_error( "Failed to add the attribute.", ldap_error( $ds ) , ldap_errno( $ds ) );
