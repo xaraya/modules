@@ -2,6 +2,7 @@
 
 /**
  * create an entry for a module item - hook for ('item','create','GUI')
+ * Optional $extrainfo['changelog_remark'] from arguments, or 'changelog_remark' from input
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
@@ -66,7 +67,14 @@ function changelog_adminapi_createhook($args)
     }
     $date = time();
     $status = 'created';
-    $remark = '';
+    if (isset($extrainfo['changelog_remark']) && is_string($extrainfo['changelog_remark'])) {
+        $remark = $extrainfo['changelog_remark'];
+    } else {
+        $remark = xarVarCleanFromInput('changelog_remark');
+        if (empty($remark)){
+            $remark = '';
+        }
+    }
 
     if (!empty($itemtype)) {
         $getlist = xarModGetVar('changelog',$modname.'.'.$itemtype);

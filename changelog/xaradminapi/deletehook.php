@@ -86,7 +86,7 @@ function changelog_adminapi_deletehook($args)
     $date = time();
     $status = 'deleted';
 /*
-    if (!empty($extrainfo['changelog_remark'])) {
+    if (isset($extrainfo['changelog_remark']) && is_string($extrainfo['changelog_remark'])) {
         $remark = $extrainfo['changelog_remark'];
     } else {
         $remark = xarVarCleanFromInput('changelog_remark');
