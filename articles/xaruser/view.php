@@ -496,16 +496,19 @@ function articles_user_view()
             switch ($value['format']) {
                 case 'calendar':
                     if (!empty($article[$field])) {
-                        //$article[$field] = strftime('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
-                        // we're assuming timestamps in the db are GMT/UTC
-                        // if they are not, we should make it so
-                        $article[$field] = xarLocaleFormatDate('%a, %d %b %Y %H:%M:%S GMT',$article[$field]);
+                        if($field!='pubdate') {
+                            // only convert this timestamp if it's NOT the pubdate
+                            // we want the pubdate field to remain a UTC Unix TimeStamp
+                            $article[$field] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",($article[$field])));
+                        }
                     } else {
                         $article[$field] = '';
                     }
-                // TODO: replace by pubdate and sync with templates
+                    
+                // TODO: replace by  and sync with templates
                     if ($field == 'pubdate') {
-                        $article['date'] = $article[$field];
+                        // the date for this field is represented in the user's timezone for display
+                        $article['date'] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",$article[$field]));
                     }
                     break;
             }
@@ -598,7 +601,6 @@ function articles_user_view()
         $article['title'] = xarVarPrepHTMLDisplay($article['title']);
         $article['summary'] = xarVarPrepHTMLDisplay($article['summary']);
         $article['notes'] = xarVarPrepHTMLDisplay($article['notes']);
-
         if ($dotransform) {
             $article['itemtype'] = $article['pubtypeid'];
         // TODO: what about transforming DD fields ?
@@ -611,6 +613,7 @@ function articles_user_view()
         $columns[$col][] = xarTplModule('articles', 'user', 'summary', $article, $template);
         $number++;
     }
+    
     unset($articles);
 
     $data['number'] = $number;

@@ -259,7 +259,7 @@ function articles_user_display($args)
             case 'calendar':
         // TODO: replace by pubdate and sync with templates
                 if (!empty($article[$field])) {
-                    $data[$field] = strftime('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
+                    $data[$field] = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
                 } else {
                     $data[$field] = '';
                 }
