@@ -1,0 +1,89 @@
+<?php
+/**
+ * File: $Id$
+ *
+ * Pubsub User Interface
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Pubsub Module
+ * @author Chris Dudley <miko@xaraya.com>
+ * @author Garrett Hunter <garrett@blacktower.com>
+ */
+
+/**
+ * unsubscribe user from a pubsub element
+ * @param $args['modid'] module ID of event
+ * @param $args['cid'] cid of event
+ * @param $args['itemtype'] itemtype of event
+ * @param $args['userid'] the subscriber
+ * @returns output
+ * @return output with pubsub information
+ */
+function pubsub_userapi_unsubscribe($args)
+{
+	extract($args);
+
+    // Argument check
+    $invalid = array();
+    if (!isset($modid))     { $invalid[] = 'modid'; }
+    if (!isset($cid)) 		{ $invalid[] = 'cid'; }
+//    if (!isset($itemtype))  { $invalid[] = 'itemtype'; }
+    if (!isset($userid))    { $invalid[] = 'userid'; }
+    if (count($invalid) > 0) {
+        $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
+        join(', ',$invalid), 'unsubscribe', 'Pubsub');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
+
+    // Database information
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubeventstable = $xartable['pubsub_events'];
+    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
+    $pubsubregtable = $xartable['pubsub_reg'];
+
+    // fetch eventid to unsubscribe from
+/*
+    $query = "SELECT xar_pubsubid
+                FROM $pubsubeventstable, $pubsubeventcidstable, $pubsubregtable
+	           WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+	             AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
+                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+                 AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
+                 AND $pubsubregtable.xar_userid = xarVarPrepForStore($userid)
+	             AND $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+*/
+    $query = "SELECT xar_pubsubid
+                FROM $pubsubeventstable, $pubsubeventcidstable, $pubsubregtable
+	           WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+                 AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
+                 AND $pubsubregtable.xar_userid = '" . xarVarPrepForStore($userid) . "'
+	             AND $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+
+    $result = $dbconn->Execute($query);
+    if (!$result || $result->EOF) return;
+
+    list($pubsubid) = $result->fields;
+
+    if (!xarModAPIFunc('pubsub',
+                       'user',
+                       'deluser',
+                        array('pubsubid' => $pubsubid))) {
+        $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
+                     'deluser', 'unsubscribe', 'Pubsub');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+    }
+
+    return true;
+
+} // END unsubscribe
+
+?>

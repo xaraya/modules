@@ -33,22 +33,22 @@
         </th>
     </tr>
     <xar:if condition="count($items) gt 0">
-    <xar:loop name="$items">
+    <xar:foreach in="$items" value="$item">
     <tr>
         <td>
-            #$loop:item['username']#
+            #$item['username']#
         </td>
         <td>
-            #$loop:item['subdate']#
+            #$item['subdate']#
         </td>
         <td>
-            #$loop:item['modname']#
+            #$item['modname']#
         </td>
         <td>
-            <a href="#xarModURL('pubsub','admin','removeuser')#">Remove</a>
+            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('catname'=>$catname,'cid'=>$cid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
         </td>
      </tr>
-     </xar:loop>
+     </xar:foreach>
     <xar:else />
     <tr>
       <td colspan="5" align="left">

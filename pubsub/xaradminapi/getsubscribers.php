@@ -22,7 +22,7 @@
 */
 function pubsub_adminapi_getsubscribers($args)
 {
-
+	$subscribers = array();
     /*
      * lets get...
      *  - username (need to get from db)
@@ -48,6 +48,9 @@ function pubsub_adminapi_getsubscribers($args)
 
     $query = "SELECT $rolestable.xar_uname  AS username
                     ,$modulestable.xar_name AS modname
+                    ,$pubsubeventstable.xar_modid AS modid
+                    ,$pubsubregtable.xar_subdate AS subdate
+                    ,$pubsubregtable.xar_pubsubid AS pubsubid
                 FROM $rolestable
                     ,$modulestable
                     ,$pubsubeventcidstable
@@ -63,14 +66,18 @@ function pubsub_adminapi_getsubscribers($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($username, $modname) = $result->fields;
+        list($username
+            ,$modname
+            ,$modid
+            ,$subdate
+            ,$pubsubid
+           ) = $result->fields;
         if (xarSecurityCheck('AdminPubSub', 0)) {
-            /*
-             * FIXME: <garrett> would like to return a subscribed on date too, don't store it yet
-             */
-            $subscribers[] = array('username'    => $username
-                                  ,'modname'     => $modname
-                                  ,'subdate'     => ' '
+            $subscribers[] = array('username'  => $username
+                                  ,'modname'   => $modname
+                                  ,'modid'     => $modid
+                                  ,'subdate'   => xarLocaleFormatDate($subdate,"%a, %d-%B-%Y")
+                                  ,'pubsubid'  => $pubsubid
                                   );
         }
     }

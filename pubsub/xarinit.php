@@ -11,7 +11,8 @@
  *
  * @subpackage Pubsub Module
  * @author Chris Dudley <miko@xaraya.com>
-*/
+ * @author Garrett Hunter <garrett@blacktower.com>
+ */
 
 /**
  * initialise the pubsub module
@@ -56,7 +57,8 @@ function pubsub_init()
         'xar_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_userid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0')
+        'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0'),
+        'xar_subdate'=>array('type'=>'int','size'=>11,'null'=>FALSE)
     );
     $query = xarDBCreateTable($pubsubregtable,$regfields);
     $result =& $dbconn->Execute($query);
@@ -166,6 +168,32 @@ function pubsub_init()
  */
 function pubsub_upgrade($oldversion)
 {
+	switch ($oldversion) {
+		case '1.0':
+		    list($dbconn) = xarDBGetConn();
+		    $prefix = xarDBGetSiteTablePrefix();
+		    
+		    $xarTables = xarDBGetTables();
+		    $pubsubregtable = $xarTables['pubsub_reg'];
+			$pubsubtemplatetable = $prefix.'_pubsub_template';
+
+			// Drop the template table
+			$dbconn->Execute("DROP TABLE ".$pubsubtemplatetable);
+			xarExceptionFree();						
+			
+			// Add a column to the register table
+		    $sql= "ALTER TABLE $pubsubregtable 
+		                ADD xar_subdate INT(11) NOT NULL";
+		    $result =& $dbconn->Execute($sql);
+		    if (!$result) return;
+
+			$sql = "UPDATE $pubsubregtable
+					   SET xar_subdate = ".time()."";
+		    $result =& $dbconn->Execute($sql);
+		    if (!$result) return;
+		    break;
+	} // END switch
+
     return true;
 }
 /**

@@ -16,37 +16,33 @@
 
 /**
  * display pubsub element next to a registered event
+ *  - A subscribe icon is if the user is registered
+ *  - Nothing is displayed for an unregisted user
+ *  - An unsubscribe option is displayed to users currently subscribed
+ * 
  * @param $args['extrainfo'] URL to return
  * @returns output
  * @return output with pubsub information
  */
 function pubsub_user_displayicon($args)
 {
-// This function will display the output code next to an item that has a
-// registered pubsub event associated with it.
-// It will display an icon to subscribe to the event if the user is registered
-// if they arent then it will display nothing.
-// If they are logged in and have already subscribed it will display an
-// unsubscribe option.
+    extract($args);
 
-    // do nothing if user not logged in
+    // do nothing if user not logged in otherwise subscribe 
+    // the currently logged in user
     if (xarUserIsLoggedIn()) {
-        if (!isset($userid)) {
-            $userid = xarSessionGetVar('uid');
-        }
+        $userid = xarUserGetVar('uid');
     } else {
         return;
     }
-//// var handling
-
-    extract($args);
     if (!isset($extrainfo)) {
          $extrainfo = array();
     }
 
-	/*(
+	/**
 	 * Validate parameters
 	 */
+//    $itemtype = 0; // needed?? <garrett>
 	$invalid = array();
 	if(!isset($extrainfo) || !is_array($extrainfo)) {
 		$invalid[] = 'extrainfo';
@@ -63,23 +59,11 @@ function pubsub_user_displayicon($args)
         if (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         }
+        if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
+            $returnurl = $extrainfo['returnurl'];
+        }
 	} else {
-		// No cid, no display sub option, do we have a cids?
-
-//		$cidsTrue = FALSE;
-//		if (isset($extrainfo['cids'])) {
-//	        $cidsTrue = TRUE;
-//	    }
-//		if ($cidsTrue) {
-//			$cidsMsg = "have cids";
-//		} else {
-//			$cidsMsg = "have NO cids";
-//		}
-//        $msg = xarML('No cid, and #(1) for #(2) function #(3)() in module #(4)',
-//            $cidsMsg, 'user', 'displayicon', 'pubsub');
-//        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-//            				new SystemException($msg));
-		
+		// May only subscribe to categories, no category, pubsub does nothing.		
 		return array('donotdisplay'=>TRUE);
 	}
 	
@@ -91,23 +75,6 @@ function pubsub_user_displayicon($args)
     } else {
     }
 ///
-
-    $cid = $objectid; // assuming categories have display hooks someday
-    $itemtype = 0;
-    if (isset($extrainfo) && is_array($extrainfo)) {
-        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-            $itemtype = $extrainfo['itemtype'];
-        }
-        if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
-            $cid = $extrainfo['cid'];
-        }
-        if (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
-            $modname = $extrainfo['module'];
-        }
-        if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
-            $returnurl = $extrainfo['returnurl'];
-        }
-    }
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -135,6 +102,7 @@ function pubsub_user_displayicon($args)
                  AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
                  AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
                  AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
+                 AND $pubsubregtable.xar_userid = $userid
                  AND $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
 
     $result = $dbconn->Execute($query);
@@ -144,13 +112,24 @@ function pubsub_user_displayicon($args)
          * If we get a hit on pubsub_reg, that mean we are already subscribed
          */
         $data['subscribe'] = TRUE;
-    } // end if
+    } else { 
+        $data['subscribe'] = FALSE;
+    }
 
-    $data['modname'] = $modname;
-    $data['modid'] = xarVarPrepForDisplay($modid);
-    $data['cid'] = xarVarPrepForDisplay($cid);
-    $data['itemtype'] = xarVarPrepForDisplay($itemtype);
-    $data['returnurl'] = rawurlencode($returnurl);
+	$data['subdata'] = array ('modname' => xarVarPrepForDisplay($modname)
+	                         ,'modid'   => xarVarPrepForDisplay($modid)
+	                         ,'cid'     => xarVarPrepForDisplay($cid)
+	                         ,'userid'  => xarVarPrepForDisplay($userid)
+	                         ,'itemtype' => xarVarPrepForDisplay($itemtype)
+	                         ,'returnurl' => rawurlencode($returnurl)
+	                         ,'subaction' => $data['subscribe']
+	                         );
+
+	$data['subURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);	                         
+	$data['subTEXT'] = xarML ('Subscribe');	                         
+
+	$data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);	                         
+	$data['unsubTEXT'] = xarML ('Unsubscribe');	                         
 
     return $data;
 

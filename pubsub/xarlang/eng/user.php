@@ -9,4 +9,12 @@
 if (!defined('_PUBSUBNOAUTH')) {
 	define('_PUBSUBNOAUTH','Not authorized to access Pubsub module');
 }
+
+if (!defined('_PUBSUB_ACTION_UNSUB')) {
+	define('_PUBSUB_ACTION_UNSUB',0);
+}
+if (!defined('_PUBSUB_ACTION_SUB')) {
+	define('_PUBSUB_ACTION_SUB',1);
+}
+
 ?>
