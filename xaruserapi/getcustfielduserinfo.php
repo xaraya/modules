@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcustfielduserinfo.php,v 1.4 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: getcustfielduserinfo.php,v 1.4 2004/11/13 06:20:14 garrett Exp $
  *
  * AddressBook user getCustomFieldUserInfo
  *
@@ -17,7 +17,7 @@
 /**
  * getCustFieldUserInfo
  */
-function addressbook_userapi_getCustFieldUserInfo($args) 
+function addressbook_userapi_getCustFieldUserInfo($args)
 {
     extract($args);
 
@@ -34,18 +34,11 @@ function addressbook_userapi_getCustFieldUserInfo($args)
         // build a sql statement
         $sql = 'SELECT ';
 
-        /**
-         * we only store 'data' and not custom placeholders (br / hr) so build a select list
-         * of column names. col name = 'custom_' + the keyID from the customFieldType col
-         */
         foreach($custFieldTypeInfo as $custFieldType) {
-            if ((!strstr($custFieldType['type'],_AB_CUST_TEST_LB) &&
-                 !strstr($custFieldType['type'],_AB_CUST_TEST_HR))) {
-                $colName = _AB_CUST_COLPREFIX.$custFieldType['nr'];
+            $colName = _AB_CUST_COLPREFIX.$custFieldType['nr'];
 
-                $custData[$colName] = '';
-                $sql .= $colName.',';
-            }
+            $custData[$colName] = '';
+            $sql .= $colName.',';
         }
         $sql = substr($sql,0,-1); // remove trailing comma
 

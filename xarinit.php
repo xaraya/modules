@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.10 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: xarinit.php,v 1.5 2004/11/17 07:08:57 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -148,10 +148,12 @@ function addressbook_init()
      */
     $abCustomfieldsTable = $xarTables['addressbook_customfields'];
     $fields = array(
-         'nr'       =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
-        ,'label'    =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
-        ,'type'     =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
-        ,'position' =>  array('type'=>'integer','size'=>'small','null'=>FALSE)
+         'nr'          =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+        ,'label'       =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
+        ,'type'        =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
+        ,'position'    =>  array('type'=>'integer','size'=>'small','null'=>FALSE)
+        ,'short_label' =>  array('type'=>'varchar','size'=>8,'null'=>TRUE,'default'=>'NULL')
+        ,'display'     =>  array('type'=>'integer','size'=>'tiny','null'=>FALSE, 'default'=>'0')
         );
     $query = xarDBCreateTable($abCustomfieldsTable,$fields);
     if (empty($query)) return; // throw back
@@ -172,7 +174,7 @@ function addressbook_init()
 
     $nextId = 1;
     foreach ($insertRows as $row) {
-        $query = sprintf ("INSERT INTO %s (nr,label,type,position) VALUES (?,?,'varchar(60) default NULL',?)"
+        $query = sprintf ("INSERT INTO %s (nr,label,type,position) VALUES (?,?,_AB_CUSTOM_TEXT_SHORT,?)"
                          ,$abCustomfieldsTable);
         $bindvars = array ($nextId,$row,$nextId);
         $result =& $dbconn->Execute($query,$bindvars);
@@ -220,6 +222,7 @@ function addressbook_init()
     xarModSetVar(__ADDRESSBOOK__, 'zipbeforecity', 0);
     xarModSetVar(__ADDRESSBOOK__, 'hidecopyright', 0);
     xarModSetVar(__ADDRESSBOOK__, 'use_prefix', 0);
+    xarModSetVar(__ADDRESSBOOK__, 'display_prefix', 0);
     xarModSetVar(__ADDRESSBOOK__, 'use_img', 0);
     xarModSetVar(__ADDRESSBOOK__, 'textareawidth', 60);
     xarModSetVar(__ADDRESSBOOK__, 'dateformat', 0);
@@ -318,7 +321,105 @@ function addressbook_upgrade($oldversion)
         case '1.2.3':
         case '1.2.4':
         case '1.2.5':
-           // No data changes
+        case '1.2.6':
+
+            // Add two columns to custom fields tables
+            $dbconn =& xarDBGetConn();
+            $xarTables =& xarDBGetTables();
+
+            xarDBLoadTableMaintenanceAPI();
+
+            $abCustomTable = $xarTables['addressbook_customfields'];
+            $abAddressTable = $xarTables['addressbook_address'];
+
+            $sql = xarDBAlterTable ($abCustomTable, array('command'=>'add','field'=>'short_label','type'=>'varchar','size'=>8,'null'=>TRUE,'default'=>'NULL'));
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return FALSE;
+
+            $sql = xarDBAlterTable ($abCustomTable, array('command'=>'add','field'=>'display','type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'));
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return FALSE;
+
+            // Change custom field "date" type from "date" to integer(11) for easier manipulation
+            $sql = "SELECT nr
+                      FROM $abCustomTable
+                     WHERE type like ?";
+            $results =& $dbconn->Execute($sql,array('date%'));
+            if (!$results) return FALSE;
+
+            if ($results->RecordCount() > 0) {
+                /**
+                 * We found some custom fields to convert. We will form the following actions
+                 * 1. update the custom fields table to reflect the new column type
+                 * 2. using the custom field ID save a copy of all the old custom field data
+                 * 3. drop that column from the address table
+                 * 4. add the column back using the new type
+                 * 5. convert the old data
+                 * 6. reload the old data
+                 */
+
+                // Step 1
+                $sql = "UPDATE $abCustomTable
+                           SET type = ?
+                         WHERE type like ?";
+                $colUpdate =& $dbconn->Execute($sql, array(_AB_CUSTOM_DATE,'date%'));
+
+                for (; !$results->EOF; $results->MoveNext()) {
+                    list ($index) = $results->fields;
+
+                    // Step 2 - clean up bad data then copy old data
+                    $sql = "UPDATE $abAddressTable
+                               SET custom_$index = NULL
+                             WHERE custom_$index = '0000-00-00'";
+                    $oldData =& $dbconn->Execute($sql);
+                    if (!$oldData) return FALSE;
+
+                    $sql = "SELECT nr, custom_$index
+                              FROM $abAddressTable";
+                    $oldData =& $dbconn->Execute($sql);
+                    if (!$oldData) return FALSE;
+
+                    // Step 3
+                    $sql = "ALTER TABLE $abAddressTable
+                                   DROP custom_$index";
+                    $dropCol =& $dbconn->Execute($sql);
+                    if (!$dropCol) return FALSE;
+                    $dropCol->Close();
+                    //Step 4
+                    $sql = xarDBAlterTable ($abAddressTable, array('command'=>'add','field'=>'custom_'.$index,'type'=>'integer','null'=>TRUE,'default'=>'NULL'));
+                    $addCol =& $dbconn->Execute($sql);
+                    if (!$addCol) return FALSE;
+                    $addCol->Close();
+
+                    for (; !$oldData->EOF; $oldData->MoveNext()) {
+                        list ($nr,$date) = $oldData->fields;
+                    //Step 5
+                        if (!empty($date)) {
+                            if (ereg("([0-9]{4})-([0-9]{2})-([0-9]{2})", $date, $tgRegs)) {
+                                $date = mktime(0,0,0,$tgRegs[2],$tgRegs[3],$tgRegs[1]);
+                            } else {
+                                $date = 'NULL';
+                            }
+                        } else {
+                            $date = 'NULL';
+                        }
+
+                    //Step 6
+                        $sql = "UPDATE $abAddressTable
+                                   SET custom_$index = ?
+                                 WHERE nr = ?";
+                        $updateResult =& $dbconn->Execute($sql,array($date,$nr));
+                        if (!$updateResult) return FALSE;
+                        $updateResult->Close();
+                    }
+                    $oldData->Close();
+                }
+                $results->Close();
+            }
+
+            // Add a config var to allow the prefix to be displayed in the search results
+            xarModSetVar(__ADDRESSBOOK__, 'display_prefix', 0);
+
             break;
     }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updaterecord.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
+ * File: $Id: updaterecord.php,v 1.5 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook user updateRecord
  *
@@ -49,7 +49,7 @@ function addressbook_userapi_updaterecord($args)
      */
     if (isset($custUserData)) {
         foreach($custUserData as $rowIdx=>$userData) {
-            if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
+            if (strstr($userData['custType'],_AB_CUST_TEST_STRING)) {
                 $custUserData[$rowIdx]['userData'] =
                     xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$userData['userData']);
             }
@@ -58,17 +58,25 @@ function addressbook_userapi_updaterecord($args)
 
     // sort column
     if (xarModGetVar(__ADDRESSBOOK__, 'name_order')==1) {
-        $sortvalue = $fname.' '.$lname;
+        if (!empty($fname)) {
+            $sortvalue = $fname.' '.$lname;
+        } else {
+            $sortvalue = $lname;
+        }
     }
     else {
-        $sortvalue = $lname.', '.$fname;
+        if (!empty($lname)) {
+            $sortvalue = $lname.', '.$fname;
+        } else {
+            $sortvalue = $fname;
+        }
     }
     $special1 = xarModGetVar(__ADDRESSBOOK__, 'special_chars_1');
     $special2 = xarModGetVar(__ADDRESSBOOK__, 'special_chars_2');
     for ($i=0;$i<strlen($special1);$i++) {
         $a[substr($special1,$i,1)]=substr($special2,$i,1);
     }
-    if (is_array($a)) {
+    if (isset($a) && is_array($a)) {
         $sortvalue = strtr($sortvalue, $a);
         $sortvalue2 = strtr($company, $a);
     }
@@ -148,23 +156,27 @@ function addressbook_userapi_updaterecord($args)
 
     if (isset($custUserData)) {
         foreach($custUserData as $userData) {
-            if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
+            if (strstr($userData['custType'],_AB_CUST_TEST_STRING)) {
                 array_push ($bindvars, $userData['userData']);
 
-            } elseif ($userData['type']=='date default NULL') {
+            } elseif ($userData['custType']==_AB_CUSTOM_DATE) {
                 array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData'])));
 
-            } elseif ($userData['type']=='int default NULL') {
+            } elseif ($userData['custType']==_AB_CUSTOM_INTEGER) {
                 array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
-            } elseif ($userData['type']=='int(1) default NULL') {
+            } elseif ($userData['custType']==_AB_CUSTOM_CHECKBOX) {
+                if (isset($userData['userData'])) {
+                    array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
+                } else {
+                    array_push ($bindvars, 'NULL');
+                }
+
+            } elseif ($userData['custType']==_AB_CUSTOM_DECIMAL) {
                 array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
 
-            } elseif ($userData['type']=='decimal(10,2) default NULL') {
-                array_push ($bindvars, xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])));
-
-            } elseif ((!strstr($userData['type'],_AB_CUST_TEST_LB) &&
-                       !strstr($userData['type'],_AB_CUST_TEST_HR)) &&
+            } elseif ((!strstr($userData['custType'],_AB_CUSTOM_BLANKLINE) &&
+                       !strstr($userData['custType'],_AB_CUSTOM_HORIZ_RULE)) &&
                       (empty($userData['userData']) || $userData['userData'] == '')) {
                 array_push ($bindvars, 'NULL');
             }

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: is_url.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: is_url.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook utilapi is_url
  *
@@ -24,11 +24,11 @@ function addressbook_utilapi_is_url ($args)
 {
     extract($args);
     $UrlElements = parse_url($url);
-    if( (empty($UrlElements)) or (!$UrlElements) ) {
+    if ((empty($UrlElements)) or (!$UrlElements)) {
         return false;
     }
 
-    if ((!isset($UrlElements['host'])) || (!empty($UrlElements['host']))) {
+    if ((!isset($UrlElements['host'])) || (empty($UrlElements['host']))) {
         return false;
     }
     return true;

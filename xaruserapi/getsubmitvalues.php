@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getsubmitvalues.php,v 1.5 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: getsubmitvalues.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -57,8 +57,6 @@ function addressbook_userapi_getsubmitvalues($args)
     if (!xarVarFetch ('note','str::',       $output['note'], FALSE)) return;
 
     if (!xarVarFetch ('private','str::',      $output['private'], 0)) return;
-// gehDEBUG who uses this? remove if no error
-//    if (!xarVarFetch ('date','str::',         $output['date'], FALSE)) return;
     if (!xarVarFetch ('formcall','str::',     $output['formcall'], FALSE)) return;
     if (!xarVarFetch ('formSubmitted','bool::',     $output['formSubmitted'], FALSE)) return;
     if (!xarVarFetch ('action','int::',       $output['action'], _AB_TEMPLATE_NAME)) return;

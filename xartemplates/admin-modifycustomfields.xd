@@ -1,6 +1,7 @@
+<!-- START TITLE BAR -->
 <xar:template compile="false" file="mod-admin-title" type="module" />
 <!-- END TITLE BAR -->
-  <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
+<xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
   <div class="xar-mod-body">
       <h2><xar:mlstring>Configure Custom Fields</xar:mlstring></h2>
 <!-- START WARN DISPLAY -->
@@ -13,25 +14,59 @@
         <div style="width:60%;">
         <form name="modcustfield" id="modcustfield" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifycustomfields')#"><!-- enctype="application/x-www-form-urlencoded"> -->
         <div id="tableContainer">
+        <div id="tableContainer">
           <table style="width:60%; border:0em; padding:.5em;">
           <tr>
-            <td style="text-align:center; padding:.25em;">
-              <strong><xar:mlstring>Custom Label</xar:mlstring></strong>
-            </td>
-            <td style="text-align:center; padding:.25em;">
-              <strong><xar:mlstring>Data Type</xar:mlstring></strong>
-            </td>
-            <td style="text-align:center; padding:.25em;">
-              <strong><xar:mlstring>Delete</xar:mlstring></strong>
-            </td>
-            <td style="text-align:center; padding:.25em;">
-              <strong><xar:mlstring>Order</xar:mlstring></strong>
-            </td>
+            <th>
+              <label class="xar-mod-title">
+                <acronym title="#xarML('Check this option to display this field on the search results page')#" >
+                <xar:mlstring>Display</xar:mlstring>
+                </acronym>
+              </label>
+            </th>
+            <th>
+              <label class="xar-mod-title">
+                <acronym title="#xarML('This will be the text that displays in the column heading on the main search page. Leave blank to use the Form Label.')#" >
+                <xar:mlstring>Display Label</xar:mlstring>
+                </acronym>
+              </label>
+            </th>
+            <th>
+              <label class="xar-mod-title">
+                <acronym title="#xarML('This text is used as the label on the custom field form entry page.')#" >
+                <xar:mlstring>Form Label</xar:mlstring>
+                </acronym>
+              </label>
+            </th>
+            <th>
+              <label class="xar-mod-title"><xar:mlstring>Data Type</xar:mlstring></label>
+            </th>
+            <th>
+              <label class="xar-mod-title"><xar:mlstring>Delete</xar:mlstring></label>
+            </th>
+            <th>
+              <label class="xar-mod-title"><xar:mlstring>Order</xar:mlstring></label>
+            </th>
           </tr>
-<!-- Logic for displaying existing custom fields -->
+<xar:comment>Logic for displaying existing custom fields</xar:comment>
 <xar:if condition="isset($custfields)">
   <xar:foreach in="$custfields" value="$cf">
           <tr>
+            <td style="text-align:center; padding:.25em;">
+            <input type="hidden" name="id[]" id="id[]" value="#$cf['nr']#" />
+    <xar:if condition="!strstr($cf['custType'],_AB_CUSTOM_BLANKLINE) and !strstr($cf['custType'],_AB_CUSTOM_HORIZ_RULE)">
+            <xar:if condition="$cf['custDisplay']">
+              <input type="checkbox" name="custDisplay[]" id="custDisplay[]" checked="checked" value="#$cf['nr']#"/>
+            <xar:else />
+              <input type="checkbox" name="custDisplay[]" id="custDisplay[]" value="#$cf['nr']#" />
+            </xar:if>
+    <xar:else />
+              <input type="hidden" name="custDisplay[]" id="custDisplay[]" value="" />
+    </xar:if>
+            </td>
+            <td style="text-align:center; padding:.25em;">
+              <input name="custShortLabel[]" id="custShortLabel[]" type="text" value="#$cf['custShortLabel']#" size="20" maxlength="30" />
+            </td>
             <td style="text-align:center; padding:.25em;">
               <input name="custLabel[]" id="custLabel[]" type="text" value="#$cf['custLabel']#" size="20" maxlength="30" />
             </td>
@@ -52,7 +87,6 @@
             <xar:else />
               <input type="hidden" name="del[]" id="del[]" value=""/>&nbsp;
             </xar:if>
-              <input type="hidden" name="id[]" id="id[]" value="#$cf['nr']#" />
             </td>
             <td style="text-align:center; padding:.25em;">
             <xar:if condition="$cf['position'] eq 1">
@@ -66,11 +100,17 @@
             </xar:if>
             </td>
           </tr>
-  </xar:foreach>
-</xar:if>
-<!-- END Logic for displaying existing custom fields -->
-<!-- START Logic for displaying new custom field -->
+    </xar:foreach>
+  </xar:if>
+<xar:comment>END Logic for displaying existing custom fields</xar:comment>
+<xar:comment>START Logic for displaying new custom field</xar:comment>
           <tr>
+            <td style="text-align:center; padding:.25em;">
+              <input type="checkbox" name="newDisplay" id="newDisplay" value="1" />
+            </td>
+            <td style="text-align:center; padding:.25em;">
+              <input name="newShortLabel" id="newShortLabel" type="text" size="20" maxlength="30" />
+            </td>
             <td style="text-align:center; padding:.25em;">
               <input name="newname" id="newname" type="text" size="20" maxlength="30" />
             </td>
@@ -85,10 +125,10 @@
               &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
             </td>
             <td style="text-align:center; padding:.25em;">&nbsp;
-              
+
             </td>
           </tr>
-<!-- END Logic for displaying new custom field -->
+<xar:comment>END Logic for displaying new custom field</xar:comment>
         </table>
         </div>
         <div style="margin:1em;">

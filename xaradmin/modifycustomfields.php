@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifycustomfields.php,v 1.6 2003/12/22 07:11:41 garrett Exp $
+ * File: $Id: modifycustomfields.php,v 1.5 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -40,6 +40,12 @@ function addressbook_admin_modifycustomfields()
             if (!xarVarFetch ('id', 'array::',$formData['id'], FALSE))  {
                 return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
             }
+            if (!xarVarFetch ('custDisplay', 'array::',$formData['custDisplay'], FALSE))  {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+            if (!xarVarFetch ('custShortLabel', 'array::',$formData['custShortLabel'], FALSE))  {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
             if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE))  {
                 return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
             }
@@ -53,6 +59,12 @@ function addressbook_admin_modifycustomfields()
                 return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('decID','int::',$formData['decID'],FALSE))  {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+            if (!xarVarFetch ('newDisplay', 'checkbox',$formData['newDisplay'], FALSE))  {
+                return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
+            }
+            if (!xarVarFetch ('newShortLabel', 'str::30',$formData['newShortLabel'], FALSE))  {
                 return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
             }
             if (!xarVarFetch ('newname','str::30',$formData['newname'],FALSE))  {
@@ -75,16 +87,16 @@ function addressbook_admin_modifycustomfields()
             return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
         }
 
-        //gehINFO - this should be in a table & configurable
-        $output['datatypes'][] = array('id'=>'varchar(60) default NULL',    'name'=>' Text, 60 chars, 1 line');
-        $output['datatypes'][] = array('id'=>'varchar(120) default NULL',   'name'=>'Text, 120 chars, 2 lines');
-        $output['datatypes'][] = array('id'=>'varchar(240) default NULL',   'name'=>'Text, 240 chars, 4 lines');
-        $output['datatypes'][] = array('id'=>'int default NULL',            'name'=>'Integer numbers');
-        $output['datatypes'][] = array('id'=>'decimal(10,2) default NULL',  'name'=>'Decimal numbers');
-        $output['datatypes'][] = array('id'=>'int(1) default NULL',         'name'=>'Checkbox');
-        $output['datatypes'][] = array('id'=>'date default NULL',           'name'=>'Date');
-        $output['datatypes'][] = array('id'=>'tinyint default NULL',        'name'=>'Blank line');
-        $output['datatypes'][] = array('id'=>'smallint default NULL',       'name'=>'Horizontal rule');
+        //TODO - this should be in a table & configurable. geh
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_TEXT_SHORT,     'name'=>' Text, 60 chars, 1 line');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_TEXT_MEDIUM,    'name'=>'Text, 120 chars, 2 lines');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_TEXT_LONG,      'name'=>'Text, 240 chars, 4 lines');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_INTEGER,        'name'=>'Integer numbers');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_DECIMAL,        'name'=>'Decimal numbers');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_CHECKBOX,       'name'=>'Checkbox');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_DATE,           'name'=>'Date');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_BLANKLINE,      'name'=>'Blank line');
+        $output['datatypes'][] = array('id'=>_AB_CUSTOM_HORIZ_RULE,     'name'=>'Horizontal rule');
 
         // Generate a one-time authorisation code for this operation
         $output['authid'] = xarSecGenAuthKey();

@@ -1,13 +1,14 @@
 <!-- START TITLE BAR -->
 <xar:template compile="false" file="mod-title" type="module" />
 <!-- END TITLE BAR -->
+<xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
 <div class="xar-mod-body" style="display:block;">
   <!-- START WARN DISPLAY -->
   <div style="text-align:center;">
-  <xar:template compile="false" file="mod-warn-msg" type="module" />
+<xar:template compile="false" file="mod-warn-msg" type="module" />
   </div>
 <!-- END WARN DISPLAY -->
-    <xar:if condition="!isset($insertStatus)">
+<xar:if condition="!isset($insertStatus)">
     <div class="xar-alt-outline" style="padding:.25; text-align:center;">
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
 <!-- START MENUVALUES -->
@@ -31,52 +32,56 @@
 <tr>
   <td>
     <div class="xar-alt-outline" style="padding:.5em; text-align:center">
-        <xar:if condition="$formcall eq 'edit'">
+    <xar:if condition="$formcall eq 'edit'">
+        <xar:if condition="!empty($fname) or !empty($lname)">
             <span class="xar-title">#$fname# #$lname#</span>
         <xar:else />
-            <span class="xar-title"><xar:mlstring>Insert new record</xar:mlstring></span>
+            <span class="xar-title">#$company#</span>
         </xar:if>
+    <xar:else />
+            <span class="xar-title"><xar:mlstring>Insert new record</xar:mlstring></span>
+    </xar:if>
     </div>
     </td>
 </tr>
 <tr>
 <td>
-<xar:if condition="$action eq _AB_TEMPLATE_NAME">
-    <xar:template file="user-name" compile="false" type="module" />
-    <!-- the following templates are used to hold all the hidden vars -->
-    <xar:template file="var-address" compile="false" type="module" />
-    <xar:template file="var-contact" compile="false" type="module" />
-    <xar:template file="var-custom" compile="false" type="module" />
-    <xar:template file="var-note" compile="false" type="module" />
-<xar:elseif condition="$action eq _AB_TEMPLATE_ADDR" />
-    <xar:template file="user-address" compile="false" type="module" />
-    <!-- the following templates are used to hold all the hidden vars -->
-    <xar:template file="var-name" compile="false" type="module" />
-    <xar:template file="var-contact" compile="false" type="module" />
-    <xar:template file="var-custom" compile="false" type="module" />
-    <xar:template file="var-note" compile="false" type="module" />
-<xar:elseif condition="$action eq _AB_TEMPLATE_CONTACT" />
-    <xar:template file="user-contact" compile="false" type="module" />
-    <!-- the following templates are used to hold all the hidden vars -->
-    <xar:template file="var-name" compile="false" type="module" />
-    <xar:template file="var-address" compile="false" type="module" />
-    <xar:template file="var-custom" compile="false" type="module" />
-    <xar:template file="var-note" compile="false" type="module" />
-<xar:elseif condition="$action eq _AB_TEMPLATE_CUST" />
-    <xar:template file="user-custom" compile="false" type="module" />
-    <!-- the following templates are used to hold all the hidden vars -->
-    <xar:template file="var-name" compile="false" type="module" />
-    <xar:template file="var-address" compile="false" type="module" />
-    <xar:template file="var-contact" compile="false" type="module" />
-    <xar:template file="var-note" compile="false" type="module" />
-<xar:elseif condition="$action eq _AB_TEMPLATE_NOTE" />
-    <xar:template file="user-note" compile="false" type="module" />
-    <!-- the following templates are used to hold all the hidden vars -->
-    <xar:template file="var-name" compile="false" type="module" />
-    <xar:template file="var-address" compile="false" type="module" />
-    <xar:template file="var-contact" compile="false" type="module" />
-    <xar:template file="var-custom" compile="false" type="module" />
-</xar:if>
+    <xar:if condition="$action eq _AB_TEMPLATE_NAME">
+        <xar:template file="user-name" compile="false" type="module" />
+        <xar:comment>the following templates are used to hold all the hidden vars </xar:comment>
+        <xar:template file="var-address" compile="false" type="module" />
+        <xar:template file="var-contact" compile="false" type="module" />
+        <xar:template file="var-custom" compile="false" type="module" />
+        <xar:template file="var-note" compile="false" type="module" />
+    <xar:elseif condition="$action eq _AB_TEMPLATE_ADDR" />
+        <xar:template file="user-address" compile="false" type="module" />
+        <xar:comment>the following templates are used to hold all the hidden vars </xar:comment>
+        <xar:template file="var-name" compile="false" type="module" />
+        <xar:template file="var-contact" compile="false" type="module" />
+        <xar:template file="var-custom" compile="false" type="module" />
+        <xar:template file="var-note" compile="false" type="module" />
+    <xar:elseif condition="$action eq _AB_TEMPLATE_CONTACT" />
+        <xar:template file="user-contact" compile="false" type="module" />
+        <xar:comment>the following templates are used to hold all the hidden vars </xar:comment>
+        <xar:template file="var-name" compile="false" type="module" />
+        <xar:template file="var-address" compile="false" type="module" />
+        <xar:template file="var-custom" compile="false" type="module" />
+        <xar:template file="var-note" compile="false" type="module" />
+    <xar:elseif condition="$action eq _AB_TEMPLATE_CUST" />
+        <xar:template file="user-custom" compile="false" type="module" />
+        <xar:comment>the following templates are used to hold all the hidden vars </xar:comment>
+        <xar:template file="var-name" compile="false" type="module" />
+        <xar:template file="var-address" compile="false" type="module" />
+        <xar:template file="var-contact" compile="false" type="module" />
+        <xar:template file="var-note" compile="false" type="module" />
+    <xar:elseif condition="$action eq _AB_TEMPLATE_NOTE" />
+        <xar:template file="user-note" compile="false" type="module" />
+        <xar:comment>the following templates are used to hold all the hidden vars </xar:comment>
+        <xar:template file="var-name" compile="false" type="module" />
+        <xar:template file="var-address" compile="false" type="module" />
+        <xar:template file="var-contact" compile="false" type="module" />
+        <xar:template file="var-custom" compile="false" type="module" />
+    </xar:if>
 </td>
 </tr>
 <tr>
@@ -87,33 +92,33 @@
         <td align="left" valign="middle">
                 <select name="cat_id" id="cat_id">
                     <option value="0"><xar:mlstring>Unfiled</xar:mlstring></option>
-                <xar:foreach in="$cats" value="$cat">
-                  <xar:if condition="$cat['id'] ne $cat_id">
+    <xar:foreach in="$cats" value="$cat">
+        <xar:if condition="$cat['id'] ne $cat_id">
                     <option value="#$cat['id']#">#$cat['name']#</option>
-                  <xar:else />
+        <xar:else />
                     <option selected="selected" value="#$cat['id']#">#$cat['name']#</option>
-                  </xar:if>
-                </xar:foreach>
+        </xar:if>
+    </xar:foreach>
         </select>
         </td>
         <td width="100%" align="right" valign="middle">&nbsp;</td>
         <td align="right" valign="middle">
-                <xar:if condition="!$globalprotect">
-                    <xar:mlstring>Private</xar:mlstring>:
-                <xar:else />
+    <xar:if condition="!$globalprotect">
+        <xar:mlstring>Private</xar:mlstring>:
+    <xar:else />
                     &nbsp;
-                </xar:if>
+    </xar:if>
                 </td>
         <td align="left" valign="middle">
-                <xar:if condition="!$globalprotect">
-                    <xar:if condition="$private">
+    <xar:if condition="!$globalprotect">
+        <xar:if condition="$private">
                         <input type="checkbox" name="private" id="private" checked="checked" value="1" />
-          <xar:else />
+        <xar:else />
                         <input type="checkbox" name="private" id="private" value="1" />
-          </xar:if>
-                <xar:else />
+        </xar:if>
+    <xar:else />
                     <input type="hidden" name="private" value="0" />
-                </xar:if>
+    </xar:if>
         </td>
       </tr>
     </table>
@@ -123,7 +128,8 @@
   <td>
         <br />
     <div style="text-align:center;">
-      <input name="#$btnCommitID#" type="submit" id="#$btnCommitID#" value="#$btnCommitTitle#" />&nbsp;&nbsp;&nbsp;
+      <input name="#$btnCommitID#" type="submit" id="#$btnCommitID#" value="#$btnCommitTitle#" />
+&nbsp;&nbsp;&nbsp;
       <input name="cancel" type="submit" id="cancel" value="Cancel" />
     </div>
   </td>
@@ -132,14 +138,14 @@
   <td>&nbsp;</td>
 </tr>
 </table>
-</form> 
+</form>
 </div>
-  <xar:else />
+<xar:else />
   <div class="xar-alt-outline" style="padding: 4em; text-align:center;">
       <h3>#xarModGetVar(__ADDRESSBOOK__,'abtitle')# <xar:mlstring>Entry Saved!</xar:mlstring></h3>
         <br />
       <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
   </div>
-  </xar:if>
+</xar:if>
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />

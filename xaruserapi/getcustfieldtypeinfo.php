@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcustfieldtypeinfo.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: getcustfieldtypeinfo.php,v 1.3 2004/11/13 06:20:14 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -17,35 +17,33 @@
 /**
  * getCustomFieldsTypes
  */
-function addressbook_userapi_getCustFieldTypeInfo() 
+function addressbook_userapi_getCustFieldTypeInfo()
 {
-
-    $custFieldTypeInfo = array();
-
     $dbconn =& xarDBGetConn();
     $xarTables =& xarDBGetTables();
-    $tableCustomField = $xarTables['addressbook_customfields'];
+    $cus_table = $xarTables['addressbook_customfields'];
+    $sql = "SELECT *
+            FROM $cus_table WHERE nr > 0
+            ORDER BY position";
 
-    $sql = "SELECT nr, label, type, position ".
-           "FROM $tableCustomField WHERE nr > 0 ".
-           "ORDER BY position";
     $result =& $dbconn->Execute($sql);
+    if (!$result) return array();
 
-    if($dbconn->ErrorNo() == 0) {
-        if(isset($result)) {
-            for($i=0; !$result->EOF; $result->MoveNext()) {
-                list($cusid,$cuslabel,$custype,$cuspos) = $result->fields;
-                $custFieldTypeInfo[$i]['nr']     = $cusid;
-                $custFieldTypeInfo[$i]['colName']= _AB_CUST_COLPREFIX.$cusid;
-                $custFieldTypeInfo[$i]['label']  = $cuslabel;
-                $custFieldTypeInfo[$i]['type']   = $custype;
-                $custFieldTypeInfo[$i++]['position']   = $cuspos;
-             }
-            $result->Close();
-        }
+    $customFields = array();
+    for($i=0; !$result->EOF; $result->MoveNext(), $i++) {
+        list($custID,$custLabel,$custType,$position, $custShortLabel, $custDisplay) = $result->fields;
+
+        $custFieldData[$i]['nr']            = $custID;
+        $custFieldData[$i]['colName']       = _AB_CUST_COLPREFIX.$custID;
+        $custFieldData[$i]['custLabel']     = $custLabel;
+        $custFieldData[$i]['custType']      = $custType;
+        $custFieldData[$i]['position']      = $position;
+        $custFieldData[$i]['custShortLabel']= $custShortLabel;
+        $custFieldData[$i]['custDisplay']   = $custDisplay;
     }
+    $result->Close();
 
-    return $custFieldTypeInfo;
+    return $custFieldData;
 
 } // END getCustFieldTypeInfo
 

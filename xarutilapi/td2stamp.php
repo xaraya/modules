@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: td2stamp.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: td2stamp.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook utilapi td2stamp
  *
@@ -32,7 +32,7 @@ function addressbook_utilapi_td2stamp($args)
     $p2 = strtok($token);
     $p3 = strtok($token);
     $p4 = strtok($token);
-    $date = ""; $y = ""; $m = ""; $d = "";
+    $y = ""; $m = ""; $d = "";
     if ($dateformat == 1) {
         $y = $p3;
         $m = $p2;
@@ -47,16 +47,12 @@ function addressbook_utilapi_td2stamp($args)
         if ($y >= 70) $y = $y + 1900;
         if ($y < 70) $y = $y + 2000;
     }
-    /*
-    $timestamp = mktime(1,0,0,$m,$d,$y);
-    if($timestamp == -1){
-        return 'NULL';
-    }
-    else {
-        return $timestamp;
-    }
-    */
-    $returnValue = $y.$m.$d;
+	if (checkdate($m,$d,$y)) {
+		$returnValue = mktime(0,0,0,$m,$d,$y);
+	} else {
+		$returnValue = 0;
+	}
+
     return $returnValue;
 
 } // END td2stamp

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getlistheader.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: getlistheader.php,v 1.3 2004/11/13 06:20:14 garrett Exp $
  *
  * AddressBook userapi getListHeader
  *
@@ -55,17 +55,38 @@ function addressbook_userapi_getListHeader($args)
             case 'country':
                 $returnArray[$i] = array('header'=> strtoupper(_AB_COUNTRY));
                 break;
+            default:
+                // do nothing
+                break;
         }
         $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_UDCOLANDLABELS)); //gehDEBUG
+            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldtypeinfo');
             foreach($custUserData as $userData) {
                 if ($sortCols[$i] == $userData['colName']) {
-                    $returnArray[$i] = array('header'=> strtoupper($userData['label']));
+                    $returnArray[$i] = array('header'=> strtoupper($userData['custLabel']));
                 }
             }
         }
     }
+
+    /**
+     * Check if any of the custom fields are selected for display on the search results
+     */
+    $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
+    if ((!empty($custom_tab)) && ($custom_tab != '')) {
+        $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldtypeinfo');
+        foreach($custUserData as $userData) {
+            if ($userData['custDisplay']) {
+                if (!empty($userData['custShortLabel'])) {
+                    $returnArray[] = array('header'=> '<acronym title="'.$userData['custLabel'].'">'.strtoupper($userData['custShortLabel'].'</acronym>'));
+                } else {
+                    $returnArray[] = array('header'=> strtoupper($userData['custLabel']));
+                }
+            }
+        }
+    }
+
     return $returnArray;
 } // END getListHeader
 

@@ -10,7 +10,7 @@
 <!-- END WARN DISPLAY -->
   <div class="xar-norm-outline" style="padding:.25em;">
     <form method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifyconfig')#">
-<!-- SECURITY SETTINGS -->        
+<!-- SECURITY SETTINGS -->
         <div id="secSettings" style="margin:.25em;">
           <div style="margin: 0em 1em;">
             <h4><xar:mlstring>Security Settings</xar:mlstring></h4>
@@ -54,7 +54,7 @@
                   <input type="checkbox" name="guestmode_3" id="guestmode_3" checked="checked" value="1" tabindex="3" />
                 <xar:else />
                   <input type="checkbox" name="guestmode_3" id="guestmode_3" value="1" tabindex="3" />
-                </xar:if> 
+                </xar:if>
                 </td>
               </tr>
               <tr>
@@ -88,10 +88,10 @@
           <div style="margin:0em 1em;">
             <div style="padding:.5em;">
                 <span class="xar-accent" style="padding:.25em;"><xar:mlstring>Note: Users can ONLY edit/delete records which they have created!</xar:mlstring></span>
-            </div>  
+            </div>
           </div>
         </div>
-<!-- OTHER SETTINGS -->        
+<!-- OTHER SETTINGS -->
         <div id="otherSettings" style="margin:.25em;">
           <div style="text-align:left; margin: 0em 1em;">
             <h4><xar:mlstring>Other Settings</xar:mlstring></h4>
@@ -122,7 +122,7 @@
                   </select>
                   |
                   <select name="sortdata_2" id="sortdata_2" size="1" tabindex="9">
-                    <xar:foreach in="$sortdata_2" value="$sortoption"> 
+                    <xar:foreach in="$sortdata_2" value="$sortoption">
                       <xar:if condition="$sortoption['id'] ne $defSortCols[1]">
                     <option value="#$sortoption['id']#">#$sortoption['name']#</option>
                       <xar:else />
@@ -180,7 +180,7 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                   <input type="text" name="special_chars_1" id="special_chars_1" value="#$special_chars_1#" size="12" maxlength="24" tabindex="13" />
-                    =&gt; 
+                    =&gt;
                   <input type="text" name="special_chars_2" id="special_chars_2" value="#$special_chars_2#" size="12" maxlength="24" tabindex="14" /></td>
               </tr>
               <tr>
@@ -204,6 +204,18 @@
                   <input type="checkbox" name="use_prefix" id="use_prefix" value="1" checked="checked" tabindex="16" />
                 <xar:else />
                   <input type="checkbox" name="use_prefix" id="use_prefix" value="1" tabindex="16" />
+                </xar:if>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align:left; padding:.25em;">
+                  <label for="display_prefix"><xar:mlstring>Display prefix in search resutls?</xar:mlstring></label>
+                </td>
+                <td style="text-align:left; padding:.25em;">
+                <xar:if condition="$display_prefix">
+                  <input type="checkbox" name="display_prefix" id="display_prefix" value="1" checked="checked" tabindex="16" />
+                <xar:else />
+                  <input type="checkbox" name="display_prefix" id="display_prefix" value="1" tabindex="16" />
                 </xar:if>
                 </td>
               </tr>
@@ -326,14 +338,14 @@
                 </td>
                 <td style="text-align:left; padding:.25em;">
                   <select name="numformat" id="numformat" size="1" tabindex="26">
-                <xar:foreach in="$numformat" value="$option"> 
+                <xar:foreach in="$numformat" value="$option">
                   <xar:if condition="$option['id'] ne $numformat_selected">
                     <option value="#$option['id']#">#$option['name']#</option>
                   <xar:else />
                     <option value="#$option['id']#" selected="selected">#$option['name']#</option>
                   </xar:if>
                 </xar:foreach>
-                  </select> 
+                  </select>
                 </td>
               </tr>
             </table>
@@ -367,9 +379,11 @@
               </tr>
               <tr>
                 <td style="text-align:left; padding:.25em;">
-                  <label for="rptErrDevFlag"><acronym title="Recommended for quality assurance purposes. Only the contents of the error message are sent.">
+                  <label for="rptErrDevFlag">
+                    <acronym title="#xarML('Recommended for quality assurance purposes. Only the contents of the error message are sent.')#" >
                     <xar:mlstring>Send error reports to AddressBook Quality Control?</xar:mlstring>
-                  </acronym></label>
+                    </acronym>
+                  </label>
                 </td>
                 <td style="text-align:left; padding:.25em;">
                 <xar:if condition="$rptErrDevFlag">

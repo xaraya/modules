@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: viewdetail.php,v 1.8 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: viewdetail.php,v 1.3 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook user viewDetail
  *
@@ -77,16 +77,13 @@ function addressbook_user_viewdetail()
             foreach ($labels as $lab) {
                 if ($output[$the_label] == $lab['id']) {
                     $contact['label'] = xarVarPrepHTMLDisplay($lab['name']);
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$output[$the_contact]))) {
-                        if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$output[$the_contact]))) {
-                            $contact['contact'] = xarVarPrepHTMLDisplay($output[$the_contact]);
-                        }
-                        else {
-                            $contact['contact'] = '<a href="'.xarVarPrepHTMLDisplay($output[$the_contact]).'" target="_blank">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
-                        }
+                    if(xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$output[$the_contact]))) {
+                        $contact['contact'] = '<a href="mailto:'.xarVarPrepHTMLDisplay($output[$the_contact]).'">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
+					} elseif (xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$output[$the_contact]))) {
+                        $contact['contact'] = '<a href="'.xarVarPrepHTMLDisplay($output[$the_contact]).'" target="_blank">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
                     }
                     else {
-                        $contact['contact'] = '<a href="mailto:'.xarVarPrepHTMLDisplay($output[$the_contact]).'">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
+                        $contact['contact'] = xarVarPrepHTMLDisplay($output[$the_contact]);
                     }
                 }
             }

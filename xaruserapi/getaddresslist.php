@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getaddresslist.php,v 1.10 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: getaddresslist.php,v 1.4 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook user getAddressList
  *
@@ -19,7 +19,7 @@
  *
  * @return mixed
  */
-function addressbook_userapi_getAddressList($args) 
+function addressbook_userapi_getAddressList($args)
 {
 
     extract($args);
@@ -93,13 +93,27 @@ function addressbook_userapi_getAddressList($args)
             $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_2'));
         }
         if ($sortCols[0] == 'sortname') {
-            if ($output['char']) { $output['sql'] .= " AND (sortname LIKE '".$output['char']."%')"; }
-            else { $output['sql'] .= " AND (sortname LIKE 'A%')"; }
+            if ($output['char']) {
+                if (strcasecmp($output['char'],'a')) {
+                    $output['sql'] .= " AND (sortname LIKE '".$output['char']."%')";
+                } else {
+                    $output['sql'] .= " AND (sortname < 'b')";
+                }
+            } else {
+                $output['sql'] .= " AND (sortname < 'b')";
+            }
         }
         else {
             if ($sortCols[0] == 'sortcompany') {
-                if ($output['char']) { $output['sql'] .= " AND (sortcompany LIKE '".$output['char']."%')"; }
-                else { $output['sql'] .= " AND (sortcompany LIKE 'A%')"; }
+                if ($output['char']) {
+                    if (strcasecmp($output['char'],'a')) {
+                        $output['sql'] .= " AND (sortcompany LIKE '".$output['char']."%')";
+                    } else {
+                        $output['sql'] .= " AND (sortcompany < 'b')";
+                    }
+                } else {
+                    $output['sql'] .= " AND (sortcompany < 'b')";
+                }
             }
             else {
                 if ($output['char']) { $output['sql'] .= " AND (".$sortCols[0]." LIKE '".$output['char']."%')"; }
@@ -107,6 +121,9 @@ function addressbook_userapi_getAddressList($args)
             }
         }
     }
+
+    // Retrieve all the custom fields, we use this throughout.
+    $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
 
     // Search
     if ($output['formSearch']) {
@@ -127,10 +144,9 @@ function addressbook_userapi_getAddressList($args)
                   OR contact_4 LIKE '%".$output['formSearch']."%'
                   OR contact_5 LIKE '%".$output['formSearch']."%')";
 
-        $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
         foreach($custFields as $custField) {
-            if ((!strstr($custField['type'],_AB_CUST_TEST_LB)) && (!strstr($custField['type'],_AB_CUST_TEST_HR))) {
-                if (strstr($custField['type'],_AB_CUST_TEST_STRING)) {
+            if ((!strstr($custField['custType'],_AB_CUSTOM_BLANKLINE)) && (!strstr($custField['custType'],_AB_CUSTOM_HORIZ_RULE))) {
+                if (strstr($custField['custType'],_AB_CUST_TEST_STRING)) {
                     $output['sql'] .= " OR ".$custField['colName']." LIKE '%".$output['formSearch']."%'";
                 }
             }
@@ -210,93 +226,79 @@ function addressbook_userapi_getAddressList($args)
         return $output;
     }
 
+    /**
+     * Get the title of each column to be displayed.
+     */
     if ($output['sortview'] != 1) {
         $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getlistheader',array('sort'=>1));
-//geh        $output->Text('<b>'.xarVarPrepHTMLDisplay($headers[0]).'</b>');
     }
     else {
         $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getlistheader',array('sort'=>2));
-//geh        $output->Text('<b>'.xarVarPrepHTMLDisplay($headers[0]).'</b>');
+    }
+
+    /**
+     * Get the prefix decodes if we are to display them
+     */
+    $prefixes = array();
+    if (xarModGetVar(__ADDRESSBOOK__, 'display_prefix')) {
+        $prefixes = xarModAPIFunc(__ADDRESSBOOK__,'util','getitems',array('tablename'=>'prefixes'));
+    }
+
+    $abData = array('id'            => ''
+                   ,'cat_id'        => ''
+                   ,'prefix'        => ''
+                   ,'lname'         => ''
+                   ,'fname'         => ''
+                   ,'sortname'      => ''
+                   ,'title'         => ''
+                   ,'company'       => ''
+                   ,'sortcompany'   => ''
+                   ,'img'           => ''
+                   ,'zip'           => ''
+                   ,'city'          => ''
+                   ,'address_1'     => ''
+                   ,'address_2'     => ''
+                   ,'state'         => ''
+                   ,'country'       => ''
+                   ,'contact_1'     => ''
+                   ,'contact_2'     => ''
+                   ,'contact_3'     => ''
+                   ,'contact_4'     => ''
+                   ,'contact_5'     => ''
+                   ,'c_label_1'     => ''
+                   ,'c_label_2'     => ''
+                   ,'c_label_3'     => ''
+                   ,'c_label_4'     => ''
+                   ,'c_label_5'     => ''
+                   ,'c_main'        => ''
+                   ,'custom_1'      => ''
+                   ,'custom_2'      => ''
+                   ,'custom_3'      => ''
+                   ,'custom_4'      => ''
+                   ,'note'          => ''
+                   ,'user'          => ''
+                   ,'private'       => ''
+                   ,'last_updt'     => '');
+
+
+    foreach($custFields as $custField) {
+        $abData[$custField['colName']] = '';
     }
 
 
     // Retrieve all records and format as needed for display. The 'searchResults' var is temp
     // only and 'displayRows' is used be the template to display the data
     for (; !$result->EOF; $result->MoveNext()) {
-        list($id
-            ,$cat_id
-            ,$prefix
-            ,$lname
-            ,$fname
-            ,$sortname
-            ,$title
-            ,$company
-            ,$sortcompany
-            ,$img
-            ,$zip
-            ,$city
-            ,$address_1
-            ,$address_2
-            ,$state
-            ,$country
-            ,$contact_1
-            ,$contact_2
-            ,$contact_3
-            ,$contact_4
-            ,$contact_5
-            ,$c_label_1
-            ,$c_label_2
-            ,$c_label_3
-            ,$c_label_4
-            ,$c_label_5
-            ,$c_main
-            ,$custom_1
-            ,$custom_2
-            ,$custom_3
-            ,$custom_4
-            ,$note
-            ,$user
-            ,$private
-            ,$last_updt
-            ) = $result->fields;
+        $index = 0;
+        foreach ($abData as $key=>$value) {
+            $abData[$key] = $result->fields[$index++];
+        }
+        // Only doing this step because I'm too lazy to change all the variable refs to the $abData. I use it as a temp holding place to build in all the custom
+        // fields
+        extract ($abData);
+
         $displayRow = array();
-        $output['searchResults'][] = array ('id'          => $id
-                                         ,'cat_id'      => $cat_id
-                                         ,'prefix'      => $prefix
-                                         ,'lname'       => $lname
-                                         ,'fname'       => $fname
-                                         ,'sortname'    => $sortname
-                                         ,'title'       => $title
-                                         ,'company'     => $company
-                                         ,'sortcompany' => $sortcompany
-                                         ,'img'         => $img
-                                         ,'zip'         => $zip
-                                         ,'city'        => $city
-                                         ,'address_1'   => $address_1
-                                         ,'address_2'   => $address_2
-                                         ,'state'       => $state
-                                         ,'country'     => $country
-                                         ,'contact_1'   => $contact_1
-                                         ,'contact_2'   => $contact_2
-                                         ,'contact_3'   => $contact_3
-                                         ,'contact_4'   => $contact_4
-                                         ,'contact_5'   => $contact_5
-                                         ,'c_label_1'   => $c_label_1
-                                         ,'c_label_2'   => $c_label_2
-                                         ,'c_label_3'   => $c_label_3
-                                         ,'c_label_4'   => $c_label_4
-                                         ,'c_label_5'   => $c_label_5
-                                         ,'c_main'      => $c_main
-                                         ,'custom_1'    => $custom_1
-                                         ,'custom_2'    => $custom_2
-                                         ,'custom_3'    => $custom_3
-                                         ,'custom_4'    => $custom_4
-                                         ,'note'        => $note
-                                         ,'user'        => $user
-                                         ,'private'     => $private
-                                         ,'last_updt'   => $last_updt
-/*                                         ,'listname'    => $listname */
-                                         );
+        $output['searchResults'][] = $abData;
 
         /* not sure what this does gehDEBUG
 //        $cus_fields = xarModAPIFunc(__ADDRESSBOOK__,'user','customfieldinformation',array('id'=>$id));
@@ -323,29 +325,41 @@ function addressbook_userapi_getAddressList($args)
         /*
          * Step 2
          */
+
+        $displayName = '';
         if ($sortCols[0] == 'sortname') {
-            if (xarModGetVar(__ADDRESSBOOK__, 'name_order')==1) {
-                if ((!empty($fname)) && (!empty($lname))) {
-                    $displayRow[] = xarVarPrepHTMLDisplay($fname).' '.xarVarPrepHTMLDisplay($lname);
+            if ((!empty($fname) && !empty($lname)) ||
+                (!empty($fname) || !empty($lname))) {
+                if (xarModGetVar(__ADDRESSBOOK__, 'name_order')==_AB_NO_FIRST_LAST) {
+                    if (!empty($prefixes) && $prefix > 0) {
+                        $displayName .= $prefixes[$prefix-1]['name'].' ';
+                    }
+                    $displayName .= xarVarPrepHTMLDisplay($fname).' '.xarVarPrepHTMLDisplay($lname);
                 } else {
-                    $displayRow[] = xarVarPrepHTMLDisplay($fname).xarVarPrepHTMLDisplay($lname);
+                    if (!empty($lname)) {
+                        $displayName .= xarVarPrepHTMLDisplay($lname).', ';
+                    }
+                    if (!empty($prefixes) && $prefix > 0) {
+                        $displayName .= $prefixes[$prefix-1]['name'].' ';
+                    }
+                    $displayName .= xarVarPrepHTMLDisplay($fname);
                 }
             }
             else {
-                if ((!empty($lname)) && (!empty($fname))) {
-                    $displayRow[] = xarVarPrepHTMLDisplay($lname).', '.xarVarPrepHTMLDisplay($fname);
-                } else {
-                    $displayRow[] = xarVarPrepHTMLDisplay($lname).xarVarPrepHTMLDisplay($fname);
+                if (!empty($company)) {
+                    $displayName .= xarVarPrepHTMLDisplay($company);
                 }
             }
         }
         else {
             if ($sortCols[0] == 'sortcompany') {
-                $displayRow[] = xarVarPrepHTMLDisplay($company);
+                $displayName .= xarVarPrepHTMLDisplay($company);
             } else {
-                $displayRow[] = xarVarPrepHTMLDisplay($$sortCols[0]);
+                $displayName .= xarVarPrepHTMLDisplay($$sortCols[0]);
             }
         }
+
+        $displayRow[] = trim($displayName,",");
 
         /*
          * Step 3
@@ -378,7 +392,29 @@ function addressbook_userapi_getAddressList($args)
             }
         }
 
-        // Format Contact information
+        /*
+         * Step 4 - Check for any custom fields to display
+         */
+        foreach($custFields as $custField) {
+            if ($custField['custDisplay']) {
+                switch ($custField['custType']) {
+                    case 'int(1) default NULL':
+                        if ($$custField['colName']) {
+                            $displayRow[] = '<acronym title="'.$custField['custLabel'].'">'.$custField['custShortLabel'].'</acronym>';
+                        } else {
+                            $displayRow[] = "&nbsp;";
+                        }
+                        break;
+                    default:
+                        $displayRow[] = $$custField['colName'];
+                        break;
+                }
+            }
+        }
+
+        /*
+         * Step 5 - Format Contact information
+         */
         switch($c_main) {
             case 0:
                 if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_1))) {

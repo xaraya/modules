@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateconfig.php,v 1.9 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: updateconfig.php,v 1.3 2004/11/13 06:21:57 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -33,98 +33,8 @@ function addressbook_adminapi_updateconfig($args)
     extract($args);
 
     /**
-     * Validate parameters
+     * @TODO: Validate parameters
      */
-//FIXME: Need to figure out how Xar determines int vs. bool
-// leave out until figured out
-//  $invalid = array();
-//  if(!isset($guestmode_1) || !is_bool($guestmode_1)) {
-//      $invalid[] = 'guestmode_1';
-//  }
-//  if(!isset($guestmode_2) || !is_bool($guestmode_2)) {
-//      $invalid[] = 'guestmode_2';
-//  }
-//  if(!isset($guestmode_3) || !is_bool($guestmode_3)) {
-//      $invalid[] = 'guestmode_3';
-//  }
-//  if(!isset($usermode_1) || !is_bool($usermode_1)) {
-//      $invalid[] = 'usermode_1';
-//  }
-//  if(!isset($usermode_2) || !is_bool($usermode_2)) {
-//      $invalid[] = 'usermode_2';
-//  }
-//  if(!isset($usermode_3) || !is_bool($usermode_3)) {
-//      $invalid[] = 'usermode_3';
-//  }
-//  if(!isset($abtitle) || !is_string($abtitle)) {
-//      $invalid[] = 'abtitle';
-//  }
-//  if(!isset($sortdata_1) || !is_string($sortdata_1)) {
-//      $invalid[] = 'sortdata_1';
-//  }
-//  if(!isset($sortdata_2) || !is_string($sortdata_2)) {
-//      $invalid[] = 'sortdata_2';
-//  }
-//  if(!isset($sortdata_3) || !is_string($sortdata_3)) {
-//      $invalid[] = 'sortdata_3';
-//  }
-//  if(!isset($sortdata_4) || !is_string($sortdata_4)) {
-//      $invalid[] = 'sortdata_4';
-//  }
-//  if(!isset($name_order) || !is_string($name_order)) {
-//      $invalid[] = 'name_order';
-//  }
-//  if(!isset($special_chars_1) || !is_string($special_chars_1)) {
-//      $invalid[] = 'special_chars_1';
-//  }
-//  if(!isset($special_chars_2) || !is_string($special_chars_2)) {
-//      $invalid[] = 'special_chars_2';
-//  }
-//  if(!isset($globalprotect) || !is_bool($globalprotect)) {
-//      $invalid[] = 'globalprotect';
-//  }
-//  if(!isset($use_prefix) || !is_bool($use_prefix)) {
-//      $invalid[] = 'use_prefix';
-//  }
-//  if(!isset($use_img) || !is_bool($use_img)) {
-//      $invalid[] = 'use_img';
-//  }
-//  if(!isset($menu_off) || !is_string($menu_off)) {
-//      $invalid[] = 'menu_off';
-//  }
-//  if(!isset($menu_semi) || !is_bool($menu_semi)) {
-//      $invalid[] = 'menu_semi';
-//  }
-//  if(!isset($zipbeforecity) || !is_bool($zipbeforecity)) {
-//      $invalid[] = 'zipbeforecity';
-//  }
-//  if(!isset($itemsperpage) || !is_int($itemsperpage)) {
-//      $invalid[] = 'itemsperpage';
-//  }
-//  if(!isset($hidecopyright) || !is_bool($hidecopyright)) {
-//      $invalid[] = 'hidecopyright';
-//  }
-//  if(!isset($custom_tab) || !is_string($custom_tab)) {
-//      $invalid[] = 'custom_tab';
-//  }
-//  if(!isset($textareawidth) || !is_int($textareawidth)) {
-//      $invalid[] = 'textareawidth';
-//  }
-//  if(!isset($dateformat) || !is_string($dateformat)) {
-//      $invalid[] = 'dateformat';
-//  }
-//  if(!isset($numformat) || !is_string($numformat)) {
-//      $invalid[] = 'numformat';
-//  }
-//    if (count($invalid) > 0) {
-//        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-//                     join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
-//        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-//                    new SystemException($msg));
-//      return; //???gehDEBUG
-//    } else {
-//    }
-
     // Configure default values
     $guestmode = 0;
     if ($guestmode_1 == 1) ($guestmode += 1);
@@ -202,6 +112,7 @@ function addressbook_adminapi_updateconfig($args)
 
     xarModSetVar(__ADDRESSBOOK__, 'globalprotect',   $globalprotect);
     xarModSetVar(__ADDRESSBOOK__, 'use_prefix',      $use_prefix);
+    xarModSetVar(__ADDRESSBOOK__, 'display_prefix',  $display_prefix);
     xarModSetVar(__ADDRESSBOOK__, 'use_img',         $use_img);
     xarModSetVar(__ADDRESSBOOK__, 'menu_off',        $menu_off);
     xarModSetVar(__ADDRESSBOOK__, 'menu_semi',       $menu_semi);

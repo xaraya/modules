@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updatecustomfields.php,v 1.2 2004/03/28 23:22:58 garrett Exp $
+ * File: $Id: updatecustomfields.php,v 1.5 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -37,6 +37,8 @@ function addressbook_adminapi_updatecustomfields($args)
     if (!isset($del)) { $invalid[] = '*del*'; }
     if (!isset($custLabel)) { $invalid[] = '*custLabel*'; }
     if (!isset($custType)) { $invalid[] = '*custType*'; }
+    if (!isset($custDisplay)) { $invalid[] = '*custDisplay*'; }
+    if (!isset($custShortLabel)) { $invalid[] = '*custShortLabel*'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
                      join(', ',$invalid), 'updatelabels', __ADDRESSBOOK__);
@@ -52,6 +54,8 @@ function addressbook_adminapi_updatecustomfields($args)
     $modType = array();
     $modDel = array();
     $modDelType = array();
+    $modShortLabel = array();
+    $modDisplay = array();
 
     /**
      * we can resequence the custom fields OR make data updates
@@ -68,26 +72,38 @@ function addressbook_adminapi_updatecustomfields($args)
     } else {
 
         // Update / Insert / Delete a custom field
-        if(isset($id)) {
-            foreach($id as $k=>$datatype) {
+        if (isset($id)) {
+            foreach ($id as $k=>$custFieldID) {
                 $found = false;
-                if(isset($dels) && count($del)) {
-                    foreach($del as $d) {
-                        if($datatype == $d) {
+                if (isset($dels) && count($del)) {
+                    foreach ($del as $d) {
+                        if ($custFieldID == $d) {
                             $found = true;
-                            array_push($modDel,$datatype);
+                            array_push($modDel,$custFieldID);
                             array_push($modDelType,$custType[$k]);
                             break;
                         }
                     }
                 }
-                if(!$found) {
-                    array_push($modID,$datatype);
-                    array_push($modName,$custLabel[$k]);
-                    array_push($modType,$custType[$k]);
+                if (!$found) {
+                    array_push ($modID,$custFieldID);
+                    array_push ($modName,$custLabel[$k]);
+                    array_push ($modType,$custType[$k]);
+                    array_push ($modShortLabel,$custShortLabel[$k]);
+                }
+
+                // Handle the Display checkboxes
+                $modDisplay[$k] = 0;
+                if (!empty($custDisplay)) {
+                    foreach ($custDisplay as $key=>$custDisplayID) {
+                        if ($custFieldID == $custDisplayID) {
+                            $modDisplay[$k] = 1;
+                        }
+                    }
                 }
             }
         }
+
         $xarTables =& xarDBGetTables();
         $cus_table = $xarTables['addressbook_customfields'];
         $adr_table = $xarTables['addressbook_address'];
@@ -96,9 +112,9 @@ function addressbook_adminapi_updatecustomfields($args)
 
         foreach($modID as $k=>$id) {
             array_push($updates,array ('sql'=>"UPDATE $cus_table
-                                                  SET label=?, type=?
+                                                  SET label=?, type=?, short_label=?, display=?
                                                 WHERE nr=?"
-                                        ,'bindvars'=>array($modName[$k],$modType[$k],$id )));
+                                        ,'bindvars'=>array($modName[$k],$modType[$k],$modShortLabel[$k],$modDisplay[$k],$id )));
 
             if (($modType[$k] != 'smallint default NULL') && ($modType[$k] != 'tinyint default NULL')) {
                 array_push($updates,array('sql'=>"ALTER TABLE $adr_table CHANGE custom_".$id." custom_".$id." ".$modType[$k],'bindvars'=>array()));
@@ -127,9 +143,13 @@ function addressbook_adminapi_updatecustomfields($args)
         }
         if (isset($newtype) && ($newtype == 'tinyint default NULL')) {
             $newname = '[      ]';
+            $newShortLabel = '[      ]';
+            $newDisplay = 0;
         }
         if (isset($newtype) && ($newtype == 'smallint default NULL')) {
             $newname = '[------]';
+            $newShortLabel = '[------]';
+            $newDisplay = 0;
         }
         if( (isset($newname)) && ($newname != '') ) {
             $dbconn =& xarDBGetConn();
@@ -138,9 +158,9 @@ function addressbook_adminapi_updatecustomfields($args)
             $nextID++;
             $result->Close();
             $inserts = array();
-            array_push($inserts,array ('sql'=>"INSERT INTO $cus_table (nr,label,type,position)
-                                               VALUES (?,?,?,9999999999)"
-                                      ,'bindvars'=>array ($nextID,$newname,$newtype)));
+            array_push($inserts,array ('sql'=>"INSERT INTO $cus_table (nr,label,type,position,short_label,display)
+                                               VALUES (?,?,?,9999999999,?,?)"
+                                      ,'bindvars'=>array ($nextID,$newname,$newtype,$newShortLabel,(int)$newDisplay)));
 
             array_push($inserts,array('sql'=>"ALTER TABLE $adr_table ADD custom_".$nextID." ".$newtype,'bindvars'=>array()));
 

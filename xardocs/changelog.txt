@@ -1,4 +1,12 @@
-Version 1.2.5 25-Oct-2004
+Version 1.2.7 24-Oct-2004
+---------------------------
+ - Added new configuration option
+ 	-> Display Prefix: Toggle whether or not to include the contact's prefix in the search results
+ - Added two new fields to "Custom Fields" tabs
+ 	-> Display: allows the user to include the field in the serch results page
+	-> Short Display: Text field that allows the user to provide an abreviated label for the custom field
+
+Version 1.2.6 23-Oct-2004
 ---------------------------
  - Removed deprecated xarVarPrepForStore()
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcustfieldinfo.php,v 1.2 2004/03/28 23:23:16 garrett Exp $
+ * File: $Id: getcustfieldinfo.php,v 1.6 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook user getCustomFieldInfo
  *
@@ -18,14 +18,13 @@
  * Retrieves all custom field information from database
  * takes multiple flags which retrun varying amounts of data
  *
- * _AB_CUST_UDCOLANDLABELS
  * _AB_CUST_UDCOLNAMESONLY
  * _AB_CUST_ALLFIELDINFO
  * _AB_CUST_ALLINFO
  *
  * @return array custom field info
  */
-function addressbook_userapi_getCustFieldInfo($args) 
+function addressbook_userapi_getCustFieldInfo($args)
 {
     extract ($args);
 
@@ -54,40 +53,13 @@ function addressbook_userapi_getCustFieldInfo($args)
         $custFieldTypeInfo = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldtypeinfo');
 
         switch ($flag) {
-            case _AB_CUST_UDCOLANDLABELS:
-                $custColAndLabels = array();
-
-                $i=0;
-                foreach ($custFieldTypeInfo as $custFieldTypeData) {
-                    if (!strstr($custFieldTypeData['type'],_AB_CUST_TEST_LB) &&
-                        !strstr($custFieldTypeData['type'],_AB_CUST_TEST_HR)) {
-                        /*
-                         * clear the column name for placeholder entries
-                         */
-                        $custColAndLabels[] = $custFieldTypeData;
-                    }
-                } // END foreach
-
-                $custFieldInfo = $custColAndLabels;
-                break;
-
             case _AB_CUST_UDCOLNAMESONLY: //gehDEBUG - search the code for this / don't think the array index is correctly used / think its fixed now
 
                 $custColNames = array();
 
                 if (!empty($custUserData)) {
-                    /**
-                     * We've been passed live data, extract only the data column names
-                     */
                     foreach ($custUserData as $userData) {
-                        if (!strstr($userData['type'],_AB_CUST_TEST_LB) &&
-                            !strstr($userData['type'],_AB_CUST_TEST_HR)) {
-                            /*
-                             * clear the column name for placeholder entries
-                             */
-                            $custColNames[] = $userData['colName'];
-                        }
-
+                        $custColNames[] = $userData['colName'];
                     } // END foreach
 
                 } else {
@@ -95,14 +67,7 @@ function addressbook_userapi_getCustFieldInfo($args)
                      * No data passed so I guess we want the current names
                      */
                     foreach ($custFieldTypeInfo as $custFieldTypeData) {
-                        if (!strstr($custFieldTypeData['type'],_AB_CUST_TEST_LB) &&
-                            !strstr($custFieldTypeData['type'],_AB_CUST_TEST_HR)) {
-                            /*
-                             * clear the column name for placeholder entries
-                             */
-                            $custColNames[] = $custFieldTypeData['colName'];
-                        }
-
+                        $custColNames[] = $custFieldTypeData['colName'];
                     } // END foreach
                 }
 
@@ -142,10 +107,10 @@ function addressbook_userapi_getCustFieldInfo($args)
                      */
                     if (isset($custFieldUserInfo[$colName])) { // leave off the trailing ')' in IF and the Xaraya exception handler does not report syntax error //gehDEBUG
                         $custFieldInfo[$rowIdx]['userData'] = $custFieldUserInfo[$colName];
-                    } elseif (strstr($custFieldInfo[$rowIdx]['type'],_AB_CUST_TEST_LB)) {
+                    } elseif (strstr($custFieldInfo[$rowIdx]['custType'],_AB_CUSTOM_BLANKLINE)) {
                         $custFieldInfo[$rowIdx]['userData'] = _AB_HTML_LINEBREAK;
                         $custFieldInfo[$rowIdx]['colName'] = '';
-                    } elseif (strstr($custFieldInfo[$rowIdx]['type'],_AB_CUST_TEST_HR)) {
+                    } elseif (strstr($custFieldInfo[$rowIdx]['custType'],_AB_CUSTOM_HORIZ_RULE)) {
                         $custFieldInfo[$rowIdx]['userData'] = _AB_HTML_HORIZRULE;
                         $custFieldInfo[$rowIdx]['colName'] = '';
                     }

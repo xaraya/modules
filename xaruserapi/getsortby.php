@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getsortby.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: getsortby.php,v 1.3 2004/11/13 06:20:14 garrett Exp $
  *
  * AddressBook userapi getSortBy
  *
@@ -57,10 +57,10 @@ function addressbook_userapi_getSortBy($args)
         }
         $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo',array('flag'=>_AB_CUST_UDCOLANDLABELS)); //gehDEBUG
+            $custUserData = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldtypeinfo');
             foreach($custUserData as $userData) {
                 if ($sortCols[$i] == $userData['colName']) {
-                    $returnArray[$i] = $userData['label'];
+                    $returnArray[$i] = $userData['custLabel'];
                 }
             }
         }

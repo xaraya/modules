@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.2 2004/03/28 23:22:23 garrett Exp $
+ * File: $Id: modifyconfig.php,v 1.5 2004/11/13 06:21:39 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -64,6 +64,7 @@ function addressbook_admin_modifyconfig()
 
             if (!xarVarFetch ('globalprotect','checkbox',$formData['globalprotect'], 0)) return;
             if (!xarVarFetch ('use_prefix',   'checkbox',$formData['use_prefix'],    0)) return;
+            if (!xarVarFetch ('display_prefix','checkbox',$formData['display_prefix'],0)) return;
             if (!xarVarFetch ('use_img',      'checkbox',$formData['use_img'],       0)) return;
             if (!xarVarFetch ('menu_off',     'str:1:',  $formData['menu_off'],      0)) return;
             if (!xarVarFetch ('menu_semi',    'checkbox',$formData['menu_semi'],     0)) return;
@@ -116,9 +117,9 @@ function addressbook_admin_modifyconfig()
         // Inclue custom fields in sorts & ordering
         $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
         if ((!empty($custom_tab)) && ($custom_tab != '')) {
-            $custFieldLabels = xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldinfo', array('flag'=>_AB_CUST_UDCOLANDLABELS));
+            $custFieldLabels = xarModAPIFunc(__ADDRESSBOOK__,'admin','getcustomfields');
             foreach($custFieldLabels as $custFieldLabel) {
-                $sortOptions[] = array('id'=>$custFieldLabel['colName'], 'name'=>xarVarPrepHTMLDisplay($custFieldLabel['label']));
+                $sortOptions[] = array('id'=>$custFieldLabel['colName'], 'name'=>xarVarPrepHTMLDisplay($custFieldLabel['custLabel']));
             }
         }
 
@@ -143,6 +144,7 @@ function addressbook_admin_modifyconfig()
 
         $output['globalprotect']    = xarModGetVar(__ADDRESSBOOK__, 'globalprotect');
         $output['use_prefix']       = xarModGetVar(__ADDRESSBOOK__, 'use_prefix');
+        $output['display_prefix']   = xarModGetVar(__ADDRESSBOOK__, 'display_prefix');
         $output['use_img']          = xarModGetVar(__ADDRESSBOOK__, 'use_img');
 
         // Disable / enable menu options

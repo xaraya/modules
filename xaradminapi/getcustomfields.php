@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcustomfields.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
+ * File: $Id: getcustomfields.php,v 1.4 2004/11/13 06:21:57 garrett Exp $
  *
  * AddressBook admin getCustomFields
  *
@@ -14,28 +14,13 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
+/**
+ * getCustomFieldsTypes
+ */
 function addressbook_adminapi_getCustomfields() 
 {
-    $dbconn =& xarDBGetConn();
-    $xarTables =& xarDBGetTables();
-    $cus_table = $xarTables['addressbook_customfields'];
-    $sql = "SELECT nr, label, type, position
-            FROM $cus_table WHERE nr > 0
-            ORDER BY position";
+    return xarModAPIFunc(__ADDRESSBOOK__,'user','getcustfieldtypeinfo');
 
-    $result =& $dbconn->Execute($sql);
-    if (!$result) return array();
-
-    $customfields = array();
-    for($i=0; !$result->EOF; $result->MoveNext()) {
-        list($cusid,$cuslabel,$custype,$cuspos) = $result->fields;
-        $customfields[$i]['nr']     = $cusid;
-        $customfields[$i]['custLabel']   = $cuslabel;
-        $customfields[$i]['custType']   = $custype;
-        $customfields[$i++]['position']   = $cuspos;
-     }
-    $result->Close();
-    return $customfields;
 } // END getCustomFields
 
 ?>

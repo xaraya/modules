@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarglobal.php,v 1.12 2004/01/10 22:52:37 garrett Exp $
+ * File: $Id: xarglobal.php,v 1.4 2004/11/16 05:40:47 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -49,18 +49,19 @@ define('_AB_HTML_HORIZRULE',         '<hr />');
  */
 define('_AB_CUST_ALLFIELDINFO',     1);
 define('_AB_CUST_UDCOLNAMESONLY',   2); // user data column names only
-define('_AB_CUST_UDCOLANDLABELS',   3); // user data custom field labels & column names
 define('_AB_CUST_ALLINFO',          4);
-
-define('_AB_CUST_COLPREFIX',        'custom_');
-define('_AB_CUST_TEST_LB',          'tinyint');
-define('_AB_CUST_TEST_HR',          'smallint');
-define('_AB_CUST_TEST_STRING',      'varchar');
 
 define('_AB_DATEFORMAT_1',      'MM.DD.YYYY');
 define('_AB_DATEFORMAT_2',      'DD.MM.YYYY');
+define('_AB_NULL_DATE',         '0000-00-00');
 
 /* end custom field defines */
+
+/**
+ * Display name ordering
+ */
+define('_AB_NO_LAST_FIRST',      0);
+define('_AB_NO_FIRST_LAST',      1);
 
 /**
  * Exception Handling
@@ -243,6 +244,21 @@ define('_AB_CUSTOM_2',          xarML('Custom Label 2')); //admin
 define('_AB_CUSTOM_3',          xarML('Custom Label 3')); //admin
 define('_AB_CUSTOM_4',          xarML('Custom Label 4')); //admin
 
+//Default Custom Field Types
+define('_AB_CUSTOM_TEXT_SHORT', 'varchar(60) default NULL');
+define('_AB_CUSTOM_TEXT_MEDIUM','varchar(120) default NULL');
+define('_AB_CUSTOM_TEXT_LONG',  'varchar(240) default NULL');
+define('_AB_CUSTOM_INTEGER',    'int default NULL');
+define('_AB_CUSTOM_DECIMAL',    'decimal(10,2) default NULL');
+define('_AB_CUSTOM_CHECKBOX',   'int(1) default NULL');
+define('_AB_CUSTOM_DATE',       'int(11) default NULL');
+define('_AB_CUSTOM_BLANKLINE',  'tinyint default NULL');
+define('_AB_CUSTOM_HORIZ_RULE', 'smallint default NULL');
+
+//Custom Tield tests
+define('_AB_CUST_COLPREFIX',        'custom_');
+define('_AB_CUST_TEST_STRING',      'varchar');
+
 // Default Contact Labels
 define('_AB_EMAIL',             xarML('E-Mail'));  //admin
 define('_AB_FAX',               xarML('Fax'));     //admin
@@ -273,12 +289,12 @@ define('_AB_DEVQA_EMAIL',    __ADDRESSBOOK__."@blacktower.com");
 //
 ////////////////
 
-class abUserException extends DefaultUserException 
+class abUserException extends DefaultUserException
 {
 
     var $errCollection = array();
 
-    function abUserException ($exc) 
+    function abUserException ($exc)
     {
 
         if (is_object($exc)) {

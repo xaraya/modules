@@ -6,7 +6,7 @@
       <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="hidden" value="" />
         </xar:if>
       <input name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" type="hidden" value="#$custUserData[$i]['colName']#" />
-      <input name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" type="hidden" value="#$custUserData[$i]['type']#" />
-      <input name="custUserData[#$i#][label]" id="custUserData[#$i#][label]" type="hidden" value="#$custUserData[$i]['label']#" />
+      <input name="custUserData[#$i#][custType]" id="custUserData[#$i#][custType]" type="hidden" value="#$custUserData[$i]['custType']#" />
+      <input name="custUserData[#$i#][custLabel]" id="custUserData[#$i#][custLabel]" type="hidden" value="#$custUserData[$i]['custLabel']#" />
     </xar:for>
 </xar:if>
