@@ -1,0 +1,143 @@
+#!/bin/bash
+
+# Trigger which does sanity checking to the merged changes
+# this runs in the RESYNC tree.
+
+# Only run this script on the server
+if [ X$BK_SIDE != Xserver ]
+then exit 0
+fi
+
+# Only run this script on *this* server (the xaraya one)
+# or when it is explicitly requested
+THISHOST=`bk gethost`
+if [ $THISHOST != newton.xaraya.com -a X$BK_RUNQA != Xyes ]
+then exit 0
+fi
+
+# Assume all is well
+cancommit=1
+
+function failed() {
+    # $1 test number
+    # $2 msg
+    # $3 result
+    echo
+    echo "FAILED QA test $1: $test $2"
+    echo " --> Line: $3"
+    failed=1
+    cancommit=0
+}
+
+function passed() {
+    # $1 test number
+    if [ $failed = 0 ] ; then
+        echo "PASSED QA test $1: $test"
+    fi
+}
+ 
+# Make sure all files are there
+echo "Getting all necessary files..."
+for i in `bk sfiles -Ug`; do
+    bk get -qS $i
+done
+
+echo "Running some quality assurance checks on the files..."
+echo
+
+# test 1.1 : parse errors are not allowed.
+failed=0
+test="PHP syntax"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    # Test #1.1 : Is it a syntactically valid PHP file
+    result=`php -q -l -f $i`
+    if [ $? -ne 0 ] ; then
+      failed "1.1 " "on $i" "$result"
+    fi
+done
+passed "1.1 "
+
+
+# test 2.10 Dont use short php tag
+failed=0
+test="Short open tags not allowed"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`grep -ni '<?[ ]*[^[xmlphpxar]*$' $i`
+    if [ $? -ne 1 ] ; then
+        failed 2.10 "in $i" $result
+    fi
+done
+passed 2.10
+
+# test 2.11 No tabs
+failed=0
+test="No tabs allowed"
+for i in `bk sfiles -Ug`; do
+    tab=`echo -en "\t"`
+    result=`grep -n '${tab}' $i`
+    if [ $? -ne 1 ] ; then
+        failed 2.11 "in $i" $result
+    fi
+done
+passed 2.11
+
+
+# test 2.13 : use unix line endings
+failed=0
+test="Windows line ending not allowed"
+for i in `bk sfiles -Ug`; do
+    wincr=`echo -en "\n\r"`
+    result=`grep -n '${wincr}' $i`
+    if [ $? -ne 1 ] ; then
+        failed 2.13 "on $i" $result
+    fi
+done
+passed 2.13
+
+# Function use the one true brace convention
+failed=0
+test="Function declaration does not use the right bracing"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`grep -n '[[:space:]]*function .*[(].*[)].*{.*' $i`
+    if [ $? -ne 1 ] ; then
+        failed 2.18 "in $i" $result
+    fi
+done
+passed 2.18 
+
+# Last two characters of a php file are always ?>
+failed=0
+test="No other characters than ?> at the end of php file"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`tail -qc2 $i`
+    result2=`tail -qc3 $i`
+    if [ "X$result" != 'X?>' ] ; then
+        if [ "X$result2" != "X?>" ]; then
+            failed 2.21 "on $i" "last two characters are '$result'"
+        fi
+    fi
+done
+passed 2.21
+
+# Class declations use the one true brace convention
+failed=0
+test="Class declaration does not use the right bracing"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`grep -n '[[:space:]]*class .*{.*' $i`
+    if [ $? -ne 1 ] ; then
+        failed 2.22 "in $i" $result
+    fi
+done
+passed 2.22
+
+if [ $cancommit -eq 0 ] ; then
+    echo 
+    echo "PUSH ABORTED:"
+    echo "I'm sorry, some QA tests failed, i cannot commit these changes"
+    echo "Look at the failures above and fix those first, after that, try again"
+    # exit with code 1, dont even leave something behind
+    exit 1
+fi
+
+# echo "All seems well, continuing to apply the changes"
+exit 0
