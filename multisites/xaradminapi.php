@@ -20,7 +20,7 @@
 function multisites_adminapi_getmenulinks()
 {
 
-    if (!xarSecurityCheck('AdminMultisites')) {
+    if (xarSecurityCheck('AddMultisites',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('multisites',
                                                    'admin',
@@ -29,7 +29,7 @@ function multisites_adminapi_getmenulinks()
                               'label' => xarML('Add'));
     }
 
-    if (!xarSecurityCheck('ReadMultisites')) {
+    if (xarSecurityCheck('ReadMultisites',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('multisites',
                                                    'admin',
@@ -38,7 +38,7 @@ function multisites_adminapi_getmenulinks()
                               'label' => xarML('View'));
     }
 
-    if (!xarSecurityCheck('AdminMultisites')) {
+    if (xarSecurityCheck('AdminMultisites',0)) {
         $menulinks[] = Array('url'   => xarModURL('multisites',
                                                    'admin',
                                                    'modifyconfig'),

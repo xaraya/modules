@@ -1,83 +1,60 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites
-  Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"> 
-  <h2><xar:mlstring>Overview</xar:mlstring></h2>
-  <div style="padding: 1px;" class="xar-norm-outline"> 
-    <div style="float:right;padding:10px;"> <xar:if condition="file_exists('modules/multisites/xarimages/admin.gif')" > 
-      <img src="modules/multisites/xarimages/admin.gif" alt="official icon" width="96" height="96" /> 
-      <xar:else /> <img src="modules/multisites/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" /> 
-      </xar:if> </div>
-    <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;"> 
-      <xar:mlstring>What is it?</xar:mlstring> </div>
-    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-      <p><xar:mlstring>The Multisites Module automates the creation of Xaraya multisites. Using Xaraya Multisites, a Site Administrator can create and run
-        multiple Xaraya sites from a single master installation of Xaraya.</xar:mlstring></p>
-      <p><xar:mlstring>At this time, the Multisites Modules is not complete. However, you can still setup Xaraya multisites manually. See the <a href="http://www.xaraya.com/index.php/docs/180" target="_blank">Xaraya and Multisites tutorial</a> for more information.</xar:mlstring></p>
-    </div>
-    <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-      <xar:mlstring>How to use it?</xar:mlstring> </div>
-    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-      <p><xar:mlstring>To use Xaraya multisites, you must have all domain and
-        subdomains that you wish to use for your 'subsites' resolving to the same
-        IP or directory as your master Xaraya site domain name. </xar:mlstring></p>
-    </div>
-  </div>
-</div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-  <div style="padding: 1px;" class="xar-norm-outline">
-    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-    <p><xar:mlstring>From the menu, you have three choices:</xar:mlstring></p>
-    </div>
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/multisites/xarimages/admin.gif')" >
+               <img src="modules/multisites/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else /> <img src="modules/multisites/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+         </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The Multisites Module automates the creation of Xaraya multisites. Using Xaraya Multisites, a Site Administrator can create and run multiple Xaraya sites from a single master installation of Xaraya.</xar:mlstring></p>
+            <p><xar:mlstring>At this time, the Multisites Module is not complete. However, you can still setup Xaraya multisites manually. See the <a href="http://www.xaraya.com/index.php/docs/180" target="_blank">Xaraya and Multisites tutorial</a> for more information.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>To use Xaraya multisites, you must have all domain and subdomains that you wish to use for your 'subsites' resolving to the same
+             IP or directory as your master Xaraya site domain name. </xar:mlstring></p>
+            <p><xar:mlstring>From the menu, you have three choices:</xar:mlstring></p>
+        </div>
+        <ul>
+            <li>
+                <xar:mlstring>Add /TO DO </xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>View /TO DO</xar:mlstring>
+            </li>
+            <li>
+                <xar:mlstring>Config /TO DO</xar:mlstring>
+            </li>
+        </ul>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+          <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Multisites Module has no blocks included at this time.</xar:mlstring>
+        </div>
+         <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+           <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+           <xar:mlstring>The Multisites Module has no hooks included.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+           <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+      </div>
   </div>
-</div>
-<ul>
-  <li>
-    <div class="xar-mod-body">
-      <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"><xar:mlstring>Add
-          /TO DO </xar:mlstring></div>
-      </div>
-    </div>
-  </li>
-  <li>
-    <div class="xar-mod-body">
-      <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"><xar:mlstring>View
-          /TO DO</xar:mlstring></div>
-      </div>
-    </div>
-  </li>
-  <li>
-    <div class="xar-mod-body">
-      <div style="padding: 1px;" class="xar-norm-outline">
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"><xar:mlstring>Modify
-          Config /TO DO</xar:mlstring></div>
-      </div>
-    </div>
-  </li>
-</ul>
-<div class="xar-mod-body">
-<div style="padding: 1px;" class="xar-norm-outline">
-    <div style="margin-left: 1em; margin-right: 1em; text-align:left;"></div>
-    <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;"> 
-      <xar:mlstring>Included Blocks</xar:mlstring> </div>
-    <br />
-    <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>The 
-      Multisites Module has no blocks included at this time.</xar:mlstring> </div>
-    <br />
-    <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;"> 
-      <xar:mlstring>Included Hooks</xar:mlstring> </div>
-    <br />
-    <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>The 
-      Multisites Module has no hooks included.</xar:mlstring> </div>
-    <br />
-    <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;"> 
-      <xar:mlstring>Extended information about this module can be found here. 
-      [modules module]</xar:mlstring> </div>
-  </div>
-</div>
 <div align="center">
-
 <b><xar:var scope="session" name="$multisites_statusmsg" /></b>
-
 </div>

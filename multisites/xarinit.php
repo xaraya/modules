@@ -67,6 +67,11 @@ global $HTTP_HOST;
 // $output->Text(xarConfigGetVar('master'));
 // return $output->GetOutput();
 // ------
+
+    // Remove Masks and Instances
+    xarRemoveMasks('multisites');
+    xarRemoveInstances('multisites');
+
 return true;
 
 /*
