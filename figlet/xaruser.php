@@ -28,7 +28,7 @@ function figlet_user_main()
                                        'text');
 
     // Security Check
-	if(!xarSecurityCheck('ReadFiglet')) return;
+    if(!xarSecurityCheck('ReadFiglet')) return;
 
     if (!empty($font)) {
         $font = xarVarPrepForDisplay($font);

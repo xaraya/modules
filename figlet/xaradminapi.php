@@ -22,7 +22,7 @@
 function figlet_adminapi_getmenulinks()
 {
     // Security Check
-	if (xarSecurityCheck('AdminFiglet',0)) {
+    if (xarSecurityCheck('AdminFiglet',0)) {
         $menulinks[] = Array('url'   => xarModURL('figlet',
                                                   'admin',
                                                   'modifyconfig'),

@@ -53,8 +53,8 @@ function figlet_userapi_transform($args)
 //
 function figlet_transform($text) 
 {
-	// pad it with a space so we can match things at the start of the 1st line.
-	$ret = " " . $text;
+    // pad it with a space so we can match things at the start of the 1st line.
+    $ret = " " . $text;
 
     $phpFiglet = new phpFiglet();
 
