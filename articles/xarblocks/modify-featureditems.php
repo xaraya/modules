@@ -21,7 +21,7 @@
 function articles_featureditemsblock_modify($blockinfo)
 {
     // Get current content
-    if (is_string($blockinfo['content'])) {
+    if (!is_array($blockinfo['content'])) {
         $vars = @unserialize($blockinfo['content']);
     } else {
         $vars = $blockinfo['content'];

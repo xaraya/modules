@@ -14,7 +14,9 @@
  */
 function articles_relatedblock_init()
 {
-    return true;
+    return array(
+        'numitems' => 5
+    );
 }
 
 /**
@@ -23,13 +25,15 @@ function articles_relatedblock_init()
 function articles_relatedblock_info()
 {
     // Values
-    return array('text_type' => 'Related',
-                 'module' => 'articles',
-                 'text_type_long' => 'Show related categories and author links',
-                 'allow_multiple' => true,
-                 'form_content' => false,
-                 'form_refresh' => false,
-                 'show_preview' => true);
+    return array(
+        'text_type' => 'Related',
+        'module' => 'articles',
+        'text_type_long' => 'Show related categories and author links',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+        'show_preview' => true
+    );
 }
 
 /**
@@ -38,17 +42,21 @@ function articles_relatedblock_info()
 function articles_relatedblock_display($blockinfo)
 {
     // Security check
-    if(!xarSecurityCheck('ReadArticlesBlock',1,'Block',$blockinfo['title'])) return;
+    if (!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Defaults
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     }
 
-// Trick : work with cached variables here (set by the module function)
+    // Trick : work with cached variables here (set by the module function)
 
     // Check if we've been through articles display
     if (!xarVarIsCached('Blocks.articles','aid')) {
@@ -64,14 +72,14 @@ function articles_relatedblock_display($blockinfo)
         if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
             $vars['pubtypelink'] = xarModURL('articles','user','view',
                                              array('ptid' => $ptid));
-            $vars['pubtypename'] = xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
+            $vars['pubtypename'] = $pubtypes[$ptid]['descr'];
             $links++;
         }
     }
     // Show categories (for now)
     if (xarVarIsCached('Blocks.articles','cids')) {
         $cids = xarVarGetCached('Blocks.articles','cids');
-// TODO: add related links
+        // TODO: add related links
     }
     // Show author (for now)
     if (xarVarIsCached('Blocks.articles','authorid') &&
@@ -81,7 +89,7 @@ function articles_relatedblock_display($blockinfo)
         if (!empty($authorid) && !empty($author)) {
             $vars['authorlink'] = xarModURL('articles','user','view',
                                             array('authorid' => $authorid));
-            $vars['authorname'] = xarVarPrepForDisplay($author);
+            $vars['authorname'] = $author;
             $links++;
         }
     }
@@ -90,14 +98,11 @@ function articles_relatedblock_display($blockinfo)
 
     // Populate block info and pass to theme
     if ($links > 0) {
-        if (empty($blockinfo['template'])) {
-            $template = 'related';
-        } else {
-            $template = $blockinfo['template'];
-        }
-        $blockinfo['content'] = xarTplBlock('articles',$template,$vars);
+        $blockinfo['content'] = $vars;
         return $blockinfo;
     }
+
+    return;
 }
 
 
@@ -107,16 +112,21 @@ function articles_relatedblock_display($blockinfo)
 function articles_relatedblock_modify($blockinfo)
 {
     // Get current content
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Defaults
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     }
-    $vars['blockid'] = $blockinfo['bid'];
+
+    $vars['bid'] = $blockinfo['bid'];
 
     // Return output
-    return xarTplBlock('articles','relatedAdmin',$vars);
+    return $vars;
 }
 
 /**
@@ -124,9 +134,12 @@ function articles_relatedblock_modify($blockinfo)
  */
 function articles_relatedblock_update($blockinfo)
 {
-    $vars['numitems'] = xarVarCleanFromInput('numitems');
+    $vars = array();
+    if (!xarVarFetch('numitems', 'int:1', $numitems, 5, XARVAR_NOT_REQUIRED)) {return;}
 
-    $blockinfo['content'] = serialize($vars);
+    $vars['numitems'] = $numitems;
+
+    $blockinfo['content'] = $vars;
 
     return $blockinfo;
 }

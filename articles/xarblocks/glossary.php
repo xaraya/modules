@@ -14,8 +14,11 @@
  */
 function articles_glossaryblock_init()
 {
-    // TODO: initialise data.
-    return true;
+    return array(
+        'paramname' => 'glossaryterm',
+        'ptid' => 0,
+        'cid' => 0
+    );
 }
 
 /**
@@ -45,7 +48,11 @@ function articles_glossaryblock_display($blockinfo)
     //if(!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Get the glossary parameter.
     // TODO: make parameter name configurable.
@@ -91,12 +98,12 @@ function articles_glossaryblock_display($blockinfo)
 
     // Replace the string '{term}' in the title with the term.
     // Note: the prep display prevents injected tags being rendered.
+    // The title of a block does not go through any further tag stripping
+    // because it is normally under admin control (the admin may wish to
+    // add working tags to the title).
     $blockinfo['title'] = str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $blockinfo['title']);
 
-    // TODO: return $vars without rendering when the core supports it. The following
-    // (commented out) line should be all that is needed.
-    //$blockinfo['content'] = $vars;
-    $blockinfo['content'] = xarTplBlock('articles', 'glossary', $vars);
+    $blockinfo['content'] = $vars;
 
     return $blockinfo;
 }
@@ -108,7 +115,11 @@ function articles_glossaryblock_display($blockinfo)
 function articles_glossaryblock_modify($blockinfo)
 {
     // Get current content
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Pub type drop-down list values.
     $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
@@ -130,9 +141,7 @@ function articles_glossaryblock_modify($blockinfo)
     $vars['bid'] = $blockinfo['bid'];
 
     // Return output
-    // TODO: just return $vars, and allow the handler to call the template (articles/admin-glossary?)
-    // We certainly need to get rid of that mixed case.
-    return xarTplBlock('articles', 'glossaryAdmin', $vars);
+    return $vars;
 }
 
 /**
@@ -142,11 +151,11 @@ function articles_glossaryblock_update($blockinfo)
 {
     $vars = array();
 
-    xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
     xarVarFetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
 
-    $blockinfo['content'] = serialize($vars);
+    $blockinfo['content'] = $vars;
     return $blockinfo;
 }
 

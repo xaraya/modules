@@ -16,7 +16,11 @@
 function articles_topitemsblock_modify($blockinfo)
 {
     // Get current content
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');

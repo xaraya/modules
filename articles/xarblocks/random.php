@@ -17,18 +17,16 @@
 function articles_randomblock_init()
 {
     // Default values to initialize the block.
-    return serialize(
-        array(
-            'ptid' => '',
-            'cid' => '',
-            'status' => '3,2',
-            'refreshtime' => 60*24,
-            'showtitle' => true,
-            'showpubdate' => false,
-            'showauthor' => false,
-            'showsubmit' => false,
-            'showsummary' => true
-        )
+    return array(
+        'ptid' => '',
+        'cid' => '',
+        'status' => '3,2',
+        'refreshtime' => 60*24,
+        'showtitle' => true,
+        'showpubdate' => false,
+        'showauthor' => false,
+        'showsubmit' => false,
+        'showsummary' => true
     );
 }
 
@@ -58,7 +56,11 @@ function articles_randomblock_display($blockinfo)
     if (!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from block content.
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Allow refresh by setting refreshrandom variable
     xarVarFetch('refreshrandom', 'checkbox', $refreshrandom, false, XARVAR_NOT_REQUIRED);
@@ -189,7 +191,11 @@ function articles_randomblock_display($blockinfo)
 function articles_randomblock_modify($blockinfo)
 {
     // Get current content
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Defaults
     //$vars = _articles_randomblock_checkdefaults($vars);
@@ -224,7 +230,7 @@ function articles_randomblock_update($blockinfo)
     if (!xarVarFetch('showsubmit', 'checkbox', $vars['showsubmit'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED)) {return;}
 
-    $blockinfo['content'] = serialize($vars);
+    $blockinfo['content'] = $vars;
 
     // Clear the cache.
     // TODO: centralise this facility for all blocks.
