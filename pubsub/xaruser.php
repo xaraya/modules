@@ -84,11 +84,14 @@ function pubsub_user_displayicon($args)
  * @returns output
  * @return output with pubsub information
  */
-function pubsub_user_subscribe($args)
+function pubsub_user_subscribe()
 {
-    list($modid,$cid,$itemtype) = xarVarCleanFromInput('modid','cid','itemtype');
+    list($modid,
+         $cid,
+         $itemtype) = xarVarCleanFromInput('modid',
+                                           'cid',
+                                           'itemtype');
 
-    extract($args);
     // Argument check
     $invalid = array();
     if (!isset($modid) || !is_numeric($modid)) {
@@ -108,6 +111,10 @@ function pubsub_user_subscribe($args)
         return;
     }
 		    
+    // What is groupdescr???
+    if (!isset($groupdescr))
+        $groupdescr = 'Subscribe';
+
     // Database information
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -115,8 +122,16 @@ function pubsub_user_subscribe($args)
     $pubsubeventcidstable = $xartable['pubsub_eventcids'];
 
     // make sure event exists, create it if necessary
-    if (!xarModAPILoad('pubsub','admin')) return;    
-    pubsub_adminapi_createhook($cid, $itemtype, $modid);
+    $extrainfo = array('modid' => $modid,
+                       'cid' => $cid,
+                       'itemtype' => $itemtype,
+                       'groupdescr' => $groupdescr); 
+
+    if (!xarModAPIFunc('pubsub',
+                       'admin',
+                       'createhook',
+                        array('extrainfo' => $extrainfo)));
+        return; // throw back
 
     // fetch eventid to subscribe to
     $query = "SELECT $pubsubeventstable.xar_eventid
@@ -130,12 +145,16 @@ function pubsub_user_subscribe($args)
     if (!$result) return;
     $eventid = $result->fields[0];
 
-    if (!xarModAPILoad('pubsub','user')) return;    
 // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
-// AM hardcoding actionid to 'mail' for now, will have to work out options for htmlmail etc. later
-    pubsub_userapi_adduser($eventid,'mail');
+// AM hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
+    if (!xarModAPIFunc('pubsub',
+                       'user',
+                       'adduser',
+                        array('eventid' => $eventid,
+                              'actionid' => 1)))
+        return; // throw back
 
-    return;
+    return true;
 }
 
 /**
@@ -148,7 +167,11 @@ function pubsub_user_subscribe($args)
  */
 function pubsub_user_unsubscribe($args)
 {
-    list($modid,$cid,$itemtype) = xarVarCleanFromInput('modid','cid','itemtype');
+    list($modid,
+         $cid,
+         $itemtype) = xarVarCleanFromInput('modid',
+                                           'cid',
+                                           'itemtype');
 
     extract($args);
     // Argument check
@@ -185,13 +208,17 @@ function pubsub_user_unsubscribe($args)
 	    AND   $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
         
     $result = $dbconn->Execute($query);
-    if (!$result) return;
-    $eventid = $result->fields[0];
-    
-    if (!xarModAPILoad('pubsub','user')) return;    
-    pubsub_userapi_deluser($eventid);
+    if (!$result || $result->EOF) return;
 
-    return;
+    list($eventid) = $result->fields;
+    
+    if (!xarModAPIFunc('pubsub',
+                       'user',
+                       'deluser',
+                        array('eventid' => $eventid)))
+        return; // throw back
+
+    return true;
 }
 
 /**
@@ -217,10 +244,13 @@ function pubsub_user_remove($args)
         return;
     }
 		    
-    if (!xarModAPILoad('pubsub','user')) return;    
-    pubsub_userapi_deluser($eventid);
+    if (!xarModAPIFunc('pubsub',
+                       'user',
+                       'deluser',
+                        array('eventid' => $eventid)))
+        return; // throw back
 
-    return;
+    return true;
 }
 
 

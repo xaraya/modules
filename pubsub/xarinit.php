@@ -35,7 +35,7 @@ function pubsub_init()
         'xar_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_modid'=>array('type'=>'integer','null'=>FALSE),
         'xar_itemtype'=>array('type'=>'integer','null'=>FALSE),
-        'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE)
+        'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE,'default'=>'')
     );
     $query = xarDBCreateTable($pubsubeventstable,$eventsfields);
     $result =& $dbconn->Execute($query);
