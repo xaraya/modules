@@ -1,0 +1,20 @@
+Some needed bk commands I collected while using it
+
+*** To understand which ranges to use when making a patch
+bk changes -L 
+	what is unique in local copy
+bk changes -R 
+	what is unique in parent copy
+bk chanbes -Lv
+	gives more details
+
+*** To resolve convlicts
+bk -U sfiles -cg
+	(this should generate some files in PENDING)
+bk takepatch PENDING/filename
+bk resolve
+
+
+*** Other useful stuff
+bk help ranges
+	some help with ranges
