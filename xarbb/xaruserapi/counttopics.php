@@ -23,7 +23,7 @@ function xarbb_userapi_counttopics($args)
 
     if (!isset($fid)) {
         $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2)', '', 'userapi', 'counttopics', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();

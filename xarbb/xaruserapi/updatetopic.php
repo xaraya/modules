@@ -53,7 +53,7 @@ function xarbb_userapi_updatetopic($args)
     if ( isset($invalid) ) {
         $msg = xarML('Invalid Parameter Count',
                     join(', ',$invalid), 'admin', 'create', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

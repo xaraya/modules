@@ -24,7 +24,7 @@ function xarbb_userapi_countposts($args)
     if (!isset($uid)) {
         $msg = xarML('Invalid Parameter Count',
                     '', 'userapi', 'get', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

@@ -52,7 +52,7 @@ function xarbb_user_viewtopic($args)
 
     if ($topic['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
         return;
     }
 

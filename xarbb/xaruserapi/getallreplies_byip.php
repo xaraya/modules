@@ -27,7 +27,7 @@ function xarbb_userapi_getallreplies_byip($args)
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
                                  'modid', $modid, 'userapi', 'get_multiple', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                                         new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return false;
     }

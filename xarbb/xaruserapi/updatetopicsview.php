@@ -20,7 +20,7 @@ function xarbb_userapi_updatetopicsview($args)
     // Argument check
     if (!isset($tid)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -33,7 +33,7 @@ function xarbb_userapi_updatetopicsview($args)
 
         if (empty($topic)) {
             $msg = xarML('No Such Topic Present');
-            xarExceptionSet(XAR_USER_EXCEPTION,
+            xarErrorSet(XAR_USER_EXCEPTION,
                             'MISSING_DATA',
                              new DefaultUserException($msg));
             return;

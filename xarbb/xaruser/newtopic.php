@@ -30,7 +30,7 @@ function xarbb_user_newtopic()
         if (!xarUserIsLoggedIn()){
             unset($tid);
             $msg = xarML('You do not have access to modify this topic.');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }
     }

@@ -25,7 +25,7 @@ function xarbb_admin_view()
         $data['isforums']=false;
         //<jojodee> Handle it ourselves Bug #2455 
         //$msg = xarML('There are no Forums registered for viewing.  Please add a forum.');
-        // xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        // xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return $data;
     }
     $totlinks=count($links);

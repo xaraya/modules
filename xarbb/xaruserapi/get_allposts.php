@@ -29,7 +29,7 @@ function xarbb_userapi_get_allposts($args)
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
                                  'modid', $modid, 'userapi', 'get_multiple', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                                         new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return false;
     }
@@ -37,7 +37,7 @@ function xarbb_userapi_get_allposts($args)
     if ( (!isset($objectid) || empty($objectid)) && !isset($author) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
                                  'objectid', $objectid, 'userapi', 'get_multiple', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                                         new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return false;
     } else
@@ -133,7 +133,7 @@ function xarbb_userapi_get_allposts($args)
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return;
     }
 
@@ -152,7 +152,7 @@ function xarbb_userapi_get_allposts($args)
 
     if (!comments_renderer_array_markdepths_bypid($commentlist)) {
         $msg = xarML('Unable to create depth by pid');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return;
     }
 

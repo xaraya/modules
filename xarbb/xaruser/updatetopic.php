@@ -29,7 +29,7 @@ function xarbb_user_updatetopic()
 
     if ($data['tstatus'] == 3) {
         $msg = xarML('Topic -- #(1) -- has been locked by administrator', $data['ttitle']);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
         return;
     }
 

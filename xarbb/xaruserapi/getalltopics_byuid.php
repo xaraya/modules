@@ -37,7 +37,7 @@ function xarbb_userapi_getalltopics_byuid($args)
 
     if (empty($uid)) {
         $msg = xarML('Invalid Parameter Count', '', 'userapi', 'getalltopics_byuid', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

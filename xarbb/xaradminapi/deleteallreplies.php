@@ -25,7 +25,7 @@ function xarbb_adminapi_deleteallreplies($args)
     // Argument check
     if (!isset($tid))  {
         $msg = xarML('Invalid Parameter Count in #(1), #(2), #(3)', 'admin', 'deleteallreplies', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -34,7 +34,7 @@ function xarbb_adminapi_deleteallreplies($args)
 
     if (!$topic){
         $msg = xarML('Could not get topic in #(1), #(2), #(3)', 'admin', 'deleteallreplies', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

@@ -28,7 +28,7 @@ function xarbb_userapi_getnexttopicid($args)
     if (empty($tid) && (empty($fid) || empty($ttime))) {
         $msg = xarML('Invalid Parameter Count in #(1) function #(2) of module #(3)',
                      'userapi', 'getnexttopicid', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

@@ -28,7 +28,7 @@ function xarbb_userapi_updateforumview($args)
     // Argument check
     if (empty($fid)) {
         $msg = xarML('Invalid Parameter Count in #(1)api_#(2) in module #(3)', 'user', 'updateforumsview', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -39,7 +39,7 @@ function xarbb_userapi_updateforumview($args)
                            array('fid' => $fid));
     if (empty($forum)) {
         $msg = xarML('No Such Forum Present');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 */

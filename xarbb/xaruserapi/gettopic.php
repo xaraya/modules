@@ -24,7 +24,7 @@ function xarbb_userapi_gettopic($args)
 
     if (!isset($tid)) {
         $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -70,7 +70,7 @@ function xarbb_userapi_gettopic($args)
 
     if($result->EOF)     {
         $msg = xarML('Topic with ID #(1) does not exist',$tid);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
         return;
     }
   

@@ -29,7 +29,7 @@ function xarbb_user_newreply()
 
         if ($data['tstatus'] == 3) {
             $msg = xarML('Topic -- #(1) -- has been locked by administrator', $data['ttitle']);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'LOCKED_TOPIC', new SystemException($msg));
             return;
         }
 
@@ -71,7 +71,7 @@ function xarbb_user_newreply()
         if (!xarUserIsLoggedIn()){
             unset($cid);
             $msg = xarML('You do not have access to modify this topic.');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }
 
