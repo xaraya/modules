@@ -52,7 +52,8 @@ function search_user_handlesearch()
         return ($list['module'] == $search_in_module) && ($list['area'] == "API");
     }
 
-    function highlight_match(&$match,$key, $term) {    
+    function highlight_match(&$match,$key, $term) 
+    {    
         // FIXME: This doesn't belong in code, it's a template function
         // <xar:transform> or something like that. Transform hook seems a bit over the top for this
         $match['context'] = str_replace($term, "<span class=\"xar-search-match\">$term</span>",$match['context']);
