@@ -47,6 +47,8 @@ function tinymce_init()
     xarModSetVar('tinymce','tinydate', '');
     xarModSetVar('tinymce','tinytime', '');
     xarModSetVar('tinymce', 'tinybr', 'false');
+    xarModSetVar('tinymce', 'tinyinvalid', '');    
+    xarModSetVar('tinymce', 'tinyadvformat', '');
 
 //Set masks
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
@@ -119,6 +121,11 @@ function tinymce_upgrade($oldversion)
     return tinymce_upgrade('0.1.2');
     break;
     case '0.1.2':
+    xarModSetVar('tinymce', 'tinyadvformat', '');
+    xarModSetVar('tinymce', 'tinyinvalid', '');
+    return tinymce_upgrade('0.1.3');
+    break;
+    case '0.1.3':
     // Current version
     break;
     }

@@ -54,6 +54,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinycsslist', 'str:1:', $tinycsslist, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
                 xarModSetVar('tinymce', 'tinyextended', $tinyextended);
                 xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
                 xarModSetVar('tinymce','tinyencode', $tinyencode); //not used at this stage
@@ -61,6 +62,7 @@ function tinymce_admin_updateconfig()
                 xarModSetVar('tinymce', 'tinycsslist', $tinycsslist);
                 xarModSetVar('tinymce','tinydate', $tinydate);
                 xarModSetVar('tinymce','tinytime', $tinytime);
+                xarModSetVar('tinymce','tinyinvalid', $tinyinvalid);
 
             break;
         case 'customadvanced':
@@ -73,6 +75,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinybuild1','str:1:',$tinybuild1,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybuild2','str:1:',$tinybuild2,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybuild3','str:1:',$tinybuild3,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyadvformat','str:1:',$tinyadvformat,'',XARVAR_NOT_REQUIRED)) return;
 
                xarModSetVar('tinymce', 'tinyexstyle', $tinyexstyle); //not used at this stage
                xarModSetVar('tinymce', 'tinytoolbar', $tinytoolbar);
@@ -82,6 +85,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinybuild1', $tinybuild1);
                xarModSetVar('tinymce', 'tinybuild2', $tinybuild2);
                xarModSetVar('tinymce', 'tinybuild3', $tinybuild3);
+               xarModSetVar('tinymce', 'tinyadvformat', $tinyadvformat);
                xarModSetVar('tinymce', 'tinybuttonsremove', $tinybuttonsremove);
 
            break;
@@ -122,6 +126,9 @@ function tinymce_admin_updateconfig()
     if (xarModGetVar('tinymce','tinybr')=='true'){
         $jstext .='force_br_newlines: "true",';
     }
+   if (trim(xarModGetVar('tinymce','tinyinvalid')) <> '') {
+          $jstext .='invalid_elements  : "'.trim(xarModGetVar('tinymce','tinyinvalid')).'",';
+    }
     if (trim(xarModGetVar('tinymce','tinydate')) <> '') {
           $jstext .='plugin_insertdate_dateFormat  : "'.trim(xarModGetVar('tinymce','tinydate')).'",';
     }
@@ -149,12 +156,17 @@ function tinymce_admin_updateconfig()
         if (trim(xarModGetVar('tinymce','tinybuild1')) <> '') {
           $jstext .='theme_advanced_buttons1 : "'.xarModGetVar('tinymce','tinybuild1').'",';
         }
-        if (xarModGetVar('tinymce','tinybuild2') <> '') {
+        if (trim(xarModGetVar('tinymce','tinybuild2')) <> '') {
           $jstext .='theme_advanced_buttons2 : "'.xarModGetVar('tinymce','tinybuild2').'",';
         }
-        if (xarModGetVar('tinymce','tinybuild3') <> '') {
+        if (trim(xarModGetVar('tinymce','tinybuild3')) <> '') {
           $jstext .='theme_advanced_buttons3 : "'.xarModGetVar('tinymce','tinybuild3').'",';
         }
+        
+        if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
+          $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'",';
+        }
+
 
     }
 

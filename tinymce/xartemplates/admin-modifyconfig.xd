@@ -208,14 +208,32 @@
             </span>
         </div>
         <div style="clear: both; width: 98%; padding-top: 10px;">
-            <span style="float:left; width: 30%; text-align: right;"><xar:mlstring><strong>All text areas</strong> :</xar:mlstring></span>
-                <span style="float: right; width: 68%; text-align: left;"><xar:mlstring>will convert all textareas contained or included in the template where you have the XarTinymce tags (default value)</xar:mlstring>
-                </span>
-                <p style="clear:both;"><span style="float:left; width: 30%; text-align: right;"><xar:mlstring><strong>Special Labelled only</strong> :  </xar:mlstring>
+            <span style="float:left; width: 30%; text-align: right;">
+                <xar:mlstring><strong>All text areas</strong> :</xar:mlstring>
+            </span>
+            <span style="float: right; width: 68%; text-align: left;">
+                <xar:mlstring>will convert all textareas contained or included in the template where you have the XarTinymce tags (default value)</xar:mlstring>
+            </span>
+             <p style="clear:both;">
+            <span style="float:left; width: 30%; text-align: right;">
+                <xar:mlstring><strong>Special Labelled only</strong> :  </xar:mlstring>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                   <xar:mlstring>will convert all specifically marked textareas and divs in the template where you have added the tinymce template tags above and and where you have <strong>specifically marked</strong> the div or textareas with the attribute <code>mce_editable="true"</code></xar:mlstring>
             </span>
+            </p>
+             <p style="clear:both;">
+            <span style="float:left; width: 30%; text-align: right;">
+                <xar:mlstring><strong>Dynamic Data Property</strong> :  </xar:mlstring>
+            </span>
+            <span style="float: right; width: 68%; text-align: left;">
+                  <xar:mlstring>You can now use a TinyMCE Dynamic Data WYSIWYG textarea with either of the above
+                  modes. Install and add the XarTinyMCE code to your templates as usual. Add a 
+                  XarTinyMCE GUI TextArea Dynamic Data property to your publication types, or
+                  other modules (in usual way). You can set the row height and column width in the 
+                  validation field of the DD property. eg 20:80 for 20 rows high, 80 columns wide.</code></xar:mlstring>
+            </span>
+             </p>
         </div>
         
         <xar:comment> Remove until supported
@@ -349,6 +367,17 @@
                 <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="80" maxlength="240" />
             </span>
         </div>
+        
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#xarML('List of html tags that are not allowed, separated by commas. These will be stripped from the textarea.')#">
+                    <label for="tinyinvalid"><xar:mlstring>Tags that are NOT allowed:</xar:mlstring></label>
+                </span>
+            </span>
+            <span style="float: right; width: 68%; text-align: left;">
+                <input type="text" name="tinyinvalid" id="tinyinvalid" value="#$tinyinvalid#" size="80" maxlength="240" />
+            </span>
+        </div>
 
         <div style="clear: both; padding-top: 10px;">
             <span style="float: left; width: 30%; text-align: right;">
@@ -442,6 +471,17 @@
             </span>
         </div>
         </xar:comment>
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#xarML('Comma separated list of block formats to be used in format drop down list.')#">
+                    <label for="tinyadvformat"><xar:mlstring>List of block formats:</xar:mlstring></label>
+                </span>
+            </span>
+            <span style="float: right; width: 68%; text-align: left;">
+                <input type="text" name="tinyadvformat" id="tinyadvformat" value="#$tinyadvformat#" size="60" maxlength="240" />
+                    <p><xar:mlstring>These will defalut to p, address, pre, h1, h2, h3, h4, h5 and h6 if this option is left blank.</xar:mlstring></p>
+            </span>
+        </div>
 
         <div style="clear: both; padding-top: 10px;">
             <span style="float: left; width: 30%; text-align: right;">
@@ -509,10 +549,7 @@
             <strong><xar:mlstring>Build Your Own Layout:</xar:mlstring></strong>
             </span>
         <div style="float: right; width: 68%; text-align: left; ">
-            <xar:mlstring>You can define your own Custom Editor Layout from here using existing buttons.
-            Blank line will default to the original theme buttons for that line.</xar:mlstring>
-            <p><xar:mlstring>NOTE: SPACES in the line will result in a BLANK line - NO BUTTONS! Make 
-            sure you clear the lines fully if you want to use other Advanced Theme Options above.</xar:mlstring></p>
+            <xar:mlstring>You can define your own Custom Editor Layout from here using existing buttons.</xar:mlstring>
         </div>
         <div style="clear: both; padding-top: 10px;">
             <span style="float: left; width: 30%; text-align: right;">

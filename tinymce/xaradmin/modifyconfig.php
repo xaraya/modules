@@ -51,6 +51,8 @@ function tinymce_admin_modifyconfig()
     $data['tinydate']=xarModGetVar('tinymce', 'tinydate');
     $data['tinytime']=xarModGetVar('tinymce', 'tinytime');
     $data['tinybr']=xarModGetVar('tinymce', 'tinybr');
+    $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');    
+    $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');        
     if (strpos($data['tinyplugins'], 'insertdatetime')) {
         $data['dateplug']=1;
     } else {
