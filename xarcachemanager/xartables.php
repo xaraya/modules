@@ -19,7 +19,8 @@ function xarcachemanager_xartables()
     $xartable = array();
 
     // Set the table names
-    $xartable['cache_blocks'] = xarDBGetSiteTablePrefix() . '_cache_blocks';
+    $xartable['cache_blocks'] = xarDBGetSiteTablePrefix() . '_cache_blocks'; // cfr. blocks module
+    $xartable['cache_data'] = xarDBGetSiteTablePrefix() . '_cache_data';
 
     // Return the table information
     return $xartable;

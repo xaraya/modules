@@ -53,6 +53,22 @@
                 <input type="text" name="cachesizelimit" id="cachesizelimit" value="#$settings.OutputSizeLimit#" size="4" maxlength="4" />
             </td>
         </tr>
+<xar:comment> TODO
+        <tr>
+            <td><span class="help" title="#xarML('Specify where the cached data should be stored.')#">
+            <label for="cachestorage">
+                <xar:mlstring>Cache Storage:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <select name="cachestorage" id="cachestorage">
+                    <option value="fs"><xar:mlstring>Filesystem</xar:mlstring></option>
+                    <option value="db"><xar:mlstring>Database</xar:mlstring></option>
+                    <option value="mc"><xar:mlstring>MemCached</xar:mlstring></option>
+                    <option value="..">...</option>
+                </select>
+            </td>
+        </tr>
+</xar:comment>
         <tr>
             <td colspan="2"><h3><xar:mlstring>Page Output Cache Settings</xar:mlstring></h3></td>
         </tr>
