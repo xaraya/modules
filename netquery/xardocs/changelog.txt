@@ -14,3 +14,5 @@ Version 2.0 2004-12-01
    - added user submissions for services/exploits
    - added admin notification on new submissions
    - updated manual and other refs to reflect changes
+Version 2.0.1 2004-12-20
+   - minor template changes for Xaraya 0.9.11

@@ -29,7 +29,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                     <xar:if condition="!empty($loglink)">
                         ~ <a href=javascript:openwindow("#$loglink['url']#");>#$loglink['label']#</a>
                     </xar:if>
-            </td></tr><tr align="right"><td colspan=2>
+            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="logfile_local"><xar:mlstring>At Filepath:</xar:mlstring></label></span>
                 <input type="text" name="logfile_local" id="logfile_local" value="#$logfile['exec_local']#" size="30" maxlength="100" />
             </td><td>&nbsp;&nbsp;&nbsp;
@@ -43,7 +43,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                     </xar:if>
                     <xar:mlstring>Enable Whois Search</xar:mlstring>
                     ~ <a href="#$wivlink['url']#">#$wivlink['title']#</a>
-            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td></tr><tr><td colspan=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('Maximum simultaneous whois lookups')#"><label for="whois_max_limit"><xar:mlstring>Max Entries:</xar:mlstring></label></span>
                 <select name="whois_max_limit" id="whois_max_limit">
                 <xar:foreach in="$whoislimits" value="$whoislimit">
@@ -86,7 +86,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                     <xar:mlstring>Enable Port Check</xar:mlstring>
                     ~ <a href="#$ptvlink['url']#">#$ptvlink['title']#</a>
                     ~ <a href="#$flvlink['url']#">#$flvlink['title']#</a>
-            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td></tr><tr><td colspan=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <xar:if condition="$user_submissions">
                         <input type="checkbox" name="user_submissions" id="user_submissions" value="1" checked="checked">
                     <xar:else />
@@ -113,16 +113,9 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                         <input type="checkbox" name="ping_enabled" id="ping_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Local ICMP Ping</xar:mlstring>
-            </td></tr><tr align="right"><td colspan=2>
+            </td></tr><tr><td colspan=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('Local ping EXECUTABLE including path if necessary')#"><label for="pingexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
                 <input type="text" name="pingexec_local" id="pingexec_local" value="#$pingexec['exec_local']#" size="30" maxlength="100" />
-            </td><td>
-                <span class="help" title="#xarML('CHECK BOX if local system is Microsoft Windows')#"><label for="pingexec_winsys"><xar:mlstring>MS Windows:</xar:mlstring></label></span>
-                    <xar:if condition="$pingexec['exec_winsys']">
-                        <input type="checkbox" name="pingexec_winsys" id="pingexec_winsys" value="1" checked="checked">
-                    <xar:else />
-                        <input type="checkbox" name="pingexec_winsys" id="pingexec_winsys" value="1">
-                    </xar:if>
             </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$ping_remote_enabled">
                         <input type="checkbox" name="ping_remote_enabled" id="ping_remote_enabled" value="1" checked="checked">
@@ -130,10 +123,10 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                         <input type="checkbox" name="ping_remote_enabled" id="ping_remote_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Remote ICMP Ping</xar:mlstring>
-            </td></tr><tr align="right"><td colspan=2>
+            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('URL for remote system ping script')#"><label for="pingexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
                 <input type="text" name="pingexec_remote" id="pingexec_remote" value="#$pingexec['exec_remote']#" size="30" maxlength="100" />
-            </td><td>
+            </td><td>&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('Remote ping script url?PARAM=target')#"><label for="pingexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
                 <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec['exec_remote_t']#" size="6" maxlength="10" />
             </td></tr><tr align="left"><td colspan=3>
@@ -143,16 +136,9 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                         <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Local Traceroute</xar:mlstring>
-            </td></tr><tr align="right"><td colspan=2>
+            </td></tr><tr><td colspan=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('Local traceroute EXECUTABLE including path if necessary')#"><label for="traceexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
                 <input type="text" name="traceexec_local" id="traceexec_local" value="#$traceexec['exec_local']#" size="30" maxlength="100" />
-            </td><td>
-                <span class="help" title="#xarML('CHECK BOX if local system is Microsoft Windows')#"><label for="traceexec_winsys"><xar:mlstring>MS Windows:</xar:mlstring></label></span>
-                    <xar:if condition="$traceexec['exec_winsys']">
-                        <input type="checkbox" name="traceexec_winsys" id="traceexec_winsys" value="1" checked="checked"><br />
-                    <xar:else />
-                        <input type="checkbox" name="traceexec_winsys" id="traceexec_winsys" value="1"><br />
-                    </xar:if>
             </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$trace_remote_enabled">
                         <input type="checkbox" name="trace_remote_enabled" id="trace_remote_enabled" value="1" checked="checked">
@@ -160,10 +146,10 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                         <input type="checkbox" name="trace_remote_enabled" id="trace_remote_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Remote Traceroute</xar:mlstring>
-            </td></tr><tr align="right"><td colspan=2>
+            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('URL for remote system traceroute script')#"><label for="traceexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
                 <input type="text" name="traceexec_remote" id="traceexec_remote" value="#$traceexec['exec_remote']#" size="30" maxlength="100" />
-            </td><td>
+            </td><td>&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('Remote script traceroute url?PARAM=target')#"><label for="traceexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
                 <input type="text" name="traceexec_remote_t" id="traceexec_remote_t" value="#$traceexec['exec_remote_t']#" size="6" maxlength="10" />
             </td></tr><tr align="left"><td colspan=3>

@@ -66,6 +66,7 @@ function netquery_user_main()
     {
         $readbuf = '';
         $nextServer = '';
+        $extra = '';
         $target = $data['host'];
         $whois_server = "whois.arin.net";
         $msg = ('<p><b>IP Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
@@ -82,15 +83,12 @@ function netquery_user_main()
                 }
                 @fclose($sock);
             }
-            //declare extra var
-            $extra='';
             if (eregi("RIPE.NET", $readbuf))
                 $nextServer = "whois.ripe.net";
             else if (eregi("whois.apnic.net", $readbuf))
                 $nextServer = "whois.apnic.net";
             else if (eregi("nic.ad.jp", $readbuf)) {
                 $nextServer = "whois.nic.ad.jp";
-                /* /e suppresses Japanese character output from JPNIC */
                 $extra = "/e";
             }
             else if (eregi("whois.registro.br", $readbuf))
@@ -129,6 +127,7 @@ function netquery_user_main()
     else if ($data['querytype'] == 'dig')
     {
         $target = $data['host'];
+        $digparam = $data['digparam'];
         $msg = ('<p><b>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (eregi("[a-zA-Z]", $target))
             $ntarget = gethostbyname($target);
@@ -138,7 +137,7 @@ function netquery_user_main()
             $msg .= 'DNS query (Dig) requires a hostname.';
         } else {
             if (! eregi("[a-zA-Z]", $target) ) $target = $ntarget;
-            if (! $msg .= trim(nl2br(`dig any '$target'`)))
+            if (! $msg .= trim(nl2br(`dig $digparam '$target'`)))
                 $msg .= "The <i>dig</i> command is not working on your system.";
         }
         $msg .= '</blockquote></p>';
@@ -216,7 +215,7 @@ function netquery_user_main()
         $tpoints = $data['maxp'];
         $pexec = $data['pingexec'];
         $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if ($pexec['exec_winsys']) {$PN=$pexec['exec_local'].' -n '.$tpoints.' '.$target;}
+        if ($data['winsys']) {$PN=$pexec['exec_local'].' -n '.$tpoints.' '.$target;}
         else {$PN=$pexec['exec_local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
         exec($PN, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
@@ -237,7 +236,7 @@ function netquery_user_main()
         $target = $data['host'];
         $texec = $data['traceexec'];
         $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if ($texec['exec_winsys']) {$TR=$texec['exec_local'].' '.$target;}
+        if ($data['winsys']) {$TR=$texec['exec_local'].' '.$target;}
         else {$TR=$texec['exec_local'].' '.$target;}
         exec($TR, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {

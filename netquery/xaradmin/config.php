@@ -24,13 +24,11 @@ function netquery_admin_config()
             if (!xarVarFetch('http_req_enabled', 'checkbox', $http_req_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('ping_enabled', 'checkbox', $ping_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pingexec_local', 'str:1:100', $pingexec_local, 'ping.exe', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('pingexec_winsys', 'checkbox', $pingexec_winsys, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('ping_remote_enabled', 'checkbox', $ping_remote_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pingexec_remote', 'str:1:100', $pingexec_remote, 'http://noc.thunderworx.net/cgi-bin/public/ping.pl', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pingexec_remote_t', 'str:1:10', $pingexec_remote_t, 'target', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('trace_enabled', 'checkbox', $trace_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('traceexec_local', 'str:1:100', $traceexec_local, 'tracert.exe', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('traceexec_winsys', 'checkbox', $traceexec_winsys, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('trace_remote_enabled', 'checkbox', $trace_remote_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('traceexec_remote', 'str:1:100', $traceexec_remote, 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('traceexec_remote_t', 'str:1:10', $traceexec_remote_t, 'target', XARVAR_NOT_REQUIRED)) return;
@@ -85,19 +83,17 @@ function netquery_admin_config()
             $result =& $dbconn->Execute($query,$bindvars);
             $query = "UPDATE $ExecTable
                 SET exec_local    = ?,
-                    exec_winsys   = ?,
                     exec_remote   = ?,
                     exec_remote_t = ?
                 WHERE exec_type = 'ping'";
-            $bindvars = array($pingexec_local, (int)$pingexec_winsys, $pingexec_remote, $pingexec_remote_t);
+            $bindvars = array($pingexec_local, $pingexec_remote, $pingexec_remote_t);
             $result =& $dbconn->Execute($query,$bindvars);
             $query = "UPDATE $ExecTable
                 SET exec_local    = ?,
-                    exec_winsys   = ?,
                     exec_remote   = ?,
                     exec_remote_t = ?
                 WHERE exec_type = 'trace'";
-            $bindvars = array($traceexec_local, (int)$traceexec_winsys, $traceexec_remote, $traceexec_remote_t);
+            $bindvars = array($traceexec_local, $traceexec_remote, $traceexec_remote_t);
             $result =& $dbconn->Execute($query,$bindvars);
             $query = "UPDATE $LGRouterTable
                 SET username        = ?,

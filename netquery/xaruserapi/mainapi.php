@@ -30,6 +30,7 @@ function netquery_userapi_mainapi()
     $data['whoisiplabel'] = xarVarPrepForDisplay(xarML('Whois IP Address or AS#####'));
     $data['lookuplabel'] = xarVarPrepForDisplay(xarML('Lookup IP Address or Host Name'));
     $data['diglabel'] = xarVarPrepForDisplay(xarML('Lookup (Dig) IP or Host Name'));
+    $data['digparamlabel'] = xarVarPrepForDisplay(xarML('Parameter'));
     $data['serverlabel'] = xarVarPrepForDisplay(xarML('Port Check Host (Optional)'));
     $data['portnumlabel'] = xarVarPrepForDisplay(xarML('Port'));
     $data['httpurllabel'] = xarVarPrepForDisplay(xarML('HTTP Request Object URL'));
@@ -40,7 +41,7 @@ function netquery_userapi_mainapi()
     $data['tracelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host Name'));
     $data['traceremotelabel'] = xarVarPrepForDisplay(xarML('Traceroute IP or Host - Remote'));
     $data['lgrequestlabel'] = xarVarPrepForDisplay(xarML('Looking Glass Query'));
-    $data['lgparamlabel'] = xarVarPrepForDisplay(xarML('Query Parameter'));
+    $data['lgparamlabel'] = xarVarPrepForDisplay(xarML('Parameter'));
     $data['lgrouterlabel'] = xarVarPrepForDisplay(xarML('Router'));
     $data['j'] = 0;
     $data['results'] = '';
@@ -56,8 +57,15 @@ function netquery_userapi_mainapi()
     }
     $data['domain'] = $domain;
     $data['whois_ext'] = $whois_ext;
+    $data['winsys'] = (DIRECTORY_SEPARATOR == '\\');
     $data['maxpoptions'] = array(4, 5, 6, 7, 8, 9, 10);
     $data['httpoptions'] = array('HEAD', 'GET');
+    $digoptions = array();
+      $digoptions[] = array('name' => 'ANY', 'value' => 'ANY');
+      $digoptions[] = array('name' => 'Mail eXchanger', 'value' => 'MX');
+      $digoptions[] = array('name' => 'Start Of Authority', 'value' => 'SOA');
+      $digoptions[] = array('name' => 'Name Servers', 'value' => 'NS');
+    $data['digoptions'] = $digoptions;
     xarVarFetch('maxp', 'int:1:10', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
     xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
     xarVarFetch('server', 'str:1:', $data['server'], 'None', XARVAR_NOT_REQUIRED);
@@ -66,6 +74,7 @@ function netquery_userapi_mainapi()
     xarVarFetch('httpreq', 'str:1:', $data['httpreq'], 'HEAD', XARVAR_NOT_REQUIRED);
     xarVarFetch('request', 'str:1:', $data['request'], 'IPv4 BGP neighborship', XARVAR_NOT_REQUIRED);
     xarVarFetch('lgparam', 'str:1:', $data['lgparam'], '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('digparam', 'str:1:', $data['digparam'], 'ANY', XARVAR_NOT_REQUIRED);
     xarVarFetch('router', 'str:1:', $data['router'], 'ATT Public', XARVAR_NOT_REQUIRED);
     xarVarFetch('querytype', 'str:1:', $data['querytype'], 'none', XARVAR_NOT_REQUIRED);
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main'),
