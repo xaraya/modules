@@ -10,13 +10,13 @@
                 </xar:mlstring>
             </option>
             <xar:loop name="$items">
-                <xar:if condition="$loop:item['fname'] eq $default">
-                    <option value="#$loop:item['fid']#" selected="selected">
-                        #$loop:item['fname']#
+                <xar:if condition="$loop:item.fid eq $default">
+                    <option value="#$loop:item.fid#" selected="selected">
+                        #$loop:item.fname#
                     </option>
                     <xar:else />
-                    <option value="#$loop:item['fid']#">
-                        #$loop:item['fname']#
+                    <option value="#$loop:item.fid#">
+                        #$loop:item.fname#
                     </option>
                 </xar:if>
             </xar:loop>
