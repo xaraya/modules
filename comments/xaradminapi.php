@@ -111,12 +111,14 @@ function comments_adminapi_delete_node( $args )
     // First we subtract 1 from all the deletion node's children's left and right values
     // and then we subtract 2 from all the nodes > the deletion node's right value
     // and <= the max right value for the table
-    xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $left, 
-                                                       'endpoint'   => $right,
-                                                       'modid'      => $modid,
-                                                       'objectid'   => $objectid,
-                                                       'itemtype'   => $itemtype,
-                                                       'gapsize'    => 1));
+    if ($right > $left + 1) {
+        xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $left, 
+                                                           'endpoint'   => $right,
+                                                           'modid'      => $modid,
+                                                           'objectid'   => $objectid,
+                                                           'itemtype'   => $itemtype,
+                                                           'gapsize'    => 1));
+    }
     xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $right,
                                                        'modid'      => $modid,
                                                        'objectid'   => $objectid,
