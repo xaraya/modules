@@ -53,7 +53,8 @@ function workflow_adminapi_createhook($args)
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {
         $activityId = xarModGetVar('workflow',"$modname.$itemtype.create");
-    } else {
+    }
+    if (empty($activityId)) {
         $activityId = xarModGetVar('workflow',"$modname.create");
     }
     if (empty($activityId)) {

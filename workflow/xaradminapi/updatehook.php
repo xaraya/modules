@@ -75,7 +75,8 @@ function workflow_adminapi_updatehook($args)
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {
         $activityId = xarModGetVar('workflow',"$modname.$itemtype.update");
-    } else {
+    }
+    if (empty($activityId)) {
         $activityId = xarModGetVar('workflow',"$modname.update");
     }
     if (empty($activityId)) {
