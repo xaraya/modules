@@ -1,0 +1,4 @@
+<xar:loop name="$items">
+	<p><xar:mlstring>In</xar:mlstring>:<b>&nbsp;&nbsp;#$loop:item['yid']#</b></p>
+	<p>#$loop:item['content']#</p>
+</xar:loop>
