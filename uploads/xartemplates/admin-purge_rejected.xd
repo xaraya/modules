@@ -24,9 +24,10 @@
                             <xar:mlstring>
                                 Are you sure you want to delete the following files?
                             </xar:mlstring>&nbsp;
-                            <input type="submit" name="submit" value="#xarML('Delete')#">
-                            <input type="hidden" name="confirmation" value="1">
-                            <input type="submit" name="submit" value="#xarML('Cancel')#" onClick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;">
+                            <input type="submit" name="submit" value="#xarML('Delete')#" />
+                            <input type="hidden" name="authid" value="#$authid#" />
+                            <input type="hidden" name="confirmation" value="1" />
+                            <input type="submit" name="submit" value="#xarML('Cancel')#" onClick="javascript:window.location='#xarModURL('uploads', 'admin', 'view')#'; return false;" />
                         </form>
                     </td>
                 </tr>

@@ -27,13 +27,15 @@
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                         <tr>
                             <td width="20%">
-                                <img src="#$fileInfo['mimeImage']#" height="48" width="48" alt="FileType: #$fileInfo['fileType']#">
+                                <img src="#$fileInfo['mimeImage']#" height="48" width="48" alt="FileType: #$fileInfo['fileType']#" />
                             </td>
                             <td width="80%">
-                                <input type="textbox" maxlength="128" size="50" value="#$fileInfo['fileName']#">
+                                <input type="textbox" name="fileName" maxlength="128" size="30" value="#$fileInfo['fileName']#" />
+                                <input type="hidden"  name="fileId"   value="#$fileInfo['fileId']#">                                
                             </td>
                         </tr>
                     </table>
+                    </form>
                 </td>
             </tr>
             <tr><td class="xar-accent"><p style="height: 12px;">&nbsp;</p></td></tr>
@@ -152,7 +154,6 @@
                     </xar:if>
                 </td>
             </tr>
-            </form>
         <xar:else />
             <tr>
                 <td colspan="3" width="100%">

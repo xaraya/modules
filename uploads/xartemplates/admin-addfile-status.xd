@@ -60,25 +60,13 @@
                                     <br />
                                     <table width="100%" cellspacing="1" cellpadding="1" border=0">
                                         <tr>
-                                            <th><xar:mlstring>Error ID</xar:mlstring></th>
-                                            <th><var:mlstring>Error Message</var:mlstring></th>
-                                        </tr>
-                                        <tr>
                                             <xar:loop name="$loop:item['errors']">
                                                 <xar:if condition="(($loop:index + 1) % 2)">
-                                                    <td width="35%" class="xar-norm">
-                                                        &nbsp;
-                                                        #$loop:item['errorId']#
-                                                    </td>
                                                     <td width="65%" class="xar-norm">
                                                         &nbsp;
                                                         #$loop:item['errorMesg']#
                                                     </td>
                                                 <xar:else />
-                                                    <td width="35%" class="xar-accent">
-                                                        &nbsp;
-                                                        #$loop:item['errorId']#
-                                                    </td>
                                                     <td width="65%" class="xar-accent">
                                                         &nbsp;
                                                         #$loop:item['errorMesg']#
@@ -123,25 +111,13 @@
                                     <br />
                                     <table width="100%" cellspacing="1" cellpadding="1" border=0">
                                         <tr>
-                                            <th><xar:mlstring>Error ID</xar:mlstring></th>
-                                            <th><var:mlstring>Error Message</var:mlstring></th>
-                                        </tr>
-                                        <tr>
                                             <xar:loop name="$loop:item['errors']">
                                                 <xar:if condition="(($loop:index + 1) % 2)">
-                                                    <td width="35%" class="xar-norm">
-                                                        &nbsp;
-                                                        #$loop:item['errorId']#
-                                                    </td>
                                                     <td width="65%" class="xar-norm">
                                                         &nbsp;
                                                         #$loop:item['errorMesg']#
                                                     </td>
                                                 <xar:else />
-                                                    <td width="35%" class="xar-accent">
-                                                        &nbsp;
-                                                        #$loop:item['errorId']#
-                                                    </td>
                                                     <td width="65%" class="xar-accent">
                                                         &nbsp;
                                                         #$loop:item['errorMesg']#

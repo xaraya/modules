@@ -29,12 +29,12 @@ function uploads_userapi_validate_upload( $args ) {
     switch ($fileInfo['error'])  {
 
         case 1: // The uploaded file exceeds the upload_max_filesize directive in php.ini
-            $msg = xarML('File size exceeds the maximum allowable based on your system settings.');
+            $msg = xarML('File size exceeds the maximum allowable based on the server\'s settings.');
             xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOAD_ERR_INI_SIZE', new SystemException($msg));
             return FALSE;
 
         case 2: // The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form
-            $msg = xarML('File size exceeds the maximum allowable.');
+            $msg = xarML('File size exceeds the maximum allowable defined by the website administrator.');
             xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOAD_ERR_FORM_SIZE', new SystemException($msg));
             return FALSE;
 
@@ -51,7 +51,16 @@ function uploads_userapi_validate_upload( $args ) {
         case 0:  // no error
             break;
     }
-
+    
+    $maxsize = xarModGetVar('uploads', 'file.maxsize');
+    $maxsize = $maxsize > 0 ? $maxsize : 0;
+    
+    if ($fileInfo['size'] > $maxsize) {
+        $msg = xarML('File size exceeds the maximum allowable defined by the website administrator.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOAD_ERR_CONFIG_SIZE', new SystemException($msg));
+        return FALSE;
+    }    
+    
     if (!is_uploaded_file($fileInfo['fileSrc'])) {
         $msg = xarML('Possible attempted malicious file upload.');
         xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOAD_ERR_MAL_ATTEMPT', new SystemException($msg));

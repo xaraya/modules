@@ -20,7 +20,6 @@ function uploads_admin_view( ) {
     /**
      *  Determine the filter settings to use for this view
      */
-    
     if (!isset($mimetype) || !isset($subtype) || !isset($status)) {
         // if the filter settings are empty, then 
         // grab the users last view filter
@@ -61,15 +60,9 @@ function uploads_admin_view( ) {
         
         switch ($action) {
             case _UPLOADS_STATUS_APPROVED:
-                    if (!isset($args['fileId'])) {
-                        break;
-                    }
                     xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_APPROVED));
                     break;
             case _UPLOADS_STATUS_SUBMITTED:
-                    if (!isset($args['fileId'])) {
-                        break;
-                    }
                     xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
                     break;
             case _UPLOADS_STATUS_REJECTED:

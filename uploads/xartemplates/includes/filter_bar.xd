@@ -92,7 +92,7 @@
 		</td>
 		<td width="10%" align="center">
 			<br />
-			<input type="submit" name="do_it" value="Submit">
+			<input type="submit" name="do_it" value="#xarML('Refresh')#">
 		</td>
 		</form>
 	</tr>

@@ -1,29 +1,32 @@
 .xar-uploads-attachment-wrapper
 {
-    float: left;
-    width: 100%;
+    float:       left;
+    width:       100%;
 }
 
 .xar-uploads-clearer
 {
-    clear: left;
-    display: block;
+    clear:       left;
+    display:     block;
     line-height: 14px;
-    height: 0;
+    height:      0;
 }
 
 .xar-uploads-icon
 {
-    float: left;
-    width: 60px;
-    border: 0px solid #999;
-    margin: 0 15px 15px 0;
-    padding: 5px;
+    float:       left;
+    width:       30px;
+    border:      0px solid #999;
+    margin:      0 15px 15px 0;
+    font-size:   8pt;
+    text-align:  center;
+    padding:     5px;
+    word-break:  normal;
 }
 
 .xar-uploads-icon img
 {
-    float: left;
-    width: 24;
-    height: 26;
+    float:       left;
+    width:       36px;
+    height:      39px;
 }

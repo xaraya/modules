@@ -26,9 +26,19 @@ function uploads_admin_updateconfig()
         foreach ($path as $varname => $value) {
             // check to make sure that the value passed in is 
             // a real uploads module variable
-            $value = ereg_replace('\/$', '', $value);
+            $value = trim(ereg_replace('\/$', '', $value));
             if (NULL !== xarModGetVar('uploads', 'path.' . $varname)) {
-                xarModSetVar('uploads', 'path.' . $varname, $value);
+                if (!file_exists($value) || !is_dir($value)) {
+                    $msg = xarML('Location [#(1)] either does not exist or is not a valid directory!', $value);
+                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'INVALID_DIRECTORY', new SystemException($msg));
+                    return;
+                } elseif (!is_writable($value)) {
+                    $msg = xarML('Location [#(1)] can not be written to - please check permissions and try again!', $value);
+                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NOT_WRITABLE', new SystemException($msg));
+                    return;
+                } else {
+                    xarModSetVar('uploads', 'path.' . $varname, $value);
+                }
             }
         }
     }

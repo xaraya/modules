@@ -43,7 +43,7 @@ function uploads_userapi_import_get_filelist( $args ) {
     switch ($type) {
         case _INODE_TYPE_FILE:
             $fileName = $fileLocation;
-            $fileList[$fileName] = xarModAPIFunc('uploads', 'user', 'file_get_metadata', 
+            $fileList["$type:$fileName"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata', 
                                                   array('fileLocation' => $fileLocation));
             break;
         case _INODE_TYPE_DIRECTORY:
@@ -71,7 +71,8 @@ function uploads_userapi_import_get_filelist( $args ) {
                     } 
                     if (is_file($fileLocation. '/' . $inode)) {
                         $fileName = $fileLocation . '/' . $inode;
-                        $fileList[$fileName] = xarModAPIFunc('uploads', 'user', 'file_get_metadata', array('fileLocation' => $fileName));
+                        $file = xarModAPIFunc('uploads', 'user', 'file_get_metadata', array('fileLocation' => $fileName));
+						$fileList["$file[inodeType]:$fileName"] = $file;
                     }
                 }
             }

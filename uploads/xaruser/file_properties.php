@@ -6,9 +6,12 @@
 xarModAPILoad('uploads','user');
 
 function uploads_user_file_properties( $args ) {
+    
+    extract($args);
 
     if (!xarSecurityCheck('ViewUploads')) return;
-    if (!xarVarFetch('fileId', 'int:1', $fileId)) return;
+    if (!xarVarFetch('fileId',   'int:1', $fileId)) return;
+    if (!xarVarFetch('fileName', 'str:1:64', $fileName, '', XARVAR_NOT_REQUIRED)) return;
     
     if (!isset($fileId)) {
         $msg = xarML('Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
@@ -17,8 +20,7 @@ function uploads_user_file_properties( $args ) {
         return;
     }
     
-    $fileInfo = xarModAPIFunc('uploads','user','db_get_file',
-                               array('fileId' => $fileId));
+    $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
     if (empty($fileInfo) || !count($fileInfo)) {
         $data['fileInfo']   = array();
         $dtaa['error']      = xarML('File not found!');
@@ -33,6 +35,26 @@ function uploads_user_file_properties( $args ) {
 
         $instance = implode(':', $instance);
 
+        if (isset($fileName) && !empty($fileName)) {
+            
+            if (xarSecurityCheck('EditUploads', 1, 'File', $instance)) {
+                $args['fileId'] = $fileId;
+                $args['fileName'] = trim($fileName);
+                
+                if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
+                    $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)', 
+                                  $fileInfo['fileName'], $fileInfo['fileId']);
+                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN_ERROR', new SystemException($msg));
+                    return;
+                }
+                xarResponseRedirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
+                return;
+            } else {
+                // No access - so return the exception
+                return;
+            }
+        }
+        
         if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
 
 

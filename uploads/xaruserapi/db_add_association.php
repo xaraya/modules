@@ -63,7 +63,7 @@ function uploads_userapi_db_add_association( $args ) {
                         $itemType,
                         $objectId
                       )";
-    echo "<Br />SQL: <b>$sql</b>";
+
     $result = &$dbconn->Execute($sql);
 
     if (!$result) {
