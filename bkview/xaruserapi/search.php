@@ -42,7 +42,9 @@ include_once("modules/bkview/xarincludes/bk.class.php");
 function bkview_userapi_search($args) {
     extract($args);
 
-    if(empty($object_id)) return;
+    // We can't do anything without an object id, fail silently by
+    // returning an empty array
+    if(empty($object_id)) return array();
 
     $repoinfo = xarModAPIFunc('bkview','user','get',array('repoid' => $object_id));
     $repo = new bkRepo($repoinfo['repopath']);
