@@ -42,7 +42,7 @@ function bkview_user_display($args)
     
     $repo = new bkRepo($item['repopath']);
     // Now construct the count array
-    $times=array('1h','2h','4h','1d','2d','3d','4d','1w','2w','3w','1m','2m','3m','6m','9m','1y','2y','3y');
+    $times=array('1h','2h','4h','1d','2d','3d','4d','1w','2w','3w','4w','8w','12w','6M','9M','1y','2y','3y');
     $csets=array();
     while (list(,$time) = each($times)) {
         $csets[$time]=$repo->bkCountChangeSets("-$time",false,$user);
