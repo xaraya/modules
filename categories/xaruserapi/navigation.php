@@ -131,6 +131,11 @@ function categories_userapi_navigation($args)
         $showchildren = 1;
     }
 
+    // See if we need to show empty categories
+    if (!isset($showempty) && empty($showcatcount)) {
+        $showempty = 1; // default yes here (otherwise you never see anything by default - duh)
+    }
+
     // Get current category counts (optional array of cid => count)
     if (empty($showcatcount)) {
         $catcount = array();
@@ -659,6 +664,10 @@ function categories_userapi_navigation($args)
                             $count = 0;
 
                             // TODO: check! When does this section get executed?
+// <mikespub> this is used in the dynamic case, to show the base categories for a module+itemtype
+//            when no categories are currently selected
+// See also the navigation block, which was supposed to stay in sync with this code, except
+// for returning null instead of '', and adding some block title at the end of the code...
                             // TODO: how much duplication is there in these three loops?
                             // Note: when hiding empty categories, check the deep count
                             // as a child category may be empty, but it could still have
