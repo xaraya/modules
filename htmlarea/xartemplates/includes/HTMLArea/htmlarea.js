@@ -1605,9 +1605,9 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
         case "copy":
         case "paste":
         try {
+            this._doc.execCommand(cmdID, UI, param);
             if (this.config.killWordOnPaste)
                 this._wordClean();
-            this._doc.execCommand(cmdID, UI, param);
         } catch (e) {
             if (HTMLArea.is_gecko) {
                 if (confirm("Unprivileged scripts cannot access Cut/Copy/Paste programatically " +
