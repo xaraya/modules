@@ -24,6 +24,8 @@
  * @param $args['external'] flag if issue is internal/external (1 = true, 0 = false)
  * @param $args['editorNote'] editor note for the issue
  * @param $args['tstmpDatePublished'] issue date of the issue as UNIX timestamp
+ * @param $args['fromname'] issue email from name (overrides publication from name)
+ * @param $args['fromemail'] issue email from address (overrides publication from email)
  * @returns int
  * @return issue ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -64,9 +66,16 @@ function newsletter_adminapi_createissue($args)
     $result =& $dbconn->Execute($query, array((string) $title));
     if (!$result) return false; 
 
+    // We actually don't care if there are duplicate issues as
+    // the different publications could have the same issue title.
+    /*
     if ($result->RecordCount() > 0) {
-        return false;  // owner already exists
+        $msg = xarML('The issue title already exists for #(1) function #(2)() in module #(3).  Please click on back in your browser and enter a different title.',
+                    'adminapi', 'createissue', 'Newsletter');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
+        return false;  // issue already exists
     }
+    */
 
     // Get next ID in table
     $nextId = $dbconn->GenId($nwsltrTable);
@@ -79,8 +88,10 @@ function newsletter_adminapi_createissue($args)
               xar_ownerid,
               xar_external,
               xar_editornote,
-              xar_datepublished)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+              xar_datepublished,
+              xar_fromname,
+              xar_fromemail)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $bindvars = array((int) $nextId,
                         (int) $publicationId,
@@ -88,7 +99,9 @@ function newsletter_adminapi_createissue($args)
                         (int) $ownerId, 
                         (int) $external,
                         (string) $editorNote,
-                        (int) $tstmpDatePublished);
+                        (int) $tstmpDatePublished,
+                        (string) $fromname,
+                        (string) $fromemail);
 
     $result =& $dbconn->Execute($query, $bindvars);
 

@@ -377,7 +377,9 @@ function newsletter_userapi_get($args)
                              $rolesTable.xar_name,
                              $issuesTable.xar_external,
                              $issuesTable.xar_editornote,
-                             $issuesTable.xar_datepublished
+                             $issuesTable.xar_datepublished,
+                             $issuesTable.xar_fromname,
+                             $issuesTable.xar_fromemail
                       FROM  $issuesTable, $publicationsTable, $rolesTable
                       WHERE $issuesTable.xar_ownerid = $rolesTable.xar_uid
                       AND   $issuesTable.xar_pid = $publicationsTable.xar_id";
@@ -443,7 +445,9 @@ function newsletter_userapi_get($args)
                      $ownerName,
                      $external,
                      $editorNote,
-                     $datePublished['timestamp']) = $result->fields;
+                     $datePublished['timestamp'],
+                     $fromname,
+                     $fromemail) = $result->fields;
 
                 // Change date formats from UNIX timestamp to something readable
                 if ($datePublished['timestamp'] == 0) {
@@ -464,7 +468,9 @@ function newsletter_userapi_get($args)
                                   'ownerName' => $ownerName,
                                   'external' => $external,
                                   'editorNote' => $editorNote,
-                                  'datePublished' => $datePublished);
+                                  'datePublished' => $datePublished,
+                                  'fromname' => $fromname,
+                                  'fromemail' => $fromemail);
             }
 
             // Close result set
@@ -493,7 +499,9 @@ function newsletter_userapi_get($args)
                              $publicationsTable.xar_disclaimerid,
                              $publicationsTable.xar_introduction,
                              $publicationsTable.xar_private,
-                             $publicationsTable.xar_subject
+                             $publicationsTable.xar_subject,
+                             $publicationsTable.xar_fromname,
+                             $publicationsTable.xar_fromemail
                       FROM  $publicationsTable, $categoriesTable, $rolesTable
                       WHERE $publicationsTable.xar_ownerid = $rolesTable.xar_uid
                       AND $publicationsTable.xar_cid = $categoriesTable.xar_cid";
@@ -535,7 +543,9 @@ function newsletter_userapi_get($args)
                      $disclaimerId,
                      $introduction,
                      $private,
-                     $subject) = $result->fields;
+                     $subject,
+                     $fromname,
+                     $fromemail) = $result->fields;
 
                 // The user API function is called.
                 $userData = xarModAPIFunc('roles',
@@ -571,7 +581,9 @@ function newsletter_userapi_get($args)
                                  'disclaimerId' => $disclaimerId,
                                  'introduction' => $introduction,
                                  'private' => $private,
-                                 'subject' => $subject);
+                                 'subject' => $subject,
+                                 'fromname' => $fromname,
+                                 'fromemail' => $fromemail);
             }
 
             // Close result set

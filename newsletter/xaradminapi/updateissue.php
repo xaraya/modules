@@ -25,6 +25,8 @@
  * @param $args['external'] flag if issue is internal/external (1 = true, 0 = false)
  * @param $args['editorNote'] editor note for the issue
  * @param $args['tstmpDatePublished'] issue date of the issue as UNIX timestamp
+ * @param $args['fromname'] issue email from name (overrides publication from name)
+ * @param $args['fromemail'] issue email from address (overrides publication from email)
  * @returns int
  * @return issue ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -75,7 +77,9 @@ function newsletter_adminapi_updateissue($args)
                   xar_title = ?,
                   xar_external = ?,
                   xar_editornote = ?,
-                  xar_datepublished = ?
+                  xar_datepublished = ?,
+                  xar_fromname = ?,
+                  xar_fromemail = ?
               WHERE xar_id = ?";
 
     $bindvars = array((int) $publicationId,
@@ -84,6 +88,8 @@ function newsletter_adminapi_updateissue($args)
                       (int) $external,
                       (string) $editorNote,
                       (int) $tstmpDatePublished,
+                      (string) $fromname,
+                      (string) $fromemail,
                       (int) $id);
 
     // Execute query

@@ -39,6 +39,7 @@
  * @param 'datePublishedMon' the month the story was published
  * @param 'datePublishedDay' the day the story was published
  * @param 'datePublishedYear' the year the story was published
+ * @param 'articleid' articleid to use with story
  * @returns bool
  * @return true on success, false on failure
  */
@@ -81,8 +82,8 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('datePublishedYear', 'int:0:', $datePublishedYear, 0)) return;
     if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
     if (!xarVarFetch('source', 'str:1:', $source, '')) return;
-    xarVarFetch('title', 'str:0:', $title,NULL);
-    xarVarFetch('content', 'str:0:', $content,NULL);
+    if (!xarVarFetch('title', 'str:0:', $title, '')) return;
+    if (!xarVarFetch('content', 'str:0:', $content, '')) return;
 
     // they must enter a title, unless they have selected an article
     if (empty($title) && ($articleid==0)) {
@@ -101,7 +102,15 @@ function newsletter_admin_updatestory()
         }
     }
 
-
+    // If the title is empty, then set the title from the article
+    if (empty($title)) {
+        $_article  = current(xarModAPIFunc('articles',
+                                           'user',
+                                           'getAll',
+                                           array('aids'=>array($articleid),
+                                                 'extra'=>array('dynamicdata'))));
+        $title = $_article['title'];
+    }
 
     // If commentary exists, then check that a commentary source 
     // was entered

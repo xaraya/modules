@@ -244,7 +244,7 @@
                             <xar:mlstring>HTML Template</xar:mlstring>
                         </td>
                         <td halign="center">
-                            <xar:mlstring>The name of the HTML template to use for the publication.  The HTML template located in the <i>modules/newsletter/templates</i> directory.</xar:mlstring>
+                            <xar:mlstring>The name of the HTML template to use for the publication.  The HTML template is located in the <i>modules/newsletter/templates</i> directory.</xar:mlstring>
                         </td>
                     </tr>
                     <tr>
@@ -255,6 +255,23 @@
                             <xar:mlstring>The name of the text template to use for the publication.  The text template located in the <i>modules/newsletter/templates</i> directory.</xar:mlstring>
                         </td>
                     </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Email From Name</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The default from name for every issue of the publication.  This is the email from name when a newsletter is published.  This will default to the publication owner's name if left blank.  This field can be overriden in every issue.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Email From Address</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The default from email address for every issue of the publication.  This is the email from address (e.g. 'newsletter@yoursite.com') when a newsletter is published.  This will default to the publication owner's name if left blank.  This field can be overriden in every issue.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
                     <tr>
                         <td halign="center">
                             <xar:mlstring>Email Subject</xar:mlstring>
@@ -366,6 +383,22 @@
                     </tr>
                     <tr>
                         <td halign="center">
+                            <xar:mlstring>Email From Name</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The from name of the newsletter email when the newsletter is published.  The default is the publication's email from name.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Email From Address</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The from email address (e.g. 'newsletter@yoursite.com') of the newsletter email when the newsletter is published.  The default is the publication's email from address.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
                             <xar:mlstring>Date Published</xar:mlstring>
                         </td>
                         <td halign="center">
@@ -391,6 +424,14 @@
                         </td>
                         <td halign="center">
                             <xar:mlstring>The publication of the story.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Use Article</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>Select an article to use as a story.  A separate window will open which will allow you to choose an article in place of a story.  The article title and article body will be used in place of the story title and story content.</xar:mlstring>
                         </td>
                     </tr>
                     <tr>

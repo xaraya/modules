@@ -60,7 +60,9 @@ function newsletter_userapi_getpublication($args)
                      xar_disclaimerid,
                      xar_introduction,
                      xar_private,
-                     xar_subject
+                     xar_subject,
+                     xar_fromname,
+                     xar_fromemail
               FROM $nwsltrTable
               WHERE xar_id = ?";
 
@@ -93,7 +95,9 @@ function newsletter_userapi_getpublication($args)
          $disclaimerId,
          $introduction,
          $private,
-         $subject) =  $result->fields;
+         $subject,
+         $fromname,
+         $fromemail) =  $result->fields;
 
     // Close result set
     $result->Close();
@@ -136,7 +140,9 @@ function newsletter_userapi_getpublication($args)
                   'disclaimerId' => $disclaimerId,
                   'introduction' => $introduction,
                   'private' => $private,                  
-                  'subject' => $subject);                  
+                  'subject' => $subject,
+                  'fromname' => $fromname,
+                  'fromemail' => $fromemail);                  
 
     // Return the publication array
     return $publication;

@@ -32,6 +32,8 @@
  * @param 'description' description of the publication (used on subscription page)
  * @param 'private' publication is open for subscription or private
  * @param 'subject' email subject (title) for an issue
+ * @param 'fromname' publication email from name (default = owner name)
+ * @param 'fromemail' publication email from address (default = owner email)
  * @author Richard Cave
  * @returns bool
  * @return true on success, false on failure
@@ -85,6 +87,29 @@ function newsletter_admin_updatepublication()
     if (!xarVarFetch('altcids', 'array:1:', $altcids, array())) return;
     if (!xarVarFetch('private', 'int:0:1:', $private, 0)) return;
     if (!xarVarFetch('subject', 'id', $subject, 0)) return;
+    if (!xarVarFetch('fromname', 'str:1:', $fromname, '')) return;
+    if (!xarVarFetch('fromemail', 'str:1:', $fromemail, '')) return;
+
+    // If the fromname or fromemail fields are empty, then retrieve the information
+    // from the publication owner
+    if (empty($fromname) || empty($fromemail)) {
+        // Get owner information
+        $role = xarModAPIFunc('roles',
+                              'user',
+                              'get',
+                               array('uid' => $ownerId));
+        // Check return value
+        if (!isset($role) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+            return; // throw back
+
+        // Set name and/or email
+        if (empty($fromname)) {
+            $fromname = $role['name'];
+        }
+        if (empty($fromemail)) {
+            $fromemail = $role['email'];
+        }
+    }
 
     // Update the disclaimer
     if (!empty($editdisclaimer)) {
@@ -157,7 +182,9 @@ function newsletter_admin_updatepublication()
                             'disclaimerId' => $disclaimerId,
                             'introduction' => $introduction,
                             'private' => $private,
-                            'subject' => $subject))) {
+                            'subject' => $subject,
+                            'fromname' => $fromname,
+                            'fromemail' => $fromemail))) {
         return; // throw back
     }
 

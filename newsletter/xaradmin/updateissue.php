@@ -28,6 +28,8 @@
  * @param 'datePublishedMon' the month the issue was published
  * @param 'datePublishedDay' the day the issue was published
  * @param 'datePublishedYear' the year the issue was published
+ * @param 'fromname' issue email from name (overrides publication from name)
+ * @param 'fromemail' issue email from address (overrides publication from email)
  * @returns bool
  * @return true on success, false on failure
  */
@@ -67,6 +69,8 @@ function newsletter_admin_updateissue()
     if (!xarVarFetch('datePublishedMon', 'int:0:', $datePublishedMon, 0)) return;
     if (!xarVarFetch('datePublishedDay', 'int:0:', $datePublishedDay, 0)) return;
     if (!xarVarFetch('datePublishedYear', 'int:0:', $datePublishedYear, 0)) return;
+    if (!xarVarFetch('fromname', 'str:1:', $fromname, '')) return;
+    if (!xarVarFetch('fromemail', 'str:1:', $fromemail, '')) return;
 
     // Check and format datePublished - dates are stored as UNIX timestamp
     if ($datePublishedMon == 0 || $datePublishedDay == 0 || $datePublishedYear == 0) { 
@@ -75,6 +79,28 @@ function newsletter_admin_updateissue()
         $tstmpDatePublished = mktime(0,0,0,$datePublishedMon,$datePublishedDay,$datePublishedYear);
     }
     
+    // If the fromname or fromemail fields are empty, then retrieve the information
+    // from the publication
+    if (empty($fromname) || empty($fromemail)) {
+        // Get publication information
+        $pubinfo = xarModAPIFunc('newsletter',
+                                 'user',
+                                 'getpublication',
+                                 array('id' => $publication));
+
+        // Check for exceptions
+        if (!isset($pubinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
+            return; // throw back
+
+        // Set name and/or email
+        if (empty($fromname)) {
+            $fromname = $pubinfo['fromname'];
+        }
+        if (empty($fromemail)) {
+            $fromemail = $pubinfo['fromemail'];
+        }
+    }
+
     // Get current issue attributes
     $oldissue = xarModAPIFunc('newsletter',
                               'user',
@@ -95,7 +121,9 @@ function newsletter_admin_updateissue()
                             'ownerId' => $ownerId,
                             'external' => $external,
                             'editorNote' => $editorNote,
-                            'tstmpDatePublished' => $tstmpDatePublished))) {
+                            'tstmpDatePublished' => $tstmpDatePublished,
+                            'fromname' => $fromname,
+                            'fromemail' => $fromemail))) {
         return; // throw back
     }
 
@@ -146,8 +174,6 @@ function newsletter_admin_updateissue()
             }
         }
     }
-
-    
             
     xarSessionSetVar('statusmsg', xarML('Newsletter Story Update'));
 

@@ -64,9 +64,15 @@ function newsletter_admin_newissue()
             
         // Set publication name
         $publication_title = $publication['title'];                                     
+
+        // Get issue from name and email and publication
+        $data['fromname'] = $publication['fromname'];
+        $data['fromemail'] = $publication['fromemail'];
     } else {
-       // Set publication name to empty string
-       $publication_title = '';
+        // Set publication name to empty string
+        $publication_title = '';
+        $data['fromname'] = '';
+        $data['fromemail'] = '';
     }
 
     // Get current user

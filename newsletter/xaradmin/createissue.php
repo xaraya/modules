@@ -24,6 +24,8 @@
  * @param 'editorNote' editor note for the issue
  * @param 'stories' array of stories in the issue
  * @param 'external' flag if issue is internal/external (1 = true, 0 = false)
+ * @param 'fromname' issue email from name (overrides publication from name)
+ * @param 'fromemail' issue email from address (overrides publication from email)
  * @returns bool
  * @return true on success, false on failure
  */
@@ -54,7 +56,32 @@ function newsletter_admin_createissue()
     if (!xarVarFetch('title', 'str:1:', $title, '')) return;
     if (!xarVarFetch('editorNote', 'str:1:', $editorNote, '')) return;
     if (!xarVarFetch('external', 'int:0:1:', $external, 0)) return;
+    if (!xarVarFetch('fromname', 'str:1:', $fromname, '')) return;
+    if (!xarVarFetch('fromemail', 'str:1:', $fromemail, '')) return;
     
+    // If the fromname or fromemail fields are empty, then retrieve the information
+    // from the publication
+    if (empty($fromname) || empty($fromemail)) {
+        // Get publication information
+        $pubinfo = xarModAPIFunc('newsletter',
+                                 'user',
+                                 'getpublication',
+                                 array('id' => $publicationId));
+
+        // Check for exceptions
+        if (!isset($pubinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
+            return; // throw back
+
+        // Set name and/or email
+        if (empty($fromname)) {
+            $fromname = $pubinfo['fromname'];
+        }
+        if (empty($fromemail)) {
+            $fromemail = $pubinfo['fromemail'];
+        }
+    }
+
+    // Add new disclaimer if field isn't empty
     // Call create owner function API
     $issueId = xarModAPIFunc('newsletter',
                              'admin',
@@ -64,7 +91,9 @@ function newsletter_admin_createissue()
                                    'title' => $title,
                                    'editorNote' => $editorNote,
                                    'external' => $external,
-                                   'tstmpDatePublished' => 0));  // not published, so set to 0
+                                   'tstmpDatePublished' => 0,  // not published, so set to 0
+                                   'fromname' => $fromname,
+                                   'fromemail' => $fromemail));
 
     // Check return value
     if (!isset($issueId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 

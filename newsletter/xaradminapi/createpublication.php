@@ -33,6 +33,8 @@
  * @param $args['introduction'] introduction of the publication 
  * @param $args['private'] publication is open for subscription or private
  * @param $args['subject'] email subject (title) of an issue
+ * @param $args['fromname'] publication email from name (default = owner name)
+ * @param $args['fromemail'] publication email from address (default = owner email)
  * @returns int
  * @return publication ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -78,7 +80,10 @@ function newsletter_adminapi_createpublication($args)
     if (!$result) return false; 
 
     if ($result->RecordCount() > 0) {
-        return false;  // owner already exists
+        $msg = xarML('The publication title already exists.  Please click on back in your browser and enter a different title.',
+                    'adminapi', 'createpublication', 'Newsletter');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
+        return false;  // publication already exists
     }
 
     // Get next ID in table
@@ -100,8 +105,10 @@ function newsletter_adminapi_createpublication($args)
               xar_disclaimerid,
               xar_introduction,
               xar_private,
-              xar_subject)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              xar_subject,
+              xar_fromname,
+              xar_fromemail)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $bindvars = array((int)     $nextId,
                       (int)     $ownerId,
@@ -117,7 +124,9 @@ function newsletter_adminapi_createpublication($args)
                       (int)     $disclaimerId,
                       (string)  $introduction,
                       (int)     $private,
-                      (int)     $subject);
+                      (int)     $subject,
+                      (string)  $fromname,
+                      (string)  $fromemail);
 
     $result =& $dbconn->Execute($query, $bindvars);
 

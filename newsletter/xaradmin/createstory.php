@@ -54,10 +54,11 @@ function newsletter_admin_createstory()
     if (!xarVarFetch('issueId', 'int:0:', $issueId, 0)) return;
     if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
     if (!xarVarFetch('source', 'str:1:', $source, '')) return;
-    xarVarFetch('articleid', 'int:0', $articleid, 0);
-    xarVarFetch('title', 'str', $title);
-    xarVarFetch('content', 'str', $content);
+    if (!xarVarFetch('articleid', 'int:0', $articleid, 0)) return;
+    if (!xarVarFetch('title', 'str', $title, '')) return;
+    if (!xarVarFetch('content', 'str', $content, '')) return;
 
+    // they must enter a title, unless they have selected an article
     if (empty($title) && ($articleid==0)) {
         xarErrorFree();
         $formErrorMsg['title'] = xarML('You must enter a title for the story');
@@ -66,12 +67,23 @@ function newsletter_admin_createstory()
         }
     }
 
+    // they must enter content, unless they have selected an article
     if (empty($content) && ($articleid==0)) {
         xarErrorFree();
         $formErrorMsg['content'] = xarML('You must provide content for the story ');
         if (xarModIsAvailable('articles')){
              $formErrorMsg['content'] .= xarML('or select an article to use.');
         }
+    }
+
+    // If the title is empty, then set the title from the article
+    if (empty($title)) {
+        $_article  = current(xarModAPIFunc('articles',
+                                           'user',
+                                           'getAll',
+                                           array('aids'=>array($articleid),
+                                                 'extra'=>array('dynamicdata'))));
+        $title = $_article['title'];
     }
 
     if (!xarVarFetch('priority', 'int:0:1:', $priority, 0)) return;
@@ -88,8 +100,7 @@ function newsletter_admin_createstory()
     // Get submit button
     if (!xarVarFetch('submitValue', 'str:1:', $submitbutton, '')) return;
 
-    // If commentary exists, then check that a commentary source 
-    // was entered
+    // If commentary exists, then check that a commentary source was entered
     if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
         xarErrorFree();
         $formErrorMsg['comment'] = xarML('You must enter a commentary source for the commentary.');

@@ -51,7 +51,9 @@ function newsletter_userapi_getissue($args)
                      xar_ownerid,
                      xar_external,
                      xar_editornote,
-                     xar_datepublished
+                     xar_datepublished,
+                     xar_fromname,
+                     xar_fromemail
                 FROM $nwsltrTable
                WHERE xar_id = ?";
 
@@ -75,7 +77,9 @@ function newsletter_userapi_getissue($args)
          $ownerId, 
          $external,
          $editorNote,
-         $datePublished['timestamp'] ) =  $result->fields;
+         $datePublished['timestamp'],
+         $fromname,
+         $fromemail) =  $result->fields;
 
     // Close result set
     $result->Close();
@@ -113,7 +117,9 @@ function newsletter_userapi_getissue($args)
                    'ownerName' => $ownerName,
                    'external' => $external,
                    'editorNote' => $editorNote,
-                   'datePublished' => $datePublished);
+                   'datePublished' => $datePublished,
+                   'fromname' => $fromname,
+                   'fromemail' => $fromemail);
 
     // Return the issue array
     return $issue;

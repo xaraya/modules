@@ -50,7 +50,9 @@ function newsletter_init()
         'xar_disclaimerid'  => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'xar_introduction'  => array('type'=>'text','null'=>TRUE),
         'xar_private'       => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
-        'xar_subject'       => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0')
+        'xar_subject'       => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
+        'xar_fromname'      => array('type'=>'varchar','size'=>100,'null'=>TRUE),
+        'xar_fromemail'     => array('type'=>'varchar','size'=>100,'null'=>TRUE)
     );
     
     // Create the table DDL
@@ -79,7 +81,10 @@ function newsletter_init()
         'xar_title'         => array('type'=>'varchar','size'=>255,'null'=>FALSE),
         'xar_external'      => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
         'xar_editornote'    => array('type'=>'text','null'=>TRUE),
-        'xar_datepublished' => array('type'=>'integer','unsigned'=>TRUE,'null'=>TRUE,'default'=>'0')
+        'xar_datepublished' => array('type'=>'integer','unsigned'=>TRUE,'null'=>TRUE,'default'=>'0'),
+        'xar_fromname'      => array('type'=>'varchar','size'=>100,'null'=>TRUE),
+        'xar_fromemail'     => array('type'=>'varchar','size'=>100,'null'=>TRUE)
+
     );
     
     // Create the table DDL
@@ -360,15 +365,15 @@ function newsletter_upgrade($oldversion)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     
+    // Get the newsletter tables necessary for upgrade
+    $nwsltrPublications = $xartable['nwsltrPublications'];
+    $nwsltrStories = $xartable['nwsltrStories'];
+    $nwsltrIssues = $xartable['nwsltrIssues'];
     
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
-
-
-            // Get the newsletter publication table
-            $nwsltrPublications = $xartable['nwsltrPublications'];
             
             // Add the column 'xar_subject' to the publications table
             $query = xarDBAlterTable($nwsltrPublications,
@@ -398,7 +403,7 @@ function newsletter_upgrade($oldversion)
             // article ID of the choosen article.            
                         
             // Add the column 'xar_articleid' to the stories table
-            $query = xarDBAlterTable('xar_nwsltr_stories',
+            $query = xarDBAlterTable($nwsltrStories,
                                      array('command' => 'add',
                                            'field' => 'xar_articleid',
                                            'type' => 'integer'));
@@ -406,7 +411,7 @@ function newsletter_upgrade($oldversion)
             if (!$result) return;
                                            
             // change the title field to allow for null
-            $query = xarDBAlterTable($xartable['nwsltrStories'],
+            $query = xarDBAlterTable($nwsltrStories,
                                      array('command' => 'modify',
                                            'field' => 'xar_title',
                                            'null' => false));
@@ -414,18 +419,115 @@ function newsletter_upgrade($oldversion)
             if (!$result) return;
                                            
             // change the content field to allow for null
-            $query = xarDBAlterTable($xartable['nwsltrStories'],
+            $query = xarDBAlterTable($nwsltrStories,
                                      array('command' => 'modify',
                                            'field' => 'xar_content',
                                            'null' => false));
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
+            // fall through to the next upgrade
             
         case '1.1.1':
             // Code to upgrade from version 1.1.1 goes here
-            break;
+
+            // Add capability to change the from name and email
+            // address for an issue.  By default, the publication owner's
+            // name and email address will be used.  But this can be
+            // overridden by either the publication or by an issue.
+
+            // Add the column 'xar_fromname' to the publications table
+            $query = xarDBAlterTable($nwsltrPublications,
+                                     array('command' => 'add',
+                                           'field' => 'xar_fromname',
+                                           'type' => 'varchar',
+                                           'size' => 100,
+                                           'null' => true));
+
+            $result = & $dbconn->Execute($query);
+            if (!$result) return;
+
+            // Add the column 'xar_fromemail' to the publications table
+            $query = xarDBAlterTable($nwsltrPublications,
+                                     array('command' => 'add',
+                                           'field' => 'xar_fromemail',
+                                           'type' => 'varchar',
+                                           'size' => 100,
+                                           'null' => true));
+
+            $result = & $dbconn->Execute($query);
+            if (!$result) return;
+                                           
+            // Add the column 'xar_fromname' to the issues table
+            $query = xarDBAlterTable($nwsltrIssues,
+                                     array('command' => 'add',
+                                           'field' => 'xar_fromname',
+                                           'type' => 'varchar',
+                                           'size' => 100,
+                                           'null' => true));
+
+            $result = & $dbconn->Execute($query);
+            if (!$result) return;
+
+            // Add the column 'xar_fromemail' to the issues table
+            $query = xarDBAlterTable($nwsltrIssues,
+                                     array('command' => 'add',
+                                           'field' => 'xar_fromemail',
+                                           'type' => 'varchar',
+                                           'size' => 100,
+                                           'null' => true));
+
+            $result = & $dbconn->Execute($query);
+            if (!$result) return;
+                                           
+            // Update current publications so that the fromname and fromemail
+            // fields are populated with the publication owner information
             
+            // Get all of the publications
+            $publications = xarModAPIFunc('newsletter',
+                                  'user',
+                                  'get',
+                                  array('phase' => 'publication',
+                                        'sortby' => 'title'));
+
+            // Check for exceptions
+            if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
+                return; // throw back
+
+            // for each publication, loop through and assign owner information
+            foreach ($publications as $publication) {
+                // Get owner information
+                $role = xarModAPIFunc('roles',
+                                      'user',
+                                      'get',
+                                       array('uid' => $publication['ownerId']));
+                // Check return value
+                if (!isset($role) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+                    return; // throw back
+                }
+
+                // Create SQL
+                $query = "UPDATE $nwsltrPublications
+                          SET xar_fromname = ?,
+                              xar_fromemail = ?
+                          WHERE xar_id = ?";
+
+                $bindvars = array((string)   $role['name'],
+                                  (string)   $role['email'],
+                                  (int)      $publication['id']);
+
+                $result =& $dbconn->Execute($query, $bindvars);
+
+                // Check for an error
+                if (!$result) return false;
+            }
+
+            // fall through to the next upgrade
+            
+        case '1.1.2':
+            // Code to upgrade from version 1.1.2 goes here
+            break;
+
         default:
             // Couldn't find a previous version to upgrade
             return;

@@ -33,6 +33,8 @@
  * @param $args['description'] description of the publication 
  * @param $args['private'] publication is open for subscription or private
  * @param $args['subject'] email subject (title) of an issue
+ * @param $args['fromname'] publication email from name (default = owner name)
+ * @param $args['fromemail'] publication email from address (default = owner email)
  * @returns int
  * @return publication ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -99,7 +101,9 @@ function newsletter_adminapi_updatepublication($args)
                   xar_disclaimerid = ?,
                   xar_introduction = ?,
                   xar_private = ?,
-                  xar_subject = ?
+                  xar_subject = ?,
+                  xar_fromname = ?,
+                  xar_fromemail = ?
               WHERE xar_id = ?";
 
     $bindvars = array((int)     $categoryId,
@@ -116,6 +120,8 @@ function newsletter_adminapi_updatepublication($args)
                       (string)  $introduction,
                       (int)     $private,
                       (int)     $subject,
+                      (string)  $fromname,
+                      (string)  $fromemail,
                       (int)     $id);
 
     // Execute query

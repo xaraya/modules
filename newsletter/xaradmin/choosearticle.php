@@ -14,11 +14,18 @@
 
 
 /**
- * Add a new Newsletter story
+ * Choose an article to use as a Newsletter story
  *
  * @public
- * @author Richard Cave
- * @param 'publicationId' the publication id of the story (0 = no publication)
+ * @author Ashley Jones 
+ * @param 'publicationId' the publication id of the story
+ * @param 'issueId' the issue id of the story
+ * @param 'pubtypeid'
+ * @param 'catfilter'
+ * @param 'status'
+ * @param 'articleid'
+ * @param 'id'
+ * @param 'notnew'
  * @returns array
  * @return $data
  */
@@ -55,7 +62,7 @@ function newsletter_admin_choosearticle()
 
 
 
-    // set the defautls of the variables for the first time this page is run.
+    // set the defaults of the variables for the first time this page is run.
     // this scenario covers when there was nothing pulled from the 
     // database and nothing pulled from the form
     if (empty($vars['pubtypeid'])) {$vars['pubtypeid'] = '0';}
@@ -100,7 +107,7 @@ function newsletter_admin_choosearticle()
         $article_args['numitems'] = $vars['itemlimit'];
     }
     
-    // Add the rest of the arguments into article_args so that wehn we call the modAPIFunc
+    // Add the rest of the arguments into article_args so that when we call the modAPIFunc
     // below, we only get the articles the user wants
     $article_args['cids'] = $cidsarray;
     $article_args['enddate'] = time();

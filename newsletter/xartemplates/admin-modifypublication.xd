@@ -81,7 +81,7 @@
                     <b><xar:mlstring>HTML Template:</xar:mlstring></b>
                 </td>
                 <td>
-                    <input type="text" name="templateHTML" id="templateHTML" size="50" maxlength="50" tabindex="6" value="#xarVarPrepForDisplay($publication['templateHTML'])#"/>
+                    <input type="text" name="templateHTML" id="templateHTML" value="#xarVarPrepForDisplay($publication['templateHTML'])#" size="50" maxlength="50" tabindex="6" />
                 </td>
             </tr>
             <tr>
@@ -89,7 +89,25 @@
                     <b><xar:mlstring>Text Template:</xar:mlstring></b>
                 </td>
                 <td>
-                    <input type="text" name="templateText" id="templateText" size="50" maxlength="50" tabindex="7" value="#xarVarPrepForDisplay($publication['templateText'])#"/>
+                    <input type="text" name="templateText" id="templateText" value="#xarVarPrepForDisplay($publication['templateText'])#" size="50" maxlength="50" tabindex="7" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Email From Name:</xar:mlstring></b> 
+                    <br/><font size="1">(Default is owner's name)</font>
+                </td>
+                <td>
+                    <input type="text" name="fromname" id="fromname" value="#xarVarPrepForDisplay($publication['fromname'])#" size="50" maxlength="100" tabindex="8" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b><xar:mlstring>Email From Address:</xar:mlstring></b> 
+                    <br/><font size="1">(Default is owner's email address)</font>
+                </td>
+                <td>
+                    <input type="text" name="fromemail" id="fromemail" value="#xarVarPrepForDisplay($publication['fromemail'])#" size="50" maxlength="100" tabindex="9" />
                 </td>
             </tr>
             <tr>
@@ -98,7 +116,7 @@
                     <br/><font size="1">(Subject line in sent email)</font>
                 </td>
                 <td>
-                    <select name="subject" tabindex="8">
+                    <select name="subject" tabindex="10">
                     <xar:if condition="$publication['subject'] eq 0">
                         <option name="id" value="0" selected>Issue Title</option>
                     <xar:else />
@@ -122,7 +140,7 @@
                     <br/><font size="1">http://my.site.com/logo.gif</font>
                 </td>
                 <td>
-                    <input type="text" name="logo" id="logo" value="#$publication['logo']#" size="50" maxlength="255" tabindex="9" />
+                    <input type="text" name="logo" id="logo" value="#$publication['logo']#" size="50" maxlength="255" tabindex="11" />
                 </td>
             </tr>
             <tr>
@@ -130,7 +148,7 @@
                     <b><xar:mlstring>Default Number of Days before Link Expires:</xar:mlstring></b>
                 </td>
                 <td>
-                    <input type="text" name="linkExpiration" id="linkExpiration" value="#$publication['linkExpiration']#" size="4" maxlength="4" tabindex="10" />
+                    <input type="text" name="linkExpiration" id="linkExpiration" value="#$publication['linkExpiration']#" size="4" maxlength="4" tabindex="12" />
                     &nbsp;<xar:mlstring>(0 = link never expires)</xar:mlstring>
                 <td>
             </tr>
@@ -139,7 +157,7 @@
                     <b><xar:mlstring>Text for Link Registration:</xar:mlstring></b>
                 </td>
                 <td>
-                    <textarea name="linkRegistration" rows="3" cols="50" tabindex="11">#xarVarPrepForDisplay($publication['linkRegistration'])#</textarea>
+                    <textarea name="linkRegistration" rows="3" cols="50" tabindex="13">#xarVarPrepForDisplay($publication['linkRegistration'])#</textarea>
                 <td>
             </tr>
             <tr>
@@ -148,9 +166,9 @@
                 </td>
                 <td>
                     <xar:if condition="$publication['private'] eq 1">
-                        <input type="checkbox" name="private" value="1" checked tabindex="12" />
+                        <input type="checkbox" name="private" value="1" checked tabindex="14" />
                     <xar:else />
-                        <input type="checkbox" name="private" value="1" tabindex="13" />
+                        <input type="checkbox" name="private" value="1" tabindex="15" />
                     </xar:if>
                 </td>
             </tr>
@@ -159,7 +177,7 @@
                     <b><xar:mlstring>Disclaimer:</xar:mlstring></b>
                 </td>
                 <td>
-                    <select name="disclaimerId" tabindex="14">
+                    <select name="disclaimerId" tabindex="16">
                     <option value=0>Choose Disclaimer</option>
                     <xar:loop name="$publication['disclaimers']">
                         <xar:if condition="$loop:item['id'] eq $publication['disclaimerId']">
@@ -172,7 +190,7 @@
                 <br /><br />
                     <xar:mlstring>Or edit the current disclaimer:</xar:mlstring></b>
                     <br /><br />
-                    <textarea name="editdisclaimer" rows="3" cols="50" tabindex="15">#xarVarPrepForDisplay($disclaimer['disclaimer'])#</textarea>
+                    <textarea name="editdisclaimer" rows="3" cols="50" tabindex="17">#xarVarPrepForDisplay($disclaimer['disclaimer'])#</textarea>
                 </td>
             </tr>
             <tr>
@@ -181,13 +199,13 @@
                     <br/><font size="1">(Shown on subscription page)</font>
                 </td>
                 <td>
-                    <textarea name="description" rows="10" cols="50" tabindex="16">#xarVarPrepForDisplay($publication['description'])#</textarea>
+                    <textarea name="description" rows="10" cols="50" tabindex="18">#xarVarPrepForDisplay($publication['description'])#</textarea>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
                     <br /><br />
-                    <input type="submit" value="#$updatebutton#"  tabindex="17" />
+                    <input type="submit" value="#$updatebutton#"  tabindex="19" />
                 </td>
             </tr>
         </table>            

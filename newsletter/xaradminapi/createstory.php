@@ -83,10 +83,6 @@ function newsletter_adminapi_createstory($args)
               AND xar_cid = ?
               AND xar_ownerid = ?";
     
-    $bindvars[] = (string) $title;
-    $bindvars[] = (int) $categoryId;
-    $bindvars[] = (int) $ownerId;
-
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return false; 
 

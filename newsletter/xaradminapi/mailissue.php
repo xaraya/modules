@@ -69,6 +69,24 @@ function newsletter_adminapi_mailissue($args)
         $bccrecipients = array();
     }
     
+    // Check if fromname or fromemail is set in the issue.  If not, then check
+    // the publication.  If that is not set then default to publication owner.
+    if (empty($issue['fromname']) || empty($issue['fromemail'])) {
+        // Check if publication fromname and fromemail is set
+        if (empty($publication['fromname']) || empty($publication['fromemail'])) {
+            // Get publication owner information
+            $fromname = $publication['ownerEmail'];
+            $fromemail = $publication['ownerName'];
+        } else {
+            // Set to publication fromname and fromemail
+            $fromname = $publication['fromname'];
+            $fromemail = $publication['fromemail'];
+        }
+    } else {
+        // Set to issue fromname and fromemail
+        $fromname = $issue['fromname'];
+        $fromemail = $issue['fromemail'];
+    }
 
     // Set the subject/title of the email
     switch($publication['subject']) {
@@ -95,8 +113,8 @@ function newsletter_adminapi_mailissue($args)
                        'subject'       => $subject,
                        'message'       => $issueText,
                        'htmlmessage'   => $issueHTML,
-                       'from'          => $publication['ownerEmail'],
-                       'fromname'      => $publication['ownerName'],
+                       'from'          => $fromemail,
+                       'fromname'      => $fromname,
                        'usetemplates'  => false);
 
     // Check type of email to send

@@ -56,6 +56,15 @@ function newsletter_admin_modifyissue()
         // Check for exceptions
         if (!isset($pubItem) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
             return; // throw back
+
+        // If issue fromname is empty, then set to publication fromname
+        if (empty($issue['fromname'])) {
+            $issue['fromname'] = $pubItem['fromname'];
+        }
+        // If issue fromemail is empty, then set to publication fromemail
+        if (empty($issue['fromemail'])) {
+            $issue['fromemail'] = $pubItem['fromemail'];
+        }
     }
 
     // Get the list of publications
