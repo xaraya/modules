@@ -7,6 +7,26 @@
 <br />
 <xar:mlstring>This must be the full path to the folder on your server, including ending slash.  This directory must be php-writable.</xar:mlstring>
 </p>
+
+<p><xar:mlstring>Import Directory</xar:mlstring>&nbsp;&nbsp;<input type="text" name="import_directory" value="#$import_directory#" size="70">
+<br />
+<xar:mlstring>Files placed in this directory can be imported via the File Import option in the Uploads Admin Menu. This must be the full path to the folder on your server, including ending slash.</xar:mlstring>
+</p>
+
+<p><xar:mlstring>Obfuscate/Secure Imported Filenames</xar:mlstring>
+&nbsp;&nbsp;
+<xar:if condition="$obfuscate_imports == 0">
+	<input type="radio" name="obfuscate_imports" value="1"> Yes
+	<input type="radio" name="obfuscate_imports" value="0" checked="true"> No
+<xar:else />
+	<input type="radio" name="obfuscate_imports" value="1" checked="true"> Yes
+	<input type="radio" name="obfuscate_imports" value="0"> No
+</xar:if>
+<br />
+<xar:mlstring>Files placed in this directory can be imported via the File Import option in the Uploads Admin Menu. This must be the full path to the folder on your server, including ending slash.</xar:mlstring>
+</p>
+
+
 <p><xar:mlstring>Maximum Upload Size (in bytes)</xar:mlstring>&nbsp;&nbsp;<input type="text" name="maximum_upload_size" value="#$maximum_upload_size#">
 <br />
 <xar:mlstring>This number may be ignored if it is greater than your PHP maximum upload size.</xar:mlstring>

@@ -1,4 +1,5 @@
 <?php
+
 // File: $Id$
 // ----------------------------------------------------------------------
 // Xaraya eXtensible Management System
@@ -24,6 +25,8 @@ function uploads_init()
 		$uploads_directory = 'var/uploads/';
 	}
     xarModSetVar('uploads', 'uploads_directory', $uploads_directory);
+    xarModSetVar('uploads', 'import_directory',  $uploads_directory."import/");
+    xarModSetVar('uploads', 'obfuscate_imports', '1');
     xarModSetVar('uploads', 'maximum_upload_size', '100000');
     xarModSetVar('uploads', 'allowed_types', 'gif;jpg;zip;tar.gz;tgz');
     xarModSetVar('uploads', 'max_image_width', '600');

@@ -1,4 +1,5 @@
 <?php 
+
 // File: $Id
 // ----------------------------------------------------------------------
 // Xaraya eXtensible Management System
@@ -169,21 +170,31 @@ function uploads_userapi_upload($args)
 }
 function uploads_userapi_store( $args ) 
 {
+	// Place file into uploads DB so it can be managed by Uploads Module
     // args
-    // ulfile - Filename
+    // ulfile - Filename of the file
+	// filepath (optional) - Full path to file
     // utype
     // mod
     // modid
     // filesize
     // type
+	// movefile (optional) - Yes: Moves file to uploads_dir, No: Copies file to uploads_dir
     extract( $args );
     if (!xarSecurityCheck('ReadUploads')) return;
-//if we've gotten this far, the file is good to upload.  
-//Move file out of php temp upload directory into holding pen.  Then change code below to move
-//from holding pen to unapproved directory.
-// Build path to temp file
+
+	// Path to uploads directory
     $savepath = xarModGetVar('uploads','uploads_directory');
+	
+	// Get full path to file
+	if( !isset($filepath) || ($filepath=='') )
+	{
+		// Assume file uploaded with uploads_userapi_upload -- file should now be in uploads_dir w/ original filename
+		// Build path to temp file
     $tmp_name = $savepath . $ulfile;
+	} else {
+		$tmp_name = $filepath;
+	}
 
 // Build fairly unique file name
     $jumble = md5(time() . getmypid());
@@ -193,26 +204,46 @@ function uploads_userapi_store( $args )
 // Note user ID 
     $uid = xarUserGetVar('uid');
 // Store file
-    if ($utype == 'file') { 
+    if ($utype == 'file') 
+	{ 
     //move it to the given directory/rename it
     //and add an entry in the uploads table.
   
       $savefile = $savepath . $ulhash;
+		
+		if( !isset($movefile) || ($movefile=='') || ($movefile=='No') )
+		{
     $aok = rename($tmp_name, $savefile);
-    if (!$aok) {
-        $msg = xarML('The file did not copy properly.  Please report the problem to the site administrator. ' . "$tmp_name, $savefile");
+			if (!$aok) 
+			{
+				$msg = xarML('Could not move file into Uploads Directory.  Please report the problem to the site administrator. ' . "$tmp_name, $savefile");
+				xarExceptionSet(XAR_SYSTEM_EXCEPTION, xarML('Error Copying Uploaded File'), new SystemException($msg));
+				return;
+			}
+		} else if ( $movefile=='Yes' ) {
+			$aok = copy($tmp_name, $savefile);
+			if (!$aok) 
+			{
+				$msg = xarML('Could not copy file into Uploads Directory.  Please report the problem to the site administrator. ' . "$tmp_name, $savefile");
       xarExceptionSet(XAR_SYSTEM_EXCEPTION, xarML('Error Copying Uploaded File'), new SystemException($msg));
       return;
     }
+		} else {
+			$msg = xarML('Invalid Argument to [$movefile].');
+			xarExceptionSet(XAR_SYSTEM_EXCEPTION, xarML('Invalid Argument'), new SystemException($msg));
+			return;
+		}
       
       //add to uploads table
       // Get database setup
       list($dbconn) = xarDBGetConn();
       $xartable = xarDBGetTables();
           
+          
       // table and column definitions
       $uploadstable = $xartable['uploads'];
             $nextUL = $dbconn->GenID($uploadstable);
+
     // Check to see if user has the right to approve uploads, if so... then just approve this one too
       if( xarSecurityCheck('EditUploads',0))
       {
@@ -228,7 +259,7 @@ function uploads_userapi_store( $args )
         VALUES ($nextUL, '"
               . xarVarPrepForStore($mod) . "', "
               . xarVarPrepForStore($modid) . ", "
-              . xarVarPrepForStore($uid) . ",' "
+              . xarVarPrepForStore($uid) . ",'"
               . xarVarPrepForStore($ulfile) . "', '"
               . xarVarPrepForStore($ulhash). "', "
             . $ulapp.", 0, '" . substr($utype,0,1) . "')" ;
@@ -351,6 +382,7 @@ function uploads_userapi_uploadmagic($args)
     if( is_array($fileUpload) )
     {
         return '#ulid:' . $fileUpload['ulid'] . '#';
+
     } else {
         return $fileUpload;
     }
@@ -377,13 +409,18 @@ function uploads_userapi_get($args)
     extract($args);
     
 
+    
     // Argument check
+	if( !isset($ulname) || ($ulname == "") )
+	{
+		
     if (!isset($ulid) || !is_numeric($ulid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'upload ID', 'user', 'get', 'uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+	}
 
     // Security check before we do all the hard work.
     if (!xarSecurityCheck('ReadUploads')) return;
@@ -395,6 +432,16 @@ function uploads_userapi_get($args)
         // table and column definitions
     $uploadstable = $xartable['uploads'];
     // Get item
+	if( isset($ulname) && ($ulname != "") )
+	{
+		$sql = "SELECT xar_ulid,
+					   xar_ulmod,
+					   xar_ulhash,
+					   xar_ulapp,
+					   xar_ulfile
+				FROM $uploadstable
+				WHERE xar_ulfile = '" . xarVarPrepForStore($ulname) ."'";
+	} else {
     $sql = "SELECT xar_ulid,
                    xar_ulmod,
                    xar_ulhash,
@@ -402,6 +449,9 @@ function uploads_userapi_get($args)
                    xar_ulfile
             FROM $uploadstable
             WHERE xar_ulid = " . xarVarPrepForStore($ulid);
+	}
+	
+	
     $result = $dbconn->Execute($sql);
     // Check for an error with the database code, and if so set an appropriate
     // error message and return
@@ -513,6 +563,25 @@ function uploads_userapi_transform ( $body )
                               'user',
                               'get',
                               array('ulid'=>$ulid));
+        // Retrieve user specified filename
+        $ulfile = $info['ulfile'];
+
+        // Check if file approved
+        $tpl = xarTplModule('uploads','user','viewdownload'
+                           ,array('ulid' => $ulid, 'ulfile' => $ulfile));
+        $body=ereg_replace("#ulidd:$reg[1]#",$tpl,$body); 
+    }
+
+    // Loop over each Upload Tag set to use Default Template
+    while( ereg('#ulfn:(.+)#',$body,$reg) )
+    {
+        $ulname = $reg[1];
+
+        // Lookup Upload
+        $info = xarModAPIFunc('uploads',
+                              'user',
+                              'get',
+                              array('ulname'=>$ulname));
         // Retrieve user specified filename
         $ulfile = $info['ulfile'];
 

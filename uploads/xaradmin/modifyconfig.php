@@ -1,4 +1,5 @@
 <?php
+
 function uploads_admin_modifyconfig()
 {
 
@@ -10,9 +11,11 @@ function uploads_admin_modifyconfig()
 
     // get the current module variables for display
     $data['uploads_directory']      = xarModGetVar('uploads', 'uploads_directory');
-    $data['maximum_upload_size']    = xarModGetVar('uploads','maximum_upload_size');
-    $data['max_image_width']        = xarModGetVar('uploads','max_image_width');
-    $data['max_image_height']       = xarModGetVar('uploads','max_image_height');
+    $data['import_directory']       = xarModGetVar('uploads', 'import_directory');
+    $data['obfuscate_imports']      = xarModGetVar('uploads', 'obfuscate_imports');
+    $data['maximum_upload_size']    = xarModGetVar('uploads', 'maximum_upload_size');
+    $data['max_image_width']        = xarModGetVar('uploads', 'max_image_width');
+    $data['max_image_height']       = xarModGetVar('uploads', 'max_image_height');
     $data['allowed_types']          = xarModGetVar('uploads', 'allowed_types');
     $data['confirm_delete']          = xarModGetVar('uploads', 'confirm_delete');
 

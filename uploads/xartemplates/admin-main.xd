@@ -20,6 +20,11 @@
 	<xar:mlstring>Modify Uploads Configuration</xar:mlstring>
     </a>
   </li>
+  <li>
+  <a href="#xarModURL('uploads', 'admin', 'fileimport')#">
+	<xar:mlstring>Import Files</xar:mlstring>
+    </a>
+  </li>
 </ul>
 </div>
 </div>

@@ -1,4 +1,5 @@
 <?php
+
 // File: $Id$
 // ----------------------------------------------------------------------
 // Xaraya eXtensible Management System
@@ -20,7 +21,10 @@ function uploads_adminapi_download( $args )
     $info = xarModAPIFunc('uploads',
                           'user',
                           'get',
-                          array('ulid'=>$ulid));
+                          array(  'ulid'=>$ulid
+						        , 'ulname'=>$ulname)
+						 );
+						 
     // Check if download is not approved for viewing
     if( $info['ulhash'] == '' )
     {
@@ -64,8 +68,7 @@ function uploads_adminapi_download( $args )
         header("Content-type: application/octet-stream");
     }
 
-    
-    header("Content-Disposition: attachment; filename=\"".$fname."\"");
+    header("Content-disposition: attachment; filename=\"".basename($fname)."\"");
     header("Content-length: $size");
     $fp = fopen($file,"rb");
     if( is_resource($fp) )
@@ -237,6 +240,7 @@ function uploads_adminapi_approveupload($args)
         
         // Get items
     $sql = "UPDATE $uploadstable
+
                     SET xar_ulapp = 1
             WHERE xar_ulid = $ulid;";
     $result = $dbconn->Execute($sql);
@@ -277,6 +281,11 @@ function uploads_adminapi_getmenulinks()
                                                    'uploadform'),
                               'title' => xarML('Upload a File'),
                               'label' => xarML('Upload File'));
+        $menulinks[] = Array('url'   => xarModURL('uploads',
+                                                   'admin',
+                                                   'fileimport'),
+                              'title' => xarML('Import Files'),
+                              'label' => xarML('Import Files'));
     }
     if (xarSecurityCheck('AdminUploads')) {
         $menulinks[] = Array('url'   => xarModURL('uploads',
@@ -307,22 +316,13 @@ function uploads_adminapi_reject($args)
                           'getuploadinfo',
                           array('ulid'=>$ulid));
     $info = $info[0];
-    print_r($info);
-    if( $info['ulapp'] == 0 )
-    {
-        $uploads_directory = xarModGetVar('uploads', 'uploads_directory');
-        $fulloldfile = $uploads_directory.$info['ulhash'];
-    } else {
-        $fulloldfile = $info['ulfile'];
-    }
+
     // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
         
     // table and column definitions
     $uploadstable = $xartable['uploads'];
-        
-        
         
     // Remove item
     $sql = "DELETE FROM $uploadstable
@@ -338,15 +338,25 @@ function uploads_adminapi_reject($args)
         return;
     }
     
+	// Remove File
+	$uploads_directory = xarModGetVar('uploads', 'uploads_directory');
+	$fulloldfile = $uploads_directory.$info['ulhash'];
+	@unlink( $fulloldfile );
+    
     return True;
 }
 
 
+function uploads_adminapi_newhook( $args )
+{
+    extract($args);
+    // TODO: update the upload's module-ID to correspond to the article's ID
+    return $extrainfo;    
+}
+
 function uploads_adminapi_createhook( $args )
 {
     extract($args);
-    // TODO: do you really want to handle some input field here or not ?
-
     // TODO: update the upload's module-ID to correspond to the article's ID
     return $extrainfo;    
 }
