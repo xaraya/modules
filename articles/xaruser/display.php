@@ -169,7 +169,7 @@ function articles_user_display($args)
                 // option for the publication type.
                 $urlmask = xarModURL(
                     'articles','user','display',
-                    array('aid' => $aid, 'page' => '%%')
+                    array('ptid' => $ptid, 'aid' => $aid, 'page' => '%%')
                 );
                 $data['pager'] = xarTplGetPager(
                     $page, $numpages, $urlmask,
