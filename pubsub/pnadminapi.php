@@ -272,7 +272,7 @@ function pubsub_adminapi_runjob($args)
     $actionid = $result->fields[0];
     $eventid  = $result->fields[1]);
     list($action,$info)   =  explode(':', $actionid);
-    if ($action = "mail") {
+    if ($action = "mail" || $action = "htmlmail") {
 	// check mail address is a valid email address
 	if (!eregi("^([A-Za-z0-9_]|\\-|\\.)+@(([A-Za-z0-9_]|\\-)+\\.)[A-Za-z]{2,4}$", $info)) {
 	    // address invalid
@@ -295,28 +295,35 @@ function pubsub_adminapi_runjob($args)
 	    // do something with the template to parse it and generate the HTML
 	    $html = SOME_BL_FUNCTION($template); 
 	    $plaintext = strip_tags($html);
-	    $boundary = "b" . md5(uniqid(time()));
-	    $message = "From: pnConfigGetVar('adminmail')\r\nReply-to: pnConfigGetVar('adminmail')\r\n";
-	    $message .= "Content-type: multipart/mixed; ";
-	    $message .= "boundary = $boundary\r\n\r\n";
-	    $message .= "This is a MIME encoded message.\r\n\r\n";
-	    // first the plaintext message
-	    $message .= "--$boundary\r\n";
-	    $message .= "Content-type: text/plain\r\n";
-	    $message .= "Content-Transfer-Encoding: base64";
-	    $message .= "\r\n\r\n" . chunk_split(base64_encode($plaintext)) . "\r\n";
-	    // now the HTML version
-	    $message .= "--$boundary\r\n";
-	    $message .= "Content-type: text/html\r\n";
-	    $message .= "Content-Transfer-Encoding: base64";
-	    $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
+	    if ($action = "htmlmail") { 
+	       $boundary = "b" . md5(uniqid(time()));
+	       $message = "From: pnConfigGetVar('adminmail')\r\nReply-to: pnConfigGetVar('adminmail')\r\n";
+	       $message .= "Content-type: multipart/mixed; ";
+	       $message .= "boundary = $boundary\r\n\r\n";
+	       $message .= "This is a MIME encoded message.\r\n\r\n";
+	       // first the plaintext message
+	       $message .= "--$boundary\r\n";
+	       $message .= "Content-type: text/plain\r\n";
+	       $message .= "Content-Transfer-Encoding: base64";
+	       $message .= "\r\n\r\n" . chunk_split(base64_encode($plaintext)) . "\r\n";
+	       // now the HTML version
+	       $message .= "--$boundary\r\n";
+	       $message .= "Content-type: text/html\r\n";
+	       $message .= "Content-Transfer-Encoding: base64";
+	       $message .= "\r\n\r\n" . chunk_split(base64_encode($html)) . "\r\n";
 	    
-	    // send the mail
-            mail($info,     // to
-	         $subject,  // subject
-		 '',        // empty mesage body as sending multipart messages
-	         $message); // message
-
+	       // send the mail
+               mail($info,     // to
+	            $subject,  // subject
+		    '',        // empty mesage body as sending multipart messages
+	            $message); // message
+	    } else {
+	       // send the mail
+               mail($info,      // to
+	            $subject,   // subject
+		    $plaintext, // empty mesage body as sending multipart messages
+	            "From: pnConfigGetVar('adminmail')\r\nReply-to: pnConfigGetVar('adminmail')\r\n"); 
+	    }   
             // delete job from queue now it has run
 	    pubsub_adminapi_deljob($handlingid);
         }
