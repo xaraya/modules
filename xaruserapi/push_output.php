@@ -3,9 +3,10 @@
 function reports_userapi_push_output($args)
 {
     extract($args);
-    
+
     // Write the xmldata to a temporary inputfile
-    $input = realpath(tempnam('var/cache/reports','REP_IN'));
+    $cacheDir = realpath(xarCoreGetVarDirPath().'/cache/reports');;
+    $input = realpath(tempnam($cacheDir,'REP_IN'));
     $hIn = fopen($input, 'w');
     if($hIn) {
         fwrite($hIn, $xmldata);
@@ -13,10 +14,10 @@ function reports_userapi_push_output($args)
     } else {
         // TODO: raise an exception
     }
-    
+
     // Write the resulting document into a temporary outputfile
-    $output = realpath(tempnam('var/cache/reports','REP_OUT'));
-    $command ="fop -q -fo $input -$format $output";
+    $output = realpath(tempnam($cacheDir,'REP_OUT'));
+    $command ="fop -d -fo $input -$format $output";
     xarLogMessage("FOP: $command");
     $lastline = exec($command, $outlines, $returnvalue);
     $outlines = join("\n",$outlines);
@@ -27,7 +28,7 @@ function reports_userapi_push_output($args)
         xarErrorSet(XAR_USER_EXCEPTION, 'NOT_FOUND', $outtext);
         return;
     }
-    
+
     // Determine the content type
     switch($format) {
         case 'pdf':
@@ -42,7 +43,7 @@ function reports_userapi_push_output($args)
         default:
             // force download?
     }
-    
+
     // Push the contents of the output to the users client
     $hOut = fopen($output, "rb");
     if($hOut) {
@@ -58,6 +59,6 @@ function reports_userapi_push_output($args)
     }
     // When done, remove the xmldata and the produced output file
     // TODO: investigate output cache here, huge potential
-    unlink($input); unlink($output);
+    //unlink($input); unlink($output);
     return true;
 }
