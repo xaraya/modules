@@ -26,6 +26,7 @@ function authsql_admin_updateconfig()
          $sqldbpasswordfield,
          $sqldbpasswordencryptionmethod,
          $sqlwhere,
+         $activate,
          $adduser,
          $storepassword,
          $defaultgroup ) = xarVarCleanFromInput('sqldbhost',
@@ -39,6 +40,7 @@ function authsql_admin_updateconfig()
                                                 'sqldbpasswordfield',
                                                 'sqldbpasswordencryptionmethod',
                                                 'sqlwhere',
+                                                'activate', 
                                                 'adduser', 
                                                 'storepassword', 
                                                 'defaultgroup');
@@ -79,6 +81,26 @@ function authsql_admin_updateconfig()
         }
     } 
     xarModSetVar('authsql', 'defaultgroup', $defaultgroup);
+
+    $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
+    if (empty($activate) && in_array('authsql', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module != 'authsql') {
+                $newauth[] = $module;
+            }
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    } elseif (!empty($activate) && !in_array('authsql', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module == 'authsystem') {
+                $newauth[] = 'authsql';
+            }
+            $newauth[] = $module;
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    }
 
     // lets update status and display updated configuration
     xarResponseRedirect(xarModURL('authsql', 'admin', 'modifyconfig'));

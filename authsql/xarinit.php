@@ -33,7 +33,8 @@ function authsql_init()
     xarRegisterMask('AdminAuthSQL','All','authsql','All','All','ACCESS_ADMIN');
     xarRegisterMask('ReadAuthSQL','All','authsql','All','All','ACCESS_READ');
 
-    // Add authsql to Site.User.AuthenticationModules in xar_config_vars
+    // Do not add authsql to Site.User.AuthenticationModules in xar_config_vars here
+/*
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
     $authModules[] = 'authsql';
 
@@ -41,6 +42,7 @@ function authsql_init()
     sort($authModules);
 
     xarConfigSetVar('Site.User.AuthenticationModules',$authModules);
+*/
 
     /* call upgrade */
     return upgrade(1.0);

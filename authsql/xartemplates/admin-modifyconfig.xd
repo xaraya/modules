@@ -64,6 +64,22 @@
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>Authentication Configuration</xar:mlstring>
         </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Activate authentication module</xar:mlstring>
+                    </td>
+                    <td>
+                        <xar:if condition="in_array('authsql',xarConfigGetVar('Site.User.AuthenticationModules'))">
+                            <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
+                        <xar:else/>
+                            <input type="checkbox" name="activate" id="activate" value="1" />
+                        </xar:if>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>User Configuration</xar:mlstring>
