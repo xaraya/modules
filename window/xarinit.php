@@ -99,8 +99,12 @@ function window_init()
     return true;
 }
 
-function window_upgrade()
+function window_upgrade($oldversion)
 {
+    switch($oldversion){
+        case '1.0':
+            break;
+    }
     return true;
 }
 
