@@ -13,6 +13,11 @@ Various stuff to do:
   easy as each page type could get its data from a different place, and this
   module has no inside knowledge of how to access that data
 - Some good docs with examples and diagrams
+- Fix page view so that the image on the first item displays correctly
+- Provide selection methods (by tree etc) on the admin/view page to help
+  view large numbers of pages
+- Provide selection box when there is more than one template page for a
+  given page type (possibly including -none- as an option)
 
 
 To get this thing working in the meantime, create a page type called 'html'
