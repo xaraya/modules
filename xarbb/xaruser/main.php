@@ -63,11 +63,11 @@ function xarbb_user_main()
         $args['cid'] = $catid;
         $cats = xarModAPIfunc('categories', 'user', 'getcat', $args);
 
-// Security check: remove categories the user should not see
-            $catcount = count($cats);
-            foreach($cats as $cat)
-                if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
-                    $items[] = $cat;
+        // Security check: remove categories the user should not see
+        $catcount = count($cats);
+        foreach($cats as $cat)
+            if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
+                $items[] = $cat;
 
         $totalitems = count($items);
         for ($i = 0; $i < $totalitems; $i++) {
@@ -82,8 +82,9 @@ function xarbb_user_main()
                                            'startnum' => $startnum,
                                             'numitems' => xarModGetVar('xarbb',
                                                                     'forumsperpage')));
-// Security check: remove forums the user should not see
+            // Security check: remove forums the user should not see
             $forumcount = count($forums);
+            $items[$i]['forums'] = array();
             foreach($forums as $forum)
                 if(xarSecurityCheck('ReadxarBB',0,'Forum','All:'.$forum['fid']))
                 $items[$i]['forums'][] = $forum;
@@ -96,11 +97,11 @@ function xarbb_user_main()
         // Get an array of assigned category details for a specific item
         $cats = xarModAPIfunc('categories', 'user', 'getallcatbases', $args);
 
-// Security check: remove categories the user should not see
-            $catcount = count($cats);
-            foreach($cats as $cat)
-                if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
-                    $items[] = $cat;
+        // Security check: remove categories the user should not see
+        $catcount = count($cats);
+        foreach($cats as $cat)
+            if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
+                $items[] = $cat;
 
         $totalitems = count($items);
         for ($i = 0; $i < $totalitems; $i++) {
@@ -109,7 +110,7 @@ function xarbb_user_main()
             $args['basecat'] = $item['cid'];
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
 
-                    // The user API function is called
+            // The user API function is called
             $forums = xarModAPIFunc('xarbb',
                                     'user',
                                     'getallforums',
@@ -118,8 +119,9 @@ function xarbb_user_main()
                                             'numitems' => xarModGetVar('xarbb',
                                                                     'forumsperpage')));
 
-// Security check: remove forums the user should not see
+            // Security check: remove forums the user should not see
             $forumcount = count($forums);
+            $items[$i]['forums'] = array();
             foreach($forums as $forum)
                 if(xarSecurityCheck('ReadxarBB',0,'Forum','All:'.$forum['fid']))
                 $items[$i]['forums'][] = $forum;
