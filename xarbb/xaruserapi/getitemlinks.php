@@ -26,10 +26,6 @@ function xarbb_userapi_getitemlinks($args)
 
     $itemlinks = array();
 
-//    if (empty($itemtype)) {
-//        $itemtype = 0; // xarbb accesses some hooks directly without itemtype atm
-//    } 
-
     // forums
     if (empty($itemtype)) {
          $forums = xarModAPIFunc('xarbb','user','getallforums');
@@ -37,7 +33,7 @@ function xarbb_userapi_getitemlinks($args)
              return $itemlinks;
          }
          foreach ($forums as $forum) {
-             if (!in_array($forum['fid'],$itemids)) continue;
+             if (!empty($itemids) && !in_array($forum['fid'],$itemids)) continue;
              $itemlinks[$forum['fid']] = array('url'   => xarModURL('xarbb', 'user', 'viewforum',
                                                                  array('fid' => $forum['fid'])),
                                                'title' => xarML('View Forum'),
@@ -46,8 +42,13 @@ function xarbb_userapi_getitemlinks($args)
 
     // topics
     } else {
-         $topics = xarModAPIFunc('xarbb','user','getalltopics',
-                                 array('tids' => $itemids));
+         if (empty($itemids)) {
+             $topics = xarModAPIFunc('xarbb','user','getalltopics',
+                                     array('fid' => $itemtype));
+         } else {
+             $topics = xarModAPIFunc('xarbb','user','getalltopics',
+                                     array('tids' => $itemids));
+         }
          if (empty($topics)) {
              return $itemlinks;
          }
