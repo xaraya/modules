@@ -87,21 +87,19 @@ function polls_user_vote($args)
         return;
     }
     // CHECKME: find some cleaner way to update the page cache if necessary
-    if (function_exists('xarPageFlushCached') &&
-        !empty($GLOBALS['xarPage_cacheDisplay']) &&
-        xarModGetVar('xarcachemanager','FlushOnNewPollvote')) {
-        if (isset($callingmod)) {
-            xarPageFlushCached("$callingmod-user-");
+    if (function_exists('xarPageFlushCached')) {
+        if (isset($callingmod) && 
+            xarModGetVar('xarcachemanager','FlushOnNewPollvote')) {
+            xarPageFlushCached("$callingmod-user-display-");
         } else {
             xarPageFlushCached("polls-user-");
         }
     }
 
     // Success, Redirect
-    if (!empty($returnurl)){
+    if (!empty($returnurl)) {
         xarResponseRedirect($returnurl);
-    }
-    else {
+    } else {
         xarResponseRedirect(xarModURL('polls', 'user', 'results', array('pid' => $pid)));
     }
 
