@@ -1,5 +1,5 @@
-repository: xaraya-modules
-description: Xaraya modules repository
+repository: xaraya chat modules
+description: Xaraya chat module repository
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
