@@ -19,7 +19,7 @@
     </ul>
   </div>
 
-  <div>
+  <div style="float:right;">
     <xar:if condition="!empty($hooks)">
       <xar:foreach in="$hooks" key="$hookmod" value="$hookout">
         #$hookout#
