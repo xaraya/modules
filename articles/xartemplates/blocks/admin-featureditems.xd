@@ -1,0 +1,176 @@
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Choose the publication type for the featured items.')#"><label for="pubtypeid#$blockid#"><xar:mlstring>Publication Type</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<select name="pubtypeid" id="pubtypeid#$blockid#">
+				<option value="0"><xar:mlstring>All</xar:mlstring></option>
+				<xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
+					<xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
+						<option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
+					<xar:else />
+						<option value="#$pubid#">#$pubtype['descr']#</option>
+					</xar:if>
+				</xar:foreach>
+			</select>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Choose the category for the featured items.')#"><label for="catfilter#$blockid#"><xar:mlstring>Category</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<select name="catfilter" id="catfilter#$blockid#">
+				<option value="0"><xar:mlstring>All</xar:mlstring></option>
+				<xar:foreach in="$categorylist" value="$catlistx">
+					<xar:if condition="!empty($catfilter) and $catfilter eq $catlistx['cid']">
+						<option value="#$catlistx['cid']#" selected="selected">#$catlistx['name']#</option>
+					<xar:else />
+						<option value="#$catlistx['cid']#">#$catlistx['name']#</option>
+					</xar:if>
+				</xar:foreach>
+			</select>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Choose the status (e.g. Approved, Front Page) for the featured items.')#"><label for="status#$blockid#"><xar:mlstring>Status</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<select name="status" id="status#$blockid#" size="1">
+				<xar:foreach in="$statusoptions" value="$statusoption">
+					<xar:if condition="!empty($status) and $status eq $statusoption['id']">
+						<option value="#$statusoption['id']#" selected="selected">#$statusoption['name']#</option>
+					<xar:else />
+						<option value="#$statusoption['id']#">#$statusoption['name']#</option>
+					</xar:if>
+				</xar:foreach>
+			</select>
+		</span>
+		</div>
+		
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Enter the number of items to choose featured articles from.')#"><label for="itemlimit#$blockid#"><xar:mlstring>Limit</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="text" name="itemlimit" id="itemlimit#$blockid#" value="#$itemlimit#" size="3" maxlength="4" />
+		</span>
+		</div>
+		
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Choose the article to display as a featured item.')#"><label for="featuredaid#$blockid#"><xar:mlstring>Featured Article</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<select name="featuredaid" id="featuredaid#$blockid#" size="1">
+			<xar:if condition="$featuredaid eq 0">
+				<option value="" selected="selected">--- choose an article to be featured ---</OPTION>
+			</xar:if>
+			<xar:foreach in="$filtereditems" value="$filtereditem">
+				<xar:if condition="$featuredaid eq $filtereditem['aid']">
+					<option value="#$filtereditem['aid']#" selected="selected">#$filtereditem['title']#</option>
+				<xar:else />
+					<option value="#$filtereditem['aid']#">#$filtereditem['title']#</option>
+				</xar:if>
+			</xar:foreach>
+			</select>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('If you wish to give the article an alternative title to be displayed as a featured item, enter the name here.')#"><label for="alttitle#$blockid#"><xar:mlstring>Alternate Title:</xar:mlstring></label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="text" name="alttitle" id="alttitle#$blockid#" value="#$alttitle#" size="24" maxlength="62" />
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('If you wish to show the summary for the article as teaser text select this box.')#"><label for="showfeaturedsum#$blockid#"><xar:mlstring>Show summary</xar:mlstring>:</label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<xar:if condition="empty($showfeaturedsum)">
+				<input type="checkbox" name="showfeaturedsum" id="showfeaturedsum#$blockid#" value="1" />
+			<xar:else />
+				<input type="checkbox" name="showfeaturedsum" id="showfeaturedsum#$blockid#" value="1" checked="checked" />
+			</xar:if>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Choose additional headlines to display.')#"><label for="moreitems"><xar:mlstring>Additional Headlines</xar:mlstring>:</label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+            <select name="moreitems[]" id="moreitems" multiple="mulitple" size="#$itemlimit#">
+                <xar:foreach in="$morearticles" value="$item">
+                    <xar:if condition="!empty($item['selected'])">
+                        <option name="aid" value="#$item['aid']#" selected="selected">#xarVarPrepForDisplay($item['title'])#</option>
+                    <xar:else/>
+                        <option name="aid" value="#$item['aid']#">#xarVarPrepForDisplay($item['title'])#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Choose the sort options.')#"><label for="toptype#$blockid#"><xar:mlstring>Sort by</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<select name="toptype" id="toptype#$blockid#" size="1">
+			<xar:foreach in="$sortoptions" value="$sortoption">
+			<xar:if condition="$toptype eq $sortoption['id']">
+				<option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
+			<xar:else />
+				<option value="#$sortoption['id']#">#$sortoption['name']#</option>
+			</xar:if>
+			</xar:foreach>
+			</select>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Select this box if you wish to display the sort options.')#"><label for="showvalue#$blockid#"><xar:mlstring>Show sort value</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<xar:if condition="empty($showvalue)">
+				<input type="checkbox" name="showvalue" id="showvalue#$blockid#" value="1" />
+			<xar:else />
+				<input type="checkbox" name="showvalue" id="showvalue#$blockid#" value="1" checked="checked" />
+			</xar:if>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('If you wish to show the summary for the block, select this box.')#"><label for="showsummary#$blockid#"><xar:mlstring>Show summary</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<xar:if condition="empty($showsummary)">
+				<input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" />
+			<xar:else />
+				<input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" checked="checked" />
+			</xar:if>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Set to include the publication type in the article link.')#"><label for="linkpubtype#$blockid#"><xar:mlstring>Link to publication type:</xar:mlstring></label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<xar:if condition="empty($linkpubtype)">
+				<input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" />
+			<xar:else />
+				<input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" checked="checked" />
+			</xar:if>
+		</span>
+		</div>
