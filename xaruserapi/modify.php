@@ -50,9 +50,6 @@ function comments_userapi_modify($args)
     $useeditstamp=xarModGetVar('comments','editstamp');
     $adminid = xarModGetVar('roles','admin');
 
-
-    $modified_date = xarLocaleFormatDate("%B %d, %Y %I:%M %p",time());
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
@@ -70,15 +67,10 @@ function comments_userapi_modify($args)
 
     if  (($useeditstamp ==1 ) ||
                      (($useeditstamp == 2 ) && (xarUserGetVar('uid')<>$adminid))) {
-    $text .= "\n<p>\n";
-    $text .= xarML('[Modified by: #(1) (#(2)) on #(3)]',
-                   xarUserGetVar('name'),
-                   xarUserGetVar('uname'),
-                   $modified_date);
-    $text .= "\n</p>\n"; //let's keep the begin and end tags together around the wrapped content
+        $text .= "\n";
+        $text .= xarTplModule('comments','user','modifiedby',array());
+        $text .= "\n"; //let's keep the begin and end tags together around the wrapped content
     }
-
-
 
     $sql =  "UPDATE $xartable[comments]
                 SET xar_title    = ?, 

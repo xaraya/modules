@@ -1,0 +1,8 @@
+<p>
+<xar:ml>
+<xar:mlstring>[Modified by: #(1) (#(2)) on #(3)]</xar:mlstring>
+<xar:mlvar>#xarUserGetVar('name')#</xar:mlvar>
+<xar:mlvar>#xarUserGetVar('uname')#</xar:mlvar>
+<xar:mlvar>#xarLocaleFormatDate("%B %d, %Y %I:%M %p",time())#</xar:mlvar>
+</xar:ml>
+</p>
