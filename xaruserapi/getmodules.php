@@ -42,7 +42,7 @@ function comments_userapi_getmodules($args)
     if (!empty($modid)) {
         $where_mod = " AND $ctable[modid] = $modid";
         if (isset($itemtype)) {
-            $where_mod = " AND $ctable[itemtype] = $itemtype";
+            $where_mod .= " AND $ctable[itemtype] = $itemtype";
         }
     } else {
         $where_mod = '';
