@@ -29,7 +29,7 @@ function page_top($page,$printlayout)
     if ($page == THELIST) {
         $jetzt = getdate(time());
         $str .= '
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
         <!--
         function showCalendar()
         {
@@ -42,7 +42,7 @@ function page_top($page,$printlayout)
         ';
         // Javascript for project-select (main-page)
         $str .= '
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
         <!--
         function selectproject() {
               window.location.href="'.pnModURL('todolist', 'user', 'main', array()).'&';
@@ -55,7 +55,7 @@ function page_top($page,$printlayout)
         </script>';
         // Javascript for project-select (add form)
         $str .= '
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
         <!--
         function updateaddbox() {
               window.location.href="'.pnModURL('todolist', 'user', 'main', array()).'&';
@@ -70,7 +70,7 @@ function page_top($page,$printlayout)
     if ($page == DETPAGE){
         // Javascript for project-select (add form)
         $str .= '
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
         <!--
         function updatedetails() {
               window.location.href="'.pnModURL('todolist', 'user', 'main', array()).'&';
