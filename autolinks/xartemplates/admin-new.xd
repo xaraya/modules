@@ -2,42 +2,46 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Add</xar:mlstring></h2><br />
 <div style="margin: auto;">
 <form method="post" action="#xarModURL('autolinks', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" />
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <table border="0" width="100%">
-		<tr align="left" valign="middle">
-			<td>
-				<label for="keyword"><xar:mlstring>Key (link) word</xar:mlstring></label>
-			</td>
-			<td>
-				<input type="text" name="keyword" id="keyword" value="" size="32" maxlength="100" />
-			</td>
-		</tr>
-		<tr align="left" valign="middle">
-			<td>
-				<label for="title"><xar:mlstring>Title</xar:mlstring></label>
-			</td>
-			<td>
-				<input type="text" name="title" id="title" value="" size="32" maxlength="100" />
-			</td>
-		</tr>
-		<tr align="left" valign="middle">
-			<td>
-				<label for="url"><xar:mlstring>URL</xar:mlstring></label>
-			</td>
-			<td>
-				<input type="text" name="url" id="url" value="" size="40" maxlength="200" />
-			</td>
-		</tr>
-		<tr align="left" valign="middle">
-			<td>
-				<label for="comment"><xar:mlstring>Comment</xar:mlstring></label>
-			</td>
-			<td>
-				<input type="text" name="comment" id="comment" value="" size="40" maxlength="200" />
-            </td>
-        </tr>
-    </table>
+<div class="xar-norm-outline" style="margin: 0px 3px 6px 3px; padding: 3px; text-align: left;">
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+	<span style="float: left; width: 100px; text-align: right;">
+		<label for="keyword"><xar:mlstring>Key (link) word</xar:mlstring></label>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="keyword" id="keyword" value="" size="32" maxlength="100" />
+	</span>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+	<span style="float: left; width: 100px; text-align: right;">
+		<label for="title"><xar:mlstring>Title</xar:mlstring></label>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="title" id="title" value="" size="32" maxlength="100" />
+	</span>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+	<span style="float: left; width: 100px; text-align: right;">
+		<label for="url"><xar:mlstring>URL</xar:mlstring></label>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="url" id="url" value="" size="40" maxlength="200" />
+	</span>
+	</div>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+	<span style="float: left; width: 100px; text-align: right;">
+		<label for="comment"><xar:mlstring>Comment</xar:mlstring></label>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="comment" id="comment" value="" size="40" maxlength="200" />
+	</span>
+	</div>
     <input type="submit" value="Create Autolink" align="middle" />
+</div>
 </form>
 </div>
 </div>
