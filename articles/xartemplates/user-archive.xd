@@ -1,71 +1,137 @@
-<div class="xar-mod-body"><xar:template file="publinks" type="module" />
-<div style="margin: auto;">
-
-<h3><xar:mlstring>Monthly Archives</xar:mlstring></h3>
-
-<ul>
-<xar:foreach in="$months" value="$month">
-    <li>
-    <xar:if condition="empty($month['mlink'])">
-        <b>#$month['month']# (#$month['mcount']#)</b>
-        <xar:else />
-            <a href="#$month['mlink']#">#$month['month']#</a> (#$month['mcount']#)
-    </xar:if>
-    </li>
-</xar:foreach>
-</ul>
-
-<table border="0" cellpadding="3" width="100%">
-<form method="post" action="#$curlink#">
-<div>
-<tr>
-    <xar:foreach in="$catsel" value="$sel">
-        <td>#$sel#</td>
-    </xar:foreach>
-</tr>
-</div>
-</form>
-<tr>
-    <xar:foreach in="$catlist" value="$cat">
-       <xar:if condition="empty($cat['link'])">
-       <td align="center">#$cat['name']#</td>
-       <xar:else />
-           <td align="center"><a href="#$cat['link']#">#$cat['name']#</a></td>
-       </xar:if>
-    </xar:foreach>
-</tr>
+<div class="xar-mod-body">
+    <xar:template file="publinks" type="module" />
+    <div style="margin: auto;">
+        <h3>
+            <xar:mlstring>
+                Monthly Archives 
+            </xar:mlstring>
+        </h3>
+        <ul>
+            <xar:foreach in="$months" value="$month">
+                <li>
+                    <xar:if condition="empty($month['mlink'])">
+                        <b>
+                            #$month['month']# (#$month['mcount']#) 
+                        </b>
+                        <xar:else />
+                        <a href="#$month['mlink']#">
+                            #$month['month']# 
+                        </a>
+                        (#$month['mcount']#) 
+                    </xar:if>
+                </li>
+            </xar:foreach>
+        </ul>
+        <table border="0" cellpadding="3" width="100%">
+            <form method="post" action="#$curlink#">
+                <div>
+                    <tr>
+                        <xar:foreach in="$catsel" value="$sel">
+                            <td>
+                                #$sel# 
+                            </td>
+                        </xar:foreach>
+                    </tr>
+                </div>
+            </form>
+            <tr>
+                <xar:foreach in="$catlist" value="$cat">
+                    <xar:if condition="empty($cat['link'])">
+                        <td align="center">
+                            #$cat['name']# 
+                        </td>
+                        <xar:else />
+                        <td align="center">
+                            <a href="#$cat['link']#">
+                                #$cat['name']# 
+                            </a>
+                        </td>
+                    </xar:if>
+                </xar:foreach>
+            </tr>
 <!-- TODO: make sure xar-alt is the right class to use here -->
-<xar:set name="$i">1</xar:set>
-<xar:foreach in="$articles" value="$article">
-<xar:if condition="$i++ and $i % 2 eq 0">
-    <tr class="xar-accent">
-<xar:else />
-    <tr>
-</xar:if>
-    <xar:foreach in="$article['cats']" value="$cat">
-       <td>#$cat['list']#</td>
-    </xar:foreach>
-    <td><a href="#$article['link']#">#$article['title']#</a></td>
-    <xar:if condition="!empty($showdate)">
-        <td>#$article['date']#</td>
-    </xar:if>
-</tr>
-</xar:foreach>
-</table>
-
-<xar:if condition="!empty($maplink) or !empty($archivelink)">
-<div style="text-align: left; padding: 10px">
-    <xar:if condition="!empty($maplink)">
-    <span style="text-align: left; padding: 50px">
-        <a href="#$maplink#">#$maplabel#</a>
-    </span>
-    </xar:if>
-    <xar:if condition="!empty($viewlink)">
-    <span style="text-align: right; padding: 50px">
-        <a href="#$viewlink#">#$viewlabel#</a>
-    </span>
-    </xar:if>
-</div>
-</xar:if>
-</div>
+            <xar:set name="$i">
+                1
+            </xar:set>
+            <xar:foreach in="$articles" value="$article">
+                <xar:if condition="$i++ and $i % 2 eq 0">
+                    <tr class="xar-accent">
+                        <xar:foreach in="$article['cats']" value="$cat">
+                            <td>
+                                #$cat['list']# 
+                            </td>
+                        </xar:foreach>
+                        <td>
+                            <a href="#$article['link']#">
+                                #$article['title']# 
+                            </a>
+                        </td>
+                        <xar:if condition="!empty($showdate)">
+                            <td>
+                                #$article['date']# 
+                            </td>
+                        </xar:if>
+                    </tr>
+                    <xar:else />
+                    <tr>
+                        <xar:foreach in="$article['cats']" value="$cat">
+                            <td>
+                                #$cat['list']# 
+                            </td>
+                        </xar:foreach>
+                        <td>
+                            <a href="#$article['link']#">
+                                #$article['title']# 
+                            </a>
+                        </td>
+                        <xar:if condition="!empty($showdate)">
+                            <td>
+                                #$article['date']# 
+                            </td>
+                        </xar:if>
+                    </tr>
+                </xar:if>
+            </xar:foreach>
+        </table>
+<!--- new way --->
+        <xar:if condition="!empty($maplink) or !empty($archivelink)">
+            <ul style="margin:0;padding:0;">
+                <xar:if condition="!empty($maplink)">
+                    <li style="display:inline;padding:0 .5em;">
+                        <a href="#$maplink#">
+                            #$maplabel# 
+                        </a>
+                    </li>
+                </xar:if>
+                <xar:if condition="!empty($archivelink)">
+                    <li style="display:inline;padding:0 .5em;">
+                        <a href="#$archivelink#">
+                            #$archivelabel# 
+                        </a>
+                    </li>
+                </xar:if>
+            </ul>
+        </xar:if>
+        <xar:comment>
+<!-- old way -->
+            <xar:if condition="!empty($maplink) or !empty($archivelink)">
+                <div style="text-align: left; padding: 10px">
+                    <xar:if condition="!empty($maplink)">
+                        <span style="text-align: left; padding: 50px">
+                            <a href="#$maplink#">
+                                #$maplabel# 
+                            </a>
+                        </span>
+                    </xar:if>
+                    <xar:if condition="!empty($viewlink)">
+                        <span style="text-align: right; padding: 50px">
+                            <a href="#$viewlink#">
+                                #$viewlabel# 
+                            </a>
+                        </span>
+                    </xar:if>
+                </div>
+            </xar:if>
+        </xar:comment>
+    </div>
 </div>
