@@ -100,7 +100,8 @@ class Net_NNTP_Protocol extends PEAR
     /**
      *
      */
-    function Net_NNTP_Protocol() {
+    function Net_NNTP_Protocol()
+    {
     parent::PEAR();
     
     $this->_socket = new Net_Socket();
