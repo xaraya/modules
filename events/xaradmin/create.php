@@ -9,7 +9,7 @@
 function events_admin_create($args)
 {
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarCleanFromInput(), getting them
+    // function should be obtained from xarVarFetch(), getting them
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
@@ -19,7 +19,7 @@ function events_admin_create($args)
     // happens then the calling module will be able to pass in arguments to
     // this function through the $args parameter.  Hence we extract these
     // arguments *after* we have obtained any form-based input through
-    // xarVarCleanFromInput().
+    // xarVarFetch().
     extract($args);
 
     // Argument check - make sure that all required arguments are present
