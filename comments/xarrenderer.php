@@ -354,11 +354,8 @@ function comments_renderer_array_depthbuoy($action, $depth, $value=true) {
 function comments_renderer_array_maptree(&$CommentList, $modName = NULL) {
 
     // if $CommentList isn't an array or it is empty,
-    // raise an exception and return an empty array
+    // return an empty array
     if (!is_array($CommentList) || count($CommentList) == 0) {
-        $msg = xarML('List of related comments isn\'t an array or it is empty');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
-                       new DefaultUserException($msg));
         return array();
     }
 
