@@ -33,6 +33,7 @@ function comments_userapi_get_multipleall($args)
     $commentlist = array();
 
     $query = "SELECT  $ctable[title] AS xar_subject,
+                      $ctable[comment] AS xar_text,
                       $ctable[cdate] AS xar_datetime,                        
                       $ctable[author] AS xar_author,
                       $ctable[cid] AS xar_cid,
