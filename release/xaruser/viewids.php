@@ -195,7 +195,7 @@ function release_user_viewids()
                                            'countdocs',
                                            array('rid' => $item['rid']));
     }
-
+     $data['phase']=$phase;
      $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
         xarModURL('release', 'user', 'viewids', array('startnum' => '%%','phase'=>$phase)),

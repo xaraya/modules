@@ -40,7 +40,7 @@ function release_user_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            $phasedesc =xarML('All');
             break;
 
         case 'certified':
@@ -57,7 +57,7 @@ function release_user_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            $phasedesc =xarML('Certified');
             break;
 
         case 'price':
@@ -74,7 +74,7 @@ function release_user_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            $phasedesc =xarML('Commercial');
             break;
 
         case 'free':
@@ -91,7 +91,7 @@ function release_user_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            $phasedesc =xarML('Free');
             break;
 
         case 'supported':
@@ -108,7 +108,7 @@ function release_user_viewnotes()
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-
+            $phasedesc =xarML('Supported');
             break;
     }
 
@@ -147,6 +147,7 @@ function release_user_viewnotes()
     }
 
     $phase=strtolower($phase);
+    $data['phase'] = $phasedesc;
     // Add the array of items to the template variables
     $data['items'] = $items;
 

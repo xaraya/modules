@@ -20,7 +20,15 @@
   </form>
   </span>
 </div>
-
+<xar:if condition="isset($phase)">
+<xar:set name="displayphase">ucfirst($phase)</xar:set>
+  <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
+  <xar:ml>
+      <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
+      <xar:mlvar>#$displayphase#</xar:mlvar>
+  </xar:ml>
+  </div>
+</xar:if>
   <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
     <div class="xar-accent">
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -28,32 +36,26 @@
 		    <th width="5%">
 			    <xar:mlstring>ID</xar:mlstring>
 		    </th>
-		    <th width="5%">
-			    <xar:mlstring>Info</xar:mlstring>
+		    <th width="30%" align="left">
+			    <xar:mlstring>Name</xar:mlstring>
 		    </th>
-		    <th width="5%">
-			    <xar:mlstring>Edit</xar:mlstring>
+		    <th width="25%" align="left">
+			    <xar:mlstring>Author</xar:mlstring>
 		    </th>
 		    <th width="5%">
 			    <xar:mlstring>Release</xar:mlstring>
 		    </th>
-		    <th width="5%">
-			    <xar:mlstring>Docs</xar:mlstring>
-		    </th>
-		    <th width="20%">
-			    <xar:mlstring>Author</xar:mlstring>
-		    </th>
-		    <th width="25%">
-			    <xar:mlstring>Name</xar:mlstring>
-		    </th>
-		    <th width="5%">
+		    <th width="10%">
 			    <xar:mlstring>Docs</xar:mlstring>
 		    </th>
 		    <th width="5%">
 			    <xar:mlstring>Comments</xar:mlstring>
 		    </th>
 		    <th width="5%">
-			    <xar:mlstring>Viewed</xar:mlstring>
+			    <xar:mlstring>Hits</xar:mlstring>
+		    </th>
+		    <th width="15%">
+			    <xar:mlstring>Info</xar:mlstring>
 		    </th>
 	    </tr>
 	    <xar:loop name="$items">
@@ -67,15 +69,11 @@
 		        <td width="5%" class="#$rowclass#">
 			        #$loop:item['rid']#
 		        </td>
-		        <td width="5%" class="#$rowclass#">
-			        <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a>
+		        <td align="left" valign="top" width="30%" class="#$rowclass#">
+			        #$loop:item['name']#
 		        </td>
-		        <td width="5%" class="#$rowclass#">
-		          <xar:if condition="empty($loop:item['editurl'])">
-			          #$loop:item['edittitle']#
-		          <xar:else />
-			          <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
-		          </xar:if>
+		        <td align="left" valign="top" width="25%" class="#$rowclass#">
+			        <a href="#$loop:item['contacturl']#">#$loop:item['author']#</a>
 		        </td>
 		        <td width="5%" class="#$rowclass#">
 			        <xar:if condition="empty($loop:item['addurl'])">
@@ -84,27 +82,25 @@
 			          <a href="#$loop:item['addurl']#">#$loop:item['addtitle']#</a>
 		          </xar:if>
 		        </td>
-		        <td width="5%" class="#$rowclass#">
+		        <td width="10%" class="#$rowclass#">
 		          <xar:if condition="empty($loop:item['adddocs'])">
-			          #$loop:item['adddocstitle']#
+			          			        #$loop:item['docs']#  #$loop:item['adddocstitle']#
 		          <xar:else />
-			          <a href="#$loop:item['adddocs']#">#$loop:item['adddocstitle']#</a>
+			          			        #$loop:item['docs']# | <a href="#$loop:item['adddocs']#">#$loop:item['adddocstitle']#</a>
 		          </xar:if>
-		        </td>
-		        <td align="center" valign="top" width="25%" class="#$rowclass#">
-			        <a href="#$loop:item['contacturl']#">#$loop:item['author']#</a>
-		        </td>
-		        <td align="center" valign="top" width="25%" class="#$rowclass#">
-			        #$loop:item['name']#
-		        </td>
-		        <td width="5%" class="#$rowclass#">
-			        #$loop:item['docs']#
 		        </td>
 		        <td width="5%" class="#$rowclass#">
 			        #$loop:item['comments']#
 		        </td>
 		        <td width="5%" class="#$rowclass#">
 			        #$loop:item['hitcount']#
+		        </td>
+		        <td width="15%" class="#$rowclass#">
+		          <xar:if condition="empty($loop:item['editurl'])">
+			        <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a>
+                  <xar:else />
+			        <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a> | <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                  </xar:if>
 		        </td>
 	        </tr>
     </xar:loop>
