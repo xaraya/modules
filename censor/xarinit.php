@@ -1,15 +1,15 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Xaraya Censor
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  * @subpackage Censor Module
- * @author John Cox 
+ * @author John Cox
  */
 // Load Table Maintainance API
 xarDBLoadTableMaintenanceAPI();
@@ -18,10 +18,10 @@ xarDBLoadTableMaintenanceAPI();
  * initialise the autolinks module
  */
 function censor_init()
-{ 
+{
     // Set up database tables
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $xartable = xarDBGetTables();
     // Set up module variables
     xarModSetVar('censor', 'itemsperpage', 20);
     xarModSetVar('censor', 'replace', '****');
@@ -41,7 +41,7 @@ function censor_init()
         'unique' => true);
     $query = xarDBCreateIndex($censortable, $index);
     $result = &$dbconn->Execute($query);
-    if (!$result) return; 
+    if (!$result) return;
     // Set up module hooks
     if (!xarModRegisterHook('item',
             'transform',
@@ -50,14 +50,14 @@ function censor_init()
             'user',
             'transform')) return;
 
-    xarRegisterMask('ReadCensor', 'All', 'censor', 'All', 'All', ACCESS_READ);
-    xarRegisterMask('EditCensor', 'All', 'censor', 'All', 'All', ACCESS_EDIT);
-    xarRegisterMask('AddCensor', 'All', 'censor', 'All', 'All', ACCESS_ADD);
-    xarRegisterMask('DeleteCensor', 'All', 'censor', 'All', 'All', ACCESS_DELETE);
-    xarRegisterMask('AdminCensor', 'All', 'censor', 'All', 'All', ACCESS_ADMIN); 
+    xarRegisterMask('ReadCensor', 'All', 'censor', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('EditCensor', 'All', 'censor', 'All', 'All', 'ACCESS_EDIT');
+    xarRegisterMask('AddCensor', 'All', 'censor', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteCensor', 'All', 'censor', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminCensor', 'All', 'censor', 'All', 'All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
-} 
+}
 
 /**
  * upgrade the smiley module from an old version
@@ -65,13 +65,13 @@ function censor_init()
 function censor_upgrade($oldversion)
 {
     return true;
-} 
+}
 
 /**
  * delete the smiley module
  */
 function censor_delete()
-{ 
+{
     // Remove module hooks
     if (!xarModUnregisterHook('item',
             'transform',
@@ -80,7 +80,7 @@ function censor_delete()
             'user',
             'transform')) {
         return false;
-    } 
+    }
     // Drop the table
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -88,18 +88,18 @@ function censor_delete()
     $censortable = $xartable['censor'];
     $query = xarDBDropTable($censortable);
     $result = &$dbconn->Execute($query);
-    if (!$result) return; 
+    if (!$result) return;
     // Remove module variables
     xarModDelVar('censor', 'replace');
-    xarModDelVar('censor', 'itemsperpage'); 
+    xarModDelVar('censor', 'itemsperpage');
     // Remove Masks
     xarUnRegisterMask('ReadCensor');
     xarUnRegisterMask('EditCensor');
     xarUnRegisterMask('AddCensor');
     xarUnRegisterMask('DeleteCensor');
-    xarUnRegisterMask('AdminCensor'); 
+    xarUnRegisterMask('AdminCensor');
     // Deletion successful
     return true;
-} 
+}
 
 ?>
