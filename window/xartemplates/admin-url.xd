@@ -38,7 +38,7 @@
 <xar:if condition =" count($urls) eq 0">
 <tr align="left" valign="middle">
     <td colspan="3">
-        No URLs defined
+        <xar:mlstring>No URLs defined</xar:mlstring>
     </td>
 </tr>
 
