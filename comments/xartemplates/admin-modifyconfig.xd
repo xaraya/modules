@@ -7,7 +7,7 @@
 <div class="xar-mod-body">
     <div align="center"><h2><xar:mlstring>Comments Module Configuration</xar:mlstring></h2></div><br />
 
-<form method="post" action="&xar-modurl-comments-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="&xar-modurl-comments-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 
     <table border="0" width="100%">
