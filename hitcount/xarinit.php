@@ -108,9 +108,9 @@ function hitcount_init()
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
 
-    $query1 = "SELECT DISTINCT xar_modules.xar_name FROM xar_hitcount LEFT JOIN xar_modules ON xar_hitcount.xar_moduleid = xar_modules.xar_regid";
-    $query2 = "SELECT DISTINCT xar_itemtype FROM xar_hitcount";
-    $query3 = "SELECT DISTINCT xar_itemid FROM xar_hitcount";
+    $query1 = "SELECT DISTINCT $xartable[modules].xar_name FROM $xartable[hitcount] LEFT JOIN $xartable[modules] ON $xartable[hitcount].xar_moduleid = $xartable[modules].xar_regid";
+    $query2 = "SELECT DISTINCT xar_itemtype FROM $xartable[hitcount]";
+    $query3 = "SELECT DISTINCT xar_itemid FROM $xartable[hitcount]";
     $instances = array(
                         array('header' => 'Module Name:',
                                 'query' => $query1,
