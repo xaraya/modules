@@ -287,12 +287,9 @@ function mybookmarks_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-
-        // TODO // IMPLEMENT YOUR UPGRADES
-
-        default:
-            // TODO // throw appropriate exception
-            return false;
+    case '0.1':
+        // compatability upgrade
+        break;
     }
 
     // Update successful
