@@ -174,13 +174,46 @@ function comments_user_displayall($args)
         }
     }
 
+    // generate comments array of arrays; each date has an array of comments
+    // posted on that date 
+    $commentsarray = array();
     $timenow = time();   
     $hoursnow = xarLocaleFormatDate("%H",$timenow);
-    $dateprev = '';
-
-    // add title, url and truncate comments if requested
+    $dateprev = '';  
     $numcomments = count($comments);
     for ($i=0;$i<$numcomments;$i++) {   
+
+        if ($args['adddaysep']=='on') {
+        // find out whether to change day separator        
+            $msgunixtime=$comments[$i]['xar_datetime'];
+            $msgdate=xarLocaleFormatDate("%b %d, %Y",$msgunixtime);
+            $msgday=xarLocaleFormatDate("%A",$msgunixtime);          
+
+            $daylabel=0;
+
+            $hoursdiff=($timenow - $msgunixtime)/3600;        
+            if($hoursdiff<$hoursnow && $msgdate!=$dateprev) {
+                $daylabel=xarML('Today');
+            }
+            elseif($hoursdiff>=$hoursnow && $hoursdiff<$hoursnow+24 && ($msgdate!=$dateprev) ) {
+                $daylabel=xarML('Yesterday');
+            }
+            elseif($hoursdiff>=$hoursnow+24 && $hoursdiff<$hoursnow+48 && $msgdate!=$dateprev) {
+                $daylabel=xarML('Two days ago');
+            }
+            elseif ($hoursdiff>=$hoursnow+48 && $hoursdiff<$hoursnow+144 && $msgdate!=$dateprev) {
+                $daylabel=xarML("$msgday");
+            }
+            elseif ($hoursdiff>=$hoursnow+144 && $msgdate!=$dateprev) {
+                $daylabel=$msgdate;
+            }
+            $dateprev=$msgdate;
+        }  else {
+        // no need to keep track of date
+            $daylabel = 'none';
+        }
+
+        // add title, url and truncate comments if requested
         $modid = $comments[$i]['xar_modid'];
         $itemtype = $comments[$i]['xar_itemtype'];
         $itemid = $comments[$i]['xar_objectid'];
@@ -212,33 +245,7 @@ function comments_user_displayall($args)
                                                              array($comments[$i]['xar_text'],
                                                                    $comments[$i]['xar_subject']),
                                                                    'comments');
-
-        if ($args['adddaysep']=='on') {
-        // find out whether to change day separator        
-            $msgunixtime=$comments[$i]['xar_datetime'];
-            $msgdate=xarLocaleFormatDate("%b %d, %Y",$msgunixtime);
-            $msgday=xarLocaleFormatDate("%A",$msgunixtime);          
-
-            $comments[$i]['daychange']=0;
-
-            $hoursdiff=($timenow - $msgunixtime)/3600;        
-            if($hoursdiff<$hoursnow && $msgdate!=$dateprev) {
-                $comments[$i]['daychange']=xarML('Today');
-            }
-            elseif($hoursdiff>=$hoursnow && $hoursdiff<$hoursnow+24 && ($msgdate!=$dateprev) ) {
-                $comments[$i]['daychange']=xarML('Yesterday');
-            }
-            elseif($hoursdiff>=$hoursnow+24 && $hoursdiff<$hoursnow+48 && $msgdate!=$dateprev) {
-                $comments[$i]['daychange']=xarML('Two days ago');
-            }
-            elseif ($hoursdiff>=$hoursnow+48 && $hoursdiff<$hoursnow+144 && $msgdate!=$dateprev) {
-                $comments[$i]['daychange']=xarML("$msgday");
-            }
-            elseif ($hoursdiff>=$hoursnow+144 && $msgdate!=$dateprev) {
-                $comments[$i]['daychange']=$msgdate;
-            }
-            $dateprev=$msgdate;
-        }        
+        $commentsarray[$daylabel][] = $comments[$i];
     }                       
 
     // prepare for output
@@ -262,7 +269,7 @@ function comments_user_displayall($args)
                                                                             'howmany'=>$args['howmany'],
                                                                             'modid'=>$modarray)
                                                             );
-    $templateargs['commentlist']    =$comments;
+    $templateargs['commentlist']    =$commentsarray;
     $templateargs['order']          =$settings['order'];
     
     if ($args['block_is_calling']==0 )   {         
