@@ -63,7 +63,7 @@ function pubsub_adminapi_processevent($args)
               " . xarVarPrepForStore($pubsubid) . ",
               " . xarvarPrepForStore($objectid) . ",
               " . xarvarPrepForStore('pending') . ")";
-    $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) return;
 
     $nextId = $dbconn->PO_Insert_ID($pubsubprocesstable, 'xar_handlingid');
