@@ -40,6 +40,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
     if (empty($vars['showsummary'])) {$vars['showsummary'] = false;}
+    if (empty($vars['showdynamic'])) {$vars['showdynamic'] = false;}
     if (empty($vars['linkpubtype'])) {$vars['linkpubtype'] = false;}
     if (!isset($vars['linkcat'])) {$vars['linkcat'] = false;}
 
@@ -56,7 +57,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if (!is_array($vars['status'])) {
         $statusarray = array($vars['status']);
     } else {
-        $statusarray = $vars['status'];
+            $statusarray = $vars['status'];
     }
 
     if(!empty($vars['catfilter'])) {
@@ -77,7 +78,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if ($vars['itemlimit'] != 0 ) {
         $article_args['numitems'] = $vars['itemlimit'];
     }
-    
+
     // Add the rest of the arguments
     $article_args['cids'] = $cidsarray;
     $article_args['enddate'] = time();
@@ -152,6 +153,7 @@ function articles_featureditemsblock_update($blockinfo)
     xarVarFetch('showfeaturedbod', 'checkbox', $vars['showfeaturedbod'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showfeaturedsum', 'checkbox', $vars['showfeaturedsum'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED);
+    xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('linkcat', 'checkbox', $vars['linkcat'], false, XARVAR_NOT_REQUIRED);
