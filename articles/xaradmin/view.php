@@ -110,6 +110,13 @@ function articles_admin_view()
                                    'cids' => $cids,
                                    'status' => $status));
 
+    // Save the current admin view, so that we can return to it after update
+    $lastview = array('ptid' => $ptid,
+                      'catid' => $catid,
+                      'status' => $status,
+                      'startnum' => $startnum > 1 ? $startnum : null);
+    xarSessionSetVar('Articles.LastView',serialize($lastview));
+
     $labels = array();
     if (!empty($ptid)) {
         foreach ($pubtypes[$ptid]['config'] as $field => $value) {
