@@ -38,9 +38,9 @@ function userpoints_adminapi_validaterank($args)
     // if it is ever needed
     $query = "SELECT xar_rankname
             FROM $ranks
-            WHERE xar_rankname = '" . xarVarPrepForStore($rankname) . "'";
+            WHERE xar_rankname = ?";
 
-    $result = &$dbconn->Execute($query); 
+    $result = &$dbconn->Execute($query, array($rankname));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

@@ -19,16 +19,10 @@ function userpoints_adminapi_addpoints($args)
                                      xar_authorid, 
                                      xar_pubdate, 
                                      xar_cpoints)
-                  VALUES(" . xarVarPrepForStore($nextId) . ",
-                         " . xarVarPrepForStore($moduleid) .",
-                         " . xarVarPrepForStore($itemtype) .",
-                         " . xarVarPrepForStore($objectid) .",
-                         " . xarVarPrepForStore($status) .",
-                         " . xarVarPrepForStore($authorid) .",
-                         " . xarVarPrepForStore($pubdate) .",
-                         " . xarVarPrepForStore($points) . "
-                            )";
-            $result =& $dbconn->Execute($sql);
+                  VALUES(?,?,?,?,?,?,?,?)";
+            $bindvars = array((int)$nextId, (int)$moduleid, $itemtype, $objectid, $status, 
+                                   $authorid, $pubdata, $points);
+            $result =& $dbconn->Execute($sql, $bindvars);
             if (!$result) return;
 
     

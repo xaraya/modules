@@ -30,13 +30,9 @@ function userpoints_adminapi_createptype($args)
                                        xar_itemtype,
                                        xar_action,
                                        xar_tpoints)
-            VALUES ($nextId,
-                    '" . xarVarPrepForStore($pmodule) . "',
-                    '" . xarVarPrepForStore($itemtype) . "',
-                    '" . xarVarPrepForStore($paction) . "',
-                    '" . xarVarPrepForStore($tpoints) . "')";
-
-    $result =& $dbconn->Execute($query);
+            VALUES (?,?,?,?,?)";
+    $bindvars = array((int)$nextId, $pmodule, $itemtype, $paction, $tpoints);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     $uptid = $dbconn->PO_Insert_ID($pointstable, 'xar_uptid');

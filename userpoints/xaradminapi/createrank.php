@@ -76,11 +76,8 @@ function userpoints_adminapi_createrank($args)
               xar_id,
               xar_rankname,
               xar_rankminscore)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($rankname) . "',
-              " . xarvarPrepForStore($rankminscore) . ")";
-    $result = &$dbconn->Execute($query); 
+            VALUES (?,?,?)";
+    $result = &$dbconn->Execute($query, array((int)$nextId, $rankname, $rankminscore));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

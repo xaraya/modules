@@ -46,10 +46,10 @@ function ratings_userapi_get($args)
     // Get items
     $query = "SELECT xar_rating
             FROM $ratingstable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
-    $result =& $dbconn->Execute($query);
+            WHERE xar_moduleid = ?
+              AND xar_itemid = ?
+              AND xar_itemtype = ?";
+    $result =& $dbconn->Execute($query, array((int)$modid, (int)$objectid, $itemtype));
     if (!$result) return;
 
     $rating = $result->fields[0];

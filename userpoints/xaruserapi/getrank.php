@@ -55,8 +55,8 @@ function userpoints_userapi_getrank($args)
     $query = "SELECT xar_rankname,
                      xar_rankminscore
             FROM $ranks
-            WHERE xar_id = " . xarVarPrepForStore($id);
-    $result = &$dbconn->Execute($query); 
+            WHERE xar_id = ?";
+    $result = &$dbconn->Execute($query, array((int)$id));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

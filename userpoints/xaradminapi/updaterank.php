@@ -93,10 +93,10 @@ function userpoints_adminapi_updaterank($args)
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "UPDATE $ranks
-            SET xar_rankname = '" . xarVarPrepForStore($rankname) . "',
-                xar_rankminscore = " . xarVarPrepForStore($rankminscore) . "
-            WHERE xar_id = " . xarVarPrepForStore($id);
-    $result = &$dbconn->Execute($query); 
+            SET xar_rankname = ?,
+                xar_rankminscore = ?
+            WHERE xar_id = ?";
+    $result = &$dbconn->Execute($query, array($rankname, $rankminscore, (int)$id));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 
