@@ -4,5 +4,11 @@ Added the installation of a subsite with a prefix.
 27/03/02 18:27:40
 Replace default parameters/ to sitesettings/
 
+08/03
+Rewrite, remove legacy code
+
+29/10/03
+Split out to individual function files
+
 
 

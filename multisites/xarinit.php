@@ -96,11 +96,6 @@ function multisites_upgrade($oldversion)
 
 function multisites_delete() {
 global $HTTP_HOST;
-// I never get there :-(
-// $output = new xarHTML();
-// $output->Text(xarConfigGetVar('master'));
-// return $output->GetOutput();
-// ------
 
     //Remove the multisites database
     list($dbconn) = xarDBGetConn();
@@ -178,21 +173,5 @@ global $HTTP_HOST;
 
 return true;
 
-/*
-if 	(trim(xarConfigGetVar('master'))==trim($HTTP_HOST)) {
-	// ok
-	if (unlink('multisites.php')) {
-		copy("config_multisites_sauve.php","config.php");
-		xarModDelVar('multisites', 'init');
-	    xarModDelVar('multisites', 'master');
-		return true;
-	} else {
-		return false;
-		}
-	}
-else {
-	return false;
-	}
-*/
 }
 ?>
