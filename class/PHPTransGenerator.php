@@ -151,8 +151,6 @@ class PHPTranslationsGenerator
         // rename($this->fileName.'.swp', $this->fileName);
         copy($this->fileName.'.swp', $this->fileName);
         unlink($this->fileName.'.swp');
-        // FIXME: <marco> Remove 0666 later!
-        chmod($this->fileName, 0666);
         return true;
     }
 
