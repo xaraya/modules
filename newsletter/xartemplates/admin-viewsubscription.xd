@@ -21,7 +21,7 @@
                     <xar:loop name="$subscriptions">
                         <tr>
                             <td>
-                                #$loop:number#.
+                                #xarVarPrepForDisplay($loop:index+1)#.
                             </td>
                             <td>
                                 #$loop:item['title']#
