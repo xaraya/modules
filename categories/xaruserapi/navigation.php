@@ -76,7 +76,7 @@ function categories_userapi_navigation($args)
             $itemtype = xarVarGetCached('Blocks.categories','itemtype');
         } else {
             // try to get itemtype from input
-            xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
+            xarVarFetch('itemtype', 'id', $itemtype, NULL, XARVAR_DONT_SET);
         }
     }
     if (empty($itemtype)) {
@@ -89,7 +89,7 @@ function categories_userapi_navigation($args)
             $itemid = xarVarGetCached('Blocks.categories','itemid');
         } else {
             // try to get itemid from input
-            xarVarFetch('itemid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
+            xarVarFetch('itemid', 'id', $itemid, NULL, XARVAR_DONT_SET);
         }
     }
     if (empty($itemid)) {
@@ -213,7 +213,7 @@ function categories_userapi_navigation($args)
     }
     if (empty($catid)) {
         // try to get catid from input
-        xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET);
+        xarVarFetch('catid', 'str', $catid, NULL, XARVAR_DONT_SET);
     }
     // turn $catid into $cids array (and set $andcids flag)
     $istree = 0;
