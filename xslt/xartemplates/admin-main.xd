@@ -1,0 +1,30 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XSLT Transform Hooks Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<table border="0" width="100%">
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>What is it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>The XSLT module is a utility module that allows you to do XSL transformations via transform hooks.</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>How to use it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>
+For each hooked module, specify the XSL file to be used in the transformation. This file should be located on the server, somewhere below the document root. Any DTD referenced by the original XML should also be available.
+
+<br /><br />In order to test this with articles, you should remove the call to xarVarPrepHTMLDisplay() on line 292 of modules/articles/xaruser/display.php (test only !), otherwise all XML tags in your content will be escaped before it gets passed to the transform hook...
+
+<br /><br />Note : this is a work in progress :)
+
+            </xar:mlstring>
+        </td>
+    </tr>
+</table>
+</div>
+</div>
