@@ -30,6 +30,21 @@ function autolinks_admin_modifyconfig()
 
     $data['sample_data'] = $sample_data['autolink-types'];
     
+    $decoration = array();
+    $decoration[''] = xarML('Default');
+    $decoration['none'] = xarML('None');
+    $decoration['underline'] = xarML('Underline');
+    $decoration['overline'] = xarML('Overline');
+    $decoration['both'] = xarML('Both');
+    $data['decoration'] = $decoration;
+
+    $samples = array();
+    $samples[0] = xarML('None');
+    $samples[1] = xarML('Results Only');
+    $samples[2] = xarML('Samples Only');
+    $samples[3] = xarML('Samples and Results');
+    $data['samples'] = $samples;
+    
     return $data;
 }
 

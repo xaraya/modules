@@ -1,18 +1,8 @@
 <!--- Dropdown for link style --->
-<!--- TODO: is there a better way to do this using DD display tags? --->
 <xar:set name="$decorationsel">xarModGetVar('autolinks', 'decoration')</xar:set>
-<xar:set name="$decoration['']"><xar:mlstring>Default</xar:mlstring></xar:set>
-<xar:set name="$decoration['none']"><xar:mlstring>None</xar:mlstring></xar:set>
-<xar:set name="$decoration['underline']"><xar:mlstring>Underline</xar:mlstring></xar:set>
-<xar:set name="$decoration['overline']"><xar:mlstring>Overline</xar:mlstring></xar:set>
-<xar:set name="$decoration['both']"><xar:mlstring>Both</xar:mlstring></xar:set>
 
 <!--- Dropdown for samples display --->
 <xar:set name="$samplessel">xarModGetVar('autolinks', 'showsamples')</xar:set>
-<xar:set name="$samples[0]"><xar:mlstring>None</xar:mlstring></xar:set>
-<xar:set name="$samples[1]"><xar:mlstring>Results Only</xar:mlstring></xar:set>
-<xar:set name="$samples[2]"><xar:mlstring>Samples Only</xar:mlstring></xar:set>
-<xar:set name="$samples[3]"><xar:mlstring>Samples and Results</xar:mlstring></xar:set>
 
 <!--- Button labels --->
 <xar:set name="$submit"><xar:mlstring>Submit</xar:mlstring></xar:set>
