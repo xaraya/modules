@@ -1,16 +1,120 @@
 <!--- This call will initialize the overlib js library --->
 <xar:overlib-init />
 
-<!--- Here we set up the popup parameters --->
+<!--- Here we create a basic popup --->
 <xar:overlib-popup-open name="$olopen" 
-    caption="monkey" 
-    text="some test text" 
-    offsetx="5" 
-    offsety="5" 
-    sticky="true" />
+    caption="Basic Popup" 
+    text="some test text"/>
 <xar:overlib-popup-close name="$olclose"/>
-    
-<a href="javascript:void(0);" 
+
+<p><a href="javascript:void(0);" 
    onmouseover="#$olopen#" 
-   onmouseout="#$olclose#">test mouse over</a>
+   onmouseout="#$olclose#">Basic Example</a></p>
+   
+<!--- Here we create a sticky popup --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="Sticky Popup" 
+    text="some test text"
+    sticky="true"/>
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">Sticky Example</a></p>
+   
+<!--- Here we create a sticky popup --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="OnClick Sticky Popup" 
+    text="some test text"
+    sticky="true"/>
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onclick="#$olopen#" 
+   onmouseout="#$olclose#">OnClick Example</a></p>
+   
+<!--- Here we create a static width and height popup --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="200x75" 
+    text="some test text"
+    width="200"
+    height="75"/>
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">Static Dimension Example</a></p>
+   
+<!--- Here we create a fixed position popup --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="fixed position 100x50" 
+    text="some test text"
+    fixx="100"
+    fixy="50"/>
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">Fixed Position Example</a></p>
+   
+<!--- Here we create a basic Delay popup --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="Delayed Popup - 500" 
+    text="some test text"
+    delay="500"/>
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">Delayed Popup Example</a></p>
+   
+   
+<!--- Change the look and feel --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="look & feel : example 1" 
+    text="pretty"
+    fgcolor="#ffffff"
+    bgcolor="#000000"
+    textcolor="#ff0000"
+    capcolor="#ffffff"
+    />
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">Look & Feel : Example 1</a></p>
+   
+<!--- Change the look and feel --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="look & feel : example 2" 
+    text="pretty"
+    fgcolor="#ffffff"
+    bgcolor="#000000"
+    textcolor="#ff0000"
+    capcolor="#ffffff"
+    capicon="modules/overlib/xarimages/admin.gif"
+    height="31"
+    />
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">Look & Feel : Example 2</a></p>
+   
+<!--- Change the look and feel --->
+<xar:overlib-popup-open name="$olopen" 
+    caption="look & feel : example 3" 
+    text="pretty"
+    fgcolor="#ffffff"
+    bgcolor="#000000"
+    textcolor="#ff0000"
+    capcolor="#ffffff"
+    fgbackground="modules/overlib/xarimages/admin.gif"
+    height="31"
+    />
+<xar:overlib-popup-close name="$olclose"/>
+
+<p><a href="javascript:void(0);" 
+   onmouseover="#$olopen#" 
+   onmouseout="#$olclose#">Look & Feel : Example 3</a></p>
    
