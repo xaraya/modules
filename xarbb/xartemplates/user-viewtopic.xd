@@ -565,7 +565,12 @@
     </xar:sec>
 </xar:if>
 
+
 <xar:if condition="$post ne '1'">
+
+<xar:comment>remove this form if you want to provide page caching for users who are allowed to post</xar:comment>
+
+<xar:sec mask="PostxarBB" catch="false">
     <form action="#xarModUrl('comments', 'user', 'reply', array('tid' => $tid))#" method="post" name="post" id="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         <p>
             <div class="xar-sub">
@@ -589,6 +594,7 @@
             </div>
         </p>
     </form>
+</xar:sec>
 </xar:if>
 
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
