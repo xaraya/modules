@@ -14,16 +14,20 @@ function trackback_adminapi_deleteall($args)
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
-        $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'object ID (= module name)', 'admin', 'deleteall', 'Trackback');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
 
     $modId = xarModGetIDFromName($objectid);
     if (empty($modId)) {
-        $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module ID', 'admin', 'deleteall', 'Trackback');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
 
     // TODO: re-evaluate this for hook calls !!
