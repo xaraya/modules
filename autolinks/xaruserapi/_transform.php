@@ -27,7 +27,7 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
     // Execute the template.
     set_error_handler('autolinks_userapi__transform_errhandler');
     $replace = xarTplModule(
-        'Autolinks',
+        'autolinks',
         xarModGetVar('autolinks', 'templatebase'),
         $template_name,
         $template_vars
