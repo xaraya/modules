@@ -4,12 +4,10 @@ function release_user_adddocs()
 {
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
+    if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('phase', 'str:1:',    $phase,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('type',  'isset',    $type,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
-    list ($phase,
-          $rid,
-          $type)= xarVarCleanFromInput('phase',
-                                       'rid',
-                                       'type');
 
     $data['items'] = array();
     $data['rid'] = $rid;
@@ -35,7 +33,7 @@ function release_user_adddocs()
             // First we need to get the module that we are adding the release note to.
             // This will be done in several stages so that the information is accurate.
 
-            $rid = xarVarCleanFromInput('rid');
+           if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
 
             // The user API function is called.
             $data = xarModAPIFunc('release',
@@ -55,7 +53,7 @@ function release_user_adddocs()
             //TODO FIX ME!!!
             if (empty($data['name'])){
                 $message = xarML('There is no assigned ID for your extension.');
-                $data['name']=xarML('unassigned');
+                $data['name']='';
 
             }
 
@@ -243,16 +241,13 @@ function release_user_adddocs()
             break;
 
         case 'update':
-            list($rid,
-                 $mtype,
-                 $title,
-                 $return,
-                 $doc) = xarVarCleanFromInput('rid',
-                                              'mtype',
-                                              'title',
-                                              'return',
-                                              'doc');
-            
+            if(!xarVarFetch('rid',   'isset',    $rid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('mtype', 'isset',    $mtype,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('title', 'str:1:',   $title,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('return','isset',   $return,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('doc',   'isset',   $doc,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+
            if (!xarSecConfirmAuthKey()) return;
 
            if (!xarSecurityCheck('EditRelease', 0)) {
