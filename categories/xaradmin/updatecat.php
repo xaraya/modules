@@ -40,12 +40,28 @@ function categories_admin_updatecat()
     // Load API
     if (!xarModAPILoad('categories', 'admin')) return;
 
-    foreach ($cids as $key => $cid) {
+    //Reverses the order of cids with the 'last children' option:
+    //Look at bug #997
+
+    $old_cids = $cids;
+    $cids = array();
+
+    foreach ($old_cids as $key => $cid) {
         //Empty -> Creating Cats (ALL OF THEM should have empty cids!)
         if (empty($cid)) {
             $cid = $key;
             $creating = true;
         }
+
+        if (intval($position[$key]) == 3 ||
+            intval($position[$key]) == 2 ) {
+            array_unshift ($cids, $cid);
+        } else {
+            array_push ($cids, $cid);
+        }
+    }
+
+    foreach ($cids as $cid) {
 
         switch (intval($position[$cid])) {
             case 1: // above - same level
