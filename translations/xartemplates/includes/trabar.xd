@@ -13,7 +13,7 @@
 		</xar:if>
     </xar:for>
 	</select>
-    <input type="submit" value="Select" align="middle" />
+    <input type="submit" value="Select"  />
     </form>
 <xar:else />
   <p>
