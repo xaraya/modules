@@ -37,7 +37,7 @@ function ratings_userapi_topitems($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('ReadRatings')) return;
+    if(!xarSecurityCheck('ReadRatings')) return;
 
     // Database information
     $dbconn =& xarDBGetConn();

@@ -38,7 +38,7 @@ function ratings_userapi_rate($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('CommentRatings',1,'Item',"$modname:$itemtype:$objectid")) return;
+    if(!xarSecurityCheck('CommentRatings',1,'Item',"$modname:$itemtype:$objectid")) return;
 
 
     // Database information
