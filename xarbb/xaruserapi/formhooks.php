@@ -15,7 +15,7 @@
  
 function xarbb_userapi_formhooks($args)
 {
-	extract($args);
+    extract($args);
     if (!isset($itemtype) || empty($itemtype)) {
        $itemtype='0';
     }

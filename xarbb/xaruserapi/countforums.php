@@ -51,14 +51,14 @@ function xarbb_userapi_countforums($args)
             }
         }
     }
-    if(isset($filter["fid"]))	{
-    	$wheres[] = "xar_fid = ".$filter["fid"];
+    if(isset($filter["fid"]))    {
+        $wheres[] = "xar_fid = ".$filter["fid"];
     }
 
-	if(count($wheres) > 0)
-    	$where = " WHERE ". join(" AND ",$wheres)." ";
+    if(count($wheres) > 0)
+        $where = " WHERE ". join(" AND ",$wheres)." ";
     else
-    	$where = "";
+        $where = "";
     $join = " ".join(",",$joins)." ";
 
     // Get links

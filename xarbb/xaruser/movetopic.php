@@ -14,7 +14,7 @@
 */
 function xarbb_user_movetopic()
 {
-	if (!xarVarFetch('phase', 'str:1:10', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('phase', 'str:1:10', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('tid','int:1:',$tid)) return;
 
     // Need to handle locked topics

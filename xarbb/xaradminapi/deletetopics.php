@@ -23,35 +23,35 @@ function xarbb_adminapi_deletetopics($args)
     extract($args);
     // Argument check
     if ( (!isset($tids) || !is_array($tids) || count($tids) == 0) &&
-    	 (!isset($tid) || !($tid > 0)) ) {
+         (!isset($tid) || !($tid > 0)) ) {
         $msg = xarML('Invalid Parameter count in #(1), #(2), #(3)', 'admin', 'delete', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }  
     if(!isset($tids))
-    	$tids = Array($tid);
+        $tids = Array($tid);
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
-    foreach($tids as $tid)	{
-    	// get forum id
-        if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;		
-	    // Item Specific Security Check
-	    if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;
-		// Delete comments
+    foreach($tids as $tid)    {
+        // get forum id
+        if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;        
+        // Item Specific Security Check
+        if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;
+        // Delete comments
         if(!xarModAPIFunc('xarbb', 'admin', 'deleteallreplies', array('tid' => $tid))) return;
-	    // Delete the item
-	    $query = "DELETE FROM $xbbtopicstable
-	              WHERE xar_tid = ?";
-	    $result =& $dbconn->Execute($query, array($tid));
-	    if (!$result) return;
+        // Delete the item
+        $query = "DELETE FROM $xbbtopicstable
+                  WHERE xar_tid = ?";
+        $result =& $dbconn->Execute($query, array($tid));
+        if (!$result) return;
         // Let any hooks know that we have deleted a topic
         $args['module'] = 'xarbb';
-	    $args['itemtype'] =$topic['fid']; // forum
-	    $args['itemid']= $tid;
-	    xarModCallHooks('item', 'delete', $tid, $args);
-	}
+        $args['itemtype'] =$topic['fid']; // forum
+        $args['itemid']= $tid;
+        xarModCallHooks('item', 'delete', $tid, $args);
+    }
     // Let the calling process know that we have finished successfully
     return true;
 }

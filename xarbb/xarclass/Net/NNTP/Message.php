@@ -82,7 +82,7 @@ class Net_NNTP_Message
      * @access public
      */
     var $header;
-				 
+                 
     /**
      * Contains the body part of the message
      *
@@ -101,7 +101,7 @@ class Net_NNTP_Message
      */
     function Net_NNTP_Message()
     {
-	$this->reset();
+    $this->reset();
     }
 
     // }}}
@@ -114,8 +114,8 @@ class Net_NNTP_Message
      */
     function reset()
     {
-	$this->header = new Net_NNTP_Header();
-	$this->body = null;
+    $this->header = new Net_NNTP_Header();
+    $this->body = null;
     }
 
     // }}}
@@ -138,68 +138,68 @@ class Net_NNTP_Message
      */
     function & create($input = null, $input2 = null)
     {
-	$Object = new Net_NNTP_Message();
-	
-	switch (true) {
+    $Object = new Net_NNTP_Message();
+    
+    switch (true) {
 
-	    // Null
-	    case (is_null($input) && is_null($input2)):
-	        return $Object;
-		break;
+        // Null
+        case (is_null($input) && is_null($input2)):
+            return $Object;
+        break;
 
 
-	    // Object 
-	    case is_object($input):
-		switch (true) {
-		    
-		    // Header
-		    case is_a($input, 'net_nntp_header'):
-			$Object->setHeader($input);
-			$Object->setBody($input2);
-			return $Object;
-			break;
-			
-		    // Message
-		    case is_a($input, 'net_nntp_message'):
-			if ($input2 != null) {
-			    return PEAR::throwError('Second parameter not allowed!', null);
-			}			
-			return $input;
-			break;
-			
-		    // Unknown object/class
-		    default:
-			return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
-		}
-		break;
+        // Object 
+        case is_object($input):
+        switch (true) {
+            
+            // Header
+            case is_a($input, 'net_nntp_header'):
+            $Object->setHeader($input);
+            $Object->setBody($input2);
+            return $Object;
+            break;
+            
+            // Message
+            case is_a($input, 'net_nntp_message'):
+            if ($input2 != null) {
+                return PEAR::throwError('Second parameter not allowed!', null);
+            }            
+            return $input;
+            break;
+            
+            // Unknown object/class
+            default:
+            return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
+        }
+        break;
 
-	    // Array & String (only 1st parameter)
-	    case ((is_string($input) || is_array($input)) && (is_null($input2))):
-		$Object->setMessage($input)
+        // Array & String (only 1st parameter)
+        case ((is_string($input) || is_array($input)) && (is_null($input2))):
+        $Object->setMessage($input)
 ;
-		return $Object;
-		break;
+        return $Object;
+        break;
 
-	    // Array & String (also 2nd parameter)
-	    case ((is_string($input) || is_array($input)) && (is_string($input2) || is_array($input2))):
+        // Array & String (also 2nd parameter)
+        case ((is_string($input) || is_array($input)) && (is_string($input2) || is_array($input2))):
 
-		$Object->setHeader($input)
+        $Object->setHeader($input)
 ;
 
-		if (is_array($input2)) {
-		    $Object->body = implode("\r\n", $input2)
+        if (is_array($input2)) {
+            $Object->body = implode("\r\n", $input2)
 ;
-		} else {
-		    $Object->body = $input2;
-		}
+        } else {
+            $Object->body = $input2;
+        }
 
-		return $Object;
-		break;
+        return $Object;
+        break;
 
-	    // Unknown type
-	    default:
-		return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
-	}
+        // Unknown type
+        default:
+        return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
+    }
     }
 
     // }}}
@@ -217,35 +217,35 @@ class Net_NNTP_Message
      */
     function setMessage($message)
     {
-	switch (true) {
+    switch (true) {
 
-	    // Object
-	    case is_object($message);
-	        switch (true) {
+        // Object
+        case is_object($message);
+            switch (true) {
 
-		    // Message
-		    case is_a($input, 'net_nntp_message'):
-		        $this =& $message;
-		        break;
+            // Message
+            case is_a($input, 'net_nntp_message'):
+                $this =& $message;
+                break;
 
-		    // Unknown object/class
-		    default:
-		        return PEAR::throwError('Unsupported object/class: '.get_class($message), null);
-		}
-		break;
+            // Unknown object/class
+            default:
+                return PEAR::throwError('Unsupported object/class: '.get_class($message), null);
+        }
+        break;
 
-	    // Array & String
-	    case is_array($message):
-	    case is_string($message):
-		$array = $this->splitMessage($message);
-		$this->setHeader($array['header']);
-		$this->setBody($array['body']);
-	        break;
-		
-	    // Unknown type
-	    default:
-	        return PEAR::throwError('Unsupported type: '.gettype($message), null);
-	}
+        // Array & String
+        case is_array($message):
+        case is_string($message):
+        $array = $this->splitMessage($message);
+        $this->setHeader($array['header']);
+        $this->setBody($array['body']);
+            break;
+        
+        // Unknown type
+        default:
+            return PEAR::throwError('Unsupported type: '.gettype($message), null);
+    }
     }
 
     // }}}
@@ -259,7 +259,7 @@ class Net_NNTP_Message
      */
     function getMessageString()
     {
-	return $this->header->getFieldsString()."\r\n\r\n".$this->getBody();
+    return $this->header->getFieldsString()."\r\n\r\n".$this->getBody();
     }
 
     // }}}
@@ -273,14 +273,14 @@ class Net_NNTP_Message
      */
     function getMessageArray()
     {
-	// Get the header fields
-	$header = $this->header->getFieldsArray();
-	
-	// Append null line
-	$header[] = '';
-	
-	// Merge with body, and return
-	return array_merge($header, explode("\r\n", $this->getBody()));
+    // Get the header fields
+    $header = $this->header->getFieldsArray();
+    
+    // Append null line
+    $header[] = '';
+    
+    // Merge with body, and return
+    return array_merge($header, explode("\r\n", $this->getBody()));
     }
 
     // }}}
@@ -298,35 +298,35 @@ class Net_NNTP_Message
      */
     function setHeader($input)
     {
-	    switch (true) {
+        switch (true) {
 
-		// Object
-		case is_object($input):
-		    switch (true) {
-		    
-			// Header
-			case is_a($input, 'net_nntp_header'):
-		    	    $this->header = $input;
-			    break;
+        // Object
+        case is_object($input):
+            switch (true) {
+            
+            // Header
+            case is_a($input, 'net_nntp_header'):
+                    $this->header = $input;
+                break;
 
-			// Unknown object/class
-			default:
-			    return PEAR::throwError('Unsupported object/class: '. get_class($input), null);
-		    }
-		    break;
-
-
-		// Array & String
-		case is_array($input):
-		case is_string($input):
-		    $this->header->setFields($input);
-		    break;
+            // Unknown object/class
+            default:
+                return PEAR::throwError('Unsupported object/class: '. get_class($input), null);
+            }
+            break;
 
 
-		// Unknown type
-		default:
-		    return PEAR::throwError('Unsupported type: '. gettype($input), null);
-	    }
+        // Array & String
+        case is_array($input):
+        case is_string($input):
+            $this->header->setFields($input);
+            break;
+
+
+        // Unknown type
+        default:
+            return PEAR::throwError('Unsupported type: '. gettype($input), null);
+        }
     }
 
     // }}}
@@ -340,7 +340,7 @@ class Net_NNTP_Message
      */
     function getHeader()
     {
-	return $this->header;
+    return $this->header;
     }
 
     // }}}
@@ -356,11 +356,11 @@ class Net_NNTP_Message
      */
     function setBody($body)
     {
-	if (is_array($body)) {
-	    $this->body = implode("\r\n", $body);
-	} else {
-	    $this->body = $body;
-	}
+    if (is_array($body)) {
+        $this->body = implode("\r\n", $body);
+    } else {
+        $this->body = $body;
+    }
     }
 
     // }}}
@@ -374,7 +374,7 @@ class Net_NNTP_Message
      */
     function getBody()
     {
-	return $this->body;
+    return $this->body;
     }
 
     // }}}
@@ -392,31 +392,31 @@ s in same type as $input
      */
     function splitMessage($input)
     {
-	switch (true) {
+    switch (true) {
 
-	    // String
-	    case is_string($input);
-    		if (preg_match("/^(.*?)\r?\n\r?\n(.*)/s", $input, $matches)) {
-    		    return array('header' => $matches[1], 'body' => $matches[2]);
-    		}
+        // String
+        case is_string($input);
+            if (preg_match("/^(.*?)\r?\n\r?\n(.*)/s", $input, $matches)) {
+                return array('header' => $matches[1], 'body' => $matches[2]);
+            }
  else {
-	    	    return PEAR::throwError('Could not split header and body');
-		}
-		break;
-		
-	    // Array
-	    case is_array($input);
-		$header = array();
-		while (($line = array_shift($input)) != '') {
-		    $header[] = $line;
-		}
-    		return array('header' => &$header, 'body' => $input);
-		break;
+                return PEAR::throwError('Could not split header and body');
+        }
+        break;
+        
+        // Array
+        case is_array($input);
+        $header = array();
+        while (($line = array_shift($input)) != '') {
+            $header[] = $line;
+        }
+            return array('header' => &$header, 'body' => $input);
+        break;
 
-	    // Unknown type
-	    default:
-	        return PEAR::throwError('Unsupported type: '.gettype($input));
-	}
+        // Unknown type
+        default:
+            return PEAR::throwError('Unsupported type: '.gettype($input));
+    }
     }
 
     // }}}

@@ -96,7 +96,7 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function Net_NNTP_Realtime()
     {
-	parent::Net_NNTP_Protocol();
+    parent::Net_NNTP_Protocol();
     }
 
     // }}}
@@ -117,7 +117,7 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     function connect($host = NET_NNTP_PROTOCOL_DEFAULT_HOST,
                      $port = NET_NNTP_PROTOCOL_DEFAULT_PORT)
     {
-	return parent::connect($host, $port);
+    return parent::connect($host, $port);
     }
 
     // }}}
@@ -140,23 +140,23 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      * @see Net_NNTP::quit()
      */
     function connectAuthenticated($user = null,
-            			  $pass = null,
-				  $host = NET_NNTP_PROTOCOL_DEFAULT_HOST,
-                		  $port = NET_NNTP_PROTOCOL_DEFAULT_PORT,
-                		  $authmode = NET_NNTP_AUTHORIGINAL)
+                          $pass = null,
+                  $host = NET_NNTP_PROTOCOL_DEFAULT_HOST,
+                          $port = NET_NNTP_PROTOCOL_DEFAULT_PORT,
+                          $authmode = NET_NNTP_AUTHORIGINAL)
     {
-	$R = $this->connect($host, $port);
-	if (PEAR::isError($R)) {
-	    return $R;
-	}
+    $R = $this->connect($host, $port);
+    if (PEAR::isError($R)) {
+        return $R;
+    }
 
-	// Authenticate if username is given
-	if ($user != null) {
-    	    $R = $this->authenticate($user, $pass, $authmode);
-    	    if (PEAR::isError($R)) {
-    		return $R;
-    	    }
-	}
+    // Authenticate if username is given
+    if ($user != null) {
+            $R = $this->authenticate($user, $pass, $authmode);
+            if (PEAR::isError($R)) {
+            return $R;
+            }
+    }
 
         return true;
     }
@@ -251,14 +251,14 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     function selectGroup($newsgroup)
     {
         $response_arr = $this->cmdGroup($newsgroup);
-    	if (PEAR::isError($response_arr)) {
-	    return $response_arr;
-	}
+        if (PEAR::isError($response_arr)) {
+        return $response_arr;
+    }
 
-	// Store group info in the object
-	$this->_currentGroup = $response_arr;
+    // Store group info in the object
+    $this->_currentGroup = $response_arr;
 
-	return $response_arr;
+    return $response_arr;
     }
 
     // }}}
@@ -274,13 +274,13 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function getGroups()
     {
-	// Get groups
-	$groups = $this->cmdList();
-	if (PEAR::isError($groups)) {
-	    return $groups;
-	}
+    // Get groups
+    $groups = $this->cmdList();
+    if (PEAR::isError($groups)) {
+        return $groups;
+    }
 
-	return $groups;
+    return $groups;
     }
 
     // }}}
@@ -296,13 +296,13 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     function getDescriptions()
     {
 
-	// Get group descriptions
-	$descriptions = $this->cmdListNewsgroups();
-	if (PEAR::isError($descriptions)) {
-	    return $descriptions;
-	}
-	
-	return $descriptions;
+    // Get group descriptions
+    $descriptions = $this->cmdListNewsgroups();
+    if (PEAR::isError($descriptions)) {
+        return $descriptions;
+    }
+    
+    return $descriptions;
     }
 
     // }}}
@@ -324,12 +324,12 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function getOverview($first, $last)
     {
-	$overview = $this->cmdXOver($first, $last);
-	if (PEAR::isError($overview)) {
-	    return $overview;
-	}
-	
-	return $overview;
+    $overview = $this->cmdXOver($first, $last);
+    if (PEAR::isError($overview)) {
+        return $overview;
+    }
+    
+    return $overview;
     }
 
     // }}}
@@ -344,7 +344,7 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function getOverviewFormat()
     {
-	return $this->cmdListOverviewFmt();
+    return $this->cmdListOverviewFmt();
     }
 
     // }}}
@@ -362,12 +362,12 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function getReferencesOverview($first, $last)
     {
-	$overview = $this->cmdXROver($first, $last);
-	if (PEAR::isError($overview)) {
-	    return $overview;
-	}
-	
-	return $overview;
+    $overview = $this->cmdXROver($first, $last);
+    if (PEAR::isError($overview)) {
+        return $overview;
+    }
+    
+    return $overview;
     }
 
     // }}}
@@ -393,7 +393,7 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function post($newsgroups, $subject, $body, $from, $aditional = '')
     {
-	return $this->cmdPost($newsgroups, $subject, $body, $from, $aditional);
+    return $this->cmdPost($newsgroups, $subject, $body, $from, $aditional);
     }
 
     // }}}
@@ -416,12 +416,12 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     {
         $message = $this->getArticleRaw($article, false);
         if (PEAR::isError($message)) {
-	    return $data;
-	}
-	
-	$M = Net_NNTP_Message::create($message);
-	
-	return $M;
+        return $data;
+    }
+    
+    $M = Net_NNTP_Message::create($message);
+    
+    return $M;
     }
 
     // }}}
@@ -443,14 +443,14 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     {
         $data = $this->cmdArticle($article);
         if (PEAR::isError($data)) {
-	    return $data;
-	}
+        return $data;
+    }
 
-	if ($implode == true) {
-	    $data = implode("\r\n", $data);
-	}
+    if ($implode == true) {
+        $data = implode("\r\n", $data);
+    }
 
-	return $data;
+    return $data;
     }
 
     // }}}
@@ -471,13 +471,13 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     {
         $header = $this->getHeaderRaw($article, false);
         if (PEAR::isError($header)) {
-	    return $header
+        return $header
 ;
-	}
+    }
 
-	$H = Net_NNTP_Header::create($header);
+    $H = Net_NNTP_Header::create($header);
 
-	return $H;
+    return $H;
     }
 
     // }}}
@@ -499,20 +499,20 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     {
         $data = $this->cmdHead($article);
         if (PEAR::isError($data)) {
-	    return $data;
-	}
+        return $data;
+    }
 
-	if ($implode == true) {
-	    $data = implode("\r\n", $data);
-	}
+    if ($implode == true) {
+        $data = implode("\r\n", $data);
+    }
 
-	return $data;
+    return $data;
     }
 
     // }}}
     // {{{ getBody()
 
-	// Not written yet...
+    // Not written yet...
 
     // }}}
     // {{{ getBodyRaw()
@@ -533,14 +533,14 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     {
         $data = $this->cmdBody($article);
         if (PEAR::isError($data)) {
-	    return $data;
-	}
-	
-	if ($implode == true) {
-	    $data = implode("\r\n", $data);
-	}
-	
-	return $data;
+        return $data;
+    }
+    
+    if ($implode == true) {
+        $data = implode("\r\n", $data);
+    }
+    
+    return $data;
     }
 
     // }}}
@@ -568,17 +568,17 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function getNewGroups($time)
     {
-	switch (gettype($time)) {
-	    case 'integer':
-		break;
-	    case 'string':
-		$time = (int) strtotime($time);
-		break;
-	    default:
-	        return $this->throwError('');
-	}
+    switch (gettype($time)) {
+        case 'integer':
+        break;
+        case 'string':
+        $time = (int) strtotime($time);
+        break;
+        default:
+            return $this->throwError('');
+    }
 
-	return $this->cmdNewgroups($time);
+    return $this->cmdNewgroups($time);
     }
 
     // }}}
@@ -592,17 +592,17 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function getNewNews($time, $newsgroups = '*')
     {
-	switch (gettype($time)) {
-	    case 'integer':
-		break;
-	    case 'string':
-		$time = (int) strtotime($time);
-		break;
-	    default:
-	        return PEAR::throwError('UPS...');
-	}
+    switch (gettype($time)) {
+        case 'integer':
+        break;
+        case 'string':
+        $time = (int) strtotime($time);
+        break;
+        default:
+            return PEAR::throwError('UPS...');
+    }
 
-	return $this->cmdNewnews($time, $newsgroups);
+    return $this->cmdNewnews($time, $newsgroups);
     }
 
     // }}}
@@ -627,19 +627,19 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
     {
         $date = $this->cmdDate();
         if (PEAR::isError($date)) {
-	    return $date;
-	}
+        return $date;
+    }
 
-	switch ($format) {
-	    case 1:
-	        return array('y' => substr($date, 0, 4), 'm' => substr($date, 4, 2), 'd' => substr($date, 6, 2));
-	        break;
+    switch ($format) {
+        case 1:
+            return array('y' => substr($date, 0, 4), 'm' => substr($date, 4, 2), 'd' => substr($date, 6, 2));
+            break;
 
-	    case 0:
-	    default:
-	        return $date;
-	        break;
-	}
+        case 0:
+        default:
+            return $date;
+            break;
+    }
     }
 
     // }}}
@@ -677,7 +677,7 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function last()
     {
-	return $this->_currentGroup['last'];
+    return $this->_currentGroup['last'];
     }
 
     // }}}
@@ -696,7 +696,7 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function first()
     {
-	return $this->_currentGroup['first'];
+    return $this->_currentGroup['first'];
     }
 
     // }}}
@@ -715,7 +715,7 @@ class Net_NNTP_Realtime extends Net_NNTP_Protocol
      */
     function group()
     {
-	return $this->_currentGroup['group'];
+    return $this->_currentGroup['group'];
     }
 
     // }}}

@@ -39,12 +39,12 @@ function xarbb_adminapi_delete($args)
                           array('fid' => $fid));
 
     if (empty($data)) return;
-	
+    
  
     // Security Check
     if(!xarSecurityCheck('DeletexarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
-	// topics and comments are deleted in delete gui func so do not care
+    // topics and comments are deleted in delete gui func so do not care
     // shouldn't this call be here?
 
     // Get datbase setup

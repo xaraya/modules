@@ -96,21 +96,21 @@ function xarbb_admin_privileges($args)
 
     $filter = array();
     if($cid != "All")
-	    $filter["catids"] = array($cid);
+        $filter["catids"] = array($cid);
     if($fid != "All")
-	    $filter["fid"] = $fid;
+        $filter["fid"] = $fid;
 
     $numitems = xarModAPIFunc('xarbb','user','countforums',array("filter" => $filter));
 
-	if($cid != 'All')
-		$fids = xarModAPIFunc('xarbb','user','getallforums',array("assoc" => "fid", "catid" => $cid));
+    if($cid != 'All')
+        $fids = xarModAPIFunc('xarbb','user','getallforums',array("assoc" => "fid", "catid" => $cid));
     else
-		$fids = xarModAPIFunc('xarbb','user','getallforums',array("assoc" => "fid"));
+        $fids = xarModAPIFunc('xarbb','user','getallforums',array("assoc" => "fid"));
 
 
 
     if(!in_array($fid,array_keys($fids)))
-    	$fid = 'All';
+        $fid = 'All';
 
     // define the new instance
     $newinstance = array();
@@ -139,10 +139,10 @@ function xarbb_admin_privileges($args)
     }    */
 
     $data = array(
-                  'cid' 		 => $cid,
-                  'fid' 		 => $fid,
-                  'cids' 		 => $cids,
-                  'fids' 		 => $fids,
+                  'cid'          => $cid,
+                  'fid'          => $fid,
+                  'cids'          => $cids,
+                  'fids'          => $fids,
                   'numitems'     => $numitems,
                   'extpid'       => $extpid,
                   'extname'      => $extname,

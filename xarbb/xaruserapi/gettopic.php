@@ -53,7 +53,7 @@ function xarbb_userapi_gettopic($args)
                      xar_treplier,
                      xar_tstatus,
                      xar_thostname,
-                   	 xar_fname,
+                        xar_fname,
                      xar_fdesc,
                      xar_ftopics,
                      xar_fposts,
@@ -68,14 +68,14 @@ function xarbb_userapi_gettopic($args)
     $result =& $dbconn->Execute($query, array($tid));
     if (!$result) return;
 
-    if($result->EOF) 	{
+    if($result->EOF)     {
         $msg = xarML('Topic with ID #(1) does not exist',$tid);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
         return;
     }
   
     list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname,
-    	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
+        $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;

@@ -82,13 +82,13 @@ function xarbb_admin_delete()
     if (count($topics) >0) { //check to make sure there are topics to delete
     // need to delete the topics first then the forum.
         if (!xarModAPIFunc('xarbb',
-	   	                   'admin',
-		                   'deletealltopics',
+                              'admin',
+                           'deletealltopics',
                                 array('fid' => $fid))) return;
     }
     if (!xarModAPIFunc('xarbb',
-		               'admin',
-		               'delete',
+                       'admin',
+                       'delete',
                         array('fid' => $fid))) return;
 
     // Redirect

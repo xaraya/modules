@@ -138,14 +138,14 @@ function xarbb_init()
     // Register Masks
     // Mask = Categorie : Id : Name
     xarRegisterMask('ReadxarBB','All','xarbb','Forum','All:All','ACCESS_READ');     // Allows reading Topics and Postings
-    xarRegisterMask('ViewxarBB','All','xarbb','Read','All:All','ACCESS_OVERVIEW');	// Allows seeing Forum
+    xarRegisterMask('ViewxarBB','All','xarbb','Read','All:All','ACCESS_OVERVIEW');    // Allows seeing Forum
     xarRegisterMask('EditxarBB','All','xarbb','Forum','All:All','ACCESS_EDIT');
     xarRegisterMask('AddxarBB','All','xarbb','Forum','All:All','ACCESS_ADD');
     xarRegisterMask('DeletexarBB','All','xarbb','Forum','All:All','ACCESS_DELETE');
-    xarRegisterMask('AdminxarBB','All','xarbb','Forum','All:All','ACCESS_ADMIN');	// Allows all ;D
-    xarRegisterMask('ModxarBB','All','xarbb','Forum','All:All','ACCESS_MODERATE');	// Allows Editing + Deleting Replys + Topics
+    xarRegisterMask('AdminxarBB','All','xarbb','Forum','All:All','ACCESS_ADMIN');    // Allows all ;D
+    xarRegisterMask('ModxarBB','All','xarbb','Forum','All:All','ACCESS_MODERATE');    // Allows Editing + Deleting Replys + Topics
     xarRegisterMask('PostxarBB','All','xarbb','Forum','All:All','ACCESS_COMMENT');  // Allows Posting Replys and Topics
-	// for what is moderate good?
+    // for what is moderate good?
 
  /*   //-----------------------------------------------------------------------------------
     // Topic
@@ -163,7 +163,7 @@ function xarbb_init()
     xarRegisterMask('DeletexarBB','All','xarbb','Topic','All','ACCESS_DELETE');
     xarRegisterMask('AdminxarBB','All','xarbb','Topic','All','ACCESS_ADMIN');
     xarRegisterMask('ModxarBB','All','xarbb','Topic','All','ACCESS_MODERATE');    */
-	// for what is moderate good?
+    // for what is moderate good?
 
     // Enable categories hooks for xarbb forums
     if (xarModIsAvailable('categories')) {
@@ -484,7 +484,7 @@ function xarbb_upgrade($oldversion)
 
 function xarbb_delete()
 {
-	//Let's first get all the forums
+    //Let's first get all the forums
     $forums = xarModAPIFunc('xarbb','user','getallforums');
 
     //Now if there are forums, let's identify all the topics associated with each forum
@@ -757,9 +757,9 @@ return true;
 function xarbb_cleanitemtypes()
 {   //We have to assume here everyone has been working with itemtype = 1 for forums
     //As has been setin upgrade in 0.9 above
-	//May also be junk with itemtypes > 0
+    //May also be junk with itemtypes > 0
     $xbbid=xarModGetIDFromName('xarbb');
-	// Update catlinkage table so all entries of itemtype 1 are are itemtype 0
+    // Update catlinkage table so all entries of itemtype 1 are are itemtype 0
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $catlinkage =  xarDBGetSiteTablePrefix() . '_categories_linkage';

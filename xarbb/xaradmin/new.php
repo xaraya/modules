@@ -21,10 +21,10 @@ function xarbb_admin_new()
     if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
 
     // Get parameters
-	if (!xarVarFetch('fname', 'str:1:', $data['fname'], '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fname', 'str:1:', $data['fname'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'], '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('fstatus','int', $data['fstatus'], 0)) return;
-	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('new_cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('postsperpage','int:1:',$postsperpage, 20 ,XARVAR_NOT_REQUIRED)) return;

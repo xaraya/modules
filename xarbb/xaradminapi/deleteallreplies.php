@@ -48,9 +48,9 @@ function xarbb_adminapi_deleteallreplies($args)
         return;
     }
 
-    if(count($comments) > 0)	{
-    	xarModAPIFunc('comments', 'admin', 'delete_object_nodes', array('modid' => xarModGetIdFromName('xarbb'), 'objectid' => $tid));
-	}
+    if(count($comments) > 0)    {
+        xarModAPIFunc('comments', 'admin', 'delete_object_nodes', array('modid' => xarModGetIdFromName('xarbb'), 'objectid' => $tid));
+    }
     return true;
 }
 ?>

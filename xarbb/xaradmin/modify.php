@@ -88,7 +88,7 @@ function xarbb_admin_modify()
             }
             if (!isset($data['nntpgroup'])) {
                 $data['nntpgroup'] = 'xaraya.test';
-            }		
+            }        
             $data['module'] = 'xarbb';
             $data['itemtype'] = 0; // forum
             $data['itemid'] = $fid;
@@ -220,6 +220,6 @@ function xarbb_admin_modify()
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'modify', array('fid' => $fid)));
             break;
         }
-	return $data;
+    return $data;
 }
 ?>

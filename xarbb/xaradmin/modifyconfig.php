@@ -72,9 +72,9 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpserver', 'str:1:', $nntpserver, 'news.xaraya.com', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpgroup', 'str:1:', $nntpgroup, 'xaraya.test', XARVAR_NOT_REQUIRED)) return;
-	        if (!xarVarFetch('cookiename', 'str:1:', $cookiename, 'xarbb', XARVAR_NOT_REQUIRED)) return;
-	        //if (!xarVarFetch('cookiedomain', 'str:1:', $cookiepath, ' ', XARVAR_NOT_REQUIRED)) return;
-	        if (!xarVarFetch('cookiepath', 'str:1:', $cookiepath, '/', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cookiename', 'str:1:', $cookiename, 'xarbb', XARVAR_NOT_REQUIRED)) return;
+            //if (!xarVarFetch('cookiedomain', 'str:1:', $cookiepath, ' ', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cookiepath', 'str:1:', $cookiepath, '/', XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;

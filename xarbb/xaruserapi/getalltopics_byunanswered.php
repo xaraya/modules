@@ -90,9 +90,9 @@ function xarbb_userapi_getalltopics_byunanswered($args)
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
-    	$fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
+        $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
 
-	    if (xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid"))	{
+        if (xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid"))    {
             $topics[] = array('tid'     => $tid,
                    'fid'     => $fid,
                    'ttitle'  => $ttitle,

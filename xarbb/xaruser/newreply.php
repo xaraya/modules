@@ -78,8 +78,8 @@ function xarbb_user_newreply()
                 return $message;
             }
         }
-	} else {
-   	    if(!xarSecurityCheck('PostxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
+    } else {
+           if(!xarSecurityCheck('PostxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
     }
 
     $data = xarModAPIFunc('xarbb',
@@ -92,13 +92,13 @@ function xarbb_user_newreply()
     $header['input-title']  = xarML('Post a Reply');
     $header['modid']        = xarModGetIDFromName('xarbb');
     $header['objectid']     = $tid;
-    $header['cid'] 			= $cid;
+    $header['cid']             = $cid;
 
-	if ($phase == 'edit') {
-    	$action = 'modify';
+    if ($phase == 'edit') {
+        $action = 'modify';
         $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid, 'modify' => 1));
     } else {
-    	$action = 'reply';
+        $action = 'reply';
         $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid));
     }
 

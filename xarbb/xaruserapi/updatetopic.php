@@ -26,7 +26,7 @@ function xarbb_userapi_updatetopic($args)
     extract($args);
 
     if(!isset($tid))
-    	$invalid[] = "tid";
+        $invalid[] = "tid";
 
     // params in arg
     $params = array("fid"       => "xar_fid",
@@ -39,14 +39,14 @@ function xarbb_userapi_updatetopic($args)
                     "treplier"  => "xar_treplier",
                     "tftime"    => "xar_tftime",
                     "tstatus"   => "xar_tstatus");
-    foreach($params as $vvar => $dummy)	{
-    	if(isset($$vvar))	{
-			$set = true;
+    foreach($params as $vvar => $dummy)    {
+        if(isset($$vvar))    {
+            $set = true;
             break;
         }
     }
     if(    !isset($set)   )
-    	$invalid[] = "at least one of these has to be set: ".join(",",array_keys($fields));
+        $invalid[] = "at least one of these has to be set: ".join(",",array_keys($fields));
 
     // Argument check - make sure that at least on paramter is present
     // if not then set an appropriate error message and return
@@ -73,7 +73,7 @@ function xarbb_userapi_updatetopic($args)
 
     $update = array();
     $bindvars = array();
-    foreach($params as $vvar => $field)	{
+    foreach($params as $vvar => $field)    {
         if(isset($$vvar)) {
             $update[] = $field ."=?";
             $bindvars[] = $$vvar;

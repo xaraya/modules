@@ -19,7 +19,7 @@ function xarbb_user_deletetopic()
     if (!xarVarFetch('obid','str:1:',$obid,$tid,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirmation','int',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
 
-	// for sec check
+    // for sec check
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
 
     // Security Check
@@ -39,8 +39,8 @@ function xarbb_user_deletetopic()
     if (!xarSecConfirmAuthKey()) return;
 
     if (!xarModAPIFunc('xarbb',
-		               'admin',
-		               'deletetopics',
+                       'admin',
+                       'deletetopics',
                         array('tid' => $tid))) return;
 
     $tposter = xarUserGetVar('uid');

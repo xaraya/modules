@@ -44,13 +44,13 @@ function xarbb_adminapi_deletealltopics($args)
     $topics =  xarModAPIFunc('xarbb','user','getalltopics',array('fid' => $fid));
 
     if ((!$topics) || (count($topics) ==0)) {
-     	return;
+         return;
     }
     //Delete all the reply posts (comments table)
-    foreach($topics as $topic)	   {
-		if(!xarModAPIFunc('xarbb','admin','deleteallreplies',array(
-        			'tid' => $topic['tid']
-				))) return;
+    foreach($topics as $topic)       {
+        if(!xarModAPIFunc('xarbb','admin','deleteallreplies',array(
+                    'tid' => $topic['tid']
+                ))) return;
     }
  
     // Get datbase setup
@@ -66,11 +66,11 @@ function xarbb_adminapi_deletealltopics($args)
     if (!$result) return;
 
     // Let any hooks know that we have deleted topics
-	foreach($topics as $topic)	{
-	    $args['module'] = 'xarbb';
-	    $args['itemtype'] = $fid; // topic
-	    $args['itemid'] = $topic['tid'];
-	    xarModCallHooks('item', 'delete', $topic['tid'], $args);
+    foreach($topics as $topic)    {
+        $args['module'] = 'xarbb';
+        $args['itemtype'] = $fid; // topic
+        $args['itemid'] = $topic['tid'];
+        xarModCallHooks('item', 'delete', $topic['tid'], $args);
     } 
 
     // Let the calling process know that we have finished successfully
