@@ -73,6 +73,9 @@ function newsletter_adminapi_createstory($args)
     // Name the table and column definitions
     $nwsltrTable = $xartable['nwsltrStories'];
 
+    // We actually don't care if there are duplicate stories as
+    // the same story could be used in different issues.
+    /*
     // Check if that story already exists
     $query = "SELECT xar_id FROM $nwsltrTable
               WHERE xar_title = '".xarVarPrepForStore($title)."'
@@ -85,6 +88,7 @@ function newsletter_adminapi_createstory($args)
     if ($result->RecordCount() > 0) {
         return false;  // story already exists
     }
+    */
 
     // Get next ID in table
     $nextId = $dbconn->GenId($nwsltrTable);

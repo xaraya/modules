@@ -177,7 +177,7 @@ function newsletter_admin_createstory()
         return; // throw back
 
     // A new story has been added to an issue, so sort the stories
-    if ($issueId) {
+    if ($issueId && $storyId) {
         // Add this story to topic
         $topic = xarModAPIFunc('newsletter',
                                'admin',
