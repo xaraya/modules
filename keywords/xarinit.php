@@ -198,6 +198,9 @@ function keywords_init()
  */
 function keywords_upgrade($oldversion)
 {
+    // Load Table Maintainance API
+    xarDBLoadTableMaintenanceAPI();
+
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case '1.0':
@@ -242,10 +245,16 @@ function keywords_upgrade($oldversion)
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
 
-            $query = "ALTER TABLE $xartable[keywords_restr]
-                        ADD COLUMN xar_itemtype integer NOT NULL";
-            $result =& $dbconn->Execute($query);
+            // Add column 'xar_itemtype' to table
+             $query = xarDBAlterTable($xartable['keywords_restr'],
+                                     array('command' => 'add',
+                                           'field' => 'xar_itemtype',
+                                           'type' => 'integer',
+                                           'null' => false,
+                                           'default' => 0));
+            $result = & $dbconn->Execute($query);
             if (!$result) return;
+
             // Register blocks
             if (!xarModAPIFunc('blocks',
                     'admin',
