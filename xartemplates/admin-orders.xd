@@ -33,7 +33,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
   $orders_status_array = array();
   $orders_status_query = new xenQuery("select orders_status_id, orders_status_name from " . TABLE_ORDERS_STATUS . " where language_id = '" . $_SESSION['languages_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($orders_status = $q->output() {
     $orders_statuses[] = array('id' => $orders_status['orders_status_id'],
                                'text' => $orders_status['orders_status_name']);
@@ -49,7 +49,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
       $order_updated = false;
       $check_status_query = new xenQuery("select customers_name, customers_email_address, orders_status, date_purchased from " . TABLE_ORDERS . " where orders_id = '" . xtc_db_input($oID) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $check_status = $q->output();
       if ($check_status['orders_status'] != $status || $comments != '') {
         new xenQuery("update " . TABLE_ORDERS . " set orders_status = '" . xtc_db_input($status) . "', last_modified = now() where orders_id = '" . xtc_db_input($oID) . "'");
@@ -233,7 +233,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
     // begin modification for banktransfer
     $banktransfer_query = new xenQuery("select banktransfer_prz, banktransfer_status, banktransfer_owner, banktransfer_number, banktransfer_bankname, banktransfer_blz, banktransfer_fax from banktransfer where orders_id = '" . xtc_db_input($_GET['oID']) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     $banktransfer = $q->output();
     if (($banktransfer['banktransfer_bankname']) || ($banktransfer['banktransfer_blz']) || ($banktransfer['banktransfer_number'])) {
 ?>
@@ -394,7 +394,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
     $orders_history_query = new xenQuery("select orders_status_id, date_added, customer_notified, comments from " . TABLE_ORDERS_STATUS_HISTORY . " where orders_id = '" . xtc_db_input($oID) . "' order by date_added");
     if ($orders_history_query->getrows()) {
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($orders_history = $q->output()) {
         echo '          <tr>' . "\n" .
              '            <td class="smallText" align="center">' . xtc_datetime_short($orders_history['date_added']) . '</td>' . "\n" .
@@ -511,7 +511,7 @@ require(DIR_WS_CLASSES . 'currencies.php');
     $orders_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $orders_query_raw, $orders_query_numrows);
     $orders_query = new xenQuery($orders_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
     while ($orders = $q->output()) {
       if (((!$_GET['oID']) || ($_GET['oID'] == $orders['orders_id'])) && (!$oInfo)) {
         $oInfo = new objectInfo($orders);

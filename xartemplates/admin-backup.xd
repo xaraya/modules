@@ -35,7 +35,7 @@ function commerce_admin_configuration()
                   '# Backup Date: ' . date(PHP_DATE_TIME_FORMAT) . "\n\n";
         $tables_query = new xenQuery('show tables');
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         while ($tables = $q->output()) {
           list(,$table) = each($tables);
           $schema .= 'drop table if exists ' . $table . ';' . "\n" .
@@ -43,7 +43,7 @@ function commerce_admin_configuration()
           $table_list = array();
           $fields_query = new xenQuery("show fields from " . $table);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($fields = $q->output()) {
             $table_list[] = $fields['Field'];
             $schema .= '  ' . $fields['Field'] . ' ' . $fields['Type'];
@@ -58,7 +58,7 @@ function commerce_admin_configuration()
           $index = array();
           $keys_query = new xenQuery("show keys from " . $table);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($keys = $q->output()) {
             $kname = $keys['Key_name'];
             if (!isset($index[$kname])) {
@@ -83,7 +83,7 @@ function commerce_admin_configuration()
           // Dump the data
           $rows_query = new xenQuery("select " . implode(',', $table_list) . " from " . $table);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
           while ($rows = $q->output()) {
             $schema_insert = 'insert into ' . $table . ' (' . implode(', ', $table_list) . ') values (';
             reset($table_list);

@@ -29,8 +29,7 @@
 				  </tr>
 
 <xar:comment>  BEGIN LOOP ROWS  </xar:comment>
-    <xar:loop name="$items">
-    
+    <xar:loop name="$items">    
         <xar:if condition="is_array($cInfo) and($loop:item['manufacturers_id'] eq $cInfo.manufacturers_id)">
             <tr class="dataTableRowSelected" onmouseover="this.style.cursor='hand'" onclick="document.location.href='#$loop:item['url']#'">
         <xar:else />
@@ -119,7 +118,7 @@
 				<td class="infoBoxContent">
 					<xar:mlstring>Please make any necessary changes</xar:mlstring>
 					<br /><xar:mlstring>Name</xar:mlstring><br />
-					<input type="text" name="manufacturers_name">
+					<input type="text" name="manufacturers_name" value="#$cInfo.manufacturers_name#">
 					<br /><xar:mlstring>Picture</xar:mlstring><br />
 					<input type="file" name="manufacturers_image">
 					<br />
@@ -127,12 +126,13 @@
 						<br />
 						<input type="image" src="#xarTplGetImage($loop:item['directory'] .'/admin/' . $loop:item['image'])#" border="0" alt="#xarML($loop:item['name'])#">
 						&nbsp;
-						<input type="text" name="manufacturers_url[#$loop:item['id']#]">					
+						<input type="text" name="manufacturers_url[#$loop:item['id']#]" value="#xarModAPIFunc('commerce','user','get_manufacturer_url', array('manufacturers_id' => $cInfo.manufacturers_id, 'language_id' => $loop:item['id']))#">					
+
 					</xar:loop>
 					<br /><br />
 					&nbsp;
 					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" border="0" alt="#xarML('Edit')#">
-					&nbsp;
+					<br />&nbsp;
 					<a href="#xarModURL('commerce','admin','manufacturers',array('page' => $page))#">
 						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
 					</a>
@@ -182,11 +182,13 @@
 					<br />
 					#$cInfo.manufacturers_name#
 					<br /><br />
+					<xar:comment>
 					<xar:mlstring>ISO Code (2)</xar:mlstring>: #$cInfo.manufacturers_iso_code_2#
 					<br /><br />
 					<xar:mlstring>ISO Code (3)</xar:mlstring>: #$cInfo.manufacturers_iso_code_3#
 					<br /><br />
 					<xar:mlstring>Address Format</xar:mlstring>: #$cInfo.address_format_id#
+					</xar:comment>
 				</td>
 			</xar:if>
 		</xar:if>

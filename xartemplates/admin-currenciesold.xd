@@ -41,7 +41,7 @@ function commerce_admin_configuration()
   $currency_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $currency_query_raw, $currency_query_numrows);
   $currency_query = new xenQuery($currency_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($currency = $q->output()) {
     if (((!$_GET['cID']) || (@$_GET['cID'] == $currency['currencies_id'])) && (!$cInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
       $cInfo = new objectInfo($currency);

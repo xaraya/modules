@@ -2607,25 +2607,33 @@ function commerce_init()
 
 // Create some block instances
 
-// Put a categories block in the 'right' blockgroup
+// Put an exit menu in the 'left' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'base', 'type'=>'menu'));
+    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commerceexit',
+                                                                  'content' => 'a:6:{s:14:"displaymodules";b:0;s:10:"showlogout";b:1;s:10:"displayrss";b:0;s:12:"displayprint";b:0;s:6:"marker";s:3:"[x]";s:7:"content";s:52:"index.php?module=commerce&type=user&func=exit|Exit||";}',
+                                                                  'state' => 0,
+                                                                  'groups' => array($leftgroup)));
+// Put a search block in the 'left' blockgroup
+    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'search'));
+    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
+    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
+                                                                  'name' => 'commercesearch',
+                                                                  'state' => 0,
+                                                                  'groups' => array($leftgroup)));
+// Put a categories block in the 'left' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'categories'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
     $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
                                                                   'name' => 'commercecategories',
                                                                   'state' => 0,
                                                                   'groups' => array($leftgroup)));
-// Put a information block in the 'right' blockgroup
+// Put a information block in the 'left' blockgroup
     $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'information'));
     $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
     $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
                                                                   'name' => 'commerceinformation',
-                                                                  'state' => 0,
-                                                                  'groups' => array($leftgroup)));
-// Put a search block in the 'right' blockgroup
-    $type = xarModAPIFunc('blocks', 'user', 'getblocktype', array('module' => 'commerce', 'type'=>'search'));
-    $leftgroup = xarModAPIFunc('blocks', 'user', 'getgroup', array('name'=> 'left'));
-    $bid = xarModAPIFunc('blocks','admin','create_instance',array('type' => $type['tid'],
-                                                                  'name' => 'commercesearch',
                                                                   'state' => 0,
                                                                   'groups' => array($leftgroup)));
 // Put a language block in the 'right' blockgroup
@@ -2700,6 +2708,11 @@ function commerce_delete()
 
     // Remove the language block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercelanguage'));
+    if ($blockinfo) {
+        if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
+    }
+    // Remove the exit menu
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceexit'));
     if ($blockinfo) {
         if(!xarModAPIFunc('blocks', 'admin', 'delete_instance', array('bid' => $blockinfo['bid']))) return;
     }

@@ -57,7 +57,7 @@ $products_price = round(get_group_price($loop:item['status_id'], $pInfo->product
 
 <table width="247" border="0" cellpadding="0" cellspacing="0">
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       while ($staffel_values = $q->output()) {
       // load data into array
 
@@ -73,7 +73,7 @@ $products_price = round(get_group_price($loop:item['status_id'], $pInfo->product
 	<xar:if condition="$configuration['price_is_brutto']">
 $tax_query = new xenQuery("select tax_rate from " . TABLE_TAX_RATES . " where tax_class_id = '" . $pInfo->products_tax_class_id . "' ");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
 $tax = $q->output();
 
 $products_price = round($staffel_values['personal_offer']*((100+$tax['tax_rate'])/100),$configuration['price_precision']);

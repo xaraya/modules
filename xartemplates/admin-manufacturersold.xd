@@ -67,7 +67,7 @@ function commerce_admin_configuration()
       if ($_POST['delete_image'] == 'on') {
         $manufacturer_query = new xenQuery("select manufacturers_image from " . TABLE_MANUFACTURERS . " where manufacturers_id = '" . xtc_db_input($manufacturers_id) . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
         $manufacturer = $q->output();
         $image_location = DIR_FS_DOCUMENT_ROOT . DIR_WS_CATALOG_IMAGES . $manufacturer['manufacturers_image'];
         if (file_exists($image_location)) @unlink($image_location);
@@ -115,12 +115,12 @@ function commerce_admin_configuration()
   $manufacturers_split = new splitPageResults($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS, $manufacturers_query_raw, $manufacturers_query_numrows);
   $manufacturers_query = new xenQuery($manufacturers_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($manufacturers = $q->output()) {
     if (((!$_GET['mID']) || (@$_GET['mID'] == $manufacturers['manufacturers_id'])) && (!$mInfo) && (substr($_GET['action'], 0, 3) != 'new')) {
       $manufacturer_products_query = new xenQuery("select count(*) as products_count from " . TABLE_PRODUCTS . " where manufacturers_id = '" . $manufacturers['manufacturers_id'] . "'");
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
       $manufacturer_products = $q->output();
 
       $mInfo_array = xtc_array_merge($manufacturers, $manufacturer_products);

@@ -39,7 +39,7 @@ function commerce_admin_configuration()
 
   $products_query = new xenQuery($products_query_raw);
       $q = new xenQuery();
-      $q->run();
+      if(!$q->run()) return;
   while ($products = $q->output()) {
     $rows++;
 

@@ -28,6 +28,99 @@
 		</td>
 	</tr>
 </table>
+				<table width="100%"  border="0">
+					<tr>
+						<td class="main">
+							<xar:mlstring>Product Status</xar:mlstring>:
+							<img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
+							<input type="checkbox" name="products_status">
+							&nbsp;&nbsp;
+							<xar:mlstring>In Stock</xar:mlstring>
+							&nbsp;&nbsp;
+							<input type="checkbox" name="products_status">
+							&nbsp;&nbsp;
+							<xar:mlstring>Out of Stock</xar:mlstring>
+							<table width="100%" border="0">
+                                <tr>
+                                    <td class="main" width="127">
+                                        <xar:mlstring>Date Available</xar:mlstring>
+                                        <br />
+                                        <small>(YYYY-MM-DD)</small>
+                                    </td>
+                                    <td class="main">
+                                        <img src="#xarTplGetImage('pixel_trans.gif')#" width="24" height="15">
+                                        &nbsp;
+										<input name='dateAvailable' size='12' value='$cInfo.products_date_available'>
+										<img src="modules/commerce/xarimages/cal.gif" style="vertical-align: top" onclick="return showCalendar('dateAvailable', 'y-m-d');" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table bgcolor="f3f3f3" style="border: 1px solid; border-color: #cccccc;" "width="100%"  border="0">
+                                <tr>
+                                    <td class="main">
+                                        <xar:mlstring>Product Sort</xar:mlstring></span>
+                                    </td>
+                                    <td class="main">
+										<input type="text" name="products_sort" value="$cInfo.products_sort">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="main">
+                                            <xar:mlstring>Product Model</xar:mlstring>
+                                        </span>
+                                    </td>
+                                    <td class="main">
+										<input type="text" name="products_model" value="$cInfo.products_model">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="main">
+                                        <xar:mlstring>Product Manufacturer</xar:mlstring>
+                                    </td>
+									<td class="main">
+										#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'manufacturers_id', 'values' => xarModAPIFunc('commerce','user','get_manufacturers',array('manufacturers_array' => array(array('id' => '', 'text' => xarML('-- none --'))))), 'default' =>'cInfo.manufacturers_id'))#
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="main">
+                                        <xar:mlstring>FSK18</xar:mlstring>
+                                    </td>
+                                    <td class="main">
+										#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'fsk18', 'values' => array(array('id' => 0, 'text' => xarML('No')),array('id' => 1, 'text' => xarML('Yes'))), 'default' =>'cInfo.products_fsk18'))#
+                                    </td>
+                                </tr>
+                                <xar:if condition="$configuration['activate_shipping_status'] eq true">
+                                    <tr>
+                                        <td class="main">
+                                            <xar:mlstring>Shipping Status</xar:mlstring>
+                                        </td>
+                                        <td class="main">
+											#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'shipping_status', 'values' => xarModAPIFunc('commerce','user','get_shipping_status'), 'default' =>'cInfo.products_shippingtime'))#
+                                        </td>
+                                    </tr>
+                                </xar:if>
+                                <tr>
+									<td class="main">
+										<xar:mlstring>Product Detail Template</xar:mlstring>
+									</td>
+									<td class="main">
+										#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'info_template', 'values' => 'producttemplatefiles', 'default' => 'cInfo.product_template'))#
+									</td>
+								</tr>
+								<tr>
+									<td class="main">
+										<xar:mlstring>Product Options Template</xar:mlstring>
+									</td>
+									<td class="main">
+										#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'options_template', 'values' => 'optionstemplatefiles', 'default' => 'cInfo.options_template'))#											
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+	            <br /><br />
 <div id="tabnav">
 	<xar:loop name="$languages">
 		<div>
