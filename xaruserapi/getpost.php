@@ -51,6 +51,11 @@ function metaweblogapi_userapi_getpost($args)
         $data['content']    = xarVarPrepForDisplay($article['summary']);
         $data['body']       = xarVarPrepForDisplay($article['body']);
         $data['postid']     = $article['aid'];
+        // See if we can have keywords
+        if(xarModIsAvailable('keywords')) {
+            $keywords = xarModAPIFunc('keywords','user','getwords',array('modid' => 151, 'itemtype' => $article['pubtypeid'], 'itemid' => $postid));
+            if(!empty($keywords)) $data['keywords'] = xarVarPrepForDisplay(join(',',$keywords));
+        }
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                                 array('module'  => 'metaweblogapi',
                                       'command' => 'getpost',

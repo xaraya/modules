@@ -55,19 +55,24 @@ function metaweblogapi_userapi_newpost($args)
     } else {
         $body ='';
     }
+    $keywords ='';
+    if(isset($mt_keywords)) {
+        $keywords = $mt_keywords;
+    }
        
     // We now have gathered all our stuff, use this to post to xaraya through the API
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or wrong password while creating new post",$username);
     } else {
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
-        $postid = xarModAPIFunc('articles','admin','create',array('ptid'    => $pubType,
-                                                                  'title'   =>  $title,
-                                                                  'summary' => $description,
-                                                                  'cids'    => $cids, 
-                                                                  'body'    => $body,
-                                                                  'status'  => $status,
-                                                                  'pubdate' => $dateCreated));
+        $postid = xarModAPIFunc('articles','admin','create',array('ptid'      => $pubType,
+                                                                  'title'     =>  $title,
+                                                                  'summary'   => $description,
+                                                                  'cids'      => $cids, 
+                                                                  'body'      => $body,
+                                                                  'status'    => $status,
+                                                                  'pubdate'   => $dateCreated,
+                                                                  'keywords'  => $keywords));
         xarLogMessage("Created article $postid with status $status ($publish) in (".join(',',$cids).")");
         if (!$postid) {
             xarErrorFree();

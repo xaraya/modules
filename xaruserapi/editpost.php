@@ -56,6 +56,17 @@ function metaweblogapi_userapi_editpost($args)
     } else {
         $body = $mt_text_more;
     }
+    // Keywords
+    $keywords = '';
+    if(isset($mt_keywords)) {
+        $keywords = $mt_keywords;
+    } else {
+        // Use the keywords already registered
+        if(xarModIsAvailable('keywords')) {
+            $keywords = xarModAPIFunc('keywords','user','getwords',array('modid' => 151, 'itemtype' => $article['pubtypeid'], 'itemid' => $postid));
+            if(!empty($keywords)) $keywords = xarVarPrepForDisplay(join(',',$keywords));
+        }
+    }
     
     // categories are optional
     $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
@@ -89,7 +100,8 @@ function metaweblogapi_userapi_editpost($args)
                                                          'body'     => $body,
                                                          'ptid'     => $pubType, 
                                                          'cids'     => $cids, 
-                                                         'status'   => $status))) {
+                                                         'status'   => $status,
+                                                         'keywords' => $keywords))) {
         $err = "Failed to update post: $postid";
     }
     

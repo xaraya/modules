@@ -33,6 +33,12 @@
               <value><string>#$body#</string></value>
             </member>
           </xar:if>
+          <xar:if condition="isset($keywords)">
+            <member>
+              <name>mt_keywords</name>
+              <value><string>#$keywords#</string></value>
+            </member>
+          </xar:if>
           <member>
             <name>postid</name>
             <value>
