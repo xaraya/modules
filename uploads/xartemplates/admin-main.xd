@@ -1,30 +1,100 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-<h2><xar:mlstring>Uploads Module Overview</xar:mlstring></h2>
-<div align="center">
-<br />
-<ul>
-  <li>
-  <a href="#xarModURL('uploads', 'admin', 'view')#">
-    <xar:mlstring>View All Uploads</xar:mlstring>
-    </a>
-  </li>
-  <li>
-    <a href="#xarModURL('uploads', 'admin', 'view', array('filter'=>'waiting'))#">
-    <xar:mlstring>View Waiting Uploads</xar:mlstring>
-    </a>
-  </li>
-  <li>
-  <a href="#xarModURL('uploads', 'admin', 'modifyconfig')#">
-	<xar:mlstring>Modify Uploads Configuration</xar:mlstring>
-    </a>
-  </li>
-  <li>
-  <a href="#xarModURL('uploads', 'admin', 'fileimport')#">
-	<xar:mlstring>Import Files</xar:mlstring>
-    </a>
-  </li>
-</ul>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Administration - Uploads</xar:mlstring>
+    </span>
 </div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <em><xar:mlstring>Uploads is a Xaraya Utility Module.</xar:mlstring></em>
+            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Allows for the importing of files into the Xaraya system iether locally or externally.</xar:mlstring></li>
+                <li><xar:mlstring>Allows for the managing access to files via privileges.</xar:mlstring></li>
+                <li>...</li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <h3>
+                <xar:mlstring>External Imports and Uploads</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>
+                    Files that are uploaded or imported from external locations can be saved in the database (DB) 
+                    or stored in the filesystem (FS). Use the options (FS/DB) under each form to select the 
+                    storage location for your file. 
+                </xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>
+                    The import engine will try to make a best guess at the name of the file you are trying to import. 
+                    In the event that it cannot figure out what the file name is it will use the following methods:
+                </xar:mlstring>
+                <ul>
+                    <li>
+                        <xar:mlstring><strong>HTTP and HTTPS</strong></xar:mlstring>
+                        <p>
+                            <xar:mlstring>
+                                In the event that the filename for an HTTP import can not be determined, the file will be 
+                                named based on the host name of the server the file was imported from. For example, importing
+                                http://www.xaraya.com/ would return a file with the name of www_xaraya_com.html
+                            </xar:mlstring>
+                        </p>
+                    </li>
+                    <li>
+                        <strong>FTP</strong>
+                        <p>
+                            <xar:mlstring>
+                                Due to the underlying nature of the FTP protocol, it is impossible to successfully access a file 
+                                on a system without providing a viable file name. In this case, no file name 'guessing' will be 
+                                attempted and the import will fail.
+                            </xar:mlstring>
+                        </p>
+                    </li>
+                </ul>
+            </p>
+
+            <h3>
+                <xar:mlstring>Local Imports Sandbox</xar:mlstring>
+            </h3>
+            <p>
+                <xar:mlstring>
+                    Files can be inserted into your local import sandbox and used immediately by users with sufficient access to 
+                    add files and attach them to hooked objects (articles, comments, etc). Files you place in your local import
+                    sandbox can be seen in the 'Import Local Files' form immediately upon adding them.
+                </xar:mlstring>
+            </p>
+
+        
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>There are no included blocks.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            .. To be filled in ..
+        </div>
+    </div>
 </div>
