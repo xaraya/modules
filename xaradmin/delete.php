@@ -1,13 +1,8 @@
 <?php
 function comments_admin_delete( ) 
 {
-
-    // Security Check
-    if(!xarSecurityCheck('Comments-Admin'))
-        return;
-
-    $dtype = xarVarCleanFromInput('dtype');
-
+    if (!xarSecurityCheck('Comments-Admin')) return;
+    if (!xarVarFetch('dtype', 'str:1:', $dtype)) return;
     $delete_args = array();
 
     if (!isset($dtype) || !eregi('^(all|module|object)$',$dtype)) {
