@@ -99,21 +99,16 @@ function reports_init()
     xarModSetVar('reports','reports_location',$moddir);
     xarModSetVar('reports','images_location',$moddir."/images");
     xarModSetVar('reports','pdf_backend','ezpdf');
-    return true;
+    // The initialize installs version 0.0.1, do the upgrades next
+    return reports_upgrade('0.0.1');
 }
 
 function reports_upgrade() 
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-    case 1.0:
-        // Code to upgrade from version 1.0 goes here
-        break;
-    case 2.0:
-        // Code to upgrade from version 2.0 goes here
-        break;
-    case 2.5:
-        // Code to upgrade from version 2.5 goes here
+    case '0.0.1'
+        // Code to upgrade from version 0.0.1 goes here
         break;
     }
 	return true;
