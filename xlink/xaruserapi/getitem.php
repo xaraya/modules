@@ -18,7 +18,7 @@ function xlink_userapi_getitem($args)
         if (!is_numeric($id)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                          'xlink id', 'user', 'getitem', 'xlink');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return;
         }
@@ -26,14 +26,14 @@ function xlink_userapi_getitem($args)
         if (!isset($basename)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                         'base name', 'user', 'getitem', 'xlink');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return;
         }
         if (!isset($refid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                          'reference id', 'user', 'getitem', 'xlink');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                            new SystemException($msg));
             return;
         }
