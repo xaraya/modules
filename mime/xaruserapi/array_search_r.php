@@ -30,7 +30,8 @@
  *    @returns      array || FALSE        array of keys or FALSE if not found.
  *    @access        public
  */
-function array_search_r($args) {
+
+function mime_userapi_array_search_r($args) {
     extract($args);
 
     static $indent = 0;
@@ -42,12 +43,11 @@ function array_search_r($args) {
     }
 
     foreach($haystack as $key => $value){
-
         if(is_array($value)) {
             $indent++;
-            $match = array_search_r(array('needle'=>&$needle, 'haystack'=>&$value));
+            $match = mime_userapi_array_search_r(array('needle' => $needle, 'haystack' => $value));
         } else {          
-            if ($value == $needle) {
+            if ($value === $needle) {
                 $match[$indent] = $value;
             } else {
                 $match = FALSE;
@@ -61,7 +61,8 @@ function array_search_r($args) {
     $indent--;
     
     if ($indent <= 0) {
-        array_reverse($match);
+        if (is_array($match)) 
+            array_reverse($match);
     }
     return $match;
 }

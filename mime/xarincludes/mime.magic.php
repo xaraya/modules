@@ -1,5 +1,10 @@
 <?php
 
+/**
+ *  array magic number / extension mappings to mime types
+ *  this is based off the Magic class in Horde (www.horde.org)
+ */  
+
 $mime_list['application/andrew-inset']['extensions'][0] = 'ez';
 $mime_list['application/compress']['needles']["\\37\\235"]['length'] = 2;
 $mime_list['application/compress']['needles']["\\37\\235"]['offset'] = 0;
@@ -421,6 +426,10 @@ $mime_list['application/xhtml+xml']['extensions'][0] = 'xht';
 $mime_list['application/xhtml+xml']['extensions'][1] = 'xhtml';
 $mime_list['application/x-httpd-php3']['extensions'][0] = 'php3';
 $mime_list['application/x-httpd-php']['extensions'][0] = 'php';
+$mime_list['application/x-httpd-php']['needles']["\\74\\77\\160\\150\\160"]['length'] = 5;
+$mime_list['application/x-httpd-php']['needles']["\\74\\77\\160\\150\\160"]['offset'] = 0;
+$mime_list['application/x-httpd-php']['needles']["\\74\\77\\120\\110\\120"]['length'] = 5;
+$mime_list['application/x-httpd-php']['needles']["\\74\\77\\120\\110\\120"]['offset'] = 0;
 $mime_list['application/x-javascript']['extensions'][0] = 'js';
 $mime_list['application/x-koan']['extensions'][0] = 'skd';
 $mime_list['application/x-koan']['extensions'][1] = 'skm';

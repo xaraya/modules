@@ -30,6 +30,8 @@ function mime_userapi_analyze_file( $args )
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_OPEN', new SystemException($msg));
         return FALSE;
     } else {
+        $fileSize = filesize($fileName);
+        
         foreach($mime_list as $mime_type => $mime_info) {
             
             // if this mime_type doesn't have a 
@@ -40,10 +42,9 @@ function mime_userapi_analyze_file( $args )
             }
             
             foreach ($mime_info['needles'] as $needle => $needle_info) {
-                
                 // if the offset is beyond the range of the file
                 // continue on to the next item
-                if ($needle_info['offset'] >= filesize($fileName)) {
+                if ($needle_info['offset'] >= $fileSize) {
                     continue;
                 }
 
@@ -62,21 +63,25 @@ function mime_userapi_analyze_file( $args )
                     xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
                     return FALSE;
                 }
-                
+
                 // FIXME: need to figure out how to get the stored, octal,
                 // representation of the needle back into ascii values easily
                 // and with minimal overhead - this works for now though
-                for ($i = 0, $check = ''; $i < strlen($value); $i++)
-                    $check .= "\\" . ord($value{$i});
-                } 
+                for ($i = 0, $check = array(); $i < strlen($value); $i++) {
+                    $check[] = decoct(ord($value{$i}));
+                }
+                $value = '';
                 
-                if ($needle == $check) {
+                foreach ($check as $char) {
+                    $value .= '\\' . $char;
+                }
+                
+                if ($needle == $value) {
                     fclose($fp);
                     return $mime_type;
                 }
             }
         } 
-       
         if (!rewind($fp)) {
             $msg = xarML('Unable to rewind to beginning of file: [#(1)]', $fileName);
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_REWIND', new SystemException($msg));
