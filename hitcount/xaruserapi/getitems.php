@@ -49,10 +49,10 @@ function hitcount_userapi_getitems($args)
     // Security check
     if (count($itemids) > 0) {
         foreach ($itemids as $itemid) {
-			if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$objectid")) return;
+            if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$itemid")) return;
         }
     } else {
-			if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
+        if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
     }
 
     // Database information
@@ -67,7 +67,7 @@ function hitcount_userapi_getitems($args)
               AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
     if (count($itemids) > 0) {
         $allids = join(', ',$itemids);
-        $query .= " AND xar_itemid IN ('" . xarVarPrepForStore($allids) . "')";
+        $query .= " AND xar_itemid IN (" . xarVarPrepForStore($allids) . ")";
     }
     if ($sort == 'numhits') {
         $query .= " ORDER BY xar_hits DESC, xar_itemid ASC";
