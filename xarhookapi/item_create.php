@@ -61,22 +61,22 @@ function hookbridge_hookapi_item_create ( $args )
     // Get the list of active hookbridge functions for the Create Hook
     $hookfunctions_create = unserialize(xarModGetVar('hookbridge', 'hookfunctions_create' ));
     
-	if( isset($hookfunctions_create) && (count($hookfunctions_create) > 0) )
-	{
-		// Get the path to where the hookbridge functions are stored
-		$hookbridge_functionpath = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
+    if( isset($hookfunctions_create) && (count($hookfunctions_create) > 0) )
+    {
+        // Get the path to where the hookbridge functions are stored
+        $hookbridge_functionpath = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
      
-		// Loop through'em
-		foreach( $hookfunctions_create as $bridgefunctionfile )
-		{
-			$includeFile = $hookbridge_functionpath.'/'.$bridgefunctionfile;
-			
-			$functionName = 'hookbridge_'.str_replace(".php","",$bridgefunctionfile);
-			include_once($includeFile);
-			
-			$extrainfo = call_user_func($functionName, $modname, $modid, $extrainfo);
-		}
-	}    
+        // Loop through'em
+        foreach( $hookfunctions_create as $bridgefunctionfile )
+        {
+            $includeFile = $hookbridge_functionpath.'/'.$bridgefunctionfile;
+            
+            $functionName = 'hookbridge_'.str_replace(".php","",$bridgefunctionfile);
+            include_once($includeFile);
+            
+            $extrainfo = call_user_func($functionName, $modname, $modid, $extrainfo);
+        }
+    }    
     
     return $extrainfo;
 }
