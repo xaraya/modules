@@ -133,7 +133,7 @@ function articles_user_display($args)
                 $image = xarTplGetImage($cat['image'],'categories');
                 $data['topic_icons'] .= '<a href="'. $link .'">'.
                                         '<img src="'. $image .
-                                        '" border="0" alt="'. xarVarPrepForDisplay($cat['name']) .'" />'.
+                                        '" alt="'. xarVarPrepForDisplay($cat['name']) .'" />'.
                                         '</a>';
                 break;
             }

@@ -750,7 +750,7 @@ function articles_user_view($args)
                     $image = xarTplGetImage($catinfo[$cid]['image'],'categories');
                     $article['topic_icons'] .= '<a href="'. $catinfo[$cid]['link'] .'">'.
                                             '<img src="'. $image .
-                                            '" border="0" alt="'. xarVarPrepForDisplay($catinfo[$cid]['name']) .'" />'.
+                                            '" alt="'. xarVarPrepForDisplay($catinfo[$cid]['name']) .'" />'.
                                             '</a>';
                 }
             }
