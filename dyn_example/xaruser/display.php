@@ -89,13 +89,11 @@ function dyn_example_user_display($args)
 
     xarVarSetCached('Blocks.dyn_example', 'itemid', $itemid);
 
-    $hooks = xarModCallHooks('item',
-                             'display',
-                             $itemid,
-                             xarModURL('dyn_example',
-                                       'user',
-                                       'display',
-                                       array('itemid' => $itemid)));
+    $item = array();
+    $item['module'] = 'dyn_example';
+    $item['returnurl'] = xarModURL('dyn_example', 'user', 'display',
+                                   array('itemid' => $itemid));
+    $hooks = xarModCallHooks('item', 'display', $itemid, $item);
     if (empty($hooks)) {
         $data['hookoutput'] = '';
     } elseif (is_array($hooks)) {
