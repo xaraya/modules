@@ -7,6 +7,7 @@
  */
 function xarbb_userapi_counttopics($args)
 {
+    extract($args);
 
     if (!isset($fid)) {
         $msg = xarML('Invalid Parameter Count',
@@ -22,7 +23,7 @@ function xarbb_userapi_counttopics($args)
     $xbbtopicstable = $xartable['xbbtopics'];
 
     $query = "SELECT COUNT(1)
-              FROM $xbbforumstable            
+              FROM $xbbtopicstable            
               WHERE xar_fid = $fid";
     $result =& $dbconn->Execute($query);
     if (!$result) return;

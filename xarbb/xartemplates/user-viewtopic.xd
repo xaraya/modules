@@ -87,7 +87,11 @@
         </tr>
 		<xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
         <tr>
-          <td width="100%" align="center"><xar:data-output property="$properties['avatar']" /></td>
+          <td width="100%" align="center">
+			<xar:if condition="isset($properties)">
+				<xar:data-output property="$properties['avatar']" />
+			</xar:if>
+		  </td>
         </tr>
         <tr>
           <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br /> #$posterdate#</td>
@@ -99,7 +103,10 @@
     </td>
     <td valign="top">
 		#$transformedtext#<br /><br />
-		<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
+		<xar:if condition="isset($properties)">
+			<p>&nbsp;&nbsp;<i>	
+			<xar:data-output property="$properties['signature']" /></i></p>
+		</xar:if>
 	</td>
   </tr>
   <tr>
@@ -144,7 +151,11 @@
         </tr>
 		<xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
         <tr>
-          <td width="100%" align="center"><xar:data-output property="$properties['avatar']" /></td>
+          <td width="100%" align="center">
+			<xar:if condition="isset($properties)">
+				<xar:data-output property="$properties['avatar']" />
+			</xar:if>
+		  </td>
         </tr>
         <tr>
           <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br /> #$item['commenterdate']#</td>
@@ -155,8 +166,10 @@
       </table>
     </td>
     <td valign="top">
-		#$item['xar_text']#<br /><br />
-		<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
+		<xar:if condition="isset($properties)">
+			#$item['xar_text']#<br /><br />
+			<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
+		</xar:if>
 	</td>
   </tr>
   <tr>
@@ -168,9 +181,9 @@
           <td width="50%">&nbsp;</td>
           <td width="50%" align="right">
 				<xar:if condition="xarModIsAvailable('bbcode')">
-					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
+					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
 					</xar:if>
-					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a> |
+					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a> |
 					<a href="TODO"><xar:mlstring>Delete</xar:mlstring></a>
 			</td>
         </tr>

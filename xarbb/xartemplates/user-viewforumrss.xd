@@ -1,0 +1,8 @@
+<xar:loop name="$items">
+<item>
+<title>#$loop:item['ttitle']#</title>
+<link>#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#</link>
+<pubDate>#$loop:item['ttime']#</pubDate>
+<content:format rdf:resource="http://www.w3.org/1999/xhtml" />
+</item>
+</xar:loop>

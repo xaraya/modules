@@ -2,19 +2,22 @@
 
 function xarbb_user_viewforum()
 {
-     
-    $fid = xarVarCleanFromInput('fid');
-
-    $data['items'] = array();
+    // Get parameters from whatever input we need
+    xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED); 
+    xarVarFetch('fid', 'id', $fid); 
 
     // Security Check
     if(!xarSecurityCheck('ReadxarBB')) return;
+
+    $data['items'] = array();
 
     // The user API function is called
     $topics = xarModAPIFunc('xarbb',
                             'user',
                             'getalltopics',
-                            array('fid' => $fid));
+                            array('fid' => $fid,
+                                  'startnum' => $startnumitem,
+                                  'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
 
     for ($i = 0; $i < count($topics); $i++) {
         $topic = $topics[$i];
@@ -87,8 +90,13 @@ function xarbb_user_viewforum()
     //images
     $data['newtopic'] = '<img src="' . xarTplGetImage('newpost.gif') . '" />';
     
-    // TODO : add a pager (once it exists in BL)
-    $data['pager'] = '';
+    // Call the xarTPL helper function to produce a pager in case of there
+    // being many items to display.
+    $data['pager'] = xarTplGetPager($startnumitem,
+                                    xarModAPIFunc('xarbb', 'user', 'counttopics', array('fid' => $fid)),
+                                    xarModURL('xarbb', 'user', 'viewforum', array('startnumitem' => '%%',
+                                                                                  'fid'          => $fid)),
+                                    xarModGetVar('xarbb', 'topicsperpage'));
 
     // Return the template variables defined in this function
     return $data;

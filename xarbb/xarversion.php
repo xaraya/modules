@@ -30,4 +30,5 @@ $modversion['user'] = 1;
 $modversion['securityschema'] = array();
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
+$modversion['dependency'] = array(147, 177, 14);
 ?>

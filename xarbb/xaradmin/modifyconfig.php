@@ -8,11 +8,7 @@ function xarbb_admin_modifyconfig()
     // Security Check
     if(!xarSecurityCheck('AdminxarBB')) return;
 
-    $phase = xarVarCleanFromInput('phase');
-
-    if (empty($phase)){
-        $phase = 'modify';
-    }
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
 
     switch(strtolower($phase)) {
 
@@ -38,6 +34,7 @@ function xarbb_admin_modifyconfig()
 
             if (!xarVarFetch('hottopic','int:1:',$hotTopic,10,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('redhottopic','int:1:',$redhotTopic,20,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage,20,XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -45,6 +42,7 @@ function xarbb_admin_modifyconfig()
             // Update module variables
             xarModSetVar('xarbb', 'hottopic', $hotTopic);
             xarModSetVar('xarbb', 'redhottopic', $redhotTopic);
+            xarModSetVar('xarbb', 'topicsperpage', $topicsperpage);
             xarModCallHooks('module','updateconfig','xarbb',
                            array('module' => 'xarbb',
                                  'itemtype' => 1)); // forum

@@ -35,7 +35,6 @@ function xarbb_user_updatetopic()
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
 
     return;
-
 }
 
 ?>

@@ -28,6 +28,7 @@ function xarbb_init()
                         new SystemException($msg));
         return;
     }
+
     // Set up database tables
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -89,10 +90,6 @@ function xarbb_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // modvars
-    xarModSetVar('xarbb', 'hottopic', 10);
-    xarModSetVar('xarbb', 'redhottopic', 20);
-
     // Register Masks
     xarRegisterMask('ReadxarBB','All','xarbb','All','All','ACCESS_READ');
     xarRegisterMask('ModxarBB','All','xarbb','All','All','ACCESS_MODERATE');
@@ -101,62 +98,60 @@ function xarbb_init()
     xarRegisterMask('DeletexarBB','All','xarbb','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminxarBB','All','xarbb','All','All','ACCESS_ADMIN');
 
-    // Enable categories hooks for xarbb forums (= item type 1)
-    if (xarModIsAvailable('categories')) {
-        xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'xarbb', 'callerItemType' => 1, 'hookModName' => 'categories'));
-    }
-
-    // Enable comments hooks for xarbb topics (= item type 2)
-    if (xarModIsAvailable('comments')) {
-        xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'xarbb', 'callerItemType' => 2, 'hookModName' => 'comments'));
-    }
-    // Enable hitcount hooks for xarbb topics (= item type 2)
-    if (xarModIsAvailable('hitcount')) {
-        xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'xarbb', 'callerItemType' => 2, 'hookModName' => 'hitcount'));
-    }
-    // Enable ratings hooks for xarbb topics (= item type 2)
-    if (xarModIsAvailable('ratings')) {
-        xarModAPIFunc('modules','admin','enablehooks',
-                      array('callerModName' => 'xarbb', 'callerItemType' => 2, 'hookModName' => 'ratings'));
-    }
-
-    // If Categories API loaded and available, generate proprietary
-    // module master category cid and child subcids
-    if (xarModIsAvailable('categories')) {
-        $xarbbcid = xarModAPIFunc('categories',
-            'admin',
-            'create',
-            Array('name' => 'xarbb',
-                'description' => 'XarBB Categories',
-                'parent_id' => 0)); 
-        // Note: you can have more than 1 mastercid (cfr. articles module)
-        xarModSetVar('xarbb', 'number_of_categories', 1);
-        xarModSetVar('xarbb', 'mastercids', $xarbbcid);
-        $xarbbcategories = array();
-        $xarbbcategories[] = array('name' => "Forum Category One",
-            'description' => "description one");
-        $xarbbcategories[] = array('name' => "Forum Category Two",
-            'description' => "description two");
-        $xarbbcategories[] = array('name' => "Forum Category Three",
-            'description' => "description three");
-        foreach($xarbbcategories as $subcat) {
-            $xabbsubcid = xarModAPIFunc('categories',
-                'admin',
-                'create',
-                Array('name'        => $subcat['name'],
-                    'description'   => $subcat['description'],
-                    'parent_id'     => $xarbbcid));
-        } 
-    } 
-
-
     // Initialisation successful
     return true;
 }
 
+function xarbb_activate()
+{
+    // Enable categories hooks for xarbb forums (= item type 1)
+    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb', 
+                                                         'callerItemType'   => 1, 
+                                                         'hookModName'      => 'categories'));
+
+
+    // Enable comments hooks for xarbb topics (= item type 2)
+        xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb', 
+                                                             'callerItemType'   => 2, 
+                                                             'hookModName'      => 'comments'));
+
+    // Enable hitcount hooks for xarbb topics (= item type 2)
+        xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb', 
+                                                             'callerItemType'   => 2, 
+                                                             'hookModName'      => 'hitcount'));
+
+    // modvars
+    xarModSetVar('xarbb', 'hottopic', 10);
+    xarModSetVar('xarbb', 'redhottopic', 20);
+    xarModSetVar('xarbb', 'number_of_categories', 1);
+
+    $xarbbcid = xarModAPIFunc('categories',
+        'admin',
+        'create',
+        Array('name' => 'xarbb',
+            'description' => 'XarBB Categories',
+            'parent_id' => 0)); 
+    // Note: you can have more than 1 mastercid (cfr. articles module)
+    xarModSetVar('xarbb', 'number_of_categories', 1);
+    xarModSetVar('xarbb', 'mastercids', $xarbbcid);
+    $xarbbcategories = array();
+    $xarbbcategories[] = array('name' => "Forum Category One",
+        'description' => "description one");
+    $xarbbcategories[] = array('name' => "Forum Category Two",
+        'description' => "description two");
+    $xarbbcategories[] = array('name' => "Forum Category Three",
+        'description' => "description three");
+    foreach($xarbbcategories as $subcat) {
+        $xabbsubcid = xarModAPIFunc('categories',
+            'admin',
+            'create',
+            Array('name'        => $subcat['name'],
+                'description'   => $subcat['description'],
+                'parent_id'     => $xarbbcid));
+    }
+
+    return true;
+}
 
 
 function xarbb_delete()

@@ -115,7 +115,9 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr>
     <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>Post a New Topic</xar:mlstring></a></td>
-    <td width="50%">
+	<xar:if condition="xarThemeIsAvailable('rss')">
+    <td width="50%"><a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#"><xar:mlstring>Syndicate This Forum</xar:mlstring></a></td>
+	</xar:if>
 <!--  Need an API Forum Picker.
 	<form method="POST">
         <table border="0" cellpadding="3" cellspacing="0">
