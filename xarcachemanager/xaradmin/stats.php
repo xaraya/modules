@@ -22,6 +22,24 @@ function xarcachemanager_admin_stats($args)
     $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                       array('from' => 'file', 'tpl_prep' => TRUE));
 
+    $data['pageCachingEnabled'] = 0;
+    $data['blockCachingEnabled'] = 0;
+    $data['queryCachingEnabled'] = 0;
+    $data['autoCachingEnabled'] = 0;
+    if (file_exists($outputCacheDir . '/cache.touch')) {
+        if (file_exists($outputCacheDir . '/cache.pagelevel')) {
+            $data['pageCachingEnabled'] = 1;
+            if (file_exists($outputCacheDir . '/autocache.log')) {
+                $data['autoCachingEnabled'] = 1;
+            }
+        }
+        if (file_exists($outputCacheDir . '/cache.blocklevel')) {
+            $data['blockCachingEnabled'] = 1;
+        }
+// FIXME: bring in line with other cache systems
+        $data['queryCachingEnabled'] = 1;
+    }
+
     switch ($tab) {
         case 'autocache':
             if (!empty($reset)) {
@@ -107,23 +125,67 @@ function xarcachemanager_admin_stats($args)
             break;
 
         case 'page':
+            if ($data['pageCachingEnabled'] && !empty($data['settings']['PageCacheStorage'])) {
+                $pagestorage = xarCache_getStorage(array('storage'  => $data['settings']['PageCacheStorage'],
+                                                         'type'     => 'page',
+                                                         'cachedir' => $outputCacheDir));
+                $data['items'] = $pagestorage->getCachedList();
+                if (empty($sort) || $sort == 'id') {
+                    ksort($data['items']);
+                } elseif (strtolower($sort) == 'key') {
+                    $sortfunc = create_function('$a, $b','return strcmp($a["key"],$b["key"]);');
+                    uasort($data['items'], $sortfunc);
+                } elseif (strtolower($sort) == 'code') {
+                    $sortfunc = create_function('$a, $b','return strcmp($a["code"],$b["code"]);');
+                    uasort($data['items'], $sortfunc);
+                } elseif (strtolower($sort) == 'time') {
+                    $sortfunc = create_function('$a, $b','if ($a["time"] == $b["time"]) return 0;
+                                                          return ($a["time"] > $b["time"]) ? -1 : 1;');
+                    uasort($data['items'], $sortfunc);
+                } elseif (strtolower($sort) == 'size') {
+                    $sortfunc = create_function('$a, $b','if ($a["size"] == $b["size"]) return 0;
+                                                          return ($a["size"] > $b["size"]) ? -1 : 1;');
+                    uasort($data['items'], $sortfunc);
+                }
+            }
+            break;
+
         case 'block':
+            if ($data['blockCachingEnabled'] && !empty($data['settings']['BlockCacheStorage'])) {
+                $blockstorage = xarCache_getStorage(array('storage'  => $data['settings']['BlockCacheStorage'],
+                                                          'type'     => 'block',
+                                                          'cachedir' => $outputCacheDir));
+                $data['items'] = $blockstorage->getCachedList();
+                if (empty($sort) || $sort == 'id') {
+                    ksort($data['items']);
+                } elseif (strtolower($sort) == 'key') {
+                    $sortfunc = create_function('$a, $b','return strcmp($a["key"],$b["key"]);');
+                    uasort($data['items'], $sortfunc);
+                } elseif (strtolower($sort) == 'code') {
+                    $sortfunc = create_function('$a, $b','return strcmp($a["code"],$b["code"]);');
+                    uasort($data['items'], $sortfunc);
+                } elseif (strtolower($sort) == 'time') {
+                    $sortfunc = create_function('$a, $b','if ($a["time"] == $b["time"]) return 0;
+                                                          return ($a["time"] > $b["time"]) ? -1 : 1;');
+                    uasort($data['items'], $sortfunc);
+                } elseif (strtolower($sort) == 'size') {
+                    $sortfunc = create_function('$a, $b','if ($a["size"] == $b["size"]) return 0;
+                                                          return ($a["size"] > $b["size"]) ? -1 : 1;');
+                    uasort($data['items'], $sortfunc);
+                }
+            }
+            break;
+
         case 'query':
 // TODO: Get some page/block/query cache statistics when available
             break;
 
         case 'overview':
         default:
-            if (file_exists($outputCacheDir . '/cache.touch') &&
-                file_exists($outputCacheDir . '/cache.pagelevel')) {
-                $data['pageCachingEnabled'] = 1;
-            } else {
-                $data['pageCachingEnabled'] = 0;
-            }
             if ($data['pageCachingEnabled'] && !empty($data['settings']['PageCacheStorage'])) {
-                $pagestorage =& xarCache_getStorage(array('storage'  => $data['settings']['PageCacheStorage'],
-                                                          'type'     => 'page',
-                                                          'cachedir' => $outputCacheDir));
+                $pagestorage = xarCache_getStorage(array('storage'  => $data['settings']['PageCacheStorage'],
+                                                         'type'     => 'page',
+                                                         'cachedir' => $outputCacheDir));
                 $data['pagecachesize'] = $pagestorage->getCacheSize(true);
                 $data['pagecacheitems'] = $pagestorage->getCacheItems();
             } else {
@@ -147,16 +209,10 @@ function xarcachemanager_admin_stats($args)
                 $data['pageloglines'] = 0;
             }
 
-            if (file_exists($outputCacheDir . '/cache.touch') &&
-                file_exists($outputCacheDir . '/cache.blocklevel')) {
-                $data['blockCachingEnabled'] = 1;
-            } else {
-                $data['blockCachingEnabled'] = 0;
-            }
             if ($data['blockCachingEnabled'] && !empty($data['settings']['BlockCacheStorage'])) {
-                $blockstorage =& xarCache_getStorage(array('storage'  => $data['settings']['BlockCacheStorage'],
-                                                           'type'     => 'block',
-                                                           'cachedir' => $outputCacheDir));
+                $blockstorage = xarCache_getStorage(array('storage'  => $data['settings']['BlockCacheStorage'],
+                                                          'type'     => 'block',
+                                                          'cachedir' => $outputCacheDir));
                 $data['blockcachesize'] = $blockstorage->getCacheSize(true);
                 $data['blockcacheitems'] = $blockstorage->getCacheItems();
             } else {
@@ -180,17 +236,12 @@ function xarcachemanager_admin_stats($args)
                 $data['blockloglines'] = 0;
             }
 
-        // FIXME: bring in line with other cache systems
-            if (file_exists($outputCacheDir . '/cache.touch')) {
-                $data['queryCachingEnabled'] = 1;
-            } else {
-                $data['queryCachingEnabled'] = 0;
-            }
+        // Note: the query cache is actually handled by ADODB
             $data['settings']['QueryCacheStorage'] = 'filesystem';
             if ($data['blockCachingEnabled'] && !empty($data['settings']['BlockCacheStorage'])) {
-                $querystorage =& xarCache_getStorage(array('storage'  => $data['settings']['QueryCacheStorage'],
-                                                           'type'     => 'adodb',
-                                                           'cachedir' => 'var/cache'));
+                $querystorage = xarCache_getStorage(array('storage'  => $data['settings']['QueryCacheStorage'],
+                                                          'type'     => 'adodb',
+                                                          'cachedir' => 'var/cache'));
                 $data['querycachesize'] = $querystorage->getCacheSize(true);
                 $data['querycacheitems'] = $querystorage->getCacheItems() - 1; // index.html
             } else {
@@ -198,13 +249,6 @@ function xarcachemanager_admin_stats($args)
                 $data['querycacheitems'] = 0;
             }
 
-            if (file_exists($outputCacheDir . '/cache.touch') &&
-                file_exists($outputCacheDir . '/cache.pagelevel') &&
-                file_exists($outputCacheDir . '/autocache.log')) {
-                $data['autoCachingEnabled'] = 1;
-            } else {
-                $data['autoCachingEnabled'] = 0;
-            }
             $data['settings']['AutoCacheLogFile'] = $outputCacheDir . '/autocache.log';
             if ($data['autoCachingEnabled'] && !empty($data['settings']['AutoCacheLogFile']) &&
                 file_exists($data['settings']['AutoCacheLogFile']) && filesize($data['settings']['AutoCacheLogFile']) > 0) {

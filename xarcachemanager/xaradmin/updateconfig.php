@@ -19,11 +19,13 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVarFetch('autoregenerate',   'isset',       $autoregenerate,    0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('pagecachestorage', 'str:1',       $pagecachestorage,  'filesystem', XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('pagelogfile',      'str',         $pagelogfile,       '',   XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagesizelimit',    'float:0.25:', $pagesizelimit,     0.25, XARVAR_NOT_REQUIRED)) { return; }
 
     if (!xarVarFetch('cacheblocks',      'isset',       $cacheblocks,       0,    XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockexpiretime',  'str:1:9',     $blockexpiretime,   '0',  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockcachestorage','str:1',       $blockcachestorage, 'filesystem', XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blocklogfile',     'str',         $blocklogfile,      '',   XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('blocksizelimit',   'float:0.25:', $blocksizelimit,    0.25, XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
@@ -81,6 +83,8 @@ function xarcachemanager_admin_updateconfig()
 
     // convert size limit from MB to bytes
     $cachesizelimit = (intval($cachesizelimit * 1048576));
+    $pagesizelimit = (intval($pagesizelimit * 1048576));
+    $blocksizelimit = (intval($blocksizelimit * 1048576));
     
     //turn hh:mm:ss back into seconds
     $pageexpiretime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
@@ -103,11 +107,13 @@ function xarcachemanager_admin_updateconfig()
     $configSettings['Page.HookedOnly'] = $pagehookedonly;
     $configSettings['Page.CacheStorage'] = $pagecachestorage;
     $configSettings['Page.LogFile'] = $pagelogfile;
+    $configSettings['Page.SizeLimit'] = $pagesizelimit;
 
     $configSettings['Block.TimeExpiration'] = $blockexpiretime;
     $configSettings['Block.CacheStorage'] = $blockcachestorage;
     $configSettings['Block.LogFile'] = $blocklogfile;
-    
+    $configSettings['Block.SizeLimit'] = $blocksizelimit;
+
     xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                   array('configSettings' => $configSettings,
                         'cachingConfigFile' => $cachingConfigFile));

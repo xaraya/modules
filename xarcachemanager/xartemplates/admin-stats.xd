@@ -346,12 +346,45 @@
     <xar:elseif condition="$tab eq 'page'" />
 
         <h3><xar:mlstring>Page Cache Statistics</xar:mlstring></h3>
+
+        <table class="xar-norm">
+        <tr>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'page','sort' => 'size'))#"><xar:mlstring>Size</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'page','sort' => 'key'))#"><xar:mlstring>Key</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'page','sort' => 'code'))#"><xar:mlstring>Code</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'page','sort' => 'time'))#"><xar:mlstring>Time</xar:mlstring></a></th>
+        </tr>
+        <xar:foreach in="$items" key="$id" value="$item">
+        <tr>
+          <td>#$item['size']#</td>
+          <td>#$item['key']#</td>
+          <td>#$item['code']#</td>
+          <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$item['time'])#</td>
+        </tr>
+        </xar:foreach>
+        </table>
         <xar:mlstring>to be defined</xar:mlstring>
 
     <xar:comment> ----------------- Begin Block Statistics ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'block'" />
 
         <h3><xar:mlstring>Block Cache Statistics</xar:mlstring></h3>
+        <table class="xar-norm">
+        <tr>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'block','sort' => 'size'))#"><xar:mlstring>Size</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'block','sort' => 'key'))#"><xar:mlstring>Key</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'block','sort' => 'code'))#"><xar:mlstring>Code</xar:mlstring></a></th>
+          <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'block','sort' => 'time'))#"><xar:mlstring>Time</xar:mlstring></a></th>
+        </tr>
+        <xar:foreach in="$items" key="$id" value="$item">
+        <tr>
+          <td>#$item['size']#</td>
+          <td>#$item['key']#</td>
+          <td>#$item['code']#</td>
+          <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$item['time'])#</td>
+        </tr>
+        </xar:foreach>
+        </table>
         <xar:mlstring>to be defined</xar:mlstring>
 
     <xar:comment> ----------------- Begin Query Statistics ------------------- </xar:comment>

@@ -66,6 +66,9 @@ function xarcachemanager_admin_modifyconfig()
     if(!isset($data['settings']['PageLogFile'])) {
         $data['settings']['PageLogFile'] = '';
     }
+    if(!isset($data['settings']['PageSizeLimit'])) {
+        $data['settings']['PageSizeLimit'] = $data['settings']['OutputSizeLimit'];
+    }
     if(!isset($data['settings']['BlockTimeExpiration'])) {
         $data['settings']['BlockTimeExpiration'] = 7200;
     }
@@ -75,9 +78,14 @@ function xarcachemanager_admin_modifyconfig()
     if(!isset($data['settings']['BlockLogFile'])) {
         $data['settings']['BlockLogFile'] = '';
     }
+    if(!isset($data['settings']['BlockSizeLimit'])) {
+        $data['settings']['BlockSizeLimit'] = $data['settings']['OutputSizeLimit'];
+    }
 
     // convert the size limit from bytes to megabytes
     $data['settings']['OutputSizeLimit'] /= 1048576;
+    $data['settings']['PageSizeLimit'] /= 1048576;
+    $data['settings']['BlockSizeLimit'] /= 1048576;
 
     // reformat seconds as hh:mm:ss
     $data['settings']['PageTimeExpiration'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',

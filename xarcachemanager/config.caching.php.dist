@@ -24,6 +24,8 @@ $cachingConfiguration['Page.HookedOnly'] = 0;
 $cachingConfiguration['Page.CacheStorage'] = 'filesystem';
 // Keep a logfile of the cache hits and misses for pages, e.g. in var/logs/page.log
 $cachingConfiguration['Page.LogFile'] = '';
+// Size in bytes to limit the page cache to
+$cachingConfiguration['Page.SizeLimit'] = 2097152;
 
 // Allow session-less page caching of these URLs for first-time visitors
 $cachingConfiguration['Page.SessionLess'] = array();
@@ -47,4 +49,6 @@ $cachingConfiguration['Block.TimeExpiration'] = 7200;
 $cachingConfiguration['Block.CacheStorage'] = 'filesystem';
 // Keep a logfile of the cache hits and misses for blocks, e.g. in var/logs/block.log
 $cachingConfiguration['Block.LogFile'] = '';
+// Size in bytes to limit the block cache to
+$cachingConfiguration['Block.SizeLimit'] = 2097152;
 ?>

@@ -345,7 +345,8 @@ function xarcachemanager_upgrade($oldversion)
 
         case '0.3.3':
             // Code to upgrade from the 0.3.3 version (use xar_cache_data as optional replacement for filesystem)
-            //xarcachemanager_create_cache_data();
+            xarcachemanager_create_cache_data();
+// TODO: add new entries to config file too (or is that done via updateconfig too now ?)
 
         case '0.4.0':
             // Code to upgrade from the 0.4.0 version (base module level caching)

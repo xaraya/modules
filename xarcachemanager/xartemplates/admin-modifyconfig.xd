@@ -197,12 +197,12 @@
                     <xar:else/>
                         <option value="filesystem"><xar:mlstring>Filesystem</xar:mlstring></option>
                     </xar:if>
-<xar:comment> TODO
                     <xar:if condition="$settings['PageCacheStorage'] eq 'database'">
                         <option value="database" selected="selected"><xar:mlstring>Database</xar:mlstring></option>
                     <xar:else/>
                         <option value="database"><xar:mlstring>Database</xar:mlstring></option>
                     </xar:if>
+<xar:comment> TODO
                     <xar:if condition="!extension_loaded('memcache')">
                         <option value="memcached" disabled="disabled"><xar:mlstring>Memcache</xar:mlstring></option>
                     <xar:elseif condition="$settings['PageCacheStorage'] eq 'memcache'"/>
@@ -212,6 +212,15 @@
                     </xar:if>
 </xar:comment>
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span class="help" title="#xarML('Limits the disk usage of the page cache to the specified number of megabytes.')#">
+            <label for="pagesizelimit">
+                <xar:mlstring>Page Cache Size Limit (in MB):</xar:mlstring>
+            </label></span></td>
+            <td>
+                <input type="text" name="pagesizelimit" id="pagesizelimit" value="#$settings.PageSizeLimit#" size="4" maxlength="4" />
             </td>
         </tr>
         <tr>
@@ -260,12 +269,12 @@
                     <xar:else/>
                         <option value="filesystem"><xar:mlstring>Filesystem</xar:mlstring></option>
                     </xar:if>
-<xar:comment> TODO
                     <xar:if condition="$settings['BlockCacheStorage'] eq 'database'">
                         <option value="database" selected="selected"><xar:mlstring>Database</xar:mlstring></option>
                     <xar:else/>
                         <option value="database"><xar:mlstring>Database</xar:mlstring></option>
                     </xar:if>
+<xar:comment> TODO
                     <xar:if condition="!extension_loaded('memcache')">
                         <option value="memcached" disabled="disabled"><xar:mlstring>Memcache</xar:mlstring></option>
                     <xar:elseif condition="$settings['BlockCacheStorage'] eq 'memcache'"/>
@@ -275,6 +284,15 @@
                     </xar:if>
 </xar:comment>
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span class="help" title="#xarML('Limits the disk usage of the block cache to the specified number of megabytes.')#">
+            <label for="blocksizelimit">
+                <xar:mlstring>Block Cache Size Limit (in MB):</xar:mlstring>
+            </label></span></td>
+            <td>
+                <input type="text" name="blocksizelimit" id="blocksizelimit" value="#$settings.BlockSizeLimit#" size="4" maxlength="4" />
             </td>
         </tr>
         <tr>
