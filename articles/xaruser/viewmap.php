@@ -51,8 +51,12 @@ function articles_user_viewmap()
     }
 
     // redirect to filtered view
-    if (!empty($go)) {
-        $catid = join('+',$cids);
+    if (!empty($go) && $ptid != '') {
+        if (is_array($cids)) {
+            $catid = join('+',$cids);
+        } else {
+            $catid = NULL;
+        }
         $url = xarModURL('articles','user','view',array('ptid' => $ptid, 'catid' => $catid));
         xarResponseRedirect($url);
         return;
