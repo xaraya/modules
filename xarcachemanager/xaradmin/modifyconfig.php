@@ -60,6 +60,8 @@ function xarcachemanager_admin_modifyconfig()
     if(!isset($data['settings']['OutputSizeLimit'])) {
         $data['settings']['OutputSizeLimit'] = 0.2;
     }
+    
+    $data['settings']['PageMinuteExpiration'] = $data['settings']['PageTimeExpiration']/60;
 
     $filter['Class'] = 2;
     $data['themes'] = xarModAPIFunc('themes',

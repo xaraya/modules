@@ -40,6 +40,9 @@ function xarcachemanager_admin_updateconfig()
             unlink($systemVar . '/cache/output/cache.touch');
         }
     }
+    
+    //turn minutes back into seconds
+    $expiretime = $expiretime * 60;
 
     if(!empty($cachedisplayview)) {
         $cachedisplayview = 1;
