@@ -55,6 +55,31 @@
             <p>
                 <strong>
                     <xar:mlstring>
+                        Auto approve files added by:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+                <xar:if condition="$file['auto-approve'] eq $approveList['noone']">
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"> <xar:mlstring>No one</xar:mlstring>     
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"> <xar:mlstring>Admin</xar:mlstring>      
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"> <xar:mlstring>Everyone</xar:mlstring>   
+                <xar:elseif condition="$file['auto-approve'] eq $approveList['admin']" />
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"><xar:mlstring>No one</xar:mlstring>     
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#" checked="true"> <xar:mlstring>Admin</xar:mlstring>      
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"> <xar:mlstring>Everyone</xar:mlstring>   
+                <xar:else />
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"> <xar:mlstring>No one</xar:mlstring>     
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"> <xar:mlstring>Admin</xar:mlstring>      
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#" checked="true"> <xar:mlstring>Everyone</xar:mlstring>   
+                </xar:if>
+                <p>
+                <xar:mlstring>
+                    This option allows you to make all newly added files' status set to approved for Everyone (not recommended), Admins only, or No One.
+                </xar:mlstring>
+                </p>
+            </p>
+            <p>
+                <strong>
+                    <xar:mlstring>
                         Confirm deletion of files:
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;

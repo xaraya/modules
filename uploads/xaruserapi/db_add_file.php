@@ -40,7 +40,14 @@ function uploads_userapi_db_add_file( $args )
     }
     
     if (!isset($fileStatus)) {
-        $fileStatus = _UPLOADS_STATUS_SUBMITTED;
+        $autoApprove = xarModGetVar('uploads', 'file.auto-approve');
+        
+        if ($autoApprove == _UPLOADS_APPROVE_EVERYONE || 
+           ($autoApprove == _UPLOADS_APPROVE_ADMIN && xarSecurityCheck('AdminUploads', 0))) {
+                $fileStatus = _UPLOADS_STATUS_APPROVED;
+        } else {
+            $fileStatus = _UPLOADS_STATUS_SUBMITTED;
+        }
     }
     
     if (!isset($fileSize)) {

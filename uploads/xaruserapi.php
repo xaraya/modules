@@ -43,4 +43,8 @@ define('_UPLOADS_GET_REFRESH_LOCAL', 6);
 define('_UPLOADS_GET_STORED',        7);
 define('_UPLOADS_GET_NOTHING',       8);
 
+define('_UPLOADS_APPROVE_NOONE',     1);
+define('_UPLOADS_APPROVE_EVERYONE',  2);
+define('_UPLOADS_APPROVE_ADMIN',     3);
+
 ?>

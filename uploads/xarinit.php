@@ -45,7 +45,8 @@ function uploads_init()
     xarModSetVar('uploads', 'dd.fileupload.external', TRUE);
     xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
     xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
-
+    xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
+    
     $data['filters']['inverse']                     = FALSE;
     $data['filters']['mimetypes'][0]['typeId']      = 0;
     $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
@@ -162,8 +163,8 @@ function uploads_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case .01:
-        case .02:
+        case '0.0.1':
+        case '0.0.2':
             // change newhook from API to GUI
 
            $dbconn =& xarDBGetConn();
@@ -175,7 +176,7 @@ function uploads_upgrade($oldversion)
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-        case .03:
+        case '0.0.3':
             // Remove unused hooks
             xarModUnregisterHook('item', 'new', 'GUI','uploads', 'admin', 'newhook');
             xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook');
@@ -195,15 +196,15 @@ function uploads_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
             
-        case .04:
-        case .05:
+        case '0.0.4':
+        case '0.0.5':
             //Add mimetype column to DB
 //            ALTER TABLE `xar_uploads` ADD `ulmime` VARCHAR( 128 ) DEFAULT 'application/octet-stream' NOT NULL ;
 
             // Get database information
             $dbconn =& xarDBGetConn();
 
-			$xartable =& xarDBGetTables();
+            $xartable =& xarDBGetTables();
             $linkagetable =& $xartable['uploads'];
 
             xarDBLoadTableMaintenanceAPI();
@@ -218,7 +219,7 @@ function uploads_upgrade($oldversion)
                                            'default' => 'application/octet-stream'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-        case .10:
+        case '0.1.0':
 
             //Not needed anymore with the dependency checks.
             if (!xarModIsAvailable('mime')) {
@@ -498,11 +499,16 @@ function uploads_upgrade($oldversion)
             if (!$result)
                 return;
 
-            return true;
-        case .75:
+            break;
+            
+        case '0.7.5':
+            xarModSetVar('uploads', 'file.auto-approve', _UPLOADS_APPROVE_ADMIN);
+            break;
+            
         default:
             return true;
     }
+    
     return true;
 }
 
@@ -511,14 +517,21 @@ function uploads_upgrade($oldversion)
  */
 function uploads_delete()
 {
-    xarModDelVar('uploads','path.uploads-directory');
-    xarModDelVar('uploads','path.imports-directory');
-    xarModDelVar('uploads','file.maxsize');
-    xarModDelVar('uploads','file.censored-mimetypes');
-    xarModDelVar('uploads','file.obfuscate-on-import');
-    xarModDelVar('uploads','file.obfuscate-on-upload');
-
-
+    xarModDelVar('uploads', 'path.uploads-directory');
+    xarModDelVar('uploads', 'path.imports-directory');
+    xarModDelVar('uploads', 'file.maxsize');
+    xarModDelVar('uploads', 'file.delete-confirmation');
+    xarModDelVar('uploads', 'file.auto-purge');
+    xarModDelVar('uploads', 'file.obfuscate-on-import');
+    xarModDelVar('uploads', 'file.obfuscate-on-upload');
+    xarModDelVar('uploads', 'path.imports-cwd');
+    xarModDelVar('uploads', 'dd.fileupload.stored');
+    xarModDelVar('uploads', 'dd.fileupload.external');
+    xarModDelVar('uploads', 'dd.fileupload.upload');
+    xarModDelVar('uploads', 'dd.fileupload.trusted');
+    xarModDelVar('uploads', 'file.auto-approve');
+    xarModDelVar('uploads', 'view.filter');    
+    
     xarUnregisterMask('ViewUploads');
     xarUnregisterMask('AddUploads');
     xarUnregisterMask('EditUploads');

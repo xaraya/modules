@@ -38,7 +38,7 @@ function uploads_user_file_properties( $args )
 
         if (isset($fileName) && !empty($fileName)) {
             
-            if (xarSecurityCheck('EditUploads', 1, 'File', $instance)) {
+            if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurityCheck('EditUploads', 1, 'File', $instance)) {
                 $args['fileId'] = $fileId;
                 $args['fileName'] = trim($fileName);
                 
@@ -51,12 +51,15 @@ function uploads_user_file_properties( $args )
                 xarResponseRedirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
+                xarExceptionHandled();
+                $msg = xarML('You do not have the necessary permissions for this object.');
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
                 // No access - so return the exception
                 return;
             }
         }
         
-        if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
+        if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
 
 
             // we don't want the theme to show up, so 
@@ -115,9 +118,11 @@ function uploads_user_file_properties( $args )
             echo xarTplModule('uploads','user','file_properties', $data, NULL);
             exit();
         } else {
-            $data['fileInfo']   = array();
-            $dtaa['error']      = xarML('File not found!');
-            return FALSE;
+            xarExceptionHandled();
+            $msg = xarML('You do not have the necessary permissions for this object.');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
+            // No access - so return the exception
+            return;
         }
     }
     

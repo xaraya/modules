@@ -22,7 +22,7 @@
 
 $modversion['name'] = 'uploads';
 $modversion['id'] = '666';
-$modversion['version'] = '0.75';
+$modversion['version'] = '0.9.8';
 $modversion['description'] = 'Upload/Download File Handler';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';

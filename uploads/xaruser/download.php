@@ -25,18 +25,27 @@ function uploads_user_download()
     $instance[3] = $fileId;
     
     $instance = implode(':', $instance);
-    
+
+    // If you are an administrator OR the file is approved, continue
+    if (!xarSecurityCheck('AdminUploads', 1, 'File' . $instance)  && $fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED) {
+        xarExceptionHandled();
+        $msg = xarML('You do not have the necessary permissions for this object.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new DefaultUserException($msg));
+        // No access - so return the exception
+        return;
+    }
+        
     if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
         if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM || ($fileInfo['storeType'] == _UPLOADS_STORE_DB_ENTRY)) {
             if (!file_exists($fileInfo['fileLocation'])) {
                 $msg = xarML('File [#(1)] does not exist in FileSystem.', $fileInfo['fileName']);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new SystemException($msg));
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new DefaultUserException($msg));
                 return;
             }
         } elseif ($fileInfo['storeType'] & _UPLOADS_STORE_DB_FULL) {
             if (!xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileInfo['fileId']))) {
                 $msg = xarML('File [#(1)] does not exist in Database.', $fileInfo['fileName']);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new SystemException($msg));
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new DefaultUserException($msg));
                 return;
             }
         }        
@@ -48,7 +57,7 @@ function uploads_user_download()
             return FALSE;
         } 
     
-    } else {
+    } else { 
         return FALSE;
     }
 }

@@ -5,7 +5,7 @@ xarModAPILoad('uploads','user');
 function uploads_admin_view( ) 
 {
     //security check
-    if (!xarSecurityCheck('ViewUploads')) return;
+    if (!xarSecurityCheck('AdminUploads')) return;
     
     /**
      *  Validate variables passed back
