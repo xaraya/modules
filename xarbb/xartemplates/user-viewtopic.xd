@@ -104,7 +104,7 @@
 				<!-- user point hook <br /> -->
 				<!-- user point image <br /> -->
 				<xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
-				<xar:if condition="isset($properties) and count($properties) gt 0">
+				<xar:if condition="isset($properties['avatar']) and count($properties) gt 0">
 					<xar:data-output property="$properties['avatar']" /><br /><br />
 				</xar:if>
 				<xar:mlstring>
@@ -113,7 +113,7 @@
 				<xar:mlstring>
 					Posts
 				</xar:mlstring>: #$usertopics#<br />
-				<xar:if condition="isset($properties) and count($properties) gt 0">
+				<xar:if condition="isset($properties['location']) and count($properties) gt 0">
 					<xar:set name="$location">$properties['location']->value</xar:set>
 					<xar:if condition="$location">
 						<xar:mlstring>
@@ -171,7 +171,7 @@
 					<td colspan="2">
 						<span>
 							#$transformedtext#<br /><br />
-							<xar:if condition="isset($properties) and count($properties) gt 0">
+							<xar:if condition="isset($properties['signature']) and count($properties) gt 0">
 								<xar:set name="$hide">$properties['signature']->value</xar:set>
 								<xar:if condition="$hide">
 									<p>
@@ -219,7 +219,7 @@
 							<a href="#xarModUrl('messages', 'user', 'outbox')#">
 								<img src="#xarTplGetImage('new/icon_pm.gif')#" alt="#xarML('Private Message')#" /></a>
 						</xar:if>
-						<xar:if condition="isset($properties) and count($properties) gt 0">
+						<xar:if condition="isset($properties['website']) and count($properties) gt 0">
 							<xar:set name="$website">$properties['website']->value</xar:set>
 							<xar:if condition="$website">
 								<a href="#$website#">
@@ -287,7 +287,7 @@
 				<!-- user point image <br /> -->
 				<xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
 				<xar:if condition="$item['xar_postanon'] eq 0">
-					<xar:if condition="isset($properties) and count($properties) gt 0">
+					<xar:if condition="isset($properties['avatar']) and count($properties) gt 0">
 						<xar:data-output property="$properties['avatar']" /><br /><br />
 					</xar:if>
 					<xar:mlstring>
@@ -296,7 +296,7 @@
 					<xar:mlstring>
 						Posts
 					</xar:mlstring>: #$item['usertopics']#<br />
-					<xar:if condition="isset($properties) and count($properties) gt 0">
+					<xar:if condition="isset($properties['location']) and count($properties) gt 0">
 						<xar:set name="$location">$properties['location']->value</xar:set>
 						<xar:if condition="$location">
 							<xar:mlstring>
@@ -356,7 +356,7 @@
 						<span>
 							#$item['xar_text']#<br /><br />
 							<xar:if condition="$item['xar_postanon'] eq 0">
-								<xar:if condition="isset($properties) and count($properties) gt 0">
+								<xar:if condition="isset($properties['signature']) and count($properties) gt 0">
 									<xar:set name="$hide">$properties['signature']->value</xar:set>
 									<xar:if condition="$hide">
 										<p>
@@ -406,7 +406,7 @@
 								<a href="#xarModUrl('messages', 'user', 'outbox')#">
 									<img src="#xarTplGetImage('new/icon_pm.gif')#" alt="#xarML('Private Message')#" /></a>
 							</xar:if>
-								<xar:if condition="isset($properties) and count($properties) gt 0">
+								<xar:if condition="isset($properties['website']) and count($properties) gt 0">
 									<xar:set name="$website">$properties['website']->value</xar:set>
 									<xar:if condition="$website">
 										<a href="#$website#">
