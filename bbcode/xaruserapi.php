@@ -41,7 +41,7 @@ function bbcode_userapi_transform($args)
             $result[] = bbcode_transform($text);
         }
     } else {
-        $result = bbcode_transform($text);
+        $result = bbcode_transform($extrainfo);
     }
 
     return $result;
