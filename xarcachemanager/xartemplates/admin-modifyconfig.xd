@@ -138,8 +138,8 @@
             </td>
         </tr>
         <tr>
-            <td><span class="help" title="#xarML('If enabled, xarCache will sends an Expires header to the client, encouraging the page to be cached locally')#"><label for="cachetimestamp">
-                <xar:mlstring>Send an "Expires" header to the client:</xar:mlstring>
+            <td><span class="help" title="#xarML('If enabled, xarCache will send Expires and Cache-Control headers to the client, encouraging the page to be cached locally')#"><label for="cachetimestamp">
+                <xar:mlstring>Allow clients to reuse locally cached pages without re-validation:</xar:mlstring>
             </label></span></td>
             <td>
                 <xar:if condition="$settings.PageExpireHeader eq 1 ">
