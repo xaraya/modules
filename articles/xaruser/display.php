@@ -268,19 +268,23 @@ function articles_user_display($args)
                 $data[$field] = $article[$field];
                 break;
             case 'calendar':
-        // TODO: replace by pubdate and sync with templates
+                // Make sure there is a value date
                 if (!empty($article[$field])) {
-                    // Make sure there is a value date
-                    if ($article[$field] > 0 ) {
-                        $data[$field] = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
+                    // only convert this timestamp if it's NOT the pubdate (cfr. articles view)
+                // TODO: use $pubdate in display templates and format the date there
+                    if ($field == 'pubdate') {
+                        // we want the pubdate field to remain a UTC Unix TimeStamp
+                        $data[$field] = $article[$field];
+                        // the date for this field is represented in the user's timezone for display
+                        $data['date'] = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
                     } else {
-                        $data[$field] = '';
+                        $data[$field] = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article[$field]);
                     }
                 } else {
                     $data[$field] = '';
-                }
-                if ($field == 'pubdate') {
-                    $data['date'] = $data[$field];
+                    if ($field == 'pubdate') {
+                        $data['date'] = '';
+                    }
                 }
                 break;
             case 'url':
