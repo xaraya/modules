@@ -275,7 +275,7 @@ function createthumbnetpbm( $file, $thumbwidth, $thumbheight, $newfile )
 	echo $cmd;
 	echo "<hr>";
 //	exit();
-	echo "Executing...<br>";
+	echo "Executing...<br/>";
 	echo "<pre>";
 //	passthru($cmd);
 	exit();
