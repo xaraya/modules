@@ -7,7 +7,7 @@
     the image.
 --->
 <!--- Default image alt text, if not over-ridden. --->
-<xar:if condition="empty($imgalt)">
+#$dummy#<xar:if condition="empty($imgalt)">
     <xar:set name="$imgalt"><xar:mlstring>External link icon</xar:mlstring></xar:set>
 </xar:if>
 <!--- Default icon, if not over-ridden. --->

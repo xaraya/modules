@@ -42,35 +42,31 @@ function autolinks_admin_modifytype($args)
 
         if (!xarVarFetch('type_name', 'str:1', $type['type_name'])) {
             $errorcount += 1;
-            $type['type_name_error'] = xarExceptionRender('text');
-            // Hack until exceptions are sorted.
+            $type['type_name_error'] = xarErrorRender('text');
             if (isset($data['type_name_error']['short'])) {$data['type_name_error'] = $data['type_name_error']['short'];}
-            xarExceptionHandled();
+            xarErrorHandled();
         }
 
         // TODO: better validation on template name
         if (!xarVarFetch('template_name', 'str:1', $type['template_name'])) {
             $errorcount += 1;
-            $type['template_name_error'] = xarExceptionRender('text');
-            // Hack until exceptions are sorted.
+            $type['template_name_error'] = xarErrorRender('text');
             if (isset($data['template_name_error']['short'])) {$data['template_name_error'] = $data['template_name_error']['short'];}
-            xarExceptionHandled();
+            xarErrorHandled();
         }
 
         if (!xarVarFetch('dynamic_replace', 'int:0:1', $type['dynamic_replace'], '0')) {
             $errorcount += 1;
-            $type['dynamic_replace_error'] = xarExceptionRender('text');
-            // Hack until exceptions are sorted.
+            $type['dynamic_replace_error'] = xarErrorRender('text');
             if (isset($data['dynamic_replace_error']['short'])) {$data['dynamic_replace_error'] = $data['dynamic_replace_error']['short'];}
-            xarExceptionHandled();
+            xarErrorHandled();
         }
 
         if (!xarVarFetch('type_desc', 'str:0:400', $type['type_desc'])) {
             $errorcount += 1;
-            $type['type_desc_error'] = xarExceptionRender('text');
-            // Hack until exceptions are sorted.
+            $type['type_desc_error'] = xarErrorRender('text');
             if (isset($data['type_desc_error']['short'])) {$data['type_desc_error'] = $data['type_desc_error']['short'];}
-            xarExceptionHandled();
+            xarErrorHandled();
         }
 
         // Confirm authorisation code.
@@ -93,10 +89,9 @@ function autolinks_admin_modifytype($args)
                 // Error in API.
 
                 $errorcount += 1;
-                $type['global_error'] = xarExceptionRender('text');
-                // Hack until exceptions are sorted.
+                $type['global_error'] = xarErrorRender('text');
                 if (isset($data['global_error']['short'])) {$data['global_error'] = $data['global_error']['short'];}
-                xarExceptionHandled();
+                xarErrorHandled();
             }
         }
     } else {

@@ -1,162 +1,134 @@
 <!--- $Id --->
 <xar:set name="$modifybuttonlabel"><xar:mlstring>Modify</xar:mlstring></xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Edit Autolink</xar:mlstring> #$prepname#</h2><br />
+<div class="xar-mod-body"><h2><xar:mlstring>Edit Autolink</xar:mlstring> #$prepname#</h2>
 <div style="margin: auto;">
-<form method="post" action="#$updateurl#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#$updateurl#" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="lid" id="lid" value="#$lid#" />
 
-    <table style="width: auto;" border="0">
-        <tr align="left" valign="top">
-            <td>
-                <xar:if condition="!empty($edittypeurl)">
-                <a href="#$edittypeurl#" title="#xarML('Edit autolink type')#"><xar:mlstring>Type</xar:mlstring></a>
-                <xar:else/>
-                <xar:mlstring>Type</xar:mlstring>
-                </xar:if>
-                <xar:if condition="!empty($moveurl)">
-                [<a href="#$moveurl#" title="#xarML('Move autolink type to a new type')#"><xar:mlstring>Move</xar:mlstring></a>]
-                </xar:if>
-            </td>
-            <td>
-                #$preptypename#
-                <xar:if condition="!empty($preptype_desc)">
-                <br/><span style="font-style: italic;">#$preptype_desc#</span>
-                </xar:if>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <xar:if condition="!empty($edittypeurl)">
+        <a href="#$edittypeurl#" title="#xarML('Edit autolink type')#"><xar:mlstring>Type</xar:mlstring></a>
+        <xar:else/>
+        <xar:mlstring>Type</xar:mlstring>
+        </xar:if>
+        <xar:if condition="!empty($moveurl)">
+        [<a href="#$moveurl#" title="#xarML('Move autolink type to a new type')#"><xar:mlstring>Move</xar:mlstring></a>]
+        </xar:if>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        #$preptypename#
+        <xar:if condition="!empty($preptype_desc)">
+        <br/><span style="font-style: italic;">#$preptype_desc#</span>
+        </xar:if>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left">
-            <td colspan="2">
-                <h4><xar:mlstring>Security</xar:mlstring></h4>
-            </td>
-        </tr>
-        <tr align="left" valign="top">
-            <td>
-                <label for="name" class="help" title="#xarML('A unique name for the Autolink')#">
-                    <xar:mlstring>Name</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="name" id="name" value="#$prepname#" size="20" maxlength="30"/>
-            </td>
-        </tr>
+    <h4 style="clear: both;"><xar:mlstring>Security</xar:mlstring></h4>
 
-        <tr align="left" valign="top">
-            <td>
-                <label for="enabled" class="help" title="#xarML('Flag determines whether the Autolink is active')#">
-                    <xar:mlstring>Enabled</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:if condition="$enabled">
-                    <input type="checkbox" name="enabled" id="enabled" value="1" checked="checked"/>
-                <xar:else />
-                    <input type="checkbox" name="enabled" id="enabled" value="1"/>
-                </xar:if>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="name" class="help" title="#xarML('A unique name for the Autolink')#">
+            <xar:mlstring>Name</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <input type="text" name="name" id="name" value="#$prepname#" size="20" maxlength="30"/>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left">
-            <td colspan="2">
-                <h4><xar:mlstring>Matching</xar:mlstring></h4>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="enabled" class="help" title="#xarML('Flag determines whether the Autolink is active')#">
+            <xar:mlstring>Enabled</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <xar:if condition="$enabled">
+            <input type="checkbox" name="enabled" id="enabled" value="1" checked="checked"/>
+        <xar:else />
+            <input type="checkbox" name="enabled" id="enabled" value="1"/>
+        </xar:if>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left" valign="top">
-            <td>
-                <label for="keyword" class="help" title="#xarML('The word or regular expression that is replaced for this Autolink')#">
-                    <xar:mlstring>Matching Key</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="keyword" id="keyword" value="#$prepkeyword#" size="32" maxlength="100"/>
-            </td>
-        </tr>
+    <h4 style="clear: both;"><xar:mlstring>Matching</xar:mlstring></h4>
 
-        <tr align="left" valign="top">
-            <td>
-                <label for="match_re" class="help" title="#xarML('Flag indicates whether the Matching Key should be processed as a regular expression')#">
-                    <xar:mlstring>Match As Regular Expression</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <xar:if condition="$match_re">
-                    <input type="checkbox" name="match_re" id="match_re" value="1" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="match_re" id="match_re" value="1" />
-                </xar:if>
-            </td>
-        </tr>
 
-        <tr align="left">
-            <td colspan="2">
-                <h4><xar:mlstring>Replacing</xar:mlstring></h4>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="keyword" class="help" title="#xarML('The word or regular expression that is replaced for this Autolink')#">
+            <xar:mlstring>Matching Key</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <input type="text" name="keyword" id="keyword" value="#$prepkeyword#" size="32" maxlength="100"/>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left" valign="top">
-            <td>
-                <label for="title" class="help" title="#xarML('The title (usually a tooltip) for the resulting Autolink transformation')#">
-                    <xar:mlstring>Title</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="title" id="title" value="#$preptitle#" size="32" maxlength="100"/>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="match_re" class="help" title="#xarML('Flag indicates whether the Matching Key should be processed as a regular expression')#">
+            <xar:mlstring>Match As Regular Expression</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <xar:if condition="$match_re">
+            <input type="checkbox" name="match_re" id="match_re" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="match_re" id="match_re" value="1" />
+        </xar:if>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left" valign="top">
-            <td>
-                <label for="url" class="help" title="#xarML('The URL for the Autolink')#">
-                    <xar:mlstring>URL</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200"/>
-            </td>
-        </tr>
+    <h4 style="clear: both;"><xar:mlstring>Replacing</xar:mlstring></h4>
 
-        <tr align="left" valign="top">
-            <td>
-                <label for="comment" class="help" title="#xarML('A comment or description to help you manage the Autolinks generally not used in the Autolink transform')#">
-                    <xar:mlstring>Comment</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <textarea name="comment" id="comment" cols="32" rows="5" wrap="virtual">#$prepcomment#</textarea>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="title" class="help" title="#xarML('The title (usually a tooltip) for the resulting Autolink transformation')#">
+            <xar:mlstring>Title</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <input type="text" name="title" id="title" value="#$preptitle#" size="32" maxlength="100"/>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left">
-            <td colspan="2">
-                <!--- Display the DD hooks --->
-                <xar:if condition="!empty($hooks)">
-                    <xar:foreach in="$hooks" key="$hookmodule">
-                        <xar:if condition="$hookmodule eq 'dynamicdata'">#$hooks[$hookmodule]#</xar:if>
-                    </xar:foreach>
-                </xar:if>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="url" class="help" title="#xarML('The URL for the Autolink')#">
+            <xar:mlstring>URL</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200"/>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left">
-            <td colspan="2">
-                <h4><xar:mlstring>Other</xar:mlstring></h4>
-            </td>
-        </tr>
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="comment" class="help" title="#xarML('A comment or description to help you manage the Autolinks generally not used in the Autolink transform')#">
+            <xar:mlstring>Comment</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <textarea name="comment" id="comment" cols="32" rows="5" wrap="virtual">#$prepcomment#</textarea>
+    </div>
+    <br style="clear: both; height=0;"/>
 
-        <tr align="left" valign="top">
-            <td>
-                <label for="sample" class="help" title="#xarML('Some sample text that can be used to test the Autolink - the examples are displayed in the main Autolink list')#">
-                    <xar:mlstring>Sample text to test link</xar:mlstring>
-                </label>
-            </td>
-            <td>
-                <input type="text" name="sample" id="sample" value="#$prepsample#" size="40" maxlength="200"/>
-            </td>
-        </tr>
-    </table>
+    <!--- Display the DD hooks --->
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+            <xar:if condition="$hookmodule eq 'dynamicdata'">#$hooks[$hookmodule]#</xar:if>
+        </xar:foreach>
+    </xar:if>
+    <br style="clear: both;"/>
+
+    <h4 style="clear: both;"><xar:mlstring>Other</xar:mlstring></h4>
+
+    <div style="text-align: left; vertical-align: text-top; clear: left; float: left; width: 12em;">
+        <label for="sample" class="help" title="#xarML('Some sample text that can be used to test the Autolink - the examples are displayed in the main Autolink list')#">
+            <xar:mlstring>Sample text to test link</xar:mlstring>
+        </label>
+    </div>
+    <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
+        <input type="text" name="sample" id="sample" value="#$prepsample#" size="40" maxlength="200"/>
+    </div>
+    <br style="clear: both; height=0;"/>
 
     <!--- Display the non-DD hooks --->
     <xar:if condition="!empty($hooks)">

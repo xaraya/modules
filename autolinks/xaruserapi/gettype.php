@@ -10,11 +10,15 @@ function autolinks_userapi_gettype($args)
 {
     extract($args);
 
-    if (!isset($tid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    'userapi', 'gettype', 'autolinks');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+    if (!isset($tid) && !isset($type_name)) {
+        $msg = xarML(
+            'Invalid Parameter Count',
+            'userapi', 'gettype', 'autolinks'
+        );
+        xarExceptionSet(
+            XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            new SystemException($msg)
+        );
         return;
     }
 
@@ -24,15 +28,22 @@ function autolinks_userapi_gettype($args)
     $autolinkstable = $xartable['autolinks'];
     $autolinkstypestable = $xartable['autolinks_types'];
 
+    if (isset($tid)) {
+        $where = 'xar_tid = ' . xarVarPrepForStore($tid);
+    } elseif (isset($type_name)) {
+        $where = 'xar_type_name = \'' . xarVarPrepForStore($type_name) . '\'';
+    }
+
     // Get link type
-    $query = 'SELECT xar_tid,
-                    xar_dynamic_replace,
-                    xar_template_name,
-                    xar_type_name,
-                    xar_link_itemtype,
-                    xar_type_desc
-            FROM    ' . $autolinkstypestable . '
-            WHERE   xar_tid = ' . xarVarPrepForStore($tid);
+    $query = '
+        SELECT xar_tid,
+               xar_dynamic_replace,
+               xar_template_name,
+               xar_type_name,
+               xar_link_itemtype,
+               xar_type_desc
+        FROM   ' . $autolinkstypestable . '
+        WHERE  ' . $where;
     $result =& $dbconn->Execute($query);
 
     if (!$result || $result->EOF) {return;}

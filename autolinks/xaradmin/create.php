@@ -13,13 +13,16 @@ function autolinks_admin_create()
     $errorcount = 0;
     $data = array();
 
+    // Security check
+    if(!xarSecurityCheck('AddAutolinks')) {return;}
+
     // Get parameters from whatever input we need
     if (!xarVarFetch('tid', 'id', $tid)) {
         $errorcount += 1;
-        $data['tid_error'] = xarExceptionRender('text');
-        // Hack until exceptions are sorted.
+        // 'text' rendering will return an array
+        $data['tid_error'] = xarErrorRender('text');
         if (isset($data['tid_error']['short'])) {$data['tid_error'] = $data['tid_error']['short'];}
-        xarExceptionHandled();
+        xarErrorHandled();
     } else {
         // Get the autolink type details.
         $type = xarModAPIfunc('autolinks', 'user', 'gettype', array('tid' => $tid));
@@ -38,10 +41,9 @@ function autolinks_admin_create()
     // TODO: handle these in one go using the new array validation.
     if (!xarVarFetch('keyword', 'str:1', $keyword)) {
         $errorcount += 1;
-        $data['keyword_error'] = xarExceptionRender('text');
-        // Hack until exceptions are sorted.
+        $data['keyword_error'] = xarErrorRender('text');
         if (isset($data['keyword_error']['short'])) {$data['keyword_error'] = $data['keyword_error']['short'];}
-        xarExceptionHandled();
+        xarErrorHandled();
         if (trim($keyword) == '' ) {
             $keyword = NULL;
         }
@@ -49,35 +51,33 @@ function autolinks_admin_create()
 
     if (!xarVarFetch('title', 'str', $title)) {
         $errorcount += 1;
-        $data['title_error'] = xarExceptionRender('text');
-        // Hack until exceptions are sorted.
+        $data['title_error'] = xarErrorRender('text');
         if (isset($data['title_error']['short'])) {$data['title_error'] = $data['title_error']['short'];}
-        xarExceptionHandled();
+        xarErrorHandled();
     }
 
     if (!xarVarFetch('url', 'str:1', $url)) {
         $errorcount += 1;
-        $data['url_error'] = xarExceptionRender('text');
-        // Hack until exceptions are sorted.
+        $data['url_error'] = xarErrorRender('text');
         if (isset($data['url_error']['short'])) {$data['url_error'] = $data['url_error']['short'];}
-        xarExceptionHandled();
+        xarErrorHandled();
     }
 
     if (!xarVarFetch('comment', 'isset', $comment, NULL, XARVAR_DONT_SET)) {
         $errorcount += 1;
-        $data['comment_error'] = xarExceptionRender('text');
+        $data['comment_error'] = xarErrorRender('text');
         // Hack until exceptions are sorted.
         if (isset($data['comment_error']['short'])) {$data['comment_error'] = $data['comment_error']['short'];}
-        xarExceptionHandled();
+        xarErrorHandled();
     }
 
     // Default the name to the same as the keyword.
     if (!xarVarFetch('name', 'str:1', $name, $keyword)) {
         $errorcount += 1;
-        $data['name_error'] = xarExceptionRender('text');
+        $data['name_error'] = xarErrorRender('text');
         // Hack until exceptions are sorted.
         if (isset($data['name_error']['short'])) {$data['name_error'] = $data['name_error']['short'];}
-        xarExceptionHandled();
+        xarErrorHandled();
     }
 
     // Confirm authorisation code.
@@ -100,12 +100,11 @@ function autolinks_admin_create()
     }
 
     // Error in creating the item.
-    if (xarExceptionMajor()) {
+    if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
         $errorcount += 1;
-        $data['global_error'] = xarExceptionRender('text');
-        // Hack until exceptions are sorted.
+        $data['global_error'] = xarErrorRender('text');
         if (isset($data['global_error']['short'])) {$data['global_error'] = $data['global_error']['short'];}
-        xarExceptionHandled();
+        xarErrorHandled();
     }
 
     if ($errorcount > 0) {

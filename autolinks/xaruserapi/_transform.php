@@ -26,11 +26,11 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
     //restore_error_handler();
 
     // Catch any exceptions.
-    if (xarExceptionMajor()) {
+    if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
         // The template errored.
 
-        $error_text = xarExceptionRender('text');
-        // Hack until exceptions are sorted.
+        // 'text' rendering returns the exception as an array.
+        $error_text = xarErrorRender('text');
         if (isset($error_text['short'])) {$error_text = $error_text['short'];}
 
         if (xarModGetVar('autolinks', 'showerrors') || xarVarIsCached('autolinks', 'showerrors')) {
@@ -44,9 +44,9 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
                     'error_text' => $error_text
                 )
             );
-            if (xarExceptionMajor()) {
+            if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
                 // The error template errored - just return the matched text.
-                xarExceptionHandled();
+                xarErrorHandled();
                 $replace = $matched_text;
             }
         } else {
@@ -56,7 +56,7 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
         }
  
         // Handle the error since we have rendered it here.
-        xarExceptionHandled();
+        xarErrorHandled();
     } else {
         // Trim whitespace from template output by default, until we have a choice
         // on how to handle whitespace from within the template.

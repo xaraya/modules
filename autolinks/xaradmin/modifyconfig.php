@@ -28,7 +28,7 @@ function autolinks_admin_modifyconfig()
 
     if (!is_array($sample_data)) {$sample_data = array();}
 
-    $data['sample_data'] = $sample_data;
+    $data['sample_data'] = $sample_data['autolink-types'];
     
     return $data;
 }

@@ -27,11 +27,11 @@
 <!--- TODO: module classes? --->
 <table style="width: auto; border: 1px solid #666666; empty-cells: inherit; border-collapse: collapse;" cellspacing="0" cellpadding="4">
     <tr>
-        <th><xar:mlstring>Type</xar:mlstring></th>
-        <th><xar:mlstring>Name</xar:mlstring></th>
-        <th><xar:mlstring>Matching Key</xar:mlstring></th>
-        <th><xar:mlstring>URL</xar:mlstring></th>
-        <th><xar:mlstring>Options</xar:mlstring></th>
+        <th style="border: 1px solid #666666;"><xar:mlstring>Type</xar:mlstring></th>
+        <th style="border: 1px solid #666666;"><xar:mlstring>Name</xar:mlstring></th>
+        <th style="border: 1px solid #666666;"><xar:mlstring>Matching Key</xar:mlstring></th>
+        <th style="border: 1px solid #666666;"><xar:mlstring>URL</xar:mlstring></th>
+        <th style="border: 1px solid #666666;"><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$items" value="$item">
         <!--- TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items? --->

@@ -119,13 +119,12 @@ function autolinks_userapi_getreplace($args)
         //restore_error_handler();
 
         // Catch any exceptions.
-        if (xarExceptionMajor()) {
-            $error_text = xarExceptionRender('text');
-            // Hack until exceptions are sorted.
+        if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
+            $error_text = xarErrorRender('text');
             if (isset($error_text['short'])) {$error_text = $error_text['short'];}
 
             // Handle the exception since we have rendered it.
-            xarExceptionHandled();
+            xarErrorHandled();
 
             // Do we want the error displayed in-line?
             if (xarModGetVar('autolinks', 'showerrors') || xarVarGetCached('autolinks', 'showerrors')) {
@@ -140,9 +139,9 @@ function autolinks_userapi_getreplace($args)
                     )
                 );
                 // Even the error template errored.
-                if (xarExceptionMajor()) {
+                if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
                     $result = '$1';
-                    xarExceptionHandled();
+                    xarErrorHandled();
                 }
             } else {
                 // Don't highlight the error - just return the matched text.

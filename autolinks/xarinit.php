@@ -25,10 +25,8 @@ define ('AUTOLINKS_PUNCTUATION', '.!?"\';:');
  */
 function autolinks_init()
 {
-    // Need Xaraya version 0.9.1 or above for correct ADOdb version and
-    // to allow APIs to be called while the module is being installed and
-    // upgraded.
-    if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1'))) {
+    // Need Xaraya version 0.9.1.3 or above for correct exceptions core functions.
+    if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1.3'))) {
         return;
     }
             
@@ -103,7 +101,7 @@ function autolinks_init()
     'xar_template_name' => array ('type'=>'varchar', 'size'=>60, 'null'=>false, 'default'=>''),
     'xar_dynamic_replace' => array ('type'=>'integer', 'size'=>'tiny', 'null'=>false, 'default'=>'0'),
     'xar_link_itemtype' => array ('type'=>'integer', 'null'=>false, 'default'=>'0'),
-    'xar_type_desc'     => array ('type'=>'text', 'null'=>true)
+    'xar_type_desc'     => array ('type'=>'text', 'null'=>true, 'default'=>'')
     );
 
     $query = xarDBCreateTable($autolinkstypestable, $fields);
@@ -241,7 +239,7 @@ function autolinks_upgrade($oldversion)
                 if (!$result) {
                     //return;
                     // Until we have a better method of handling errors, it is safer to continue.
-                    xarExceptionHandled();
+                    xarErrorHandled();
                 }
             }
 
@@ -310,8 +308,8 @@ function autolinks_upgrade($oldversion)
             // - drop and alter some autolink table columns
             // - set up some sample data
 
-            // Need Xaraya version 0.9.1 or above for correct ADOdb version.
-            if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1'))) {
+            // Need Xaraya version 0.9.1.3 or above for correct exceptions core functions.
+            if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1.3'))) {
                 return;
             }
             
@@ -351,7 +349,7 @@ function autolinks_upgrade($oldversion)
             if (!xarExceptionId()) {
                 $sqlarray = array_merge($sqlarray, $droparray);
             } else {
-                xarExceptionHandled();
+                xarErrorHandled();
             }
 
             // TODO: this would be a neat thing to use in upgrades. We could
@@ -426,8 +424,8 @@ function autolinks_upgrade($oldversion)
                 . ' and xar_component = \'Autolinks\'';
             
             $result =& $dbconn->Execute($query);
-            if (xarExceptionId()) {
-                xarExceptionHandled();
+            if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
+                xarErrorHandled();
             }
 
         case '1.6':

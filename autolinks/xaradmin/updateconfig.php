@@ -85,7 +85,7 @@ function autolinks_admin_updateconfig()
     }
 
     // Check for errors.
-    if (xarExceptionMajor()) {
+    if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
         return;
     }
 

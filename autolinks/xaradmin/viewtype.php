@@ -38,7 +38,15 @@ function autolinks_admin_viewtype()
 
     if (is_array($links)) {
         foreach ($links as $i => $link) {
-            if (xarSecurityCheck('EditAutolinks',0)) {
+            if (xarSecurityCheck('EditAutolinks', 0)) {
+                $links[$i]['linksurl'] = xarModURL(
+                    'autolinks', 'admin', 'view',
+                    array('tid' => $link['tid'])
+                );
+            } else {
+                $links[$i]['linksurl'] = '';
+            }
+            if (xarSecurityCheck('EditAutolinks', 0)) {
                 $links[$i]['editurl'] = xarModURL(
                     'autolinks', 'admin', 'modifytype',
                     array('tid' => $link['tid'], 'startnumitem' => $startnumitem)
@@ -46,7 +54,7 @@ function autolinks_admin_viewtype()
             } else {
                 $links[$i]['editurl'] = '';
             }
-            if (xarSecurityCheck('DeleteAutolinks',0)) {
+            if (xarSecurityCheck('DeleteAutolinks', 0)) {
                 $links[$i]['deleteurl'] = xarModURL(
                     'autolinks', 'admin', 'deletetype',
                     array('tid' => $link['tid'])
