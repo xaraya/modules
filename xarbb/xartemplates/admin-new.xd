@@ -66,7 +66,7 @@
 		<span class="help" title="#xarML('Threshhold for individual topics to be considered hot.')#"><label for="hottopic"><xar:mlstring>Hot Topic</xar:mlstring></label>:</span>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
+		<input type="text" name="hottopic" id="hottopic" value="20" size="2" maxlength="4" />
 	</span>
 	</div>
 
