@@ -13,11 +13,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-define('BK_ITEMTYPE_REPO',  8);
-define('BK_ITEMTYPE_FILE',  4);
-define('BK_ITEMTYPE_CSET',  1);
-define('BK_ITEMTYPE_DELTA', 2);
-
 define('BK_SEARCH_REPO',   8);
 define('BK_SEARCH_FILE',   4);
 define('BK_SEARCH_CSET',   1);

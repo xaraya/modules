@@ -37,8 +37,6 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.php");
-
 function bkview_userapi_search($args) 
 {
     extract($args);
@@ -48,7 +46,7 @@ function bkview_userapi_search($args)
     if(empty($object_id)) return array();
 
     $repoinfo = xarModAPIFunc('bkview','user','get',array('repoid' => $object_id));
-    $repo = new bkRepo($repoinfo['repopath']);
+    $repo =& $repoinfo['repo'];
 
     // Now we now which repo to search
     $searchresults = array();
@@ -61,6 +59,7 @@ function bkview_userapi_search($args)
             $searchresults = array_merge($searchresults, $itemtype_results);
         }
     }
+    xarLogVariable('searchresults',$searchresults);
     return $searchresults;
    
 }
