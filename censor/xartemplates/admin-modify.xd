@@ -1,0 +1,30 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">
+            <xar:mlstring>Censor Administration</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+<div align="center"><h2><xar:mlstring>Edit Censored Word</xar:mlstring></h2><br />
+<form method="post" action="#xarModURL('censor', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="#$authid#" />
+	<input type="hidden" name="cid" id="cid" value="#$cid#" />
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Key word</xar:mlstring>
+                        </td>
+                        <td>
+                            <input type="text" name="keyword" id="keyword" value="#$keyword#" size="32" maxlength="100" tabindex="1" />
+						</td>
+					</tr>					
+				</table>
+			</td>
+		</tr>
+	</table>
+	<input type="submit" value="Modify Censor" align="middle" tabindex="5" />
+</form>
+</center>

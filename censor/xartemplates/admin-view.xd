@@ -1,0 +1,42 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">
+            <xar:mlstring>Censor Administration</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+<div align="center"><h2><xar:mlstring>View Censored Words</xar:mlstring></h2><br />
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <th>
+			#$keywordlabel#
+		</th>
+        <th>
+			#$optionslabel#
+		</th>
+	</tr>
+    <xar:loop name="$items">
+    <tr>
+        <td>
+			#$keyword#
+		</td>
+		<td align="center">
+           <xar:if condition="empty($editurl)">
+               #$edittitle#
+               <xar:else />
+                   <a href="#$editurl#">#$edittitle#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($deleteurl)">
+               #$deletetitle#
+               <xar:else />
+                   <a href="#$deleteurl#">#$deletetitle#</a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:loop>
+</table>
+<br />
+
+<!-- add the pager here -->
+#$pager#

@@ -1,0 +1,33 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">
+            <xar:mlstring>Censor Administration</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+<div align="center"><h2><xar:mlstring>Censor Module Overview</xar:mlstring></h2><br />
+<table border="0" width="100%">
+    <tr>
+        <td align="left" valign="top" width="100px">
+            <b><xar:mlstring>What is it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>The Censor Module allows you to censor words of your choice to moderate your Xaraya System</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" valign="top" width="100px">
+            <b><xar:mlstring>How to use it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>
+			From the menu, you have three choices.  "Modify Configuration", "Add", and "View". 
+			</xar:mlstring>
+			<ul>
+				<li><xar:mlstring>Modify Configuration -- Allows you to set global configuration of the censor module</xar:mlstring></li>
+				<li><xar:mlstring>Add -- Allows you to add new automatically censored text.</xar:mlstring></li>
+				<li><xar:mlstring>View -- Allows you to see what you have defined to be automatically censored.</xar:mlstring></li>
+			</ul>
+		</td>
+	</tr>
+</table>
