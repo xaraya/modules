@@ -10,5 +10,5 @@
 <br /><br />
 
 
-<input type="submit" value="Modify events Information" align="middle" tabindex="2" />
+<input type="submit" value="Modify events Information"  tabindex="2" />
 </form>
