@@ -28,8 +28,8 @@ function subitems_init()
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you
     // are using - $table doesn't cut it in more complex
     // modules
@@ -266,8 +266,8 @@ function subitems_upgrade($oldversion)
             // tables array together for easy reference later on
             // This code could be moved outside of the switch statement if
             // multiple upgrades need it
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             // It's good practice to name the table and column definitions you
             // are getting - $table and $column don't cut it in more complex
             // modules
@@ -319,8 +319,8 @@ function subitems_delete()
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     // adodb does not provide the functionality to abstract table creates
     // across multiple databases.  Xaraya offers the xarDropeTable function
     // contained in the following file to provide this functionality.

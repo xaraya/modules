@@ -46,8 +46,8 @@ function subitems_adminapi_ddobjectlink_update($args)
  //   if(!xarSecurityCheck('ReadxarBB',1,'Forum',"$fid:All")) return;    // todo
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // now
     $time = date('Y-m-d G:i:s');
