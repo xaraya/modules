@@ -68,6 +68,7 @@
             }
         }
         var myTarget = tinyMCE.getWindowArg('target');
+		myTarget = myTarget != "" ? myTarget : "_self";
         formObj.target.value    = myTarget;
         formObj.href.value      = tinyMCE.getWindowArg('href');
         formObj.linktitle.value = tinyMCE.getWindowArg('title');
@@ -168,7 +169,7 @@
                 window.opener.tinyMCE.insertLink(href, target, title, onclick);
                 top.close();
             } else {
-                alert('Please insert a name for the target or choose another option.');
+                alert(tinyMCE.getLang('lang_insert_link_popup_missingtarget'));
                 formObj.framename.select();
             }
         }
@@ -181,7 +182,7 @@
             case '':
             case '_self':
                 document.getElementById('same').checked=true;
-                formObj.framename.value='';
+                formObj.framename.value='_self';
             break;
             case '_blank':
                 document.getElementById('blank').checked=true; 

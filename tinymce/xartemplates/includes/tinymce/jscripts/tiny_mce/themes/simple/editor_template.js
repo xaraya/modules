@@ -1,7 +1,7 @@
 function TinyMCE_simple_getEditorTemplate() {
-    var template = new Array();
+	var template = new Array();
 
-    template['html'] = '\
+	template['html'] = '\
 <table class="mceEditor" border="0" cellpadding="0" cellspacing="0" width="{$width}" height="{$height}">\
 <tr><td align="center">\
 <span id="{$editor_id}">IFRAME</span>\
@@ -22,49 +22,49 @@ function TinyMCE_simple_getEditorTemplate() {
 </td></tr>\
 </table>';
 
-    template['delta_width'] = 0;
-    template['delta_height'] = -20;
+	template['delta_width'] = 0;
+	template['delta_height'] = -20;
 
-    return template;
+	return template;
 }
 
 function TinyMCE_simple_handleNodeChange(editor_id, node) {
-    // Reset old states
-    tinyMCE.switchClassSticky(editor_id + '_bold', 'mceButtonNormal');
-    tinyMCE.switchClassSticky(editor_id + '_italic', 'mceButtonNormal');
-    tinyMCE.switchClassSticky(editor_id + '_underline', 'mceButtonNormal');
-    tinyMCE.switchClassSticky(editor_id + '_strikethrough', 'mceButtonNormal');
-    tinyMCE.switchClassSticky(editor_id + '_bullist', 'mceButtonNormal');
-    tinyMCE.switchClassSticky(editor_id + '_numlist', 'mceButtonNormal');
+	// Reset old states
+	tinyMCE.switchClassSticky(editor_id + '_bold', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_italic', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_underline', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_strikethrough', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_bullist', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_numlist', 'mceButtonNormal');
 
-    // Handle elements
-    do {
-        switch (node.nodeName.toLowerCase()) {
-            case "b":
-            case "strong":
-                tinyMCE.switchClassSticky(editor_id + '_bold', 'mceButtonSelected');
-            break;
+	// Handle elements
+	do {
+		switch (node.nodeName.toLowerCase()) {
+			case "b":
+			case "strong":
+				tinyMCE.switchClassSticky(editor_id + '_bold', 'mceButtonSelected');
+			break;
 
-            case "i":
-            case "em":
-                tinyMCE.switchClassSticky(editor_id + '_italic', 'mceButtonSelected');
-            break;
+			case "i":
+			case "em":
+				tinyMCE.switchClassSticky(editor_id + '_italic', 'mceButtonSelected');
+			break;
 
-            case "u":
-                tinyMCE.switchClassSticky(editor_id + '_underline', 'mceButtonSelected');
-            break;
+			case "u":
+				tinyMCE.switchClassSticky(editor_id + '_underline', 'mceButtonSelected');
+			break;
 
-            case "strike":
-                tinyMCE.switchClassSticky(editor_id + '_strikethrough', 'mceButtonSelected');
-            break;
-            
-            case "ul":
-                tinyMCE.switchClassSticky(editor_id + '_bullist', 'mceButtonSelected');
-            break;
+			case "strike":
+				tinyMCE.switchClassSticky(editor_id + '_strikethrough', 'mceButtonSelected');
+			break;
+			
+			case "ul":
+				tinyMCE.switchClassSticky(editor_id + '_bullist', 'mceButtonSelected');
+			break;
 
-            case "ol":
-                tinyMCE.switchClassSticky(editor_id + '_numlist', 'mceButtonSelected');
-            break;
-        }
-    } while ((node = node.parentNode));
+			case "ol":
+				tinyMCE.switchClassSticky(editor_id + '_numlist', 'mceButtonSelected');
+			break;
+		}
+	} while ((node = node.parentNode));
 }

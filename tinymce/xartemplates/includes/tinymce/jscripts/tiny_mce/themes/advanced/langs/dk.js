@@ -66,3 +66,7 @@ tinyMCELang['lang_insert_anchor_title'] = 'Inds&#230;t/rediger bogm&#230;rke';
 tinyMCELang['lang_insert_anchor_name'] = 'Bogm&#230;rkets navn';
 tinyMCELang['lang_theme_anchor_desc'] = 'Inds&#230;t/rediger bogm&#230;rke';
 tinyMCELang['lang_theme_insert_link_titlefield'] = 'Title';
+tinyMCELang['lang_theme_clipboard_msg'] = 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?';
+tinyMCELang['lang_cut_desc'] = 'Cut';
+tinyMCELang['lang_copy_desc'] = 'Copy';
+tinyMCELang['lang_paste_desc'] = 'Paste';

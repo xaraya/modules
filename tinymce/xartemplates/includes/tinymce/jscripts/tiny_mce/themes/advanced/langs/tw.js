@@ -94,4 +94,8 @@ tinyMCELang['lang_theme_visualaid_desc'] = '顯示/隱藏非可見的元素';
 tinyMCELang['lang_underline_desc'] = '底線';
 tinyMCELang['lang_undo_desc'] = '復原';
 tinyMCELang['lang_unlink_desc'] = '取消連結';
+tinyMCELang['lang_theme_clipboard_msg'] = 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?';
+tinyMCELang['lang_cut_desc'] = 'Cut';
+tinyMCELang['lang_copy_desc'] = 'Copy';
+tinyMCELang['lang_paste_desc'] = 'Paste';
 

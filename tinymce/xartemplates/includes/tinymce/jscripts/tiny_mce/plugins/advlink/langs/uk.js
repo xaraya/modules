@@ -17,3 +17,4 @@ tinyMCELang['lang_insert_link_popup_location'] = 'Show locationbar';
 tinyMCELang['lang_insert_link_popup_resizable'] = 'Make window resizable';
 tinyMCELang['lang_insert_link_popup_size'] = 'Size';
 tinyMCELang['lang_insert_link_popup_position'] = 'Position (X/Y)';
+tinyMCELang['lang_insert_link_popup_missingtarget'] = 'Please insert a name for the target or choose another option.';

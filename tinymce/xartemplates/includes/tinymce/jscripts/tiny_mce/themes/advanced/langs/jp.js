@@ -64,3 +64,7 @@ tinyMCELang['lang_theme_fontdefault'] = '$BI8=`(B';
 tinyMCELang['lang_theme_colorpicker_title'] = '$B?\'$N;XDj(B';
 tinyMCELang['lang_theme_colorpicker_apply'] = '$BE,MQ(B';
 tinyMCELang['lang_theme_forecolor_desc'] = '$BA07J?\'(B';
+tinyMCELang['lang_theme_clipboard_msg'] = 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?';
+tinyMCELang['lang_cut_desc'] = 'Cut';
+tinyMCELang['lang_copy_desc'] = 'Copy';
+tinyMCELang['lang_paste_desc'] = 'Paste';

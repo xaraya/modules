@@ -17,3 +17,4 @@ tinyMCELang['lang_insert_link_popup_location']= 'Adresszeile anzeigen';
 tinyMCELang['lang_insert_link_popup_resizable'] = 'Gr&ouml;&szlig;e &auml;nderbar';
 tinyMCELang['lang_insert_link_popup_size']= 'Gr&ouml;&szlig;e';
 tinyMCELang['lang_insert_link_popup_position']= 'Position (X/Y)';
+tinyMCELang['lang_insert_link_popup_missingtarget'] = 'Please insert a name for the target or choose another option.';

@@ -17,3 +17,4 @@ tinyMCELang['lang_insert_link_popup_location'] = 'Visa locationbar';
 tinyMCELang['lang_insert_link_popup_resizable'] = 'G&ouml;r f&ouml;nstret skalbart';
 tinyMCELang['lang_insert_link_popup_size'] = 'Storlek';
 tinyMCELang['lang_insert_link_popup_position'] = 'Position (X/Y)';
+tinyMCELang['lang_insert_link_popup_missingtarget'] = 'Var god skriv ett namn för målet eller välj ett annat val.';
