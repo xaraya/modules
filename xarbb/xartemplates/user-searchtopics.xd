@@ -134,5 +134,11 @@
         </td>
       </tr>
     </table>
+<xar:else />
+<xar:set name="displaymessage">strtolower($message)</xar:set>
+    <xar:mlstring>
+        There are no
+    </xar:mlstring> 
+    #$displaymessage#.
 </xar:if>
 <h4 style="text-align:right;"><a href="#$returnurl#"><xar:mlstring>Return to Forum Index</xar:mlstring></a></h4>
