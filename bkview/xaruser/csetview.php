@@ -40,6 +40,7 @@ function bkview_user_csetview($args)
     $csets=array();
     while (list($key,$val) = each($list)) {
         list($tag,$age, $author, $rev, $utc, $comments) = explode('|',$val);
+        $csets[$counter]['file'] = 'ChangeSet';
         $csets[$counter]['tag']=$tag;
         $csets[$counter]['age']=$age;
         $csets[$counter]['age_code'] =  bkAgeToRangeCode($age);

@@ -82,6 +82,7 @@ function bkview_user_patchview($args)
     $data['repoid']=$repoid;
     $data['name_value']=$item['reponame'];
     $data['deltalist']=$deltalist;
+    $data['cset']['file'] = 'ChangeSet';
     $data['cset']['repoid'] = $repoid;
     $data['cset']['rev'] = $rev;
     $data['cset']['age'] = $changeset->bkGetAge();

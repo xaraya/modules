@@ -2,7 +2,7 @@
 
 <div style="float: left; margin-top: 1em; width: 100%;">
     <xar:if condition="$file =='ChangeSet'">
-        <xar:template file="user-cset" subdata="$cset"/>
+        <xar:template file="user-delta" subdata="$cset"/>
     </xar:if>
   
     <xar:loop name="$deltalist">

@@ -58,6 +58,7 @@ class bkFile
     function bkChangeSet($rev) 
    {
         // Return the corresponding cset for the specified delta
+        if($this->_file == 'ChangeSet') return $rev;
         $cmd = "bk r2c -r$rev " . $this->_file;
         $cset = $this->_repo->_run($cmd);
         return $cset[0];
