@@ -10,7 +10,15 @@
  */
 
  function opentracker_init()
-{ 
+{
+    if (!function_exists('version_compare') || ! version_compare(PHP_VERSION,'4.3','>=')) {
+        $msg=xarML('Your PHP configuration does not seem to be the correct version. OpenTracker requires PHP version 4.3 or newer.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'SYSTEM_ERROR',
+                        new SystemException($msg));
+        return;
+
+    }
+
 	@set_time_limit(0);
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables(); 
