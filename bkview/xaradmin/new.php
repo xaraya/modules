@@ -25,8 +25,8 @@ function bkview_admin_new($args)
     // Security check
     if (!xarSecurityCheck('AdminAllRepositories')) return;
  
-    xarVarFetch('repopath',"str::",$repopath,'/var/bk/repo');
-    xarVarFetch('reponame',"str::",$reponame,'<'.xarML('untitled').'>');
+    if(!xarVarFetch('repopath',"str::",$repopath,'/var/bk/repo')) return;
+    if(!xarVarFetch('reponame',"str::",$reponame,'<'.xarML('untitled').'>')) return;
     extract($args);
 
     // Generate the items which need to be in the form

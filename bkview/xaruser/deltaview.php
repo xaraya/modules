@@ -15,9 +15,9 @@
 
 function bkview_user_deltaview($args) 
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('rev','str::',$rev,'');
-    xarVarFetch('file','str::',$file,'');
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('rev','str::',$rev,'')) return;
+    if(!xarVarFetch('file','str::',$file,'')) return;
     extract($args);
 
     // Get the information on the repository

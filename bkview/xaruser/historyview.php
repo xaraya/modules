@@ -17,9 +17,9 @@
 
 function bkview_user_historyview($args)
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('file','str::',$file,'ChangeSet');
-    xarVarFetch('user','str::',$user,'');
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
+    if(!xarVarFetch('user','str::',$user,'')) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
@@ -31,8 +31,10 @@ function bkview_user_historyview($args)
     if(xarModIsAvailable('mime') && file_exists($the_file->bkAbsoluteName())) {
         $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $the_file->bkAbsoluteName()));
         $icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+        $available = true;
     } else {
         $icon = xarTplGetImage('file.gif','bkview');
+        $available = false;
     }
     
     $formatstring="'";
@@ -53,6 +55,7 @@ function bkview_user_historyview($args)
         $histlist[$counter]['repoid'] = $repoid;
         $histlist[$counter]['file'] = $file;
         $histlist[$counter]['icon'] = $icon;
+        $histlist[$counter]['available'] = $available;
         $counter++;
     }
     

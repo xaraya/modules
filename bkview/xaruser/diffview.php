@@ -15,9 +15,9 @@
 
 function bkview_user_diffview($args)
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('rev','str::',$rev,'1.0');
-    xarVarFetch('file','str::',$file,'ChangeSet');
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('rev','str::',$rev,'1.0')) return;
+    if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));

@@ -22,8 +22,8 @@
  */
 function bkview_admin_create($args)
 {
-    xarVarFetch('reponame','str::',$reponame);
-    xarVarFetch('repopath','str::',$repopath);
+    if(!xarVarFetch('reponame','str::',$reponame)) return;
+    if(!xarVarFetch('repopath','str::',$repopath)) return;
     extract($args);
     
     if (!xarSecConfirmAuthKey()) return;

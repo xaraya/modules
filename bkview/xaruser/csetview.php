@@ -13,13 +13,13 @@
 
 function bkview_user_csetview($args) 
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('range','str::',$range,NULL,XARVAR_NOT_REQUIRED);
-    xarVarFetch('revs','str::',$revs,NULL,XARVAR_NOT_REQUIRED);
-    xarVarFetch('showmerge','int:0:1',$showmerge,0);
-    xarVarFetch('sort','str::',$sort,0);
-    xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED);
-    xarVarFetch('taggedonly','int:0:1',$taggedonly,0,XARVAR_NOT_REQUIRED);
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('range','str::',$range,NULL,XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('revs','str::',$revs,NULL,XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('showmerge','int:0:1',$showmerge,0)) return;
+    if(!xarVarFetch('sort','str::',$sort,0)) return;
+    if(!xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('taggedonly','int:0:1',$taggedonly,0,XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
     $data=array();

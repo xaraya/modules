@@ -23,8 +23,8 @@
                 <xar:if condition="!isset($icon)">
                     <xar:set name="icon">xarTplGetImage('file.gif','bkview')</xar:set>
                 </xar:if>
-                <xar:if condition="file_exists($file)">
-                    <a href="&xar-modurl-bkview-user-downloadfile;&amp;file=#$file#">
+                <xar:if condition="isset($available) && $available">
+                    <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$file#">
                         <img class="bkicon" src="#$icon#" alt="file" />
                     </a>
                 <xar:else/>
@@ -39,13 +39,13 @@
         </div>
         <span><xar:mlstring>Delta</xar:mlstring></span>
         <span>
-          <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+          <a onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
             #$rev#
           </a> #$csettag#
         </span>
         <span><xar:mlstring>created by</xar:mlstring></span>
         <span>
-          <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$author#">
+          <a onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$author#">
             #$author#
           </a>
         </span>

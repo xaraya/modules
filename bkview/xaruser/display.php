@@ -24,9 +24,9 @@
  */
 function bkview_user_display($args)
 {
-    xarVarFetch('repoid','id',$repoid,null, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemid','id',$repoid);
-    xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED);
+    if(!xarVarFetch('repoid','id',$repoid,null, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('itemid','id',$repoid)) return;
+    if(!xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED)) return;
     extract($args);
 
     // Prepare the variable that will hold some status message if necessary

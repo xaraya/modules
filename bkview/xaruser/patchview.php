@@ -15,8 +15,8 @@
 
 function bkview_user_patchview($args)
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('rev','str::',$rev,'+');
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('rev','str::',$rev,'+')) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));

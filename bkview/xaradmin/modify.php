@@ -22,7 +22,7 @@
  */
 function bkview_admin_modify($args)
 {
-    xarVarFetch('repoid','id',$repoid,NULL);
+    if(!xarVarFetch('repoid','id',$repoid,NULL)) return;
        extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));

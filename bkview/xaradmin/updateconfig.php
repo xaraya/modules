@@ -16,8 +16,8 @@ function bkview_admin_updateconfig($args)
 {
     
     // Get the variables
-    xarVarFetch('enablesearch','str::',$enablesearch,"");
-    xarVarFetch('enablexmlhttp','str::',$enablexmlhttp,"");
+    if(!xarVarFetch('enablesearch','str::',$enablesearch,"")) return;
+    if(!xarVarFetch('enablexmlhttp','str::',$enablexmlhttp,"")) return;
     extract($args);
 
     // Process

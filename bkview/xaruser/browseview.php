@@ -15,8 +15,8 @@
 
 function bkview_user_browseview($args)
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('dir','str::',$dir,'/');
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('dir','str::',$dir,'/')) return;
     extract($args);
     
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));

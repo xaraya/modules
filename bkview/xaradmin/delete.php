@@ -19,8 +19,8 @@
  */
 function bkview_admin_delete($args)
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('confirm','bool',$confirm,false);
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('confirm','bool',$confirm,false)) return;
     extract($args);
     
     $item = xarModAPIFunc('bkview',    'user','get', array('repoid' => $repoid));

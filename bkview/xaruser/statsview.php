@@ -18,8 +18,8 @@ include_once("modules/bkview/xarincludes/bk.class.php");
     
 function bkview_user_statsview($args)
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED);
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED)) return;
 
     extract($args);
 

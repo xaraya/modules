@@ -15,9 +15,9 @@
 
 function bkview_user_annotateview($args)
 {
-    xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('file','str::',$file,'ChangeSet');
-    xarVarFetch('rev','str::',$rev,'1.0');
+    if(!xarVarFetch('repoid','id',$repoid)) return;
+    if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
+    if(!xarVarFetch('rev','str::',$rev,'1.0')) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
