@@ -68,7 +68,7 @@ function xmlrpcsystemapi_admin_introspect()
         $response = $client->send($request);
     
         $methodHelp = $response->xv->me['string'];
-        $data['methodhelp'] = $methodHelp;
+        $data['methodhelp'] = xarVarPrepForDisplay($methodHelp);
 
         // Get the signature
         $request = new xmlrpcmsg('system.methodSignature',array(new xmlrpcval($method)));
