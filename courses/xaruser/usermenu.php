@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id:
- * 
+ *
  * Display the user menu hook
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -15,7 +15,7 @@
 /**
  * display the user menu hook
  * This is a standard function to provide a link in the "Your Account Page"
- * 
+ *
  * @param  $phase is the which part of the loop you are on
  */
 function courses_user_usermenu()
@@ -101,7 +101,7 @@ function courses_user_usermenu()
 
             // We also need to set the SecAuthKey, in order to stop hackers from setting user
             // vars off site.
-            $authid = xarSecGenAuthKey();
+            $authid = xarSecGenAuthKey('courses');
             // Lets get the value that we want to override from the preferences. Notice that we are
             // xarModUserGetMod and not xarModGetVar so we can grab the overridden value.  You do
             // not have to use a user variable for every module var that the module posses, just
