@@ -1,17 +1,24 @@
 <!---
     Traditional autolink anchor tag.
     The default attributes passed into this template are:
-    $stdattributes['href'] - the url field of the link
-    $stdattributes['title'] - the title field of the link (optional)
-    $stdattributes['style'] - the global autolinks 'style' setting (optional)
-    $stdattributes['target'] - the global autolinks 'target' setting (optional)
+    #$url# - the url field of the link
+    #$title# - the title field of the link (optional)
+    #$style# - the global autolinks 'style' setting (optional)
+    #$target# - the global autolinks 'target' setting (optional)
     * You can reset any of those values within this template or add further attributes.
-    * An empty string value will result in that attribute being discarded completely.
     * You can also over-ride the global settings by creating DD fields for the standard
       autolink type with field names 'url', 'title', 'style' or 'target'.
-    * Additional attributes can be created through DD by creating properties with
-      appropriate field names.
-    * The individual values are also available as #$url#, #$title#, #$style# and #$target#,
-      but remember that an admin may decide to create any further attributes they like.
+    * Additional user-supplied attributes can be created through DD by creating properties
+      with appropriate field names.
+    * The #$match# variable contains the full matched string. Other DD properties may be
+      set up to supply different parts of the matched string, using a RE match.
 --->
+<xar:set name="$stdattributes['href']">#$url#</xar:set>
+<xar:set name="$stdattributes['title']">#$title#</xar:set>
+<xar:if condition="!empty($target)">
+    <xar:set name="$stdattributes['target']">#$target#</xar:set>
+</xar:if>
+<xar:if condition="!empty($style)">
+    <xar:set name="$stdattributes['style']">#$style#</xar:set>
+</xar:if>
 <a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $stdattributes)#>#$match#</a>

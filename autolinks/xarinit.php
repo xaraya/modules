@@ -68,7 +68,7 @@ function autolinks_init()
     'xar_match_re'      => array ('type'=>'integer', 'size'=>'tiny', 'null'=>false, 'default'=>'0'),
     'xar_sample'        => array ('type'=>'varchar', 'size'=>200, 'null'=>true, 'default'=>''),
     'xar_type_tid'      => array ('type'=>'integer', 'null'=>false, 'default'=>'0'),
-    'xar_cache_replace' => array ('type'=>'text', 'null'=>true, 'default'=>'')
+    'xar_cache_replace' => array ('type'=>'text', 'null'=>true)
     );
 
     $query = xarDBCreateTable($autolinkstable, $fields);
@@ -283,8 +283,7 @@ function autolinks_upgrade($oldversion)
                     'type'      => 'varchar',
                     'size'      => '200',
                     'null'      => true,
-                    'first'     => false,
-                    'default'   => ''
+                    'first'     => false
                 )
             );
 
@@ -492,7 +491,19 @@ function autolinks_init_upgrade_data()
         array(
             'type_name' => xarML('Standard autolink'),
             'template_name' => 'standard',
-            'default' => true),
+            'default' => true,
+            'links' => array(
+                array(
+                    'name' => xarML('Xaraya home'),
+                    'keyword' => 'xaraya[\'s]*',
+                    'match_re' => '1',
+                    'title' => 'Xaraya - Content Management System',
+                    'url' => 'http://www.xaraya.com/',
+                    'comment' => 'Xaraya home page.',
+                    'enabled' => '1'
+                )
+            )
+        ),
         array(
             'type_name' => xarML('Sample autolink type 1'),
             'template_name' => 'sample1',

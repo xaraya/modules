@@ -48,8 +48,7 @@ function autolinks_userapi_getreplace($args)
         $style = '';
     }
 
-    // Check if we want to open in a new window
-    // TODO: this will be a DD property on the item
+    // Check if we want to open in a new window.
     if (xarModGetVar('autolinks', 'newwindow')) {
         $target = '_blank';
     } else {
@@ -58,16 +57,19 @@ function autolinks_userapi_getreplace($args)
     
     // Build an array of data for the template.
 
-    // Fixed/standard values available to the template
+    // Standard values available to the template.
+    // The comment is not normally used in the template, but it could
+    // be useful to pass in.
     $template_data = array(
         'match' => '$1',
-        'url' => xarVarPrepForDisplay($link['url']),
-        'title' => xarVarPrepForDisplay($link['title']),
+        'url' => $link['url'],
+        'title' => $link['title'],
+        'comment' => $link['comment'],
         'style' => $style,
         'target' => $target
     );
 
-    // DD items to add to the template too.
+    // DD items to add to the template.
     if (xarModIsHooked('dynamicdata', 'autolinks', $link['itemtype'])) {
         // We are hooked into DD, so fetch the current fields and values.
         $dd_data = xarModAPIfunc(
@@ -86,20 +88,11 @@ function autolinks_userapi_getreplace($args)
                 if ($name{0} != '_') {
                     // e.g. a DD property named 'a' will be evaluated as $template_data['a']
                     // and a DD property named 'a_b_c' will be evaluated as $template_data['a']['b']['c']
-                    @eval('$template_data[\'' . str_replace('_', '\'][\'', $name) . '\'] = xarVarPrepForDisplay($value);');
+                    @eval('$template_data[\'' . str_replace('_', '\'][\'', $name) . '\'] = $value;');
                 }
             }
         }
     }
-
-    // Additional values for the 'standard' template.
-    // Pick these back out of the template array, so any of them can be
-    // over-ridden by DD property values.
-
-    $template_data['stdattributes']['href'] = $template_data['url'];
-    $template_data['stdattributes']['title'] = $template_data['title'];
-    $template_data['stdattributes']['target'] = $template_data['target'];
-    $template_data['stdattributes']['style'] = $template_data['style'];
 
     // Either execute the template now (if cachable) or return the expression used to
     // execute the template in an expression-based preg_replace.

@@ -88,8 +88,6 @@ function autolinks_admin_modifytype($args)
                 $type['global_error'] = xarExceptionRender('text');
                 xarExceptionHandled();
             }
-
-            //return true;
         }
     } else {
         // First time - return the current type details.

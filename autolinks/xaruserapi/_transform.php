@@ -99,21 +99,22 @@ function autolinks_userapi__transform($args)
     $punctuation = preg_replace('/([-^\]])/', '\\\$1', $punctuation);
 
     if (empty($gotautolinks)) {
-        // Only get enabled autolinks.
-        // A valid autolink is one in which the replace template successfully parsed.
         if (!isset($lid)) {
             // Normal mode: go through all enabled autolinks.
             // Order by name so the admin has some control over the order in which the
             // links are applied to content (some links may need to stack on top of
             // each other).
+            // Only get enabled autolinks.
             $tmpautolinks = xarModAPIFunc(
                 'autolinks', 'user', 'getall',
                 array('enabled'=>true, 'order'=>'name')
             );
+            // Make sure we don't visit this section again.
             $gotautolinks = 1;
         } else {
-            // Test mode: just select one specific link.
+            // Test/sample mode: just select one specific link.
             $tmpautolinks = array(xarModAPIFunc('autolinks', 'user', 'get', array('lid'=>$lid)));
+            // Clear the previous test link.
             $alsearch = array();
             $alreplace = array();
         }
@@ -165,9 +166,10 @@ function autolinks_userapi__transform($args)
                 // which is invalid PHP. However, it seems to work. Does PHP escape out the single-
                 // quotes for us?
 
-                // If $replace cannot be evaluated as an expression, then we will get a pretty fatal error.
+                // If $replace cannot be evaluated as an expression, then we will get a system error later.
                 // Test out the ability to evaluate the expression. This is just a final safety measure.
                 if (!@eval('return ' . $replace . ';')) {
+                    // The string did not evaluate - set it to something safe.
                     $replace = 'array()';
                 }
 

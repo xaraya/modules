@@ -4,8 +4,10 @@
     <xar:set name="$aidarray['aid']">#$title#</xar:set>
     <xar:set name="$article">#xarModAPIfunc('articles','user','get',$aidarray)#</xar:set>
     <xar:if condition="!empty($article['title'])">
-    <xar:set name="$linktitle"><xar:mlstring>Click here to read the article</xar:mlstring></xar:set>
-    <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#$linktitle#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
+    <xar:if condition="empty($linktitle)">
+        <xar:set name="$linktitle"><xar:mlstring>Click here to read the article</xar:mlstring></xar:set>
+    </xar:if>
+    <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay($linktitle)#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
     <xar:else/>
     <!--- Display error if the article could not be fetched (invalid number or no permission. --->
     <span class="xar-error">[<xar:mlstring>article ID not available:</xar:mlstring> #$title#]</span>

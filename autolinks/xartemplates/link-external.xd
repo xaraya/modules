@@ -2,11 +2,19 @@
 <!--- 
     Over-ride the default image using a DD property named 'icon' on 
     the autolink type using this template. This will allow you to
-    use different images for, say, HTTP and FTP URIs.
+    use different images for, say, HTTP and FTP URLs.
+    A DD property 'imgalt' will over-ride the default alt text for
+    the image.
 --->
-<xar:set name="$imgalt"><xar:mlstring>External link icon</xar:mlstring></xar:set>
+<xar:if condition="empty($imgalt)">
+    <xar:set name="$imgalt"><xar:mlstring>External link icon</xar:mlstring></xar:set>
+</xar:if>
 <xar:if condition="empty($icon)">
     <xar:set name="$icon">'icon_www.gif'</xar:set>
 </xar:if>
 <xar:set name="$imgurl">#xarTplGetImage($icon)#</xar:set>
-<xar:if condition="empty($imgurl)"><a href="#$url#" target="external" title="#$title#">#$match#</a><xar:else/><a href="#$url#" target="external" title="#$title#"><img src="#xarTplGetImage($icon)#" alt="#$imgalt#" hspace="4">#$match#</a></xar:if>
+<xar:if condition="empty($imgurl)">
+    <a href="#$url#" target="external" title="#xarVarPrepForDisplay($title)#">#$match#</a>
+<xar:else/>
+    <a href="#$url#" target="external" title="#xarVarPrepForDisplay($title)#"><img src="#xarTplGetImage($icon)#" alt="#xarVarPrepForDisplay($imgalt)#" hspace="4">#$match#</a>
+</xar:if>

@@ -13,7 +13,7 @@
         <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$items" value="$item">
-        <!--- TODO: set classes rather than style colours --->
+        <!--- TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items? --->
         <xar:if condition="!empty($item['enabled'])">
             <xar:set name="$bgrow">'#DDFFDD'</xar:set>
         <xar:else/>
@@ -62,15 +62,25 @@
             </td>
 
             <td align="center">
+                <xar:if condition="!empty($item['enabled'])">
+                    <xar:set name="$enablelabel"><xar:mlstring>Disable</xar:mlstring></xar:set>
+                <xar:else/>
+                    <xar:set name="$enablelabel"><xar:mlstring>Enable</xar:mlstring></xar:set>
+                </xar:if>
                 <xar:if condition="empty($item['enableurl'])">
-                    #$item['enablelabel']# |
+                    #$enablelabel# |
                 <xar:else />
-                    <a href="#$item['enableurl']#">#$item['enablelabel']#</a> |
+                    <a href="#$item['enableurl']#">#$enablelabel#</a> |
                 </xar:if>
                 <xar:if condition="empty($item['editurl'])">
                     <xar:mlstring>Edit</xar:mlstring> |
                 <xar:else />
                     <a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a> |
+                </xar:if>
+                <xar:if condition="empty($item['moveurl'])">
+                    <xar:mlstring>Move</xar:mlstring> |
+                <xar:else />
+                    <a href="#$item['moveurl']#"><xar:mlstring>Move</xar:mlstring></a> |
                 </xar:if>
                 <xar:if condition="empty($item['deleteurl'])">
                     <xar:mlstring>Delete</xar:mlstring>
@@ -85,13 +95,13 @@
         <tr>
             <td colspan="5">
                 <xar:if condition="$showsamples eq 2 or $showsamples eq 3">
-                <p style="float: left; padding-right: 8px; width: 5em;"><strong><xar:mlstring>Test:</xar:mlstring></strong></p>
-                <div style="float: left; text-align: left;">#xarVarPrepForDisplay($item['sample'])#</div>
+                <p style="float: left; padding-right: 8px; width: 8em;"><strong><xar:mlstring>Test:</xar:mlstring></strong></p>
+                <div style="float: left;">#xarVarPrepForDisplay($item['sample'])#</div>
                 <br style="clear: both;"/>
                 </xar:if>
 
                 <xar:if condition="$showsamples eq 1 or $showsamples eq 3">
-                <p style="float: left; padding-right: 8px; width: 5em;"><strong><xar:mlstring>Example:</xar:mlstring></strong></p>
+                <p style="float: left; padding-right: 8px; width: 8em;"><strong><xar:mlstring>Example:</xar:mlstring></strong></p>
                 <div style="float: left; text-align: left;">#$item['sampleresult']#</div>
                 </xar:if>
             </td>

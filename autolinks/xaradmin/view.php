@@ -36,11 +36,21 @@ function autolinks_admin_view()
 
     if (is_array($links)) {
         foreach($links as $lid => $link) {
-            if (xarSecurityCheck('EditAutolinks',0)) {
+            if (xarSecurityCheck('EditAutolinks', 0)) {
                 $links[$lid]['editurl'] = xarModURL(
                     'autolinks', 'admin', 'modify',
                     array('lid' => $lid, 'startnumitem' => $startnumitem)
                 );
+                // A move is appropriate only if there are other link types to
+                // move the link to.
+                if (xarModAPIfunc('autolinks', 'user', 'counttypes') > 1) {
+                    $links[$lid]['moveurl'] = xarModURL(
+                        'autolinks', 'admin', 'move',
+                        array('lid' => $lid)
+                    );
+                } else {
+                    $links[$lid]['moveurl'] = '';
+                }
                 $links[$lid]['edittypeurl'] = xarModURL(
                     'autolinks', 'admin', 'modifytype',
                     array('tid' => $link['tid'])
@@ -55,10 +65,12 @@ function autolinks_admin_view()
                 );
             } else {
                 $links[$lid]['editurl'] = '';
+                $links[$lid]['moveurl'] = '';
+                $links[$lid]['edittypeurl'] = '';
+                $links[$lid]['enableurl'] = '';
             }
-            // TODO: get these tables into the template.
-            $links[$lid]['enablelabel'] = xarML(empty($link['enabled']) ? 'Enable' : 'Disable');
-            if (xarSecurityCheck('DeleteAutolinks',0)) {
+
+            if (xarSecurityCheck('DeleteAutolinks', 0)) {
                 $links[$lid]['deleteurl'] = xarModURL(
                     'autolinks', 'admin', 'delete',
                     array('lid' => $lid)
@@ -73,7 +85,6 @@ function autolinks_admin_view()
                 xarVarSetCached('autolinks', 'showerrors', '1');
                 if (!empty($links[$lid]['sample'])) {
                     // We need to perform a single autolink on the sample.
-                    // TODO: not sure how to do that yet. The links are all transformed in a loop.
                     $links[$lid]['sampleresult'] = xarModAPIfunc(
                         'autolinks', 'user', '_transform',
                         array('text' => $links[$lid]['sample'], 'lid' => $lid)
