@@ -12,8 +12,8 @@
 </table>
 <br />
 
-	<table border="0" cellpadding="8" cellspacing="0">
-	<tr><td><label for="ranksperpage">#$ranksperlabel#</label></td>
+    <table border="0" cellpadding="8" cellspacing="0">
+    <tr><td><label for="ranksperpage">#$ranksperlabel#</label></td>
 <td><input type="text" name="ranksperpage" id="ranksperpage" size="3" maxlength="3" value="#$rankspervalue#" /></td></tr>
 <tr><td><label for="showadminscore">#$showadminlabel#</label></td>
 <td><input type="checkbox" name="showadminscore" id="showadminscore" value="1" #$showadminchecked# /></td></tr>
@@ -38,62 +38,62 @@
                 <li><xar:mlstring><b>Frontpage Points:</b> Extra points awarded to items of this type that make it to frontpage status (Only applicable to the articles module)</xar:mlstring></li>
 
             </ul>
-	            <br />
+                <br />
             <em><xar:mlstring>The points are of type xxxx.xx .That means you can award/subtract from 0.00 up to 9999.99 for an item.</xar:mlstring></em>
 
         </div>
-	            <br />
+                <br />
 
-	<table border="0" cellpadding="8" cellspacing="0">
+    <table border="0" cellpadding="8" cellspacing="0">
 
-	<xar:foreach in="$settings" key="$modname" value="$config">
-		<tr>
-			<td colspan="2"><b>#$config['label']#</b></td>
-		</tr>
-		<tr>
-			<td><xar:mlstring>Create Points:</xar:mlstring></td>
-			<td>
+    <xar:foreach in="$settings" key="$modname" value="$config">
+        <tr>
+            <td colspan="2"><b>#$config['label']#</b></td>
+        </tr>
+        <tr>
+            <td><xar:mlstring>Create Points:</xar:mlstring></td>
+            <td>
 
-        <input type="text" name="createscore[#$modname#]" id="createscore[#$modname#]" size="3" maxlength="7" value="#$config['create_score']#" />				
+        <input type="text" name="createscore[#$modname#]" id="createscore[#$modname#]" size="3" maxlength="7" value="#$config['create_score']#" />                
 
-			</td>
-		</tr>
+            </td>
+        </tr>
                 <tr>
-			<td><xar:mlstring>Delete Points:</xar:mlstring></td>
-			<td>
+            <td><xar:mlstring>Delete Points:</xar:mlstring></td>
+            <td>
 
-        <input type="text" name="deletescore[#$modname#]" id="deletescore[#$modname#]" size="3" maxlength="7" value="#$config['delete_score']#" />				
+        <input type="text" name="deletescore[#$modname#]" id="deletescore[#$modname#]" size="3" maxlength="7" value="#$config['delete_score']#" />                
 
-			</td>
-		</tr>
+            </td>
+        </tr>
                 <tr>
-			<td><xar:mlstring>Display Points:</xar:mlstring></td>
-			<td>
+            <td><xar:mlstring>Display Points:</xar:mlstring></td>
+            <td>
 
-        <input type="text" name="displayscore[#$modname#]" id="displayscore[#$modname#]" size="3" maxlength="7" value="#$config['display_score']#" />				
+        <input type="text" name="displayscore[#$modname#]" id="displayscore[#$modname#]" size="3" maxlength="7" value="#$config['display_score']#" />                
 
-			</td>
-		</tr>
+            </td>
+        </tr>
                 <tr>
-			<td><xar:mlstring>Update Points:</xar:mlstring></td>
-			<td>
+            <td><xar:mlstring>Update Points:</xar:mlstring></td>
+            <td>
 
-        <input type="text" name="updatescore[#$modname#]" id="updatescore[#$modname#]" size="3" maxlength="7" value="#$config['update_score']#" />				
+        <input type="text" name="updatescore[#$modname#]" id="updatescore[#$modname#]" size="3" maxlength="7" value="#$config['update_score']#" />                
 
-			</td>
-		</tr>
+            </td>
+        </tr>
                 <tr>
-			<td><xar:mlstring>Frontpage Points:</xar:mlstring></td>
-			<td>
+            <td><xar:mlstring>Frontpage Points:</xar:mlstring></td>
+            <td>
 
-        <input type="text" name="frontpagescore[#$modname#]" id="frontpagescore[#$modname#]" size="3" maxlength="7" value="#$config['frontpage_score']#" />				
+        <input type="text" name="frontpagescore[#$modname#]" id="frontpagescore[#$modname#]" size="3" maxlength="7" value="#$config['frontpage_score']#" />                
 
-			</td>
-		</tr>
-	</xar:foreach>
-	</table>
-	<br /><br />
-	<input type="submit" value="Update Userpoints Configuration" />
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
+    <br /><br />
+    <input type="submit" value="Update Userpoints Configuration" />
 </form>
 </div>
 </div>
