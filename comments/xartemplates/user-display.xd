@@ -1,3 +1,6 @@
+<!--- lets include related stylesheet --->
+#xarTplAddStyleLink("comments", "comments")#
+
 <xar:sec mask="Comments-Read" catch="false">
     <xar:if condition="$package['settings']['render'] ne 'nocomments'">
         <xar:if condition="!isset($header['selected_cid'])">

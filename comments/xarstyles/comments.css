@@ -1,0 +1,128 @@
+/* Classes for Overridden Templates for Comments module */
+
+.xar-cm-wrapper {
+	height: 42px;
+/* 	background-color: #E5EEF1; */
+	margin-bottom: 5px;
+}
+
+.xar-cm-settings {
+	float: left;
+	width: 19%;
+/* 	font-size: 11px; */
+/* 	color: #4C7292; */
+	font-weight: bold;
+	text-align: center;
+	padding-top: 2px;
+}
+
+.xar-cm-note {
+/* 	font-size: 9px; */
+	text-align: right;
+	line-height: 1em;
+	margin-bottom: -14px;
+}
+
+.xar-cm-comment {
+	color: #15506E !important;
+	font-size: 10px;
+	line-height: 130%;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+.xar-cm-comment p {
+/*     font-size: 10px; */
+    line-height: 130%;
+    padding: 0;
+}
+
+form.xar-cm-actions {
+	float: right;
+	width:auto;
+	padding:0;
+	margin:0;
+}
+
+form.xar-cm-actions > input {
+	width:auto;
+	padding-left:.25em;
+}
+/* fancy input box classes */
+.xar-ib-wrapper {
+	margin: 0;
+	padding: 5px;
+	height: 250px;
+}
+.xar-ib-leftpanel {
+	width: 70%;
+	margin-top: 5px;
+	float: left;
+}
+
+.xar-ib-actionpanel {
+	width: 28%;
+	float: left;
+/* 	background-color: #E5EEF1; */
+	height: 210px;
+	padding-top: 35px;
+	padding-left: 2%;
+}
+
+.xar-ib-control input {
+	width: 29%;
+/* 	padding-top: 5px; */
+}
+
+.xar-ib-field {
+    width: 98%;
+}
+
+.xar-ib-fieldtext {
+    height: 120px;
+    width: 98%;
+}
+
+/* threaded view stuff */
+.xar-tr-wrapper {
+	height: 21px;
+	padding-left: 5px;
+}
+
+.xar-tr-image {
+	float: left;
+	/*     width:60% */
+	margin: 0;
+	padding: 0;
+}
+
+/* .xar-tr-viewimage a { */
+/* 	float: left; */
+/* 	margin: 5px; */
+/* } */
+
+.xar-tr-title {
+	float: left;
+	width: 50%;
+}
+
+.xar-tr-title a {
+	margin-left:5px;
+}
+
+.xar-tr-author {
+	float: left;
+	width: 20%;
+	white-space: nowrap;
+}
+
+.xar-tr-date {
+	float: left;
+    width:30%;
+    white-space: nowrap;
+}
+
+.xar-tr-collapsed {
+	display: none;
+	margin-top: 5px;
+}
