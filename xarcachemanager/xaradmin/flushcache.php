@@ -29,6 +29,7 @@ function xarcachemanager_admin_flushcache($args)
 
         $data['message']    = false;
         $data['cachekeys'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachekeys', $outputCacheDir);
+        $data['cachedirs'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachedirs', $outputCacheDir);
 
         if (!$data['cachekeys']) {
             $data['empty']  = true;
@@ -57,7 +58,7 @@ function xarcachemanager_admin_flushcache($args)
         if ($flushkey == '-') {
             $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
-            if (!empty($flushkey) && !strpos('-', $flushkey)) {
+            if (!empty($flushkey) && !strpos($flushkey, '-')) {
                 xarOutputFlushCached('', "$outputCacheDir/$flushkey");
             } else {
                 xarOutputFlushCached($flushkey);

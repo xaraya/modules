@@ -24,9 +24,11 @@
                                 </option>
                             </xar:loop>
                             <xar:if condition="$empty ne 1">
-                            <option value="page"> * Flush all page cache keys * </option>
-                            <option value="block"> * Flush all block cache keys * </option>
-                            <xar:comment><option value="mod"> * Flush all module cache keys * </option></xar:comment>
+                            <xar:loop name="$cachedirs">
+                                <option value="#$loop:item#">
+                                     * Flush all #$loop:key# cache keys * 
+                                </option>
+                            </xar:loop>
                             <option value=""> * Flush all cache keys * </option>
                             </xar:if>
                         </select>

@@ -1,4 +1,20 @@
 <?php
+
+/**
+ * Construct and array of the current cache keys
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 Xaraya
+ * @link http://www.xaraya.com
+ *
+ * @subpackage xarCacheManager module
+ * @author jsb
+ *
+ * @param $dir directory to start the search for cachekeys in
+ * @returns array
+ * @return sorted array of cachekeys, with key and value both set to $ckey
+*/
+
 function xarcachemanager_adminapi_getcachekeys($dir = FALSE)
 {   
     $cachekeys = array();
@@ -23,7 +39,7 @@ function xarcachemanager_adminapi_getcachekeys($dir = FALSE)
             closedir($dirId);
         }
     }
-    sort($cachekeys);
+    asort($cachekeys);
     return $cachekeys;         
 }
 ?>
