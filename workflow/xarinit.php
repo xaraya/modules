@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- * 
  * Workflow initialization functions
  * 
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -79,14 +77,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_activity_roles] (
@@ -111,14 +101,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instance_activities] (
@@ -152,14 +134,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instance_comments] (
@@ -199,14 +173,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_instances] (
@@ -246,14 +212,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_processes] (
@@ -291,14 +249,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_roles] (
@@ -330,14 +280,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_transitions] (
@@ -366,14 +308,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_user_roles] (
@@ -402,14 +336,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     /*
     $queries[] =
 "CREATE TABLE $xartable[workflow_workitems] (
@@ -448,14 +374,6 @@ function workflow_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return false;
-    }
-    
     // set default activityId for create, update and delete hooks
     xarModSetVar('workflow','default.create',0);
     xarModSetVar('workflow','default.update',0);
