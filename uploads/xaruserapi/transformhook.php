@@ -1,10 +1,10 @@
 <?php
 /**
  * Primarily used by Articles as a transform hook to turn "upload tags" into various display formats
- * 
- * @param  $args ['extrainfo'] 
- * @returns 
- * @return 
+ *
+ * @param  $args ['extrainfo']
+ * @returns
+ * @return
  */
 function & uploads_userapi_transformhook ( $args )
 {
@@ -19,7 +19,7 @@ function & uploads_userapi_transformhook ( $args )
             }
             return $extrainfo;
         }
-        foreach ($extrainfo as $text) {
+        foreach ($extrainfo as $key => $text) {
             $result[] =& uploads_userapi_transform($text);
         }
     } else {
@@ -30,11 +30,9 @@ function & uploads_userapi_transformhook ( $args )
 
 function & uploads_userapi_transform ( $body )
 {
-    
-    while(eregi('#(ulid|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]*)#', $body, $matches)) {
+    while(eregi('#(ulid|ulidd|ulfn|fileURL|fileIcon|fileName|fileLinkedIcon):([^#]+)#', $body, $matches)) {
         array_shift($matches);
         list($type, $id) = $matches;
-        
         switch ( $type )  {
             case 'ulid':
                 // DEPRECATED
@@ -51,7 +49,7 @@ function & uploads_userapi_transform ( $body )
             case 'ulfn': // ULFN is DEPRECATED
             case 'fileLinkedIcon':
                 $list = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $id));
-                $replacement = xarTplModule('uploads', 'user', 'attachment-list', 
+                $replacement = xarTplModule('uploads', 'user', 'attachment-list',
                                              array('Attachments' => $list));
                 break;
             case 'fileIcon':
@@ -70,7 +68,7 @@ function & uploads_userapi_transform ( $body )
                 $replacement = $file['fileName'];
                 break;
         }
-        
+
         $body = ereg_replace("#$type:$id#", $replacement, $body);
     }
 
