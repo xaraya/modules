@@ -54,10 +54,6 @@ function newsletter_userapi_getissuefordisplay($args)
     if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
         return; // throw back
 
-    // Convert newlines in text to <br /> for display
-    $brtext = nl2br($issue['editorNote']); 
-    $issue['editorNote'] = $brtext;
-
     // Change date formats from UNIX timestamp to something readable
     if ($issue['datePublished']['timestamp'] == 0) {
         $issue['datePublished']['mon'] = "";
@@ -85,8 +81,7 @@ function newsletter_userapi_getissuefordisplay($args)
                                array('id' => $issue['ownerId']));
 
         if ($owner) {
-            // Convert newlines in text to <br /> for display
-            $issue['ownerSignature'] = nl2br($owner['signature']);
+            $issue['ownerSignature'] = $owner['signature'];
         } else {
             $issue['ownerSignature'] = "";
         }
@@ -124,12 +119,6 @@ function newsletter_userapi_getissuefordisplay($args)
         if (!isset($stories[$idx]) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
             return; // throw back
         
-        // Convert newlines in text to <br /> for display
-        $brtext = nl2br($stories[$idx]['content']); 
-        $stories[$idx]['content'] = $brtext;
-        $brtext = nl2br($stories[$idx]['commentary']); 
-        $stories[$idx]['commentary'] = $brtext; 
-
         // Check to see if link has expired
         $linkExpiration = $stories[$idx]['linkExpiration']; 
         $storyDate = $stories[$idx]['storyDate'];

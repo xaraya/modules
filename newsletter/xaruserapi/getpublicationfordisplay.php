@@ -63,15 +63,9 @@ function newsletter_userapi_getpublicationfordisplay($args)
                                     array('id' => $publication['disclaimerId']));
 
         if ($disclaimer) {
-            $publication['disclaimer'] = nl2br($disclaimer['disclaimer']);
+            $publication['disclaimer'] = $disclaimer['disclaimer'];
         }
     }
-
-    // Convert newlines in text to <br /> for display
-    $brtext = nl2br($publication['description']); 
-    $publication['description'] = $brtext;
-    $brtext = nl2br($publication['introduction']); 
-    $publication['introduction'] = $brtext;
 
     // Check that we have a real category id
     if ($publication['cid'] != 0) {
