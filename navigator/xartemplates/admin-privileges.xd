@@ -1,0 +1,131 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Navigator Privilege Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>
+                Select Access Modes for Privilege '#(1)'
+            </xar:mlstring>
+            <xar:mlvar>
+                #$extname#
+            </xar:mlvar>
+        </xar:ml>
+    </h2>
+    
+    <div style="margin: auto;">
+
+    <form method="post" action="#xarModURL('navigator', 'admin', 'privileges')#">
+        <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
+        <input type="hidden" name="extname" id="extname" value="#$extname#" />
+        <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
+        <input type="hidden" name="extmodule" id="extmodule" value="#$extmodule#" />
+        <input type="hidden" name="extcomponent" id="extcomponent" value="#$extcomponent#" />
+        <input type="hidden" name="privtype" id="privtype" value="#$privtype#" />
+        
+        <table border="1" cellpadding="8" cellspacing="0">
+            <xar:if condition="$privtype eq 'item'">
+                <tr>
+                    <th>
+                        <xar:mlstring>
+                            Primary Category
+                        </xar:mlstring>
+                    </th>
+                    <td>
+                        <select name="primaryid" id="primaryid" onchange="this.form.submit();">
+                            <option value="0"><xar:mlstring>All</xar:mlstring></option>
+                            <xar:foreach in="$primarylist" key="$key" value="$node">
+                                <xar:if condition="$primaryid eq $node['cid']">
+                                    <option value="#$node['cid']#" selected="selected">
+                                        #$node['name']# 
+                                    </option>
+                                <xar:else />
+                                    <option value="#$node['cid']#">
+                                        #$node['name']# 
+                                    </option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </td>
+                </tr>
+                <xar:if condition="$matrix eq TRUE">
+                    <tr>
+                        <th>
+                            <xar:mlstring>
+                                Secondary Category
+                            </xar:mlstring>
+                        </th>
+                        <td>
+                            <select name="secondaryid" id="secondaryid" onchange="this.form.submit();">
+                                <option value="0"><xar:mlstring>All</xar:mlstring></option>
+                                <xar:foreach in="$secondarylist" key="$key" value="$node">
+                                    <xar:if condition="$secid eq $node['cid']">
+                                        <option value="#$node['cid']#" selected="selected">
+                                            #$node['name']# 
+                                        </option>
+                                    <xar:else />
+                                        <option value="#$node['cid']#">
+                                            #$node['name']# 
+                                        </option>
+                                    </xar:if>
+                                </xar:foreach>
+                            </select>
+                        </td>
+                    </tr>
+                <xar:else />
+                    <input type="hidden" name="secondaryid" id="secondaryid" value="0" />
+                </xar:if>
+            <xar:elseif condition="$privtype eq 'menu'" />
+                <tr>
+                    <th>
+                        <xar:mlstring>
+                            Menu Name
+                        </xar:mlstring>
+                    </th>
+                    <td>
+                        <input type="text" name="menuname" value="#$menuname#" />
+                    </td>
+                </tr>
+            </xar:if>
+            <tr>
+                <th valign="top" align="right">
+                    <xar:mlstring>Access Level</xar:mlstring>
+                </th>
+                <td>
+                    <select name="extlevel" id="extlevel">
+                        <xar:foreach in="$levels" value="$level">
+                            <xar:if condition="$level['selected'] eq TRUE">
+                                <option value="#$level['level']#" selected="selected">
+                                    #$level['name']#
+                                </option>
+                            <xar:else />
+                                <option value="#$level['level']#">
+                                    #$level['name']#
+                                </option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="#$refreshlabel#" />
+                    </td>
+                </tr>
+        </table>
+        <br />
+        <hr />
+        <p>
+        Instance Definition: [ <strong>#$extinstance#</strong> ]
+        </p>
+        <input type="submit" name="apply" value="#$applylabel#" />
+    </form>
+    <br />
+        
+    </div>
+</div>

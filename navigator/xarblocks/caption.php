@@ -41,7 +41,7 @@ function navigator_captionblock_info()
 function navigator_captionblock_display($blockinfo)
 {
     // Security Check
-    if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:All")) {
+    if(!xarSecurityCheck('ViewNavigatorBlock',0,'Block',"$blockinfo[title]")) {
         return;
     }
 
