@@ -423,6 +423,7 @@ function articles_user_view()
 //}
     $data['showpublinks'] = $showpublinks;
     $data['showprevnext'] = $showprevnext;
+    $data['showcategories'] = $showcategories;
 
     if (empty($articles)) {
         // No articles

@@ -1,5 +1,5 @@
 <xar:template file="publinks" type="module" />
-<xar:if condition="!empty($ptid) or !empty($catid)">
+<xar:if condition="(!empty($ptid) or !empty($catid)) and $showcategories">
     <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" />
 </xar:if>
 
