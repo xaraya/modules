@@ -126,6 +126,15 @@ function comments_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_comments_author',
+                   'fields'    => array('xar_author'),
+                   'unique'    => FALSE);
+
+    $query = xarDBCreateIndex($xartable['comments'],$index);
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     // Set up module variables
     xarModSetVar('comments','render',_COM_VIEW_THREADED);
     xarModSetVar('comments','sortby',_COM_SORTBY_THREAD);
