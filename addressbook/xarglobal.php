@@ -197,7 +197,7 @@ define('_AB_INSERT_RECORD',     " Save ");
 define('_AB_LASTCHANGED',       'Last changed ');
 define('_AB_NOIMAGE',           'No Image');
 define('_AB_NUM_COLS',          4);
-define('_AB_REGONLY',           "This website require it's users to be registered to use the address book.<br> Register for free <a href=\"user.php\">here</a>, or <a href=\"user.php\">log in</a> if you are already registered.");
+define('_AB_REGONLY',           "This website require it's users to be registered to use the address book.<br/> Register for free <a href=\"user.php\">here</a>, or <a href=\"user.php\">log in</a> if you are already registered.");
 define('_AB_LABEL_NAME',        "NAME");
 define('_AB_TEMPLATE_ADDR',   1);
 define('_AB_TEMPLATE_CONTACT', 2);
