@@ -275,9 +275,13 @@ function comments_upgrade($oldversion)
         case '1.0':
             // Code to upgrade from version 1.0 goes here
             // Register blocks
-            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+	    if (!xarModAPIFunc('blocks', 'admin', 'block_type_exists',
+                               array('modName'  => 'comments',
+                                     'blockType'=> 'latestcomments'))) { 
+                 if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                                array('modName'  => 'comments',
                                      'blockType'=> 'latestcomments'))) return;
+	    }
             // fall through to the next upgrade
         case '1.1':
             // Code to upgrade from version 1.1 goes here
