@@ -16,8 +16,8 @@
 /**
  * MethodSignatur
  */
-function xmlrpcsystemapi_userapi_methodsignature($server, $msg) {
-	global $xmlrpcerr, $xmlrpcstr;
+function xmlrpcsystemapi_userapi_methodsignature($args) {
+    extract($args);
 
 	$methName=$msg->getParam(0);
 	$methName=$methName->scalarval();
@@ -28,27 +28,36 @@ function xmlrpcsystemapi_userapi_methodsignature($server, $msg) {
 		$sysCall=0;
 	}
 	//	print "<!-- ${methName} -->\n";
+    $data = array();  $data['signatures'] = array();
 	if (isset($dmap[$methName])) {
 		if ($dmap[$methName]["signature"]) {
-			$sigs=array();
 			$thesigs=$dmap[$methName]["signature"];
-			for($i=0; $i<sizeof($thesigs); $i++) {
-				$cursig=array();
+            // Function can have multiple signatures.
+			for($i=0, $nrSigs=sizeof($thesigs); $i<$nrSigs; $i++) {
 				$inSig=$thesigs[$i];
-				for($j=0; $j<sizeof($inSig); $j++) {
-					$cursig[]=new xmlrpcval($inSig[$j], "string");
-				}
-				$sigs[]=new xmlrpcval($cursig, "array");
+                // Reserve room for the params
+                $data['signatures'][$i] = array();
+				for($j=0, $nrParams=sizeof($inSig); $j<$nrParams; $j++) {
+                    $data['signatures'][$i][] = $inSig[$j];
+                }
 			}
-			$r=new xmlrpcresp(new xmlrpcval($sigs, "array"));
 		} else {
-			$r=new xmlrpcresp(new xmlrpcval("undef", "string"));
+            // Method exists, but signature is undefined, set 
+            // both returntype and params to undef
+            $data['signatures'][0][] = 'undef';
+            $data['signatures'][0][] = 'undef';
 		}
 	} else {
-			$r=new xmlrpcresp(0,
-						  $xmlrpcerr["introspect_unknown"],
-						  $xmlrpcstr["introspect_unknown"]);
+        // Method is not in the dispatch map.
+        $err = xarML("The method #(1) is not know at this XML-RPC server",$methName);
+        $out = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
 	}
-	return $r;
+    // Let xmlrpcserver construct the response
+    $out = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                         array('module'  => 'xmlrpcsystemapi',
+                               'command' => 'methodsignature',
+                               'params'  => $data)
+                         );
+    return $out;
 }
 ?>

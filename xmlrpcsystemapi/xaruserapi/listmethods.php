@@ -15,17 +15,25 @@
 
 /**
  * List methods - show the known methods for the XML-RPC server
+ *
+ * This function is part of the 'informal' introspection API
+ * which is not very well standardized.
+ *
+ * @param object $server XML-RPC server instance
+ * @param string $msg    not used (but required)
+ * @retun XML-RPC formatted message
  */
-function xmlrpcsystemapi_userapi_listmethods($server, $msg) {
-    // listmethods has no parameters
-	global $xmlrpcerr, $xmlrpcstr;
-	$v=new xmlrpcval();
+function xmlrpcsystemapi_userapi_listmethods($args) {
+    extract($args);
+    // listmethods has no parameters, so $msg can be ignored
 	$dmap=$server->dmap;
-	$outAr=array();
-	for(reset($dmap); list($key, $val)=each($dmap); ) {
-		$outAr[]=new xmlrpcval($key, "string");
-	}
-	$v->addArray($outAr);
-	return new xmlrpcresp($v);
+	$data['methods'] = array();
+	for(reset($dmap); list($key, $val)=each($dmap); ) $data['methods'][]=$key;
+    $out = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                         array('module'  => 'xmlrpcsystemapi',
+                               'command' => 'listmethods',
+                               'params'  => $data)
+                         );
+	return $out;
 }
 ?>

@@ -13,30 +13,33 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcsystemapi_userapi_methodhelp($server, $msg) {
-	global $xmlrpcerr, $xmlrpcstr;
-
-	$methName=$msg->getParam(0);
+function xmlrpcsystemapi_userapi_methodhelp($args) 
+{
+    extract($args);
+   	$methName=$msg->getParam(0);
 	$methName=$methName->scalarval();
-    $dmap=$server->dmap;
+    $dmap = $server->dmap;
 	if (ereg("^system\.", $methName)) {
 		$sysCall=1;
 	} else {
 		$sysCall=0;
 	}
 	//	print "<!-- ${methName} -->\n";
+    $data = array();
+    $data['methodhelp'] = '';
 	if (isset($dmap[$methName])) {
 		if ($dmap[$methName]["docstring"]) {
-			$r=new xmlrpcresp(new xmlrpcval($dmap[$methName]["docstring"]),
-												"string");
-		} else {
-			$r=new xmlrpcresp(new xmlrpcval("", "string"));
-		}
+            $data['methodhelp'] = $dmap[$methName]['docstring'];
+		} 
+        $out = xarModAPIFunc('xmlrpcserver','user','createresponse',
+                             array('module'  => 'xmlrpcsystemapi',
+                                   'command' => 'methodhelp',
+                                   'params'  => $data)
+                             );
 	} else {
-			$r=new xmlrpcresp(0,
-						  $xmlrpcerr["introspect_unknown"],
-						  $xmlrpcstr["introspect_unknown"]);
+        $err = xarML("The method #(1) is not know at this XML-RPC server",$methName);
+        $out = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
 	}
-	return $r;
+	return $out;
 }
 ?>
