@@ -62,10 +62,10 @@ function newsletter_adminapi_createtopic($args)
     
     // Check if that topic already exists
     $query = "SELECT xar_issueid FROM $nwsltrTable
-              WHERE  xar_issueid = '".xarVarPrepForStore($issueId)."'
-              AND    xar_storyid = '".xarVarPrepForStore($storyId)."'";
+              WHERE  xar_issueid = ?
+              AND    xar_storyid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $issueId, (int) $storyId);
     if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
@@ -78,13 +78,10 @@ function newsletter_adminapi_createtopic($args)
                 xar_storyid,
                 xar_cid,
                 xar_order)
-              VALUES (
-                " . xarVarPrepForStore($issueId) .",
-                " . xarVarPrepForStore($storyId) .",
-                " . xarVarPrepForStore($cid) .",
-                " . xarVarPrepForStore($storyOrder) . ")";
+              VALUES (?, ?, ?, ?)";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $issueId, (int) $storyId, (int) $cid, (int) $storyOrder);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;

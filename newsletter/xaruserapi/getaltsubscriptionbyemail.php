@@ -53,14 +53,17 @@ function newsletter_userapi_getaltsubscriptionbyemail($args)
                      xar_pid,
                      xar_htmlmail
               FROM $nwsltrTable
-              WHERE xar_email = '" . xarVarPrepForStore($email) . "'";
+              WHERE xar_email = ?";
+
+    $bindvars[] = (string) $email;
 
     if(isset($pid)) {
-        $query .= " AND xar_pid = " . xarVarPrepForStore($pid);
+        $query .= " AND xar_pid = ?";
+        $bindvars[] = (int) $pid;
     }
 
     // Process query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

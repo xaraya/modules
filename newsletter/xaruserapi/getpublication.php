@@ -62,10 +62,10 @@ function newsletter_userapi_getpublication($args)
                      xar_private,
                      xar_subject
               FROM $nwsltrTable
-              WHERE xar_id = " . xarVarPrepForStore($id);
+              WHERE xar_id = ?";
 
     // Process query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

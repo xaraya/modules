@@ -72,9 +72,9 @@ function newsletter_adminapi_createpublication($args)
 
     // Check if the publication already exists
     $query = "SELECT xar_id FROM $nwsltrTable
-              WHERE xar_title = '".xarVarPrepForStore($title)."'";
+              WHERE xar_title = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((string) $title));
     if (!$result) return false; 
 
     if ($result->RecordCount() > 0) {
@@ -101,22 +101,23 @@ function newsletter_adminapi_createpublication($args)
               xar_introduction,
               xar_private,
               xar_subject)
-            VALUES (
-              $nextId,
-              " . xarVarPrepForStore($ownerId) .",
-              " . xarVarPrepForStore($categoryId) .",
-              '" . xarVarPrepForStore($altcids) ."',
-              '" . xarVarPrepForStore($title) ."',
-              '" . xarVarPrepForStore($templateHTML) ."',
-              '" . xarVarPrepForStore($templateText) ."',
-              '" . xarVarPrepForStore($logo) ."',
-              " . xarVarPrepForStore($linkExpiration) .",
-              '" . xarVarPrepForStore($linkRegistration) ."',
-              '" . xarVarPrepForStore($description) ."',
-              '" . xarVarPrepForStore($disclaimerId) . "',
-              '" . xarvarPrepForStore($introduction) . "',
-              " . xarVarPrepForStore($private) . ",
-              " . xarVarPrepForStore($subject) . " )";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $bindvars = array((int)     $nextId,
+                      (int)     $ownerId,
+                      (int)     $categoryId,
+                      (string)  $altcids,
+                      (string)  $title,
+                      (string)  $templateHTML,
+                      (string)  $templateText,
+                      (string)  $logo,
+                      (int)     $linkExpiration,
+                      (string)  $linkRegistration,
+                      (string)  $description,
+                      (int)     $disclaimerId,
+                      (string)  $introduction,
+                      (int)     $private,
+                      (int)     $subject);
 
     $result =& $dbconn->Execute($query);
 

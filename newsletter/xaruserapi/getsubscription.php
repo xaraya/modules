@@ -56,15 +56,18 @@ function newsletter_userapi_getsubscription($args)
                      $subTable.xar_pid,
                      $subTable.xar_htmlmail
               FROM  $subTable, $rolesTable
-              WHERE $subTable.xar_uid = " . xarVarPrepForStore($uid) . "
+              WHERE $subTable.xar_uid = ? 
               AND   $subTable.xar_uid = $rolesTable.xar_uid";
 
+    $bindvars[] = (int) $uid;
+
     if(isset($pid)) {
-        $query .= " AND $subTable.xar_pid = " . xarVarPrepForStore($pid);
+        $bindvars[] = (int) $pid
+        $query .= " AND $subTable.xar_pid = ? ";
     }
 
     // Process query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

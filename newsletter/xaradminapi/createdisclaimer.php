@@ -53,9 +53,9 @@ function newsletter_adminapi_createdisclaimer($args)
 
     // Check if that disclaimer already exists
     $query = "SELECT xar_id FROM $nwsltrTable
-              WHERE xar_title = '".xarVarPrepForStore($title)."'";
+              WHERE xar_title = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((string) $title));
     if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
@@ -70,11 +70,11 @@ function newsletter_adminapi_createdisclaimer($args)
               xar_id,
               xar_title,
               xar_text)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($title) . "',
-              '" . xarVarPrepForStore($disclaimer) . "')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?, ?, ?)";
+
+    $bindvars = array((int) $nextId, (string) $title, (string) $disclaimer);
+
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;

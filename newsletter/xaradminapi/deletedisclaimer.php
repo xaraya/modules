@@ -46,9 +46,11 @@ function newsletter_adminapi_deletedisclaimer($args)
     $nwsltrTable = $xartable['nwsltrDisclaimers'];
 
     // Delete the disclaimer
-    $query = "DELETE FROM $nwsltrTable
-              WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE 
+                FROM $nwsltrTable
+               WHERE xar_id = ?";
+    $bindvars[] = (int) $id;
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

@@ -62,9 +62,11 @@ function newsletter_adminapi_deleteowner($args)
     $nwsltrTable = $xartable['nwsltrOwners'];
 
     // Delete the item
-    $query = "DELETE FROM $nwsltrTable
-              WHERE xar_uid = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE 
+                FROM $nwsltrTable
+               WHERE xar_uid = ?";
+    $bindvars[] = (int) $id;
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

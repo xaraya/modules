@@ -62,9 +62,11 @@ function newsletter_adminapi_deletepublication($args)
     $altsubsTable = $xartable['nwsltrAltSubscriptions'];
 
     // Delete the publication
-    $query = "DELETE FROM $publicationsTable
-              WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE 
+                FROM $publicationsTable
+               WHERE xar_id = ?";
+    $bindvars[] = (int) $id;
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

@@ -85,25 +85,41 @@ function newsletter_adminapi_updatepublication($args)
     $nwsltrTable = $xartable['nwsltrPublications'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_ownerid = " .  xarVarPrepForStore($ownerId) . ",
-              xar_cid = " .  xarVarPrepForStore($categoryId) . ",
-              xar_altcids = '" .  xarVarPrepForStore($altcids) . "',
-              xar_title = '" .  xarVarPrepForStore($title) . "',
-              xar_template_html = '" .  xarVarPrepForStore($templateHTML) . "',
-              xar_template_text = '" .  xarVarPrepForStore($templateText) . "',
-              xar_logo = '" .  xarVarPrepForStore($logo) . "',
-              xar_linkexpiration = " .  xarVarPrepForStore($linkExpiration) . ",
-              xar_linkregistration = '" .  xarVarPrepForStore($linkRegistration) . "',
-              xar_description = '" .  xarVarPrepForStore($description) . "',
-              xar_disclaimerid = " .  xarVarPrepForStore($disclaimerId) . ",
-              xar_introduction = '" .  xarVarPrepForStore($introduction) . "',
-              xar_private = " .  xarVarPrepForStore($private) . ",
-              xar_subject = " .  xarVarPrepForStore($subject) . "
-              WHERE xar_id = " . xarVarPrepForStore($id);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_cid = ?
+                     xar_altcids = ?
+                     xar_ownerid = ?
+                     xar_template_html = ?
+                     xar_template_text = ?
+                     xar_title = ?
+                     xar_logo = ?
+                     xar_linkexpiration = ?
+                     xar_linkregistration = ?
+                     xar_description = ?
+                     xar_disclaimerid = ?
+                     xar_introduction = ?
+                     xar_private = ?
+                     xar_subject = ?
+               WHERE xar_id = ?";
+
+    $bindvars = array((int)     $categoryId,
+                      (string)  $altcids,
+                      (int)      $ownerId,
+                      (string)  $templateHTML,
+                      (string)  $templateText,
+                      (string)  $title,
+                      (string)  $logo,
+                      (int)     $linkExpiration,
+                      (sring)   $linkRegistration,
+                      (string)  $description,
+                      (int)     $disclaimerId,
+                      (string)  $introduction,
+                      (int)     $private,
+                      (int)     $subject,
+                      (int)     $id);
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

@@ -49,23 +49,23 @@ function newsletter_adminapi_setdatepublished($args)
     $nwsltrStoriesTable = $xartable['nwsltrStories'];
 
     // Update the issue
-    $query = "UPDATE $nwsltrIssuesTable SET
-              xar_datepublished = " .  xarVarPrepForStore($date) . "
-              WHERE xar_id = " . xarVarPrepForStore($issue['id']);
+    $query = "UPDATE $nwsltrIssuesTable 
+                 SET xar_datepublished = ?
+               WHERE xar_id = ?";
+
+    $bindvars = array((int) $date, (int) $id);
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;
 
     // Get topics for issue - these are the stories
     // associated with issue
-    $topics = xarModAPIFunc('newsletter',
-                          'user',
-                          'get',
-                          array('id' => $issue['id'],
-                                'phase' => 'topic'));
+    $topics = xarModAPIFunc('newsletter', 'user', 'get',
+                             array('id' => $issue['id'],
+                                   'phase' => 'topic'));
 
     // Check for exceptions
     if (!isset($topics) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
@@ -73,12 +73,14 @@ function newsletter_adminapi_setdatepublished($args)
 
     foreach ($topics as $topic) {
         // Update story
-        $query = "UPDATE $nwsltrStoriesTable SET
-                  xar_datepublished = " .  xarVarPrepForStore($date) . "
-                  WHERE xar_id = " . xarVarPrepForStore($topic['storyId']);
+        $query = "UPDATE $nwsltrStoriesTable 
+                     SET xar_datepublished = ?
+                   WHERE xar_id = ?";
+        
+        $bindvars = array((int) $date, (int) $topic['storyId']);
 
         // Execute query
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query, $bindvars);
 
         // Check for an error
         if (!$result) return;

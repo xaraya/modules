@@ -60,10 +60,10 @@ function newsletter_adminapi_createaltsubscription($args)
 
     // Check if that subscription already exists
     $query = "SELECT xar_email FROM $nwsltrTable
-              WHERE xar_email = '".xarVarPrepForStore($email)."'
-              AND   xar_pid = ".xarVarPrepForStore($pid);
+              WHERE xar_email = ?
+              AND   xar_pid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((string) $email, (int) $pid));
     if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
@@ -82,14 +82,15 @@ function newsletter_adminapi_createaltsubscription($args)
               xar_email,
               xar_pid,
               xar_htmlmail)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarVarPrepForStore($email) . "',
-              " . xarVarPrepForStore($pid) . ",
-              " . xarVarPrepForStore($htmlmail) . ")";
+            VALUES (?, ?, ?, ?, ?)";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $nextId. 
+                      (string) $name,
+                      (string) $email, 
+                      (int) $pid,
+                      (int) $htmlmail);
+
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;

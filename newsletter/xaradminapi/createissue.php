@@ -59,9 +59,9 @@ function newsletter_adminapi_createissue($args)
 
     // Check if the issue already exists
     $query = "SELECT xar_id FROM $nwsltrTable
-              WHERE xar_title = '".xarVarPrepForStore($title)."'";
+              WHERE xar_title = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((string) $title));
     if (!$result) return false; 
 
     if ($result->RecordCount() > 0) {
@@ -80,14 +80,15 @@ function newsletter_adminapi_createissue($args)
               xar_external,
               xar_editornote,
               xar_datepublished)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($publicationId) ."',
-              '" . xarVarPrepForStore($title) ."',
-              " . xarVarPrepForStore($ownerId) .",
-              '" . xarVarPrepForStore($external) . "',
-              '" . xarVarPrepForStore($editorNote) . "',
-              '" . xarVarPrepForStore($tstmpDatePublished) . "')";
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+	$bindvars = array((int) $nextd,
+	              	  (int) $publicationId,
+    	          	  (string) $title,
+        	      	  (int) $ownerId, 
+            	  	  (int) $external,
+	              	  (string) $editorNote,
+    	          	  (int) $tstmpDatePublished);
 
     $result =& $dbconn->Execute($query);
 

@@ -69,17 +69,25 @@ function newsletter_adminapi_updateissue($args)
     $nwsltrTable = $xartable['nwsltrIssues'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_pid = " .  xarVarPrepForStore($publicationId) . ",
-              xar_ownerid = " .  xarVarPrepForStore($ownerId) . ",
-              xar_title = '" .  xarVarPrepForStore($title) . "',
-              xar_external = " .  xarVarPrepForStore($external) . ",
-              xar_editornote = '" .  xarVarPrepForStore($editorNote) . "',
-              xar_datepublished = " .  xarVarPrepForStore($tstmpDatePublished) . "
-              WHERE xar_id = " . xarVarPrepForStore($id);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_pid = ?
+                     xar_ownerid = ?
+                     xar_title = ?
+                     xar_external = ?
+                     xar_editornote = ?
+                     xar_datepublished = ?
+               WHERE xar_id = ?";
+
+    $bindvars = array((int) $publicationId,
+                      (int) $ownerId,
+                      (string) $title,
+                      (int) $external,
+                      (string) $editorNote,
+                      (int) $tstmpDatePublished,
+                      (int) $id);
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

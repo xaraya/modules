@@ -50,14 +50,18 @@ function newsletter_adminapi_deletesubscription($args)
     $nwsltrTable = $xartable['nwsltrSubscriptions'];
 
     // Delete the disclaimer
-    $query = "DELETE FROM $nwsltrTable
-              WHERE xar_uid = " . xarVarPrepForStore($uid);
+    $query = "DELETE 
+                FROM $nwsltrTable
+               WHERE xar_uid = ?";
+    $bindvars[] = (int) $uid;
 
     // Check if $pid also sent
-    if (isset($pid))
-        $query .= " AND xar_pid = ". xarVarPrepForStore($pid);
+    if (isset($pid)) {
+        $query .= " AND xar_pid = ?"; 
+        $bindvars[] = (int) $pid;
+    }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

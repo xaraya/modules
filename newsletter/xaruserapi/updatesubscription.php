@@ -68,13 +68,17 @@ function newsletter_userapi_updatesubscription($args)
     $nwsltrTable = $xartable['nwsltrSubscriptions'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_htmlmail = " . xarVarPrepForStore($disclaimer) . "
-              WHERE xar_uid = " . xarVarPrepForStore($uid) ."
-              AND   xar_pid = " . xarVarPrepForStore($pid);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_htmlmail = ?
+               WHERE xar_uid = ?
+                 AND xar_pid = ?";
+
+    $bindvars[] = (int) $disclaimer;
+    $bindvars[] = (int) $uid;
+    $bindvars[] = (int) $pid;
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

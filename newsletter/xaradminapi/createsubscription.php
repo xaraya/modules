@@ -55,10 +55,10 @@ function newsletter_adminapi_createsubscription($args)
 
     // Check if that subscription already exists
      $query = "SELECT xar_uid FROM $nwsltrTable
-               WHERE xar_uid = ".xarVarPrepForStore($uid)."
-               AND   xar_pid = ".xarVarPrepForStore($pid);
+               WHERE xar_uid = ? 
+               AND   xar_pid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $uid, (int) $pid));
     if (!$result) return false;
 
     if ($result->RecordCount() > 0) {
@@ -70,12 +70,11 @@ function newsletter_adminapi_createsubscription($args)
               xar_uid,
               xar_pid,
               xar_htmlmail)
-             VALUES (
-              " . xarVarPrepForStore($uid) . ",
-              " . xarVarPrepForStore($pid) . ",
-              " . xarVarPrepForStore($htmlmail) . ")";
+             VALUES (?, ?, ?)"
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $uid, (int) $pid, (int) $htmlmail);
+
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;

@@ -68,13 +68,15 @@ function newsletter_adminapi_updatedisclaimer($args)
     $nwsltrTable = $xartable['nwsltrDisclaimers'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_title = '" . xarVarPrepForStore($title) . "',
-              xar_text = '" . xarVarPrepForStore($disclaimer) . "'
-              WHERE xar_id = " . xarVarPrepForStore($id);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_title = ?
+                       xar_text = ?
+               WHERE xar_id = ?";
+
+    $bindvars = array((string) $title, (string) $disclaimer, (int) $id);
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

@@ -52,11 +52,11 @@ function newsletter_userapi_getissue($args)
                      xar_external,
                      xar_editornote,
                      xar_datepublished
-              FROM $nwsltrTable
-              WHERE xar_id = " . xarVarPrepForStore($id);
+                FROM $nwsltrTable
+               WHERE xar_id = ?";
 
     // Process query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

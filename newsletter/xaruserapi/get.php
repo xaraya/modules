@@ -325,12 +325,15 @@ function newsletter_userapi_get($args)
                       FROM $topicsTable";
 
             if($issueId) {
-                $query .= " WHERE xar_issueid = " . xarVarPrepForStore($issueId);
+                $query .= " WHERE xar_issueid = ?";
+                $bindvars = array((int) $issueId);
+            } else {
+                $bindvars = array();
             }
 
             $query .= " ORDER by xar_order";
 
-            $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+            $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
             // Check for an error
             if (!$result) return;
@@ -572,15 +575,18 @@ function newsletter_userapi_get($args)
                              $rolesTable.xar_name,
                              $subscriptionsTable.xar_htmlmail
                       FROM $subscriptionsTable, $rolesTable
-                      WHERE $subscriptionsTable.xar_pid = " . xarVarPrepForStore($pid) . "
+                      WHERE $subscriptionsTable.xar_pid = ?
                       AND $subscriptionsTable.xar_uid = $rolesTable.xar_uid";
 
+            $bindvars[] = (int) $pid);
+
             if(isset($uid)) {
-                $query .= " AND $subscriptionsTable.xar_uid = " . xarVarPrepForStore($uid);
+                $query .= " AND $subscriptionsTable.xar_uid = ?";
+                $bindvars[] = (int) $uid;
             }
 
             $query .= " ORDER by xar_uid, xar_pid";
-            $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+            $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
             // Check for an error
             if (!$result) return;
@@ -614,10 +620,12 @@ function newsletter_userapi_get($args)
                              xar_pid,
                              xar_htmlmail
                       FROM $nwsltrTable
-                      WHERE xar_pid = " . xarVarPrepForStore($pid);
+                      WHERE xar_pid = ?";
+            
+            $bindvars[] = (int) $pid;
 
             $query .= " ORDER by xar_email";
-            $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+            $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
 
             // Check for an error
             if (!$result) return;

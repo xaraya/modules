@@ -111,25 +111,26 @@ function newsletter_adminapi_createstory($args)
               xar_linkexpiration,
               xar_commentary,
               xar_commentarysrc)
-            VALUES (
-              $nextId,
-              " . xarVarPrepForStore($ownerId) .",
-              " . xarVarPrepForStore($publicationId) .",
-              " . xarVarPrepForStore($categoryId) .",
-              '" . xarVarPrepForStore($title) . "',
-              '" . xarVarPrepForStore($source) . "',
-              '" . xarVarPrepForStore($content) . "',
-              " . xarVarPrepForStore($priority) . ",
-              " . xarVarPrepForStore($tstmpStoryDate) . ",
-              '" . xarVarPrepForStore($altDate) . "',
-              " . xarVarPrepForStore($tstmpDatePublished) . ",
-              '" . xarVarPrepForStore($fullTextLink) . "',
-              " . xarVarPrepForStore($registerLink) . ",
-              " . xarVarPrepForStore($linkExpiration) . ",
-              '" . xarVarPrepForStore($commentary) . "',
-              '" . xarvarPrepForStore($commentarySource) . "')";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $nextId,
+                      (int) $ownerId,
+                      (int) $publicationId,
+                      (int) $categoryId,
+                      (string) $title,
+                      (string) $source,
+                      (string) $content,
+                      (int) $priority,
+                      (int) $tstmpStoryDate,
+                      (string) $altDate,
+                      (int) $tstmpDatePublished,
+                      (string) $fullTextLink,
+                      (int) $registerLink,
+                      (int) $linkExpiration,
+                      (string) $commentary,
+                      (string) $commentarySource);
+
+    $result =& $dbconn->Execute($query. $bindvars);
 
     // Check for an error
     if (!$result) return false;

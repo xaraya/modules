@@ -60,17 +60,19 @@ function newsletter_adminapi_deletestory($args)
     $storiesTable = $xartable['nwsltrStories'];
 
     // Delete the story from the topics table
-    $query = "DELETE FROM $topicsTable
-              WHERE xar_storyid = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE 
+                FROM $topicsTable
+               WHERE xar_storyid = ?";
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;
 
     // Delete the story
-    $query = "DELETE FROM $storiesTable
-              WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE 
+                FROM $storiesTable
+               WHERE xar_id = ?";
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

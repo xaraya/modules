@@ -66,13 +66,15 @@ function newsletter_adminapi_updateowner($args)
     $nwsltrTable = $xartable['nwsltrOwners'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_rid = " . xarVarPrepForStore($rid) . ",
-              xar_signature = '" . xarVarPrepForStore($signature) . "'
-              WHERE xar_uid = " . xarVarPrepForStore($id);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_rid = ?
+                       xar_signature = ?
+               WHERE xar_uid = ?";
+
+    $bindvars = array((int) $rid, (string) $signature, (int) $id);
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

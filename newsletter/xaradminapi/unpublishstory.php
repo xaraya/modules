@@ -60,12 +60,12 @@ function newsletter_adminapi_unpublishstory($args)
     $nwsltrTable = $xartable['nwsltrStories'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_datepublished = 0
-              WHERE xar_id = " . xarVarPrepForStore($id);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_datepublished = 0
+               WHERE xar_id = ?";
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array(int) $id));
 
     // Check for an error
     if (!$result) return;

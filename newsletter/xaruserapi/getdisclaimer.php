@@ -49,11 +49,11 @@ function newsletter_userapi_getdisclaimer($args)
 
     $query = "SELECT xar_title,
                      xar_text
-              FROM $nwsltrTable
-              WHERE xar_id = " . xarVarPrepForStore($id);
+                FROM $nwsltrTable
+               WHERE xar_id = ?";
 
     // Process query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

@@ -73,14 +73,19 @@ function newsletter_adminapi_updatealtsubscription($args)
     $nwsltrTable = $xartable['nwsltrAltSubscriptions'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_name = '" . xarVarPrepForStore($name) . "'
-              xar_email = '" . xarVarPrepForStore($email) . "'
-              xar_htmlmail = " . xarVarPrepForStore($disclaimer) . "
-              WHERE xar_id = " . xarVarPrepForStore($id);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_name = ?
+                     xar_email = ?
+                     xar_htmlmail = ?
+              WHERE xar_id = ?";
+    
+    $bindvars[] = (string) $name;
+    $bindvars[] = (string) $email;
+    $bindvars[] = (int) $htmlmail;
+    $bindvars[] = (int) $id;
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

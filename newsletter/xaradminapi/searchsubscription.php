@@ -76,8 +76,10 @@ function newsletter_adminapi_searchsubscription($args)
                              $rolesTable.xar_email
                       FROM   $nwsltrSubTable, $nwsltrPubTable, $rolesTable
                       WHERE  $nwsltrSubTable.xar_uid =  $rolesTable.xar_uid
-                      AND    $nwsltrPubTable.xar_id = " . xarVarPrepForStore($pid) . "
+                      AND    $nwsltrPubTable.xar_id = ?
                       AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+            $bindvars[] = (int) $pid;
 
             if (!empty($searchname)) {
                 $query .= " AND ($rolesTable.xar_name LIKE '%" . $searchname . "%' OR $rolesTable.xar_email LIKE  '%" . $searchname . "%')";
@@ -122,7 +124,11 @@ function newsletter_adminapi_searchsubscription($args)
             break;
     }
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    if (isset($bindvars) && !empty($bindvars)) {
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
+    } else {
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    }
 
     // Check for an error
     if (!$result) return;

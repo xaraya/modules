@@ -49,9 +49,10 @@ function newsletter_adminapi_deletetopic($args)
     $nwsltrTable = $xartable['nwsltrTopics'];
 
     // Delete the topic
-    $query = "DELETE FROM $nwsltrTable
-              WHERE xar_issueid = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+    $query = "DELETE 
+                FROM $nwsltrTable
+               WHERE xar_issueid = ?";
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

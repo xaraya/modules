@@ -65,12 +65,14 @@ function newsletter_adminapi_updatesignature($args)
     $nwsltrTable = $xartable['nwsltrOwners'];
 
     // Update the item
-    $query = "UPDATE $nwsltrTable SET
-              xar_signature = '" . xarVarPrepForStore($signature) . "'
-              WHERE xar_uid = " . xarVarPrepForStore($id);
+    $query = "UPDATE $nwsltrTable 
+                 SET xar_signature = ?
+               WHERE xar_uid = ?";
+    
+    $bindvars = array((string) $signature, (int) $id);
 
     // Execute query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

@@ -50,11 +50,11 @@ function newsletter_userapi_getowner($args)
     $query = "SELECT xar_uid,
                      xar_rid,
                      xar_signature
-              FROM $nwsltrTable
-              WHERE xar_uid = " . xarVarPrepForStore($id);
+                FROM $nwsltrTable
+               WHERE xar_uid = ?";
 
     // Process query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

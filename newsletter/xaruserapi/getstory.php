@@ -63,10 +63,10 @@ function newsletter_userapi_getstory($args)
                      xar_commentary,
                      xar_commentarysrc
               FROM $nwsltrTable
-              WHERE xar_id = " . xarVarPrepForStore($id);
+              WHERE xar_id = ?";
 
     // Process query
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;

@@ -54,9 +54,9 @@ function newsletter_adminapi_createowner($args)
 
     // Check if that owner already exists
     $query = "SELECT xar_uid FROM $nwsltrTable
-              WHERE xar_uid = ".xarVarPrepForStore($id);
+              WHERE xar_uid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $id));
     if (!$result) return false; 
 
     if ($result->RecordCount() > 0) {
@@ -69,22 +69,19 @@ function newsletter_adminapi_createowner($args)
         $query = "INSERT INTO $nwsltrTable (
                   xar_uid,
                   xar_rid)
-                  VALUES (
-                  " . xarVarPrepForStore($id) .",
-                  " . xarVarPrepForStore($rid) .")";
+                  VALUES ( ?, ? )";
+		$bindvars = array((int) $id, (int) $rid);
     } else {
         // Add item
         $query = "INSERT INTO $nwsltrTable (
                   xar_uid,
                   xar_rid,
                   xar_signature)
-                VALUES (
-                  " . xarVarPrepForStore($id) .",
-                  " . xarVarPrepForStore($rid) .",
-                  '" . xarVarPrepForStore($signature) ."')";
+                VALUES (?, ?, ?)";
+		$bindvars = array((int) $id, (int) $rid, (string) $signature);
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return false;

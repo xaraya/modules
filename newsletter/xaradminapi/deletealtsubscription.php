@@ -53,17 +53,20 @@ function newsletter_adminapi_deletealtsubscription($args)
     // If email sent, then delete all subscriptions for that email
     if (isset($email)) {
         $query = "DELETE FROM $nwsltrTable
-                  WHERE xar_email = '" . xarVarPrepForStore($email) . "'";
+                  WHERE xar_email = ?";
+        $bindvars[] = (string) $email;
     } else {
         $query = "DELETE FROM $nwsltrTable
-                  WHERE xar_id = " . xarVarPrepForStore($id);
+                  WHERE xar_id = ?";
+        $bindvars[] = (int) $id;
     }
 
     // Check if $pid also sent
-    if (isset($pid))
-        $query .= " AND xar_pid = ". xarVarPrepForStore($pid);
-
-    $result =& $dbconn->Execute($query);
+    if (isset($pid)) {
+        $query .= " AND xar_pid = ?";
+        $bindvars[] = (int) $pid;
+    }
+    $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
     if (!$result) return;

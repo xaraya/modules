@@ -73,8 +73,10 @@ function newsletter_adminapi_searchaltsubscription($args)
                              $nwsltrAltSubTable.xar_name,
                              $nwsltrAltSubTable.xar_email
                       FROM   $nwsltrAltSubTable, $nwsltrPubTable
-                      WHERE  $nwsltrPubTable.xar_id = " . xarVarPrepForStore($pid) . "
+                      WHERE  $nwsltrPubTable.xar_id = ? 
                       AND    $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+            $bindvars[] = (int) $pid;
 
             if (!empty($searchname)) {
                 $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
@@ -114,7 +116,11 @@ function newsletter_adminapi_searchaltsubscription($args)
             break;
     }
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    if (isset($bindvars) && !empty($bindvars)) {
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
+    } else {
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    }        
 
     // Check for an error
     if (!$result) return;
