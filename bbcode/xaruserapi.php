@@ -171,101 +171,85 @@ function bbcode_encode($message, $is_html_disabled)
 
 } // bbcode_encode()
 
-
-
-/**
- * Nathan Codding - Jan. 12, 2001.
- * Performs [quote][/quote] bbencoding on the given string, and returns the results.
- * Any unmatched "[quote]" or "[/quote]" token will just be left alone. 
- * This works fine with both having more than one quote in a message, and with nested quotes.
- * Since that is not a regular language, this is actually a PDA and uses a stack. Great fun.
- *
- * Note: This function assumes the first character of $message is a space, which is added by 
- * bbencode().
- */
-function bbcode_encode_quote($message)
+/* completely reworked bbcode quote function to improve performance.
+* Credit for the algorithm goes to Ara Anjargolian <ara@jargol.com>
+*/
+function bbcode_encode_quote($message) 
 {
-    // First things first: If there aren't any "[quote]" strings in the message, we don't
-    // need to process it at all.
-    
-    if (!strpos(strtolower($message), "[quote]"))
-    {
-        return $message;    
-    }
-    
-    $stack = Array();
-    $curr_pos = 1;
-    while ($curr_pos && ($curr_pos < strlen($message)))
-    {    
-        $curr_pos = strpos($message, "[", $curr_pos);
-    
-        // If not found, $curr_pos will be 0, and the loop will end.
-        if ($curr_pos)
-        {
-            // We found a [. It starts at $curr_pos.
-            // check if it's a starting or ending quote tag.
-            $possible_start = substr($message, $curr_pos, 7);
-            $possible_end = substr($message, $curr_pos, 8);
-            if (strcasecmp("[quote]", $possible_start) == 0)
-            {
-                // We have a starting quote tag.
-                // Push its position on to the stack, and then keep going to the right.
-                array_push($stack, $curr_pos);
-                ++$curr_pos;
-            }
-            else if (strcasecmp("[/quote]", $possible_end) == 0)
-            {
-                // We have an ending quote tag.
-                // Check if we've already found a matching starting tag.
-                if (sizeof($stack) > 0)
-                {
-                    // There exists a starting tag. 
-                    // We need to do 2 replacements now.
-                    $start_index = array_pop($stack);
+  $tags_found = array();
+  //Create an associative array, including the character
+  //offset of each end/start tag in the message.
+  for($j = 0; ($j = strpos($message, '[', $j)); $j++) {
+    if(strcasecmp(substr($message, $j, 7), '[quote]') == 0)
+      $tags_found[$j] = 's';
+    elseif(strcasecmp(substr($message, $j, 8), '[/quote]') == 0)
+      $tags_found[$j] = 'e';
+  }
 
-                    // everything before the [quote] tag.
-                    $before_start_tag = substr($message, 0, $start_index);
-
-                    // everything after the [quote] tag, but before the [/quote] tag.
-                    $between_tags = substr($message, $start_index + 7, $curr_pos - $start_index - 7);
-
-                    // everything after the [/quote] tag.
-                    $after_end_tag = substr($message, $curr_pos + 8);
-
-                    $message = $before_start_tag . xarML('Quote').":<blockquote>";
-                    $message .= $between_tags . "</blockquote>";
-                    $message .= $after_end_tag;
-                    
-                    // Now.. we've screwed up the indices by changing the length of the string. 
-                    // So, if there's anything in the stack, we want to resume searching just after it.
-                    // otherwise, we go back to the start.
-                    if (sizeof($stack) > 0)
-                    {
-                        $curr_pos = array_pop($stack);
-                        array_push($stack, $curr_pos);
-                        ++$curr_pos;
-                    }
-                    else
-                    {
-                        $curr_pos = 1;
-                    }
-                }
-                else
-                {
-                    // No matching start tag found. Increment pos, keep going.
-                    ++$curr_pos;    
-                }
-            }
-            else
-            {
-                // No starting tag or ending tag.. Increment pos, keep looping.,
-                ++$curr_pos;    
-            }
-        }
-    } // while
-    
+  /*
+  This will be faster, but no stripos() until PHP 5.0 :-( 
+  for($j = 0; ($j = stripos($message, '[quote]', $j)); $j++) 
+    $tags_found[$j] = 's';
+  for($j = 0; ($j = stripos($message, '[/quote]', $j)); $j++) 
+    $tags_found[$j] = 'e';
+  ksort($tags_found);
+  */
+  
+  //If no tags found, return.
+  if(empty($tags_found)) {
     return $message;
-    
+  }
+  $stack = array();
+  $is_well_formed = TRUE;
+
+  foreach($tags_found as $k => $v) {
+    //If we have a start tag, hold on to it in the stack
+    if($v == 's') {
+      array_push($stack, $k);
+    }
+    //If we have an end tag
+    else{
+      //If we have a pending start tag, we have a matach
+      if(!empty($stack)) {
+	array_pop($stack);
+
+      }
+      //If we don't have a pending start tag, mark string
+      //as malformed and remove extranneous end tag from our list.
+      else {
+	$is_well_formed = FALSE;
+	unset($tags_found[$k]); //This is safe because 'foreach' operates on a copy
+      }
+    }
+  }
+  
+  //Fast Path: is we know our string is well formed, then we can do a batch replace
+  if($is_well_formed && empty($stack)) {
+    //No str_ireplace until PHP 5.0 :-(
+    $message = preg_replace('/\[quote\]/i', '<p>Quote:</p><blockquote>', $message);
+    $message = preg_replace('/\[\/quote\]/i', '</blockquote>', $message);
+    return $message;
+  }
+
+  //Get rid of extra start tags, if any
+  foreach($stack as $v) {
+    unset($tags_found[$v]);
+  }
+
+  //Now rebuild the string using $tags_found
+  $new_offset = 0;
+  foreach($tags_found as $k => $v) {
+    if($v == 's') {
+      $message = & substr_replace($message, '<p>Quote:</p><blockquote>', $k + $new_offset, 7);
+      $new_offset += 11;
+    }
+    else {
+      $message = & substr_replace($message, '</blockquote>', $k + $new_offset, 8);
+      $new_offset += 5;
+    }
+  }
+
+  return $message;
 } // bbcode_encode_quote()
 
 

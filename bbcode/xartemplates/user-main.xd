@@ -1,0 +1,25 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>BBCode Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body"><h2><xar:mlstring>Test BBCode</xar:mlstring></h2>
+<div style="margin: auto;">
+
+	<div style="clear: both; padding-top: 10px;">
+		<xar:if condition="!empty($output)">
+			#$output#
+		</xar:if>
+	</div>
+
+
+	<form action="#xarModUrl('bbcode', 'user', 'main')#" method="post">
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Enter a bbcode item to test.')#"><label for="searchstrings"><xar:mlstring>Test BBCode</xar:mlstring></label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<textarea name="text" id="text" rows="10" cols="70" /></textarea> 
+	</span>
+	</div>
+	<div style="float: left; width: 30%; text-align: right; margin-top: 5px;"><input type="submit" value="#$submit#" /></div>
+	</form>
+</div>
+</div>
