@@ -20,7 +20,7 @@ function userpoints_adminapi_createhook($args)
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'admin', 'createhook', 'userpoints');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
@@ -35,7 +35,7 @@ function userpoints_adminapi_createhook($args)
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'createhook', 'userpoints');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {

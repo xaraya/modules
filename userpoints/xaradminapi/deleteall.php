@@ -18,7 +18,7 @@ function ratings_adminapi_deleteall($args)
     if (!isset($objectid) || !is_string($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID (= module name)', 'admin', 'deleteall', 'ratings');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
@@ -27,7 +27,7 @@ function ratings_adminapi_deleteall($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'deleteall', 'ratings');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }

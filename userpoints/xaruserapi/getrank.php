@@ -34,7 +34,7 @@ function userpoints_userapi_getrank($args)
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'rank ID', 'user', 'getrank', 'Userpoints');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     } 
@@ -64,7 +64,7 @@ function userpoints_userapi_getrank($args)
     if ($result->EOF) {
         $result->Close();
         $msg = xarML('This rank does not exists');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     } 

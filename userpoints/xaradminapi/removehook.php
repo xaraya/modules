@@ -26,7 +26,7 @@ function userpoints_adminapi_removehook($args)
     extract($args);
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         //$msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'admin', 'createhook', 'userpoints');
-        //xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        //xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         $extrainfo = array();

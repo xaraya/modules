@@ -27,14 +27,14 @@ function ping_adminapi_updatehook($args)
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object id', 'admin', 'updatehook', 'ping');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'admin', 'updatehook', 'ping');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
@@ -51,7 +51,7 @@ function ping_adminapi_updatehook($args)
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'admin', 'updatehook', 'ping');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
         return $extrainfo;
@@ -89,7 +89,7 @@ function ping_adminapi_updatehook($args)
         $result         = $client->send($message);
         if (!$result || $result->faultCode()) {
             $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             // we *must* return $extrainfo for now, or the next hook will fail
             //return false;
             return $extrainfo;
@@ -101,7 +101,7 @@ function ping_adminapi_updatehook($args)
             $result         = $client->send($message);
             if (!$result || $result->faultCode()) {
                 $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 // we *must* return $extrainfo for now, or the next hook will fail
                 //return false;
                 return $extrainfo;
@@ -114,7 +114,7 @@ function ping_adminapi_updatehook($args)
             $result         = $client->send($message);
             if (!$result || $result->faultCode()) {
                 $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 // we *must* return $extrainfo for now, or the next hook will fail
                 //return false;
                 return $extrainfo;

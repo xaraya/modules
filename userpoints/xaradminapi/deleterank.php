@@ -34,7 +34,7 @@ function userpoints_adminapi_deleterank($args)
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'rank ID', 'admin', 'deleterank', 'Userpoints');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     } 
