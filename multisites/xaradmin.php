@@ -377,13 +377,43 @@ global $HTTP_SERVER_VARS;
                                array('where'   =>
                                    'WHERE xar_msprefix = "'.$msPrefix.'" AND xar_msdb = "'.$siteDB.'"'));
 
-   if ($prefixexists) {
+    if ($prefixexists) {
             $msg = xarML("Sorry, a subsite already exists in database '".$siteDB."'\nwith database prefix '".$msPrefix."'\nPlease use a different table prefix.");
             xarExceptionSet(XAR_USER_EXCEPTION, 'ALREADY_EXISTS', new DefaultUserException($msg));
             return $msg;
     }
 
     $cWhereIsPerso =xarModGetVar('multisites','masterfolder');
+
+    $masterdb=xarDBGetName();
+    // TO DO - option to create database, create tables
+
+    //Set the new config vars
+    $setmultisite = xarMSConfigSetVar('System.MS.MultiSites',
+                                   '1',
+					  	           $msPrefix,
+						           xarDBGetSiteTablePrefix(),
+						           $siteDB,
+                                   $masterdb);
+    if (!$setmultisite) {
+            $msg = xarML("Unable to set configuration vars for ".$siteDN.
+                         "/nDelete the new site from the Multisite Table, check your database and tables exists and try again.");
+            xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE', new DefaultUserException($msg));
+            return $msg;
+    }
+
+    $setmultisite = xarMSConfigSetVar('Site.DB.TablePrefix',
+                                   $msPrefix,
+					  	           $msPrefix,
+						           xarDBGetSiteTablePrefix(),
+						           $siteDB,
+                                   $masterdb);
+
+    if (!$setmultisite) {
+            xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE ".$siteDB', new DefaultUserException($msg));
+            return $msg;
+    }
+    // TO DO - set subsite mod vars
 
     //Create new masterfolder data tree
     $var = is_dir($cWhereIsPerso."/".$sitedir);
@@ -461,22 +491,6 @@ global $HTTP_SERVER_VARS;
 
     if (!$msid) return;
 
-    $setmultisite = MSConfigSetVar('System.MS.MultiSites',
-                                   '1',
-					  	           $msPrefix,
-						           xarDBGetSiteTablePrefix(),
-						           $siteDB);
-    $setmultisite = MSConfigSetVar('Site.DB.TablePrefix',
-                                   $msPrefix,
-					  	           $msPrefix,
-						           xarDBGetSiteTablePrefix(),
-						           $siteDB);
-
-    // TO DO - set subsite mod vars
-
-    // TO DO - option to create database, create tables
-
-//
    xarResponseRedirect(xarModURL('multisites', 'admin', 'view'));
    // success
    return true;
@@ -764,11 +778,12 @@ global $HTTP_SERVER_VARS;
         $msid = xarModAPIFunc('multisites',
                               'admin',
                               'create',
-                        array('mssite'   => $masterurl,
-                              'msprefix' => xarDBGetSystemTablePrefix(),
-                              'msdb'     => xarDBGetName(),
-                              'msshare'  => 'Master',
-                              'msstatus' => 1));
+                        array('mssite'     => $masterurl,
+                              'msprefix'   => xarDBGetSystemTablePrefix(),
+                              'msdb'       => xarDBGetName(),
+                              'msshare'    => 'Master',
+                              'msstatus'   => 1,
+                              'sitefolder' => 'var'));
 
         if (!$msid) return;
 
@@ -1650,29 +1665,99 @@ return true;
 
 // ==================================================================================================
 
-//jojodee: my turn to hack!
-function MSModSetVar()
+//jojodee: my turn to hack.
+function xarMSModSetVar()
 {
  	    //TO DO
 }
-
-function MSModGetVar()
-{
-		//TO DO
-}
-function MSModDelVar()
-{
-		//TO DO
-}
-function MSConfigSetVar($name,
-                        $value,
-						$msprefix,
+//TO DO FINISH THIS AFTER MODE PROBLEM IS SETTLED
+function xarMSModGetVar($modName,
+                        $name,
+					  	$msprefix,
 						$masterprefix,
-						$msdb)
+						$msdb,
+                        $masterdb)
 {
-    //TO DO: put some more error checking in this function
+    if (empty($modName)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'EMPTY_PARAM', 'modName');
+        return;
+    }
+    if (empty($name)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'EMPTY_PARAM', 'name');
+        return;
+    }
+    //This should be the same info for subsite as sharing same code base
+    //except for xar_id (systemid) - cannot assume the module table will be shared
+    $modBaseInfo = xarMod_getBaseInfo($modName);
+    if (!isset($modBaseInfo)) {
+         return; // throw back
+    }
 
-	if (empty($name)) {
+    // Connect to master db - and get the config table
+    list($dbconn) 	= xarDBGetConn();
+    $xartable 		= xarDBGetTables();
+    $module_varstable =$xartable['module_vars'];
+
+    // Start connection with the new database - assume same type as master.
+    $dbsiteconn = ADONewConnection(xarDBGetType());
+    $dbsite 	   = $dbsiteconn->Connect(
+ 					  xarDBGetHost(), // assume same as master for these atm
+					  xarCore_getSystemVar('DB.UserName'),
+					  xarCore_getSystemVar('DB.Password'),
+					  $msdb  // new site database - maybe same as master
+					  );
+    if (!$dbsite) return;
+
+   // We're in the right database, work out what mode and table prefix!
+    if ($modBaseInfo['mode'] == XARMOD_MODE_SHARED) {
+        $module_varstable = $tables['system/module_vars'];
+    } elseif ($modBaseInfo['mode'] == XARMOD_MODE_PER_SITE) {
+        $module_varstable = $tables['site/module_vars'];
+    }
+
+    $query = "SELECT xar_value
+              FROM $module_varstable
+              WHERE xar_modid = '" . xarVarPrepForStore($modBaseInfo['systemid']) . "'
+              AND xar_name = '" . xarVarPrepForStore($name) . "'";
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    if ($result->EOF) {
+        $result->Close();
+        xarVarSetCached('Mod.Variables.' . $modName, $name, '*!*MiSSiNG*!*');
+        return;
+    }
+    list($value) = $result->fields;
+    $result->Close();
+    
+    xarVarSetCached('Mod.Variables.' . $modName, $name, $value);
+
+    if ($prep == XARVAR_PREP_FOR_DISPLAY){
+        $value = xarVarPrepForDisplay($value);
+    } elseif ($prep == XARVAR_PREP_FOR_HTML){
+        $value = xarVarPrepHTMLDisplay($value);
+    }
+
+    return $value;
+
+}
+
+function xarMSModDelVar()
+{
+		//TO DO
+}
+
+// Set a configuration variable
+//  in the new site tables
+// Reconnect to database in case of different database
+function xarMSConfigSetVar($name,
+                           $value,
+					  	   $msprefix,
+						   $masterprefix,
+						   $msdb,
+                           $masterdb)
+{
+ 	if (empty($name)) {
         $msg = xarML('Empty name.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
@@ -1684,24 +1769,23 @@ function MSConfigSetVar($name,
    $configtable     = $xartable['config_vars'];
 
    // Start connection with the new database - assume same type as master.
-   $dbconn = ADONewConnection(xarDBGetType());
-   $dbsite 	= $dbconn->Connect(
+   $dbsiteconn = ADONewConnection(xarDBGetType());
+   $dbsite 	   = $dbsiteconn->Connect(
  					  xarDBGetHost(), // assume same as master for these atm
 					  xarCore_getSystemVar('DB.UserName'),
 					  xarCore_getSystemVar('DB.Password'),
 					  $msdb  // new site database - maybe same as master
 					  );
-   if (!$dbsite){
-             $setmultisite=" didn't connect to new database";
-             return $setmultisite;
-   }
+   if (!$dbsite) return;
+   
+   //make sure we are getting the table with the prefix we want
    $configtable 		= str_replace($masterprefix,$msprefix,$configtable);
    //check the var exists already
    $query = "SELECT xar_value
               FROM $configtable
               WHERE xar_name = '" . xarVarPrepForStore($name) . "'
               ";
-    $result = $dbconn->Execute($query);
+    $result = $dbsiteconn->Execute($query);
     if ((!$result) || ($result->EOF)) {
        $mustInsert = true;
     } else {
@@ -1716,7 +1800,7 @@ function MSConfigSetVar($name,
     //or update the value if it already exists
    if ($mustInsert == true) {
         //Insert
-        $seqId = $dbconn->GenId($configtable);
+        $seqId = $dbsiteconn->GenId($configtable);
         $query = "INSERT INTO $configtable
                   (xar_id,
                    xar_name,
@@ -1731,14 +1815,76 @@ function MSConfigSetVar($name,
                    WHERE xar_name='" . xarVarPrepForStore($name) . "'";
      }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbsiteconn->Execute($query);
     if (!$result) return;
 
+    //force return to master database
+    $dbconn = ADONewConnection(xarDBGetType());
+    $dbsite = $dbconn->Connect(
+ 					  xarDBGetHost(),
+					  xarCore_getSystemVar('DB.UserName'),
+					  xarCore_getSystemVar('DB.Password'),
+					  $masterdb
+					  );
     return true;
 }
-
-function multisites_admin_MSConfigGetVar()
+// Get a configuration variable
+// in a subsite table
+// Reconnect to database in case of different database
+function xarMSConfigGetVar($name,
+					  	   $msprefix,
+						   $masterprefix,
+						   $msdb,
+                           $masterdb)
 {
-	// TO DO
+	
+	if (empty($name)) {
+        $msg = xarML('Empty name.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+    return;
+    }
+    list($dbconn) 	= xarDBGetConn();
+    $xartable 		= xarDBGetTables();
+    $config_varsTable    = $xartable['config_vars'];
+
+    // Start connection with the new database - assume same type as master.
+    $dbsiteconn = ADONewConnection(xarDBGetType());
+    $dbsite 	   = $dbsiteconn->Connect(
+ 					  xarDBGetHost(), // assume same as master for these atm
+					  xarCore_getSystemVar('DB.UserName'),
+					  xarCore_getSystemVar('DB.Password'),
+					  $msdb  // new site database - maybe same as master
+					  );
+    if (!$dbsite) return;
+    //make sure we get the table with correct prefix
+    $$config_varsTable 		= str_replace($masterprefix,$msprefix,$config_varsTable);
+    $query = "SELECT xar_value
+              FROM $config_varsTable
+              WHERE xar_name='" . xarVarPrepForStore($name) . "'";
+    $result =& $dbsiteconn->Execute($query);
+    if (!$result) return;
+
+    if ($result->EOF) {
+        $result->Close();
+        return;
+    }
+
+    //Get data
+    list($value) = $result->fields;
+    $result->Close();
+
+    // Unserialize variable value
+    $value = unserialize($value);
+
+   //force return to master database
+    $dbconn = ADONewConnection(xarDBGetType());
+    $dbsite = $dbconn->Connect(
+ 					  xarDBGetHost(),
+					  xarCore_getSystemVar('DB.UserName'),
+					  xarCore_getSystemVar('DB.Password'),
+					  $masterdb
+					  );
+     return $value;
 }
 ?>
