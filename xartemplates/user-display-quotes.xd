@@ -17,7 +17,8 @@
     <xar:mlstring>
         Added on
     </xar:mlstring>
-    : #$date#
+    : #xarLocaleGetFormattedDate('long',$pubdate)#
+      #xarLocaleGetFormattedTime('long',$pubdate)#
 </div>
 <div class="xar-sub">
     <xar:mlstring>

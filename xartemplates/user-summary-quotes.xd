@@ -8,7 +8,9 @@
             </xar:if>
             <a class="xar-title" href="#$link#">#$title#</a><br />
             <xar:mlstring>Description</xar:mlstring>: #$summary#<br />
-            <xar:mlstring>Added on</xar:mlstring>: #$date#
+            <xar:mlstring>Added on</xar:mlstring>:
+            #xarLocaleGetFormattedDate('long',$pubdate)#
+            #xarLocaleGetFormattedTime('long',$pubdate)#
             <xar:if condition="!empty($rating)">
                 - <xar:mlstring>Rating</xar:mlstring>: #$rating#
             </xar:if>

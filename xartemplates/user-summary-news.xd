@@ -9,9 +9,10 @@
 
           <div class="xar-accent" style="padding: 2px;"><span class="xar-sub">
           <xar:ml>
-              <xar:mlstring>Posted by: #(1) on #(2)</xar:mlstring>
+              <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
               <xar:mlvar>#$author#</xar:mlvar>
-              <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $pubdate)#</xar:mlvar>
+              <xar:mlvar>#xarLocaleGetFormattedDate('long',$pubdate)#</xar:mlvar>
+              <xar:mlvar>#xarLocaleGetFormattedTime('long',$pubdate)#</xar:mlvar>
           </xar:ml>
           <xar:if condition="!empty($counter)">
             <xar:if condition="$counter eq 1">

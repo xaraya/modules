@@ -38,7 +38,8 @@
     <xar:mlstring>Added on:</xar:mlstring>
   </td>
   <td align="left">
-    #$date#
+    #xarLocaleGetFormattedDate('long',$pubdate)#
+    #xarLocaleGetFormattedTime('long',$pubdate)#
   </td>
 </tr>
 <tr>

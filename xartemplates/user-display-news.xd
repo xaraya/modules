@@ -19,13 +19,16 @@
         </xar:if>
         <xar:ml>
             <xar:mlstring>
-                Posted by: #(1) on #(2)
+                Posted by: #(1) on #(2) #(3)
             </xar:mlstring>
             <xar:mlvar>
                 #$author_string#
             </xar:mlvar>
             <xar:mlvar>
-                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $pubdate)#
+                #xarLocaleGetFormattedDate('long',$pubdate)#
+            </xar:mlvar>
+            <xar:mlvar>
+                #xarLocaleGetFormattedTime('long',$pubdate)#
             </xar:mlvar>
         </xar:ml>
         <xar:if condition="!empty($counter)">
