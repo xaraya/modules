@@ -53,7 +53,7 @@ function navigator_newsletter_subblock_display($blockinfo)
         return; // throw back
     }
 
-    // Make sure the newsletter module is active
+    // Make sure the issue area publication module is active
 
 
     // Get program area and content type cids
@@ -78,11 +78,11 @@ function navigator_newsletter_subblock_display($blockinfo)
                                          'getchildren' => false));
 
     // Check for exceptions
-    if (!isset($research_cat) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {
+    if (!isset($research_cat) && xarErrorMajor() != XAR_NO_EXCEPTION) {
         return; // throw back
     }
 
-    // Get newsletter publications
+    // Get issue area publications
     $publications = xarModAPIFunc('newsletter', 'user', 'get',
                                    array('phase' => 'publication'));
 
@@ -99,79 +99,85 @@ function navigator_newsletter_subblock_display($blockinfo)
     $archive_link = '';
     $archive_text = '';
     $found = false;
-    $subscriptioncount = 0;
 
-    // Check if the user is logged in
-    if (xarUserIsLoggedIn()) {
-        // Get user id
-        $uid = xarUserGetVar('uid');
+    // Loop through publications
+    foreach ($publications as $publication) {
+        // Check if a publication has been assigned to the program area
+        if (in_array($primary_cid, $publication['altcids'])) {
+            // Get the publication subscription information
+            $logo = $publication['logo'];
+            $description = $publication['description'];
 
-        // Loop through publications
-        foreach ($publications as $publication) {
-            // Check if a publication has been assigned to an alternative category
-            if (in_array($primary_cid, $publication['altcids'])) {
-                // Get the publication subscription information
-                $logo = $publication['logo'];
-                $description = $publication['description'];
+            // Create title
+            $title = xarVarPrepForDisplay($research_cat[0]['name'] . ' News');
 
-                // Create title
-                $title = xarVarPrepForDisplay($research_cat[0]['name'] . ' News');
+            // Get current user
+            if (xarUserIsLoggedIn()) {
+                // Determine if user has already subscribed to the issue update
+                $uid = xarUserGetVar('uid');
 
-                // Determine if archives are available for the publication
-                if (!$publication['private']) {
-                    $archive_link = xarModURL('newsletter',
-                                              'user',
-                                              'viewarchives',
-                                              array('publicationId' => $publication['id']));
-                    $archive_text = 'Archives';
+                // The user API function is called
+                $subscriptions = xarModAPIFunc('newsletter', 'user', 'get',
+                                                array('id' => 0, // doesn't matter
+                                                      'uid' => $uid,
+                                                      'pid' => $publication['id'],
+                                                      'phase' => 'subscription'));
+
+                // Has user subscribed?
+                if (count($subscriptions) == 0) {
+                    // Set subscribe link
+                    $subscribe_text = 'Subscribe';
+                    $subscribe_link = xarModURL('newsletter',
+                                                'user',
+                                                'newsubscription');
+                } else {
+                    // Set modify subscription link
+                    $subscribe_text = 'Modify Subscription';
+                    $subscribe_link = xarModURL('newsletter',
+                                                'user',
+                                                'modifysubscription');
                 }
+            } else {
+                // Set subscribe link
+                $subscribe_text = 'Subscribe';
+                $subscribe_link = xarModURL('newsletter',
+                                            'user',
+                                            'newsubscription');
+            }
+            // Set flag
+            $found = true;
+
+            // Determine if archives are available for the publication
+            if (!$publication['private']) {
+                $archive_link = xarModURL('newsletter',
+                                          'user',
+                                          'viewarchives',
+                                          array('publicationId' => $publication['id']));
+                $archive_text = 'Archives';
             }
 
-            // Determine if the user is subscribed to this publication
-            $subscriptions = xarModAPIFunc('newsletter', 'user', 'get',
-                                           array('id' => 0, // doesn't matter
-                                                 'uid' => $uid,
-                                                 'pid' => $publication['id'],
-                                                 'phase' => 'subscription'));
-
-
-            // Has user subscribed?
-            if (count($subscriptions) > 0) {
-                // Set flag
-                $found = true;
-            }
+            break;
         }
     }
-
-    // Check if the user is subscribed to a publication
-    if ($found) {
-        // Set modify subscription link
-        $subscribe_text = 'Modify Subscription';
-        $subscribe_link = xarModURL('newsletter',
-                                    'user',
-                                    'modifysubscription');
-    } else {
-        // Set subscribe link
-        $subscribe_text = 'Subscribe';
-        $subscribe_link = xarModURL('newsletter',
-                                    'user',
-                                    'newsubscription');
-    }
-
-    // Set title and subscription text
-    $data['title'] = $title;
-    $data['logo'] = $logo;
-    $data['description'] = $description;
-    $data['subscribe_link'] = $subscribe_link;
-    $data['subscribe_text'] = $subscribe_text;
-    $data['archive_link'] = $archive_link;
-    $data['archive_text'] = $archive_text;
     
-    // Set blockinfo content
-    $blockinfo['content'] = $data;
+    
 
-    if (!empty($blockinfo['content'])) {
-        return $blockinfo;
+    if ($found) {
+        // Set title and subscription text
+        $data['title'] = $title;
+        $data['logo'] = $logo;
+        $data['description'] = $description;
+        $data['subscribe_link'] = $subscribe_link;
+        $data['subscribe_text'] = $subscribe_text;
+        $data['archive_link'] = $archive_link;
+        $data['archive_text'] = $archive_text;
+        
+        // Set blockinfo content
+        $blockinfo['content'] = $data;
+
+        if (!empty($blockinfo['content'])) {
+            return $blockinfo;
+        }
     }
 }
 
