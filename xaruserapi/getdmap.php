@@ -43,7 +43,7 @@ http://plant.blogger.com/api/samples/getUserInfoResponse.xml";
     $getUsersBlogs_sig=array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString, $xmlrpcString));
     $getUsersBlogs_doc=
         "Returns information about all the blogs a
-given user is a member of. Data is returned as an array of <struct>s containing
+given user is a member of. Data is returned as an array of &lt;struct&gt;s containing
 the ID (blogid), name (blogName), and URL (url) of each blog";
     
     /**
