@@ -3,6 +3,9 @@
 /**
  * Grab the highest 'right' value for the whole comments table
  *
+ * Note: this is no longer relevant, since each (modid + itemtype + objectid)
+ *       has its own Celko tree
+ *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   private
  * @returns   integer   the highest 'right' value for the table or zero if it couldn't find one

@@ -13,8 +13,8 @@ function comments_userapi_activate( $args )
     
     extract($args);
     
-    if (empty($id)) {
-        $msg = xarML('Missing or Invalid parameter \'id\'!!');
+    if (empty($cid)) {
+        $msg = xarML('Missing or Invalid parameter \'cid\'!!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -26,9 +26,10 @@ function comments_userapi_activate( $args )
     // then find the root node.
     $sql = "UPDATE $xartable[comments]
             SET xar_status='" . _COM_STATUS_ON."'
-            WHERE xar_cid='$comment_cid'";
+            WHERE xar_cid=?";
+    $bindvars = array((int) $cid);
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,$bindvars);
 
     if (!$result)
         return;

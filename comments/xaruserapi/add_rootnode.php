@@ -9,6 +9,7 @@
  * @param    integer     objectid   The particular object within that module 
  * @param    integer     itemtype   The itemtype of that object
  * @returns  integer     the id of the node that was created so it can be used as a parent id
+ * @todo get rid of this notion of root node ?
  */
 function comments_userapi_add_rootnode( $args ) 
 {
@@ -40,18 +41,11 @@ function comments_userapi_add_rootnode( $args )
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
-    $ctable = &$xartable['comments_column'];
-
-    // grab the max right value
-    $maxright = xarModAPIFunc('comments','user','get_table_maxright');
-
-    // if we couldn't find a maxright then there isn't any
-    // comments in the table yet so we start with maxright = 0 :)
-    if (false == $maxright) {
-        $maxright = 0;
-    }
-
     $commenttable = $xartable['comments'];
+
+    // Each (modid + itemtype + objectid) has its own Celko tree now,
+    // so we start over from 0 for the left and right positions
+    $maxright = 0;
 
     // Set left and right values;
     $left  = $maxright + 1;

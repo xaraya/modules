@@ -32,7 +32,7 @@ function comments_userapi_get_childcount($cid)
 
     $sql = "SELECT  COUNT($ctable[cid]) as numitems
               FROM  $xartable[comments]
-             WHERE  $ctable[status]='"._COM_STATUS_ON."'
+             WHERE  $ctable[status]="._COM_STATUS_ON."
                AND  ($ctable[left] >= $nodelr[xar_left] AND $ctable[right] <= $nodelr[xar_right])";
 
     $result =& $dbconn->Execute($sql);

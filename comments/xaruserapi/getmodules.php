@@ -30,19 +30,19 @@ function comments_userapi_getmodules($args)
 
     switch ($status) {
         case 'active':
-            $where_status = "$ctable[status] = '". _COM_STATUS_ON ."'";
+            $where_status = "$ctable[status] = ". _COM_STATUS_ON;
             break;
         case 'inactive':
-            $where_status = "$ctable[status] = '". _COM_STATUS_OFF ."'";
+            $where_status = "$ctable[status] = ". _COM_STATUS_OFF;
             break;
         default:
         case 'all':
-            $where_status = "$ctable[status] != '". _COM_STATUS_ROOT_NODE ."'";
+            $where_status = "$ctable[status] != ". _COM_STATUS_ROOT_NODE;
     }
     if (!empty($modid)) {
-        $where_mod = " AND $ctable[modid] = '$modid'";
+        $where_mod = " AND $ctable[modid] = $modid";
         if (isset($itemtype)) {
-            $where_mod = " AND $ctable[itemtype] = '$itemtype'";
+            $where_mod = " AND $ctable[itemtype] = $itemtype";
         }
     } else {
         $where_mod = '';

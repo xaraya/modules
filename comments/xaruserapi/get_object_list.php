@@ -27,10 +27,10 @@ function comments_userapi_get_object_list( $args )
 
     $sql     = "SELECT DISTINCT $ctable[objectid] AS pageid
                            FROM $xartable[comments]
-                          WHERE $ctable[modid] = '$modid'";
+                          WHERE $ctable[modid] = $modid";
 
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]='$itemtype'";
+        $sql .= " AND $ctable[itemtype]=$itemtype";
     }
 
     $result =& $dbconn->Execute($sql);

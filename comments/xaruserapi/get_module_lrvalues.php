@@ -33,8 +33,8 @@ function comments_userapi_get_module_lrvalues( $args )
                     MIN($ctable[left]) AS xar_left,
                     MAX($ctable[right]) AS xar_right
               FROM  $xartable[comments]
-             WHERE  $ctable[modid]='$modid'
-               AND  $ctable[itemtype]='$itemtype'
+             WHERE  $ctable[modid]=$modid
+               AND  $ctable[itemtype]=$itemtype
           GROUP BY  $ctable[objectid]";
 
     $result =& $dbconn->Execute($sql);

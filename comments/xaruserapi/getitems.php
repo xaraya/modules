@@ -60,14 +60,14 @@ function comments_userapi_getitems($args)
 
     switch ($status) {
         case 'active':
-            $where_status = "$ctable[status] = '". _COM_STATUS_ON ."'";
+            $where_status = "$ctable[status] = ". _COM_STATUS_ON;
             break;
         case 'inactive':
-            $where_status = "$ctable[status] = '". _COM_STATUS_OFF ."'";
+            $where_status = "$ctable[status] = ". _COM_STATUS_OFF;
             break;
         default:
         case 'all':
-            $where_status = "$ctable[status] != '". _COM_STATUS_ROOT_NODE ."'";
+            $where_status = "$ctable[status] != ". _COM_STATUS_ROOT_NODE;
     }
 
     // Get items
@@ -77,7 +77,7 @@ function comments_userapi_getitems($args)
                WHERE $ctable[modid] = ?
                  AND $ctable[itemtype] = ?
                  AND $where_status ";
-    $bindvars[] = $modid; $bindvars[] = $itemtype;
+    $bindvars[] = (int) $modid; $bindvars[] = (int) $itemtype;
     if (isset($itemids) && count($itemids) > 0) {
         $bindmarkers = '?' . str_repeat(',?', count($itemids)-1);
         $bindvars = array_merge($bindvars, $itemids);

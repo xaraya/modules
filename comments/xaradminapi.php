@@ -15,10 +15,6 @@
 
 include_once('modules/comments/xarincludes/defines.php');
 
-function comments_adminapi_updateconfig($args) 
-{
-}
-
 /**
  * utility function pass individual menu items to the main menu
  *
@@ -54,159 +50,6 @@ function comments_adminapi_getmenulinks()
     return $menulinks;
 }
 
-/* replaced by getmodules
-function comments_adminapi_get_stats( ) 
-{
-
-    $modules = xarModAPIFunc('comments','admin','get_module_list');
-
-    if (!count($modules) || empty($modules)) {
-        return array();
-    }
-
-    foreach ($modules as $modid => $list) {
-        $modules[$modid]['pages']    = xarModAPIFunc('comments','admin','count_module_pages',
-                                            array('modid'=>$modid));
-        $modules[$modid]['total']    = xarModAPIFunc('comments','admin','count_comments',
-                                            array('type'    => 'module',
-                                                  'modid'   => $modid,
-                                                  'status'  => 'all'));
-
-        $modules[$modid]['active']   = xarModAPIFunc('comments','admin','count_comments',
-                                            array('type'    => 'module',
-                                                  'modid'   => $modid,
-                                                  'status'  => 'active'));
-
-        $modules[$modid]['inactive'] = xarModAPIFunc('comments','admin','count_comments',
-                                            array('type'    => 'module',
-                                                  'modid'   => $modid,
-                                                  'status'  => 'inactive'));
-    }
-
-    return $modules;
-}
-*/
-
-/* replaced by getitems
-function comments_adminapi_get_module_stats( $args ) 
-{
-
-    extract($args);
-
-    if (!isset($modid) || empty($modid)) {
-        $msg = xarML('Invalid or Missing Parameter \'modid\'');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
-    }
-    if (empty($itemtype)) {
-        $itemtype = 0;
-    }
-    xarModAPILoad('comments','user');
-    $pages = xarModAPIFunc('comments','user','get_object_list',
-                            array( 'modid'    => $modid, 
-                                   'itemtype' => $itemtype ));
-
-    if (!count($pages) || empty($pages)) {
-        return array();
-    }
-
-    foreach ($pages as $pageid => $list) {
-        $pages[$pageid]['total']    = xarModAPIFunc('comments','admin','count_comments',
-                                            array('type'    => 'object',
-                                                  'modid'   => $modid,
-                                                  'itemtype'=> $itemtype,
-                                                  'objectid'=> $pageid,
-                                                  'status'  => 'all'));
-
-        $pages[$pageid]['inactive'] = xarModAPIFunc('comments','admin','count_comments',
-                                            array('type'    => 'object',
-                                                  'modid'   => $modid,
-                                                  'itemtype'=> $itemtype,
-                                                  'objectid'=> $pageid,
-                                                  'status'  => 'inactive'));
-    }
-
-    return $pages;
-
-}
-*/
-
-/* replaced by getmodules
-function comments_adminapi_get_module_list( ) 
-{
-
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $ctable = &$xartable['comments_column'];
-    $mtable = &$xartable['modules'];
-
-    $sql     = "SELECT DISTINCT $xartable[modules].xar_name AS modname, $ctable[modid] AS modid
-                           FROM $xartable[comments]
-                      LEFT JOIN $xartable[modules]
-                             ON $ctable[modid] = $xartable[modules].xar_regid
-                       ORDER BY modname ASC";
-
-
-    $result =& $dbconn->Execute($sql);
-    if (!$result) return;
-
-    // if it's an empty set, return array()
-    if ($result->EOF) {
-        return array();
-    }
-
-    // zip through the list of results and
-    // create the return array
-    while (!$result->EOF) {
-        $row = $result->GetRowAssoc(false);
-        $ret[$row['modid']]['modname'] = $row['modname'];
-        $result->MoveNext();
-    }
-    $result->Close();
-
-    return $ret;
-
-}
-*/
-
-/* replaced by getitems
-function comments_adminapi_count_module_pages( $args ) 
-{
-    extract($args);
-
-    if (!isset($modid) || empty($modid)) {
-        $msg = xarML('Missing or Invalid modid!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
-    }
-
-    // initialize total to zero
-    $total = 0;
-
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $ctable = &$xartable['comments_column'];
-
-    $query = "SELECT DISTINCT $ctable[objectid]
-                         FROM $xartable[comments]
-                        WHERE $ctable[modid] = $modid";
-
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    // zip through the list of results and
-    // add them up to create our total
-    while (!$result->EOF) {
-        $total++;
-        $result->MoveNext();
-    }
-    $result->Close();
-
-    return $total;
-
-}
-*/
-
 /**
  * Delete a node from the tree and reassign it's children to it's parent
  *
@@ -234,9 +77,13 @@ function comments_adminapi_delete_node( $args )
     }
 
     // Grab the deletion node's left and right values
-    // as well as the max right value for the comments table
-    $del_node_lr = xarModAPIFunc('comments','user','get_node_lrvalues',array('cid'=>$node));
-    $max_right = xarModAPIFunc('comments','user','get_table_maxright');
+    $comments = xarModAPIFunc('comments','user','get_one',
+                              array('cid' => $node));
+    $left = $comments[0]['xar_left'];
+    $right = $comments[0]['xar_right'];
+    $modid = $comments[0]['xar_modid'];
+    $itemtype = $comments[0]['xar_itemtype'];
+    $objectid = $comments[0]['xar_objectid'];
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -246,13 +93,13 @@ function comments_adminapi_delete_node( $args )
     // delete the node
     $sql = "DELETE
               FROM  $xartable[comments]
-             WHERE  $ctable[cid]='$node'";
+             WHERE  $ctable[cid]=$node";
 
     // reset all parent id's == deletion node's id to that of
     // the deletion node's parent id
     $sql2 = "UPDATE $xartable[comments]
                 SET $ctable[pid]='$pid'
-              WHERE $ctable[pid]='$node'";
+              WHERE $ctable[pid]=$node";
 
     if (!$dbconn->Execute($sql))
         return;
@@ -264,11 +111,16 @@ function comments_adminapi_delete_node( $args )
     // First we subtract 1 from all the deletion node's children's left and right values
     // and then we subtract 2 from all the nodes > the deletion node's right value
     // and <= the max right value for the table
-    xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $del_node_lr['xar_left'], 
-                                                       'endpoint'   => $del_node_lr['xar_right'],
+    xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $left, 
+                                                       'endpoint'   => $right,
+                                                       'modid'      => $modid,
+                                                       'objectid'   => $objectid,
+                                                       'itemtype'   => $itemtype,
                                                        'gapsize'    => 1));
-    xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $del_node_lr['xar_right'],
-                                                       'endpoint'   => $max_right, 
+    xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $right,
+                                                       'modid'      => $modid,
+                                                       'objectid'   => $objectid,
+                                                       'itemtype'   => $itemtype,
                                                        'gapsize'    => 2));
 
     return $dbconn->Affected_Rows();
@@ -293,12 +145,14 @@ function comments_adminapi_delete_branch( $args )
         return;
     }
 
-    xarModAPILoad('comments','user');
-
     // Grab the deletion node's left and right values
-    // as well as the max right value for the comments table
-    $del_node_lr = xarModAPIFunc('comments','user','get_node_lrvalues', array('cid'=>$node));
-    $max_right = xarModAPIFunc('comments','user','get_table_maxright');
+    $comments = xarModAPIFunc('comments','user','get_one',
+                              array('cid' => $node));
+    $left = $comments[0]['xar_left'];
+    $right = $comments[0]['xar_right'];
+    $modid = $comments[0]['xar_modid'];
+    $itemtype = $comments[0]['xar_itemtype'];
+    $objectid = $comments[0]['xar_objectid'];
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -307,8 +161,8 @@ function comments_adminapi_delete_branch( $args )
 
     $sql = "DELETE
               FROM  $xartable[comments]
-             WHERE  $ctable[left]   >= $del_node_lr[xar_left]
-               AND  $ctable[right]  <= $del_node_lr[xar_right]";
+             WHERE  $ctable[left]   >= $left
+               AND  $ctable[right]  <= $right";
 
     $result =& $dbconn->Execute($sql);
 
@@ -318,13 +172,15 @@ function comments_adminapi_delete_branch( $args )
 
     // figure out the adjustment value for realigning the left and right
     // values of all the comments
-    $adjust_value = (($del_node_lr['xar_right'] - $del_node_lr['xar_left']) + 1);
+    $adjust_value = (($right - $left) + 1);
 
 
     // Go through and fix all the l/r values for the comments
-    if (xarModAPIFunc('comments','user','remove_gap', array('startpoint' =>$del_node_lr['xar_left'], 
-                                                            'endpoint'    =>$max_right,
-                                                            'gapsize'   => $adjust_value)))
+    if (xarModAPIFunc('comments','user','remove_gap', array('startpoint' => $left, 
+                                                            'modid'      => $modid,
+                                                            'objectid'   => $objectid,
+                                                            'itemtype'   => $itemtype,
+                                                            'gapsize'    => $adjust_value)))
     {
         return $dbconn->Affected_Rows();
     }
@@ -468,10 +324,10 @@ function comments_adminapi_count_comments( $args )
                     return;
                 }
 
-                $where_type .= "$ctable[modid] = '$modid'";
+                $where_type .= "$ctable[modid] = $modid";
 
                 if (isset($itemtype) && is_numeric($itemtype)) {
-                    $where_type .= " AND $ctable[itemtype] = '$itemtype'";
+                    $where_type .= " AND $ctable[itemtype] = $itemtype";
                 }
                 break;
 
@@ -488,14 +344,14 @@ function comments_adminapi_count_comments( $args )
     } else {
         switch ($status) {
             case 'active':
-                $where_status = "$ctable[status] = '". _COM_STATUS_ON ."'";
+                $where_status = "$ctable[status] = ". _COM_STATUS_ON;
                 break;
             case 'inactive':
-                $where_status = "$ctable[status] = '". _COM_STATUS_OFF ."'";
+                $where_status = "$ctable[status] = ". _COM_STATUS_OFF;
                 break;
             default:
             case 'active':
-                $where_status = "$ctable[status] != '". _COM_STATUS_ROOT_NODE ."'";
+                $where_status = "$ctable[status] != ". _COM_STATUS_ROOT_NODE;
         }
     }
 

@@ -43,7 +43,7 @@ function comments_userapi_get_multipleall($args)
                       $ctable[itemtype] AS xar_itemtype,
                       $ctable[objectid] AS xar_objectid
                 FROM  $xartable[comments]
-               WHERE  $ctable[status]='"._COM_STATUS_ON."' ";
+               WHERE  $ctable[status]="._COM_STATUS_ON." ";
     
     if (count($modarray) > 0 && $modarray[0] != 'all' ) {
         $where = array();     
@@ -54,10 +54,10 @@ function comments_userapi_get_multipleall($args)
                 if (empty($itemtype)) {
                     $itemtype = 0;
                 }
-                $where[] = "($ctable[modid] = '$modid' AND $ctable[itemtype] = '$itemtype')";
+                $where[] = "($ctable[modid] = $modid AND $ctable[itemtype] = $itemtype)";
             } else {
                 $modid = xarModGetIDFromName($modname);
-                $where[] = "($ctable[modid] = '$modid')";
+                $where[] = "($ctable[modid] = $modid)";
             }
         }
         if (count($where) > 0) {

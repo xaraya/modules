@@ -45,12 +45,12 @@ function comments_userapi_get_countlist($args)
 
     $sql = "SELECT  $ctable[objectid], COUNT($ctable[cid]) as numitems
               FROM  $xartable[comments]
-             WHERE  $ctable[modid]='$modid'
+             WHERE  $ctable[modid]=$modid
                AND  $ctable[objectid] IN ('" . join("', '",$objectids) . "')
-               AND  $ctable[status]='"._COM_STATUS_ON."'";
+               AND  $ctable[status]="._COM_STATUS_ON;
 
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]='$itemtype'";
+        $sql .= " AND $ctable[itemtype]=$itemtype";
     }
 
     $sql .= " GROUP BY  $ctable[objectid]";

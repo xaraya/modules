@@ -118,7 +118,10 @@ function comments_userapi_add($args)
     if (!xarModAPIFunc('comments',
                        'user',
                        'create_gap',
-                        array('startpoint' => $parent_lnr['xar_right']))) {
+                        array('startpoint' => $parent_lnr['xar_right'],
+                              'modid'      => $modid,
+                              'objectid'   => $objectid,
+                              'itemtype'   => $itemtype))) {
             
             $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
             $msg .= xarML('Please seek help on the public-developer list xaraya_public-dev@xaraya.com, or in the #support channel on Xaraya\'s IRC network.');

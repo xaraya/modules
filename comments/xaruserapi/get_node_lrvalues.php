@@ -28,7 +28,7 @@ function comments_userapi_get_node_lrvalues( $args )
 
     $sql = "SELECT  $ctable[left], $ctable[right]
               FROM  $xartable[comments]
-             WHERE  $ctable[cid]='$cid'";
+             WHERE  $ctable[cid]=$cid";
 
     $result =& $dbconn->Execute($sql);
 

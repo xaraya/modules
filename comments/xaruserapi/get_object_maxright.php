@@ -45,7 +45,7 @@ function comments_userapi_get_object_maxright( $args )
     // based on the objectid/modid pair
     $sql = "SELECT  MAX($ctable[right]) as max_right
               FROM  $xartable[comments]
-             WHERE  $ctable[objectid] = $objectid
+             WHERE  $ctable[objectid] = '$objectid'
                AND  $ctable[itemtype] = $itemtype
                AND  $ctable[modid] = $modid";
 

@@ -48,8 +48,8 @@ function comments_userapi_get_one( $args )
                     $ctable[itemtype] AS xar_itemtype,
                     $ctable[objectid] AS xar_objectid
               FROM  $xartable[comments]
-             WHERE  $ctable[cid]='$cid'
-               AND  $ctable[status]='"._COM_STATUS_ON."'";
+             WHERE  $ctable[cid]=$cid
+               AND  $ctable[status]="._COM_STATUS_ON;
 
     $result =& $dbconn->Execute($sql);
     if(!$result) return;
