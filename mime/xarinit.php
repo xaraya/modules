@@ -24,14 +24,14 @@
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function mime_init() 
+function mime_init()
 {
 
     $error = FALSE;
-    
+
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
-    
+
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
 
@@ -39,19 +39,19 @@ function mime_init()
         'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_type_name'        => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
     );
-    
+
     $fields['mime_subtype'] = array(
         'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_subtype_name'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
     );
-    
+
     $fields['mime_extension'] = array(
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_extension_id'     => array('type'=>'integer',  'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_extension_name'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>10)
     );
-    
+
     $fields['mime_magic'] = array(
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_magic_id'         => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
@@ -59,25 +59,25 @@ function mime_init()
         'xar_mime_magic_length'     => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_magic_offset'     => array('type'=>'integer',  'null'=>FALSE)
     );
-    
+
     // Create all the tables and, if there are errors
     // just make a note of them for now - we don't want
     // to return right away otherwise we could have
     // some tables created and some not.
     foreach ($fields as $table => $data) {
         $query = xarDBCreateTable($xartable[$table], $data);
-        
+
         $result =& $dbconn->Execute($query);
         if (!$result) {
             $tables[$table] = FALSE;
             $error |= TRUE;
         } else {
             $tables[$table] = TRUE;
-            $error |= FALSE;              
+            $error |= FALSE;
         }
-    } 
-    
-    // if there were any errors during the 
+    }
+
+    // if there were any errors during the
     // table creation, make sure to remove any tables
     // that might have been created
     if ($error) {
@@ -90,27 +90,45 @@ function mime_init()
         }
         return FALSE;
     }
-    
-    include_once('modules/mime/xarincludes/mime.magic.php');
+
+    if (!xarInclude('modules/mime/xarincludes/mime.magic.php')) {
+
+        $msg = xarML('Could not open #(1) for inclusion', 'modules/mime/xarincludes/mime.magic.php');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_FILE', new SystemException($msg));
+
+        mime_delete();
+        return FALSE;
+    }
+
+
+    if (!isset($mime_list) || empty($mime_list)) {
+        $msg = xarML('Missing mime magic list! Please report this as a bug.');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MISSING_MIME_MAGIC_LIST', new SystemException($msg));
+
+        mime_delete();
+        return FALSE;
+    }
+
+
     xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
-    
+
     // Initialisation successful
     return TRUE;
 }
 
 /**
  *  Delete all tables, unregister hooks, remove
- *  priviledge instances, and anything else related to 
+ *  priviledge instances, and anything else related to
  *  this module
- */              
-              
-              
-    
+ */
+
+
+
 
 function mime_delete()
 {
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();    
+    xarDBLoadTableMaintenanceAPI();
 
     // Get database information
     $dbconn =& xarDBGetConn();
@@ -121,7 +139,7 @@ function mime_delete()
     $queries[1] = xarDBDropTable($xartable['mime_subtype']);
     $queries[2] = xarDBDropTable($xartable['mime_extension']);
     $queries[3] = xarDBDropTable($xartable['mime_magic']);
-    
+
     foreach( $queries as $query) {
         $result =& $dbconn->Execute($query);
     }
