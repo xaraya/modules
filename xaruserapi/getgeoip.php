@@ -1,5 +1,6 @@
 <?php
-function netquery_userapi_getgeoip($args) {
+function netquery_userapi_getgeoip($args) 
+{
     extract($args);
     if (!isset($ip)) {
       if (getenv('HTTP_CLIENT_IP')) {
