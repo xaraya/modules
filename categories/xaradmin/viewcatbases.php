@@ -8,7 +8,7 @@ function categories_admin_viewcatbases()
     // Get parameters
     // TODO: add pager
     if (!xarVarFetch('modid', 'id', $modid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemtype', 'int', $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemtype', 'int:0', $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Security check
     if (!xarSecurityCheck('ReadCategories')) {return;}
