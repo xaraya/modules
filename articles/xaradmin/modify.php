@@ -110,7 +110,7 @@ function articles_admin_modify($args)
     $data['fields'] = $fields;
 
     if (!empty($ptid) && empty($data['withupload']) &&
-        xarModIsHooked('uploads', 'articles', $ptid)) {
+        (xarVarIsCached('Hooks.dynamicdata','withupload') || xarModIsHooked('uploads', 'articles', $ptid)) ) {
         $data['withupload'] = 1;
     }
 
