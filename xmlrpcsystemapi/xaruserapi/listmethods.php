@@ -27,11 +27,11 @@ function xmlrpcsystemapi_userapi_listmethods($args)
 {
     extract($args);
     // listmethods has no parameters, so $msg can be ignored
-	$dmap=$server->dmap;
-	$elements = array();
+    $dmap=$server->dmap;
+    $elements = array();
     
     // Construct an array of strings for the xmlrpcserver
-	for(reset($dmap); list($key, $val)=each($dmap); ) {
+    for(reset($dmap); list($key, $val)=each($dmap); ) {
         $elements[]=array('string',$key);
     }
     $params = array(array('array',$elements));
@@ -45,6 +45,6 @@ function xmlrpcsystemapi_userapi_listmethods($args)
      */
     $out = xarModAPIFunc('xmlrpcserver','user','createresponse',array('params'  => $params));
 
-	return $out;
+    return $out;
 }
 ?>
