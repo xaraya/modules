@@ -1,0 +1,57 @@
+<table border="0" width="100%">
+  <tr>
+    <th colspan="4" align="center">
+      <xar:mlstring>Blogger API Administration</xar:mlstring>
+    </th>
+  </tr>
+</table>
+
+<h1>Overview of the Blogger API</h1>
+
+<p>
+  The Blogger API is a XML-RPC API used for blogging. The API is very simple and is 
+  basically a way to exchange strings between xmlrpc clients and servers.
+</p>
+<p>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+  needed for the Blogger API functionality. This module will not function without
+  the webservices module activated.
+</p>
+
+<p>
+  You can find the specification of the Blogger API at 
+  <a href="http://plant.blogger.com/api/index.html">
+    http://plant.blogger.com/api/index.html
+  </a>
+</p>
+
+<h1>Little survival guide for using Blogging tools with Xaraya</h1>
+<p>
+  Make sure you have enabled the following modules:
+</p>
+<ul>
+  <li>Webservices</li>
+  <li>Categories</li>
+  <li>Articles</li>
+</ul>
+
+<p>
+  When these modules are activated, configure the categories modules and create some
+  categories which should hold the postings made from Blogs. While not necessary, it 
+  is adviced to create a publication type for blog postings specifically and link this
+  type to the category-tree you created for blog postings.
+</p>
+<p>
+  Go into the config section of the BloggerAPI module and configure the publication type
+  to use for blog postings. Select either News articles or your publication type which 
+  you created.
+</p>
+<p>
+  Basically you're all set now to start blogging. Use your favorite tool for managing your
+  blog postings. For windows we recommend <a href="http://www.bloggar.com">w.bloggar</a> and
+  for other operating systems <a href="http://mozblog.mozdev.org">The mozilla blogger</a>. 
+  These two are the ones we test the API with and make sure that it at least works with those.
+</p>
+<p>
+  Point your blogging client to the url: http://www.yourxaraya.com/ws.php?type=xmlrpc and use
+  your Xaraya account for authentication. The rest should be self-explanatory.
+</p>

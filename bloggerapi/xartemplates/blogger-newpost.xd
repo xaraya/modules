@@ -1,0 +1,7 @@
+<methodResponse>
+  <params>
+    <param>
+      <value><string>#$postid#</string></value>
+    </param>
+  </params>
+</methodResponse>

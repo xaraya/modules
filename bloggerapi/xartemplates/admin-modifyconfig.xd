@@ -1,0 +1,36 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Blogger API Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Blogger API Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post" action="&xar-modurl-bloggerapi-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" />
+  <input type="hidden" name="authid" value="#$authid#">
+    <table border="0" width="100%">
+      <tr>
+        <td>
+          <table border="0" width="100%">
+            <tr align="left" valign="middle">
+              <td>
+                <xar:mlstring>BLogger API publication type</xar:mlstring>
+              </td>
+              <td>
+                <select id="bloggerpubtype" name="bloggerpubtype" tabindex="1">
+                  <xar:loop name="$pubtypes">
+                    <xar:if condition="xarModGetVar('bloggerapi','bloggerpubtype') eq $loop:item['ptid']">
+                      <option value="#$loop:item['ptid']#" selected="selected">
+                    <xar:else/>
+                      <option value="#$loop:item['ptid']#">
+                    </xar:if>
+                    #$loop:item['name']# : #$loop:item['descr']#</option>
+                  </xar:loop>
+                </select>
+              </td>
+            </tr>
+	  </table>
+        </td>
+      </tr>
+    </table>
+    <br /><br />
+    <input type="submit" value="Update bloggerapi Configuration" align="middle" tabindex="3" />
+</form>
+</div>
+</div>
+

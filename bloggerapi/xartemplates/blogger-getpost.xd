@@ -1,0 +1,28 @@
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>userid</name>
+            <value>#$userid#</value>
+          </member>
+          <member>
+            <name>dateCreated</name>
+            <value>
+              <dateTime.iso8601>#$dateCreated#</dateTime.iso8601>
+            </value>
+          </member>
+          <member>
+            <name>content</name>
+            <value>#$content#</value>
+          </member>
+          <member>
+            <name>postid</name>
+            <value>#$postid#</value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodResponse>

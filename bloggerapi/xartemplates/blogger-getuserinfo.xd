@@ -1,0 +1,30 @@
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>nickname</name>
+            <value>#$nickname#</value>
+          </member>
+          <member>
+            <name>userid</name>
+            <value>#$userid#</value>
+          </member>
+          <member>
+            <name>email</name>
+            <value>#$email#</value>
+          </member>
+          <member>
+            <name>lastname</name>
+            <value>#$lastname#</value>
+          </member>
+          <member>
+            <name>firstname</name>
+            <value>#$firstname#</value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodResponse>
