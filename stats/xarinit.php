@@ -28,7 +28,7 @@ function stats_init()
     // Dependancy check - will be removed when core supports dependancies
     if (!xarModIsAvailable('sniffer')) {
         $msg = xarML('Please install and activate the module \'Sniffer\'');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_MODULE', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_MODULE', new DefaultUserException($msg));
         return false;
     }
 
