@@ -46,6 +46,12 @@ function xarcachemanager_admin_updateconfig()
         if(file_exists($outputCacheDir . '/cache.pagelevel')) {
             unlink($outputCacheDir . '/cache.pagelevel');
         }
+        if(file_exists($outputCacheDir . '/autocache.start')) {
+            unlink($outputCacheDir . '/autocache.start');
+        }
+        if(file_exists($outputCacheDir . '/autocache.log')) {
+            unlink($outputCacheDir . '/autocache.log');
+        }
     }
 
     // turn block level ouput caching on or off 

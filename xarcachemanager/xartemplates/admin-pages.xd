@@ -6,11 +6,15 @@
 <xar:mlstring>Page caching is currently disabled...</xar:mlstring>
 <xar:else/>
 <form action="#xarModURL('xarcachemanager', 'admin', 'pages')#" method="post">
-<xar:mlstring>This page is reserved for future extensions...</xar:mlstring>
 
 <xar:comment>this just shows the current rules for now</xar:comment>
 
 <table border="1" cellpadding="4" cellspacing="0">
+<tr>
+  <th colspan="3">
+    <xar:mlstring>Default page caching</xar:mlstring>
+  </th>
+</tr>
 <tr>
   <td>&nbsp;</td>
   <td><xar:mlstring>Module</xar:mlstring></td>
@@ -67,6 +71,11 @@
   </td>
 </tr>
 <tr>
+  <th colspan="3">
+    <xar:mlstring>Session-less page caching</xar:mlstring>
+  </th>
+</tr>
+<tr>
   <td colspan="3">
     <xar:mlstring>Enable session-less page caching of the following URLs for your first-time visitors</xar:mlstring>
     <br/>
@@ -77,6 +86,63 @@
   </td>
 </tr>
 <tr>
+  <th colspan="3">
+    <xar:mlstring>Auto-cache configuration</xar:mlstring> [ <a href="#xarServerGetCurrentURL()##viewlog"><xar:mlstring>view log</xar:mlstring></a> ]
+  </th>
+</tr>
+<tr>
+  <td colspan="3">
+    <xar:mlstring>Enable automatic caching of frequently-hit pages for your first-time visitors</xar:mlstring>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <label for="autocache_period"><xar:mlstring>Period of analysis</xar:mlstring></label>
+  </td>
+  <td>
+    <input type="text" name="autocache[period]" id="autocache_period" size="9" value="#$settings['AutoCachePeriod']#" />
+    <xar:mlstring>hh:mm:ss</xar:mlstring>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <label for="autocache_threshold"><xar:mlstring>Threshold for inclusion</xar:mlstring></label>
+  </td>
+  <td>
+    <input type="text" name="autocache[threshold]" id="autocache_threshold" size="5" value="#$settings['AutoCacheThreshold']#" />
+    <xar:mlstring>hits in that period</xar:mlstring>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <label for="autocache_maxpages"><xar:mlstring>Maximum number of pages</xar:mlstring></label>
+  </td>
+  <td>
+    <input type="text" name="autocache[maxpages]" id="autocache_maxpages" size="5" value="#$settings['AutoCacheMaxPages']#" />
+    <xar:mlstring>pages in cache</xar:mlstring>
+  </td>
+</tr>
+<tr>
+  <td colspan="3">
+    <label for="autocache_include"><xar:mlstring>Pages to include in the auto-cache</xar:mlstring></label>
+  </td>
+</tr>
+<tr>
+  <td colspan="3">
+    <textarea name="autocache[include]" id="autocache_include" rows="5" cols="80">#$settings['AutoCacheInclude']#</textarea>
+  </td>
+</tr>
+<tr>
+  <td colspan="3">
+    <label for="autocache_exclude"><xar:mlstring>Pages to exclude from the auto-cache</xar:mlstring></label>
+  </td>
+</tr>
+<tr>
+  <td colspan="3">
+    <textarea name="autocache[exclude]" id="autocache_exclude" rows="5" cols="80">#$settings['AutoCacheExclude']#</textarea>
+  </td>
+</tr>
+<tr>
   <td colspan="3">
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="submit" name="submit" value="#xarML('Submit')#" />
@@ -84,6 +150,43 @@
 </tr>
 </table>
 </form>
+
+<a name="viewlog"></a>
+<h2><xar:mlstring>Auto-Cache Log</xar:mlstring></h2>
+<xar:if condition="!empty($autocachepages)">
+<p><xar:ml>
+  <xar:mlstring>From #(1) to #(2)</xar:mlstring>
+  <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachestart)#</xar:mlvar>
+  <xar:mlvar>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocacheend)#</xar:mlvar>
+</xar:ml></p>
+<table border="1" cellpadding="4" cellspacing="0">
+<tr>
+  <th><xar:mlstring>Page</xar:mlstring></th>
+  <xar:foreach in="$autocachehits" key="$status">
+    <th>#$status#</th>
+  </xar:foreach>
+</tr>
+<xar:foreach in="$autocachepages" key="$page" value="$count">
+<tr>
+  <td>#$page#</td>
+  <xar:foreach in="$autocachehits" key="$status">
+    <xar:if condition="!empty($count[$status])">
+      <td>#$count[$status]#</td>
+    <xar:else/>
+      <td>-</td>
+    </xar:if>
+  </xar:foreach>
+</tr>
+</xar:foreach>
+<tr>
+  <th><xar:mlstring>Total</xar:mlstring></th>
+  <xar:foreach in="$autocachehits" key="$status">
+    <th>#$autocachehits[$status]#</th>
+  </xar:foreach>
+</tr>
+</table>
+</xar:if>
+
 </xar:if>
 </div>
 </div>

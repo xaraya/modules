@@ -58,7 +58,6 @@ function xarcachemanager_admin_pages($args)
         if (!xarSecConfirmAuthKey()) return;
 
         xarVarFetch('groups','isset',$groups,array(),XARVAR_NOT_REQUIRED);
-
         $grouplist = array();
         foreach ($data['groups'] as $idx => $group) {
             if (!empty($groups[$group['uid']])) {
@@ -66,9 +65,10 @@ function xarcachemanager_admin_pages($args)
                 $grouplist[] = $group['uid'];
             }
         }
+        $cachegroups = join(';', $grouplist); 
     
         xarVarFetch('sessionless','isset',$sessionless,'',XARVAR_NOT_REQUIRED);
-        $urllist = '';
+        $sessionlesslist = '';
         if (!empty($sessionless)) {
             $urls = preg_split('/\s+/',$sessionless,-1,PREG_SPLIT_NO_EMPTY);
             $baseurl = xarServerGetBaseURL();
@@ -78,7 +78,47 @@ function xarcachemanager_admin_pages($args)
                 $checkurls[] = $url;
             }
             if (count($checkurls) > 0) {
-                $urllist = "'" . join("','",$checkurls) . "'";
+                $sessionlesslist = "'" . join("','",$checkurls) . "'";
+            }
+        }
+
+        xarVarFetch('autocache','isset',$autocache,'',XARVAR_NOT_REQUIRED);
+        if (empty($autocache['period'])) {
+            $autocache['period'] = 0;
+        }
+        $autocache['period'] = xarModAPIFunc('xarcachemanager', 'admin', 'convertseconds',
+                                             array('starttime' => $autocache['period'],
+                                                   'direction' => 'to'));
+        if (empty($autocache['threshold'])) {
+            $autocache['threshold'] = 0;
+        }
+        if (empty($autocache['maxpages'])) {
+            $autocache['maxpages'] = 0;
+        }
+        $includelist = '';
+        if (!empty($autocache['include'])) {
+            $urls = preg_split('/\s+/',$autocache['include'],-1,PREG_SPLIT_NO_EMPTY);
+            $baseurl = xarServerGetBaseURL();
+            $checkurls = array();
+            foreach ($urls as $url) {
+                if (empty($url) || !strstr($url,$baseurl)) continue;
+                $checkurls[] = $url;
+            }
+            if (count($checkurls) > 0) {
+                $includelist = "'" . join("','",$checkurls) . "'";
+            }
+        }
+        $excludelist = '';
+        if (!empty($autocache['include'])) {
+            $urls = preg_split('/\s+/',$autocache['exclude'],-1,PREG_SPLIT_NO_EMPTY);
+            $baseurl = xarServerGetBaseURL();
+            $checkurls = array();
+            foreach ($urls as $url) {
+                if (empty($url) || !strstr($url,$baseurl)) continue;
+                $checkurls[] = $url;
+            }
+            if (count($checkurls) > 0) {
+                $excludelist = "'" . join("','",$checkurls) . "'";
             }
         }
 
@@ -93,14 +133,37 @@ function xarcachemanager_admin_pages($args)
     
         $cachingConfig = join('', file($cachingConfigFile));
    
-        $cachegroups = join(';', $grouplist); 
         $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
     
-        $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($urllist);", $cachingConfig);
+        $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($sessionlesslist);", $cachingConfig);
+
+        $cachingConfig = preg_replace('/\[\'AutoCache.Period\'\]\s*=\s*(.*?);/', "['AutoCache.Period'] = $autocache[period];", $cachingConfig);
+        $cachingConfig = preg_replace('/\[\'AutoCache.Threshold\'\]\s*=\s*(.*?);/', "['AutoCache.Threshold'] = $autocache[threshold];", $cachingConfig);
+        $cachingConfig = preg_replace('/\[\'AutoCache.MaxPages\'\]\s*=\s*(.*?);/', "['AutoCache.MaxPages'] = $autocache[maxpages];", $cachingConfig);
+        $cachingConfig = preg_replace('/\[\'AutoCache.Include\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Include'] = array($includelist);", $cachingConfig);
+        $cachingConfig = preg_replace('/\[\'AutoCache.Exclude\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Exclude'] = array($excludelist);", $cachingConfig);
 
         $fp = fopen ($cachingConfigFile, 'wb');
         fwrite ($fp, $cachingConfig);
         fclose ($fp);
+
+        // set the cache dir
+        $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output';
+
+        if (empty($autocache['period'])) {
+            // remove autocache.start and autocache.log files
+            if (file_exists($outputCacheDir . '/autocache.start')) {
+                unlink($outputCacheDir . '/autocache.start');
+            }
+            if (file_exists($outputCacheDir . '/autocache.log')) {
+                unlink($outputCacheDir . '/autocache.log');
+            }
+        } else {
+            // initialise autocache.start and autocache.log files
+            touch($outputCacheDir . '/autocache.start');
+            $fp = fopen($outputCacheDir . '/autocache.log', 'w');
+            fclose($fp);
+        }
 
         xarResponseRedirect(xarModURL('xarcachemanager','admin','pages'));
         return true;
@@ -121,6 +184,57 @@ function xarcachemanager_admin_pages($args)
         $data['sessionless'] = join("\n",$data['settings']['PageSessionLess']);
     } else {
         $data['sessionless'] = '';
+    }
+
+    if (!isset($data['settings']['AutoCachePeriod'])) {
+        $data['settings']['AutoCachePeriod'] = 0;
+    }
+    $data['settings']['AutoCachePeriod'] = xarModAPIFunc('xarcachemanager', 'admin', 'convertseconds',
+                                               array('starttime' => $data['settings']['AutoCachePeriod'],
+                                                     'direction' => 'from'));
+
+    if (!isset($data['settings']['AutoCacheThreshold'])) {
+        $data['settings']['AutoCacheThreshold'] = 10;
+    }
+    if (!isset($data['settings']['AutoCacheMaxPages'])) {
+        $data['settings']['AutoCacheMaxPages'] = 25;
+    }
+    if (!isset($data['settings']['AutoCacheInclude'])) {
+        $data['settings']['AutoCacheInclude'] = xarServerGetBaseURL() . "\n" . xarServerGetBaseURL() . 'index.php';
+    } elseif (is_array($data['settings']['AutoCacheInclude'])) {
+        $data['settings']['AutoCacheInclude'] = join("\n",$data['settings']['AutoCacheInclude']);
+    }
+    if (!isset($data['settings']['AutoCacheExclude'])) {
+        $data['settings']['AutoCacheExclude'] = '';
+    } elseif (is_array($data['settings']['AutoCacheExclude'])) {
+        $data['settings']['AutoCacheExclude'] = join("\n",$data['settings']['AutoCacheExclude']);
+    }
+
+    // Get some current information from auto-cache
+    $data['autocachepages'] = array();
+    $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output';
+    if (file_exists($outputCacheDir . '/autocache.log') &&
+        filesize($outputCacheDir . '/autocache.log') > 0) {
+        $logs = file($outputCacheDir . '/autocache.log');
+        $data['autocachehits'] = array('HIT' => 0,
+                                       'MISS' => 0);
+        foreach ($logs as $entry) {
+            if (empty($entry)) continue;
+            list($time,$status,$addr,$url) = explode(' ',$entry);
+            if (!isset($start)) $start = $time;
+            $end = $time;
+            if (!isset($data['autocachepages'][$url])) {
+                $data['autocachepages'][$url] = array();
+            }
+            if (!isset($data['autocachepages'][$url][$status])) {
+                $data['autocachepages'][$url][$status] = 0;
+            }
+            $data['autocachepages'][$url][$status]++;
+            $data['autocachehits'][$status]++;
+        }
+        unset($logs);
+        $data['autocachestart'] = $start;
+        $data['autocacheend'] = $end;
     }
 
     // Get some page caching configurations
