@@ -337,7 +337,7 @@
                                 : 
                                 <a name="#top">
                                 </a>
-                                #$ttitle# 
+                                #$item['xar_title']# 
                             </strong>
                         </div>
                         <div class="rightnote">
