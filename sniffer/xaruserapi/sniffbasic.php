@@ -25,7 +25,9 @@
 function sniffer_userapi_sniffbasic($args)
 {
     // Extract args
-    extract($args);
+    if(!empty($args)) { // jsb: args get passed in from sniff.php, seem to be empty.  anyone know what is supposed to be in the args?
+        extract($args);
+    }
 
 	// sniff process
     include_once('modules/sniffer/class/xarSniff.php');
