@@ -155,8 +155,14 @@ function articles_admin_update()
         }
     }
 
-    xarResponseRedirect(xarModURL('articles', 'admin', 'view',
-                                  array('ptid' => $ptid)));
+    // if we can edit articles, go to admin view, otherwise go to user view
+    if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
+        xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+                                      array('ptid' => $ptid)));
+    } else {
+        xarResponseRedirect(xarModURL('articles', 'user', 'view',
+                                      array('ptid' => $ptid)));
+    }
 
     return true;
 }
