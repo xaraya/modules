@@ -14,42 +14,6 @@
 */
 
 include_once('modules/comments/xarincludes/defines.php');
-
-/**
- * utility function pass individual menu items to the main menu
- *
- * @author the Example module development team
- * @returns array
- * @return array containing the menulinks for the main menu items.
- */
-function comments_adminapi_getmenulinks()
-{
-
-// Security Check
-        $menulinks[] = Array('url'   => xarModURL('comments',
-                                                  'admin',
-                                                  'main'),
-                              'title' => xarML('An Overview of the Comments Module'),
-                              'label' => xarML('Overview'));
-
-        $menulinks[] = Array('url'   => xarModURL('comments',
-                                                  'admin',
-                                                  'stats'),
-                             'title' => xarML('View comments per module statistics'),
-                             'label' => xarML('View Statistics'));
-
-        $menulinks[] = Array('url'   => xarModURL('comments',
-                                                  'admin',
-                                                  'modifyconfig'),
-                             'title' => xarML('Modify the comments module configuration'),
-                             'label' => xarML('Modify Config'));
-    if (empty($menulinks)){
-        $menulinks = '';
-    }
-
-    return $menulinks;
-}
-
 /**
  * Delete a node from the tree and reassign it's children to it's parent
  *
@@ -124,6 +88,11 @@ function comments_adminapi_delete_node( $args )
                                                        'objectid'   => $objectid,
                                                        'itemtype'   => $itemtype,
                                                        'gapsize'    => 2));
+
+    // Call delete hooks for categories, hitcount etc.
+    $args['module'] = 'comments';
+    $args['itemid'] = $node;
+    xarModCallHooks('item', 'delete', $node, $args);
 
     return $dbconn->Affected_Rows();
 }
@@ -404,19 +373,15 @@ function comments_adminapi_remove_module( $args )
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID (= module name)', 'admin', 'remove_module', 'Comments');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
     $modid = xarModGetIDFromName($objectid);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module ID', 'admin', 'deleteall', 'Hitcount');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter');
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
