@@ -20,7 +20,7 @@ function helpdesk_userapi_getuserticketstats($args)
     if (!$results) {
         $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
                      'null', 'userapi', 'getuserticketstats', 'helpdesk');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         $results->Close();
         return false;
@@ -36,7 +36,7 @@ function helpdesk_userapi_getuserticketstats($args)
     if (!$results) {
         $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
                      'null', 'userapi', 'getuserticketstats', 'helpdesk');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         $results->Close();
         return false;
@@ -53,7 +53,7 @@ function helpdesk_userapi_getuserticketstats($args)
     if (!$results) {
         $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
                      'null', 'userapi', 'getuserticketstats', 'helpdesk');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         $results->Close();
         return false;

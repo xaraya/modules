@@ -24,7 +24,7 @@ function helpdesk_user_view($args)
     $EditAccess = xarSecurityCheck('edithelpdesk', 0);
     if (!$EditAccess && substr($selection, 0, 2) != 'MY') {
         $msg = xarML('Illegal Access - You are not allowed to be here!');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }

@@ -9,7 +9,7 @@ function helpdesk_userapi_ticketowner($args)
     if (!isset($ticket_id)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                      'ticket id', 'userapi', 'isticketowner', 'helpdesk');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }

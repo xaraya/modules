@@ -36,7 +36,7 @@ function helpdesk_user_modify($args)
 
     if ((!$isticketowner) && (!$data['EditAccess'])) {
         $msg = xarML('Illegal Access - You are not allowed to be here!');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }

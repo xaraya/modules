@@ -19,7 +19,7 @@ function helpdesk_userapi_deleteticket($args)
     if (!$result) return;
         /*$msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'ticket ID', 'userapi', 'deleteticket', 'helpdesk');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));*/
 
     $result->Close();

@@ -24,7 +24,7 @@ function helpdesk_user_display($args)
     if (empty($ticket_id)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'ticket id', 'user', 'viewticket', 'helpdesk');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
@@ -56,7 +56,7 @@ function helpdesk_user_display($args)
     
     if (($isticketowner == '0') && (!$EditAccess)) {
         $msg = xarML('Illegal Access - You are not allowed to be here!');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }

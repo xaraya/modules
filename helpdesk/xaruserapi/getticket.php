@@ -13,7 +13,7 @@ function helpdesk_userapi_getticket($args)
     if (!isset($tid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'ticket id', 'userapi', 'getticket', 'helpdesk');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
