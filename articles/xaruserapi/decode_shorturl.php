@@ -14,6 +14,7 @@ function articles_userapi_decode_shorturl($params)
 
     $module = 'articles';
 
+
     // Check if we're dealing with an alias here
     if ($params[0] != $module) {
         $alias = xarModGetAlias($params[0]);
@@ -98,6 +99,16 @@ function articles_userapi_decode_shorturl($params)
                 }
             }
         }
+
+        // Decode should return the same array of arguments that was passed to encode        
+        if( strpos($catid,'+') === FALSE )
+        {
+            $args['cids'] = explode('-',$catid);
+        } else {
+            $args['cids'] = explode('+',$catid);
+            $args['andcids'] = TRUE;
+        }
+        
         return array('view', $args);
 
     } elseif ($params[1] == 'c') {
@@ -118,6 +129,14 @@ function articles_userapi_decode_shorturl($params)
                     } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches)) {
                         $catid = $matches[1];
                         $args['catid'] = $catid;
+                        // Decode should return the same array of arguments that was passed to encode        
+                        if( strpos($catid,'+') === FALSE )
+                        {
+                            $args['cids'] = explode('-',$catid);
+                        } else {
+                            $args['cids'] = explode('+',$catid);
+                            $args['andcids'] = TRUE;
+                        }
                         return array('view', $args);
                     } elseif (preg_match('/^map/i',$params[2])) {
                         return array('viewmap', $args);
@@ -137,7 +156,6 @@ function articles_userapi_decode_shorturl($params)
                             return array('redirect', $args);
                         }
                     } else {
-
                         // Now that we find out that we're in a specific pubtype, get specific pubtype settings again
                         $settings = unserialize(xarModGetVar('articles', 'settings.'.$args['ptid']));
         
