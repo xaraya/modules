@@ -78,7 +78,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <script language="JavaScript" type="text/JavaScript">
     // click ok - select picture or save changes
-    function selectClick() {
+    function selectClick() 
+    {
         if (validateParams()) {
             if (document.forms[0].src.value !='') {
                 var src = document.forms[0].src.value;
@@ -97,7 +98,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // validate input values
-        function validateParams() {
+        function validateParams() 
+        {
         // check numeric values for attributes
         if (isNaN(parseInt(libbrowser.width.value)) && libbrowser.width.value != '') {
                 alert(tinyMCE.getLang('lang_ibrowser_error')+ ' : '+ tinyMCE.getLang('lang_ibrowser_error_width_nan'));
@@ -129,7 +131,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // delete image
-    function deleteClick() {
+    function deleteClick() 
+    {
     if (document.libbrowser.imglist.selectedIndex>=0) {
             if (confirm(tinyMCE.getLang('lang_ibrowser_confirmdelete')))  {
                 document.libbrowser.lib_action.value = 'delete';
@@ -139,7 +142,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
 // set picture attributes on change
-    function selectChange(obj) {
+    function selectChange(obj) 
+    {
         var formObj = document.forms[0];
 
         formObj.src.value = '<?php echo $tinyMCE_base_url.$imglib?>'+obj.options[obj.selectedIndex].value;
@@ -153,7 +157,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // init functions
-    function init() {
+    function init() 
+    {
         // if existing image (image properties)
         if (tinyMCE.getWindowArg('src') != '') {
             var formObj = document.forms[0];
@@ -182,7 +187,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // updates style settings
-    function updateStyle() {
+    function updateStyle() 
+    {
         if (validateParams()) {
             document.getElementById('wrap').align = document.libbrowser.align.value;
             document.getElementById('wrap').vspace = document.libbrowser.vspace.value;
@@ -195,7 +201,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     var oheight; // original width
     var owidth;  // original height
 
-    function changeDim(sel) {
+    function changeDim(sel) 
+    {
         var formObj = document.forms[0];
         if (formObj.src.value!=''){
             f=oheight/owidth;
@@ -206,7 +213,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
         }
     }
 
-    function resetDim() {
+    function resetDim() 
+    {
          var formObj = document.forms[0];
         formObj.width.value = owidth;
         formObj.height.value = oheight;
@@ -417,7 +425,8 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 </body>
 </html>
 <?php
-function liboptions($arr, $prefix = '', $sel = '') {
+function liboptions($arr, $prefix = '', $sel = '') 
+{
   $buf = '';
   foreach($arr as $lib) {
     $buf .= '<option value="'.$lib['value'].'"'.(($lib['value'] == $sel)?' selected':'').'>'.$prefix.$lib['text'].'</option>'."\n";
@@ -425,7 +434,8 @@ function liboptions($arr, $prefix = '', $sel = '') {
   return $buf;
 }
 // upload image
-function uploadImg($img) {
+function uploadImg($img) 
+{
 
   global $HTTP_POST_FILES;
   global $HTTP_SERVER_VARS;
@@ -472,7 +482,8 @@ function uploadImg($img) {
   return false;
 }
 
-function deleteImg() {
+function deleteImg() 
+{
   global $HTTP_SERVER_VARS;
   global $imglib;
   global $img;
@@ -501,7 +512,8 @@ function deleteImg() {
 // @param int $size a file size
 // @param int $dec a number of decimal places
 
-function filesize_h($size, $dec = 1) {
+function filesize_h($size, $dec = 1) 
+{
     $sizes = array('byte(s)', 'kb', 'mb', 'gb');
     $count = count($sizes);
     $i = 0;
