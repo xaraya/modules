@@ -19,16 +19,16 @@
  *
  * @return array of menu links
  */
-function addressbook_user_export() 
+function addressbook_user_export()
 {
-	$output = array();
-	
+    $output = array();
+
     /**
      * Security check first
      */
     if (xarSecurityCheck('AdminAddressBook',0)) {
 
-    	xarModAPIFunc(__ADDRESSBOOK__,'user','export');
+        xarModAPIFunc(__ADDRESSBOOK__,'user','export');
 
     }
 

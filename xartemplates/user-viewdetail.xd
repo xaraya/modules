@@ -111,16 +111,16 @@
                         <td width="10"></td>
                         <td style="text-align:left;" >
                         <xar:if condition="isset($cud['userData'])">
-						  <xar:if condition="strstr($cud['custType'],_AB_CUSTOM_DATE)">
+                          <xar:if condition="strstr($cud['custType'],_AB_CUSTOM_DATE)">
                             <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
-					          <xar:set name="$date">date("m.d.Y",$cud['userData']);</xar:set>
-						    <xar:else />
-							  <xar:set name="$date">date("d.m.Y",$cud['userData']);</xar:set>
+                              <xar:set name="$date">date("m.d.Y",$cud['userData']);</xar:set>
+                            <xar:else />
+                              <xar:set name="$date">date("d.m.Y",$cud['userData']);</xar:set>
                             </xar:if>
-							#$date#
-						  <xar:else />
+                            #$date#
+                          <xar:else />
                             #$cud['userData']#
-						  </xar:if>
+                          </xar:if>
                         <xar:else />
                             &nbsp;
                         </xar:if>

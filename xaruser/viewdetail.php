@@ -17,7 +17,7 @@
 /**
  * Display details
  */
-function addressbook_user_viewdetail() 
+function addressbook_user_viewdetail()
 {
 
     $output = array();
@@ -79,7 +79,7 @@ function addressbook_user_viewdetail()
                     $contact['label'] = xarVarPrepHTMLDisplay($lab['name']);
                     if(xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$output[$the_contact]))) {
                         $contact['contact'] = '<a href="mailto:'.xarVarPrepHTMLDisplay($output[$the_contact]).'">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
-					} elseif (xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$output[$the_contact]))) {
+                    } elseif (xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$output[$the_contact]))) {
                         $contact['contact'] = '<a href="'.xarVarPrepHTMLDisplay($output[$the_contact]).'" target="_blank">'.xarVarPrepHTMLDisplay($output[$the_contact]).'</a>';
                     }
                     else {
