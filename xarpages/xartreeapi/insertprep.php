@@ -11,7 +11,8 @@
  * Table must have columns: xar_parent, xar_left, xar_right and a specified ID column.
  */
 
-function xarpages_treeapi_insertprep($args) {
+function xarpages_treeapi_insertprep($args)
+{
     // An insertion point (an ID in the table) is required.
     // Special insertion point ID is 0, which refers to the
     // virtual root of all trees. An item can not be

@@ -9,7 +9,8 @@
 // DD is always fetched if hooked
 // Results are cached if all page types are selected
 
-function xarpages_userapi_gettypes($args) {
+function xarpages_userapi_gettypes($args)
+{
     static $static_all_pagetypes = NULL;
 
     extract($args);

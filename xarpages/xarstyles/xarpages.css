@@ -1,7 +1,7 @@
 /*
     Copied from the blocks stylesheet.
     It would be nice if this kind of layout were available by default.
-	Note: tidy this up, as some pages contain far too many outlines and are confusing.
+    Note: tidy this up, as some pages contain far too many outlines and are confusing.
 */
 
 form.xar-xarpages-admin,
@@ -114,8 +114,8 @@ form.xar-xarpages-admin fieldset.formelements table caption {
 
 /* Style for the tree-display images */
 img.xar-xarpages-tree {
-	vertical-align: top;
-	border: 0;
-	height: 21;
-	width: 12;
+    vertical-align: top;
+    border: 0;
+    height: 21;
+    width: 12;
 }

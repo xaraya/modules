@@ -3,7 +3,8 @@
 // Encode the short URL.
 // TODO: handle more than just a display function. Site maps could come through here too.
 
-function xarpages_userapi_encode_shorturl($args) {
+function xarpages_userapi_encode_shorturl($args)
+{
     extract($args);
 
     static $pages = NULL;

@@ -8,7 +8,8 @@
  * idname: name of the ID column
  */
 
-function xarpages_treeapi_getleftright($args) {
+function xarpages_treeapi_getleftright($args)
+{
     // Expand the arguments.
     extract($args);
 

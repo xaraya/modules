@@ -3,7 +3,8 @@
 // Get DD data for a set of pages
 // pages: array of pages to fetch data for.
 
-function xarpages_userapi_getpagedd($args) {
+function xarpages_userapi_getpagedd($args)
+{
     extract($args);
 
     // TODO: Check if we are hooked to DD and that there are pages to 

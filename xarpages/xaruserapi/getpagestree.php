@@ -2,7 +2,8 @@
 
 // Get a tree of pages, with various structures to get navigate it.
 
-function xarpages_userapi_getpagestree($args) {
+function xarpages_userapi_getpagestree($args)
+{
     // First get the set of pages.
     // Check out 'getpages' for the complete range of parameters that can be
     // passed in to restrict the pages retrieved.

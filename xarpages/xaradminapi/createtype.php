@@ -12,7 +12,8 @@
  * TODO: default most values and raise an error in missing mandatory values
  */
 
-function xarpages_adminapi_createtype($args) {
+function xarpages_adminapi_createtype($args)
+{
     extract($args);
 
     // TODO: validate name (mandatory and unique)
