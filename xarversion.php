@@ -16,7 +16,7 @@
 
 $modversion['name']           = 'xarpages';
 $modversion['id']             = '160';
-$modversion['version']        = '0.1.0';
+$modversion['version']        = '0.1.1';
 $modversion['displayname']    = xarML('Xarpages');
 $modversion['description']    = 'Static pages administration';
 $modversion['credits']        = 'xardocs/credits.txt';

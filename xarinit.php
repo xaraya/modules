@@ -82,12 +82,10 @@ function xarpages_init()
     );
     if (!$result) {return;}
 
-    // The page type must be unique.
     $result = $datadict->createIndex(
         'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
         $pagestable,
-        'xar_itemtype',
-        array('UNIQUE' => true)
+        'xar_itemtype'
     );
     if (!$result) {return;}
 
@@ -109,6 +107,16 @@ function xarpages_init()
     // Create or alter the table as necessary.
     $result = $datadict->changeTable($typestable, $fields);    
     if (!$result) {return;}
+
+    // The page type name must be unique.
+    $result = $datadict->createIndex(
+        'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name',
+        $typestable,
+        'xar_name',
+        array('UNIQUE' => true)
+    );
+    if (!$result) {return;}
+
 
     // Set up module variables.
     xarModSetVar('xarpages', 'defaultpage', 0);
@@ -246,10 +254,44 @@ function xarpages_init()
  */
 function xarpages_upgrade($oldversion)
 {
+    // Set up database tables
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    $pagestable = $xartable['xarpages_pages'];
+    $typestable = $xartable['xarpages_types'];
+
+    // Get a data dictionary object with item create methods.
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
     // Upgrade dependent on old version number.
     switch ($oldversion) {
         case '0.1.0':
-        default:
+            // Drop an eroneous unique index and recreate it non-unique.
+            $result = $datadict->dropIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
+                $pagestable
+            );
+
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
+                $pagestable,
+                'xar_itemtype'
+            );
+            if (!$result) {return;}
+
+            // Create a new index.
+
+            // The page type name must be unique.
+            $result = $datadict->createIndex(
+                'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name',
+                $typestable,
+                'xar_name',
+                array('UNIQUE' => true)
+            );
+            if (!$result) {return;}
+
+        case '0.1.1':
             break;
     }
 
