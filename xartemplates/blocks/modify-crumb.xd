@@ -1,0 +1,41 @@
+<div>
+    <div>
+        <xar:if condition="!empty($include_root)">
+            <input name="include_root" type="checkbox" value="true" id="include_root_#$bid#" checked="checked" />
+        <xar:else />
+            <input name="include_root" type="checkbox" value="true" id="include_root_#$bid#" />
+        </xar:if>
+        <label for="include_root_#$bid#"><xar:mlstring>Show the root page in the trails</xar:mlstring></label>
+    </div>
+
+    <fieldset>
+        <legend><xar:mlstring>Root Pages</xar:mlstring></legend>
+        <p>
+            <xar:mlstring>
+                If root pages are set, then the crumbtrails will be limited to those trees alone.
+                A current page outside any root will suppress the block.
+            </xar:mlstring>
+        </p>
+        <label for="new_root_pid_#$bid#"><xar:mlstring>Add Root Page</xar:mlstring></label>
+        <select name="new_root_pid" id="new_root_pid_#$bid#">
+            <option value="0" selected="selected">-- <xar:mlstring>None</xar:mlstring> --</option>
+            <xar:loop name="$all_pages.pages">
+                <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+            </xar:loop>
+        </select>
+
+        <xar:comment>Existing root pids to removed</xar:comment>
+        <xar:loop name="$root_pids">
+            <div>
+                <input name="remove_root_pid[]" type="checkbox" value="#$loop:key#" id="remove_root_pid_#$bid#_#$loop:key#" />
+                <label for="remove_root_pid_#$bid#_#$loop:key#">
+                    <xar:ml>
+                        <xar:mlstring>Remove #(1)</xar:mlstring>
+                        <xar:mlvar>#xarVarPrepForDisplay($loop:item)#</xar:mlvar>
+                    </xar:ml>
+                </label>
+            </div>
+        </xar:loop>
+    </fieldset>
+
+</div>

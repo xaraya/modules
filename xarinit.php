@@ -365,8 +365,20 @@ function xarpages_upgrade($oldversion)
             // Upgrade from 0.2.3 or 0.2.4 to 0.2.5
             xarModSetVar('xarpages', 'shortestpath', 1);
 
-            break;
-    }
+        case '0.2.5':
+            // Upgrade to 0.2.6 - new crumbtrail block added.
+
+            // Register block types.
+            if (!xarModAPIFunc(
+                'blocks', 'admin', 'register_block_type',
+                array(
+                    'modName' => 'xarpages',
+                    'blockType'=> 'crumb'
+                )
+            )) return;
+
+                    break;
+            }
 
     // Update successful.
     return true;

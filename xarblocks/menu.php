@@ -64,12 +64,15 @@ function xarpages_menublock_display($blockinfo)
     // We want a few facilities:
     // 1. Set a root higher than the real tree root. Pages will only
     //    be displayed once that root is reached. Effectively set one
-    //    or more trees, at any depth, that this menu will cover.
+    //    or more trees, at any depth, that this menu will cover. [DONE]
     // 2. Set a 'max depth' value, so only a preset max number of levels
-    //    are rendered in a tree.
+    //    are rendered in a tree. [DONE]
     // [1 and 2 are a kind of "view window" for levels]
     // 3. Set behaviour when no current page in the xarpages module is
-    //    displayed, e.g. hide menu, show default tree or page etc.
+    //    displayed, e.g. hide menu, show default tree or page etc. [DONE]
+    // 4. Allow the page tree to be pruned at arbitrary specified
+    //    pages. That would allow sections of the tree to be pruned
+    //    from one menu and added to another (i.e. split menus).
 
     // Get variables from content block.
     if (!is_array($blockinfo['content'])) {
