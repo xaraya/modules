@@ -29,60 +29,51 @@
 					No keywords found ! 
 				</xar:mlstring>
 			</h4>
-			<xar:else />
-			<div style="clear:both;">
-				<xar:set name="i">
-					1 
-				</xar:set>
-				<xar:set name="j">
-					0 
-				</xar:set>
-				<div style="float:left; width: #$divwidth#%; text-align: left;">
-					<ul>
-						<xar:foreach in="$items" value="$item">
-							<xar:set name="j">
-								++$j 
-							</xar:set>
-							<xar:if condition="$i++ lt $totitemspercol">
-								<li>
-									<a href="#$item['url']#">
-										#$item['label']# 
-									</a>
-									(#$item['count']#) 
-								</li>
-								<xar:elseif condition="($j eq $totitems)" />
-								<li>
-									<a href="#$item['url']#">
-										#$item['label']# 
-									</a>
-									(#$item['count']#) 
-								</li>
-								<xar:set name="i">
-									1 
-								</xar:set>
-								<xar:else />
-								<li>
-									<a href="#$item['url']#">
-										#$item['label']# 
-									</a>
-									(#$item['count']#) 
-								</li>
-								<xar:set name="i">
-									1 
-								</xar:set>
-							</xar:if>
-						</xar:foreach>
-					</ul>
-				</div>
-			</div>
-		</xar:if>
-	</div>
+    <xar:else /> <!-- Start the list column output -->
+        <!-- Begin the column wrapping div -->
+        <div style="clear:both;">
+            <xar:set name="i">1</xar:set>
+            <xar:set name="j">0</xar:set>
+            <!-- Begin first list column div -->
+            <div style="float:left; width: #$divwidth#%; text-align: left;">
+                <ul>
+                <xar:foreach in="$items" value="$item">
+                    <xar:set name="j">++$j</xar:set>
+                    <xar:if condition="$i++ lt $totitemspercol">
+                        <li>
+                            <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                        </li>
+                <xar:elseif condition="($j eq $totitems)" />
+                        <li>
+                            <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                        </li>
+                        <xar:set name="i">1</xar:set>
+                <xar:else />
+                        <li>
+                            <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                        </li>
+                  </ul>
+             </div> <!-- end list column -->
+
+                     <!-- begin list column -->
+             <div style="float:left; width: #$divwidth#%; text-align: left;">
+                   <ul>
+                   <xar:set name="i">1</xar:set>
+               </xar:if>
+           </xar:foreach>
+
+                   </ul>
+
+              </div>              <!-- end last column div -->
+        </div>  <!-- End all column wrapping div -->
+    </xar:if>
+	</div>    <!-- End div for wrapping whole if section -->
 	<xar:elseif condition="$status eq 1 and !empty($keyword)" />
 	<div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
 		<h4>
 			<xar:ml>
 				<xar:mlstring>
-					Keyword : #(1) 
+					Keyword : #(1)
 				</xar:mlstring>
 				<xar:mlvar>
 					#$keyword# 
