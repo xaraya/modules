@@ -13,6 +13,7 @@
 class PHPTranslationsGenerator {
 
     var $locale;
+    var $fp;
 
     function PHPTranslationsGenerator($locale)
     {
