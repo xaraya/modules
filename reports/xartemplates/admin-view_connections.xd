@@ -14,14 +14,14 @@
   </tr>
   <xar:loop name="$connections">
     <tr>
-      <td><a href="&xar-modurl-reports-admin-modify_connection;&conn_id=#$id#">#$name#</a></td>
-      <td>#$description#</td>
-      <td>#$type#</td>
-      <td>#$server#</td>
-      <td>#$database#</td>
-      <td>#$user#</td>
+      <td><a href="&xar-modurl-reports-admin-modify_connection;&amp;conn_id=#$loop:item['id']#">#$loop:item['name']#</a></td>
+      <td>#$loop:item['description']#</td>
+      <td>#$loop:item['type']#</td>
+      <td>#$loop:item['server']#</td>
+      <td>#$loop:item['database']#</td>
+      <td>#$loop:item['user']#</td>
       <td>
-        <a href="&xar-modurl-reports-admin-delete_connection;&conn_id=#$id#">
+        <a href="&xar-modurl-reports-admin-delete_connection;&amp;conn_id=#$loop:item['id']#">
           <xar:mlstring>Delete</xar:mlstring>
         </a>
       </td>

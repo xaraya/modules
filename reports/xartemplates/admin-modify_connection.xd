@@ -8,7 +8,7 @@
     <td>
       <form action="&xar-modurl-reports-admin-update_connection;" method="post"  enctype="application/x-www-form-urlencoded">
         <xar:template file="connection_form" type="module"/>
-        <input type="submit" value="<xar:mlstring>Update connection</xar:mlstring>"/>
+        <input type="submit" value="#$updatelabel#"/>
       </form>
     </td>
   </tr>

@@ -72,7 +72,8 @@ function reports_admin_new_connection() {
     $data=array(
                 'authid' => xarSecGenAuthKey(),
                 'conn_id' => 0,
-                'name' => xarML('<untitled connection>'),
+                'createlabel' => xarML('Create Connection'),
+                'name' => xarML('(untitled connection)'),
                 'description' => xarML('no description'),
                 'type' => 'mysql',
                 'server' => 'localhost',
@@ -123,6 +124,7 @@ function reports_admin_modify_connection($args) {
     extract($conn);
     $data=array(
                 'authid' => xarSecGenAuthKey(),
+                'updatelabel' => xarML('Update Connection'),
                 'conn_id' => $conn_id,
                 'name' => $conn['name'],
                 'description' => $conn['description'],
@@ -187,10 +189,11 @@ function reports_admin_new_report() {
 	
     $data = array ('rep_id' => 0,
                    'authid' => xarSecGenAuthKey(),
-                   'name' => '<untitled report>',
+                   'name' => '(untitled report)',
                    'description' => 'no description',
                    'xmlfile' => 'empty.xml',
                    'rep_conn_id' => 0,
+                   'createlabel' => xarML('Create report'),
                    'connections' => $connections
                    );
     return $data;
@@ -200,8 +203,8 @@ function reports_admin_new_report() {
  * Gather entered info and let admin api process new report creation
  */
 function reports_admin_create_report($args) {
-	list($rep_name, $rep_desc,$rep_xmlfile, $rep_conn_id) = 
-		xarVarCleanFromInput('rep_name','rep_desc','rep_xmlfile', 'rep_conn_id');
+	list($rep_id, $rep_name, $rep_desc,$rep_xmlfile, $rep_conn_id) = 
+		xarVarCleanFromInput('rep_id','rep_name','rep_desc','rep_xmlfile', 'rep_conn_id');
 	extract($args);
     
 	// Only desc, user and password may be empty, rest must have values
@@ -212,7 +215,8 @@ function reports_admin_create_report($args) {
         if (!xarModAPIFunc('reports',
                            'admin',
                            'create_report',
-                           array('rep_name'=>$rep_name,
+                           array('rep_id'=>$rep_id,
+                                 'rep_name'=>$rep_name,
                                  'rep_desc'=>$rep_desc,
                                  'rep_xmlfile'=>$rep_xmlfile,
                                  'rep_conn_id'=>$rep_conn_id
@@ -239,6 +243,7 @@ function reports_admin_modify_report($args) {
 	$rep = xarModAPIFunc('reports','user','report_get',array('rep_id'=>$rep_id));
 	$connections= xarModAPIFunc('reports','user','connection_getall',array());
     $data=array ('authid' => xarSecGenAuthKey(),
+                 'updatelabel' => xarML('Update Report'),
                  'rep_id' => $rep_id,
                  'name' => $rep['name'],
                  'description' => $rep['description'],

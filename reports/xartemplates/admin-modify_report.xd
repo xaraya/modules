@@ -8,7 +8,7 @@
     <td>
       <form action="&xar-modurl-reports-admin-update_report;" method="post">
         <xar:template file="report_form" type="module"/>
-        <input type="submit" value="<xar:mlstring>Update report</xar:mlstring>"/>
+        <input type="submit" value="#$updatelabel#"/>
       </form>
     </td>
   </tr>

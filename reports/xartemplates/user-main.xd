@@ -14,9 +14,9 @@
         <xar:loop name="$reportlist">
           <tr>
             <td>
-             <a href="&xar-modurl-reports-user-generate;&rep_id=#$id#&xmlfile=#$xmlfile#&conn_id=#$conn_id#">#$name#</a>
+             <a href="&xar-modurl-reports-user-generate;&amp;rep_id=#$loop:item['id']#&amp;xmlfile=#$loop:item['xmlfile']#&amp;conn_id=#$loop:item['conn_id']#">#$loop:item['name']#</a>
             </td>
-            <td>#$desc#</td>
+            <td>#$loop:item['desc']#</td>
           </tr>
         </xar:loop>
       </table>

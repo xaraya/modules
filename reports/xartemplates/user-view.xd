@@ -11,7 +11,7 @@
           <th><xar:mlstring>Report name</xar:mlstring></th>
           <th><xar:mlstring>Report description</xar:mlstring></th>
         </tr>
-        <xar:loop name="reportlist">
+        <xar:loop name="$reportlist">
           <tr>
           </tr>
         </xar:loop>

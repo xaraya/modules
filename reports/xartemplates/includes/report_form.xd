@@ -3,23 +3,27 @@
 
 <table>
   <tr>
-    <td><xar:mlstring>Report name</xar:mlstring></td>
-    <td><input type="text" name="rep_name" value="#$name#"></td>
+    <td><label for="rep_name"><xar:mlstring>Report name</xar:mlstring></label></td>
+    <td><input type="text" name="rep_name" id="rep_name" value="#$name#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Description</xar:mlstring></td>
-    <td><input type="textarea" name="rep_desc" value="#$description#"></td>
+    <td><label for="rep_desc"><xar:mlstring>Description</xar:mlstring></label></td>
+    <td><input type="textarea" name="rep_desc" id="rep_desc" value="#$description#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Definition file</xar:mlstring></td>
-    <td><input type="text" name="rep_xmlfile" value="#$xmlfile#"></td>
+    <td><label for="rep_xmlfile"><xar:mlstring>Definition file</xar:mlstring></label></td>
+    <td><input type="text" name="rep_xmlfile" id="rep_xmlfile" value="#$xmlfile#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Connection</xar:mlstring></td>
+    <td><label for="rep_conn_id"><xar:mlstring>Connection</xar:mlstring></label></td>
     <td>
-      <select name="rep_conn_id">
+      <select name="rep_conn_id" id="rep_conn_id">
       <xar:loop name="$connections">
-        <option <xar:if condition="$rep_conn_id == $id">selected="selected"</xar:if> value="#$id#">#$name#</option>
+        <xar:if condition="$rep_conn_id eq $loop:item['id']">
+          <option selected="selected" value="#$loop:item['id']#">#$loop:item['name']#</option>
+        <xar:else />
+          <option value="#$loop:item['id']#">#$loop:item['name']#</option>
+        </xar:if>
       </xar:loop>
       </select>
     </td>

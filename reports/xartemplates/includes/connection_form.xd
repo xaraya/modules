@@ -1,40 +1,44 @@
 
-<input type="hidden" name="authid" value="#$authid#"/>
-<input type="hidden" name="conn_id" value="#$conn_id#"/>
+<input type="hidden" name="authid" id="authid" value="#$authid#"/>
+<input type="hidden" name="conn_id" id="conn_id" value="#$conn_id#"/>
 
 <table>
   <tr>
-    <td><xar:mlstring>Connection name</xar:mlstring></td>
-    <td><input type="text" name="conn_name" value="#$name#"></td>
+    <td><label for="conn_name"><xar:mlstring>Connection name</xar:mlstring></label></td>
+    <td><input type="text" name="conn_name" id="conn_name" value="#$name#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Description</xar:mlstring></td>
-    <td><input type="textarea" name="conn_desc" value="#$description#"></td>
+    <td><label for="conn_desc"><xar:mlstring>Description</xar:mlstring></label></td>
+    <td><input type="textarea" name="conn_desc" id="conn_desc" value="#$description#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Type</xar:mlstring>
+    <td><label for="conn_type"><xar:mlstring>Type</xar:mlstring></label></td>
     <td>
-      <select name="conn_type">
-        <option <xar:if condition="$type=='mysql'">selected="selected"</xar:if> value="mysql">MySql</option>
-        <option <xar:if condition="$type=='odbc'">selected="selected"</xar:if> value="odbc">ODBC</option>
+      <select name="conn_type" id="conn_type">
+        <xar:if condition="$type eq 'mysql'">
+          <option selected="selected" value="mysql">MySql</option>
+        </xar:if>
+        <xar:if condition="$type eq 'mysql'">
+          <option selected="selected" value="odbc">ODBC</option>
+        </xar:if>
       </select>
     </td>
   </tr>
   <tr>
-    <td><xar:mlstring>Server</xar:mlstring></td>
-    <td><input type="text" name="conn_server" value="#$server#"></td>
+    <td><label for="conn_server"><xar:mlstring>Server</xar:mlstring></label></td>
+    <td><input type="text" name="conn_server" id="conn_server" value="#$server#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Database name</xar:mlstring></td>
-    <td><input type="text" name="conn_database" value="#$database#"></td>
+    <td><label for="conn_database"><xar:mlstring>Database name</xar:mlstring></label></td>
+    <td><input type="text" name="conn_database" id="conn_database" value="#$database#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>User</xar:mlstring></td>
-    <td><input type="text" name="conn_user" value="#$user#"></td>
+    <td><label for="conn_user"><xar:mlstring>User</xar:mlstring></label></td>
+    <td><input type="text" name="conn_user" id="conn_user" value="#$user#"></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Password</xar:mlstring></td>
-    <td><input type="password" name="conn_password" value="#$password#"></td>
+    <td><label for="conn_password"><xar:mlstring>Password</xar:mlstring></label></td>
+    <td><input type="password" name="conn_password" id="conn_password" value="#$password#"></td>
   </tr>
 </table>
 

@@ -7,22 +7,22 @@
   <tr>
     <form action="&xar-modurl-reports-admin-update_config;" method="post">
     <input type="hidden" name="authid" value="#$authid#"/>
-    <td><xar:mlstring>Report location</xar:mlstring></td>
-    <td><input type="text" size="70" name="config_replocation" value="#$rep_location#"/></td>
+    <td><label for="config_replocation"><xar:mlstring>Report location</xar:mlstring></label></td>
+    <td><input type="text" size="70" name="config_replocation" id="config_replocation" value="#$rep_location#"/></td>
   </tr>
   <tr>
-    <td><xar:mlstring>Images location</xar:mlstring></td>
-    <td><input type="text" size="70" name="config_imglocation" value="#$img_location#"/></td>
+    <td><label for="config_imglocation"><xar:mlstring>Images location</xar:mlstring></label></td>
+    <td><input type="text" size="70" name="config_imglocation" id="config_imglocation" value="#$img_location#"/></td>
   </tr>
   <tr>
-    <td><xar:mlstring>PDF backend processor</xar:mlstring></td>
+    <td><label for="config_pdfbackend"><xar:mlstring>PDF backend processor</xar:mlstring></label></td>
     <td>
-      <select name="config_pdfbackend">
+      <select name="config_pdfbackend" id="config_pdfbackend">
         <xar:loop name="$backends">
-          <xar:if condition="$selectedbackend==$id">
-            <option selected="selected" value="#$id#">#$name#</option>
+          <xar:if condition="$selectedbackend eq $loop:item['id']">
+            <option selected="selected" value="#$loop:item['id']#">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
