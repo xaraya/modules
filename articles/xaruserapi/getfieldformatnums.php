@@ -12,7 +12,7 @@
  */
 function articles_userapi_getfieldformatnums($args)
 {
-    return array(
+    $fieldnames= array(
         'static'          => 1,
         'textbox'         => 2,
         'textarea_small'  => 3,
@@ -31,8 +31,21 @@ function articles_userapi_getfieldformatnums($args)
         'userlist'        => 37,
         'textupload'      => 38,
         'urltitle'        => 41,
-// TODO: add more property types after testing
+
+    // TODO: add more property types after testing
+    //other 'text' DD property types won't give significant performance hits
     );
+    // Add  'text' dd properites that are dependent on module availability
+    $fielditem=array();
+
+    if (xarModIsAvailable('tinymce')) {
+        $fielditems=array('xartinymce' => 205);
+        $fieldnames=array_merge($fieldnames,$fielditems);
+    }
+
+
+return $fieldnames;
+
 }
 
 ?>
