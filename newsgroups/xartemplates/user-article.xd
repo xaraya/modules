@@ -15,9 +15,11 @@
         </p>
     <xar:else />
         <div style="margin: auto;">
+            <xar:sec mask="SendNewsGroups" catch="false">
             <p>
                 <a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'article' => $articlenum, 'phase' => 'reply'))#"><xar:mlstring>Post a reply</xar:mlstring></a>
             </p>
+            </xar:sec>
             <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
                 <div class="xar-norm" style="padding: 3px;">
 

@@ -3,7 +3,7 @@
 function newsgroups_user_post()
 {
     // Security Check
-    if(!xarSecurityCheck('ReadNewsGroups')) return;
+    if(!xarSecurityCheck('SendNewsGroups')) return;
 
     if (!xarVarFetch('phase','str:1:100',$phase,'new',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('group','str:1:',$group)) return;
@@ -17,7 +17,11 @@ function newsgroups_user_post()
         default:
 
             $data['name']       = xarUserGetVar('name');
-            $data['email']      = xarUserGetVar('email');
+            if (xarUserIsLoggedIn()) {
+                $data['email']  = xarUserGetVar('email');
+            } else {
+                $data['email']  = '';
+            }
             $data['subject']    = '';
             $data['message']    = '';
             $data['reference']  = '';
@@ -40,6 +44,13 @@ function newsgroups_user_post()
             $newsgroups -> connect($server, $port);
             $counts = $newsgroups->selectGroup($group);
             $data               = $newsgroups->splitHeaders($article);
+            if (PEAR::isError($data)) {
+                $error_message = $data->message;
+                $newsgroups->quit();
+                return array('group' => $group,
+                             'error_message' => $error_message);
+            }
+
             $data['raw']        = explode("\n", $newsgroups->getBody($article));
             $newsgroups->quit();
 
@@ -51,7 +62,11 @@ function newsgroups_user_post()
           
             $data['reference']  = $data['Message-ID'];
             $data['name']       = xarUserGetVar('name');
-            $data['email']      = xarUserGetVar('email');
+            if (xarUserIsLoggedIn()) {
+                $data['email']  = xarUserGetVar('email');
+            } else {
+                $data['email']  = '';
+            }
             $data['authid']     = xarSecGenAuthKey();
             $data['group']      = $group;
             $data['message']    = $data['From'];

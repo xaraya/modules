@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'NewsGroups';
 $modversion['id'] = '802';
-$modversion['version'] = '1.0.0';
+$modversion['version'] = '1.0.1';
 $modversion['displayname']    = xarML('Newsgroups');
 $modversion['description'] = 'A newsgroup reader for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';

@@ -9,7 +9,9 @@
     </p>
 <xar:else />
 <p><a href="#xarModUrl('newsgroups', 'user', 'main')#"><xar:mlstring>Back to main list</xar:mlstring></a></p>
+<xar:sec mask="SendNewsGroups" catch="false">
 <p><a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'phase' => 'new'))#"><xar:mlstring>Post to this newsgroup</xar:mlstring></a></p>
+</xar:sec>
 <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
 <table>
     <tr>

@@ -3,6 +3,14 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Post to</xar:mlstring> #$group#</h2>
 
+<xar:if condition="isset($error_message)">
+    <p> <xar:mlstring>News Server Error:</xar:mlstring>
+        <span style="color: red;">
+            #$error_message#
+        </span>
+    </p>
+<xar:else />
+
 <form method="post" action="#xarModURL('newsgroups', 'user', 'post', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded">
 <table>
     <tr>
@@ -46,4 +54,5 @@
     <input type="submit" value="New Topic" />
 </p>
 </form>
+</xar:if>
 </div>

@@ -28,6 +28,7 @@ function newsgroups_init()
 
     // Register Masks
     xarRegisterMask('ReadNewsGroups','All','newsgroups','All','All','ACCESS_READ');
+    xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT');
     xarRegisterMask('AdminNewsGroups','All','newsgroups','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
@@ -39,6 +40,26 @@ function newsgroups_activate()
     return true;
 }
 
+/**
+ * upgrade the newsgroups module from an old version
+ */
+function newsgroups_upgrade($oldversion)
+{
+    // Upgrade dependent on old version number
+    switch($oldversion) {
+        case '1.0.0':
+            // Code to upgrade from version 1.0.0 goes here
+            xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT');
+
+        case '1.0.1':
+            // Code to upgrade from version 1.0.1 goes here
+
+        case '2.0.0':
+            // Code to upgrade from version 2.0.0 goes here
+
+    }
+    return true;
+}
 
 function newsgroups_delete()
 {
