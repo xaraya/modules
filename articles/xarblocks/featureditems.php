@@ -32,6 +32,7 @@ function articles_featureditemsblock_init()
         'status' => array(3, 2),
         'itemlimit' => 10,
         'showfeaturedsum' => false,
+        'showfeaturedbod' => false,
         'moreitems' => array(),
         'showsummary' => false,
         'linkpubtype' => false,
@@ -82,7 +83,6 @@ function articles_featureditemsblock_display(& $blockinfo)
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
     if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
     if (empty($vars['linkcat'])) {$vars['linkcat'] = false;}
-
     if (!isset($vars['showvalue'])) {
         if ($vars['toptype'] == 'rating') {
             $vars['showvalue'] = false;
@@ -132,7 +132,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
             )
         );
-
+        if (empty($vars['showfeaturedbod'])) {$vars['showfeaturedbod'] = false;}
         $data['feature'][] = array(
             'featuredlabel'     => $featuredart['title'],
             'featuredlink'      => $featuredlink,
