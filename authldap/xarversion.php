@@ -1,7 +1,7 @@
 <?php 
 $modversion['name'] = 'AuthLDAP';
 $modversion['id'] = '50';
-$modversion['version'] = '1.0';
+$modversion['version'] = '1.0.0';
 $modversion['description'] = 'Xaraya LDAP authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

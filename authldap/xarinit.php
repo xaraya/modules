@@ -51,6 +51,21 @@ function authldap_init()
 }
 
 /**
+ * Module upgrade function
+ *
+ *
+ */
+function authldap_upgrade($oldVersion) 
+{
+    switch($oldVersion) {
+    case '1.0':
+        // compatability upgrade
+        break;
+    }
+    return true;
+}
+
+/**
  * module removal function
 */
 function authldap_delete()
