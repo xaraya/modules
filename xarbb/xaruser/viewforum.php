@@ -17,7 +17,6 @@ function xarbb_user_viewforum()
     // Get parameters from whatever input we need
     if(!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('fid', 'id', $fid)) return;
-    if (!xarVarFetch('read', 'isset', $read, NULL, XARVAR_DONT_SET)) return;
 
     // The user API function is called.
     $data = xarModAPIFunc('xarbb',
@@ -35,11 +34,6 @@ function xarbb_user_viewforum()
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
     xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
 
-    // Lets deal with the cookie in a more sane manner
-    if (isset($read)){
-        $time    = serialize(time());
-        setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
-    }
 
     // Lets deal with the cookie in a more sane manner
     if (xarUserIsLoggedIn()){
@@ -48,22 +42,6 @@ function xarbb_user_viewforum()
         // Easier to set a cookie for the last visit than it is
         // roll through all the forums to check the time set.
         setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
-    }
-
-    // Get the cookie names
-    $cookie_name_all_forums_read = xarModGetVar('xarbb', 'cookiename') . '_f_all';
-    $cookie_name_this_forum_read = xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid;
-
-    // Cookie
-    if (isset($_COOKIE[$cookie_name_all_forums_read])){
-        $allforumtimecompare = unserialize($_COOKIE[$cookie_name_all_forums_read]);
-    } else {
-        $allforumtimecompare = '';
-    }
-    if (isset($_COOKIE[$cookie_name_this_forum_read])){
-        $forumtimecompare = unserialize($_COOKIE[$cookie_name_this_forum_read]);
-    } else {
-        $forumtimecompare = '';
     }
 
     // Settings and disply
@@ -119,11 +97,16 @@ function xarbb_user_viewforum()
                                          'xarbb',
                                          $fid);
 
+        $read_topic = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $topic['tid']);
+
+        if (isset($read_topic)){
+            $cookie_time_compare = $read_topic;
+        } else {
+            $cookie_time_compare = '';
+        }
 
         $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
         $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
-
-        $cookie_time_compare = max($allforumtimecompare, $forumtimecompare);
 
         switch(strtolower($topic['tstatus'])) {
             // Just a regular old topic
@@ -132,18 +115,18 @@ function xarbb_user_viewforum()
                 if (($cookie_time_compare > $topic['ttime']) || !xarUserIsLoggedIn()){
                     // More comments than our hottopic setting, therefore should be hot, but not new.
                     if ($topics[$i]['comments'] > $hotTopic){
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+                        $topics[$i]['timeimage'] = 1;
                     // Else should be a regular old boring topic
                     } else {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+                        $topics[$i]['timeimage'] = 2;
                     }
                 } else {
                     // OOF, look at this topic, hot and new.
                     if ($topics[$i]['comments'] > $hotTopic){
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+                        $topics[$i]['timeimage'] = 3;
                     // Else should be a regular old boring topic that has a new post
                     } else {
-                        $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+                        $topics[$i]['timeimage'] = 9;
                     }
                 }
                 break;
@@ -151,23 +134,23 @@ function xarbb_user_viewforum()
             case '1':
 
                 if (($cookie_time_compare > $topic['ttime']) || !xarUserIsLoggedIn()){
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce.gif') . '" alt="'.xarML('Announcement').'" />';
+                    $topics[$i]['timeimage'] = 4;
                 } else {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_announce_new.gif') . '" alt="'.xarML('New Announcement').'" />';
+                    $topics[$i]['timeimage'] = 5;
                 }
 
                 break;
             // Sticky topic
             case '2':
                 if (($cookie_time_compare > $topic['ttime']) || !xarUserIsLoggedIn()){
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky.gif') . '" alt="'.xarML('Sticky').'" />';
+                    $topics[$i]['timeimage'] = 6;
                 } else {
-                    $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_sticky_new.gif') . '" alt="'.xarML('New Sticky Topic').'" />';
+                    $topics[$i]['timeimage'] = 7;
                 }
                 break;
             // Locked
             case '3':
-                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New post').'" />';
+                $topics[$i]['timeimage'] = 8;
                 break;
         }
 

@@ -93,15 +93,45 @@
             </th>
         </tr>
         <xar:loop name="$items">
+
+        <xar:if condition="$loop:item['timeimage'] eq 1">
+            <xar:set name="image">xarTplGetImage('new/folder_hot.gif')</xar:set>
+            <xar:set name="alt">xarML('Hot Topic')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 2" />
+            <xar:set name="image">xarTplGetImage('new/folder.gif')</xar:set>
+            <xar:set name="alt">xarML('No New post')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 3" />
+            <xar:set name="image">xarTplGetImage('new/folder_new_hot.gif')</xar:set>
+            <xar:set name="alt">xarML('Hot Topic')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 4" />
+            <xar:set name="image">xarTplGetImage('new/folder_announce.gif')</xar:set>
+            <xar:set name="alt">xarML('Announcement')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 5" />
+            <xar:set name="image">xarTplGetImage('new/folder_announce_new.gif')</xar:set>
+            <xar:set name="alt">xarML('New Announcement')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 6" />
+            <xar:set name="image">xarTplGetImage('new/folder_sticky.gif')</xar:set>
+            <xar:set name="alt">xarML('Sticky')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 7" />
+            <xar:set name="image">xarTplGetImage('new/folder_sticky_new.gif')</xar:set>
+            <xar:set name="alt">xarML('New Sticky Topic')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 8" />
+            <xar:set name="image">xarTplGetImage('new/folder_lock.gif')</xar:set>
+            <xar:set name="alt">xarML('No New post')</xar:set>
+        <xar:elseif condition="$loop:item['timeimage'] eq 9" />
+            <xar:set name="image">xarTplGetImage('new/folder_new.gif')</xar:set>
+            <xar:set name="alt">xarML('No New post')</xar:set>
+        </xar:if>
+
             <tr>
                 <td class="xar-norm icon">
                     <xar:if condition="$loop:item['tstatus'] eq 5">
                         <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tpost']))#">
-                            #$loop:item['timeimage']# 
+                            <img src="#$image#" alt="#$alt#" /> 
                         </a>
                         <xar:else />
                         <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#">
-                            #$loop:item['timeimage']# 
+                            <img src="#$image#" alt="#$alt#" /> 
                         </a>
                     </xar:if>
                 </td>

@@ -190,11 +190,13 @@ function xarbb_user__getforuminfo($args)
             if (xarUserIsLoggedIn()){
                 // Here we can check the updated images or standard ones.
                 // Images
+                /*
                 if (isset($_COOKIE[$cookie_name_all_read])){
                     $alltimecompare = unserialize($_COOKIE[$cookie_name_all_read]);
                 } else {
                     $alltimecompare = '';
                 }
+                */
                 $cookie_name_this_forum_read = xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'];
                 if (isset($_COOKIE[$cookie_name_this_forum_read])){
                     $forumtimecompare = unserialize($_COOKIE[$cookie_name_this_forum_read]);
@@ -202,7 +204,10 @@ function xarbb_user__getforuminfo($args)
                     $forumtimecompare = '';
                 }
 
-                $time_compare = max($alltimecompare, $forumtimecompare);
+                //$time_compare = max($alltimecompare, $forumtimecompare);
+
+                $time_compare = $forumtimecompare;
+
                 if ($time_compare > $forum['fpostid']) {
                     $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
                 } else {

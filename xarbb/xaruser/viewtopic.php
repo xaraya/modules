@@ -45,6 +45,9 @@ function xarbb_user_viewtopic($args)
         }
     }
 
+    // Session for topic read
+    xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_t_' . $tid, time());
+
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
     if ($topic['fstatus'] == 1) {
