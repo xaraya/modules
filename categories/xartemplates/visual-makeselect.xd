@@ -1,5 +1,5 @@
 <xar:if condition="!empty($size)">
-    <xar:set name="sizestring">'size="#$size#"'</xar:set>
+    <xar:set name="sizestring">'size="'.$size.'"'</xar:set>
 <xar:else/>
     <xar:set name="sizestring">''</xar:set>
 </xar:if>
