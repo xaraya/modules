@@ -41,7 +41,7 @@
                             <xar:mlstring>Mail Options</xar:mlstring>
                         </td>
                         <td>
-                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" tabindex="3" />
+                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked tabindex="3" />
                             &nbsp;&nbsp;HTML Mail
                         </td>
                     </tr>
