@@ -1,6 +1,6 @@
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
     <div class="tabnav">
-        <div class="navhelp" class="help" title="#xarML('Click on a tab to explore further')#">
+        <div class="navhelp" title="#xarML('Click on a tab to explore further')#">
             <xar:mlstring>
                 Options 
             </xar:mlstring>
