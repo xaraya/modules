@@ -35,13 +35,10 @@ function sitecontact_user_main()
     $customtitle = xarModGetVar('sitecontact','customtitle');
     $usehtmlemail= xarModGetVar('sitecontact', 'usehtmlemail');
     $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
-    if ($usehtmlemail==1){
-        $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
-        $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
-    } else {
-         $data['customtitle']=xarVarPrepForDisplay($customtitle);
-         $data['customtext'] = xarVarPrepForDisplay($customtext);
-    }
+
+    $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
+    $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
+
     $data['usehtmlemail'] = $usehtmlemail;
     $data['allowcopy'] = $allowcopy;
     $optiontext = xarModGetVar('sitecontact','optiontext');
