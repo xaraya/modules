@@ -50,10 +50,14 @@ function bloggerapi_userapi_newpost($msg) {
         $bodytype = ' ';
         $bodytext = $content;
         $language = ' ';
-        $status=0; // Submitted
+        
         if ($publish) {
-          $status ='3'; // Frontpage
+            $status ='publishstatus'; 
+        } else {
+            $status = 'draftstatus';
         }
+        $status = xarModGetVar('bloggerapi',$status);
+        if(empty($status)) $status = 0; // Submitted
         // FIXME: Test for exceptions
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
         $postid = xarModAPIFunc('articles','admin','create',array('ptid'=>$pubType,
