@@ -17,12 +17,18 @@
     <!-- Depending how the hook was enabled several itemtypes need searching -->
     <xar:if condition="!empty($itemtypes)">
       <label><xar:mlstring>Search in</xar:mlstring>:</label><br/>
+      
       <xar:loop name="$itemtypes">
-        <input type="checkbox" name="itemtypes[#$loop:item['label']#]" value="#$loop:key#"/>#$loop:item['title']#<br/>
+        <xar:if condition="$loop:key==1">
+          <xar:set name="$ischecked">'checked="checked"'</xar:set>
+        <xar:else/>
+          <xar:set name="$ischecked">''</xar:set>
+        </xar:if>
+        <input type="checkbox" name="itemtypes[#$loop:item['label']#]" value="#$loop:key#" #$ischecked# />#$loop:item['title']#<br/>
       </xar:loop>
     </xar:if>
     <br/>
-    <!-- The buttons which producte the behaviour -->
+    <!-- The buttons which produce the behaviour -->
     <input type="submit" value="Search"/>
     <input type="reset" value="Clear search"/>
 </form>

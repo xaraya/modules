@@ -28,7 +28,7 @@ function search_user_handlesearch() {
     // The module we want to search and the search terms are required.
     xarVarFetch('formodule','str:1:',$search_in_module);
     xarVarFetch('searchterms','str:0:',$search_terms);
-    xarVarFetch('startnum','int::',$startnum,0,XARVAR_NOT_REQUIRED);
+    xarVarFetch('startnum','int::',$startnum,1,XARVAR_NOT_REQUIRED);
     
     // Some modules allow searching only specific itemtypes, the generic
     // searchform supports this.
@@ -90,9 +90,9 @@ function search_user_handlesearch() {
  
     $total = count($searchresults);
     $itemsperpage = xarModGetUserVar('search','resultsperpage');
-    $searchresults = array_slice($searchresults,$startnum, $itemsperpage); 
+    $searchresults = array_slice($searchresults,$startnum-1, $itemsperpage); 
     if($total < $itemsperpage) $itemsperpage = $total;
-
+    
     $urltemplate = xarModUrl('search','user','handlesearch',array('startnum' => '%%',
                                                                   'formodule' => $search_in_module,
                                                                   'searchterms' => $search_terms,
@@ -106,8 +106,8 @@ function search_user_handlesearch() {
     $data['searchterms'] = $search_terms;
     $data['searchresults'] = $searchresults;
     $data['searchtotal'] = $total;
-    $data['searchstart'] = ($startnum !=0)?$startnum + 1:$startnum;
-    $data['searchend'] = $startnum + $itemsperpage;
+    $data['searchstart'] = ($total !=0)?$startnum:$startnum-1;
+    $data['searchend'] = min($total,($startnum + $itemsperpage -1));
     return $data;
 }
 
