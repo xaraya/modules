@@ -14,9 +14,32 @@ function xlink_user_display($args)
     extract($args);
 
     if (empty($itemid)) {
-        $itemid = '';
+        return array();
     }
-    return array('itemid' => $itemid);
+    $item = xarModAPIFunc('xlink','user','getitem',
+                          array('id' => $itemid));
+    if (!isset($item)) return;
+    if (count($item) == 0 || empty($item['moduleid'])) return array();
+
+    $modinfo = xarModGetInfo($item['moduleid']);
+    if (!isset($modinfo) || empty($modinfo['name'])) return array();
+
+    $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                               array('itemtype' => $item['itemtype'],
+                                     'itemids' => array($item['itemid'])),
+                               0);
+
+    if (isset($itemlinks[$item['itemid']]) && !empty($itemlinks[$item['itemid']]['url'])) {
+        // normally we should have url, title and label here
+        foreach ($itemlinks[$item['itemid']] as $field => $value) {
+            $item[$field] = $value;
+        }
+    } else {
+        $item['url'] = xarModURL($modinfo['name'],'user','display',
+                                 array('itemtype' => $item['itemtype'],
+                                       'itemid' => $item['itemid']));
+    }
+    return $item;
 }
 
 ?>

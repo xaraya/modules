@@ -14,6 +14,11 @@ function xlink_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminXLink')) {
         $menulinks[] = Array('url'   => xarModURL('xlink',
                                                   'admin',
+                                                  'view'),
+                              'title' => xarML('Overview of the XLink Definitions'),
+                              'label' => xarML('View XLinks'));
+        $menulinks[] = Array('url'   => xarModURL('xlink',
+                                                  'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the xlink configuration'),
                               'label' => xarML('Modify Config'));

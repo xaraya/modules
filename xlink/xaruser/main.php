@@ -17,23 +17,25 @@ function xlink_user_main($args)
 
     if (empty($base) && empty($id)) {
         return array('status' => 0);
+    } elseif (empty($id)) {
+        return array('status' => 1,
+                     'base' => xarVarPrepForDisplay($base),
+                     'where' => "basename eq '" . xarVarPrepForStore($base) ."'");
     } elseif (empty($base)) {
         $base = '';
-    } elseif (empty($id)) {
-        $id = '';
     }
 // TODO: show list of valid id's per base ?
     $item = xarModAPIFunc('xlink','user','getitem',
-                          array('base' => $base,
-                                'id' => $id));
+                          array('basename' => $base,
+                                'refid' => $id));
     if (!isset($item)) return;
     if (!isset($item['moduleid'])) {
-        return array('status' => 1);
+        return array('status' => 2);
     }
 
     $modinfo = xarModGetInfo($item['moduleid']);
     if (!isset($modinfo) || empty($modinfo['name'])) {
-        return array('status' => 2);
+        return array('status' => 3);
     }
 
 // TODO: make configurable per module/itemtype

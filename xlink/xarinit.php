@@ -81,7 +81,7 @@ function xlink_init()
     xarModSetVar('xlink', 'SupportShortURLs', 1);
 
 // base names
-    xarModSetVar('xlink', 'default', ',kbase,products');
+    xarModSetVar('xlink', 'default', ',kbase,products,wiki');
 
     if (!xarModRegisterHook('item', 'new', 'GUI',
                            'xlink', 'admin', 'newhook')) {

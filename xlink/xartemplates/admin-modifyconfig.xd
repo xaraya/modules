@@ -10,7 +10,7 @@
 			<td colspan="2"><b>#$config['label']#</b></td>
 		</tr>
 		<tr>
-			<td><xar:mlstring>Base names (comma-separated list) TODO</xar:mlstring></td>
+			<td><xar:mlstring>Base names (comma-separated list)</xar:mlstring></td>
 			<td>
 				<input type="text" name="xlink[#$modname#]" id="xlink[#$modname#]" value="#$config['xlink']#" size="40" />
 			</td>

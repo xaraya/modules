@@ -1,11 +1,17 @@
-<h2><xar:mlstring>View XLink Definitions</xar:mlstring></h2>
 <xar:if condition="empty($status)">
+    <h2><xar:mlstring>Overview of XLink Definitions</xar:mlstring></h2>
     <xar:data-view module="xlink" fieldlist="basename,refid" layout="list" />
-<xar:elseif condition="$status eq 1" />
-    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+<xar:elseif condition="$status eq 1 and !empty($base)" />
+    <h2><xar:ml><xar:mlstring>Overview of XLink Definitions for #(1)</xar:mlstring><xar:mlvar>#$base#</xar:mlvar></xar:ml></h2>
+    <xar:data-view module="xlink" fieldlist="basename,refid" layout="list" where="$where" />
 <xar:elseif condition="$status eq 2" />
+    <h2><xar:mlstring>Overview of XLink Definitions</xar:mlstring></h2>
+    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+<xar:elseif condition="$status eq 3" />
+    <h2><xar:mlstring>Overview of XLink Definitions</xar:mlstring></h2>
     <xar:mlstring>Unable to find module for the corresponding item</xar:mlstring>
 <xar:else />
+    <h2><xar:mlstring>Overview of XLink Definitions</xar:mlstring></h2>
     <xar:mlstring>Unknown status</xar:mlstring>
 </xar:if>
 

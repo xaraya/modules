@@ -40,7 +40,7 @@ function xlink_admin_updateconfig()
             } 
         } 
     } 
-    if (!isset($isalias)) {
+    if (empty($isalias)) {
         $isalias = array();
     }
     foreach (array_keys($oldbasenames) as $base) {
