@@ -17,8 +17,8 @@
 
 // the hook function
 //
-function bbcode_userapi_transform($args) {
-
+function bbcode_userapi_transform($args) 
+{
     extract($args);
 
     // Argument check
@@ -52,7 +52,8 @@ function bbcode_userapi_transform($args) {
 
 // the wrapper for a string var (simple up to now)
 //
-function bbcode_transform($text) {
+function bbcode_transform($text) 
+{
     $message = bbcode_encode($text, $is_html_disabled=false);
     return $message;
 }
@@ -73,7 +74,8 @@ function bbcode_transform($text) {
  * different [img] tag conversion against XSS
  */
 
-function bbcode_encode($message, $is_html_disabled) {
+function bbcode_encode($message, $is_html_disabled) 
+{
 
     // pad it with a space so we can distinguish between FALSE and matching the 1st char (index 0).
     // This is important; bbencode_quote(), bbencode_list(), and bbencode_code() all depend on it.

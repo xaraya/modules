@@ -13,8 +13,8 @@
  * @author larseneo, Hinrich Donner
 */
 
-function bbcode_init() {
-
+function bbcode_init() 
+{
     // Set up module variables
     //
     xarModSetVar('bbcode', 'dolinebreak', 0);
