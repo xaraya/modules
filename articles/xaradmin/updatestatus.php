@@ -21,7 +21,7 @@ function articles_admin_updatestatus()
                        new DefaultUserException($msg));
         return;
     }
-    if (!isset($status) || !is_numeric($status) || $status < 0 || $status > 3) {
+    if (!isset($status) || !is_numeric($status) || $status < -1 || $status > 3) {
         $msg = xarML('Invalid status');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_DATA',
                        new DefaultUserException($msg));
@@ -57,7 +57,11 @@ function articles_admin_updatestatus()
         // Security check
         $input = array();
         $input['article'] = $article;
-        $input['mask'] = 'EditArticles';
+        if ($status < 0) {
+            $input['mask'] = 'DeleteArticles';
+        } else {
+            $input['mask'] = 'EditArticles';
+        }
         if (!xarModAPIFunc('articles','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
                          $descr, xarVarPrepForDisplay($aid));
@@ -66,16 +70,23 @@ function articles_admin_updatestatus()
             return;
         }
 
-        // Update the status now
-        $article['status'] = $status;
-        // We need to tell some hooks that we are coming from the update status screen
-        // and not the update the actual article screen.  Right now, the keywords vanish
-        // into thin air.  Bug 1960
-        $article['statusflag'] = true;
+        if ($status < 0) {
+            // Pass to API
+            if (!xarModAPIFunc('articles', 'admin', 'delete', $article)) {
+                return; // throw back
+            }
+        } else {
+            // Update the status now
+            $article['status'] = $status;
+            // We need to tell some hooks that we are coming from the update status screen
+            // and not the update the actual article screen.  Right now, the keywords vanish
+            // into thin air.  Bug 1960
+            $article['statusflag'] = true;
 
-        // Pass to API
-        if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
-            return; // throw back
+            // Pass to API
+            if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
+                return; // throw back
+            }
         }
     }
     unset($article);
