@@ -47,6 +47,8 @@ function sitecontact_user_contactus()
     $optionset = array();
     $selectitem=array();
     $adminemail = xarModGetVar('mail','adminmail');
+    $mainemail=xarModGetVar('sitecontact','scdefaultemail');
+
     $optionset=explode(',',$optiontext);
     $data['optionset']=$optionset;
     $optionitems=array();
@@ -58,12 +60,12 @@ function sitecontact_user_contactus()
             if (isset($optionid[1])) {
                 $setmail=$optionid[1];
             }else{
-                $setmail=$adminemail;
+                $setmail=$mainemail;
             }
         }
     }
     if (!isset($setmail) ) {
-       $setmail = xarModGetVar('mail','adminmail');
+       $setmail = xarModGetVar('sitecontact','scdefaultemail');
    }
    $data['setmal']=$setmail;
     $today = getdate();
@@ -88,7 +90,7 @@ function sitecontact_user_contactus()
    //Get the existing value of htmlmail module
     $oldhtmlvalue=xarModGetVar('mail','html');
     if (!isset($oldhtmlvalue) ) {
-        $oldhtmlvalue=false;
+    $oldhtmlvalue=false;
     }
     if ($usehtmlemail ==1) {
     //temporarily set the use of html in mail.
@@ -97,8 +99,11 @@ function sitecontact_user_contactus()
     //make sure at least temporarily it is set to use text in mail
         xarModSetVar('mail','html',0);
     }
-
-    $adminname= xarModGetVar('mail','adminname');
+    $sendname=xarModGetVar('sitecontact','scdefaultname');
+    if (!isset($sendname)) {
+        $adminname= xarModGetVar('mail','adminname');
+        $sendname=$adminname;
+    }
     $sitename = xarModGetVar('themes','SiteName');
     $siteurl = xarServerGetBaseURL();
     $subject = $requesttext;
@@ -155,7 +160,7 @@ function sitecontact_user_contactus()
                              'message'      => $usertextmessage,
                              'htmlmessage'  => $userhtmlmessage,
                              'from'         => $setmail,
-                             'fromname'     => $adminname))) return;
+                             'fromname'     => $sendname))) return;
     }//allow copy
 
     //now let's do the html message to admin
@@ -197,7 +202,7 @@ function sitecontact_user_contactus()
                        'admin',
                        'sendmail',
                        array('info'         => $setmail,
-                             'name'         => $adminname,
+                             'name'         => $sendname,
                              'subject'      => $subject,
                              'message'      => $admintextmessage,
                              'htmlmessage'  => $adminhtmlmessage,

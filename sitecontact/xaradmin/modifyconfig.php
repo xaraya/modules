@@ -30,9 +30,24 @@ function sitecontact_admin_modifyconfig()
     $data['webconfirmtext'] = xarModGetVar('sitecontact', 'webconfirmtext');
     $notetouser = xarModGetVar('sitecontact', 'notetouser');
     if (!isset($notetouser) || (trim($notetouser)=='')) {
-     $notetouser=$xarModGetVar('sitecontact','defaultnote');
+     $notetouser=xarModGetVar('sitecontact','defaultnote');
     }
     $data['notetouser']=$notetouser;
+
+    $scdefaultemail = xarModGetVar('sitecontact', 'scdefaultemail');
+
+    if (!isset($scdefaultemail) || (trim($scdefaultemail)=='')) {
+     $scdefaultemail=xarModGetVar('mail','adminmail');
+    }
+    $data['scdefaultemail']= $scdefaultemail;
+
+    $scdefaultname = xarModGetVar('sitecontact', 'scdefaultname');
+
+    if (!isset($scdefaultname) || ($scdefaultname)=='') {
+     $scdefaultname=xarModGetVar('mail','adminname');
+    }
+    $data['scdefaultname']= $scdefaultname;
+
     $data['shorturlschecked'] = xarModGetVar('sitecontact', 'SupportShortURLs') ? 'checked' : '';
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'sitecontact',

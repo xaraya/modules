@@ -26,6 +26,8 @@ function sitecontact_admin_updateconfig()
     if (!xarVarFetch('notetouser', 'str:1:', $notetouser, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowcopy', 'checkbox', $allowcopy, true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('usehtmlemail', 'checkbox', $usehtmlemail, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('scdefaultemail', 'str:1:', $scdefaultemail,'', XARVAR_NOT_REQUIRED)) return;
+   if ( !xarVarFetch('scdefaultname', 'str:1:', $scdefaultname, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
     xarModSetVar('sitecontact', 'customtext', $customtext);
@@ -36,6 +38,23 @@ function sitecontact_admin_updateconfig()
     xarModSetVar('sitecontact', 'usehtmlemail', $usehtmlemail);
     xarModSetVar('sitecontact', 'webconfirmtext', $webconfirmtext);
     xarModSetVar('sitecontact', 'notetouser', $notetouser);
+    xarModSetVar('sitecontact', 'scdefaultemail', $scdefaultemail);
+    xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);    
+
+    $scdefaultemail=trim($scdefaultemail);
+    if ((!isset($scdefaultemail)) || $scdefaultemail=='') {
+       $scdefaultemail=xarModGetVar('mail','adminmail');
+    }
+    xarModSetVar('sitecontact', 'scdefaultemail', $scdefaultemail);
+
+    $scdefaultname=trim($scdefaultname);
+
+    if (!isset($scdefaultname) || $scdefaultname=='') {
+       $scdefaultname=xarModGetVar('mail','adminname');
+    }
+
+   xarModSetVar('sitecontact', 'scdefaultname', $scdefaultname);
+
     xarModCallHooks('module','updateconfig','sitecontact',
               array('module' => 'sitecontact'));
 

@@ -24,6 +24,26 @@
         </xar:if>
     </span>
     </div>
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Default site email for receiving and sending contact emails. Defaults to Admin email')#">
+                <label for="scdefaultemail"><xar:mlstring>Default email</xar:mlstring></label>:
+            </span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="scdefaultemail" id="scdefaultemail" size="40" maxlength="128" value="#$scdefaultemail#" />
+        </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Default name for receiving and sending contact emails. Defaults to site Admin name')#">
+                <label for="scdefaultname"><xar:mlstring>Default email name</xar:mlstring></label>:
+            </span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="scdefaultname" id="scdefaultname" size="40" maxlength="128" value="#$scdefaultname#" />
+        </span>
+    </div>
 
     <div style="clear: both; width: 98%;padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
@@ -35,7 +55,7 @@
             <input type="text" name="customtitle" id="customtitle" size="40" maxlength="128" value="#$customtitle#" />
         </span>
     </div>
-    
+
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;margin-top:40px;margin-bottom:40px;">
         <span class="help" title="#xarML('Custom text for the contact page. You can use HTML here if configured on your site.')#"><label for="customtext">
