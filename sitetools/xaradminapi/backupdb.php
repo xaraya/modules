@@ -398,7 +398,8 @@ function sitetools_adminapi_backupdb ($args)
    return $items;
 }
  //A few formatting functions
- function FormattedTimeRemaining($seconds, $precision=1) {
+ function FormattedTimeRemaining($seconds, $precision=1) 
+ {
 	if ($seconds > 86400) {
 		return number_format($seconds / 86400, $precision).' days';
 	} else if ($seconds > 3600) {
@@ -408,7 +409,8 @@ function sitetools_adminapi_backupdb ($args)
 	}
 	return number_format($seconds, $precision).' seconds';
 }
-function FileSizeNiceDisplay($filesize, $precision=2) {
+function FileSizeNiceDisplay($filesize, $precision=2) 
+{
 	if ($filesize < 1000) {
 		$sizeunit  = 'bytes';
 		$precision = 0;
