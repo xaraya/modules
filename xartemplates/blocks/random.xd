@@ -6,7 +6,11 @@
 
 <xar:foreach in="$items" value="$item">
     <xar:if condition="!empty($showtitle)">
-        <a href="#xarModURL('articles', 'user', 'display', array('aid' => $item['aid']))#">#$item['title']#</a>
+        <xar:if condition="isset($linkpubtype)">
+            <a href="#xarModURL('articles', 'user', 'display', array('aid' => $item['aid'], 'itemtype' => $item['pubtypeid']))#">#$item['title']#</a>
+        <xar:else />
+            <a href="#xarModURL('articles', 'user', 'display', array('aid' => $item['aid']))#">#$item['title']#</a>
+        </xar:if>
     </xar:if>
     <xar:if condition="!empty($showsummary) and !empty($item['summary'])">
         <p>

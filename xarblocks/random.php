@@ -18,22 +18,23 @@ function articles_randomblock_init()
 {
     // Default values to initialize the block.
     return array(
-        'pubtypeid' => 0,
-        'catfilter' => 0,
-        'status' => '3,2',
-        'language' => '',
-        'numitems' => 1,
-        'alttitle' => '',
-        'altsummary' => '',
-        'showtitle' => true,
-        'showsummary' => true,
-        'showpubdate' => false,
-        'showsubmit' => false,
-        'showdynamic' => false,
-        'nocache' => 0, // Cache this block
-        'pageshared' => 1, // Share across all pages
-        'usershared' => 1, // Share between group members
-        'cacheexpire' => null // Default cache expiration time
+        'pubtypeid'     => 0,
+        'catfilter'     => 0,
+        'status'        => '3,2',
+        'language'      => '',
+        'numitems'      => 1,
+        'alttitle'      => '',
+        'altsummary'    => '',
+        'showtitle'     => true,
+        'showsummary'   => true,
+        'showpubdate'   => false,
+        'showsubmit'    => false,
+        'showdynamic'   => false,
+        'nocache'       => 0, // Cache this block
+        'pageshared'    => 1, // Share across all pages
+        'usershared'    => 1, // Share between group members
+        'cacheexpire'   => null, // Default cache expiration time
+        'linkpubtype'   => false
     );
 }
 

@@ -39,7 +39,7 @@ function articles_randomblock_modify($blockinfo)
     if (empty($vars['showauthor'])) {$vars['showauthor'] = false;}
     if (empty($vars['showsubmit'])) {$vars['showsubmit'] = false;}
     if (empty($vars['showdynamic'])) {$vars['showdynamic'] = false;}
-
+    if (empty($vars['linkpubtype'])) {$vars['linkpubtype'] = false;}
     $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
     $vars['statusoptions'] = array(
@@ -82,7 +82,7 @@ function articles_randomblock_update($blockinfo)
     xarVarFetch('showauthor', 'checkbox', $vars['showauthor'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showsubmit', 'checkbox', $vars['showsubmit'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED);
-    
+    xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED);
     
     $vars['blockid'] = $blockinfo['bid'];
     $blockinfo['content'] = $vars;
