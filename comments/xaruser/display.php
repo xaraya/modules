@@ -159,7 +159,7 @@ function comments_user_display($args)
     $package['uid']                   = xarUserGetVar('uid');
     $package['uname']                 = xarUserGetVar('uname');
     $package['name']                  = xarUserGetVar('name');
-    $package['new_title']             = xarVarGetCached('Comments.title', 'title');
+    $package['new_title']             = xarVarPrepForDisplay(xarVarGetCached('Comments.title', 'title'));
 
     if (empty($ishooked) && empty($receipt['returnurl'])) {
         // get the title and link of the original object
