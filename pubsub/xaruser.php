@@ -50,6 +50,7 @@ function pubsub_user_display($args)
 	return;
     }
 
+    $data = "<a href=\"RealUrlNeedsToGoHere\"><img src=\"modules/pubsub/images/subscribe.png\" alt=\"subscribe\" \></a>";
     // TODO: make it actually do what the comment says it will :-)
     return $data;
 }

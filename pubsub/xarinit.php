@@ -33,10 +33,10 @@ function pubsub_init()
     $pubsubeventstable = $xartable['pubsub_events'];
     $eventsfields = array(
         'xar_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_module'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
-        'xar_eventtype'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
-        'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
-        'xar_actionid'=>array('type'=>'integer','size'=>100,'null'=>FALSE,'default'=>'0')
+        'xar_modid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_cid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_iid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE)
     );
     $query = xarDBCreateTable($pubsubeventstable,$eventsfields);
     $result =& $dbconn->Execute($query);
@@ -80,7 +80,7 @@ function pubsub_init()
                            'API',
                            'pubsub',
                            'admin',
-                           'addevent')) {
+                           'createhook')) {
         return false;
     }
     if (!xarModRegisterHook('item',
@@ -88,25 +88,25 @@ function pubsub_init()
                            'API',
                            'pubsub',
                            'admin',
-                           'delevent')) {
+                           'deletehook')) {
         return false;
     }
-    if (!xarModRegisterHook('item',
-                           'create',
-                           'API',
-                           'pubsub',
-                           'user',
-                           'subscribe')) {
-        return false;
-    }
-    if (!xarModRegisterHook('item',
-                           'delete',
-                           'API',
-                           'pubsub',
-                           'user',
-                           'unsubscribe')) {
-        return false;
-    }
+    #if (!xarModRegisterHook('item',
+    #                       'create',
+    #                       'API',
+    #                       'pubsub',
+    #                       'user',
+    #                       'subscribe')) {
+    #   return false;
+    #}
+    #if (!xarModRegisterHook('item',
+    #                       'delete',
+    #                       'API',
+    #                       'pubsub',
+    #                       'user',
+    #                       'unsubscribe')) {
+    #    return false;
+    #}
     if (!xarModRegisterHook('item',
                            'delete',
                            'API',
@@ -115,12 +115,12 @@ function pubsub_init()
                            'delsubscriptons')) {
         return false;
     }
-    if (!xarModRegisterHook('category',
+    if (!xarModRegisterHook('item',
                            'display',
-                          'GUI',
+                           'GUI',
                            'pubsub',
                            'user',
-                           'display')) {
+                           'displayicon')) {
         return false;
     }
 
@@ -156,33 +156,33 @@ function pubsub_delete()
                            'API',
                            'pubsub',
                            'admin',
-                           'addevent')) {
+                           'createhook')) {
         xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
+    #if (!xarModUnregisterHook('item',
+    #                       'create',
+    #                       'API',
+    #                       'pubsub',
+    #                       'user',
+    #                       'subscribe')) {
+    #    xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+    #}
     if (!xarModUnregisterHook('item',
-                           'create',
-                           'API',
-                           'pubsub',
-                           'user',
-                           'subscribe')) {
-        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
-    }
-    if (!xarModUnregisterHook('category',
                            'display',
                            'GUI',
                            'pubsub',
                            'user',
-                           'display')) {
+                           'displayicon')) {
         xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
-    if (!xarModUnregisterHook('item',
-                           'delete',
-                           'API',
-                           'pubsub',
-                           'user',
-                           'unsubscribe')) {
-        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
-    }
+    #if (!xarModUnregisterHook('item',
+    #                       'delete',
+    #                       'API',
+    #                       'pubsub',
+    #                       'user',
+    #                       'unsubscribe')) {
+    #    xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+    #}
     if (!xarModUnregisterHook('item',
                            'delete',
                            'API',
@@ -196,7 +196,7 @@ function pubsub_delete()
                            'API',
                            'pubsub',
                            'admin',
-                           'delevent')) {
+                           'deletehook')) {
         xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
 

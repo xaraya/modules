@@ -15,41 +15,43 @@
 
 /**
  * create a new pubsub event
+ * create event for an item - hook for ('item','create','API')
+ * 
  * @param $args['module'] name of the module this event applies to
  * @param $args['eventtype'] the event type
  * @returns int
  * @return event ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_adminapi_addevent($args)
+function pubsub_adminapi_createhook($args)
 {
 // This function will create a new 
 
     // Get arguments from argument array
     extract($args);
-    $invalid = array();
-    if (!isset($module) || !is_string($module)) {
-        $invalid[] = 'module';
+    if (!isset($extrainfo)) {
+        $extrainfo = array();
     }
-    if (!isset($eventtype) || !is_string($eventtype)) {
-        $invalid[] = 'eventtype';
-    }
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'addevent', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
+    
+    $cid = $extrainfo['cid'];
+    $iid = $extrainfo['iid'];
+    // When called via hooks, the module name may be empty, so we get it from
+    // the current module
+    if (empty($extrainfo['module'])) {
+        $modname = xarModGetName();
+    } else {
+        $modname = $extrainfo['module'];
     }
 
-    // Security check
-    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-	$msg = xarML('Not authorized to add #(1) items',
-                    'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+    $modid = xarModGetIDFromName($modname);
+    if (empty($modid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module name', 'admin', 'addevent', 'pubsub');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
-        return;
+        return false;
     }
+
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -59,8 +61,9 @@ function pubsub_adminapi_addevent($args)
     // check this event isn't already in the DB
     $query = "SELECT xar_eventid
  	    FROM $pubsubeventstable
-	    WHERE xar_module '" . xarVarPrepForStore($module) . "',
-	          xar_eventtype '" . xarVarPrepForStore($eventtype) . "'";
+	    WHERE xar_modid '" . xarVarPrepForStore($modid) . "',
+	          xar_iid '" . xarVarPrepForStore($iid) . "',
+	          xar_cid '" . xarVarPrepForStore($cid) . "'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
     if (count($result) > 0) {
@@ -77,17 +80,71 @@ function pubsub_adminapi_addevent($args)
     // Add item
     $query = "INSERT INTO $pubsubeventstable (
               xar_eventid,
-              xar_module,
-              xar_eventtype)
+              xar_modid,
+              xar_cid,
+	      xar_iid,
+	      xar_groupdescr)
             VALUES (
               $nextId,
-              '" . xarVarPrepForStore($module) . "',
-              '" . xarvarPrepForStore($eventtype) . "')";
+              '" . xarVarPrepForStore($modid) . "',
+              '" . xarVarPrepForStore($cid) . "',
+              '" . xarVarPrepForStore($iid) . "',
+              '" . xarvarPrepForStore($groupdescr) . "')";
     $dbconn->Execute($query);
     if (!$result) return;
 
     // return eventID
     return $nextId;
+}
+
+/**
+ * delete a pubsub event from hooks
+ * @param $args['extrainfo']
+ * @returns bool
+ * @return true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ */
+function pubsub_adminapi_deletehook($args)
+{
+    if (!isset($extrainfo)) {
+        $extrainfo = array();
+    }
+    $cid = $extrainfo['cid'];
+    $iid = $extrainfo['iid'];
+
+    // When called via hooks, the module name may be empty, so we get it from
+    // the current module
+    if (empty($extrainfo['module'])) {
+        $modname = xarModGetName();
+    } else {
+        $modname = $extrainfo['module'];
+    }
+
+    $modid = xarModGetIDFromName($modname);
+    if (empty($modid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module name', 'admin', 'deletehook', 'pubsub');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
+    }
+    // Get datbase setup
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubeventstable = $xartable['pubsub_events'];
+
+    // check this event isn't already in the DB
+    $query = "SELECT xar_eventid
+ 	    FROM $pubsubeventstable
+	    WHERE xar_modid '" . xarVarPrepForStore($modid) . "',
+	          xar_iid '" . xarVarPrepForStore($iid) . "',
+	          xar_cid '" . xarVarPrepForStore($cid) . "'";
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+    $eventid = $result->fields;
+    
+    # call delete function
+    pubsub_adminapi_delevent($eventid);
 }
 
 /**
