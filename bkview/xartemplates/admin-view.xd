@@ -1,5 +1,6 @@
 <xar:template file="admin-menu" type="module"/>
 
+<xar:if condition="count($items) != 0">
 <table class="csets">
   <tr>
     <th><xar:mlstring>Repository-ID</xar:mlstring></th>
@@ -29,4 +30,9 @@
     </tr>
   </xar:loop>
 </table>
+<xar:else/>
+    <div>
+        No repositories have been registered yet
+    </div>
+</xar:if>
  
