@@ -1,10 +1,10 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:loop name="$items">
 <item>
-<title>#$loop:item['ttitle']#</title>
+<title><xar:var name="loop:item.ttitle" prep="true"/></title>
 <link>#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#</link>
 <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$loop:item['ttime'])#</pubDate>
-<content:encoded>&lt;![CDATA[ #$loop:item['tpost']# ]]&gt;</content:encoded>
+<content:encoded><![CDATA[ #$loop:item['tpost']# ]]></content:encoded>
 <description>#$loop:item['tpostrss']#</description>
 <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
 </item>
