@@ -47,19 +47,29 @@ function hookbridge_hookapi_item_create ( $args )
         return;
     }
 
-    /*
-     * ADD YOUR CODE HERE
-     */
-     ob_start();
-     print_r($args);
-     $arg_dump = ob_get_contents();
-     ob_end_clean();
-    
-
-    mail("mcortez@fullcoll.edu", "HookBridgeDebug", $arg_dump);
-
-    
-    return $extrainfo;
+	/*
+	 * ADD YOUR CODE HERE
+	 */
+	 
+	// Get the path to where the hookbridge functions are stored
+	$hookbridge_functionpath = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
+	 
+	// Get the list of active hookbridge functions for the Create Hook
+	$hookfunctions_create = unserialize(xarModGetVar('hookbridge', 'hookfunctions_create' ));
+	
+	// Loop through'em
+	foreach( $hookfunctions_create as $bridgefunctionfile )
+	{
+		$includeFile = $hookbridge_functionpath.'/'.$bridgefunctionfile;
+		
+		$functionName = 'hookbridge_'.str_replace(".php","",$bridgefunctionfile);
+		include_once($includeFile);
+		
+		$extrainfo = call_user_func($functionName, $modname, $modid, $extrainfo);
+	}
+	
+	
+	return $extrainfo;
 }
 
 /*

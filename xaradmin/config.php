@@ -49,14 +49,29 @@ function hookbridge_admin_config( $args )
         case 1:
             $itemtype_name = 'createhook';
             
-            hookbridge_adminpriv_config_createhook( $args );
+            xarModAPIFunc( 'hookbridge','admin','config_createhook', $args );
             
-            $data['createhooksenabled']  = xarModGetVar('hookbridge', 'CreateHooksEnabled' );
-            $data['createhooksfunction'] = xarModGetVar('hookbridge', 'CreateHooksFunction' );
+            $data['hookenabled_create']      = xarModGetVar('hookbridge', 'hookenabled_create' );
+            $data['hookfunctions_create']    = unserialize(xarModGetVar('hookbridge', 'hookfunctions_create' ));
+			
+			$data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
+			
             break;
+        case 2:
+            $itemtype_name = 'updatehook';
+            
+            xarModAPIFunc( 'hookbridge','admin','config_updatehook', $args );
+            
+            $data['hookenabled_update']      = xarModGetVar('hookbridge', 'hookenabled_update' );
+            $data['hookfunctions_update']    = unserialize(xarModGetVar('hookbridge', 'hookfunctions_update' ));
+			
+			$data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
+			
+            break;
+			
         default:
             $itemtype_name = 'Hookbridge Configuration';
-            hookbridge_adminpriv_config( $args );
+            xarModAPIFunc('hookbridge', 'admin', 'config_main', $args);
             
             $data['hookbridge_functionpath'] = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
             
@@ -97,111 +112,32 @@ function hookbridge_adminpriv_commondata( $args )
 
 }
 
-/**
- * Administration for the hookbridge module.
- */
-function hookbridge_adminpriv_config( $args ) 
+function hookbridge_adminpriv_get_available_hook_functions()
 {
-    if (!xarVarFetch('itemtype',   'str', $itemtype,   '',     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('authid',     'str', $authid,     '',     XARVAR_NOT_REQUIRED)) return;
+	$hookbridge_functionpath = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
 
-    extract( $args );
-
-    if ( isset( $authid ) ) 
-    {
-
-        /*
-         * The user confirmed the form. So save the results.
-         */
-
-        if (!xarSecConfirmAuthKey()) return;
-
-
-        if (!xarVarFetch('supportshorturls',   'str', $supportshorturls,   '',     XARVAR_NOT_REQUIRED)) return;
-
-        if ( empty( $supportshorturls ) or !is_numeric( $supportshorturls ) ) 
-        {
-            $supportshorturls = 0;
-        }
-
-        xarModSetVar('hookbridge', 'SupportShortURLs', $supportshorturls );
-
-
-        if (!xarVarFetch('hookbridge_functionpath',   'str', $hookbridge_functionpath,   '',     XARVAR_NOT_REQUIRED)) return;
-        xarModSetVar('hookbridge', 'HookBridge_FunctionPath', $hookbridge_functionpath );
-        
-
-        /*
-         * Set a status message
-         */
-        xarSessionSetVar('hookbridge_statusmsg', xarML( 'Updated the global module settings!' ) );
-
-        /*
-         * Finished. Back to the sender!
-         */
-        return xarResponseRedirect(
-            xarModURL('hookbridge','admin','config',array(
-                                                            'itemtype' => $itemtype )
-                                                          ));
-
-    } // Save the changes
-
-
-}
-
-/**
- * CreateHook config for the hookbridge module.
- */
-function hookbridge_adminpriv_config_createhook( $args ) 
-{
-
-    if (!xarVarFetch('itemtype',   'str', $itemtype,   '',     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('authid',   'str', $authid,   '',     XARVAR_NOT_REQUIRED)) return;
-
-    extract( $args );
-
-    if ( isset( $authid ) ) 
-    {
-
-        /*
-         * The user confirmed the form. So save the results.
-         */
-
-        if (!xarSecConfirmAuthKey()) return;
-
-
-        $data['createhooksenabled']  = xarModGetVar('hookbridge', 'CreateHooksEnabled' );
-        $data['createhooksfunction'] = xarModGetVar('hookbridge', 'CreateHooksFunction' );
-
-        if (!xarVarFetch('createhooksenabled',   'str', $createhooksenabled,   '',     XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('createhooksfunction',   'str', $createhooksfunction,   '',     XARVAR_NOT_REQUIRED)) return;
-
-        if ( empty( $createhooksenabled ) or !is_numeric( $createhooksenabled ) ) 
-        {
-            $createhooksenabled = 0;
-        }
-
-        xarModSetVar('hookbridge', 'CreateHooksEnabled', $createhooksenabled );
-        xarModSetVar('hookbridge', 'CreateHooksFunction', $createhooksfunction );
-
-        
-
-        /*
-         * Set a status message
-         */
-        xarSessionSetVar('hookbridge_statusmsg', xarML( 'Updated the CreateHook module settings!' ) );
-
-        /*
-         * Finished. Back to the sender!
-         */
-        return xarResponseRedirect(
-            xarModURL('hookbridge','admin','config',array(
-                                                            'itemtype' => $itemtype )
-                                                          ));
-
-    } // Save the changes
-
-
+	$available_hook_functions = array();
+	if( isset($hookbridge_functionpath) && !empty($hookbridge_functionpath) )
+	{
+		$dir = $hookbridge_functionpath;
+		
+		// Open a known directory, and proceed to read its contents
+		if (is_dir($dir)) 
+		{
+			if ($dh = opendir($dir)) 
+			{
+				while (($file = readdir($dh)) !== false) 
+				{
+					if( !is_dir($dir."/".$file) )
+					{
+						$available_hook_functions[$file] = $file;
+					}
+				}
+				closedir($dh);
+			}
+		}
+	}
+	return $available_hook_functions;
 }
 
 /*

@@ -23,16 +23,20 @@ function hookbridge_privateapi_adminconfigmenu( $itemtype )
      * Build the configuration submenu
      */
     $menu = array();
-    $menu[0] = array(
+    $menu[] = array(
             'title' =>  xarML( 'Config' ),
             'url'   =>  xarModURL(
                 'hookbridge',
                 'admin',
                 'config' ));
 
-    $menu[1] = array(
+    $menu[] = array(
             'title' =>  xarML( 'Create Hook' ),
             'url'   =>  xarModURL('hookbridge','admin','config',array('itemtype'=>1)));
+    
+    $menu[] = array(
+            'title' =>  xarML( 'Update Hook' ),
+            'url'   =>  xarModURL('hookbridge','admin','config',array('itemtype'=>2)));
     
 
 //    $menu[$itemtype]['url'] = "";

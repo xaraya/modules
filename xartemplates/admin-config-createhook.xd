@@ -20,20 +20,17 @@
         <tr>
             <td><label for="supportshorturls"><xar:mlstring>Enable Create Hooks</xar:mlstring></label></td>
             <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
-                <xar:data-input id="createhooksenabled" type="checkbox" name="createhooksenabled" value="$createhooksenabled"/>
+                <xar:data-input id="hookenabled_create" type="checkbox" name="hookenabled_create" value="$hookenabled_create"/>
             </td>
         </tr>
 
         <tr>
             <td><label for="supportshorturls"><xar:mlstring>Create Hooks Function</xar:mlstring></label></td>
             <td xmlns:xar="http://www.w3.org/TR/xhtml1/strict">
-                <xar:data-input id="createhooksfunction" type="textbox" name="createhooksfunction" value="$createhooksfunction"/>
+                <xar:data-input id="hookfunctions_create" type="checkboxlist" name="hookfunctions_create" value="$hookfunctions_create" validation="$available_hook_functions"/>
             </td>
         </tr>
     
-
-    
-
         <tr>
             <td colspan="2" align="center">
                 <input type="hidden" name="itemtype" value="#$itemtype#"/>
@@ -44,6 +41,7 @@
 
     </table>
 </form>
+
 </div>
 </div>
 
