@@ -103,7 +103,7 @@ function _bk_search($repo, $terms,$object_id,$itemtype_id)
             $itemtype = xarML('File delta comment');
             $result = $file . ' @ ' . xarML('revision') . $rev;
             $context = $dots . substr($comment,0,80) . $dots;
-            $link = xarModUrl('bkview','user','diffview',array('repoid' => $object_id,'rev' => $rev,'file' => $file));
+            $link = xarModUrl('bkview','user','patchview',array('repoid' => $object_id,'rev' => $rev,'file' => $file));
             $description = $comment;
             break;
         }

@@ -58,7 +58,7 @@
       <div style="text-align: right; font-size: smaller;">
         <a onclick="return loadContent(this.href);"  title="#xarML('View the changeset in which this delta was created')#" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$rev#&amp;file=#$file#">
             <xar:mlstring>Corresponding cset</xar:mlstring></a> | 
-        <a  onclick="return loadContent(this.href);" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-diffview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+        <a  onclick="return loadContent(this.href);" title="#xarML('View differences introduced in this revision')#" href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
             <xar:mlstring>View differences</xar:mlstring></a>
      </div>
 </div>
