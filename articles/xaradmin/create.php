@@ -6,17 +6,9 @@
 function articles_admin_create()
 {
     // Get parameters
-    if(!xarVarFetch('title',    'isset', $title,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('summary',  'isset', $summary,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('body',     'str',   $body,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('notes',    'isset', $notes,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('pubdate',  'isset', $pubdate,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('preview',  'isset', $preview,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',     'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
-
-    if (!xarVarFetch('ptid',     'notempty', $ptid))                                 {return;}
-    if (!xarVarFetch('status',   'isset',    $status,   NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('language', 'isset',    $language, 'eng', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('ptid',     'notempty', $ptid)) {return;}
+    if (!xarVarFetch('cids',     'isset',    $cids,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('preview',  'isset',    $preview, NULL, XARVAR_DONT_SET)) {return;}
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -31,64 +23,14 @@ function articles_admin_create()
         return;
     }
 
-    if ($status === NULL) {
-        if (empty($pubtypes[$ptid]['config']['status']['label'])) {
-            $status = 2;
-        } else {
-            $status = 0;
-        }
+// TODO: switch to DD object style
+    $article = array();
+    $invalid = array();
+    if (xarModIsHooked('uploads', 'articles', $ptid)) {
+        xarVarSetCached('Hooks.uploads','ishooked',1);
     }
-// TODO: check local/user time
-    if (isset($pubdate) && is_array($pubdate)) {
-        if (!isset($pubdate['sec'])) {
-            $pubdate['sec'] = 0;
-        }
-        $pubdate = mktime($pubdate['hour'],$pubdate['min'],$pubdate['sec'],
-                          $pubdate['mon'],$pubdate['mday'],$pubdate['year']);
-    } else {
-//        $pubdate = '';
-        $pubdate = time();
-    }
-
-    if (!isset($body) || !is_string($body)) {
-        $body = '';
-    }
-
-    // Get relevant text
-    // Note : $body_upload is no longer set in PHP 4.2.1+
-    if (!empty($_FILES) && !empty($_FILES['body_upload']) && !empty($_FILES['body_upload']['tmp_name'])
-        // is_uploaded_file() : PHP 4 >= 4.0.3
-        && is_uploaded_file($_FILES['body_upload']['tmp_name']) && $_FILES['body_upload']['size'] > 0 && $_FILES['body_upload']['size'] < 1000000) {
-
-        if (xarModIsHooked('uploads', 'articles', $ptid)) 
-        {
-            $magicLink = xarModAPIFunc('uploads',
-                                       'user',
-                                       'uploadmagic',
-                                       array('uploadfile'=>'body_upload',
-                                             'mod'=>'articles',
-                                             'modid'=>0,
-                                             'utype'=>'file'));
-            
-            $body .= ' '. $magicLink;
-        } else {
-            // this doesn't work on some configurations
-            //$body = join('', @file($_FILES['body_upload']['tmp_name']));
-            $tmpdir = xarCoreGetVarDirPath();
-            $tmpdir .= '/cache/templates';
-            $tmpfile = tempnam($tmpdir, 'art');
-            if (move_uploaded_file($_FILES['body_upload']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
-                $body = join('', file($tmpfile));
-                unlink($tmpfile);
-            }
-        }
-    }
-
-// TEST: grab the title from the webpage
-$isfile = '';
     $properties = array();
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
-/*
         if (!empty($value['label'])) {
             if (!isset($value['validation'])) {
                 $value['validation'] = '';
@@ -97,84 +39,68 @@ $isfile = '';
                                                  array('name' => $field,
                                                        'type' => $value['format'],
                                                        'validation' => $value['validation']));
-            $properties[$field]->checkInput($field);
+            $check = $properties[$field]->checkInput($field);
+            if (!$check) {
+                $article[$field] = '';
+                $invalid[$field] = $properties[$field]->invalid;
+                $preview = 1;
+            } else {
+                $article[$field] = $properties[$field]->value;
+            }
         }
-*/
-if ($value['format'] == 'webpage') {
-$isfile = $field;
-} elseif ($value['format'] == 'calendar' && isset($$field) && is_array($$field)) {
-    $var = $$field;
-    if (!isset($var['sec'])) {
-        $var['sec'] = 0;
+        if (!isset($article[$field])) {
+            $article[$field] = '';
+        }
     }
-    $$field = mktime($var['hour'],$var['min'],$var['sec'],
-                     $var['mon'],$var['mday'],$var['year']);
-} elseif ($value['format'] == 'url' && isset($$field) && $$field == 'http://') {
-    $$field = '';
-} elseif ($value['format'] == 'image' && isset($$field) && $$field == 'http://') {
-    $$field = '';
-}
-        if (!isset($$field)) {
-            $$field = '';
+
+    $article['ptid'] = $ptid;
+
+    // check that we have a title when we need one, or fill in a dummy one
+    if (empty($article['title'])) {
+        if (empty($pubtypes[$ptid]['config']['title']['label'])) {
+            $article['title'] = ' ';
+        } elseif (empty($invalid['title'])) {
+            // show this to the user
+            $invalid['title'] = xarML('This field is required');
         }
+    }
+    if (empty($article['pubdate'])) {
+        $article['pubdate'] = time();
+    }
+
+// TODO: make $status dependent on permissions ?
+    if (empty($article['status'])) {
+        if (empty($pubtypes[$ptid]['config']['status']['label'])) {
+            $article['status'] = 2;
+        } else {
+            $article['status'] = 0;
+        }
+    }
+
+    $article['authorid'] = xarUserGetVar('uid');
+    if (empty($article['authorid'])) {
+        $article['authorid'] = _XAR_ID_UNREGISTERED;
+    }
+
+    if (empty($article['language'])) {
+        $article['language'] = 'eng';
     }
 
     if (!empty($cids) && count($cids) > 0) {
-        $cids = array_values(preg_grep('/\d+/',$cids));
+        $article['cids'] = array_values(preg_grep('/\d+/',$cids));
     } else {
-        $cids = array();
+        $article['cids'] = array();
     }
 
-// TEST: grab the title from the webpage
-if (empty($title) && !empty($isfile)) {
-    $basedir = 'modules/articles';
-    $curfile = $basedir . '/' . $$isfile;
-    if (file_exists($curfile) && is_file($curfile)) {
-        $fd = fopen($curfile,'r');
-        if (!empty($fd)) {
-            $head = fread($fd, 4096);
-            fclose($fd);
-            if (preg_match('#<title>(.*?)</title>#is',$head,$matches)) {
-                $title = $matches[1];
-            }
-        }
-    }
-}
+    // for preview
+    $article['pubtypeid'] = $ptid;
+    $article['aid'] = 0;
 
-    // check that we have a title when we need one, or fill in a dummy one
-    if (empty($title)) {
-        if (empty($pubtypes[$ptid]['config']['title']['label'])) {
-            $title = ' ';
-        } else {
-            $title = xarML('This field is required');
-            // show this to the user
-            $preview = 1;
-        }
-    }
-
-// TODO: make $status dependent on permissions
-
-    $authorid = xarUserGetVar('uid');
-    if (empty($authorid)) {
-        $authorid = 1;
-    }
-
-    // Fill in the new values
-    $article = array('title' => $title,
-                     'summary' => $summary,
-                     'body' => $body,
-                     'notes' => $notes,
-                     'pubdate' => $pubdate,
-                     'status' => $status,
-                     'ptid' => $ptid,
-                     'cids' => $cids,
-                  // for preview
-                     'pubtypeid' => $ptid,
-                     'authorid' => $authorid,
-                     'aid' => 0);
-    if ($preview) {
+    if ($preview || count($invalid) > 0) {
         $data = xarModFunc('articles','admin','new',
-                             array('preview' => true, 'article' => $article));
+                             array('preview' => true,
+                                   'article' => $article,
+                                   'invalid' => $invalid));
         unset($article);
         if (is_array($data)) {
             return xarTplModule('articles','admin','new',$data);

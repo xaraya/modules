@@ -138,6 +138,9 @@ function articles_admin_new($args)
             if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
                 $data['withupload'] = 1;
             }
+            if (!empty($preview) && isset($invalid) && !empty($invalid[$field])) {
+                $input['invalid'] = $invalid[$field];
+            }
             $fields[] = array('label' => $value['label'], 'id' => $field,
                               'definition' => $input);
         }

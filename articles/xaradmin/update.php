@@ -7,17 +7,9 @@ function articles_admin_update()
 {
     // Get parameters
     if(!xarVarFetch('aid',      'isset', $aid,       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('title',    'isset', $title,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('summary',  'isset', $summary,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('body',     'isset', $body,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('notes',    'isset', $notes,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('pubdate',  'isset', $pubdate,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('status',   'isset', $status,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',     'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('ptid',     'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('language', 'isset', $language,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('cids',     'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',  'isset', $preview,   NULL, XARVAR_DONT_SET)) {return;}
-
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -45,60 +37,21 @@ function articles_admin_update()
                             'get',
                             array('aid' => $aid));
 
-// TODO: check local/user time
-    if (isset($pubdate) && is_array($pubdate)) {
-        if (!isset($pubdate['sec'])) {
-            $pubdate['sec'] = 0;
-        }
-        $pubdate = mktime($pubdate['hour'],$pubdate['min'],$pubdate['sec'],
-                          $pubdate['mon'],$pubdate['mday'],$pubdate['year']);
-    } else {
-        $pubdate = '';
+    if (!isset($article)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                     'article', 'admin', 'update', 'Articles');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
     }
 
-    if (!isset($body) || !is_string($body)) {
-        $body = '';
+// TODO: switch to DD object style
+    $invalid = array();
+    if (xarModIsHooked('uploads', 'articles', $ptid)) {
+        xarVarSetCached('Hooks.uploads','ishooked',1);
     }
-
-    // Get relevant text
-    // Note : $body_upload is no longer set in PHP 4.2.1+
-    if (!empty($_FILES) && !empty($_FILES['body_upload']) && !empty($_FILES['body_upload']['tmp_name'])
-        // is_uploaded_file() : PHP 4 >= 4.0.3
-        && is_uploaded_file($_FILES['body_upload']['tmp_name']) && $_FILES['body_upload']['size'] > 0 && $_FILES['body_upload']['size'] < 1000000) {
-        
-        if (xarModIsHooked('uploads', 'articles', $ptid)) 
-        {
-            $magicLink = xarModAPIFunc('uploads',
-                                       'user',
-                                       'uploadmagic',
-                                       array('uploadfile'=>'body_upload',
-                                             'mod'=>'articles',
-                                             'modid'=>0,
-                                             'utype'=>'file'));
-            
-            $body .= ' '. $magicLink;
-        } else {
-            // this doesn't work on some configurations
-            //$body = join('', @file($_FILES['body_upload']['tmp_name']));
-            $tmpdir = xarCoreGetVarDirPath();
-            $tmpdir .= '/cache/templates';
-            $tmpfile = tempnam($tmpdir, 'art');
-            if (move_uploaded_file($_FILES['body_upload']['tmp_name'], $tmpfile) && file_exists($tmpfile)) {
-                $body = join('', file($tmpfile));
-                unlink($tmpfile);
-            }
-        }
-    }
-
-    if (!isset($status)) {
-        if (empty($pubtypes[$ptid]['config']['status']['label'])) {
-            $status = 2;
-        } else {
-            $status = 0;
-        }
-    }
+    $properties = array();
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
-/*
         if (!empty($value['label'])) {
             if (!isset($value['validation'])) {
                 $value['validation'] = '';
@@ -108,61 +61,63 @@ function articles_admin_update()
                                                        'type' => $value['format'],
                                                        'validation' => $value['validation'],
                                                        'value' => $article[$field]));
-            $properties[$field]->checkInput($field);
-        }
-*/
-        if ($value['format'] == 'calendar' && isset($$field) && is_array($$field)) {
-            $var = $$field;
-            if (!isset($var['sec'])) {
-                $var['sec'] = 0;
+            $check = $properties[$field]->checkInput($field);
+            if (!$check) {
+                $article[$field] = '';
+                $invalid[$field] = $properties[$field]->invalid;
+                $preview = 1;
+            } else {
+                $article[$field] = $properties[$field]->value;
             }
-            $$field = mktime($var['hour'],$var['min'],$var['sec'],
-                             $var['mon'],$var['mday'],$var['year']);
-        } elseif ($value['format'] == 'url' && isset($$field) && $$field == 'http://') {
-            $$field = '';
-        } elseif ($value['format'] == 'image' && isset($$field) && $$field == 'http://') {
-            $$field = '';
         }
-        if (!isset($$field)) {
-            $$field = '';
+        if (!isset($article[$field])) {
+            $article[$field] = '';
         }
     }
-    if (!isset($language)) {
-        $language = 'eng';
-    }
-    if (!empty($cids) && count($cids) > 0) {
-        $cids = array_values(preg_grep('/\d+/',$cids));
-    } else {
-        $cids = array();
-    }
+
+    $article['ptid'] = $ptid;
 
     // check that we have a title when we need one, or fill in a dummy one
-    if (empty($title)) {
+    if (empty($article['title'])) {
         if (empty($pubtypes[$ptid]['config']['title']['label'])) {
-            $title = ' ';
-        } else {
-            $title = xarML('This field is required');
+            $article['title'] = ' ';
+        } elseif (empty($invalid['title'])) {
             // show this to the user
-            $preview = 1;
+            $invalid['title'] = xarML('This field is required');
+        }
+    }
+    if (empty($article['pubdate'])) {
+        $article['pubdate'] = 0;
+    }
+
+// TODO: make $status dependent on permissions ?
+    if (empty($article['status'])) {
+        if (empty($pubtypes[$ptid]['config']['status']['label'])) {
+            $article['status'] = 2;
+        } else {
+            $article['status'] = 0;
         }
     }
 
-    // fill in the new values
-    $article['title'] = $title;
-    $article['summary'] = $summary;
-    $article['body'] = $body;
-    $article['notes'] = $notes;
-    $article['pubdate'] = $pubdate;
-    $article['status'] = $status;
-    $article['ptid'] = $ptid;
-    $article['cids'] = $cids;
-// really ?
-    $article['pubtypeid'] = $ptid;
-    $article['language'] = $language;
+    if (empty($article['language'])) {
+        $article['language'] = 'eng';
+    }
 
-    if ($preview) {
+    if (!empty($cids) && count($cids) > 0) {
+        $article['cids'] = array_values(preg_grep('/\d+/',$cids));
+    } else {
+        $article['cids'] = array();
+    }
+
+    // for preview
+    $article['pubtypeid'] = $ptid;
+    $article['aid'] = $aid;
+
+    if ($preview || count($invalid) > 0) {
         $data = xarModFunc('articles','admin','modify',
-                             array('preview' => true, 'article' => $article));
+                             array('preview' => true,
+                                   'article' => $article,
+                                   'invalid' => $invalid));
         unset($article);
         if (is_array($data)) {
             return xarTplModule('articles','admin','modify',$data);

@@ -100,6 +100,9 @@ function articles_admin_modify($args)
         if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
             $data['withupload'] = 1;
         }
+        if (!empty($preview) && isset($invalid) && !empty($invalid[$field])) {
+            $input['invalid'] = $invalid[$field];
+        }
         // using new field tags here
         $fields[] = array('label' => $value['label'], 'id' => $field,
                           'definition' => $input);
