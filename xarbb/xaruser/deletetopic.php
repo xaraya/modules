@@ -49,6 +49,8 @@ function xarbb_user_deletetopic()
                        'user',
                        'updateforumview',
                        array('fid'      => $topic['fid'],
+                             'tid'      => $tid,
+                             'ttitle'   => $topic['ttitle'],
                              'topics'   => 1,
                              'replies'  => $topic['treplies'],
                              'move'     => 'negative',

@@ -73,6 +73,8 @@ function xarbb_user_updatetopic()
                            'user',
                            'updateforumview',
                            array('fid'      => $data['fid'],
+                                 'tid'      => $tid,
+                                 'ttitle'   => $data['ttitle'],
                                  'replies'  => 1,
                                  'move'     => 'positive',
                                  'fposter'  => $poster,
