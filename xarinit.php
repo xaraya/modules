@@ -26,7 +26,6 @@
  */
 function mime_init()
 {
-
     $error = FALSE;
 
     //Load Table Maintenance API
@@ -44,6 +43,7 @@ function mime_init()
         'xar_mime_type_id'          => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_mime_subtype_name'     => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255),
+        'xar_mime_subtype_desc'     => array('type'=>'varchar',  'null'=>TRUE,  'size'=>255),
     );
 
     $fields['mime_extension'] = array(
@@ -155,6 +155,11 @@ function mime_delete()
 */
 function mime_upgrade($oldversion)
 {
+    // Set up database objects
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.0.0':
@@ -171,9 +176,15 @@ function mime_upgrade($oldversion)
             // fall through to the next upgrade
         case '0.2.5':
             // Code to upgrade from version 2.5 goes here
-            break;
+        case '1.0.0':
+            // Upgrade from version 1.0.0 to 1.1.0
+
+            // Add a description column to the mime_subtype table
+            $result = $datadict->changeTable($xartable['mime_subtype'], 'xar_mime_subtype_desc C(255) DEFAULT NULL');
+            if (!$result) {xarErrorHandled();}
     }
-    return TRUE;
+
+    return true;
 }
 
 ?>

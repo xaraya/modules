@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'MIME API';
 $modversion['id']             = '999';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '1.1.0';
 $modversion['displayname']    = xarML('Mime');
 $modversion['description']    = 'Hook based module that returns the content-type of a given file.';
 $modversion['credits']        = 'xardocs/credits.txt';

@@ -1,66 +1,82 @@
 <?php
 
  /**
-  *  Get the name of a mime type 
+  *  Get details for mime subtypes
   *
   *  @author Carl P. Corliss
+  *  @author Jason Judge
   *  @access public
-  *  @param  integer    $typeId     the type ID of the mime type to grab subtypes for 
-  *  returns array      An array of (typeid, subtypeId, subtypeName) or an empty array
+  *  @param  integer    typeId the type ID of the mime type to grab subtypes for
+  *  @param  integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
+  *  @param  string     subtypeName the subtype name of the mime type, which should fetch just one subtype
+  *  @param  string     typeName the type name of the mime type
+  *  returns array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
   */
   
-function mime_userapi_getall_subtypes( $args ) 
+function mime_userapi_getall_subtypes($args)
 {
-
     extract($args);
     
-    if (isset($typeId)) {
-        $typeId = (int) $typeId;
-        if (is_int($typeId)) {
-            $where = " WHERE xar_mime_type_id = $typeId";
-        } else {
-            $msg = xarML('Supplied parameter [#(1)] for function [#(2)], is not an integer!', 
-                         'typeId','mime_userapi_getall_subtypes');
-            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-            return;
-        }
-    } else {
-        $where = '';
+    $where = array();
+    $bind = array();
+
+    if (isset($typeId) && is_int($typeId)) {
+        $where[] = 'subtype_tab.xar_mime_type_id = ?';
+        $bind[] = (int)$typeId;
     }
-    
+
+    if (isset($subtypeId) && is_int($subtypeId)) {
+        $where[] = 'subtype_tab.xar_mime_subtype_id = ?';
+        $bind[] = (int)$subtypeId;
+    }
+
+    if (isset($subtypeName) && is_string($subtypeName)) {
+        $where[] = 'subtype_tab.xar_mime_subtype_name = ?';
+        $bind[] = strtolower($subtypeName);
+    }
+
+    if (isset($typeName) && is_string($typeName)) {
+        $where[] = 'type_tab.xar_mime_type_name = ?';
+        $bind[] = strtolower($typeName);
+    }
+
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $xartable = xarDBGetTables();
     
     // table and column definitions
     $subtype_table =& $xartable['mime_subtype'];
+    $type_table =& $xartable['mime_type'];
+    $ext_table =& $xartable['mime_extension'];
     
-    $sql = "SELECT xar_mime_type_id,
-                   xar_mime_subtype_id, 
-                   xar_mime_subtype_name 
-              FROM $subtype_table
-            $where
-          ORDER BY xar_mime_type_id,
-                   xar_mime_subtype_name ASC ";
+    $sql = 'SELECT subtype_tab.xar_mime_type_id, subtype_tab.xar_mime_subtype_id,'
+        . ' subtype_tab.xar_mime_subtype_name, subtype_tab.xar_mime_subtype_desc,'
+        . ' type_tab.xar_mime_type_name'
+        . ' FROM ' . $subtype_table . ' subtype_tab'
+        . ' INNER JOIN ' . $type_table . ' type_tab ON type_tab.xar_mime_type_id = subtype_tab.xar_mime_type_id'
+        . (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
+        . ' ORDER BY xar_mime_type_id, xar_mime_subtype_name ASC';
 
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql, $bind);
 
-    if (!$result | $result->EOF)  {
-        return array();
-    }
+    // Return NULL in the event of an error.
+    if (!$result) {return;}
     
+    $subtypeInfo = array();
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        
-        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeId']     = $row['xar_mime_subtype_id'];
-        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeName']   = $row['xar_mime_subtype_name'];
-        
+
+        $subtypeInfo[$row['xar_mime_subtype_id']]['typeId']         = $row['xar_mime_type_id'];
+        $subtypeInfo[$row['xar_mime_subtype_id']]['typeName']       = $row['xar_mime_type_name'];
+        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeId']      = $row['xar_mime_subtype_id'];
+        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeName']    = $row['xar_mime_subtype_name'];
+        $subtypeInfo[$row['xar_mime_subtype_id']]['subtypeDesc']    = $row['xar_mime_subtype_desc'];
+
         $result->MoveNext();
     }
     $result->Close();
 
     return $subtypeInfo;
-    
 }    
-    
+
 ?>
