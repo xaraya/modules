@@ -30,8 +30,8 @@
     </xar:if>
     <p><a href="#xarModUrl('polls', 'user', 'list')#"><xar:mlstring>Previous Polls</xar:mlstring></a></p>
     </form>
-    </div>
 </xar:if>
+    </div>
 <div class="xar-mod-foot">
 #$hookoutput#
 </div>
