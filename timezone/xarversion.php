@@ -4,6 +4,7 @@
 $modversion['name']           = 'timezone';
 $modversion['id']             = '5';
 $modversion['version']        = '0.3.3';
+$modversion['displayname']    = xarML('Timezone');
 $modversion['description']    = 'timezone module';
 $modversion['credits']        = 'credits.txt';
 $modversion['help']           = 'help.txt';
