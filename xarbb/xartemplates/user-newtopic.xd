@@ -1,5 +1,5 @@
 <xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
+    License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
 <xar:comment>
     minimum use of tables for layout - a css-driven template 
@@ -143,7 +143,7 @@
                     : 
                 </td>
                 <td class="xar-norm newtopicfield">
-                    <textarea name="tpost" id="tpost" rows="15" cols="35"  tabindex="2">#xarVarPrepForDisplay($tpost)# </textarea>
+                    <textarea name="tpost" id="tpost" rows="15" cols="35" tabindex="2">#xarVarPrepForDisplay($tpost)#</textarea>
                 </td>
             </tr>
             <tr>
@@ -182,7 +182,7 @@
                         </xar:if>
                         <br />
                         <xar:mlstring>
-                            Smilies are 
+                            Smilies are
                         </xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
                             <a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
