@@ -29,6 +29,10 @@ function search_init()
             'register_block_type',
             array('modName' => 'search',
                 'blockType' => 'search'))) return;
+
+    // Register search hook
+    xarModRegisterHook('item','search','GUI','search','user','searchform');
+
     // Register Mask
     xarRegisterMask('ReadSearch', 'All', 'search', 'All', 'All', 'ACCESS_READ');
 
@@ -47,6 +51,12 @@ function search_init()
  */
 function search_upgrade($oldversion)
 {
+    switch($oldversion) {
+    case '0.1':
+        // Register search hook
+        xarModRegisterHook('item','search','GUI','search','user','searchform');
+        break;
+    }
     return true;
 }
 /**
@@ -70,6 +80,9 @@ function search_delete()
     // Remove Masks and Instances
     xarRemoveMasks('search');
     xarRemoveInstances('search');
+
+    // Unregister search hook
+    xarModUnRegisterHook('item','search','GUI','search','user','searchform');
 
     return true;
 }

@@ -1,0 +1,28 @@
+<div>
+    <span class="xar-title">
+        <xar:mlstring>Search data in </xar:mlstring> "#$callingmodule#"
+    </span>
+</div>
+
+<div class="xar-mod-body">
+<form action="#$formaction#" method="post">
+    <!-- However we do stuff, the search form needs an input field to enter the keywords to search on -->
+    <label for="searchterms"><xar:mlstring>Search for</xar:mlstring>:</label>
+    <input id="searchterms" size="26" type="text" name="searchterms"><br/>
+
+    <!-- For which module are we displaying a search form -->
+    <input type="hidden" name="formodule" value="#$callingmodule#"/>
+
+    <!-- Depending how the hook was enabled several itemtypes need searching -->
+    <xar:if condition="!empty($itemtypes)">
+      <label><xar:mlstring>Search in</xar:mlstring>:</label><br/>
+      <xar:loop name="$itemtypes">
+        <input type="checkbox" name="itemtypes[#$loop:item['label']#]" value="#$loop:key#"/>#$loop:item['title']#<br/>
+      </xar:loop>
+    </xar:if>
+    <br/>
+    <!-- The buttons which producte the behaviour -->
+    <input type="submit" value="Search">
+    <input type="reset" value="Clear search">
+</form>
+</div>
