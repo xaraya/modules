@@ -41,7 +41,6 @@ function pubsub_admin_main()
 */
 function pubsub_admin_view()
 {
-    $data = pubsub_admin_menu();
     $data['items'] = array();
     $data['namelabel'] = xarVarPrepForDisplay(xarMLByKey('PUBSUBNAME'));
     $data['modnamelabel'] = xarVarPrepForDisplay(xarMLByKey('Module Name'));
