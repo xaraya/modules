@@ -1,12 +1,12 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 
-<!--- This template displays all the topics in a thread.
+<!--- This template displays all the posts in a thread.
       You can easily add icons to this template. Keep in mind there is a section
       in this template for Topic post, and separate section for posted replies.
       There are two main types of images -
 
       1. Icons and images dependent on the user's profile. 
-         If you have importer the user.xml DD data and users have filled 
+         If you have importer the user.xml DD data and users have filled
          in their avatar, ICQ etc then these images can be displayed in the template.
          Avatar displays by default - ICQ, MSN etc will only display if you uncomment the two
          required areas as indicated in the template.
@@ -15,7 +15,7 @@
          These images must exist with names indicated in your xarbb/xarimages/ 
          folder or theme equivalent.
          You can replace the <xar:mlstring>Action text</xar:mlstring> areas with corresponding
-         icon variables as #$nameofvar# -
+         icon variables as #$nameofvar# to display the named gif file -
 
          #$newtopic#   newpost.gif        New Topic
          #$emailicon#  emailicon.gif      Email the thread
@@ -26,7 +26,7 @@
          #$profile#    infoicon.gif       User Profile or account if logged in
          #$pm#         pm.gif             Send PM
          #$rsstopic#   topicsubscribe.gif Subscribe to a topic
-
+         
 --->
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
   <tr>
@@ -70,7 +70,7 @@
 </table>
 <table border="0" cellpadding="0" cellspacing="5" width="100%">
   <tr>
-    <td width="60%">
+    <td style="width:60%;">
 	<xar:sec mask="PostxarBB" catch="false">
       <table cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
         <tr>
@@ -152,7 +152,7 @@
 		  </td>
         </tr>
         <tr>
-          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br /> #$posterdate#</td>
+          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br />#$posterdate#</td>
         </tr>
         <tr>
           <td width="100%" align="center"><xar:mlstring>Topics Started</xar:mlstring>: #$usertopics#</td>
@@ -210,7 +210,11 @@
       <table border="0" cellpadding="2" cellspacing="0" width="100%">
         <tr>
           <td width="50%"><b><xar:mlstring>Posted</xar:mlstring>:</b> #$item['xar_date']#&nbsp;&nbsp;</td>
-          <td width="50%" align="right">&nbsp;</td>
+          <td width="50%" align="right">
+          <xar:sec catch="false" mask="ModxarBB">
+          #$item['xar_hostname']#
+          </xar:sec>
+          </td>
         </tr>
       </table>
 
@@ -221,7 +225,7 @@
       <table border="0" cellpadding="3" cellspacing="0" width="100%">
            <tr>
             <td width="100%" align="center">
-            <!--_ Reply post could be anonymous - need to check --->
+            <!--- Reply post could be anonymous - need to check --->
                 <xar:if condition="$item['xar_postanon'] eq 0">
                     <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">#$item['xar_author']#</a>
                 <xar:else />
@@ -251,7 +255,7 @@
         </tr>
         <xar:if condition="$item['xar_postanon'] eq 0">
         <tr>
-          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br /> #$item['commenterdate']#</td>
+          <td width="100%" align="center"><xar:mlstring>Registered</xar:mlstring>:<br />#$item['commenterdate']#</td>
         </tr>
         <tr>
           <td width="100%" align="center"><xar:mlstring>Topics Started</xar:mlstring>: #$item['usertopics']#</td>

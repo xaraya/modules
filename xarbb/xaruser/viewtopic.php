@@ -55,6 +55,9 @@ function xarbb_user_viewtopic()
                                 'get',
                                 array('uid' => $data['tposter']));
 
+    //TODO: still need to get tftime and ttime out in proper format 
+    // to pass to template for formatting
+
     // The user API function is called
     $topiccount = xarModAPIFunc('xarbb',
                                 'user',
@@ -101,8 +104,13 @@ function xarbb_user_viewtopic()
 
         //format reply poster's registration date
         $comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
+        //Add datestamp so users can format in template, existing templates are still OK
+        $comments[$i]['commenterdatestamp'] =$comments[$i]['userdata']['date_reg'];
+
         //format the post reply date consistently with topic post date
         $comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
+        //Add datestamp so users can format in template, existing templates are still OK
+        $comments[$i]['xar_datestamp']=$comments[$i]['xar_datetime'];
     }
 
     $data['items'] = $comments;
@@ -110,14 +118,14 @@ function xarbb_user_viewtopic()
     // End individual Replies
 
     // adjust the display format
-    // TODO: needs to be made variable
-
     // <jojodee> OK - rather than change each post reply time formats above
     // Let's bring this reg date into line with future locale use
     //$thisdate = new xarDate();
     //if(is_numeric($posterdata['date_reg'])) {
     //    $thisdate->setTimestamp($posterdata['date_reg']);
      $regdate=xarLocaleFormatDate('%Y-%m-%d',$posterdata['date_reg']);
+    //Add datestamp so users can format in template, existing templates are still OK
+     $regdatestamp=$posterdata['date_reg'];
     //}
     // else {
     //     $thisdate->DBtoTS($posterdata['date_reg']);
@@ -127,8 +135,10 @@ function xarbb_user_viewtopic()
     // $data['fname']      = $forumdata['fname']; //No need to reassign here
     $data['postername'] = $posterdata['name'];
     $data['posterdate'] = $regdate;
+    $data['posterdatestamp'] = $regdatestamp;
     $data['usertopics'] = $topiccount;
     $data['xbbname']    = xarModGetVar('themes', 'SiteName');
+
 
     //images - add some alt text
     $data['newtopic']   = '<img src="' . xarTplGetImage('newpost.gif') . '" alt="'.xarML('New Topic').'" />';
