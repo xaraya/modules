@@ -9,9 +9,19 @@ function uploads_admin_download()
     $ulid   = xarVarCleanFromInput('ulid');
     $ulname = xarVarCleanFromInput('ulname');
 
+    $thumbwidth  = xarVarCleanFromInput('thumbwidth');
+    $thumbheight = xarVarCleanFromInput('thumbheight');
+    $thumb = xarVarCleanFromInput('thumb');
+
+
     return xarModAPIFunc('uploads',
                           'admin',
                           'download',
-						  array('ulid'=>$ulid, 'ulname'=>$ulname));
+						  array('ulid'=>$ulid
+						  		, 'ulname'=>$ulname
+						  		, 'thumbwidth'=>$thumbwidth
+						  		, 'thumbheight'=>$thumbheight
+						  		, 'thumb'=>$thumb
+								));
 }
 ?>

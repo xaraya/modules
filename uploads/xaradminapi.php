@@ -46,8 +46,42 @@ function uploads_adminapi_download( $args )
         {
             $fname="NotFound.gif";
             $file="modules/uploads/xarimages/NotFound.gif";
+        } else {
+			if ( 
+					(isset($thumbwidth) && ($thumbwidth>0)) 
+				||	(isset($thumbheight) && ($thumbheight>0)) 
+				||	(isset($thumb) && ($thumb>0)) 
+				)
+			{
+				include "thumb.php";
+				
+				if( $thumb > 0 )
+				{
+					list($width, $height, $type, $attr) = GetImageSize($file);
+					$total = $width+$height;
+					$perc = $thumb/$total;
+					$thumbwidth = floor($width * $perc);
+					$thumbheight = floor($height * $perc);
         }
+				
+				if( !$thumbwidth ) { $thumbwidth = 0; }
+				if( !$thumbheight ) { $thumbheight = 0; }
+
+				$newfile=$file.'_'.$thumbwidth.'_'.$thumbheight;
+
+				if( !file_exists( $newfile ) )
+				{
+					// echo "Need to convert<br>";
+					// echo "Loaded image, converting<br>";
+					createthumb($file,$thumbwidth,$thumbwidth,$newfile);
     }
+				// Thumbnail already exists, or has just been created.  Set $file to thumbnail
+				$file = $newfile;
+			}
+		}
+    }
+	
+	
     $size=filesize($file);
     ob_end_clean();
 //     header("Cache-Control: no-cache, must-revalidate");
@@ -360,4 +394,5 @@ function uploads_adminapi_createhook( $args )
     // TODO: update the upload's module-ID to correspond to the article's ID
     return $extrainfo;    
 }
+
 ?>

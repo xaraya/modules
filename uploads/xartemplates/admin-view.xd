@@ -48,7 +48,7 @@
 		<td class="xar-accent">#$loop:item['ulhash']#</td>
 		<td class="xar-accent">
 		<a href="#xarModURL('uploads', 'admin', 'download', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Download</xar:mlstring></a>
-		<xar:if condition="$ulapp eq 0"> 
+		<xar:if condition="$loop:item['ulapp'] eq 0"> 
 		 | <a href="#xarModURL('uploads', 'admin', 'approve', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Approve</xar:mlstring></a> |
 		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Reject</xar:mlstring></a>
 		<xar:else />
