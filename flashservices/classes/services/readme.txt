@@ -1,0 +1,3 @@
+Place all services here...
+
+This folder can be moved anywhere on the server as long as the base class path is set in the gateway ( setBaseClassPath("path") )
