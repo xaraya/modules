@@ -577,7 +577,7 @@ function categories_userapi_navigation($args)
                     $numicons = 0;
                     foreach ($children as $cat) {
                     // TODO: now this is a tricky part...
-
+					
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -592,11 +592,16 @@ function categories_userapi_navigation($args)
                                 continue;
                             }
                         }
-
+						
                         $label = xarVarPrepForDisplay($cat['name']);
                         $link = xarModURL($modname,$type,$func,
                                          array('itemtype' => $itemtype,
                                                'catid' => $cat['cid']));
+						if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
+                                $descr = xarVarPrepHTMLDisplay($cat['description']);
+                            } else {
+                                $descr = '';
+                            }
                         if (!empty($cat['image'])) {
                             // find the image in categories (we need to specify the module here)
                             $image = xarTplGetImage($cat['image'],'categories');
@@ -604,15 +609,11 @@ function categories_userapi_navigation($args)
                             $data['caticons'][] = array('catlabel' => $label,
                                                         'catid' => $cat['cid'],
                                                         'catlink' => $link,
+														'catdescr' => $descr,
                                                         'catimage' => $image,
                                                         'catcount' => $count,
                                                         'catnum' => $numicons);
                         } else {
-                            if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
-                                $descr = xarVarPrepHTMLDisplay($cat['description']);
-                            } else {
-                                $descr = '';
-                            }
                             $beforetags = '<li>';
                             $aftertags = '</li>';
                             $data['catlines'][] = array('catlabel' => $label,
@@ -793,7 +794,6 @@ function categories_userapi_navigation($args)
                                               'catlink' => $link,
                                               'catcount' => $count);
                     }
-
                     // Get sibling categories
                     $siblings = xarModAPIFunc('categories','user','getchildren',
                                              array('cid' => $parentid));
@@ -857,7 +857,6 @@ function categories_userapi_navigation($args)
     if (!empty($template_override)) {
         $template = $template_override;
     }
-
     return xarTplModule('categories', 'user', 'navigation', $data, $template);
 }
 
