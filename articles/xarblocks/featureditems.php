@@ -122,7 +122,6 @@ function articles_featureditemsblock_display(& $blockinfo)
         if (xarModIsHooked('uploads', 'articles', $vars['pubtypeid'])) {
             xarVarSetCached('Hooks.uploads','ishooked',1);
         }
-        
         $featuredart = current(xarModAPIFunc(
             'articles','user','getall',
             array(
@@ -130,17 +129,21 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'extra' => array('dynamicdata')
             )
         ));
+       
+        $fieldlist = array('aid', 'title', 'summary', 'authorid', 'pubdate', 
+                           'pubtypeid', 'notes', 'status', 'body');
         
         $featuredlink = xarModURL(
             'articles', 'user', 'display',
             array(
-                'aid' => $featuredart['aid'],
+                'aid' => $featuredart['aid'], 
                 'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtypeid'] : NULL),
                 'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
             )
         );
         if (empty($vars['showfeaturedbod'])) {$vars['showfeaturedbod'] = false;}
-        $data['feature'][] = array(
+        
+        $feature= array(
             'featuredlabel'     => $featuredart['title'],
             'featuredlink'      => $featuredlink,
             'alttitle'          => $vars['alttitle'],
@@ -150,6 +153,17 @@ function articles_featureditemsblock_display(& $blockinfo)
             'featureddesc'      => $featuredart['summary'],
             'featuredbody'      => $featuredart['body']
         );
+        
+        // Get rid of the default fields so all we have left are the DD ones
+        foreach ($fieldlist as $field) {
+            if (isset($featuredart[$field])) {
+                unset($featuredart[$field]);
+            }
+        }
+        
+        // now add the DD fields to the featuredart
+        $feature = array_merge($featuredart, $feature);
+        $data['feature'][] = $feature;
     }
     
     // Setup additional items
