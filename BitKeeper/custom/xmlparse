@@ -12,10 +12,16 @@ else
   echo No valid XML parser was found on your system, can not complete this command.
   exit 1
 fi
-# Get a list of files
-echo -n "Getting the list of files..."
-FILELIST=`bk sfiles -g | grep -e '\.x[d|t]$'`
-echo "done"
+
+# If no explicit file is given, use the current location to construct a list
+if [ $# -gt 0 ]; then
+  FILELIST=$1
+else
+  echo "Getting the list of files..."
+  FILELIST=`bk sfiles -Ug | grep -e '\.x[d|t]$'`
+fi
+
+FAILED=0
 for template in $FILELIST; do
   TEMPFILE=`mktemp` || exit 1
   bk get -Sq $template
@@ -37,9 +43,11 @@ for template in $FILELIST; do
     if [ $PARSERTYPE = 'xmllint' ]
     then
       echo $RESULT | awk 'BEGIN {RS="^"; FS=":"} {if(NF > 1) {printf("  Line"); printf(" %s",$2); for(i=4;i<=NF;i++) {printf(": %s",$i)}; print ""}}'
+      FAILED=1
     else
       echo $RESULT
     fi
   fi
   rm $TEMPFILE >/dev/null 2>&1
 done
+exit $FAILED
