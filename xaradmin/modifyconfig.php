@@ -12,19 +12,11 @@
  * @subpackage  xarbb Module
  * @author John Cox
 */
-
-/**
- * modify configuration
- */
 function xarbb_admin_modifyconfig()
 {
-    // Security Check
     if(!xarSecurityCheck('AdminxarBB')) return;
- 
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
-
     switch(strtolower($phase)) {
-
         case 'modify':
         default:
             $data = array();
@@ -42,13 +34,12 @@ function xarbb_admin_modifyconfig()
             $data['allowbbcode']     = !isset($settings['allowbbcode']) ? false :$settings['allowbbcode'];
             $data['editstamp']       = !isset($settings['editstamp']) ? 1 :$settings['editstamp'];
             $data['showcats']        = !isset($settings['showcats']) ? false :$settings['showcats'];
+            $data['usenntp']         = !isset($settings['usenntp']) ? false :$settings['usenntp'];
             $data['linknntp']        = !isset($settings['linknntp']) ? false :$settings['linknntp'];
             $data['nntpport']        = !isset($settings['nntpport']) ? 119 :$settings['nntpport'];
             $data['nntpserver']      = !isset($settings['nntpserver']) ? 'news.xaraya.com' :$settings['nntpserver'];
             $data['nntpgroup']       = !isset($settings['nntpgroup']) ? '' :$settings['nntpgroup'];
-
-            $hooks = xarModCallHooks('module', 'modifyconfig', 'xarbb',
-                                    array('module' => 'xarbb')); // forum
+            $hooks                   = xarModCallHooks('module', 'modifyconfig', 'xarbb', array('module' => 'xarbb')); // forum
             if (empty($hooks)) {
                 $data['hooks'] = '';
             } elseif (is_array($hooks)) {
@@ -56,12 +47,15 @@ function xarbb_admin_modifyconfig()
             } else {
                 $data['hooks'] = $hooks;
             }
-            $data['settings']=$settings;
-            $data['authid'] = xarSecGenAuthKey();
+            $data['settings']        = $settings;
+            $data['authid']          = xarSecGenAuthKey();
         break;
 
         case 'update':
 
+            // Confirm authorisation code
+            if (!xarSecConfirmAuthKey()) return;
+ 
             if (!xarVarFetch('hottopic','int:1:',$hottopic,10,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('postsperpage','int:1:',$postsperpage,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('postsortorder', 'str:1:', $postsortorder, 'ASC', XARVAR_NOT_REQUIRED)) return;
@@ -74,17 +68,14 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showcats','checkbox', $showcats, false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('usenntp','checkbox', $usenntp, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('linknntp','checkbox', $linknntp, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpserver', 'str:1:', $nntpserver, 'news.xaraya.com', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpgroup', 'str:1:', $nntpgroup, 'xaraya.test', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cookiename', 'str:1:', $cookiename, 'xarbb', XARVAR_NOT_REQUIRED)) return;
-            //if (!xarVarFetch('cookiedomain', 'str:1:', $cookiepath, ' ', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('cookiepath', 'str:1:', $cookiepath, '/', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('xarbbtitle', 'str:1:', $xarbbtitle, '', XARVAR_NOT_REQUIRED)) return;
-
-            // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
 
             // Update module variables
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
@@ -105,6 +96,7 @@ function xarbb_admin_modifyconfig()
             $settings['editstamp']          = $editstamp;            
             $settings['allowbbcode']        = $allowbbcode;
             $settings['showcats']           = $showcats;
+            $settings['usenntp']            = $usenntp;
             $settings['linknntp']           = $linknntp;
             $settings['nntpport']           = $nntpport;
             $settings['nntpserver']         = $nntpserver;
@@ -115,21 +107,15 @@ function xarbb_admin_modifyconfig()
 
             // call modifyconfig hooks with module
             $hooks = xarModCallHooks('module', 'updateconfig', 'xarbb', array('module' => 'xarbb'));
-
-           if (empty($hooks)) {
+            if (empty($hooks)) {
                $data['hooks'] = array('categories' => xarML('You can assign base categories by enabling the categories hooks for xarbb...'));
-           } else {
+            } else {
               $data['hooks'] = $hooks;
-           }
-
+            }
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'modifyconfig')); 
-
-            // Return
             return true;
-
             break;
     }
-
     return $data;
 }
 ?>
