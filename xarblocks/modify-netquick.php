@@ -29,7 +29,7 @@ function netquery_netquickblock_modify($blockinfo)
 }
 function netquery_netquickblock_update($blockinfo)
 {
-    $vars['blockquery'] = xarVarCleanFromInput('blockquery');
+    if (!xarVarFetch('blockquery','str:0:',$vars['blockquery'],'',XARVAR_NOT_REQUIRED)) return;
     $blockinfo['content'] = serialize($vars);
     return $blockinfo;
 }
