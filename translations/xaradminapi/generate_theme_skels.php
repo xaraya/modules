@@ -74,6 +74,7 @@ function translations_adminapi_generate_theme_skels($args)
             $parser = new TPLParser();
             $parser->parse("themes/$themedir/$dirname/$subname.$xtype");
             ${$dirname . "names"}[] = $subname;
+            
             $transEntriesCollection[$dirname.'::'.$subname] = $parser->getTransEntries();
             $transKeyEntriesCollection[$dirname.'::'.$subname] = $parser->getTransKeyEntries();
         }
@@ -220,8 +221,9 @@ function translations_gather_common_entries($transEntriesCollection)
                         }
                     }
 
-                    unset($transEntriesCollection[$subname][$string]);
-                    unset($transEntriesCollection[$other_subname][$string]);
+                    // FIXME: This is a workaround for bug #2423, not a fix
+                    //unset($transEntriesCollection[$subname][$string]);
+                    //unset($transEntriesCollection[$other_subname][$string]);
                 }
             }
         }
