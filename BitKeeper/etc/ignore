@@ -21,3 +21,13 @@ converter.zip
 messages/messages.data.xml
 xarlinkme/xarimages/linkads/xaraya_102x47.gif
 xarlinkme/xarimages/linkads/blocklayout_102x47.gif
+articles/xartemplates/admin-modify-downloads2.xd
+articles/xartemplates/admin-new-downloads2.xd
+articles/xartemplates/user-display-downloads.xd
+articles/xartemplates/user-display-downloads2.xd
+articles/xartemplates/user-summary-downloads.xd
+articles/xartemplates/user-summary-downloads2.xd
+categories/xarblocks/chsfcontentnav.php
+categories/xarblocks/chsfissuenav.php
+categories/xartemplates/blocks/chsfcontentnav.xd
+categories/xartemplates/blocks/chsfissuenav.xd
