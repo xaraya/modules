@@ -110,14 +110,14 @@ function xarbb_user_newtopic()
         case 'update':
 
             if(isset($tid))    {
-                 $modified_date= time();
+                 $modified_date= xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z',time());
                  $tpost .= "\n";
                  $tpost .=xarML('[Modified by: #(1) (#(2)) on #(3)]',
                      xarUserGetVar('name'),
                      xarUserGetVar('uname'),
                      $modified_date);
                      $tpost .= "\n"; //Have to take this out with xarbb and html now handling paras.
-                     
+
                 if (!xarModAPIFunc('xarbb',
                                'user',
                                'updatetopic',
