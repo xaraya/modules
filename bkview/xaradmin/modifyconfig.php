@@ -17,10 +17,16 @@
 
 function bkview_admin_modifyconfig() {
     $data = array();
-    
-    $hooks = xarModCallHooks('module','modifyconfig','bkview',array());
+
+    // Check whether the search functionality is enabled
+    $data['search_enabled'] = 0;
+    if(xarModIsHooked('search','bkview')) {
+        $data['search_enabled'] = 1;
+    }
+                                     
+    // Assemble the template data
     $data['pageinfo'] = xarML('BKview configuration');
-    $data['hooks'] = $hooks;
+    $data['hooks'] =  xarModCallHooks('module','modifyconfig','bkview',array());
     $data['updatelabel']= xarML('Update');
     $data['formaction'] = xarModUrl('bkview','admin','updateconfig');
     return $data;

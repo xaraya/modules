@@ -1,11 +1,21 @@
 <xar:template file="admin-menu" type="module"/>
 
 <form action="#$formaction#" method="post">
-<xar:if condition="!empty($hooks)">
-<xar:foreach in="$hooks" key="$hookmod" value="$hookout">
-#$hookout#
-</xar:foreach>
-</xar:if>
+    <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmod" value="$hookout">
+            #$hookout#
+        </xar:foreach>
+    </xar:if>
 
-<input type="submit" value="#$updatelabel#"/>
+    <div>
+        <xar:if condition="$search_enabled == 1">
+            <input id="bkenablesearch" type="checkbox" name="enablesearch" checked="checked"/>
+        <xar:else/>
+            <input id="bkenablesearch" type="checkbox" name="enablesearch" />
+        </xar:if>
+        <label for="bkenablesearch"><xar:mlstring>Enable searching</xar:mlstring>
+    </div>
+    <div>
+        <input type="submit" value="#$updatelabel#"/>
+    </div>
 </form>

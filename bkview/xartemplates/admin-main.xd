@@ -28,7 +28,7 @@
             <li>It's probably very hard to get it working reliably under windows</li>
             <li>bkview is slower than bkweb, because it adds another level of abstraction (the php layer)</li>
             <li>It relies on spawning bk commands on the server, parsing the output those commands generate, this is
-                far from ideal, both in terms of performancs and security</li>
+                far from ideal, both in terms of performance and security</li>
         </ol>
     </div>
 
@@ -48,7 +48,6 @@
         The following issues are known and part of the todo-list:
         <ol>
             <li>Counting of csets isn't consistent (discrepancy with bkweb, assuming that one is correct</li>
-            <li>Searching is not enabled yet</li>
             <li>No security is in place</li>
             <li>No check is done in admin section whether the pointed to path is actually a bk repository</li>
             <li>The templates are horrible</li>

@@ -12,5 +12,9 @@
 
 <!-- Show a mini breadcrumb -->
 <div class="xarmod-body">
-  <h2>#$pageinfo#</h2>
+    <xar:if condition="!empty($pageinfo)">
+        <h2>#$pageinfo#</h2>
+    <xar:else/>
+        <h2><xar:mlstring>No pageinfo specified</xar:mlstring>
+    </xar:if>
 </div>
