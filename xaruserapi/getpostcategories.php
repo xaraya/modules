@@ -31,7 +31,7 @@ function moveabletype_userapi_getpostcategories($args)
 
         $blog = array_intersect($rootCats, $itemCatKeys);
         $blog = $blog[0];
-        xarLogMessage("MT: BLOG CAT: " . $blog);
+        
         if(!empty($itemCats)) {
             // Construct an array of structs to return
             foreach($itemCats as $index => $category) {
