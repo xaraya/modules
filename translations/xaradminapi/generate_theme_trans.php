@@ -68,7 +68,7 @@ function translations_adminapi_generate_theme_trans($args)
     //}
 
     $dirnames = xarModAPIFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
-    $pattern = '/^([a-z\-_]+)\.xt$/i';
+    $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
     foreach ($dirnames as $dirname) {
         $subnames = xarModAPIFunc('translations','admin','get_theme_files',
                               array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));

@@ -309,7 +309,7 @@ function translations_create_trabar($subtype, $subname, $backend=NULL)
 
         $dirnames = xarModAPIFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
         foreach ($dirnames as $dirname) {
-            $pattern = '/^([a-z\-_]+)\.xt$/i';
+            $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
             $subnames = xarModAPIFunc('translations','admin','get_theme_files',
                                   array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));
             foreach ($subnames as $subname) {
