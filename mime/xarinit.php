@@ -128,6 +128,9 @@ function mime_delete()
 
 }
 
+case 1.1:
+case '1.1':
+
 /**
 * upgrade the mime module from an old version
 */
@@ -136,16 +139,17 @@ function mime_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case .1:
+        case '0.1.0':
             mime_init();
             include_once "modules/mime/xarincludes/mime.magic.php";
             xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
             // fall through to the next upgrade
-        case 1.1:
+        case '0.1.1':
             // fall through to the next upgrade
-        case 2.0:
+        case '0.2.0':
             // Code to upgrade from version 2.0 goes here
             // fall through to the next upgrade
-        case 2.5:
+        case '0.2.5':
             // Code to upgrade from version 2.5 goes here
             break;
     }
