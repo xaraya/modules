@@ -242,11 +242,9 @@
 		</td>
 	</tr>
 	</xar:if>
-<xar:if condition="$startnum eq 1">
-</table>
-<table width="98%" border="0">
-</xar:if>
-    <!--- add alternating row colors --->
+
+    <!--- start the post replies and 
+          add alternating row colors --->
     <xar:foreach in="$items" value="$item" key="$key">
         <xar:if condition="(($key+1) % 2)">
             <xar:set name="myclass">'xar-alt'</xar:set>
