@@ -9,7 +9,8 @@ function reports_admin_update_config($args)
     xarVarFetch('config_imglocation','str::',$config_imglocation);
     xarVarFetch('config_pdfbackend','str::',$config_pdfbackend);
     xarVarFetch('config_defaultoutput','str::',$config_defaultoutput);
-
+    xarVarFetch('config_itemsperpage','int::', $config_itemsperpage);
+    
     extract($args);
     
     if (!xarSecConfirmAuthKey()) {
@@ -23,7 +24,8 @@ function reports_admin_update_config($args)
                            array('config_replocation'=>$config_replocation,
                                  'config_imglocation'=>$config_imglocation,
                                  'config_pdfbackend'=>$config_pdfbackend,
-                                 'config_defaultoutput' => $config_defaultoutput
+                                 'config_defaultoutput' => $config_defaultoutput,
+                                 'config_itemsperpage' => $config_itemsperpage
                                  )
                            )
             ) {

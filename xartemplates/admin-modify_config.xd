@@ -44,6 +44,10 @@
             </td>
         </tr>
         <tr>
+            <td><label for="config_itemsperpage"><xar:mlstring>Items per page (search results)</xar:mlstring></label></td>
+            <td><input type="text" size="3" name="config_itemsperpage" id="config_itemsperpage" value="#$itemsperpage#"/></td>
+        </tr>
+        <tr>
             <xar:set name="$buttonlabel"><xar:mlstring>Update config</xar:mlstring></xar:set>
             <td><input type="submit" value="#$buttonlabel#"/></td>
             <td>&nbsp;</td>

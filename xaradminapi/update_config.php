@@ -15,7 +15,7 @@ function reports_adminapi_update_config($args)
     xarModSetVar('reports','images_location',$config_imglocation);
     xarModSetVar('reports','pdf_backend',$config_pdfbackend);
     xarModSetVar('reports','default_output',$config_defaultoutput);
-
+    xarModSetVar('reports','itemsperpage', $config_itemsperpage);
     return true;
 }
 

@@ -12,13 +12,18 @@ function reports_admin_modify_config()
     if(empty($format)) {
         xarModSetVar('reports','default_output','html');
     }
+    $itemsperpage = xarModGetVar('reports','itemsperpage');
+    if(empty($itemsperpage)) {
+        xarModSetVar('reports','itemsperpage', 10);
+    }
     
     $data = array('authid' => xarSecGenAuthKey(),
                   'rep_location' => xarModGetVar('reports','reports_location'),
                   'img_location' => xarModGetVar('reports','images_location'),
                   'backends' => $backends,
                   'selectedbackend' => xarModGetVar('reports','pdf_backend'),
-                  'format' => $format
+                  'format' => $format,
+                  'itemsperpage' => xarModGetVar('reports','itemsperpage')
                   );
     
     return $data;
