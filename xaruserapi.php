@@ -123,6 +123,9 @@ function bbcode_encode($message, $is_html_disabled)
             // Remove the list function for a bit.  Need to work on this one.
             //$message = bbcode_encode_list($message);
 
+            // [p] and [/p] for paragraphs.  Bug 3994
+            $message = preg_replace("/\[p\](.*?)\[\/p\]/si", "<p>\\1</p>", $message);
+
             // [u] and [/u] for underline text.
             $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
 
