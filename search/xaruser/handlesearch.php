@@ -93,7 +93,7 @@ function search_user_handlesearch() {
     }
 
     // Display the search form again, can we count on the array having one element?
-    $searchform = xarModCallHooks('item','search',$object_id,array(),$search_in_module);
+    $searchform = xarModCallHooks('item','search',$object_id,array('module' => $search_in_module));
  
     $total = count($searchresults);
     $itemsperpage = xarModGetUserVar('search','resultsperpage');
