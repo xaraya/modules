@@ -287,7 +287,7 @@ function nameday_adminapi_addlist($args)
 
     $clang=pnUserGetLang();
     $modinfo = pnModGetInfo(pnModGetIDFromName('nameday'));
-    $ndfilepath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/pnlang/'.$clang.'/'.$clang.'.txt';
+    $ndfilepath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/data/'.$clang.'/'.$clang.'.txt';
 
     if (!file_exists($ndfilepath)) {
         pnSessionSetVar('errormsg', xarML('No such file'));
