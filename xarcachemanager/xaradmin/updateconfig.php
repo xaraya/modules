@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Update configuration
+ * Update the configuration parameters of the module based on data from the modification form
  */
 function xarcachemanager_admin_updateconfig()
 { 
@@ -48,7 +48,7 @@ function xarcachemanager_admin_updateconfig()
 
     // turn block level ouput caching on or off
     xarVarFetch('cacheblocks', 'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED);
-    if ($cacheblocks && $cacheenabled) {
+    if ($cacheblocks) {
         xarModSetVar('xarcachemanager','CacheBlockOutput', 1);
         // flush adminpanels blocks to show new options if necessary
         if (!function_exists('xarPageFlushCached')) {
