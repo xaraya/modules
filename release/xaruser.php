@@ -51,7 +51,7 @@ function release_user_viewids()
         $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
-                                  array('uid' => $item['uid']));
+                                  array('uid' => $uid));
 
         // Author Name and Contact URL
         $items[$i]['author'] = $getuser['name'];
