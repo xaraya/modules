@@ -91,7 +91,7 @@ function mime_init()
         return FALSE;
     }
     
-    include_once "modules/mime/xarincludes/mime.magic.php";
+    include_once('modules/mime/xarincludes/mime.magic.php');
     xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
     
     // Initialisation successful
