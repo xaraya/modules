@@ -198,8 +198,9 @@ function categories_init()
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
     $xartable = xarDBGetTables();
-    $query1 = "SELECT DISTINCT xar_name FROM $xartable[categories]";
-    $query2 = "SELECT DISTINCT xar_cid FROM $xartable[categories]";
+    $categorytable =$xartable['categories'];
+    $query1 = "SELECT DISTINCT xar_name FROM ".$categorytable;
+    $query2 = "SELECT DISTINCT xar_cid FROM ".$categorytable;
     $instances = array(
                         array('header' => 'Category Name:',
                                 'query' => $query1,
@@ -210,7 +211,7 @@ function categories_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('categories','Category',$instances,1,'xar_categories','xar_cid',
+    xarDefineInstance('categories','Category',$instances,1,$categorytable,'xar_cid',
     'xar_parent','Instances of the categories module, including multilevel nesting');
 
     $query = "SELECT DISTINCT instances.xar_title FROM $xartable[block_instances] as instances LEFT JOIN $xartable[block_types] as btypes ON btypes.xar_id = instances.xar_type_id WHERE xar_module = 'categories'";
