@@ -102,7 +102,7 @@
 				        </td>
 				   </tr>
                     <tr align="center" valign="middle">
-                        <td colspan="3"><br /><br /><input type="submit" value="#$btntxt#" align="middle" tabindex="3" />
+                        <td colspan="3"><br /><br /><input type="submit" value="#$btntxt#"  tabindex="3" />
                     </td>
                 </tr>
         </table>
