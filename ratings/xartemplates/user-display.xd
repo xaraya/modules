@@ -19,6 +19,18 @@
 	   <xar:if condition="$fracrating ge 5">
 		   <img src="modules/ratings/xarimages/halfstar.gif" alt="half star" />       
 	   </xar:if>
+	<xar:elseif condition="$style eq 'customised'" />
+           <xar:if condition="$rating gt 80">
+               <strong><xar:mlstring>Excellent</xar:mlstring></strong>
+           <xar:elseif condition="$rating gt 60"/>
+               <strong><xar:mlstring>Good</xar:mlstring></strong>
+           <xar:elseif condition="$rating gt 40"/>
+               <strong><xar:mlstring>Average</xar:mlstring></strong>
+           <xar:elseif condition="$rating gt 20"/>
+               <strong><xar:mlstring>Bad</xar:mlstring></strong>
+           <xar:else />
+               <strong><xar:mlstring>Very Bad</xar:mlstring></strong>
+           </xar:if>
 	</xar:if>
 	<xar:if condition="empty($rated)">
 		<xar:if condition="xarSecurityCheck('CommentRatings',0)">
@@ -73,6 +85,14 @@
 				 <option value="80">8</option>
 				 <option value="90">9</option>
 				 <option value="100">10</option>
+			  </select>
+		   <xar:elseif condition="$style eq 'customised'" />
+			  <select name="rating" id="rating" size="1">
+				 <option value="90"><xar:mlstring>Excellent</xar:mlstring></option>
+				 <option value="70"><xar:mlstring>Good</xar:mlstring></option>
+				 <option value="50" selected="selected"><xar:mlstring>Average</xar:mlstring></option>
+				 <option value="30"><xar:mlstring>Bad</xar:mlstring></option>
+				 <option value="10"><xar:mlstring>Very Bad</xar:mlstring></option>
 			  </select>
 		   </xar:if>
 

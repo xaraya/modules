@@ -85,6 +85,10 @@ function ratings_user_display($args)
                 $data['fracrating'] = $data['rating'] - (10*$data['intrating']);
                 $data['rating'] = sprintf("%.1f",$data['rating']);
                 break;
+            case 'customised':
+            default:
+                $data['rating'] = sprintf("%.1f",$data['rating']);
+                break;
         }
     } else {
         $data['rating'] = 0;
