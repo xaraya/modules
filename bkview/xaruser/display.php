@@ -27,7 +27,8 @@ include_once("modules/bkview/xarincludes/bk.class.php");
  */
 function bkview_user_display($args)
 {
-    xarVarFetch('repoid','id',$repoid);
+    xarVarFetch('repoid','id',$repoid,null, XARVAR_NOT_REQUIRED);
+    xarVarFetch('itemid','id',$repoid);
     xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED);
     extract($args);
 
