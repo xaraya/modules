@@ -1,21 +1,22 @@
 <xar:if condition="$showhost">
-  <xar:ml>
-    <xar:mlstring><a href="#(1)">Last modified</a> on #(2) by <a href="#(3)">#(4)</a> [#(5)]</xar:mlstring>
-    <xar:mlvar>#$link#</xar:mlvar>
-    <xar:mlvar>#$date#</xar:mlvar>
-    <xar:mlvar>#$profile#</xar:mlvar>
-    <xar:mlvar>#$editorname#</xar:mlvar>
-    <xar:mlvar>#$hostname#</xar:mlvar>
-  </xar:ml>
-  <xar:if condition="!empty($remark)">
-  <br /><xar:mlstring>Remark</xar:mlstring>: #$remark#
-  </xar:if>
+	<xar:ml>
+		<xar:mlstring><a href="#(1)">Last modified</a> on #(2) #(3) by <a href="#(4)">#(5)</a> [#(6)]</xar:mlstring>
+		<xar:mlvar>#$link#</xar:mlvar>
+		<xar:mlvar>#xarLocaleGetFormattedDate('medium',$date)#</xar:mlvar>
+		<xar:mlvar>#xarLocaleGetFormattedTime('medium',$date)#</xar:mlvar>
+		<xar:mlvar>#$profile#</xar:mlvar>
+		<xar:mlvar>#$editorname#</xar:mlvar>
+		<xar:mlvar>#$hostname#</xar:mlvar>
+	</xar:ml>
+	<xar:if condition="!empty($remark)">
+	<br /><xar:mlstring>Remark</xar:mlstring>: #$remark#
+	</xar:if>
 <xar:else />
-  <xar:ml>
-    <xar:mlstring>Last modified on #(1) by <a href="#(2)">#(3)</a></xar:mlstring>
-    <xar:mlvar>#$date#</xar:mlvar>
-    <xar:mlvar>#$profile#</xar:mlvar>
-    <xar:mlvar>#$editorname#</xar:mlvar>
-  </xar:ml>
+	<xar:ml>
+		<xar:mlstring>Last modified on #(1) #(2) by <a href="#(3)">#(4)</a></xar:mlstring>
+		<xar:mlvar>#xarLocaleGetFormattedDate('medium',$date)#</xar:mlvar>
+		<xar:mlvar>#xarLocaleGetFormattedTime('medium',$date)#</xar:mlvar>
+		<xar:mlvar>#$profile#</xar:mlvar>
+		<xar:mlvar>#$editorname#</xar:mlvar>
+	</xar:ml>
 </xar:if>
-

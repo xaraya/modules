@@ -10,34 +10,37 @@
 <br /><br />
 </xar:if>
 <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-    <tr>
-        <th><xar:mlstring>Version</xar:mlstring></th>
-        <th><xar:mlstring>Status</xar:mlstring></th>
-        <th><xar:mlstring>Editor</xar:mlstring></th>
-        <xar:if condition="$showhost">
-            <th><xar:mlstring>Hostname</xar:mlstring></th>
-        </xar:if>
-        <th><xar:mlstring>Date</xar:mlstring></th>
-        <th><xar:mlstring>Remark</xar:mlstring></th>
-    </tr>
+	<tr>
+		<th><xar:mlstring>Version</xar:mlstring></th>
+		<th><xar:mlstring>Status</xar:mlstring></th>
+		<th><xar:mlstring>Editor</xar:mlstring></th>
+		<xar:if condition="$showhost">
+		<th><xar:mlstring>Hostname</xar:mlstring></th>
+		</xar:if>
+		<th><xar:mlstring>Date</xar:mlstring></th>
+		<th><xar:mlstring>Remark</xar:mlstring></th>
+	</tr>
 <xar:foreach in="$changes" key="$logid" value="$change">
-    <tr>
-        <td class="xar-norm">
-            <xar:if condition="!empty($change['link'])">
-                <input type="checkbox" name="logids[]" value="#$logid#" />
-                <a href="#$change['link']#">#$change['version']#</a>
-            <xar:else />
-                #$change['version']#
-            </xar:if>
-        </td>
-        <td class="xar-norm">#$change['status']#</td>
-        <td class="xar-norm"><a href="#$change['profile']#">#$change['editorname']#</a></td>
-        <xar:if condition="$showhost">
-            <td class="xar-norm">#$change['hostname']#</td>
-        </xar:if>
-        <td class="xar-norm">#$change['date']#</td>
-        <td class="xar-norm">#$change['remark']#</td>
-    </tr>
+	<tr>
+		<td class="xar-norm">
+			<xar:if condition="!empty($change['link'])">
+				<input type="checkbox" name="logids[]" value="#$logid#" />
+					<a href="#$change['link']#">#$change['version']#</a>
+			<xar:else />
+				#$change['version']#
+			</xar:if>
+		</td>
+		<td class="xar-norm">#$change['status']#</td>
+		<td class="xar-norm"><a href="#$change['profile']#">#$change['editorname']#</a></td>
+		<xar:if condition="$showhost">
+		<td class="xar-norm">#$change['hostname']#</td>
+		</xar:if>
+		<td class="xar-norm">
+			#xarLocaleGetFormattedDate('medium',$change['date'])#&nbsp;
+			#xarLocaleGetFormattedTime('medium',$change['date'])# 
+		</td>
+		<td class="xar-norm">#$change['remark']#</td>
+	</tr>
 </xar:foreach>
 </table>
 <br />
@@ -60,4 +63,3 @@
 <br />
 </div>
 </div>
-
