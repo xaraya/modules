@@ -222,8 +222,8 @@ function translations_gather_common_entries($transEntriesCollection)
                     }
 
                     // FIXME: This is a workaround for bug #2423, not a fix
-                    //unset($transEntriesCollection[$subname][$string]);
-                    //unset($transEntriesCollection[$other_subname][$string]);
+                    unset($transEntriesCollection[$subname][$string]);
+                    unset($transEntriesCollection[$other_subname][$string]);
                 }
             }
         }
