@@ -39,7 +39,7 @@ function ephemerids_ephemblock_display($blockinfo)
     $ephemtable = $xartable['ephem'];
 
     // Security Check
-	if(!xarSecurityCheck('ReadEphemerids', 0)) return;
+    if(!xarSecurityCheck('ReadEphemerids', 0)) return;
 
     $data['items'] = array();
     $data['emptycontent'] = false;

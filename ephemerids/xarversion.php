@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'Ephemerids';
 $modversion['id'] = '15';
-$modversion['version'] = '1.4.0';
+$modversion['version'] = '1.4.1';
 $modversion['description'] = 'A "This day in history" type module.';
 $modversion['credits'] = '';
 $modversion['help'] = '';

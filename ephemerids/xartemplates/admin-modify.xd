@@ -23,7 +23,8 @@
 		<br />
 			<textarea name="content" id="content" rows="10" cols="60" tabindex="5">#$content#</textarea>
 		<br /><br />
-			<input type="submit" value="Submit"  tabindex="6" />
+            <xar:set name="$submitbutton"><xar:mlstring>Submit</xar:mlstring></xar:set> 
+			<input type="submit" value="#$submitbutton#"  tabindex="6" />
 		</form>
 
 </div>

@@ -16,7 +16,7 @@
 function ephemerids_admin_main()
 {
     // Security Check
-	if(!xarSecurityCheck('EditEphemerids')) return;
+    if(!xarSecurityCheck('EditEphemerids')) return;
 
     // we only really need to show the default view (overview in this case)
     if (xarModGetVar('adminpanels', 'overview') == 0){
@@ -34,14 +34,13 @@ function ephemerids_admin_main()
 function ephemerids_admin_new()
 {
     // Security Check
-	if(!xarSecurityCheck('AddEphemerids')) return;
+    if(!xarSecurityCheck('AddEphemerids')) return;
 
     // TODO: figure out how to get a list of *available* languages
 
-	$data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSecGenAuthKey();
 
-	return $data;
-	
+    return $data;
 }
 
 /**
@@ -54,7 +53,7 @@ function ephemerids_admin_view()
     $data['items'] = array();
 
     // Security Check
-	if(!xarSecurityCheck('EditEphemerids')) return;
+    if(!xarSecurityCheck('EditEphemerids')) return;
 
     // Specify some labels for display
     $data['daylabel'] = xarVarPrepForDisplay(xarML('Day'));
@@ -105,7 +104,6 @@ function ephemerids_admin_view()
 
     // Return the template variables defined in this function
     return $data;
-
 }
 
 /**
@@ -127,18 +125,18 @@ function ephemerids_admin_add()
         $elanguage = 'ALL';
     }
 
-	// Confirm Auth
+    // Confirm Auth
     if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
-	if(!xarSecurityCheck('AddEphemerids')) return;
+    if(!xarSecurityCheck('AddEphemerids')) return;
 
     // The API function is called.  
     $emp = xarModAPIFunc('ephemerids',
                          'admin',
                          'add',
-						 array('did' => $did, 
-						       'mid' => $mid, 
+                         array('did' => $did, 
+                               'mid' => $mid, 
                                'yid' => $yid, 
                                'content' => $content, 
                                'elanguage' => $elanguage));
@@ -152,7 +150,6 @@ function ephemerids_admin_add()
 
     // Return
     return true;
-
 }
 
 /**
@@ -169,12 +166,11 @@ function ephemerids_admin_delete($args)
     extract ($args);
 
     // Security Check
-	if(!xarSecurityCheck('DeleteEphemerids')) return;
+    if(!xarSecurityCheck('DeleteEphemerids')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
     $data['eid'] = $eid;
-    $data['submitlabel'] = xarML('Submit');
     $data['authid'] = xarSecGenAuthKey();
 
     return $data;
@@ -195,7 +191,6 @@ function ephemerids_admin_delete($args)
 
     // Return
     return true;
-
 }
 
 function ephemerids_admin_modify($args)
@@ -222,7 +217,7 @@ function ephemerids_admin_modify($args)
     if ($data == false) return;
 
     // Security Check
-	if(!xarSecurityCheck('EditEphemerids')) return;
+    if(!xarSecurityCheck('EditEphemerids')) return;
 
     // Get menu variables 
     
@@ -298,7 +293,7 @@ function ephemerids_admin_update($args)
 function ephemerids_admin_modifyconfig()
 {
     // Security Check
-	if(!xarSecurityCheck('AdminEphemerids')) return;
+    if(!xarSecurityCheck('AdminEphemerids')) return;
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
@@ -309,16 +304,12 @@ function ephemerids_admin_modifyconfig()
  */
 function ephemerids_admin_updateconfig()
 {
-    list($linkfirst,
-         $itemsperpage,
-         $invisilinks)= xarVarCleanFromInput('linkfirst',
-                                             'itemsperpage',
-                                             'invisilinks');
+    $itemsperpage = xarVarCleanFromInput('itemsperpage');
 
     if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
-	if(!xarSecurityCheck('AdminEphemerids')) return;
+    if(!xarSecurityCheck('AdminEphemerids')) return;
 
     if (!isset($itemsperpage)) {
         $itemsperpage = 10;

@@ -6,15 +6,16 @@
 
 <form method="post" action="&xar-modurl-ephemerids-admin-delete;" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" value="#$authid#" />
-	<input type="hidden" name="eid" id="eid" value="#$eid#" />
-	<input type="hidden" name="confirm" id="confirm" value="1"/>
-	<input type="hidden" name="confirmation" id="confirmation" value="1"/>
+    <input type="hidden" name="eid" id="eid" value="#$eid#" />
+    <input type="hidden" name="confirm" id="confirm" value="1"/>
+    <input type="hidden" name="confirmation" id="confirmation" value="1"/>
 
-	<p><xar:mlstring>Confirm deletion of Ephemerid</xar:mlstring></p>
+    <p><xar:mlstring>Confirm deletion of Ephemerid</xar:mlstring></p>
 
-	<input type="submit" value="#$submitlabel#"  tabindex="1" /><br /><br />
-	
-	<a href="&xar-modurl-ephemerids-admin-main;"><xar:mlstring>Cancel deletion of Ephemerid</xar:mlstring></a>
+    <xar:set name="$submitbutton"><xar:mlstring>Submit</xar:mlstring></xar:set> 
+    <input type="submit" value="#$submitbutton#"  tabindex="1" /><br /><br />
+    
+    <a href="&xar-modurl-ephemerids-admin-main;"><xar:mlstring>Cancel deletion of Ephemerid</xar:mlstring></a>
 </form>        
 </div>
 </div>

@@ -31,7 +31,7 @@ function ephemerids_adminapi_add($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('AddEphemerids')) return;
+    if(!xarSecurityCheck('AddEphemerids')) return;
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -53,7 +53,7 @@ function ephemerids_adminapi_add($args)
                                        xar_yid, 
                                        xar_content, 
                                        xar_elanguage)
-				                VALUES ($nextId, 
+                                VALUES ($nextId, 
                                         '$did', 
                                         '$mid', 
                                         '$yid', 
@@ -94,7 +94,7 @@ function ephemerids_adminapi_update($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('EditEphemerids')) return;
+    if(!xarSecurityCheck('EditEphemerids')) return;
     $elanguage = 'all';
 
     list($dbconn) = xarDBGetConn();
@@ -135,7 +135,7 @@ function ephemerids_adminapi_delete($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('DeleteEphemerids')) return;
+    if(!xarSecurityCheck('DeleteEphemerids')) return;
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -157,7 +157,7 @@ function ephemerids_adminapi_delete($args)
 function ephemerids_adminapi_display()
 {
     // Security Check
-	if(!xarSecurityCheck('EditEphemerids')) return;
+    if(!xarSecurityCheck('EditEphemerids')) return;
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -178,14 +178,14 @@ function ephemerids_adminapi_display()
     $resarray = array();
 
     while(list($eid, $did, $mid, $yid, $content, $elanguage) = $result->fields) {
-	$result->MoveNext();
+    $result->MoveNext();
 
-	$resarray[] = array('eid' => $eid,
-			    'did' => $did,
-			    'mid' => $mid,
-			    'yid' => $yid,
-			    'content' => $content,
-			    'elanguage' => $elanguage);
+    $resarray[] = array('eid' => $eid,
+                'did' => $did,
+                'mid' => $mid,
+                'yid' => $yid,
+                'content' => $content,
+                'elanguage' => $elanguage);
     }
     $result->Close();
 
@@ -203,7 +203,7 @@ function ephemerids_adminapi_getmenulinks()
 {
 
 // Security Check
-	if (xarSecurityCheck('AddEphemerids',0)) {
+    if (xarSecurityCheck('AddEphemerids',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('ephemerids',
                                                    'admin',
@@ -213,7 +213,7 @@ function ephemerids_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('EditEphemerids',0)) {
+    if (xarSecurityCheck('EditEphemerids',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('ephemerids',
                                                    'admin',
@@ -223,7 +223,7 @@ function ephemerids_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('AdminEphemerids',0)) {
+    if (xarSecurityCheck('AdminEphemerids',0)) {
         $menulinks[] = Array('url'   => xarModURL('ephemerids',
                                                    'admin',
                                                    'modifyconfig'),

@@ -38,34 +38,13 @@ function ephemerids_init()
         'xar_elanguage'=>array('type'=>'varchar','size'=>32,'null'=>FALSE)
     );
 
-/*
-    $ephemcolumn = &$xartable['ephem_column'];
-    $query = "CREATE TABLE $ephemtable (
-            $ephemcolumn[eid] int(11) NOT NULL auto_increment,
-            $ephemcolumn[did] tinyint(2) NOT NULL default '0',
-            $ephemcolumn[mid] tinyint(2) NOT NULL default '0',
-            $ephemcolumn[yid] int(4) NOT NULL default '0',
-            $ephemcolumn[content] text NOT NULL,
-            $ephemcolumn[language] varchar(30) NOT NULL default '',
-            PRIMARY KEY(xar_eid))";
-
-    $dbconn->Execute($query);
-
-    // Check database result
-    if ($dbconn->ErrorNo() != 0) {
-        // Report failed initialisation attempt
-        return false;
-    }
-*/
-
     // Create the Table
     $query = xarDBCreateTable($ephemtable,$fields);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     // Set up module variables
-    xarModSetVar('Ephemerids', 'detail', 0);
-    xarModSetVar('Ephemerids', 'table', 1);
+    xarModSetVar('ephemerids', 'itemsperpage', 20);
 
     // Register blocks
     if (!xarModAPIFunc('blocks',
@@ -91,6 +70,15 @@ function ephemerids_init()
  */
 function ephemerids_upgrade($oldversion)
 {
+    // Upgrade dependent on old version number
+    switch($oldversion) {
+        case '1.4.0':
+            // Code to upgrade from version 2.0 goes here
+            xarModSetVar('ephemerids', 'itemsperpage', 20);
+            xarModDelVar('Ephemerids', 'detail');
+            xarModDelVar('Ephemerids', 'table');
+            break;
+    }
     return true;
 }
 
@@ -109,8 +97,7 @@ function ephemerids_delete()
     if (!$result) return;
 
     // Delete module variables
-    xarModDelVar('Ephemerids', 'detail');
-    xarModDelVar('Ephemerids', 'table');
+    xarModDelVar('ephemerids', 'itemsperpage');
 
     // Remove Masks and Instances
     xarRemoveMasks('ephemerids');

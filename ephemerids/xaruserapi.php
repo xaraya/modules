@@ -76,11 +76,11 @@ function ephemerids_userapi_getall($args)
         list($exid, $name, $number) = $result->fields;
         if (xarSecurityCheck('OverviewEphemerids', 0)) {
             $items[] = array('eid' => $eid,
-			      'did' => $did,
-			      'mid' => $mid,
-			      'yid' => $yid,
-			      'content' => $content,
-			      'elanguage' => $elanguage);
+                  'did' => $did,
+                  'mid' => $mid,
+                  'yid' => $yid,
+                  'content' => $content,
+                  'elanguage' => $elanguage);
         }
     }
 
@@ -130,10 +130,10 @@ function ephemerids_userapi_getalltoday()
         list($eid, $did, $mid, $yid, $content, $elanguage) = $result->fields;
         if (xarSecurityCheck('OverviewEphemerids', 0)) {
             $items[] = array(
-			      'did' => $did,
-			      'mid' => $mid,
-			      'yid' => $yid,
-			      'content' => $content);
+                  'did' => $did,
+                  'mid' => $mid,
+                  'yid' => $yid,
+                  'content' => $content);
         }
     }
 
@@ -198,15 +198,15 @@ function ephemerids_userapi_get($args)
     $result->Close();
 
     // Security Check
-	if(!xarSecurityCheck('OverviewEphemerids')) return;
+    if(!xarSecurityCheck('OverviewEphemerids')) return;
 
     // Create the item array
-	$data = array('eid' => $eid,
-			      'did' => $did,
-			      'mid' => $mid,
-			      'yid' => $yid,
-			      'content' => $content,
-			      'elanguage' => $elanguage);
+    $data = array('eid' => $eid,
+                  'did' => $did,
+                  'mid' => $mid,
+                  'yid' => $yid,
+                  'content' => $content,
+                  'elanguage' => $elanguage);
 
     // Return the item array
     return $data;
@@ -227,7 +227,7 @@ function ephemerids_userapi_countitems()
     $xartable = xarDBGetTables();
 
     // Security Check
-	if(!xarSecurityCheck('OverviewEphemerids')) return;
+    if(!xarSecurityCheck('OverviewEphemerids')) return;
 
     $ephemtable = $xartable['ephem'];
 

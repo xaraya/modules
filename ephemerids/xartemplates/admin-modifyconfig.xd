@@ -22,6 +22,7 @@
 		</tr>
 	</table>
 	<br /><br />
-	<input type="submit" value="Update Ephemerids Configuration"  tabindex="3" />
+    <xar:set name="$updatebutton"><xar:mlstring>Update Ephemerids Configuration</xar:mlstring></xar:set> 
+	<input type="submit" value="#$updatebutton#"  tabindex="3" />
 </form>
 </center>
