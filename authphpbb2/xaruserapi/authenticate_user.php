@@ -21,7 +21,7 @@ function authphpbb2_userapi_authenticate_user($args)
 
     if (!isset($uname) || !isset($pass) || $pass == "") {
         $msg = xarML('Empty uname (#(1)) or pass (not shown).', $uname);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return XARUSER_AUTH_FAILED;
     }
@@ -35,7 +35,7 @@ function authphpbb2_userapi_authenticate_user($args)
     $user_info = authphpbb2__get_phpbb2_userdata($connect,$uname,$pass);
     if (!$user_info) {
         $msg = xarML('Wrong username (#(1)) or pass (not shown).', $uname);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return XARUSER_AUTH_FAILED;
     }
@@ -125,7 +125,7 @@ function authphpbb2__open_phpbb2_connection()
     $db = NewADOConnection($dbtype);
     if (!$db) {
         $msg = "phpBB2: Loading ADOdb driver '".$server."' has failed: " . $db->ErrorMsg();
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         error_log("phpBB2 Error: Loading ADOdb driver '".$server."' failed");
         return;
@@ -134,7 +134,7 @@ function authphpbb2__open_phpbb2_connection()
 
     if (!$db) {
         $msg = "phpBB2: Connection to $server has failed: " . $db->ErrorMsg();
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         error_log("phpBB2 Error: Connection to $server failed");
         return;
@@ -175,7 +175,7 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
         if (!$result) {
             //error
             $msg = "phpBB2: Query to $table has failed: " . $connect->ErrorMsg();
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                 new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             error_log("phpBB2 Error: Query to $table failed");
             return false;
@@ -184,7 +184,7 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
         {
             //incorrect login
         $msg = xarML('Wrong username (#(1)) or pass (not shown).', $username);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                 new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             $result->Close();
             return false;
@@ -195,7 +195,7 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
                 {
                     //user inactive
                     $msg = xarML('User #(1) not activated.', $username);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                     $result->Close();
                     return false;    

@@ -18,7 +18,7 @@ function authphpbb2_userapi_has_capability($args)
 
     if (!isset($capability)) {
         $msg = xarML('Empty capability.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -36,7 +36,7 @@ function authphpbb2_userapi_has_capability($args)
             break;
     }
     $msg = xarML('Unknown capability.');
-    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
     return;
 }
