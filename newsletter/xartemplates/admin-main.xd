@@ -177,11 +177,9 @@
                 <xar:mlstring>From the main menu, you have the following choices based on your privileges:</xar:mlstring>
                 <ul>
                     <li><xar:mlstring>Publish Issue - Create a new issue for publication</xar:mlstring></li>
-                    <li><xar:mlstring>Edit Issues - Edit your issues and stories.</xar:mlstring></li>
-                    <li><xar:mlstring>Edit Publications - Edit your publications.</xar:mlstring></li>
-                    <li><xar:mlstring>Edit Subscriptions - Search/edit subscriptions of a publication.</xar:mlstring></li>
-                    <li><xar:mlstring>Edit Signature - Edit your signature.</xar:mlstring></li>
-                    <li><xar:mlstring>Modify Config - Modify the configuration.</xar:mlstring></li>
+                    <li><xar:mlstring>Edit Issues - Edit your publications, issues, stories, disclaimers and signature block.</xar:mlstring></li>
+                    <li><xar:mlstring>Edit Subscriptions - Search, add and edit subscriptions of a publication.</xar:mlstring></li>
+                    <li><xar:mlstring>Modify Config - Administrative menu to modify the module configuration.</xar:mlstring></li>
                 </ul>
             </div>
             <br />
@@ -211,7 +209,7 @@
                     </tr>
                     <tr>
                         <td halign="center">
-                            <xar:mlstring>Category</xar:mlstring>
+                            <xar:mlstring>Publication Category</xar:mlstring>
                         </td>
                         <td halign="center">
                             <xar:mlstring>The category for the publication.  This will be a category created by the module administrator.</xar:mlstring>
@@ -259,6 +257,14 @@
                     </tr>
                     <tr>
                         <td halign="center">
+                            <xar:mlstring>Email Subject</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The subject line of the publication email.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
                             <xar:mlstring>Logo</xar:mlstring>
                         </td>
                         <td halign="center">
@@ -283,7 +289,7 @@
                     </tr>
                     <tr>
                         <td halign="center">
-                            <xar:mlstring>Private</xar:mlstring>
+                            <xar:mlstring>Private Publication</xar:mlstring>
                         </td>
                         <td halign="center">
                             <xar:mlstring>If the publication is private, then registered users will not be allowed to subscribe to the publication.  The editor of the publication will need to add subscribers through the "Edit Subscriptions" menu.</xar:mlstring>
@@ -358,6 +364,14 @@
                             <xar:mlstring>Allow an issue to be shown in the archive of past issues.  The archive is displayed to registered users in the information block.</xar:mlstring>
                         </td>
                     </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Date Published</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The date that the issue was published.  To publish the issue again, clear the date fields or set the fields to "0".</xar:mlstring>
+                        </td>
+                    </tr>
                 </table>
                 <br /><br />
                 <xar:mlstring><b>Story</b></xar:mlstring>
@@ -381,7 +395,7 @@
                     </tr>
                     <tr>
                         <td halign="center">
-                            <xar:mlstring>Owner</xar:mlstring>
+                            <xar:mlstring>Story Owner</xar:mlstring>
                         </td>
                         <td halign="center">
                             <xar:mlstring>The owner of the story.</xar:mlstring>
@@ -389,7 +403,7 @@
                     </tr>
                     <tr>
                         <td halign="center">
-                            <xar:mlstring>Story Category</xar:mlstring>
+                            <xar:mlstring>Category</xar:mlstring>
                         </td>
                         <td halign="center">
                             <xar:mlstring>The category of the story.  The story order within an issue is based on the category order.  Within each category, the story is ordered by date (newest to oldest).</xar:mlstring>
@@ -473,6 +487,14 @@
                         </td>
                         <td halign="center">
                             <xar:mlstring>The source of the commentary (e.g. person, news agency, etc.).</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td halign="center">
+                            <xar:mlstring>Date Published</xar:mlstring>
+                        </td>
+                        <td halign="center">
+                            <xar:mlstring>The date that the issue was published.  To publish the issue again, clear the date fields or set the fields to "0".</xar:mlstring>
                         </td>
                     </tr>
                 </table>

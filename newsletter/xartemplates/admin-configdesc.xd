@@ -40,9 +40,9 @@
                 <br /><br />
                 <b><xar:mlstring>1.  Configure Roles and Privileges</xar:mlstring></b>
                 <br /><br />
-                 <xar:mlstring>As the module administrator, you must configure the necessary roles and privileges for the Newsletter publishers, editors and writers.  You can create the groups and privileges manually or can you use the adminstration modify configuration menu to easily create the default groups and privileges.  After these groups and privileges have been created, you can then add a user to the publisher, editor or writer group.</xar:mlstring>
+                 <xar:mlstring>As the module administrator, you must configure the necessary roles and privileges for the Newsletter publishers, editors and writers.  You can create the groups and privileges manually or can you use the administration modify configuration menu to easily create the default groups and privileges.  After these groups and privileges have been created, you can then add a user to the publisher, editor or writer group.</xar:mlstring>
                 <br /><br />
-                <xar:mlstring>To add the groups and privileges, select Modify Configuration from the Newsletter administration menu.  By default, the groups are assigned to the Everybody role.  You can select the default groups and privileges to be created or you can set which role to assign these groups and change the default privilege for each group.</xar:mlstring>
+                <xar:mlstring>To add the groups and privileges, select Modify Config from the Newsletter administration menu followed by the Modify Privileges tab.  By default, the groups are assigned to the Everybody role.  You can select the default groups and privileges to be created or you can set which role to assign these groups and change the default privilege for each group.</xar:mlstring>
                 <br /><br />
                  <xar:mlstring>The default groups and privileges are:</xar:mlstring>
                 <ul>
@@ -56,13 +56,13 @@
                     <br />
                     <xar:mlstring>Can add, edit or delete stories.  Cannot publish issues.</xar:mlstring>
                 </ul>
-                <xar:mlstring>Once the groups and privileges are created, you do not need to modify the admin configuration unless you want to change the privilege of a group.</xar:mlstring>
+                <xar:mlstring>Once the groups and privileges are created, you do not need to modify the privileges again unless you want to change the privilege of a group.</xar:mlstring>
                 <br /><br />
                 <a href="#xarModURL('newsletter', 'admin', 'modifyprivileges')#">Click here to configure Newsletter roles and privileges.</a>
                 <br /><br />
                 <b><xar:mlstring>2.  Add a Newsletter user</xar:mlstring></b>
                 <br /><br />
-                <xar:mlstring>After the Newsletter groups and privileges have been successfully created, you can add users to these groups.  Select "Add Newsletter User" from the Newsletter administration menu to add a user.   Once a user has been added to the appropriate group, that user will have writer, editor or publisher privileges and will be able to start creating content for a publication.</xar:mlstring>
+                <xar:mlstring>After the Newsletter groups and privileges have been successfully created, you can add users to these groups.  Select the Modify Users tab from the Modify Config administrative menu.  This will display a list of currently assigned users and allow you to add a new user.  Select the user to add and the group that the user will inherit privileges from.  Once a user has been added to the appropriate group, that user will have writer, editor or publisher privileges and will be able to start creating content for a publication.</xar:mlstring>
                 <br /><br />
                 <xar:mlstring><b>Note:</b>  You will not be able to create a publication until at least one user is added to the Newsletter Publisher group.</xar:mlstring>
                 <br /><br />
