@@ -47,7 +47,7 @@
     <tr>
         <td class="xar-norm">#$item['title']#</td>
         <xar:if condition="$showdate">
-            <td class="xar-norm">#$item['pubdate']#</td>
+            <td class="xar-norm">#xarLocaleFormatDate('%x %X %z',$item['pubdate'])#</td>
         </xar:if>
         <xar:if condition="$showstatus">
             <td class="xar-norm">

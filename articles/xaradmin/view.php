@@ -143,8 +143,9 @@ function articles_admin_view()
             // Title and pubdate
             $item['title'] = $article['title'];
             $item['aid'] = $article['aid'];
+            
             if ($showdate) {
-                $item['pubdate'] = strftime('%x %X %z', $article['pubdate']);
+                $item['pubdate'] = $article['pubdate']; //strftime('%x %X %z', $article['pubdate']);
             }
             if ($showstatus) {
                 $item['status'] = $statuslabel[$article['status']];
