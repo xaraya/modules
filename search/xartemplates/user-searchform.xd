@@ -19,6 +19,9 @@
 
     <!-- Retrieve the remembered checked item types -->
     <xar:set name="$checked_itemtypes"><xar:var name="checked_itemtypes" scope="session"/></xar:set>
+    <xar:if condition="empty($checked_itemtypes)">
+    <xar:set name="$checked_itemtypes[1]">1</xar:set>   
+    </xar:if>
     <!-- Depending how the hook was enabled several itemtypes need searching -->
     <xar:if condition="!empty($itemtypes)">
       <label><xar:mlstring>Search in</xar:mlstring>:</label><br/>
