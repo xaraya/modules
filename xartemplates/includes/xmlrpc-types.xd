@@ -35,6 +35,8 @@
   <boolean>#$value#</boolean>
 <xar:elseif condition="$type == 'i4'"/>
   <i4>#$value#</i4>
+<xar:elseif condition="$type == 'int'"/>
+  <int>#$value#</int>
 <xar:elseif condition="$type == 'double'"/>
   <double>#$value#</double>
 <xar:elseif condition="$type == 'dateTime.iso8601'"/>
