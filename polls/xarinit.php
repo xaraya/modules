@@ -51,7 +51,7 @@ function polls_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -90,7 +90,7 @@ function polls_init()
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -258,7 +258,7 @@ function polls_upgrade($oldversion)
             // appropriate exception
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }

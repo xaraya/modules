@@ -12,7 +12,7 @@ function polls_user_vote($args)
     extract($args);
     if(empty($pid)){
         $msg = xarML('No poll specified');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -41,7 +41,7 @@ function polls_user_vote($args)
 
     if (!$poll) {
         $msg = xarML('Error retrieving Poll data');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;
@@ -63,12 +63,12 @@ function polls_user_vote($args)
     }
     if(count($options) == 0){
         $msg = xarML('No vote received');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if(count($options) > 1 && $poll['type'] == 'single'){
         $msg = xarML('Multiple votes not allowed on this Poll.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -81,7 +81,7 @@ function polls_user_vote($args)
 
     if (!$vote) {
         $msg = xarML('Error recording vote');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

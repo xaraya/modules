@@ -15,7 +15,7 @@ function polls_adminapi_update($args)
         (!isset($title)) ||
         (!isset($type))) {
         $msg = xarML('Missing poll ID, title, or type');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

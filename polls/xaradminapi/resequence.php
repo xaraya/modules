@@ -11,7 +11,7 @@ function polls_adminapi_resequence($args)
     // Argument check
     if (!isset($pid)) {
         $msg = xarML('Missing poll ID');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

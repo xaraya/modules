@@ -14,7 +14,7 @@ function polls_user_display($args)
 
     if (!isset($pid)) {
         $msg = xarML('Missing poll id');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;
@@ -28,7 +28,7 @@ function polls_user_display($args)
 
     if (!$poll) {
         $msg = xarML('Error retrieving Poll data');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

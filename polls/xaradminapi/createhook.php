@@ -17,7 +17,7 @@ function polls_adminapi_createhook($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'createhook', 'polls');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -38,7 +38,7 @@ function polls_adminapi_createhook($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'createhook', 'polls');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -87,7 +87,7 @@ function polls_adminapi_createhook($args)
     if (empty($pid)) {
         // Something went wrong - return
         $msg = xarML('Unable to create poll');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         // we *must* return $extrainfo for now, or the next hook will fail
         return $extrainfo;
     }

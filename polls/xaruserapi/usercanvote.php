@@ -13,7 +13,7 @@ function polls_userapi_usercanvote($args)
     // Check args
     if (!isset($pid)) {
         $msg = xarML('Missing poll ID in checkvote');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return false;
@@ -70,7 +70,7 @@ function polls_userapi_usercanvote($args)
             }
         default:
             $msg = xarML('Cannot determine vote status');
-            xarExceptionSet(XAR_USER_EXCEPTION,
+            xarErrorSet(XAR_USER_EXCEPTION,
                         'BAD_DATA',
                         new DefaultUserException($msg));
             return false;

@@ -21,7 +21,7 @@ function polls_admin_create()
 
     if (!isset($title) || !isset($polltype)){
         $msg = xarML('Missing required field title or polltype');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
         return;
@@ -29,7 +29,7 @@ function polls_admin_create()
 
     if ($polltype != 'single' && $polltype != 'multi'){
         $msg = xarML('Invalid poll type');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
         return;
@@ -47,7 +47,7 @@ function polls_admin_create()
     if (!$pid) {
         // Something went wrong - return
         $msg = xarML('Unable to create poll');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         return;
     }
 

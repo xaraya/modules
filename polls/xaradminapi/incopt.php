@@ -16,7 +16,7 @@ function polls_adminapi_incopt($args)
     if ((!isset($pid)) ||
         (!isset($opt))) {
         $msg = xarML('Missing poll ID or option');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;
@@ -29,7 +29,7 @@ function polls_adminapi_incopt($args)
                            array('pid' => $pid));
 
     if (!$poll) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         return;
     }
 

@@ -17,7 +17,7 @@ function polls_adminapi_updatehook($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object id', 'admin', 'updatehook', 'polls');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
@@ -26,7 +26,7 @@ function polls_adminapi_updatehook($args)
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'extrainfo', 'admin', 'updatehook', 'polls');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
@@ -45,7 +45,7 @@ function polls_adminapi_updatehook($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'updatehook', 'polls');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
@@ -66,7 +66,7 @@ function polls_adminapi_updatehook($args)
     if (empty($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'admin', 'updatehook', 'polls');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
@@ -120,7 +120,7 @@ function polls_adminapi_updatehook($args)
         if (empty($pid)) {
             // Something went wrong - return
             $msg = xarML('Unable to create poll');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
             // we *must* return $extrainfo for now, or the next hook will fail
             return $extrainfo;
         }
@@ -143,7 +143,7 @@ function polls_adminapi_updatehook($args)
                            array('pid' => $oldpoll['pid']))) {
             // Something went wrong - return
             $msg = xarML('Unable to delete poll');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         }
         if (isset($extrainfo['poll'])) {
             unset($extrainfo['poll']);
@@ -169,7 +169,7 @@ function polls_adminapi_updatehook($args)
         if (empty($updated)) {
             // Something went wrong - return
             $msg = xarML('Unable to update poll');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
             return $extrainfo;
         }
     }

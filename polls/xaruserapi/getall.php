@@ -22,7 +22,7 @@ function polls_userapi_getall($args)
     if ((!isset($startnum)) ||
         (!isset($numitems))) {
         $msg = xarML('Missing request parameters');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

@@ -32,19 +32,19 @@ function polls_admin_updateconfig()
     // Check arguments
     if (!is_numeric($barscale) || $barscale <= 0) {
         $msg = xarML("Invalid value for config variable: barscale");
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
                        new SystemException($msg));
         return;
     }
     if (strval(intval($itemsperpage)) !== $itemsperpage || $itemsperpage < 1) {
         $msg = xarML("Invalid value for config variable: itemsperpage");
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
                        new SystemException($msg));
         return;
     }
     if (strval(intval($defaultopts)) !== $defaultopts || $defaultopts < 2) {
         $msg = xarML("Invalid value for config variable: defaultopts");
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
                        new SystemException($msg));
         return;
     }
@@ -53,7 +53,7 @@ function polls_admin_updateconfig()
     }
     if (strval(intval($imggraph)) !== $imggraph || $imggraph < 0 || $imggraph > 3) {
         $msg = xarML("Invalid value for config variable: imggraph");
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
                        new SystemException($msg));
         return;
     }
@@ -62,7 +62,7 @@ function polls_admin_updateconfig()
         ($voteinterval == 604800) ||
         ($voteinterval == 2592000))) {
         $msg = xarML("Invalid value for config variable: voteinterval");
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA',
                        new SystemException($msg));
         return;
     }

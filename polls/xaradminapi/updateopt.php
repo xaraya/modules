@@ -16,7 +16,7 @@ function polls_adminapi_updateopt($args)
         (!isset($opt)) ||
         (!isset($option))) {
         $msg = xarML('Missing poll ID, option ID, or option text');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

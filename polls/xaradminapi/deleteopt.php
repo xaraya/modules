@@ -16,7 +16,7 @@ function polls_adminapi_deleteopt($args)
     if ((!isset($pid))  ||
         (!isset($opt))) {
         $msg = xarML('Missing poll ID or option ID');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

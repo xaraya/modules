@@ -16,7 +16,7 @@ function polls_adminapi_createopt($args)
     // Argument check
     if ((!isset($pid)) || (!isset($option))) {
         $msg = xarML('Missing poll ID or option');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;

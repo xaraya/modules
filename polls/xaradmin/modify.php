@@ -15,7 +15,7 @@ function polls_admin_modify()
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     if (!$poll) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         return;
     }
 

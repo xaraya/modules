@@ -7,7 +7,7 @@ function polls_admin_display()
     // Check arguments
     if (empty($pid)) {
         $msg = xarML('No poll selected');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -20,7 +20,7 @@ function polls_admin_display()
                            array('pid' => $pid));
 
     if (!$poll) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         return;
     }
 

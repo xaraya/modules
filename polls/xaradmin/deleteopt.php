@@ -29,7 +29,7 @@ function polls_admin_deleteopt()
 
     // Check that option exists
     if (!isset($poll['options'][$opt])) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_DATA');
         return;
     }
 

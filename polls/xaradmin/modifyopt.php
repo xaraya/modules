@@ -9,7 +9,7 @@ function polls_admin_modifyopt()
     // Check arguments
     if (empty($pid) || empty($opt)) {
         $msg = xarML('No poll or option specified');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -20,7 +20,7 @@ function polls_admin_modifyopt()
     $poll = xarModAPIFunc('polls', 'user', 'get', array('pid' => $pid));
 
     if (!$poll) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
         return;
     }
 

@@ -21,7 +21,7 @@ function polls_adminapi_create($args)
     // Argument check
     if ((!isset($title)) || (!isset($polltype))) {
         $msg = xarML('Missing poll title or type');
-        xarExceptionSet(XAR_USER_EXCEPTION,
+        xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;
