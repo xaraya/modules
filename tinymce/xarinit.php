@@ -67,16 +67,17 @@ function tinymce_activate()
  */
 function tinymce_upgrade($oldVersion)
 {
+   switch ($oldversion) {
    case '0.0.1':
        // Set up new module vars
        xarModSetVar('tinymce', 'tinybuttonsremove', '');
        if (!$result) return;
        break;
-
-   default:
-       break;
-    // Update successful
-    return true;
+   case '0.0.2':
+        // Current version
+        break;
+    }
+	return true;
 }
 
 /**
