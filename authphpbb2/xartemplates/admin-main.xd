@@ -3,8 +3,8 @@
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
         <div style="padding: 1px;" class="xar-norm-outline">
         <div style="float:right;padding:10px;">
-        <xar:if condition="file_exists('modules/authphpbb2/xarimages/admin.gif')" >
-            <img src="modules/authphpbb2/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <xar:if condition="file_exists('modules/authphpbb2/xarimages/images.jpg')" >
+            <img src="modules/authphpbb2/xarimages/images.jpg" alt="official icon" width="100" height="51" />
         <xar:else />
             <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
         </xar:if>
