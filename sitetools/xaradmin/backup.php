@@ -134,6 +134,7 @@ function sitetools_admin_backup($args)
             return $status;
         }
 
+
         $data['deleteurl'] =$bkupdata['deleteurl'];
         $data['warning'] =$bkupdata['warning'];
         if ($screen==0) {
@@ -141,7 +142,7 @@ function sitetools_admin_backup($args)
         } else {
             $data['runningstatus'] =$bkupdata['runningstatus'];
         }
-        
+
 
         $data['bkfiletype'] =$bkupdata['bkfiletype'];
         $data['bkfilename'] =$bkupdata['bkfilename'];

@@ -16,6 +16,7 @@
  * @Backup tables in your database
  * @author jojodee
  * TODO: Add in multidatabase once multidatabase functionality and location decided
+ * TODO: Remove all the commented out code once classes fully tidied and tested
  */
 function sitetools_adminapi_backupdb ($args)
 
@@ -83,7 +84,7 @@ function sitetools_adminapi_backupdb ($args)
     $partbackupfilename = $dbname.'.xar_backup_partial'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
     $strubackupfilename = $dbname.'.xar_backup_structure'.$backuptimestamp.'.sql'.($GZ_enabled ? '.gz' : '');
     $tempbackupfilename = $dbname.'.xar_backup.temp.sql'.($GZ_enabled ? '.gz' : '');
-    $xarbackupversion   = '0.1'; //TO DO: get actual version from var
+    $xarbackupversion   = '0.2.0'; //TO DO: get actual version from var
     $items['gz-enabled']=$GZ_enabled;
     $runningstatus=array();
 
@@ -94,14 +95,20 @@ function sitetools_adminapi_backupdb ($args)
 	        return ((float) $usec + (float) $sec);
 	    }
 	}
+    // Instantiation of SiteTools class
+     include_once("modules/sitetools/xarclass/dbSiteTools_".$dbtype.".php");
+     $classname="dbSiteTools_".$dbtype;
+     $bkitems= new $classname();
 
     //Open up files for write and setup up file headers
     if (($GZ_enabled && ($zp = gzopen($backupabsolutepath.$tempbackupfilename, 'wb'))) || (!$GZ_enabled && ($fp = fopen($backupabsolutepath.$tempbackupfilename, 'wb')))) {
         $fileheaderline = "# Xaraya SiteToolsBackup v".$xarbackupversion."\n# mySQL backup (".date('F j, Y g:i a').")   Type = ";
 	    if ($GZ_enabled) {
 	        gzwrite($zp, $fileheaderline, strlen($fileheaderline));
+	        $fp='';
 	    } else {
 	        fwrite($fp, $fileheaderline, strlen($fileheaderline));
+	        $zp='';
         }
 
         //headers for structure only
@@ -148,21 +155,27 @@ function sitetools_adminapi_backupdb ($args)
 	        $btype=xarML('Full - Standard Inserts');
             }
 	        unset($SelectedTables);
-	        $tables = mysql_list_tables($dbname);
+	        $SelectedTables =$bkitems-> selecttables($dbname);
+	     /* Move to class
+         $tables = mysql_list_tables($dbname);
     	    if (is_resource($tables)) {
 	        	$tablecounter = 0;
 	         	while (list($tablename) = mysql_fetch_array($tables)) {
 			        $SelectedTables["$dbname"][] = $tablename;
 		        }
 	        }
+	     */
 
         }//headers finished
 
         $runningstatus[]['message']='<span id="topprogress" class="xar-block-title">'.xarML('Overall Progress: ').'</span>';
     	$runningstatus[]['message']='<p>'.xarML('Checking tables for database ').'<b>'.$dbname."</b></p>";
 
-        //Let's check the tables
+        //Let's check the tables and return errors
         $TableErrors = array();
+	    $TableErrors = $bkitems-> checktables($SelectedTables);
+        /* Move to class
+
 	    foreach ($SelectedTables as $dbname => $selectedtablesarray) {
 	   	    mysql_select_db($dbname);
     	    foreach ($selectedtablesarray as $selectedtablename) {
@@ -181,6 +194,7 @@ function sitetools_adminapi_backupdb ($args)
 		   }
 	   }
 
+
 	   if (isset($TableErrorTables) && is_array($TableErrorTables)) {
 	        for ($t = 0; $t < count($TableErrorTables); $t++) {
 	        	mysql_select_db($TableErrorDB["$t"]);
@@ -190,13 +204,17 @@ function sitetools_adminapi_backupdb ($args)
 		        }
 	        }
 	    }
-
+	   */
     	if (count($TableErrors) > 0) {
-            $runningstatus[]['message']='<b>TABLE ERRORS!</b><ul><li>'.implode('</li><li>', $TableErrors).'</li></ul>';
+            $tableerrormsg=xarML('TABLE ERRORS!');
+            $runningstatus[]['message']='<strong>'.$tableerrormsg.'</strong><ul><li>'.implode('</li><li>', $TableErrors).'</li></ul>';
 	    }
 
         //Put this here for now - format output later
         $overallrows = 0;
+	    $overallrows = $bkitems-> bkcountoverallrows($SelectedTables);        
+        //Count up the overall number of rows in the selected table list
+        /* Move to classes
         foreach ($SelectedTables as $dbname => $value) {
             mysql_select_db($dbname);
 		    $tablecounter = 1;
@@ -212,11 +230,34 @@ function sitetools_adminapi_backupdb ($args)
 			    $overallrows += $rows["$t"];
 		    }
 	    }
+        */
+        //Let's do the actual backup now
 
     	$starttime = getmicrotime();
 	    $alltablesstructure = '';
     	$runningstatus[]['message']=xarML('Creating table structures for ').'<b>'.$dbname.'</b>'.xarML(' database tables').'<br /><br />';
-   	    foreach ($SelectedTables as $dbname => $value) {
+   	    //Switch to backup class
+   	    //Pass $SelectedTables
+   	    //Pass all our vars in an array
+   	    $bkvars = array('SelectedTables' => $SelectedTables,
+   	                    'GZ_enabled' => $GZ_enabled,
+   	                    'number_of_cols' => $number_of_cols,
+   	                    'overallrows'    => $overallrows,
+   	                    'thedbprefix'    => $thedbprefix,
+   	                    'alltablesstructure' => $alltablesstructure,
+   	                    'fp' =>$fp,
+   	                    'zp' =>$zp,
+   	                    'startbackup' => $startbackup,
+   	                    'backtickchar' => $backtickchar,
+   	                    'quotechar' => $quotechar,
+   	                    'buffer_size' =>$buffer_size,
+                        'runningstatus' =>$runningstatus,
+                        'starttime' => $starttime,
+                        'screen'    => $screen);
+
+	    $runningstatus = $bkitems-> backup($bkvars);
+   	    /*
+        foreach ($SelectedTables as $dbname => $value) {
 	        mysql_select_db($dbname);
     	    for ($t = 0; $t < count($SelectedTables["$dbname"]); $t++) {
 	    	    $fieldnames     = array();
@@ -364,8 +405,8 @@ function sitetools_adminapi_backupdb ($args)
     	} else {
 	        fclose($fp);
 	    }
-
-
+end the backup that is moved to class
+*/
 	    if ($startbackup == 'structure') {
 	        if (file_exists($backupabsolutepath.$strubackupfilename)) {
 		        unlink($backupabsolutepath.$strubackupfilename); // Windows won't allow overwriting via rename
@@ -400,7 +441,6 @@ function sitetools_adminapi_backupdb ($args)
     $items['runningstatus']=$runningstatus;
     $items['backuptype']=$backuptype;
     $items['btype']=$btype;
-
 
    //Return data for display
    return $items;

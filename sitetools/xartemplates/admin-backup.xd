@@ -204,7 +204,7 @@
             </a>
 
 <xar:elseif condition="$startbackup" />
-    <xar:if condition="$screen eq 1">
+   <xar:if condition="$screen eq 1">
         <xar:loop name="$runningstatus">
             #$loop:item['message']#
              <br />
