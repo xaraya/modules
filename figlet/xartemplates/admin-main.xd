@@ -15,7 +15,7 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>The Figlet module uses a class written by <a href="http://www.thebobo.com/?page=php,figlet#do">Lucas Baltes</a> to transform text to Ascii art.  This module includes a special text transform called transformfig which will take any call to it and transform the text to Ascii art of your choosing.  It also offers a user page to allow any text to be transformed.  Good for use with signatures, etc.</xar:mlstring>
-		</div>
+        </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>How to use it?</xar:mlstring>
@@ -31,7 +31,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>The Mail Module has no blocks included at this time.</xar:mlstring>
+            <xar:mlstring>The Mail Module has no blocks included at this time.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
