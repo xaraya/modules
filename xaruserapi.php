@@ -553,40 +553,41 @@ function bbcode_br2nl($str)
 {
     return preg_replace("=<br( />|([\s/][^>]*)>)\r?\n?=i", "\n", $str);
 }
-   /**
-   * replacement for php's nl2br tag that produces more designer friendly html
-   *
-   * Modified from: http://www.php-editors.com/contest/1/51-read.html
-   *
-   * @param string $text
-   * @param string $cssClass
-   * @return string
-   */
-   function nl2p($text, $cssClass=''){
+/**
+* replacement for php's nl2br tag that produces more designer friendly html
+*
+* Modified from: http://www.php-editors.com/contest/1/51-read.html
+*
+* @param string $text
+* @param string $cssClass
+* @return string
+*/
+function nl2p($text, $cssClass='')
+{
 
-     // Return if there are no line breaks.
-     if (!strstr($text, "\n")) {
-         return $text;
-     }
-
-     // Add Optional css class
-     if (!empty($cssClass)) {
-         $cssClass = ' class="' . $cssClass . '" ';
-     }
-
-     // put all text into <p> tags
-     $text = '<p' . $cssClass . '>' . $text . '</p>';
-
-     // replace all newline characters with paragraph
-     // ending and starting tags
-     $text = str_replace("\n", "</p>\n<p" . $cssClass . '>', $text);
-
-     // remove empty paragraph tags & any cariage return characters
-     $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "\r"), '', $text);
-
+ // Return if there are no line breaks.
+ if (!strstr($text, "\n")) {
      return $text;
+ }
 
-   } // end nl2p
+ // Add Optional css class
+ if (!empty($cssClass)) {
+     $cssClass = ' class="' . $cssClass . '" ';
+ }
+
+ // put all text into <p> tags
+ $text = '<p' . $cssClass . '>' . $text . '</p>';
+
+ // replace all newline characters with paragraph
+ // ending and starting tags
+ $text = str_replace("\n", "</p>\n<p" . $cssClass . '>', $text);
+
+ // remove empty paragraph tags & any cariage return characters
+ $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "\r"), '', $text);
+
+ return $text;
+
+} // end nl2p
 
   /**
    * expanding on the nl2p tag above to convert user contributed
@@ -596,27 +597,28 @@ function bbcode_br2nl($str)
    * @param string $cssClass
    * @return string
    */
-   function br2p($text, $cssClass=''){
+function br2p($text, $cssClass='')
+{
 
-     if (!eregi('<br', $text)) {
-         return $text;
-     }
-
-     if (!empty($cssClass)) {
-         $cssClass = ' class="' . $cssClass . '" ';
-     }
-
-     // put all text into <p> tags
-     $text = '<p' . $cssClass . '>' . $text . '</p>';
-
-     // replace all break tags with paragraph
-     // ending and starting tags
-     $text = str_replace(array('<br>', '<br />', '<BR>', '<BR />'), "</p>\n<p" . $cssClass . '>', $text);
-
-     // remove empty paragraph tags
-     $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "<p>\n</p>"), '', $text);
-
+    if (!eregi('<br', $text)) {
      return $text;
+    }
+
+    if (!empty($cssClass)) {
+     $cssClass = ' class="' . $cssClass . '" ';
+    }
+
+    // put all text into <p> tags
+    $text = '<p' . $cssClass . '>' . $text . '</p>';
+
+    // replace all break tags with paragraph
+    // ending and starting tags
+    $text = str_replace(array('<br>', '<br />', '<BR>', '<BR />'), "</p>\n<p" . $cssClass . '>', $text);
+
+    // remove empty paragraph tags
+    $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "<p>\n</p>"), '', $text);
+
+    return $text;
 }
 
 ?>
