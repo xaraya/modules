@@ -93,6 +93,7 @@ function navigator_newsletter_subblock_display($blockinfo)
 
     // Initialize variables
     $title = '';
+    $logo = '';
     $description = '';
     $subscribe_link = '';
     $subscribe_text = '';
@@ -105,6 +106,7 @@ function navigator_newsletter_subblock_display($blockinfo)
         // Check if a publication has been assigned to the program area
         if (in_array($primary_cid, $publication['altcids'])) {
             // Get the publication subscription information
+            $logo = $publication['logo'];
             $description = $publication['description'];
 
             // Create title
@@ -162,6 +164,7 @@ function navigator_newsletter_subblock_display($blockinfo)
     if ($found) {
         // Set title and subscription text
         $data['title'] = $title;
+        $data['logo'] = $logo;
         $data['description'] = $description;
         $data['subscribe_link'] = $subscribe_link;
         $data['subscribe_text'] = $subscribe_text;
