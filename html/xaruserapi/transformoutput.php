@@ -114,6 +114,7 @@ function _clean_paragraphs($text)
 
     $value = $text;
 
+// FIXME: this removes any line breaks in the original text !
     $value = preg_replace("/[\n\r]/", ' ', $value);
 
     // Change double p/br to double newline
