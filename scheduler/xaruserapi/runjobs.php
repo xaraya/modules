@@ -29,6 +29,14 @@ function scheduler_userapi_runjobs($args = array())
             $interval = $matches[2];
             $skip = 0;
             switch ($interval) {
+                case 't':    // Schedular trigger/tick
+                    if ($count <> 1) {
+                        // zero count is never - effectively disables a job without removing it
+                        // TODO: for count > 1, a countdown of scheduler clock ticks
+                        // i.e. every Nth time the scheduler is triggered.
+                        $skip = 1;
+                    }
+                    break;
                 case 'n':    // Minutes
                     if ($now - $lastrun < $count * 60) {
                         $skip = 1;

@@ -18,7 +18,16 @@
     <tr>
       <td>
         <select name="jobs[#$id#][module]">
-          <option value=""></option>
+          <xar:if condition="$jobs[$id]['module'] eq ''">
+            <option value=""></option>
+          <xar:else />
+            <option value="">
+              [<xar:ml>
+                <xar:mlstring>Remove #(1)</xar:mlstring>
+                <xar:mlvar>#$jobs[$id]['module']#</xar:mlvar>
+              </xar:ml>]
+            </option>
+          </xar:if>
           <xar:foreach in="$modules" key="$name" value="$display">
             <xar:if condition="!empty($job['module']) and $job['module'] eq $name">
               <option value="#$name#" selected="selected">#$display#</option>
@@ -30,6 +39,7 @@
       </td>
       <td>
         <select name="jobs[#$id#][type]">
+          <xar:comment>TODO: is there a reason for this blank entry?</xar:comment>
           <option value=""></option>
           <xar:foreach in="$types" key="$name" value="$display">
             <xar:if condition="!empty($job['type']) and $job['type'] eq $name">
@@ -45,7 +55,6 @@
       </td>
       <td>
         <select name="jobs[#$id#][interval]">
-          <option value=""></option>
           <xar:foreach in="$intervals" key="$name" value="$display">
             <xar:if condition="!empty($job['interval']) and $job['interval'] eq $name">
               <option value="#$name#" selected="selected">#$display#</option>
