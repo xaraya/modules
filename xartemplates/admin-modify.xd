@@ -1,3 +1,4 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript">
 <!--
@@ -7,34 +8,56 @@
     var fieldDescription = Array("Name");
 //-->
 </script>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>BBCode Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify BBCode</xar:mlstring></h2>
-    <div style="margin: auto;">
-    <form action="#xarModURL('bbcode', 'admin', 'modify')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
-        
-        <div style="clear: both; padding-top: 10px;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <input type="hidden" name="id" id="id" value="#$id#" />
-        <input type="hidden" name="phase" id="phase" value="update" />
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('The long name for the bbcode.')#"><label for="keyword"><xar:mlstring>Name</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="name" id="name" value="#$name#" size="32" maxlength="255" />
-        </span>
-        </div>
-
-        <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('The tag for the bbcode.')#"><label for="keyword"><xar:mlstring>Tag</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="code" id="code" value="#$tag#" size="32" maxlength="255" />
-        </span>
-        </div>
-
-        <br /><br />
-        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$submitlabel#" /></span>
+<xar:if condition="xarTplAddStyleLink('bbcode', 'forms')"></xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            BBCode Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify BBCode
+        </xar:mlstring>
+    </h2>
+    <form class="xar-formwidget" action="#xarModURL('bbcode', 'admin', 'modify')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="phase" id="phase" value="update" />
+            <input type="hidden" name="id" id="id" value="#$id#" />
+            <p class="param">
+                <label for="name" class="required">
+                    <span class="help" title="#xarML('The long name for the bbcode.')#">
+                        <xar:mlstring>
+                            Name
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="name" id="name" value="#$name#" size="32" maxlength="255" />
+            </p>
+            <p class="param">
+                <label for="code" class="required">
+                    <span class="help" title="#xarML('The tag for the bbcode.')#">
+                        <xar:mlstring>
+                            Tag
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="code" id="code" value="#$tag#" size="32" maxlength="255" />
+            </p>
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
     </form>
-    </div>
 </div>
