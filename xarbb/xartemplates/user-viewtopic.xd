@@ -1,4 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
 <table border="0" width="98%">
@@ -89,7 +89,7 @@
 			</h4>
 		</th>
 	</tr>
-	<!--- Display the Topic Post itself - unless it is not the first pager page --->
+	<xar:comment> Display the Topic Post itself - unless it is not the first pager page </xar:comment>
 	<xar:if condition="$startnum eq 1">
 	<tr> 
 		<td width="150" align="left" valign="top" style="border-right: 1px solid #000; border-left: 1px solid #000;">
@@ -253,8 +253,8 @@
 	</tr>
 	</xar:if>
 
-    <!--- start the post replies and 
-          add alternating row colors --->
+    <xar:comment> start the post replies and 
+          add alternating row colors </xar:comment>
     <xar:foreach in="$items" value="$item" key="$key">
         <xar:if condition="(($key+1) % 2)">
             <xar:set name="myclass">'xar-alt'</xar:set>
@@ -265,7 +265,7 @@
 		<td width="150" align="left" valign="top" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000;">
 			<span>
 				<b>
-					<!--- Reply post could be anonymous - need to check --->
+					<xar:comment> Reply post could be anonymous - need to check </xar:comment>
 					<xar:if condition="$item['xar_postanon'] eq 0">
 						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">#$item['xar_author']#</a>
 					<xar:else />
@@ -528,8 +528,8 @@
 <br /><br />
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
     <xar:foreach in="$hooks" key="$hookmodule">
-    <!--- xarbb already deals with comments directly via API, using itemtype 0 (for now ?) --->
-    <!--- and polls are already inserted at the top for a nicer display --->
+    <xar:comment> xarbb already deals with comments directly via API, using itemtype 0 (for now ?) </xar:comment>
+    <xar:comment> and polls are already inserted at the top for a nicer display </xar:comment>
         <xar:if condition="$hookmodule ne 'comments' and $hookmodule ne 'polls'">
             #$hooks[$hookmodule]#
         </xar:if>

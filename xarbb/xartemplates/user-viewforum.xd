@@ -1,4 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 
 <xar:if condition="$showcats">
 	<table border="0" cellpadding="3" width="98%">
@@ -135,8 +135,8 @@
 		</td>
 		<td class="xar-norm" align="center" valign="middle" >
 			<span>
-				<!---#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['tftime'])#<br />
-				<strong>By: </strong> --->
+				<xar:comment>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['tftime'])#<br />
+				<strong>By: </strong> </xar:comment>
                 <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
 			</span>
 
