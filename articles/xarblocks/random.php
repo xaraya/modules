@@ -111,6 +111,7 @@ function articles_randomblock_display($blockinfo)
             'fields' => $fields	)
     );
     $nbarticles = count($articles);
+    if (empty($vars['numitems'])) $vars['numitems'] = $nbarticles;
     if (!isset($articles) || !is_array($articles) || $nbarticles == 0) {
             return;
     } else {
