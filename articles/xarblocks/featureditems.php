@@ -61,6 +61,9 @@ function articles_featureditemsblock_display($blockinfo)
     if (empty($vars['toptype'])) {
         $vars['toptype'] = 'hits';
     }
+    if (empty($vars['linkpubtype'])) {
+        $vars['linkpubtype'] = 0;
+    }
     if (!isset($vars['showvalue'])) {
         if ($vars['toptype'] == 'hits') {
             $vars['showvalue'] = 1;
@@ -117,7 +120,10 @@ function articles_featureditemsblock_display($blockinfo)
 
         $featuredlink = xarModURL(
             'articles', 'user', 'display',
-            array('aid' => $featuredart['aid'], 'itemtype' => $featuredart['pubtypeid'])
+            array(
+                'aid' => $featuredart['aid'],
+                'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtypeid'] : NULL)
+            )
         );
 
         if ($vars['showfeaturedsum'] == 1) {
@@ -160,7 +166,10 @@ function articles_featureditemsblock_display($blockinfo)
             if ($article['aid'] != $curaid) {
                 $link = xarModURL(
                     'articles', 'user', 'display',
-                    array('aid' => $article['aid'], 'itemtype' => $article['pubtypeid'])
+                    array(
+                        'aid' => $article['aid'],
+                        'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL)
+                    )
                 );
             } else {
                 $link = '';
@@ -263,6 +272,10 @@ function articles_featureditemsblock_modify($blockinfo)
         $vars['showsummary'] = 0;
     }
 
+    if (empty($vars['linkpubtype'])) {
+        $vars['linkpubtype'] = 0;
+    }
+
 //    if (empty($vars['showdynamic'])) {
 //        $vars['showdynamic'] = 0;
 //    }
@@ -330,30 +343,35 @@ function articles_featureditemsblock_modify($blockinfo)
 function articles_featureditemsblock_update($blockinfo)
 {
     //MikeC: Make sure we retrieve the new pubtype from the configuration form.
-    list($vars['pubtypeid'],
-         $vars['catfilter'],
-         $vars['status'],
-         $vars['itemlimit'],
-         $vars['toptype'],
-         $vars['featuredaid'],
-         $vars['alttitle'],
-         $vars['showfeaturedsum'],
-         $vars['moreitems'],
-         $vars['showsummary'],
-         //$vars['showdynamic'],
-         $vars['showvalue']) = xarVarCleanFromInput('pubtypeid',
-                                                    'catfilter',
-                                                    'status',
-                                                    'itemlimit',
-                                                    'toptype',
-                                                    'featuredaid',
-                                                    'alttitle',
-                                                    'showfeaturedsum',
-                                                    'moreitems',
-                                                    'showsummary',
-                                                    //'showdynamic',
-                                                    'showvalue'
-                                                   );
+    list(
+        $vars['pubtypeid'],
+        $vars['catfilter'],
+        $vars['status'],
+        $vars['itemlimit'],
+        $vars['toptype'],
+        $vars['featuredaid'],
+        $vars['alttitle'],
+        $vars['showfeaturedsum'],
+        $vars['moreitems'],
+        $vars['showsummary'],
+        //$vars['showdynamic'],
+        $vars['showvalue'],
+        $vars['linkpubtype']
+    ) = xarVarCleanFromInput(
+        'pubtypeid',
+        'catfilter',
+        'status',
+        'itemlimit',
+        'toptype',
+        'featuredaid',
+        'alttitle',
+        'showfeaturedsum',
+        'moreitems',
+        'showsummary',
+        //'showdynamic',
+        'showvalue',
+        'linkpubtype'
+    );
 
     if (empty($vars['showfeaturedsum'])) {
         $vars['showfeaturedsum'] = 0;
@@ -363,6 +381,9 @@ function articles_featureditemsblock_update($blockinfo)
     }
     if (empty($vars['showsummary'])) {
         $vars['showsummary'] = 0;
+    }
+    if (empty($vars['linkpubtype'])) {
+        $vars['linkpubtype'] = 0;
     }
 //    if (empty($vars['showdynamic'])) {
 //        $vars['showdynamic'] = 0;
