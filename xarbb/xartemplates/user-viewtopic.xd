@@ -53,11 +53,33 @@
         </a>
     </span>
 <xar:comment>
+  Approach 1 : via redirect in viewtopic
     FIXME: insert link to previous/next topic here with the right CSS stuff ?
     <span class="xar-sub">
     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#"><xar:mlstring>Previous Topic</xar:mlstring></a>
     |
     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#"><xar:mlstring>Next Topic</xar:mlstring></a>
+    </span>
+</xar:comment>
+<xar:comment>
+  Approach 2 : show previous/next topic directly in viewtopic instead of redirecting (unsupported)
+</xar:comment>
+<xar:comment>
+  Approach 3 : retrieve the previous/next topic id here
+    <span class="xar-sub">
+    <xar:set name="previd">#xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' => $fid, 'ttime' => $ttime))#</xar:set>
+    <xar:if condition="!empty($previd)">
+        <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $previd))#"><xar:mlstring>Previous Topic</xar:mlstring></a>
+    <xar:else/>
+        <xar:mlstring>Previous Topic</xar:mlstring>
+    </xar:if>
+    |
+    <xar:set name="nextid">#xarModAPIFunc('xarbb','user','getnexttopicid',array('fid' => $fid, 'ttime' => $ttime))#</xar:set>
+    <xar:if condition="!empty($nextid)">
+        <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $nextid))#"><xar:mlstring>Next Topic</xar:mlstring></a>
+    <xar:else/>
+        <xar:mlstring>Next Topic</xar:mlstring>
+    </xar:if>
     </span>
 </xar:comment>
 </div>
@@ -457,11 +479,33 @@
         </a>
     </span>
 <xar:comment>
+  Approach 1 : via redirect in viewtopic
     FIXME: insert link to previous/next topic here with the right CSS stuff ?
     <span class="xar-sub">
     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'prev'))#"><xar:mlstring>Previous Topic</xar:mlstring></a>
     |
     <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid, 'view' => 'next'))#"><xar:mlstring>Next Topic</xar:mlstring></a>
+    </span>
+</xar:comment>
+<xar:comment>
+  Approach 2 : show previous/next topic directly in viewtopic instead of redirecting (unsupported)
+</xar:comment>
+<xar:comment>
+  Approach 3 : retrieve the previous/next topic id here
+    <span class="xar-sub">
+    <xar:set name="previd">#xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' => $fid, 'ttime' => $ttime))#</xar:set>
+    <xar:if condition="!empty($previd)">
+        <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $previd))#"><xar:mlstring>Previous Topic</xar:mlstring></a>
+    <xar:else/>
+        <xar:mlstring>Previous Topic</xar:mlstring>
+    </xar:if>
+    |
+    <xar:set name="nextid">#xarModAPIFunc('xarbb','user','getnexttopicid',array('fid' => $fid, 'ttime' => $ttime))#</xar:set>
+    <xar:if condition="!empty($nextid)">
+        <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $nextid))#"><xar:mlstring>Next Topic</xar:mlstring></a>
+    <xar:else/>
+        <xar:mlstring>Next Topic</xar:mlstring>
+    </xar:if>
     </span>
 </xar:comment>
     <xar:if condition="!empty($pager)">
