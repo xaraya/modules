@@ -1,4 +1,7 @@
-<xar:mlstring>Set Comment Viewing Defaults</xar:mlstring>:
 <p>
-	<a href="#$usermenu_form_url#"><img src="#$icon#" border="0" alt=""></a>
+    <a href="#xarModURL('comments', 'user', 'usermenu', array('phase' => 'form'))#">
+        <xar:mlstring>
+            Set Comment Viewing Defaults
+        </xar:mlstring>
+    </a>
 </p>
