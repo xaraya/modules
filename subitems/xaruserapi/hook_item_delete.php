@@ -7,19 +7,19 @@ function subitems_userapi_hook_item_delete($args)
     // extrainfo -> module,itemtype,itemid
 
     // a object should be linked to this hook
-    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return;
+    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return $extrainfo;
     $objectid = $ddobjectlink['objectid'];
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object =& xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $objectid,
                          			'status' => 1));
-    if (!isset($object)) return;
+    if (!isset($object)) return $extrainfo;
 
     // get existing subitems
     $ids = xarModAPIFunc('subitems','user','dditems_getids',array('objectid' => $objectid,'itemid' => $extrainfo['itemid']));
     if(!isset($ids))
-    	return;
+    	return $extrainfo;
 
     // when itemids == array() => it will return all ids, but we don't want this
     if(count($ids) > 0)	{
@@ -40,13 +40,13 @@ function subitems_userapi_hook_item_delete($args)
         				'modid' => $object->moduleid,
                          'itemtype' => $object->itemtype,
                          'itemid' => $ddid
-                         ))) return;
+                         ))) return $extrainfo;
 
         // detach ids -> write db
         if(!xarModAPIFunc('subitems','admin','dditem_detach',array(
             'ddid' => $ddid,
             'objectid' => $objectid
-            ))) return;
+            ))) return $extrainfo;
     }
 
  /* print "<pre>";
@@ -55,7 +55,7 @@ function subitems_userapi_hook_item_delete($args)
     print_r($ids);
     die("");   */
 
-	return true;
+	return $extrainfo;
 }
 
 ?>
