@@ -1,9 +1,9 @@
 <?php
 /**
    File: $Id$
-  
+
    Helpdesk for Xaraya
-  
+
    @package Helpdesk
    @copyright (C) 2003 Brian McGilligan.
    @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -26,6 +26,7 @@
 $modversion['id'] = '910';
 $modversion['name'] = 'helpdesk';
 $modversion['version'] = '0.5.6';
+$modversion['displayname']    = xarML('HelpDesk');
 $modversion['description'] = 'HelpDesk Module';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
