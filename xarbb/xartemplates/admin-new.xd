@@ -17,7 +17,7 @@
 		<br /><br /> 
 	</xar:if>
 
-	<form method="post" action="#xarModURL('xarbb', 'admin', 'new', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" />
+	<form method="post" name="post" id="post" action="#xarModURL('xarbb', 'admin', 'new', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" />
 
 	<div style="clear: both; padding-top: 10px;">
 	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
