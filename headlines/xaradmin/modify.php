@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * modify an item
  * @param 'hid' the id of the headline to be modified

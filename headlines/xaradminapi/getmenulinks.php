@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * utility function pass individual menu items to the main menu

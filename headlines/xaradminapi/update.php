@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * update an headline
  * @param $args['hid'] the ID of the link

@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * get a specific headline

@@ -1,4 +1,4 @@
-<?
+<?php
 function headlines_admin_new()
 {
     

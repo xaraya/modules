@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * create a new headline
  * @param $args['url'] url of the item

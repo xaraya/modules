@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * count the number of links in the database

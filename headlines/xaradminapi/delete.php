@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * delete an headlines
  * @param $args['hid'] ID of the headline
