@@ -1,9 +1,16 @@
+<xar:comment>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
         <xar:mlstring>HelpDesk - View Tickets</xar:mlstring>
     </span>
 </div>
 <br />
+</xar:comment>
+<xar:if condition="!empty($catid)">
+    <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="$catid" showcatcount="0" showempty="0" />
+</xar:if>
+
+
 <div class="xar-mod-body">
 #$menu#   
 <div class="contentBorder"> 

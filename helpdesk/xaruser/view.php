@@ -20,6 +20,7 @@ function helpdesk_user_view($args)
     xarVarFetch('order',        'str:1:',  $order,      'ASC',  XARVAR_NOT_REQUIRED);
     xarVarFetch('startnum',     'str:1:',  $startnum,    1,     XARVAR_NOT_REQUIRED);
     xarVarFetch('statusfilter', 'str:1:',  $statusfilter,null,  XARVAR_NOT_REQUIRED);
+    if(!xarVarFetch('catid',    'str',     $catid,       null,  XARVAR_NOT_REQUIRED)) {return;}
     
     // if user doesn't have edit access only allow user to view his tickets
     $EditAccess = xarSecurityCheck('edithelpdesk', 0);
@@ -47,12 +48,22 @@ function helpdesk_user_view($args)
     $data['showdateenteredinsummary']   = xarModGetVar('helpdesk', 'ShowDateEnteredInSummary');
     $data['showstatusinsummary']        = xarModGetVar('helpdesk', 'ShowStatusInSummary');
     $data['showpriorityinsummary']      = xarModGetVar('helpdesk', 'ShowPriorityInSummary');    
+    if(empty($catid))
+    {
+        $cat  = xarModAPIFunc('categories', 'user', 'getcatbase', 
+                               array('modid'    => 910,
+                                     'itemtype' => '1',
+                                     'bid' => 1));
+        $catid = $cat['cid'];
+    }
+
 
     // Lets get the ticket now for the view
     $data['mytickets_data']  = xarModAPIFunc('helpdesk', 
                                              'user', 
                                              'gettickets', 
                                              array('userid'    => $data['userid'],
+                                                   'catid'     => $catid,
                                                    'selection' => $selection,
                                                    'sortorder' => $sortorder,
                                                    'order'     => $order,
@@ -78,7 +89,7 @@ function helpdesk_user_view($args)
     $data['statusfilter'] = $statusfilter;
     $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
                                     array('itemtype' => 3));    
-    
+    $data['catid'] = $catid;
     return xarTplModule('helpdesk', 'user', 'view', $data);
 }
 ?>

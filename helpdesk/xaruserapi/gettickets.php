@@ -20,9 +20,18 @@ function helpdesk_userapi_gettickets($args)
     xarSessionSetVar('ResultTitle', '');
     
     xarVarFetch('override',  'str:1:', $override,  null,  XARVAR_NOT_REQUIRED);
+
+    //Joins on Catids
+    if(!empty($catid))
+    {
+        $catlj = xarModAPIFunc('categories', 'user', 'leftjoin', 
+                               array('modid'    => 910,
+                                     'itemtype' => 1,
+                                     'cids'     => array($catid)));
+    }
     
     // Get items Ticket Number/Date/Subject/Status/Last Update
-    $sql = "SELECT  $helpdeskcolumn[ticket_id],
+    $sql = "SELECT DISTINCT  $helpdeskcolumn[ticket_id],
 		    $helpdeskcolumn[ticket_date],
 		    $helpdeskcolumn[ticket_subject],
 		    $helpdeskcolumn[ticket_statusid],
@@ -31,9 +40,22 @@ function helpdesk_userapi_gettickets($args)
 		    $helpdeskcolumn[ticket_assignedto],
 		    $helpdeskcolumn[ticket_openedby],
 		    $helpdeskcolumn[ticket_closedby]
-	    FROM    $helpdesktable
-	    WHERE   $helpdeskcolumn[ticket_id] = $helpdeskcolumn[ticket_id]";
-
+	    FROM    $helpdesktable ";
+	
+    if(!empty($catlj))
+    {
+        $sql .= ", " . $catlj['table'];
+        if(!empty($catlj['more']))
+        {
+            $sql .= " " . $catlj['more'];
+        }
+        $sql .= " WHERE " . $catlj['where'];
+    }
+    else
+    {
+        $sql .= "WHERE $helpdeskcolumn[ticket_id] = $helpdeskcolumn[ticket_id]";
+    }
+    
     switch($selection) {
         case 'UNASSIGNED':            
             xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
@@ -96,7 +118,7 @@ function helpdesk_userapi_gettickets($args)
     
     if(!empty($userid) && !xarSecurityCheck('edithelpdesk', 0))
     {
-	$sql .= " AND  $helpdeskcolumn[ticket_openedby] = $userid ";
+        $sql .= " AND  $helpdeskcolumn[ticket_openedby] = $userid ";
     }
     
     switch($sortorder) {
