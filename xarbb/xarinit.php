@@ -384,8 +384,8 @@ function xarbb_upgrade($oldversion)
             //And make sure all forums have a catlink entry for each existing forum
             //in prior versions hooks were not consistently called and mixed itemtypes added
             //TODO
-            $cleanupxarbb=xarbb_cleanitemtypes();
-                if (!$cleanupxarbb)  return;
+            //$cleanupxarbb=xarbb_cleanitemtypes();
+             //   if (!$cleanupxarbb)  return;
             break;
         default:
             break;
@@ -581,47 +581,12 @@ function xarbb_convertdates()
 return true;
 }
 
+//TODO
 function xarbb_cleanupxarbb()
 {   //We have to assume here everyone has been working with itemtype = 1 for forums
     //As has been setin upgrade in 0.9 above
 	//Let's first get all the forums
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $linkagetable = $xartable['categories_linkage'];
 
-            // update item type in categories - you need to upgrade categories first :-)
-            $modid = xarModGetIDFromName('xarbb');
-            $update =  "UPDATE $linkagetable SET xar_itemtype = 1 WHERE xar_modid = $modid";
-            $result =& $dbconn->Execute($update);
-            if (!$result) return;
-
-
-    //Remove all xarbb entries from category linkage table
-
-    //Add in an entry for every existing forum
-    $forums = xarModAPIFunc('xarbb','user','getallforums');
-    foreach($forums as $forum) {
-        $topics= xarModAPIFunc('xarbb','user','getalltopics',
-                                  array('fid'=>$forum['fid']));
-
-        //Now update each topic to the categories linkage table
-        foreach($topics as $topic) {
-           $update =  "INSERT INTO $categories_linkage (
-                          xar_cid,
-                          xar_iid,
-                          xar_modid,
-                          xar_itemtype )
-                       VALUES (
-                          '" . $topic['catid'] . "',
-                          '" . $topic['tid'] . "',
-                          '$modid',
-                          '2')";
-
-           $result =& $dbconn->Execute($update);
-           if (!$result) return;
-       }
-    }
-    $result->Close();
     return true;
 }
 ?>

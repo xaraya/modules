@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * File: $Id$
  * 
  * Update a topic
@@ -91,7 +91,7 @@ function xarbb_userapi_updatetopic($args)
         // Let any hooks know that we have created a new topic
         $args['module'] = 'xarbb';
         $args['itemtype'] = $topic['fid']; // forum item type
-        $args['itemid'] = $fid;
+        $args['itemid'] = $tid;
         xarModCallHooks('item', 'update', $tid, $args);
     }
 
