@@ -10,7 +10,8 @@
  * @returns  array an array containing the left and right values or an
  *           empty array if the comment_id specified doesn't exist
  */
-function comments_userapi_get_node_lrvalues( $args ) {
+function comments_userapi_get_node_lrvalues( $args ) 
+{
 
     extract( $args );
     

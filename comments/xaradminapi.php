@@ -15,7 +15,9 @@
 
 include_once('modules/comments/xarincludes/defines.php');
 
-function comments_adminapi_updateconfig($args) {}
+function comments_adminapi_updateconfig($args) 
+{
+}
 
 /**
  * utility function pass individual menu items to the main menu
@@ -53,7 +55,8 @@ function comments_adminapi_getmenulinks()
 }
 
 /* replaced by getmodules
-function comments_adminapi_get_stats( ) {
+function comments_adminapi_get_stats( ) 
+{
 
     $modules = xarModAPIFunc('comments','admin','get_module_list');
 
@@ -85,7 +88,8 @@ function comments_adminapi_get_stats( ) {
 */
 
 /* replaced by getitems
-function comments_adminapi_get_module_stats( $args ) {
+function comments_adminapi_get_module_stats( $args ) 
+{
 
     extract($args);
 
@@ -128,7 +132,8 @@ function comments_adminapi_get_module_stats( $args ) {
 */
 
 /* replaced by getmodules
-function comments_adminapi_get_module_list( ) {
+function comments_adminapi_get_module_list( ) 
+{
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -165,7 +170,8 @@ function comments_adminapi_get_module_list( ) {
 */
 
 /* replaced by getitems
-function comments_adminapi_count_module_pages( $args ) {
+function comments_adminapi_count_module_pages( $args ) 
+{
     extract($args);
 
     if (!isset($modid) || empty($modid)) {
@@ -210,7 +216,8 @@ function comments_adminapi_count_module_pages( $args ) {
  * @param   integer     $pid    the deletion node's parent id (used to reassign the children)
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_node( $args ) {
+function comments_adminapi_delete_node( $args ) 
+{
 
     extract($args);
 
@@ -275,7 +282,8 @@ function comments_adminapi_delete_node( $args ) {
  * @param   integer     $node   the id of the node to delete
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_branch( $args ) {
+function comments_adminapi_delete_branch( $args ) 
+{
 
     extract($args);
 
@@ -333,7 +341,8 @@ function comments_adminapi_delete_branch( $args ) {
  * @param   integer     $objectid   the id of the object within the specified module that the comments are attached to
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_object_nodes( $args ) {
+function comments_adminapi_delete_object_nodes( $args ) 
+{
     extract($args);
 
     if (empty($objectid)) {
@@ -373,7 +382,8 @@ function comments_adminapi_delete_object_nodes( $args ) {
  * @param   integer     $itemtype   the item type that the comments are associated with
  * @returns bool true on success, false otherwise
  */
-function comments_adminapi_delete_module_nodes( $args ) {
+function comments_adminapi_delete_module_nodes( $args ) 
+{
     extract($args);
 
     if (!isset($modid) || empty($modid)) {
@@ -416,7 +426,8 @@ function comments_adminapi_delete_module_nodes( $args ) {
  * @param   integer objectid ObjectId to gather info on (only used with type == object)
  * @returns integer total comments
  */
-function comments_adminapi_count_comments( $args ) {
+function comments_adminapi_count_comments( $args ) 
+{
 
     extract($args);
 
@@ -515,7 +526,8 @@ function comments_adminapi_count_comments( $args ) {
  *
  * Delete the appertain comments when the module is hooked.
  */
-function comments_adminapi_remove_module( $args ) {
+function comments_adminapi_remove_module( $args ) 
+{
     extract($args);
 
     // When called via hooks, we should get the real module name from objectid

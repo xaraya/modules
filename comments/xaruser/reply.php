@@ -9,7 +9,8 @@
  * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
  */
 
-function comments_user_reply() {
+function comments_user_reply() 
+{
 
     if (!xarSecurityCheck('Comments-Post'))
         return;

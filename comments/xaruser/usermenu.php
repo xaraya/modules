@@ -1,6 +1,7 @@
 <?php
 
-function comments_user_usermenu() {
+function comments_user_usermenu() 
+{
 
     // Security Check
     if (xarSecurityCheck('Comments-Read',0)) {

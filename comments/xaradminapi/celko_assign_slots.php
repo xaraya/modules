@@ -10,7 +10,8 @@
  *  @returns array  the modified array is passed back, or zero if it is empty
  */
 
-function comments_adminapi_celko_assign_slots( $data ) {
+function comments_adminapi_celko_assign_slots( $data ) 
+{
 
     static $total = 0;
     static $depth = 0;

@@ -10,7 +10,8 @@
  * @param    integer    $gapsize       the size of the gap to remove
  * @returns  integer    number of affected rows or false [0] on error
  */
-function comments_userapi_remove_gap( $args ) {
+function comments_userapi_remove_gap( $args ) 
+{
 
     extract($args);
     

@@ -13,7 +13,8 @@
  * @param    integer    [$args['preview']]          optional: an array containing a single (preview) comment used with adding/editing comments
  * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
  */
-function comments_user_display($args) {
+function comments_user_display($args) 
+{
 
     if (!xarSecurityCheck('Comments-Read',0))
         return;

@@ -20,7 +20,8 @@
  *                   found for the particular modid/objectid pair, or raise an
  *                   exception and return false.
  */
-function comments_userapi_get_multiple($args) {
+function comments_userapi_get_multiple($args) 
+{
     extract($args);
 
     if ( !isset($modid) || empty($modid) ) {

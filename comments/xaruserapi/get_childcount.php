@@ -9,7 +9,8 @@
  * @returns integer  the number of child comments for the particular comment id,
  *                   or raise an exception and return false.
  */
-function comments_userapi_get_childcount($cid) {
+function comments_userapi_get_childcount($cid) 
+{
 
     if ( !isset($cid) || empty($cid) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',

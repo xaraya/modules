@@ -80,7 +80,8 @@ define('_COM_CUTOFF_CONNECTOR',8);
  * @returns bool true on success, false otherwise
  *
  */
-function comments_renderer_array_markdepths_bychildren(&$comments_list) {
+function comments_renderer_array_markdepths_bychildren(&$comments_list) 
+{
     
     // check to make sure we got passed an array,
     // return false if we got no array or it has no items in it
@@ -132,7 +133,8 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list) {
  * @param array   &$comments_list    an array of related (array) items - each item -must- contain a parent id field
  * @returns bool True on success, False otherwise
  */
-function comments_renderer_array_markdepths_bypid(&$comments_list) {
+function comments_renderer_array_markdepths_bypid(&$comments_list) 
+{
 
     if (empty($comments_list) || !count($comments_list)) {
         $msg = xarML('Empty comments list');
@@ -246,7 +248,8 @@ function comments_renderer_array_markdepths_bypid(&$comments_list) {
  * @param integer    $args['cutoff']        depth cutoff point
  * @returns void if no array is passed or the array has no nodes return void
  */
-function comments_renderer_array_prune_excessdepth($args) {
+function comments_renderer_array_prune_excessdepth($args) 
+{
 
     extract($args);
     if (!is_array($array_list) || !count($array_list)) {
@@ -320,7 +323,8 @@ function comments_renderer_array_prune_excessdepth($args) {
  * @returns bool true if the specified depth is set, false otherwise
  */
 
-function comments_renderer_array_depthbuoy($action, $depth, $value=true) {
+function comments_renderer_array_depthbuoy($action, $depth, $value=true) 
+{
     
     static $matrix = array();
     
@@ -351,7 +355,8 @@ function comments_renderer_array_depthbuoy($action, $depth, $value=true) {
  *                  that's contains the visual representation for that particular node
  */
 
-function comments_renderer_array_maptree(&$CommentList, $modName = NULL) {
+function comments_renderer_array_maptree(&$CommentList, $modName = NULL) 
+{
 
     // if $CommentList isn't an array or it is empty,
     // return an empty array
@@ -501,7 +506,8 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL) {
  * @returns array   an list of the images needed for displaying this particular node in the tree
  */
 
-function comments_renderer_array_image_substitution($matrix, $modName = NULL) {
+function comments_renderer_array_image_substitution($matrix, $modName = NULL) 
+{
     
     $map = array();
     
@@ -553,7 +559,8 @@ function comments_renderer_array_image_substitution($matrix, $modName = NULL) {
  * @returns integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
-function comments_renderer_array_fieldrelation_compare ($a, $b) {
+function comments_renderer_array_fieldrelation_compare ($a, $b) 
+{
 
     // get the sort value
     $sort = comments_renderer_array_sortvalue();
@@ -640,7 +647,8 @@ function comments_renderer_array_fieldrelation_compare ($a, $b) {
  * @returns  string  The current sort value
  *
  */
-function comments_renderer_array_sortvalue($value=NULL) {
+function comments_renderer_array_sortvalue($value=NULL) 
+{
     static $sort;
     
     if ($value != NULL) {
@@ -667,7 +675,8 @@ function comments_renderer_array_sortvalue($value=NULL) {
  * @returns   void    nothing
  */
 
-function  comments_renderer_array_sort( &$comment_list, $sortby, $direction) {
+function  comments_renderer_array_sort( &$comment_list, $sortby, $direction) 
+{
     
     if (!isset($comment_list) || !is_array($comment_list)) {
         $msg = xarML('Missing or invalid argument [#(1)] for #(2) function #(3) in module #(4)',
@@ -778,7 +787,8 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction) {
  * @returns   string the word-wrapped string
  */
 
-function comments_renderer_wrap_words(&$str, $chars) {
+function comments_renderer_wrap_words(&$str, $chars) 
+{
     $str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
 }
  

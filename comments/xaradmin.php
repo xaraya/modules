@@ -147,7 +147,8 @@ function comments_admin_updateconfig()
  * View Statistics about comments per module
  *
  */
-function comments_admin_stats() {
+function comments_admin_stats() 
+{
 
     // Security Check
     if(!xarSecurityCheck('Comments-Admin'))
@@ -215,7 +216,8 @@ function comments_admin_stats() {
 }
 
 
-function comments_admin_module_stats( ) {
+function comments_admin_module_stats( ) 
+{
 
     // Security Check
     if(!xarSecurityCheck('Comments-Admin'))
@@ -342,7 +344,8 @@ function comments_admin_module_stats( ) {
 }
 
 
-function comments_admin_delete( ) {
+function comments_admin_delete( ) 
+{
 
     // Security Check
     if(!xarSecurityCheck('Comments-Admin'))

@@ -8,7 +8,8 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_user_search( $args ) {
+function comments_user_search( $args ) 
+{
 
     if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}

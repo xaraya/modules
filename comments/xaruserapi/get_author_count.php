@@ -12,7 +12,8 @@
  * @returns integer  the number of comments for the particular modid/objectid pair,
  *                   or raise an exception and return false.
  */
-function comments_userapi_get_author_count($args) {
+function comments_userapi_get_author_count($args) 
+{
     extract($args);
 
     $exception = false;

@@ -27,7 +27,8 @@ include_once('modules/comments/xarincludes/defines.php');
  * @author Carl P. Corliss (aka Rabbitt)
  *
  */
-function comments_init() {
+function comments_init() 
+{
 
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();

@@ -10,7 +10,8 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_user_modify() {
+function comments_user_modify() 
+{
 
     $header                       = xarRequestGetVar('header');
     $package                      = xarRequestGetVar('package');

@@ -8,7 +8,8 @@
  * @param    integer     $comment_id     id of the comment to lookup
  * @returns  bool      returns true on success, throws an exception and returns false otherwise
  */
-function comments_userapi_deactivate( $args ) {
+function comments_userapi_deactivate( $args ) 
+{
     extract($args);
     
     if (empty($cid)) {

@@ -7,7 +7,8 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_userapi_modify($args) {
+function comments_userapi_modify($args) 
+{
 
     extract($args);
 

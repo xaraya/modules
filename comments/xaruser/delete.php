@@ -7,7 +7,8 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_user_delete() {
+function comments_user_delete() 
+{
 
     if (!xarSecurityCheck('Comments-Delete'))
         return;

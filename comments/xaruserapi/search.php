@@ -7,7 +7,8 @@
  * @access private
  * @returns mixed description of return
  */
-function comments_userapi_search($args) {
+function comments_userapi_search($args) 
+{
 
     if (empty($args) || count($args) < 1) {
         return;

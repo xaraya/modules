@@ -38,7 +38,8 @@ include_once('modules/comments/xarincludes/defines.php');
  * @access private
  * @returns mixed description of return
  *
-function comments_userapi_collapse( ) {
+function comments_userapi_collapse( ) 
+{
 
     $headers = xarRequestGetVar('headers');
     $package = xarRequestGetVar('package');
@@ -92,7 +93,8 @@ function comments_userapi_collapse( ) {
  * @access private
  * @returns mixed description of return
  *
-function comments_userapi_expand( ) {
+function comments_userapi_expand( ) 
+{
 
     $headers = xarRequestGetVar('headers');
     $package = xarRequestGetVar('package');

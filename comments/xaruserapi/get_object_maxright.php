@@ -10,7 +10,8 @@
  * @param    integer     itemtype   The itemtype of that object
  * @returns   integer   the highest 'right' value for the specified modid/objectid pair or zero if it couldn't find one
  */
-function comments_userapi_get_object_maxright( $args ) {
+function comments_userapi_get_object_maxright( $args ) 
+{
 
     extract ($args);
 

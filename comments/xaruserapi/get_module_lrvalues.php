@@ -9,7 +9,8 @@
  * @returns  array an array containing the left and right values or an
  *           empty array if the modid specified doesn't exist
  */
-function comments_userapi_get_module_lrvalues( $args ) {
+function comments_userapi_get_module_lrvalues( $args ) 
+{
 
     extract ($args);
 

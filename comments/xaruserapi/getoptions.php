@@ -11,7 +11,8 @@
  * @access public
  * @returns array list of viewing options (depth, render style, order, and sortby)
  */
-function comments_userapi_getoptions() {
+function comments_userapi_getoptions() 
+{
 
     $depth      = xarVarCleanFromInput('depth');
     $render     = xarVarCleanFromInput('render');

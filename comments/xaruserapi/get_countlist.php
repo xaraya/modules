@@ -11,7 +11,8 @@
  * @returns array     the number of comments for the particular modid/objectids pairs,
  *                    or raise an exception and return false.
  */
-function comments_userapi_get_countlist($args) {
+function comments_userapi_get_countlist($args) 
+{
     extract($args);
     // $modid, $objectids
 

@@ -10,7 +10,8 @@
  * @param    integer    $gapsize       the size of the gap to make (defaults to 2 for inserting a single node)
  * @returns  integer    number of affected rows or false [0] on error
  */
-function comments_userapi_create_gap( $args ) {
+function comments_userapi_create_gap( $args ) 
+{
     
     extract($args);
     

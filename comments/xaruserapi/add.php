@@ -18,7 +18,8 @@
  * @param    integer     $args['cid']        comment id (for API access - import only)
  * @returns  integer     the id of the new comment
  */
-function comments_userapi_add($args) {
+function comments_userapi_add($args) 
+{
     extract($args);
 
     if (!isset($modid)) {

@@ -13,7 +13,8 @@
  *                   found for the particular modules, or raise an
  *                   exception and return false.
  */
-function comments_userapi_get_multipleall($args) {
+function comments_userapi_get_multipleall($args) 
+{
     extract($args);
     // $modid
     if (!isset($modarray) || empty($modarray) || !is_array($modarray)) {

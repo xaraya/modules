@@ -9,7 +9,8 @@
  * @returns  array   an array containing the sole comment that was requested
                      or an empty array if no comment found
  */
-function comments_userapi_get_one( $args ) {
+function comments_userapi_get_one( $args ) 
+{
 
     extract($args);
 

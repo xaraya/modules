@@ -10,7 +10,8 @@
  *  @returns boolean  FALSE on error, TRUE on success
  */
 
-function comments_adminapi_celko_reconstruct() {
+function comments_adminapi_celko_reconstruct() 
+{
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -72,4 +73,3 @@ function comments_adminapi_celko_reconstruct() {
 }
 
 ?>
-

@@ -10,7 +10,8 @@
  * @param    integer     itemtype   The itemtype of that object
  * @returns  integer     the id of the node that was created so it can be used as a parent id
  */
-function comments_userapi_add_rootnode( $args ) {
+function comments_userapi_add_rootnode( $args ) 
+{
 
     extract ($args);
 

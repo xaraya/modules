@@ -4,7 +4,8 @@
  * Display comments from one or more modules and item types
  *
  */
-function comments_user_displayall($args) {
+function comments_user_displayall($args) 
+{
 
     $modarray = array();
     if (empty($args['modid'])) {
