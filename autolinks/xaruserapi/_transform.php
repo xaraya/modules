@@ -9,7 +9,7 @@
  * @returns string unparsed array of values to pass into the template
  * @return string of transformed matched text
  */
-function autolinks_userapi__transform_preg($template_name, $matched_text, $template_vars)
+function autolinks_userapi__transform_preg($template_name, $matched_text, $template_vars, $munger)
 {
     // This is the callback function for the dynamic template links.
     // This function is called for each dynamic link found, and the results
@@ -63,8 +63,8 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
         $replace = trim($replace);
     }
 
-    // Put a placeholder in the spaces so we don't match it again.
-    return $replace;
+    // Put a placeholder in the word boundaries so we don't match it again.
+    return preg_replace('/\b/', "$munger", $replace);
 }
 
 
@@ -77,10 +77,12 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
  */
 function autolinks_userapi__transform($args)
 {
-    static $alsearch = array();
-    static $alreplace = array();
+    static $alsearch;
+    static $alreplace;
     static $gotautolinks = 0;
-    static $tag_preg;
+    static $tag_preg = '';
+    static $joiner = '';
+    static $munger = '';
 
     // Extra the arguments, allowing positional parameters.
     extract($args, EXTR_PREFIX_INVALID, 'p');
@@ -109,6 +111,40 @@ function autolinks_userapi__transform($args)
     // Escape characters that are special in a character class definition.
     // These are: ] ^ -
     $punctuation = preg_replace('/([-^\]])/', '\\\$1', $punctuation);
+
+    // Get two tokens that do not appear in the original text.
+    // Try a few tokens so we can be sure it will work without inadvertantly
+    // matching valid content. Hopefully the first token will work (' #-+-# ')
+    // Use the saved version unless they happen to appear in this block of text,
+    // for which the complete replace string array needs to be rebuilt.
+    if ($joiner == '' || strpos($text, $joiner) || strpos($text, $munger)) {
+        $joiner = '';
+        $munger = '';
+        $gotautolinks = 0;
+        for ($i=0; $i<=11; $i+=2)
+        {
+            $try = '#' . str_pad('-', $i, '+', STR_PAD_BOTH) . '#';
+            if (strpos($text, $try) === false)
+            {
+                if (empty($joiner)) {
+                    $joiner = ' ' . $try . ' ';
+                } else {
+                    $munger = $try;
+                break;
+                }
+            }
+        }
+    }
+
+    if (empty($joiner) || empty($munger)) {
+        // We can't do a transform due to matches in the content.
+        return $text;
+    }
+
+    if ($gotautolinks == 0) {
+        $alsearch = array();
+        $alreplace = array();
+    }
 
     if (empty($gotautolinks)) {
         if (!isset($lid)) {
@@ -187,21 +223,21 @@ function autolinks_userapi__transform($args)
 
                 $alreplace[] = 'autolinks_userapi__transform_preg(\''
                     . $tmpautolink['template_name'] . '\', \'$1\', '
-                    . $replace . ')';
+                    . $replace . ', \'' . $munger . '\')';
             } else {
                 // Replacement string.
-                $alreplace[] = $replace;
+                // Munge the word boundaries to prevent a recursive match.
+                $alreplace[] = preg_replace('/([^a-z])([a-z])/i', '$1'.$munger.'$2', $replace);
             }
         }
     }
 
-    if ($tag_preg === NULL)
+    if ($tag_preg == '')
     {
         // List of elements we do not want to match inside.
         // The user can enter a list in any format they wish. It can also
         // include custom tags if the user wants to prevent Autolink matching
         // in any enclosed section of a document.
-        // TODO: exclude_elements is a configuration item.
 
         $exclude_elements = xarModGetVar('autolinks', 'excludeelements');
         if (empty($exclude_elements)) {$exclude_elements = 'a';}
@@ -251,29 +287,6 @@ function autolinks_userapi__transform($args)
     // to the array as there are no sub-patterns in tag_preg.
     preg_match_all($tag_preg, $text, $tag_array);
 
-    // Get a token that does not appear in the original text.
-    // Try a few tokens so we can be sure it will work without inadvertantly
-    // matching valid content. Hopefully the first token will work (' #-+-# ')
-    if (empty($joiner))
-    {
-        for ($i=0; $i<=11; $i+=2)
-        {
-            $joiner = ' #' . str_pad('-', $i, '+', STR_PAD_BOTH) . '# ';
-            if (strpos($text, $joiner) === false)
-            {
-                // No match, so we can use this as a field separater.
-                break;
-            } else {
-                $joiner = '';
-            }
-        }
-    }
-
-    if ($joiner == '') {
-        // We can't do a transform due to matches in the content.
-        return $text;
-    }
-
     $limit = xarModGetVar('autolinks', 'maxlinkcount');
     if (empty($limit))
     {
@@ -295,7 +308,8 @@ function autolinks_userapi__transform($args)
     $func_join_strings = create_function('$m,$n', 'return (!empty($m)?$m:"") . (!empty($n)?$n:"");');
     $text = implode('', array_map($func_join_strings, $content_array, $tag_array[0]));
 
-    return $text;
+    // Strip out munger characters.
+    return str_replace($munger, '', $text);
 }
 
 ?>
