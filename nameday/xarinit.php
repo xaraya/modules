@@ -72,10 +72,11 @@ function nameday_upgrade($oldversion)
         case 1.0:
             // upgrade versions
             break;
-        case 2.0:
+        case '1.3':
+        case '2.0.0':
             // upgrade versions
             break;
-        case 2.5:
+        case '2.5.0':
             // upgrade versions
             break;
     }
