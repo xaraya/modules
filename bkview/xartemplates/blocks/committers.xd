@@ -1,0 +1,16 @@
+<xar:if condition="!empty($repolist)">
+  <ul class="xar-menu-section">
+    <xar:loop name="$repolist">
+      <li><a href="&xar-modurl-bkview-user-display;&amp;repoid=#$loop:item['repoid']#">#$loop:item['reponame']#</a></li>
+      <li class="xar-menu-section">
+        <ul class="xar-menu-section">
+          <xar:foreach in="$loop:item['stats']" key="$user" value="$csets">
+            <li><a href="&xar-modurl-bkview-user-display;&amp;repoid=#$loop:item['repoid']#&amp;user=#$user#"><img src="#xarTplGetImage('ob_user.gif','bkview')#"/>#$user# (#$csets#)</a></li>
+          </xar:foreach>
+        </ul>
+      </li>
+    </xar:loop>
+  </ul>
+<xar:else/>
+  <xar:mlstring>No repositories were configured for this block</xar:mlstring>
+</xar:if>

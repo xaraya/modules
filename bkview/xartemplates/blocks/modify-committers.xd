@@ -1,0 +1,27 @@
+<xar:comment>
+  Template for the configuration of the committers block
+  Remember that we are already inside a form block, which
+  sucks, but that's the case
+</xar:comment>
+
+<xar:if condition="!empty($repositories)">
+  <div>
+    <xar:mlstring>Show information in this block for the following repositories:</xar:mlstring>
+  </div>
+  <xar:foreach in="$repositories" value="$repository">
+    <xar:if condition="array_key_exists($repository['repoid'], $selectedrepositories) && $selectedrepositories[$repository['repoid']] =='on'">
+      <input type="checkbox" name="repositories[#$repository['repoid']#]" id="repository_#$repository['repoid']#" value="on" checked="checked"/>
+    <xar:else/> 
+      <input type="checkbox" name="repositories[#$repository['repoid']#]" id="repository_#$repository['repoid']#" value="on"/>
+    </xar:if>  
+  <label for="repository_#$repository['repoid']#">#$repository['reponame']#</label>
+    <br/>
+  </xar:foreach>
+  <label for="bkview_block_nrofitems"><xar:mlstring>Show</xar:mlstring></label>
+  <input id="bkview_block_nrofitmes" type="textbox" name="nrofitems" value="#$nrofitems#" size="2"/>
+  <label for="bkview_block_nrofitems"><xar:mlstring>items for each repository</xar:mlstring></label>
+<xar:else/>
+  <div>
+    <xar:mlstring>There are no repositories registered. No information can be shown in this block</xar:mlstring>
+  </div>
+</xar:if>

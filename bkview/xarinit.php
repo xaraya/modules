@@ -55,11 +55,8 @@ function bkview_init()
     xarRegisterMask('ViewAllRepositories','All','bkview','All','All','ACCESS_READ','Being able to view information contained in a repository');
     xarRegisterMask('AdminAllRepositories','All','bkview','All','All','ACCESS_ADMIN','Being able to administer repositories');
 
-
-    // item:search:api hook registration
-    xarModRegisterHook('item','search','API','bkview','user','search');
-
-    return true;
+    // The above brings the module to it 1.0 version, to prevent duplication of code (and errors) we let the upgrade handle the rest
+    return bkview_upgrade('1.0');
 }
 
 /**
@@ -68,15 +65,25 @@ function bkview_init()
  */
 function bkview_upgrade($oldversion)
 {
-    // Upgrade dependent on old version number
+    // Upgrade dependent on old version number, hook into the right case
+    // The final version stored in the database depends on the version mentioned
+    // in the xarversion.php file
     switch($oldversion) {
-        case 1.0:
-            // Hook was added
-            xarModRegisterHook('item','search','API','bkview','user','search');
-            break;
-
+        // Compatability for pre-three-digit version numbers
+    case  1.0 :
+    case '1.0':
+        // Hook was added
+        xarModRegisterHook('item','search','API','bkview','user','search');
+    case '1.1.0':
+        // Some blocks
+        // Summary of committers info
+        if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                           array('modName'  => 'bkview',
+                                 'blockType'=> 'committers'))) return;
+    case '1.2.0':
+        // We end with the current version, but dont do anything
     }
-
+     
     // Update successful
     return true;
 }
@@ -89,15 +96,20 @@ function bkview_upgrade($oldversion)
 function bkview_delete()
 {
     // The order is important
-    // 1. make the module less function (hooks)
+    // 1. make the module less functional (hooks, blocks etc.)
     // 2. remove the data
     // 3. remove the security
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
 
-    // Unregister the hook
+    // Unregister the hooks
     if (!xarModUnregisterHook('item','search','API','bkview','user','search')) return;
+
+    // Unregister the blocks
+    if(!xarModAPIFunc('blocks','admin','unregister_block_type',
+                      array('modName' => 'bkview',
+                            'blockType' => 'committers'))) return;
 
     // Generate the SQL to drop the table using the API
     $sql = xarDBDropTable($xartable['bkview']);
