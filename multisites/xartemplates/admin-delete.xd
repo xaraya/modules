@@ -5,11 +5,11 @@
 
 <xar:if condition="$mastersite eq false">
     <table border="0" width="100%" align="center">
-	     <tr align="left" valign="middle">
-	 	    <td>
-			    <xar:mlstring>$infomsg</xar:mlstring>
-			</td>
-	     </tr>
+         <tr align="left" valign="middle">
+             <td>
+                <xar:mlstring>$infomsg</xar:mlstring>
+            </td>
+         </tr>
     </table>
 <xar:else condition="$mastersite eq true" />
 <div class="xar-mod-body" align="left">
@@ -19,67 +19,67 @@
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 
         <table border="0" width="100%" align="center">
-		    <th align="center" valign="middle" colspan="2">
-			    <xar:mlstring>Delete site</xar:mlstring>
-			</th>
-			    <tr>
-			    <td>&nbsp;</td>
-			    </tr>
+            <th align="center" valign="middle" colspan="2">
+                <xar:mlstring>Delete site</xar:mlstring>
+            </th>
+                <tr>
+                <td>&nbsp;</td>
+                </tr>
                 <tr align="left" valign="middle">
-				    <td width="40%">
+                    <td width="40%">
                         <xar:mlstring>Site ID</xar:mlstring>:
-					</td>
+                    </td>
                     <td>#$msid#
-						<input type="hidden" name="msid" value="#$msid#" />
-					</td>
+                        <input type="hidden" name="msid" value="#$msid#" />
+                    </td>
 
-				</tr>
+                </tr>
                 <tr align="left" valign="middle">
-				    <td>
+                    <td>
                         <xar:mlstring>Site Name</xar:mlstring>:
-					</td>
+                    </td>
                     <td>#$mssite#
-						<input type="hidden" name="mssite" value="#$mssite#" />
-					</td>
+                        <input type="hidden" name="mssite" value="#$mssite#" />
+                    </td>
 
-				</tr>
+                </tr>
                 <tr align="left" valign="middle">
-				    <td>
+                    <td>
                         <xar:mlstring>Site prefix</xar:mlstring>:
-					</td>
+                    </td>
                     <td align="left">#$msprefix#
-						<input type="hidden" name="msprefix" value="#$msprefix#" />
-					</td>
+                        <input type="hidden" name="msprefix" value="#$msprefix#" />
+                    </td>
 
-				</tr>
+                </tr>
                 <tr align="left" valign="middle">
-				    <td>
+                    <td>
                         <xar:mlstring>Site database</xar:mlstring>:
-					</td>
+                    </td>
                     <td align="left">#$msdb#
-						<input type="hidden" name="msdb" value="#$msdb#" />
-					</td>
+                        <input type="hidden" name="msdb" value="#$msdb#" />
+                    </td>
 
-				</tr>
-				<tr align="left" valign="middle">
-				    <td>
+                </tr>
+                <tr align="left" valign="middle">
+                    <td>
                         <xar:mlstring>Remove site database tables</xar:mlstring>?
                     </td>
                     <td>
-   			            <input type="checkbox" name="removetables" id="removetables" value="1" checked="checked" /> /Not functional TO DO
-				    </td>
-				</tr>
-				<tr align="left" valign="middle">
-				    <td>
+                           <input type="checkbox" name="removetables" id="removetables" value="1" checked="checked" /> /Not functional TO DO
+                    </td>
+                </tr>
+                <tr align="left" valign="middle">
+                    <td>
                     <xar:mlstring>Remove site data directory</xar:mlstring>?
                     </td>
                     <td>
-   			            <input type="checkbox" name="removedatadir" id="removedatadir" value="1" checked="checked" />
+                           <input type="checkbox" name="removedatadir" id="removedatadir" value="1" checked="checked" />
                         <xar:mlstring>Will remove all directories and content for the&nbsp;</xar:mlstring>#$mssite#<xar:mlstring>&nbsp;site data directory!</xar:mlstring>
-				    </td>
-				</tr>
+                    </td>
+                </tr>
 
-			    <tr align="center" valign="middle">
+                <tr align="center" valign="middle">
                    <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#"  tabindex="3" />
                    </td>
                 </tr>

@@ -4,13 +4,13 @@
 <xar:set name="$btntxt"><xar:mlstring>Create New Site</xar:mlstring></xar:set>
 <xar:if condition="$mastersite eq false">
     <table border="0" width="98%" align="center">
-	     <tr align="left" valign="middle">
-	 	    <td>
-			    <xar:mlstring>Multisites must be configured first before you can Add a site! <br /><br />
+         <tr align="left" valign="middle">
+             <td>
+                <xar:mlstring>Multisites must be configured first before you can Add a site! <br /><br />
                               Please configure the master site from the menu option Multisites - Master Config.
                               <p>The Master site can then return here to Add Sites.</p></xar:mlstring>
-			</td>
-	     </tr>
+            </td>
+         </tr>
     </table>
 <xar:else condition="$mastersite eq true" />
 <div class="xar-mod-body" align="left">
@@ -25,60 +25,60 @@
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 
         <table border="0" width="98%" align="center">
-		    <th align="center" valign="middle" colspan="3">
-			    <xar:mlstring>Site Parameters</xar:mlstring>
-			</th>
+            <th align="center" valign="middle" colspan="3">
+                <xar:mlstring>Site Parameters</xar:mlstring>
+            </th>
                 <tr align="left" valign="middle">
-				    <td ><br />
-					    <xar:mlstring>Site Domain Name:</xar:mlstring>
-					</td>
-					<td><br />
-					    <input type="text" name="siteDN" id="siteDN" size="40" maxlength="60" value="#$siteDN#" />
-					</td>
-					<td><br />
-					    <xar:mlstring>Domain or subdomain <span style="color: red">eg hosting.mydomain.com</span></xar:mlstring>
-					</td>
-					</tr>
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Site Table Prefix:</xar:mlstring>
-						</td>
-						<td>
-						<input type="text" name="msPrefix" id="msPrefix" size="15" maxlength="20" value="#$msPrefix#" />
-						</td>
-						<td><xar:mlstring>Prefix of tables for new site. <span style="color: red">You must enter a prefix here.</span></xar:mlstring>
-						</td>
-					</tr>
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Site Database:</xar:mlstring>
-						</td>
-						<td>
-						<input type="text" name="siteDB" id="siteDB" size="20" maxlength="30" value="#$siteDB#" />
-						</td>
-						<td><xar:mlstring>Defaults to the same database as the Master System site</xar:mlstring>
-						</td>
-					</tr>
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Shared tables prefix (NOT FUNCTIONAL):</xar:mlstring>
-						</td>
-						<td>
-						<input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sharedTables#" />
-						</td>
-						<td><xar:mlstring>LEAVE EMPTY unless you want to share System tables. To share, enter the System Table prefix.</xar:mlstring>
-						</td>
-					</tr>
+                    <td ><br />
+                        <xar:mlstring>Site Domain Name:</xar:mlstring>
+                    </td>
+                    <td><br />
+                        <input type="text" name="siteDN" id="siteDN" size="40" maxlength="60" value="#$siteDN#" />
+                    </td>
+                    <td><br />
+                        <xar:mlstring>Domain or subdomain <span style="color: red">eg hosting.mydomain.com</span></xar:mlstring>
+                    </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Site Table Prefix:</xar:mlstring>
+                        </td>
+                        <td>
+                        <input type="text" name="msPrefix" id="msPrefix" size="15" maxlength="20" value="#$msPrefix#" />
+                        </td>
+                        <td><xar:mlstring>Prefix of tables for new site. <span style="color: red">You must enter a prefix here.</span></xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Site Database:</xar:mlstring>
+                        </td>
+                        <td>
+                        <input type="text" name="siteDB" id="siteDB" size="20" maxlength="30" value="#$siteDB#" />
+                        </td>
+                        <td><xar:mlstring>Defaults to the same database as the Master System site</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Shared tables prefix (NOT FUNCTIONAL):</xar:mlstring>
+                        </td>
+                        <td>
+                        <input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sharedTables#" />
+                        </td>
+                        <td><xar:mlstring>LEAVE EMPTY unless you want to share System tables. To share, enter the System Table prefix.</xar:mlstring>
+                        </td>
+                    </tr>
 
 <xar:comment> TO DO: Additional options to be added later
 
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Site Status:</xar:mlstring>
-						</td>
-						<td>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Site Status:</xar:mlstring>
+                        </td>
+                        <td>
                             <select name="siteStatus" id="siteStatus" size="1">
-		                        <xar:foreach in="$siteStatus" value="$v" key="$k">
+                                <xar:foreach in="$siteStatus" value="$v" key="$k">
                                     <xar:if condition="$k eq $siteStatus">
                                         <option value="#$k#" selected="selected">#$v#</option>
                                     <xar:else />
@@ -86,21 +86,21 @@
                                     </xar:if>
                                 </xar:foreach>
                             </select>
-						</td>
-						<td><xar:mlstring>Pending is the default state.</xar:mlstring>
-						</td>
-					</tr>
+                        </td>
+                        <td><xar:mlstring>Pending is the default state.</xar:mlstring>
+                        </td>
+                    </tr>
 </xar:comment>
-	                <tr align="left" valign="middle">
-				        <td>
+                    <tr align="left" valign="middle">
+                        <td>
                             <xar:mlstring>Create Database</xar:mlstring>?
                         </td>
                         <td>
-   			                <input type="checkbox" name="createdb" id="createdb" value="1" /> /Not functional TO DO
-				        </td>
-				        <td><xar:mlstring>You must have the correct priviledges to create a DATABASE. Create it manually first if you have problems.</xar:mlstring>
-				        </td>
-				   </tr>
+                               <input type="checkbox" name="createdb" id="createdb" value="1" /> /Not functional TO DO
+                        </td>
+                        <td><xar:mlstring>You must have the correct priviledges to create a DATABASE. Create it manually first if you have problems.</xar:mlstring>
+                        </td>
+                   </tr>
                     <tr align="center" valign="middle">
                         <td colspan="3"><br /><br /><input type="submit" value="#$btntxt#"  tabindex="3" />
                     </td>

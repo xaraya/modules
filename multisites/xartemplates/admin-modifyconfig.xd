@@ -4,7 +4,7 @@
 <xar:if condition="$modifysite eq 0">
 <xar:set name="$btntxt"><xar:mlstring>Set Multisite Configuration</xar:mlstring></xar:set>
     <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-	    <p><xar:mlstring>This option will gather some server configuration data and then modify your main config.system.php file.
+        <p><xar:mlstring>This option will gather some server configuration data and then modify your main config.system.php file.
         Once this is complete, this site will become the Master site from which you can create other (sub)sites. Usually this operation is only carried out once. If there is a change in your server configuration, you may need to reconfigure this Master site using this option.<br /><br />
         Before you continue, please make sure that you</xar:mlstring>:</p>
             <ol>
@@ -22,7 +22,7 @@
 <xar:elseif condition="$modifysite eq 1" />
 <xar:set name="$btntxt"><xar:mlstring>Change Multisite Configuration</xar:mlstring></xar:set>
      <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-	    <p><xar:mlstring><span style="color: red">THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.</span><br /><br />
+        <p><xar:mlstring><span style="color: red">THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.</span><br /><br />
         You should only make changes to this configuration, if</xar:mlstring>:</p>
              <ul>
                 
@@ -63,7 +63,7 @@
 </xar:if>
     <form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
-	    
+        
     <table border="0" width="98%" align="center">
       <th align="center" valign="middle" colspan="2"> <xar:mlstring>Server Configuration</xar:mlstring> 
       </th>
@@ -96,62 +96,62 @@
       </tr>
     </table>
     <br />
-	        <table border="0" width="98%">
-		        <th align="center" valign="middle" colspan="2">
-			    <xar:mlstring>File Paths &amp; Domain Types</xar:mlstring>
-		  	    </th>
-		  	        <tr align="left" valign="middle">
-		  	            <td colspan="2"><br /><xar:mlstring>All path names are relative to the directory where Xaraya is installed.</xar:mlstring><br /><br />
-		  	            </td>
-		  	        </tr>
-<xar:comment>					<tr align="left" valign="middle">
-						<td width="30%"><br />
-							<xar:mlstring>Default Theme Path</xar:mlstring>:
-						</td>
-						<td><br />
-						<input type="text" name="themepath" id="themepath" size="20" maxlength="30" value="#xarModGetVar('multisites', 'themepath')#" />
-						</td>
-					</tr>
-					<tr align="left" valign="middle">
-						<td width="30%">
-							<xar:mlstring>Default Var Path</xar:mlstring>:
-						</td>
-						<td>
-						<input type="text" name="varpath" id="varpath" size="20" maxlength="30" value="#xarModGetVar('multisites', 'varpath')#" />
-						(/Don't want this changed!)</td>
-					</tr>
+            <table border="0" width="98%">
+                <th align="center" valign="middle" colspan="2">
+                <xar:mlstring>File Paths &amp; Domain Types</xar:mlstring>
+                  </th>
+                      <tr align="left" valign="middle">
+                          <td colspan="2"><br /><xar:mlstring>All path names are relative to the directory where Xaraya is installed.</xar:mlstring><br /><br />
+                          </td>
+                      </tr>
+<xar:comment>                    <tr align="left" valign="middle">
+                        <td width="30%"><br />
+                            <xar:mlstring>Default Theme Path</xar:mlstring>:
+                        </td>
+                        <td><br />
+                        <input type="text" name="themepath" id="themepath" size="20" maxlength="30" value="#xarModGetVar('multisites', 'themepath')#" />
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td width="30%">
+                            <xar:mlstring>Default Var Path</xar:mlstring>:
+                        </td>
+                        <td>
+                        <input type="text" name="varpath" id="varpath" size="20" maxlength="30" value="#xarModGetVar('multisites', 'varpath')#" />
+                        (/Don't want this changed!)</td>
+                    </tr>
 </xar:comment>
-					<tr align="left" valign="middle">
-						<td width="30%">
-							<xar:mlstring>Default Master Data Directory Path</xar:mlstring>:
-						</td>
-						<td>
-						<input type="text" name="masterfolder" id="masterfolder" size="30" maxlength="40" value="#xarModGetVar('multisites', 'masterfolder')#" />
-						<xar:mlstring>NOTE: Do not enter trailing slashes.</xar:mlstring>
-						</td>
-					</tr>
-			        <tr align="left" valign="middle">
-						<td colspan="2"><br />
-						</td>
-				    </tr>
+                    <tr align="left" valign="middle">
+                        <td width="30%">
+                            <xar:mlstring>Default Master Data Directory Path</xar:mlstring>:
+                        </td>
+                        <td>
+                        <input type="text" name="masterfolder" id="masterfolder" size="30" maxlength="40" value="#xarModGetVar('multisites', 'masterfolder')#" />
+                        <xar:mlstring>NOTE: Do not enter trailing slashes.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td colspan="2"><br />
+                        </td>
+                    </tr>
 
-					<tr align="left" valign="middle">
-						<td width="30%">
-							<xar:mlstring>Domain &amp; subdomain extensions</xar:mlstring>:
-						</td>
-						<td>
-						<input type="text" name="DNexts" id="DNexts" size="30" maxlength="80" value="#$DNexts#" />
-						<xar:mlstring>Separate each by a comma (,)</xar:mlstring>
-						</td>
-					</tr>
-			        <tr align="left" valign="middle">
+                    <tr align="left" valign="middle">
+                        <td width="30%">
+                            <xar:mlstring>Domain &amp; subdomain extensions</xar:mlstring>:
+                        </td>
+                        <td>
+                        <input type="text" name="DNexts" id="DNexts" size="30" maxlength="80" value="#$DNexts#" />
+                        <xar:mlstring>Separate each by a comma (,)</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
 
         <td colspan="2"> <xar:mlstring>The common extensions are .com, .net, .org.
           However, if for example you use a subdomain or domain such as www.domain.biz
           as a site, you will need to add the .biz extension to the list.</xar:mlstring><br /><br />
           If you want to use domain extensions to discriminate your sites eg mysite.com will be a different site to mysite.net,
           then make sure the text field box is totally blank.</td>
-		           <tr align="center" valign="middle">
+                   <tr align="center" valign="middle">
                       <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#"  tabindex="3" />
                       </td>
                   </tr>

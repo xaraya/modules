@@ -4,14 +4,14 @@
 <div style="margin: auto;">
 <xar:if condition="$mastersite eq false">
     <table border="0" width="100%" align="center">
-	     <tr align="left" valign="middle">
-	 	    <td>
-			    <xar:mlstring>The Master Multisite has not yet been configured!
+         <tr align="left" valign="middle">
+             <td>
+                <xar:mlstring>The Master Multisite has not yet been configured!
                               <p>Please configure the Master Site from the menu option Multisites - Master Config.</p>
                               <p>You can then add new sites through the menu option Multisites - Add Sites.</p>
                               <p>Return here to View Sites once your have added sites to view!</p></xar:mlstring>
-			</td>
-	     </tr>
+            </td>
+         </tr>
     </table>
 <xar:else condition="$mastersite eq true" />
     <xar:mlstring>Total number of sites, including Master Site:</xar:mlstring> #$siteno#
