@@ -19,14 +19,14 @@
  */
 function bkview_admin_delete($args)
 {
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
+    
     if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('confirm','bool',$confirm,false)) return;
     extract($args);
     
     $item = xarModAPIFunc('bkview',    'user','get', array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-    
-    if (!xarSecurityCheck('AdminAllRepositories')) return;
     
     // Check for confirmation.
     if (!$confirm) {

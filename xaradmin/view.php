@@ -19,11 +19,11 @@
  */
 function bkview_admin_view()
 {
-    $data['items'] = array();
-
     // Security check
     if (!xarSecurityCheck('AdminAllRepositories')) return;
     
+    $data['items'] = array();
+  
     $items = xarModAPIFunc('bkview', 'user', 'getall',array());
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     

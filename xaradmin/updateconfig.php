@@ -14,6 +14,8 @@
 
 function bkview_admin_updateconfig($args) 
 {
+    // Security check
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
     
     // Get the variables
     if(!xarVarFetch('enablesearch','str::',$enablesearch,"")) return;

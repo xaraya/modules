@@ -9,12 +9,19 @@
 
     <div class="xar-norm-outline" style="padding: 3pt; margin-bottom: 1em;">
         <h4><xar:mlstring>Search capability</xar:mlstring></h4>
-        <xar:if condition="$search_enabled == 1">
-            <input id="bkenablesearch" type="checkbox" name="enablesearch" checked="checked"/>
+        <xar:if condition="!$search_disabled">
+            <xar:if condition="$search_enabled == 1">
+                <input id="bkenablesearch" type="checkbox" name="enablesearch" checked="checked"/>
+            <xar:else/>
+                <input id="bkenablesearch" type="checkbox" name="enablesearch" />
+            </xar:if>
+            <label for="bkenablesearch"><xar:mlstring>Enable searching</xar:mlstring></label>
         <xar:else/>
-            <input id="bkenablesearch" type="checkbox" name="enablesearch" />
+            <xar:comment>Search module not there, disable the whole field</xar:comment>
+            <input id="bkenablesearch" type="checkbox" disabled="disabled"/>
+            <label for="bkenablesearch"><xar:mlstring>(Search module not available)</xar:mlstring></label>
         </xar:if>
-        <label for="bkenablesearch"><xar:mlstring>Enable searching</xar:mlstring></label>
+        
         <p>
             <xar:mlstring>
                 By hooking search into bkview we enable the search results screen provide by the search

@@ -22,14 +22,16 @@
  */
 function bkview_admin_modify($args)
 {
+    // Security check
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
+    
     if(!xarVarFetch('repoid','id',$repoid,NULL)) return;
        extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
-    // Security check
-    if (!xarSecurityCheck('AdminAllRepositories')) return;
+
     
     $item['module'] = 'bkview';
     $hooks = xarModCallHooks('item','modify',$repoid,$item);

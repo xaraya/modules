@@ -25,6 +25,8 @@ include_once("modules/bkview/xarincludes/bk.class.php");
 */
 function bkview_admin_detectrepos() 
 {
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
+    
     $data = array();
 
     // Detect the repositories installed on this server.

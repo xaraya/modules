@@ -17,6 +17,9 @@
 
 function bkview_admin_modifyconfig() 
 {
+    // Security check
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
+    
     $data = array();
 
     // Check whether the search functionality is enabled
@@ -24,7 +27,11 @@ function bkview_admin_modifyconfig()
     if(xarModIsHooked('search','bkview')) {
         $data['search_enabled'] = 1;
     }
-    
+    $data['search_disabled'] = 0;
+    if(!xarModIsAvailable('search')) {
+        // Not much we can do then
+        $data['search_disabled'] = 1;
+    }
     // Is the xmlhttprequest configured
     $data['xmlhttp_enabled'] = strtolower(xarModGetVar('bkview', 'xmlhttp_enabled'));
     

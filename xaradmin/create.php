@@ -22,6 +22,8 @@
  */
 function bkview_admin_create($args)
 {
+    if (!xarSecurityCheck('AdminAllRepositories')) return;
+    
     if(!xarVarFetch('reponame','str::',$reponame)) return;
     if(!xarVarFetch('repopath','str::',$repopath)) return;
     extract($args);
