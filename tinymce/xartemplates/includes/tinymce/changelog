@@ -1,3 +1,14 @@
+Version 1.34 (2004-10-03)
+	Added new insertdatetime plugin, inserts date/time in various formats.
+	Added new preview plugin, previews the HTML page in a new window.
+	Added new zoom plugin, adds the possibility zoom the editor in MSIE.
+	Added new emotions plugin, adds the possibility to add smileys.
+	Fixed so that TinyMCE functions on MSIE 5.0 again.
+	Fixed so that TinyMCE functions better on Mozilla 1.3.
+	Fixed so that the cursor doesn't jump to the top when setting styles.
+	Fixed bug with STRONG and EM elements wasn't handled correctly in Firefox.
+	Optimized the key handling some, gives better typing performance.
+	Removed key down statusbar debug info.
 Version 1.33 (2004-09-29)
 	Removed the need of loading blank.html, iframes are now created dynamicly.
 	Fixed bug when selecting tables, MSIE was casting errors.

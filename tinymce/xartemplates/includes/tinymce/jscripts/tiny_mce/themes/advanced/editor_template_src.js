@@ -175,7 +175,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 			}
 
 			if (!skip)
-				outArray.push(in_array[i]);
+				outArray[outArray.length] = in_array[i];
 		}
 
 		return outArray; 
@@ -183,7 +183,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 
 	function addToArray(in_array, add_array) {
 		for (var i=0; i<add_array.length; i++)
-			in_array.push(add_array[i]);
+			in_array[in_array.length] = add_array[i];
 
 		return in_array; 
 	}
