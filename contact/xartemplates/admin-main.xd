@@ -1,0 +1,60 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Contact Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Contact Module Overview</xar:mlstring></h2>
+<p><xar:mlstring>If this is your first visit to this part of your Xaraya site,
+please take a minute to read through the following introduction,
+in order to explore the different possibilities offered by the
+Contact module.</xar:mlstring></p>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/contact/xarimages/admin.gif')" >
+                <img src="modules/contact/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/contact/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The contact module gives your users a way to contact members of your company or development staff by listing a business card type of display for each person that you enter through the contact persons area of administration. The user can also send an email to the contact person via a web based form using Xaraya's mail module.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>From the menu, you have a few choices. I would suggest starting from the first option and work your way down. </xar:mlstring>
+            <xar:mlstring>"Add Company".  From this menu option, you can update the necessary contact information for your company,"NOTE:" In this version of contact you will need to give write permissions to your /modules/contact/xarimages directory so that you may upload a company logo. From here work your way down the list and add cities, locations, departments as necessary, some default items have already been added to the database, feel free to change them.</xar:mlstring>
+            <br />
+            <xar:mlstring>"Add Contacts" Here you can add contact persons for your company. The information that is added here, is what will be displayed on the business card page. Again to upload a picture for the contact, you will need to give write permission to the /modules/contact/xarimages directory.
+</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The Contact Module has no blocks included at this time.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+
+        <br />
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+<div align="center"><strong> #$welcome# </strong></div>
+<div align="center"> #$companyinfo#   </div>
+<div align="center"> #$addcity# </div>
+<div align="center"> #$addlocation# </div>
+<div align="center"> #$addtitles# </div>
+<div align="center"> #$adddepartments# </div><br />
+<div align="center"> #$persons#
+<ul><li>-- #$addpersons#</li>
+<li>-- #$listpersons#</li></ul> </div>
+    </div>
+</div>
+
+
+</div>

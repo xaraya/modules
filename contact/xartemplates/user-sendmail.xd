@@ -1,0 +1,111 @@
+
+<!-- common user menu for this module - remove link to the current function -->
+
+<table border="0" width="100%">
+
+    <tr><th align="center">#$menutitle#</th></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <!-- a link to a particular menu item -->
+
+        <td><a href="#$menulink_view#">#$menulabel_view#</a></td>
+
+        <!-- more menu items come here... -->
+
+        <!-- Note : you can also specify simple links directly with blocklayout
+             template tags : e.g. &xar-modurl-example-user-view; -->
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<!-- the specific template for the current function comes here -->
+
+<!-- some variable filled in by the function using this template -->
+
+
+<form method="post" action="#xarModURL('contact','user','sendemail')#">
+<table width="100%" border="0" cellspacing="0"cellpadding="1">
+<tr>
+<td align="right" valign="top" #$yourname#> </td>
+<tr><input type="hidden" name="sendMailToCompany" value="1">
+<td width="20"><img src="modules/contact/xarimages/head_left.gif" width="20" height="28"></td>
+<td align="center" valign="middle"background="modules/contact/xarimages/head_middle.gif"><strong>Contact #$recepient# #$lastname# <img src="modules/contact/xarimages/exclam.gif" width="11" height="22" align="absmiddle"></strong></td>
+<td width="27"><img src="modules/contact/xarimages/head_right.gif" width="27" height="28"></td>
+</tr>
+</table><table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>
+<td width="20" background="modules/contact/xarimages/boxleft.gif" width="20" height="25"></td>
+<td align="center"> <br /><table border="0" cellspacing="0" cellpadding="1">
+<tr>
+<td align="right" valign="top"> #$yourname# &nbsp; </td>
+<td><input type="text" name="fname" value=""></td>
+</tr>
+<tr>
+<td align="right" valign="top"> #$yourphone# &nbsp;</td>
+<td><input name="phone" value=""></td>
+</tr>
+<tr>
+<td align="right" valign="top"> #$youremail#&nbsp;</td>
+<td> <input name="femail" value="">&nbsp;</td>
+</tr>
+<tr>
+<td align="right" valign="top"> #$yourmessage#&nbsp;</td>
+<td><textarea name="message" wrap="virtual" rows="8"> </textarea> </td>
+</tr>
+<td align="right" valign="top"> #$send_me_copy# &nbsp; </td>
+
+<xar:if condition="$sender_wantcopy eq 1">
+<td><input type="checkbox" name="sender_wantcopy"  checked="checked" value="1">
+<xar:else/>
+<td><input type="checkbox" name="sender_wantcopy"  value="1">
+</xar:if>
+</td>
+</tr>
+<tr>
+<td align="right" valign="top"> #$contactme# &nbsp;</td>
+
+<xar:if condition="$sender_wants_contact eq 1">
+<td><input type="checkbox" name="sender_wants_contact"  checked="checked" value="1">
+<xar:else/>
+<td><input type="checkbox" name="sender_wants_contact" value="1">
+</xar:if>
+</td>
+<tr>
+<td>&nbsp;</td>
+<td>
+<table border="0" cellspacing="0" cellpadding="1">
+<tr>
+<td align="right"> &xar-var-preview; &nbsp;</td>
+<td><input type="radio" name="preview" value="1" checked="checked"> </td>
+</tr></tr>
+<td align="right"> #$send# &nbsp;</td>
+<td><input type="radio" name="preview" value="2" ></td>
+</tr>
+</table>
+</td>
+</tr><tr>
+<td>&nbsp;</td>
+<td><input name="Reset" type="reset" value=#$reset#>
+<input name="submit" type="submit" value="#$submit#"></td>
+<input name="info" type="hidden" value="#$info#">
+<input name="name" type="hidden" value="#$recepient# #$lastname#">
+<input name="uid" type="hidden" value="#$contact_id# #$lastname#">
+<input name="subject" type="hidden" value="Contact Mailer Message">
+</form>
+</tr>
+</table>
+</td>
+<td width="27" background="modules/contact/xarimages/boxright.gif"><img src="modules/contact/xarimages/boxright.gif" width="27" height="25"></td>
+</tr>
+</table><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"><img src="modules/contact/xarimages/boxbott_left.gif" width="20" height="22"></td>
+<td background="modules/contact/xarimages/boxbott_middle.gif"><img src="modules/contact/xarimages/boxbott_middle.gif" width="9" height="22"> </td>
+<td width ="27"><img src="modules/contact/xarimages/boxbott_right.gif" width="27" height="22"></td>
+</tr>
+</table>
+</td>
+</tr><tr>
+<td>&nbsp;</td>
+</tr>

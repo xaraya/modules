@@ -1,0 +1,39 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from contact_admin_menu() -->
+
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+
+</table>
+<br />
+
+<div class="xar-accent xar-norm-outline" style="text-align: left;padding: 0.3em 1em 0.3em 1em; margin-top: 3px;">
+
+<form enctype="multipart/form-data" method="post" action="&xar-modurl-contact-admin-delete;">
+
+<strong>#$firstname_label#</strong>&nbsp;<strong>#$lastname_label#</strong>
+&nbsp;
+<strong>#$email_label#</strong>
+&nbsp;
+<strong>#$departments_label#</strong>
+&nbsp;<strong>#$delete_label#</strong>
+&nbsp;
+<xar:loop name="$list"></div>
+<div class="xar-accent xar-norm-outline" style="text-align: left;padding: 0.3em 1em 0.3em 1em; margin-top: 3px;">
+  #$loop:item['firstname']#&nbsp;&nbsp;  #$loop:item['lastname']# &nbsp;&nbsp; #$loop:item['mail']# &nbsp; &nbsp; &nbsp;   #$loop:item['depname']#
+
+&nbsp;<input type ="checkbox" name="deleteuser[]" value="#$id#">
+&nbsp;[<a href="index.php?module=contact&amp;type=admin&amp;func=edit_contact&amp;id=#$loop:item['id']#">Edit</a>]
+<div align="right"><input type="submit" value=#$addcontactbutton#></div>
+</div>
+<input type="hidden" name="id" value="#$loop:item['id']#">
+</xar:loop>
+
+</form>
+
+<!-- the specific template for the current admin function comes here -->

@@ -1,0 +1,68 @@
+<table border="0" width="100%">
+
+    <!-- the variables used in this menu come from contact_user_menu() -->
+
+    <tr><TH align="center">&xar-var-menutitle;</TH></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <!-- a link to a particular menu item -->
+
+        <td><a href="#$menulink_view#">#$menulabel_view#</a></td>
+
+        <!-- more menu items come here... -->
+
+        <!-- Note : you can also specify simple links directly with blocklayout
+             template tags : e.g. &xar-modurl-contact-user-view; -->
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+
+
+<xar:blockgroup name="topnav" id="topnav" />
+<link rel="StyleSheet" href="modules/contact/css/style.css" type="text/css">
+
+<table border="0" width="100% height="100%">
+    <tr>
+        <td align="center" valign="middle">
+         <table border="1" cellpadding="0"  cellspacing="0" class="BusinessCardBackground">
+         <tr>
+         <td><table width="100%"  border="0"  cellspacing="0" cellpadding="2">
+         <tr>
+         <td width="70">&nbsp;</td>
+         <th class="BusinessCardHeader"><font class="BusinessCardHeader">
+<a href="#$menulink_view#">#$companyname# </a>
+         <td width="70">&nbsp;</td>
+         </tr><tr>
+         <td width="70" align="center" valign="top"><table width="100% border="0" cellpadding="0"  cellspacing="0">
+
+    </table></td>
+    <td align="left" valign="middle"><table width="100%"  border="0" cellpadding="2"  cellspacing="0">
+    <tr>
+    <td align="center" class="BusinessCardText"><font class="BusinessCardText">#$address#,&nbsp;#$compcity#&nbsp;#$state#&nbsp;#$zip#
+    </font></td>
+    </tr><tr>
+    <td align="center" class="BusinessCardText"><font class="BusinessCardText">#$country#</font></td>
+    </tr><tr>
+    <td align="center"><img src="/modules/contact/xarimages/dots.gif" width="207" height="1" vspace="1" alt="" /></td>
+    </tr>
+    </table>
+    <td width="70" align="center" valign="top"><table width="100%" border="0" cellpadding="0"  cellspacing="0">
+    <tr>
+    <td align="center" height="80" valign="middle"><img src="#$companylogo#" width="60" vspace="3" alt="" /></td>
+     </tr>
+    </table>
+    <tr>
+    <td align="center" valign="top">&nbsp;</td>
+    <td align="center" valign="middle" nowrap="nowrap" class="BusinessCardContactWays">
+    <font class="BusinessCardContactWays"><strong>#$phone_label#</strong>&nbsp;#$phone#,&nbsp;<strong>#$fax_label#</strong>&nbsp;#$fax#</font><br />
+    <font class="BusinessCardText"><em><strong>#$email_label#</strong><a href="mailto:#$mail#">&nbsp;#$mail#</a></em></font></td>
+
+    </tr>
+    </table>
+    </table>
+    </table>
+<br />
+

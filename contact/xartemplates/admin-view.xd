@@ -1,0 +1,50 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from example_admin_menu() -->
+
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br />
+
+<!-- the specific template for the current admin function comes here -->
+
+<!-- some status given by the function using this template -->
+
+<strong>#$status#</strong>
+
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <th>#$namelabel#</th>
+        <th>#$numberlabel#</th>
+        <th>#$optionslabel#</th>
+    </tr>
+    <xar:loop name="$items">
+    <tr>
+        <td>#$loop:item['name']#</td>
+        <td>#$loop:item['number']#</td>
+        <td>
+           <xar:if condition="empty($loop:item['editurl'])">
+               #$loop:item['edittitle']#
+               <xar:else />
+                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($loop:item['deleteurl'])">
+               #$loop:item['deletetitle']#
+               <xar:else />
+                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:loop>
+</table>
+<br />
+
+<!-- add the pager here -->
+&xar-var-pager;
+

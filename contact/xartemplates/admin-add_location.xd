@@ -1,0 +1,44 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Contact Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Add Location</xar:mlstring></h2>
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the specific template for the current admin function comes here -->
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<div align="center">
+#$hooks#
+<form method="post" action="&xar-modurl-contact-admin-create_location;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" value="#$authid#" />
+
+<table border="0" cellpadding="2" cellspacing="0">
+<tr>
+<td colspan="3" align="center"><xar:mlstring>Location Types</xar:mlstring></td>
+</tr>
+<xar:loop name="$items">
+<tr>
+<td><input type="hidden" name="id[]" value="#$loop:item['id']#">&nbsp;</td>
+<td><input type="text" name="locationname[]" value="#$loop:item['name']#" size="40" maxlength="60"></td>
+<td><input type="checkbox" name="cid[]" id="ck_#$loop:item['id']#" value="#$loop:item['id']#">&nbsp;<label for="ck_#$loop:item['id']#">Delete</label></td>
+</tr>
+</xar:loop>
+<tr><td colspan="3" align="center"><hr noshade="noshade"></td></tr>
+<tr>
+<td><label for="newlocation">#$locationlabel#</label></td>
+<td colspan="2"><input type="text" size="40" maxlength="60" name="newlocation" id="newlocation"></td>
+</tr>
+<tr>
+<td colspan="3" align="center"><input type="submit" name="addlocation" value="#$addlocationbutton#"></td>
+</tr>
+</table>
+</form>
+</div>
+</div>

@@ -1,0 +1,97 @@
+
+<!-- common user menu for this module - remove link to the current function -->
+
+<table border="0" width="100%">
+
+    <!-- the variables used in this menu come from contact_user_menu() -->
+
+    <tr><TH align="center">#$menutitle#</TH></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <!-- a link to a particular menu item -->
+
+        <td><a href="#$menulink_view#">#$menulabel_view#</a></td>
+
+        <!-- more menu items come here... -->
+
+        <!-- Note : you can also specify simple links directly with blocklayout
+             template tags : e.g. &xar-modurl-contact-user-view; -->
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<!-- the specific template for the current function comes here -->
+
+<!-- some status given by the function using this template -->
+
+<!-- Note : we use an if/else structure here, either to show a status *or*
+     to show the details of a particular item -->
+
+<xar:if condition="!empty($status)">
+    <strong>#$status#</strong>
+<xar:else />
+<!-- some item variables given by the function using this template -->
+
+<xar:blockgroup name="topnav" id="topnav" />
+<link rel="StyleSheet" href="modules/contact/css/style.css" type="text/css">
+
+<table border="0" width="100% height="100%">
+    <tr>
+        <td align="center" valign="middle">
+         <table border="1" cellpadding="0"  cellspacing="0" class="BusinessCardBackground">
+         <tr>
+         <td><table width="100%"  border="0"  cellspacing="0" cellpadding="2">
+         <tr>
+         <td width="70">&nbsp;</td>
+         <th class="BusinessCardHeader"><font class="BusinessCardHeader">#$companyname# - #$depname#
+         <td width="70">&nbsp;</td>
+         </tr><tr>
+         <td width="70" align="center" valign="top"><table width="100% border="0" cellpadding="0"  cellspacing="0">
+    <tr>
+    <td align="center"><img src="#$image#" width="60" height="80" vspace="3" alt="" /></td>
+    </tr>
+    </table></td>
+    <td align="left" valign="middle"><table width="100%"  border="0" cellpadding="2"  cellspacing="0">
+    <tr>
+    <td align="center" class="BusinessCardText"><font class="BusinessCardText">#$firstname#&nbsp;#$lastname#</font></td>
+    <tr>
+            <xar:if condition="$showtitle eq 1"><td align="center" class="BusinessCardText"><font class="BusinessCardText"><em>#$titleName#</em></font></td>
+
+            </xar:if>
+    </tr>
+            <tr>
+    <td align="center" class="BusinessCardText"><font class="BusinessCardText">#$address#,&nbsp;#$editcity#&nbsp;#$state#&nbsp;#$zip#
+    </font></td>
+    </tr><tr>
+    <td align="center" class="BusinessCardText"><font class="BusinessCardText">#$editcountry#</font></td>
+    </tr><tr>
+    <td align="center"><img src="/modules/contact/xarimages/dots.gif" width="207" height="1" vspace="1" alt="" /></td>
+    </tr>
+    </table></td>
+    <td width="70" align="center" valign="top"><table width="100%" border="0" cellpadding="0"  cellspacing="0">
+    <tr>
+    <td align="center" height="80" valign="middle"><img src="&xar-var-companylogo;" width="60" vspace="3" alt="" /></td>
+     </tr>
+    </table></td>
+    </tr><tr>
+    <td align="center" valign="top">&nbsp;</td>
+    <td align="center" valign="middle" nowrap="nowrap" class="BusinessCardContactWays">
+    <font class="BusinessCardContactWays"><strong>#$phone_label#</strong>&nbsp;#$phone#,&nbsp;<xar:if condition="$showfax eq 1"><strong>#$fax_label#</strong>&nbsp;#$fax#</font></xar:if>
+    <br /><xar:if condition="$showmobile eq 1"><font class="BusinessCardContactWays"><strong>#$mobile_label#</strong>&nbsp;#$mobile#,</xar:if>
+    <xar:if condition="$showpager eq 1"><font class="BusinessCardContactWays"><strong>#$pager_label#</strong>&nbsp;#$pager#,<br /></xar:if>
+    <xar:if condition="$showICQ eq 1"><font class="BusinessCardContactWays"><strong>#$icq_label#</strong> #$ICQ#</font>,</xar:if>
+    <xar:if condition="$showAIM eq 1"><font class="BusinessCardContactWays"><strong>#$aim_label#</strong> #$AIM#</font></xar:if><xar:if condition="$showICQ eq 0">,</xar:if><xar:if condition="$showICQ eq 1 and $showAIM eq 1"><br /></xar:if>
+    <xar:if condition="$showYIM eq 1"><font class="BusinessCardContactWays"><strong>#$yim_label#</strong> #$YIM#</font></xar:if><xar:if condition="$showAIM eq 0 and $showYIM = 1"><br /></xar:if><xar:if condition="$showAIM eq 1">,</xar:if>
+    <xar:if condition="$showMSNM eq 1"><font class="BusinessCardContactWays"><strong>#$msnm_label#</strong> #$MSNM#</font><br /></xar:if>
+    <xar:if condition="$showemail eq 1"><font class="BusinessCardText"><em><strong>#$email_label#</strong>&nbsp;#$mail#</em></font></xar:if>
+    </tr>
+    </table>
+    </table>
+    </table>
+
+<br />
+
+
+</xar:if>

@@ -1,0 +1,77 @@
+
+<!-- common user menu for this module - remove link to the current function -->
+
+<table border="0" width="100%">
+
+    <!-- the variables used in this menu come from contact_user_menu() -->
+
+    <tr><th align="center">&xar-var-menutitle;</th></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <!-- since this is the menu item we're on, we only show the label -->
+
+        <td> &xar-var-menulabel_view; </td>
+
+        <!-- more menu items come here... -->
+
+        <!-- Note : you can also specify simple links directly with blocklayout
+             template tags : e.g. &xar-modurl-example-user-view; -->
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<!-- the specific template for the current function comes here -->
+
+<xar:blockgroup name="topnav" id="topnav" />
+
+<!-- some status given by the function using this template -->
+
+<xar:if condition="!empty($status)">
+    <strong>#$status#</strong>
+</xar:if>
+
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+    <tr>
+        <th> #$firstname_label# </th>
+        <th> #$lastname_label# </th>
+        <th> #$email_label# </th>
+        <th> #$department_label# </th>
+        <th> #$info_label# </th>
+        <th> #$send_label# </th>
+    </tr>
+
+    <!-- Loop over all the items given by the function. Since $data['items']
+         is preset to an empty array, we don't need to use an if/else
+         structure like we do in user-display.xd -->
+    <!-- Note : when you specify a prefix="item", the individual variable
+         names ("name" and "link" in this case) are renamed to "item_..."
+         ("item_name" and "item_link" here). This makes is easier for
+         template designer, e.g. when you have several loops with different
+         variables in the same template -->
+
+    <xar:loop name="$items">
+    <tr align="center"><td>
+
+        <!-- we only show a link if the item link variable is not empty -->
+
+        <xar:if condition="empty($loop:item['link'])">
+            #$loop:item['firstname']#
+            <xar:else />
+               <a href="#$loop:item['link']#">#$loop:item['firstname']#</a></td>
+        </xar:if>
+              <td> #$loop:item['lastname']#</td>
+              <td> #$loop:item['mail']#</td>
+              <td> #$loop:item['depname']#</td>
+              <td> <a href="#$loop:item['link']#"><img src="modules/contact/xarimages/questionmark.gif"></a></td>
+              <td> <a href="#$loop:item['email']#"><img src="modules/contact/xarimages/friend.gif"></a></td>
+    </td></tr>
+    </xar:loop>
+
+</table>
+<br />
+
+<!-- add the pager here -->
+&xar-var-pager;

@@ -1,0 +1,40 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Contact Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+<div align="center">
+<!-- common admin menu for this module - remove link to the current function -->
+
+<!-- the specific template for the current admin function comes here -->
+
+<table border="0" cellspacing="0" cellpadding="2">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form method="post" action="&xar-modurl-contact-admin-updateconfig;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" value="#$authid#" />
+
+<tr><td><label for="bold">#$boldlabel#</label></td>
+<td><input type="checkbox" name="bold" id="bold" value="1" #$boldchecked#></td></tr>
+
+<tr><td><label for="itemsperpage">#$itemslabel#</label></td>
+<td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#"></td></tr>
+
+<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
+<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked#></td></tr>
+
+<tr><td colspan="2" align="center"><br/>
+    <input type="submit" value="#$updatebutton#"></td></tr>
+</form>
+
+</table>
+#$hooks#
+</div>
+</div>

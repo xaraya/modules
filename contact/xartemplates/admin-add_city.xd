@@ -1,0 +1,51 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from contact_admin_menu() -->
+
+    <tr>
+        <th align="center">&xar-var-menutitle;</th>
+    </tr>
+</table>
+<br />
+
+<!-- the specific template for the current admin function comes here -->
+
+<table border="0" cellspacing="1" cellpadding="1">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form method="post" action="&xar-modurl-contact-admin-create_city;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" value="&xar-var-authid;" />
+
+<tr><td colspan="2" align="center">
+#$hooks#
+</td></tr>
+<table><tr><td colspan="2" align="center"><strong>City</strong></td><td><strong>Delete</strong></td></tr>
+<xar:loop name="$city">
+<input type="hidden" name="id[]" value="#$loop:item['id']#">
+<tr><td colspan="2" align="center"><input type="text" name="cityname[]" value="#$loop:item['name']#" size="40" maxlength="60"></td>
+<td colspan="2" align="center"><input type="checkbox" name="cid[]" value="#$loop:item['id']#"></td></tr>
+
+</xar:loop>
+</td>
+</tr><tr><td colspan="2" align="center"><hr></td>
+
+<tr><td><strong>&xar-var-citylabel;</strong></td>
+<td><input type="text" size="40" maxlength="60" name="newcity"></td>
+</tr><tr>
+<td colspan="2" align="center"><input type="submit" name="addcity" value="#$addcitybutton#"></td></tr>
+</table>
+</form>
+
+</table>
+<br />

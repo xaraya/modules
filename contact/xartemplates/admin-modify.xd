@@ -1,0 +1,39 @@
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+    <tr>
+        <th colspan="3" align="center">Example Administration</th>
+    </tr>
+</table>
+<br />
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form method="post" action="&xar-modurl-example-admin-update;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="exid" value="#$exid#" />
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+
+<tr><td>#$namelabel#</td>
+<td><input type="text" name="name" size=32 maxlength=32 value="#$name#"></td></tr>
+
+<tr><td>#$numberlabel#</td>
+<td><input type="text" name="number" size=5 maxlength=5 value="#$number#"></td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#"></td></tr>
+</form>
+
+</table>
+<br />
+

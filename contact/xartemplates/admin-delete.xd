@@ -1,0 +1,50 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from contact_admin_menu() -->
+
+    <tr>
+        <th align="center">&xar-var-menutitle;</th>
+    </tr>
+
+</table>
+<br />
+
+<!-- the specific template for the current admin function comes here -->
+
+
+<div align="center">#$confirmtext#</div><br />
+
+<div align="center">
+<form method="post" action="&xar-modurl-contact-admin-delete;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" value="true" />
+    <input type="hidden" name="id" value="&xar-var-id;" />
+
+    <table border="0" width="300">
+        <tr>
+            <td>
+                #$itemid#:
+            </td>
+            <td>
+                #$id#
+            </td>
+        </tr>
+        <tr>
+            <td>
+                #$namelabel#:
+            </td>
+            <td>
+                #$firstnamevalue#&nbsp;#$lastnamevalue#
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#" align="middle" />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
