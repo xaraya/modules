@@ -75,7 +75,7 @@ function xlink_admin_modifyhook($args)
     if (isset($extrainfo['xlink_base'])) {
         $base = $extrainfo['xlink_base'];
     } else {
-        $newbase = xarVarCleanFromInput('xlink_base');
+        xarVarFetch('xlink_base', 'str:1:', $newbase, NULL, XARVAR_NOT_REQUIRED);
         if (isset($newbase)) {
             $base = $newbase;
         }
@@ -86,6 +86,7 @@ function xlink_admin_modifyhook($args)
     if (isset($extrainfo['xlink_id'])) {
         $refid = $extrainfo['xlink_id'];
     } else {
+        xarVarFetch('xlink_id', 'str:1:', $newrefid, NULL, XARVAR_NOT_REQUIRED);
         $newrefid = xarVarCleanFromInput('xlink_id');
         if (isset($newrefid)) {
             $refid = $newrefid;

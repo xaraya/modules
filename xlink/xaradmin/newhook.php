@@ -64,7 +64,7 @@ function xlink_admin_newhook($args)
     if (isset($extrainfo['xlink_base'])) {
         $base = $extrainfo['xlink_base'];
     } else {
-        $base = xarVarCleanFromInput('xlink_base');
+        xarVarFetch('xlink_base', 'str:1:', $base, NULL, XARVAR_NOT_REQUIRED);
     }
     if (empty($base)) {
         $base = '';
@@ -72,7 +72,7 @@ function xlink_admin_newhook($args)
     if (isset($extrainfo['xlink_id'])) {
         $refid = $extrainfo['xlink_id'];
     } else {
-        $refid = xarVarCleanFromInput('xlink_id');
+        xarVarFetch('xlink_id', 'str:1:', $refid, NULL, XARVAR_NOT_REQUIRED);
     }
     if (empty($refid)) {
         $refid = '';
