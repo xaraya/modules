@@ -186,8 +186,10 @@ div.xarbb-topiccontrols span img {
     vertical-align: middle;
     display: inline;
 }
-/* Note from andyv - make button more cross-theme robust */
+
 div.xarbb-topiccontrols span a { padding: 0 .2em; }
+
+/* Note from andyv - make button more cross-theme robust */
 div#mainmodulearea div.xarbb-topiccontrols a.cssbutton,
 div.xarbb-topiccontrols a.cssbutton {
     float: left;
