@@ -22,9 +22,11 @@ function authurl_admin_updateconfig()
     # Get parameters
 
     list($adduser,
+         $activate,
          $authurl,
          $debuglevel,
          $defaultgroup ) = xarVarCleanFromInput('adduser',
+                                                'activate',
                                                 'authurl',
                                                 'debuglevel',
                                                 'defaultgroup');
@@ -41,6 +43,26 @@ function authurl_admin_updateconfig()
     xarModSetVar('authurl', 'auth_url', $authurl);
     xarModSetVar('authurl', 'debug_level', $debuglevel);
     xarModSetVar('authurl', 'default_group', $defaultgroup);
+
+    $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
+    if (empty($activate) && in_array('authurl', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module != 'authurl') {
+                $newauth[] = $module;
+            }
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    } elseif (!empty($activate) && !in_array('authurl', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module == 'authsystem') {
+                $newauth[] = 'authurl';
+            }
+            $newauth[] = $module;
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    }
 
     # lets update status and display updated configuration
     xarResponseRedirect(xarModURL('authurl', 'admin', 'modifyconfig'));

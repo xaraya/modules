@@ -38,7 +38,8 @@ function authurl_init()
     xarRegisterMask('AdminAuthURL','All','authurl','All','All','ACCESS_ADMIN');
     xarRegisterMask('ReadAuthURL','All','authurl','All','All','ACCESS_READ');
 
-    # Add authurl to Site.User.AuthenticationModules in xar_config_vars
+    # Do not add authurl to Site.User.AuthenticationModules in xar_config_vars here
+/*
     $authModules = array_flip(xarConfigGetVar('Site.User.AuthenticationModules'));
 
     # insert authurl right before authsystem
@@ -48,6 +49,7 @@ function authurl_init()
     ksort($authModules);
     # save the setting
     xarConfigSetVar('Site.User.AuthenticationModules',$authModules);
+*/
 
     # Initialization successful
     return true;
