@@ -54,7 +54,7 @@ function newsletter_admin_createaltsubscription()
     if (!xarVarFetch('htmlmail', 'int:0:1:', $htmlmail, 0)) return;
 
     // Create the syntactical validation regular expression
-    $regexp = "^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$";
+    $regexp = "^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,6})$";
 
     // Presume that the email is invalid
     $valid = 0;

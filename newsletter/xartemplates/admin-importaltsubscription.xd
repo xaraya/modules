@@ -12,12 +12,13 @@
                 <xar:if condition="!empty($imports_invalid)">
                     <tr>
                         <td colspan="2">
-                            <b><xar:mlstring>The following did not import:</xar:mlstring></b>
+                            <b><xar:mlstring>The following</xar:mlstring>&nbsp;#$invalid_count#&nbsp;<xar:mlstring> records encountered errors:</xar:mlstring></b>
                         </td>
                     </tr>
                     <tr>
                         <th><xar:mlstring>Name</xar:mlstring></th>
                         <th><xar:mlstring>Email Address</xar:mlstring></th>
+                        <th><xar:mlstring>Error</xar:mlstring></th>
                     </tr>
                     <xar:loop name="$imports_invalid">
                         <tr>
@@ -26,6 +27,13 @@
                             </td> 
                             <td>
                                 #$loop:item['email']#
+                            </td> 
+                            <td>
+                                <xar:if condition="$loop:item['error'] eq -1">
+                                    <xar:mlstring>Duplicate Email</xar:mlstring>
+                                <xar:else />
+                                    <xar:mlstring>Unknown</xar:mlstring>
+                                </xar:if>
                             </td> 
                         </tr>
                     </xar:loop>
@@ -36,7 +44,7 @@
                 <xar:if condition="!empty($imports_valid)">
                     <tr>
                         <td colspan="4">
-                            <b><xar:mlstring>The following imported successfully:</xar:mlstring></b>
+                            <b><xar:mlstring>The following</xar:mlstring>&nbsp;#$valid_count#&nbsp;<xar:mlstring> records imported successfully:</xar:mlstring></b>
                         </td>
                     </tr>
                     <tr>

@@ -218,8 +218,8 @@ function newsletter_init()
     $nwsltrSubscriptionsColumn = &$xartable['nwsltrSubscriptions_column'];
 
     $fields = array(
-        'xar_uid'      => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'xar_pid'      => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'xar_uid'      => array('type'=>'integer','null'=>FALSE,'primary_key'=>TRUE),
+        'xar_pid'      => array('type'=>'integer','null'=>FALSE,'primary_key'=>TRUE),
         'xar_htmlmail' => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0')
     );
 

@@ -64,9 +64,11 @@ function newsletter_admin_importaltsubscription()
     // Initialize values
     $imports_valid = array();
     $imports_invalid = array();
+    $valid_count = 0;
+    $invalid_count = 0;
 
     // Create the syntactical validation regular expression for email validation
-    $regexp = "^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,4})$";
+    $regexp = "^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,6})$";
 
     // MS Outlook export quotes sections that have commas as part
     // of the string.  This may occur with the names and the 
@@ -131,6 +133,7 @@ function newsletter_admin_importaltsubscription()
                                             'pid' => $pid,
                                             'htmlmail' => $htmlmail));
 
+                // Check if valid subscription
                 if ($subscriptionId) {
                     $imports_valid[$idx]['name'] = trim($name);
                     $imports_valid[$idx]['email'] = trim($email);
@@ -162,27 +165,34 @@ function newsletter_admin_importaltsubscription()
                     }
 
                     $idx++;
+                    $valid_count++;
                 } else {
                     // Invalid import
                     $imports_invalid[] = array('name' => $name,
-                                               'email' => $email);
+                                               'email' => $email,
+                                               'error' => -1);
+                    $invalid_count++;
                 }
             }
         } else {
             // Invalid import
             $imports_invalid[] = array('name' => $name,
-                                       'email' => $email);
+                                       'email' => $email,
+                                       'error' => 0);
+            $invalid_count++;
         }
     }
 
-    $data = array();
     // Get the admin subscription menu
+    $data = array();
     $data['menu'] = xarModFunc('newsletter', 'admin', 'subscriptionmenu');
 
     // Set parameters for template
     $data['pids'] = $pids;
     $data['imports_valid'] = $imports_valid;
     $data['imports_invalid'] = $imports_invalid;
+    $data['valid_count'] = $valid_count;
+    $data['invalid_count'] = $invalid_count;
 
     // Redirect to create a story for the issue
     return $data;
@@ -190,24 +200,29 @@ function newsletter_admin_importaltsubscription()
 
 function newsletter_admin__explodeimport($str, $delim = ',', $qual = "\"")
 {
-   $len = strlen($str);
-   $inside = false;
-   $word = '';
-   for ($i = 0; $i < $len; ++$i) {
-       if ($str[$i]==$delim && !$inside) {
+    // Check if last character of line is the delim and remove
+    $str = rtrim($str, $delim);
+
+    $len = strlen($str);
+    $inside = false;
+    $word = '';
+        
+    // Explode import
+    for ($i = 0; $i < $len; ++$i) {
+        if ($str[$i]==$delim && !$inside) {
            $out[] = $word;
            $word = '';
-       } else if ($inside && $str[$i]==$qual && ($i<$len && $str[$i+1]==$qual)) {
+        } else if ($inside && $str[$i]==$qual && ($i<$len && $str[$i+1]==$qual)) {
            $word .= $qual;
            ++$i;
-       } else if ($str[$i] == $qual) {
+        } else if ($str[$i] == $qual) {
            $inside = !$inside;
-       } else {
+        } else {
            $word .= $str[$i];
-       }
-   }
-   $out[] = $word;
-   return $out;
+        }
+    }
+    $out[] = $word;
+    return $out;
 }
 
 ?>
