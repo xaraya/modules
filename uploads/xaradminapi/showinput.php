@@ -68,19 +68,19 @@ function uploads_adminapi_showinput($args)
     // used to allow selection of multiple files
     $data['multiple_' . $id] = $multiple;
 
-    if (isset($methods) && count($methods) > 0) {
+    if (isset($methods) && count($methods) == 4) {
         $data['methods'] = array(
-            'trusted' => in_array('trusted',$methods) ? TRUE : FALSE,
-            'external' => in_array('external',$methods) ? TRUE : FALSE,
-            'upload' => in_array('upload',$methods) ? TRUE : FALSE,
-            'stored' => in_array('stored',$methods) ? TRUE : FALSE,
+            'trusted'  => $methods['trusted']  ? TRUE : FALSE,
+            'external' => $methods['external'] ? TRUE : FALSE,
+            'upload'   => $methods['upload']   ? TRUE : FALSE,
+            'stored'   => $methods['stored']   ? TRUE : FALSE
         );
     } else {
         $data['methods'] = array(
-            'trusted' => xarModGetVar('uploads', 'dd.fileupload.trusted') ? TRUE : FALSE,
+            'trusted'  => xarModGetVar('uploads', 'dd.fileupload.trusted')  ? TRUE : FALSE,
             'external' => xarModGetVar('uploads', 'dd.fileupload.external') ? TRUE : FALSE,
-            'upload' => xarModGetVar('uploads', 'dd.fileupload.upload') ? TRUE : FALSE,
-            'stored' => xarModGetVar('uploads', 'dd.fileupload.stored') ? TRUE : FALSE,
+            'upload'   => xarModGetVar('uploads', 'dd.fileupload.upload')   ? TRUE : FALSE,
+            'stored'   => xarModGetVar('uploads', 'dd.fileupload.stored')   ? TRUE : FALSE
         );
     }
 
