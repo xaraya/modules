@@ -33,11 +33,15 @@ function bkview_user_patchview($args)
     $dlist = $changeset->bkDeltaList();
     if(!is_null($dlist)) {
         foreach($dlist as $delta_id => $delta) {
-            //while (list($delta_id) = each($dlist)) {
-            //$delta=$changeset->bkDelta($delta_id);
+            $delta->repoid = $repoid;
+            
+            if(xarModIsAvailable('mime') && $delta->checkedout) {
+                $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $repo->_root . '/' . $delta->file));
+                $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+            } else {
+                $delta->icon = xarTplGetImage('file.gif','bkview');
+            }
             $deltalist[$counter] = (array) $delta;
-            //$deltalist[$counter]['file']=$delta->bkFile();
-            //$deltalist[$counter]['revision']=$delta->bkRev();
             
             $diff=$delta->bkDiffs();
             $deltalist[$counter]['difflines']=array();
