@@ -2,10 +2,10 @@
 
 
 // Divert PHP errors to the normal error stack
-function autolinks_userapi__getreplace_errhandler($errorType, $errorString, $file, $line)
+function autolinks_userapi__getreplace_errhandler($errorType, $errorString, $errorFile, $errorLine)
 {
     if (!error_reporting()) {return;}
-    $msg = "File: " . $file. "; Line: " . $line . "; ". $errorString;
+    $msg = "File: " . $errorFile. "; Line: " . $errorLine . "; ". $errorString;
     xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     return;
 }
@@ -132,9 +132,9 @@ function autolinks_userapi_getreplace($args)
         if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
             $errorstack = xarErrorGet();
             $errorstack = array_shift($errorstack);
-            $error_text = $errorstack['short'];
+            $error_text = $errorstack['long'];
 
-            // Handle the exception since we have rendered it.
+            // Clear the errors since we are handling it locally.
             xarErrorHandled();
 
             // Do we want the error displayed in-line?

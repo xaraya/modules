@@ -1,5 +1,14 @@
 <?php
 
+// Divert PHP errors to the normal error stack
+function autolinks_userapi__transform_errhandler($errorType, $errorString, $errorFile, $errorLine)
+{
+    if (!error_reporting()) {return;}
+    $msg = "File: " . $errorFile. "; Line: " . $errorLine . "; ". $errorString;
+    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+    return;
+}
+
 /**
  * $Id$
  * callback function to transform text dynamically (private)
@@ -32,7 +41,10 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
         // 'text' rendering returns the exception as an array.
         $errorstack = xarErrorGet();
         $errorstack = array_shift($errorstack);
-        $error_text = $errorstack['short'];
+        $error_text = $errorstack['long'];
+
+        // Clear the errors since we are handling it locally.
+        xarErrorHandled();
 
         if (xarModGetVar('autolinks', 'showerrors') || xarVarIsCached('autolinks', 'showerrors')) {
             // Pass the error through the error template if required.
@@ -67,16 +79,6 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
     // Put a placeholder in the word boundaries so we don't match it again.
     return preg_replace('/\b/', "$munger", $replace);
 }
-
-// Divert PHP errors to the normal error stack
-function autolinks_userapi__transform_errhandler($errorType, $errorString, $file, $line)
-{
-    if (!error_reporting()) {return;}
-    $msg = "File: " . $file. "; Line: " . $line . "; ". $errorString;
-    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-    return;
-}
-
 
 /**
  * $Id$
