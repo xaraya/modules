@@ -12,90 +12,90 @@
 function pubsub_init()
 {
     // Get database information
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
 
-    pnDBLoadTableMaintenanceAPI();
+    xarDBLoadTableMaintenanceAPI();
     
     // Create tables
-    $pubsubeventstable = $pntable['pubsub_events'];
+    $pubsubeventstable = $xartable['pubsub_events'];
     $eventsfields = array(
-        'pn_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pn_module'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
-        'pn_eventtype'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
-        'pn_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
-        'pn_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+        'xar_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_module'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
+        'xar_eventtype'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
+        'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
+        'xar_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
     );
-    $sql = pnDBCreateTable($pubsubeventstable,$eventsfields);
+    $sql = xarDBCreateTable($pubsubeventstable,$eventsfields);
     if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
    }
 
-    $pubsubregtable = $pntable['pubsub_reg'];
+    $pubsubregtable = $xartable['pubsub_reg'];
     $regfields = array(
-        'pn_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pn_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'pn_users'=>array('type'=>'text','size'=>'medium','null'=>FALSE),
-        'pn_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+        'xar_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_users'=>array('type'=>'text','size'=>'medium','null'=>FALSE),
+        'xar_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
     );
-    $sql = pnDBCreateTable($pubsubregtable,$regfields);
+    $sql = xarDBCreateTable($pubsubregtable,$regfields);
     if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
 
-    $pubsubprocesstable = $pntable['pubsub_process'];
+    $pubsubprocesstable = $xartable['pubsub_process'];
     $processfields = array(
-        'pn_handlingid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pn_pubsubid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'pn_objectid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'pn_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
+        'xar_handlingid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_pubsubid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_objectid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
     );
-    $sql = pnDBCreateTable($pubsubprocesstable,$processfields);
+    $sql = xarDBCreateTable($pubsubprocesstable,$processfields);
     if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
     
-    $pubsubtemplatetable = $pntable['pubsub_template'];
+    $pubsubtemplatetable = $xartable['pubsub_template'];
     $templatefields = array(
-        'pn_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pn_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'pn_template'=>array('type'=>'text','size'=>'long','null'=>FALSE)
+        'xar_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_template'=>array('type'=>'text','size'=>'long','null'=>FALSE)
     );
-    $sql = pnDBCreateTable($pubsubtemplatetable,$templatefields);
+    $sql = xarDBCreateTable($pubsubtemplatetable,$templatefields);
     if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
     
     // Set up module hooks
-    if (!pnModRegisterHook('item',
+    if (!xarModRegisterHook('item',
                            'create',
                            'API',
                            'pubsub',
@@ -103,7 +103,7 @@ function pubsub_init()
                            'addevent')) {
         return false;
     }
-    if (!pnModRegisterHook('item',
+    if (!xarModRegisterHook('item',
                            'delete',
                            'API',
                            'pubsub',
@@ -111,7 +111,7 @@ function pubsub_init()
                            'delevent')) {
         return false;
     }
-    if (!pnModRegisterHook('item',
+    if (!xarModRegisterHook('item',
                            'create',
                            'API',
                            'pubsub',
@@ -119,7 +119,7 @@ function pubsub_init()
                            'subscribe')) {
         return false;
     }
-    if (!pnModRegisterHook('item',
+    if (!xarModRegisterHook('item',
                            'delete',
                            'API',
                            'pubsub',
@@ -127,7 +127,7 @@ function pubsub_init()
                            'unsubscribe')) {
         return false;
     }
-    if (!pnModRegisterHook('category',
+    if (!xarModRegisterHook('category',
                            'display',
                           'GUI',
                            'pubsub',
@@ -153,54 +153,54 @@ function pubsub_upgrade($oldversion)
 function pubsub_delete()
 {
     // Remove module hooks
-    if (!pnModUnregisterHook('item',
+    if (!xarModUnregisterHook('item',
                            'create',
                            'API',
                            'pubsub',
                            'admin',
                            'addevent')) {
-        pnSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
-    if (!pnModUnregisterHook('item',
+    if (!xarModUnregisterHook('item',
                            'create',
                            'API',
                            'pubsub',
                            'user',
                            'adduser')) {
-        pnSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
-    if (!pnModUnregisterHook('category',
+    if (!xarModUnregisterHook('category',
                            'display',
                            'GUI',
                            'pubsub',
                            'user',
                            'display')) {
-        pnSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
-    if (!pnModUnregisterHook('item',
+    if (!xarModUnregisterHook('item',
                            'delete',
                            'API',
                            'pubsub',
                            'user',
                            'deluser')) {
-        pnSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
-    if (!pnModUnregisterHook('item',
+    if (!xarModUnregisterHook('item',
                            'delete',
                            'API',
                            'pubsub',
                            'admin',
                            'delevent')) {
-        pnSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
 
     // Get database information
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    include ('includes/pnTableDDL.php');
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    include ('includes/xarTableDDL.php');
 
     // Generate the SQL to drop the table using the API
-    $sql = pnDBDropTable($pntable['pubsub_events']);
+    $sql = xarDBDropTable($xartable['pubsub_events']);
     if (empty($sql)) return; // throw back
 
     // Drop the table
@@ -208,13 +208,13 @@ function pubsub_delete()
     // Check for an error with the database code, and if so raise the
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
 
-    $sql = pnDBDropTable($pntable['pubsub_reg']);
+    $sql = xarDBDropTable($xartable['pubsub_reg']);
     if (empty($sql)) return; // throw back
 
     // Drop the table
@@ -222,13 +222,13 @@ function pubsub_delete()
     // Check for an error with the database code, and if so raise the
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
     
-    $sql = pnDBDropTable($pntable['pubsub_process']);
+    $sql = xarDBDropTable($xartable['pubsub_process']);
     if (empty($sql)) return; // throw back
 
     // Drop the table
@@ -236,13 +236,13 @@ function pubsub_delete()
     // Check for an error with the database code, and if so raise the
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
 
-    $sql = pnDBDropTable($pntable['pubsub_template']);
+    $sql = xarDBDropTable($xartable['pubsub_template']);
     if (empty($sql)) return; // throw back
 
     // Drop the table
@@ -250,8 +250,8 @@ function pubsub_delete()
     // Check for an error with the database code, and if so raise the
     // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $query);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $query);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }

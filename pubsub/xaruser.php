@@ -12,7 +12,7 @@
 function pubsub_user_main()
 {
     // Return output
-    return pnML('This module has no user interface *except* via display hooks');
+    return xarML('This module has no user interface *except* via display hooks');
 }
 
 /**
@@ -34,10 +34,10 @@ function pubsub_user_display($args)
     extract($args);
 
     // Load API
-    if (!pnModAPILoad('pubsub', 'user')) {
-        $msg = pnML('API Failed to Load',
+    if (!xarModAPILoad('pubsub', 'user')) {
+        $msg = xarML('API Failed to Load',
 	            'pubsub');
-	pnExceptionSet(PN_SYSTEM_EXCEPTION,
+	xarExceptionSet(XAR_SYSTEM_EXCEPTION,
 	            'LOAD_FAILED',
 	            new SystemException($msg));
 	return;

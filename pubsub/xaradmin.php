@@ -12,10 +12,10 @@
 function pubsub_admin_main()
 {
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
-        $msg = pnML('Not authorized to access to #(1)',
+    if (!xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
+        $msg = xarML('Not authorized to access to #(1)',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
@@ -23,7 +23,7 @@ function pubsub_admin_main()
     $data = pubsub_admin_menu();
     
     // Specify some other variables used in the blocklayout template
-    $data['welcome'] = pnML('Welcome to the administration part of this Pubsub module.');
+    $data['welcome'] = xarML('Welcome to the administration part of this Pubsub module.');
 
     // Return the template variables defined in this function
     return $data;
@@ -32,13 +32,13 @@ function pubsub_admin_view()
 {
     $data = pubsub_admin_menu();
     $data['items'] = array();
-    $data['namelabel'] = pnVarPrepForDisplay(pnMLByKey('PUBSUBNAME'));
+    $data['namelabel'] = xarVarPrepForDisplay(xarMLByKey('PUBSUBNAME'));
     $data['pager'] = '';
 
-    if (!pnSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
-        $msg = pnML('Not authorized to access to #(1)',
+    if (!xarSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
+        $msg = xarML('Not authorized to access to #(1)',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }

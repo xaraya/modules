@@ -28,42 +28,42 @@ function pubsub_adminapi_addevent($args)
         $invalid[] = 'eventtype';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'addevent', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-	$msg = pnML('Not authorized to add #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
+	$msg = xarML('Not authorized to add #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubeventstable = $pntable['pubsub_events'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubeventstable = $xartable['pubsub_events'];
 
     // check this event isn't already in the DB
-    $sql = "SELECT pn_eventid
+    $sql = "SELECT xar_eventid
  	    FROM $pubsubeventstable
-	    WHERE pn_module '" . pnVarPrepForStore($module) . "',
-	          pn_eventtype '" . pnVarPrepForStore($eventtype) . "'";
+	    WHERE xar_module '" . xarVarPrepForStore($module) . "',
+	          xar_eventtype '" . xarVarPrepForStore($eventtype) . "'";
     $result = $dbconn->Execute($sql);
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     } elseif (count($result) > 0) {
-        $msg = pnML('Item already exists in function #(1)() in module #(2)',
+        $msg = xarML('Item already exists in function #(1)() in module #(2)',
                     'addevent', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                       new SystemException($msg));
         return;
     }
@@ -73,18 +73,18 @@ function pubsub_adminapi_addevent($args)
 
     // Add item
     $sql = "INSERT INTO $pubsubeventstable (
-              pn_eventid,
-              pn_module,
-              pn_eventtype)
+              xar_eventid,
+              xar_module,
+              xar_eventtype)
             VALUES (
               $nextId,
-              '" . pnVarPrepForStore($module) . "',
-              '" . pnvarPrepForStore($eventtype) . "')";
+              '" . xarVarPrepForStore($module) . "',
+              '" . xarvarPrepForStore($eventtype) . "')";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-	pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+	xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -111,35 +111,35 @@ function pubsub_adminapi_delevent($args)
         $invalid[] = 'eventid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid) 'delevent', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
-	$msg = pnML('Not authorized to delete #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
+	$msg = xarML('Not authorized to delete #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubeventstable = $pntable['pubsub_events'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubeventstable = $xartable['pubsub_events'];
 
     // Delete item
     $sql = "DELETE FROM $pubsubeventstable
-            WHERE pn_eventid = '" . pnVarPrepForStore($eventid) . "'";
+            WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -181,39 +181,39 @@ function pubsub_adminapi_updateevent($args)
         $invalid[] = 'actionid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'updateevent', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', "$name::$eventid", ACCESS_EDIT)) {
-	$msg = pnML('Not authorized to edit #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', "$name::$eventid", ACCESS_EDIT)) {
+	$msg = xarML('Not authorized to edit #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get database setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubeventstable = $pntable['pubsub_events'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubeventstable = $xartable['pubsub_events'];
 
     // Update the item
     $sql = "UPDATE $pubsubeventstable
-            SET pn_module = '" . pnVarPrepForStore($module) . "',
-                pn_eventtype = '" . pnVarPrepForStore($eventtype) . "',
-                pn_groupdescr = '" . pnVarPrepForStore($groupdescr) . "',
-                pn_actionid = '" . pnVarPrepForStore($actionid) . "'
-            WHERE pn_eventid = '" . pnVarPrepForStore($eventid) . "'";
+            SET xar_module = '" . xarVarPrepForStore($module) . "',
+                xar_eventtype = '" . xarVarPrepForStore($eventtype) . "',
+                xar_groupdescr = '" . xarVarPrepForStore($groupdescr) . "',
+                xar_actionid = '" . xarVarPrepForStore($actionid) . "'
+            WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -243,46 +243,46 @@ function pubsub_adminapi_processevent($args)
         $invalid[] = 'objectid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'processevent', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM', 
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', 
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-	$msg = pnML('Not authorized to add #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
+	$msg = xarML('Not authorized to add #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubprocesstable = $pntable['pubsub_process'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Get next ID in table
     $nextId = $dbconn->GenId($pubsubprocesstable);
 
     // Add item
     $sql = "INSERT INTO $pubsubprocesstable (
-              pn_handlingid,
-              pn_pubsubid,
-              pn_objectid,
-	      pn_status)
+              xar_handlingid,
+              xar_pubsubid,
+              xar_objectid,
+	      xar_status)
             VALUES (
               $nextId,
-              '" . pnVarPrepForStore($pubsubid) . "',
-              '" . pnvarPrepForStore($objectid) . "',
-              '" . pnvarPrepForStore('pending') . "')";
+              '" . xarVarPrepForStore($pubsubid) . "',
+              '" . xarvarPrepForStore($objectid) . "',
+              '" . xarvarPrepForStore('pending') . "')";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -306,22 +306,22 @@ function pubsub_adminapi_processq($args)
     extract($args);
 
     // Database information
-    list($dbconn) = pnDBGetConn(); 
-    $pntable = pnDBGetTables();
-    $pubsubprocesstable = $pntable['pubsub_process'];
+    list($dbconn) = xarDBGetConn(); 
+    $xartable = xarDBGetTables();
+    $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Get all jobs in pending state
-    $sql = "SELECT pn_pubsubid,
-    		   pn_objectid
+    $sql = "SELECT xar_pubsubid,
+    		   xar_objectid
             FROM $pubsubprocesstable
-            WHERE pn_status = '" . pnVarPrepForStore('pending') . "'";
+            WHERE xar_status = '" . xarVarPrepForStore('pending') . "'";
     $result = $dbconn->Execute($sql);
     // set count to 0
     $count = 0;
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     } else {
@@ -357,27 +357,27 @@ function pubsub_adminapi_runjob($args)
         $invalid[] = 'objectid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'runjob', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
     
     // Database information
-    list($dbconn) = pnDBGetConn(); 
-    $pntable = pnDBGetTables();
-    $pubsubregtable = $pntable['pubsub_reg'];
+    list($dbconn) = xarDBGetConn(); 
+    $xartable = xarDBGetTables();
+    $pubsubregtable = $xartable['pubsub_reg'];
 
     // Get info on job to run
-    $sql = "SELECT pn_actionid,
-    		   pn_eventid
+    $sql = "SELECT xar_actionid,
+    		   xar_eventid
             FROM $pubsubregtable
-            WHERE pn_pubsubid = '" . pnVarPrepForStore($pubsubid) . "'";
+            WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
     $result   = $dbconn->Execute($sql);
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -388,22 +388,22 @@ function pubsub_adminapi_runjob($args)
 	// check mail address is a valid email address
 	if (!eregi("^([A-Za-z0-9_]|\\-|\\.)+@(([A-Za-z0-9_]|\\-)+\\.)[A-Za-z]{2,4}$", $info)) {
 	    // address invalid
-	    $msg = pnML('Invalid E-mail address #(1)',
+	    $msg = xarML('Invalid E-mail address #(1)',
                     $info);
-            pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                      new SystemException($msg));
             return;
 	} else {
        	    // Database information
-    	    $pubsubtemplatetable = $pntable['pubsub_template'];
+    	    $pubsubtemplatetable = $xartable['pubsub_template'];
     	    // Get info on job to run
-    	    $sql = "SELECT pn_template
+    	    $sql = "SELECT xar_template
             	    FROM $pubsubtemplatetable
-            	    WHERE pn_eventid = '" . pnVarPrepForStore($eventid) . "'";
+            	    WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
     	    $result   = $dbconn->Execute($sql);
             if ($dbconn->ErrorNo() != 0) {
- 	         $msg = pnMLByKey('DATABASE_ERROR', $sql);
-                 pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	         $msg = xarMLByKey('DATABASE_ERROR', $sql);
+                 xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                  return;
             }
@@ -416,11 +416,11 @@ function pubsub_adminapi_runjob($args)
 	    // need to create the $tplData array with all the information in it
 
 	    // call BL with the template to parse it and generate the HTML
-	    $html = pnTplString($template, $tplData);
+	    $html = xarTplString($template, $tplData);
 	    $plaintext = strip_tags($html);
 	    if ($action = "htmlmail") { 
 	       $boundary = "b" . md5(uniqid(time()));
-	       $message = "From: pnConfigGetVar('adminmail')\r\nReply-to: pnConfigGetVar('adminmail')\r\n";
+	       $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
 	       $message .= "Content-type: multipart/mixed; ";
 	       $message .= "boundary = $boundary\r\n\r\n";
 	       $message .= "This is a MIME encoded message.\r\n\r\n";
@@ -445,7 +445,7 @@ function pubsub_adminapi_runjob($args)
                mail($info,      // to
 	            $subject,   // subject
 		    $plaintext, // empty mesage body as sending multipart messages
-	            "From: pnConfigGetVar('adminmail')\r\nReply-to: pnConfigGetVar('adminmail')\r\n"); 
+	            "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n"); 
 	    }   
             // delete job from queue now it has run
 	    pubsub_adminapi_deljob($handlingid);
@@ -453,9 +453,9 @@ function pubsub_adminapi_runjob($args)
     } else {
         // invalid action - update queue accordingly
 	pubsub_adminapi_updatejob($handlingid,$pubsubid,$objectid,'error');
-	$msg = pnML('Invalid #(1) action',
+	$msg = xarML('Invalid #(1) action',
                  'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                  new SystemException($msg));
         return;
     }
@@ -480,35 +480,35 @@ function pubsub_adminapi_deljob($args)
         $invalid[] = 'handlingid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'deljob', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_DELETE)) {
-	$msg = pnML('Not authorized to delete #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_DELETE)) {
+	$msg = xarML('Not authorized to delete #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
     
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubprocesstable = $pntable['pubsub_process'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Delete item
     $sql = "DELETE FROM $pubsubprocesstable
-            WHERE pn_handlingid = '" . pnVarPrepForStore($handlingid) . "'";
+            WHERE xar_handlingid = '" . xarVarPrepForStore($handlingid) . "'";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -546,38 +546,38 @@ function pubsub_adminapi_updatejob($args)
         $invalid[] = 'status';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'updatejob', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_EDIT)) {
-	$msg = pnML('Not authorized to edit #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', "::$handlingid", ACCESS_EDIT)) {
+	$msg = xarML('Not authorized to edit #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get database setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubprocesstable = $pntable['pubsub_process'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Update the item
     $sql = "UPDATE $pubsubprocesstable
-            SET pn_pubsubid = '" . pnVarPrepForStore($pubsubid) . "',
-                pn_objectid = '" . pnVarPrepForStore($objectid) . "',
-                pn_status = '" . pnVarPrepForStore($status) . "'
-            WHERE pn_handlingid = '" . pnVarPrepForStore($handlingid) . "'";
+            SET xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "',
+                xar_objectid = '" . xarVarPrepForStore($objectid) . "',
+                xar_status = '" . xarVarPrepForStore($status) . "'
+            WHERE xar_handlingid = '" . xarVarPrepForStore($handlingid) . "'";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }    
@@ -606,41 +606,41 @@ function pubsub_adminapi_addtemplate($args)
         $invalid[] = 'eventid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'addtemplate', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-	$msg = pnML('Not authorized to add #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
+	$msg = xarML('Not authorized to add #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubtemplatetable = $pntable['pubsub_template'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubtemplatetable = $xartable['pubsub_template'];
 
     // check this event isn't already in the DB
-    $sql = "SELECT pn_templateid
+    $sql = "SELECT xar_templateid
             FROM $pubsubtemplatetable
-            WHERE pn_eventid '" . pnVarPrepForStore($eventid) . "'";
+            WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "'";
     $result = $dbconn->Execute($sql);
     if ($dbconn->ErrorNo() != 0) {
-        $msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        $msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     } elseif (count($result) > 0) {
-        $msg = pnML('Item already exists in function #(1)() in module #(2)',
+        $msg = xarML('Item already exists in function #(1)() in module #(2)',
                     'addtemplate', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                       new SystemException($msg));
         return;
     }
@@ -650,18 +650,18 @@ function pubsub_adminapi_addtemplate($args)
 
     // Add item
     $sql = "INSERT INTO $pubsubtemplatetable (
-              pn_templateid,
-              pn_eventid,
-              pn_template)
+              xar_templateid,
+              xar_eventid,
+              xar_template)
             VALUES (
               $nextId,
-              '" . pnVarPrepForStore($eventid) . "',
-              '" . pnvarPrepForStore($template) . "')";
+              '" . xarVarPrepForStore($eventid) . "',
+              '" . xarvarPrepForStore($template) . "')";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -688,35 +688,35 @@ function pubsub_adminapi_deltemplate($args)
         $invalid[] = 'templateid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'deltemplate', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
-	$msg = pnML('Not authorized to delete #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_DELETE)) {
+	$msg = xarML('Not authorized to delete #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get datbase setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubtemplatetable = $pntable['pubsub_template'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubtemplatetable = $xartable['pubsub_template'];
 
     // Delete item
     $sql = "DELETE FROM $pubsubtemplatetable
-            WHERE pn_templateid = '" . pnVarPrepForStore($templateid) . "'";
+            WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -750,37 +750,37 @@ function pubsub_adminapi_updatetemplate($args)
         $invalid[] = 'template';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'updatetemplate', 'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Pubsub', "$name::$templateid", ACCESS_EDIT)) {
-	$msg = pnML('Not authorized to edit #(1) items',
+    if (!xarSecAuthAction(0, 'Pubsub', "$name::$templateid", ACCESS_EDIT)) {
+	$msg = xarML('Not authorized to edit #(1) items',
                     'Pubsub');
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
 
     // Get database setup
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
-    $pubsubtemplatetable = $pntable['pubsub_template'];
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $pubsubtemplatetable = $xartable['pubsub_template'];
 
     // Update the item
     $sql = "UPDATE $pubsubtemplatetable
-            SET pn_template = '" . pnVarPrepForStore($template) . "',
-                pn_eventid = '" . pnVarPrepForStore($eventid) . "'
-            WHERE pn_templateid = '" . pnVarPrepForStore($templateid) . "'";
+            SET xar_template = '" . xarVarPrepForStore($template) . "',
+                xar_eventid = '" . xarVarPrepForStore($eventid) . "'
+            WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
- 	$msg = pnMLByKey('DATABASE_ERROR', $sql);
-        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+ 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
