@@ -183,8 +183,8 @@
       </table>
     </td>
     <td valign="top">
+		#$item['xar_text']#<br /><br />
 		<xar:if condition="isset($properties) and count($properties) gt 0">
-			#$item['xar_text']#<br /><br />
 			<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
 		</xar:if>
 	</td>
