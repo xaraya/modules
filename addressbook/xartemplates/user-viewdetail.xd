@@ -7,7 +7,7 @@
     </div>
 
 <!-- CONTACT info -->
-    
+
     <div id="contactInfo" class="xar-alt-outline" style="margin:.5em 0em;">
     <div style="padding:.5em;">
     <table border="0" cellpadding="0" cellspacing="0" >
@@ -111,6 +111,7 @@
                         <td colspan="3" style="text-align:left;">#$cud['userData']#</td>
                 </tr>
             <xar:else />
+              <xar:if condition="!empty($cud['userData'])">
                 <tr>
                         <td style="text-align:left;" >#$cud['label']#:</td>
                         <td width="10"></td>
@@ -122,6 +123,7 @@
                         </xar:if>
                         </td>
                 </tr>
+              </xar:if>
             </xar:if>
         </xar:foreach>
         </table>
