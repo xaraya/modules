@@ -16,8 +16,8 @@ function getPositionOfEvent(evt)
              top: evt.pageY 
            };
   else if (evt.clientX) {
-	//modified by CvdS for konquerer... clientLeft/-top doesn't exist
-	return {
+    //modified by CvdS for konquerer... clientLeft/-top doesn't exist
+    return {
              left: evt.clientX + document.body.scrollLeft - (document.body.clientLeft ? document.body.clientLeft : 0),
              top:  evt.clientY + document.body.scrollTop  - (document.body.clientTop ? document.body.clientTop : 0)
            };
@@ -50,7 +50,7 @@ psmenu.openMenu = function(listener, menuDivElement, pos)
   else
   {
     menuDivElement.style.visibility = "visible";
-	//modified by CvdS for konquerer... it requires 'px' postfix
+    //modified by CvdS for konquerer... it requires 'px' postfix
     menuDivElement.style.left = pos.left + 'px';
     menuDivElement.style.top = pos.top + 'px';
 

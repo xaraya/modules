@@ -135,7 +135,7 @@ function handleOnClickTarget(target)
 
     var imageID  = currentImage.id;
     var position = target.id;
-	var authkey = document.getElementById('authid').value;
+    var authkey = document.getElementById('authid').value;
 
     window.location = "index.php?module=photoshare&func=moveimage&iid=" + imageID + "&pos=" + position + "&authid=" + authkey;
   }
@@ -220,12 +220,12 @@ contextmenu.onMouseDown = function(imgId, evt, menuId)
 
 contextmenu.itemSelected = function(menuId, itemIndex)
 {
-	if (contextmenu.confirmations && contextmenu.confirmations[itemIndex])
-		if (!confirm(contextmenu.confirmations[itemIndex]))
-			return;
+    if (contextmenu.confirmations && contextmenu.confirmations[itemIndex])
+        if (!confirm(contextmenu.confirmations[itemIndex]))
+            return;
 
-	var url = contextmenu.actionURLs[itemIndex] + "&iid=" + contextmenu.currentImgElement.id;
-	window.location.href = url.replace(/&amp;/ig, '&');
+    var url = contextmenu.actionURLs[itemIndex] + "&iid=" + contextmenu.currentImgElement.id;
+    window.location.href = url.replace(/&amp;/ig, '&');
 }
 
 
