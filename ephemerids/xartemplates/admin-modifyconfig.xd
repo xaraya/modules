@@ -5,24 +5,24 @@
 
 <form method="post" action="#xarModURL('ephemerids', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<table border="0" width="100%">
-		<tr>
-			<td>
-				<table border="0" width="100%">
-					<tr>
-						<td align="left" valign="middle">
-							<xar:mlstring>Items Per Page</xar:mlstring>
-						</td>
-						<td align="left" valign="middle">
-							<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('ephemerids', 'itemsperpage')#" />
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<br /><br />
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr>
+                        <td align="left" valign="middle">
+                            <xar:mlstring>Items Per Page</xar:mlstring>
+                        </td>
+                        <td align="left" valign="middle">
+                            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('ephemerids', 'itemsperpage')#" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br /><br />
     <xar:set name="$updatebutton"><xar:mlstring>Update Ephemerids Configuration</xar:mlstring></xar:set> 
-	<input type="submit" value="#$updatebutton#"  tabindex="3" />
+    <input type="submit" value="#$updatebutton#"  tabindex="3" />
 </form>
 </center>
