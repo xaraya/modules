@@ -27,14 +27,18 @@ function pubsub_admin_main()
         return;
     }
 
-    $data = pubsub_admin_menu();
+    $welcome = '';
+    // TODO: make directory non-hardcoded
+    @include('modules/pubsub/xarlang/eng/admindoc.php');
     
-    // Specify some other variables used in the blocklayout template
-    $data['welcome'] = xarML('Welcome to the administration part of this Pubsub module.');
-
     // Return the template variables defined in this function
-    return $data;
+    return array('menu' => pubsub_admin_getmenu(),
+                 'welcome' => $welcome);
 }
+
+/**
+ * Admin Menu
+*/
 function pubsub_admin_view()
 {
     $data = pubsub_admin_menu();
@@ -50,6 +54,23 @@ function pubsub_admin_view()
         return;
     }
     
+}
+/**
+ * Main administrative menu labels
+*/
+function pubsub_admin_getmenu()
+{
+    $menu = array();
+
+    $menu['status'] = xarGetStatusMsg();
+    $menu['title'] = xarML('Pubsub Administration');
+    $menu['view_events'] = xarML('View Events');
+    $menu['view_subscriptions'] = xarML('View Subscriptions');
+    $menu['view_templates'] = xarML('View Templates');
+    $menu['new_template'] = xarML('New Template');
+    
+    return $menu;
+
 }
 
 ?>
