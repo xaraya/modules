@@ -4,12 +4,12 @@
       <value>
         <array>
           <data>
-            <!--- for each signature repeat the following block --->
+            <xar:comment> for each signature repeat the following block </xar:comment>
             <xar:foreach in="$signatures" value="$signature">
               <value>
                 <array>
                   <data>
-                    <!--- for each element in the signature repeat --->
+                    <xar:comment> for each element in the signature repeat </xar:comment>
                     <xar:foreach in="$signature" value="$param">
                       <value><string>#$param#</string></value>
                     </xar:foreach>
