@@ -14,6 +14,7 @@
 $modversion['name']           = 'photoshare';
 $modversion['id']             = '5554';
 $modversion['version']        = '3.0.0';
+$modversion['displayname']    = xarML('Photoshare');
 $modversion['description']    = 'Online photo album';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = '';
