@@ -1,7 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>PayPal IPN</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify PayPal IPN Configuration</xar:mlstring></h2><br />
 <div style="margin: auto;">
-<form method="post" action="#xarModUrl('paypalipn', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModUrl('paypalipn', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
 		<div style="clear: both; padding-top: 10px;">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<span style="float: left; width: 20%; text-align: right;">
