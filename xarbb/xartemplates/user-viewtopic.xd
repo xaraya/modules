@@ -357,7 +357,9 @@
                                     Subject 
                                 </xar:mlstring>
                                 : 
-                                #$item['xar_title']# 
+                                <a name="#$item['xar_cid']#" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid),NULL, $item['xar_cid'])#">
+                                    #$item['xar_title']# 
+                                </a>
                             </strong>
                         </div>
                         <div class="rightnote">
