@@ -1,7 +1,5 @@
 <?php
  /**
- * File: $Id: 
- * 
  * Display an item
  * 
  * @package Xaraya eXtensible Management System
@@ -93,9 +91,9 @@ function example_user_display($args)
     // Fill in the details of the item.  Note that a module variable is used here to determine
     // whether or not parts of the item information should be displayed in
     // bold type or not
-    $data['name_label'] = xarMLByKey('EXAMPLENAME');
+    $data['name_label'] = xarML('Example item name');
     $data['name_value'] = $item['name'];
-    $data['number_label'] = xarMLByKey('EXAMPLENUMBER');
+    $data['number_label'] = xarML('Example item number');
     $data['number_value'] = $item['number'];
 
     $data['exid'] = $exid;

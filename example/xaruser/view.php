@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id:
- * 
  * View a list of items
  * 
  * @package Xaraya eXtensible Management System
@@ -36,7 +34,7 @@ function example_user_view()
     // Prepare the array variable that will hold all items for display
     $data['items'] = array(); 
     // Specify some other variables for use in the function template
-    $data['someheader'] = xarMLByKey('EXAMPLENAME');
+    $data['someheader'] = xarML('Example item name');
     $data['pager'] = ''; 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -101,7 +99,7 @@ function example_user_view()
         xarModURL('example', 'user', 'view', array('startnum' => '%%')),
         xarModGetUserVar('example', 'itemsperpage', $uid)); 
     // Specify some other variables for use in the function template
-    $data['someheader'] = xarMLByKey('EXAMPLENAME'); 
+    $data['someheader'] = xarML('Example item name'); 
     // Same as above.  We are changing the name of the page to raise
     // better search engine compatibility.
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('View Examples'))); 

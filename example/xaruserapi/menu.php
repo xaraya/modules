@@ -20,9 +20,9 @@ function example_userapi_menu()
     // Initialise the array that will hold the menu configuration
     $menu = array(); 
     // Specify the menu title to be used in your blocklayout template
-    $menu['menutitle'] = xarMLByKey('EXAMPLE'); 
+    $menu['menutitle'] = xarML('Example'); 
     // Specify the menu items to be used in your blocklayout template
-    $menu['menulabel_view'] = xarMLByKey('EXAMPLEVIEW');
+    $menu['menulabel_view'] = xarML('View example items');
     $menu['menulink_view'] = xarModURL('example', 'user', 'view'); 
     // Specify the labels/links for more menu items if relevant
     // $menu['menulabel_other'] = xarML('Some other menu item');
