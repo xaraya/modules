@@ -38,10 +38,8 @@ function release_adminapi_updatenote($args)
         return; 
     }
 
-    if (!xarSecAuthAction(0, 'Release::', "::", ACCESS_READ)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('EditRelease')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -103,11 +101,8 @@ function release_adminapi_deletenote($args)
         return; 
     }
 
-    // Security check
-    if (!xarSecAuthAction(0, 'Release::', "$link[rid]::$rnid", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('DeleteRelease')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -157,11 +152,8 @@ function release_adminapi_deleteid($args)
         return; 
     }
 
-    // Security check
-    if (!xarSecAuthAction(0, 'Release::', "::", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('DeleteRelease')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -211,11 +203,8 @@ function release_adminapi_deletedoc($args)
         return; 
     }
 
-    // Security check
-    if (!xarSecAuthAction(0, 'Release::', "::", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('DeleteRelease')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -238,31 +227,26 @@ function release_adminapi_deletedoc($args)
 
 function release_adminapi_getmenulinks()
 {
-    if (xarSecAuthAction(0, 'release::', '::', ACCESS_ADMIN)) {
+
+    if (xarSecurityCheck('EditRelease', 0)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'admin',
                                                   'addcore'),
                              'title' => xarML('Add Core Notifications'),
                              'label' => xarML('Add Core Release'));
 
-     }
-    if (xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'admin',
                                                   'viewids'),
                              'title' => xarML('View Registered IDs on the system'),
                              'label' => xarML('View IDs'));
 
-     }
-    if (xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'admin',
                                                   'viewnotes'),
                              'title' => xarML('View Release Notifications'),
                              'label' => xarML('View Notifications'));
 
-     }
-    if (xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'admin',
                                                   'viewdocs'),

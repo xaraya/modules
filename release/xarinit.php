@@ -161,6 +161,11 @@ function release_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    // Register Masks
+    xarRegisterMask('OverviewRelease','All','release','All','All',ACCESS_READ);
+    xarRegisterMask('EditRelease','All','release','All','All',ACCESS_EDIT);
+    xarRegisterMask('DeleteRelease','All','release','All','All',ACCESS_DELETE);
+
     return true;
 }
 
@@ -226,6 +231,11 @@ function release_delete()
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
+    // UnRegister Masks
+    xarUnRegisterMask('OverviewRelease');
+    xarUnRegisterMask('EditRelease');
+    xarUnRegisterMask('DeleteRelease');
 
     return true;
 }

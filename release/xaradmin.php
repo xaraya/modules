@@ -11,12 +11,9 @@
 
 function release_admin_main()
 {
-    if (!xarSecAuthAction(0, 'Reccomend::', '::', ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
-    
-    $theme = xarVarCleanFromInput('theme');
+
+    // Security Check
+    if(!xarSecurityCheck('EditRelease')) return;
         
     return array();
 
@@ -24,11 +21,8 @@ function release_admin_main()
 
 function release_admin_viewids()
 {
-    // Security check
-    if (!xarSecAuthAction(0, 'users::', '::', ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('EditRelease')) return;
 
     $data = array();
 
@@ -50,7 +44,7 @@ function release_admin_viewids()
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
 
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT)) {
+        if (xarSecurityCheck('EditRelease', 0)) {
             $items[$i]['editurl'] = xarModURL('release',
                                               'user',
                                               'modifyid',
@@ -60,7 +54,7 @@ function release_admin_viewids()
         }
 
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_DELETE)) {
+        if (xarSecurityCheck('DeleteRelease', 0)) {
             $items[$i]['deleteurl'] = xarModURL('release',
                                                'admin',
                                                'deleteid',
@@ -79,11 +73,8 @@ function release_admin_viewids()
 
 function release_admin_viewnotes()
 {
-    // Security check
-    if (!xarSecAuthAction(0, 'users::', '::', ACCESS_READ)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('EditRelease')) return;
 
     // Get parameters
     list($startnum,
@@ -111,7 +102,7 @@ function release_admin_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'approved' => 1));
             if ($items == false){
@@ -128,7 +119,7 @@ function release_admin_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'approved' => 2));
             if ($items == false){
@@ -144,7 +135,7 @@ function release_admin_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'certified'=> $filter));
             
@@ -161,7 +152,7 @@ function release_admin_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'price'    => $filter));
             
@@ -178,7 +169,7 @@ function release_admin_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'supported'=> $filter));
             
@@ -193,7 +184,7 @@ function release_admin_viewnotes()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
 
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT)) {
+        if (xarSecurityCheck('EditRelease', 0)) {
             $items[$i]['editurl'] = xarModURL('release',
                                               'admin',
                                               'modifynote',
@@ -202,7 +193,7 @@ function release_admin_viewnotes()
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_DELETE)) {
+        if (xarSecurityCheck('DeleteRelease', 0)) {
             $items[$i]['deleteurl'] = xarModURL('release',
                                                'admin',
                                                'deletenote',
@@ -226,12 +217,12 @@ function release_admin_viewnotes()
                                           'displaynote',
                                            array('rnid' => $item['rnid']));
 
-        $getuser = xarModAPIFunc('users',
+        $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
                                   array('uid' => $getid['uid']));
 
-        $items[$i]['contacturl'] = xarModURL('users',
+        $items[$i]['contacturl'] = xarModURL('roles',
                                              'user',
                                              'display',
                                               array('uid' => $getid['uid']));
@@ -263,11 +254,8 @@ function release_admin_viewnotes()
 
 function release_admin_viewdocs()
 {
-    // Security check
-    if (!xarSecAuthAction(0, 'users::', '::', ACCESS_READ)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('EditRelease')) return;
 
     // Get parameters
     list($startnum,
@@ -308,7 +296,7 @@ function release_admin_viewdocs()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'approved' => 2));
             if ($items == false){
@@ -324,7 +312,7 @@ function release_admin_viewdocs()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'certified'=> $filter));
             
@@ -341,7 +329,7 @@ function release_admin_viewdocs()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'price'    => $filter));
             
@@ -358,7 +346,7 @@ function release_admin_viewdocs()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('users',
+                                        'numitems' => xarModGetVar('roles',
                                                                   'itemsperpage'),
                                         'supported'=> $filter));
             
@@ -373,7 +361,7 @@ function release_admin_viewdocs()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
 
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT)) {
+        if (xarSecurityCheck('EditRelease', 0)) {
             $items[$i]['editurl'] = xarModURL('release',
                                               'admin',
                                               'modifynote',
@@ -382,7 +370,7 @@ function release_admin_viewdocs()
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_DELETE)) {
+        if (xarSecurityCheck('DeleteRelease', 0)) {
             $items[$i]['deleteurl'] = xarModURL('release',
                                                'admin',
                                                'deletenote',
@@ -406,12 +394,12 @@ function release_admin_viewdocs()
                                           'displaynote',
                                            array('rnid' => $item['rnid']));
 
-        $getuser = xarModAPIFunc('users',
+        $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
                                   array('uid' => $getid['uid']));
 
-        $items[$i]['contacturl'] = xarModURL('users',
+        $items[$i]['contacturl'] = xarModURL('roles',
                                              'user',
                                              'display',
                                               array('uid' => $getid['uid']));
@@ -443,11 +431,8 @@ function release_admin_viewdocs()
 
 function release_admin_modifynote()
 {
-    // Security check
-    if (!xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('EditRelease')) return;
 
     list ($phase,
           $rnid) = xarVarCleanFromInput('phase',
@@ -479,7 +464,7 @@ function release_admin_modifynote()
             if ($id == false) return;
 
             // The user API function is called.
-            $user = xarModAPIFunc('users',
+            $user = xarModAPIFunc('roles',
                                   'user',
                                   'get',
                                   array('uid' => $id['uid']));
@@ -576,11 +561,8 @@ function release_admin_deletenote()
 
     if ($data == false) return;
 
-    // Security check
-    if (!xarSecAuthAction(0, 'users::Item', "$data[rid]::$rnid", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('DeleteRelease')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
@@ -621,11 +603,8 @@ function release_admin_deleteid()
 
     if ($data == false) return;
 
-    // Security check
-    if (!xarSecAuthAction(0, 'users::Item', "::", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('DeleteRelease')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {

@@ -28,11 +28,8 @@ function release_userapi_getallids($args)
 
     $releaseinfo = array();
 
-    // Security check
-    if (!xarSecAuthAction(0, 'users::', '::', ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -59,7 +56,7 @@ function release_userapi_getallids($args)
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($rid, $uid, $name, $desc, $type, $certified, $approved) = $result->fields;
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
+        if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
                                    'name'       => $name,
@@ -109,7 +106,7 @@ function release_userapi_getid($args)
     list($rid, $uid, $name, $desc, $type, $certified, $approved) = $result->fields;
     $result->Close();
 
-    if (!xarSecAuthAction(0, 'Release::', "$name::$rid", ACCESS_READ)) {
+    if (!xarSecurityCheck('OverviewRelease', 0)) {
         return false;
     }
 
@@ -220,10 +217,8 @@ function release_userapi_updateid($args)
         return; 
     }
 
-    if (!xarSecAuthAction(0, 'Release::', "::", ACCESS_READ)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -265,11 +260,8 @@ function release_userapi_getallnotes($args)
 
     $releaseinfo = array();
 
-    // Security check
-    if (!xarSecAuthAction(0, 'users::', '::', ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -322,7 +314,7 @@ function release_userapi_getallnotes($args)
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved) = $result->fields;
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
+        if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
                                    'version'    => $version,
@@ -390,7 +382,7 @@ function release_userapi_getnote($args)
     list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved) = $result->fields;
     $result->Close();
 
-    if (!xarSecAuthAction(0, 'Release::', "$rnid::$rid", ACCESS_READ)) {
+    if (!xarSecurityCheck('OverviewRelease', 0)) {
         return false;
     }
 
@@ -508,11 +500,8 @@ function release_userapi_getdocs($args)
 
     $releasedocs = array();
 
-    // Security check
-    if (!xarSecAuthAction(0, 'release::', '::', ACCESS_OVERVIEW)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+    if(!xarSecurityCheck('OverviewRelease')) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -547,7 +536,7 @@ function release_userapi_getdocs($args)
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         list($rdid, $rid, $title, $docs, $type, $time, $approved) = $result->fields;
-        if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
+        if (xarSecurityCheck('OverviewRelease', 0)) {
             $releasedocs[] = array('rdid'       => $rdid,
                                    'rid'        => $rid,
                                    'title'      => $title,
@@ -598,7 +587,7 @@ function release_userapi_getdoc($args)
     list($rdid, $rid, $title, $docs, $type, $time, $approved) = $result->fields;
     $result->Close();
 
-    if (!xarSecAuthAction(0, 'Release::', "$name::$rid", ACCESS_READ)) {
+    if (!xarSecurityCheck('OverviewRelease', 0)) {
         return false;
     }
 
@@ -678,7 +667,7 @@ function release_userapi_createdoc($args)
 
 function release_userapi_getmenulinks()
 {
-    if (xarSecAuthAction(0, 'users::', '::', ACCESS_OVERVIEW)) {
+    if (xarSecurityCheck('OverviewRelease', 0)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'user',
                                                   'viewids'),
