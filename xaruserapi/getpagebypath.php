@@ -17,7 +17,8 @@
 // In addition, if 'about' is a module alias, the following will match:
 //  /about/the-org
 
-function xarpages_userapi_getpagebypath($args) {
+function xarpages_userapi_getpagebypath($args)
+{
     extract($args);
 
     if (!isset($path)) {
