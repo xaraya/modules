@@ -1,5 +1,5 @@
 <xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
+    License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
 <xar:comment>
     minimum use of tables for layout - a css-driven template 
@@ -19,12 +19,17 @@
 <div class="xarbb-topiccontrols">
     <span class="xar-sub">
         <a href="#xarModUrl('xarbb', 'user', 'main')#">
-            #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
-            <xar:mlstring>
-                Forum Index 
-            </xar:mlstring>
+        <xar:if condition="!empty($xarbbtitle)">
+            #$xarbbtitle#
+        <xar:else />
+            #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)#
+        </xar:if>
+            #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
+        <xar:mlstring>
+            Forum Index 
+        </xar:mlstring>
         </a>
-        -> 
+        ->
         <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
             #$fname# 
         </a>
@@ -218,7 +223,7 @@
 <div class="xarbb-noteswrapper">
     <span class="xar-sub rightnote">
         <xar:mlstring>
-            All times are GMT 
+            All times are GMT
         </xar:mlstring>
     </span>
 </div>

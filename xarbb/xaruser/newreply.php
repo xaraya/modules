@@ -129,7 +129,8 @@ function xarbb_user_newreply()
     $data['authid']     = xarSecGenAuthkey();
 
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Reply to ') . $data['ttitle']));
-
+    $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
+    $data['xarbbtitle'] = isset($xarbbtitle) ? $xarbbtitle :'';
     return $data;
 }
 ?>

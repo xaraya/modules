@@ -84,8 +84,11 @@ function xarbb_user_updatetopic()
 
     $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
     $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid));
+    $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
+    $xarbbtitle = isset($xarbbtitle) ? $xarbbtitle :'';
     $data = xarTplModule('xarbb','user', 'return', array('forumreturn'     => $forumreturn,
-                                                         'topicreturn'     => $topicreturn));
+                                                         'topicreturn'     => $topicreturn,
+                                                         'xarbbtitle'      => $xarbbtitle));
     return $data;
 }
 ?>

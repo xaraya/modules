@@ -223,9 +223,11 @@ function xarbb_user_newtopic()
             else
                 xarResponseRedirect(xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid'])));
             */
-
+            $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
+            $xarbbtitle          = isset($xarbbtitle) ? $xarbbtitle :'';
             $data = xarTplModule('xarbb','user', 'return', array('forumreturn'     => $forumreturn,
-                                                                 'topicreturn'     => $topicreturn));
+                                                                 'topicreturn'     => $topicreturn,
+                                                                 'xarbbtitle'      => $xarbbtitle));
 
 
             break;
