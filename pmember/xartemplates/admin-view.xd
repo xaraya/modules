@@ -1,36 +1,36 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Paid Membership Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-	<h2><xar:mlstring>View Subscriptions</xar:mlstring></h2>
+    <h2><xar:mlstring>View Subscriptions</xar:mlstring></h2>
         <div>
-			<div class="xar-norm-outline" style="padding: 0px 0px 5px 0px;">
-				<table border="0" width="100%" cellspacing="0" cellpadding="2">
-					<tr>
-						<th style="text-align: left; padding-left: 10px;">
-							#$membername#
-						</th>
-						<th style="text-align: center; padding-left: 10px;">
-							#$subscribed#
-						</th>
-						<th style="text-align: center;padding-left: 10px;">
-							#$expires#
-						</th>
-					</tr>
-					<xar:loop name="$items">
-					<tr>
-						<td class="xar-norm-outline xar-mod-title" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
-							<a href="#xarModURL('roles', 'admin', 'displayrole', array('uid' => $loop:item['uid']))#">#$loop:item['name']#</a>
-						</td>
-						<td class="xar-norm-outline" style="vertical-align: middle; text-align: center; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
-							#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['subscribed'])#
-						</td>
-						<td class="xar-norm-outline" style="vertical-align: middle; text-align: center; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
-							#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['expires'])#
-						</td>
-					</tr>
-					</xar:loop>
-					</tr>
-				</table>
-			</div>
+            <div class="xar-norm-outline" style="padding: 0px 0px 5px 0px;">
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <th style="text-align: left; padding-left: 10px;">
+                            #$membername#
+                        </th>
+                        <th style="text-align: center; padding-left: 10px;">
+                            #$subscribed#
+                        </th>
+                        <th style="text-align: center;padding-left: 10px;">
+                            #$expires#
+                        </th>
+                    </tr>
+                    <xar:loop name="$items">
+                    <tr>
+                        <td class="xar-norm-outline xar-mod-title" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                            <a href="#xarModURL('roles', 'admin', 'displayrole', array('uid' => $loop:item['uid']))#">#$loop:item['name']#</a>
+                        </td>
+                        <td class="xar-norm-outline" style="vertical-align: middle; text-align: center; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                            #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['subscribed'])#
+                        </td>
+                        <td class="xar-norm-outline" style="vertical-align: middle; text-align: center; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                            #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['expires'])#
+                        </td>
+                    </tr>
+                    </xar:loop>
+                    </tr>
+                </table>
+            </div>
         </div>
-	#$pager#
+    #$pager#
 </div>

@@ -15,14 +15,14 @@
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>The paid membership modules will work behind the scenes in managing your paid membership to your website.  It will take a confirmation from a credit card or money management service (tested against PayPal) and will upgrade the account of the user who paid.  It will also work behind the scenes with the scheduler module to downgrade subscriptions that are past the expiration date (need to install the scheduler for functionality).</xar:mlstring></p>
-		</div>
+        </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <p><xar:mlstring>How to use it?</xar:mlstring></p>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>From the menu, you have two choices. </xar:mlstring></p>
             <p><xar:mlstring>"Modify Configuration".  From this menu option, you can update the necessary configuration options, such as the type of payment (subscription or one time fee) and price of payment.</xar:mlstring></p>
-			<p><xar:mlstring>"View Subscriptions".  From this menu option you view the users who have paid, when they subscribed, and when their subscription will run out.</xar:mlstring></p>
+            <p><xar:mlstring>"View Subscriptions".  From this menu option you view the users who have paid, when they subscribed, and when their subscription will run out.</xar:mlstring></p>
         </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <p><xar:mlstring>Scheduling deactivations</xar:mlstring></p>
@@ -38,7 +38,7 @@
             <p><xar:mlstring>Included Blocks</xar:mlstring></p>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<p><xar:mlstring>There are no blocks included at this time.</xar:mlstring></p>
+            <p><xar:mlstring>There are no blocks included at this time.</xar:mlstring></p>
         </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <p><xar:mlstring>Included Hooks</xar:mlstring></p>

@@ -19,7 +19,7 @@ function pmember_admin_view()
 
     
     // Security Check
-	if(!xarSecurityCheck('AdminPmember')) return;
+    if(!xarSecurityCheck('AdminPmember')) return;
 
     // The user API function is called
     $links = xarModAPIFunc('pmember',
@@ -42,7 +42,7 @@ function pmember_admin_view()
                                  'get',
                                  array('uid' => $link['uid']));
         $links[$i]['name'] = $getname['name'];
-	$links[$i]['username'] = $getname['uname'];
+    $links[$i]['username'] = $getname['uname'];
     }
 
     // Add the array of items to the template variables

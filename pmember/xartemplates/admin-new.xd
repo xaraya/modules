@@ -4,35 +4,35 @@
 <div style="margin: auto;">
 <form method="post" action="#xarModUrl('pmember', 'admin', 'new')#" method="post" enctype="application/x-www-form-urlencoded">
 
-		<div style="clear: both; padding-top: 10px;">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="phase" id="phase" value="update" />
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Enter Username')#"><label for="uname"><xar:mlstring>Username to Add</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="uname" id="username" size="25" maxlength="255" />
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="phase" id="phase" value="update" />
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Enter Username')#"><label for="uname"><xar:mlstring>Username to Add</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="uname" id="username" size="25" maxlength="255" />
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<b><xar:mlstring>OR</xar:mlstring></b>
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <b><xar:mlstring>OR</xar:mlstring></b>
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Enter Email')#"><label for="email"><xar:mlstring>Email to Add</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="email" id="email" size="25" maxlength="255" />
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Enter Email')#"><label for="email"><xar:mlstring>Email to Add</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="email" id="email" size="25" maxlength="255" />
+        </span>
+        </div>
 
-		<div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
-			<input type="submit" value="#xarML('Submit')#" />
-		</div>
+        <div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
+            <input type="submit" value="#xarML('Submit')#" />
+        </div>
 
 </form>
 </div>
