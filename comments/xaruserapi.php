@@ -27,12 +27,15 @@ include_once('modules/comments/xarincludes/defines.php');
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
- * @param    integer     $comment_id     id of the comment to lookup
+ * @param    integer     $cid     id of the comment to lookup
  * @returns  bool        returns true on success, throws an exception and returns false otherwise
  */
-function comments_userapi_activate($comment_id) {
-    if (empty($comment_id)) {
-        $msg = xarML('Missing or Invalid parameter \'comment_id\'!!');
+function comments_userapi_activate( $args ) {
+    
+    extract($args);
+    
+    if (empty($id)) {
+        $msg = xarML('Missing or Invalid parameter \'id\'!!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -61,9 +64,11 @@ function comments_userapi_activate($comment_id) {
  * @param    integer     $comment_id     id of the comment to lookup
  * @returns  bool      returns true on success, throws an exception and returns false otherwise
  */
-function comments_userapi_deactivate($comment_id) {
-    if (empty($comment_id)) {
-        $msg = xarML('Missing or Invalid parameter \'comment_id\'!!');
+function comments_userapi_deactivate( $args ) {
+    extract($args);
+    
+    if (empty($cid)) {
+        $msg = xarML('Missing or Invalid parameter \'cid\'!!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -75,7 +80,7 @@ function comments_userapi_deactivate($comment_id) {
     // then find the root node.
     $sql = "UPDATE $xartable[comments]
             SET xar_status='"._COM_STATUS_OFF."'
-            WHERE xar_cid='$comment_cid'";
+            WHERE xar_cid='$cid'";
 
     $result =& $dbconn->Execute($sql);
 
@@ -89,25 +94,34 @@ function comments_userapi_deactivate($comment_id) {
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
- * @param    integer     $comment_id     id of the comment to lookup
+ * @param    integer     modid      The module that comment is attached to
+ * @param    integer     objectid   The particular object within that module 
+ * @param    integer     itemtype   The itemtype of that object
  * @returns  array an array containing the left and right values or an
  *                 empty array if the comment_id specified doesn't exist
  */
-function comments_userapi_get_node_root($args) {
+function comments_userapi_get_node_root( $args ) {
+    
     extract ($args);
+    
+    $exception = false;
+    
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Missing or Invalid parameter \'modid\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $exception |= true;
+    }
 
     if (!isset($objectid) || empty($objectid)) {
-        $msg = xarML('Missing or Invalid parameter \'objectidj\'!!');
+        $msg = xarML('Missing or Invalid parameter \'objectid\'!!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        return;
+        $exception |= true;
     }
 
-    if (!isset($modid) || empty($modid)) {
-        $msg = xarML('Missing or Invalid parameter \'modidj\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+    if ($exception) {
         return;
-    }
-
+    )
+    
     if (empty($itemtype)) {
         $itemtype = 0;
     }
@@ -149,15 +163,33 @@ function comments_userapi_get_node_root($args) {
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   private
+ * @param    integer     modid      The module that comment is attached to
+ * @param    integer     objectid   The particular object within that module 
+ * @param    integer     itemtype   The itemtype of that object
  * @returns   integer   the highest 'right' value for the specified modid/objectid pair or zero if it couldn't find one
  */
 function comments_userapi_get_object_maxright( $args ) {
 
     extract ($args);
 
-    if (!isset($objectid) || !isset($modid)) {
-        // TODO:  raise exception
+    $exception = false;
+    
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Missing or Invalid parameter \'modid\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $exception |= true;
     }
+
+    if (!isset($objectid) || empty($objectid)) {
+        $msg = xarML('Missing or Invalid parameter \'objectid\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $exception |= true;
+    }
+
+    if ($exception) {
+        return;
+    )
+    
     if (empty($itemtype)) {
         $itemtype = 0;
     }
@@ -196,7 +228,7 @@ function comments_userapi_get_object_maxright( $args ) {
  * @access   private
  * @returns   integer   the highest 'right' value for the table or zero if it couldn't find one
  */
-function comments_userapi_get_table_maxright( ) {
+function comments_userapi_get_table_maxright(/* VOID */) {
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -229,14 +261,18 @@ function comments_userapi_get_table_maxright( ) {
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   public
- * @param    integer     $comment_id     id of the comment to lookup
+ * @param    integer     $cid     id of the comment to lookup
  * @returns  array an array containing the left and right values or an
  *           empty array if the comment_id specified doesn't exist
  */
-function comments_userapi_get_node_lrvalues($comment_id) {
+function comments_userapi_get_node_lrvalues( $args ) } 
 
-    if (empty($comment_id)) {
-        // TODO: raise exception
+    extract( $args );
+    
+    if (empty($cid)) {
+        $msg = xarML('Missing or Invalid parameter \'cid\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     list($dbconn) = xarDBGetConn();
@@ -246,7 +282,7 @@ function comments_userapi_get_node_lrvalues($comment_id) {
 
     $sql = "SELECT  $ctable[left], $ctable[right]
               FROM  $xartable[comments]
-             WHERE  $ctable[cid]='$comment_id'";
+             WHERE  $ctable[cid]='$cid'";
 
     $result =& $dbconn->Execute($sql);
 
@@ -273,11 +309,16 @@ function comments_userapi_get_node_lrvalues($comment_id) {
  * @returns  array an array containing the left and right values or an
  *           empty array if the modid specified doesn't exist
  */
-function comments_userapi_get_module_lrvalues($modid, $itemtype = 0) {
+function comments_userapi_get_module_lrvalues( $args ) {
 
-    if (empty($modid)) {
-        // TODO: raise exception
+    extract ($args);
+
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Missing or Invalid parameter \'modid\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
+
     if (empty($itemtype)) {
         $itemtype = 0;
     }
@@ -325,8 +366,24 @@ function comments_userapi_get_module_lrvalues($modid, $itemtype = 0) {
  * @param    integer    $gapsize       the size of the gap to make (defaults to 2 for inserting a single node)
  * @returns  integer    number of affected rows or false [0] on error
  */
-function comments_userapi_create_gap($startpoint, $gapsize = 2, $endpoint = NULL) {
-
+function comments_userapi_create_gap( $args ) {
+    
+    extract($args);
+    
+    if (!isset($startpoint)) {
+        $msg = xarML('Missing or Invalid parameter \'startpoint\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
+    
+    if (!isset($endpoint) || !is_numeric($endpoint)) {
+        $endpoint = NULL;
+    }
+       
+    if (!isset($gapsize) || $gapsize <= 1) {
+        $gapsize = 2;
+    }
+     
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
@@ -364,8 +421,24 @@ function comments_userapi_create_gap($startpoint, $gapsize = 2, $endpoint = NULL
  * @param    integer    $gapsize       the size of the gap to remove
  * @returns  integer    number of affected rows or false [0] on error
  */
-function comments_userapi_remove_gap($startpoint, $endpoint, $gapsize) {
+function comments_userapi_remove_gap( $args ) {
 
+    extract($args);
+    
+    if (!isset($startpoint)) {
+        $msg = xarML('Missing or Invalid parameter \'startpoint\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
+    
+    if (!isset($gapsize) || $gapsize <= 1) {
+        $gapsize = 2;
+    }
+     
+    if (!isset($endpoint) || !is_numeric($endpoint)) {
+        $endpoint = NULL;
+    }
+       
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
@@ -398,12 +471,36 @@ function comments_userapi_remove_gap($startpoint, $endpoint, $gapsize) {
  *
  * @author   Carl P. Corliss (aka rabbitt)
  * @access   private
- * @param    integer     $modid      the id of the module this is attached to
- * @param    integer     $itemtype   the item type this is attached to
- * @param    string      $objectid     the particular item in the specified module that this is attached to
- * @returns   integer     the id of the node that was created so it can be used as a parent id
+ * @param    integer     modid      The module that comment is attached to
+ * @param    integer     objectid   The particular object within that module 
+ * @param    integer     itemtype   The itemtype of that object
+ * @returns  integer     the id of the node that was created so it can be used as a parent id
  */
-function comments_userapi_add_rootnode($modid, $objectid, $itemtype = 0) {
+function comments_userapi_add_rootnode( $args ) {
+
+    extract ($args);
+
+    $exception = false;
+    
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Missing or Invalid parameter \'modid\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $exception |= true;
+    }
+
+    if (!isset($objectid) || empty($objectid)) {
+        $msg = xarML('Missing or Invalid parameter \'objectid\'!!');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $exception |= true;
+    }
+
+    if ($exception) {
+        return;
+    )
+    
+    if (empty($itemtype)) {
+        $itemtype = 0;
+    }
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -419,10 +516,10 @@ function comments_userapi_add_rootnode($modid, $objectid, $itemtype = 0) {
         $maxright = 0;
     }
 
-    $commenttable=$xartable['comments'];
+    $commenttable = $xartable['comments'];
 
     // Set left and right values;
-    $left = $maxright + 1;
+    $left  = $maxright + 1;
     $right = $maxright + 2;
     $cdate = time();
 
@@ -467,9 +564,9 @@ function comments_userapi_add_rootnode($modid, $objectid, $itemtype = 0) {
         return;
 
     // Return the cid of the created record just now.
-    $cid = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
+    $id = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
 
-    return $cid;
+    return $id;
 }
 
 /**
@@ -481,14 +578,15 @@ function comments_userapi_add_rootnode($modid, $objectid, $itemtype = 0) {
  * @returns  array   an array containing the sole comment that was requested
                      or an empty array if no comment found
  */
-function comments_userapi_get_one($args) {
+function comments_userapi_get_one( $args ) {
 
     extract($args);
 
     if(!isset($cid) || empty($cid)) {
-        $msg = xarML('Missing or Invalid arguement [#(1)] for #(2) function #(3) in module #(4)',
+        $msg = xarML('Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
                                  'cid','userapi','get_one','comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', 
+                        new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
         return false;
     }
 
@@ -551,9 +649,9 @@ function comments_userapi_get_one($args) {
 
     if (!comments_renderer_array_markdepths_bypid($commentlist)) {
         // TODO: raise exception -- couldn't figure out depths for nodes
+        // NOTE: <rabbitt> this stuff should really be moved out of the comments
+        //       module into a "rendering" module of some sort anyway -- or (god forbid) a widget.
     }
-
-
 
     return $commentlist;
 }
@@ -581,7 +679,6 @@ function comments_userapi_get_one($args) {
 function comments_userapi_get_multiple($args) {
     extract($args);
 
-    // $modid, $objectid, $depth=_COM_MAX_DEPTH, $cid=0
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
                                  'modid', $modid, 'userapi', 'get_multiple', 'comments');
@@ -602,9 +699,12 @@ function comments_userapi_get_multiple($args) {
     }
 
     if (!isset($cid) || !is_numeric($cid)) {
-        $cid = 0;
+        $id = 0;
     } else {
-        $nodelr = comments_userapi_get_node_lrvalues($cid);
+        $nodelr = xarModAPIFunc('comments',
+                                'user',
+                                'get_node_lrvalues',
+                                 array('cid' => $cid));
     }
 
     if (!isset($status) || empty($status)) {
@@ -706,14 +806,15 @@ function comments_userapi_get_multiple($args) {
  */
 function comments_userapi_get_count($args) {
     extract($args);
-    // $modid, $objectid
+    
+    $exception = false;
 
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'modid', 'userapi', 'get_count', 'comments');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
-        return false;
+        $exception |= true;
     }
 
 
@@ -722,9 +823,13 @@ function comments_userapi_get_count($args) {
                                  'objectid', 'userapi', 'get_count', 'comments');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
-        return false;
+        $exception |= true;
     }
 
+    if ($exception) {
+        return;
+    }
+    
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $ctable = &$xartable['comments_column'];
@@ -767,15 +872,16 @@ function comments_userapi_get_count($args) {
  */
 function comments_userapi_get_author_count($args) {
     extract($args);
-    // $modid, $author
 
+    $exception = false;
+    
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'modid', 'userapi', 'get_count', 'comments');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
-        return false;
-    }
+        $exception |= true;
+            }
 
 
     if ( !isset($author) || empty($author) ) {
@@ -783,9 +889,13 @@ function comments_userapi_get_author_count($args) {
                                  'author', 'userapi', 'get_count', 'comments');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
-        return false;
+        $exception |= true;
     }
 
+    if ($exception) {
+        return;
+    }
+    
     if (!isset($status) || empty($status)) {
         $status = _COM_STATUS_ON;
     }
@@ -821,24 +931,26 @@ function comments_userapi_get_author_count($args) {
 /**
  * Get the number of comments for a list of module items
  *
- * @author mikespub
- * @access public
- * @param integer    $modid     the id of the module that these nodes belong to
- * @param integer    $itemtype  the item type that these nodes belong to
- * @param array    $objectids    the list of ids of the items that these nodes belong to
- * @returns array  the number of comments for the particular modid/objectids pairs,
- *                   or raise an exception and return false.
+ * @author  mikespub
+ * @access  public
+ * @param   integer   $modid        the id of the module that these nodes belong to
+ * @param   integer   $itemtype     the item type that these nodes belong to
+ * @param   array     $objectids    the list of ids of the items that these nodes belong to
+ * @returns array     the number of comments for the particular modid/objectids pairs,
+ *                    or raise an exception and return false.
  */
 function comments_userapi_get_countlist($args) {
     extract($args);
     // $modid, $objectids
 
+    $exception = false;
+    
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'modid', 'userapi', 'get_countlist', 'comments');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
-        return false;
+        $exception |= true;
     }
 
 
@@ -847,9 +959,13 @@ function comments_userapi_get_countlist($args) {
                      'objectids', 'userapi', 'get_countlist', 'comments');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
-        return false;
+        $exception |= true;
     }
 
+    if ($exception) {
+        return false;
+    }
+     
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $ctable = &$xartable['comments_column'];
@@ -905,7 +1021,10 @@ function comments_userapi_get_childcount($cid) {
     $xartable = xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
-    $nodelr = comments_userapi_get_node_lrvalues($cid);
+    $nodelr = xarModAPIFunc('comments',
+                            'user',
+                            'get_node_lrvalues',
+                             array('id' => $cid));
 
     $sql = "SELECT  COUNT($ctable[cid]) as numitems
               FROM  $xartable[comments]
@@ -955,19 +1074,17 @@ function comments_userapi_get_childcountlist($args) {
     $ctable = &$xartable['comments_column'];
 
     $sql = "SELECT P1.xar_cid, COUNT(P2.xar_cid) AS numitems
-                  FROM $xartable[comments] AS P1,
-                       $xartable[comments] AS P2
-                 WHERE P2.xar_left
-                    >= P1.xar_left
-                   AND P2.xar_left
-                    <= P1.xar_right
-                   AND P1.xar_left >= $left
-                   AND P1.xar_right <= $right
-                   AND  P2.xar_status='"._COM_STATUS_ON."'
-             GROUP BY P1.xar_cid";
+              FROM $xartable[comments] AS P1,
+                   $xartable[comments] AS P2
+             WHERE P2.xar_left >= P1.xar_left
+               AND P2.xar_left <= P1.xar_right
+               AND P1.xar_left >= $left
+               AND P1.xar_right <= $right
+               AND P2.xar_status='"._COM_STATUS_ON."'
+          GROUP BY P1.xar_cid";
 /*
                    AND P1.xar_cid
-                        IN (".join(', ',$cids).")
+                        IN (".join(', ',$ids).")
 */
     $result =& $dbconn->Execute($sql);
     if (!$result)
@@ -979,9 +1096,9 @@ function comments_userapi_get_childcountlist($args) {
 
     $count = array();
     while (!$result->EOF) {
-        list($cid,$numitems) = $result->fields;
+        list($id,$numitems) = $result->fields;
         // return total count - 1 ... the -1 is so we don't count the comment root.
-        $count[$cid] = $numitems - 1;
+        $count[$id] = $numitems - 1;
         $result->MoveNext();
     }
 
@@ -1104,15 +1221,21 @@ function comments_userapi_add($args) {
     assert($pid!=0 && !empty($pid));
 
     // grab the left and right values from the parent
-    $parent_lnr = comments_userapi_get_node_lrvalues($pid);
-
+    $parent_lnr = xarModAPIFunc('comments',
+                                'user',
+                                'get_node_lrvalues',
+                                 array('cid' => $pid));
+    
     // there should be -at-least- one affected row -- if not
     // then raise an exception. btw, at the very least,
     // the 'right' value of the parent node would have been affected.
-    if (!comments_userapi_create_gap($parent_lnr['xar_right'])) {
-        // TODO: raise exception
-        die ("Could not create gap for new comment insertion. I'm going to die a really horrible death now -- see you later!");
-        return;
+    if (!xarModAPIFunc('comments',
+                       'user',
+                       'create_gap',
+                        array('startpoint' => $parent_lnr['xar_right'])) {
+            // TODO: raise exception
+            die ("Could not create gap for new comment insertion. I'm going to die a really horrible death now -- see you later!");
+            return;
     }
 
     // the comment's date will be autoinserted by database
@@ -1121,8 +1244,8 @@ function comments_userapi_add($args) {
     $right    = $left + 1;
     $status   = xarModGetVar('comments','AuthorizeComments') ? _COM_STATUS_OFF : _COM_STATUS_ON;
 
-    if (!isset($cid)) {
-        $cid = $dbconn->GenId($xartable['comments']);
+    if (!isset($id)) {
+        $id = $dbconn->GenId($xartable['comments']);
     }
 
     $sql = "INSERT INTO $xartable[comments]
@@ -1161,8 +1284,8 @@ function comments_userapi_add($args) {
     if (!$result) {
         return;
     } else {
-        $cid = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
-        return $cid;
+        $id = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
+        return $id;
     }
 }
 
@@ -1174,15 +1297,24 @@ function comments_userapi_add($args) {
  * @access  private
  * @param   integer     $modid      the id of the module that the objectids are associated with
  * @param   integer     $itemtype   the item type that these nodes belong to
- * @returns array A list of objectid's
+ * @returns array       A list of objectid's
  */
 function comments_userapi_get_object_list( $modid, $itemtype = null ) {
+
+    extract($args);
+    
+    if (!isset($modid) || empty($modid)) {
+        $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
+                                'modid', 'userapi', 'get_object_list', 'comments');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $ctable = &$xartable['comments_column'];
 
-	$sql     = "SELECT DISTINCT $ctable[objectid] AS pageid
+    $sql     = "SELECT DISTINCT $ctable[objectid] AS pageid
                            FROM $xartable[comments]
                           WHERE $ctable[modid] = '$modid'";
 
@@ -1226,22 +1358,22 @@ function comments_userapi_modify($args) {
     $error = FALSE;
 
     if (!isset($title)) {
-        $msg .= xarMLbykey(' title ');
+        $msg .= xarMLbykey('title ');
         $error = TRUE;
     }
 
-    if (!isset($cid)) {
-        $msg .= xarMLbykey(' cid ');
+    if (!isset($id)) {
+        $msg .= xarMLbykey('cid ');
         $error = TRUE;
     }
 
     if (!isset($text)) {
-        $msg .= xarMLbykey(' text ');
+        $msg .= xarMLbykey('text ');
         $error = TRUE;
     }
 
     if (!isset($postanon)) {
-        $msg .= xarMLbykey(' postanon ');
+        $msg .= xarMLbykey('postanon ');
         $error = TRUE;
     }
 
@@ -1263,9 +1395,11 @@ function comments_userapi_modify($args) {
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $text .= "\n<br />\n<br />\n" . xarML('[Modified by: #(1) (#(2)) on #(3)]', xarUserGetVar('name'),
-                                                                          xarUserGetVar('uname'),
-                                                                          $modified_date);
+    $text .= "\n<br />\n<br />\n";
+    $text .= xarML('[Modified by: #(1) (#(2)) on #(3)]', 
+                   xarUserGetVar('name'),
+                   xarUserGetVar('uname'),
+                   $modified_date);
 
     $sql =  "UPDATE $xartable[comments]
                 SET xar_title    = '". xarVarPrepForStore($title) ."',

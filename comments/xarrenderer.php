@@ -514,7 +514,7 @@ function comments_renderer_array_image_substitution($matrix, $modName = NULL) {
                 break;
             case _COM_L_CONNECTOR:
                 $map[] = xarTplGetImage('n_sub_branch_l.gif', $modName);
-                break;
+                break; 
             case _COM_I_CONNECTOR:
                 $map[] = xarTplGetImage('n_sub_line.gif', $modName);
                 break;
@@ -762,6 +762,16 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction) {
 
     return $comment_list;
 }
+
+/**
+ * Wraps words at the specified length
+ *
+ * @author Carl P. Corliss (aka rabbitt)
+ * @access public
+ * @param    string  &$str  the string to perform word wrapping on
+ * @param    integer $chars the amount of characters to word wrap at
+ * @returns   string the word-wrapped string
+ */
 
 function comments_renderer_wrap_words(&$str, $chars) {
     $str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
