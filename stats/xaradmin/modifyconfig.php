@@ -13,6 +13,7 @@ function stats_admin_modifyconfig()
     switch (strtolower($phase)) {
         case 'update':
             if (!xarVarFetch('countadmin', 'checkbox', $countadmin, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('excludelist', 'str', $excludelist, '', XARVAR_NOT_REQUIRED)) return;
             // the following call returns an empty startdate, so it will be set wrong later on
             // if (!xarVarFetch('startdate', 'str:1', $startdate, '', XARVAR_NOT_REQUIRED)) return;
 
@@ -20,6 +21,7 @@ function stats_admin_modifyconfig()
             if (!xarSecConfirmAuthKey()) return; 
             // Update module variables
             xarModSetVar('stats', 'countadmin', $countadmin);
+            xarModSetVar('stats', 'excludelist', $excludelist);
             // xarModSetVar('stats', 'startdate', $startdate);
 
             xarResponseRedirect(xarModURL('stats', 'admin', 'modifyconfig')); 

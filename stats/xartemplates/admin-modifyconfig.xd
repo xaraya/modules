@@ -18,6 +18,15 @@
             <input type="checkbox" name="countadmin" id="countadmin" value="1" />
         </xar:if></td>
         </tr>
+        <tr>
+            <td>
+                <label for="excludelist"><xar:mlstring>IP exclude list</xar:mlstring>:</label>
+                <br /><xar:mlstring>(One IP per line.)</xar:mlstring>
+            </td>
+            <td>
+                <textarea name="excludelist" rows="5" cols="30">#xarModGetVar('stats', 'excludelist')#</textarea>
+            </td>
+        </tr>
     </table>
     <br /><br />
     <input type="submit" value="#$updatelabel#"  />
