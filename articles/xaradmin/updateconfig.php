@@ -12,6 +12,7 @@ function articles_admin_updateconfig()
     //A lot of these probably are bools, still might there be a need to change the template to return
     //'true' and 'false' to use those...
     if(!xarVarFetch('itemsperpage',      'int',   $itemsperpage,      20, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('adminitemsperpage', 'int',   $adminitemsperpage, 20, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('number_of_columns', 'int',   $number_of_columns, 0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('shorturls',         'isset', $shorturls,         0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
