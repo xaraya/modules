@@ -6,10 +6,10 @@
 function articles_user_archive($args)
 {
     // Get parameters from user
-    if (!xarVarFetch('ptid',  'isset', $ptid,  xarModGetVar('articles','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('sort',  'isset', $sort,  'd',                                       XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('month', 'isset', $month, '',                                        XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('cids',  'isset', $cids,   NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('ptid',  'isset', $ptid,  xarModGetVar('articles','defaultpubtype'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if (!xarVarFetch('sort',  'isset', $sort,  'd',                                       XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if (!xarVarFetch('month', 'isset', $month, '',                                        XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if (!xarVarFetch('cids',  'isset', $cids,   NULL,                                     XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
 
     // Override if needed from argument array
     extract($args);
