@@ -207,7 +207,6 @@ function translations_adminapi_generate_module_skels($args)
     // Load previously made translations
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
-
 // TODO: <marc> it seesm to me that if a file does not exist it should be created, rather than dies
     $contexts = $GLOBALS['MLS']->getContexts();
     if ($backend->bindDomain(XARMLS_DNTYPE_MODULE,$modname)) {
@@ -218,8 +217,10 @@ function translations_adminapi_generate_module_skels($args)
             else{
                 $names = ${$context->getName() . "names"};
             }
-            foreach($names as $name)
-            if (!$backend->loadContext($context->getType(),$name)) return;
+            foreach($names as $name) {
+                if ($backend->hasContext($context->getType(),$name))
+                    if (!$backend->loadContext($context->getType(),$name)) return;
+            }
         }
     }
 
