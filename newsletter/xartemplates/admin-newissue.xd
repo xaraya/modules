@@ -4,7 +4,7 @@
 <div class="xar-mod-body">
     <h2><xar:mlstring>New Issue</xar:mlstring></h2><br />
     <div style="text-align: left;margin: auto;">
-        <script language="JavaScript">
+        <script type="text/javascript">
         function radio_input(redirect)
         {
         // Re-direct the browser to the modurl value
