@@ -111,7 +111,7 @@
     </tr>
     <tr>
         <td><label for="adminitemsperpage"><xar:mlstring>Items per page on admin view</xar:mlstring> <i>($number)</i></label></td>
-        <td><input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /></td>
+        <td><input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$adminitemsperpage#" /></td>
     </tr>
     <tr>
         <td><label for="showcategories"><xar:mlstring>Show category links in article summaries</xar:mlstring> <i>($categories)</i></label></td>

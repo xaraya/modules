@@ -31,22 +31,23 @@ function articles_admin_modifyconfig()
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
     if (isset($settings) && is_array($settings)) {
-        $data['itemsperpage'] = $settings['itemsperpage'];
-        $data['numcols'] = $settings['number_of_columns'];
-        $data['defaultview'] = $settings['defaultview'];
-        $data['showcategories'] = !empty($settings['showcategories']) ? 'checked' : '';
-        $data['showprevnext'] = !empty($settings['showprevnext']) ? 'checked' : '';
-        $data['showcomments'] = !empty($settings['showcomments']) ? 'checked' : '';
-        $data['showhitcounts'] = !empty($settings['showhitcounts']) ? 'checked' : '';
-        $data['showratings'] = !empty($settings['showratings']) ? 'checked' : '';
-        $data['showarchives'] = !empty($settings['showarchives']) ? 'checked' : '';
-        $data['showmap'] = !empty($settings['showmap']) ? 'checked' : '';
-        $data['showpublinks'] = !empty($settings['showpublinks']) ? 'checked' : '';
-        $data['dotransform'] = !empty($settings['dotransform']) ? 'checked' : '';
-        $data['titletransform'] = !empty($settings['titletransform']) ? 'checked' : '';
-        $data['prevnextart'] = !empty($settings['prevnextart']) ? 'checked' : '';
-        $data['page_template'] = isset($settings['page_template']) ? $settings['page_template'] : '';
-        $data['defaultstatus'] = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
+        $data['itemsperpage']           = $settings['itemsperpage'];
+        $data['adminitemsperpage']      = $settings['adminitemsperpage'];
+        $data['numcols']                = $settings['number_of_columns'];
+        $data['defaultview']            = $settings['defaultview'];
+        $data['showcategories']         = !empty($settings['showcategories']) ? 'checked' : '';
+        $data['showprevnext']           = !empty($settings['showprevnext']) ? 'checked' : '';
+        $data['showcomments']           = !empty($settings['showcomments']) ? 'checked' : '';
+        $data['showhitcounts']          = !empty($settings['showhitcounts']) ? 'checked' : '';
+        $data['showratings']            = !empty($settings['showratings']) ? 'checked' : '';
+        $data['showarchives']           = !empty($settings['showarchives']) ? 'checked' : '';
+        $data['showmap']                = !empty($settings['showmap']) ? 'checked' : '';
+        $data['showpublinks']           = !empty($settings['showpublinks']) ? 'checked' : '';
+        $data['dotransform']            = !empty($settings['dotransform']) ? 'checked' : '';
+        $data['titletransform']         = !empty($settings['titletransform']) ? 'checked' : '';
+        $data['prevnextart']            = !empty($settings['prevnextart']) ? 'checked' : '';
+        $data['page_template']          = isset($settings['page_template']) ? $settings['page_template'] : '';
+        $data['defaultstatus']          = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
     }
     if (!isset($data['itemsperpage'])) {
         $data['itemsperpage'] = 20;
