@@ -8,15 +8,15 @@ function netquery_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'wiview'),
                              'title' => xarML('View-edit whois TLD/server links'),
                              'label' => xarML('Edit Whois Links'));
-        $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
-                             'title' => xarML('View-edit looking glass routers'),
-                             'label' => xarML('Edit LG Routers'));
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
                              'title' => xarML('View-edit port services/exploits'),
                              'label' => xarML('Edit Port Services'));
         $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'flview'),
-                             'title' => xarML('View-edit service/exploit flags'),
-                             'label' => xarML('Edit Service Flags'));
+                             'title' => xarML('View-edit service category flags'),
+                             'label' => xarML('Edit Category Flags'));
+        $menulinks[] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
+                             'title' => xarML('View-edit looking glass routers'),
+                             'label' => xarML('Edit LG Routers'));
     }
     if (empty($menulinks)){
         $menulinks = '';

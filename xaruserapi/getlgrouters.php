@@ -6,7 +6,7 @@ function netquery_userapi_getlgrouters($args)
         $startnum = 1;
     }
     if ((!isset($numitems)) || (!is_numeric($numitems))) {
-        $numitems = -1;
+        $numitems = 100000;
     }
     $lgrouters = array();
     if (!xarSecurityCheck('OverviewNetquery')) {
@@ -15,7 +15,7 @@ function netquery_userapi_getlgrouters($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
-    $query = "SELECT * FROM $LGRouterTable WHERE router != 'default' ORDER BY router_id";
+    $query = "SELECT * FROM $LGRouterTable ORDER BY router_id";
     $result =& $dbconn->SelectLimit($query, (int)$numitems, (int)$startnum-1);
     if (!$result) return;
     for (; !$result->EOF; $result->MoveNext()) {

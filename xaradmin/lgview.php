@@ -19,7 +19,7 @@ function netquery_admin_lgview()
             $routers[$i]['editurl'] = '';
         }
         $routers[$i]['edittitle'] = xarML('Edit');
-        if (xarSecurityCheck('DeleteNetquery',0)) {
+        if (xarSecurityCheck('DeleteNetquery',0) && $router['router'] != 'default') {
             $routers[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'lgdelete', array('router_id' => $router['router_id']));
         } else {
             $routers[$i]['deleteurl'] = '';
@@ -31,12 +31,12 @@ function netquery_admin_lgview()
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Config'));
     $data['lgvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
-                             'title' => xarML('Edit looking glass routers'),
-                             'label' => xarML('Edit LG Routers'));
+                             'title' => xarML('Edit looking glass settings'),
+                             'label' => xarML('Edit LG Settings'));
     $data['lgalink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgnew'),
                              'title' => xarML('Add looking glass router'),
                              'label' => xarML('Add LG Router'));
-    $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
+    $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
     return $data;

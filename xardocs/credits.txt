@@ -1,5 +1,9 @@
-Utility module written by Richard Virtue
-Thanks to "jojodee" for much Xaraya help
-Thanks to "JMorris" for much Xoops help
-Thanks to Colin Tinker and Nick Cross for the ports lookup table
-Thanks to Stephen (Adelphia) for AS##### lookup info
+Author:
+Richard Virtue <rvirtue@virtech.org>
+
+Thanks to:
+Colin Tinker and Nick Cross for the ports lookup table
+Jo Dalle Nogare for much Xaraya help
+James Morris for much Xoops help
+Roger Raymond for the client info "sniffer"
+Stephen at Adelphia for AS##### lookup info

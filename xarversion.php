@@ -1,16 +1,16 @@
 <?php
 $modversion['name']           = 'Netquery';
 $modversion['id']             = '91';
-$modversion['version']        = '2.3.0';
+$modversion['version']        = '2.4.0';
 $modversion['displayname']    = xarML('Netquery');
-$modversion['description']    = 'MultiWhois, DNS, port check, HTTP request, ping, traceroute, looking glass';
+$modversion['description']    = 'MultiWhois, DNS, Email, Ports, HTTP, Ping, Traceroute, Looking Glass';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/install.txt';
 $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 0;
 $modversion['author']         = 'Richard Virtue';
-$modversion['contact']        = 'http://www.xaraya.com/index.php/release/91.html';
+$modversion['contact']        = 'http://www.virtech.org/tools/';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['securityschema'] = array('Netquery::' => '::');

@@ -20,7 +20,7 @@ function netquery_admin_ptmodify()
             $data['cancellabel']    = xarML('Cancel');
             $data['hlplink'] = Array('url'   => xarModURL('netquery', 'admin', 'portlist', array('theme' => 'print', 'portnum' => $data['port'])),
                                      'title' => xarML('List port services data'),
-                                     'label' => xarML('Port '.$data['port'].' List'));
+                                     'label' => xarML('Port').' '.$data['port'].' '.xarML('List'));
             break;
         case 'update':
             if (!xarVarFetch('port_port', 'int:1:100000', $port_port)) return;

@@ -22,10 +22,10 @@
   <tr align="left">
     <td colspan="3">
       <xar:mlstring>Query type for default start page:</xar:mlstring>
-      <select name="logfile_remote_t" id="logfile_remote_t">
+      <select name="querytype_default" id="querytype_default">
         <xar:foreach in="$startoptions" value="$startoption">
           <xar:if condition="!empty($startoption.value)">
-            <xar:if condition="$startoption.value eq $logfile.exec_remote_t">
+            <xar:if condition="$startoption.value eq $querytype_default">
               <option selected="selected" value="#$startoption.value#">#$startoption.name#</option>
             <xar:else />
               <option value="#$startoption.value#">#$startoption.name#</option>
@@ -44,18 +44,28 @@
       </xar:if>
       <xar:mlstring>Enable Netquery Log</xar:mlstring>
       <xar:if condition="!empty($loglink)">
-        ~ <a href="javascript:popUp('#$loglink.url#,'console','400','600');">#$loglink.label#</a>
+        ~ <a href="javascript:popUp('#$loglink.url#','console','400','600');">#$loglink.label#</a>
       </xar:if>
     </td>
   </tr>
   <tr>
     <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="logfile_local"><xar:mlstring>At Filepath:</xar:mlstring></label></span>
-      <input type="text" name="logfile_local" id="logfile_local" value="#$logfile.exec_local#" size="30" maxlength="100" />
+      <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="capture_log_filepath"><xar:mlstring>At Filepath:</xar:mlstring></label></span>
+      <input type="text" name="capture_log_filepath" id="capture_log_filepath" value="#$capture_log_filepath#" size="30" maxlength="100" />
     </td>
     <td>&nbsp;&nbsp;&nbsp;
-      <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="logfile_remote"><xar:mlstring>Datetime Fmt:</xar:mlstring></label></span>
-      <input type="text" name="logfile_remote" id="logfile_remote" value="#$logfile.exec_remote#" size="11" maxlength="100" />
+      <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="capture_log_dtformat"><xar:mlstring>Datetime Fmt:</xar:mlstring></label></span>
+      <input type="text" name="capture_log_dtformat" id="capture_log_dtformat" value="#$capture_log_dtformat#" size="11" maxlength="100" />
+    </td>
+  </tr>
+  <tr align="left">
+    <td colspan="3">
+      <xar:if condition="$clientinfo_enabled">
+        <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" checked="checked" />
+      <xar:else />
+        <input type="checkbox" name="clientinfo_enabled" id="clientinfo_enabled" value="1" />
+      </xar:if>
+      <xar:mlstring>Enable Client Info (Main Interface)</xar:mlstring>
     </td>
   </tr>
   <tr align="left">
@@ -66,7 +76,7 @@
         <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1" />
       </xar:if>
       <xar:mlstring>Enable Whois Search</xar:mlstring>
-      ~ <a href="#$wivlink.url#">#$wivlink.title#</a>
+      ~ <a href="#$wivlink.url#">#$wivlink.label#</a>
     </td>
   </tr>
   <tr>
@@ -79,6 +89,19 @@
             <option selected="selected" value="#$whoislimit#">#$whoislimit#</option>
           <xar:else />
             <option value="#$whoislimit#">#$whoislimit#</option>
+          </xar:if>
+        </xar:if>
+      </xar:foreach>
+      </select>
+      ~
+      <span class="help" title="#xarML('Default TLD for whois lookups')#"><label for="whois_default"><xar:mlstring>Default TLD:</xar:mlstring></label></span>
+      <select name="whois_default" id="whois_default">
+      <xar:foreach in="$links" value="$link">
+        <xar:if condition="!empty($link.whois_ext)">
+          <xar:if condition="$link.whois_ext eq $whois_default">
+            <option selected="selected" value="#$link.whois_ext#">#$link.whois_ext#</option>
+          <xar:else />
+            <option value="#$link.whois_ext#">#$link.whois_ext#</option>
           </xar:if>
         </xar:if>
       </xar:foreach>
@@ -112,23 +135,7 @@
       <xar:else />
         <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1" />
       </xar:if>
-      <xar:mlstring>Enable DNS (Dig) Query</xar:mlstring>
-    </td>
-  </tr>
-  <tr align="left">
-    <td colspan="3">
-      <xar:if condition="$email_check_enabled">
-        <input type="checkbox" name="email_check_enabled" id="email_check_enabled" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="email_check_enabled" id="email_check_enabled" value="1" />
-      </xar:if>
-      <xar:mlstring>Enable Email Check</xar:mlstring> ~ 
-      <xar:if condition="$query_email_server">
-        <input type="checkbox" name="query_email_server" id="query_email_server" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="query_email_server" id="query_email_server" value="1" />
-      </xar:if>
-      <xar:mlstring>Query MX Server</xar:mlstring>
+      <xar:mlstring>Enable DNS (Dig) Query</xar:mlstring> ~ 
       <xar:if condition="$use_win_nslookup">
         <input type="checkbox" name="use_win_nslookup" id="use_win_nslookup" value="1" checked="checked" />
       <xar:else />
@@ -139,14 +146,30 @@
   </tr>
   <tr align="left">
     <td colspan="3">
+      <xar:if condition="$email_check_enabled">
+        <input type="checkbox" name="email_check_enabled" id="email_check_enabled" value="1" checked="checked" />
+      <xar:else />
+        <input type="checkbox" name="email_check_enabled" id="email_check_enabled" value="1" />
+      </xar:if>
+      <xar:mlstring>Enable Email Validation</xar:mlstring> ~ 
+      <xar:if condition="$query_email_server">
+        <input type="checkbox" name="query_email_server" id="query_email_server" value="1" checked="checked" />
+      <xar:else />
+        <input type="checkbox" name="query_email_server" id="query_email_server" value="1" />
+      </xar:if>
+      <xar:mlstring>Query MX Server</xar:mlstring>
+    </td>
+  </tr>
+  <tr align="left">
+    <td colspan="3">
       <xar:if condition="$port_check_enabled">
         <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1" checked="checked" />
       <xar:else />
         <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1" />
       </xar:if>
       <xar:mlstring>Enable Port Check</xar:mlstring>
-      ~ <a href="#$ptvlink.url#">#$ptvlink.title#</a>
-      ~ <a href="#$flvlink.url#">#$flvlink.title#</a>
+      ~ <a href="#$ptvlink.url#">#$ptvlink.label#</a>
+      ~ <a href="#$xaplink.url#">#$xaplink.label#</a>
     </td>
   </tr>
   <tr>
@@ -162,7 +185,7 @@
       <xar:else />
         ~ #$p99link.label#
       </xar:if>
-      ~ <a href="#$xaplink.url#">#$xaplink.label#</a>
+      ~ <a href="#$flvlink.url#">#$flvlink.label#</a>
     </td>
   </tr>
   <tr align="left">
@@ -188,7 +211,7 @@
   <tr>
     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('Local ping EXECUTABLE including path if necessary')#"><label for="pingexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
-      <input type="text" name="pingexec_local" id="pingexec_local" value="#$pingexec.exec_local#" size="30" maxlength="100" />
+      <input type="text" name="pingexec_local" id="pingexec_local" value="#$pingexec_local#" size="30" maxlength="100" />
     </td>
   </tr>
   <tr align="left">
@@ -204,11 +227,11 @@
   <tr>
     <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('URL for remote system ping script')#"><label for="pingexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
-      <input type="text" name="pingexec_remote" id="pingexec_remote" value="#$pingexec.exec_remote#" size="30" maxlength="100" />
+      <input type="text" name="pingexec_remote" id="pingexec_remote" value="#$pingexec_remote#" size="30" maxlength="100" />
     </td>
     <td>&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('Remote ping script url?PARAM=target')#"><label for="pingexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
-      <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec.exec_remote_t#" size="6" maxlength="10" />
+      <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec_remote_t#" size="6" maxlength="10" />
     </td>
   </tr>
   <tr align="left">
@@ -224,7 +247,7 @@
   <tr>
     <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('Local traceroute EXECUTABLE including path if necessary')#"><label for="traceexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
-      <input type="text" name="traceexec_local" id="traceexec_local" value="#$traceexec.exec_local#" size="30" maxlength="100" />
+      <input type="text" name="traceexec_local" id="traceexec_local" value="#$traceexec_local#" size="30" maxlength="100" />
     </td>
   </tr>
   <tr align="left">
@@ -240,11 +263,11 @@
   <tr>
     <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('URL for remote system traceroute script')#"><label for="traceexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
-      <input type="text" name="traceexec_remote" id="traceexec_remote" value="#$traceexec.exec_remote#" size="30" maxlength="100" />
+      <input type="text" name="traceexec_remote" id="traceexec_remote" value="#$traceexec_remote#" size="30" maxlength="100" />
     </td>
     <td>&nbsp;&nbsp;&nbsp;
       <span class="help" title="#xarML('Remote script traceroute url?PARAM=target')#"><label for="traceexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
-      <input type="text" name="traceexec_remote_t" id="traceexec_remote_t" value="#$traceexec.exec_remote_t#" size="6" maxlength="10" />
+      <input type="text" name="traceexec_remote_t" id="traceexec_remote_t" value="#$traceexec_remote_t#" size="6" maxlength="10" />
     </td>
   </tr>
   <tr align="left">
@@ -255,133 +278,7 @@
         <input type="checkbox" name="looking_glass_enabled" id="looking_glass_enabled" value="1" />
       </xar:if>
       <xar:mlstring>Enable Looking Glass</xar:mlstring>
-      ~ <a href="#$lgvlink.url#">#$lgvlink.title#</a>
-    </td>
-  </tr>
-  <tr align="right">
-    <td align="left">&nbsp;&nbsp;&nbsp;
-      <xar:if condition="$lgdefault.use_argc">
-        <input type="checkbox" name="lgdefault_use_argc" id="lgdefault_use_argc" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="lgdefault_use_argc" id="lgdefault_use_argc" value="1" />
-      </xar:if>
-      <xar:mlstring>Use full table</xar:mlstring>
-    </td>
-    <td>
-      <xar:mlstring>User:</xar:mlstring>
-      <input type="text" name="lgdefault_username" id="lgdefault_username" value="#$lgdefault.username#" size="10" maxlength="20" />
-    </td>
-    <td>
-      <xar:mlstring>Password:</xar:mlstring>
-      <input type="text" name="lgdefault_password" id="lgdefault_password" value="#$lgdefault.password#" size="10" maxlength="20" />
-    </td>
-  </tr>
-  <tr align="right">
-    <td align="left">&nbsp;&nbsp;&nbsp;
-      <xar:if condition="$lgdefault.zebra">
-        <input type="checkbox" name="lgdefault_zebra" id="lgdefault_zebra" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="lgdefault_zebra" id="lgdefault_zebra" value="1" />
-      </xar:if>
-      <xar:mlstring>Use zebra</xar:mlstring>
-    </td>
-    <td>
-      <xar:mlstring>Port:</xar:mlstring>
-      <input type="text" name="lgdefault_zebra_port" id="lgdefault_zebra_port" value="#$lgdefault.zebra_port#" size="10" maxlength="10" />
-    </td>
-    <td>
-      <xar:mlstring>Password:</xar:mlstring>
-      <input type="text" name="lgdefault_zebra_password" id="lgdefault_zebra_password" value="#$lgdefault.zebra_password#" size="10" maxlength="20" />
-    </td>
-  </tr>
-  <tr align="right">
-    <td align="left">&nbsp;&nbsp;&nbsp;
-      <xar:if condition="$lgdefault.ripd">
-        <input type="checkbox" name="lgdefault_ripd" id="lgdefault_ripd" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="lgdefault_ripd" id="lgdefault_ripd" value="1" />
-      </xar:if>
-      <xar:mlstring>Use ripd</xar:mlstring>
-    </td>
-    <td>
-      <xar:mlstring>Port:</xar:mlstring>
-      <input type="text" name="lgdefault_ripd_port" id="lgdefault_ripd_port" value="#$lgdefault.ripd_port#" size="10" maxlength="10" />
-    </td>
-    <td>
-      <xar:mlstring>Password:</xar:mlstring>
-      <input type="text" name="lgdefault_ripd_password" id="lgdefault_ripd_password" value="#$lgdefault.ripd_password#" size="10" maxlength="20" />
-    </td>
-  </tr>
-  <tr align="right">
-    <td align="left">&nbsp;&nbsp;&nbsp;
-      <xar:if condition="$lgdefault.ripngd">
-        <input type="checkbox" name="lgdefault_ripngd" id="lgdefault_ripngd" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="lgdefault_ripngd" id="lgdefault_ripngd" value="1" />
-      </xar:if>
-      <xar:mlstring>Use ripngd</xar:mlstring>
-    </td>
-    <td>
-      <xar:mlstring>Port:</xar:mlstring>
-      <input type="text" name="lgdefault_ripngd_port" id="lgdefault_ripngd_port" value="#$lgdefault.ripngd_port#" size="10" maxlength="10" />
-    </td>
-    <td>
-      <xar:mlstring>Password:</xar:mlstring>
-      <input type="text" name="lgdefault_ripngd_password" id="lgdefault_ripngd_password" value="#$lgdefault.ripngd_password#" size="10" maxlength="20" />
-    </td>
-  </tr>
-  <tr align="right">
-    <td align="left">&nbsp;&nbsp;&nbsp;
-      <xar:if condition="$lgdefault.ospfd">
-        <input type="checkbox" name="lgdefault_ospfd" id="lgdefault_ospfd" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="lgdefault_ospfd" id="lgdefault_ospfd" value="1" />
-      </xar:if>
-      <xar:mlstring>Use ospfd</xar:mlstring>
-    </td>
-    <td>
-      <xar:mlstring>Port:</xar:mlstring>
-      <input type="text" name="lgdefault_ospfd_port" id="lgdefault_ospfd_port" value="#$lgdefault.ospfd_port#" size="10" maxlength="10" />
-    </td>
-    <td>
-      <xar:mlstring>Password:</xar:mlstring>
-      <input type="text" name="lgdefault_ospfd_password" id="lgdefault_ospfd_password" value="#$lgdefault.ospfd_password#" size="10" maxlength="20" />
-    </td>
-  </tr>
-  <tr align="right">
-    <td align="left">&nbsp;&nbsp;&nbsp;
-      <xar:if condition="$lgdefault.bgpd">
-        <input type="checkbox" name="lgdefault_bgpd" id="lgdefault_bgpd" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="lgdefault_bgpd" id="lgdefault_bgpd" value="1" />
-      </xar:if>
-      <xar:mlstring>Use bgpd</xar:mlstring>
-    </td>
-    <td>
-      <xar:mlstring>Port:</xar:mlstring>
-      <input type="text" name="lgdefault_bgpd_port" id="lgdefault_bgpd_port" value="#$lgdefault.bgpd_port#" size="10" maxlength="10" />
-    </td>
-    <td>
-      <xar:mlstring>Password:</xar:mlstring>
-      <input type="text" name="lgdefault_bgpd_password" id="lgdefault_bgpd_password" value="#$lgdefault.bgpd_password#" size="10" maxlength="20" />
-    </td>
-  </tr>
-  <tr align="right">
-    <td align="left">&nbsp;&nbsp;&nbsp;
-      <xar:if condition="$lgdefault.ospf6d">
-        <input type="checkbox" name="lgdefault_ospf6d" id="lgdefault_ospf6d" value="1" checked="checked" />
-      <xar:else />
-        <input type="checkbox" name="lgdefault_ospf6d" id="lgdefault_ospf6d" value="1" />
-      </xar:if>
-      <xar:mlstring>Use ospf6d</xar:mlstring>
-    </td>
-    <td>
-      <xar:mlstring>Port:</xar:mlstring>
-      <input type="text" name="lgdefault_ospf6d_port" id="lgdefault_ospf6d_port" value="#$lgdefault.ospf6d_port#" size="10" maxlength="10" />
-    </td>
-    <td>
-      <xar:mlstring>Password:</xar:mlstring>
-      <input type="text" name="lgdefault_ospf6d_password" id="lgdefault_ospf6d_password" value="#$lgdefault.ospf6d_password#" size="10" maxlength="20" />
+      ~ <a href="#$lgvlink.url#">#$lgvlink.label#</a>
     </td>
   </tr>
   <tr>
@@ -392,13 +289,6 @@
   </tr>
 </table>
 </form>
-
-<p><xar:mlstring><b>Please Note</b>: The local ping and traceroute options require read/execute
-permission for your operating system's ping and traceroute executables. The Netquery Log option
-requires write permission for the specified filepath. Looking Glass defaults enabled and entered below
-may be overridden by individual router settings.  Disabled LG items below are disabled for all LG
-routers. LG daemon port passwords take precedence over the default LG user password.</xar:mlstring>
-</p>
 
 </div>
 </div>

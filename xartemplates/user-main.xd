@@ -5,6 +5,12 @@
 
 <div class="xar-mod-head">
 <span class="xar-mod-title">#$maintitle#</span>
+<xar:if condition="$clientinfo_enabled">
+    <xar:mlstring>Client Info</xar:mlstring><br />
+    <xar:mlstring>IP</xar:mlstring>: #$host# -
+    <xar:mlstring>OS</xar:mlstring>: #$browserinfo->property("platform")# #$browserinfo->property("os")# -
+    <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("browser")# #$browserinfo->property("version")#
+</xar:if>
 </div>
 
 <div class="xar-mod-body">
@@ -17,7 +23,7 @@
   <xar:if condition="$whois_enabled"><input name="b1" id="b1" type="image" src="modules/netquery/xarimages/btn_whois.gif" class="#$b1class#" alt="Whois" /></xar:if>
   <xar:if condition="$whoisip_enabled"><input name="b2" id="b2" type="image" src="modules/netquery/xarimages/btn_whoisip.gif" class="#$b2class#" alt="Whois IP" /></xar:if>
   <xar:if condition="$dns_lookup_enabled"><input name="b3" id="b3" type="image" src="modules/netquery/xarimages/btn_dns.gif" class="#$b3class#" alt="DNS Lookup" /></xar:if>
-  <xar:if condition="$dns_dig_enabled and (!$winsys)"><input name="b4" id="b4" type="image" src="modules/netquery/xarimages/btn_dig.gif" class="#$b4class#" alt="DNS Dig" /></xar:if>
+  <xar:if condition="$dns_dig_enabled and (!$winsys or $use_win_nslookup)"><input name="b4" id="b4" type="image" src="modules/netquery/xarimages/btn_dig.gif" class="#$b4class#" alt="DNS Dig" /></xar:if>
   <xar:if condition="$email_check_enabled"><input name="b12" id="b12" type="image" src="modules/netquery/xarimages/btn_email.gif" class="#$b12class#" alt="Validate Email" /></xar:if>
   <xar:if condition="$port_check_enabled"><input name="b5" id="b5" type="image" src="modules/netquery/xarimages/btn_port.gif" class="#$b5class#" alt="Port Check" /></xar:if>
   <xar:if condition="$http_req_enabled"><input name="b6" id="b6" type="image" src="modules/netquery/xarimages/btn_http.gif" class="#$b6class#" alt="HTTP Request" /></xar:if>
@@ -218,13 +224,13 @@
     <label class="lgparam" for="lgparam">#$lgparamlabel#</label>
     <label class="lgrouter" for="router">#$lgrouterlabel#</label>
     <br /><select name="request" id="request">
-        <xar:foreach in="$lgrequests" value="$req">
+        <xar:foreach in="$lgrequests" value="$req" key="$lgreq">
             <xar:if condition="!empty($req.request)">
                 <xar:if condition="$lgdefault[$req.handler] and !(($req.argc) and (!$lgdefault.use_argc))">
-                    <xar:if condition="$req.request eq $request">
-                        <option selected="selected" value="#$req.request#">#$req.request#</option>
+                    <xar:if condition="$lgreq eq $request">
+                        <option selected="selected" value="#$lgreq#">#$req.request#</option>
                     <xar:else />
-                        <option value="#$req.request#">#$req.request#</option>
+                        <option value="#$lgreq#">#$req.request#</option>
                     </xar:if>
                 </xar:if>
             </xar:if>
@@ -255,12 +261,12 @@
 <script type="text/javascript">
 function pingwindow(target)
 {
-        var pingsite = "#$pingexec.exec_remote#?#$pingexec.exec_remote_t#=" + target;
+        var pingsite = "#$pingexec_remote#?#$pingexec_remote_t#=" + target;
         popUp(pingsite,'console','400','600')
 }
 function tracewindow(target)
 {
-        var tracesite = "#$traceexec.exec_remote#?#$traceexec.exec_remote_t#=" + target;
+        var tracesite = "#$traceexec_remote#?#$traceexec_remote_t#=" + target;
         popUp(tracesite,'console','400','600')
 }
 </script>

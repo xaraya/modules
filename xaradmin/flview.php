@@ -35,7 +35,7 @@ function netquery_admin_flview()
     $data['flalink'] = Array('url'   => xarModURL('netquery', 'admin', 'flnew'),
                              'title' => xarML('Add service/exploit flag'),
                              'label' => xarML('Add Flag'));
-    $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
+    $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
     return $data;

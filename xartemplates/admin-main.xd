@@ -18,9 +18,11 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The Netquery module includes whois, DNS, port check, HTTP request, ping, traceroute
-            and looking glass router interrogation functions. Availability of each query type, local and remote
-            execution, and all entries in the whois, port services and looking glass data tables are configurable.</xar:mlstring>
+            <xar:mlstring>The Netquery module includes multidomain and IP/AS whois, DNS queries,
+            email address validation, port services lookup, HTTP requests, ping, traceroute and
+            looking glass router interrogation functions. Availability of each query type, local
+            and remote execution, and all entries in the whois, port services and looking glass
+            data tables are configurable.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -32,20 +34,19 @@
             <ul>
             <li><a href="#$cfglink.url#">#$cfglink.label#</a><xar:mlstring>: From this
             menu option, you can select which Netquery functions will be available to users of
-            your site, configure local and remote excution and set defaults for "looking glass"
-            queries.</xar:mlstring></li>
+            your site, configure local and remote excution and set defaults.</xar:mlstring></li>
             <li><a href="#$wivlink.url#">#$wivlink.label#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete whois "lookup links" between top level domain
             (TLD) entries and whois servers.</xar:mlstring></li>
-            <li><a href="#$lgvlink.url#">#$lgvlink.label#</a><xar:mlstring>: From this
-            menu option, you can edit, add or delete "looking glass" router entries overriding
-            default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
             <li><a href="#$ptvlink.url#">#$ptvlink.label#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete port services data entries, including
             keyword comments on vulnerabilities displayed to port lookup users.</xar:mlstring></li>
             <li><a href="#$flvlink.url#">#$flvlink.label#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete the flagging data used for services and
             exploits, including keywords, font colors and search lookup URLs.</xar:mlstring></li>
+            <li><a href="#$lgvlink.url#">#$lgvlink.label#</a><xar:mlstring>: From this
+            menu option, you can edit, add or delete "looking glass" router entries overriding
+            default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
             </ul>
         </div>
         <br />

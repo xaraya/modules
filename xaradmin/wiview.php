@@ -36,7 +36,7 @@ function netquery_admin_wiview()
     $data['wialink'] = Array('url'   => xarModURL('netquery', 'admin', 'winew'),
                              'title' => xarML('Add whois lookup link'),
                              'label' => xarML('Add Whois'));
-    $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
+    $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
     return $data;

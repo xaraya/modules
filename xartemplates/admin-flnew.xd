@@ -16,7 +16,7 @@
 </tr>
 <tr>
     <td>
-    <span class="help" title="#xarML('The flag number')#"><label for="port_port"><xar:mlstring>Flag #</xar:mlstring></label></span>
+    <span class="help" title="#xarML('The flag number')#"><label for="flag_flagnum"><xar:mlstring>Flag #</xar:mlstring></label></span>
     </td>
     <td>
     <span class="help" title="#xarML('The flag keyword text')#"><label for="flag_keyword"><xar:mlstring>Keyword</xar:mlstring></label></span>

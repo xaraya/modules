@@ -25,16 +25,20 @@ function netquery_netquickblock_display($blockinfo)
     if (!isset($vars['blockquery'])) {
         $vars['blockquery'] = 'whois';
     }
-    $httpurl = 'http://'.$_SERVER['SERVER_NAME'];
-    $host = $_SERVER['REMOTE_ADDR'];
-    $email = 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']);
+    if (!isset($browserinfo)) $browserinfo = xarModAPIFunc('netquery','user','getsniff');
     $links = array();
     $links = xarModAPIFunc('netquery','user','getlinks');
-    $blockinfo['content'] = array('links'   => $links,
-                                  'host'    => $host,
-                                  'email'   => $email,
-                                  'httpurl' => $httpurl,
-                                  'vars'    => $vars);
+    $whois_default = xarModGetVar('netquery', 'whois_default');
+    $host = $_SERVER['REMOTE_ADDR'];
+    $email = 'someone@'.gethostbyaddr($_SERVER['REMOTE_ADDR']);
+    $httpurl = 'http://'.$_SERVER['SERVER_NAME'];
+    $blockinfo['content'] = array('browserinfo'   => $browserinfo,
+                                  'links'         => $links,
+                                  'whois_default' => $whois_default,
+                                  'host'          => $host,
+                                  'email'         => $email,
+                                  'httpurl'       => $httpurl,
+                                  'vars'          => $vars);
     return $blockinfo;
 }
 ?>

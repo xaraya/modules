@@ -10,6 +10,7 @@ function netquery_netquickblock_modify($blockinfo)
                      'blockquery'            => $vars['blockquery'],
                      'authid'                => xarSecGenAuthKey(),
                      'capture_log_enabled'   => xarModGetVar('netquery', 'capture_log_enabled'),
+                     'clientinfo_enabled'    => xarModGetVar('netquery', 'clientinfo_enabled'),
                      'whois_enabled'         => xarModGetVar('netquery', 'whois_enabled'),
                      'whoisip_enabled'       => xarModGetVar('netquery', 'whoisip_enabled'),
                      'dns_lookup_enabled'    => xarModGetVar('netquery', 'dns_lookup_enabled'),

@@ -1,5 +1,10 @@
 <xar:sec mask="OverviewNetquery" catch="false">
-  <xar:if condition="$vars['blockquery'] eq 'whois'" >
+  <xar:if condition="$vars['blockquery'] eq 'clientinfo'" >
+    &para; <xar:mlstring>IP</xar:mlstring> : #$host#<br />
+    &para; <xar:mlstring>OS</xar:mlstring> : #$browserinfo->property("platform")# #$browserinfo->property("os")#<br />
+    &para; <xar:mlstring>Browser</xar:mlstring> : #$browserinfo->property("long_name")# #$browserinfo->property("version")#<br />
+    &para; <xar:mlstring>User Agent</xar:mlstring> : #$browserinfo->property("ua")#<br />
+  <xar:elseif condition="$vars['blockquery'] eq 'whois'" />
     <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="querytype" id="querytype" value="whois" />
     <label for="domain_1"><xar:mlstring>Whois Domain</xar:mlstring></label>
@@ -8,7 +13,7 @@
     <select name="whois_ext_1" id="whois_ext_1">
         <xar:foreach in="$links" value="$link">
             <xar:if condition="!empty($link.whois_ext)">
-                <xar:if condition="$link.whois_ext eq '.com'">
+                <xar:if condition="$link.whois_ext eq $whois_default">
                     <option selected="selected" value="#$link.whois_ext#">#$link.whois_ext#</option>
                 <xar:else />
                     <option value="#$link.whois_ext#">#$link.whois_ext#</option>
@@ -75,10 +80,6 @@
     <input style="vertical-align:top;" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
     </form>
   </xar:if>
-                      <xar:comment>
-  <p><a href="#xarModUrl('netquery', 'user', 'main')#">
-  <xar:mlstring>Netquery main interface</xar:mlstring></a></p>
-                      </xar:comment>
 <xar:else />
   <xar:mlstring>Sorry - You do not have access to Netquery</xar:mlstring>
 </xar:sec>

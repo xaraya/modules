@@ -25,14 +25,14 @@ function netquery_user_main()
                 unset($sock);
                 $msg .= "Cannot connect to ".$whois_server." (".$error.")";
             } else {
-                fputs($sock, "$target\n");
+                fputs($sock, $target."\r\n");
                 while (!feof($sock)) {
                     $readbuf .= fgets($sock, 10240);
                 }
+                @fclose($sock);
             }
-            @fclose($sock);
             if (! eregi("Whois Server:", $readbuf)) {
-                if (eregi("No match", $readbuf) || eregi("No entries", $readbuf) || eregi("Not found", $readbuf) || eregi("AVAIL", $readbuf))
+                if (eregi("No match", $readbuf) || eregi("No entries", $readbuf) || eregi("Not found", $readbuf))
                     $msg .= "NOT FOUND: No match for $target<br />";
                 else if (! eregi("Timed-out", $msg))
                     $msg .= "Ambiguous query, multiple matches for $target:<br />";
@@ -87,12 +87,12 @@ function netquery_user_main()
                 $nextServer = "whois.ripe.net";
             else if (eregi("whois.apnic.net", $readbuf))
                 $nextServer = "whois.apnic.net";
+            else if (eregi("whois.registro.br", $readbuf))
+                $nextServer = "whois.registro.br";
             else if (eregi("nic.ad.jp", $readbuf)) {
                 $nextServer = "whois.nic.ad.jp";
                 $extra = "/e";
             }
-            else if (eregi("whois.registro.br", $readbuf))
-                $nextServer = "whois.registro.br";
             if ($nextServer) {
                 $readbuf = "";
                 if (! $sock = @fsockopen($nextServer, 43, $errnum, $error, 10)) {
@@ -130,15 +130,26 @@ function netquery_user_main()
         $digparam = $data['digparam'];
         $msg = ('<p><b>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if (eregi("[a-zA-Z]", $target))
-            $ntarget = gethostbyname($target);
+          $ntarget = gethostbyname($target);
         else
-            $ntarget = gethostbyaddr($target);
+          $ntarget = gethostbyaddr($target);
         if (! eregi("[a-zA-Z]", $target) && !eregi("[a-zA-Z]", $ntarget)) {
-            $msg .= 'DNS query (Dig) requires a hostname.';
+          $msg .= 'DNS query (Dig) requires a hostname.';
         } else {
-            if (! eregi("[a-zA-Z]", $target) ) $target = $ntarget;
-            if (! $msg .= trim(nl2br(`dig $digparam '$target'`)))
-                $msg .= "The <i>dig</i> command is not working on your system.";
+          if (! eregi("[a-zA-Z]", $target) ) $target = $ntarget;
+          if ($data['winsys']) {
+            if ($data['use_win_nslookup']) {
+              if (@exec("nslookup -type=$digparam $target", $output, $ret))
+                  while (list($k, $line) = each($output)) {
+                    $msg .= $line.'<br />';
+                  }
+              else
+                  $msg .= "The <i>nslookup</i> command is not working on your system.";
+            }
+          } else {
+              if (! $msg .= trim(nl2br(`dig $digparam '$target'`)))
+                  $msg .= "The <i>dig</i> command is not working on your system.";
+          }
         }
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
@@ -178,10 +189,10 @@ function netquery_user_main()
                   fputs ($sock, "QUIT\r\n");
                   fclose($sock);
                   if (!ereg ("^250", $from) || !ereg ( "^250", $to )) {
-                      $addmsg = "<br />MX Server Address Check: Address rejected by ".$address;
+                    $addmsg = "<br />MX Server Address Check: Address rejected by ".$address;
                   }
                 } else {
-                    $addmsg = "<br />MX Server Address Check: No response from ".$address;
+                  $addmsg = "<br />MX Server Address Check: No response from ".$address;
                 }
               }
               $msg .= $addmsg;
@@ -264,10 +275,9 @@ function netquery_user_main()
         $png = '';
         $target = $data['host'];
         $tpoints = $data['maxp'];
-        $pexec = $data['pingexec'];
         $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
-        if ($data['winsys']) {$PN=$pexec['exec_local'].' -n '.$tpoints.' '.$target;}
-        else {$PN=$pexec['exec_local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
+        if ($data['winsys']) {$PN=$data['pingexec_local'].' -n '.$tpoints.' '.$target;}
+        else {$PN=$data['pingexec_local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
         exec($PN, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
             $png .= $response[$i].'<br />';
@@ -285,10 +295,9 @@ function netquery_user_main()
     {
         $rt = '';
         $target = $data['host'];
-        $texec = $data['traceexec'];
         $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
-        if ($data['winsys']) {$TR=$texec['exec_local'].' '.$target;}
-        else {$TR=$texec['exec_local'].' '.$target;}
+        if ($data['winsys']) {$TR=$data['traceexec_local'].' '.$target;}
+        else {$TR=$data['traceexec_local'].' '.$target;}
         exec($TR, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
             $rt .= $response[$i].'<br />';
@@ -304,9 +313,11 @@ function netquery_user_main()
     }
     else if ($data['querytype'] == 'lgquery')
     {
-        $lgrequest  = xarModAPIFunc('netquery', 'user', 'getlgrequest', array('request' => $data['request']));
+        $lgdefault  = $data['lgdefault'];
+        $lgrequests = $data['lgrequests'];
+        $lgreq      = $data['request'];
+        $lgrequest  = $lgrequests[$lgreq];
         $lgrouter   = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => $data['router']));
-        $lgdefault  = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => 'default'));
         $readbuf = '';
         $lgaddress  = $lgrouter['address'];
         $lgport     = ($lgrouter[$lgrequest['handler'] . '_port'] > 0) ? $lgrouter[$lgrequest['handler'] . '_port'] : $lgdefault[$lgrequest['handler'] . '_port'];
@@ -368,11 +379,10 @@ function netquery_user_main()
         $msg .= '<br /><hr /></p>';
         $data['results'] .= $msg;
     }
-    $logfp = $data['logfile'];
-    if ($data['capture_log_enabled'] && $logfp['exec_local'])
+    if ($data['capture_log_enabled'] && $data['capture_log_filepath'])
     {
-        $datetime = date($logfp['exec_remote']);
-        $fp = @fopen($logfp['exec_local'], 'a');
+        $datetime = date($data['capture_log_dtformat']);
+        $fp = @fopen($data['capture_log_filepath'], 'a');
         if ($fp) {
             $string = $datetime." - User IP: ".$_SERVER[REMOTE_ADDR]." - Target: ".$target." \n";
             $write = fputs($fp, $string);

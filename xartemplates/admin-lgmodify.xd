@@ -14,14 +14,23 @@ Individual daemon port passwords take precedence over the router user password.<
 <table>
     <tr>
         <td>
-        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />
-        <input type="hidden" name="router_id" id="whois_id" value="#$router_id#" />
+        <input type="hidden" name="router_id" id="router_id" value="#$router_id#" />
         </td>
     </tr>
-    <tr align="right">
+    <xar:if condition="$router eq 'default'">
+      <tr align="right">
         <td align="left">
-        Router Name - Address:
+        <input type="hidden" name="router_router" id="router_router" value="#$router#" />
+        <input type="hidden" name="router_address" id="router_address" value="#$address#" />
+        <xar:mlstring>LG Default Settings</xar:mlstring>
+        </td>
+      </tr>
+    <xar:else />
+      <tr align="right">
+        <td align="left">
+        <xar:mlstring>Router Name - Address:</xar:mlstring>
         </td>
         <td>
         <input type="text" name="router_router" id="router_router" value="#$router#" size="21" maxlength="100" />
@@ -29,7 +38,8 @@ Individual daemon port passwords take precedence over the router user password.<
         <td>
         <input type="text" name="router_address" id="router_address" value="#$address#" size="21" maxlength="100" />
         </td>
-    </tr>
+      </tr>
+    </xar:if>
     <tr align="right">
         <td align="left">&nbsp;&nbsp;&nbsp;
         <xar:if condition="$use_argc">

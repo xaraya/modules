@@ -9,7 +9,7 @@ function netquery_admin_ptdelete()
     $data = xarModAPIFunc('netquery', 'admin', 'getport', array('port_id' => $port_id));
     if ($data == false) return;
     $data['pflag'] = $pflag;
-    $data['confirminfo'] = xarML('Port: '.$data['port'].' - Protocol: '.$data['protocol'].' - Service: '.$data['service']);
+    $data['confirminfo'] = xarML('Port').": ".$data['port']." - ".xarML('Protocol').": ".$data['protocol']." - ".xarML('Service').": ".$data['service'];
     $data['submitlabel'] = xarML('Confirm');
     $data['cancellabel'] = xarML('Cancel');
     if (empty($confirmation)) {

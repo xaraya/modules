@@ -7,7 +7,7 @@ function netquery_admin_lgdelete()
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $data = xarModAPIFunc('netquery', 'admin', 'getrouter', array('router_id' => $router_id));
     if ($data == false) return;
-    $data['confirminfo'] = xarML('Router Name: ').$data['router'].xarML(' - Address: ').$data['address'];
+    $data['confirminfo'] = xarML('Router Name').": ".$data['router']." - ".xarML('Address').": ".$data['address'];
     $data['submitlabel'] = xarML('Confirm');
     $data['cancellabel'] = xarML('Cancel');
     if (empty($confirmation)) {

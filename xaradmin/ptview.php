@@ -41,7 +41,7 @@ function netquery_admin_ptview()
     $data['ptalink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptnew', array('portnum' => $portnum)),
                              'title' => xarML('Add port service data'),
                              'label' => xarML('Add Port'));
-    $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
+    $data['hlplink'] = Array('url'   => 'modules/netquery/xardocs/manual.html#admin',
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
     return $data;

@@ -25,3 +25,7 @@ Version 2.3 2005-02-15
    - added email address validation feature
    - added comparison popup for admin editing of port entries
    - updated ports services and category flags data
+Version 2.4 2005-03-10
+   - switched exec table items to module config vars
+   - added admin selection for default whois TLD
+   - added client info to main interface and blocks
