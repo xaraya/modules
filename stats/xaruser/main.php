@@ -15,7 +15,7 @@ function stats_user_main()
 	if(!xarSecurityCheck('OverviewStats')) return;
 	
     // load the locale data
-    $localeData = xarMLSLoadLocaleData();
+    $localeData =& xarMLSLoadLocaleData();
 
     // Initialize vars
     $picpath = 'modules/stats/xarimages';

@@ -32,17 +32,17 @@ function stats_userapi_get_os_data($args)
                     case '98':
                         $osname = xarML('Windows 98');
                         break;
-                    case 'nt4.0':
-                        $osname = xarML('Windows NT 4');
-                        break;
-                    case 'nt':
-                        $osname = xarML('Windows NT 3.x');
-                        break;
                     case '95':
                         $osname = xarML('Windows 95');
                         break;
                     case 'nt5.2':
                         $osname = xarML('Windows 2003 Server');
+                        break;
+                    case 'nt4.0':
+                        $osname = xarML('Windows NT 4');
+                        break;
+                    case 'nt':
+                        $osname = xarML('Windows NT 3.x');
                         break;
                     case '31':
                         $osname = xarML('Windows 3.1');
