@@ -11,7 +11,7 @@ function sitecloud_adminapi_delete($args)
     extract($args);
     // Argument check
     if (!isset($id)) {
-        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'delete', 'sitecloud');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
