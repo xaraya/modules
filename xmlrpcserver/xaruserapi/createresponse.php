@@ -43,7 +43,8 @@ function xmlrpcserver_userapi_createresponse($args)
 {
     // Get the parameters
     extract($args);
-    //xarLogMessage(print_r($params,true));
+    //xarLogMessage(print_r($params,true), XARLOG_LEVEL_WARNING);
+    $data = array();
     if(isset($module) && isset($command)) {
         // Using a specific template supplied by the module
         $type = $module; // Type used in the module template is the originating module
@@ -53,48 +54,13 @@ function xmlrpcserver_userapi_createresponse($args)
         $type   = 'xmlrpc';         // type is an xmlrpc response (doh)
         $command= 'createresponse'; // command in this module to use
         // Using the generic protocol template
-        // There are parameters to this msg, switch on type
         foreach ($params as $parameter) {
-            switch($parameter[0]) {
-            case 'struct':
-                $members = array();
-                foreach($parameter[1] as $member) {
-                    $members[] = array('name' => $member[0],
-                                       'value' => array('type' => $member[1], 'value' => $member[2])
-                                       );
-                }
-                $data[] = array('type' => $parameter[0],
-                                'members' => $members);
-                break;
-            case 'array':
-                $members = array();
-                foreach($parameter[1] as $member) {
-                    $members[] = array('value' => array('type' => $member[0], 'value' => $member[1]));
-                }
-                $data[] = array('type' => $parameter[0],
-                                'members' => $members);
-                break;
-            
-            case 'string':
-            case 'int':
-            case 'i4':
-            case 'double':
-            case 'boolean':
-            case 'base64':
-            case 'dateTime.iso8601':
-                // Scalar type, next elem in array is value
-                $data[] = array('type' => $parameter[0], 'value' => $parameter[1]);
-                break;
-            default:
-                // An invalid xml rpc type was specified
-                echo ('invalid xmlrpc type specified ' . $parameter[0] );
-            return;
-            }
+            $data[] = __scan_param($parameter);
         }
         $data = array('params' => $data);
     }
 
-    //xarLogMessage('data',print_r($data,true));
+    //xarLogMessage(print_r($data,true), XARLOG_LEVEL_WARNING);
     // We need to disable the template comments, if they are enabled, otherwise
     // the response will be invalid
     $themecomments = xarModGetVar('themes','ShowTemplates');
@@ -102,5 +68,51 @@ function xmlrpcserver_userapi_createresponse($args)
     $output = xarTplModule($module,$type,$command, $data);
     xarModSetVar('themes','ShowTemplates',$themecomments);
     return $output;
+}
+
+/**
+ * Private function which recursively scans the supplied params and returns the
+ * proper data array to submit to the generic template. Basically what we're
+ * doing is replacing the numeric indices of the passed in nested array with
+ * the appropriate associative ones
+ *
+ * @todo We're translating one type of array into another, messy
+ */
+function __scan_param($root)
+{
+    //xarLogMessage(print_r($root,true),XARLOG_LEVEL_WARNING);
+    $data = array();
+    switch($root[0]) {
+        case 'struct':
+            $members = array();
+            foreach($root[2] as $member) {
+                $members[] = array('name'  => $root[1],
+                                   'value' => __scan_param($member));
+            }
+            $data = array('type' => $root[0], 'members' => $members);
+            break;
+        case 'array' :
+            $members = array();
+            foreach($root[1] as $member) {
+                $members[] = array('value' => __scan_param($member));
+            }
+            $data = array('type' => $root[0], 'members' => $members);
+            break;
+        case 'string':
+        case 'int':
+        case 'i4':
+        case 'double':
+        case 'boolean':
+        case 'base64':
+        case 'dateTime.iso8601':
+            // Scalar type, next elem in array is value
+            $data = array('type' => $root[0], 'value' => $root[1]);
+            break;
+        default:
+            // An invalid xml rpc type was specified, ignore it
+            //echo ('invalid xmlrpc type specified ' . $root[0]);
+    }
+    //xarLogMessage(print_r($data,true), XARLOG_LEVEL_WARNING);
+    return $data;
 }
 ?>
