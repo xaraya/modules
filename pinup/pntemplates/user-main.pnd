@@ -1,14 +1,15 @@
+<!-- headline of module -->
 <table border="0" width="100%">
     <tr>
         <th align="center">Pinup Module</th>
     </tr>
 </table>
 <br />
-
-<!-- the specific template for the current function comes here -->
-
+<!-- module body template -->
 <div align="center">
-    <a href="http://coolpick.com/way/cool/syn/babe.html">&pnt-var-piclocation;</a>
-    <br />
-    <a href="http://coolpick.com/way/cool/syn/babe.html">CoolPick.com </a>
+    <a href="http://coolpick.com/way/cool/syn/babe.html">
+       <img src="&pnt-var-piclocation;" border="0">
+       <br /><br />
+       CoolPick.com</a>
 </div>
+<!-- end of pinup template -->

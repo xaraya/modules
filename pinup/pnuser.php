@@ -15,19 +15,7 @@
  */
 function pinup_user_main()
 {
-    $location = '';
-    $url = "http://coolpick.com/way/cool/syn/babe.html";
-    $lines_array = file($url);
-    $lines_string = implode('', $lines_array);
-    eregi("7babpol.shtml(.*)<TD ALIGN=center VALIGN=center>", $lines_string, $head);
-    $lines = split("\n", $head[0]);
-    $x = count($lines);
-    for ($i=0;$i<$x;$i++) {
-        $again=eregi_replace("</td>", " ", $lines[$i]);
-        $again=eregi_replace("7babpol.shtml", " ", $again);
-//      $again=eregi_replace("\" >", " ", $again);
-        $location .= $again;
-    }
-    return array('piclocation' => $location);
+    $url = 'http://www.coolpick.com/img/syn/_babe/' . date('Ymd') . '.jpg';
+    return array('piclocation' => $url);
 }
 ?>
