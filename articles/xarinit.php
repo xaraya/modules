@@ -396,11 +396,24 @@ function articles_upgrade($oldversion)
                     return false;
                 }
             }
-            break;
+            //break;
 
         // no upgrade for random block here - you can register it via blocks admin
         case '1.5':
-            // compatability upgrade, nothing to be done
+        case '1.5.0':
+            // Upgrade the glossary block - we'll be kind :-)
+            if (!xarModAPIFunc(
+                'blocks', 'admin', 'register_block_type',
+                array(
+                    'modName'  => 'articles',
+                    'blockType'=> 'glossary'
+                )
+            )) {return;}
+
+            break;
+
+        case '1.5.1':
+            // Code to upgrade from version 1.5.1 goes here
             break;
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
@@ -481,6 +494,12 @@ function articles_delete()
                        'unregister_block_type',
                        array('modName'  => 'articles',
                              'blockType'=> 'featureditems'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'articles',
+                             'blockType'=> 'glossary'))) return;
 
 // TODO: move this to some common place in Xaraya (base module ?)
     // Unregister BL tags

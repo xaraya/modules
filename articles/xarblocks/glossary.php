@@ -92,7 +92,11 @@ function articles_glossaryblock_display($blockinfo)
     // Replace the string '{term}' in the title with the term.
     $blockinfo['title'] = str_replace('{term}', $glossaryterm, $blockinfo['title']);
 
-    $blockinfo['content'] = $vars;
+    // TODO: return $vars without rendering when the core supports it. The following
+    // (commented out) line should be all that is needed.
+    //$blockinfo['content'] = $vars;
+    $blockinfo['content'] = xarTplBlock('articles', 'glossary', $vars);
+
     return $blockinfo;
 }
 
@@ -125,7 +129,8 @@ function articles_glossaryblock_modify($blockinfo)
     $vars['bid'] = $blockinfo['bid'];
 
     // Return output
-    // TODO: just return $vars, and allow the handler to call the template (articles/admin-glossary)
+    // TODO: just return $vars, and allow the handler to call the template (articles/admin-glossary?)
+    // We certainly need to get rid of that mixed case.
     return xarTplBlock('articles', 'glossaryAdmin', $vars);
 }
 
@@ -152,6 +157,9 @@ function articles_glossaryblock_help()
     return (
         'Use {term} in the block title as a placeholder for the glossary term.'
         . ' Glossary terms will match an article title.'
+        . ' In the block admin, choose the optional pub type and category that will define the glossary terms.'
+        . ' The glossary term displayed will be the article summary.'
+        . ' A link to the full article will be provided if the body of the article contains text.'
     );
 }
 
