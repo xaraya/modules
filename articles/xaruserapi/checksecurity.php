@@ -144,6 +144,8 @@ function articles_userapi_checksecurity($args)
     foreach ($article['cids'] as $cid) {
         $jointcids[$cid] = 1;
     }
+    // FIXME: the line within the foreach is known to give an illegal offset error, not sure how to properly
+    // fix it. Only seen on using xmlrpc and bloggerapi.
     foreach ($cids as $cid) {
         $jointcids[$cid] = 1;
     }
