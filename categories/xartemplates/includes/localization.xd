@@ -33,9 +33,9 @@
             </xar:for>
         </select></td>
     </tr>
-    <!--- The position needs to be set after categories select because
+    <xar:comment> The position needs to be set after categories select because
           There is no position which we can have a selected category that will
-          work in all cases  --->
+          work in all cases  </xar:comment>
     <tr>
         <td><label for="position_#$cid#"><xar:mlstring>Position</xar:mlstring></label></td>
         <td><select name="position[#$cid#]" id="position_#$cid#">
