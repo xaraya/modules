@@ -14,6 +14,10 @@ function hitcount_user_main()
     $data['title'] = "Modules we're currently counting display hits for : (test)";
     $data['moditems'] = array();
 
+    $numitems = xarModGetVar('hitcount','numitems');
+    if (empty($numitems)) {
+        $numitems = 10;
+    }
     $modlist = xarModAPIFunc('hitcount','user','getmodules');
     foreach ($modlist as $modid => $itemtypes) {
         $modinfo = xarModGetInfo($modid);
@@ -21,9 +25,10 @@ function hitcount_user_main()
         $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
                                  // don't throw an exception if this function doesn't exist
                                  array(), 0);
-        foreach ($itemtypes as $itemtype => $numitems) {
+        foreach ($itemtypes as $itemtype => $stats) {
             $moditem = array();
-            $moditem['numitems'] = $numitems;
+            $moditem['numitems'] = $stats['items'];
+            $moditem['numhits'] = $stats['hits'];
             if ($itemtype == 0) {
                 $moditem['name'] = ucwords($modinfo['displayname']);
                 $moditem['link'] = xarModURL($modinfo['name'],'user','main');
@@ -38,7 +43,8 @@ function hitcount_user_main()
             }
             $moditem['tophits'] = xarModAPIFunc('hitcount','user','topitems',
                                                 array('modname'  => $modinfo['name'],
-                                                      'itemtype' => $itemtype));
+                                                      'itemtype' => $itemtype,
+                                                      'numitems' => $numitems));
             if (isset($moditem['tophits']) && count($moditem['tophits']) > 0) {
                 $itemids = array();
                 $itemid2hits = array();

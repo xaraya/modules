@@ -4,7 +4,7 @@
  * get the list of modules for which we're counting items
  *
  * @returns array
- * @return $array[$modid][$itemtype] = $numitems
+ * @return $array[$modid][$itemtype] = array('items' => $numitems,'hits' => $numhits);
  */
 function hitcount_userapi_getmodules($args)
 {
@@ -17,7 +17,7 @@ function hitcount_userapi_getmodules($args)
     $hitcounttable = $xartable['hitcount'];
 
     // Get items
-    $query = "SELECT xar_moduleid, xar_itemtype, COUNT(xar_itemid)
+    $query = "SELECT xar_moduleid, xar_itemtype, COUNT(xar_itemid), SUM(xar_hits)
             FROM $hitcounttable
             GROUP BY xar_moduleid, xar_itemtype";
 
@@ -26,8 +26,8 @@ function hitcount_userapi_getmodules($args)
 
     $modlist = array();
     while (!$result->EOF) {
-        list($modid,$itemtype,$numitems) = $result->fields;
-        $modlist[$modid][$itemtype] = $numitems;
+        list($modid,$itemtype,$numitems,$numhits) = $result->fields;
+        $modlist[$modid][$itemtype] = array('items' => $numitems, 'hits' => $numhits);
         $result->MoveNext();
     }
     $result->close();

@@ -8,17 +8,20 @@
  */
 function hitcount_adminapi_getmenulinks()
 { 
+    $menulinks = array();
+
     // Security Check
     if (xarSecurityCheck('AdminHitcount', 0)) {
+        $menulinks[] = Array('url'   => xarModURL('hitcount',
+                                                  'admin',
+                                                  'view'),
+                              'title' => xarML('View hitcount statistics per module'),
+                              'label' => xarML('View Statistics'));
         $menulinks[] = Array('url' => xarModURL('hitcount',
-                'admin',
-                'modifyconfig'),
-            'title' => xarML('Modify the configuration for the Hitcount module'),
-            'label' => xarML('Modify Config'));
-    } 
-
-    if (empty($menulinks)) {
-        $menulinks = '';
+                                                'admin',
+                                                'modifyconfig'),
+                             'title' => xarML('Modify the configuration for the Hitcount module'),
+                             'label' => xarML('Modify Config'));
     } 
 
     return $menulinks;
