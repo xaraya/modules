@@ -14,7 +14,7 @@ function categories_adminapi_deletecat($args)
     if (empty($cid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 
                      'cid', 'admin', 'deletecat', 'categories');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
@@ -29,7 +29,7 @@ function categories_adminapi_deletecat($args)
     if ($cat == false) {
         $msg = xarML('Category does not exist. Invalid #(1) for #(2) function #(3)() in module #(4)', 
                      'category', 'admin', 'deletecat', 'categories');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // These are set to be used later on
@@ -43,7 +43,7 @@ function categories_adminapi_deletecat($args)
     if ($categories == false || count($categories) == 0) {
         $msg = xarML('Category does not exist. Invalid #(1) for #(2) function #(3)() in module #(4)', 
                      'category', 'admin', 'deletecat', 'categories');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // Useful Variables set...

@@ -30,7 +30,7 @@ function categories_adminapi_linkcat($args)
        )
     {
         $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'linkcat', 'categories');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     if (isset($args['itemtype']) && is_numeric($args['itemtype'])) {
@@ -50,7 +50,7 @@ function categories_adminapi_linkcat($args)
                             );
          if ($cat == false) {
             $msg = xarML('Unknown Category');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
          }
     }

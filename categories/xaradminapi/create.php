@@ -45,7 +45,7 @@ function categories_adminapi_create ($args)
 
        if ($cat == false)
        {
-          xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+          xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
           new SystemException(__FILE__.'('.__LINE__.'): Unable to load the categories module´s user API'));
           return false;
        }

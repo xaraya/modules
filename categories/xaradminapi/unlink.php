@@ -20,7 +20,7 @@ function categories_adminapi_unlink($args)
             (empty($iid)) || !is_numeric($iid))
         {
             $msg = xarML('Invalid Parameter Count', '', 'admin', 'linkcat', 'categories');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
 
@@ -63,7 +63,7 @@ function categories_adminapi_unlink($args)
         if (!is_numeric($modid)) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                          'module id', 'admin', 'unlink', 'categories');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                             new SystemException($msg));
             return false;
         }

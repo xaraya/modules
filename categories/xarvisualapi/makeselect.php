@@ -44,7 +44,7 @@ function categories_visualapi_makeselect ($args)
 
     if ($args['categories'] === false) {// If it returned false
         $msg = xarML('Error obtaining category.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

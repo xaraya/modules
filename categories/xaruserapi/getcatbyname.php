@@ -31,7 +31,7 @@ function categories_userapi_getcatbyname($args)
     if (!isset($name) && !is_string($name)) {
         $msg = xarML('Invalid name for #(1) function #(2)() in module #(3)',
                      'userapi', 'getcatbyname', 'category');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
        return false;
     }
@@ -61,7 +61,7 @@ function categories_userapi_getcatbyname($args)
     if ($result->EOF) {
         $result->Close();
         //$msg = xarML('This category does not exist');
-        //xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+        //xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
         //              new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }

@@ -41,7 +41,7 @@ function categories_userapi_leftjoin($args)
     if (!isset($modid) || !is_numeric($modid)) {
         $msg = xarML('Missing parameter #(1) for #(2)',
                     'modid','categories');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return array();
     }

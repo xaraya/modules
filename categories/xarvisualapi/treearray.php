@@ -42,7 +42,7 @@ function categories_visualapi_treearray ($args)
 
     if ($categories === false) {// If it returned false
         $msg = xarML('Error obtaining category.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
