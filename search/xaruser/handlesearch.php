@@ -27,7 +27,7 @@
 function search_user_handlesearch() {
     // The module we want to search and the search terms are required.
     xarVarFetch('formodule','str:1:',$search_in_module);
-    xarVarFetch('searchterms','str:1:',$search_terms);
+    xarVarFetch('searchterms','str:0:',$search_terms);
     
     // Some modules allow searching only specific itemtypes, the generic
     // searchform supports this.
@@ -41,6 +41,10 @@ function search_user_handlesearch() {
         // scoping doesn't give me access to $search_in_module
         xarVarFetch('formodule','str:1:',$search_in_module);
         return ($list['module'] == $search_in_module) && ($list['area'] == "API");
+    }
+
+    function highlight_match(&$match,$key, $term) {    
+        $match['context'] = str_replace($term, "<span class=\"xar-search-match\">$term</span>",$match['context']);
     }
 
     // The actual search itself, needs to be handled by the module itself, because
@@ -67,6 +71,9 @@ function search_user_handlesearch() {
                                        array('terms' => $search_terms,
                                              'itemtypes' => $item_types,
                                              'object_id' => $object_id));
+        // The search results array contains a 'context' element, highlight the stuff in there
+        // which we searched for
+        array_walk($searchresults,'highlight_match',$search_terms);
         //var_dump($searchresults);
     } else {
         // If module is not hooked how are we going to get results, not possible

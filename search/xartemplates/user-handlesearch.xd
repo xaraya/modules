@@ -4,20 +4,40 @@
   </span>
 </div>
 
-<div>
-  Your search on <span class="xar-title">'#$searchterms#'</span> 
-  in the data of module <span class="xar-title">'#$searchmodule#</span> 
-  produced the following results:
+<div id="searchintro">
+  <p>
+    Your search on <span class="xar-title">'#$searchterms#'</span> 
+    in the data of module <span class="xar-title">'#$searchmodule#'</span> 
+    produced the following results:
+  </p>
 </div>
 
-<div>
+<style type="text/css">
+.xar-search-match { 
+  font-weight: bold;
+}
+</style>
+<span class="xar-mod-title">Results</span>
+  
+<div id="searchform" style="float:right;">
+  <span class="xar-mod-title"><xar:mlstring>Search again</xar:mlstring></span>
   #$searchform#
 </div>
+<!-- TODO: set the values of the searchform to the values searched on -->
 
-<xar:loop name="$searchresults">
-<a href="#$loop:item['link']#">#$loop:item['result']#</a> [ #$loop:item['itemtype']# ]<br/>
-
-<xar:if condition="!empty($loop:item['description'])">
-    <xar:mlstring>Description:</xar:mlstring> #$loop:item['description']#<br/>
-</xar:if>
-</xar:loop>
+<div id="searchtotal">
+  <xar:if condition="!empty($searchresults)">
+    <xar:loop name="$searchresults">
+      <div id="searchresultitem" style="padding: 4px;">
+        <a href="#$loop:item['link']#">#$loop:item['result']#</a> <span class="xar-sub">[ #$loop:item['itemtype']# ]</span><br/>
+        #$loop:item['context']#<br/>
+        <xar:if condition="!empty($loop:item['description'])">
+          <xar:mlstring>Description:</xar:mlstring> #$loop:item['description']#<br/>
+        </xar:if>
+        <span class="xar-sub" style="color: green;">#$loop:item['link']#</span><br/>
+      </div>
+    </xar:loop>
+  <xar:else/>
+    <xar:mlstring>No results found</xar:mlstring>
+  </xar:if>
+</div>
