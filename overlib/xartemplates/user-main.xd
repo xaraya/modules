@@ -1,7 +1,7 @@
-<!--- This call will initialize the overlib js library --->
+<xar:comment> This call will initialize the overlib js library </xar:comment>
 <xar:overlib-init />
 
-<!--- Here we create a basic popup --->
+<xar:comment> Here we create a basic popup </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="Basic Popup" 
     text="some test text"/>
@@ -11,7 +11,7 @@
    onmouseover="#$olopen#" 
    onmouseout="#$olclose#">Basic Example</a></p>
    
-<!--- Here we create a sticky popup --->
+<xar:comment> Here we create a sticky popup </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="Sticky Popup" 
     text="some test text"
@@ -22,7 +22,7 @@
    onmouseover="#$olopen#" 
    onmouseout="#$olclose#">Sticky Example</a></p>
    
-<!--- Here we create a sticky popup --->
+<xar:comment> Here we create a sticky popup </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="OnClick Sticky Popup" 
     text="some test text"
@@ -33,7 +33,7 @@
    onclick="#$olopen#" 
    onmouseout="#$olclose#">OnClick Example</a></p>
    
-<!--- Here we create a static width and height popup --->
+<xar:comment> Here we create a static width and height popup </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="200x75" 
     text="some test text"
@@ -45,7 +45,7 @@
    onmouseover="#$olopen#" 
    onmouseout="#$olclose#">Static Dimension Example</a></p>
    
-<!--- Here we create a fixed position popup --->
+<xar:comment> Here we create a fixed position popup </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="fixed position 100x50" 
     text="some test text"
@@ -57,7 +57,7 @@
    onmouseover="#$olopen#" 
    onmouseout="#$olclose#">Fixed Position Example</a></p>
    
-<!--- Here we create a basic Delay popup --->
+<xar:comment> Here we create a basic Delay popup </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="Delayed Popup - 500" 
     text="some test text"
@@ -69,7 +69,7 @@
    onmouseout="#$olclose#">Delayed Popup Example</a></p>
    
    
-<!--- Change the look and feel --->
+<xar:comment> Change the look and feel </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="look & feel : example 1" 
     text="pretty"
@@ -84,7 +84,7 @@
    onmouseover="#$olopen#" 
    onmouseout="#$olclose#">Look & Feel : Example 1</a></p>
    
-<!--- Change the look and feel --->
+<xar:comment> Change the look and feel </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="look & feel : example 2" 
     text="pretty"
@@ -101,7 +101,7 @@
    onmouseover="#$olopen#" 
    onmouseout="#$olclose#">Look & Feel : Example 2</a></p>
    
-<!--- Change the look and feel --->
+<xar:comment> Change the look and feel </xar:comment>
 <xar:overlib-popup-open name="$olopen" 
     caption="look & feel : example 3" 
     text="pretty"
