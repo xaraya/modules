@@ -6,37 +6,37 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <tr>
         <th>
-			<xar:mlstring>Smiley Code</xar:mlstring>
-		</th>
+            <xar:mlstring>Smiley Code</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Smiley Icon</xar:mlstring>
-		</th>
+            <xar:mlstring>Smiley Icon</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Smiley Icon Path</xar:mlstring>
-		</th>
+            <xar:mlstring>Smiley Icon Path</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Smiley Emotion</xar:mlstring>
-		</th>
+            <xar:mlstring>Smiley Emotion</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Options</xar:mlstring>
-		</th>
-	</tr>
+            <xar:mlstring>Options</xar:mlstring>
+        </th>
+    </tr>
     <xar:loop name="$items">
-	<xar:if condition="(($loop:index + 1) % 2)">
+    <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td class="xar-norm">
-			#$loop:item['code']#
-		</td>
+            #$loop:item['code']#
+        </td>
         <td class="xar-norm">
-			<img src="#xarTplGetImage($loop:item['icon'])#" alt="#$loop:item['emotion']#" />
-		</td>
+            <img src="#xarTplGetImage($loop:item['icon'])#" alt="#$loop:item['emotion']#" />
+        </td>
         <td class="xar-norm">
-			#$loop:item['icon']#
-		</td>
+            #$loop:item['icon']#
+        </td>
         <td class="xar-norm">
-			#$loop:item['emotion']#
-		</td>
-		<td align="center" class="xar-norm">
+            #$loop:item['emotion']#
+        </td>
+        <td align="center" class="xar-norm">
            <xar:if condition="empty($loop:item['editurl'])">
                #$edittitle#
                <xar:else />
@@ -50,21 +50,21 @@
            </xar:if>
         </td>
     </tr>
-	<xar:else />
+    <xar:else />
     <tr>
         <td class="xar-accent">
-			#$loop:item['code']#
-		</td>
+            #$loop:item['code']#
+        </td>
         <td class="xar-accent">
-			<img src="#xarTplGetImage($loop:item['icon'])#" alt="#$loop:item['emotion']#" />
-		</td>
+            <img src="#xarTplGetImage($loop:item['icon'])#" alt="#$loop:item['emotion']#" />
+        </td>
         <td class="xar-accent">
-			#$loop:item['icon']#
-		</td>
+            #$loop:item['icon']#
+        </td>
         <td class="xar-accent">
-			#$loop:item['emotion']#
-		</td>
-		<td align="center" class="xar-accent">
+            #$loop:item['emotion']#
+        </td>
+        <td align="center" class="xar-accent">
            <xar:if condition="empty($loop:item['editurl'])">
                #$loop:item['edittitle']#
                <xar:else />
@@ -78,7 +78,7 @@
            </xar:if>
         </td>
     </tr>
-	</xar:if>
+    </xar:if>
     </xar:loop>
 </table>
 </div>

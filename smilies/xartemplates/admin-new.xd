@@ -4,40 +4,40 @@
 <h2><xar:mlstring>Add a New Smiley</xar:mlstring></h2>
 
 <form method="post" action="#xarModURL('smilies', 'admin', 'new', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" >
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" value="#$authid#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The code used to present a smiley')#"><label for="code"><xar:mlstring>Code</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="code" id="code" value="" size="10" maxlength="10" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('The code used to present a smiley')#"><label for="code"><xar:mlstring>Code</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="code" id="code" value="" size="10" maxlength="10" />
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Icon to use')#"><label for="icon"><xar:mlstring>Icon</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="icon" id="icon" value="" size="30" maxlength="100" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Icon to use')#"><label for="icon"><xar:mlstring>Icon</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="icon" id="icon" value="" size="30" maxlength="100" />
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Emotion that is expressed')#"><label for="emotion"><xar:mlstring>Emotion</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="emotion" id="emotion" value="" size="30" maxlength="100" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Emotion that is expressed')#"><label for="emotion"><xar:mlstring>Emotion</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="emotion" id="emotion" value="" size="30" maxlength="100" />
+    </span>
+    </div>
 
-	#$hooks#
+    #$hooks#
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="submit" value="#$submitlabel#"/>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="submit" value="#$submitlabel#"/>
+    </span>
+    </div>
 </form>
 </div>

@@ -21,12 +21,12 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>
-			From the menu, you have two choices.  "Add Smilies", and "View Smiles". 
-			</xar:mlstring>
-			<ul>
-				<li><xar:mlstring>View Smilies -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
-				<li><xar:mlstring>Add Smilies -- Allows you to add new smilies to your system.</xar:mlstring></li>
-			</ul>
+            From the menu, you have two choices.  "Add Smilies", and "View Smiles". 
+            </xar:mlstring>
+            <ul>
+                <li><xar:mlstring>View Smilies -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
+                <li><xar:mlstring>Add Smilies -- Allows you to add new smilies to your system.</xar:mlstring></li>
+            </ul>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
