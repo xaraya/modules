@@ -39,8 +39,12 @@
     <xar:loop name="$items">
       <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
         <div class="xar-norm" style="padding: 3px;">
-          [ #$loop:item['type']# ]
-          <h1><a class="xar-title" href="#$loop:item['displaylink']#">#$loop:item['name']#</a></h1>
+          <xar:if condition="$loop:item['type'] == 0">
+            [ <xar:mlstring>Module</xar:mlstring> ]
+          <xar:else />        
+            [ <xar:mlstring>Theme</xar:mlstring> ]
+          </xar:if>
+          <h1><a class="xar-title" href="#$loop:item['displaylink']#">#$loop:item['regname']#</a></h1>
           <div class="xar-accent" style="padding: 2px;">
             <span class="xar-sub">
               <xar:mlstring>Author</xar:mlstring>: 

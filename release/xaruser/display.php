@@ -91,7 +91,9 @@ function release_user_display()
                                        array('rid' => $items[$i]['rid']));
 
                 $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
-                $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
+                $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
+                $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
+                $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
                 $items[$i]['displaylink'] =  xarModURL('release',
                                                   'user',
                                                   'displaynote',
@@ -360,8 +362,10 @@ function release_user_display()
     $time=time();
     $data['time']=$time;
     $data['desc'] = nl2br($id['desc']);
-    $data['name'] = $id['name'];
+    $data['regname'] = $id['regname'];
+    $data['displname'] = $id['displname'];
     $data['type'] = $id['type'];
+    $data['class'] = $id['class'];
     $data['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $data['realname'] = $getuser['name'];
     $data['rid'] = $rid;

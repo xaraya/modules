@@ -21,7 +21,7 @@
 			<table border="0" cellpadding="2" cellspacing="0" width="100%">
 				<tr>
 					<td align="left" valign="top" class="xar-norm">
-						<label for="rid"><xar:mlstring>Module or Theme ID</xar:mlstring></label>
+						<label for="rid"><xar:mlstring>Extension ID</xar:mlstring></label>
 					</td>
 					<td align="left" valign="top" class="xar-norm">
 						<input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
@@ -29,10 +29,18 @@
 				</tr>
 				<tr>
 					<td align="left" valign="top" class="xar-norm">
-						<label for="name"><xar:mlstring>Module or Theme Name</xar:mlstring></label>
+						<label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
 					</td>
 					<td align="left" valign="top" class="xar-norm">
-						<input type="text" name="name" id="name" value="" size="25" maxlength="60" tabindex="2" />
+						<input type="text" name="regname" id="regname" value="" size="25" maxlength="60" tabindex="2" />
+					</td>
+				</tr>
+				<tr>
+					<td align="left" valign="top" class="xar-norm">
+						<label for="displname"><xar:mlstring>Extension Display Name</xar:mlstring></label>
+					</td>
+					<td align="left" valign="top" class="xar-norm">
+						<input type="text" name="displname" id="displname" value="" size="25" maxlength="60" tabindex="2" />
 					</td>
 				</tr>
 				<tr>
@@ -49,8 +57,19 @@
                     </td>
 					<td align="left" valign="top" class="xar-norm">
 						<select name="idtype" id="idtype">
-							<option name="module"><xar:mlstring>Module</xar:mlstring></option>
-							<option name="theme"><xar:mlstring>Theme</xar:mlstring></option>
+							<option value="0"><xar:mlstring>Module</xar:mlstring></option>
+							<option value="1"><xar:mlstring>Theme</xar:mlstring></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" valign="top" class="xar-norm">
+						<label for="class"><xar:mlstring>Class</xar:mlstring></label>
+                    </td>
+					<td align="left" valign="top" class="xar-norm">
+						<select name="class" id="class">
+							<option value="0"><xar:mlstring>Core</xar:mlstring></option>
+							<option value="1"><xar:mlstring>Non-Core</xar:mlstring></option>
 						</select>
 					</td>
 				</tr>

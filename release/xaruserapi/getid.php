@@ -20,9 +20,11 @@ function release_userapi_getid($args)
     // Get link
     $query = "SELECT xar_rid,
                      xar_uid,
-                     xar_name,
+                     xar_regname,
+                     xar_displname,
                      xar_desc,
                      xar_type,
+                     xar_class,
                      xar_certified,
                      xar_approved,
                      xar_rstate
@@ -31,7 +33,7 @@ function release_userapi_getid($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    list($rid, $uid, $name, $desc, $type, $certified, $approved, $rstate) = $result->fields;
+    list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, $rstate) = $result->fields;
     $result->Close();
 
     if (!xarSecurityCheck('OverviewRelease', 0)) {
@@ -40,9 +42,11 @@ function release_userapi_getid($args)
 
     $releaseinfo = array('rid'        => $rid,
                          'uid'        => $uid,
-                         'name'       => $name,
+                         'regname'    => $regname,
+                         'displname'  => $displname,
                          'desc'       => $desc,
                          'type'       => $type,
+                         'class'      => $class,
                          'certified'  => $certified,
                          'approved'   => $approved,
                          'rstate'     => $rstate);

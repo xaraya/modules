@@ -28,11 +28,11 @@ function release_userapi_countitems($args)
         $idtypes = 1;
     }
     if ($idtypes == 3){
-        $whereclause= "WHERE xar_type = 'module'";
+        $whereclause= "WHERE xar_type = '0'";
     }elseif ($idtypes==2) {
-        $whereclause= "WHERE xar_type = 'theme'";
+        $whereclause= "WHERE xar_type = '1'";
     }else {
-        $whereclause= "WHERE xar_type = 'theme' or xar_type = 'module'";
+        $whereclause= "WHERE xar_type = '1' or xar_type = '0'";
     }
 
 

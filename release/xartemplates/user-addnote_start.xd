@@ -6,18 +6,18 @@
 	#$message#
 <xar:else />
 
-<xar:mlstring>From this screen, you will be adding a release note for your module or theme.  Please enter all applicable information.  Release notes are held for validation.  If your module or theme has never had a release before, it may take extra time to determine the certification status.  For more information on the certification of modules and themes, and their benefits, please read this information (insert link).</xar:mlstring>
+<xar:mlstring>From this screen, you will be adding a release note for your extension.  Please enter all applicable information.  Release notes are held for validation.  If your extension has never had a release before, it may take extra time to determine the certification status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).</xar:mlstring>
 <div align="center">
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<input type="hidden" name="phase" id="phase" value="getbasics" />	
 		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
-		<input type="hidden" name="name" id="name" value="#$name#" />
+		<input type="hidden" name="regname" id="regname" value="#$regname#" />
 		<table border="0" cellpadding="5">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme ID</xar:mlstring>
+					<xar:mlstring>Extension ID</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					#$rid#
@@ -25,10 +25,10 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme Name</xar:mlstring>
+					<xar:mlstring>Extension Registered Name</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					#$name#
+					#$regname#
 				</td>
 			</tr>
 			<tr>

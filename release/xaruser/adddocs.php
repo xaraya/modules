@@ -54,7 +54,7 @@ function release_user_adddocs()
 
             //TODO FIX ME!!!
             if (empty($data['name'])){
-                $message = xarML('There is no assigned ID for your module or theme.');
+                $message = xarML('There is no assigned ID for your extension.');
             }
 
             xarTplSetPageTitle(xarVarPrepForDisplay($data['name']));

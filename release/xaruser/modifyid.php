@@ -66,17 +66,21 @@ function release_user_modifyid()
 
             list($rid,
                  $uid,
-                 $name,
+                 $regname,
+                 $displname,
                  $desc,
                  $certified,
                  $idtype,
+                 $class,
                  $rstate,
                  $cids) = xarVarCleanFromInput('rid',
                                                'uid',
-                                               'name',
+                                               'regname',
+                                               'displname',
                                                'desc',
                                                'certified',
                                                'idtype',
+                                               'class',
                                                'rstate',
                                                'modify_cids');
             
@@ -89,10 +93,12 @@ function release_user_modifyid()
                                'updateid',
                                 array('rid' => $rid,
                                       'uid' => $uid,
-                                      'name' => $name,
+                                      'regname' => $regname,
+                                      'displname' => $displname,
                                       'desc' => $desc,
                                       'certified' => $certified,
                                       'type' => $idtype,
+                                      'class' => $class,
                                       'rstate' => $rstate,
                                       'cids' => $cids))) return;
 

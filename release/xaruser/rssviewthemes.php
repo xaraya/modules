@@ -23,7 +23,9 @@ function release_user_rssviewthemes()
                                'getid',
                                array('rid' => $items[$i]['rid']));
 
-        $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
+        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
+
+        $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
 
         $items[$i]['displaylink'] =  xarModURL('release',
                                                'user',

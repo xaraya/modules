@@ -53,15 +53,15 @@ function release_user_addnotes()
             }
 
             //TODO FIX ME!!!
-            if (empty($data['name'])){
-                $message = xarML('There is no assigned ID for your module or theme.');
+            if (empty($data['regname'])){
+                $message = xarML('There is no assigned ID for your extension.');
             }
 
-            xarTplSetPageTitle(xarVarPrepForDisplay($data['name']));
+            xarTplSetPageTitle(xarVarPrepForDisplay($data['regname']));
 
             $authid = xarSecGenAuthKey();
             $data = xarTplModule('release','user', 'addnote_start', array('rid'       => $data['rid'],
-                                                                          'name'      => $data['name'],
+                                                                          'regname'   => $data['regname'],
                                                                           'desc'      => $data['desc'],
                                                                           'message'   => $message,
                                                                           'authid'    => $authid));
@@ -71,29 +71,29 @@ function release_user_addnotes()
         case 'getbasics':
 
            list($rid,
-                $name) = xarVarCleanFromInput('rid',
-                                              'name');
+                $regname) = xarVarCleanFromInput('rid',
+                                                 'regname');
 
            //if (!xarSecConfirmAuthKey()) return;
 
 
-            xarTplSetPageTitle(xarVarPrepForDisplay($name));
+            xarTplSetPageTitle(xarVarPrepForDisplay($regname));
 
            $authid = xarSecGenAuthKey();
-           $data = xarTplModule('release','user', 'addnote_getbasics', array('rid'       => $rid,
-                                                                             'name'     => $name,
+           $data = xarTplModule('release','user', 'addnote_getbasics', array('rid'      => $rid,
+                                                                             'regname'  => $regname,
                                                                              'authid'   => $authid));
             break;
 
         case 'getdetails':
 
             list($rid,
-                 $name,
+                 $regname,
                  $version,
                  $pricecheck,
                  $supportcheck,
                  $democheck) = xarVarCleanFromInput('rid',
-                                                    'name',
+                                                    'regname',
                                                     'version',
                                                     'pricecheck',
                                                     'supportcheck',
@@ -101,14 +101,14 @@ function release_user_addnotes()
             
            //if (!xarSecConfirmAuthKey()) return;
 
-            xarTplSetPageTitle(xarVarPrepForDisplay($name));
+            xarTplSetPageTitle(xarVarPrepForDisplay($regname));
 
            $authid = xarSecGenAuthKey();
-           $data = xarTplModule('release','user', 'addnote_getdetails', array('rid'         => $rid,
-                                                                              'name'        => $name,
-                                                                              'authid'      => $authid,
-                                                                              'version'     => $version,
-                                                                              'pricecheck'  => $pricecheck,
+           $data = xarTplModule('release','user', 'addnote_getdetails', array('rid'          => $rid,
+                                                                              'regname'      => $regname,
+                                                                              'authid'       => $authid,
+                                                                              'version'      => $version,
+                                                                              'pricecheck'   => $pricecheck,
                                                                               'supportcheck' => $supportcheck,
                                                                               'democheck'    => $democheck,
                                                                               'stateoptions' => $stateoptions));
@@ -118,7 +118,7 @@ function release_user_addnotes()
         case 'preview':
 
             list($rid,
-                 $name,
+                 $regname,
                  $version,
                  $pricecheck,
                  $supportcheck,
@@ -130,18 +130,18 @@ function release_user_addnotes()
                  $changelog,
                  $notes,
                  $rstate) = xarVarCleanFromInput('rid',
-                                                'name',
-                                                'version',
-                                                'pricecheck',
-                                                'supportcheck',
-                                                'democheck',
-                                                'dllink',
-                                                'price',
-                                                'demolink',
-                                                'supportlink',
-                                                'changelog',
-                                                'notes',
-                                                'rstate');
+                                                 'regname',
+                                                 'version',
+                                                 'pricecheck',
+                                                 'supportcheck',
+                                                 'democheck',
+                                                 'dllink',
+                                                 'price',
+                                                 'demolink',
+                                                 'supportlink',
+                                                 'changelog',
+                                                 'notes',
+                                                 'rstate');
             
            //if (!xarSecConfirmAuthKey()) return;
            //Get some info for the extensions state
@@ -154,11 +154,11 @@ function release_user_addnotes()
            $notesf = nl2br($notes);
            $changelogf = nl2br($changelog);
 
-            xarTplSetPageTitle(xarVarPrepForDisplay($name));
+            xarTplSetPageTitle(xarVarPrepForDisplay($regname));
 
            $authid = xarSecGenAuthKey();
            $data = xarTplModule('release','user', 'addnote_preview',    array('rid'         => $rid,
-                                                                              'name'        => $name,
+                                                                              'regname'     => $regname,
                                                                               'authid'      => $authid,
                                                                               'version'     => $version,
                                                                               'pricecheck'  => $pricecheck,
@@ -183,7 +183,7 @@ function release_user_addnotes()
         case 'update':
 
             list($rid,
-                 $name,
+                 $regname,
                  $version,
                  $pricecheck,
                  $supportcheck,
@@ -195,7 +195,7 @@ function release_user_addnotes()
                  $changelog,
                  $notes,
                  $rstate) = xarVarCleanFromInput('rid',
-                                                'name',
+                                                'regname',
                                                 'version',
                                                 'pricecheck',
                                                 'supportcheck',

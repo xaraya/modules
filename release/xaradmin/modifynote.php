@@ -57,7 +57,7 @@ function release_admin_modifynote()
             }
             $data['rstatesel']=$rstatesel;
             $data['stateoptions']=$stateoptions;
-            $data['name'] = $id['name'];
+            $data['regname'] = $id['regname'];
             $data['username'] = $user['name'];
             $data['changelogf'] = nl2br($data['changelog']);
             $data['notesf'] = nl2br($data['notes']);
@@ -68,7 +68,7 @@ function release_admin_modifynote()
         case 'update':
 
             list($rid,
-                 $name,
+                 $regname,
                  $version,
                  $pricecheck,
                  $supportcheck,
@@ -83,7 +83,7 @@ function release_admin_modifynote()
                  $approved,
                  $notes,
                  $rstate) = xarVarCleanFromInput('rid',
-                                                'name',
+                                                'regname',
                                                 'version',
                                                 'pricecheck',
                                                 'supportcheck',

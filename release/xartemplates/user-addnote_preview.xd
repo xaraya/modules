@@ -9,7 +9,7 @@
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<input type="hidden" name="phase" id="phase" value="update" />	
 		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
-		<input type="hidden" name="name" id="name" value="#$name#" />
+		<input type="hidden" name="regname" id="regname" value="#$regname#" />
 		<input type="hidden" name="version" id="version" value="#$version#" />	
 		<input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />	
 		<input type="hidden" name="democheck" id="democheck" value="#$democheck#" />	
@@ -17,7 +17,7 @@
 		<table border="0" cellpadding="5">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme ID</xar:mlstring>
+					<xar:mlstring>Extension ID</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					#$rid#
@@ -25,10 +25,10 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme Name</xar:mlstring>
+					<xar:mlstring>Extension Registered Name</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					#$name#
+					#$regname#
 				</td>
 			</tr>
 			<tr>

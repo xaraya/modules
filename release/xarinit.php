@@ -35,16 +35,24 @@ function release_init()
                                                               'null'        => false,
                                                               'default'     => '0',
                                                               'increment'   => false),
-                                   'xar_name'        => array('type'        => 'varchar',
+                                   'xar_regname'     => array('type'        => 'varchar',
                                                               'size'        => 100,
+                                                              'null'        => false,
+                                                              'default'     => ''),
+                                   'xar_displname'   => array('type'        => 'varchar',
+                                                              'size'        => 200,
                                                               'null'        => false,
                                                               'default'     => ''),
                                    'xar_desc'        => array('type'        => 'text',
                                                               'default'     => ''),
-                                   'xar_type'        => array('type'        => 'varchar',
-                                                              'size'        => 100,
+                                   'xar_type'        => array('type'        => 'integer',
                                                               'null'        => false,
-                                                              'default'     => ''),
+                                                              'default'     => '0',
+                                                              'increment'   => false),
+                                   'xar_class'       => array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
+                                                              'increment'   => false),
                                    'xar_certified'   => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '1',
@@ -53,7 +61,7 @@ function release_init()
                                                               'null'        => false,
                                                               'default'     => '0',
                                                               'increment'   => false),
-                                    'xar_rstate'    => array('type'        => 'integer',
+                                   'xar_rstate'      => array('type'        => 'integer',
                                                               'null'        => false,
                                                               'default'     => '0',
                                                               'increment'   => false)
@@ -62,7 +70,7 @@ function release_init()
     if (!$result) return;
 
     $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
-                   'fields'    => array('xar_name'),
+                   'fields'    => array('xar_regname','xar_type'),
                    'unique'    => TRUE);
     $query = xarDBCreateIndex($releasetable,$index);
     $result =& $dbconn->Execute($query);
@@ -364,9 +372,119 @@ function release_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
 
+            return release_upgrade('0.0.11');
 
         break;
         case '0.0.11':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $releasetable = $xartable['release_id'];
+            //Add new class field to release table
+            $query = xarDBAlterTable($releasetable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_class',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            //Add new dispname field to release table
+            $query = xarDBAlterTable($releasetable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_displname',
+                                    'type'    => 'varchar',
+                                    'size'    => 200,
+                                    'null'    => false,
+                                    'default' => ''));
+
+            // Pass to ADODB, and send exception if the result isn't valid.
+
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // FIXME: non-portable SQL
+            $query = "update $releasetable set xar_type='0' where xar_type='Module'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            $result->Close();
+
+            // FIXME: non-portable SQL
+            $query = "update $releasetable set xar_type='1' where xar_type='Theme'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            $result->Close();
+
+            // FIXME: non-portable SQL
+            $query = "update $releasetable set xar_name='skribetheme' where xar_rid='5555'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            $result->Close();
+
+            // FIXME: non-portable SQL
+            $query = "update $releasetable set xar_name='ComputerPoint' where xar_rid='2001'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            $result->Close();
+
+            // FIXME: non-portable SQL
+            $query = "ALTER TABLE $releasetable
+                         CHANGE xar_type xar_type INT UNSIGNED DEFAULT '0' NOT NULL";
+            $altresult =& $dbconn->Execute($query);
+            if (!$altresult) return;
+            $altresult->Close();
+
+            $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
+                           'fields'    => array('xar_name'),
+                           'unique'    => TRUE);
+            $query = xarDBDropIndex($releasetable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // FIXME: non-portable SQL
+            $query = "ALTER TABLE $releasetable
+                         CHANGE xar_name xar_regname varchar(100) NOT NULL default ''";
+            $altresult =& $dbconn->Execute($query);
+            if (!$altresult) return;
+            $altresult->Close();
+
+            // FIXME: non-portable SQL
+            $query = "update $releasetable set xar_class='1'";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            $result->Close();
+
+            // FIXME: non-portable SQL
+            $query = "select xar_rid,xar_regname from $releasetable";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            while (!$result->EOF) {
+                $newid = $result->fields[0];
+                $newrn = strtolower($result->fields[1]);
+                $newdn = $result->fields[1];
+
+                $query = "update $releasetable set xar_regname='$newrn',xar_displname='$newdn' where xar_rid=$newid";
+                $result2 =& $dbconn->Execute($query);
+                if (!$result2) return;
+                $result2->Close();
+
+                $result->MoveNext();
+            }
+            $result->Close();
+
+            $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
+                           'fields'    => array('xar_regname','xar_type'),
+                           'unique'    => TRUE);
+            $query = xarDBCreateIndex($releasetable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+        break;
+        case '0.0.12':
     }
     return true;
 }

@@ -65,8 +65,10 @@ function release_user_displaynote()
     }
     $item['stateoption']=$stateoption;
     $item['desc'] = nl2br($id['desc']);
-    $item['name'] = $id['name'];
+    $item['regname'] = $id['regname'];
+    $item['displname'] = $id['displname'];
     $item['type'] = $id['type'];
+    $item['class'] = $id['class'];
     $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $item['realname'] = $getuser['name'];
 

@@ -9,11 +9,11 @@
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<input type="hidden" name="phase" id="phase" value="getdetails" />	
 		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
-		<input type="hidden" name="name" id="name" value="#$name#" />
+		<input type="hidden" name="regname" id="regname" value="#$regname#" />
 		<table border="0" cellpadding="5">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme ID</xar:mlstring>
+					<xar:mlstring>Extension ID</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					#$rid#
@@ -21,10 +21,10 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme Name</xar:mlstring>
+					<xar:mlstring>Extension Registered Name</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					#$name#
+					#$regname#
 				</td>
 			</tr>
 			<tr>
@@ -53,7 +53,7 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<label for="supportcheck"><xar:mlstring>Is this Module or Theme Supported?</xar:mlstring></label>
+					<label for="supportcheck"><xar:mlstring>Is this Extension Supported?</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					Yes&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="supportcheck" value="2" />&nbsp;&nbsp; No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="supportcheck" value="1" />

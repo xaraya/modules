@@ -139,7 +139,9 @@ function release_user_viewnotes()
                                               array('uid' => $getid['uid']));
 
         $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
-        $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
+        $items[$i]['class'] = xarVarPrepForDisplay($getid['class']);
+        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
+        $items[$i]['displname'] = xarVarPrepForDisplay($getid['displname']);
         $items[$i]['realname'] = $getuser['name'];
         $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($getid['desc']));
         $items[$i]['notes'] = nl2br(xarVarPrepHTMLDisplay($item['notes']));

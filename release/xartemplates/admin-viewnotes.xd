@@ -65,10 +65,14 @@
         </xar:if>
         <tr>
           <td class="#$rowclass#">
-			      #$loop:item['type']#
-		      </td>
+            <xar:if condition="$loop:item['type'] == 0">
+              <h3><xar:mlstring>Module</xar:mlstring>:</h3>
+            <xar:else />        
+              <h3><xar:mlstring>Theme</xar:mlstring>:</h3>
+            </xar:if>
+	      </td>
           <td class="#$rowclass#">
-			      #$loop:item['name']#
+			      #$loop:item['regname']#
 		      </td>
           <td class="#$rowclass#">
 			      #$loop:item['desc']#

@@ -1,6 +1,6 @@
 <xar:loop name="$items">
 
-	<title>#$loop:item.name# - Version #$loop:item.version#</title>
+	<title>#$loop:item.regname# - Version #$loop:item.version#</title>
 	<link>#$loop:item.displaylink#</link>
 	<description>#$loop:item.desc#</description>
 	<guid isPermaLink="false">http://www.xaraya.com</guid> 

@@ -11,22 +11,22 @@ function release_admin_viewids()
 
     $uid = xarUserGetVar('uid');
 
-   if (!isset($idtypes)) {
+    if (!isset($idtypes)) {
        $idtypes=1;
     }
 
     if ($phase == 'modules') {
         $idtypes=3;
-    }elseif ($phase =='themes') {
+    } elseif ($phase =='themes') {
         $idtypes=2;
-    }else{
-     $idtypes=1;
+    } else{
+        $idtypes=1;
     }
 
     // The user API function is called. 
     $items = xarModAPIFunc('release',
                            'user',
-                             'getallids',
+                           'getallids',
                        array('idtypes' => $idtypes,
                              'startnum' => $startnum,
                              'numitems' => xarModGetUserVar('release',
@@ -44,7 +44,7 @@ function release_admin_viewids()
         $item = $items[$i];
 
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
-        $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
+        $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
 
         if (xarSecurityCheck('EditRelease', 0)) {
             $items[$i]['editurl'] = xarModURL('release',

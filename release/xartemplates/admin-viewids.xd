@@ -20,7 +20,7 @@
 			  #$loop:item['rid']#
 		  </td>
       <td>
-			  #$loop:item['name']#
+			  #$loop:item['regname']#
 		  </td>
 		  <td align="center">
         <xar:if condition="empty($editurl)">

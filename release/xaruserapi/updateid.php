@@ -8,8 +8,10 @@ function release_userapi_updateid($args)
     // Argument check
     if ((!isset($rid)) ||
         (!isset($uid)) ||
-        (!isset($name)) ||
-        (!isset($type))) {
+        (!isset($regname)) ||
+        (!isset($displname)) ||
+        (!isset($type)) ||
+        (!isset($class))) {
         $msg = xarML('Invalid Parameter Count',
                     join(', ',$invalid), 'admin', 'update', 'Autolinks');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -48,8 +50,10 @@ function release_userapi_updateid($args)
     // Update the link
     $query = "UPDATE $releasetable
             SET xar_uid = '" . xarVarPrepForStore($uid) . "',
-                xar_name = '" . xarVarPrepForStore($name) . "',
+                xar_regname = '" . xarVarPrepForStore($regname) . "',
+                xar_displname = '" . xarVarPrepForStore($displname) . "',
                 xar_type = '" . xarVarPrepForStore($type) . "',
+                xar_class = '" . xarVarPrepForStore($class) . "',
                 xar_desc = '" . xarVarPrepForStore($desc) . "',
                 xar_certified = '" . xarVarPrepForStore($certified) . "',
                 xar_approved = '" . xarVarPrepForStore($approved) . "',

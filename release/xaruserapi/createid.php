@@ -6,20 +6,12 @@ function release_userapi_createid($args)
     extract($args);
 
     // Argument check
-    if ((!isset($name)) ||
+    if ((!isset($regname)) ||
         (!isset($type))) {
 
         $msg = xarML('Wrong arguments to release_userapi_createid.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,
                         'BAD_PARAM',
-                        new SystemException($msg));
-        return false;
-    }
-
-    if ($rid >= 10000 AND $rid < 11000) {
-        $msg = xarML('You have requested the private ID (1000-10999).');
-        xarExceptionSet(XAR_USER_EXCEPTION,
-                        'MISSING_DATA',
                         new SystemException($msg));
         return false;
     }
@@ -32,13 +24,14 @@ function release_userapi_createid($args)
 
     // Check if that username exists
     $query = "SELECT xar_rid FROM $releasetable
-            WHERE xar_name='".xarVarPrepForStore($name)."'
+            WHERE xar_regname='".xarVarPrepForStore($regname)."'
+            AND xar_type='".xarVarPrepForStore($type)."'
             OR xar_rid='".xarVarPrepForStore($rid)."'";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
-        $msg = xarML('Requested ID or name already registered earlier.');
+        $msg = xarML('Requested ID or name/type already registered earlier.');
         xarExceptionSet(XAR_USER_EXCEPTION,
                         'MISSING_DATA',
                         new SystemException($msg));
@@ -52,9 +45,11 @@ function release_userapi_createid($args)
     $query = "INSERT INTO $releasetable (
               xar_rid,
               xar_uid,
-              xar_name,
+              xar_regname,
+              xar_displname,
               xar_desc,
               xar_type,
+              xar_class,
               xar_certified,
               xar_approved,
               xar_rstate
@@ -62,9 +57,11 @@ function release_userapi_createid($args)
             VALUES (
               '" . xarVarPrepForStore($rid) . "',
               '" . xarVarPrepForStore($uid) . "',
-              '" . xarVarPrepForStore($name) . "',
+              '" . xarVarPrepForStore($regname) . "',
+              '" . xarVarPrepForStore($displname) . "',
               '" . xarVarPrepForStore($desc) . "',
               '" . xarVarPrepForStore($type) . "',
+              '" . xarVarPrepForStore($class) . "',
               '" . xarVarPrepForStore($certified) . "',
               '" . xarVarPrepForStore($approved) . "',
               '" . xarVarPrepForStore($rstate)."')";

@@ -23,7 +23,7 @@ function release_user_rssviewnotes()
                                'getid',
                                array('rid' => $items[$i]['rid']));
 
-        $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
+        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
 
         $items[$i]['displaylink'] =  xarModURL('release',
                                                'user',

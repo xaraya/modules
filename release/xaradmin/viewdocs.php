@@ -136,7 +136,7 @@ function release_admin_viewdocs()
                                array('rid' => $items[$i]['rid']));
 
         $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
-        $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
+        $items[$i]['regname'] = xarVarPrepForDisplay($getid['regname']);
         $items[$i]['displaylink'] =  xarModURL('release',
                                           'user',
                                           'displaynote',

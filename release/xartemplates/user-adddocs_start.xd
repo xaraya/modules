@@ -6,7 +6,7 @@
 	#$message#
 <xar:else />
 
-<xar:mlstring>From this screen, you will be adding a documentation for your module or theme.  Please enter all applicable information.  Documentation is held for validation.  If your module or theme is certified, your documentation will be syndicated into the help module, as well as notification of the module or theme status.  For more information on the certification of modules and themes, and their benefits, please read this information (insert link).</xar:mlstring>
+<xar:mlstring>From this screen, you will be adding a documentation for your extension.  Please enter all applicable information.  Documentation is held for validation.  If your extension is certified, your documentation will be syndicated into the help module, as well as notification of the extension status.  For more information on the certification of extensions, and their benefits, please read this information (insert link).</xar:mlstring>
 <div align="center">
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
@@ -16,7 +16,7 @@
 		<table border="0" cellpadding="5">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme ID</xar:mlstring>
+					<xar:mlstring>Extension ID</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					#$rid#
@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Module or Theme Name</xar:mlstring>
+					<xar:mlstring>Extension Registered Name</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					#$name#

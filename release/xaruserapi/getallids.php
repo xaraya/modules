@@ -30,9 +30,11 @@ function release_userapi_getallids($args)
 
     $query = "SELECT xar_rid,
                      xar_uid,
-                     xar_name,
+                     xar_regname,
+                     xar_displname,
                      xar_desc,
                      xar_type,
+                     xar_class,
                      xar_certified,
                      xar_approved,
                      xar_rstate
@@ -47,13 +49,15 @@ function release_userapi_getallids($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $name, $desc, $type, $certified, $approved, $rstate) = $result->fields;
+        list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, $rstate) = $result->fields;
         if (xarSecurityCheck('OverviewRelease', 0)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
-                                   'name'       => $name,
+                                   'regname'    => $regname,
+                                   'displname'  => $displname,
                                    'desc'       => $desc,
                                    'type'       => $type,
+                                   'class'      => $class,
                                    'certified'  => $certified,
                                    'approved'   => $approved,
                                    'rstate'     => $rstate);

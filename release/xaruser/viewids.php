@@ -108,7 +108,8 @@ function release_user_viewids()
 
         // Basic Information
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
-        $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
+        $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
+        $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
 
         $getuser = xarModAPIFunc('roles',
                                  'user',

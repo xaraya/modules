@@ -55,7 +55,8 @@ function release_user_rssviewids()
 
         // Basic Information
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
-        $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
+        $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
+        $items[$i]['displname'] = xarVarPrepForDisplay($item['displname']);
         $items[$i]['desc'] = xarVarPrepForDisplay($item['desc']);
 
         $getuser = xarModAPIFunc('roles',

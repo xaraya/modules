@@ -2,7 +2,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <!-- Let's put non-repeating detail as header and list releases underneath -->
-<xar:set name="extname">ucfirst($name)</xar:set>
+<xar:set name="extname">ucfirst($regname)</xar:set>
 <xar:set name="goback"><xar:mlstring>Back to List View</xar:mlstring></xar:set>
 <xar:set name="listview">xarModURL('release','user','viewids')</xar:set>
 <xar:if condition="$general eq 2" >
@@ -16,10 +16,22 @@
     </div>
     <div style="clear: both; padding-top: 5px;">
     <span style="float: left; width: 20%; text-align: left;">
-        <h3>#$type#:</h3>
+      <xar:if condition="$type == 0">
+        <h3><xar:mlstring>Module</xar:mlstring>:</h3>
+      <xar:else />        
+        <h3><xar:mlstring>Theme</xar:mlstring>:</h3>
+      </xar:if>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <h3>#$extname#</h3>
+    </span>
+    </div>
+    <div style="clear: both; padding-top: 5px;">
+    <span style="float: left; width: 20%; text-align: left;;">
+       <h3>Display Name:</h3>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        #$displname#
     </span>
     </div>
     <div style="clear: both; padding-top: 5px;">
@@ -28,6 +40,18 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         #$desc#
+    </span>
+    </div>
+    <div style="clear: both; padding-top: 5px;">
+    <span style="float: left; width: 20%; text-align: left;;">
+       <h3>Class:</h3>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+      <xar:if condition="$class == 0">
+        <xar:mlstring>Core</xar:mlstring>
+      <xar:else />        
+        <xar:mlstring>Non-Core</xar:mlstring>
+      </xar:if>
     </span>
     </div>
     <div style="clear: both; padding-top: 5px;">
