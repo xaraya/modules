@@ -3,6 +3,7 @@
 $modversion['name']           = 'icecast';
 $modversion['id']             = '2346';
 $modversion['version']        = '0.0.1';
+$modversion['displayname']    = xarML('IceCast');
 $modversion['description']    = 'IceCast Status/Administration';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
