@@ -691,51 +691,55 @@ function release_user_addid()
         $phase = 'add';
     }
 
-    switch(strtolower($phase)) {
+    if (xarUserIsLoggedIn()){
+        switch(strtolower($phase)) {
 
-        case 'add':
-        default:
+            case 'add':
+            default:
 
-            $data['uid'] = xarUserGetVar('uid');
-            $data['authid'] = xarSecGenAuthKey();
+                $data['uid'] = xarUserGetVar('uid');
+                $data['authid'] = xarSecGenAuthKey();
 
-            break;
-        
-        case 'update':
-
-            list($rid,
-                 $uid,
-                 $name,
-                 $desc,
-                 $idtype) = xarVarCleanFromInput('rid',
-                                                 'uid',
-                                                 'name',
-                                                 'desc',
-                                                 'idtype');
+                break;
             
-            // Get the UID of the person submitting the module
-            $uid = xarUserGetVar('uid');
+            case 'update':
 
-            // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
+                list($rid,
+                     $uid,
+                     $name,
+                     $desc,
+                     $idtype) = xarVarCleanFromInput('rid',
+                                                     'uid',
+                                                     'name',
+                                                     'desc',
+                                                     'idtype');
+                
+                // Get the UID of the person submitting the module
+                $uid = xarUserGetVar('uid');
 
-            // The user API function is called. 
-            if (!xarModAPIFunc('release',
-                               'user',
-                               'createid',
-                                array('rid' => $rid,
-                                      'uid' => $uid,
-                                      'name' => $name,
-                                      'desc' => $desc,
-                                      'certified' => '1',
-                                      'type' => $idtype))) return;
+                // Confirm authorisation code
+                if (!xarSecConfirmAuthKey()) return;
 
-            xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
+                // The user API function is called. 
+                if (!xarModAPIFunc('release',
+                                   'user',
+                                   'createid',
+                                    array('rid' => $rid,
+                                          'uid' => $uid,
+                                          'name' => $name,
+                                          'desc' => $desc,
+                                          'certified' => '1',
+                                          'type' => $idtype))) return;
 
-            return true;
+                xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
 
-            break;
-    }   
+                return true;
+
+                break;
+        }
+    } else {
+        $data['message'] = xarML('You Must Be Logged In to Assign an ID');
+    }
     
     return $data;
 }
@@ -1089,8 +1093,6 @@ function release_user_viewnotes()
                                'getid',
                                array('rid' => $items[$i]['rid']));
 
-        $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
-        $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
 
         $items[$i]['displaylink'] =  xarModURL('release',
                                                'user',
@@ -1107,46 +1109,11 @@ function release_user_viewnotes()
                                              'display',
                                               array('uid' => $getid['uid']));
 
-
+        $items[$i]['type'] = xarVarPrepForDisplay($getid['type']);
+        $items[$i]['name'] = xarVarPrepForDisplay($getid['name']);
         $items[$i]['realname'] = $getuser['name'];
-        $items[$i]['desc'] = xarVarPrepForDisplay($getid['desc']);
-
-        if ($item['certified'] == 2){
-            $items[$i]['certifiedstatus'] = xarML('Yes');
-        } else {
-            $items[$i]['certifiedstatus'] = xarML('No');
-        }
-        $items[$i]['changelog'] = nl2br($item['changelog']);
-        $items[$i]['notes'] = nl2br($item['notes']);
-
-        $items[$i]['comments'] = xarModAPIFunc('comments',
-                                               'user',
-                                               'get_count',
-                                               array('modid' => xarModGetIDFromName('release'),
-                                                     'objectid' => $item['rnid']));
-        
-        if (!$items[$i]['comments']) {
-            $items[$i]['comments'] = '0';
-        } elseif ($items[$i]['comments'] == 1) {
-            $items[$i]['comments'] .= ' ';
-        } else {
-            $items[$i]['comments'] .= ' ';
-        }
-
-        $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
-                                               'user',
-                                               'get',
-                                               array('modname' => 'release',
-                                                     'itemtype' => '2',
-                                                     'objectid' => $item['rnid']));
-        
-        if (!$items[$i]['hitcount']) {
-            $items[$i]['hitcount'] = '0';
-        } elseif ($items[$i]['hitcount'] == 1) {
-            $items[$i]['hitcount'] .= ' ';
-        } else {
-            $items[$i]['hitcount'] .= ' ';
-        }
+        $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($getid['desc']));
+        $items[$i]['notes'] = nl2br(xarVarPrepHTMLDisplay($item['notes']));
 
     }
 
