@@ -6,21 +6,21 @@
     
     <table cellspacing="0" cellpadding="0" width="50%" border="0">
         <tr>
-            <td nowrap width="5%" align="center">
+            <td nowrap="nowrap" width="5%" align="center">
                 <xar:if condition="$unread gt 0">
                     <img src="modules/messages/xarimages/green.gif" />
                 <xar:else/>
                     <img src="modules/messages/xarimages/red.gif" />
                 </xar:if>
             </td>
-            <td nowrap width="15%" align="right">
+            <td nowrap="nowrap" width="15%" align="right">
                 <xar:mlstring>Inbox</xar:mlstring>
             </td>
-            <td nowrap width="10%"></td>
-            <td nowrap width="70%" align="left"> #$unread# / #$total# </td>
+            <td nowrap="nowrap" width="10%"></td>
+            <td nowrap="nowrap" width="70%" align="left"> #$unread# / #$total# </td>
         </tr>
         <tr>
-            <td nowrap width="5%" align="center">
+            <td nowrap="nowrap" width="5%" align="center">
 
             <xar:if condition="$sent gt 0">
                 <img src="modules/messages/xarimages/green.gif" />
@@ -28,24 +28,24 @@
                 <img src="modules/messages/xarimages/red.gif" />
             </xar:if>
             </td>
-            <td nowrap width="15%" align="right">
+            <td nowrap="nowrap" width="15%" align="right">
                 <xar:mlstring>Sent</xar:mlstring>
             </td>
-            <td nowrap width="10%"></td>
-            <td nowrap width="70%" align="left">
+            <td nowrap="nowrap" width="10%"></td>
+            <td nowrap="nowrap" width="70%" align="left">
                 #$sent#
             </td>
             </tr>
     <xar:comment>
         <tr>
-            <td nowrap width="5%" align="center">
+            <td nowrap="nowrap" width="5%" align="center">
                 *
             </td>
-            <td nowrap width="15%" align="right">
+            <td nowrap="nowrap" width="15%" align="right">
                 <xar:mlstring>Drafts</xar:mlstring>
             </td>
-            <td nowrap width="10%"></td>
-            <td nowrap width="70%" align="left">
+            <td nowrap="nowrap" width="10%"></td>
+            <td nowrap="nowrap" width="70%" align="left">
                 #$total#
             </td>
         </tr>
@@ -57,22 +57,22 @@
     </div>
     <table cellspacing="0" cellpadding="0" width="100%" border="0">
         <tr>
-            <th nowrap width="3%" align="center">
+            <th nowrap="nowrap" width="3%" align="center">
                 <img src="#$header_attachment_image#" alt="attachent" valign="bottom" />
             </th>
-            <th nowrap width="3%" align="center">
+            <th nowrap="nowrap" width="3%" align="center">
                 <img src="#$header_status_image#" alt="attachent" valign="bottom" />
             </th>
-            <th nowrap width="15%" align="left">
+            <th nowrap="nowrap" width="15%" align="left">
                 <xar:mlstring>From</xar:mlstring>
             </th>
-            <th nowrap width="50%" align="center">
+            <th nowrap="nowrap" width="50%" align="center">
                 <xar:mlstring>Subject</xar:mlstring>
             </th>
-            <th nowrap width="15%" align="center">
+            <th nowrap="nowrap" width="15%" align="center">
                 <xar:mlstring>Date</xar:mlstring>
             </th>
-            <th nowrap width="10%" align="center">
+            <th nowrap="nowrap" width="10%" align="center">
                 <xar:mlstring>Action</xar:mlstring>
             </th>
         </tr>
@@ -142,7 +142,7 @@
         <hr/>
         <div align="right">
             <a href="#xarModURL('messages','user','send',array('action'=>'post'))#">
-                <img src="modules/messages/xarimages/newpm.gif" border="0">
+                <img src="modules/messages/xarimages/newpm.gif" border="0"/>
             </a>
         </div>
 <xar:else />

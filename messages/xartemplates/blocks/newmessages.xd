@@ -12,7 +12,7 @@
             <a href="#xarModURL('messages','user','display')#">#$unread#</a>
             <xar:mlstring>Unread Messages</xar:mlstring><br />
             <a href="#xarModURL('messages','user','display')#">
-                <img src="modules/messages/xarimages/unread.gif" border="0">
+                <img src="modules/messages/xarimages/unread.gif" border="0"/>
             </a>
         </center>
     </xar:if>
