@@ -89,6 +89,7 @@ function dyn_example_user_display($args)
 
     xarVarSetCached('Blocks.dyn_example', 'itemid', $itemid);
 
+    // call the display hooks for this item
     $item = array();
     $item['module'] = 'dyn_example';
     $item['returnurl'] = xarModURL('dyn_example', 'user', 'display',
@@ -96,8 +97,6 @@ function dyn_example_user_display($args)
     $hooks = xarModCallHooks('item', 'display', $itemid, $item);
     if (empty($hooks)) {
         $data['hookoutput'] = '';
-    } elseif (is_array($hooks)) {
-        $data['hookoutput'] = join('',$hooks);
     } else {
         $data['hookoutput'] = $hooks;
     }

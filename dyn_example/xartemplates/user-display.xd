@@ -97,6 +97,11 @@
 
 <p><xar:mlstring>Notice for instance that you don't get the option to automatically display the image with &lt;xar:data-output ... &gt; or not here.</xar:mlstring></p>
 
-<!-- add the output from display hooks here -->
-#$hookoutput#
+<!-- add the output from the different display hooks here -->
+<xar:if condition="!empty($hookoutput)">
+<br />
+<xar:foreach in="$hookoutput" key="$hookmodule">
+    #$hookoutput[$hookmodule]#
+</xar:foreach>
+</xar:if>
 
