@@ -47,12 +47,16 @@ function categories_adminapi_updatehook($args)
 
     // see what we have to do here (might be empty => we need to unlink)
     if (empty($extrainfo['cids'])) {
-        // try to get cids from input
-        $cids = xarVarCleanFromInput('cids');
-        if (empty($cids) || !is_array($cids)) {
-            $extrainfo['cids'] = array();
+        if (!empty($extrainfo['modify_cids'])) {
+            $extrainfo['cids'] =& $extrainfo['modify_cids'];
         } else {
-            $extrainfo['cids'] = $cids;
+            // try to get cids from input
+            $cids = xarVarCleanFromInput('modify_cids');
+            if (empty($cids) || !is_array($cids)) {
+                $extrainfo['cids'] = array();
+            } else {
+                $extrainfo['cids'] =& $cids;
+            }
         }
     }
     // get all valid cids for this item

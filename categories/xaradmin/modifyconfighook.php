@@ -84,6 +84,7 @@ function categories_admin_modifyconfighook($args)
         // limit to some reasonable depth for now
         $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
                                        array('values' => &$seencid,
+                                             'name_prefix' => 'config_',
                                              'maximum_depth' => 3,
                                              'show_edit' => true));
         $items[] = $item;

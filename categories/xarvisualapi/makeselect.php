@@ -17,6 +17,8 @@
  * @param $args['select_itself'] allow selecting the cid itself if included (default false)
  * @param $args['show_edit'] show edit link for current selection (default false)
  * @param $args['javascript'] add onchange, onblur or whatever javascript to select (default empty)
+ * @param $args['size'] optional size of the select field (default empty)
+ * @param $args['name_prefix'] optional prefix for the select field name (default empty)
  *
  *  -- OUTPUT --
  * @returns string
@@ -41,13 +43,24 @@ function categories_visualapi_makeselect ($args)
         $args['show_edit'] = 0;
     }
 
-// TODO: templatize !
+    if (isset($args['name_prefix'])) {
+        $name_prefix = $args['name_prefix'];
+    } else {
+        $name_prefix = '';
+    }
 
-    $select = '<select name="cids[]"' . (($args['multiple'] == 1)?' multiple="multiple"':'').
+// TODO: templatize !
+// Pass 'size' into the template, so that the list size can be adjusted in context (pretty-please).
+// Or allow different templates to be selected. Likewise for the label etc.
+
+    $select = '<select' . (!empty($size) ? ' size="'.$size.'"' : '')
+        . ' name="' . $name_prefix . 'cids[]"' . (($args['multiple'] == 1)?' multiple="multiple"':'').
                (!empty($args['javascript']) ? ' ' . $args['javascript'] : '').'>'."\n";
+
     if (!empty($args['select_itself'])) {
         $select .= '<option value="">' . xarML('Select :') . '</option>'."\n";
     }
+
     $already_passed = false;
     $current_id = 0;
     foreach ($tree_array as $option)

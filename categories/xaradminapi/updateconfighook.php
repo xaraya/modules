@@ -50,10 +50,14 @@ function categories_adminapi_updateconfighook($args)
     }
 
     if (empty($extrainfo['cids']) || !is_array($extrainfo['cids'])) {
-        // try to get cids from input
-        $cids = xarVarCleanFromInput('cids');
-        if (empty($cids) || !is_array($cids)) {
-            $cids = array();
+        if (!empty($extrainfo['config_cids'])) {
+            $cids =& $extrainfo['config_cids'];
+        } else {
+            // try to get cids from input
+            $cids = xarVarCleanFromInput('config_cids');
+            if (empty($cids) || !is_array($cids)) {
+                $cids = array();
+            }
         }
     } else {
         $cids = $extrainfo['cids'];

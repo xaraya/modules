@@ -100,6 +100,7 @@ function categories_admin_newhook($args)
         $item['select'] = xarModAPIFunc('categories', 'visual', 'makeselect',
                                        array('cid' => $mastercids[$n],
                                              'multiple' => 1,
+                                             'name_prefix' => 'new_',
                                              'return_itself' => true,
                                              'select_itself' => true,
                                              'values' => &$seencid));
