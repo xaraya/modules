@@ -1,0 +1,8 @@
+<xar:if condition="!isset($catid)">
+    <xar:set name="catid">0</xar:set>
+</xar:if>
+<xar:if condition="!isset($pid)">
+    <xar:set name="pid">0</xar:set>
+</xar:if>
+<xar:categories-navigation layout="trails" module="polls" itemid="$pid" func="list" catid="$catid" showchildren="1" showcatcount="1" />
+

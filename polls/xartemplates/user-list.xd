@@ -6,6 +6,9 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:if condition="xarModIsHooked('categories','polls')">
+        <xar:template file="catnavigation"/>
+    </xar:if>
     <xar:if condition="empty($polls)">
         <div style="align: center;margin: auto; clear: both; padding-top: 10px;">
             <p>

@@ -45,6 +45,16 @@ function polls_admin_modifyconfig()
     $data['voteintervals']['2592000'] = xarML('Once per month');
     $data['voteinterval'] =  xarModGetVar('polls', 'voteinterval');
 
+    $hooks = xarModCallHooks('module', 'modifyconfig', 'polls',
+                             array('module' => 'polls'));
+    if (empty($hooks)) {
+        $data['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hooks'] = join('', $hooks);
+    } else {
+        $data['hooks'] = $hooks;
+    }
+
     return $data;
 }
 

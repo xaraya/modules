@@ -127,6 +127,11 @@
                         </xar:if>
                     </span>
                 </div>
+                <xar:if condition="!empty($hooks)">
+                <div style="clear: both; padding-top: 10px;">
+                    #$hooks#
+                </div>
+                </xar:if>
                 <div style="clear: both; padding-top: 10px; text-align: center; margin: auto;">
                         <input type="submit" value="Submit" />
                 </div>

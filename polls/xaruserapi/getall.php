@@ -38,34 +38,52 @@ function polls_userapi_getall($args)
     $bindvars = array();
 
     if (isset($status) && is_numeric($status)) {
-        $where = " WHERE xar_open = ?";
+        $where = " WHERE $pollstable.xar_open = ?";
         $bindvars[]= (int) $status;
         if (isset($hook) && is_numeric($hook)) {
-            $where .= " AND xar_itemid = ?";
+            $where .= " AND $pollstable.xar_itemid = ?";
             $bindvars[]= (int) $hook;
             }
     } else {
         if (isset($modid) && is_numeric($modid)) {
-        $where = " WHERE xar_modid = ?";
+        $where = " WHERE $pollstable.xar_modid = ?";
         $bindvars[]= (int) $modid;
     } else {
         $where = '';
     }
     }
+    if (!empty($catid) && xarModIsHooked('categories','polls')) {
+        // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
+        $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
+                                       array('modid' => xarModGetIDFromName('polls'),
+                                             'catid' => $catid));
+        if (!empty($categoriesdef)) {
+            $catwhere = " LEFT JOIN $categoriesdef[table]
+                          ON $categoriesdef[field] = xar_pid
+                          $categoriesdef[more]
+                          WHERE $categoriesdef[where] ";
+            if (empty($where)) {
+                $where = $catwhere;
+            } else {
+                $where = preg_replace('/ WHERE /','',$where);
+                $where = $catwhere . ' AND ' . $where;
+            }
+        }
+    }
     // Get polls
-    $sql = "SELECT xar_pid,
-                   xar_title,
-                   xar_type,
-                   xar_open,
-                   xar_private,
-                   xar_modid,
-                   xar_itemtype,
-                   xar_itemid,
-                   xar_votes,
-                   xar_reset
+    $sql = "SELECT $pollstable.xar_pid,
+                   $pollstable.xar_title,
+                   $pollstable.xar_type,
+                   $pollstable.xar_open,
+                   $pollstable.xar_private,
+                   $pollstable.xar_modid,
+                   $pollstable.xar_itemtype,
+                   $pollstable.xar_itemid,
+                   $pollstable.xar_votes,
+                   $pollstable.xar_reset
             FROM $pollstable
             $where
-            ORDER BY xar_pid DESC";
+            ORDER BY $pollstable.xar_pid DESC";
     $result = $dbconn->execute($sql, $bindvars);
 
     if (!$result) {

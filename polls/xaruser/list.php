@@ -19,6 +19,8 @@ function polls_user_list($args)
 {
     extract($args);
 
+    if (!xarVarFetch('catid','str',$catid,0,XARVAR_DONT_SET)) return;
+
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if(!xarSecurityCheck('ListPolls')){
@@ -28,13 +30,14 @@ function polls_user_list($args)
     $items = xarModAPIFunc('polls',
                           'user',
                           'getall',
-                          array('modid' => xarModGetIDFromName('polls')));
+                          array('modid' => xarModGetIDFromName('polls'),
+                                'catid' => $catid));
     $data = array();
+    $data['catid'] = $catid;
+
     if (!$items) {
         return $data;
     }
-
-    $data = array();
 
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the

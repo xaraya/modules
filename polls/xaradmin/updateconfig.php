@@ -78,6 +78,8 @@ function polls_admin_updateconfig()
     xarModSetVar('polls', 'previewresults', $previewresults);
     xarModSetVar('polls', 'SupportShortURLs', $shorturl);
 
+    xarModCallHooks('module','updateconfig','polls',
+                    array('module' => 'polls'));
 
     xarResponseRedirect(xarModURL('polls', 'admin', 'modifyconfig'));
 

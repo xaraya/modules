@@ -9,11 +9,14 @@
     </span>
 </div>
 <div class="xar-mod-body">
+    <xar:if condition="xarModIsHooked('categories','polls')">
+        <xar:template file="catnavigation"/>
+    </xar:if>
     <h2>
         #$title#
     </h2>
     <div style="clear: both; padding-top: 10px; width: 100%; text-align: center; margin: auto;">
-       <xar:if condition="$private">
+        <xar:if condition="$private">
             <p>
                 <xar:mlstring>
                     This Poll is currently private.  Please check again soon for the results.
