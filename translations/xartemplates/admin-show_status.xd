@@ -52,10 +52,30 @@
 </table>
 
 <xar:set name="scale">500</xar:set>
-<xar:set name="core_progress">round((($coreentries['numEntries'] - $coreentries['numEmptyEntries'])/$coreentries['numEntries'])*$scale)</xar:set>
-<xar:set name="mod_progress">round((($mod_totalentries-$mod_untranslated)/$mod_totalentries)*$scale)</xar:set>
-<xar:set name="theme_progress">round((($theme_totalentries-$theme_untranslated)/$theme_totalentries)*$scale)</xar:set>
-<xar:set name="total_progress">round((($total_entries-$total_untranslated)/$total_entries)*$scale)</xar:set>
+
+<xar:if condition="$coreentries['numEntries'] eq 0">
+    <xar:set name="core_progress">0</xar:set>
+<xar:else />
+    <xar:set name="core_progress">round((($coreentries['numEntries'] - $coreentries['numEmptyEntries'])/$coreentries['numEntries'])*$scale)</xar:set>
+</xar:if>
+
+<xar:if condition="$mod_totalentries eq 0">
+    <xar:set name="mod_progress">0</xar:set>
+<xar:else />
+    <xar:set name="mod_progress">round((($mod_totalentries-$mod_untranslated)/$mod_totalentries)*$scale)</xar:set>
+</xar:if>
+
+<xar:if condition="$theme_totalentries eq 0">
+    <xar:set name="theme_progress">0</xar:set>
+<xar:else />
+    <xar:set name="theme_progress">round((($theme_totalentries-$theme_untranslated)/$theme_totalentries)*$scale)</xar:set>
+</xar:if>
+
+<xar:if condition="$total_entries eq 0">
+    <xar:set name="total_progress">0</xar:set>
+<xar:else />
+    <xar:set name="total_progress">round((($total_entries-$total_untranslated)/$total_entries)*$scale)</xar:set>
+</xar:if>
 
 <h3><xar:mlstring>Chart</xar:mlstring></h3>
 <table style="width:95%">
@@ -76,7 +96,6 @@
     <td><div class="xar-alt" style="width:#$total_progress#px; min-width:1px; display:inline; float:left;">&nbsp;</div></td>
   </tr>
 </table>
-
 
 <h3><xar:mlstring>Core</xar:mlstring></h3>
 <table style="width: 95%">
@@ -133,10 +152,10 @@
   </xar:if>
   <tr class="#$class#">
     <td class="#$class#">#$loop:key#</td>
-    <td class="#$class#">#$loop:item['numEntries']#</td>
-    <td class="#$class#">#$loop:item['numEmptyEntries']#</td>
-    <td class="#$class#">#$loop:item['numKeyEntries']#</td>
-    <td class="#$class#">#$loop:item['numEmptyKeyEntries']#</td>
+    <td class="#$class#"><xar:if condition="$loop:item['numEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numEntries']#</xar:if></td>
+    <td class="#$class#"><xar:if condition="$loop:item['numEmptyEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numEmptyEntries']#</xar:if></td>
+    <td class="#$class#"><xar:if condition="$loop:item['numKeyEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numKeyEntries']#</xar:if></td>
+    <td class="#$class#"><xar:if condition="$loop:item['numEmptyKeyEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numEmptyKeyEntries']#</xar:if></td>
   </tr>
 </xar:loop>
 </table>
@@ -165,10 +184,10 @@
   </xar:if>
   <tr class="#$class#">
     <td class="#$class#">#$loop:key#</td>
-    <td class="#$class#">#$loop:item['numEntries']#</td>
-    <td class="#$class#">#$loop:item['numEmptyEntries']#</td>
-    <td class="#$class#">#$loop:item['numKeyEntries']#</td>
-    <td class="#$class#">#$loop:item['numEmptyKeyEntries']#</td>
+    <td class="#$class#"><xar:if condition="$loop:item['numEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numEntries']#</xar:if></td>
+    <td class="#$class#"><xar:if condition="$loop:item['numEmptyEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numEmptyEntries']#</xar:if></td>
+    <td class="#$class#"><xar:if condition="$loop:item['numKeyEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numKeyEntries']#</xar:if></td>
+    <td class="#$class#"><xar:if condition="$loop:item['numEmptyKeyEntries'] eq -1"><xar:mlstring>N/A</xar:mlstring><xar:else />#$loop:item['numEmptyKeyEntries']#</xar:if></td>
   </tr>
 </xar:loop>
 </table>
