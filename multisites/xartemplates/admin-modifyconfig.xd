@@ -64,7 +64,7 @@
     <form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 	    
-    <table border="0" width="100%" align="center">
+    <table border="0" width="98%" align="center">
       <th align="center" valign="middle" colspan="2"> <xar:mlstring>Server Configuration</xar:mlstring> 
       </th>
       <tr> 
@@ -96,7 +96,7 @@
       </tr>
     </table>
     <br />
-	        <table border="0" width="100%">
+	        <table border="0" width="98%">
 		        <th align="center" valign="middle" colspan="2">
 			    <xar:mlstring>File Paths &amp; Domain Types</xar:mlstring>
 		  	    </th>

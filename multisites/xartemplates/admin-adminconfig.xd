@@ -4,8 +4,7 @@
 <xar:set name="$btntxt"><xar:mlstring>Update Admin Configuration</xar:mlstring></xar:set>
 <form method="post" action="&xar-modurl-multisites-admin-updateadminconfig;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
-	    <table border="0" width="100%" align="center">
-           <table border="0" width="100%">
+	    <table border="0" width="98%" align="center">
 		      <th align="center" valign="middle" colspan="2">
 			        <xar:mlstring>Admin Options</xar:mlstring>
 		  	  </th>

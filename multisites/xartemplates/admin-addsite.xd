@@ -3,7 +3,7 @@
 <div align="center">
 <xar:set name="$btntxt"><xar:mlstring>Create New Site</xar:mlstring></xar:set>
 <xar:if condition="$mastersite eq false">
-    <table border="0" width="100%" align="center">
+    <table border="0" width="98%" align="center">
 	     <tr align="left" valign="middle">
 	 	    <td>
 			    <xar:mlstring>Multisites must be configured first before you can Add a site! <br /><br />
@@ -24,7 +24,7 @@
 <form method="post" action="&xar-modurl-multisites-admin-createsite;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 
-        <table border="0" width="100%" align="center">
+        <table border="0" width="98%" align="center">
 		    <th align="center" valign="middle" colspan="3">
 			    <xar:mlstring>Site Parameters</xar:mlstring>
 			</th>
