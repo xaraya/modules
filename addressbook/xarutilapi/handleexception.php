@@ -63,10 +63,10 @@ function addressbook_utilapi_handleexception ($args) {
                     include_once ("includes/exceptions/htmlexceptionrendering.class.php");
                     include_once ("includes/exceptions/textexceptionrendering.class.php");
 
-                    $xarException['type'] = $exception->getID();
+                    $xarException['type'] = $errorException->getID();
 
-                    $htmlRendering = new HTMLExceptionRendering($exception);
-                    $textRendering = new TextExceptionRendering($exception);
+                    $htmlRendering = new HTMLExceptionRendering($errorException);
+                    $textRendering = new TextExceptionRendering($errorException);
                     $xarException['text'] = $textRendering->getShort();
                     $xarException['htmltext'] = $htmlRendering->getShort();
 

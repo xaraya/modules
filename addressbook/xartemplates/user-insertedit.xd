@@ -39,7 +39,7 @@
 	    <xar:if condition="$formcall eq 'edit'">
 	        <span class="xar-title">#$fname# #$lname#</span>
 	    <xar:else />
-	        <span class="xar-title">Insert new record</span>
+	        <span class="xar-title"><xar:mlstring>Insert new record</xar:mlstring></span>
 	    </xar:if>
 	</div>
 	</td>
@@ -91,7 +91,7 @@
         <td align="right" valign="middle"><xar:mlstring>Category</xar:mlstring>:</td>
         <td align="left" valign="middle">
                 <select name="cat_id" id="cat_id">
-                    <option value="0">Unfiled</option>
+                    <option value="0"><xar:mlstring>Unfiled</xar:mlstring></option>
                 <xar:foreach in="$cats" value="$cat">
 	              <xar:if condition="$cat['id'] ne $cat_id">
                     <option value="#$cat['id']#">#$cat['name']#</option>
@@ -142,7 +142,7 @@
 </div>
   <xar:else />
   <div class="xar-alt-outline" style="padding: 4em; text-align:center;">
-	  <h3>#xarModGetVar(__ADDRESSBOOK__,'abtitle')# Entry Saved!</h3>
+	  <h3>#xarModGetVar(__ADDRESSBOOK__,'abtitle')# <xar:mlstring>Entry Saved!</xar:mlstring></h3>
 		<br />
 	  <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
   </div>

@@ -138,7 +138,7 @@
 <xar:if condition="!empty($note)">
   <div id="noteInfo" class="xar-alt-outline" style="margin:.5em 0em;;">
 	<div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
-	  <span class="xar-title">Note</span>
+	  <span class="xar-title"><xar:mlstring>Note</xar:mlstring></span>
 	</div>
 	  
 	<div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">

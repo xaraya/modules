@@ -22,7 +22,7 @@
             <td align="right" valign="middle"><xar:mlstring>Prefix/Title</xar:mlstring>:</td>
             <td align="left" valign="middle">
                 <select name="prfx" id="prfx">
-                  <option value="0">#xarML(_AB_NOPREFIX)#</option>
+                  <option value="0"><xar:mlstring>None</xar:mlstring></option>
                 <xar:foreach in="$prfxs" value="$prefix">
                     <xar:if condition="$prefix['id'] ne $prfx">
                   <option value="#$prefix['id']#">#$prefix['name']#</option>
@@ -37,21 +37,21 @@
                 <input type="hidden" name="prfx" id="prfx" value="#$prfx#" />
             </xar:if>
           <tr>
-            <td align="right" valign="middle">#xarML(_AB_LABEL_LASTNAME)#:</td>
+            <td align="right" valign="middle"><xar:mlstring>Last Name</xar:mlstring>:</td>
             <td align="left" valign="middle">
               <input name="lname" type="text" id="lname" value="#$lname#" size="60" maxlength="100">
             </td>
             </tr>
           <tr>
-            <td align="right" valign="middle">#xarML(_AB_LABEL_FIRSTNAME)#:</td>
+            <td align="right" valign="middle"><xar:mlstring>First Name</xar:mlstring>:</td>
             <td align="left" valign="middle"><input name="fname" type="text" id="fname" value="#$fname#" size="60" maxlength="100"></td>
             </tr>
           <tr>
-            <td align="right" valign="middle">Title:</td>
+            <td align="right" valign="middle"><xar:mlstring>Title</xar:mlstring>:</td>
             <td align="left" valign="middle"><input name="title" type="text" id="title" value="#$title#" size="60" maxlength="100"></td>
             </tr>
           <tr>
-            <td align="right" valign="middle">Company:</td>
+            <td align="right" valign="middle"><xar:mlstring>Company</xar:mlstring>:</td>
             <td align="left" valign="middle"><input name="company" type="text" id="company" value="#$company#" size="60" maxlength="100"></td>
             </tr>
           <tr>

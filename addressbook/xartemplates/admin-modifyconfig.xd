@@ -352,9 +352,7 @@
             <table>
               <tr>
                 <td style="text-align:left; padding:.25em;">
-				  <xar:mlstring>
-				  <label for="rptErrAdminFlag">Send error reports to Site Admin?</label>
-				  </xar:mlstring>
+				  <label for="rptErrAdminFlag"><xar:mlstring>Send error reports to Site Admin?</xar:mlstring></label>
 				</td>
                 <td style="text-align:left; padding:.25em;">
 				<xar:if condition="$rptErrAdminFlag">
@@ -366,9 +364,7 @@
               </tr>
               <tr>
                 <td style="text-align:left; padding:.25em;">
-				  <xar:mlstring>
-				  <label for="rptErrAdminEmail">Alternate Site Admin email address</label>
-				  </xar:mlstring>
+				  <label for="rptErrAdminEmail"><xar:mlstring>Alternate Site Admin email address</xar:mlstring></label>
 				</td>
                 <td style="text-align:left; padding:.25em;">
 				  <input name="rptErrAdminEmail" type="text" id="rptErrAdminEmail" value="#$rptErrAdminEmail#" size="30" maxlength="128" tabindex="28" />
@@ -399,7 +395,7 @@
 		  </div>
 		</div>
 		<div style="text-align:center; margin:1em;">
-	                <input name="submit" type="submit" tabindex="27" value="#$btnCommitText#"  />
+	                <input name="submit" type="submit" tabindex="27" value="#$btnCommitText#" align="middle" />
 	                <input name="authid" type="hidden" id="authid" value="#$authid#" />
 	                <input name="formSubmit" type="hidden" id="formSubmit" value="1" />
 		</div>

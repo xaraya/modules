@@ -58,11 +58,8 @@ function addressbook_user_viewdetail() {
     }
 
     if ($output['last_updt'] > 0) {
-        $output['info'] .= ' | '.xarVarPrepHTMLDisplay(_AB_LASTCHANGED)
-                               .xarLocaleFormatDate ('',$output['last_updt']);
-//                               .xarModAPIFunc(__ADDRESSBOOK__,'util','ml_ftime',
-//                                                            array ('datefmt' =>_DATETIMEBRIEF
-///                                                                  ,'timestamp'=>$output['last_updt']));
+        $output['info'] .= ' | '.xarVarPrepHTMLDisplay(_AB_LASTCHANGED).": "
+                               .xarLocaleGetFormattedDate ('long',$output['last_updt']);
     }
 
     // Format the Contat info for display

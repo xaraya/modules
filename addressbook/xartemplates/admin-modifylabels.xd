@@ -47,7 +47,7 @@
             <input name="newname" id="newname" type="text" size="20" maxlength="30" >
           </td>
           <td style="text-align:center; padding:.25em;">
-		    &lt;== New
+			  &lt;==&nbsp;<xar:mlstring>New</xar:mlstring>
 		  </td>
           </tr>
         </table>

@@ -10,14 +10,15 @@
 </div>
 <div style="border-width: 1px; background-color:#DEDEDE; border-style: solid; border-color: #666666; padding: 2px; text-align:center;">
 	<br />
-	<strong>#xarML(_AB_NOAUTH_FUNCTION)#</strong>
+	<strong><xar:mlstring>You are not authorized to perform this function</xar:mlstring></strong>
 	<br />
 	</div>
 	<div style="text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
 			<br />
 			<br />
 			<br />
-			<strong>Please click <a href="#xarModURL(__ADDRESSBOOK__,'user','viewall')#">here</a> to return to the start.</strong>
+			<xar:set name="$msg">xarML("Please click <a href=\"#(1)\">here</a> return to the start.",xarModURL(__ADDRESSBOOK__,'user','viewall'))</xar:set>
+			<strong>#$msg#</strong>
 			<br />
 			<br />
 			<br />

@@ -33,9 +33,9 @@
     <td class="#$rowClass#">#$rowData#</td>
     </xar:foreach>
     <td class="#$rowClass#"><a href="#$row['detailURL']#">Details</a>
-    <xar:if condition="xarModAPIFunc(__ADDRESSBOOK__,'user','checkaccesslevel',$row['accessLevel'])">
+    <xar:if condition="xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',$row['accessLevel'])">
       <xar:if condition="xarSecurityCheck('EditAddressBook',0) or ($user_id eq $row['user'])">
-         | <a href="#$row['editURL']#">Edit</a> | <a href="#$row['deleteURL']#">Delete</a>
+         | <a href="#$row['editURL']#"><xar:mlstring>Edit</xar:mlstring></a> | <a href="#$row['deleteURL']#"><xar:mlstring>Delete</xar:mlstring></a>
       </xar:if>
     </xar:if>
     </td>

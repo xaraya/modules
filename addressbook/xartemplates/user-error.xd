@@ -11,20 +11,20 @@
 <div class="xar-alt-outline" style="padding:1em;">
 <xar:if condition="!empty($abExceptions['xarSysException'])">
 	<div class="xar-error" style="border-width: 1px; background-color:#FFCCFF; border-style: solid; padding: .5em; text-align:center;">
-	<strong>**Houston, we have a problem...**<br />
+	<strong><xar:mlstring>**Houston, we have a problem...**</xar:mlstring><br />
 		<br />
-		The page / action you requested is unavailable.
+		<xar:mlstring>The page / action you requested is unavailable.</xar:mlstring>
 	</strong>
 	</div>
 	<div style="text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: .5em; margin:.5em 0em">
-			<h3>We apologize for the inconvenience.</h3>
+			<h3><xar:mlstring>We apologize for the inconvenience.</xar:mlstring></h3>
 			<xar:if condition="xarModGetVar(__ADDRESSBOOK__,'rptErrAdminFlag')">
-			  <h3>A message has been sent to the Site Admin.</h3>
+			  <h3><xar:mlstring>A message has been sent to the Site Admin.</xar:mlstring></h3>
 			</xar:if>
-			<strong><a href="#xarModURL(__ADDRESSBOOK__,'user','viewall')#">Return to the List</a></strong><br />
+			<strong><a href="#xarModURL(__ADDRESSBOOK__,'user','viewall')#"><xar:mlstring>Return to the List</xar:mlstring></a></strong><br />
 			<br />
 			<br />
-			The exact error message is listed below
+			<xar:mlstring>The exact error message is listed below</xar:mlstring>
 	</div>
 	<div style="border-width: 1px; background-color:#EFEFEF; border-style: solid; border-color: #666666; padding: 1em; text-align:center;">
 			<xar:foreach in="$abExceptions['xarSysException']" value="$sysExc">
