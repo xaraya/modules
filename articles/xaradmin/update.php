@@ -35,7 +35,8 @@ function articles_admin_update()
     $article = xarModAPIFunc('articles',
                             'user',
                             'get',
-                            array('aid' => $aid));
+                            array('aid' => $aid,
+                                  'withcids' => true));
 
     if (!isset($article)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
