@@ -96,7 +96,7 @@ function sitetools_admin_optimize()
        }
 
        $data['totalruns']=$runtimes;
-       $data['gaintd']=$gaintd;
+       $data['gaintd']=round ($gaintd,3);
 
     //return
     return $data;
