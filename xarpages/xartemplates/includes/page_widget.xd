@@ -1,0 +1,21 @@
+<xar:comment>
+    Display a form page-select drop-down.
+    Parameters:
+    $pages: the list of pages.
+    $name: the name and ID of the select item.
+    *** DEPRECATED ***
+</xar:comment>
+
+<select name="#$name#" id="#$name#">
+    <xar:loop name="$pages">
+        <xar:if condition="$loop:item.left eq $page.left-1">
+            <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+            <xar:set name="$position">'firstchild'</xar:set>
+        <xar:elseif condition="$loop:item.right eq $page.left-1" />
+            <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+            <xar:set name="$position">'after'</xar:set>
+        <xar:else />
+            <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+        </xar:if>
+    </xar:loop>
+</select>
