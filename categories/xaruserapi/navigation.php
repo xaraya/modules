@@ -735,7 +735,7 @@ function categories_userapi_navigation($args)
                                 continue;
                             }
                         }
-						
+                        
                         $label = xarVarPrepForDisplay($cat['name']);
                         $link = xarModURL(
                             $modname, $type, $func,
@@ -744,7 +744,7 @@ function categories_userapi_navigation($args)
                                 'catid' => $cat['cid']
                             )
                         );
-						if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
+                        if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
                                 $descr = xarVarPrepHTMLDisplay($cat['description']);
                             } else {
                                 $descr = '';

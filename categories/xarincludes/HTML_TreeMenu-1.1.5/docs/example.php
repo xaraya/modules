@@ -35,55 +35,55 @@
 //
 // $Id: example.php,v 1.12 2003/02/21 18:19:39 richard Exp $
 
-	require_once('HTML/TreeMenu.php');
-	//require_once('../TreeMenu.php');
+    require_once('HTML/TreeMenu.php');
+    //require_once('../TreeMenu.php');
 
-	$icon         = 'folder.gif';
-	$expandedIcon = 'folder-expanded.gif';
+    $icon         = 'folder.gif';
+    $expandedIcon = 'folder-expanded.gif';
 
-	$menu  = new HTML_TreeMenu();
+    $menu  = new HTML_TreeMenu();
 
-	$node1   = new HTML_TreeNode(array('text' => "First level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon), array('onclick' => "alert('foo'); return false", 'onexpand' => "alert('Expanded')"));
-	$node1_1 = &$node1->addItem(new HTML_TreeNode(array('text' => "Second level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
-	$node1_1_1 = &$node1_1->addItem(new HTML_TreeNode(array('text' => "Third level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
-	$node1_1_1_1 = &$node1_1_1->addItem(new HTML_TreeNode(array('text' => "Fourth level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
-	$node1_1_1_1->addItem(new HTML_TreeNode(array('text' => "Fifth level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon, 'cssClass' => 'treeMenuBold')));
+    $node1   = new HTML_TreeNode(array('text' => "First level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon), array('onclick' => "alert('foo'); return false", 'onexpand' => "alert('Expanded')"));
+    $node1_1 = &$node1->addItem(new HTML_TreeNode(array('text' => "Second level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
+    $node1_1_1 = &$node1_1->addItem(new HTML_TreeNode(array('text' => "Third level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
+    $node1_1_1_1 = &$node1_1_1->addItem(new HTML_TreeNode(array('text' => "Fourth level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
+    $node1_1_1_1->addItem(new HTML_TreeNode(array('text' => "Fifth level", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon, 'cssClass' => 'treeMenuBold')));
 
-	$node1->addItem(new HTML_TreeNode(array('text' => "Second level, item 2", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
-	$node1->addItem(new HTML_TreeNode(array('text' => "Second level, item 3", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
+    $node1->addItem(new HTML_TreeNode(array('text' => "Second level, item 2", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
+    $node1->addItem(new HTML_TreeNode(array('text' => "Second level, item 3", 'link' => "test.php", 'icon' => $icon, 'expandedIcon' => $expandedIcon)));
 
-	$menu->addItem($node1);
-	$menu->addItem($node1);
-	
-	// Create the presentation class
-	$treeMenu = &new HTML_TreeMenu_DHTML($menu, array('images' => '../images', 'defaultClass' => 'treeMenuDefault'));
-	$listBox  = &new HTML_TreeMenu_Listbox($menu, array('linkTarget' => '_self'));
+    $menu->addItem($node1);
+    $menu->addItem($node1);
+    
+    // Create the presentation class
+    $treeMenu = &new HTML_TreeMenu_DHTML($menu, array('images' => '../images', 'defaultClass' => 'treeMenuDefault'));
+    $listBox  = &new HTML_TreeMenu_Listbox($menu, array('linkTarget' => '_self'));
 ?>
 <html>
 <head>
-	<style type="text/css">
-		body {
-			font-family: Georgia;
-			font-size: 11pt;
-		}
-		
-		.treeMenuDefault {
-			font-style: italic;
-		}
-		
-		.treeMenuBold {
-			font-style: italic;
-			font-weight: bold;
-		}
-	</style>
-	<script src="TreeMenu.js" language="JavaScript" type="text/javascript"></script>
+    <style type="text/css">
+        body {
+            font-family: Georgia;
+            font-size: 11pt;
+        }
+        
+        .treeMenuDefault {
+            font-style: italic;
+        }
+        
+        .treeMenuBold {
+            font-style: italic;
+            font-weight: bold;
+        }
+    </style>
+    <script src="TreeMenu.js" language="JavaScript" type="text/javascript"></script>
 </head>
 <body>
 
 <script language="JavaScript" type="text/javascript">
 <!--
-	a = new Date();
-	a = a.getTime();
+    a = new Date();
+    a = a.getTime();
 //-->
 </script>
 
@@ -92,10 +92,10 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-	b = new Date();
-	b = b.getTime();
-	
-	document.write("Time to render tree: " + ((b - a) / 1000) + "s");
+    b = new Date();
+    b = b.getTime();
+    
+    document.write("Time to render tree: " + ((b - a) / 1000) + "s");
 //-->
 </script>
 </body>
