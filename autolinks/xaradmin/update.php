@@ -19,7 +19,7 @@ function autolinks_admin_update($args)
     if (!xarVarFetch('lid',     'isset', $lid,      NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('obid',    'isset', $obid,     NULL, XARVAR_DONT_SET)) {return;}
 
-    if (!xarVarFetch('name', 'pre:lower:passthru:str:1', $name)) {return;}
+    if (!xarVarFetch('name', 'pre:ftoken:lower:passthru:str:1', $name)) {return;}
     if (!xarVarFetch('keyword', 'str:1', $keyword)) {return;}
     if (!xarVarFetch('title',   'str', $title,    NULL, XARVAR_DONT_SET)) {return;}
     if (!xarVarFetch('url',     'str:1', $url)) {return;}

@@ -5,7 +5,6 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="lid" id="lid" value="#$lid#" />
     <input type="hidden" name="confirm" id="confirm" value="1" />
-    <input type="hidden" name="confirmation" id="confirmation" value="1" />
 
     <p class="xar-title"><xar:mlstring>Confirm deletion of autolink:</xar:mlstring> #$name#</p>
 

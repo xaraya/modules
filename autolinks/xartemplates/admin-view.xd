@@ -1,5 +1,5 @@
 <!--- $Id$ --->
-
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto; width: 100%;">
@@ -106,7 +106,7 @@
                 <xar:if condition="empty($item['deleteurl'])">
                     <xar:mlstring>Delete</xar:mlstring>
                 <xar:else />
-                    <a href="#$item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+                    <a href="#$item['deleteurl']#" onClick="return xar_base_confirmLink(this, '#xarML('Delete autolink').' '.xarVarPrepfordisplay($item['name'])#?')"><xar:mlstring>Delete</xar:mlstring></a>
                 </xar:if>
             </td>
         </tr>

@@ -15,13 +15,15 @@ function autolinks_admin_view()
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
-    $data['pager'] = xarTplGetPager($startnumitem,
-                                    xarModAPIFunc('autolinks', 'user', 'countitems'),
-                                    xarModURL('autolinks', 'admin', 'view', array('startnumitem' => '%%')),
-                                    xarModGetVar('autolinks', 'itemsperpage'));
+    $data['pager'] = xarTplGetPager(
+        $startnumitem,
+        xarModAPIFunc('autolinks', 'user', 'countitems'),
+        xarModURL('autolinks', 'admin', 'view', array('startnumitem' => '%%')),
+        xarModGetVar('autolinks', 'itemsperpage')
+    );
 
     // Security Check
-    if(!xarSecurityCheck('EditAutolinks')) {return;}
+    if (!xarSecurityCheck('EditAutolinks')) {return;}
 
     // Multi-page selection.
     $select_order = array(
@@ -95,7 +97,7 @@ function autolinks_admin_view()
             if (xarSecurityCheck('DeleteAutolinks', 0)) {
                 $links[$lid]['deleteurl'] = xarModURL(
                     'autolinks', 'admin', 'delete',
-                    array('lid' => $lid)
+                    array('lid' => $lid, 'authid' => $authid)
                 );
             } else {
                 $links[$lid]['deleteurl'] = '';

@@ -16,6 +16,9 @@ function autolinks_admin_create()
     // Security check
     if(!xarSecurityCheck('AddAutolinks')) {return;}
 
+    // Confirm authorisation code.
+    if (!xarSecConfirmAuthKey()) {return;}
+
     // Get parameters from whatever input we need
     if (!xarVarFetch('tid', 'id', $tid)) {
         $errorcount += 1;
@@ -75,17 +78,16 @@ function autolinks_admin_create()
         xarErrorHandled();
     }
 
-    // Default the name to the same as the keyword.
-    if (!xarVarFetch('name', 'str:1', $name, $keyword)) {
+    // Default the name to the same as the (modified) keyword.
+    $prekeyword = $keyword;
+    xarVarValidate('pre:ftoken:lower', $prekeyword, true);
+    if (!xarVarFetch('name', 'pre:ftoken:lower:passthru:str:1', $name, $prekeyword)) {
         $errorcount += 1;
         $errorstack = xarErrorGet();
         $errorstack = array_shift($errorstack);
         $data['name_error'] = $errorstack['short'];
         xarErrorHandled();
     }
-
-    // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) {return;}
 
     if ($errorcount == 0) {
         // The API function is called

@@ -9,28 +9,27 @@
 function autolinks_admin_delete($args)
 {
     // Get parameters from whatever input we need
-    if (!xarVarFetch('lid',          'isset', $lid,          NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('obid',         'isset', $obid,         NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('confirmation', 'isset', $confirmation, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('lid', 'isset', $lid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('obid', 'isset', $obid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('confirm', 'isset', $confirmation, NULL, XARVAR_DONT_SET)) {return;}
 
     extract($args);
 
-     if (!empty($obid)) {
-         $lid = $obid;
-     }
+    if (!empty($obid)) {
+        $lid = $obid;
+    }
 
     // The user API function is called
-    $link = xarModAPIFunc('autolinks',
-                         'user',
-                         'get',
-                         array('lid' => $lid));
+    $link = xarModAPIFunc(
+        'autolinks', 'user', 'get', array('lid' => $lid)
+    );
 
     if ($link == false) {
         return;
     }
 
     // Security Check
-    if(!xarSecurityCheck('DeleteAutolinks')) {return;}
+    if (!xarSecurityCheck('DeleteAutolinks')) {return;}
 
     // Check for confirmation.
     if (empty($confirmation)) {
