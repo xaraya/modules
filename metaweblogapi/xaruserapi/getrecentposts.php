@@ -39,10 +39,11 @@ function metaweblogapi_userapi_getrecentposts($args)
         $articles = xarModAPIFunc('articles','user','getall', 
                                   array('startnum' => 1, 'ptid' => null, 'numitems' => $numberOfPosts, 'cids' => $cids));
         
-        if (count($articles)==0) {
-            $cat = xarModAPIFunc('categories','user','cid2name',array('cid'=>$blogid));
-            $err = xarML("No posts found in category (#(1))",$cat);
-        }
+        // No posts found does NOT constitute an error, but can be helpfull in debugging
+        //if (count($articles)==0) {
+        //    $cat = xarModAPIFunc('categories','user','cid2name',array('cid'=>$blogid));
+        //    $err = xarML("No posts found in category (#(1))",$cat);
+        //}
     }
     
     
@@ -50,7 +51,7 @@ function metaweblogapi_userapi_getrecentposts($args)
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
     } else {
         // otherwise, we create the right response
-        $articlelist=array(); $i = 0;
+        $article_list=array(); $i = 0;
         $data=array();
         foreach ($articles as $article) {
             $article_list[$i]['title'] = $article['title'];
@@ -60,7 +61,7 @@ function metaweblogapi_userapi_getrecentposts($args)
             $article_list[$i]['postid'] = $article['aid'];
             $i++;
         }
-        
+                
         $data['articlelist'] = $article_list;
         
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
