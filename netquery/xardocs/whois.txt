@@ -1,6 +1,13 @@
 #
-Here are some additional TLDs and Whois Servers
-(not guaranteed and not comprehensive)
+In Netquery's administrator interface for Whois TLD-Server links,
+if the server entry is left blank when adding or editing items,
+Netquery will try autodiscovery using whois-servers.net data.
+Autodiscovery is NOT available for compound domain extensions
+(such as .co.uk) for which the server name must be entered
+manually based on that found for the top level domain (TLD).
+#
+Below is a list of whois servers for some domains.  It is not
+comprehensive and may not be currently accurate in all cases.
 #
 .us -> whois.nic.us - Not found
 .org -> whois.publicinterestregistry.net - NOT FOUND

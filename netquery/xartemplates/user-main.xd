@@ -70,7 +70,7 @@
 </form>
 </xar:if>
 
-<xar:if condition="$dns_dig_enabled and !$winsys">
+<xar:if condition="$dns_dig_enabled && !$winsys">
 <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="dig">
@@ -215,7 +215,7 @@
     <br /><select name="request" id="request">
         <xar:foreach in="$lgrequests" value="$req">
             <xar:if condition="!empty($req['request'])">
-                <xar:if condition="$lgdefault[$req['handler']] and (! ( ($req['argc']) and (!$lgdefault['use_argc']) ) )">
+                <xar:if condition="$lgdefault[$req['handler']] && (! ( ($req['argc']) && (!$lgdefault['use_argc']) ) )">
                     <xar:if condition="$req['request'] eq $request">
                         <option selected value="#$req['request']#">#$req['request']#</option>
                     <xar:else />

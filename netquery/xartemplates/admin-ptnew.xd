@@ -11,7 +11,7 @@
 <input type="hidden" name="phase" id="phase" value="update" />
 <input type="hidden" name="portnum" id="portnum" value="#$portnum#" />
 <tr><td colspan=4>
-<span><xar:mlstring>Adding a New Port Service Datum</xar:mlstring></span>
+<span><xar:mlstring>Adding a New Port Service or Exploit</xar:mlstring></span>
 </tr></td><tr><td>
 <span class="help" title="#xarML('The port number')#"><label for="port_port"><xar:mlstring>Port</xar:mlstring></label></span>
 </td><td>
@@ -23,7 +23,7 @@
 </td><td>
 <span class="help" title="#xarML('Flag - 1=trojan, 2=backdoor')#"><label for="port_flag"><xar:mlstring>Flag</xar:mlstring></label></span>
 </tr></td><tr><td>
-<input type="text" name="port_port" id="port_port" value="" size="2" maxlength="5" />
+<input type="text" name="port_port" id="port_port" value="#$portnum#" size="2" maxlength="5" />
 </td><td>
 <input type="text" name="port_protocol" id="port_protocol" value="" size="3" maxlength="3" />
 </td><td>
@@ -34,7 +34,7 @@
 <select name="port_flag" id="port_flag" tabindex="0">
     <xar:foreach in="$flags" value="$flagg">
         <xar:if condition="!empty($flagg['keyword'])">
-            <xar:if condition="$flagg['flagnum'] eq $flag">
+            <xar:if condition="$flagg['flagnum'] eq 0">
                 <option selected value="#$flagg['flagnum']#">#$flagg['keyword']#</option>
             <xar:else />
                 <option value="#$flagg['flagnum']#">#$flagg['keyword']#</option>
@@ -42,7 +42,7 @@
         </xar:if>
     </xar:foreach>
 </select>
-</tr></td><tr><td colspan=4 align="center">
+</td></tr><tr><td colspan=4 align="center">
 <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
 <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
 </td></tr>

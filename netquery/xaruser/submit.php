@@ -9,7 +9,7 @@ function netquery_user_submit()
         case 'form':
         default:
             $data['authid']         = xarSecGenAuthKey();
-            $data['portnum']        = xarML($portnum);
+            $data['portnum']        = $portnum;
             $data['submitlabel']    = xarML('Submit');
             $data['cancellabel']    = xarML('Cancel');
             break;

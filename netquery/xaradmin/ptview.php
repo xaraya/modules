@@ -9,6 +9,7 @@ function netquery_admin_ptview()
     if ($pflag >= 0) {
         $portdata = xarModAPIFunc('netquery', 'admin', 'getportflag', array('flag' => $pflag));
     } else {
+        $pflag = '';
         $portdata = xarModAPIFunc('netquery', 'admin', 'getportdata', array('port' => $portnum));
     }
     for ($i = 0; $i < count($portdata); $i++) {

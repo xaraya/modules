@@ -13,6 +13,7 @@ Version 2.0 2004-12-01
    - added ports data table update capability
    - added user submissions for services/exploits
    - added admin notification on new submissions
-   - updated manual and other refs to reflect changes
-Version 2.0.1 2004-12-20
+Version 2.1 2005-01-05
+   - added whois lookup server autodiscovery
    - minor template changes for Xaraya 0.9.11
+   - updated manual and other refs to reflect changes

@@ -8,18 +8,18 @@ function netquery_admin_ptnew()
     switch(strtolower($phase)) {
         case 'form':
         default:
-            $data['flags'] = pnModAPIFunc('netquery', 'admin', 'getflags');
+            $data['flags'] = xarModAPIFunc('netquery', 'admin', 'getflags');
             if ($data['flags'] == false) return;
+            $data['portnum']        = $portnum;
             $data['authid']         = xarSecGenAuthKey();
-            $data['portnum']        = xarML($portnum);
             $data['submitlabel']    = xarML('Submit');
             $data['cancellabel']    = xarML('Cancel');
             break;
         case 'update':
-            if (!xarVarFetch('port_port', 'int:1:100000', $port_port, 80, XARVAR_NOT_REQUIRED)) return;
             if ((!isset($Submit)) || ($Submit != 'Submit')) {
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'ptview', array('portnum' => $portnum)));
             }
+            if (!xarVarFetch('port_port', 'int:1:100000', $port_port)) return;
             if (!xarVarFetch('port_protocol', 'str:1:3', $port_protocol)) return;
             if (!xarVarFetch('port_service', 'str:1:35', $port_service)) return;
             if (!xarVarFetch('port_comment', 'str:1:50', $port_comment, '', XARVAR_NOT_REQUIRED)) return;

@@ -35,7 +35,7 @@
 </head>
 <body>
 <h1 align="center">
-<a name="top"><img src="nqlogo.gif" border=0 width=100 height=50 alt=""></a>
+<a name="top"><img src="nqtoppix.gif" border=0 width=225 height=111 alt=""></a>
 <br />Netquery Manual</h1>
 
 <h2><a name="summary">Summary</a></h2>
@@ -49,6 +49,7 @@ major features:<ul>
 <li>ICMP pings (local and/or remote),</li>
 <li>traceroutes (local and/or remote),</li>
 <li>looking glass router interrogation,</li>
+<li>whois lookup server autodiscovery,</li>
 <li>data table updates independent of module updating, and</li>
 <li>user submissions with admin notification and approval.</li></ul></p>
 
@@ -61,10 +62,9 @@ downloaded and updated independently of the module itself.</p>
 <h3>Availability, Information &amp; Testing</h3>
 
 <p>A standlone edition and three CMS module editions of Netquery are available for download from the
-home site or from their respective CMS development project sites.  A user-to-user discussion forum
-and live test installations are also available on line as follows:<ul>
+home site or from their respective CMS development project sites.  Live test installations and
+user-to-user discussion and help forums are also available on line as follows:<ul>
 <li><a href="http://www.virtech.org/tools/" target="_top">Netquery Home</a>
- ~ <a href="http://www.virtech.org/phpbb2/" target="_top">Discussion Forums</a>
  ~ <a href="http://www.virtech.org/netquery/" target="_top">Standalone Edition Live</a></li>
 <li><a href="http://noc.postnuke.com/projects/netquery/" target="_top">Postnuke Project</a>
  ~ <a href="http://postnuke.virtech.org/index.php?module=Netquery" target="_top">Postnuke Edition Live</a></li>
@@ -72,6 +72,7 @@ and live test installations are also available on line as follows:<ul>
  ~ <a href="http://xaraya.virtech.org/index.php?module=netquery" target="_top">Xaraya Edition Live</a></li>
 <li><a href="http://dev.xoops.org/modules/xfmod/project/?mwr-netquery" target="_top">Xoops Project</a>
  ~ <a href="http://xoops.virtech.org/modules/netquery/" target="_top">Xoops Edition Live</a></li>
+<li><a href="http://www.virtech.org/phpbb2/" target="_top">Discussion &amp; Help Forums</a></li>
 </ul></p>
 
 <h3>Download Notes</h3>
@@ -289,6 +290,11 @@ can set permissions on its system executables, you will probably need to disable
 and traceroute features. Very few hosting services allow the read/execute permissions required for those
 local functions. A listing of alternative server scripts for use with the external traceroute and ping
 features can be found at <a href="http://www.traceroute.org/" target="_blank">Traceroute.org</a></p>
+
+<p>In Netquery's administrator interface for Whois TLD-Server links, if the server entry is left blank
+when adding or editing items, Netquery will try autodiscovery using whois-servers.net data.  Autodiscovery
+is NOT available for compound domain extensions (such as .co.uk) for which the server name must be entered
+manually based on that found for the top level domain (TLD).</p>
 
 <p>When Netquery is initially installed, its whois and looking glass data tables contain only a few
 commonly used examples. To assist with populating your whois data table, you can look for TLD server

@@ -7,7 +7,7 @@ function netquery_userapi_ptsubmit($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    if(!xarSecurityCheck('AddNetquery')) return;
+    if(!xarSecurityCheck('OverviewNetquery')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $PortsTable = $xartable['netquery_ports'];

@@ -16,8 +16,13 @@ function netquery_admin_winew()
                 xarResponseRedirect(xarModURL('netquery', 'admin', 'wiview'));
             }
             if (!xarVarFetch('whois_ext', 'str:1:100', $whois_ext)) return;
-            if (!xarVarFetch('whois_server', 'str:1:100', $whois_server)) return;
+            if (!xarVarFetch('whois_server', 'str:1:100', $whois_server, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarSecConfirmAuthKey()) return;
+            if (!isset($whois_server) || $whois_server == '') {
+                $whois_server = ltrim($whois_ext, " .") . ".whois-servers.net";
+                $whois_server = gethostbyname($whois_server);
+                $whois_server = gethostbyaddr($whois_server);
+            }
             if (!xarModAPIFunc('netquery', 'admin', 'wicreate',
                                array('whois_ext'    => $whois_ext,
                                      'whois_server' => $whois_server))) return;
