@@ -51,6 +51,7 @@ function hitcount_userapi_leftjoin($args)
 
     // Table definition
     $xartable =& xarDBGetTables();
+    $dbconn =& xarDBGetConn();
     $userstable = $xartable['hitcount'];
 
     $leftjoin = array();
@@ -70,8 +71,7 @@ function hitcount_userapi_leftjoin($args)
 
     if (count($itemids) > 0) {
         $allids = join(', ', $itemids);
-        $leftjoin['where'] = $xartable['hitcount'] . '.xar_itemid IN (' .
-                             xarVarPrepForStore($allids) . ')';
+        $leftjoin['where'] = $xartable['hitcount'] . '.xar_itemid IN (' . $allids . ')';
 /*
         if (!empty($modid)) {
             $leftjoin['where'] .= ' AND ' .
