@@ -1,14 +1,14 @@
 <?php
 
 /**
- * 
+ *
  *
  * Administration System
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage xproject module
  * @author Chad Kraeft <stego@xaraya.com>
 */
@@ -30,7 +30,7 @@ function xproject_adminapi_create($args)
                        new SystemException($msg));
         return;
     }
-	
+
     if (!xarSecAuthAction(0, 'xproject::Project', "$name::", ACCESS_ADD)) {
         $msg = xarML('Not authorized to add #(1) items',
                     'xproject');
@@ -38,7 +38,7 @@ function xproject_adminapi_create($args)
                        new SystemException($msg));
         return;
     }
-		
+
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
@@ -49,15 +49,15 @@ function xproject_adminapi_create($args)
     $sql = "INSERT INTO $xprojecttable (
               xar_projectid,
               xar_name,
-			  xar_description,
-			  xar_usedatefields,
-			  xar_usehoursfields,
+              xar_description,
+              xar_usedatefields,
+              xar_usehoursfields,
               xar_usefreqfields,
               xar_allowprivate,
               xar_importantdays,
-			  xar_criticaldays, 
-			  xar_sendmailfreq, 
-			  xar_billable)
+              xar_criticaldays,
+              xar_sendmailfreq,
+              xar_billable)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($name) . "',
@@ -69,7 +69,7 @@ function xproject_adminapi_create($args)
               " . $importantdays . ",
               " . $criticaldays . ",
               " . $sendmails . ",
-              " . ($billable ? $billable : "NULL") . ")";			  
+              " . ($billable ? $billable : "NULL") . ")";
 
 // PRIVATE INITIALLY SET BASED ON USER PREFERENCE
 

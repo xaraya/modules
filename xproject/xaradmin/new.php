@@ -2,8 +2,8 @@
 
 function xproject_admin_new()
 {
-	xarModLoad('xproject','user');
-	$data = xarModAPIFunc('xproject','user','menu');
+    xarModLoad('xproject','user');
+    $data = xarModAPIFunc('xproject','user','menu');
 
     if (!xarSecAuthAction(0, 'xproject::', '::', ACCESS_ADD)) {
         $msg = xarML('Not authorized to access to #(1)',
@@ -15,14 +15,14 @@ function xproject_admin_new()
 
     $data['authid'] = xarSecGenAuthKey();
 
-    $sendmailoptions = array();    
-    $sendmailoptions[] = array('id'=>0,'name'=>xarMLBYKey('Please choose an email option'));
-    $sendmailoptions[] = array('id'=>1,'name'=>xarMLBYKey("any changes"));
-    $sendmailoptions[] = array('id'=>2,'name'=>xarMLBYKey("major changes"));
-    $sendmailoptions[] = array('id'=>3,'name'=>xarMLBYKey("weekly summaries"));
-    $sendmailoptions[] = array('id'=>4,'name'=>xarMLBYKey("Do NOT send email"));
-	$data['sendmailoptions'] = $sendmailoptions;
-	
+    $sendmailoptions = array();
+    $sendmailoptions[] = array('id'=>0,'name'=>xarML('Please choose an email option'));
+    $sendmailoptions[] = array('id'=>1,'name'=>xarML("any changes"));
+    $sendmailoptions[] = array('id'=>2,'name'=>xarML("major changes"));
+    $sendmailoptions[] = array('id'=>3,'name'=>xarML("weekly summaries"));
+    $sendmailoptions[] = array('id'=>4,'name'=>xarML("Do NOT send email"));
+    $data['sendmailoptions'] = $sendmailoptions;
+
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add'));
 
     $item = array();
