@@ -17,9 +17,9 @@
  */
 function xarbb_user_newtopic()
 {
-	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+	if (!xarVarFetch('phase', 'str:1:10', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 	if (!xarVarFetch('ttitle', 'str:1:100', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('tpost', 'str:1:100', $tpost, '', XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('tpost', 'str', $tpost, '', XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('tstatus', 'int', $tstatus, '', XARVAR_NOT_REQUIRED)) return;
 	if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
 	if (!xarVarFetch('tid', 'id', $tid, NULL, XARVAR_DONT_SET)) return;
