@@ -36,6 +36,8 @@ function autolinks_userapi_getalltypes($args)
 
     if (!empty($where)) {
         $where = ' WHERE ' . implode(' and ', $where);
+    } else {
+        $where = '';
     }
 
     // Security Check
