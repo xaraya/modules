@@ -1,0 +1,38 @@
+<xar:if condition="empty($status)">
+    <h2><xar:mlstring>Overview of Keywords</xar:mlstring></h2>
+    <ul>
+    <xar:foreach in="$items" value="$item">
+        <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#) </li>
+    </xar:foreach>
+    </ul>
+<xar:elseif condition="$status eq 1 and !empty($keyword)" />
+    <h2><xar:ml><xar:mlstring>Keyword : #(1)</xar:mlstring><xar:mlvar>#$keyword#</xar:mlvar></xar:ml></h2>
+    <ul>
+    <xar:foreach in="$items" key="$id" value="$item">
+        <li>
+        <xar:if condition="!empty($item['modname'])">
+            [#$item['modname']#]
+        </xar:if>
+        <xar:if condition="!empty($item['url']) and !empty($item['label'])">
+            <a href="#$item['url']#">#$item['label']#</a>
+        <xar:elseif condition="!empty($item['url'])"/>
+            <!--- you could skip these items --->
+            <a href="#$item['url']#"><xar:ml><xar:mlstring>item #(1)</xar:mlstring><xar:mlvar>#$item['itemid']#</xar:mlvar></xar:ml></a>
+        <xar:else/>
+            <!--- you could skip these items --->
+            <xar:mlstring>item</xar:mlstring> #$item['moduleid']# #$item['itemtype']# #$item['itemid']#</a>
+        </xar:if>
+        </li>
+    </xar:foreach>
+    </ul>
+<xar:elseif condition="$status eq 2" />
+    <h2><xar:mlstring>Overview of Keyword Assignments</xar:mlstring></h2>
+    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+<xar:elseif condition="$status eq 3" />
+    <h2><xar:mlstring>Overview of Keyword Assignments</xar:mlstring></h2>
+    <xar:mlstring>Unable to find module for the corresponding item</xar:mlstring>
+<xar:else />
+    <h2><xar:mlstring>Overview of Keyword Assignments</xar:mlstring></h2>
+    <xar:mlstring>Unknown status</xar:mlstring>
+</xar:if>
+

@@ -1,0 +1,15 @@
+<h2><xar:mlstring>Display Keyword Assignment</xar:mlstring></h2>
+<xar:if condition="!empty($id) and is_numeric($id)">
+    <xar:data-display module="keywords" itemid="$id" />
+    <xar:if condition="!empty($url)">
+        <br />
+        <xar:if condition="!empty($label)">
+            <xar:mlstring>This entry refers to</xar:mlstring> [#$modname#] <a href="#$url#">#$label#</a>
+        <xar:else/>
+            <xar:mlstring>This entry refers to</xar:mlstring> [#$modname#] <a href="#$url#"><xar:mlstring>item</xar:mlstring> #$itemid#</a>
+        </xar:if>
+    </xar:if>
+<xar:else />
+    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+</xar:if>
+

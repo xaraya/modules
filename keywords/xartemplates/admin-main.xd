@@ -1,0 +1,27 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<table border="0" width="100%">
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>What is it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>The Keywords module is a utility module that allows you to assign keywords to module items (taxonomy) and to look up items by keyword. Enable its hooks for any module where you want to use it...</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>How to use it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>
+After enabling the keywords hooks for a particular module, you'll see an input box where you can fill in relevant keywords whenever you create or modify a module item. Afterwards, when viewing an item, you can retrieve a list of other items having the same keyword(s).
+<br/><br/>
+In the future, this module may also restrict keywords to a predefined set of words, or try to extract keywords automatically from other fields on create/update. Contributions in that or other directions are welcome :-)
+            </xar:mlstring>
+        </td>
+    </tr>
+</table>
+</div>
+</div>

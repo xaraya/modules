@@ -1,0 +1,63 @@
+<object name="keywords">
+  <objectid>10</objectid>
+  <label>Keywords</label>
+  <moduleid>187</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>0</isalias>
+  <properties>
+    <property name="id">
+      <id>66</id>
+      <label>ID</label>
+      <type>itemid</type>
+      <default></default>
+      <source>xar_keywords.xar_id</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="keyword">
+      <id>67</id>
+      <label>Keyword</label>
+      <type>dropdown</type>
+      <default></default>
+      <source>xar_keywords.xar_keyword</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>xarModAPIFunc('keywords','user','getlist')</validation>
+    </property>
+    <property name="moduleid">
+      <id>68</id>
+      <label>Module</label>
+      <type>module</type>
+      <default></default>
+      <source>xar_keywords.xar_moduleid</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="itemtype">
+      <id>69</id>
+      <label>Itemtype</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_keywords.xar_itemtype</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="itemid">
+      <id>70</id>
+      <label>Itemid</label>
+      <type>integerbox</type>
+      <default></default>
+      <source>xar_keywords.xar_itemid</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
+

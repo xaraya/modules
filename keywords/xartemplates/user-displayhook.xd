@@ -1,0 +1,8 @@
+<xar:if condition="isset($words) and count($words) gt 0">
+<xar:mlstring>Keywords :</xar:mlstring>
+<xar:foreach in="$words" value="$word">
+    <a href="#$word['url']#">#$word['keyword']#</a>
+</xar:foreach>
+<br/>
+</xar:if>
+
