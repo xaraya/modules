@@ -186,7 +186,7 @@
 </tr>
 <tr>
     <td>
-        <input type="submit" value="Save Changes" align="middle" tabindex="21" />
+        <input type="submit" value="Save Changes"  tabindex="21" />
     </td>
 </tr>
 </form>
