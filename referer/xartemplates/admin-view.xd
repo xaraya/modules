@@ -1,4 +1,4 @@
-<script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<xar:base-include-javascript module="base" filename="confirmlink.js" position="head" />
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Referer Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
