@@ -16,7 +16,7 @@
 
 <xar:if condition="$UserLoggedIn">
 
-<xar:if condition="!empty($selection) && !empty($sortorder) && !empty($status)">
+<xar:if condition="!empty($selection) and !empty($sortorder) and !empty($status)">
 
     <form action="#xarModURL('helpdesk', 'user', 'view')#" name="options" method="post">
     <input type="hidden" name="selection" value="#$selection#" />
@@ -66,19 +66,19 @@
                 <option value="">-------------</option>
                 <option value="MYALL">My Tickets</option>
 
-                <xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="MYOPEN">My Open Tickets</option>
                 </xar:if>
 
-                <xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="ALL">All Tickets</option>
                 </xar:if>
 
-                <xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="MYASSIGNEDALL">My Assigned Tickets</option>
                 </xar:if>
 
-                <xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+                <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
                 <option value="UNASSIGNED">All Unassigned Tickets</option>
                 </xar:if>
 
