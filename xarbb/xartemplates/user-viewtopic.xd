@@ -482,7 +482,7 @@
 			<xar:else />
 				<td width="20" align="center">
 					<a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#">
-						<img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Lock Topic')#" />
+						<img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" />
 					</a>
 				</td>
 			</xar:if>
