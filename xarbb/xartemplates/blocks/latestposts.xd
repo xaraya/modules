@@ -2,7 +2,9 @@
 TODO: layout, security checks etc
 </xar:comment>
 <xar:sec mask="ReadxarBB" catch="false">
+<ul>
 <xar:foreach in="$items" value="$item">
+  <li>
     <xar:set name="textdisplay">$item['title']</xar:set>
     <xar:comment>
         <xar:if condition="$vars['titleortext'] eq 'on'">
@@ -11,8 +13,6 @@ TODO: layout, security checks etc
             <xar:set name="textdisplay">$item['ptext']</xar:set>
         </xar:if>
     </xar:comment>
-<div style="margin-bottom:2px; margin-top:2px; width:98%;">
-    &bull;
     <xar:if condition="!empty($item['link'])">
         <xar:if condition="$vars['addlink'] eq '1'" >
             #$textdisplay#
@@ -49,9 +49,10 @@ TODO: layout, security checks etc
     <xar:elseif condition="$vars['forumlink'] eq '2'" />
         <xar:mlstring> in </xar:mlstring><a href="#$item['flink']#">#$item['fname']#</a>
     </xar:if>
-</div>
+  </li>
 </xar:foreach>
-<p style="text-align:left;"><a href="#xarModUrl('xarbb', 'user', 'main')#">
+</ul>
+<p><a href="#xarModUrl('xarbb', 'user', 'main')#">
 <xar:mlstring>Browse the forums</xar:mlstring></a></p>
 
 <xar:else />
