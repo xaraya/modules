@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Update the configuration parameters of the module based on data from the modification form
+ * Prep the configuration parameters of the module for the modification form
  * 
  * @author jsb | mikespub
  * @access public 
  * @param no $ parameters
- * @return true on success or void on failure
+ * @return $data (array of values for admin modify template) on success or false on failure
  * @throws MODULE_FILE_NOT_EXIST
  * @todo nothing
  */
@@ -53,14 +53,20 @@ function xarcachemanager_admin_modifyconfig()
         $data['settings'][$keyslist[$i]] = $valueslist[$i];
     }
 
+    if(!isset($data['settings']['OutputSizeLimit'])) {
+        $data['settings']['OutputSizeLimit'] = 262144;
+    }
+    if(!isset($data['settings']['PageTimeExpiration'])) {
+        $data['settings']['PageTimeExpiration'] = 1800;
+    }
     if(!isset($data['settings']['PageDisplayView'])) {
         $data['settings']['PageDisplayView'] = 0;
     }
     if(!isset($data['settings']['PageViewTime'])) {
         $data['settings']['PageViewTime'] = 0;
     }
-    if(!isset($data['settings']['OutputSizeLimit'])) {
-        $data['settings']['OutputSizeLimit'] = 262144;
+    if(!isset($data['settings']['BlockTimeExpiration'])) {
+        $data['settings']['BlockTimeExpiration'] = 7200;
     }
 
     $data['settings']['OutputSizeLimit'] /= 1048576;
