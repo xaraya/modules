@@ -69,7 +69,10 @@ function xarbb_userapi_updatetopic($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
-    $time = time();
+
+    if (empty($time)){
+        $time = time();
+    }
 
     $update = array();
     $bindvars = array();

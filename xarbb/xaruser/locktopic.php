@@ -35,7 +35,8 @@ function xarbb_user_locktopic()
                        'user',
                        'updatetopic',
                        array('tid'      => $tid,
-                             'tstatus'  => $tstatus))) return;
+                             'tstatus'  => $tstatus,
+                             'time'     => $data['ttime']))) return;
 
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
     return;
