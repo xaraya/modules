@@ -116,8 +116,8 @@ form.xar-xarpages-admin fieldset.formelements table caption {
 img.xar-xarpages-tree {
     vertical-align: top;
     border: 0;
-    height: 21;
-    width: 12;
+    height: 21px;
+    width: 12px;
 }
 
 /* Styles for pages of different statuses. */
