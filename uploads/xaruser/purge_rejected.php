@@ -7,13 +7,13 @@ function uploads_user_purge_rejected( $args ) {
     extract ($args);
     
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) 
-            return;
+    //  if (!xarSecConfirmAuthKey()) 
+    //      return;
 
     if (!isset($confirmation))
         xarVarFetch('confirmation', 'int:1:', $confirmation, '', XARVAR_NOT_REQUIRED);
     
-    if (isset($confirmation) && $confirmation) {
+    if ((isset($confirmation) && $confirmation) || !xarModGetVar('uploads', 'file.delete-confirmation')) {
         $fileList = xarModAPIFunc('uploads', 'user', 'db_get_file', 
                                            array('fileStatus' => _UPLOADS_STATUS_REJECTED));
 

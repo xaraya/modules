@@ -68,11 +68,8 @@ function uploads_userapi_file_store( $args ) {
 
     if ($store_type & _UPLOADS_STORE_FILESYSTEM) {
 
-        $args = array('fileSrc'    => $fileInfo['fileSrc'], 
-                      'fileDest'   => $fileInfo['fileDest']);
-
         if ($fileInfo['fileSrc'] != $fileInfo['fileDest']) {
-            $result = xarModAPIFunc('uploads','user','file_move', $args);            
+            $result = xarModAPIFunc('uploads','user','file_move', $fileInfo);
         } else {
             $result = TRUE;
         }
@@ -85,6 +82,12 @@ function uploads_userapi_file_store( $args ) {
             // a corrupted file entry
             if (isset($fileId) && !empty($fileId)) {
                 xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileId));
+                
+                // Don't forget to remove the fileId from fileInfo
+                // because it's non existant now ;-)
+                if (isset($fileInfo['fileId'])) {
+                    unset($fileInfo['fileId']);
+                }
             } 
             
             $fileInfo['fileLocation'] =& $fileInfo['fileSrc'];
@@ -109,11 +112,11 @@ function uploads_userapi_file_store( $args ) {
         $errorObj = xarExceptionValue();
 
         if (is_object($errorObj)) {
-            $fileError = array('errorMsg'   => $errorObj->getShort(),
-                               'errorID'    => $errorObj->getID());
+            $fileError = array('errorMesg'   => $errorObj->getShort(),
+                               'errorId'    => $errorObj->getID());
         } else {
-            $fileError = array('errorMsg'   => 'Unknown Error!',
-                               'errorID'    => _UPLOADS_ERROR_UNKNOWN);
+            $fileError = array('errorMesg'   => 'Unknown Error!',
+                               'errorId'    => _UPLOADS_ERROR_UNKNOWN);
         }
 
         if (!isset($fileInfo['errors'])) {

@@ -86,21 +86,16 @@ function uploads_userapi_file_move( $args ) {
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
             return FALSE;
         }
+    } elseif($isLocal) {
+        if (!copy($fileSrc, $fileDest)) {
+            $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
+            return FALSE;
+        } 
+        // TODO: Think about unlinking the file after it's been copied and the 
+        // potential ramifications of doing so.
     } else {
-        if ($isLocal) {
-            if (!copy($fileSrc, $fileDest)) {
-                $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
-                return FALSE;
-            } else {
-                // This step is technically redundant due to php actually removing 
-                // the temp file upon script completion anyway (which is why don't 
-                // don't check to see if unlink was successful or not ;)
-                unlink($fileSrc);
-            }
-        } else {
-            // TODO: Grab remote file (web page?) and save it locally
-        }
+        // TODO: Grab remote file (web page?) and save it locally
     }
             
     

@@ -36,38 +36,43 @@ function uploads_userapi_prepare_imports( $args ) {
                                     'descend'       => $descend));
     if ($imports) { 
         $imports = xarModAPIFunc('uploads','user','import_prepare_files',
-                                array('fileList'  => $imports,
+                                  array('fileList'  => $imports,
                                         'savePath'  => $import_directory,
                                         'obfuscate' => $import_obfuscate));
     }
     
-    if (!$imports || xarCurrentError() !== XAR_NO_EXCEPTION) {
-
-        $fileInfo['errors'][] = $fileError;
-        $fileInfo['fileName'] = basename($importFrom);
+    if (!$imports) {
+        $fileInfo['errors']   = array();
+        $fileInfo['fileName'] = $importFrom;
         $fileInfo['fileSrc']  = $importFrom;
         $fileInfo['fileDest'] = $import_directory;
         $fileInfo['fileSize'] = 0;
 
-        while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
+        if (xarCurrentError() !== XAR_NO_EXCEPTION) {
 
-            $errorObj = xarExceptionValue();
+            while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
-            if (is_object($errorObj)) {
-                $fileError = array('errorMsg'   => $errorObj->getShort(),
-                                'errorID'    => $errorObj->getID());
-            } else {
-                $fileError = array('errorMsg'   => 'Unknown Error!',
-                                'errorID'    => _UPLOADS_ERROR_UNKNOWN);
+                $errorObj = xarExceptionValue();
+
+                if (is_object($errorObj)) {
+                    $fileError = array('errorMesg'   => $errorObj->getShort(),
+                                       'errorId'    => $errorObj->getID());
+                } else {
+                    $fileError = array('errorMesg'   => 'Unknown Error!',
+                                       'errorId'    => _UPLOADS_ERROR_UNKNOWN);
+                }
+
+                if (!isset($fileInfo['errors'])) {
+                    $fileInfo['errors'] = array();
+                }
+                $fileInfo['errors'][] = $fileError;
+                // Clear the exception because we've handled it already
+                xarExceptionHandled();
             }
-
-            if (!isset($fileInfo['errors'])) {
-                $fileInfo['errors'] = array();
-            }
-
-            // Clear the exception because we've handled it already
-            xarExceptionHandled();
-        }    
+        } else {
+            $fileInfo['errors'][]['errorMsg'] = xarML('Unknown');
+            $fileInfo['errors'][]['errorId']  = _UPLOADS_ERROR_UNKNOWN;
+        }            
         return array($fileInfo);
     } else {
         return $imports;

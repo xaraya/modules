@@ -78,8 +78,9 @@ function uploads_userapi_process_files( $args ) {
      * Prepare the imported files file list
      */    
     if (isset($importFrom)) {
-        $args = array('savePath' => $import_directory, 
-                      'obfuscate' => $import_obfuscate);
+        $args = array('importFrom'  => $importFrom,
+                      'savePath'    => $import_directory, 
+                      'obfuscate'   => $import_obfuscate);
         
         if (!empty($fileList)) {
             $fileList = array_merge($fileList, xarModAPIFunc('uploads', 'user', 'prepare_imports', $args));
@@ -101,7 +102,6 @@ function uploads_userapi_process_files( $args ) {
             $storeList[] = $fileInfo;
             continue;
         }
-            echo "<br />CALLING file_store()...";
         $storeList[] = xarModAPIFunc('uploads', 'user', 'file_store',
                                       array('fileInfo'  => $fileInfo,
                                             'storeType' => $store_type));
