@@ -49,7 +49,7 @@ function sitecloud_admin_view()
                                                 'delete',
                                                 array('id' => $link['id'],
                                                       'authid' => $data['authid']));
-            $links[$i]['javascript'] = "return confirmLink(this, '" . xarML('Delete Headline Feed') . " $link[url] ?')";
+            $links[$i]['javascript'] = "return xar_base_confirmLink(this, '" . xarML('Delete Headline Feed') . " $link[url] ?')";
         } else {
             $links[$i]['deleteurl'] = '';
         }
