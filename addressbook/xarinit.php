@@ -95,20 +95,86 @@ function AddressBook_init()
 	/**
      * insert default values
      */
-    $insertRows = array(
-                    "INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_WORK)."')"
-                   ,"INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_FAX)."')"
-                   ,"INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_MOBILE)."')"
-                   ,"INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_HOME)."')"
-                   ,"INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_EMAIL)."')"
-                   ,"INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_URL)."')"
-                   ,"INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_OTHER)."')"
-                   );
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abLabelsTable);
 
-    foreach ($insertRows as $row) {
-        $result =& $dbconn->Execute($row);
-        if (!$result) return;
-    }
+    $query = "INSERT INTO $abLabelsTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_WORK)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abLabelsTable);
+
+    $query = "INSERT INTO $abLabelsTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_FAX)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abLabelsTable);
+
+    $query = "INSERT INTO $abLabelsTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_MOBILE)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abLabelsTable);
+
+    $query = "INSERT INTO $abLabelsTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_HOME)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abLabelsTable);
+
+    $query = "INSERT INTO $abLabelsTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_EMAIL)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abLabelsTable);
+
+    $query = "INSERT INTO $abLabelsTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_URL)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abLabelsTable);
+
+    $query = "INSERT INTO $abLabelsTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_OTHER)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
 
     /**
      * create category table
@@ -127,16 +193,40 @@ function AddressBook_init()
 	/**
      * insert default values
      */
-    $insertRows = array(
-                    "INSERT INTO $abCategoriesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_BUSINESS)."')"
-                   ,"INSERT INTO $abCategoriesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_PERSONAL)."')"
-                   ,"INSERT INTO $abCategoriesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_QUICKLIST)."')"
-                   );
 
-    foreach ($insertRows as $row) {
-        $result =& $dbconn->Execute($row);
-        if (!$result) return;
-    }
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abCategoriesTable);
+
+    $query = "INSERT INTO $abCategoriesTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_BUSINESS)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abCategoriesTable);
+
+    $query = "INSERT INTO $abCategoriesTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_PERSONAL)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abCategoriesTable);
+
+    $query = "INSERT INTO $abCategoriesTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_QUICKLIST)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
 
 	/**
      * create custom field table
@@ -162,17 +252,52 @@ function AddressBook_init()
 	/**
      * insert default values
      */
-    $insertRows = array(
-                    "INSERT INTO $abCustomfieldsTable (nr,label,type,position) VALUES ('1','$tempcus_1','varchar(60) default NULL','1')"
-                   ,"INSERT INTO $abCustomfieldsTable (nr,label,type,position) VALUES ('2','$tempcus_2','varchar(60) default NULL','2')"
-                   ,"INSERT INTO $abCustomfieldsTable (nr,label,type,position) VALUES ('3','$tempcus_3','varchar(60) default NULL','3')"
-                   ,"INSERT INTO $abCustomfieldsTable (nr,label,type,position) VALUES ('4','$tempcus_4','varchar(60) default NULL','4')"
-                   );
 
-    foreach ($insertRows as $row) {
-        $result =& $dbconn->Execute($row);
-        if (!$result) return;
-    }
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abCustomfieldsTable);
+
+    $query = "INSERT INTO $abCustomfieldsTable (nr,label,type,position) 
+              VALUES ($nextId,'$tempcus_1','varchar(60) default NULL','1')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abCustomfieldsTable);
+
+    $query = "INSERT INTO $abCustomfieldsTable (nr,label,type,position) 
+              VALUES ($nextId,'$tempcus_2','varchar(60) default NULL','2')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abCustomfieldsTable);
+
+    $query = "INSERT INTO $abCustomfieldsTable (nr,label,type,position) 
+              VALUES ($nextId,'$tempcus_3','varchar(60) default NULL','3')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abCustomfieldsTable);
+
+    $query = "INSERT INTO $abCustomfieldsTable (nr,label,type,position) 
+              VALUES ($nextId,'$tempcus_4','varchar(60) default NULL','4')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
 
 	/**
      * create prefix table
@@ -191,14 +316,28 @@ function AddressBook_init()
 	/**
      * insert default values
      */
-    $insertRows = array(
-                    "INSERT INTO $abPrefixesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_MR)."')"
-                   ,"INSERT INTO $abPrefixesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_MRS)."')"
-                   );
-    foreach ($insertRows as $row) {
-        $result =& $dbconn->Execute($row);
-        if (!$result) return;
-    }
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abPrefixesTable);
+
+    $query = "INSERT INTO $abPrefixesTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_MR)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
+    // Get next ID in table
+    $nextId = $dbconn->GenId($abPrefixesTable);
+
+    $query = "INSERT INTO $abPrefixesTable (nr,name) 
+              VALUES ($nextId,'".xarVarPrepForStore(_AB_MRS)."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for an error
+    if (!$result) return false;
+
 
 	// $abModVars set in xarglobal.php and is used to ease maintenance
     foreach ($abModVars as $modvar=>$value) {
