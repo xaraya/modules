@@ -9,7 +9,8 @@
  *  @returns <type> 
  */
 
-function uploads_userapi_import_get_filelist( $args ) {
+function uploads_userapi_import_get_filelist( $args ) 
+{
     
     
     extract($args);
@@ -37,7 +38,7 @@ function uploads_userapi_import_get_filelist( $args ) {
     
     if (!file_exists($fileLocation)) {
         $msg = xarML("Unable to acquire list of files to import - Location '#(1)' does not exist!",$fileLocation);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new SystemException($msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
         return;
     }
     
