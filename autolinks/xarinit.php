@@ -342,11 +342,6 @@ function autolinks_upgrade($oldversion)
                 . ' SET xar_name = xar_keyword'
                 . ' WHERE xar_name IS NULL OR xar_name = \'\'';
 
-            // Make the name column mandatory.
-            $flds = "
-                xar_name        C(100)   NotNull
-            ";
-
             $sqlarray = array_merge($sqlarray, $dict->ChangeTableSQL($autolinkstable, $flds));
 
             // Drop an old column on the autolinks table.
@@ -366,6 +361,14 @@ function autolinks_upgrade($oldversion)
                 return;
             }
 
+            // Make the name column mandatory. Must do this after executing the
+            // other changes otherwise the data dictionary creates am 'add column'.
+            $flds = "xar_name        C(100)   NotNull";
+            $sqlarray = $dict->ChangeTableSQL($autolinkstable, $flds);
+            if (!$dict->ExecuteSQLArray($sqlarray)) {
+                return;
+            }
+            
             // Create a unique index for the autolinks name.
             // TODO?
 

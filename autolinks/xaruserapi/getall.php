@@ -2,6 +2,7 @@
 
 /**
  * get all links
+ * TODO: allow fetched results to be ordered
  * @returns array
  * @param $args['enabled'] optional boolean: get only enabled or disabled links
  * @param $args['tid'] optional integer: get only given autolink type
@@ -85,7 +86,7 @@ function autolinks_userapi_getall($args)
             $lid, $keyword, $title, $url, $comment, $enabled, $match_re, $cache_replace, $sample, $name,
             $tid, $dynamic_replace, $template_name, $type_name
         ) = $result->fields;
-    	if(xarSecurityCheck('ReadAutolinks',0,'All',"$name:$lid")) {
+    	if(xarSecurityCheck('ReadAutolinks', 0, 'All', $name.':'.$lid)) {
             $links[$lid] = array(
                 'lid' => $lid,
                 'keyword' => $keyword,
