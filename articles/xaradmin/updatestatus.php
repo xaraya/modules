@@ -79,6 +79,21 @@ function articles_admin_updatestatus()
     // Success
     xarSessionSetVar('statusmsg', xarML('Article Status Updated'));
 
+    // Return to the original admin view
+    $lastview = xarSessionGetVar('Articles.LastView');
+    if (isset($lastview)) {
+        $lastviewarray = unserialize($lastview);
+        if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
+            extract($lastviewarray);
+            xarResponseRedirect(xarModURL('articles', 'admin', 'view',
+                                          array('ptid' => $ptid,
+                                                'catid' => $catid,
+                                                'status' => $status,
+                                                'startnum' => $startnum)));
+            return true;
+        }
+    }
+
     if (empty($catid)) {
         $catid = null;
     }

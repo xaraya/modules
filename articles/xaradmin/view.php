@@ -134,9 +134,9 @@ function articles_admin_view()
     $showdate = !empty($labels['pubdate']);
     $data['showdate'] = $showdate;
     // only show the status if this publication type has one
-    $showstatus = !empty($labels['status'])
+    $showstatus = !empty($labels['status']);
                   // and if we're not selecting on it already
-                  && (!is_array($status) || !isset($status[0]));
+                  //&& (!is_array($status) || !isset($status[0]));
     $data['showstatus'] = $showstatus;
 
     $items = array();
