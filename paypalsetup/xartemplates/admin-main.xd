@@ -15,7 +15,7 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>Paypal Set-Up will set-up the necessary variables for use with the PayPal merchant tools such as the cart, pay now buttons, subscriptions.  This module just sets up the defaults.  To use the individual buttons and functionality, Dynamic Data must be hooked to your displays.</xar:mlstring>
-		</div>
+        </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>How to use it?</xar:mlstring>
@@ -31,7 +31,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>There are no blocks included at this time.</xar:mlstring>
+            <xar:mlstring>There are no blocks included at this time.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">

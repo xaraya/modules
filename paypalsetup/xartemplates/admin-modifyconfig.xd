@@ -1,10 +1,10 @@
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("business", "return");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Business Name", "Return");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("business", "return");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Business Name", "Return");
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>PayPal Set-Up</xar:mlstring></span></div>
@@ -12,67 +12,67 @@
 <div style="margin: auto;">
 <form method="post" action="#xarModUrl('paypalsetup', 'admin', 'updateconfig')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
 
-		<div style="clear: both; padding-top: 10px;">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('The Business Name is the email address that you use to recieve payments from PayPal.')#"><label for="business"><xar:mlstring>Business Name</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="business" id="business" value="#xarModGetVar('paypalsetup', 'business', 1)#" size="50" maxlength="100" />
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The Business Name is the email address that you use to recieve payments from PayPal.')#"><label for="business"><xar:mlstring>Business Name</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="business" id="business" value="#xarModGetVar('paypalsetup', 'business', 1)#" size="50" maxlength="100" />
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('The return is where you want users to return to after paying.  The default is to your index page.')#"><label for="adminmail"><xar:mlstring>Return</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="return" id="return" value="#xarModGetVar('paypalsetup', 'return', 1)#" size="50" maxlength="100" />
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The return is where you want users to return to after paying.  The default is to your index page.')#"><label for="adminmail"><xar:mlstring>Return</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="return" id="return" value="#xarModGetVar('paypalsetup', 'return', 1)#" size="50" maxlength="100" />
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('The default currency code for your business.')#"><label for="currency_code"><xar:mlstring>Default Currency Type</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<select name="currency_code" id="currency_code">
-				<xar:if condition="xarModGetVar('paypalsetup', 'currency_code') eq 'CAD'">
-					<option label="CAD" value="CAD" selected="selected">Canadian Dollars</option>
-					<option label="EUR" value="EUR">Euros</option>
-					<option label="GBP" value="GBP">Pounds Sterling</option>
-					<option label="JPY" value="JPY">Yen</option>
-					<option label="JPY" value="USD">U.S. Dollars</option>
-				<xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'EUR'" />
-					<option label="CAD" value="CAD">Canadian Dollars</option>
-					<option label="EUR" value="EUR" selected="selected">Euros</option>
-					<option label="GBP" value="GBP">Pounds Sterling</option>
-					<option label="JPY" value="JPY">Yen</option>
-					<option label="JPY" value="USD">U.S. Dollars</option>
-				<xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'GBP'" />
-					<option label="CAD" value="CAD">Canadian Dollars</option>
-					<option label="EUR" value="EUR">Euros</option>
-					<option label="GBP" value="GBP" selected="selected">Pounds Sterling</option>
-					<option label="JPY" value="JPY">Yen</option>
-					<option label="JPY" value="USD">U.S. Dollars</option>
-				<xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'JPY'" />
-					<option label="CAD" value="CAD">Canadian Dollars</option>
-					<option label="EUR" value="EUR">Euros</option>
-					<option label="GBP" value="GBP">Pounds Sterling</option>
-					<option label="JPY" value="JPY" selected="selected">Yen</option>
-					<option label="JPY" value="USD">U.S. Dollars</option>
-				<xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'USD'" />
-					<option label="CAD" value="CAD">Canadian Dollars</option>
-					<option label="EUR" value="EUR">Euros</option>
-					<option label="GBP" value="GBP">Pounds Sterling</option>
-					<option label="JPY" value="JPY">Yen</option>
-					<option label="JPY" value="USD" selected="selected">U.S. Dollars</option>
-				</xar:if>									
-			</select>
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The default currency code for your business.')#"><label for="currency_code"><xar:mlstring>Default Currency Type</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <select name="currency_code" id="currency_code">
+                <xar:if condition="xarModGetVar('paypalsetup', 'currency_code') eq 'CAD'">
+                    <option label="CAD" value="CAD" selected="selected">Canadian Dollars</option>
+                    <option label="EUR" value="EUR">Euros</option>
+                    <option label="GBP" value="GBP">Pounds Sterling</option>
+                    <option label="JPY" value="JPY">Yen</option>
+                    <option label="JPY" value="USD">U.S. Dollars</option>
+                <xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'EUR'" />
+                    <option label="CAD" value="CAD">Canadian Dollars</option>
+                    <option label="EUR" value="EUR" selected="selected">Euros</option>
+                    <option label="GBP" value="GBP">Pounds Sterling</option>
+                    <option label="JPY" value="JPY">Yen</option>
+                    <option label="JPY" value="USD">U.S. Dollars</option>
+                <xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'GBP'" />
+                    <option label="CAD" value="CAD">Canadian Dollars</option>
+                    <option label="EUR" value="EUR">Euros</option>
+                    <option label="GBP" value="GBP" selected="selected">Pounds Sterling</option>
+                    <option label="JPY" value="JPY">Yen</option>
+                    <option label="JPY" value="USD">U.S. Dollars</option>
+                <xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'JPY'" />
+                    <option label="CAD" value="CAD">Canadian Dollars</option>
+                    <option label="EUR" value="EUR">Euros</option>
+                    <option label="GBP" value="GBP">Pounds Sterling</option>
+                    <option label="JPY" value="JPY" selected="selected">Yen</option>
+                    <option label="JPY" value="USD">U.S. Dollars</option>
+                <xar:elseif condition="xarModGetVar('paypalsetup', 'currency_code') eq 'USD'" />
+                    <option label="CAD" value="CAD">Canadian Dollars</option>
+                    <option label="EUR" value="EUR">Euros</option>
+                    <option label="GBP" value="GBP">Pounds Sterling</option>
+                    <option label="JPY" value="JPY">Yen</option>
+                    <option label="JPY" value="USD" selected="selected">U.S. Dollars</option>
+                </xar:if>                                    
+            </select>
+        </span>
+        </div>
 
-		<div style="float: left; width: 30%; text-align: right; margin-top: 5px;"><input type="submit" value="#$createlabel#" /></div>
-		</form>
-	</div>
+        <div style="float: left; width: 30%; text-align: right; margin-top: 5px;"><input type="submit" value="#$createlabel#" /></div>
+        </form>
+    </div>
 </div>
