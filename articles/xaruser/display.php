@@ -99,7 +99,8 @@ function articles_user_display($args)
 
     // Initialize the data array
     $data = array();
-    $data['ptid'] = $ptid;
+    $data['ptid'] = $ptid; // navigation pubtype
+    $data['pubtypeid'] = $pubtypeid; // article pubtype
 
     // Security check for EDIT access
     if (!$preview) {

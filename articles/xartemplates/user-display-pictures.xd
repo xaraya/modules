@@ -25,8 +25,8 @@
         </td></tr><tr><td align="center">
           <br />
 
-    <xar:if condition="xarModIsHooked('uploads','articles',$itemtype) and substr($body,0,1) eq ';'">
-      <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body))</xar:set>
+    <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
+      <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body, 'multiple' => true))</xar:set>
       <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
         <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#">
         <xar:if condition="xarModIsAvailable('images')">
