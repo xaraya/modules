@@ -705,6 +705,11 @@ function articles_user_view($args)
                 }
                 $item['cname'] = $catinfo[$cid]['name'];
                 $item['clink'] = $catinfo[$cid]['link'];
+                $item['root'] = $catinfo[$cid]['root'];
+                $item['parent'] = $catinfo[$cid]['parent'];
+                $item['cid'] = $catinfo[$cid]['cid'];
+                $item['description'] = empty($catinfo[$cid]['description']) ? $catinfo[$cid]['name'] : $catinfo[$cid]['description'];
+
                 if ($isfirst) {
                     $item['cjoin'] = '';
                     $isfirst = 0;
@@ -712,6 +717,7 @@ function articles_user_view($args)
                     $item['cjoin'] = '|';
                 }
                 $article['categories'][] = $item;
+
                 if (!empty($catinfo[$cid]['image'])) {
                     $image = xarTplGetImage($catinfo[$cid]['image'],'categories');
                     $article['topic_icons'] .= '<a href="'. $catinfo[$cid]['link'] .'">'.
