@@ -18,7 +18,7 @@
 /* This program is opensource so you can do whatever    */
 /* you want with it.                                    */
 /*                                                      */
-/* http://www.dimensionquest.net			*/
+/* http://www.dimensionquest.net            */
 /********************************************************/
 
 /**
@@ -57,6 +57,58 @@ function helpdesk_init()
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($helpdesktable,$fields);
+    if (empty($query)) return; // throw back
+    $result = $dbconn->Execute($query);
+    if (!isset($result)) return;
+    
+    /**
+        Creates the Priority table
+    */
+    $table  = $xartable['helpdesk_priority'];
+    
+    $fields = array(
+        'xar_pid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_priority'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>''),
+        'xar_color'       => array('type'=>'varchar', 'size'=>10,'null'=>FALSE, 'default'=>'')
+    );
+    
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($table,$fields);
+    if (empty($query)) return; // throw back
+    $result = $dbconn->Execute($query);
+    if (!isset($result)) return;
+    
+    /**
+        Creates the Status table
+    */
+    $table  = $xartable['helpdesk_status'];
+    
+    $fields = array(
+        'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_status'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
+    );
+    
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($table,$fields);
+    if (empty($query)) return; // throw back
+    $result = $dbconn->Execute($query);
+    if (!isset($result)) return;
+    
+    /**
+        Creates the Source table
+    */
+    $table  = $xartable['helpdesk_source'];
+    
+    $fields = array(
+        'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_source'       => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
+    );
+    
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($table,$fields);
     if (empty($query)) return; // throw back
     $result = $dbconn->Execute($query);
     if (!isset($result)) return;
@@ -127,15 +179,15 @@ function helpdesk_init()
     
     // Enable categories hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-		  array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));        
+          array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));        
     
     // Enable comments hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-		  array('callerModName' => 'helpdesk', 'hookModName' => 'comments'));        
+          array('callerModName' => 'helpdesk', 'hookModName' => 'comments'));        
     
     // Enable comments hooks for helpdesk
     xarModAPIFunc('modules','admin','enablehooks',
-		  array('callerModName' => 'helpdesk', 'hookModName' => 'hitcount'));
+          array('callerModName' => 'helpdesk', 'hookModName' => 'hitcount'));
     
     /**
     * Ok, Now lets create all of our dd objects
@@ -270,7 +322,74 @@ function helpdesk_upgrade($oldversion)
         case '0.3.3':
 
         case '0.4.0':
-                      
+        
+        case '0.5.0':
+            /**
+                Creates the Priority table
+            */
+            $table  = $xartable['helpdesk_priority'];
+            
+            $fields = array(
+                'xar_pid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+                'xar_priority'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>''),
+                'xar_color'       => array('type'=>'varchar', 'size'=>10,'null'=>FALSE, 'default'=>'')
+            );
+            
+            // Create the Table - the function will return the SQL is successful or
+            // raise an exception if it fails, in this case $query is empty
+            $query = xarDBCreateTable($table,$fields);
+            if (empty($query)) return; // throw back
+            $result = $dbconn->Execute($query);
+            if (!isset($result)) return;
+            
+            /**
+                Creates the Status table
+            */
+            $table  = $xartable['helpdesk_status'];
+            
+            $fields = array(
+                'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+                'xar_status'        => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
+            );
+            
+            // Create the Table - the function will return the SQL is successful or
+            // raise an exception if it fails, in this case $query is empty
+            $query = xarDBCreateTable($table,$fields);
+            if (empty($query)) return; // throw back
+            $result = $dbconn->Execute($query);
+            if (!isset($result)) return;
+            
+            /**
+                Creates the Source table
+            */
+            $table  = $xartable['helpdesk_source'];
+            
+            $fields = array(
+                'xar_sid'          => array('type'=>'integer', 'size'=>11, 'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
+                'xar_source'       => array('type'=>'varchar', 'size'=>20,'null'=>FALSE, 'default'=>'')
+            );
+            
+            // Create the Table - the function will return the SQL is successful or
+            // raise an exception if it fails, in this case $query is empty
+            $query = xarDBCreateTable($table,$fields);
+            if (empty($query)) return; // throw back
+            $result = $dbconn->Execute($query);
+            if (!isset($result)) return;        
+        
+            /*
+                Now let load the data again
+            */
+            xarModAPIFunc('dynamicdata','util','import',
+                          array('file' => $path . 'hd_priority.data.xml'));
+
+            xarModAPIFunc('dynamicdata','util','import',
+                          array('file' => $path . 'hd_sources.data.xml'));
+            
+            xarModAPIFunc('dynamicdata','util','import',
+                          array('file' => $path . 'hd_status.data.xml'));
+            
+        case '0.5.1':
+                            
             
     }
     // If all else fails, return true so the module no longer shows "Upgrade" in module administration
@@ -291,6 +410,18 @@ function helpdesk_delete()
 
     // Delete tables
     $query = xarDBDropTable($xartable['helpdesk_tickets']);
+    $result =& $dbconn->Execute($query);
+
+   // Delete tables
+    $query = xarDBDropTable($xartable['helpdesk_source']);
+    $result =& $dbconn->Execute($query);
+
+   // Delete tables
+    $query = xarDBDropTable($xartable['helpdesk_status']);
+    $result =& $dbconn->Execute($query);
+
+   // Delete tables
+    $query = xarDBDropTable($xartable['helpdesk_priority']);
     $result =& $dbconn->Execute($query);
 
     $objectid = xarModGetVar('helpdesk','priorityobjectid');

@@ -20,12 +20,12 @@
 /* This program is opensource so you can do whatever    */
 /* you want with it.                                    */
 /*                                                      */
-/* http://www.dimensionquest.net		        */
+/* http://www.dimensionquest.net                */
 /********************************************************/
 
 $modversion['id'] = '910';
 $modversion['name'] = 'helpdesk';
-$modversion['version'] = '0.5.0';
+$modversion['version'] = '0.5.5';
 $modversion['description'] = 'HelpDesk Module';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';

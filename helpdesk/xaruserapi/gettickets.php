@@ -43,90 +43,108 @@ function helpdesk_userapi_gettickets($args)
             $helpdeskcolumn[ticket_closedby]
         FROM    $helpdesktable ";
     $from ='';
-    if (!empty($catid) && count(array($catid)) > 0) {
+    $where = array();
+    if (!empty($catid) && count(array($catid)) > 0) 
+    {
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
         $from .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_id';
-        /*
-        if (!empty($categoriesdef['more'])) {
+        
+        if (!empty($categoriesdef['more'])) 
+        {
             $from = '(' . $from . ')';
             $from .= $categoriesdef['more'];
-        }*/
-        $from .= " WHERE " . $categoriesdef['where'];
+        }
+        $where[] = $categoriesdef['where'];
         $sql .= $from;
-    }
-    else
-    {
-        $sql .= "WHERE $helpdeskcolumn[ticket_id] = $helpdeskcolumn[ticket_id]";
     }
     
     switch($selection) {
         case 'UNASSIGNED':            
             xarSessionSetVar('ResultTitle', xarML('Unassigned Tickets'));
-            $sql .= " AND $helpdeskcolumn[ticket_assignedto] < 2";
+            $where[] = "$helpdeskcolumn[ticket_assignedto] < 2";
             break;
         case 'MYALL':
             xarSessionSetVar('ResultTitle', xarML('All Your Tickets'));
-            $sql .= " AND $helpdeskcolumn[ticket_openedby]=$userid";
+            $where[] = "$helpdeskcolumn[ticket_openedby] = $userid";
             break;
         case 'MYOPEN':
             xarSessionSetVar('ResultTitle', xarML('All Your Open Tickets'));
-            $sql .= " AND ($helpdeskcolumn[ticket_openedby]=$userid";
-            $sql .= " AND $helpdeskcolumn[ticket_statusid]!=3)";
+            $where[] = "$helpdeskcolumn[ticket_openedby] = $userid";
+            $where[] = "$helpdeskcolumn[ticket_statusid] != 3 ";
             break;
         case 'MYCLOSED':
             xarSessionSetVar('ResultTitle', xarML('All Your Closed Tickets'));
-            $sql .= " AND ($helpdeskcolumn[ticket_openedby]=$userid";
-            $sql .= " AND $helpdeskcolumn[ticket_statusid]=3)";
+            $where[] = "$helpdeskcolumn[ticket_openedby] = $userid";
+            $where[] = "$helpdeskcolumn[ticket_statusid] = 3";
             break;
         case 'ALL':
             xarSessionSetVar('ResultTitle', xarML('All Tickets in Database'));
             break;
         case 'OPEN':
             xarSessionSetVar('ResultTitle', xarML('All Open Tickets'));
-            $sql .= " AND $helpdeskcolumn[ticket_statusid]!=3";
+            $where[] = "$helpdeskcolumn[ticket_statusid] != 3";
             break;
         case 'CLOSED':
             xarSessionSetVar('ResultTitle', xarML('All Closed Tickets'));
-            $sql .= " AND $helpdeskcolumn[ticket_statusid]=3";
+            $where[] = "$helpdeskcolumn[ticket_statusid] = 3";
             break;
         case 'MYASSIGNEDALL':
             xarSessionSetVar('ResultTitle', xarML('All Your Assigned Tickets'));
-            $sql .= " AND $helpdeskcolumn[ticket_assignedto]=$userid";
+            $where[] = "$helpdeskcolumn[ticket_assignedto] = $userid";
             break;
         case 'MYASSIGNEDOPEN':
             xarSessionSetVar('ResultTitle', xarML('All Your Open Assigned Tickets'));
-            $sql .= " AND ($helpdeskcolumn[ticket_assignedto]=$userid";
-            $sql .= " AND $helpdeskcolumn[ticket_statusid]!=3)";
+            $where[] = "$helpdeskcolumn[ticket_assignedto] = $userid";
+            $where[] = "$helpdeskcolumn[ticket_statusid] != 3";
             break;
         case 'MYASSIGNEDCLOSED':
             xarSessionSetVar('ResultTitle', xarML('All Your Closed Assigned Tickets'));
-            $sql .= " AND ($helpdeskcolumn[ticket_assignedto]=$userid";
-            $sql .= " AND $helpdeskcolumn[ticket_statusid]=3)";
+            $where[] = "$helpdeskcolumn[ticket_assignedto] = $userid";
+            $where[] = "$helpdeskcolumn[ticket_statusid] = 3";
             break;
     }
     
     // Status filter code
     if(!empty($statusfilter)){
-        $sql .= " AND $helpdeskcolumn[ticket_statusid] = $statusfilter ";    
+        $where[] = "$helpdeskcolumn[ticket_statusid] = $statusfilter ";    
     }
     
     // I don't like this code
-    if(!empty($keywords) && !empty($subject)){
+    $whereor = array();
+    if(!empty($keywords) && !empty($subject))
+    {
         $words = explode(" ", $keywords);
         foreach($words as $word)
         {
-            $sql .= " OR ($helpdeskcolumn[ticket_subject] LIKE '%" . $word . "%') ";
+            $whereor[] = "($helpdeskcolumn[ticket_subject] LIKE '%" . $word . "%')";
         }
     }
     
     if(!empty($userid) && !xarSecurityCheck('edithelpdesk', 0))
     {
-        $sql .= " AND  $helpdeskcolumn[ticket_openedby] = $userid ";
+        $where[] = "$helpdeskcolumn[ticket_openedby] = $userid";
     }
     
-    switch($sortorder) {
+    if(count($where) > 0)
+    {
+        $sql .= ' WHERE ' . join(' AND ', $where);
+    }
+    if(count($whereor) > 0)
+    {
+        if(count($where) == 0)
+        {
+            $sql .= ' WHERE ' . join(' OR ', $whereor);        
+        }
+        else
+        {
+            $sql .= ' OR ' . join(' OR ', $whereor);
+        }
+    }
+    
+    switch($sortorder) 
+    {
     case 'TICKET_ID':
         $sql .= " ORDER BY $helpdeskcolumn[ticket_id] $order";
         break;
@@ -160,9 +178,20 @@ function helpdesk_userapi_gettickets($args)
     
     // Note to self this is getting more complex than I'd like
     // Lets see if there is a cleaner way
-    if(empty($startnum)){$startnum='0';}
-    elseif($startnum > 0){ $startnum--; }
-    if(empty($pagerows)){$pagerows='10';}
+    if(empty($startnum))
+    {
+        $startnum = '0';
+    }
+    elseif($startnum > 0)
+    { 
+        $startnum--; 
+    }
+    
+    if(empty($pagerows))
+    {
+        $pagerows='10';
+    }
+    
     $sql .= " LIMIT $startnum, $pagerows";
     
     $results = $dbconn->Execute($sql);
@@ -170,7 +199,7 @@ function helpdesk_userapi_gettickets($args)
     
     $fieldresults = array();
     while(list($ticket_id,  $ticketdate, $subject, $statusid, $priorityid, $lastupdate,
-          $assignedto, $openedby,   $closedby) = $results->fields) {
+        $assignedto, $openedby,   $closedby) = $results->fields) {
     $fieldresults[] = array(
         'ticket_id'     => $ticket_id, 
         'ticketdate'    => xarModAPIFunc('helpdesk', 'user', 'formatdate', array('date' => $ticketdate)),

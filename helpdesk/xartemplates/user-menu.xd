@@ -2,7 +2,7 @@
     <tr>
     <!-- I love this if logic, don't you? You can thank me later-->
     <xar:loop name="$menulinks">    
-    <xar:if condition="($page eq $loop:item['page'] AND empty($loop:item['type']) AND empty($loop:item['selection'])) OR (!empty($loop:item['selection']) AND $selection eq $loop:item['selection'])">
+    <xar:if condition="$page eq $loop:item['page'] AND empty($loop:item['type'])">
         <!-- Selected Object -->        
         <td class="xar-norm" align="center">
             <div class="selectedMenuItem">

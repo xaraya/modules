@@ -42,6 +42,36 @@ Descending Order: <input type="radio" name="order" value="DESC" onChange="javasc
 Ascending Order: <input type="radio" name="order" value="ASC" onChange="javascript:document.options.submit();" />
 Descending Order: <input type="radio" name="order" value="DESC" checked="checked" onChange="javascript:document.options.submit();" />
 </xar:if>
+
+<div style="margin-top: 5px;">
+Another Filter: <br />
+<select name="selection" onChange="javascript:document.options.submit();">
+
+<xar:if condition="!empty($selection)">
+<option value="#$selection#">#$selections[$selection]#</option>
+<xar:else />
+<option value=""></option>
+</xar:if>
+
+<option value="">-------------</option>
+<option value="MYALL">My Tickets</option>
+
+<xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+<option value="ALL">All Tickets</option>
+</xar:if>
+
+<xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+<option value="MYASSIGNEDALL">My Assigned Tickets</option>
+</xar:if>
+
+<xar:if condition="xarSecurityCheck('edithelpdesk',0) && xarModGetVar('helpdesk', 'Techs see all tickets')">
+<option value="UNASSIGNED">All Unassigned Tickets</option>
+</xar:if>
+
+</select>
+
+</div>
+
 </form>
 </span>
 </xar:if>

@@ -73,49 +73,11 @@ function helpdesk_userapi_menulinks()
                                                   array('selection' => 'MYALL')),
                              'page' => 'view',
                              'selection' => 'MYALL',
-                             'title' => xarML('My Tickets'),
-                             'label' => xarML('My Tickets'));
+                             'title' => xarML('View Tickets'),
+                             'label' => xarML('View Tickets'));
     }
     
-    // Security Check
-    if (xarSecurityCheck('edithelpdesk',0) && 
-        xarModGetVar('helpdesk', 'Techs see all tickets')) {
-        $menulinks[] = Array('url'   => xarModURL('helpdesk',
-                                                  'user',
-                                                  'view',
-                                                  array('selection' => 'ALL')),
-                             'page' => 'view',
-                             'selection' => 'ALL',
-                             'title' => xarML('All Tickets'),
-                             'label' => xarML('All Tickets'));
-    }
-    
-    // Security Check
-    if (xarSecurityCheck('edithelpdesk',0) && 
-        xarModGetVar('helpdesk', 'Techs see all tickets')) {
-        $menulinks[] = Array('url'   => xarModURL('helpdesk',
-                                                  'user',
-                                                  'view',
-                                                  array('selection' => 'MYASSIGNEDALL')),
-                             'page' => 'view',
-                             'selection' => 'MYASSIGNEDALL',
-                             'title' => xarML('My Assigned Tickets'),
-                             'label' => xarML('My Ass. Tickets'));
-    }
-    
-    // Security Check
-    if (xarSecurityCheck('edithelpdesk',0) && 
-        xarModGetVar('helpdesk', 'Techs see all tickets')) {
-        $menulinks[] = Array('url'   => xarModURL('helpdesk',
-                                                  'user',
-                                                  'view',
-                                                  array('selection' => 'UNASSIGNED')),
-                             'page' => 'view',
-                             'selection' => 'UNASSIGNED',
-                             'title' => xarML('UnAssigned Tickets'),
-                             'label' => xarML('UnAss. Tickets'));
-    }
-     
+
     return $menulinks;
 }
 ?>

@@ -11,4 +11,12 @@
     <id>3</id>
     <status>Closed</status>
   </hd_status>
+  <hd_status itemid="4">
+    <id>4</id>
+    <status>Invalid</status>
+  </hd_status>
+  <hd_status itemid="5">
+    <id>5</id>
+    <status>Works For Me</status>
+  </hd_status>
 </items>

@@ -8,7 +8,7 @@
 /* This program is opensource so you can do whatever    */
 /* you want with it.                                    */
 /*                                                      */
-/* http://www.dimensionquest.net               		    */
+/* http://www.dimensionquest.net                           */
 /********************************************************/
 
 // ----------------------------------------------------------------------
@@ -69,6 +69,10 @@ function helpdesk_xartables()
                 'ticket_domain'     => "xar_domain",
                 'ticket_lastupdate' => "xar_updated"
                 );
+                
+    $xartable['helpdesk_status'] = $coprefix . '_status';
+    $xartable['helpdesk_source'] = $coprefix . '_source';
+    $xartable['helpdesk_priority'] = $coprefix . '_priority';
     
     // Return table information
     return $xartable;

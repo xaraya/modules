@@ -71,21 +71,30 @@ function helpdesk_user_view($args)
                                array('modid'    => 910,
                                      'itemtype' => '1',
                                      'bid' => 1));
-        $catid = '_' . $cat['cid'];
+        if(!empty($cat['cid']))                                     
+        {
+            $catid = $cat['cid'];
+        }
     }    
     
-    //Setup args for pager so we don't lose our place                                                                                  
+    //Setup args for pager so we don't lose our place
     $args = array('selection' => $selection,
                   'sortorder' => $sortorder,
                   'order'     => $order,
                   'statusfilter' => $statusfilter,
                   'startnum' => '%%');  
+                  
     $data['pager'] = xarTplGetPager($startnum, 
                                     $totaltickets,
                                     xarModURL('helpdesk', 'user', 'view', $args),
                                     xarModGetVar('helpdesk', 'Default rows per page'));    
 
-    // Sending state vars back into the form                                                                                                                                                         
+    $data['selections'] = array('MYALL'         => 'My Tickets',
+                                'ALL'           => 'All Tickets',
+                                'MYASSIGNEDALL' => 'My Assigned Tickets',
+                                'UNASSIGNED'    => 'Unassigned Tickets');
+                                 
+    // Sending state vars back into the form           
     $data['selection'] = $selection;
     $data['sortorder'] = $sortorder;
     $data['order'] = $order;

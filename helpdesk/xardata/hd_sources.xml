@@ -1,5 +1,5 @@
 <object name="hd_sources">
-  <objectid>11</objectid>
+  <objectid>8</objectid>
   <label>Sources</label>
   <moduleid>910</moduleid>
   <itemtype>4</itemtype>
@@ -9,21 +9,21 @@
   <isalias>1</isalias>
   <properties>
     <property name="id">
-      <id>58</id>
+      <id>49</id>
       <label>Id</label>
       <type>itemid</type>
       <default></default>
-      <source>dynamic_data</source>
+      <source>xar_helpdesk_source.xar_sid</source>
       <status>1</status>
       <order>1</order>
       <validation></validation>
     </property>
     <property name="source">
-      <id>59</id>
+      <id>50</id>
       <label>Source</label>
       <type>textbox</type>
       <default></default>
-      <source>dynamic_data</source>
+      <source>xar_helpdesk_source.xar_source</source>
       <status>1</status>
       <order>2</order>
       <validation></validation>
