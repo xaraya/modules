@@ -44,6 +44,7 @@ tinyMCELang['lang_insert_table_align_left'] = 'Do lewej';
 tinyMCELang['lang_insert_table_align_right'] = 'Do prawej';
 tinyMCELang['lang_insert_table_align_middle'] = 'Do ¶rodka';
 tinyMCELang['lang_insert_table_class'] = 'Klasa';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Domy¶lnie';
 tinyMCELang['lang_theme_paragraph'] = 'Domy¶lna czcionka akapitu';
 tinyMCELang['lang_theme_div'] = 'Linia pozioma';

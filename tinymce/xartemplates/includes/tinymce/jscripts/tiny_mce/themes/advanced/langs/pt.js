@@ -46,6 +46,7 @@ tinyMCELang['lang_insert_table_align_left'] = 'Esquerda';
 tinyMCELang['lang_insert_table_align_right'] = 'Direita';
 tinyMCELang['lang_insert_table_align_middle'] = 'Centrado';
 tinyMCELang['lang_insert_table_class'] = 'Classe de CSS';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Por omissão';
 tinyMCELang['lang_theme_paragraph'] = 'Parágrafo';
 tinyMCELang['lang_theme_div'] = 'Bloco HTML';

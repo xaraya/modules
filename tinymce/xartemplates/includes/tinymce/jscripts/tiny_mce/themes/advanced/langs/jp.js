@@ -60,6 +60,7 @@ tinyMCELang['lang_insert_table_width'] = '$BI}(B';
 tinyMCELang['lang_insert_table_height'] = '$B9b$5(B';
 tinyMCELang['lang_insert_table_border'] = '$B6-3&@~(B';
 tinyMCELang['lang_insert_table_class'] = '$B%/%i%9(B';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = '$BI8=`(B';
 tinyMCELang['lang_theme_colorpicker_title'] = '$B?\'$N;XDj(B';
 tinyMCELang['lang_theme_colorpicker_apply'] = '$BE,MQ(B';

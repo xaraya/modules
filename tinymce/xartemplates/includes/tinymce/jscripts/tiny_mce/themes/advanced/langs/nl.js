@@ -47,6 +47,7 @@ tinyMCELang['lang_insert_table_align_middle'] = 'Midden';
 tinyMCELang['lang_insert_table_delta_width'] = 20;
 tinyMCELang['lang_insert_image_delta_height'] = 0;
 tinyMCELang['lang_insert_table_class'] = 'CSS-Stijl';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Standaard';
 tinyMCELang['lang_theme_paragraph'] = 'Paragraaf';
 tinyMCELang['lang_theme_div'] = 'Div';

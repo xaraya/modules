@@ -45,6 +45,7 @@ tinyMCELang['lang_insert_table_align_left'] = 'Vasen';
 tinyMCELang['lang_insert_table_align_right'] = 'Oikea';
 tinyMCELang['lang_insert_table_align_middle'] = 'Keskelle';
 tinyMCELang['lang_insert_table_delta_height'] = 20;
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Oletus';
 tinyMCELang['lang_theme_paragraph'] = 'Kappale';
 tinyMCELang['lang_theme_div'] = 'Div';

@@ -62,7 +62,7 @@ function TinyMCE_advanced_getControlHTML(button_name) {
 			// Check for it in tilemap
 			for (var x=0; x<buttonTileMap.length; x++) {
 				if (buttonTileMap[x] == but[1])
-					return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/spacer.gif" style="background-image:url({$themeurl}/images/buttons.gif); background-position: ' + (0-(x*20)) + ' 0" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
+					return '<img id="{$editor_id}_' + but[0] + '" src="{$themeurl}/images/spacer.gif" style="background-image:url({$themeurl}/images/buttons.gif); background-position: ' + (0-(x*20)) + 'px 0px" title="' + but[2] + '" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'' + but[3] + '\', ' + (but.length > 4 ? but[4] : false) + (but.length > 5 ? ', \'' + but[5] + '\'' : '') + ')">';
 			}
 
 			// Old style
@@ -116,6 +116,7 @@ function TinyMCE_advanced_getControlHTML(button_name) {
 
 		case "fontsizeselect":
 			return '<select id="{$editor_id}_fontSizeSelect" name="{$editor_id}_fontSizeSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontSize\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
+					<option value="0">-- {$lang_theme_font_size} --</option>\
 					<option value="1">1 (8 pt)</option>\
 					<option value="2">2 (10 pt)</option>\
 					<option value="3">3 (12 pt)</option>\
@@ -583,10 +584,10 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 	var selectElm = document.getElementById(editor_id + "_fontSizeSelect");
 	if (selectElm) {
 		var elm = tinyMCE.getParentElement(node, "font", "size");
-		if (elm)
+		if (elm && getAttrib(elm, "size") != "")
 			selectByValue(selectElm, elm.getAttribute("size"));
 		else
-			selectByValue(selectElm, "1");
+			selectByValue(selectElm, "0");
 	}
 
 	// Handle align attributes

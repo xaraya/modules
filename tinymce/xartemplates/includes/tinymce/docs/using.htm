@@ -349,7 +349,7 @@ optional and is not a requierd setting.<br>
   </tr>
   <tr>
     <td><strong>[auto_cleanup_word]</strong></td>
-    <td>If enabled cleanup of MS office/Word HTML will be executed automaticly on paste operations. The default value of this option is true. Note: This option is currently only available for MSIE. </td>
+    <td>If enabled cleanup of MS office/Word HTML will be executed automaticly on paste operations. The default value of this option is false. Note: This option is currently only available for MSIE. </td>
   </tr>
   <tr>
     <td><strong>[cleanup_on_startup]</strong></td>
@@ -689,6 +689,15 @@ callback in the theme.<br>
 <br>
 <strong>Returns:</strong> None.
 <hr noshade>
+<strong>Syntax:</strong> tinyMCE.getEditorInstance(editor_id);<br>
+<br>
+<strong>Description: </strong>This method returns a editor instance by editor id. <br>
+<br>
+<strong>Parameters:<br>
+</strong>editor_id - Editor instance to retrive. <br>
+<br>
+<strong>Returns:</strong> TinyMCE Editor instance (TinyMCEControl).
+<hr noshade>
 <strong>Syntax:</strong> tinyMCE.importThemeLanguagePack([theme]);<br>
 <br>
 <strong>Description: </strong>This method imports/loads theme specific language packs. This may be called from custom themes. <br>
@@ -721,6 +730,11 @@ html - HTML code to apply theme variable substitution on. <br>
 <strong>Syntax:</strong> tinyMCE.openWindow(template, [args]);<br>
 <br>
 <strong>Description: </strong>This method opens a new window by the template data assigned, it will get the width, height and html data from template parameters. The args array contains variable names to be substituted.<br>
+<br>
+There are some custom window arguments:<br>
+mce_replacevariables
+- Enables/Disables the language/variable replacement of the document HTML. Enabled by default.<br>
+mce_windowresize - Enables/Disables the auto resize feature of popupwindows. Enabled by default.<br>
 <br>
 <strong>Parameters:</strong> <br>
 template - Name/Value array with width, height, html and file keys in it. <br>

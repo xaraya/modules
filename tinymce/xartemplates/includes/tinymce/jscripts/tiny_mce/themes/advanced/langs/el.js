@@ -45,6 +45,7 @@ tinyMCELang['lang_insert_table_align_left'] = 'Αριστερά';
 tinyMCELang['lang_insert_table_align_right'] = 'Δεξιά';
 tinyMCELang['lang_insert_table_align_middle'] = 'Στο κέντρο';
 tinyMCELang['lang_insert_table_class'] = 'Κλάση';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Προκαθορισμένη';
 tinyMCELang['lang_theme_paragraph'] = 'Παράγραφος';
 tinyMCELang['lang_theme_div'] = 'Div';

@@ -45,6 +45,7 @@ tinyMCELang['lang_insert_table_align_left'] = 'Gauche';
 tinyMCELang['lang_insert_table_align_right'] = 'Droit';
 tinyMCELang['lang_insert_table_align_middle'] = 'Milieu';
 tinyMCELang['lang_insert_table_class'] = 'Classe CSS';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'D&eacute;faut';
 tinyMCELang['lang_theme_paragraph'] = 'Paragraphe';
 tinyMCELang['lang_theme_div'] = 'Div';

@@ -47,6 +47,7 @@ tinyMCELang['lang_insert_table_align_right'] = 'Jobbra';
 tinyMCELang['lang_insert_table_align_middle'] = 'K&#246;z&#233;pre';
 tinyMCELang['lang_insert_table_class'] = 'Class';
 tinyMCELang['lang_insert_table_delta_width'] = 55;
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Default';
 tinyMCELang['lang_theme_paragraph'] = 'Paragraph';
 tinyMCELang['lang_theme_div'] = 'Div';

@@ -46,6 +46,7 @@ tinyMCELang['lang_insert_table_align_left'] = '왼쪽';
 tinyMCELang['lang_insert_table_align_right'] = '오른쪽';
 tinyMCELang['lang_insert_table_align_middle'] = '가운데';
 tinyMCELang['lang_insert_table_class'] = '클래스';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = '기본값';
 tinyMCELang['lang_theme_paragraph'] = '단락';
 tinyMCELang['lang_theme_div'] = 'Div';

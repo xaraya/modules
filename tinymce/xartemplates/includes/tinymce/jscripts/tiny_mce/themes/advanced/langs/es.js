@@ -48,6 +48,7 @@ tinyMCELang['lang_insert_table_delta_width'] = 10;
 tinyMCELang['lang_insert_table_delta_height'] = 20;
 tinyMCELang['lang_insert_image_delta_height'] = 10;
 tinyMCELang['lang_insert_table_class'] = 'Class';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Default';
 tinyMCELang['lang_theme_paragraph'] = 'Paragraph';
 tinyMCELang['lang_theme_div'] = 'Div';

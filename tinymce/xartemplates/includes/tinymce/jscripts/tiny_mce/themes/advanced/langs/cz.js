@@ -45,6 +45,7 @@ tinyMCELang['lang_insert_table_align_left'] = 'Vlevo';
 tinyMCELang['lang_insert_table_align_right'] = 'Vpravo';
 tinyMCELang['lang_insert_table_align_middle'] = 'Na st&#248;ed';
 tinyMCELang['lang_insert_table_class'] = 'Class';
+tinyMCELang['lang_theme_font_size'] = 'Font size';
 tinyMCELang['lang_theme_fontdefault'] = 'Default';
 tinyMCELang['lang_theme_paragraph'] = 'Paragraph';
 tinyMCELang['lang_theme_div'] = 'Div';
