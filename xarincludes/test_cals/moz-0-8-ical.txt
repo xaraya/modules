@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//innerjoin.org//NONSGML Innerjoin Events Publisher V1.0//EN
+BEGIN:VEVENT
+UID:20021012-8560@innerjoin.org
+DTSTART;VALUE=DATE:20020923
+DTSTAMP;VALUE=DATE:20020630
+URL:
+ http://www.somewhere.net/sometestpage.html
+SUMMARY:
+ some test summary
+DESCRIPTION:
+ some test description
+END:VEVENT
+END:VCALENDER
