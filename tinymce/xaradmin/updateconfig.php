@@ -100,7 +100,7 @@ function tinymce_admin_updateconfig()
    
     //use the image browser? Check configuration
    $useibrowser=xarModGetVar('tinymce','useibrowser');
-    if ($useibrowser == 1) {
+    if ($useibrowser == 1) { //autoset
         //theme
         xarModSetVar('tinymce', 'tinytheme', 'advanced');
         //plugins
@@ -108,7 +108,7 @@ function tinymce_admin_updateconfig()
         if (trim($currentplugs)=='')  {
              $currentplugs= 'ibrowser';
         }elseif (strstr($currentplugs,'ibrowser')==false) {
-             $currentplugs=$currentplugs.',ibrowser';
+             $currentplugs='ibrowser,'.$currentplugs;
         }
         xarModSetVar('tinymce','tinyplugins', $currentplugs);
 
@@ -117,7 +117,7 @@ function tinymce_admin_updateconfig()
         if (trim($currentremove)=='') {
              $currentremove= 'image';
         }elseif (strstr($currentremove,'image')==false) {
-             $currentremove=$currentremove.',image';
+             $currentremove='image,'.$currentremove;
         }
         xarModSetVar('tinymce', 'tinybuttonsremove', $currentremove);
        //add ibrowser button
@@ -125,7 +125,7 @@ function tinymce_admin_updateconfig()
         if (trim($currentbutton2)=='') {
              $currentbutton2= 'ibrowser';
         }elseif (strstr($currentbutton2,'ibrowser')==false) {
-             $currentbutton2=$currentbutton2.',ibrowser';
+             $currentbutton2='ibrowser,'.$currentbutton2;
         }
          xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
 
@@ -135,7 +135,7 @@ function tinymce_admin_updateconfig()
         //remove plugin
         $currentplugs = xarModGetVar('tinymce', 'tinyplugins');
         if ((trim($currentplugs)<>'') && (strstr($currentplugs,'ibrowser')==true))  {
-             $currentplugs= str_replace(array(',ibrowser','ibrowser','ibrowser,'),'',$currentplugs);
+             $currentplugs= str_replace(array(',ibrowser','ibrowser,','ibrowser'),'',$currentplugs);
         }
         xarModSetVar('tinymce','tinyplugins', $currentplugs);
 
@@ -148,7 +148,7 @@ function tinymce_admin_updateconfig()
        //remove ibrowser button
          $currentbutton2=xarModGetVar('tinymce', 'tinybuttons2');
         if ((trim($currentbutton2)<>'') && (strstr($currentbutton2,'ibrowser')==true)) {
-             $currentbutton2=str_replace(array('ibrowser',',ibrowser','ibrowser,'),'',$currentbutton2);
+             $currentbutton2=str_replace(array('ibrowser,',',ibrowser','ibrowser'),'',$currentbutton2);
         }
          xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
     
