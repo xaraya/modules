@@ -12,7 +12,7 @@ function bbcode_adminapi_delete($args)
     // Argument check
     if (!isset($id)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // The user API function is called
@@ -22,7 +22,7 @@ function bbcode_adminapi_delete($args)
                           array('id' => $id));
     if (empty($smiley)) {
         $msg = xarML('No code present');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
     // Security Check

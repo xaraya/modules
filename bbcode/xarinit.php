@@ -93,7 +93,7 @@ function bbcode_init()
                            'user',
                            'transform')) {
         $msg = xarML('Could not register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
         
     }
@@ -104,7 +104,7 @@ function bbcode_init()
                            'user',
                            'formheader')) {
         $msg = xarML('Could not register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
         
     }
@@ -115,7 +115,7 @@ function bbcode_init()
                            'user',
                            'formaction')) {
         $msg = xarML('Could not register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (!xarModRegisterHook('item',
@@ -125,7 +125,7 @@ function bbcode_init()
                            'user',
                            'formdisplay')) {
         $msg = xarML('Could not register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if (!xarModRegisterHook('item',
@@ -135,7 +135,7 @@ function bbcode_init()
                            'user',
                            'formarea')) {
         $msg = xarML('Could not register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     // Initialisation successful
@@ -160,7 +160,7 @@ function bbcode_upgrade($oldversion)
                                       'user',
                                       'formfooter')) {
                 $msg = xarML('Could not un-register hook');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
                 return;
             }
             break;
@@ -265,7 +265,7 @@ function bbcode_delete()
                              'user',
                              'transform')) {
         $msg = xarML('Could not un-register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -277,7 +277,7 @@ function bbcode_delete()
                            'user',
                            'formaction')) {
         $msg = xarML('Could not un-register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -289,7 +289,7 @@ function bbcode_delete()
                            'user',
                            'formdisplay')) {
         $msg = xarML('Could not un-register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -301,7 +301,7 @@ function bbcode_delete()
                            'user',
                            'formarea')) {
         $msg = xarML('Could not un-register hook');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     // Deletion successful

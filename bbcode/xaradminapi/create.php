@@ -17,7 +17,7 @@ function bbcode_adminapi_create($args)
     if ((!isset($tag)) ||
         (!isset($name))) {
         $msg = xarML('Invalid Parameter Count Create');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // Security Check

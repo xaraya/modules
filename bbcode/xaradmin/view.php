@@ -18,7 +18,7 @@ function bbcode_admin_view()
 
     if (empty($links)) {
         $msg = xarML('There are no custom bbcode added.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
