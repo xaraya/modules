@@ -44,6 +44,38 @@ function googlesearch_init()
     return true;
 }
 
+
+/**
+ * upgrade the googlesearch module from an old version
+ * This function can be called multiple times
+ *
+ * @returns bool
+ */
+function googlesearch_upgrade($oldversion)
+{
+    // Upgrade dependent on old version number
+    switch ($oldversion) {
+        case '1.0.0':
+          @mkdir('var/cache/google');
+          touch('var/cache/google/CACHEKEYS');
+          xarModSetVar('googlesearch', 'maxQueries', '1000');
+          xarModSetVar('googlesearch', 'queryCount', '0');
+          xarModSetVar('googlesearch', 'queryCountDay', mktime(0,0,0, date('m'), date('d'), date('Y')));
+          xarModSetVar('googlesearch', 'cacheRetrievedPages', serialize(array()));
+          xarModSetVar('googlesearch', 'cachePageIndex', '1');
+          xarModSetVar('googlesearch', 'cacheRemoteURL', 'http://');
+          xarModSetVar('googlesearch', 'cachePageFilter', '1');
+          xarModSetVar('googlesearch', 'cachePageDataFilter', '0');
+          break;
+
+        case '1.1.0':
+          // code to upgrade from 1.1.0 goes here
+          break;
+    }
+    // Update successful
+    return true;
+}
+
 /**
  * Delete the googlesearch module
  *

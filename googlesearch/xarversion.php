@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * File: $Id$
- * 
+ *
  * Xaraya Google Search
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -14,8 +14,8 @@
 */
 $modversion['name'] = 'googlesearch';
 $modversion['id'] = '809';
-$modversion['version'] = '1.0.0';
-$modversion['description'] = 'Queries Google Search terms VIA Soap';
+$modversion['version'] = '1.1.0';
+$modversion['description'] = 'Queries Google Search terms and retrieves cached pages VIA Soap';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
 $modversion['changelog'] = 'xardocs/changelog.txt';
