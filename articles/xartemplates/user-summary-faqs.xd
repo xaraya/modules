@@ -7,8 +7,11 @@
 </xar:if>
 <a class="xar-title" href="#$link#">#$title#</a>
 <xar:if condition="!empty($counter)">
-    (#$counter#
-    <xar:mlstring>Reads</xar:mlstring>)
+	<xar:if condition="$counter eq 1">
+		(#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
+	<xar:else />
+		(#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
+	</xar:if>
 </xar:if>
 <xar:if condition="!empty($notes)">
     <xar:mlstring>by</xar:mlstring> #$notes#
