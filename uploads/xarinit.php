@@ -125,7 +125,6 @@ function uploads_init()
     
     xarDefineInstance('uploads', 'File', $instances);
 
-
     xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
     xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
     xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
@@ -135,8 +134,7 @@ function uploads_init()
     /**
      * Register hooks
      */
-    if (!xarModRegisterHook('item', 'transform', 'API',
-                            'uploads', 'user', 'transformhook')) {
+    if (!xarModRegisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook');
          xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
@@ -515,6 +513,15 @@ function uploads_delete()
     xarModDelVar('uploads','file.censored-mimetypes');
     xarModDelVar('uploads','file.obfuscate-on-import');
     xarModDelVar('uploads','file.obfuscate-on-upload');
+
+
+    xarUnregisterMask('ViewUploads');
+    xarUnregisterMask('AddUploads');
+    xarUnregisterMask('EditUploads');
+    xarUnregisterMask('DeleteUploads');
+    xarUnregisterMask('AdminUploads');
+
+    xarModUnregisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook');
 
     // Get database information
     list($dbconn)   =& xarDBGetConn();
