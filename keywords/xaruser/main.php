@@ -22,6 +22,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
     xarVarFetch('tab','isset',$tab,'0', XARVAR_DONT_SET);
     
     //extract($args);
+    $displaycolumns= xarModGetVar('keywords','displaycolumns');
 
     if (empty($keyword)) {
         // get the list of keywords that are in use
@@ -42,6 +43,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
         }
       
         return array('status' => 0,
+                     'displaycolumns' => $displaycolumns,        
                      'items' => $items,
                      'tab' => $tab);
                      
@@ -107,6 +109,7 @@ if (!xarSecurityCheck('ReadKeywords')) return;
         unset($modules);
        
         return array('status' => 1,
+                     'displaycolumns' => $displaycolumns,
                      'keyword' => xarVarPrepForDisplay($keyword),
                      'items' => $items);
     }

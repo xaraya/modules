@@ -1,22 +1,45 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Module</xar:mlstring></span></div>
+     <xar:set name="totitems">count($items)</xar:set>
+     <xar:set name="totitemspercol">round($totitems/$displaycolumns)</xar:set>
+     <xar:set name="divwidth">round(95/$displaycolumns)</xar:set>
+
 <xar:if condition="empty($status)">
 
 <xar:comment>
 	Nav Tabs moved to the includes folder
 </xar:comment>
 <xar:template file="navtabs" type="module" />
-	
-	<div style="clear: both; padding-top: 10px;"> 
+	<div style="clear: both; padding-top: 10px;">
     <p></p>
     <xar:if condition="empty($items)">
-    <p><h4><xar:mlstring>No keywords found !</xar:mlstring></h4></p>
+        <p><h4><xar:mlstring>No keywords found !</xar:mlstring></h4></p>
     <xar:else />
-    <ul>
-    <xar:foreach in="$items" value="$item">
-        <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#) </li>
-    </xar:foreach>
-    </ul>
+     <div style="clear:both;">
+        <xar:set name="i">1</xar:set>
+        <xar:set name="j">0</xar:set>
+        <div style="float:left; width: #$divwidth#%; text-align: left;">
+            <ul>
+            <xar:foreach in="$items" value="$item">
+                <xar:set name="j">++$j</xar:set>
+                <xar:if condition="$i++ lt $totitemspercol">
+                    <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)</li>
+                <xar:elseif condition="($j eq $totitems)" />
+                    <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)</li>
+                        <xar:set name="i">1</xar:set>
+                <xar:else />
+                    <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)</li>
+                    </ul></div>
+                    <div style="float:left; width: #$divwidth#%; text-align: left;">
+                    <ul>
+                        <xar:set name="i">1</xar:set>
+               </xar:if>
+
+            </xar:foreach>
+                        </ul>
+                    </div>
+        </div>
+    </div>
     </xar:if>
     </div>
 <xar:elseif condition="$status eq 1 and !empty($keyword)" />

@@ -20,6 +20,18 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
+         <span class="help" title="#xarML('Number of columns for keyword display.')#"><label for="displaycolumns"><xar:mlstring>Columns for keyword display :</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+          <xar:if condition="!empty($displaycolumns)">
+             <input type="text" name="displaycolumns" id="delimiters" value="#$displaycolumns#" size="1" />
+          <xar:else/>
+             <input type="text" name="displaycolumns" id="displaycolumns" value="" size="1" />
+           </xar:if>
+    </span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
         <span class="help" title="#xarML('Define keywords delimiters list. Not use space if you want to use multi words keyword.')#"><label for="delimiters"><xar:mlstring>Valid Delimiter List :</xar:mlstring></label></span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">

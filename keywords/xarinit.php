@@ -113,6 +113,7 @@ function keywords_init()
     if (!$result) return;
 
     xarModSetVar('keywords', 'SupportShortURLs', 1);
+    xarModSetVar('keywords', 'displaycolumns', 2);    
     xarModSetVar('keywords', 'delimiters', ';,');
     xarModSetVar('keywords', 'restricted', 0);
     xarModSetVar('keywords', 'useitemtype', 0);
