@@ -1,0 +1,66 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Icecast</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <em><xar:mlstring>This icecast module interacts with the icecast streaming audio server.</xar:mlstring></em>
+            <br />
+            <xar:mlstring>Icecast is licensed under the GPL and can be found at <a href="http://icecast.org/">icecast.org</a></xar:mlstring>
+            <br />
+            <br />
+            <xar:mlstring>It is currently does the following:</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>nothing</xar:mlstring></li>
+            </ul>
+            <br />
+            <xar:mlstring>TODO</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>provide a script for the icecast server to use to determine next playlist item</xar:mlstring></li>
+                <li><xar:mlstring>parse icecast admin options.</xar:mlstring></li>
+                <li><xar:mlstring>parse icecast status</xar:mlstring></li>
+                <li><xar:mlstring>manage icecast server options</xar:mlstring></li>
+                <li><xar:mlstring>provide user interface to icecast</xar:mlstring></li>
+                <li><xar:mlstring>authenticate against icecast</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>TODO</xar:mlstring>
+
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring> TODO: playlist </xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>none</xar:mlstring></li>
+
+            </ul>
+        </div>
+
+    </div>
+</div>
