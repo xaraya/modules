@@ -62,3 +62,13 @@
       <input type="text" name="maxitems" id="maxitems#$blockid#" size="3" maxlength="3" value="#$maxitems#" />
     </span>
     </div>
+
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+      <span class="help" title="#xarML('Number of seconds before refreshing the feed.')#"><label for="refresh#$blockid#"><xar:mlstring>Refresh Rate</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+      <input type="text" name="refresh" id="refresh#$blockid#" size="5" maxlength="5" value="#$refresh#" />
+    </span>
+    </div>
+

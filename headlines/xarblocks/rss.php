@@ -24,7 +24,12 @@ function headlines_rssblock_init()
         'maxitems' => 5,
         'showdescriptions' => false,
         'show_chantitle' => 1,
-        'show_chandesc' => 1
+        'show_chandesc' => 1,
+        'refresh' => 3600,
+        'nocache' => 0, // cache by default
+        'pageshared' => 1, // don't share across pages here
+        'usershared' => 1, // share across group members
+        'cacheexpire' => 3601 // right after the refresh rate :-)
     );
 }
 
@@ -90,6 +95,10 @@ function headlines_rssblock_display($blockinfo)
     // Require the feedParser class
     require_once('modules/base/xarclass/feedParser.php');
 
+    if (empty($vars['refresh'])) {
+        $vars['refresh'] = 3600;
+    }
+
     // Get the feed file (from cache or from the remote site)
     $feeddata = xarModAPIFunc(
         'base', 'user', 'getfile',
@@ -97,7 +106,7 @@ function headlines_rssblock_display($blockinfo)
             'url' => $feedfile,
             'cached' => true,
             'cachedir' => 'cache/rss',
-            'refresh' => 3600,
+            'refresh' => $vars['refresh'],
             'extension' => '.xml',
             'superrors'=> TRUE
         )
@@ -215,6 +224,9 @@ function headlines_rssblock_modify($blockinfo)
     if (!isset($vars['maxitems'])) {
         $vars['maxitems'] = 5;
     }
+    if (!isset($vars['refresh'])) {
+        $vars['refresh'] = 3600;
+    }
 
     $vars['blockid'] = $blockinfo['bid'];
 
@@ -234,6 +246,7 @@ function headlines_rssblock_insert($blockinfo)
     if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('show_chantitle', 'checkbox', $vars['show_chantitle'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('show_chandesc', 'checkbox', $vars['show_chandesc'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('refresh', 'int:0', $vars['refresh'], 3600, XARVAR_NOT_REQUIRED)) {return;}
         
     $blockinfo['content'] = $vars;
     return $blockinfo;
