@@ -2,9 +2,6 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <xar:set name="extlisturl">xarModURL('release','user','viewids')</xar:set>
 <xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
-<xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
-<xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
-<xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
 <div class="xar-mod-body">
 <h2><xar:mlstring>Extension Release Details</xar:mlstring></h2>
 
@@ -131,11 +128,6 @@
     <a href="#$extlisturl#"><xar:mlstring>Extension List</xar:mlstring></a> ::
     <a href="#$extreleaseurl#"><xar:mlstring>Recent Releases</xar:mlstring></a>
 <span>
-<span style="float: left; width: 100%; margin-top:10px; margin-bottom:20px; text-align: center;">
-<a href="#$extdocsurldev#"><xar:mlstring>API Guides</xar:mlstring></a> ::
-<a href="#$extdocsurladm#"><xar:mlstring>Module User Guides</xar:mlstring></a>  ::
-<a href="#$extdocsurlthm#"><xar:mlstring>Theme Guides</xar:mlstring></a> 
-    </span>
 </div>
 <div style="clear: both; width:98%; ">
        #$hooks#
