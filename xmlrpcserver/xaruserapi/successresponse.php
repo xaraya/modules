@@ -13,17 +13,12 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcserver_userapi_successresponse() 
+function xmlrpcserver_userapi_successresponse($args) 
 {
-    $tplData = array();
+    extract($args);
+    $data = array(); $params = array();
+    $data['params'][] = array('boolean', 1);
 
-    // Disable inserting template comments if set
-    $themecomments=xarModGetVar('themes','ShowTemplates');
-    if($themecomments != 0) xarModSetVar('themes','ShowTemplates',0);
-    
-    $response = xarTplFile('modules/xmlrpcserver/xartemplates/xmlrpc-successresponse.xd',array());
-    if($themecomments !=0) xarModSetVar('themes','ShowTemplates',$themecomments);
-
-    return $response;
+    return xarModApiFunc('xmlrpcserver','user','createresponse', $data);
 }
 ?>
