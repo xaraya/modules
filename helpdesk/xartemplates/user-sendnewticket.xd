@@ -12,7 +12,7 @@
 
 <p>
    <xar:ml>
-       <xar:mlstring>Your new ticket has been submitted! Please reference ticket ## #(1) when referencing this issue.</xar:mlstring>
+       <xar:mlstring>Your new ticket has been submitted! Please reference ticket number #(1) when referencing this issue.</xar:mlstring>
        <xar:mlvar>#$return_val#</xar:mlvar>
    </xar:ml>
 </p>
