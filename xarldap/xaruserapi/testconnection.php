@@ -34,7 +34,7 @@ function xarldap_userapi_testconnection()
     $result = false;
     
     // Create new LDAP object
-    $ldap = new xarLDAP();
+    $ldap = new xarldap();
 
     // Make sure LDAP extension exists
     if (!$ldap->exists())

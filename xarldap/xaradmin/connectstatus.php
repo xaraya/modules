@@ -43,7 +43,7 @@ function xarldap_admin_connectstatus()
     include_once 'modules/xarldap/xarldap.php';
 
     // Create new LDAP object
-    $ldap = new xarLDAP();
+    $ldap = new xarldap();
 
     // Get server
     $ldap->get_parameters(); 

@@ -27,7 +27,7 @@ function xarldap_admin_modifyconfig()
     
     // Create LDAP object
     include_once 'modules/xarldap/xarldap.php';
-    $ldap = new xarLDAP();
+    $ldap = new xarldap();
 
     // Set the LDAP object parameters from module variables
     $ldap->get_parameters(); 

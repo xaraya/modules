@@ -636,4 +636,6 @@ class xarldap {
         return ($ntext);
     }
 
-}
+} // end of class
+
+?>

@@ -60,7 +60,7 @@ function xarldap_admin_updateconfig()
 
     // Create a new ldap object
     include_once 'modules/xarldap/xarldap.php';
-    $ldap = new xarLDAP();
+    $ldap = new xarldap();
 
     // update the data
     if(!$searchuserdn){

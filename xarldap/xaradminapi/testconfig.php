@@ -29,7 +29,7 @@ function xarldap_adminapi_testconfig()
 {
     // Create LDAP object
     include_once 'modules/xarldap/xarldap.php';
-    $ldap = new xarLDAP();
+    $ldap = new xarldap();
 
     // Make sure LDAP extension exists
     if (!$ldap->exists())

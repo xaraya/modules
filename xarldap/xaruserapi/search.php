@@ -39,7 +39,7 @@ function xarldap_userapi_search($args)
     include_once 'modules/xarldap/xarldap.php';
 
     // Create new LDAP object
-    $ldap = new xarLDAP();
+    $ldap = new xarldap();
 
     switch ($search) {
         case 'user':
