@@ -176,7 +176,7 @@
               </tr>
               <tr>
                 <td style="text-align:left; padding:.25em;">
-                  <label for="special_chars_1"><xar:mlstring>Special character (Umlauts) replacement for sort columns</xar:mlstring></label>
+                  <label for="special_chars_1"><xar:mlstring>Special character (<acronym title="Must set Base->Languages and Locales->Default Locale to en_US.iso-8859-1 for this to work. Otherwise simply remove both entries.">Umlauts</acronym>) replacement for sort columns</xar:mlstring></label>
                 </td>
                 <td style="text-align:left; padding:.25em;">
                   <input type="text" name="special_chars_1" id="special_chars_1" value="#$special_chars_1#" size="12" maxlength="24" tabindex="13" />
@@ -209,7 +209,7 @@
               </tr>
               <tr>
                 <td style="text-align:left; padding:.25em;">
-                  <label for="display_prefix"><xar:mlstring>Display prefix in search resutls?</xar:mlstring></label>
+                  <label for="display_prefix"><xar:mlstring>Display prefix in search results?</xar:mlstring></label>
                 </td>
                 <td style="text-align:left; padding:.25em;">
                 <xar:if condition="$display_prefix">
