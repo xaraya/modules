@@ -49,7 +49,7 @@
 		<span style="text-align: left;">
 				<label for="usernote"><xar:mlstring>Your Added Notes</xar:mlstring></label>:
 		<br />
-				<textarea name="usernote" id="usernote" rows="10" cols="40" /></textarea>
+				<textarea name="usernote" id="usernote" rows="10" cols="40"></textarea>
 		</span><br /><br />
 		</xar:if>				 
 	<span style="text-align: left;"><input type="submit" value="#$submit#" /></span>
