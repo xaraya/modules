@@ -8,39 +8,43 @@
 <xar:if condition="!empty($status)">
     #$status#</b>
 </xar:if>
-
-<table border="0" width="100%" cellpadding="5" cellspacing="0" align="center">
-    <tr>
-        <th>#$linkme1#</th></th>
-    </tr>
-     <tr align="center">
-	    <td><br /><br />
-		#$linkme2#
+<div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+        <div class="xar-mod-head"><span class="xar-mod-title">
+            #$linkme1# </span>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+	    <br /><br />
+		  #$linkme2#
 		<br /><br />
-		#$linkme3#<br /><br />
-	    </td>
-	</tr>
+  		  #$linkme3#<br /><br />
+	    </div>
+
     <!-- Loop over all the items given by the function. Since $data['items']
          is preset to an empty array, we don't need to use an if/else
          structure like we do in user-display.xd -->
 
     <xar:foreach in="$items" value="$item" key="$key">
-        <tr align="center"><td>
-        <!-- we only show a link if the item link variable is not empty -->
-           <xar:if condition="empty($item)">
-           <xar:else />
+          <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+             <!-- we only show a link if the item link variable is not empty -->
+             <xar:if condition="empty($item)">
+             <xar:else />
                <p align="center">#$item#</p>
                <p align="center"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border='0' valign='middle' ></p>
                <p align="center"><textarea rows="6" name="L1" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank"><img alt="#$alttxt#" src="#$imgpath#/#$item#" border='0' valign='middle' ></a><!-- end link --></textarea></p>
-          </xar:if><hr />
-          </td></tr>
+            </xar:if><hr />
+         </div>
     </xar:foreach>
-      <tr><td align="center">#$textlink#<br><br>
-      <a href="#$siteurl#" target="_blank">#$go# #$sitename#</a></center><br>
-      <p align="center"><textarea rows="6" name="L2" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><!-- end link --></textarea></p>
-	 <hr /></td>
-	 </tr>
-</table>
+         <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+             #$textlink#<br><br>
+         </div>
+         <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+           <a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><br />
+            <p align="center">
+            <textarea rows="6" name="L2" cols="60"><!-- begin link --><a href="#$siteurl#" target="_blank">#$go# #$sitename#</a><!-- end link --></textarea></p>
+	        <hr />
+	      </div>
+
+</div>
 <br />
 <!-- add the pager here -->
 #$pager#
