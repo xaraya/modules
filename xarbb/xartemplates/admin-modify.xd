@@ -10,16 +10,14 @@
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
 	<h2><xar:mlstring>Modify Existing Forum</xar:mlstring></h2>
+    <div style="clear: both; padding-top: 10px; width:98%;">
 	<xar:if condition="!empty($warning)">
-		#$warning#
-		<br /><br />
+		<p>#$warning#</p>
 	</xar:if>
+	<form method="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
 
-	<form method="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" />
-
-	<div style="clear: both; padding-top: 10px;">
+    <div style="clear: both; padding-top: 10px; width:98%;">
 	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 	<input type="hidden" name="fid" id="fid" value="#$fid#" />
 	<span style="float: left; width: 20%; text-align: right;">
@@ -30,7 +28,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px;width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The description of the forum that is being created.')#"><label for="fname"><xar:mlstring>Forum Description</xar:mlstring></label>:</span>
 	</span>
@@ -39,7 +37,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The status of the forum that is being created.')#"><label for="fstatus"><xar:mlstring>Forum Status</xar:mlstring></label>:</span>
 	</span>
@@ -58,7 +56,7 @@
 
 	#$hooks#
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The number of topics to show per page in this forum.')#"><label for="topicsperpage"><xar:mlstring>Topics per page</xar:mlstring></label>:</span>
 	</span>
@@ -67,7 +65,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The number of topics to show per page in this forum.')#"><label for="postsperpage"><xar:mlstring>Posts per page</xar:mlstring></label>:</span>
 	</span>
@@ -76,7 +74,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('Allow HTML in this forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
 	</span>
@@ -89,7 +87,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('Show category trails')#"><label for="showcats"><xar:mlstring>Show Categories</xar:mlstring></label>:</span>
 	</span>
@@ -102,7 +100,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('Link this forum to nntp.')#"><label for="allowhtml"><xar:mlstring>Link to NNTP</xar:mlstring></label>:</span>
 	</span>
@@ -115,7 +113,7 @@
 	</span>
 	</div>
 <xar:if condition="$linknntp">
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('NNTP Server to link')#"><label for="nntpserver"><xar:mlstring>NNTP Server</xar:mlstring></label>:</span>
 	</span>
@@ -124,7 +122,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The port of the NNTP server that you are linking')#"><label for="nntpport"><xar:mlstring>NNTP Port</xar:mlstring></label>:</span>
 	</span>
@@ -133,7 +131,7 @@
 	</span>
 	</div>
 
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The group on the server you are linking')#"><label for="nntpgroup"><xar:mlstring>NNTP Group</xar:mlstring></label>:</span>
 	</span>
@@ -142,7 +140,7 @@
 	</span>
 	</div>
 </xar:if>
-	<div style="clear: both; padding-top: 10px;">
+	<div style="clear: both; padding-top: 10px; width:98%;">
 		<span style="float: left; width: 30%; text-align: right;">
 			<input type="submit" value="#$createlabel#" />
 		</span>

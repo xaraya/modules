@@ -3,7 +3,7 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>View Forums</xar:mlstring></h2>
-<table width="100%" border="0" cellspacing="0" cellpadding="4">
+<table width="98%%" border="0" cellpadding="4">
     <tr>
         <th>
 			<xar:mlstring>Forum Name</xar:mlstring>

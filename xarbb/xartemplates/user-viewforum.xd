@@ -142,8 +142,8 @@
 			<span>
 				#$loop:item['hitcount']#
 			</span>
-		</td>
-		<td class="xar-accent" align="center" valign="middle" nowrap="nowrap" >
+		</td> 
+		<td class="xar-norm" align="center" valign="middle" nowrap="nowrap" >
 			<span>
                 #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
 				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">

@@ -128,8 +128,8 @@
 						<span>
 						<xar:mlstring>
 							Posted
-						</xar:mlstring>: #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $tftime)# 
-							<span class="xar-title">&nbsp; &nbsp; &nbsp;
+						</xar:mlstring>: #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $tftime)#
+       <span class="xar-title">&nbsp; &nbsp; &nbsp;
 								<xar:mlstring>
 									Subject
 								</xar:mlstring>:
@@ -495,7 +495,7 @@
 			</xar:sec>
 			<td width="20" align="center">
 				<a href="#xarModUrl('xarbb', 'user', 'movetopic', array('tid' => $tid))#">
-					<img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Lock Topic')#" />
+					<img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Move Topic')#" />
 				</a>
 			</td>
 		</tr>
