@@ -1,8 +1,8 @@
 <?php 
 $modversion['name'] = 'uploads';
 $modversion['id'] = '666';
-$modversion['version'] = '0.04';
-$modversion['description'] = 'Upload Handler';
+$modversion['version'] = '0.10';
+$modversion['description'] = 'Upload/Download File Handler';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
 $modversion['changelog'] = 'docs/changelog.txt';

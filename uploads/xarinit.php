@@ -128,7 +128,7 @@ function uploads_init()
 /**
  * upgrade the articles module from an old version
  */
-function articles_upgrade($oldversion)
+function uploads_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
@@ -162,6 +162,30 @@ function articles_upgrade($oldversion)
             if (!$result) return;
             
             break;
+		case .04:
+		case .05:
+		default:
+			//Add mimetype column to DB
+//			ALTER TABLE `xar_uploads` ADD `ulmime` VARCHAR( 128 ) DEFAULT 'application/octet-stream' NOT NULL ;
+
+            // Get database information
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $linkagetable = $xartable['uploads'];
+
+            xarDBLoadTableMaintenanceAPI();
+
+            // add the xar_itemtype column
+            $query = xarDBAlterTable($linkagetable,
+                                     array('command' => 'add',
+                                           'field' => 'xar_ulmime',
+                                           'type' => 'varchar',
+										   'size' => 128,
+                                           'null' => false,
+                                           'default' => 'application/octet-stream'));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
     }
     return true;
 }
