@@ -4,7 +4,8 @@
  */
 function netquery_user_main()
 { 
-    $data = xarModAPIFunc('netquery', 'user', 'mainapi'); 
+    $data = xarModAPIFunc('netquery', 'user', 'mainapi');
+    $clrlink = $data['clrlink'];
     if ($data['querytype'] == 'none')
     {
         return $data;
@@ -16,7 +17,7 @@ function netquery_user_main()
         $target = $data['domain'].$data['whois_ext'];
         $link = xarModAPIFunc('netquery', 'user', 'getlink', array('whois_ext' => $data['whois_ext']));
         $whois_server = $link['whois_server'];
-        $msg = "<p><b>Whois Results:</b><blockquote>";
+        $msg = ('<p><b>Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (! $sock = fsockopen($whois_server, 43, $num, $error, 10)){
             unset($sock);
             $msg .= "Timed-out connecting to $whois_server (port 43)";
@@ -59,8 +60,8 @@ function netquery_user_main()
         $buffer = '';
         $nextServer = '';
         $target = $data['addr'];
-        $server = "whois.arin.net";
-        $msg = "<p><b>IP Whois Results:</b><blockquote>";
+        $whois_server = "whois.arin.net";
+        $msg = ('<p><b>IP Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (!$target = gethostbyname($target)) {
             $msg .= "IP Whois requires an IP address.";
         } else {
@@ -105,7 +106,7 @@ function netquery_user_main()
     else if ($data['querytype'] == 'lookup')
     {
         $target = $data['host'];
-        $msg = ('<p><b>DNS Lookup Results:</b><blockquote>');
+        $msg = ('<p><b>DNS Lookup Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         $msg .= $target.' resolved to ';
         if (eregi("[a-zA-Z]", $target))
             $msg .= gethostbyname($target);
@@ -117,7 +118,7 @@ function netquery_user_main()
     else if ($data['querytype'] == 'dig')
     {
         $target = $data['host'];
-        $msg = ('<p><b>DNS Query (Dig) Results:</b><blockquote>');
+        $msg = ('<p><b>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (eregi("[a-zA-Z]", $target))
             $ntarget = gethostbyname($target);
         else
@@ -136,7 +137,7 @@ function netquery_user_main()
     {
         $target = $data['server'];
         $tport = $data['portnum'];
-        $msg = ('<p><b>Checking Port '.$tport.'</b>...<blockquote>');
+        $msg = ('<p><b>Port '.$tport.' Check Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (! $sock = fsockopen($target, $tport, $num, $error, 5))
             $msg .= 'Port '.$tport.' does not appear to be open.';
         else{
@@ -152,7 +153,7 @@ function netquery_user_main()
         $target = $data['host'];
         $tpoints = $data['maxp'];
         $pexec = $data['pingexec'];
-        $msg = ('<p><b>Ping Results:</b><blockquote>');
+        $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if ($pexec['winsys']) {$PN=$pexec['local'].' -n '.$tpoints.' '.$target;}
         else {$PN=$pexec['local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
         exec($PN, $response, $rval);
@@ -173,7 +174,7 @@ function netquery_user_main()
         $rt = '';
         $target = $data['host'];
         $texec = $data['traceexec'];
-        $msg = ('<p><b>Traceroute Results:</b><blockquote>');
+        $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if ($texec['winsys']) {$TR=$texec['local'].' '.$target;}
         else {$TR=$texec['local'].' '.$target;}
         exec($TR, $response, $rval);
@@ -216,7 +217,7 @@ function netquery_user_main()
         {
             $lgpassword = $lgdefault['password'];
         }
-        $msg = ('<p><b>Looking Glass Results</b>...<blockquote>');
+        $msg = ('<p><b>Looking Glass Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (!$lghandler)
         {
             $msg .= 'This '.$lgrequest['request'].' request is not permitted for '.$lgrouter['router'].':'.$lgport.' by administrator.';
@@ -231,6 +232,7 @@ function netquery_user_main()
         }
         else
         {
+            $readbuf = '';
             socket_set_timeout ($lglink, 5);
             if (!empty ($lgusername)) fputs ($lglink, "{$lgusername}\n");
             if (!empty ($lgpassword))
@@ -240,7 +242,7 @@ function netquery_user_main()
             if (empty ($lgparam) && $lgargc > 0) sleep (2);
             fputs ($lglink, "quit\n");
             while (!feof ($lglink)) $readbuf = $readbuf . fgets ($lglink, 256);
-            $start = strpos ($readbuf, $command);
+            $start = strpos ($readbuf, $lgcommand);
             $len = strpos ($readbuf, "quit") - $start;
             while ($readbuf[$start + $len] != "\n") $len--;
             $msg .= nl2br(substr($readbuf, $start, $len));

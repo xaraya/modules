@@ -49,11 +49,11 @@ associations and to specify both default and router-specific settings for lookin
 
 <p>Netquery has been designed and developed with site administrators, hosting service providers and
 other technically inclined users clearly in mind.  In particular, every effort has been made to keep
-adminstrative tasks such as module installation and configuration as easy and intuitive as possible
+administrative tasks such as module installation and configuration as easy and intuitive as possible
 taking into account the wide range of hosted sites and dedicated server environments in which it may
 be used.</p>
 
-<p>Netquery can certainly provide site adminstrators and technicians with readily available and highly
+<p>Netquery can certainly provide site administrators and technicians with readily available and highly
 useful information about their ISP performance and their Internet environment generally. But it's
 <b>not</b> just for "network nerds".  Ordinary users of your web site can also benefit from access to
 Netquery's functions and features. In particular, perhaps, the ability to view their own Internet
@@ -71,7 +71,7 @@ all those questions and more.  Read on.<p>
 
 <p>Getting started with Netquery is about as easy as anything could possibly be.  Just install it and
 take a quick look at its pre-set admin options to see if you want to change any of them.  Depending
-on which package you downloaded, options will be pre-configured for UNIX/Linux sytems (the .tar.gz
+on which package you downloaded, options will be pre-configured for UNIX/Linux systems (the .tar.gz
 download) or for Microsoft Windows systems (the .zip download).  Of course, either package can be
 reconfigured to suit your needs and preferences.</p>
 
@@ -122,7 +122,7 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">Enable Local ICMP Ping</td>
-        <td class="item-desc">Ping is limited to a maximum of 10 counts. (Excutable entry may include full path.)</td>
+        <td class="item-desc">Ping is limited to a maximum of 10 counts. (Executable entry may include full path.)</td>
     </tr>
     <tr>
         <td class="item">Enable Remote ICMP Ping</td>
@@ -130,7 +130,7 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">Enable Local Traceroute</td>
-        <td class="item-desc">Traceroute from your server to specified target. (Excutable entry may include full path.)</td>
+        <td class="item-desc">Traceroute from your server to specified target. (Executable entry may include full path.)</td>
     </tr>
     <tr>
         <td class="item">Enable Remote Traceroute</td>
@@ -202,7 +202,7 @@ populating the looking glass data table you can find lists of routers at
 <p>Because Netquery's looking glass configuration provides both default and individual router settings
 it is important to understand their order of operational precedence.  For entered items (username,
 password, daemon port, daemon password) individual daemon passwords take precedence over the user
-password and individual router entries take precedence over the default configuaration entries.
+password and individual router entries take precedence over the default configuration entries.
 (For example, leaving a router's "bgpd port" entry blank (or set to zero) means that the default "bgpd
 port" entry will be used.) For enabled/disabled items, disabling the main configuration item disables
 it for all routers. (For example, if "Use bgpd" has been enabled (checked) in the main configuration
@@ -224,9 +224,9 @@ registrars are entities which have been allocated the authority to register name
 subset of domain names. Most Domain name registrars provide a "whois" function, where you can ask
 "whois domain.name" and they will tell you who has registered that domain name.</p>
 
-<p>Netquery`s whois lookup feature provides to the user the same information that has been provided
+<p>Netquery's whois lookup feature provides to the user the same information that has been provided
 by the owner of the site domain in question to the top level domain (TLD) registrar. To use it, simply
-enter the name of the site domain (without any "www." or other prefix) and select the TLD (e.g, ".com")
+enter the name of the site domain (without any "www." or other prefix) and select the TLD (e.g., ".com")
 from the available drop-down listing.</p>
 
 <p>The drop-down TLD listing and associated whois lookup server data is fully under the control of
@@ -251,11 +251,11 @@ an IP address can be hard to remember. This is why there is DNS. Instead of havi
 216.226.138.60 we only have to remember www.simplehost.com.</p>
 
 <p>The domain registrar from whom a domain name is purchased will assign two IP addresses to that domain
-name. These IP addresses are the primary and secondary nameservers which are responsible for propagating,
+name. These IP addresses are the primary and secondary name servers which are responsible for propagating,
 on the Internet, that domain name and its associated IP address.</p>
 
 <p>Netquery can provide users with both forward and reverse DNS resolutions. If the user enters a domain
-name, it will be reslved to its IP address.  If the user enters an IP address, it will be resolved to its
+name, it will be resolved to its IP address.  If the user enters an IP address, it will be resolved to its
 domain name, if one has been allocated and propagated for that IP address.
 <p>More info:
 <a href="http://www.phpwebhosting.biz/faq_dns.php" target="_blank">phpweb</a>
@@ -275,7 +275,7 @@ as the DNS lookup feature, but uses the UNIX/Linux command set to execute the ac
 <p>Port checks can be an important part of securing your computing system, especially for those who
 operate with "always connected" (cable, ADSL, etc) Internet services. To use this Netquery feature,
 simply enter the host address and port number you wish to check and the results will tell you whether
-it is open and accespting connections.
+it is open and accepting connections.
 <p>More info:
 <a href="http://www.iana.org/assignments/port-numbers" target="_blank">IANA</a>
 <a href="http://advice.networkice.com/advice/Exploits/Ports/default.htm" target="_blank">UDP</a>
@@ -318,7 +318,7 @@ between when the probe was sent from traceroute and the time the response arrive
 <a href="http://www.visualware.com/whitepapers/tutorials/tracert.html" target="_blank">visualware</a></p>
 
 <h3><a name="port">Looking Glass</a></h3>
-<p>Looking glass extends Netquery's scope by providing capabilites for interrogating routers (Cisco,
+<p>Looking glass extends Netquery's scope by providing capabilities for interrogating routers (Cisco,
 Zebra, Juniper) used in wide area networks that comprise the Internet. It is intended for advanced
 users who have an in-depth understanding of network topology and router functions. The looking glass
 feature in Netquery 1.1 contains the following commands for both IPv4 and IPv6: OSPF neighborship,
@@ -331,8 +331,8 @@ BGP neighborship, OSPF RT, BGP RR, Zebra Any RR, and Zebra Interface Info.</p>
 
 <h2><a name="datetime">Appendix 1</a>: Log Datetime Formatting</h2>
 
-<p>The following table lists recognised characters for use in the datetime format configuration string.
-Any other unrecognised characters included in the string are recorded as is.</p>
+<p>The following table lists recognized characters for use in the datetime format configuration string.
+Any other unrecognized characters included in the string are recorded as is.</p>
 
 <TABLE
 CLASS="main"

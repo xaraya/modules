@@ -52,6 +52,9 @@ function netquery_userapi_mainapi()
     $data['lgrequestlabel'] = xarVarPrepForDisplay(xarML('Looking Glass Query'));
     $data['lgparamlabel'] = xarVarPrepForDisplay(xarML('Query Parameter'));
     $data['lgrouterlabel'] = xarVarPrepForDisplay(xarML('Router'));
+    $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main'),
+                             'title' => xarML('Clear results and return'),
+                             'label' => xarML('Clear'));
     $data['hlplink'] = Array('url' => xarML('modules/netquery/xardocs/manual.html#using'),
                              'title' => xarML('Netquery online user manual'),
                              'label' => xarML('Online Manual'));

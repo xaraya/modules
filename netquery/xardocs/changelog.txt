@@ -19,5 +19,5 @@ Version 1.1 2004-10-10
    - added Looking Glass router IPv4 and IPv6 interrogation
    - added config options for log datetime record format
    - added Cancel buttons to configuration templates
-   - added user help sections and <a name> links to manual
+   - added user help sections and section links to manual
    - "gold" release uploaded to Xaraya (courtesy of jojodee)
