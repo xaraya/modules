@@ -106,7 +106,7 @@ define('RELEASE', 4);
 // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!($modlist = xarModGetList())) return;
+    if (!($modlist = xarModAPIFunc('modules', 'admin', 'GetList'))) return;
 
     $tplData = translations_create_choose_a_module_druidbar(CHOOSE);
     $tplData['modlist'] = $modlist;
