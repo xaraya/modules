@@ -93,12 +93,13 @@ function newsgroups_user_post()
             if (!xarVarFetch('body','str::',$body)) return;
             if (!xarVarFetch('reference','str::',$reference, '',XARVAR_NOT_REQUIRED)) return;
 
+/* those are for filtering on output, not on input - news doesn't mind <> stuff
             $subject    = xarVarPrepForDisplay($subject);
             $email      = xarVarPrepForDisplay($email);
             $name       = xarVarPrepForDisplay($name);
             //$body       = xarVarPrepForDisplay($body);
             $reference  = xarVarPrepForDisplay($reference);
-
+*/
             xarSecConfirmAuthKey();
 
             // FIXME: put this class somewhere central or rename it.

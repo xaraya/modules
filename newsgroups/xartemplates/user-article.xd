@@ -23,11 +23,11 @@
             <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
                 <div class="xar-norm" style="padding: 3px;">
 
-                    <xar:mlstring>Subject</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['Subject']#</b><br />
-                    <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['From']#</b><br />
-                    <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b><xar:if condition="!empty($headers['Organization'])">#$headers['Organization']#<xar:else/>-</xar:if></b><br />
-                    <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['Date']#</b><br />
-                    <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#$headers['Newsgroups']#</b><br />
+                    <xar:mlstring>Subject</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Subject'])#</b><br />
+                    <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['From'])#</b><br />
+                    <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b><xar:if condition="!empty($headers['Organization'])">#xarVarPrepForDisplay($headers['Organization'])#<xar:else/>-</xar:if></b><br />
+                    <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Date'])#</b><br />
+                    <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Newsgroups'])#</b><br />
                     <xar:if condition="isset($headers['References']) && is_array($headers['References'])">
                         <xar:mlstring>References</xar:mlstring>:&nbsp;
                         <xar:foreach in="$headers['References']" key="$key" value="$ref">
