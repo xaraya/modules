@@ -50,7 +50,7 @@ class Image_Properties
         if (is_numeric($mimeType)) {
             switch ($mimeType) {
                 case 1:  return array('text' => 'image/gif', 'id' => 1);
-                case 2:  return array('text' => 'image/jpg', 'id' => 2);
+                case 2:  return array('text' => 'image/jpeg', 'id' => 2);
                 case 3:  return array('text' => 'image/png', 'id' => 3);
                 case 4:  return array('text' => 'application/x-shockwave-flash', 'id' => 4);
                 case 5:  return array('text' => 'image/psd', 'id' => 5);
