@@ -218,16 +218,18 @@ function articles_user_display($args)
                                         $article['body']);
     }
 
-// TEST
+    // TEST
     if (isset($prevnextart)) {
         $settings['prevnextart'] = $prevnextart;
     }
     if (!empty($settings['prevnextart'])) {
+        if(!array_key_exists('defaultsort',$settings)) {
+            $settings['defaultsort'] = 'aid';
+        }
         $prevart = xarModAPIFunc('articles','user','getprevious',
                                  array('aid' => $aid,
                                        'ptid' => $ptid,
-                                       // unused
-                                       //'sort' => $sort,
+                                       'sort' => $settings['defaultsort'],
                                        'status' => array(3,2),
                                        'enddate' => time()));
         if (!empty($prevart['aid'])) {
@@ -240,8 +242,7 @@ function articles_user_display($args)
         $nextart = xarModAPIFunc('articles','user','getnext',
                                  array('aid' => $aid,
                                        'ptid' => $ptid,
-                                       // unused
-                                       //'sort' => $sort,
+                                       'sort' => $settings['defaultsort'],
                                        'status' => array(3,2),
                                        'enddate' => time()));
         if (!empty($nextart['aid'])) {

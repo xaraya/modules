@@ -42,31 +42,31 @@ function articles_userapi_getprevious($args)
     // the articles-specific columns too now
     $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);
 
-    // Create the query
+    // Create the query base query
     $query = "SELECT $articlesdef[aid], $articlesdef[title], $articlesdef[pubtypeid], $articlesdef[authorid]
-                FROM $articlesdef[table]
-               WHERE $articlesdef[aid] < " . xarVarPrepForStore($aid);
+                FROM $articlesdef[table] WHERE ";
 
     // we rely on leftjoin() to create the necessary articles clauses now
     if (!empty($articlesdef['where'])) {
-        $query .= " AND $articlesdef[where]";
+        $query .= " $articlesdef[where] AND ";
     }
 
-/*
-// TODO: make this configurable too someday ?
+    // Get the current article
+    $current = xarModAPIFunc('articles','user','get',array('aid' => $aid));
+
     // Create the ORDER BY part
-    if ($sort == 'title') {
-        $query .= ' ORDER BY ' . $articlesdef['title'] . ' ASC, ' . $articlesdef['aid'] . ' DESC';
-    } elseif ($sort == 'hits' && !empty($hitcountdef['hits'])) {
-        $query .= ' ORDER BY ' . $hitcountdef['hits'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
-    } elseif ($sort == 'rating' && !empty($ratingsdef['rating'])) {
-        $query .= ' ORDER BY ' . $ratingsdef['rating'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
-    } else { // default is 'date'
-        $query .= ' ORDER BY ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
-    }
-*/
+    switch($sort) {
+    case 'title':
+        $query .= $articlesdef['title'] . ' < ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $articlesdef['title'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
+        break;
+    case 'aid':
+        $query .= $articlesdef['aid'] . ' < ' . $current['aid'] . ' ORDER BY ' . $articlesdef['aid'] . ' DESC';    
+        break;
+    case 'date':
+    default:
+        $query .= $articlesdef['pubdate'] . ' < ' . $dbconn->qstr($current['pubdate']) . ' ORDER BY ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
+    }        
 
-    $query .= ' ORDER BY ' . $articlesdef['aid'] . ' DESC';
 
     // Run the query - finally :-)
     $result =& $dbconn->SelectLimit($query, 1, 0);
@@ -78,7 +78,7 @@ function articles_userapi_getprevious($args)
 
     $result->Close();
 
-// TODO: grab categories & check against them too
+    // TODO: grab categories & check against them too
 
     // check security - don't generate an exception here
     if (!xarSecurityCheck('ViewArticles',0,'Article',"$item[pubtypeid]:All:$item[authorid]:$item[aid]")) {
