@@ -79,7 +79,7 @@ class xarldap {
     function exists() {
         if (!extension_loaded('ldap')) {
             $msg=xarML('Your PHP configuration does not seem to include the required LDAP extension. Please refer to http://www.php.net/manual/en/ref.ldap.php on how to install it.');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
             return false;
         }
@@ -110,7 +110,7 @@ class xarldap {
 
         if (!$this->connection) {
             $msg = xarML('LDAP Error:  Connection to server #(1) port_number #(2) failed', $this->server, $this->port_number);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
             return;
         }
@@ -119,13 +119,13 @@ class xarldap {
         if ($this->tls == 'true') {
             if (!$this->set_option(LDAP_OPT_PROTOCOL_VERSION, 3)) {
                 $msg = xarML('LDAP Error:  Failed to set LDAP Protocol version to 3');
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                            new SystemException($msg));
                 return;
             }
             if (!ldap_start_tls($this->connection)) {
                 $msg = xarML('LDAP Error:  Failed to start TLS');
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                            new SystemException($msg));
                 return;
             }
@@ -266,7 +266,7 @@ class xarldap {
         $result = @ldap_search($this->connection, $base_dn, $filter);
         if (!$result) {
             $msg = xarML('LDAP Error:  Search LDAP base_dn #(1) filter #(2) failed', $base_dn, $filter);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
             return;
         }
@@ -593,7 +593,7 @@ class xarldap {
     {   
         if (!isset($password)) {
             $msg = xarML('Empty password (#(1)).', $password);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             return;
         }
@@ -629,7 +629,7 @@ class xarldap {
     {
         if (!isset($body)) {
             $msg = xarML('Empty body (#(1)).', $body);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             return;
         }

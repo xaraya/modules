@@ -31,7 +31,7 @@ function xarldap_admin_connectstatus()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for creating new #(1) item',
                     'xarldap');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return false;
     }
