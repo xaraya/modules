@@ -124,7 +124,7 @@ function autolinks_userapi_getreplace($args)
         );
 
         // Catch any exceptions.
-        if (xarExceptionValue()) {
+        if (xarExceptionMajor()) {
             $error = xarExceptionRender('text');
 
             // Free the exception since we have handled it.

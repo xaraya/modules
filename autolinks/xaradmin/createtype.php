@@ -57,7 +57,7 @@ function autolinks_admin_createtype()
     }
 
     // Error in creating the item.
-    if (xarExceptionValue()) {
+    if (xarExceptionMajor()) {
         $errorcount += 1;
         $data['global_error'] = xarExceptionRender('text');
         xarExceptionHandled();

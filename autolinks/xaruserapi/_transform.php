@@ -24,12 +24,12 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
      );
 
     // Catch any exceptions.
-    if (xarExceptionValue()) {
+    if (xarExceptionMajor()) {
         // The template errored.
         if (xarModGetVar('autolinks', 'showerrors') || xarVarIsCached('autolinks', 'showerrors')) {
             // Pass the error through the error template if required.
             // This mode of operation is used during setup.
-            $replace = xarTplModule('Autolinks', 'error', 'match',
+            $replace = xarTplModule('autolinks', 'error', 'match',
                 array(
                     'match' => $matched_text,
                     'template_base' => xarModGetVar('autolinks', 'templatebase'),

@@ -573,7 +573,7 @@ function autolinks_init_upgrade_data()
                     }
                 }
             } else {
-                if (xarExceptionValue()) {
+                if (xarExceptionMajor()) {
                     xarExceptionHandled();
                 }
             }

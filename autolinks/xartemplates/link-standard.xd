@@ -1,2 +1,17 @@
-<!--- Traditional autolink anchor tag --->
+<!---
+    Traditional autolink anchor tag.
+    The default attributes passed into this template are:
+    $stdattributes['href'] - the url field of the link
+    $stdattributes['title'] - the title field of the link (optional)
+    $stdattributes['style'] - the global autolinks 'style' setting (optional)
+    $stdattributes['target'] - the global autolinks 'target' setting (optional)
+    * You can reset any of those values within this template or add further attributes.
+    * An empty string value will result in that attribute being discarded completely.
+    * You can also over-ride the global settings by creating DD fields for the standard
+      autolink type with field names 'url', 'title', 'style' or 'target'.
+    * Additional attributes can be created through DD by creating properties with
+      appropriate field names.
+    * The individual values are also available as #$url#, #$title#, #$style# and #$target#,
+      but remember that an admin may decide to create any further attributes they like.
+--->
 <a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $stdattributes)#>#$match#</a>
