@@ -17,8 +17,10 @@ function xarpages_adminapi_createtype($args)
     extract($args);
 
     // Security: allowed to create page types?
-    if (!xarSecurityCheck('AddPagetype', 1, 'Pagetype', 'All')) {
-        return;
+    if ($name[0] <> '@') {
+        if (!xarSecurityCheck('AdminPagetype', 1, 'Pagetype', 'All')) {
+            return;
+        }
     }
 
     // Get the pagetype itemtype ID. The first time this is ever called,

@@ -262,11 +262,32 @@ function xarpages_upgrade($oldversion)
  */
 function xarpages_delete()
 {
+    // Set up database tables
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    $pagestable = $xartable['xarpages_pages'];
+    $typestable = $xartable['xarpages_types'];
+
+    // Get a data dictionary object with item create methods.
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
     // TODO: delete module aliases?
-    // TODO: drop tables
+    // Probably have to loop through all pages and check whether they
+    // are module aliases to drop.
+
+    // Drop tables
+    $result = $datadict->dropTable($pagestable);
+    $result = $datadict->dropTable($typestable);
+
     // TODO: remove blocks
+
     // TODO: delete module variables
-    // TODO: drop privileges etc.
+    xarModDelAllVars('xarpages');
+
+    // Drop privileges.
+    xarRemoveMasks('xarpages');
+    xarRemoveInstances('xarpages');
 
     // Deletion successful.
     return true;

@@ -54,7 +54,7 @@ function xarpages_admin_modifytype()
         // Adding a new page type.
 
         // Security: allowed to create page types?
-        if (!xarSecurityCheck('AddPagetype', 1, 'Pagetype', 'All')) {
+        if (!xarSecurityCheck('AdminPagetype', 1, 'Pagetype', 'All')) {
             return;
         }
 
