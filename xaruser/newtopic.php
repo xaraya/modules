@@ -186,14 +186,13 @@ function xarbb_user_newtopic()
                                      'tstatus'  => $tstatus));
                  // NNTP?
                  $settings   = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
-                 if ($settings['linknntp']){
-                     if (!xarModAPIFunc('xarbb',
-                                   'user',
-                                   'sendnntp',
-                                   array('fid'      => $data['fid'],
-                                         'ttitle'   => $ttitle,
-                                         'tpost'    => $tpost,
-                                         'tposter'  => $tposter))) return;
+                 if ($settings['nntp']){
+                    if (!xarModAPIFunc('newsgroups','admin','postarticle',
+                                       array('group'     => $settings['nntp'],
+                                             'subject'   => $ttitle,
+                                             'body'      => $tpost,
+                                             'name'      => xarUserGetVar('name'),
+                                             'email'     => xarUserGetVar('email')))) return;
                  }
 
                  // We don't want to update the forum counter on an updated reply.

@@ -226,20 +226,22 @@
                     </xar:if> 
                 </select>
             </p>
-            <p class="param">
-                <label for="usenntp">
-                    <span class="help" title="#xarML('Link to a NNTP server for posting.')#">
-                        <xar:mlstring>
-                            Use NNTP
-                        </xar:mlstring>
-                    </span>
-                </label>
-                <xar:if condition="$usenntp">
-                    <input type="checkbox" name="usenntp" id="usenntp" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="usenntp" id="usenntp" value="1" />
-                </xar:if>
-            </p>
+            <xar:if condition="xarModIsAvailable('newsgroups')">
+                <p class="param">
+                    <label for="usenntp">
+                        <span class="help" title="#xarML('Link to a NNTP server for posting.')#">
+                            <xar:mlstring>
+                                Use NNTP
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                    <xar:if condition="$usenntp">
+                        <input type="checkbox" name="usenntp" id="usenntp" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="usenntp" id="usenntp" value="1" />
+                    </xar:if>
+                </p>
+            </xar:if>
         </fieldset>
         <fieldset class="formelements xar-norm">
             <legend>

@@ -255,6 +255,26 @@
                 </xar:if>
                 </select>
             </p>
+            <xar:if condition="xarModIsAvailable('newsgroups')">
+                <p class="param">
+                    <label for="nntp">
+                        <span class="help" title="#xarML('Associate with which Newsgroup')#">
+                            <xar:mlstring>
+                                NNTP Association
+                            </xar:mlstring>
+                        </span>
+                    </label>
+                    <select name="nntp" id="nntp">
+                        <xar:foreach in="$items" key="$name" value="$info">
+                            <xar:if condition="$name eq $nntp">
+                                <option value="#$name#" selected="selected">#$name#</option>
+                            <xar:else/>
+                                <option value="#$name#">#$name#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                </p>
+            </xar:if>
         </fieldset>
         <fieldset class="formelements xar-norm">
             <p class="param">

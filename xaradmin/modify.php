@@ -70,10 +70,7 @@ function xarbb_admin_modify()
                 $data['allowbbcode']            = !empty($settings['allowbbcode']) ? 'checked="checked"' : '';
                 $data['editstamp']              = !isset($settings['editstamp']) ? 1 : $settings['editstamp'];
                 $data['showcats']               = !empty($settings['showcats']) ? 'checked="checked"' : '';
-                $data['linknntp']               = !empty($settings['linknntp']) ? 'checked="checked"' : '';
-                $data['nntpserver']             = empty($settings['nntpserver']) ? 'news.xaraya.com' : $settings['nntpserver'];
-                $data['nntpport']               = empty($settings['nntpport']) ? 119 : $settings['nntpport'];
-                $data['nntpgroup']              = empty($settings['nntpgroup']) ? 'xaraya.test' : $settings['nntpgroup'];
+                $data['nntp']                   = empty($settings['nntp']) ? '' :$settings['nntp'];
             }
             if (!isset($data['topicsperpage'])) {
                 $data['topicsperpage'] = 20;
@@ -99,18 +96,30 @@ function xarbb_admin_modify()
             if (!isset($data['showcats'])) {
                 $data['showcats'] = '';
             }
-            if (!isset($data['linknntp'])) {
-                $data['linknntp'] = '';
+            if (!isset($data['nntp'])) {
+                $data['nntp'] = '';
             }
-            if (!isset($data['nntpserver'])) {
-                $data['nntpserver'] = 'news.xaraya.com';
+
+            if (xarModIsAvailable('newsgroups')){
+                // get the current list of newsgroups
+                $data['items'] = xarModAPIFunc('newsgroups','user','getgroups',
+                                               array('nocache' => true));
+                $grouplist = xarModGetVar('newsgroups','grouplist');
+                if (!empty($grouplist)) {
+                    $selected = unserialize($grouplist);
+                    // get list of selected newsgroups
+                    $data['selected'] = array_keys($selected);
+                    // update description of selected newsgroups
+                    foreach ($selected as $group => $info) {
+                        if (isset($data['items'][$group]) && isset($info['desc'])) {
+                            $data['items'][$group]['desc'] = $info['desc'];
+                        }
+                    }
+                } else {
+                    $data['selected'] = '';
+                }
             }
-            if (!isset($data['nntpport'])) {
-                $data['nntpport'] = 119;
-            }
-            if (!isset($data['nntpgroup'])) {
-                $data['nntpgroup'] = 'xaraya.test';
-            }        
+
             $data['module'] = 'xarbb';
             $data['itemtype'] = 0; // forum
             $data['itemid'] = $fid;
@@ -166,10 +175,7 @@ function xarbb_admin_modify()
             if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editstamp','int:1:', $editstamp, 0 ,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showcats','checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('linknntp','checkbox', $linknntp, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('nntpserver', 'str:1:', $nntpserver, 'news.xaraya.com', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('nntpgroup', 'str:1:', $nntpgroup, 'xaraya.test', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('nntp', 'str:1:', $nntp, '', XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
@@ -196,10 +202,7 @@ function xarbb_admin_modify()
             $settings['allowbbcode']        = $allowbbcode;
             $settings['editstamp']          = $editstamp;
             $settings['showcats']           = $showcats;
-            $settings['linknntp']           = $linknntp;
-            $settings['nntpport']           = $nntpport;
-            $settings['nntpserver']         = $nntpserver;
-            $settings['nntpgroup']          = $nntpgroup;
+            $settings['nntp']               = $nntp;
 
             xarModSetVar('xarbb', 'settings.'.$fid, serialize($settings));
 
