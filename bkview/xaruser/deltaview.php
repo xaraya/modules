@@ -16,7 +16,8 @@
 function bkview_user_deltaview($args) 
 {
     xarVarFetch('repoid','id',$repoid);
-    xarVarFetch('rev','str::',$rev,'+');
+    xarVarFetch('rev','str::',$rev,'');
+    xarVarFetch('file','str::',$file,'');
     extract($args);
 
     // Get the information on the repository
@@ -27,6 +28,11 @@ function bkview_user_deltaview($args)
     $data=array(); $data['deltatree']=array(); $deltatree = array();
     $repo =& $item['repo'];
 
+    // If we also got a file, we interpret rev as delta and determine the cset rev
+    if ($file != '') {
+        $the_file = new bkFile($repo,$file);
+        $rev = $the_file->bkChangeSet($rev);
+    }
     // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
     if(!empty($changeset->_deltas)) {

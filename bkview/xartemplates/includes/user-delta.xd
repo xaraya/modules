@@ -7,7 +7,6 @@
     $author : author of the file
     $rev    : delta revision number
     $age    : age of the delta
-    $csetrev: corresponding changeset for the delta
 </xar:comment>
 
 <div class="xar-norm-outline" style="margin-bottom: 5pt; padding-left: 2pt;">
@@ -37,7 +36,7 @@
       <div class="comments">#$comments#</div>
       
       <div style="text-align: right; padding-right: 5pt; font-size: smaller">
-        <a href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$csetrev#" onclick="return loadContent(this.href);">
+        <a href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$rev#&amp;file=#$file#" onclick="return loadContent(this.href);">
         <xar:mlstring>Corresponding cset</xar:mlstring></a>
      </div>
 </div>
