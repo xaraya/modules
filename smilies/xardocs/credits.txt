@@ -1,0 +1,3 @@
+Utility module written by Jim McDonald
+
+Smilies and smiley transform language taken from phpBB (www.phpbb.com)

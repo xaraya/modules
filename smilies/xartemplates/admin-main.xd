@@ -1,0 +1,54 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Smilies</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <em><xar:mlstring>Smilies is an utility module</xar:mlstring></em>
+            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+            <xar:mlstring>The Smilies module will transform text that is using smilies code to images.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>
+			From the menu, you have two choices.  "Add Smilies", and "View Smiles". 
+			</xar:mlstring>
+			<ul>
+				<li><xar:mlstring>View Smilies -- Allows you to view the smilies that you have configured on your system.</xar:mlstring></li>
+				<li><xar:mlstring>Add Smilies -- Allows you to add new smilies to your system.</xar:mlstring></li>
+			</ul>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>smilies</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The Smilies Transform Hook can be used on any content module that calls transforms.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>And more.. [for module developers]</xar:mlstring>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Smilies Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Add a New Smily</xar:mlstring></h2>
+<form method="post" action="#xarModURL('smilies', 'admin', 'new', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Smily Code</xar:mlstring>
+                        </td>
+                        <td>
+                            <input type="text" name="code" id="code" value="" size="10" maxlength="10" tabindex="1" />
+						</td>
+					</tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Smily Icon Path</xar:mlstring>
+                        </td>
+                        <td>
+                            <input type="text" name="icon" id="icon" value="" size="30" maxlength="100" tabindex="1" />
+						</td>
+					</tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Smily Code</xar:mlstring>
+                        </td>
+                        <td>
+                            <input type="text" name="emotion" id="emotion" value="" size="30" maxlength="100" tabindex="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<input type="submit" value="Create Smily" align="middle" tabindex="5" />
+</form>
+</div>
