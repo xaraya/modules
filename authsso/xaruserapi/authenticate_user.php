@@ -71,12 +71,12 @@ function authsso_userapi_authenticate_user($args)
     if (!$userRole) {
         // add a user that does NOT exist in the database
         // Todo: make external data source access extensible and configurable
-        if ($ssoconfig['add_user'] == 'true') {
+        if ($ssoconfig['add_user']) {
             $pass = '';
             $realname = '';
             $email = '';
 
-            if (($ssoconfig['getfromldap'] == 'true') && (xarModIsAvailable('xarldap') == 'true')) {
+            if (($ssoconfig['getfromldap']) && (xarModIsAvailable('xarldap') == 'true')) {
 
                 // Include xarldap class
                 include_once 'modules/xarldap/xarldap.php';
