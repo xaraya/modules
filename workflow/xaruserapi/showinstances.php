@@ -87,8 +87,8 @@ function workflow_userapi_showinstances($args)
         $tplData['layout'] = $args['layout'];
     }
 
-    // URL to return to if some action is taken - use htmlspecialchars() here
-    $tplData['return_url'] = htmlspecialchars(xarServerGetCurrentURL());
+    // URL to return to if some action is taken
+    $tplData['return_url'] = xarServerGetCurrentURL();
 
     if (!empty($args['template'])) {
         return xarTplModule('workflow', 'user', 'showinstances', $tplData, $args['template']);
