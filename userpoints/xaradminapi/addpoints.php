@@ -10,24 +10,29 @@ function userpoints_adminapi_addpoints($args)
 	
 	// Get next ID in table
 	$nextId = $dbconn->GenId($pointstable);	
-	$itemtypecustom = $itemtype;
-  $query = "INSERT INTO $pointstable(xar_upid, 
-							xar_uptid, 
-							xar_itemtype,
-							xar_uid, 
-							xar_points)
-							VALUES (
-							$nextId,
-							" . xarVarPrepForStore($uptid) .",
-                            $itemtypecustom,
-							" . xarVarPrepForStore($uid) .",
-							" . xarVarPrepForStore($points) . "
+          $sql = "INSERT INTO $pointstable (
+                                     xar_upid,
+							         xar_moduleid, 
+							         xar_itemtype,
+							         xar_objectid, 
+							         xar_status, 
+							         xar_authorid, 
+							         xar_pubdate, 
+							         xar_cpoints)
+                  VALUES(" . xarVarPrepForStore($nextId) . ",
+						 " . xarVarPrepForStore($moduleid) .",
+						 " . xarVarPrepForStore($itemtype) .",
+						 " . xarVarPrepForStore($objectid) .",
+						 " . xarVarPrepForStore($status) .",
+						 " . xarVarPrepForStore($authorid) .",
+						 " . xarVarPrepForStore($pubdate) .",
+						 " . xarVarPrepForStore($points) . "
 							)";
-	
-	$result =& $dbconn->Execute($query);
-	if (!$result) return;
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return;
+
     
 	// Return the extra info
-	return $extrainfo;
+	return ;
 }
 ?>

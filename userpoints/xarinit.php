@@ -21,13 +21,24 @@ function userpoints_init()
     $xartable =& xarDBGetTables();
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
-    // Create table
-    $fields = array('xar_upid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_uptid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'xar_itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'xar_uid' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'xar_points' => array('type' => 'float', 'size' => 'double', 'width' => 10, 'decimals' => 2, 'null' => false, 'default' => '0.00')
-        );
+
+    // Create table to store the user's score per item and stats
+
+	$fields = array(
+        'xar_upid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_moduleid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+        'xar_itemtype'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+        'xar_objectid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
+        'xar_status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
+        'xar_authorid'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'xar_pubdate'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+        'xar_cpoints'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+        'xar_rpoints'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+        'xar_upoints'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+        'xar_fpoints'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0')
+
+    );
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
     $query = xarDBCreateTable($xartable['userpoints'], $fields);
@@ -35,28 +46,68 @@ function userpoints_init()
     
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
-    $fields = array('xar_uptid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_module' => array('type' => 'varchar', 'size' => 25, 'null' => false, 'default' => ''),
-        'xar_itemtype' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'default' => '0'),
-        'xar_action' => array('type' => 'char', 'size' => 1, 'null' => false, 'default' => ''),
-        'xar_tpoints' => array('type' => 'float', 'size' => 'double', 'width' => 10, 'decimals' => 2, 'null' => false, 'default' => '0.00')
-        );
+
+    // Create table to store the user's score per item and stats
+
+	$fields = array(
+        'xar_upid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_moduleid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+        'xar_itemtype'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+        'xar_objectid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
+        'xar_status'=>array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
+        'xar_authorid'=>array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'xar_pubdate'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+        'xar_dpoints'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0')
+    );
+
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $query is empty
-    $query = xarDBCreateTable($xartable['pointstypes'], $fields);
+    $query = xarDBCreateTable($xartable['userpoints_display'], $fields);
     if (empty($query)) return; // throw back
-
-    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    
     $result = &$dbconn->Execute($query);
     if (!$result) return;
+
+    // Create table to hold rank information
+
+	$fields = array('xar_id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+                    'xar_rankname' => array('type' => 'varchar', 'size' => 32, 'null' => false),
+                    'xar_rankminscore' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0')
+        );
+
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($xartable['userpoints_ranks'], $fields);
+    if (empty($query)) return; // throw back
     
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    // Create table to hold the user's score
+
+	$fields = array('xar_id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+                    'xar_authorid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
+                    'xar_totalscore'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0')
+        );
+
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $query is empty
+    $query = xarDBCreateTable($xartable['userpoints_score'], $fields);
+    if (empty($query)) return; // throw back
     
-    xarModSetVar('userpoints', 'defaultcreate', 10.00);
-	xarModSetVar('userpoints', 'defaultdelete', 10.00);
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    
+    xarModSetVar('userpoints', 'ranksperpage', 10);
+    xarModSetVar('userpoints', 'showadminscore', 1);
+    xarModSetVar('userpoints', 'scowanonscore', 0);
+    xarModSetVar('userpoints', 'SupportShortURLs', 0);
+    xarModSetVar('userpoints', 'defaultcreate', 10);
+	xarModSetVar('userpoints', 'defaultdelete', 10);
     xarModSetVar('userpoints', 'defaultdisplay', 0.01);
-    xarModSetVar('userpoints', 'defaultupdate', 0.01);
-    xarModSetVar('userpoints', 'defaultfrontpage', 5.00);
+    xarModSetVar('userpoints', 'defaultupdate', 0.05);
+    xarModSetVar('userpoints', 'defaultfrontpage', 0);
 
 
     //when user performs any of the CRUD actions, have the hook fire.
@@ -65,15 +116,15 @@ function userpoints_init()
         return false;
     }   
     if (!xarModRegisterHook('item', 'create', 'API',
-                           'userpoints', 'adminapi', 'createhook')) {
+                           'userpoints', 'admin', 'createhook')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'remove', 'API',
-                           'userpoints', 'adminapi', 'removehook')) {
+                           'userpoints', 'admin', 'removehook')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'update', 'API',
-                           'userpoints', 'adminapi', 'updatehook')) {
+                           'userpoints', 'admin', 'updatehook')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'display', 'GUI',
@@ -138,9 +189,13 @@ function userpoints_init()
     xarRegisterMask('AddUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADD');
     xarRegisterMask('DeleteUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_DELETE');
     xarRegisterMask('AdminUserpoints', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADMIN');
-
     xarRegisterMask('CommentUserpoints', 'All', 'userpoints', 'Item', 'All:All:All', 'ACCESS_COMMENT');
     xarRegisterMask('EditUserpointsTemplate', 'All', 'userpoints', 'Template', 'All:All:All', 'ACCESS_ADMIN');
+
+    xarRegisterMask('ReadRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_READ');
+    xarRegisterMask('AddRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADD');
+    xarRegisterMask('DeleteRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_DELETE');
+    xarRegisterMask('AdminRank', 'All', 'userpoints', 'All', 'All', 'ACCESS_ADMIN');
     // Initialisation successful
     return true;
 }
@@ -196,6 +251,10 @@ function userpoints_delete()
     }
 
     // Delete module variables
+    xarModDelVar('userpoints', 'ranksperpage');
+    xarModDelVar('userpoints', 'showadminscore');
+    xarModDelVar('userpoints', 'showanonscore');
+    xarModDelVar('userpoints', 'SupportShortURLs');
     xarModDelVar('userpoints', 'defaultcreate');
     xarModDelVar('userpoints', 'defaultdelete');
     xarModDelVar('userpoints', 'defaultdisplay');
@@ -214,9 +273,22 @@ function userpoints_delete()
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['pointstypes']);
+    $query = xarDBDropTable($xartable['userpoints_display']);
+    if (empty($query)) return; // throw back
+    // Drop the table and send exception if returns false.
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['userpoints_ranks']);
+    if (empty($query)) return; // throw back
+    // Drop the table and send exception if returns false.
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartable['userpoints_score']);
     if (empty($query)) return; // throw back
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);

@@ -13,19 +13,20 @@ function userpoints_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminUserpoints')) {
         $menulinks[] = Array('url'   => xarModURL('userpoints',
                                                   'admin',
-                                                  'view'),
-                              'title' => xarML('View userpoints statistics per module'),
-                              'label' => xarML('View Statistics'));
+                                                  'newrank'),
+                              'title' => xarML('Add A New User Rank'),
+                              'label' => xarML('Add Rank'));
         $menulinks[] = Array('url'   => xarModURL('userpoints',
                                                   'admin',
-                                                  'pointstypes'),
-                              'title' => xarML('View userpoints types'),
-                              'label' => xarML('View Points Types'));
+                                                  'viewrank'),
+                              'title' => xarML('View The Existing Ranks'),
+                              'label' => xarML('View Ranks'));
         $menulinks[] = Array('url'   => xarModURL('userpoints',
                                                   'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the userpoints module configuration'),
                               'label' => xarML('Modify Config'));
+
     }
 
     if (empty($menulinks)){

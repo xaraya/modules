@@ -4,7 +4,48 @@
 <form method="post" action="#xarModURL('userpoints', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <tr>
+        <th align="center"><xar:mlstring>Module Settings</xar:mlstring></th>
+    </tr>
+</table>
+<br />
+
 	<table border="0" cellpadding="8" cellspacing="0">
+	<tr><td><label for="ranksperpage">#$ranksperlabel#</label></td>
+<td><input type="text" name="ranksperpage" id="ranksperpage" size="3" maxlength="3" value="#$rankspervalue#" /></td></tr>
+<tr><td><label for="showadminscore">#$showadminlabel#</label></td>
+<td><input type="checkbox" name="showadminscore" id="showadminscore" value="1" #$showadminchecked# /></td></tr>
+<tr><td><label for="showanonscore">#$showanonlabel#</label></td>
+<td><input type="checkbox" name="showanonscore" id="showanonscore" value="1" #$showanonchecked# /></td></tr>
+<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
+<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+</table>
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <tr>
+        <th align="center"><xar:mlstring>Score Settings</xar:mlstring></th>
+    </tr>
+</table>
+<br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring><b>Create Points:</b> Points awarded for the creation of an item of this type</xar:mlstring></li>
+                <li><xar:mlstring><b>Delete Points:</b> Points subtracted for the deletion of an item of this type (Don't use a negative value)</xar:mlstring></li>
+                <li><xar:mlstring><b>Display Points:</b> Points awarded for viewing an item of this type</xar:mlstring></li>
+                <li><xar:mlstring><b>Update Points:</b> Points awarded for updating an item of this type</xar:mlstring></li>
+                <li><xar:mlstring><b>Frontpage Points:</b> Extra points awarded to items of this type that make it to frontpage status (Only applicable to the articles module)</xar:mlstring></li>
+
+            </ul>
+	            <br />
+            <em><xar:mlstring>The points are of type xxxx.xx .That means you can award/subtract from 0.00 up to 9999.99 for an item.</xar:mlstring></em>
+
+        </div>
+	            <br />
+
+	<table border="0" cellpadding="8" cellspacing="0">
+
 	<xar:foreach in="$settings" key="$modname" value="$config">
 		<tr>
 			<td colspan="2"><b>#$config['label']#</b></td>

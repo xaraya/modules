@@ -11,11 +11,20 @@ function userpoints_admin_updateconfig()
     if(!xarVarFetch('displayscore',      'isset', $displayscore,    10, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('updatescore',       'isset', $updatescore,    10, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('frontpagescore',    'isset', $frontpagescore,    10, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ranksperpage', 'str:1:', $ranksperpage, '10', XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('showadminscore', 'checkbox', $showadminscore, false, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('showanonscore', 'checkbox', $showanonscore, false, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
     // Security Check
     if (!xarSecurityCheck('AdminUserpoints')) return; 
+
+    xarModSetVar('userpoints', 'ranksperpage', $ranksperpage);
+    xarModSetVar('userpoints', 'showadminscore', $showadminscore);
+    xarModSetVar('userpoints', 'showanonscore', $showanonscore);
+    xarModSetVar('userpoints', 'SupportShortURLs', $shorturls);
 
     // Update default style
     if (!is_array($createscore)) {

@@ -1,0 +1,106 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+
+<!-- This Javascript will check for required fields before the form is submitted. -->
+<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
+<script language="JavaScript">
+<!--
+	// Enter name of mandatory fields
+	var fieldRequired = Array("rankname", "rankminscore");
+	// Enter field description to appear in the dialog box
+	var fieldDescription = Array("Rank Name", "Rank Min. Score");
+//-->
+</script>
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Userpoints Ranks Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Rank</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<!-- the specific template for the current admin function comes here -->
+
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form method="post" action="#xarModUrl('userpoints', 'admin', 'updaterank')#" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);">
+
+<xar:if condition="isset($rankname)">
+
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The name of the new rank.')#"><label for="rankname">#$ranknamelabel#</label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="rankname" id="rankname" size="32" maxlength="32" value="#$rankname#" /> <xar:if condition="!empty($invalid['rankname'])">
+			<span style="color: red"><xar:mlstring>ERROR! This is not a valid rank name</xar:mlstring>
+		</xar:if>
+	</span>
+	</div>
+
+<xar:else />
+
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The name of the new rank.')#"><label for="rankname">#$ranknamelabel#</label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="rankname" id="rankname" size="32" maxlength="32" value="#$item['rankname']#" /> 
+		<xar:if condition="!empty($invalid['rankname'])">
+			<span style="color: red"><xar:mlstring>ERROR! This is not a valid rank name</xar:mlstring>
+		</xar:if>
+	</span>
+	</div>
+
+</xar:if>
+
+<xar:if condition="isset($rankname)">
+
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The minimum score to attain this rank.')#"><label for="rankminscore">#$rankminscorelabel#</label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="rankminscore" id="rankminscore" size="5" maxlength="5" value="#$rankminscore#" /><xar:if condition="!empty($invalid['rankminscore'])">
+			<span style="color: red"><xar:mlstring>ERROR! This is not a valid rank minimum score</xar:mlstring>
+		</xar:if>
+	</span>
+	</div>
+
+<xar:else />
+
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('The minimum score to attain this rank.')#"><label for="rankminscore">#$rankminscorelabel#</label>:</span>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="rankminscore" id="rankminscore" size="5" maxlength="5" value="#$item['rankminscore']#" /><xar:if condition="!empty($invalid['rankminscore'])">
+			<span style="color: red"><xar:mlstring>ERROR! This is not a valid rank minimum score</xar:mlstring>
+		</xar:if>
+	</span>
+	</div>
+
+</xar:if>
+
+	#$hooks#
+	<div style="clear: both; padding-top: 10px;">
+	<!--
+		// Add an authorisation ID - this adds a hidden field in the form that
+		// contains an authorisation ID.  The authorisation ID is very important in
+		// preventing certain attacks on the website
+	-->
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<input type="hidden" name="id" id="exid" value="#$item['id']#" />
+		<span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
+	</div>
+
+</form>
+
+<br />
+</div>
+</div>

@@ -21,6 +21,19 @@ function userpoints_admin_modifyconfig()
     $defaultupdate    = xarModGetVar('userpoints', 'defaultupdate');
     $defaultfrontpage = xarModGetVar('userpoints', 'defaultfrontpage');
 
+    $data['ranksperlabel'] = xarVarPrepForDisplay(xarML('Ranks Per Page?'));
+    $data['rankspervalue'] = xarModGetVar('userpoints', 'ranksperpage');
+    $data['showadminlabel'] = xarML('Show Admin Score?');
+    $data['showadminchecked'] = xarModGetVar('userpoints', 'showadminscore') ?
+    'checked' : '';
+    $data['showanonlabel'] = xarML('Show Anonymous Score?');
+    $data['showanonchecked'] = xarModGetVar('userpoints', 'showanonscore') ?
+    'checked' : '';
+	$data['shorturlslabel'] = xarML('Enable short URLs?');
+    $data['shorturlschecked'] = xarModGetVar('userpoints', 'SupportShortURLs') ?
+    'checked' : '';
+
+
     $data['settings'] = array();
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
 		                                 'create_score'    => $defaultcreate,

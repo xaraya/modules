@@ -24,14 +24,25 @@
 function userpoints_xartables()
 { 
     // Initialise table array
+
     $xartable = array(); 
+
     // Name for userpoints database entities
+
     $userpoints = xarDBGetSiteTablePrefix() . '_userpoints';
-    $pointstypes = xarDBGetSiteTablePrefix() . '_userptypes';
+    $userpoints_display = xarDBGetSiteTablePrefix() . '_userpoints_display';
+    $ranks = xarDBGetSiteTablePrefix() . '_userpoints_ranks';
+    $score = xarDBGetSiteTablePrefix() . '_userpoints_score';
+
     // Table name
+
     $xartable['userpoints'] = $userpoints; 
-    $xartable['pointstypes'] = $pointstypes;
+    $xartable['userpoints_display'] = $userpoints_display; 
+    $xartable['userpoints_ranks'] = $ranks; 
+    $xartable['userpoints_score'] = $score; 
+
     // Return table information
+
     return $xartable;
 } 
 
