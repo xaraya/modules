@@ -2,7 +2,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Add</xar:mlstring></h2><br />
 <div style="margin: auto;">
 <form method="post" action="#xarModURL('autolinks', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" />
-<div class="xar-norm-outline" style="padding: 20px; text-align: left;">
+<div class="xar-norm-outline" style="padding: 100px; text-align: left;">
 	<div style="clear: both; padding-top: 10px;">
 	<input type="hidden" name="authid" id="authid" value="#$authid#" />
 	<span style="float: left; width: 100px; text-align: right;">
@@ -36,7 +36,10 @@
 		<input type="text" name="comment" id="comment" value="" size="40" maxlength="200" />
 	</span>
 	</div>
-	<div style="text-align: center;"><input type="submit" value="Create Autolink" align="middle" /></div>
+	<br /><br />
+	<div style="clear: both; text-align: center;">
+		<input type="submit" value="Create Autolink" align="middle" />
+	</div>
 </div>
 </form>
 </div>
