@@ -54,10 +54,6 @@ function messages_adminapi_create( $args )
                 'object'    =>  $object
                 ,'itemtype' =>  $itemtype ));
 
-        xarSessionSetVar(
-            'messages_statusmsg'
-            ,'Created Messages ' . $itemid .' -> '.  $item_title .'.' );
-
         // This function generated no output, and so now it is complete we redirect
         // the user to an appropriate page for them to carry on their work
         xarResponseRedirect(

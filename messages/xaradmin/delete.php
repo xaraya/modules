@@ -40,13 +40,6 @@ function messages_admin_delete( $args )
 
 
 
-    /*
-     * Set the status message
-     */
-    xarSessionSetVar(
-        'messages_statusmsg'
-        ,'Deleted  Message '. $itemid .' -> '. $item_title .'!' );
-
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(

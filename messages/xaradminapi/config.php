@@ -40,14 +40,6 @@ function messages_adminapi_config( $args )
             ,$args
             ,'messages' );
 
-
-        /*
-         * Set a status message
-         */
-        xarSessionSetVar(
-            'messages_statusmsg'
-            ,'Updated the messages configuration!' );
-
         /*
          * Finished. Back to the sender!
          */

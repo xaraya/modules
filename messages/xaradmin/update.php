@@ -68,7 +68,6 @@ function messages_admin_update($args)
                           'number' => $number))) {
         return; // throw back
     }
-    xarSessionSetVar('statusmsg', xarMLByKey('messagesUPDATED'));
 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work

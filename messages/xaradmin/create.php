@@ -49,9 +49,6 @@ function messages_admin_create($args)
     // posted a failure message so no action is required
     if (!isset($msg_id) && xarCurrentErrorType() != xar_NO_EXCEPTION) return; // throw back
 
-    // Success
-    xarSessionSetVar('statusmsg', xarMLByKey('MESSAGESCREATED'));
-
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarRedirect(xarModURL('messages', 'admin', 'view'));

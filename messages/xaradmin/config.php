@@ -71,13 +71,6 @@ function messages_adminpriv_config( $args )
 
 
         /*
-         * Set a status message
-         */
-        xarSessionSetVar(
-            'messages_statusmsg'
-            ,'Updated the modules configuration!' );
-
-        /*
          * Finished. Back to the sender!
          */
         xarResponseRedirect(
