@@ -2,18 +2,12 @@
 
 function release_admin_viewnotes()
 {
-
+	if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type', 'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
-
-    // Get parameters
-    list($startnum,
-         $phase,
-         $filter,
-         $type) = xarVarCleanFromInput('startnum',
-                                       'phase',
-                                       'filter',
-                                       'type');
 
     $uid = xarUserGetVar('uid');
     $data['items'] = array();
@@ -123,9 +117,9 @@ function release_admin_viewnotes()
 
             break;
     }
-
+    $numitems=count($items);
     // Check individual permissions for Edit / Delete
-    for ($i = 0; $i < count($items); $i++) {
+    for ($i = 0; $i < $numitems; $i++) {
         $item = $items[$i];
 
         if (xarSecurityCheck('EditRelease', 0)) {
@@ -182,17 +176,18 @@ function release_admin_viewnotes()
         }
         $items[$i]['changelog'] = nl2br($item['changelog']);
         $items[$i]['notes'] = nl2br($item['notes']);
+
+     $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase,'filter'=>$filter)),
+        xarModURL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
+        xarModGetUserVar('release', 'itemsperpage', $uid));
     }
 
     $data['phase'] = $phasedesc;
     // Add the array of items to the template variables
     $data['items'] = $items;
-
-     $data['phasedesc']=$phasedesc;
-     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase,'filter'=>$filter)),
-        xarModURL('release', 'admin', 'viewnotes', array('startnum' => '%%','phase'=>$phase, 'filter'=>$filter)),
-        xarModGetUserVar('release', 'itemsperpage', $uid));
+    $data['numitems']=$numitems;
+    $data['phasedesc']=$phasedesc;
 
     // Return the template variables defined in this function
     return $data;

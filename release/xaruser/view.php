@@ -99,9 +99,9 @@ function release_user_view()
     $stateoptions[4] = xarML('Mature');
     $stateoptions[5] = xarML('Inactive');
 
-
+    $numitems = count($items);
     // Check individual permissions for Edit / Delete
-    for ($i = 0; $i < count($items); $i++) {
+    for ($i = 0; $i < ($numitems); $i++) {
         $item = $items[$i];
 
         // Basic Information
@@ -207,14 +207,14 @@ function release_user_view()
            }
        }
 
-    }
-    $data['phase']=$phase;
-    $data['catid'] = $catid;
     $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid)),
         xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase,'catid'=>$catid)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
-
+    }
+    $data['numitems']=$numitems;
+    $data['phase']=$phase;
+    $data['catid'] = $catid;
     // Add the array of items to the template variables
     $data['items'] = $items;
     return $data;

@@ -93,8 +93,8 @@
         </tr>
       </xar:loop>
     </table>
-  </xar:if>
   <br />
   <!-- add the pager here -->
   #$pager#
+  </xar:if>
 </div>

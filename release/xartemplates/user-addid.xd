@@ -3,6 +3,7 @@
 <div class="xar-mod-body">
 <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
 <xar:set name="retryID">xarModURL('release','user','view')</xar:set>
+<xar:set name="createid"><xar:mlstring>Create ID</xar:mlstring></xar:set>
 <h2><xar:mlstring>Reserve an ID</xar:mlstring></h2>
 <xar:if condition="!empty($message)">
  <div style="margin-top:20px; margin-bottom:20px;">
@@ -87,7 +88,8 @@
 			    </tr>
 			</table>
 			<br />
-			<input type="submit" value="Create ID"  tabindex="6" />
+
+			<input type="submit" value="#$createid#"  tabindex="6" />
 		</form>
 	</xar:if>
 </div>

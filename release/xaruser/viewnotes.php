@@ -4,19 +4,11 @@ function release_user_viewnotes()
 {
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type', 'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    // Get parameters
-    list($startnum,
-         $phase,
-         $filter,
-         $type) = xarVarCleanFromInput('startnum',
-                                       'phase',
-                                       'filter',
-                                       'type');
-    
     $uid = xarUserGetVar('uid');
     $data['items'] = array();
 
@@ -111,9 +103,9 @@ function release_user_viewnotes()
             $phasedesc =xarML('Supported');
             break;
     }
-
+    $numitems=count($items);
     // Check individual permissions for Edit / Delete
-    for ($i = 0; $i < count($items); $i++) {
+    for ($i = 0; $i < $numitems; $i++) {
         $item = $items[$i];
 
         // The user API function is called.
@@ -145,6 +137,15 @@ function release_user_viewnotes()
         $items[$i]['realname'] = $getuser['name'];
         $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($getid['desc']));
         $items[$i]['notes'] = nl2br(xarVarPrepHTMLDisplay($item['notes']));
+
+   
+       //Add pager
+       $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase)),
+        xarModURL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
+                                                                           'filter'=>$filter,
+                                                                            'type' =>$type)),
+        xarModGetUserVar('release', 'itemsperpage', $uid));
     }
 
 
@@ -152,14 +153,6 @@ function release_user_viewnotes()
     $data['phase'] = $phasedesc;
     // Add the array of items to the template variables
     $data['items'] = $items;
-
-    // TODO : add a pager (once it exists in BL)
-    $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase)),
-        xarModURL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
-                                                                           'filter'=>$filter,
-                                                                            'type' =>$type)),
-        xarModGetUserVar('release', 'itemsperpage', $uid));
 
     // Return the template variables defined in this function
     return $data;
