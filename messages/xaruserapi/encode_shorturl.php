@@ -4,10 +4,10 @@ function messages_userapi_encode_shorturl( $args ) {
 
     $func       = NULL;
     $module     = NULL;
-    $itemid     = NULL;
-    $itemtype   = NULL;
+    $mid        = NULL;
     $rest       = array();
-
+    //print_r($args);
+    //exit();
     foreach( $args as $name => $value ) {
 
         switch( $name ) {
@@ -15,28 +15,20 @@ function messages_userapi_encode_shorturl( $args ) {
             case 'module':
                 $module = $value;
                 break;
-
-            case 'itemtype':
-                $itemtype = $value;
+            case 'mid':
+                $mid = $value;
                 break;
-
-            case 'objectid':
-            case 'itemid':
-                $itemid = $value;
-                break;
-
             case 'func':
                 $func = $value;
                 break;
-
             default:
-                $rest[] = $value;
+                $rest[$name] = $value;
 
        }
     }
 
     // kind of a assertion :-))
-    if( isset( $module ) and $module != 'messages' ) {
+    if( isset( $module ) && $module != 'messages' ) {
         return;
     }
 
@@ -48,46 +40,33 @@ function messages_userapi_encode_shorturl( $args ) {
     if ( empty( $func ) )
         return;
 
-    /*
-     * We only provide support for display and view and main
-     */
-    if ( $func != 'display' and $func != 'view' and $func != 'main' )
-        return;
-
-    /*
-     * Now add the itemtype if possible
-     */
-    if ( isset( $itemtype ) ) {
-
-        switch ( $itemtype ) {
-
-            case 1:
-                $itemtype_name = 'messages';
-                break;
-
-
+    switch ($func) {
+        case 'send':
+            $path .= '/Outbox';
+            break;
+        case 'delete':
+            $path .= '/Trash';
+            break;
+        case 'display':
+        case 'view':
+        case 'main':
         default:
-            // Unknown itemtype?
-            return;
-        }
-
-        $path = $path . '/' . $itemtype_name;
-
-        /*
-         * And last but not least the itemid
-         */
-        If ( isset( $itemid ) ) {
-                $path = $path . '/' . $itemid;
-        }
+            $path .= '/Inbox';
+            if (isset($mid)) {
+                $path .= '/' . $mid;
+                unset($mid);
+            }
+            break;
     }
 
-    /*
-     * ADD THE REST !!!! THIS HAS TO BE DONE EVERYTIME !!!!!
-     */
+    if (isset($mid)) {
+        $rest['mid'] = $mid;
+    }
+    
     $add = array();
-    foreach ( $rest as $argument ) {
-        if ( isset( $rest['argument'] ) ) {
-            $add[] =  $argument . '=' . $rest[$argument];
+    foreach ( $rest as $key => $value ) {
+        if (isset($rest[$key])) {
+            $add[] =  $key . '=' . $value;
         }
     }
 

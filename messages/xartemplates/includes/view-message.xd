@@ -18,12 +18,14 @@
         <div class="xar-norm" style="padding: 4px;" align="left">
             #$message['body']# <br />
         </div>
-        <div class="xar-norm" style="padding: 4px;" align="left">
-            <br />
-            <br />
-            <a href="#$message['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
-            <a href="#$message['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
-        </div>
+        <xar:if condition="isset($action) AND $action ne 'preview' AND $action ne 'check'">
+            <div class="xar-norm" style="padding: 4px;" align="left">
+                <br />
+                <br />
+                <a href="#$message['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
+                <a href="#$message['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
+            </div>
+        </xar:if>
     </div>
 <xar:else />
     <br />

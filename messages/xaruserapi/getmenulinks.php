@@ -9,7 +9,7 @@ function messages_userapi_getmenulinks ( $args ) {
     // not that he/she doesn't.
 
 
-    if (xarSecurityCheck('ViewMessages', 0) === true) {
+    if (xarSecurityCheck('ViewMessages', 0) == true) {
         // The main menu will look for this array and return it for a tree
         // view of the module. We are just looking for three items in the
         // array, the url, which we need to use the xarModURL function, the
