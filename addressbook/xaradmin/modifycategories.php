@@ -51,7 +51,7 @@ function AddressBook_admin_modifycategories() {
 		} 
 
 	    // get the list of categories
-	    $output['categories'] = xarModAPIFunc(__ADDRESSBOOK__,'admin','getItems',array('tablename'=>'categories'));
+	    $output['categories'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'categories'));
 	
 	    // Generate a one-time authorisation code for this operation
 	    $output['authid'] = xarSecGenAuthKey();

@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: deleterecord.php,v 1.1 2003/07/08 23:03:47 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook userapi deleteRecord
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -15,7 +15,10 @@
  */
 
 /**
- * deleterecord
+ * Delete a record from the address table
+ *
+ * @param int $id - address table key
+ * @return bool
  */
 function AddressBook_userapi_deleterecord($args) {
     extract($args);

@@ -48,7 +48,7 @@ function AddressBook_admin_modifylabels() {
 		} 
 
         // get the list of labels
-        $output['labels'] = xarModAPIFunc(__ADDRESSBOOK__,'admin','getItems',array('tablename'=>'labels'));
+        $output['labels'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'labels'));
 
         // Generate a one-time authorisation code for this operation
         $output['authid'] = xarSecGenAuthKey();

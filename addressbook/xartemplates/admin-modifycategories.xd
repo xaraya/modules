@@ -31,8 +31,8 @@
                                     <input name="name[]" type="text" value="#$category['name']#" size="20" maxlength="30" />
                                 </td>
                                 <td align="center" valign="middle">
-                                    <input type="checkbox" name="del[]" id="del[]" value="#$category['nr']#"/>
-                                    <input type="hidden" name="id[]" id="id[]" value="#$category['nr']#" />
+                                    <input type="checkbox" name="del[]" id="del[]" value="#$category['id']#"/>
+                                    <input type="hidden" name="id[]" id="id[]" value="#$category['id']#" />
                                 </td>
                             </tr>
                         </xar:foreach>

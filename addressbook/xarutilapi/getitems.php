@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: getitems.php,v 1.1 2003/06/30 04:36:54 garrett Exp $
+ * File: $Id: getitems.php,v 1.1 2003/07/08 23:56:13 garrett Exp $
  *
- * AddressBook adminapi getitems()
+ * AddressBook utilapi getitems()
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -23,7 +23,7 @@
  * @param args['tablename'] string
  * @return arrItems array
  */
-function AddressBook_adminapi_getItems($args)
+function AddressBook_utilapi_getItems($args)
 {
 	$arrItems = array();
 	
@@ -58,8 +58,8 @@ function AddressBook_adminapi_getItems($args)
 	        $arrItems = array();
 	        for($i=0; !$result->EOF; $result->MoveNext()) {
 	            list($itemID,$itemName) = $result->fields;
-	            $arrItems[$i]['nr']     = $itemID;
-	            $arrItems[$i++]['name']   = $itemName;
+	            $arrItems[$i]['id']     = $itemID;
+	            $arrItems[$i++]['name'] = $itemName;
 	         }
 	        $result->Close();
 	

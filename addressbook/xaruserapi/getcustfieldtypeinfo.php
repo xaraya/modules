@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: getcustfieldtypeinfo.php,v 1.1 2003/07/07 04:11:58 garrett Exp $
  *
  * AddressBook utility functions
  *

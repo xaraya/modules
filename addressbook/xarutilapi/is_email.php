@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: is_email.php,v 1.1 2003/07/08 22:57:19 garrett Exp $
  *
- * AddressBook user is_email
+ * AddressBook utilapi is_email
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -15,9 +15,12 @@
  */
 
 /**
- * is_email
+ * Validates the passed in string as an email address
+ *
+ * @param string $email
+ * @return bool true / false
  */
-function AddressBook_userapi_is_email ($args) {
+function AddressBook_utilapi_is_email ($args) {
     extract($args);
 
     if (empty($email)) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.2 2003/07/05 04:11:21 garrett Exp $
+ * File: $Id: handleexception.php,v 1.3 2003/07/09 00:09:56 garrett Exp $
  *
  * AddressBook utility functions
  *

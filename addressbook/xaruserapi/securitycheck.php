@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: securitycheck.php,v 1.1 2003/07/09 00:05:39 garrett Exp $
  *
  * AddressBook utility functions
  *

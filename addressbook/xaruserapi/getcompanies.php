@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: getcompanies.php,v 1.1 2003/07/08 23:09:09 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook userapi getCompanies
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -16,6 +16,9 @@
 
 /**
  * getCompanies
+ *
+ * @param N/A
+ * @return array of companies
  */
 function AddressBook_userapi_getCompanies() {
     list($dbconn) = xarDBGetConn();

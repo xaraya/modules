@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getaddresslist.php,v 1.3 2003/07/09 00:39:09 garrett Exp $
  *
  * AddressBook user getAddressList
  *
@@ -26,7 +26,7 @@ function AddressBook_userapi_getAddressList($args) {
     // Get the menu values
     $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
     foreach ($menuValues as $key=>$value) {
-        $data[$key] = $value;
+        $output[$key] = $value;
     }
 
     // SQL Query
@@ -35,13 +35,13 @@ function AddressBook_userapi_getAddressList($args) {
     $address_table = $xarTables['addressbook_address'];
 
     // Note Searchorder
-    if ($data['sortview'] != 1) {
+    if ($output['sortview'] != 1) {
         $sort_1 = xarModGetVar(__ADDRESSBOOK__, 'sortorder_1');
-        $data['sql'] = "SELECT *, CONCAT($sort_1) AS listname FROM $address_table";
+        $output['sql'] = "SELECT *, CONCAT($sort_1) AS listname FROM $address_table";
     }
     else {
         $sort_2 = xarModGetVar(__ADDRESSBOOK__, 'sortorder_2');
-        $data['sql'] = "SELECT *, CONCAT($sort_2) AS listname FROM $address_table";
+        $output['sql'] = "SELECT *, CONCAT($sort_2) AS listname FROM $address_table";
     }
 
     // Get user id
@@ -51,131 +51,130 @@ function AddressBook_userapi_getAddressList($args) {
     // Private Contacts only
     // if globalprotect, only records of the user are shown
     if (((xarModGetVar(__ADDRESSBOOK__, 'globalprotect'))==1) && (!xarSecurityCheck('EditAddressBook',0))) {
-        $data['sql'] .= " WHERE (user_id=$user_id)";
+        $output['sql'] .= " WHERE (user_id=$user_id)";
     }
     else {
         // if private = 1, show only private records
-        if ($data['menuprivate'] == 1) {
+        if ($output['menuprivate'] == 1) {
             // Admins always see all records
             if (xarSecurityCheck('EditAddressBook',0)) {
-                $data['sql'] .= " WHERE (user_id=$user_id)";
+                $output['sql'] .= " WHERE (user_id=$user_id)";
             }
             else {
-                $data['sql'] .= " WHERE (user_id=$user_id AND private = 1)";
+                $output['sql'] .= " WHERE (user_id=$user_id AND private = 1)";
             }
         }
         else {
             // Admins always see all records
             if (xarSecurityCheck('EditAddressBook',0)) {
-                $data['sql'] .= " WHERE (user_id IS NOT NULL)";
+                $output['sql'] .= " WHERE (user_id IS NOT NULL)";
             }
             else {
                 // if private = 0, show all records
-                $data['sql'] .= " WHERE ((private = 0) OR (user_id=$user_id AND private = 1))";
+                $output['sql'] .= " WHERE ((private = 0) OR (user_id=$user_id AND private = 1))";
             }
         }
     }
 
     // Filter Categories
-    if ($data['catview']) {
-        $data['sql'] .= " AND (cat_id = ".$data['catview'].")";
+    if ($output['catview']) {
+        $output['sql'] .= " AND (cat_id = ".$output['catview'].")";
     }
 
     // A-Z
-    if ($data['all'] == 0) {
-        if ($data['sortview'] != 1) {
+    if ($output['all'] == 0) {
+        if ($output['sortview'] != 1) {
             $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_1'));
         }
         else {
             $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_2'));
         }
         if ($sortCols[0] == 'sortname') {
-            if ($data['char']) { $data['sql'] .= " AND (sortname LIKE '".$data['char']."%')"; }
-            else { $data['sql'] .= " AND (sortname LIKE 'A%')"; }
+            if ($output['char']) { $output['sql'] .= " AND (sortname LIKE '".$output['char']."%')"; }
+            else { $output['sql'] .= " AND (sortname LIKE 'A%')"; }
         }
         else {
             if ($sortCols[0] == 'sortcompany') {
-                if ($data['char']) { $data['sql'] .= " AND (sortcompany LIKE '".$data['char']."%')"; }
-                else { $data['sql'] .= " AND (sortcompany LIKE 'A%')"; }
+                if ($output['char']) { $output['sql'] .= " AND (sortcompany LIKE '".$output['char']."%')"; }
+                else { $output['sql'] .= " AND (sortcompany LIKE 'A%')"; }
             }
             else {
-                if ($data['char']) { $data['sql'] .= " AND (".$sortCols[0]." LIKE '".$data['char']."%')"; }
-                else { $data['sql'] .= " AND (".$sortCols[0]." LIKE 'A%')"; }
+                if ($output['char']) { $output['sql'] .= " AND (".$sortCols[0]." LIKE '".$output['char']."%')"; }
+                else { $output['sql'] .= " AND (".$sortCols[0]." LIKE 'A%')"; }
             }
         }
     }
 
     // Search
-    if ($data['formSearch']) {
-        $data['sql'] .= " AND (lname LIKE '%".$data['formSearch']."%'
-                  OR fname LIKE '%".$data['formSearch']."%'
-                  OR company LIKE '%".$data['formSearch']."%'
-                  OR title LIKE '%".$data['formSearch']."%'
-                  OR city LIKE '%".$data['formSearch']."%'
-                  OR address_1 LIKE '%".$data['formSearch']."%'
-                  OR address_2 LIKE '%".$data['formSearch']."%'
-                  OR zip LIKE '%".$data['formSearch']."%'
-                  OR country LIKE '%".$data['formSearch']."%'
-                  OR state LIKE '%".$data['formSearch']."%'
-                  OR note LIKE '%".$data['formSearch']."%'
-                  OR contact_1 LIKE '%".$data['formSearch']."%'
-                  OR contact_2 LIKE '%".$data['formSearch']."%'
-                  OR contact_3 LIKE '%".$data['formSearch']."%'
-                  OR contact_4 LIKE '%".$data['formSearch']."%'
-                  OR contact_5 LIKE '%".$data['formSearch']."%')";
+    if ($output['formSearch']) {
+        $output['sql'] .= " AND (lname LIKE '%".$output['formSearch']."%'
+                  OR fname LIKE '%".$output['formSearch']."%'
+                  OR company LIKE '%".$output['formSearch']."%'
+                  OR title LIKE '%".$output['formSearch']."%'
+                  OR city LIKE '%".$output['formSearch']."%'
+                  OR address_1 LIKE '%".$output['formSearch']."%'
+                  OR address_2 LIKE '%".$output['formSearch']."%'
+                  OR zip LIKE '%".$output['formSearch']."%'
+                  OR country LIKE '%".$output['formSearch']."%'
+                  OR state LIKE '%".$output['formSearch']."%'
+                  OR note LIKE '%".$output['formSearch']."%'
+                  OR contact_1 LIKE '%".$output['formSearch']."%'
+                  OR contact_2 LIKE '%".$output['formSearch']."%'
+                  OR contact_3 LIKE '%".$output['formSearch']."%'
+                  OR contact_4 LIKE '%".$output['formSearch']."%'
+                  OR contact_5 LIKE '%".$output['formSearch']."%')";
 
-//        $cus_fields = xarModAPIFunc(__ADDRESSBOOK__,'user','customFieldInformation',array('id'=>''));
-        $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustomFieldInfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
+        $custFields = xarModAPIFunc(__ADDRESSBOOK__,'user','getCustFieldInfo',array('flag'=>_AB_CUST_ALLFIELDINFO));
         foreach($cusFields as $cusField) {
             if ((!strstr($custFieled['type'],_AB_CUST_TEST_LB)) && (!strstr($custField['type'],_AB_CUST_TEST_HR))) {
                 if (strstr($custField['type'],_AB_CUST_TEST_STRING)) {
-                    $data['sql'] .= " OR ".$custField['colName']." LIKE '%".$data['formSearch']."%'";
+                    $output['sql'] .= " OR ".$custField['colName']." LIKE '%".$output['formSearch']."%'";
                 }
             }
         }
     }
 
     // Sort
-    $data['sql'] .= " ORDER BY listname ASC";
+    $output['sql'] .= " ORDER BY listname ASC";
 
-    if (!$data['total']) {
-        $numRec =& $dbconn->Execute($data['sql']);
-        $data['total'] = $numRec->RecordCount();
-        $data['page'] = 1;
+    if (!$output['total']) {
+        $numRec =& $dbconn->Execute($output['sql']);
+        $output['total'] = $numRec->RecordCount();
+        $output['page'] = 1;
         $numRec->Close();
     }
 
-    if (!$data['total']) {
+    if (!$output['total']) {
         xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_INFO, new abUserException(_AB_NORECORDS)); //gehDEBUG
     }
 
     $items = xarModGetVar(__ADDRESSBOOK__, 'itemsperpage');
-    $result =& $dbconn->Execute($data['sql']);
+    $result =& $dbconn->Execute($output['sql']);
 
     if ($dbconn->ErrorNo() != 0) {
-        xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR, new abUserException("sql = ".$data['sql']));
+        xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR, new abUserException("sql = ".$output['sql']));
     }
 
     //Show Result
 
     // A-Z Navigation
     /**
-     * These vars are not displayed / do not need to go in $data
+     * These vars are not displayed / do not need to go in $output
      */
-    $selChar = ((isset($data['char'])) ? $data['char'] : '');
-    $numPages = (($data['total']/$items)+1);
+    $selChar = ((isset($output['char'])) ? $output['char'] : '');
+    $numPages = (($output['total']/$items)+1);
 
-    $data['azLinks'] = array();
-    if ($data['all']==0) {
-        $numPages = (($data['total']/$items)+1);
+    $output['azLinks'] = array();
+    if ($output['all']==0) {
+        $numPages = (($output['total']/$items)+1);
         for($i=65;$i<=90;$i++) {
             $azLink = '';
             $char = chr($i);
             $params = array('authid'=>xarSecGenAuthKey(),
-                            'sortview'=>$data['sortview'],
-                            'catview'=>$data['catview'],
-                            'menuprivate'=>$data['menuprivate'],
-                            'all'=>$data['all'],
+                            'sortview'=>$output['sortview'],
+                            'catview'=>$output['catview'],
+                            'menuprivate'=>$output['menuprivate'],
+                            'all'=>$output['all'],
                             'char'=>$char);
 
             $pageURL = xarModURL(__ADDRESSBOOK__,'user','main',$params);
@@ -187,22 +186,22 @@ function AddressBook_userapi_getAddressList($args) {
             } else {
                 $azLink .= "<a href=\"".$pageURL."\">".$char."</a>";
             }
-            $data['azLinks'][]['azLink'] = $azLink;
+            $output['azLinks'][]['azLink'] = $azLink;
         }
     }
     // END A-Z Navigation
 
     // No Records found!
-    if ($data['total'] < 1) {
-        return $data;
+    if ($output['total'] < 1) {
+        return $output;
     }
 
-    if ($data['sortview'] != 1) {
-        $data['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getListHeader',array('sort'=>1));
+    if ($output['sortview'] != 1) {
+        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getListHeader',array('sort'=>1));
 //geh        $output->Text('<b>'.xarVarPrepHTMLDisplay($headers[0]).'</b>');
     }
     else {
-        $data['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getListHeader',array('sort'=>2));
+        $output['headers'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getListHeader',array('sort'=>2));
 //geh        $output->Text('<b>'.xarVarPrepHTMLDisplay($headers[0]).'</b>');
     }
 
@@ -212,7 +211,7 @@ function AddressBook_userapi_getAddressList($args) {
     for (; !$result->EOF; $result->MoveNext()) {
         list($id,$cat_id,$prefix,$lname,$fname,$sortname,$title,$company,$sortcompany,$img,$zip,$city,$address_1,$address_2,$state,$country,$contact_1,$contact_2,$contact_3,$contact_4,$contact_5,$c_label_1,$c_label_2,$c_label_3,$c_label_4,$c_label_5,$c_main,$custom_1,$custom_2,$custom_3,$custom_4,$note,$user,$private,$date,$listname) = $result->fields;
         $displayRow = array();
-        $data['searchResults'][] = array ('id'          => $id
+        $output['searchResults'][] = array ('id'          => $id
                                          ,'cat_id'      => $cat_id
                                          ,'prefix'      => $prefix
                                          ,'lname'       => $lname
@@ -264,7 +263,7 @@ function AddressBook_userapi_getAddressList($args) {
         /*
          * Step 1
          */
-        if ($data['sortview'] != 1) {
+        if ($output['sortview'] != 1) {
             $sortCols = explode(',',xarModGetVar(__ADDRESSBOOK__, 'sortorder_1'));
         }
         else {
@@ -332,8 +331,8 @@ function AddressBook_userapi_getAddressList($args) {
         // Format Contact information
         switch($c_main) {
             case 0:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$contact_1))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$contact_1))) {
+                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_1))) {
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_1))) {
                         if (!empty($contact_1)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_1);
                         } else {
@@ -349,8 +348,8 @@ function AddressBook_userapi_getAddressList($args) {
                 }
                 break;
             case 1:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$contact_2))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$contact_2))) {
+                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_2))) {
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_2))) {
                         if (!empty($contact_2)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_2);
                         } else {
@@ -366,8 +365,8 @@ function AddressBook_userapi_getAddressList($args) {
                 }
                 break;
             case 2:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$contact_3))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$contact_3))) {
+                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_3))) {
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_3))) {
                         if (!empty($contact_3)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_3);
                         } else {
@@ -383,8 +382,8 @@ function AddressBook_userapi_getAddressList($args) {
                 }
                 break;
             case 3:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$contact_4))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$contact_4))) {
+                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_4))) {
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_4))) {
                         if (!empty($contact_4)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_4);
                         } else {
@@ -400,8 +399,8 @@ function AddressBook_userapi_getAddressList($args) {
                 }
                 break;
             case 4:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$contact_5))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$contact_5))) {
+                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_5))) {
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_5))) {
                         if (!empty($contact_5)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_5);
                         } else {
@@ -417,8 +416,8 @@ function AddressBook_userapi_getAddressList($args) {
                 }
                 break;
             default:
-                if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$contact_1))) {
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$contact_1))) {
+                if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$contact_1))) {
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$contact_1))) {
                         if (!empty($contact_1)) {
                             $displayRow[] = xarVarPrepHTMLDisplay($contact_1);
                         } else {
@@ -439,16 +438,17 @@ function AddressBook_userapi_getAddressList($args) {
         $detailargs=array('id'=>$id,
                         'formcall'=>'edit',
                         'authid'=>xarSecGenAuthKey(),
-                        'catview'=>$data['catview'],
-                        'sortview'=>$data['sortview'],
-                        'formSearch'=>urlencode($data['formSearch']),
-                        'all'=>$data['all'],
-                        'menuprivate'=>$data['menuprivate'],
-                        'total'=>$data['total'],
-                        'page'=>$data['page'],
+                        'catview'=>$output['catview'],
+                        'sortview'=>$output['sortview'],
+                        'formSearch'=>urlencode($output['formSearch']),
+                        'all'=>$output['all'],
+                        'menuprivate'=>$output['menuprivate'],
+                        'total'=>$output['total'],
+                        'page'=>$output['page'],
                         'char'=>$selChar);
 
-        $data['displayRows'][] = array ('displayRow' => $displayRow
+		//FIXME:<garrett> sloppy way of of setting up data. Redundant vars (accessLevel, *TEXT..)
+        $output['displayRows'][] = array ('displayRow' => $displayRow
                                        ,'detailURL' => xarModURL(__ADDRESSBOOK__,'user','viewdetail',$detailargs)
                                        ,'detailTXT' => xarVarPrepHTMLDisplay(_AB_LABEL_SHOWDETAIL)
                                        ,'deleteURL' => xarModURL(__ADDRESSBOOK__,'user','confirmdelete',$detailargs)
@@ -459,35 +459,35 @@ function AddressBook_userapi_getAddressList($args) {
                                         );
     } // END for
 
-    $numPages = (($data['total']/$items)+1);
+    $numPages = (($output['total']/$items)+1);
     for($i=1;$i<$numPages;$i++) {
-        if ($data['all']==0) {
+        if ($output['all']==0) {
             $params = array('authid'=>xarSecGenAuthKey(),
-                            'sortview'=>$data['sortview'],
-                            'catview'=>$data['catview'],
-                            'menuprivate'=>$data['menuprivate'],
-                            'all'=>$data['all'],
+                            'sortview'=>$output['sortview'],
+                            'catview'=>$output['catview'],
+                            'menuprivate'=>$output['menuprivate'],
+                            'all'=>$output['all'],
                             'formSearch'=>$formSearch,
-                            'total'=>$data['total'],
+                            'total'=>$output['total'],
                             'page'=>$i,
                             'char'=>$selChar);
         }
         else {
             $params = array('authid'=>xarSecGenAuthKey(),
-                'sortview'=>$data['sortview'],
-                'catview'=>$data['catview'],
-                'menuprivate'=>$data['menuprivate'],
-                'all'=>$data['all'],
-                'formSearch'=>$data['formSearch'], //gehDEBUG - good place to test exception handling
-                'total'=>$data['total'],
+                'sortview'=>$output['sortview'],
+                'catview'=>$output['catview'],
+                'menuprivate'=>$output['menuprivate'],
+                'all'=>$output['all'],
+                'formSearch'=>$output['formSearch'], //gehDEBUG - good place to test exception handling
+                'total'=>$output['total'],
                 'page'=>$i);
         }
-        $data['pageNav'][]  = array ('pageURL' => xarModURL(__ADDRESSBOOK__,'user','viewall',$params)
+        $output['pageNav'][]  = array ('pageURL' => xarModURL(__ADDRESSBOOK__,'user','viewall',$params)
                                     ,'pageNum' => $i
                                     ,'absolutePage' => $result->AbsolutePage());
     } // END for
 
-    return $data;
+    return $output;
 
 } // END getAddressList
 

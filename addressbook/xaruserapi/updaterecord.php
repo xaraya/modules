@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: updaterecord.php,v 1.2 2003/07/09 00:09:44 garrett Exp $
  *
  * AddressBook user updateRecord
  *
@@ -111,10 +111,19 @@ function AddressBook_userapi_updaterecord($args) {
         foreach($custUserData as $userData) {
             if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
                 $sql .= $userData['colName']."='".xarVarPrepForStore($userData['userData'])."',";
+
             } elseif ($userData['type']=='date default NULL') {
-                $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'user','td2stamp',array('idate'=>$userData['userData']))."',";
+                $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData']))."',";
+
+            } elseif ($userData['type']=='int default NULL') {
+                $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+
+            } elseif ($userData['type']=='int(1) default NULL') {
+                $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+
             } elseif ($userData['type']=='decimal(10,2) default NULL') {
-                $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'user','input2numeric',array('inum'=>$userData['userData'])).",";
+                $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+
             } elseif ((!strstr($userData['type'],_AB_CUST_TEST_LB) &&
                        !strstr($userData['type'],_AB_CUST_TEST_HR)) &&
                       (empty($userData['userData']) || $userData['userData'] == '')) {

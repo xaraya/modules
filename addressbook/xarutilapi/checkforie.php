@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: checkforie.php,v 1.1 2003/07/08 22:32:23 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook util checkForIE
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -14,7 +14,13 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function AddressBook_userapi_checkForIE() {
+/**
+ * Invoke the sniffer API and check if the request comes from an IE browser
+ *
+ * @param none
+ * @return bool (true - client uses Internet Explorer / false - no IE
+ */
+function AddressBook_utilapi_checkForIE() {
 
     xarModAPIFunc('sniffer','user','sniff');
 

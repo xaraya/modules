@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: checkaccesslevel.php,v 1.2 2003/07/09 00:09:26 garrett Exp $
  *
  * AddressBook user checkAccessLevel
  *
@@ -16,6 +16,9 @@
 
 /**
  * checkAccessLevel - checks for AB specific access levels
+ *
+ * @param string $option - target access level
+ * @return bool
  */
 function AddressBook_userapi_checkAccessLevel($args) {
     $access=false;

@@ -3,18 +3,26 @@
 <!--- Original Author of file: Garrett Hunter                        --->
 <!--- Purpose of file:  Template to modify admin settings            --->
 <!--- -------------------------------------------------------------- --->
+<!--- START TITLE BAR -----------------------------------------------------------  --->
 <xar:template compile="false" file="mod-title" type="module" />
-<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center; ">
-<xar:if condition="!isset($insertStatus)">
-<br />
-<br />
-<div>
-    <xar:if condition="$formcall eq 'edit'">
-        <h3>#$fname# #$lname#</h3>
-    <xar:else />
-        <h3><xar:mlstring>Insert new record</xar:mlstring></h3>
-    </xar:if>
-</div>
+<!--- END TITLE BAR -------------------------------------------------------------  --->
+<div class="xar-mod-body" style="display:block;">
+  <!--- START WARN DISPLAY -----------------------------------------------------------  --->
+  <div style="text-align:center;">
+  <xar:template compile="false" file="mod-warn-msg" type="module" />
+  </div>
+<!--- END WARN DISPLAY -------------------------------------------------------------  --->
+	<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center; ">
+	<xar:if condition="!isset($insertStatus)">
+	<br />
+	<br />
+	<div>
+	    <xar:if condition="$formcall eq 'edit'">
+	        <h3>#$fname# #$lname#</h3>
+	    <xar:else />
+	        <h3><xar:mlstring>Insert new record</xar:mlstring></h3>
+	    </xar:if>
+	</div>
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
 <!--- START MENUVALUES --->
 <input name="id" type="hidden" value="#$id#" id="id">
@@ -141,4 +149,5 @@
 	<div style="text-align:center;">
 		<xar:template compile="false" file="mod-footer" type="module" />
 	</div>
+</div>
 </div>

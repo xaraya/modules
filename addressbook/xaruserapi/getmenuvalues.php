@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getmenuvalues.php,v 1.1 2003/07/08 23:55:42 garrett Exp $
  *
- * AddressBook user getMenuValues
+ * AddressBook userapi getMenuValues
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -16,6 +16,9 @@
 
 /**
  * getMenuValues - performs the URL retrieval of data
+ *
+ * @param GET / POST params from viewall from
+ * @return array $menuValues
  */
 function AddressBook_userapi_getMenuValues() {
     $menuValues = array();

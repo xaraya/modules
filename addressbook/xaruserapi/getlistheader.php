@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getlistheader.php,v 1.1 2003/07/08 23:56:05 garrett Exp $
  *
- * AddressBook user getListHeader
+ * AddressBook userapi getListHeader
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -15,7 +15,10 @@
  */
 
 /**
- * getListHeader
+ * Retrieve the address list results header fields
+ *
+ * @param int $sort
+ * @return array
  */
 function AddressBook_userapi_getListHeader($args){
     extract($args);

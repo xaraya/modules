@@ -192,9 +192,6 @@ define('_AB_ZIPBEFORECITY',     'Show zip before city');
 // User Defines
 define('_AB_ALLCATEGORIES',     'All Categories');
 define('_AB_CANCEL',            "Cancel");
-define('_AB_CHKMSG_1',          'There is a false numeric value in the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab.');
-define('_AB_CHKMSG_2',          'In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there are characters in a digit-only field.');
-define('_AB_CHKMSG_3',          'In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there is a false date format.');
 define('_AB_CONFIRMDELETE',     "Delete this Address Book item?");
 define('_AB_CONTACTINFO',       "General Information");
 define('_AB_COPY',              "Copy to clipboard");
@@ -212,9 +209,14 @@ define('_AB_TEMPLATE_CONTACT', 2);
 define('_AB_TEMPLATE_CUST',   3);
 define('_AB_TEMPLATE_NAME',   0);
 define('_AB_TEMPLATE_NOTE',   4);
-define('_AB_UPDATE_CHKMSG_1', 'An Address Book Entry must contain data in at least one field of the Name tab!');
 define('_AB_UPDATE_ERROR',  'An Error ocurred. The Address Book Entry could not be updated!');
 define('_AB_UPDATE_RECORD',  "Update");
+
+define('_AB_ERRMSG_MISFIELDS_NAME_TAB', 'An Address Book Entry must contain data in at least one field of the Name tab!');
+define('_AB_ERRMSG_FALSENUM_CUST_TAB',  'There is a false numeric value in the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab.');
+define('_AB_ERRMSG_INVALNUM_CUST_TAB',  'In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there are characters in a digit-only field.');
+define('_AB_ERRMSG_INVALDATE_CUST_TAB', 'In the '.xarModGetVar(__ADDRESSBOOK__,'custom_tab').' tab there is a false date format.');
+
 
 
 ////////////////

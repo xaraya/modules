@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: num4display.php,v 1.1 2003/07/08 22:58:18 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook utilapi num4display
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -14,6 +14,12 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
+/**
+ * Validates the passed in string as an email address
+ *
+ * @param string $inum
+ * @return string - number formatted for display
+ */
 function AddressBook_userapi_num4display($args){
     extract($args);
     if( (!isset($inum)) || (empty($inum)) || ($inum=='')) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getmenu.php,v 1.2 2003/07/09 00:09:44 garrett Exp $
  *
  * AddressBook user getMenu
  *
@@ -19,45 +19,44 @@
  */
 function AddressBook_userapi_getMenu($args) {
     extract ($args);
-    if (!is_array ($data)) { $data = array (); }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $output['authid'] = xarSecGenAuthKey();
 
     if (xarSecurityCheck('EditAddressBook',0)) {
-        $data['show_menu_off'] = false;
+        $output['show_menu_off'] = false;
     }
     else {
-        $m = xarModGetVar(__ADDRESSBOOK__, 'menu_off');
-        switch ($m) {
+        $menu_off = xarModGetVar(__ADDRESSBOOK__, 'menu_off');
+        switch ($menu_off) {
             case 0:
-                $data['show_menu_off'] = FALSE;
+                $output['show_menu_off'] = FALSE;
                 break;
             case 1:
-                $data['show_menu_off'] = TRUE;
+                $output['show_menu_off'] = TRUE;
                 break;
             case 2:
                 if (xarUserIsLoggedIn()) {
-                    $data['show_menu_off'] = FALSE;
+                    $output['show_menu_off'] = FALSE;
                 } else {
-                    $data['show_menu_off'] = TRUE;
+                    $output['show_menu_off'] = TRUE;
                 }
                 break;
             default:
-                $data['show_menu_off'] = TRUE;
+                $output['show_menu_off'] = TRUE;
                 break;
         }
     }
-    if ($data['show_menu_off']) {
-        return $data;
+    if ($output['show_menu_off']) {
+        return $output;
     }
     else {
         // Start Category
-        $data['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getCategories');
+        $output['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'categories'));
 
         $sortby_1 = xarModAPIFunc(__ADDRESSBOOK__,'user','getSortBy',array('sort'=>1));
         $sortby_2 = xarModAPIFunc(__ADDRESSBOOK__,'user','getSortBy',array('sort'=>2));
-        $data['sortby'][] = array('id'=>0,'name'=>xarVarPrepHTMLDisplay($sortby_1));
-        $data['sortby'][] = array('id'=>1,'name'=>xarVarPrepHTMLDisplay($sortby_2));
+        $output['sortby'][] = array('id'=>0,'name'=>xarVarPrepHTMLDisplay($sortby_1));
+        $output['sortby'][] = array('id'=>1,'name'=>xarVarPrepHTMLDisplay($sortby_2));
 
         if ((xarModGetVar(__ADDRESSBOOK__, 'menu_semi') != 1) || (xarSecurityCheck('EditAddressBook',0))) {
 
@@ -72,7 +71,7 @@ function AddressBook_userapi_getMenu($args) {
                     $menuprivate_fl = 1;
                 }
                 else {
-                    if ($data['menuprivate'] == 1) {
+                    if ($output['menuprivate'] == 1) {
                         $menuprivate_fl = 0;
                     }
                     else {
@@ -80,53 +79,53 @@ function AddressBook_userapi_getMenu($args) {
                     }
                 }
 
-                $data['menuprivateParams'] =
+                $output['menuprivateParams'] =
                         array('authid'=>xarSecGenAuthKey()
-                             ,'sortview'=>$data['sortview']
-                             /*,'total'=>$data['total']*/
-                             ,'catview'=>$data['catview']
+                             ,'sortview'=>$output['sortview']
+                             /*,'total'=>$output['total']*/
+                             ,'catview'=>$output['catview']
                              ,'menuprivate'=>$menuprivate_fl
-                             ,'all'=> $data['all']
-                             ,'char'=>$data['char']);
+                             ,'all'=> $output['all']
+                             ,'char'=>$output['char']);
 
-                $data['viewPrivateTEXT'] = xarML(_AB_VIEWPRIVATE);
-                if ($data['menuprivate']) {
-                    $data['privateIndicator'] = 'X';
+                $output['viewPrivateTEXT'] = xarML(_AB_VIEWPRIVATE);
+                if ($output['menuprivate']) {
+                    $output['privateIndicator'] = 'X';
                 } else {
-                    $data['privateIndicator'] = '&nbsp;';
+                    $output['privateIndicator'] = '&nbsp;';
                 }
 
 
             }
             // end private
 
-            $data['azMenuTEXT'] = xarML(_AB_MENU_AZ);
-            $data['allMenuTEXT'] = xarML(_AB_MENU_ALL);
+            $output['azMenuTEXT'] = xarML(_AB_MENU_AZ);
+            $output['allMenuTEXT'] = xarML(_AB_MENU_ALL);
 
             // Start A-Z/All
-            if ($data['all'] == 1) {
-                $data['azInidcator'] = '&nbsp;';
-                $data['allInidcator']= 'X';
+            if ($output['all'] == 1) {
+                $output['azInidcator'] = '&nbsp;';
+                $output['allInidcator']= 'X';
             }
             else {
-                $data['azInidcator'] = 'X';
-                $data['allInidcator']= '&nbsp;';
+                $output['azInidcator'] = 'X';
+                $output['allInidcator']= '&nbsp;';
             }
-            $data['azParams'] = array('authid'=>xarSecGenAuthKey()
-                                ,'sortview'=>$data['sortview']
-                                ,'catview'=>$data['catview']
-                                ,'menuprivate'=>$data['menuprivate']
+            $output['azParams'] = array('authid'=>xarSecGenAuthKey()
+                                ,'sortview'=>$output['sortview']
+                                ,'catview'=>$output['catview']
+                                ,'menuprivate'=>$output['menuprivate']
                                 ,'all'=>0
-                                ,'char'=>$data['char']);
+                                ,'char'=>$output['char']);
 
-            $data['allParams'] = array('authid'=>xarSecGenAuthKey()
-                                ,'sortview'=>$data['sortview']
-                                ,'catview'=>$data['catview']
-                                ,'menuprivate'=>$data['menuprivate']
+            $output['allParams'] = array('authid'=>xarSecGenAuthKey()
+                                ,'sortview'=>$output['sortview']
+                                ,'catview'=>$output['catview']
+                                ,'menuprivate'=>$output['menuprivate']
                                 ,'all'=>1
-                                /*,'total'=>$data['total']*/
-                                ,'page'=>$data['page']
-                                ,'char'=>$data['char']);
+                                /*,'total'=>$output['total']*/
+                                ,'page'=>$output['page']
+                                ,'char'=>$output['char']);
 
             // End A-Z/all
 
@@ -135,27 +134,27 @@ function AddressBook_userapi_getMenu($args) {
              */
 
             // URL query params passed by new address link
-            $data['menuValues']=array('formcall'=>'insert',
+            $output['menuValues']=array('formcall'=>'insert',
                                         'authid'=>xarSecGenAuthKey(),
-                                        'catview'=>$data['catview'],
-                                        'menuprivate'=>$data['menuprivate'],
-                                        'all'=>$data['all'],
-                                        'sortview'=>$data['sortview'],
-                                        'page'=>$data['page'],
-                                        'char'=>$data['char'],
-                                        'total'=>$data['total']);
+                                        'catview'=>$output['catview'],
+                                        'menuprivate'=>$output['menuprivate'],
+                                        'all'=>$output['all'],
+                                        'sortview'=>$output['sortview'],
+                                        'page'=>$output['page'],
+                                        'char'=>$output['char'],
+                                        'total'=>$output['total']);
 
-            $data['newAddrLinkTEXT'] = xarVarPrepHTMLDisplay (xarML(_AB_MENU_ADD));
+            $output['newAddrLinkTEXT'] = xarVarPrepHTMLDisplay (xarML(_AB_MENU_ADD));
 
             // Set our flag / template uses to determine if it should display the link
-            $data['addNewAddress'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'create'));
+            $output['addNewAddress'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'create'));
 
             // End New Record
 
         }
     }
 
-    return $data;
+    return $output;
 } // END getMenu
 
 ?>

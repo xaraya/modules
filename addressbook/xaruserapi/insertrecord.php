@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertrecord.php,v 1.1 2003/07/02 08:27:45 garrett Exp $
+ * File: $Id: insertrecord.php,v 1.2 2003/07/09 00:09:44 garrett Exp $
  *
  * AddressBook user insertRecord
  *
@@ -48,7 +48,7 @@ function AddressBook_userapi_insertrecord($args) {
     if (isset($custUserData)) {
         foreach($custUserData as $rowIdx=>$userData) {
             if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
-                $custUserData[$rowIdx]['userData'] = 
+                $custUserData[$rowIdx]['userData'] =
                 		xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$userData['userData']);
             }
         }
@@ -154,14 +154,19 @@ function AddressBook_userapi_insertrecord($args) {
                 foreach($custUserData as $userData) {
                     if (strstr($userData['type'],_AB_CUST_TEST_STRING)) {
                         $sql .= "'".xarVarPrepForStore($userData['userData'])."',";
+
                     } elseif ($userData['type']=='date default NULL') {
-                        $sql .= "'".xarModAPIFunc(__ADDRESSBOOK__,'user','td2stamp',array('idate'=>$userData['userData']))."',";
+                        $sql .= "'".xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData']))."',";
+
                     } elseif ($userData['type']=='int default NULL') {
-                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','input2numeric',array('inum'=>$userData['userData'])).",";
+                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+
                     } elseif ($userData['type']=='int(1) default NULL') {
-                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','input2numeric',array('inum'=>$userData['userData'])).",";
+                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+
                     } elseif ($userData['type']=='decimal(10,2) default NULL') {
-                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'user','input2numeric',array('inum'=>$userData['userData'])).",";
+                        $sql .= xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+
                     } elseif ((!strstr($userData['type'],_AB_CUST_TEST_LB) &&
                                !strstr($userData['type'],_AB_CUST_TEST_HR)) &&
                               (empty($userData['userData']) || $userData['userData'] == '')) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getcustfielduserinfo.php,v 1.1 2003/07/07 04:11:58 garrett Exp $
  *
  * AddressBook user getCustomFieldUserInfo
  *
@@ -75,7 +75,9 @@ function AddressBook_userapi_getCustFieldUserInfo($args) {
             $errMsg .= 'id not set';
         }
 
-        xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR, new abUserException("userapi - getCustFieldUserInfo: ".$errMsg)); //gehDEBUG
+        xarExceptionSet(XAR_USER_EXCEPTION, 
+                        _AB_ERR_ERROR, 
+                        new abUserException("userapi - getCustFieldUserInfo: ".$errMsg)); //gehDEBUG
     }
 
     return $custFieldUserInfo;

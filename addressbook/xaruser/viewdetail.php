@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: viewdetail.php,v 1.1 2003/07/02 07:31:18 garrett Exp $
+ * File: $Id: viewdetail.php,v 1.2 2003/07/09 00:08:40 garrett Exp $
  *
  * AddressBook user viewDetail
  *
@@ -38,7 +38,7 @@ function AddressBook_user_viewdetail() {
     }
 
     // Get the labels
-    $labels = xarModAPIFunc(__ADDRESSBOOK__,'user','getLabels');
+    $labels = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'labels'));
 
     // General information
     // headline
@@ -73,8 +73,8 @@ function AddressBook_user_viewdetail() {
             foreach ($labels as $lab) {
                 if ($output[$the_label] == $lab['nr']) {
                     $contact['label'] = xarVarPrepHTMLDisplay($lab['name']);
-                    if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_email',array('email'=>$output[$the_contact]))) {
-                        if(!xarModAPIFunc(__ADDRESSBOOK__,'user','is_url',array('url'=>$output[$the_contact]))) {
+                    if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$output[$the_contact]))) {
+                        if(!xarModAPIFunc(__ADDRESSBOOK__,'util','is_url',array('url'=>$output[$the_contact]))) {
                             $contact['contact'] = xarVarPrepHTMLDisplay($output[$the_contact]);
                         }
                         else {
@@ -107,46 +107,7 @@ function AddressBook_user_viewdetail() {
         								array('id'=>$output['id']
                                              ,'flag'=>_AB_CUST_ALLINFO));
 
-/* gehDEBUG
-        $hasValues = false;
-        foreach($cus_fields as $cus) {
-            if ((!empty($cus['value'])) && ($cus['value'] != '')) {
-                $hasValues = true;
-                break;
-            }
-        }
-        if ((!strstr($cus['type'],_AB_CUST_TEST_LB)) && (!strstr($cus['type'],_AB_CUST_TEST_HR))) {
-            $hasValues = true;
-        }
-        if ($hasValues) {
-*/
-/* gehDEBUG - need to fix the formatting here
 
-            foreach($custUserData as $userData) {
-                if ($userData['type']=='date default NULL') {
-                    $userData['userData'] = xarModAPIFunc(__ADDRESSBOOK__,'user','stamp2date',array('idate'=>$userData['userData']));
-                } elseif ($userData['type']=='decimal(10,2) default NULL') {
-                    $userData['userData'] = xarModAPIFunc(__ADDRESSBOOK__,'user','num4display',array('inum'=>$userData['userData']));
-                } elseif ((strstr($userData['type'],_AB_CUST_TEST_LB)) || (strstr($userData['type'],_AB_CUST_TEST_LB))) {
-                    if (strstr($userData['type'],_AB_CUST_TEST_LB)) {
-                        $userData['userData'] = _AB_HTML_LINEBREAK;
-                    } else {
-                        $userData['userData'] = _AB_HTML_HORIZRULE;
-                    }
-                } elseif (!empty($userData['userData'])) {
-                    $userData['type'] = xarVarPrepHTMLDisplay($userData['type']);
-                    $userData['userData'] = xarVarPrepHTMLDisplay(nl2br($userData['userData']));
-                } else {
-                    $userData['type'] = xarVarPrepHTMLDisplay($userData['type']);
-                    $userData['userData'] = '&nbsp;';
-                }
-
-                $output['custUserData'][] = $userData;
-
-            } // END foreach
-*/
-
-//        }
     } // END if
 
     /**
@@ -164,7 +125,7 @@ function AddressBook_user_viewdetail() {
      * Navigation buttons
      */
     // Copy to clipboard if IE
-    if (xarModAPIFunc(__ADDRESSBOOK__,'user','checkForIE')) {
+    if (xarModAPIFunc(__ADDRESSBOOK__,'util','checkForIE')) {
         $clip='';
         if (!empty($output['company'])) {$clip.=$output['company'].'\n'; }
         if (!empty($output['lname'])) {
@@ -190,7 +151,7 @@ function AddressBook_user_viewdetail() {
     }
 
     $output['goBack'] = xarVarPrepHTMLDisplay(_AB_GOBACK);
- 
+
 	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 
 } // END viewdetail

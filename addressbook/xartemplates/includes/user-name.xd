@@ -66,12 +66,19 @@
             </td>
             </tr>
             <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'use_img') and xarSecurityCheck('AdminAddressBook',0)">
-          <tr>
-            <td align="right" valign="middle"><xar:mlstring>Image</xar:mlstring>:</td>
-            <td align="left" valign="middle">               <select name="img" id="img" disabled>
-              <option value="1" selected>feature not implemented</option>
-        </select>
-                </td>
+            <tr>
+              <td align="right" valign="middle"><xar:mlstring>Image</xar:mlstring>:</td>
+              <td align="left" valign="middle">
+                <select name="img" id="img">
+                    <xar:foreach in="$imgFiles" value="$imgFile">
+                        <xar:if condition="$imgFile['id'] ne $img">
+                  <option value="#$imgFile['id']#">#$imgFile['name']#</option>
+                        <xar:else />
+                  <option selected value="#$imgFile['id']#">#$imgFile['name']#</option>
+                        </xar:if>
+                    </xar:foreach>
+		        </select>
+              </td>
             </tr>
             <xar:else />
                 <input type="hidden" name="img" id="img" value="" />

@@ -280,13 +280,11 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td>&nbsp;</td>
-                <td align="left" valign="middle"><input name="submit" type="submit" tabindex="27" value="#$btnCommitText#" align="middle" />
-                  <input name="authid" type="hidden" id="authid" value="#$authid#" />
-                  <input name="formSubmit" type="hidden" id="formSubmit" value="1" />
-								</td>
-                <td colspan="3">&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colspan="6" align="center" valign="middle">
+	                <input name="submit" type="submit" tabindex="27" value="#$btnCommitText#" align="middle" />
+	                <input name="authid" type="hidden" id="authid" value="#$authid#" />
+	                <input name="formSubmit" type="hidden" id="formSubmit" value="1" />
+				</td>
               </tr>
             </form>
           </table>

@@ -56,7 +56,7 @@ function AddressBook_admin_modifyprefixes($args) {
 		} 
 
 	    // get the list of prefixes
-	    $output['prefixes'] = xarModAPIFunc(__ADDRESSBOOK__,'admin','getItems',array('tablename'=>'prefixes'));
+	    $output['prefixes'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'prefixes'));
 	
 	    // Generate a one-time authorisation code for this operation
 	    $output['authid'] = xarSecGenAuthKey();

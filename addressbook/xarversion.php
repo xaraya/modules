@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: xarversion.php,v 1.1 2003/06/30 01:46:00 garrett Exp $
  *
  * AddressBook utility functions
  *

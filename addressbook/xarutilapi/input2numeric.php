@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: input2numeric.php,v 1.1 2003/07/08 22:46:23 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -14,7 +14,13 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function AddressBook_userapi_input2numeric($args){
+/**
+ * Converts numeric form input to Address Book numeric format
+ *
+ * @param string $inum - numeric to format
+ * @return string $num - formated number
+ */
+function AddressBook_utilapi_input2numeric($args){
 
 	$num = 0;
 	    

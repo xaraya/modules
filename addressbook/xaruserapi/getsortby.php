@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getsortby.php,v 1.1 2003/07/08 23:55:15 garrett Exp $
  *
- * AddressBook user getSortBy
+ * AddressBook userapi getSortBy
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -16,6 +16,8 @@
 
 /**
  * getSortBy - retrieves the sorting method from the db
+ * @param string $sort - type of sort
+ * @return string - contcatenated sort ordering
  */
 function AddressBook_userapi_getSortBy($args){
     extract($args);

@@ -1,7 +1,8 @@
+<?php 
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: td2stamp.php,v 1.1 2003/07/08 22:42:30 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook utilapi td2stamp
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -13,7 +14,13 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function AddressBook_userapi_td2stamp($args){
+/**
+ * converts a date string into a AddressBook formatted date
+ *
+ * @param string $idate - the date to format
+ * @return string formated date
+ */
+function AddressBook_utilapi_td2stamp($args){
     extract($args);
     if( (!isset($idate)) || (empty($idate)) || ($idate=='')) {
         return 'NULL';
@@ -50,6 +57,7 @@ function AddressBook_userapi_td2stamp($args){
     */
     $returnValue = $y.$m.$d;
     return $returnValue;
-}
+
+} // END td2stamp
 
 ?>

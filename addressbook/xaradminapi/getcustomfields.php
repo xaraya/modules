@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getcustomfields.php,v 1.1 2003/07/06 02:59:24 garrett Exp $
  *
  * AddressBook admin getCustomFields
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: viewall.php,v 1.1 2003/07/02 07:31:18 garrett Exp $
+ * File: $Id: viewall.php,v 1.2 2003/07/08 19:21:56 garrett Exp $
  *
  * AddressBook user viewAll
  *
@@ -14,50 +14,40 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-//=========================================================================
-//  Show all contacts
-//=========================================================================
-function AddressBook_user_viewall($args) {
+/**
+ * builds an array of menulinks for display in a menu block
+ *
+ * @return array of menu links
+ */
+function AddressBook_user_viewall() {
 
-    extract($args);
-
-    $data['userIsLoggedIn'] = xarUserIsLoggedIn();
-    $data['globalprotect'] = xarModGetVar(__ADDRESSBOOK__, 'globalprotect');
-    $data['userCanViewModule'] = xarSecurityCheck('ViewAddressBook',0);
+    $output['userIsLoggedIn'] = xarUserIsLoggedIn();
+    $output['globalprotect'] = xarModGetVar(__ADDRESSBOOK__, 'globalprotect');
+    $output['userCanViewModule'] = xarSecurityCheck('ViewAddressBook',0);
 
     /**
      * not sure how this differs from xarSecurityCheck above...
      */
-    $data['userCanViewEntries'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'view'));
+    $output['userCanViewEntries'] = xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'view'));
 
     /**
      * Get menu values from the input
      */
     $menuValues = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenuValues');
     foreach ($menuValues as $key=>$value) {
-        $data[$key] = $value;
+        $output[$key] = $value;
     }
 
     /**
-     * Print the main menu (could this be a block??)
+     * Print the main menu
      */
-    $data = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenu',array('data'=>$data));
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getMenu',array('output'=>$output));
 
 	// Start Page
 
-    $data = xarModAPIFunc(__ADDRESSBOOK__,'user','getAddressList',array('data'=>$data));
-
-    if (xarExceptionMajor() != XAR_NO_EXCEPTION) {
-        // Got an exception
-        if ((xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) && !_AB_DEBUG) {
-            return; // throw back
-        } else {
-            // We are going to handle this exception REGARDLESS of the type
-            $data['abExceptions'] = xarModAPIFunc(__ADDRESSBOOK__,'user','handleException');
-        }
-    }
-
-    return $data;
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getAddressList',array('output'=>$output));
+	
+	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 
 } // END viewall
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.3 2003/07/02 02:15:15 garrett Exp $
+ * File: $Id: stamp2date.php,v 1.1 2003/07/08 23:01:50 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook utilapi stamp2date
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -14,7 +14,13 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-function AddressBook_userapi_stamp2date($args){
+/**
+ * Transforms a timestamp into a Address Book date format
+ *
+ * @param string $idate
+ * @return string formated date
+ */
+function AddressBook_utilapi_stamp2date($args){
     extract($args);
     if( (!isset($idate)) || (empty($idate)) || ($idate=='')) {
         return '';
