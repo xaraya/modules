@@ -25,16 +25,22 @@
         </td></tr><tr><td align="center">
           <br />
 
-    <xar:comment> allow images to be uploaded with the uploads mod</xar:comment>
+    <xar:comment> TODO: allow images to be uploaded with the uploads mod.
+                  This code is no good because BL baulks on xar:image-resize
+                  unless the images module is installed.
+
     <xar:if condition="xarModIsHooked('uploads','articles',$ptid) and substr($body,0,1) eq ';'">
       <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body))</xar:set>
       <xar:foreach in="$img_output" key="$fileid" value="$fileinfo">
-        <xar:image-resize src="$fileid" width="100%" label="$title" />
+        (xar:image-resize src="$fileid" width="100%" label="$title" /)
       </xar:foreach>
     <xar:else />
         <img src="#$body#" border="0" alt="#$title#" />
     </xar:if>
+    
+    </xar:comment>
 
+        <img src="#$body#" border="0" alt="#$title#" />
           <br />
           <span class="xar-quote">
             #$notes#
