@@ -48,7 +48,7 @@ function referer_eventapi_OnServerRequest()
         // Check to see if the referer is already in DB
         $query = "SELECT count(xar_rid) as c
                   FROM $referertable
-                  WHERE xar_url = '" . $HTTP_REFERER . "'";
+                  WHERE xar_url = ?";
         $result =& $dbconn->Execute($query, array($HTTP_REFERER));
         $row = $result->fields;
         $count = $row[0];
