@@ -26,8 +26,9 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinymode', 'textareas');
    xarModSetVar('tinymce', 'tinyask', 'true');
    xarModSetVar('tinymce', 'tinybuttons', 'removeformat');
+   xarModSetVar('tinymce', 'tinybuttonsremove', '');
    xarModSetVar('tinymce', 'tinyexstyle', 'heading 1=head1,heading 2=head2,heading 3=head3,heading 4=head4');
-   xarModSetVar('tinymce', 'tinyextended', 'code,pre,blockquote/quote');
+   xarModSetVar('tinymce', 'tinyextended', 'code,pre,blockquote/quote,a[href|rel:external]');
    xarModSetVar('tinymce', 'tinyinstances','summary,body');
    xarModSetVar('tinymce', 'tinycsslist','./themes/Xaraya_Classic/style/style.css');
 
@@ -66,6 +67,14 @@ function tinymce_activate()
  */
 function tinymce_upgrade($oldVersion)
 {
+   case '0.0.1':
+       // Set up new module vars
+       xarModSetVar('tinymce', 'tinybuttonsremove', '');
+       if (!$result) return;
+       break;
+
+   default:
+       break;
     // Update successful
     return true;
 }

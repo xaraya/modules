@@ -30,7 +30,8 @@ function tinymce_admin_modifyconfig()
     $data['tinyask'] = xarModGetVar('tinymce', 'tinyask');
     $data['tinyextended'] = xarModGetVar('tinymce', 'tinyextended');   
     $data['tinyexstyle'] = xarModGetVar('tinymce', 'tinyexstyle');   
-    $data['tinybuttons'] = xarModGetVar('tinymce', 'tinybuttons');                  
+    $data['tinybuttons'] = xarModGetVar('tinymce', 'tinybuttons');     
+    $data['tinybuttonsremove'] = xarModGetVar('tinymce', 'tinybuttonsremove');                    
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'tinymce',
         array('module' => 'tinymce'));

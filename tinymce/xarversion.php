@@ -1,8 +1,8 @@
 <?php
 $modversion['name'] = 'tinymce';
 $modversion['id'] = '63';
-$modversion['version'] = '0.0.1';
-$modversion['description'] = 'A lightweight and very configurable wysiwyg editor for Xaraya';
+$modversion['version'] = '0.0.2';
+$modversion['description'] = 'Integration of TinyMCE, a fast and configurable wysiwyg editor for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
 $modversion['changelog'] = 'xardocs/changelog.txt';

@@ -100,7 +100,7 @@
         </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
-        <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="40" maxlength="240" />
+        <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="60" maxlength="240" />
     </span>
     </div>
 
@@ -111,7 +111,7 @@
         </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
-        <input type="text" name="tinyinstances" id="tinyinstances" value="#$tinyinstances#" size="40" maxlength="240" />
+        <input type="text" name="tinyinstances" id="tinyinstances" value="#$tinyinstances#" size="60" maxlength="240" />
     </span>
     </div>
 
@@ -122,7 +122,7 @@
         </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
-    <input type="text" name="tinycsslist" id="tinycsslist" value="#$tinycsslist#" size="40" maxlength="120" />
+    <input type="text" name="tinycsslist" id="tinycsslist" value="#$tinycsslist#" size="60" maxlength="120" />
     </span>
     </div>
 <xar:comment>jojodee - Fix this when i get time
@@ -133,7 +133,7 @@
        </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
-    <input type="text" name="tinyexstyle" id="tinyexstyle" value="#$tinyexstyle#" size="40" maxlength="120" />
+    <input type="text" name="tinyexstyle" id="tinyexstyle" value="#$tinyexstyle#" size="60" maxlength="120" />
     </span>
     </div>
 </xar:comment>
@@ -144,13 +144,30 @@
        </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
-    <input type="text" name="tinybuttons" id="tinybuttons" value="#$tinybuttons#" size="40" maxlength="120" />
+    <input type="text" name="tinybuttons" id="tinybuttons" value="#$tinybuttons#" size="60" maxlength="120" />
     </span>
+    </div>
+    <div style="float: right; width: 68%; text-align: left; ">
+        <p><xar:mlstring>The following are valid button names (separate names by comma):</xar:mlstring></p>
+        <p><strong>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor</strong></p>
     </div>
 
     <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;">
+       <span class="help" title="#xarML('Buttons to remove from Advanced theme')#">
+            <label for="tinybuttonsremove"><xar:mlstring>Buttons to remove</xar:mlstring></label>
+       </span>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+        <input type="text" name="tinybuttonsremove" id="tinybuttons" value="#$tinybuttonsremove#" size="60" maxlength="120" />
+    </span>
+    </div>
+    
+<xar:comment>We don't need this here do we?
+    <div style="clear: both; padding-top: 10px;">
          #$hooks#
     </div>
+</xar:comment>
     <div style="clear: both; padding-top: 10px; width:98%;">
     <span style="float: left; width: 30%; text-align: right;">
             <input type="submit" value="#$updatebutton#" />
