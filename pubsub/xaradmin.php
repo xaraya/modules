@@ -44,11 +44,9 @@ function pubsub_admin_view()
 
     // The user API function is called
     $events = xarModAPIFunc('pubsub',
-                          'user',
-                          'getall');
+                            'user',
+                            'getall');
 
-    if (empty($events)) return;
-    
     $data['items'] = $events;
 
     // TODO: add a pager (once it exists in BL)

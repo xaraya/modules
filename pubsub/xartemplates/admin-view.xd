@@ -22,6 +22,7 @@ ministration</xar:mlstring></span></div>
                         #$templatelabel#
                 </th>
         </tr>
+    <xar:if condition="count($items) gt 0">
     <xar:loop name="$items">
     <tr>
         <td>
@@ -41,6 +42,14 @@ ministration</xar:mlstring></span></div>
   	</td>
      </tr>
      </xar:loop>
+    <xar:else />
+    <tr>
+      <td colspan="5" align="left">
+      <br />
+      <strong><xar:mlstring>No headlines found</xar:mlstring></strong>
+      </td>
+    </tr>
+    </xar:if>
 </table>
 </div>
 </div>
