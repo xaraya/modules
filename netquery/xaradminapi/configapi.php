@@ -56,7 +56,7 @@ function netquery_adminapi_configapi()
                                  'title' => xarML('View operations logfile'),
                                  'label' => xarML('View Log'));
     } else {
-    	$data['loglink'] = '';
+        $data['loglink'] = '';
     }
     return $data;
 }
