@@ -45,7 +45,7 @@
 
 <table border="0" cellspacing="0" cellpadding="5">
 
-		<tr>
+        <tr>
         <td align="right">#$name_label# : </td>
 
         <!-- display depends on another variable specified by the function -->
@@ -61,15 +61,15 @@
         <td align="right">#$number_label# : </td>
         <td>#$number_value#</td>
     </tr>
-	<tr>
+    <tr>
         <td align="right">#$hours_label# : </td>
         <td>#$hours_value#</td>
     </tr>
-	<tr>
+    <tr>
         <td align="right">#$ceu_label# : </td>
         <td>#$ceu_value#</td>
     </tr>
-	<tr>
+    <tr>
         <td align="right">#$startdate_label# : </td>
         <td>#$startdate_value#</td>
     </tr>
@@ -77,7 +77,7 @@
         <td align="right">#$enddate_label# : </td>
         <td>#$enddate_value#</td>
     </tr>
-	<tr>
+    <tr>
         <td align="right">#$shortdesc_label# : </td>
         <td>#$shortdesc_value#</td>
     </tr>

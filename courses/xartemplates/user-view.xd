@@ -36,10 +36,10 @@
     <tr>
         <th> #$name_label# </th>
 
-		<th> #$shortdesc_label# </th>
+        <th> #$shortdesc_label# </th>
 
-		<th> #$hours_label# </th>
-	</tr>
+        <th> #$hours_label# </th>
+    </tr>
 
     <!-- Loop over all the items given by the function. Since $data['items']
          is preset to an empty array, we don't need to use an if/else
@@ -55,9 +55,9 @@
         <xar:else />
             <a href="#$item['link']#">#$item['name']#</a>
         </xar:if>
-		 </td>
-		 <td>#$item['shortdesc']#</td>
-		  <td>#$item['hours']#</td>
+         </td>
+         <td>#$item['shortdesc']#</td>
+          <td>#$item['hours']#</td>
    </tr>
     </xar:foreach>
 

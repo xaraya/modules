@@ -4,10 +4,10 @@
 <xar:base-include-javascript module="base" filename="" position="head" />
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("name", "number");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Name", "Number");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("name", "number");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Name", "Number");
 //-->
 </script>
 
@@ -28,264 +28,264 @@
 
 <xar:if condition="isset($name)">
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="name">#$namelabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" /> <xar:if condition="!empty($invalid['name'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="name">#$namelabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" /> <xar:if condition="!empty($invalid['name'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="name">#$namelabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="name" id="name" size="32" maxlength="32" value="#$item['name']#" />
-		<xar:if condition="!empty($invalid['name'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="name">#$namelabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="name" id="name" size="32" maxlength="32" value="#$item['name']#" />
+        <xar:if condition="!empty($invalid['name'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 </xar:if>
 
 <xar:if condition="isset($name)">
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="number">#$numberlabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="number" id="number" size="5" maxlength="5" value="#$number#" /><xar:if condition="!empty($invalid['number'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="number">#$numberlabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="number" id="number" size="5" maxlength="5" value="#$number#" /><xar:if condition="!empty($invalid['number'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="number">#$numberlabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="number" id="number" size="5" maxlength="5" value="#$item['number']#" /><xar:if condition="!empty($invalid['number'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('This is a tool tip for the form.')#"><label for="number">#$numberlabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="number" id="number" size="5" maxlength="5" value="#$item['number']#" /><xar:if condition="!empty($invalid['number'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
-	</xar:if>
+    </xar:if>
 
-	<xar:if condition="isset($hours)">
+    <xar:if condition="isset($hours)">
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the number of hours for this course .')#"><label for="hours">#$hourslabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="hours" id="hours" size="5" maxlength="5" value="#$hours#" /><xar:if condition="!empty($invalid['hours'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the number of hours for this course .')#"><label for="hours">#$hourslabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="hours" id="hours" size="5" maxlength="5" value="#$hours#" /><xar:if condition="!empty($invalid['hours'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the number of hours for this course.')#"><label for="hours">#$hourslabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="hours" id="hours" size="5" maxlength="5" value="#$item['hours']#" /><xar:if condition="!empty($invalid['hours'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the number of hours for this course.')#"><label for="hours">#$hourslabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="hours" id="hours" size="5" maxlength="5" value="#$item['hours']#" /><xar:if condition="!empty($invalid['hours'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 </xar:if>
 
-	<xar:if condition="isset($ceu)">
+    <xar:if condition="isset($ceu)">
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the number of credit hours for this course .')#"><label for="ceu">#$ceulabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="ceu" id="ceu" size="5" maxlength="5" value="#$ceu#" /><xar:if condition="!empty($invalid['ceu'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the number of credit hours for this course .')#"><label for="ceu">#$ceulabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="ceu" id="ceu" size="5" maxlength="5" value="#$ceu#" /><xar:if condition="!empty($invalid['ceu'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the number of credit hours for this course.')#"><label for="ceu">#$ceulabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="ceu" id="ceu" size="5" maxlength="5" value="#$item['ceu']#" /><xar:if condition="!empty($invalid['ceu'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the number of credit hours for this course.')#"><label for="ceu">#$ceulabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="ceu" id="ceu" size="5" maxlength="5" value="#$item['ceu']#" /><xar:if condition="!empty($invalid['ceu'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 </xar:if>
 
-	<xar:if condition="isset($startdate)">
+    <xar:if condition="isset($startdate)">
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the starting date for this course .')#"><label for="startdate">#$startdatelabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the starting date for this course .')#"><label for="startdate">#$startdatelabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
  <xar:data-input name="startdate" type="8" value="$startdate" />
  <xar:if condition="!empty($invalid['startdate'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the starting date for this course.')#"><label for="startdate">#$startdatelabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	<xar:data-input name="startdate" type="8" value="$startdate" />
-	<xar:if condition="!empty($invalid['startdate'])">
-				<span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the starting date for this course.')#"><label for="startdate">#$startdatelabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+    <xar:data-input name="startdate" type="8" value="$startdate" />
+    <xar:if condition="!empty($invalid['startdate'])">
+                <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 </xar:if>
 
 <xar:if condition="isset($enddate)">
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the ending date for this course .')#"><label for="enddate">#$enddatelabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	<xar:data-input name="enddate" type="8" value="$enddate" />
-	<xar:if condition="!empty($invalid['enddate'])">
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the ending date for this course .')#"><label for="enddate">#$enddatelabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+    <xar:data-input name="enddate" type="8" value="$enddate" />
+    <xar:if condition="!empty($invalid['enddate'])">
 
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter the ending date for this course.')#"><label for="enddate">#$enddatelabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	<xar:data-input name="enddate" type="8" value="$enddate" />
-	<xar:if condition="!empty($invalid['enddate'])">
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter the ending date for this course.')#"><label for="enddate">#$enddatelabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+    <xar:data-input name="enddate" type="8" value="$enddate" />
+    <xar:if condition="!empty($invalid['enddate'])">
 
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 </xar:if>
 
 <xar:if condition="isset($shortdesc)">
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter short description for this course .')#"><label for="shortdesc">#$shortdesclabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	 <xar:data-input name="shortdesc" type="202" value="$shortdesc" />
-	<xar:if condition="!empty($invalid['shortdesc'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter short description for this course .')#"><label for="shortdesc">#$shortdesclabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+     <xar:data-input name="shortdesc" type="202" value="$shortdesc" />
+    <xar:if condition="!empty($invalid['shortdesc'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter a short description for this course.')#"><label for="shortdesc">#$shortdesclabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	<xar:data-input name="shortdesc" type="202" value="$shortdesc" />
-			<xar:if condition="!empty($invalid['shortdesc'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter a short description for this course.')#"><label for="shortdesc">#$shortdesclabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+    <xar:data-input name="shortdesc" type="202" value="$shortdesc" />
+            <xar:if condition="!empty($invalid['shortdesc'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 </xar:if>
 
 <xar:if condition="isset($longdesc)">
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter detailed description for this course .')#"><label for="longdesc">#$longdesclabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	 <xar:data-input name="longdesc" type="203" value="$longdesc" />
-	<xar:if condition="!empty($invalid['longdesc'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter detailed description for this course .')#"><label for="longdesc">#$longdesclabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+     <xar:data-input name="longdesc" type="203" value="$longdesc" />
+    <xar:if condition="!empty($invalid['longdesc'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 <xar:else />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Enter a detailed description for this course.')#"><label for="longdesc">#$longdesclabel#</label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	 <xar:data-input name="longdesc" type="203" value="$longdesc" />
-			<xar:if condition="!empty($invalid['longdesc'])">
-			<span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Enter a detailed description for this course.')#"><label for="longdesc">#$longdesclabel#</label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+     <xar:data-input name="longdesc" type="203" value="$longdesc" />
+            <xar:if condition="!empty($invalid['longdesc'])">
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+        </xar:if>
+    </span>
+    </div>
 
 </xar:if>
 
-	#$hooks#
-	<div style="clear: both; padding-top: 10px;">
-	<!--
-		// Add an authorisation ID - this adds a hidden field in the form that
-		// contains an authorisation ID.  The authorisation ID is very important in
-		// preventing certain attacks on the website
-	-->
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="courseid" id="courseid" value="#$item['courseid']#" />
-		<span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
-	</div>
+    #$hooks#
+    <div style="clear: both; padding-top: 10px;">
+    <!--
+        // Add an authorisation ID - this adds a hidden field in the form that
+        // contains an authorisation ID.  The authorisation ID is very important in
+        // preventing certain attacks on the website
+    -->
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="courseid" id="courseid" value="#$item['courseid']#" />
+        <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$updatebutton#" /></span>
+    </div>
 
 </form>
 

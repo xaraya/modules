@@ -27,7 +27,7 @@
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
         <th><xar:mlstring>Enrolled Courses</xar:mlstring></th>
-	</tr>
+    </tr>
 
     <!-- Loop over all the items given by the function. Since $data['items']
          is preset to an empty array, we don't need to use an if/else
@@ -43,7 +43,7 @@
         <xar:else />
             <a href="#$item['link']#">#$item['name']#</a>
         </xar:if>
-		 </td>
+         </td>
 
    </tr>
     </xar:foreach>
