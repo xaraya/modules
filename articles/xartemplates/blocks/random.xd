@@ -1,18 +1,27 @@
- <xar:if condition="!empty($altsummary)">
-     #$altsummary#
- </xar:if><br />
+<xar:if condition="!empty($altsummary)">
+    <p>
+        #$altsummary#
+    </p>
+</xar:if>
 
 <xar:foreach in="$items" value="$item">
     <xar:if condition="!empty($showtitle)">
         <a href="#xarModURL('articles', 'user', 'display', array('aid' => $item['aid']))#">#$item['title']#</a>
-    </xar:if><br />
-    <xar:if condition="!empty($showsummary) && !empty($item['summary'])">#$item['summary']#
-    </xar:if><br />
+    </xar:if>
+    <xar:if condition="!empty($showsummary) && !empty($item['summary'])">
+        <p>
+            #$item['summary']#
+        </p>
+    </xar:if>
     <xar:if condition="!empty($showauthor)">
-       #$item['authorname']#<br />
+        <p>
+            #$item['authorname']#
+        </p>
     </xar:if>
     <xar:if condition="!empty($showpubdate)">
-       #xarLocaleGetFormattedDate('medium',$item['pubdate'])#<br />
+        <p>
+            #xarLocaleGetFormattedDate('medium',$item['pubdate'])#
+        </p>
     </xar:if>
 </xar:foreach>
 
