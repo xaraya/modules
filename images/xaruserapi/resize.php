@@ -15,7 +15,7 @@
 function images_userapi_resize($args)
 {
     extract($args);
-
+    
     if (!isset($src) || empty($src) || !is_numeric($src)) {
         $msg = xarML('Required parameter \'#(1)\' is missing or not numeric.', 'src');
         xarExceptionSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
@@ -42,6 +42,9 @@ function images_userapi_resize($args)
         return FALSE;
     }
 
+    // just a flag for later
+    $constrain_both = FALSE;
+    
     if (!isset($constrain)) {
         if (isset($width) XOR isset($height)) {
             $constrain = TRUE;
@@ -49,11 +52,15 @@ function images_userapi_resize($args)
             $constrain = FALSE;
         }
     } else {
+        // we still want to constrain here, but we might need to be a little bit smarter about it
+        // if we have both a height and a width, we don't want the image to be any larger than
+        // any pf the supplied values, so we have to provide some logic to handle this
         if (isset($width) && isset($height)) {
-            $constrain = FALSE;
-        } else {
+            //$constrain = FALSE;
+            $constrain_both = TRUE;
+        } //else {
             $constrain = (bool) $constrain;
-        }
+        //}
 
     }
 
@@ -106,7 +113,7 @@ function images_userapi_resize($args)
         }
 
         if ($constrain) {
-            $image->Constrain('width');
+            $constrain_both ? $image->Constrain('both') : $image->Constrain('width');
         }
     }
 
@@ -124,7 +131,7 @@ function images_userapi_resize($args)
         }
 
         if ($constrain) {
-            $image->Constrain('height');
+            $constrain_both ? $image->Constrain('both') : $image->Constrain('width');
         }
     }
 

@@ -96,6 +96,26 @@ class Image_Properties
                 case 'width':
                     $this->setHeight($this->getHeight2WidthRatio() * $this->width);
                     break;
+                case 'both':
+                    // choose wisely
+                    $ratios = array();
+                    
+                    $ratios[0]['width']  = $this->getWidth2HeightRatio() * $this->height;
+                    $ratios[0]['height'] = $this->getHeight2WidthRatio() * $ratios[0]['width'];
+                    
+                    $ratios[1]['height'] = $this->getHeight2WidthRatio() * $this->width;
+                    $ratios[1]['width']  = $this->getWidth2HeightRatio() * $ratios[1]['height'];
+                    
+                    foreach($ratios as $ratio) {
+                        if($ratio['width'] <= $this->width && $ratio['height'] <= $this->height) {
+                            $this->setWidth($ratio['width']);
+                            $this->setHeight($ratio['height']);
+                            break;
+                        }
+                    }
+                    // free up some memory
+                    unset($ratios,$ratio);
+                    break;
             }
         }
         return true;
