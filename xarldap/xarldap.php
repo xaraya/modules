@@ -284,7 +284,8 @@ class xarldap {
             $user_dn = $userInfo[0]['dn'];
         } else {
             // Validate password
-            $user_dn = $uid_field."=" . $username . "," . $bind_dn;
+            // Fix for bug #1413 submitted by Court Shrock 
+            $user_dn = $this->uid_field."=" . $username . "," . $this->bind_dn;
         }
 
         return $user_dn;
