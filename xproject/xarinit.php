@@ -155,21 +155,21 @@ function xproject_init()
                 $state = xarModAPIFunc('users',
                                                           'admin',
                                                           'createvar',
-                                                          array('name' => "_XPROJECTEMAILNOTIFY",
+                                                          array('name' => xarML('Email notification on task change'),
                                                                         'type' => _UDCONST_INTEGER,
                                                                         'default' => 1));
 
                 $state = xarModAPIFunc('users',
                                                           'admin',
                                                           'createvar',
-                                                          array('name' => "_XPROJECTMYTASKS",
+                                                          array('name' => xarML('Only show tasks assigned to me'),
                                                                         'type' => _UDCONST_INTEGER,
                                                                         'default' => 1));
 
                 $state = xarModAPIFunc('users',
                                                           'admin',
                                                           'createvar',
-                                                          array('name' => "_XPROJECTPRIMARYTASK",
+                                                          array('name' => xarML('Primary project / tasklist'),
                                                                         'type' => _UDCONST_INTEGER,
                                                                         'default' => 1));
     } else {
