@@ -57,6 +57,9 @@ function articles_user_display($args)
 //    $ptid = $article['pubtypeid'];
     $pubtypeid = $article['pubtypeid'];
     $authorid = $article['authorid'];
+    if (!isset($article['cids'])) {
+        $article['cids'] = array();
+    }
     $cids = $article['cids'];
 
     // Get the article settings for this publication type
