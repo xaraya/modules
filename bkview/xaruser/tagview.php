@@ -25,7 +25,7 @@ function bkview_user_tagview($args)
     $repo= new bkRepo($item['repopath']);
         
     $formatstring="'\$if(:TAG:){:AGE:|:TAG:|:REV:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}}'";
-    $changesets=$repo->bkChangeSets('','',$formatstring,false);
+    $changesets=$repo->bkChangeSets('','',$formatstring,true);
     $data['csetlist']=array();
     $csetlist=array();
     $counter=1;
