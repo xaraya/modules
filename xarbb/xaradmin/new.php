@@ -121,15 +121,6 @@ function xarbb_admin_new()
                                      'tposter'  => $tposter));
            if (!$tid) return;
 
-           // Enable hitcount hooks for xarbb forum
-            xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
-                                                                     'callerItemType'   => $forum['fid'],
-                                                                     'hookModName'      => 'hitcount'));
-
-            // Enable comment hooks for xarbb forum - let's just make sure
-            xarModAPIFunc('modules','admin','enablehooks', array('callerModName'        => 'xarbb',
-                                                                     'callerItemType'   => $forum['fid'],
-                                                                     'hookModName'      => 'comments'));
             // Enable bbcode hooks for new xarbb forum
             if (xarModIsAvailable('bbcode')) {
                 if ($allowbbcode) {

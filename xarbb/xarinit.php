@@ -170,14 +170,13 @@ function xarbb_init()
         xarModAPIFunc('modules','admin','enablehooks', 
                        array('callerModName' => 'xarbb', 'hookModName' => 'categories'));
     }
-    if (xarModIsAvailable('comments')) {
-        xarModAPIFunc('modules','admin','enablehooks',
-                       array('callerModName' => 'xarbb','hookModName' => 'comments'));
-    }
+    // Enable hitcount hooks for xarbb forums
     if (xarModIsAvailable('hitcount')) {
         xarModAPIFunc('modules','admin','enablehooks',
                        array('callerModName' => 'xarbb','hookModName' => 'hitcount'));
     }
+
+    // Note: comments should not be hooked to xarbb - it is accessed directly via APIs
 
     // modvars
     xarModSetVar('xarbb', 'cookiename', 'xarbb');
