@@ -111,6 +111,7 @@ function articles_userapi_getall($args)
 
         // Get the field names and LEFT JOIN ... ON ... parts from users
         $usersdef = xarModAPIFunc('roles','user','leftjoin');
+        if (empty($usersdef)) return;
     }
 
     if (!empty($required['cids'])) {
