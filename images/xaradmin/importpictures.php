@@ -150,8 +150,8 @@ function pruneFiles( $FilesInDir, $image_import_dir )
 	{	
 	
 		// Get database setup
-		list($dbconn) = xarDBGetConn();
-		$xartable = xarDBGetTables();
+		$dbconn =& xarDBGetConn();
+		$xartable =& xarDBGetTables();
 			
 		// table and column definitions
 		$uploadstable = $xartable['uploads'];
