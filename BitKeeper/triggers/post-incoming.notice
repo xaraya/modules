@@ -74,9 +74,9 @@ echo Changes were applied by ${BKD_USER} to ${VIRGIN}/${REPO} level ${BKD_LEVEL}
 # What is the list of changesets which were incoming?
 if [ X$BK_CSETLIST != X ]
 then (
-		echo "The following $CHANGETEXT applied:"
-		echo
-		bk changes -v - < $BK_CSETLIST
+        echo "The following $CHANGETEXT applied:"
+        echo
+        bk changes -v - < $BK_CSETLIST
      ) | sed 's/^/    /'
      CSLINKS=`bk changes -d"$BKURL/patch@:REV: " - < $BK_CSETLIST`
      echo Links for the differences:
