@@ -6,12 +6,12 @@
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   array   fileInfo             An array containing (name, type, tmp_name, error and size):
- *                   fileInfo['name']     The name of the file (minus any path information)
- *                   fileInfo['type']     The mime content-type of the file
- *                   fileInfo['tmp_name'] The temporary file name (complete path) of the file
- *                   fileInfo['error']    Number representing any errors that were encountered during the upload
- *                   fileInfo['size']     The size of the file (in bytes)
+ *  @param   array   fileInfo               An array containing (fileName, fileType, fileSrc, fileSize, error):
+ *                   fileInfo['fileName']   The (original) name of the file (minus any path information)
+ *                   fileInfo['fileType']   The mime content-type of the file
+ *                   fileInfo['fileSrc']    The temporary file name (complete path) of the file
+ *                   fileInfo['error']      Number representing any errors that were encountered during the upload
+ *                   fileInfo['fileSize']   The size of the file (in bytes)
  *  @returns boolean                      TRUE if checks pass, FALSE otherwise 
  */
 
@@ -27,10 +27,9 @@ function uploads_userapi_validate_upload( $args ) {
     }        
 
     // Check to see if the mime-type is allowed
-    $censored_mime_types = unserialize(xarModGetVar('uploads','file.censored-mime-types'));
-    $mime_type = xarModAPIFunc('mime','user','analyze_file', 
-                                array('fileInfo' => $fileInfo));
-    if (in_array($mime_type, $censored_mime_tyeps)) {
+    $censored_mime_types = unserialize(xarModGetVar('uploads','file.censored-mimetypes'));
+    
+    if (in_array($fileInfo['fileType'], $censored_mime_types)) {
         $msg = xarML('Unable to save uploaded file - File type is not allowed!');
         xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOADS_FILE_NOT_ALLOWED', new SystemException($msg));
         return FALSE;
@@ -46,7 +45,6 @@ function uploads_userapi_validate_upload( $args ) {
     // if (!xarModCallHooks('item', 'validation', array('type' => 'file', 'fileInfo' => $fileInfo))) {
     //     return FALSE;
     // }
-    
     return TRUE;
 }
 

@@ -5,70 +5,96 @@
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   string fileSource      Complete path to source file
- *  @param   string fileDestination Complete path to destination 
- *  @returns boolean    TRUE on success, FALSE otherwise
+ *  @param   string  fileSrc    Complete path to source file
+ *  @param   string  fileDest   Complete path to destination 
+ *  @param   boolean isupload   Whether or not this file was uploaded (uses special checks on uploaded files)
+ * 
+ *  @returns boolean TRUE on success, FALSE otherwise
  */
 
 function uploads_userapi_file_move( $args ) { 
 
     extract ($args);
     
-    if (!isset($fileSource)) {
-        $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'fileSource','file_move','uploads');
+    if (!isset($force)) {
+        $force = TRUE;
+    }
+    
+    // if it wasn't specified, assume TRUE
+    if (!isset($isupload)) {
+        $isupload = TRUE;
+    }
+    
+    echo "<br />file_exist(\"$fileSrc\") returnns: [<b>".file_exists($fileSrc)."</b>]<br />";
+    if (!isset($fileSrc)) {
+        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
+                     'fileSrc','file_move','uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }        
 
-    if (!isset($fileDestination)) {
+    if (!isset($fileDest)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
-                     'fileDestination','file_move','uploads');
+                     'fileDest','file_move','uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
     
-    if (!file_exists($fileSource)) {
-        $msg = xarML('Unable to move file - Source file does not exist!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NOT_EXIST', new SystemException($msg));
-        return FALSE;
-    }        
-        
-    if (!is_readable($fileSource)) {
-        $msg = xarML('Unable to move file - Source file is unreadable!');
+    if (!is_readable($fileSrc)) {
+        $msg = xarML('Unable to move file - Source file [#(1)]is unreadable!', $fileSrc);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
         return FALSE;
     }        
         
-    if (!file_exists(dirname($fileDestination))  {
+    if (!file_exists($fileSrc)) {
+        $msg = xarML('Unable to move file - Source file [#(1)]does not exist!', $fileSrc);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NOT_EXIST', new SystemException($msg));
+        return FALSE;
+    }        
+        
+    if (!file_exists(dirname($fileDest)))  {
         $msg = xarML('Unable to move file - Destination directory does not exist!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NOT_EXIST', new SystemException($msg));
         return FALSE;
     }        
         
-    if (is_writable(dirname($fileDestination)) {
+    if (!is_writable(dirname($fileDest))) {
         $msg = xarML('Unable to move file - Destination directory is not writable!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_WRITE', new SystemException($msg));
         return FALSE;
     }        
         
-    if (disk_free_space(dirname($fileDestination)) <= filesize($fileSource)) {
+    if (disk_free_space(dirname($fileDest)) <= filesize($fileSrc)) {
         $msg = xarML('Unable to move file - Destination drive does not have enough free space!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SPACE', new SystemException($msg));
         return FALSE;
     }        
     
-    if (file_exists($fileDestination) && $force == TRUE) {
+    if (file_exists($fileDest) && $force != TRUE) {
         $msg = xarML('Unable to move file - Destination file already exists!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_OVERWRITE', new SystemException($msg));
         return FALSE;
     }
     
-    if (!move_uploaded_file($fileSource, $fileDestination)) {
-        $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSource, $fileDestination);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
-        return FALSE
+    if (!$isupload) {
+        if (!move_uploaded_file($fileSrc, $fileDest)) {
+            $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
+            return FALSE;
+        }
+    } else {
+        if (!copy($fileSrc, $fileDest)) {
+            $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
+            return FALSE;
+        } else {
+            // This step is technically redundant due to php actually removing 
+            // the temp file upon script completion anyway (which is why don't 
+            // don't check to see if unlink was successful or not ;)
+            unlink($fileSrc);
+        }
     }
+            
     
     return TRUE;
 }
