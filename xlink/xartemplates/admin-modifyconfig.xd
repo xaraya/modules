@@ -1,7 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XLink Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
 <div style="margin: auto;">
-<form method="post" action="#xarModURL('xlink', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('xlink', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
 	<table border="0" cellpadding="8" cellspacing="0">
