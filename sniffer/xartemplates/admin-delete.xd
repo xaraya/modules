@@ -4,19 +4,19 @@
 <div align="center">
 <form method="post" action="#xarModURL('sniffer', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="#$authid#" />
-	<input type="hidden" name="id" id="cid" value="#$id#" />
-	<input type="hidden" name="confirm" id="confirm" value="1"/>
-	<input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
-	<input type="hidden" name="sortby" id="sortby" value="#$sortby#" />
+    <input type="hidden" name="id" id="cid" value="#$id#" />
+    <input type="hidden" name="confirm" id="confirm" value="1"/>
+    <input type="hidden" name="startnum" id="startnum" value="#$startnum#" />
+    <input type="hidden" name="sortby" id="sortby" value="#$sortby#" />
 
-	<font class="xar-title"><xar:mlstring>Confirm deletion of the sniff</xar:mlstring></font>
+    <font class="xar-title"><xar:mlstring>Confirm deletion of the sniff</xar:mlstring></font>
     <br /><br />
     #$agent#
     <br /><br />
 
-	<input type="submit" value="#$submitlabel#"  /><br /><br />
-	
-	<a href="#$cancelurl#"><xar:mlstring>Cancel deletion of the sniff</xar:mlstring>.</a>
+    <input type="submit" value="#$submitlabel#"  /><br /><br />
+    
+    <a href="#$cancelurl#"><xar:mlstring>Cancel deletion of the sniff</xar:mlstring>.</a>
 </form>        
 </div>
 </div>
