@@ -53,7 +53,7 @@ function authphpbb2_phpbb2loginblock_display($blockinfo)
 
     // URL of this page
     $args['showregister'] = $vars['showregister'];
-    $args['return_url'] = preg_replace('/&/', "&amp;$1", xarServerGetCurrentURL());
+    $args['return_url'] = xarServerGetCurrentURL();
     $args['signinlabel']= xarML('Sign in');
     $args['registerurl']  = xarModGetVar('authphpbb2', 'forumurl')."/profile.php?mode=register";
     $args['blockid'] = $blockinfo['bid'];
