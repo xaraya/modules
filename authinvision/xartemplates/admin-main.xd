@@ -25,19 +25,19 @@
             <xar:mlstring>Authentication by Authinvision is automatically set once the the Authinvision module has been initialized.   You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module.</xar:mlstring>
             <br /><br />
             <xar:mlstring>
-			From the menu, you have one choice.  "Modify Config". 
-			</xar:mlstring>
-			<ul>
-				<li><xar:mlstring>Modify Config -- From here, you can configure the authinvision server that will be used for authentication.   A user that has account information in Invision to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
-			</ul>
-		</td>
-	</tr>
-	<tr>
+            From the menu, you have one choice.  "Modify Config". 
+            </xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Modify Config -- From here, you can configure the authinvision server that will be used for authentication.   A user that has account information in Invision to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
         <td align="left" valign="top" width="100px">
             <b><xar:mlstring>Included Blocks</xar:mlstring></b>
         </td>
         <td align="left" valign="top">
-			<xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring><br/>
+            <xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring><br/>
       <xar:mlstring>whos_online.php: a who's online block that replaces the one in the roles module.</xar:mlstring>
         </td>
     </tr>
