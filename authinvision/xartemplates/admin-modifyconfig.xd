@@ -85,7 +85,7 @@
                     </td>
                     <td>
                         <!-- submit button -->
-                        <input type="submit" value="#$submitbutton#" align="middle" />
+                        <input type="submit" value="#$submitbutton#"  />
                     </td>
                 </tr>
             </table>
