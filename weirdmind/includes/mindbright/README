@@ -128,17 +128,17 @@ further details about how to run MindTerm stand-alone.
 Examples of where java-runtimes can be found:
 
 Linux:
-	http://www.blackdown.org/java-linux.html
-	http://www.alphaworks.ibm.com/tech/linuxjvm
+    http://www.blackdown.org/java-linux.html
+    http://www.alphaworks.ibm.com/tech/linuxjvm
 
 Win32 and Solaris:
-	http://www.javasoft.com/products/
+    http://www.javasoft.com/products/
 
 Macintosh:
-	http://www.apple.com/java/
+    http://www.apple.com/java/
 
 Other platforms:
-	http://java.sun.com/cgi-bin/java-ports.cgi
+    http://java.sun.com/cgi-bin/java-ports.cgi
 
 To use as an applet please download file 'mindtermbin.zip' or compile the
 source-files (optionally bundling them into a jar-file). Assuming you have the
@@ -532,7 +532,7 @@ For example to set up tunnels to telnet, imap and smtp on the local ports 4711,
 4712 and 4713 to the remote side:
 
 java -cp mindbright.jar mindbright.application.MindTerm -server www.mindbright.se
-	-local0 4711:localhost:23 -local1 4712:localhost:143 -local2 4713:localhost:25
+    -local0 4711:localhost:23 -local1 4712:localhost:143 -local2 4713:localhost:25
 
 (NOTE: 'localhost' here means "locally" on the ssh-server, i.e. the telnet,
 imap, and smtp servers all run on the same machine as the ssh-server)
@@ -597,7 +597,7 @@ The standalone options MUST be first among the java command-line options
 (right AFTER the java class-name). For example:
 
 java -cp mindbright.jar mindbright.application.MindTerm --p both --h /home/mats/mindterm
-	 -server www.mindbright.se -port 22 -x11fwd true -authtyp rsa
+     -server www.mindbright.se -port 22 -x11fwd true -authtyp rsa
 
 (NOTE: '-cp' in this example is a command-line option to the java runtime)
 
