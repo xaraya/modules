@@ -9,12 +9,12 @@
 
 
 
-<p><b><xar:mlstring>APPROACH ## 1 : the &lt;xar:data-list ...&gt; tag</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 1 : the &lt;xar:data-list ...&gt; tag</xar:mlstring></b></p>
 
 <p><xar:mlstring>This tag will automatically retrieve the list of items from DynamicData,
      and present them according to its admin-objectlist.xd template.</xar:mlstring></p>
 
-<xar:data-list module="dyn_example" numitems="$itemsperpage" startnum="$startnum" />
+<xar:data-list module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
 
 <p><xar:mlstring>If you want to provide your own presentation here, you can specify a
      different layout="..." to use in the default template, or you can specify your
@@ -22,12 +22,12 @@
 
 
 
-<p><b><xar:mlstring>APPROACH ## 2 : the &lt;xar:data-getitems ...&gt; tag</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitems ...&gt; tag</xar:mlstring></b></p>
 
 <p><xar:mlstring>This tag will retrieve the properties and values from DynamicData and
      make them available in the 'properties' and 'values' variables in your template.</xar:mlstring></p>
 
-<xar:data-getitems name="$properties" value="$values" module="dyn_example" numitems="$itemsperpage" startnum="$startnum" />
+<xar:data-getitems name="$properties" value="$values" module="dyn_example" itemtype="0" catid="$catid" numitems="$itemsperpage" startnum="$startnum" />
 
 <p><xar:mlstring>You can then use those variables to build your own layout. The &lt;xar:data-label ...&gt; and &lt;xar:data-output ...&gt; tags allow you to show individual labels or value outputs in the template.</xar:mlstring></p>
 
@@ -64,20 +64,21 @@
 
 
 
-<p><b><xar:mlstring>APPROACH ## 3 : getting the object list via API</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 3 : getting the object list via API</xar:mlstring></b></p>
 
 <p><xar:mlstring>After retrieving the object list via API, you can pass along the whole object list to the template and use &lt;xar:data-list object="$mylist"&gt;,</xar:mlstring></p>
 
 <xar:data-list object="$mylist" />
 
-<p><xar:mlstring>or pass along the properties and values and work like in APPROACH ## 2 - see the user view for an example of that.</xar:mlstring></p>
+<p><xar:mlstring>or pass along the properties and values and work like in APPROACH # 2 - see the user view for an example of that.</xar:mlstring></p>
 
 
 
-<p><b><xar:mlstring>APPROACH ## 4 : getting the raw item values via API</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 4 : getting the raw item values via API</xar:mlstring></b></p>
 
 <p><xar:mlstring>Here you'll have to handle the output format of the values yourself - in the module code and/or template...</xar:mlstring></p>
 
+<xar:if condition="!empty($items) and count($items) gt 0">
     <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
     <xar:foreach in="$labels" value="$label">
@@ -103,4 +104,6 @@
         <td><a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a></td>
     </tr>
     </table>
-
+<xar:else/>
+    <a href="#xarModURL('dyn_example','admin','new')#"><xar:mlstring>New</xar:mlstring></a>
+</xar:if>

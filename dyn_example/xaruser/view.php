@@ -9,7 +9,8 @@ function dyn_example_user_view()
 {
     $data = xarModAPIFunc('dyn_example','user','menu');
 
-    $data['startnum'] = xarVarCleanFromInput('startnum');
+    if(!xarVarFetch('startnum', 'isset', $data['startnum'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('catid',    'isset', $data['catid'],    NULL, XARVAR_DONT_SET)) {return;}
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -26,6 +27,8 @@ function dyn_example_user_view()
 /* start APPROACH # 3 : getting the object list via API */
     $mylist =& xarModAPIFunc('dynamicdata','user','getitems',
                              array('module'    => 'dyn_example',
+                                   'itemtype'  => 0,
+                                   'catid'     => $data['catid'],
                                    'numitems'  => $data['itemsperpage'],
                                    'startnum'  => $data['startnum'],
                                    'status'    => 1,      // only get the properties with status 1 = active
@@ -42,6 +45,8 @@ function dyn_example_user_view()
 /* start APPROACH # 4 : getting only the raw item values via API */
     $values =& xarModAPIFunc('dynamicdata','user','getitems',
                              array('module'   => 'dyn_example',
+                                   'itemtype' => 0,
+                                   'catid'    => $data['catid'],
                                    'numitems' => $data['itemsperpage'],
                                    'startnum' => $data['startnum'],
                                    'status'   => 1));

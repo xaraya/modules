@@ -7,12 +7,12 @@
 
 <h2><xar:mlstring>Display a Dynamic Example</xar:mlstring></h2>
 
-<p><b><xar:mlstring>APPROACH ## 1 : the &lt;xar:data-display ...&gt; tag</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 1 : the &lt;xar:data-display ...&gt; tag</xar:mlstring></b></p>
 
 <p><xar:mlstring>This tag will automatically retrieve the item from DynamicData,
      and present it according to its user-objectdisplay.xd template.</xar:mlstring></p>
 
-<xar:data-display module="dyn_example" itemid="$itemid" />
+<xar:data-display module="dyn_example" itemtype="0" itemid="$itemid" />
 
 <p><xar:mlstring>If you want to provide your own presentation here, you can specify a
      different layout="..." to use in the default template, or you can specify your
@@ -20,12 +20,12 @@
 
 
 
-<p><b><xar:mlstring>APPROACH ## 2 : the &lt;xar:data-getitem ...&gt; tag</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 2 : the &lt;xar:data-getitem ...&gt; tag</xar:mlstring></b></p>
 
 <p><xar:mlstring>This tag will retrieve the properties of this item from DynamicData and
      make them available in the 'properties' variable in your template.</xar:mlstring></p>
 
-<xar:data-getitem name="$properties" module="dyn_example" itemid="$itemid" />
+<xar:data-getitem name="$properties" module="dyn_example" itemtype="0" itemid="$itemid" />
 
 <p><xar:mlstring>You can then use that variable to build your own layout. The &lt;xar:data-label ...&gt; and &lt;xar:data-output ...&gt; tags allow you to show individual labels or value outputs in the template.</xar:mlstring></p>
 
@@ -48,13 +48,13 @@
 
 
 
-<p><b><xar:mlstring>APPROACH ## 3 : getting the object via API</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 3 : getting the object via API</xar:mlstring></b></p>
 
 <p><xar:mlstring>After retrieving the object via API, you can pass along the whole object to the template and use &lt;xar:data-display object="$object"&gt;,</xar:mlstring></p>
 
 <xar:data-display object="$object" />
 
-<p><xar:mlstring>or pass along the properties and work like in APPROACH ## 2.</xar:mlstring></p>
+<p><xar:mlstring>or pass along the properties and work like in APPROACH # 2.</xar:mlstring></p>
 
     <table border="0" cellspacing="0" cellpadding="4">
     <xar:foreach in="$properties" key="$name">
@@ -74,7 +74,7 @@
     </table>
 
 
-<p><b><xar:mlstring>APPROACH ## 4 : getting the raw item values via API</xar:mlstring></b></p>
+<p><b><xar:mlstring>APPROACH # 4 : getting the raw item values via API</xar:mlstring></b></p>
 
 <p><xar:mlstring>Here you'll have to handle the output format of the values yourself - in the module code and/or template...</xar:mlstring></p>
 
