@@ -31,7 +31,7 @@ function polls_admin_list()
                                   'numitems' => xarModGetVar('polls', 'itemsperpage')));
     $data = array();
     if (!$polls) {
-		return $data;
+        return $data;
     }
     $data['hooked'] = $hooked;
     $numrows = count($polls);

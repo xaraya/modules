@@ -31,9 +31,9 @@ function polls_userapi_getall($args)
     $polls = array();
 
     // Security check
-	if(!xarSecurityCheck('ListPolls')){
-		return;
-	}
+    if(!xarSecurityCheck('ListPolls')){
+        return;
+    }
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();

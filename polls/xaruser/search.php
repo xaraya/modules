@@ -22,7 +22,7 @@ function polls_user_search()
     }
     $data = array();
     if($q == ''){
-		return $data;
+        return $data;
     }
     if ($polls_title != 1){
         $polls_title = 0;

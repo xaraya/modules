@@ -58,9 +58,9 @@ function polls_userapi_get($args)
     $result->Close();
 
     // Security check
-	if(!xarSecurityCheck('ViewPolls',0,'All',"$title:All:$pid")){
-		return;
-	}
+    if(!xarSecurityCheck('ViewPolls',0,'All',"$title:All:$pid")){
+        return;
+    }
 
     // Get the options for this poll
     $pollsinfotable = $xartable['polls_info'];

@@ -91,20 +91,20 @@ function polls_pollblock_display($blockinfo)
 
         for ($i=1; $i<=$poll['opts']; $i++) {
             $row = array();
-	        if ($poll['votes'] == 0) {
-	            $percentage = 0;
-	        } else {
-	            $percentage = (int)($poll['options'][$i]['votes']*1000/$poll['votes']);
-	            $percentage /= 10;
-	        }
+            if ($poll['votes'] == 0) {
+                $percentage = 0;
+            } else {
+                $percentage = (int)($poll['options'][$i]['votes']*1000/$poll['votes']);
+                $percentage /= 10;
+            }
 
-	        $row = array();
-	        $row['name'] = $poll['options'][$i]['name'];
-	        $row['votes'] = $poll['options'][$i]['votes'];
-	        $row['percentage'] = $percentage;
-	        $row['barwidth'] = (int)($percentage);
+            $row = array();
+            $row['name'] = $poll['options'][$i]['name'];
+            $row['votes'] = $poll['options'][$i]['votes'];
+            $row['percentage'] = $percentage;
+            $row['barwidth'] = (int)($percentage);
 
-	        $data['options'][$i] = $row;
+            $data['options'][$i] = $row;
 
         }
     }

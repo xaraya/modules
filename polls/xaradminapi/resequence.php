@@ -40,9 +40,9 @@ function polls_adminapi_resequence($args)
                 WHERE ".$prefix."_pid=" . xarVarPrepForStore($pid) . "
                 AND ".$prefix."_optnum=" . xarVarPrepForStore($optnum);
             $result = $dbconn->Execute($query);
-		    if(!$result){
-		        return;
-		    }
+            if(!$result){
+                return;
+            }
 
         }
         $seq++;

@@ -91,7 +91,7 @@ function polls_userapi_vote($args)
             xarExceptionSet(XAR_USER_EXCEPTION,
                          'BAD_DATA',
                          new DefaultUserException($msg));
-			return;
+            return;
         }
         if($option > $poll['opts'] || $option < 1){
             $msg = xarML('Invalid Vote');
@@ -105,9 +105,9 @@ function polls_userapi_vote($args)
                 WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
                   AND ".$prefix."_optnum = " . xarVarPrepForStore($option);
         $result = $dbconn->Execute($sql);
-	    if (!$result) {
-	        return;
-	    }
+        if (!$result) {
+            return;
+        }
 
         $voteinc++;
     }
@@ -134,8 +134,8 @@ function polls_userapi_vote($args)
                       AND ".$prefix."_optnum = " . xarVarPrepForStore($option);
             $result = $dbconn->Execute($sql);
             if (!$result) {
-			    return;
-			}
+                return;
+            }
             $voteinc++;
         }
     }

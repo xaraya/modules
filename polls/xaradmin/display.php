@@ -63,17 +63,17 @@ function polls_admin_display()
                                         'authid' => $authid));
 
         if (count($poll['options']) > 1) {
-	        switch($rownum) {
-	            case 1:
-	                $row['down'] = $downurl;
-	                break;
-	            case count($poll['options']):
+            switch($rownum) {
+                case 1:
+                    $row['down'] = $downurl;
+                    break;
+                case count($poll['options']):
                     $row['up'] = $upurl;
-	                break;
-	            default:
-	                $row['down'] = $downurl;
-	                $row['up'] = $upurl;
-	        }
+                    break;
+                default:
+                    $row['down'] = $downurl;
+                    $row['up'] = $upurl;
+            }
         }
 
         $row['name'] = $optinfo['name'];
@@ -81,11 +81,11 @@ function polls_admin_display()
         $row['votes'] = $optinfo['votes'];
 
         if (xarSecurityCheck('EditPolls',0,'All',"$poll[title]:All:$pid")) {
-		    $row['modify'] = xarModURL('polls',
-		                                       'admin',
-		                                       'modifyopt',
-		                                       array('pid' => $pid,
-		                                             'opt' => $opt));
+            $row['modify'] = xarModURL('polls',
+                                               'admin',
+                                               'modifyopt',
+                                               array('pid' => $pid,
+                                                     'opt' => $opt));
         }
         if (xarSecurityCheck('EditPolls',0,'All',"$poll[title]:All:$pid")) {
             $row['delete'] = xarModURL('polls',
