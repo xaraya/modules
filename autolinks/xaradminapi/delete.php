@@ -43,8 +43,8 @@ function autolinks_adminapi_delete($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstable = $xartable['autolinks'];
 

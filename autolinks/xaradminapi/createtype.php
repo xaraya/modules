@@ -45,8 +45,8 @@ function autolinks_adminapi_createtype($args)
     if(!xarSecurityCheck('AddAutolinks')) {return;}
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstypestable = $xartable['autolinks_types'];
 

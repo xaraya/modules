@@ -75,8 +75,8 @@ function autolinks_adminapi_updatetype($args)
     if (!xarSecurityCheck('EditAutolinks')) {return;}
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstypestable = $xartable['autolinks_types'];
 

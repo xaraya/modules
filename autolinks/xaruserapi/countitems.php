@@ -16,8 +16,8 @@ function autolinks_userapi_countitems($args)
         $where = '';
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstable = $xartable['autolinks'];
 

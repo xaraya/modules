@@ -38,8 +38,8 @@ function autolinks_userapi_getalltypes($args)
     // Security Check
     if(!xarSecurityCheck('ReadAutolinks')) {return;}
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstypestable = $xartable['autolinks_types'];
 

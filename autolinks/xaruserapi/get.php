@@ -18,8 +18,8 @@ function autolinks_userapi_get($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstable = $xartable['autolinks'];
     $autolinkstypestable = $xartable['autolinks_types'];

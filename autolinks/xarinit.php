@@ -27,8 +27,8 @@ function autolinks_init()
     }
             
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstable = $xartable['autolinks'];
     $autolinkstypestable = $xartable['autolinks_types'];
@@ -173,8 +173,8 @@ function autolinks_init()
 function autolinks_upgrade($oldversion)
 {
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     $autolinkstable = $xartable['autolinks'];
@@ -373,8 +373,8 @@ function autolinks_delete()
     ) {return;}
 
     // Drop the tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     $autolinkstable = $xartable['autolinks'];

@@ -57,8 +57,8 @@ function autolinks_adminapi_create($args)
     if(!xarSecurityCheck('AddAutolinks')) {return;}
 
     // Get database connection
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstable = $xartable['autolinks'];
 

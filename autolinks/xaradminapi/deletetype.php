@@ -78,8 +78,8 @@ function autolinks_adminapi_deletetype($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstypestable = $xartable['autolinks_types'];
 

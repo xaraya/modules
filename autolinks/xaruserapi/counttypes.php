@@ -7,8 +7,8 @@
  */
 function autolinks_userapi_counttypes()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $autolinkstypestable = $xartable['autolinks_types'];
 
