@@ -9,7 +9,7 @@
     <strong><xar:mlstring>Filter By</xar:mlstring>:</strong>
   </span>
   <span style="float:left; text-align:left; width:60%;">
-  <form action="#xarModURL('release', 'user', 'viewids')#" method="post" enctype="application/x-www-form-urlencoded">
+  <form action="#xarModURL('release', 'user', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
 	  <input type="radio" name="phase" id="phase" value="themes"  />
 	  <xar:mlstring>Themes</xar:mlstring>
 	  &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="modules"  />

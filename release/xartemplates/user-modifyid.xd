@@ -24,7 +24,33 @@
 					<label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="regname" id="regname" value="#$regname#" size="25" maxlength="60" tabindex="2" />
+                    <xar:sec id="checkregname" mask="AdminRelease" catch="false" component="release" >
+                        <input type="text" name="regname" id="regname" value="#$regname#" size="25" maxlength="60" tabindex="2" />
+                    <xar:else/>
+                        #$regname#
+                    </xar:sec>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Type</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+				<xar:if condition="$type eq '0'">
+                    <xar:sec id="checktype1" mask="AdminRelease" catch="false" component="release" >
+                        <input type="radio" name="idtype" value="0" CHECKED><xar:mlstring>Module</xar:mlstring><br />
+                        <input type="radio" name="idtype" value="1"><xar:mlstring>Theme</xar:mlstring>
+                    <xar:else/>
+                        <xar:mlstring>Module</xar:mlstring>
+                    </xar:sec>
+				<xar:else />
+                    <xar:sec id="checktype2" mask="AdminRelease" catch="false" component="release" >
+                        <input type="radio" name="idtype" value="0"><xar:mlstring>Module</xar:mlstring><br />
+                        <input type="radio" name="idtype" value="1" CHECKED><xar:mlstring>Theme</xar:mlstring>
+                    <xar:else/>
+                        <xar:mlstring>Theme</xar:mlstring>
+                    </xar:sec>
+				</xar:if>
 				</td>
 			</tr>
 			<tr>
@@ -49,20 +75,6 @@
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<textarea name="desc" id="desc" tabindex="4" rows="10" cols="50" />#$desc#</textarea> 
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Type</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-				<xar:if condition="$type eq '0'">
-                    <input type="radio" name="idtype" value="0" CHECKED><xar:mlstring>Module</xar:mlstring><br />
-                    <input type="radio" name="idtype" value="1"><xar:mlstring>Theme</xar:mlstring>
-				<xar:else />
-                    <input type="radio" name="idtype" value="0"><xar:mlstring>Module</xar:mlstring><br />
-                    <input type="radio" name="idtype" value="1" CHECKED><xar:mlstring>Theme</xar:mlstring>
-				</xar:if>
 				</td>
 			</tr>
 			<tr>

@@ -40,16 +40,14 @@ function release_user_addid()
             
             case 'update':
 
-                list($rid,
-                     $uid,
+                list($uid,
                      $regname,
                      $displname,
                      $desc,
                      $idtype,
                      $class,
                      $rstate,
-                     $cids) = xarVarCleanFromInput('rid',
-                                                   'uid',
+                     $cids) = xarVarCleanFromInput('uid',
                                                    'regname',
                                                    'displname',
                                                    'desc',
@@ -68,8 +66,7 @@ function release_user_addid()
                 $newrid =  xarModAPIFunc('release',
                                          'user',
                                          'createid',
-                                    array('rid' => $rid,
-                                          'uid' => $uid,
+                                    array('uid' => $uid,
                                           'regname' => $regname,
                                           'displname' => $displname,
                                           'desc' => $desc,
@@ -82,7 +79,10 @@ function release_user_addid()
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                         return; // throw back
                     }
-                    $data['message']=xarML('Sorry, that ID is not available');
+                    $reason = xarExceptionValue();
+                    if (!empty($reason)) {
+                       $data['message'] = substr(strrchr($reason->toString(), '|'), 1);
+                    }
                     xarExceptionFree();
                     return $data;
                 }
@@ -100,7 +100,5 @@ function release_user_addid()
 
     return $data;
 }
-
-// Begin Release Data Portion
 
 ?>

@@ -2,14 +2,14 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <xar:set name='retryurl'>xarModURL('release','user','addid')</xar:set>
-<xar:set name="retryID">xarModURL('release','user','viewids')</xar:set>
+<xar:set name="retryID">xarModURL('release','user','view')</xar:set>
 <h2><xar:mlstring>Reserve an ID</xar:mlstring></h2>
 <xar:if condition="!empty($message)">
  <div style="margin-top:20px; margin-bottom:20px;">
  <span style="float:left; text-align:center; width:90%;">
-	#$message#
+	#$message#<br />
 	<a href="javascript:history.back(-1)"><xar:mlstring>Return to try again</xar:mlstring></a>,
-    <xar:mlstring>or </xar:mlstring><a href="#$retryID#"><xar:mlstring>check current IDs</xar:mlstring></a>.
+    <xar:mlstring>or </xar:mlstring><a href="#$retryID#"><xar:mlstring>check current registered names.</xar:mlstring></a>.
  </span>
  </div>
 <xar:else />
@@ -19,14 +19,6 @@
 			<input type="hidden" name="authid" id="authid" value="#$authid#" />
 			<input type="hidden" name="phase" id="phase" value="update" />
 			<table border="0" cellpadding="2" cellspacing="0" width="100%">
-				<tr>
-					<td align="left" valign="top" class="xar-norm">
-						<label for="rid"><xar:mlstring>Extension ID</xar:mlstring></label>
-					</td>
-					<td align="left" valign="top" class="xar-norm">
-						<input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
-            		</td>
-				</tr>
 				<tr>
 					<td align="left" valign="top" class="xar-norm">
 						<label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>

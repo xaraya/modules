@@ -16,24 +16,33 @@ function release_userapi_createid($args)
         return false;
     }
 
-    // Get datbase setup
+    $regname = strtolower($regname);
+    // Argument check
+    if (!ereg("^[a-z0-9][a-z0-9_-]*[a-z0-9]$", $regname)) {
+        $msg = xarML('Wrong symbols in registered name.');
+        xarExceptionSet(XAR_USER_EXCEPTION,
+                        'BAD_PARAM',
+                        new SystemException($msg));
+        return false;
+    }
+
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $releasetable = $xartable['release_id'];
 
-    // Check if that username exists
+    // Check if that regname exists
     $query = "SELECT xar_rid FROM $releasetable
             WHERE xar_regname='".xarVarPrepForStore($regname)."'
-            AND xar_type='".xarVarPrepForStore($type)."'
-            OR xar_rid='".xarVarPrepForStore($rid)."'";
+            AND xar_type='".xarVarPrepForStore($type)."'";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
-        $msg = xarML('Requested ID or name/type already registered earlier.');
+        $msg = xarML('Sorry, requested regname/type pair already registered earlier.');
         xarExceptionSet(XAR_USER_EXCEPTION,
-                        'MISSING_DATA',
+                        'BAD_PARAM',
                         new SystemException($msg));
         return false;
     }
@@ -41,6 +50,21 @@ function release_userapi_createid($args)
     if (empty($approved)){
         $approved = 1;
     }
+
+    // Get all IDs
+    $query = "SELECT xar_rid FROM $releasetable ORDER BY xar_rid";
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    $rid = 0;
+    for (; !$result->EOF; $result->MoveNext()) {
+        $nextid = $result->fields[0];
+        $rid++;
+        if ($rid == $nextid) continue;
+        break;
+    }
+    $result->Close();
+
+    if ($rid == 0) return;
 
     $query = "INSERT INTO $releasetable (
               xar_rid,
@@ -65,6 +89,7 @@ function release_userapi_createid($args)
               '" . xarVarPrepForStore($certified) . "',
               '" . xarVarPrepForStore($approved) . "',
               '" . xarVarPrepForStore($rstate)."')";
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -73,7 +98,6 @@ function release_userapi_createid($args)
 
     // Return the id of the newly created user to the calling process
     return $rid;
-
 }
 
 ?>

@@ -4,7 +4,7 @@
 <!-- Let's put non-repeating detail as header and list releases underneath -->
 <xar:set name="extname">ucfirst($regname)</xar:set>
 <xar:set name="goback"><xar:mlstring>Back to List View</xar:mlstring></xar:set>
-<xar:set name="listview">xarModURL('release','user','viewids')</xar:set>
+<xar:set name="listview">xarModURL('release','user','view')</xar:set>
 <xar:if condition="$general eq 2" >
     <div style="clear: both; padding-top: 5px;">
     <span style="float: left; width: 20%; text-align: left;">
@@ -75,9 +75,7 @@
        <h3>Categories:</h3>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-	<xar:categories-navigation layout="" module="release" itemtype="1" itemid="$rid" />
-    <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="1" itemid="$rid" />
-
+	   <xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />
     </span>
     </div>
 </xar:if>

@@ -46,6 +46,7 @@ function release_admin_viewids()
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['regname'] = xarVarPrepForDisplay($item['regname']);
 
+        $items[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('EditRelease', 0)) {
             $items[$i]['editurl'] = xarModURL('release',
                                               'user',
@@ -55,7 +56,7 @@ function release_admin_viewids()
             $items[$i]['editurl'] = '';
         }
 
-        $items[$i]['edittitle'] = xarML('Edit');
+        $items[$i]['deletetitle'] = xarML('Delete');
         if (xarSecurityCheck('DeleteRelease', 0)) {
             $items[$i]['deleteurl'] = xarModURL('release',
                                                'admin',
@@ -64,12 +65,11 @@ function release_admin_viewids()
         } else {
             $items[$i]['deleteurl'] = '';
         }
-        $items[$i]['deletetitle'] = xarML('Delete');
 
     }
     //Add the pager
-     $data['phase']=$phase;
-     $data['pager'] = xarTplGetPager($startnum,
+    $data['phase']=$phase;
+    $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
         xarModURL('release', 'admin', 'viewids', array('startnum' => '%%','phase'=>$phase)),
         xarModGetUserVar('release', 'itemsperpage', $uid));

@@ -5,7 +5,7 @@ function release_userapi_getmenulinks()
     if (xarSecurityCheck('OverviewRelease', 0)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'user',
-                                                  'viewids'),
+                                                  'view'),
                              'title' => xarML('View all extensions IDs'),
                              'label' => xarML('View Registration'));
         $menulinks[] = Array('url'   => xarModURL('release',

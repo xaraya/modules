@@ -23,7 +23,7 @@
 			  #$loop:item['regname']#
 		  </td>
 		  <td align="center">
-        <xar:if condition="empty($editurl)">
+        <xar:if condition="empty($loop:item['editurl'])">
           #$loop:item['edittitle']#
         <xar:else />
           <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>

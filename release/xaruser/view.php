@@ -3,7 +3,7 @@
  * jojodee: added pager ability
  * param $idtypes: 1- all, 2-themes, 3-modules
  */
-function release_user_viewids()
+function release_user_view()
 {
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
@@ -213,7 +213,7 @@ function release_user_viewids()
      $data['phase']=$phase;
      $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
-        xarModURL('release', 'user', 'viewids', array('startnum' => '%%','phase'=>$phase)),
+        xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
 
     // Add the array of items to the template variables

@@ -102,7 +102,7 @@ function release_user_modifyid()
                                       'rstate' => $rstate,
                                       'cids' => $cids))) return;
 
-            xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
+            xarResponseRedirect(xarModURL('release', 'user', 'view'));
 
             return true;
 

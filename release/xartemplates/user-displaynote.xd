@@ -1,6 +1,6 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
-<xar:set name="extlisturl">xarModURL('release','user','viewids')</xar:set>
+<xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
 <xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
 <div class="xar-mod-body">
 <h2><xar:mlstring>Extension Release Details</xar:mlstring></h2>
