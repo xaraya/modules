@@ -15,7 +15,7 @@
 function images_userapi_resize($args)
 {
     extract($args);
-    
+
     if (!isset($src) || empty($src) || !is_numeric($src)) {
         $msg = xarML('Required parameter \'#(1)\' is missing or not numeric.', 'src');
         xarExceptionSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
@@ -44,7 +44,7 @@ function images_userapi_resize($args)
 
     // just a flag for later
     $constrain_both = FALSE;
-    
+
     if (!isset($constrain)) {
         if (isset($width) XOR isset($height)) {
             $constrain = TRUE;
@@ -137,12 +137,12 @@ function images_userapi_resize($args)
 
     $attribs .= sprintf(' width="%s" height="%s"', $image->getWidth(), $image->getHeight());
 
-    $url = xarModURL('images', 'user', 'display',
+    $url = htmlentities(xarModURL('images', 'user', 'display',
                       array('fileId' => $src,
                             'height' => $image->getHeight(),
-                            'width'  => $image->getWidth()));
+                            'width'  => $image->getWidth())));
 
-    $imgTag = sprintf('<img src="%s" alt="%s" title="%s" %s />', $url, $label, $label, $attribs);
+    $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
 
     if (!$image->getDerivative()) {
         if ($image->resize()) {
