@@ -38,24 +38,27 @@ function AddressBook_utilapi_handleException ($args) {
     /**
      * Check for any type of exception
      */
-    if (xarExceptionMajor() != XAR_NO_EXCEPTION) {
+    if ((xarCurrentErrorType() != XAR_NO_EXCEPTION) || (isCoreException())) {
 
         /**
          * Handle the exception
          */
         $abExceptions = array();
 
-        global $ExceptionStack;
-// FIXME: verify with new exception handling
-        if (!isset($ExceptionStack)) {
-            global $ErrorStack;
-            $ExceptionStack =& $ErrorStack;
-        }
-        while (!$ExceptionStack->isempty()) {
+        global $ErrorStack, $CoreStack;
+        while (!$ErrorStack->isempty() || !$CoreStack->isempty()) {
 
-            $exception = $ExceptionStack->pop();
+			if (!$CoreStack->isempty()) {
+            	$errorException = $CoreStack->pop();
+			} else {
+				if (!$ErrorStack->isempty()) {
+	            	$errorException = $ErrorStack->pop();
+				} else {
+					$errorException = NULL;
+				}
+			}
 
-            switch ($exception->getMajor()) {
+            switch ($errorException->getMajor()) {
                 case XAR_SYSTEM_EXCEPTION:
                     include_once ("includes/exceptions/htmlexceptionrendering.class.php");
                     include_once ("includes/exceptions/textexceptionrendering.class.php");
@@ -68,7 +71,7 @@ function AddressBook_utilapi_handleException ($args) {
                     $xarException['htmltext'] = $htmlRendering->getShort();
 
                     $abExceptions['xarSysException'][] = $xarException;
-                    xarExceptionHandled();
+                    xarErrorHandled();
 
                     /**
                      * if configured, kick out an email to the admin & developer
@@ -136,28 +139,28 @@ function AddressBook_utilapi_handleException ($args) {
                     break;
 
                 case XAR_USER_EXCEPTION:
-                    switch ($exception->getMajor()) {
+                    switch ($errorException->getID()) {
                         case _AB_ERR_INFO:
-                            $abInfoMsg['type'] = $exception->getID();
-                            $abInfoMsg['text'] = $exception->abExceptionRender(_AB_ERR_INFO_STYLE);
+                            $abInfoMsg['type'] = $errorException->getID();
+                            $abInfoMsg['text'] = $errorException->abExceptionRender(_AB_ERR_INFO_STYLE);
                             $abExceptions['abInfoMsg'][] = $abInfoMsg;
                             break;
 
                         case _AB_ERR_WARN:
-                            $abWarnMsg['type'] = $exception->getID();
-                            $abWarnMsg['text'] = $exception->abExceptionRender(_AB_ERR_WARN_STYLE);
+                            $abWarnMsg['type'] = $errorException->getID();
+                            $abWarnMsg['text'] = $errorException->abExceptionRender(_AB_ERR_WARN_STYLE);
                             $abExceptions['abWarnMsg'][] = $abWarnMsg;
                             break;
 
                         case _AB_ERR_ERROR:
-                            $abErrMsg['type'] = $exception->getID();
-                            $abErrMsg['text'] = $exception->abExceptionRender(_AB_ERR_ERROR_STYLE);
+                            $abErrMsg['type'] = $errorException->getID();
+                            $abErrMsg['text'] = $errorException->abExceptionRender(_AB_ERR_ERROR_STYLE);
                             $abExceptions['abErrMsg'][] = $abErrMsg;
                             break;
 
                         case _AB_ERR_DEBUG:
-                            $abDebugMsg['type'] = $exception->getID();
-                            $abDebugMsg['text'] = $exception->abExceptionRender(_AB_ERR_DEBUG_STYLE);
+                            $abDebugMsg['type'] = $errorException->getID();
+                            $abDebugMsg['text'] = $errorException->abExceptionRender(_AB_ERR_DEBUG_STYLE);
                             $abExceptions['abDebugMsg'][] = $abDebugMsg;
                             break;
                     } // END switch
@@ -167,10 +170,12 @@ function AddressBook_utilapi_handleException ($args) {
     //              continue 2; //gehDEBUG not sure about this...
                     break;
             } // END switch
-        }
-        xarExceptionFree();
+        } // END while
+        xarErrorFree();
+        xarCoreExceptionFree();
 
         $output['abExceptions'] = $abExceptions;
+        
         /**
          * For system errors we will redirect to a special error handling page
          * for a more user friendly message
