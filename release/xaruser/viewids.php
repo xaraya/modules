@@ -1,46 +1,92 @@
 <?php
-
+/**
+ * jojodee: added pager ability
+ * param $idtypes: 1- all, 2-themes, 3-modules
+ */
 function release_user_viewids()
 {
+    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
     $phase = xarVarCleanFromInput('phase');
 
-    if (empty($phase)){
-        $phase = 'all';
+    $uid = xarUserGetVar('uid');
+
+    if (!isset($idtypes)) {
+       $idtypes=1;
     }
 
+    if ($phase == 'modules') {
+        $idtypes=3;
+    }elseif ($phase =='themes') {
+        $idtypes=2;
+    }else{
+     $idtypes=1;
+    }
     $data = array();
 
-    switch(strtolower($phase)) {
+    //jojodee: I've put all this into one function now userapi getallrids.
+
+    /*
+     switch(strtolower($phase)) {
 
         case 'all':
         default:
 
-            // The user API function is called. 
+            // The user API function is called.
             $items = xarModAPIFunc('release',
                                    'user',
-                                   'getallids');
+                                   'getallids',
+                                   array('idtypes' => $idtypes,
+                                         'startnum' => $startnum,
+                                         'numitems' => xarModGetUserVar('release',
+                                                                    'itemsperpage',$uid),
+                                        ));
+            $idtypes=1;
             break;
 
         case 'themes':
 
-            // The user API function is called. 
+            // The user API function is called.
             $items = xarModAPIFunc('release',
                                    'user',
-                                   'getthemeids');
+                                   'getthemeids',
+                                  array('startnum' => $startnum,
+                                         'numitems' => xarModGetUserVar('release',
+                                                                    'itemsperpage',$uid)
+                                    ));
+
+            $idtypes=2;
             break;
 
         case 'modules':
 
-            // The user API function is called. 
+            // The user API function is called.
             $items = xarModAPIFunc('release',
                                    'user',
-                                   'getmoduleids');
+                                   'getmoduleids',
+                             array('startnum' => $startnum,
+                                   'numitems' => xarModGetUserVar('release',
+                                                              'itemsperpage',$uid)
+                                   ));
+            $idtypes=3;
             break;
     }
 
+*/ 
+
+      // The user API function is called.
+      $items = xarModAPIFunc('release',
+                             'user',
+                             'getallrids',
+                       array('idtypes' => $idtypes,
+                             'startnum' => $startnum,
+                             'numitems' => xarModGetUserVar('release',
+                                                            'itemsperpage',$uid),
+                              ));
 
     if (empty($items)) {
         $msg = xarML('There are no items to display in the release module');
@@ -48,7 +94,7 @@ function release_user_viewids()
         return;
     }
 
-    $uid = xarUserGetVar('uid');
+
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
@@ -149,6 +195,12 @@ function release_user_viewids()
                                            'countdocs',
                                            array('rid' => $item['rid']));
     }
+
+     $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
+        xarModURL('release', 'user', 'viewids', array('startnum' => '%%','phase'=>$phase)),
+        xarModGetUserVar('release', 'itemsperpage', $uid));
+
 
     // Add the array of items to the template variables
     $data['items'] = $items;

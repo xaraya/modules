@@ -17,7 +17,7 @@
  * module
  */
 function release_admin_modifyconfig()
-{ 
+{
     // Security check
     if (!xarSecurityCheck('AdminRelease')) return; 
 
@@ -29,7 +29,11 @@ function release_admin_modifyconfig()
 
     $data['shorturlslabel'] = xarML('Enable short URLs?');
     $data['shorturlschecked'] = xarModGetVar('release', 'SupportShortURLs') ? 'checked' : '';
-
+    $data['itemsvalue'] = xarModGetVar('release', 'itemsperpage');
+    $data['itemslabel'] = xarML('Release items per page:');
+    if (!isset($data['itemsvalue'])) {
+        $data['itemsvalue']=20;
+    }
     $hooks = xarModCallHooks('module', 'modifyconfig', 'release',
         array('module' => 'release'));
     if (empty($hooks)) {

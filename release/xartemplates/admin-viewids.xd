@@ -9,7 +9,7 @@
 		  </th>
       <th>
 			  <xar:mlstring>Name</xar:mlstring>
-		  </th>
+ 		  </th>
       <th>
 			  <xar:mlstring>Options</xar:mlstring>
 		  </th>
@@ -38,4 +38,6 @@
     </tr>
   </xar:loop>
 </table>
-<br />
+<p>
+
+
