@@ -2,7 +2,7 @@
 // $Id: pnversion.php,v 1.2 2002/07/05 11:13:59 marco Exp $
 $modversion['name'] = 'Translations';
 $modversion['id'] = '77';
-$modversion['version'] = '0.01';
+$modversion['version'] = '0.1.0';
 $modversion['description'] = 'Translations handling';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
