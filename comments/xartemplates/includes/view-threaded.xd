@@ -1,12 +1,12 @@
  <table cellspacing="0" cellpadding="0" width="100%" border="0">
     <tr>
-        <th width="60%" style="word-wrap: nowrap;">
+        <th style="word-wrap: nowrap; width: 60%;">
             <xar:mlstring>Title</xar:mlstring> <img src="modules/comments/xarimages/n_spacer.gif" alt="" width="1" height="1" />
         </th>
-        <th width="15%" style="word-wrap: nowrap;">
+        <th style="word-wrap: nowrap; width: 15%;">
             <xar:mlstring>Author</xar:mlstring>
         </th>
-        <th width="25%" style="word-wrap: nowrap; text-align: center;">
+        <th style="word-wrap: nowrap; text-align: center; width: 25%">
             <xar:mlstring>Date</xar:mlstring>
         </th>
     </tr>
@@ -20,10 +20,10 @@
                                 &nbsp;
                                 <xar:if condition="$loop:item['childcount'] gt 0">
                                     <a href="">
-                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
                                     </a>
                                 <xar:else />
-                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
                                 </xar:if>
                                 &nbsp;&nbsp;
                             </td>
@@ -60,10 +60,10 @@
                                 &nbsp;
                                 <xar:if condition="$loop:item['childcount'] gt 0">
                                     <a href="">
-                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                        <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
                                     </a>
                                 <xar:else />
-                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" align="top" src="#$map#" width="9" border="0" /></xar:foreach>
+                                    <xar:foreach in="$loop:item['xar_map']" value="$map"><img height="21" src="#$map#" width="9" /></xar:foreach>
                                 </xar:if>
                                 &nbsp;&nbsp;
                             </td>
