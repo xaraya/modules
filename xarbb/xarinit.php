@@ -21,14 +21,6 @@ xarDBLoadTableMaintenanceAPI();
  */
 function xarbb_init()
 {
-
-    if((!xarModIsAvailable('categories')) || (!xarModIsAvailable('hitcount')) || (!xarModIsAvailable('comments'))) {
-        $msg=xarML('The categories, comments, and hitcount module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
-                        new SystemException($msg));
-        return;
-    }
-
     // Set up database tables
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -141,11 +133,7 @@ function xarbb_init()
 
 
     // Initialisation successful
-    return true;
-}
 
-function xarbb_activate()
-{
     // do this stuff only once
     if (xarModGetVar('xarbb', 'hottopic')) return true;
 
@@ -169,6 +157,11 @@ function xarbb_activate()
     xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
                                                              'callerItemType'   => 2,
                                                              'hookModName'      => 'hitcount'));
+
+    // Enable comment hooks for xarbb topics (= item type 2)
+    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
+                                                             'callerItemType'   => 2,
+                                                             'hookModName'      => 'comments'));
 
     // modvars
     xarModSetVar('xarbb', 'hottopic', 10);
@@ -203,6 +196,8 @@ function xarbb_activate()
                 'description'   => $subcat['description'],
                 'parent_id'     => $xarbbcid));
     }
+
+
 
     return true;
 }
