@@ -20,6 +20,8 @@ function articles_user_view($args)
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('numcols',  'isset', $numcols,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('authorid', 'isset', $authorid,  NULL, XARVAR_DONT_SET)) {return;}
+// This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
+//    if(!xarVarFetch('where',    'isset', $where,     NULL, XARVAR_DONT_SET)) {return;}
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
@@ -286,6 +288,9 @@ function articles_user_view($args)
     if (xarModIsHooked('dynamicdata','articles',$ptid)) {
         $extra[] = 'dynamicdata';
     }
+    if (!isset($where)) {
+        $where = null;
+    }
 
     // Get articles
     $articles = xarModAPIFunc('articles',
@@ -299,6 +304,7 @@ function articles_user_view($args)
                                    'status' => $status,
                                    'sort' => $sort,
                                    'extra' => $extra,
+                                   'where' => $where,
                                    'numitems' => $numitems,
                                    'enddate' => time()));
 

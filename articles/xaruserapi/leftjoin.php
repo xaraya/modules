@@ -27,6 +27,7 @@
  *                           (unix timestamp format)
  * @param $args['enddate'] articles published before enddate
  *                         (unix timestamp format)
+ * @param $args['where'] additional where clauses (myfield gt 1234)
  * @returns array
  * @return array('table' => 'nuke_articles',
  *               'field' => 'nuke_articles.xar_aid',
@@ -65,31 +66,61 @@ function articles_userapi_leftjoin($args)
     $leftjoin['field'] = $leftjoin['aid'];
 
     // Specify the WHERE part
-    $where = array();
+    $whereclauses = array();
     if (!empty($authorid) && is_numeric($authorid)) {
-        $where[] = $leftjoin['authorid'] . ' = ' . $authorid;
+        $whereclauses[] = $leftjoin['authorid'] . ' = ' . $authorid;
     }
     if (!empty($ptid) && is_numeric($ptid)) {
-        $where[] = $leftjoin['pubtypeid'] . ' = ' . $ptid;
+        $whereclauses[] = $leftjoin['pubtypeid'] . ' = ' . $ptid;
     }
     if (!empty($status) && is_array($status)) {
         if (count($status) == 1 && is_numeric($status[0])) {
-            $where[] = $leftjoin['status'] . ' = ' . $status[0];
+            $whereclauses[] = $leftjoin['status'] . ' = ' . $status[0];
         } elseif (count($status) > 1) {
             $allstatus = join(', ',$status);
-            $where[] = $leftjoin['status'] . ' IN (' . $allstatus . ')';
+            $whereclauses[] = $leftjoin['status'] . ' IN (' . $allstatus . ')';
         }
     }
     if (!empty($startdate) && is_numeric($startdate)) {
-        $where[] = $leftjoin['pubdate'] . ' >= ' . $startdate;
+        $whereclauses[] = $leftjoin['pubdate'] . ' >= ' . $startdate;
     }
     if (!empty($enddate) && is_numeric($enddate)) {
-        $where[] = $leftjoin['pubdate'] . ' < ' . $enddate;
+        $whereclauses[] = $leftjoin['pubdate'] . ' < ' . $enddate;
     }
     if (count($aids) > 0) {
         $allaids = join(', ', $aids);
-        $where[] = $articlestable . '.xar_aid IN (' .
+        $whereclauses[] = $articlestable . '.xar_aid IN (' .
                    xarVarPrepForStore($allaids) . ')';
+    }
+    if (!empty($where)) {
+        // cfr. BL compiler - adapt as needed (I don't think == and === are accepted in SQL)
+        $findLogic      = array(' eq ', ' ne ', ' lt ', ' gt ', ' id ', ' nd ', ' le ', ' ge ');
+        $replaceLogic   = array( ' = ', ' != ',  ' < ',  ' > ',  ' = ', ' != ', ' <= ', ' >= ');
+
+        $where = str_replace($findLogic, $replaceLogic, $where);
+        $parts = preg_split('/\s+(and|or)\s+/',$where,-1,PREG_SPLIT_DELIM_CAPTURE);
+        $join = '';
+        $mywhere = '';
+        foreach ($parts as $part) {
+            if ($part == 'and' || $part == 'or') {
+                $join = $part;
+                continue;
+            }
+            $pieces = preg_split('/\s+/',$part);
+            $name = array_shift($pieces);
+            // sanity check on SQL
+            if (count($pieces) < 2) {
+                continue;
+            }
+            if (isset($leftjoin[$name])) {
+            // Note: this is a potential security hole, so don't allow end-users to
+            // fill in the where clause without filtering quotes etc. !
+                $mywhere .= $join . ' ' . $leftjoin[$name] . ' ' . join(' ',$pieces) . ' ';
+            }
+        }
+        if (!empty($mywhere)) {
+            $whereclauses[] = '(' . $mywhere . ')';
+        }
     }
     if (!empty($search)) {
 // TODO : improve + make use of full-text indexing for recent MySQL versions ?
@@ -122,10 +153,10 @@ function articles_userapi_leftjoin($args)
             $find[] = $leftjoin['summary'] . " LIKE '%" . $text . "%'";
             $find[] = $leftjoin['body'] . " LIKE '%" . $text . "%'";
         }
-        $where[] = '(' . join(' OR ',$find) . ')';
+        $whereclauses[] = '(' . join(' OR ',$find) . ')';
     }
-    if (count($where) > 0) {
-        $leftjoin['where'] = join(' AND ', $where);
+    if (count($whereclauses) > 0) {
+        $leftjoin['where'] = join(' AND ', $whereclauses);
     } else {
         $leftjoin['where'] = '';
     }

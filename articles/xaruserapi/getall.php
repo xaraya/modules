@@ -27,6 +27,7 @@
  *                       to the default list). So you can EITHER specify *all* the
  *                       fields you want with 'fields', OR take all the default
  *                       ones and add some optional fields with 'extra'
+ * @param $args['where'] additional where clauses (e.g. myfield gt 1234)
  * @returns array
  * @return array of articles, or false on failure
  */
