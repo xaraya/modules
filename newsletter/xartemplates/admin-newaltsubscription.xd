@@ -24,7 +24,7 @@
                             <xar:mlstring>Subscription Name:</xar:mlstring>
                         </td>
                         <td>
-                            <input type="text" name="name" id="name" value="" size="50" maxlength="100" tabindex="1" />
+                            <input type="text" name="name" id="name" value="" size="50" maxlength="100" />
                         </td>
                     </tr>
                     <tr>
@@ -33,7 +33,7 @@
                             <br /><br />
                         </td>
                         <td>
-                            <input type="text" name="email" id="email" value="" size="50" maxlength="255" tabindex="2" />
+                            <input type="text" name="email" id="email" value="" size="50" maxlength="255" />
                         </td>
                     </tr>
                     <tr>
@@ -41,7 +41,14 @@
                             <xar:mlstring>Mail Options</xar:mlstring>
                         </td>
                         <td>
-                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked tabindex="3" />
+                            <input type="checkbox" name="validate" id="validate" value="1" checked />
+                            &nbsp;&nbsp;Validate Email Address (syntax check)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input type="checkbox" name="htmlmail" id="htmlmail" value="1" checked />
                             &nbsp;&nbsp;HTML Mail
                         </td>
                     </tr>

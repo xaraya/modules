@@ -22,6 +22,7 @@
  * @param 'email' the email address of the new subscription
  * @param 'pids' the publication ids
  * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
+ * @param 'validate' validate email address (0 = false, 1 = true)
  * @returns bool
  * @return true on success, false on failure
  */
@@ -52,24 +53,18 @@ function newsletter_admin_createaltsubscription()
     }
 
     if (!xarVarFetch('htmlmail', 'int:0:1:', $htmlmail, 0)) return;
-
-    // Create the syntactical validation regular expression
-    $regexp = "^([_a-z0-9-]+)(\.[_a-z0-9-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,6})$";
-
-    // Presume that the email is invalid
-    $valid = 0;
+    if (!xarVarFetch('validate', 'int:0:1:', $validate, 0)) return;
 
     // Trim the name and email - make sure their are no blanks before or after
     $name = trim($name);
     $email = trim($email);
 
-    // Validate the syntax
-    if (eregi($regexp, $email))
-    {
-        list($username,$domaintld) = split("@",$email);
-        // Validate the domain
-	if (getmxrr($domaintld,$mxrecords))
-            $valid = 1;
+    // Check if validating email
+    if ($validate) {
+        $valid = newsletter_admin__checkemail($email);
+    } else {
+        // No validation - assume this email address is correct
+        $valid = true;
     }
 
     if ($valid) {
@@ -128,6 +123,39 @@ function newsletter_admin_createaltsubscription()
         // Return the template variables
         return $data;
     }
+}
+
+
+/**
+ * Check if an email address is valid
+ *
+ * @private
+ * @author Richard Cave 
+ * @param 'name' the name of the new subscription
+ * @param 'email' the email address of the new subscription
+ * @param 'pids' the publication ids
+ * @param 'htmlmail' send mail html or text (0 = text, 1 = html)
+ * @returns bool
+ * @return true on success, false on failure
+ */
+function newsletter_admin__checkemail($email) 
+{
+    // Check if the $email email address in valid format
+    // Regular expression from margc's super email validation script
+    if(eregi("^[a-z0-9\._-]+".
+             "@{1}".
+             "([a-z0-9]{1}[a-z0-9-]*[a-z0-9]{1}\.{1})+".
+             "([a-z]+\.){0,1}".
+             "([a-z]+){1}$", $email)) {
+
+        // Validate the domain
+        //list($username,$domaintld) = split("@",$email);
+	    //if (getmxrr($domaintld,$mxrecords)) {
+        return true;
+        //}
+    }
+
+    return false;
 }
 
 ?>
