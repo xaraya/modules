@@ -11,7 +11,7 @@
  *               AND $where
  *
  * @param $args['modname'] name of the module you want items from, or
- * @param $args['itemtype'] item type (optional)
+ * @param $args['itemtype'] item type (optional) or array of itemtypes
  * @param $args['itemids'] optional array of itemids that we are selecting on
  * @returns array
  * @return array('table' => 'nuke_ratings',
@@ -65,8 +65,25 @@ function ratings_userapi_leftjoin($args)
         $leftjoin['field'] .= ' AND ';
     }
     if (!empty($itemtype)) {
-        $leftjoin['field'] .= $xartable['ratings'] . ".xar_itemtype = " . $itemtype;
-        $leftjoin['field'] .= ' AND ';
+        if (is_numeric($itemtype)) {
+            $leftjoin['field'] .= $xartable['ratings'] . '.xar_itemtype = ' . $itemtype;
+            $leftjoin['field'] .= ' AND ';
+        } elseif (is_array($itemtype) && count($itemtype) > 0) {
+            $seentype = array();
+            foreach ($itemtype as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seentype[$id] = 1;
+            }
+            if (count($seentype) == 1) {
+                $itemtypes = array_keys($seentype);
+                $leftjoin['field'] .= $xartable['ratings'] . '.xar_itemtype = ' . $itemtypes[0];
+                $leftjoin['field'] .= ' AND ';
+            } elseif (count($seentype) > 1) {
+                $itemtypes = join(', ', array_keys($seentype));
+                $leftjoin['field'] .= $xartable['ratings'] . '.xar_itemtype IN (' . $itemtypes . ')';
+                $leftjoin['field'] .= ' AND ';
+            }
+        }
     }
     $leftjoin['field'] .= $xartable['ratings'] . '.xar_itemid';
 
