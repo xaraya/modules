@@ -11,8 +11,8 @@ function pmember_adminapi_delete($args)
     extract($args);
     // Argument check
     if (!isset($uid)) {
-        $msg = xarML('Invalid Parameter Count in #(3)_#(1)api_#(2)', 'admin', 'delete', 'pmember');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -31,8 +31,9 @@ function pmember_adminapi_delete($args)
 
     // Delete the item
     $query = "DELETE FROM $table
-            WHERE xar_uid = " . xarVarPrepForStore($uid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_uid = ?";
+    $bindvars = array($uid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let any hooks know that we have deleted a link
     xarModCallHooks('item', 'delete', $uid, '');

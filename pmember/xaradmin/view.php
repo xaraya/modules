@@ -30,7 +30,7 @@ function pmember_admin_view()
 
     if (empty($links)) {
         $msg = xarML('No subscriptions recorded');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

@@ -14,8 +14,8 @@ function pmember_adminapi_create($args)
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
     if (!isset($uid)) {
-        $msg = xarML('Invalid Parameter Count', 'admin', 'create', 'pmember');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // Get datbase setup
@@ -36,18 +36,20 @@ function pmember_adminapi_create($args)
                   xar_subscribed,
                   xar_expires)
                 VALUES (
-                  '" . xarVarPrepForStore($uid) . "',
-                  '" . xarVarPrepForStore($time) . "',
-                  '" . xarVarPrepForStore($expire) . "')";
-        $result =& $dbconn->Execute($query);
+                  ?,
+                  ?,
+                  ?)";
+        $bindvars = array($uid, $time, $expire);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
     } else {
         // Update it instead
         $query = "UPDATE $table
-                SET xar_subscribed = '" . xarVarPrepForStore($time) . "',
-                    xar_expires = '" . xarVarPrepForStore($expire) . "'
-                WHERE xar_uid = " . xarVarPrepForStore($uid);
-        $result =& $dbconn->Execute($query);
+                SET xar_subscribed = ?,
+                    xar_expires = ?
+                WHERE xar_uid = ?";
+        $bindvars = array($time, $expire, $uid);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return;
     }
     // Return the id of the newly created link to the calling process

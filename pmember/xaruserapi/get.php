@@ -9,8 +9,8 @@ function pmember_userapi_get($args)
 {
     extract($args);
     if (empty($uid) || !is_numeric($uid)) {
-        $msg = xarML('Invalid User');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -23,8 +23,9 @@ function pmember_userapi_get($args)
                      xar_subscribed,
                      xar_expires
             FROM $pmembertable
-            WHERE xar_uid = " . xarVarPrepForStore($uid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_uid = ?";
+    $bindvars = array($uid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     list($uid, $subscribed, $expires) = $result->fields;

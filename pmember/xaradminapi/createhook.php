@@ -13,8 +13,8 @@ function pmember_adminapi_createhook($args)
 {
     extract($args);
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'admin', 'createhook', 'pmember');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
@@ -39,9 +39,8 @@ function pmember_adminapi_createhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module name', 'admin', 'createhook', 'pmember');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        mail( "mikeypotter@yahoo.com", "Error", $msg );
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -121,7 +120,7 @@ function pmember_adminapi_createhook($args)
                 $userRole = xarModGetVar('roles', 'defaultgroup');
                  // Get the group id
                 $defaultRole = xarModAPIFunc('roles', 'user', 'get', array('name'  => $userRole, 'type'   => 1));
-		if (empty($defaultRole)) return $extrainfo;
+        if (empty($defaultRole)) return $extrainfo;
                 // Make the user a member of the users role
                 if(!xarMakeRoleMemberByID($data['uid'], $defaultRole['uid'])) return $extrainfo;
                 //return $extrainfo;
