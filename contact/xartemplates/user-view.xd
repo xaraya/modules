@@ -74,4 +74,4 @@
 <br />
 
 <!-- add the pager here -->
-&xar-var-pager;
+#$pager#
