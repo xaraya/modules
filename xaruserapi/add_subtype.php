@@ -7,6 +7,7 @@
   *  @access public
   *  @param  integer    $typeId      the type ID of the mime type to attch subtypes to
   *  @param  string     $subtypeName the name of the subtype to add
+  *  @param  string     $subtypeDesc the description of the subtype to add
   *  returns array      false on error, the sub type id otherwise
   */
   
@@ -26,11 +27,15 @@ function mime_userapi_add_subtype( $args )
                      'subtypeName','userapi_add_subtype','mime');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
+
+    if (!isset($subtypeDesc) || !is_string($subtypeDesc)) {
+        $subtypeDesc = NULL;
+    }
     
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
-    
+    $xartable = xarDBGetTables();
+
     // table and column definitions
     $subtype_table =& $xartable['mime_subtype'];
     $subtypeId     = $dbconn->GenID($subtype_table);
@@ -40,11 +45,12 @@ function mime_userapi_add_subtype( $args )
                  ( 
                    xar_mime_type_id,
                    xar_mime_subtype_id,
-                   xar_mime_subtype_name
+                   xar_mime_subtype_name,
+                   xar_mime_subtype_desc
                  )
-            VALUES (?, ?, ?)";
+            VALUES (?, ?, ?, ?)";
     
-    $bindvars = array((int) $typeId, $subtypeId, (string) $subtypeName);
+    $bindvars = array((int)$typeId, $subtypeId, (string)$subtypeName, (string)$subtypeDesc);
 
     $result = $dbconn->Execute($sql, $bindvars);
 

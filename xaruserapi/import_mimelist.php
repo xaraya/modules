@@ -14,15 +14,16 @@ xarModAPILoad('mime','user');
 function mime_userapi_import_mimelist( $args ) 
 {
  
-    extract( $args );
+    extract($args);
 
-    foreach($mimeList as $mimeType => $mimeInfo) {
-        
+    $descriptions = array();
+
+    foreach($mimeList as $mimeTypeText => $mimeInfo) {
         /* 
             start off processing the mimetype and mimesubtype
             if niether of those exist, create them :)
         */
-        $mimeType = explode('/', $mimeType);
+        $mimeType = explode('/', $mimeTypeText);
         
         $typeInfo = xarModAPIFunc('mime','user','get_type', array('typeName' => $mimeType[0]));
         if (!isset($typeInfo['typeId'])) {
@@ -31,11 +32,16 @@ function mime_userapi_import_mimelist( $args )
             $typeId =& $typeInfo['typeId'];
         }
         
-        $subtypeInfo = xarModAPIFunc('mime','user','get_subtype', array('subtypeName' => $mimeType[1]));
+        $subtypeInfo = xarModAPIFunc('mime', 'user', 'get_subtype', array('subtypeName' => $mimeType[1]));
         if (!isset($subtypeInfo['subtypeId'])) {
-            $subtypeId = xarModAPIFunc('mime', 'user', 'add_subtype', 
-                                        array('subtypeName' => $mimeType[1], 
-                                              'typeId'      => $typeId));
+            $subtypeId = xarModAPIFunc(
+                'mime', 'user', 'add_subtype', 
+                array(
+                    'subtypeName'   => $mimeType[1], 
+                    'typeId'        => $typeId,
+                    'subtypeDesc'   => (isset($mimeInfo['description']) ? $mimeInfo['description'] : NULL)
+                )
+            );
         } else {
             $subtypeId =& $subtypeInfo['subtypeId'];
         }
