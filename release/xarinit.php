@@ -10,7 +10,9 @@
 // ----------------------------------------------------------------------
 
 //Load Table Maintainance API
+
 xarDBLoadTableMaintenanceAPI();
+
 /**
  * initialise the send to friend module
  */
@@ -80,6 +82,8 @@ function release_upgrade($oldversion)
 
             return example_upgrade(0.02);
 
+    }
+}
 /**
  * delete the send to friend module
  */
@@ -100,5 +104,4 @@ function release_delete()
     
     return true;
 }
-
 ?>
