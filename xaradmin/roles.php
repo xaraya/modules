@@ -181,6 +181,8 @@ foreach (array_keys($mapitems['data']) as $index) {
         $mapitems['data'][$index]['user'] = $role['name'];
         $mapitems['data'][$index]['login'] = $role['uname'];
     } else {
+        $roleManager->remove_mapping($mapitems['data'][$index]['user'], $mapitems['data'][$index]['roleId']);
+        $mapitems['cant'] = $mapitems['cant'] - 1;
         unset($mapitems['data'][$index]);
     }
 }
