@@ -26,8 +26,8 @@ function multisites_init()
 		return false;
    }
    // Setup a database table to hold subsites (may or may not need this in the end???)
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $multisitestable = $xartable['multisites'];
     xarDBLoadTableMaintenanceAPI();
@@ -100,8 +100,8 @@ function multisites_delete() {
 global $HTTP_HOST;
 
     //Remove the multisites database
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['multisites']);

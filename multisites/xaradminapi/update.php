@@ -73,8 +73,8 @@ function multisites_adminapi_update($args)
     if (!xarSecurityCheck('EditMultisites')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $multisitestable = $xartable['multisites'];
 

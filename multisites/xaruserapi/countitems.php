@@ -19,8 +19,8 @@
  */
 function multisites_userapi_countitems()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $multisitestable = $xartable['multisites'];
 

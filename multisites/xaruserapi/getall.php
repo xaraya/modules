@@ -51,8 +51,8 @@ function multisites_userapi_getall($args)
     // Security Check
     if(!xarSecurityCheck('ReadMultisites')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $multisitestable = $xartable['multisites'];
 

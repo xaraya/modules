@@ -177,7 +177,7 @@ global $HTTP_SERVER_VARS;
      //Update the site database with the Master(?)
      if (($lIsMultisites==1) and ($lIsMaster==0)) {
          xarConfigSetVar('System.MS.Master',1);
-         list($dbconn) = xarDBGetConn();
+         $dbconn =& xarDBGetConn();
        // Call Multisites API function is called
         $msid = xarModAPIFunc('multisites',
                               'admin',

@@ -48,8 +48,8 @@ function multisites_adminapi_delete($args)
     if(!xarSecurityCheck('DeleteMultisites')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $multisitestable = $xartable['multisites'];
 
