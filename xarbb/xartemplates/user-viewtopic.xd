@@ -96,12 +96,12 @@
     <td width="150" class="xar-accent" valign="top" align="center">
       <table border="0" cellpadding="3" cellspacing="0" width="100%">
         <tr>
-          <td width="100%" align="center"><b>#$postername#</b></td>
+          <td width="100%" align="center"><a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">#$postername#</a></td>
         </tr>
 		<xar:data-getitem name="$properties" module="roles" itemid="$tposter" />
+		<xar:if condition="isset($properties) and count($properties) gt 0">
         <tr>
           <td width="100%" align="center">
-			<xar:if condition="isset($properties)">
 				<xar:data-output property="$properties['avatar']" />
 			</xar:if>
 		  </td>
@@ -116,7 +116,7 @@
     </td>
     <td valign="top">
 		#$transformedtext#<br /><br />
-		<xar:if condition="isset($properties)">
+		<xar:if condition="isset($properties) and count($properties) gt 0">
 			<p>&nbsp;&nbsp;<i>	
 			<xar:data-output property="$properties['signature']" /></i></p>
 		</xar:if>
@@ -158,12 +158,12 @@
     <td width="150" class="xar-accent" valign="top" align="center">
       <table border="0" cellpadding="3" cellspacing="0" width="100%">
         <tr>
-          <td width="100%" align="center"><b>#$item['xar_author']#</b></td>
+          <td width="100%" align="center"><a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">#$item['xar_author']#</a></td>
         </tr>
 		<xar:data-getitem name="$properties" module="roles" itemid="$item['xar_uid']" />
         <tr>
           <td width="100%" align="center">
-			<xar:if condition="isset($properties)">
+			<xar:if condition="isset($properties) and count($properties) gt 0">
 				<xar:data-output property="$properties['avatar']" />
 			</xar:if>
 		  </td>
@@ -177,7 +177,7 @@
       </table>
     </td>
     <td valign="top">
-		<xar:if condition="isset($properties)">
+		<xar:if condition="isset($properties) and count($properties) gt 0">
 			#$item['xar_text']#<br /><br />
 			<p>&nbsp;&nbsp;<i><xar:data-output property="$properties['signature']" /></i></p>
 		</xar:if>

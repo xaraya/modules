@@ -199,6 +199,25 @@ function xarbb_activate()
     return true;
 }
 
+/**
+ * upgrade the smiley module from an old version
+ */
+function html_upgrade($oldversion)
+{
+
+    // Upgrade dependent on old version number
+    switch ($oldversion) {
+
+        // TODO: version numbers - normalise.
+        case '.9':
+            // Set up module hooks
+            xarRegisterMask('ViewxarBB','All','xarbb','Forum','All:All','ACCESS_OVERVIEW');
+            return true;
+            break;
+    }
+
+    return false;
+}
 
 function xarbb_delete()
 {

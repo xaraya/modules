@@ -97,10 +97,12 @@
     <td width="75" align="center">#$loop:item['comments']#</td>
     <td width="75" align="center">#$loop:item['hitcount']#</td>
     <td width="130" align="right" valign="top">#$loop:item['ttime']#</td>
+	<xar:sec mask="EditxarBB" catch="false">
     <td width="130" align="right" valign="top">
     	<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Edit</xar:mlstring></a> | 
     	<a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Delete</xar:mlstring></a>
     </td>
+	</xar:sec>
   </tr>
 <xar:else />
   <tr>
