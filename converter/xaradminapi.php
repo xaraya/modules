@@ -15,6 +15,8 @@
 
 function converter_adminapi_pntheme($args)
 {
+    define('_EDIT','Edit');
+    define('_DELETE','Delete');
 
     // Get arguments from argument array
     extract($args);
@@ -32,8 +34,6 @@ function converter_adminapi_pntheme($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
-
-//    $theme_file = $theme_dir.'theme.php';
 
     $file = join('', file($theme_file));
     $file = str_replace("\"\n", "'\n", $file);
@@ -57,10 +57,28 @@ function converter_adminapi_pntheme($args)
     $file = str_replace('_EDIT', '<xar:if condition="!empty($editurl)"><a href="#$editurl#">#$edittitle#</a></xar:if>', $file);
     $file = str_replace('_DELETE', 'Delete', $file);
     $file = str_replace('_PUBLISHED', 'Published', $file);
+    $file = preg_replace('/opentable\(/i', 'pnOpenTable(', $file);
+    $file = preg_replace('/opentable2\(/i', 'pnOpenTable2(', $file);
+    $file = preg_replace('/closetable\(/i', 'pnCloseTable(', $file);
+    $file = preg_replace('/closetable2\(/i', 'pnCloseTable2(', $file);
 
     $fp = fopen($theme_dir . 'temp.php', 'w+');
     fwrite($fp, $file);
     fclose($fp);
+
+    $file2 = join('', file($theme_file));
+    $file2 = preg_replace('/opentable\(/i', 'pnOpenTable(', $file2);
+    $file2 = preg_replace('/opentable2\(/i', 'pnOpenTable2(', $file2);
+    $file2 = preg_replace('/closetable\(/i', 'pnCloseTable(', $file2);
+    $file2 = preg_replace('/closetable2\(/i', 'pnCloseTable2(', $file2);
+    $file2 = preg_replace('/blocks\(\'left\'\)/i', 'echo \'<xar:blockgroup name="left" id="left" />\';', $file2);
+    $file2 = preg_replace('/blocks\(\'centre\'\)/i', 'echo \'<xar:blockgroup name="center" id="center" />\';', $file2);
+    $file2 = preg_replace('/blocks\(\'right\'\)/i', 'echo \'<xar:blockgroup name="right" id="right" />\';', $file2);
+
+    $new_theme_file = $theme_dir . 'temptheme.php';
+    $fp2 = fopen($new_theme_file, 'w+');
+    fwrite($fp2, $file2);
+    fclose($fp2);
 
     // bring out right and center blocks
     global $index;
@@ -69,7 +87,11 @@ function converter_adminapi_pntheme($args)
     global $thename;
     $thename = $theme;
 
-    include $theme_file;
+    $new_lang_file = $theme_dir . 'lang/eng/global.php';
+    if (file_exists($new_lang_file)) {
+        include $new_lang_file;
+    }
+    include $new_theme_file;
 
     if (!file_exists($theme_dir.'pages')) {
         mkdir($theme_dir.'pages', 0777);
@@ -104,7 +126,8 @@ function converter_adminapi_pntheme($args)
     $output = ob_get_contents();
     // Common Links
     ob_end_clean();
-    fwrite($fp, $output."</body>\n</html>\n");
+    fwrite($fp, $output.
+                "</body>\n</html>\n</xar:blocklayout>\n");
     fclose($fp);
 
 
@@ -143,19 +166,32 @@ function converter_adminapi_pntheme($args)
     ob_start();
     converter_adminapi_articleviewtop();
 
-    $catandtitle = '<xar:if condition="!empty($categories) and count($categories) gt 0">
-                    [ <xar:loop name="$categories">
-                        #$cjoin# <a href="#$clink#">#$cname#</a>
-                    </xar:loop> ]
-                </xar:if>
-              <a class="xar-title" href="#$link#">#$title#</a>';
-
+    // TODO add categories to template
+    $catandtitle = '<a class="xar-title" href="#$link#">#$title#</a>';
+/*
+    $catandtitle = 
+'<xar:if condition="!empty($categories) and count($categories) gt 0">
+    [ <xar:loop name="$categories">
+           #$cjoin# <a href="#$clink#">#$cname#</a>
+      </xar:loop> ]
+</xar:if>
+<a class="xar-title" href="#$link#">#$title#</a>';
+*/
      $info = array('informant' => '#$author#',
                    'longdatetime' => '#$date#',
+                   'briefdatetime' => '#$date#',
+                   'aid' => '#$aid#',
+                   'sid' => '#$sid#',
+                   'cattitle' => '#$cattitle#',
                    'hometext' => '#$summary#');
      $links = NULL;
      $preformat = array('notes' => '#$notes#',
-                    'catandtitle' => $catandtitle);
+                        'more' => '#$more#',
+                        'fulltext' => '#$fulltext#',
+                        'searchtopic' => '#$searchtopic#',
+                        'send' =>  '#$send#',
+                        'print' => '#$print#',
+                        'catandtitle' => $catandtitle);
      $_deprecated='';
     themeindex ($_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $info, $links, $preformat);
     $output = ob_get_contents();
@@ -177,14 +213,21 @@ function converter_adminapi_pntheme($args)
 
      $info = array('informant' => '#$author#',
                    'longdatetime' => '#$date#',
-                    'briefdatetime' => '#$date#',
+                   'briefdatetime' => '#$date#',
+                   'aid' => '#$aid#',
+                   'sid' => '#$sid#',
+                   'cattitle' => '#$cattitle#',
                    'hometext' => '#$summary#');
 
      $links = NULL;
 
      $preformat = array('notes' => '#$notes#',
-                    'fulltext' => $fulltext,
-                    'catandtitle' => $catandtitle);
+                        'more' => '#$more#',
+                        'searchtopic' => '#$searchtopic#',
+                        'fulltext' => $fulltext,
+                        'send' =>  '#$send#',
+                        'print' => '#$print#',
+                        'catandtitle' => $catandtitle);
 
      $_deprecated='';
 
@@ -334,19 +377,30 @@ function converter_adminapi_pnuketheme($args)
     ob_start();
     converter_adminapi_articleviewtop();
 
-    $catandtitle = '<xar:if condition="!empty($categories) and count($categories) gt 0">
-                    [ <xar:loop name="$categories">
-                        #$cjoin# <a href="#$clink#">#$cname#</a>
-                    </xar:loop> ]
-                </xar:if>
-              <a class="xar-title" href="#$link#">#$title#</a>';
+    // TODO add categories to template
+    $catandtitle = '<a class="xar-title" href="#$link#">#$title#</a>';
+//    $catandtitle = '<xar:if condition="!empty($categories) and count($categories) gt 0">
+//                    [ <xar:loop name="$categories">
+//                        #$cjoin# <a href="#$clink#">#$cname#</a>
+//                    </xar:loop> ]
+//                </xar:if>
+//              <a class="xar-title" href="#$link#">#$title#</a>';
 
      $info = array('informant' => '#$author#',
                    'longdatetime' => '#$date#',
+                   'briefdatetime' => '#$date#',
+                   'aid' => '#$aid#',
+                   'sid' => '#$sid#',
+                   'cattitle' => '#$cattitle#',
                    'hometext' => '#$summary#');
      $links = NULL;
      $preformat = array('notes' => '#$notes#',
-                    'catandtitle' => $catandtitle);
+                        'more' => '#$more#',
+                        'fulltext' => '#$fulltext#',
+                        'searchtopic' => '#$searchtopic#',
+                        'send' =>  '#$send#',
+                        'print' => '#$print#',
+                        'catandtitle' => $catandtitle);
      $_deprecated='';
     themeindex ($_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $_deprecated, $info, $links, $preformat);
     $output = ob_get_contents();
@@ -368,14 +422,21 @@ function converter_adminapi_pnuketheme($args)
 
      $info = array('informant' => '#$author#',
                    'longdatetime' => '#$date#',
-                    'briefdatetime' => '#$date#',
+                   'briefdatetime' => '#$date#',
+                   'aid' => '#$aid#',
+                   'sid' => '#$sid#',
+                   'cattitle' => '#$cattitle#',
                    'hometext' => '#$summary#');
 
      $links = NULL;
 
      $preformat = array('notes' => '#$notes#',
-                    'fulltext' => $fulltext,
-                    'catandtitle' => $catandtitle);
+                        'more' => '#$more#',
+                        'searchtopic' => '#$searchtopic#',
+                        'fulltext' => $fulltext,
+                        'send' =>  '#$send#',
+                        'print' => '#$print#',
+                        'catandtitle' => $catandtitle);
 
      $_deprecated='';
 
@@ -487,7 +548,9 @@ function converter_adminapi_simulateheader($theme)
         $themeimages,
         $additional_header;
 
+    echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
     echo "<?xar type=\"page\" ?>\n";
+    echo "<xar:blocklayout version=\"1.0\" content=\"text/html\" xmlns:xar=\"http://xaraya.com/2004/blocklayout\">\n";
     echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
     echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
     echo "<head>\n";
@@ -500,7 +563,8 @@ function converter_adminapi_simulateheader($theme)
     echo "<style type=\"text/css\">";
     echo "@import url(\"&xar-baseurl;#xarConfigGetVar('Site.BL.ThemesDirectory')#/$theme/style/xarstyle.css\"); ";
     echo "</style>\n";
-    echo '#$tpl:headJavaScript#'."\n\n";
+    echo "<xar:comment> Head JavaScript </xar:comment>\n";
+    echo "<xar:base-render-javascript position=\"head\" />\n\n";
 }
 
 function converter_adminapi_fullarticletop()
@@ -711,7 +775,8 @@ function converter_adminapi_addxarcss()
 function footmsg()
 {
    echo "#xarModGetVar('themes', 'SiteFooter')# "."\n";
-   echo '#$tpl:bodyJavaScript#'."\n";
+   echo "<xar:comment> Body JavaScript </xar:comment>\n".
+        "<xar:base-render-javascript position=\"body\" />\n";
 }
 
 // Simulate PHPNuke themeheader
