@@ -2,7 +2,25 @@
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
-<div style="margin: auto;">
+<div style="margin: auto; width: 100%;">
+<form method="post" action="#xarModURL('autolinks', 'admin', 'view')#" method="post" enctype="application/x-www-form-urlencoded"/>
+<div>
+    <span class="xar-mod-title"><xar:mlstring>Autolink Type:</xar:mlstring></span>
+    <select name="tid" id="tid" onchange="this.form.submit()">
+        <option value="0"><xar:mlstring>All Autolink Types</xar:mlstring></option>
+        <xar:if condition="isset($types)">
+            <xar:foreach in="$types" key="$tidkey" value="$type">
+                <xar:if condition="$tidkey eq $tid">
+                    <option value="#$tidkey#" selected="selected">#$type['type_name']#</option>
+                <xar:else />
+                    <option value="#$tidkey#">#$type['type_name']#</option>
+                </xar:if>
+            </xar:foreach>
+        </xar:if>
+    </select>
+    <input type="submit" name="update" id="update" value="#xarML('Reload')#"/>
+</div>
+</form>
 <xar:if condition="!empty($items)">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
