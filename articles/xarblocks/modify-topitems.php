@@ -1,0 +1,64 @@
+<?php
+// File: $Id: topitems.php 1.34 03/11/20 19:12:15-08:00 jbeames@lxwdev-1.schwabfoundation.org $
+// ----------------------------------------------------------------------
+// Xaraya eXtensible Management System
+// Copyright (C) 2002 by the Xaraya Development Team.
+// http://www.xaraya.org
+// ----------------------------------------------------------------------
+// Original Author of file: Jim McDonald
+// Purpose of file: Articles Block
+// ----------------------------------------------------------------------
+
+
+/**
+ * modify block settings
+ */
+function articles_topitemsblock_modify($blockinfo)
+{
+    // Get current content
+    $vars = @unserialize($blockinfo['content']);
+
+    $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
+    $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
+
+    $vars['sortoptions'] = array(
+        array('id' => 'hits', 'name' => xarML('Hit Count')),
+        array('id' => 'rating', 'name' => xarML('Rating')),
+        array('id' => 'date', 'name' => xarML('Date'))
+    );
+
+	$vars['statusoptions'] = array(
+        array('id' => '2,3', 'name' => xarML('All Published')),
+        array('id' => '3', 'name' => xarML('Frontpage')),
+        array('id' => '2', 'name' => xarML('Approved'))
+    );									   
+
+    $vars['blockid'] = $blockinfo['bid'];
+
+    // Return output
+    return $vars;
+}
+
+/**
+ * update block settings
+ */
+function articles_topitemsblock_update($blockinfo)
+{
+    if (!xarVarFetch('numitems', 'int:1:100', $vars['numitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('nopublimit', 'checkbox', $vars['nopublimit'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('nocatlimit', 'checkbox', $vars['nocatlimit'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('dynamictitle', 'checkbox', $vars['dynamictitle'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('toptype', 'enum:hits:rating:date', $vars['toptype'])) {return;}
+    if (!xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('showdynamic', 'checkbox', $vars['showdynamic'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('status', 'strlist:,:int:1:4', $vars['status'])) {return;}
+
+    $blockinfo['content'] = serialize($vars);
+
+    return $blockinfo;
+}
+
+?>
