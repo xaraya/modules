@@ -31,8 +31,7 @@ function ephemerids_userapi_getall($args)
         $invalid[] = 'numitems';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid aurguments',
-                    join(', ',$invalid), 'user', 'getall', 'ephemerids');
+        $msg = xarML('Invalid arguments');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
