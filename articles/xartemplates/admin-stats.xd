@@ -1,0 +1,20 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Statistics</xar:mlstring></h2>
+<div style="margin: auto;">
+<ul>
+<xar:foreach in="$stats" key="$ptid" value="$pubstats">
+    <li>#$pubtypes[$ptid]['descr']#
+    <ul>
+    <xar:foreach in="$pubstats" key="$status" value="$statusstats">
+        <li>#$statuslist[$status]#
+        <ul>
+        <xar:foreach in="$statusstats" key="$authorid" value="$count">
+            <li><a href="#xarModURL('articles','user','view',array('ptid' => $ptid, 'authorid' => $authorid))#">#xarUserGetVar('name',$authorid)#</a> : #$count#</li>
+        </xar:foreach>
+        </ul></li>
+    </xar:foreach>
+    </ul></li>
+</xar:foreach>
+</ul>
+</div>
+</div>
