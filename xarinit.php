@@ -25,6 +25,9 @@ function newsgroups_init()
     xarModSetVar('newsgroups', 'pass', '');
     xarModSetVar('newsgroups', 'numitems', 50);
     xarModSetVar('newsgroups', 'sortby', '');
+    xarModSetVar('newsgroups', 'grouplist', '');
+    xarModSetVar('newsgroups', 'listexpire', 3600);
+    xarModSetVar('newsgroups', 'groupexpire', 900);
 
     xarModSetVar('newsgroups', 'wildmat', 'xaraya.*,ddf.*');
     xarModSetVar('newsgroups', 'SupportShortURLs', 0);
@@ -33,6 +36,11 @@ function newsgroups_init()
     xarRegisterMask('ReadNewsGroups','All','newsgroups','All','All','ACCESS_READ');
     xarRegisterMask('SendNewsGroups','All','newsgroups','All','All','ACCESS_COMMENT');
     xarRegisterMask('AdminNewsGroups','All','newsgroups','All','All','ACCESS_ADMIN');
+
+    // Register Block types (this *should* happen at activation/deactivation)
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                       array('modName'   => 'newsgroups',
+                             'blockType' => 'latest'))) return;
 
     // Initialisation successful
     return true;
@@ -56,6 +64,12 @@ function newsgroups_upgrade($oldversion)
 
         case '1.0.1':
             // Code to upgrade from version 1.0.1 goes here
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                               array('modName'   => 'newsgroups',
+                                     'blockType' => 'latest'))) return;
+
+        case '1.0.2':
+            // Code to upgrade from version 1.0.2 goes here
 
         case '2.0.0':
             // Code to upgrade from version 2.0.0 goes here
@@ -66,6 +80,11 @@ function newsgroups_upgrade($oldversion)
 
 function newsgroups_delete()
 {
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
+                       array('modName'   => 'newsgroups',
+                             'blockType' => 'latest'))) return;
+
     return true;
 }
 

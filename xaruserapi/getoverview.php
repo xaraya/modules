@@ -100,7 +100,7 @@ function newsgroups_userapi_getoverview($args)
         $startnum = $counts['last'];
     }
 
-    $messages = $newsgroups->getOverview($startnum - $numitems, $startnum);
+    $messages = $newsgroups->getOverview($startnum - $numitems + 1, $startnum);
     if (PEAR::isError($messages)) {
         $message = $messages->message;
         $newsgroups->quit();

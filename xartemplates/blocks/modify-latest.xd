@@ -1,0 +1,30 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+        <!-- Forms sent to the blocks admin should be consistant with the blocks UI.  The UI uses CSS for positioning and as such you can use this as a template. -->
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <!-- The span class help displays help as a tool tip. -->
+            <span class="help" title="#xarML('Enter the newsgroup to display.')#"><label for="group#$blockid#"><xar:mlstring>Newsgroup</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+             <select name="group" id="group#$blockid#">
+                 <option value=""></option>
+                 <xar:foreach in="$items" key="$name" value="$info">
+                     <xar:if condition="!empty($group) and $group eq $name">
+                         <option value="#$name#" selected="selected">[ #xarVarPrepForDisplay($info['group'])# ] <xar:if condition="!empty($info['desc'])">#xarVarPrepForDisplay($info['desc'])#</xar:if></option>
+                     <xar:else/>
+                         <option value="#$name#">[ #xarVarPrepForDisplay($info['group'])# ] <xar:if condition="!empty($info['desc'])">#xarVarPrepForDisplay($info['desc'])#</xar:if></option>
+                     </xar:if>
+                 </xar:foreach>
+             </select>
+        </span>
+        </div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <!-- The span class help displays help as a tool tip. -->
+            <span class="help" title="#xarML('Enter the number of messages to display.')#"><label for="numitems#$blockid#"><xar:mlstring>Number of Messages</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+             <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" />
+        </span>
+        </div>
+        <!-- No further action is required for this block.  The blocks admin will display this form element in a consistant manner throughout Xaraya -->

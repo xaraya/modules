@@ -1,0 +1,10 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<p>
+    <xar:if condition="!empty($items)">
+        <xar:foreach in="$items" value="$item">
+            <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $item['number']))#">#xarVarPrepForDisplay($item['Subject'])#</a><br/>
+        </xar:foreach>
+    <xar:else/>
+        <xar:mlstring>No messages to display</xar:mlstring>
+    </xar:if>
+</p>
