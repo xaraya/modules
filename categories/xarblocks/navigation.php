@@ -784,7 +784,7 @@ function categories_navigationblock_display($blockinfo)
                         if (empty($root)) {
                             $root = xarVarPrepForDisplay($info['name']);
                         }
-                        if ($id = $cid) {
+                        if ($id == $cid) {
                             $parentid = $info['parent'];
                         }
                     }
