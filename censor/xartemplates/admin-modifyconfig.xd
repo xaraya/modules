@@ -14,7 +14,15 @@
 						<td>
 							<input type="text" name="replace" id="replace" value="#xarModGetVar('censor', 'replace')#" size="32" maxlength="100" tabindex="1" />
 						</td>
-					</tr>					
+					</tr>
+					<tr>
+						<td align="left" valign="middle">
+							<xar:mlstring>Items Per Page</xar:mlstring>
+						</td>
+						<td align="left" valign="middle">
+							<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('censor', 'itemsperpage')#" />
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>

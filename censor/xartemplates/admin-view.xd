@@ -1,7 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Censor Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <h2><xar:mlstring>Censored Words List</xar:mlstring></h2>
-<table width="100%" border="1" cellspacing="0" cellpadding="2">
+<table width="50%" border="0" cellspacing="0" cellpadding="2">
     <tr>
         <th>
 			#$keywordlabel#
@@ -11,7 +11,8 @@
 		</th>
 	</tr>
     <xar:loop name="$items">
-    <tr>
+	<xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+    <tr class="xar-norm">
         <td>
 			#$keyword#
 		</td>
@@ -29,10 +30,31 @@
            </xar:if> ]
         </td>
     </tr>
+	<xar:else />
+    <tr class="xar-accent">
+        <td>
+			#$keyword#
+		</td>
+		<td align="center">[ 
+           <xar:if condition="empty($editurl)">
+               #$edittitle#
+               <xar:else />
+                   <a href="#$editurl#">#$edittitle#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($deleteurl)">
+               #$deletetitle#
+               <xar:else />
+                   <a href="#$deleteurl#">#$deletetitle#</a>
+           </xar:if> ]
+        </td>
+    </tr>
+	</xar:if>
     </xar:loop>
 </table>
 </div>
 <div class="xar-mod-foot">
 <!-- add the pager here -->
+<br /><br />
 #$pager#
 </div>

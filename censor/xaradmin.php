@@ -20,11 +20,9 @@
  */
 function censor_admin_main()
 {
-    // Security check
-    if (!xarSecAuthAction(0, 'censor::', '::', ACCESS_EDIT)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('EditCensor')) return;
+
     // Return the output
     return array();
 }
@@ -35,11 +33,8 @@ function censor_admin_main()
 function censor_admin_new()
 {
     
-    // Security check
-    if (!xarSecAuthAction(0, 'censor::', '::', ACCESS_ADD)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('AddCensor')) return;
     
     $data['authid'] = xarSecGenAuthKey();
 
@@ -64,6 +59,10 @@ function censor_admin_create($args)
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
+
+    // Security Check
+	if(!xarSecurityCheck('EditCensor')) return;
+
     // Check arguments
     if (empty($keyword)) {
         $msg = xarML('No Keyword Provided, Please Go Back and Provide censor Keyword');
@@ -102,17 +101,14 @@ function censor_admin_modify($args)
     }
 
     $censor = xarModAPIFunc('censor',
-                         'user',
-                         'get',
-                         array('cid' => $cid));
+                            'user',
+                            'get',
+                            array('cid' => $cid));
 
     if ($censor == false) return;
 
-    // Security check
-    if (!xarSecAuthAction(0, 'censor::Item', "$censor[keyword]::$cid", ACCESS_EDIT)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('EditCensor')) return;
     
     $censor['authid'] = xarSecGenAuthKey();
     return $censor;
@@ -146,6 +142,9 @@ function censor_admin_update($args)
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
+
+    // Security Check
+	if(!xarSecurityCheck('EditCensor')) return;
 
     if (!xarModAPIFunc('censor',
                        'admin',
@@ -186,11 +185,8 @@ function censor_admin_delete($args)
 
     if ($censor == false) return; 
 
-    // Security check
-    if (!xarSecAuthAction(0, 'censor::Item', "$censor[keyword]::$cid", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('DeleteCensor')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
@@ -232,12 +228,15 @@ function censor_admin_view()
     $data['keywordlabel'] = xarVarPrepForDisplay(xarMLByKey('Key Word'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarMLByKey('Options'));
     $data['authid'] = xarSecGenAuthKey();
-    $data['pager'] = '';
+    // Call the xarTPL helper function to produce a pager in case of there
+    // being many items to display.
+    $data['pager'] = xarTplGetPager($startnum,
+                                    xarModAPIFunc('censor', 'user', 'countitems'),
+                                    xarModURL('censor', 'admin', 'view', array('startnum' => '%%')),
+                                    xarModGetVar('censor', 'itemsperpage'));
 
-    if (!xarSecAuthAction(0, 'censor::', '::', ACCESS_EDIT)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('EditCensor')) return;
 
     // The user API function is called
     $censors = xarModAPIFunc('censor',
@@ -258,7 +257,7 @@ function censor_admin_view()
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($censors); $i++) {
         $censor = $censors[$i];
-        if (xarSecAuthAction(0, 'censor::', "$censor[keyword]::$censor[cid]", ACCESS_EDIT)) {
+        if (xarSecurityCheck('EditCensor', 0)) {
             $censors[$i]['editurl'] = xarModURL('censor',
                                              'admin',
                                              'modify',
@@ -267,7 +266,7 @@ function censor_admin_view()
             $censors[$i]['editurl'] = '';
         }
         $censors[$i]['edittitle'] = xarML('Edit');
-        if (xarSecAuthAction(0, 'censor::', "$censor[keyword]::$censor[cid]", ACCESS_DELETE)) {
+        if (xarSecurityCheck('DeleteCensor', 0)) {
             $censors[$i]['deleteurl'] = xarModURL('censor',
                                                'admin',
                                                'delete',
@@ -281,9 +280,6 @@ function censor_admin_view()
     // Add the array of items to the template variables
     $data['items'] = $censors;
 
-    // TODO : add a pager (once it exists in BL)
-    $data['pager'] = '';
-
     // Return the template variables defined in this function
     return $data;
 }
@@ -293,10 +289,8 @@ function censor_admin_view()
  */
 function censor_admin_modifyconfig()
 {
-    if (!xarSecAuthAction(0, 'censor::', '::', ACCESS_ADMIN)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('AdminCensor')) return;
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
@@ -307,14 +301,24 @@ function censor_admin_modifyconfig()
  */
 function censor_admin_updateconfig()
 {
-    $replace= xarVarCleanFromInput('replace');
+    list($replace,
+         $itemsperpage) = xarVarCleanFromInput('replace',
+                                               'itemsperpage');
 
     if (!xarSecConfirmAuthKey()) return;
+
+    // Security Check
+	if(!xarSecurityCheck('AdminCensor')) return;
 
     if (!isset($replace)) {
         $replace = '*****';
     }
     xarModSetVar('censor', 'replace', $replace);
+
+    if (!isset($itemsperpage)) {
+        $replace = '20';
+    }
+    xarModSetVar('censor', 'itemsperpage', $itemsperpage);
 
     xarResponseRedirect(xarModURL('censor', 'admin', 'modifyconfig'));
 

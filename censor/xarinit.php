@@ -72,10 +72,13 @@ function censor_init()
                            'API',
                            'censor',
                            'user',
-                           'transform')) {
-        xarSessionSetVar('errormsg', _censorCOULDNOTREGISTER);
-        return false;
-    }
+                           'transform')) return;
+
+    xarRegisterMask('ReadCensor','All','censor','All','All',ACCESS_READ);
+    xarRegisterMask('EditCensor','All','censor','All','All',ACCESS_EDIT);
+    xarRegisterMask('AddCensor','All','censor','All','All',ACCESS_ADD);
+    xarRegisterMask('DeleteCensor','All','censor','All','All',ACCESS_DELETE);
+    xarRegisterMask('AdminCensor','All','censor','All','All',ACCESS_ADMIN);
 
     // Initialisation successful
     return true;
@@ -117,6 +120,13 @@ function censor_delete()
     // Remove module variables
     xarModDelVar('censor', 'replace');
     xarModDelVar('censor', 'itemsperpage');
+
+    // Remove Masks
+    xarUnRegisterMask('ReadCensor');
+    xarUnRegisterMask('EditCensor');
+    xarUnRegisterMask('AddCensor');
+    xarUnRegisterMask('DeleteCensor');
+    xarUnRegisterMask('AdminCensor');
 
     // Deletion successful
     return true;

@@ -35,11 +35,8 @@ function censor_adminapi_create($args)
         return;
     }
 
-    // Security check
-    if (!xarSecAuthAction(0, 'censor::', "$keyword::", ACCESS_ADD)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('AddCensor')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -97,19 +94,13 @@ function censor_adminapi_delete($args)
                          array('cid' => $cid));
 
     if ($link == false) {
-        $msg = xarML('No Such Link Present',
-                    'censor');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No Such Word Present', 'censor');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
 
-    // Security check
-    if (!xarSecAuthAction(0, 'censor::', "$link[keyword]::$cid", ACCESS_DELETE)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('DeleteCensor')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -160,18 +151,13 @@ function censor_adminapi_update($args)
                          array('cid' => $cid));
 
     if ($link == false) {
-        $msg = xarML('No Such Link Present',
-                    'censor');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No Such Link Present', 'censor');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
 
-    if (!xarSecAuthAction(0, 'censor::', "$link[keyword]::$cid", ACCESS_EDIT)) {
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
-        return;
-    }
+    // Security Check
+	if(!xarSecurityCheck('EditCensor')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -199,8 +185,7 @@ function censor_adminapi_update($args)
  */
 function censor_adminapi_getmenulinks()
 {
-
-    if (xarSecAuthAction(0, 'censor::', '::', ACCESS_ADD)) {
+    if (xarSecurityCheck('AddCensor')) {
 
         $menulinks[] = Array('url'   => xarModURL('censor',
                                                    'admin',
@@ -209,7 +194,7 @@ function censor_adminapi_getmenulinks()
                               'label' => xarML('Add'));
     }
 
-    if (xarSecAuthAction(0, 'censor::', '::', ACCESS_EDIT)) {
+    if (xarSecurityCheck('EditCensor')) {
 
         $menulinks[] = Array('url'   => xarModURL('censor',
                                                    'admin',
@@ -218,7 +203,7 @@ function censor_adminapi_getmenulinks()
                               'label' => xarML('View'));
     }
 
-    if (xarSecAuthAction(0, 'censor::', '::', ACCESS_ADMIN)) {
+    if (xarSecurityCheck('AdminCensor')) {
         $menulinks[] = Array('url'   => xarModURL('censor',
                                                    'admin',
                                                    'modifyconfig'),

@@ -31,7 +31,9 @@ function censor_userapi_getall($args)
     }
 
     $censors = array();
-    if (!xarSecAuthAction(0, 'censor::', '::', ACCESS_READ)) {
+    // Security Check
+
+	if(!xarSecurityCheck('ReadCensor')){
         return $censors;
     }
 
@@ -82,6 +84,9 @@ function censor_userapi_get($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
+    // Security Check
+	if(!xarSecurityCheck('ReadCensor')) return;
+
     $censortable = $xartable['censor'];
 
     // Get link
@@ -95,9 +100,6 @@ function censor_userapi_get($args)
     list($cid, $keyword) = $result->fields;
     $result->Close();
 
-    if (!xarSecAuthAction(0, 'censor::', "$keyword::$cid", ACCESS_READ)) {
-        return false;
-    }
     $censor = array('cid' => $cid,
                   'keyword' => $keyword);
 
