@@ -18,7 +18,7 @@ function keywords_userapi_decode_shorturl($params)
     $module = 'keywords';
 
     if (!empty($params[1])) {
-        $args['keyword'] = $params[1];
+        $args['keyword'] = urldecode($params[1]);
         if (!empty($params[2]) && is_numeric($params[2])) {
             $args['id'] = $params[2];
         }
