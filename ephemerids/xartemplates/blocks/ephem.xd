@@ -2,7 +2,11 @@
 <xar:mlstring>No Historical Reference for this date in history</xar:mlstring>
 <xar:else />
 <xar:loop name="$items">
-    <p><xar:mlstring>In</xar:mlstring>:<b>&nbsp;&nbsp;#$loop:item['yid']#</b></p>
+    <xar:if condition="$loop:item['tid'] eq '1'"> 
+    <p><xar:ml><xar:mlstring>In:&nbsp;&nbsp;<b>#(1)</b></xar:mlstring><xar:mlvar>#$loop:item['yid']#</xar:mlvar></xar:ml></p>
+    <xar:else />
+    <p><b><xar:mlstring>Nameday</xar:mlstring></b></p>
+    </xar:if>
     <p>#$loop:item['content']#</p>
 </xar:loop>
 </xar:if>

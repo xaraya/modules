@@ -5,6 +5,7 @@
 
 <table border="0" width="100%" cellpadding="2" cellspacing="0">
     <tr>
+        <th>#$typelabel#</th>
         <th>#$daylabel#</th>
         <th>#$monthlabel#</th>
         <th>#$yearlabel#</th>
@@ -13,9 +14,22 @@
     </tr>
     <xar:loop name="$ephemlist">
     <tr>
+        <td align="center">
+        <xar:if condition="$loop:item['tid'] eq '1'">
+        <xar:mlstring>Ephemerid</xar:mlstring>
+        <xar:else />
+        <xar:mlstring>Nameday</xar:mlstring>
+        </xar:if>
+        </td>
         <td align="center">#$loop:item['did']#</td>
         <td align="center">#$loop:item['mid']#</td>
-        <td align="center">#$loop:item['yid']#</td>
+        <td align="center">
+        <xar:if condition="$loop:item['tid'] eq '1'">
+        #$loop:item['yid']#
+        <xar:else />
+        ---
+        </xar:if>
+        </td>
         <td>#$loop:item['content']#</td>
         <td>[ 
             <xar:if condition="empty($loop:item['editurl'])">

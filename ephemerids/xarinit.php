@@ -31,6 +31,7 @@ function ephemerids_init()
     // Define the table structure
     $fields = array(
         'xar_eid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_tid'=>array('type'=>'integer','size'=>4,'null'=>FALSE,'default'=>'1'),
         'xar_did'=>array('type'=>'integer','size'=>'small','size'=>2,'null'=>FALSE,'default'=>'0'),
         'xar_mid'=>array('type'=>'integer','size'=>'small','size'=>2,'null'=>FALSE,'default'=>'0'),
         'xar_yid'=>array('type'=>'integer','size'=>4,'null'=>FALSE,'default'=>'0'),
@@ -70,13 +71,35 @@ function ephemerids_init()
  */
 function ephemerids_upgrade($oldversion)
 {
+    // Get database information
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    $ephemtable = $xartable['ephem'];
+
+    xarDBLoadTableMaintenanceAPI();
+
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '1.4.0':
-            // Code to upgrade from version 2.0 goes here
+            // Code to upgrade from version 1.3 goes here
             xarModSetVar('ephemerids', 'itemsperpage', 20);
             xarModDelVar('Ephemerids', 'detail');
             xarModDelVar('Ephemerids', 'table');
+        case '1.4.1':
+            // Code to upgrade from version 1.4 goes here
+            $changes = array('command'     => 'add', 
+                             'field'       => 'xar_tid', 
+                             'type'        => 'integer', 
+                             'null'        => false, 
+                             'default'     => '1');
+            $query = xarDBAlterTable($ephemtable, $changes);
+            $result = &$dbconn->Execute($query);
+            if (!$result) return; 
+
+            // Close result set
+            $result->Close();
+
             break;
     }
     return true;

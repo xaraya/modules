@@ -21,7 +21,8 @@ function ephemerids_adminapi_add($args)
 
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
-    if ((!isset($did)) ||
+    if ((!isset($tid)) ||
+        (!isset($did)) ||
         (!isset($mid)) ||
         (!isset($yid)) ||
         (!isset($content))) {
@@ -39,6 +40,7 @@ function ephemerids_adminapi_add($args)
     $ephemtable = $xartable['ephem'];
     $nextId = $dbconn->GenId($ephemtable);
     $query = "INSERT INTO $ephemtable (xar_eid, 
+                                       xar_tid, 
                                        xar_did, 
                                        xar_mid, 
                                        xar_yid, 
@@ -49,8 +51,9 @@ function ephemerids_adminapi_add($args)
                                         ?, 
                                         ?, 
                                         ?, 
+                                        ?, 
                                         ?)";
-    $bindvars = array($nextId, $did, $mid, $yid, $content, $elanguage);
+    $bindvars = array($nextId, $tid, $did, $mid, $yid, $content, $elanguage);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted.  

@@ -7,13 +7,25 @@
     <form action="&xar-modurl-ephemerids-admin-update;" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="eid" id="eid" value="#$eid#" />
+        <label for="tid"><xar:mlstring>Type</xar:mlstring></label>:
+            <select name="tid" id="tid" size="1" tabindex="2">
+            <xar:if condition="$tid eq '1'">
+            <option value="1" selected><xar:mlstring>Ephemerid</xar:mlstring></option>
+            <xar:else />
+            <option value="1"><xar:mlstring>Ephemerid</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="$tid eq '2'">
+            <option value="2" selected><xar:mlstring>Nameday</xar:mlstring></option>
+            <xar:else />
+            <option value="2"><xar:mlstring>Nameday</xar:mlstring></option>
+            </xar:if>
+            </select>
         <label for="did"><xar:mlstring>Day</xar:mlstring></label>:
             <input type="text" name="did" id="did" value="#$did#" size="4" maxlength="5" tabindex="3" />
         <label for="mid"><xar:mlstring>Month</xar:mlstring></label>:
             <input type="text" name="mid" id="mid" value="#$mid#" size="4" maxlength="5" tabindex="3" />    
         <label for="yid"><xar:mlstring>Year</xar:mlstring></label>:
             <input type="text" name="yid" id="yid" value="#$yid#" size="4" maxlength="5" tabindex="3" />
-        <br /><br />
         <label for="elanguage"><xar:mlstring>Language</xar:mlstring></label>: -- TODO
             <select name="elanguage" id="elanguage" size="0" tabindex="4">
                 <option value="all">All</option>

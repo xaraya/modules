@@ -6,6 +6,11 @@
 
         <form action="&xar-modurl-ephemerids-admin-add;" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <label for="tid"><xar:mlstring>Type</xar:mlstring></label>:
+                <select name="tid" id="tid" size="1" tabindex="2">
+                    <option value="1"><xar:mlstring>Ephemerid</xar:mlstring></option>
+                    <option value="2"><xar:mlstring>Nameday</xar:mlstring></option>
+                </select>
             <label for="did"><xar:mlstring>Day</xar:mlstring></label>:
                 <select name="did" id="did" size="1" tabindex="1">
                 <option value="1">1</option>
@@ -57,6 +62,17 @@
                 </select>
             <label for="yid"><xar:mlstring>Year</xar:mlstring></label>:
                 <input type="text" name="yid" id="yid" value="" size="4" maxlength="5" tabindex="3" />
+            <label for="elanguage"><xar:mlstring>Language</xar:mlstring></label>:
+                <select name="elanguage" id="elanguage" size="0" tabindex="4">
+                    <option value="all">All</option>
+                    <xar:loop name="$locales">
+                        <xar:if condition="$loop:item['selected']">
+                            <option value="#$loop:item['locale']#" selected="selected">#$loop:item['name']# (#$loop:item['country']#)</option>
+                        <xar:else/>
+                            <option value="#$loop:item['locale']#">#$loop:item['name']# (#$loop:item['country']#)</option>
+                        </xar:if>
+                    </xar:loop>
+                </select>
             <br /><br />
             <label for="content"><xar:mlstring>Description</xar:mlstring></label>:
             <br />

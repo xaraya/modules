@@ -12,6 +12,7 @@ function ephemerids_admin_view()
     if(!xarSecurityCheck('EditEphemerids')) return;
 
     // Specify some labels for display
+    $data['typelabel'] = xarVarPrepForDisplay(xarML('Type'));
     $data['daylabel'] = xarVarPrepForDisplay(xarML('Day'));
     $data['monthlabel'] = xarVarPrepForDisplay(xarML('Month'));
     $data['yearlabel'] = xarVarPrepForDisplay(xarML('Year'));

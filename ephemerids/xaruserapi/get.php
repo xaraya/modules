@@ -28,7 +28,8 @@ function ephemerids_userapi_get($args)
     $ephemtable = $xartable['ephem'];
 
     // Get item
-    $query = "SELECT xar_did, 
+    $query = "SELECT xar_tid, 
+                     xar_did, 
                      xar_mid, 
                      xar_yid,
                      xar_content,
@@ -49,7 +50,7 @@ function ephemerids_userapi_get($args)
     }
 
     // Obtain the item information from the result set
-    list($did, $mid, $yid, $content, $elanguage) = $result->fields;
+    list($tid, $did, $mid, $yid, $content, $elanguage) = $result->fields;
 
     $result->Close();
 
@@ -58,6 +59,7 @@ function ephemerids_userapi_get($args)
 
     // Create the item array
     $data = array('eid' => $eid,
+                  'tid' => $tid,
                   'did' => $did,
                   'mid' => $mid,
                   'yid' => $yid,

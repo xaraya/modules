@@ -21,6 +21,7 @@
 
 <table border="0" width="100%" cellpadding="2" cellspacing="0">
     <tr>
+        <th>#$typelabel#</th>
         <th>#$daylabel#</th>
         <th>#$monthlabel#</th>
         <th>#$yearlabel#</th>
@@ -30,6 +31,7 @@
     </tr>
     <xar:loop name="$ephemlist">
     <tr>
+        <td align="center">#$loop:item['tid']#</td>
         <td align="center">#$loop:item['did']#</td>
         <td align="center">#$loop:item['mid']#</td>
         <td align="center">#$loop:item['yid']#</td>

@@ -45,6 +45,7 @@ function ephemerids_userapi_getall($args)
     $xartable =& xarDBGetTables();
     $ephemtable = $xartable['ephem'];
     $query = "SELECT xar_eid,
+                     xar_tid,
                      xar_did,
                      xar_mid, 
                      xar_yid,
@@ -60,6 +61,7 @@ function ephemerids_userapi_getall($args)
         list($exid, $name, $number) = $result->fields;
         if (xarSecurityCheck('OverviewEphemerids', 0)) {
             $items[] = array('eid' => $eid,
+                  'tid' => $tid,
                   'did' => $did,
                   'mid' => $mid,
                   'yid' => $yid,

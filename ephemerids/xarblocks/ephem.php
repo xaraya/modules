@@ -23,7 +23,7 @@ function ephemerids_ephemblock_info()
     return array('text_type' => 'Ephemerids',
     'module' => 'ephemerids',
     'text_type_long' => 'Ephemerids',
-    'allow_multiple' => false,
+    'allow_multiple' => true,
     'form_content' => false,
     'form_refresh' => false,
     'show_preview' => true);
@@ -31,15 +31,15 @@ function ephemerids_ephemblock_info()
 
 function ephemerids_ephemblock_display($blockinfo)
 {
+    // Security Check
+    if(!xarSecurityCheck('ReadEphemerids', 0)) return;
+
     // Database information
     xarModDBInfoLoad('Ephemerids');
     $dbconn =& xarDBGetConn();
 
     $xartable =& xarDBGetTables();
     $ephemtable = $xartable['ephem'];
-
-    // Security Check
-    if(!xarSecurityCheck('ReadEphemerids', 0)) return;
 
     $data['items'] = array();
     $data['emptycontent'] = false;

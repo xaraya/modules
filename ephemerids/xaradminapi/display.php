@@ -11,6 +11,7 @@ function ephemerids_adminapi_display()
     $ephemtable = $xartable['ephem'];
 
     $query = "SELECT xar_eid,
+                     xar_tid, 
                      xar_did, 
                      xar_mid, 
                      xar_yid,
@@ -23,10 +24,11 @@ function ephemerids_adminapi_display()
 
     $resarray = array();
 
-    while(list($eid, $did, $mid, $yid, $content, $elanguage) = $result->fields) {
+    while(list($eid, $tid, $did, $mid, $yid, $content, $elanguage) = $result->fields) {
     $result->MoveNext();
 
     $resarray[] = array('eid' => $eid,
+                'tid' => $tid,
                 'did' => $did,
                 'mid' => $mid,
                 'yid' => $yid,

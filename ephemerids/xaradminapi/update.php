@@ -7,8 +7,9 @@ function ephemerids_adminapi_update($args)
 
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
-    if ((!isset($did)) ||
-        (!isset($eid)) ||
+    if ((!isset($eid)) ||
+        (!isset($tid)) ||
+        (!isset($did)) ||
         (!isset($mid)) ||
         (!isset($yid)) ||
         (!isset($content))) {
@@ -32,10 +33,11 @@ function ephemerids_adminapi_update($args)
               SET xar_yid       = ?,
                   xar_mid       = ?,
                   xar_did       = ?,
+                  xar_tid       = ?,
                   xar_content   = ?,
                   xar_elanguage = ?
               WHERE xar_eid = ?";
-    $bindvars = array($yid, $mid, $did, $content, $elanguage, $eid);
+    $bindvars = array($yid, $mid, $did, $tid, $content, $elanguage, $eid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     return true;

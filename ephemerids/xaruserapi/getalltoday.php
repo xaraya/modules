@@ -22,6 +22,7 @@ function ephemerids_userapi_getalltoday()
     $emonth = $today['mon'];
 
     $query = "SELECT xar_eid,
+                     xar_tid,
                      xar_did,
                      xar_mid, 
                      xar_yid,
@@ -35,9 +36,10 @@ function ephemerids_userapi_getalltoday()
 
     // Put items into result array. 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eid, $did, $mid, $yid, $content, $elanguage) = $result->fields;
+        list($eid, $tid, $did, $mid, $yid, $content, $elanguage) = $result->fields;
         if (xarSecurityCheck('OverviewEphemerids', 0)) {
             $items[] = array(
+                  'tid' => $tid,
                   'did' => $did,
                   'mid' => $mid,
                   'yid' => $yid,
