@@ -20,9 +20,9 @@ function courses_userapi_menu()
     // Initialise the array that will hold the menu configuration
     $menu = array();
     // Specify the menu title to be used in your blocklayout template
-    $menu['menutitle'] = xarMLByKey('COURSES');
+    $menu['menutitle'] = xarML('Courses');
     // Specify the menu items to be used in your blocklayout template
-    $menu['menulabel_view'] = xarMLByKey('COURSESVIEW');
+    $menu['menulabel_view'] = xarML('Courses View');
     $menu['menulink_view'] = xarModURL('courses', 'user', 'view');
     // Specify the labels/links for more menu items if relevant
     // $menu['menulabel_other'] = xarML('Some other menu item');
