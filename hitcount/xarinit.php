@@ -151,7 +151,7 @@ function hitcount_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
 
             // Get database information
@@ -173,12 +173,25 @@ function hitcount_upgrade($oldversion)
             if (!$result) return;
 
             break;
-        case 1.1:
+        case '1.1':
             xarModSetVar('hitcount', 'countadmin', 0);
             xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
             $modversion['admin']          = 1;
             // Code to upgrade from version 1.1 goes here
             break;
+
+        case '1.2.0':
+            // delete invalid hitcount entries for articles itemtype 0
+            if (xarModIsAvailable('articles') && xarModGetIDFromName('articles') != 0) {
+                xarModAPIFunc('hitcount','admin','delete',
+                              array('modid' => xarModGetIDFromName('articles'),
+                                    'itemtype' => 0,
+                                    'confirm' => true));
+            }
+            // fall through to next upgrade
+
+        case '1.2.1':
+            // Code to upgrade from version 1.2.1 goes here
     }
 
     return true;

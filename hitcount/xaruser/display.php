@@ -19,13 +19,23 @@ function hitcount_user_display($args)
     // Load API
     if (!xarModAPILoad('hitcount', 'admin')) return;
 
-    // Run API function
-    $args['modname'] = xarModGetName();
-    $args['itemtype'] = 0;
-    if (isset($extrainfo) && is_array($extrainfo)) {
-        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-            $args['itemtype'] = $extrainfo['itemtype'];
+    // When called via hooks, modname will be empty, but we get it from the
+    // extrainfo or from the current module
+    if (empty($args['modname']) || !is_string($args['modname'])) {
+        if (isset($extrainfo) && is_array($extrainfo) &&
+            isset($extrainfo['module']) && is_string($extrainfo['module'])) {
+            $args['modname'] = $extrainfo['module'];
+        } else {
+            $args['modname'] = xarModGetName();
         }
+    }
+    if (!isset($args['itemtype']) || !is_numeric($args['itemtype'])) {
+         if (isset($extrainfo) && is_array($extrainfo) &&
+             isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+             $args['itemtype'] = $extrainfo['itemtype'];
+         } else {
+             $args['itemtype'] = 0;
+         }
     }
 
     if (xarVarIsCached('Hooks.hitcount','nocount') ||
