@@ -33,8 +33,8 @@ function window_init()
 {
 
 
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
 
     $sitePrefix = xarDBGetSiteTablePrefix();
@@ -126,8 +126,8 @@ function window_delete()
     xarModDelVar('window', 'full_screen');
     xarModDelVar('window', 'table_borders');
 
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
 
     $query = xarDBDropTable($tables['window']);
