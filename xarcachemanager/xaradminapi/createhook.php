@@ -56,9 +56,8 @@ function xarcachemanager_adminapi_createhook($args)
          }
     }
 
-    // try to identify pages that include this item and remove any cached pages
-    // nothing fancy yet, just flush it out the cacheKeys
-    
+    // TODO: make all the module cache flushing behavior admin configurable
+
     switch($modname) {
         case 'blocks':
             // blocks could be anywhere, we're not smart enough not know exactly where yet
@@ -73,7 +72,7 @@ function xarcachemanager_adminapi_createhook($args)
             xarPageFlushCached($cacheKey);
             break;
         case 'articles':
-            if ($extrainfo['status'] == 0) {
+            if (!isset($extrainfo['status']) || $extrainfo['status'] == 0) {
                 break;
             }
             $cacheKey = "articles-";

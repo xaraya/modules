@@ -49,6 +49,8 @@ function xarcachemanager_adminapi_updateconfighook($args)
          }
     }
 
+    // TODO: make all the module cache flushing behavior admin configurable
+
     switch($modname) {
 
         case 'base': // who knows what global impact a config change to base might make

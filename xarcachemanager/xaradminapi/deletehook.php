@@ -56,9 +56,8 @@ function xarcachemanager_adminapi_deletehook($args)
          }
     }
 
-    // if an item is deleted, delete any associated cached pages
-    // nothing fancy yet, just flush it out
-    
+    // TODO: make all the module cache flushing behavior admin configurable
+
     switch($modname) {
         case 'blocks':
             // blocks could be anywhere, we're not smart enough not know exactly where yet

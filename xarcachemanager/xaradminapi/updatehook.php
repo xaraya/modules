@@ -57,6 +57,8 @@ function xarcachemanager_adminapi_updatehook($args)
          }
     }
 
+    // TODO: make all the module cache flushing behavior admin configurable
+
     switch($modname) {
         case 'blocks':
             // blocks could be anywhere, we're not smart enough not know exactly where yet
