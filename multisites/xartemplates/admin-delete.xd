@@ -1,0 +1,88 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Delete A Site</xar:mlstring></h2><br />
+<div align="center">
+<xar:if condition="$mastersite eq false">
+    <table border="0" width="100%" align="center">
+	     <tr align="left" valign="middle">
+	 	    <td>
+			    <xar:mlstring>$infomsg</xar:mlstring>
+			</td>
+	     </tr>
+    </table>
+<xar:else condition="$mastersite eq true" />
+<div class="xar-mod-body" align="left">
+<xar:mlstring>This option will delete the following site from your multisite database, and remove the ability to browse to that site.</xar:mlstring>
+</div>
+<form method="post" action="&xar-modurl-multisites-admin-removesite;" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="&xar-var-authid;" />
+
+        <table border="0" width="100%" align="center">
+		    <th align="center" valign="middle" colspan="2">
+			    <xar:mlstring>Delete site</xar:mlstring>
+			</th>
+			    <tr>
+			    <td>&nbsp;</td>
+			    </tr>
+                <tr valign="left">
+				    <td width="40%">
+                        <xar:mlstring>Site ID</xar:mlstring>:
+					</td>
+                    <td>
+						<input type="text" name="msid" id="msid" size="4" maxlength="4" value="#$msid#" />
+					</td>
+
+				</tr>
+                <tr valign="left">
+				    <td>
+                        <xar:mlstring>Site Name</xar:mlstring>:
+					</td>
+                    <td>
+						<input type="text" name="mssite" id="mssite" size="30" maxlength="128" value="#$mssite#" />
+					</td>
+
+				</tr>
+                <tr valign="left">
+				    <td>
+                        <xar:mlstring>Site prefix</xar:mlstring>:
+					</td>
+                    <td align="left">
+						<input type="text" name="msprefix" id="msprefix" size="20" maxlength="30" value="#$msprefix#" />
+					</td>
+
+				</tr>
+                <tr valign="left">
+				    <td>
+                        <xar:mlstring>Site database</xar:mlstring>:
+					</td>
+                    <td align="left">
+						<input type="text" name="msdb" id="msdb" size="20" maxlength="30" value="#$msdb#" />
+					</td>
+
+				</tr>
+				<tr valign ="left">
+				    <td>
+                        <xar:mlstring>Remove site database tables</xar:mlstring>?
+                    </td>
+                    <td>
+   			            <input type="checkbox" name="removetables" id="removetables" value="1" checked="checked" /> /Not functional TO DO
+				    </td>
+				</tr>
+				<tr valign = "left">
+				    <td>
+                    <xar:mlstring>Remove site data directory</xar:mlstring>?
+                    </td>
+                    <td>
+   			            <input type="checkbox" name="removedatadir" id="removedatadir" value="1" checked="checked" />
+				    </td>
+				</tr>
+
+			    <tr align="center" valign="middle">
+                   <td colspan="2"><br /><br /><input type="submit" value="#$btnDeleteSite#" align="middle" tabindex="3" />
+                   </td>
+                </tr>
+        </table>
+ </form>
+</xar:if>
+</div>
+</div>
+
