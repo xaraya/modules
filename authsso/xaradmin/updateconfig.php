@@ -32,6 +32,7 @@ function authsso_admin_updateconfig()
     if (!xarVarFetch('ldapnamevalue', 'str:1:64', $ldapnamevalue, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ldapmailvalue', 'str:1:64', $ldapmailvalue, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaultgroup', 'str:1:64', $defaultgroup, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('activate', 'str', $activate, '', XARVAR_NOT_REQUIRED)) return;
 
     // update the config
     xarModSetVar('authsso', 'add_user', $adduser);
@@ -48,6 +49,26 @@ function authsso_admin_updateconfig()
     }
     // update config
     xarModSetVar('authsso', 'defaultgroup', $defaultgroup);
+
+    $authmodules = xarConfigGetVar('Site.User.AuthenticationModules');
+    if (empty($activate) && in_array('authsso', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module != 'authsso') {
+                $newauth[] = $module;
+            }
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    } elseif (!empty($activate) && !in_array('authsso', $authmodules)) {
+        $newauth = array();
+        foreach ($authmodules as $module) {
+            if ($module == 'authsystem') {
+                $newauth[] = 'authsso';
+            }
+            $newauth[] = $module;
+        }
+        xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
+    }
 
     // and refresh display
     xarResponseRedirect(xarModURL('authsso', 'admin', 'modifyconfig'));

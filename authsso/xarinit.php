@@ -35,7 +35,8 @@ function authsso_init()
     xarRegisterMask('AdminAuthSSO', 'All', 'authsso', 'All', 'All', 'ACCESS_ADMIN');
     xarRegisterMask('ReadAuthSSO', 'All', 'authsso', 'All', 'All', 'ACCESS_READ');
 
-    // Add authsso to Site.User.AuthenticationModules in xar_config_vars
+    // Do not add authsso to Site.User.AuthenticationModules in xar_config_vars here
+/*
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
     $authModules[] = 'authsso';
 
@@ -43,6 +44,7 @@ function authsso_init()
     sort($authModules);
 
     xarConfigSetVar('Site.User.AuthenticationModules',$authModules);
+*/
 
     // Initialization successful
     return true;
