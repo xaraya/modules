@@ -216,6 +216,6 @@
     <br />
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="phase" id="phase" value="update" />
-    <input type="submit" value="Update Configuration" align="middle" tabindex="3" />
+    <input type="submit" value="Update Configuration"  tabindex="3" />
     </form>
 </div>
