@@ -1,5 +1,5 @@
 <?php 
-$modversion['name'] = 'Release';
+$modversion['name'] = 'Latest Releases';
 $modversion['id'] = '773';
 $modversion['version'] = '0.02';
 $modversion['description'] = 'Release information for themes and modules';
