@@ -5,14 +5,27 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
 	<table border="0" cellpadding="8" cellspacing="0">
+	<tr>
+            <td><label for="numstats"><xar:mlstring>Number of items shown in lists</xar:mlstring>:</label></td>
+            <td><input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" /></td>
+        </tr>
+	<tr>
+            <td><label for="showtitle"><xar:mlstring>Show the item title in lists</xar:mlstring>:</label></td>
+            <td><xar:if condition="!empty($showtitle)">
+                  <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
+                <xar:else/>
+                  <input type="checkbox" name="showtitle" id="showtitle" value="1" />
+                </xar:if>
+            </td>
+        </tr>
 	<xar:foreach in="$settings" key="$modname" value="$config">
 		<tr>
 			<td colspan="2"><b>#$config['label']#</b></td>
 		</tr>
 		<tr>
-			<td><xar:mlstring>Fields (comma-separated list) TODO</xar:mlstring></td>
+			<td><label for="changelog_#$modname#"><xar:mlstring>Fields (comma-separated list)</xar:mlstring></label></td>
 			<td>
-				<input type="text" name="changelog[#$modname#]" id="changelog[#$modname#]" value="#$config['changelog']#" size="40" />
+				<input type="text" name="changelog[#$modname#]" id="changelog_#$modname#" value="#$config['changelog']#" size="40" />
 			</td>
 		</tr>
 	</xar:foreach>

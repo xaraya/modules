@@ -23,6 +23,11 @@ function changelog_admin_updateconfig()
         } 
     } 
 
+    if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
+    xarModSetVar('changelog', 'numstats', $numstats);
+    xarModSetVar('changelog', 'showtitle', $showtitle);
+
     xarResponseRedirect(xarModURL('changelog', 'admin', 'modifyconfig'));
 
     return true;

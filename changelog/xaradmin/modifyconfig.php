@@ -59,6 +59,15 @@ function changelog_admin_modifyconfig()
         }
     }
 
+    $data['numstats'] = xarModGetVar('changelog','numstats');
+    if (empty($data['numstats'])) {
+        $data['numstats'] = 100;
+    }
+    $data['showtitle'] = xarModGetVar('changelog','showtitle');
+    if (!empty($data['showtitle'])) {
+        $data['showtitle'] = 1;
+    }
+
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }

@@ -99,6 +99,8 @@ function changelog_init()
     if (!$result) return;
 
     xarModSetVar('changelog', 'SupportShortURLs', 0);
+    xarModSetVar('changelog', 'numstats', 100);
+    xarModSetVar('changelog', 'showtitle', false);
 
 /* // nothing to do here
     if (!xarModRegisterHook('item', 'new', 'GUI',

@@ -14,6 +14,11 @@ function changelog_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminChangeLog')) {
         $menulinks[] = Array('url'   => xarModURL('changelog',
                                                   'admin',
+                                                  'view'),
+                              'title' => xarML('View changelog entries per module'),
+                              'label' => xarML('View Changes'));
+        $menulinks[] = Array('url'   => xarModURL('changelog',
+                                                  'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the changelog configuration'),
                               'label' => xarML('Modify Config'));
