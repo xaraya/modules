@@ -117,7 +117,7 @@
    	<div style="clear: both; padding-top: 5px;">
         <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
         <div class="xar-norm" style="padding: 3px;">
-		    <h3><a href="#$loop:item['displaylink']#">#$loop:item['name']#</a></h3>
+		    <h3><a href="#$loop:item['displaylink']#">#$loop:item['regname']#</a></h3>
             <div class="xar-accent" style="padding: 2px;">
             <span class="xar-sub">
                 <xar:mlstring>Author</xar:mlstring>:
