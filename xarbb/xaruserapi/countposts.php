@@ -28,8 +28,8 @@ function xarbb_userapi_countposts($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbtopicstable = $xartable['xbbtopics'];
 

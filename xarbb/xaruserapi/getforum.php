@@ -27,8 +27,8 @@ function xarbb_userapi_getforum($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbforumstable = $xartable['xbbforums'];
 

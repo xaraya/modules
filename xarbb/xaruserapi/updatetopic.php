@@ -66,8 +66,8 @@ function xarbb_userapi_updatetopic($args)
     if(!xarSecurityCheck('PostxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;    // todo
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbtopicstable = $xartable['xbbtopics'];
 

@@ -24,8 +24,8 @@ function xarbb_userapi_countforums($args)
     // Security Check
     if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbforumstable = $xartable['xbbforums'];
 

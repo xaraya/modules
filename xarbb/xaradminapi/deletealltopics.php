@@ -53,8 +53,8 @@ function xarbb_adminapi_deletealltopics($args)
     }
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbtopicstable = $xartable['xbbtopics'];
 

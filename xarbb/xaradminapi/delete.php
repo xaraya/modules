@@ -50,8 +50,8 @@ function xarbb_adminapi_delete($args)
     // else they may be left hanging in db
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbforumstable = $xartable['xbbforums'];
 

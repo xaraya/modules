@@ -22,8 +22,8 @@ xarDBLoadTableMaintenanceAPI();
 function xarbb_init()
 {
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbforumstable = $xartable['xbbforums'];
 
@@ -226,8 +226,8 @@ function xarbb_upgrade($oldversion)
             xarModAPILoad('categories','user');
 
             // Get database information
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $linkagetable = $xartable['categories_linkage'];
 
             // update item type in categories - you need to upgrade categories first :-)
@@ -245,8 +245,8 @@ function xarbb_upgrade($oldversion)
             xarModSetVar('xarbb', 'forumsperpage', 20);
             xarModSetVar('xarbb', 'postsperpage', 20);
        // Get database information
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $topicstable = $xartable['xbbtopics'];
 
              xarDBLoadTableMaintenanceAPI();
@@ -288,8 +288,8 @@ function xarbb_delete()
     }
 
     // Drop the table
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbforumstable = $xartable['xbbforums'];
     $query = xarDBDropTable($xbbforumstable);
@@ -328,8 +328,8 @@ function xarbb_updatetopicstable()
            $alltopics[$i]=xarModAPIFunc('xarbb','user','getalltopics',
                                   array('fid'=>$allforums[$i]['fid']));
        }
-       list($dbconn) = xarDBGetConn();
-       $xartable = xarDBGetTables();
+       $dbconn =& xarDBGetConn();
+       $xartable =& xarDBGetTables();
        $xbbtopicstable = $xartable['xbbtopics'];
        foreach ($alltopics as $eachforum) {
            foreach ($eachforum as $eachtopic) {

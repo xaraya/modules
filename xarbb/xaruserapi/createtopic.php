@@ -42,8 +42,8 @@ function xarbb_userapi_createtopic($args)
     if(!xarSecurityCheck('PostxarBB',1,'Forum')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xbbtopicstable = $xartable['xbbtopics'];
 
