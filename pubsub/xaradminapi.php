@@ -86,8 +86,12 @@ function pubsub_adminapi_createhook($args)
               " . xarVarPrepForStore($modid) . ",
               " . xarVarPrepForStore($itemtype) . ",
               '" . xarvarPrepForStore($groupdescr) . "')";
+
     $dbconn->Execute($query);
     if (!$result) return;
+
+    // Get the ID of the item that was inserted
+    $eventid = $dbconn->PO_Insert_ID($pubsubeventstable, 'xar_eventid');
 
     $flag = true; // what is this???
 
@@ -97,7 +101,7 @@ function pubsub_adminapi_createhook($args)
               xar_cid,
               xar_flag)
             VALUES (
-              $nextId,
+              " . xarVarPrepForStore($eventid) . ",
               " . xarVarPrepForStore($cid) . ",
               " . xarVarPrepForStore($flag) . ")";
 
