@@ -12,6 +12,12 @@ function categories_userapi_navigation($args)
 {
     extract($args);
 
+    // Allow the template to the over-ridden.
+    // This allows different category browsing formats in different places.
+    if (!empty($template)) {
+        $template_override = $template;
+    }
+    
     // Get requested layout
     if (empty($layout)) {
         $layout = 2; // breadcrumb trails
@@ -351,17 +357,30 @@ function categories_userapi_navigation($args)
                 $data['cattrails'] = array();
 
                 $descriptions = array();
-    // TODO: stop at root categories
+
+                // TODO: stop at root categories
+
+                // Loop for each category assigned to the item.
+                // A separate trail will be created for each assigned.
                 foreach ($cids as $cid) {
                     // Get category information
-                    $parents = xarModAPIFunc('categories','user','getparents',
-                                            array('cid' => $cid));
-                    if (empty($parents)) {
-                        continue;
-                    }
+                    $parents = xarModAPIFunc(
+                        'categories','user','getancestors',
+                        array('cid' => $cid, 'self' => true)
+                    );
+
+                    // Some kind of error; skip this category.
+                    // The ancestors list should never be empty, as it
+                    // includes 'self'.
+                    if (empty($parents)) {continue;}
+
                     $catitems = array();
                     $curcount = 0;
-                // TODO: now this is a tricky part...
+
+                    // TODO: now this is a tricky part...
+
+                    // Create the top-level link.
+                    // TODO: make this optional or flag it so the template can decide.
                     $label = xarML('All');
                     $link = xarModURL($modname,$type,$func,
                                      array('itemtype' => $itemtype));
@@ -371,6 +390,8 @@ function categories_userapi_navigation($args)
                                         'catlink' => $link,
                                         'catjoin' => $join);
                     $join = ' &gt; ';
+
+                    // Loop for each ancestor and create an entry.
                     foreach ($parents as $cat) {
                         $label = xarVarPrepForDisplay($cat['name']);
                         if ($cat['cid'] == $cid && empty($itemid) && empty($andcids) && empty($istree)) {
@@ -401,6 +422,7 @@ function categories_userapi_navigation($args)
                                             'catlink' => $link,
                                             'catjoin' => $join);
                     }
+
                     if (!empty($istree)) {
                         $viewall = '';
                     } else {
@@ -516,6 +538,7 @@ function categories_userapi_navigation($args)
                         if (!empty($catcount[$info['id']])) {
                             $count = $catcount[$info['id']];
                         } else {
+                            // JJ: TODO: check hiding.
                             $count = 0;
                         }
     /* don't show descriptions in (potentially) multi-level trees
@@ -628,17 +651,34 @@ function categories_userapi_navigation($args)
                     $children = xarModAPIFunc('categories','user','getchildren',
                                              array('cid' => $cid,
                                                    'return_itself' => true));
+                    
                     foreach ($children as $cat) {
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+
+                            // TODO: check! When does this section get executed?
+                            // TODO: how much duplication is there in these three loops?
+                            // Note: when hiding empty categories, check the deep count
+                            // as a child category may be empty, but it could still have
+                            // descendants with items.
+
+                            if (!empty($showempty) || !empty($deepcount[$cat['cid']])) {
+                                // We are not hiding empty categories - set count to zero.
+                                $count = 0;
+                            } else {
+                                // We want to hide empty categories - so skip this loop.
+                                continue;
+                            }
+                        }
+
                         $label = xarVarPrepForDisplay($cat['name']);
                     // TODO: now this is a tricky part...
                         $link = xarModURL($modname,$type,$func,
                                          array('itemtype' => $itemtype,
                                                'catid' => $cat['cid']));
-                        if (!empty($catcount[$cat['cid']])) {
-                            $count = $catcount[$cat['cid']];
-                        } else {
-                            $count = 0;
-                        }
+
                         if ($cat['cid'] == $cid) {
                             $catparents[] = array('catlabel' => $label,
                                                   'catid' => $cat['cid'],
@@ -663,16 +703,29 @@ function categories_userapi_navigation($args)
                                              array('cid' => $cid,
                                                    'return_itself' => true));
                     foreach ($children as $cat) {
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+
+                            // Note: when hiding empty categories, check the deep count
+                            // as a child category may be empty, but it could still have
+                            // descendants with items.
+
+                            if (!empty($showempty) || !empty($deepcount[$cat['cid']])) {
+                                // We are not hiding empty categories - set count to zero.
+                                $count = 0;
+                            } else {
+                                // We want to hide empty categories - so skip this loop.
+                                continue;
+                            }
+                        }
+
                         $label = xarVarPrepForDisplay($cat['name']);
                     // TODO: now this is a tricky part...
                         $link = xarModURL($modname,$type,$func,
                                          array('itemtype' => $itemtype,
                                                'catid' => $cat['cid']));
-                        if (!empty($catcount[$cat['cid']])) {
-                            $count = $catcount[$cat['cid']];
-                        } else {
-                            $count = 0;
-                        }
                         if ($cat['cid'] == $cid) {
                             $catparents[] = array('catlabel' => $label,
                                                   'catid' => $cat['cid'],
@@ -693,7 +746,7 @@ function categories_userapi_navigation($args)
                     $catparents = array();
                     $catitems = array();
                     // Get category information
-                    $parents = xarModAPIFunc('categories','user','getparents',
+                    $parents = xarModAPIFunc('categories','user','getancestors',
                                             array('cid' => $cid));
                     if (empty($parents)) {
                         continue;
@@ -723,6 +776,7 @@ function categories_userapi_navigation($args)
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
+                            // JJ: TODO: check hiding.
                             $count = 0;
                         }
                         $catparents[] = array('catlabel' => $label,
@@ -749,6 +803,7 @@ function categories_userapi_navigation($args)
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
+                            // JJ: TODO: check hiding.
                             $count = 0;
                         }
                         $savecid = $cat['cid'];
@@ -788,7 +843,13 @@ function categories_userapi_navigation($args)
             }
             break;
     }
-    return xarTplModule('categories','user','navigation',$data,$template);
+
+    // Do template override.
+    if (!empty($template_override)) {
+        $template = $template_override;
+    }
+
+    return xarTplModule('categories', 'user', 'navigation', $data, $template);
 }
 
 ?>

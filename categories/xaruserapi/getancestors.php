@@ -10,6 +10,7 @@
  * @param $args['cids'] array of category ids to get children for
  * @param $args['self'] =Boolean= return the cid itself (default true)
  * @param $args['return_itself'] alias of 'self'
+ * @param $args['order'] 'root' or 'self' first; default 'root' (i.e. oldest ancestor first)
  * @returns array
  * @return array of category info arrays, false on failure
  */
@@ -20,6 +21,9 @@ function categories_userapi_getancestors($args) {
 
     // Extract the arguments.
     extract($args);
+
+    // The order defaults to 'root' - oldest first.
+    if (!isset($order)) {$order = 'root';}
 
     // 'return_itself' is an alias of 'self'.
     if (isset($return_itself)) {$self = $return_itself;}
@@ -81,7 +85,8 @@ function categories_userapi_getancestors($args) {
             $SQLquery .= ' AND P2.xar_cid = ' . $dbcids[0];
         }
 
-        $SQLquery .= ' ORDER BY P1.xar_left';
+        // This order retrieved the oldest ancestor first.
+        //$SQLquery .= ' ORDER BY P1.xar_left';
 
         // Get database connection info and execute the query.
         list($dbconn) = xarDBGetConn();
@@ -94,13 +99,13 @@ function categories_userapi_getancestors($args) {
             // Add the category into the cache where necessary.
             if (!isset($cached[$dbcid])) {
                 $cached[$dbcid] = array(
-                    "cid"         => $dbcid,
+                    "cid"         => (int)$dbcid,
                     "name"        => $name,
                     "description" => $description,
                     "image"       => $image,
-                    "parent"      => $parent,
-                    "left"        => $left,
-                    "right"       => $right
+                    "parent"      => (int)$parent,
+                    "left"        => (int)$left,
+                    "right"       => (int)$right
                 );
             }
             $result->MoveNext();
@@ -139,6 +144,16 @@ function categories_userapi_getancestors($args) {
             $nextcid = $cached[$nextcid]['parent'];
         }
     }
+    
+    if ($order == 'root') {
+        // The ancestors need to be returned in order, oldest first.
+        // We build the list starting at self, so we walk the tree
+        // in the reverse of that order. The array is reversed,
+        // preserving the keys.
+
+        $info =& array_reverse($info, true);
+    }
+
     //echo "<pre>"; var_dump($info); echo "</pre><br/>";
 
     return $info;
