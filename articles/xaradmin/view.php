@@ -11,6 +11,8 @@ function articles_admin_view()
     if(!xarVarFetch('status',   'isset', $status,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('authorid', 'isset', $authorid, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
 
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
@@ -40,6 +42,8 @@ function articles_admin_view()
     }
     $data = array();
     $data['ptid'] = $ptid;
+    $data['authorid'] = $authorid;
+    $data['language'] = $lang;
 
     if (!empty($catid)) {
         if (strpos($catid,' ')) {
@@ -100,11 +104,15 @@ function articles_admin_view()
                              array('startnum' => $startnum,
                                    'numitems' => $numitems,
                                    'ptid' => $ptid,
+                                   'authorid' => $authorid,
+                                   'language' => $lang,
                                    'cids' => $cids,
                                    'status' => $status));
 
     // Save the current admin view, so that we can return to it after update
     $lastview = array('ptid' => $ptid,
+                      'authorid' => $authorid,
+                      'language' => $lang,
                       'catid' => $catid,
                       'status' => $status,
                       'startnum' => $startnum > 1 ? $startnum : null);
@@ -218,11 +226,15 @@ function articles_admin_view()
     $data['pager'] = xarTplGetPager($startnum,
                             xarModAPIFunc('articles', 'user', 'countitems',
                                           array('ptid' => $ptid,
+                                                'authorid' => $authorid,
+                                                'language' => $lang,
                                                 'cids' => $cids,
                                                 'status' => $status)),
                             xarModURL('articles', 'admin', 'view',
                                       array('startnum' => '%%',
                                             'ptid' => $ptid,
+                                            'authorid' => $authorid,
+                                            'language' => $lang,
                                             'catid' => $catid,
                                             'status' => $status)),
                             $numitems);
