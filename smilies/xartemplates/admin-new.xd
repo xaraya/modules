@@ -36,6 +36,6 @@
 			</td>
 		</tr>
 	</table>
-	<input type="submit" value="Create Smiley" align="middle" tabindex="5" />
+	<input type="submit" value="Create Smiley"  tabindex="5" />
 </form>
 </div>
