@@ -6,7 +6,7 @@
     'url'    - select different portions of this template. Values are:
                * 'display' - show article title in the link
                * 'readfirst' - readfirst-type link as defined at 
-                 http://docs.xaraya.com/docs/rfcs/rfc0032.html#rfc.section.4.1.1
+                 http://www.xaraya.com/documentation/rfcs/rfc0032.html#rfc.section.4.1.1
                * 'readnext' - readnext-type link
                * 'readlast' - readnext-type link
     'title'  - set the tool-tip title of the link
