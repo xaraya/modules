@@ -52,6 +52,96 @@ function release_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    $index = array('name'      => 'i_xar_release_id_1',
+                   'fields'    => array('xar_name'),
+                   'unique'    => TRUE);
+    $query = xarDBCreateIndex($releasetable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $releasenotes = $xartable['release_notes'];
+
+    // *_user_data
+    $query = xarDBCreateTable($releasenotes,
+                             array('xar_rnid'           => array('type'        => 'integer',
+                                                                'null'         => false,
+                                                                'default'      => '0',
+                                                                'increment'    => true,
+                                                                'primary_key'  => true),
+                                   'xar_rid'            => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false),
+                                   'xar_version'        => array('type'        => 'varchar',
+                                                                 'size'        => 100,
+                                                                 'null'        => false,
+                                                                 'default'     => ''),
+                                   'xar_price'          => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false),
+                                   'xar_priceterms'     => array('type'        => 'varchar',
+                                                                 'size'        => 100,
+                                                                 'null'        => false,
+                                                                 'default'     => ''),
+                                   'xar_demo'           => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false),
+                                   'xar_demolink'       => array('type'        => 'varchar',
+                                                                 'size'        => 100,
+                                                                 'null'        => false,
+                                                                 'default'     => ''),
+                                   'xar_supported'      => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false),
+                                   'xar_supportlink'    => array('type'        => 'varchar',
+                                                                 'size'        => 100,
+                                                                 'null'        => false,
+                                                                 'default'     => ''),
+                                   'xar_certified'      => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false),
+                                   'xar_approved'       => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false)));
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+/*
+    $releasedocs = $xartable['release_docs'];
+
+    // *_user_data
+    $query = xarDBCreateTable($releasedocs,
+                             array('xar_rid'         => array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
+                                                              'increment'   => true,
+                                                              'primary_key' => true),
+                                   'xar_uid'         => array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
+                                                              'increment'   => false),
+                                   'xar_name'        => array('type'        => 'varchar',
+                                                              'size'        => 100,
+                                                              'null'        => false,
+                                                              'default'     => ''),
+                                   'xar_desc'        => array('type'        => 'text',
+                                                              'default'     => ''),
+                                   'xar_type'        => array('type'        => 'varchar',
+                                                              'size'        => 100,
+                                                              'null'        => false,
+                                                              'default'     => ''),
+                                   'xar_approved'    => array('type'        => 'integer',
+                                                              'null'        => false,
+                                                              'default'     => '0',
+                                                              'increment'   => false)));
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+*/
     return true;
 }
 
@@ -105,7 +195,13 @@ function release_delete()
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
+
+    // Drop the table
+    $query = "DROP TABLE $xartable[release_notes]";
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     return true;
 }
 ?>

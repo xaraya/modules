@@ -2,10 +2,15 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
+<xar:mlstring>Click module name for contact information</xar:mlstring>
+<br /><br />
 <div align="center">
-
+<div class="xar-accent">
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent">
-    <tr>        
+    <tr>    
+		<th width="5%">
+            <xar:mlstring>Action</xar:mlstring>
+		</th>
 		<th width="5%">
             <xar:mlstring>ID</xar:mlstring>
 		</th>
@@ -32,15 +37,16 @@
 			#$rid#
 		</td>
         <td align="center" valign="top" class="xar-norm">
-			#$name#
+			<a href="#$contacturl#">#$name#</a>
 		</td>
 		<td align="center" valign="top" class="xar-norm">
 			#$type#
 		</td>
-        <td class="xar-norm">
-			#$desc#
+        <td align="left" class="xar-norm">
+			&nbsp;&nbsp;#$desc#
 		</td>
     </tr>
     </xar:loop>
 </table>
+</div>
 </div>

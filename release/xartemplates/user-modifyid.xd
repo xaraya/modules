@@ -1,41 +1,44 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
 <h2><xar:mlstring>Release Module :: Modify A Release ID</xar:mlstring></h2>
-<br /><br />
 
 <center>
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<input type="hidden" name="phase" id="phase" value="update" />	
+		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
 		<table border="0" cellpadding="5">
 			<tr>
-				<td align= "left" valign="top">
+				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Module or Theme ID</xar:mlstring>
 				</td>
-				<td align= "left" valign="top">
+				<td align="left" valign="top" class="xar-norm">
 					#$rid#
 				</td>
 			</tr>
 			<tr>
-				<td align= "left" valign="top">
+				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Module or Theme Name</xar:mlstring>
 				</td>
-				<td align= "left">
+				<td align="left" valign="top" class="xar-norm">
 					<input type="text" name="name" id="name" value="#$name#" size="25" maxlength="60" tabindex="2" />
 				</td>
 			</tr>
 			<tr>
-				<td align= "left" valign="top">
+				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Description</xar:mlstring>
 				</td>
-				<td>
-					<textarea name="desc" id="desc" tabindex="4" rows="10" cols="30" />#$desc#</textarea> 
+				<td align="left" valign="top" class="xar-norm">
+					<textarea name="desc" id="desc" tabindex="4" rows="10" cols="50" />#$desc#</textarea> 
 				</td>
 			</tr>
 			<tr>
-				<td align= "left" valign="top">
+				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Type</xar:mlstring>
 				</td>
-				<td align= "left">
+				<td align="left" valign="top" class="xar-norm">
 					<select name="idtype">
 						<xar:if condition="$type eq 'Module'">
 						<option name="module" selected><xar:mlstring>Module</xar:mlstring></option>
