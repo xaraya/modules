@@ -89,7 +89,7 @@
                                     <select name="action" id="action">
                                         <xar:foreach in="$filters['status']" key="$key" value="$status">
                                             <xar:if condition="$key eq '0'">
-                                                <!--- skip ---> 
+                                                <xar:comment> skip </xar:comment> 
                                             <xar:else />
                                                 <option value="#$status['statusId']#">
                                                     #$status['statusName']# 
