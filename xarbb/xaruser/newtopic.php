@@ -161,13 +161,8 @@ function xarbb_user_newtopic()
                 $adminid = xarModGetVar('roles','admin');
                 if  (($data['editstamp'] ==1 ) ||
                      (($data['editstamp'] == 2 ) && (xarUserGetVar('uid')<>$adminid))) {
-                 $modified_date= xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z',time());
-                 $tpost .= "\n\n";
-                 $tpost .=xarML('[Modified by: #(1) on #(3)]',
-                     xarUserGetVar('name'),
-                     xarUserGetVar('uname'),
-                     $modified_date);
-                     $tpost .= "\n"; //Have to take this out with xarbb and html now handling paras.
+                 $tpost2 = xarTplModule('xarbb','user','modifiedby',array());
+                 $tpost .= "\n\n".$tpost2."\n";
                 }
                 if (!xarModAPIFunc('xarbb',
                                    'user',
