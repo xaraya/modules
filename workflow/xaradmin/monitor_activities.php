@@ -58,7 +58,9 @@ if (isset($_REQUEST['filter_type']) && $_REQUEST['filter_type'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'pId_asc, flowNum_asc';
+    // FIXME: this string is wrongly converted by convert_sortmode
+	//$sort_mode = 'pId_asc, flowNum_asc';
+	$sort_mode = 'pId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
