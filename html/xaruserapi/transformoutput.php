@@ -67,6 +67,7 @@ function html_userapitransformoutput($text)
     $text = preg_replace("/\n/si","\n</p><p>\n",$text);
 	//$text = preg_replace("/(\015\012)|(\015)|(\012)/","</p><p>",$text); 
     $text = "<p> " . $text . " </p>\n";
+    $text = str_replace ("<p> </p>", "", $text);
     $text = str_replace ("<p></p>", "", $text);
     return $text;
 }
