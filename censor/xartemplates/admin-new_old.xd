@@ -1,58 +1,58 @@
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("keyword");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Keyword");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("keyword");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Keyword");
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Censor Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Add Censored Word</xar:mlstring></h2>
-	<div style="margin: auto;">
+    <div style="margin: auto;">
         <form action="#xarModURL('censor', 'admin', 'create')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" > 
-		<div style="clear: both; padding-top: 10px;">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('This is the keyword, that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Keyword</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="keyword" id="keyword" value="" size="32" maxlength="255" />
-		</span>
-		</div>
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Case Sensitive substitution.')#"><label for="case"><xar:mlstring>Case sensitive</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="checkbox" name="case" id="case" value="1" />
-		</span>
-		</div>
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Match Case substitution.')#"><label for="matchcase"><xar:mlstring>Match Case</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="checkbox" name="matchcase" id="matchcase" value="1" checked="checked" />
-		</span>
-		</div>
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Locale</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-		<select name="locale" id="locale">
-	        <option value="ALL"><xar:mlstring>ALL</xar:mlstring></option>
-		<xar:foreach in="$locales" value="$locale">
-		    <option value="#$locale['value']#">#$locale['name']#</option>
-	        </xar:foreach>
+        <div style="clear: both; padding-top: 10px;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('This is the keyword, that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Keyword</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="keyword" id="keyword" value="" size="32" maxlength="255" />
+        </span>
+        </div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Case Sensitive substitution.')#"><label for="case"><xar:mlstring>Case sensitive</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="checkbox" name="case" id="case" value="1" />
+        </span>
+        </div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Match Case substitution.')#"><label for="matchcase"><xar:mlstring>Match Case</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="checkbox" name="matchcase" id="matchcase" value="1" checked="checked" />
+        </span>
+        </div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Locale</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+        <select name="locale" id="locale">
+            <option value="ALL"><xar:mlstring>ALL</xar:mlstring></option>
+        <xar:foreach in="$locales" value="$locale">
+            <option value="#$locale['value']#">#$locale['name']#</option>
+            </xar:foreach>
                 </select>
                 </span>
                 </div>
-		<br /><br />
-		
-	<!--	<span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span> -->
-		<span style="float: left; width: 30%; text-align: right;"><input type="submit"  /></span>
-	</form>
-	</div>
+        <br /><br />
+        
+    <!--    <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span> -->
+        <span style="float: left; width: 30%; text-align: right;"><input type="submit"  /></span>
+    </form>
+    </div>
 </div>
