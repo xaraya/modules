@@ -112,6 +112,7 @@ function articles_userapi_get($args)
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($aid),
+                                          'itemtype' => $pubtypeid,
                                           'modid' =>
                                                xarModGetIDFromName('articles'),
                                           'reverse' => 0

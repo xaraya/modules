@@ -120,6 +120,7 @@ function articles_userapi_getall($args)
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                       array('cids' => $cids,
                                             'andcids' => $andcids,
+                                            'itemtype' => isset($ptid) ? $ptid : null,
                                             'modid' =>
                                               xarModGetIDFromName('articles')));
     }
@@ -302,6 +303,7 @@ function articles_userapi_getall($args)
                              'getlinks',
                              array('iids' => $aids,
                                    'reverse' => 1,
+                               // Note : we don't need to specify the item type here for articles, since we use unique ids anyway
                                    'modid' => xarModGetIDFromName('articles')));
 
         // Inserting the corresponding Category ID in the Article Description

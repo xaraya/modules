@@ -43,6 +43,9 @@ function articles_userapi_countitems($args)
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
         $args['modid'] = xarModGetIDFromName('articles');
+        if (isset($args['ptid']) && !isset($args['itemtype'])) {
+            $args['itemtype'] = $args['ptid'];
+        }
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
         $query .= ' LEFT JOIN ' . $categoriesdef['table'];

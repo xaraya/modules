@@ -101,6 +101,8 @@ function articles_userapi_checksecurity($args)
         if (!empty($cidstring)) {
             $rootcids = explode (';', $cidstring);
         }
+    } else {
+        $ptid = null;
     }
     if (!isset($rootcids)) {
     // TODO: handle cross-pubtype views better
@@ -115,6 +117,7 @@ function articles_userapi_checksecurity($args)
                                     'user',
                                     'getlinks',
                                     array('iids' => Array($aid),
+                                          'itemtype' => $ptid,
                                           'modid' =>
                                                xarModGetIDFromName('articles'),
                                           'reverse' => 0

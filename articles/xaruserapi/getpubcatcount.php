@@ -34,6 +34,9 @@ function articles_userapi_getpubcatcount($args)
     if (!xarModAPILoad('categories', 'user')) return;
 
     $args['modid'] = xarModGetIDFromName('articles');
+    if (isset($args['ptid']) && !isset($args['itemtype'])) {
+        $args['itemtype'] = $args['ptid'];
+    }
     // Get the LEFT JOIN ... ON ...  and WHERE parts from categories
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
