@@ -6,7 +6,7 @@
  * @returns 
  * @return 
  */
-function uploads_userapi_transformhook ( $args )
+function & uploads_userapi_transformhook ( $args )
 {
     extract($args);
 
@@ -28,72 +28,49 @@ function uploads_userapi_transformhook ( $args )
     return $result;
 }
 
-function uploads_userapi_transform ( $body )
+function & uploads_userapi_transform ( $body )
 {
-    // Loop over each Upload ID Tag, Auto detect display tag based on extension
-    while(ereg('#file:([0-9]+)#', $body, $matches)) {
-        $ulid = $matches[1];
-
-        // Lookup Upload
-        $info = xarModAPIFunc('uploads',
-                              'user',
-                              'get',
-                              array('ulid'=>$ulid));
-        // Retrieve user specified filename
-        $ulfile = $info['ulfile'];
-
-        // Check if file approved
-        if( $info['ulhash'] != '' )
-        {
-            $tpl = xarTplModule('uploads','user','viewdownload'
-                               ,array('ulid' => $ulid, 'ulfile' => $ulfile)
-                               ,$info['ulext']);
-        } else {
-            $tpl = xarTplModule('uploads','user','viewdownload_na'
-                               ,array('ulid' => $ulid, 'ulfile' => $ulfile)
-                               ,$info['ulext']);
+    
+    while(eregi('#(ulid|ulidd|ulfn|fileURL|fileIcon|fileName):([^#]*)#', $body, $matches)) {
+        array_shift($matches);
+        list($type, $id) = $matches;
+        
+        switch ( $type )  {
+            case 'ulid':
+                // DEPRECATED
+                $replacement = "index.php?module=uploads&func=download&fileId=$id";
+                break;
+            case 'ulidd':
+                // DEPRECATED
+                $replacement = "index.php?module=uploads&func=download&fileId=$id";
+                break;
+            case 'ulfn': // ULFN is DEPRECATED
+            case 'fileLinkedIcon':
+                $list = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $replacement = xarTplModule('uploads', 'user', 'attachment-list', 
+                                             array('Attachments' => $list));
+                break;
+            case 'fileIcon':
+                $file = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $file = end($file);
+                $replacement = $file['mimeImage'];
+                break;
+            case 'fileURL':
+                $file = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $file = end($file);
+                $replacement = $file['fileDownload'];
+                break;
+            case 'fileName':
+                $file = xarModAPIFunc('uploads', 'user', 'get', array('fileId' => $id));
+                $file = end($file);
+                $replacement = $file['fileName'];
+                break;
         }
-        $body=ereg_replace("#ulid:$matches[1]#",$tpl,$body);
-    }
-
-    // Loop over each Upload Tag set to use Default Template
-    while( ereg('#ulidd:([0-9]+)#',$body,$matches) )
-    {
-        $ulid = $matches[1];
-
-        // Lookup Upload
-        $info = xarModAPIFunc('uploads',
-                              'user',
-                              'get',
-                              array('ulid'=>$ulid));
-        // Retrieve user specified filename
-        $ulfile = $info['ulfile'];
-
-        // Check if file approved
-        $tpl = xarTplModule('uploads','user','viewdownload'
-                           ,array('ulid' => $ulid, 'ulfile' => $ulfile));
-        $body=ereg_replace("#ulidd:$matches[1]#",$tpl,$body); 
-    }
-
-    // Loop over each Upload Tag set to use Default Template
-    while( ereg('#ulfn:(.+)#',$body,$matches) )
-    {
-        $ulname = $matches[1];
-
-        // Lookup Upload
-        $info = xarModAPIFunc('uploads',
-                              'user',
-                              'get',
-                              array('ulname'=>$ulname));
-        // Retrieve user specified filename
-        $ulfile = $info['ulfile'];
-
-        // Check if file approved
-        $tpl = xarTplModule('uploads','user','viewdownload'
-                           ,array('ulid' => $ulid, 'ulfile' => $ulfile));
-        $body=ereg_replace("#ulidd:$matches[1]#",$tpl,$body); 
+        
+        $body = ereg_replace("#$type:$id#", $replacement, $body);
     }
 
     return $body;
 }
 ?>
+
