@@ -22,9 +22,11 @@ function xarcachemanager_init()
 
     if (is_writable($varCacheDir) || is_dir($varCacheDir.'/output')) {
         if (!is_dir($varCacheDir.'/output')) {
-            // set up the output directory
+            // set up the output directorys
             $old_umask = umask(0);
             mkdir($varCacheDir.'/output', 0777);
+            mkdir($varCacheDir.'/output/page', 0777);
+            mkdir($varCacheDir.'/output/block', 0777);
             umask($old_umask);
         }
         if (!is_writable($varCacheDir.'/output')) {
@@ -38,6 +40,15 @@ function xarcachemanager_init()
             xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                             new SystemException($msg));
             return false;
+        } else {
+            $old_umask = umask(0);
+            if (!is_dir($varCacheDir.'/output/page')) {
+                mkdir($varCacheDir.'/output/page', 0777);
+            }
+            if (!is_dir($varCacheDir.'/output/block')) {
+                mkdir($varCacheDir.'/output/block', 0777);
+            }
+            umask($old_umask);
         }
     } else {
         // tell them that cache needs to be writable or manually create output dir
@@ -61,6 +72,12 @@ function xarcachemanager_init()
     
     // avoid directory browsing
     if (!file_exists($varCacheDir.'/output/index.html')) {
+        @touch($varCacheDir.'/output/index.html');
+    }
+    if (!file_exists($varCacheDir.'/output/page/index.html')) {
+        @touch($varCacheDir.'/output/index.html');
+    }
+    if (!file_exists($varCacheDir.'/output/block/index.html')) {
         @touch($varCacheDir.'/output/index.html');
     }
 
@@ -212,12 +229,15 @@ function xarcachemanager_init()
  */
 function xarcachemanager_upgrade($oldversion)
 {
+    $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
+    $cachingConfigFile = $varCacheDir . '/config.caching.php';
+
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case 0.1:
             // Code to upgrade from the 0.1 version (base page level caching)
             // Do conversion of MB to bytes in config file
-            $cachingConfigFile = xarCoreGetVarDirPath() . '/cache/config.caching.php';
             include($cachingConfigFile);
             $cachesizelimit = $cachingConfiguration['Output.SizeLimit'] * 1048576;
             $cachingConfig = join('', file($cachingConfigFile));
@@ -225,13 +245,10 @@ function xarcachemanager_upgrade($oldversion)
             $fp = fopen ($cachingConfigFile, 'wb');
             fwrite ($fp, $cachingConfig);
             fclose ($fp);
-            break;
         case 0.2:
         case '0.2.0':
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
             // Bring the config file up to current version
-            $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
-            $cachingConfigFile = xarCoreGetVarDirPath() . '/cache/config.caching.php';
             include($cachingConfigFile);
             $xarPage_cacheTime = $cachingConfiguration['Page.TimeExpiration'];
             $xarPage_cacheTheme = $cachingConfiguration['Page.DefaultTheme'];
@@ -272,13 +289,9 @@ function xarcachemanager_upgrade($oldversion)
                                     'xarcachemanager', 'admin', 'modifyhook')) {
                 return false;
             }
-            break;
         case '0.3.0':
             // Code to upgrade from the 0.3.0
-            // Bring the config file up to current version
-            $varCacheDir = xarCoreGetVarDirPath() . '/cache';
-            $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
-            $cachingConfigFile = $varCacheDir . '/config.caching.php';
+            // Bring the config file up to current version            
             include($cachingConfigFile);
             $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
             $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
@@ -326,8 +339,96 @@ function xarcachemanager_upgrade($oldversion)
         		}
         		xarModDelVar('xarcachemanager', 'CacheBlockOutput');
         	}
-            break;
         case '0.3.1':
+            // Code to upgrade from the 0.3.1 version (base block level caching)
+            // Bring the config file up to current version
+            include($cachingConfigFile);
+            $cachetheme = $cachingConfiguration['Output.DefaultTheme'];
+            $cachesizelimit = $cachingConfiguration['Output.SizeLimit'];
+            $pageexpiretime = $cachingConfiguration['Page.TimeExpiration'];
+            $cachedisplayview = $cachingConfiguration['Page.DisplayView'];
+            $cachetimestamp = $cachingConfiguration['Page.ShowTime'];
+            $expireheader = $cachingConfiguration['Page.ExpireHeader'];
+            $cachegroups = $cachingConfiguration['Page.CacheGroups'];
+            $blockexpiretime = $cachingConfiguration['Block.TimeExpiration'];
+            if(isset($cachingConfiguration['Page.SessionLess'])) {
+                $sessionlessarray = $cachingConfiguration['Page.SessionLess'];
+                $sessionlesslist = "'" . join("','", $sessionlessarray) . "'";
+            }
+            if(isset($cachingConfiguration['AutoCache.Period'])) {
+                $autocacheperiod = $cachingConfiguration['AutoCache.Period'];
+            }
+            if(isset($cachingConfiguration['AutoCache.Period'])) {
+                $autocachethreshold = $cachingConfiguration['AutoCache.Threshold'];
+            }
+            if(isset($cachingConfiguration['AutoCache.Period'])) {
+                $autocachemaxpages = $cachingConfiguration['AutoCache.MaxPages'];
+            }
+            if(isset($cachingConfiguration['Page.SessionLess'])) {
+                $includearray = $cachingConfiguration['AutoCache.Include'];
+                $includelist = "'" . join("','", $includearray) . "'";
+            }
+            if(isset($cachingConfiguration['Page.SessionLess'])) {
+                $excludearray = $cachingConfiguration['AutoCache.Exclude'];
+                $excludelist = "'" . join("','", $excludearray) . "'";
+            }
+            @unlink($cachingConfigFile);
+            $handle = fopen($defaultConfigFile, "rb");
+            $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
+            $fp = @fopen($cachingConfigFile,"wb");
+            fwrite($fp, $defaultConfig);
+            fclose($fp);
+            $cachingConfig = join('', file($cachingConfigFile));
+            $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.ExpireHeader\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ExpireHeader'] = $expireheader;", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
+            $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
+            if(isset($sessionlesslist)) {
+                $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($sessionlesslist);", $cachingConfig);
+            }
+            if(isset($autocacheperiod)) {
+                $cachingConfig = preg_replace('/\[\'AutoCache.Period\'\]\s*=\s*(.*?);/', "['AutoCache.Period'] = $autocacheperiod;", $cachingConfig);
+            }
+            if(isset($autocachethreshold)) {
+                $cachingConfig = preg_replace('/\[\'AutoCache.Threshold\'\]\s*=\s*(.*?);/', "['AutoCache.Threshold'] = $autocachethreshold;", $cachingConfig);
+            }
+            if(isset($autocachemaxpages)) {
+                $cachingConfig = preg_replace('/\[\'AutoCache.MaxPages\'\]\s*=\s*(.*?);/', "['AutoCache.MaxPages'] = $autocachemaxpages;", $cachingConfig);
+            }
+            if(isset($includelist)) {
+                $cachingConfig = preg_replace('/\[\'AutoCache.Include\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Include'] = array($includelist);", $cachingConfig);
+            }
+            if(isset($excludelist)) {
+                $cachingConfig = preg_replace('/\[\'AutoCache.Exclude\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Exclude'] = array($excludelist);", $cachingConfig);
+            }
+
+            $fp = fopen ($cachingConfigFile, 'wb');
+            fwrite ($fp, $cachingConfig);
+            fclose ($fp);
+            
+            // set up the new output sub-directorys
+            $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+            $old_umask = umask(0);
+            if (!is_dir($varCacheDir.'/output/page')) {
+                mkdir($varCacheDir.'/output/page', 0777);
+            }
+            if (!is_dir($varCacheDir.'/output/block')) {
+                mkdir($varCacheDir.'/output/block', 0777);
+            }
+            umask($old_umask);
+            
+            // since we've moved around where output will be cached, flush everything out
+            if (!function_exists('xarOutputFlushCached')) {
+                include_once('includes/xarCache.php');
+                xarCache_init(array('cacheDir' => $varCacheDir . '/output'));
+            }
+            xarOutputFlushCached('');
+            break;
+        case '0.3.2':
             // Code to upgrade from the 0.3.1 version (base block level caching)
             break;
         case '0.4.0':

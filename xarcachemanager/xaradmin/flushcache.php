@@ -28,19 +28,7 @@ function xarcachemanager_admin_flushcache($args)
         $data = array();
 
         $data['message']    = false;
-        $data['cachekeys'] = array();
-
-        $handle = opendir($outputCacheDir);
-        while ($file = readdir($handle)) {
-            if ($file[0] != '.' && (strstr($file, '.php') !== false)) {
-                $ckey = substr($file, 0, (strrpos($file, '-')));
-                if (!empty($ckey)) {
-                    $data['cachekeys'][$ckey] = array('ckey' => $ckey);
-                }
-            }
-        }
-        closedir($handle);
-        sort($data['cachekeys']);
+        $data['cachekeys'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachekeys', $outputCacheDir);
 
         if (!$data['cachekeys']) {
             $data['empty']  = true;
@@ -49,7 +37,7 @@ function xarcachemanager_admin_flushcache($args)
         }
 
         $data['instructions'] = xarML("Please select a cache key to be flushed.");
-        $data['instructionhelp'] = xarML("All cached pages of output associated with this key will be deleted.");
+        $data['instructionhelp'] = xarML("All cached files of output associated with this key will be deleted.");
 
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
@@ -70,7 +58,7 @@ function xarcachemanager_admin_flushcache($args)
             $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
             xarOutputFlushCached($flushkey);
-            $data['notice'] = xarML("Cached " . $flushkey . " pages have been successfully flushed.");
+            $data['notice'] = xarML("Cached #(1) files have been successfully flushed.", $flushkey);
         }
         
         $data['returnlink'] = Array('url'   => xarModURL('xarcachemanager',
