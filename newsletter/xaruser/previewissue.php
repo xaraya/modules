@@ -64,6 +64,11 @@ function newsletter_user_previewissue($args)
     $data['publicationid'] = $issue['pid'];
     $data['issueid'] = $issueId; 
 
+    // Add field to track source of issue.  This will be set to 
+    // either 'web' or 'email'.  This can be used to optionally
+    // track hits of issue through AWStats, etc.
+    $issue['source'] = 'email';
+
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
 
@@ -94,7 +99,7 @@ function newsletter_user_previewissue($args)
             return;      
         }
     }
-        
+
     // Call blocklayout with the template to parse it and generate HTML
     $issueHTML = xarTplFile($sourceFileName,$templateVarArray);
 
