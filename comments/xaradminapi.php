@@ -337,13 +337,13 @@ function comments_adminapi_delete_object_nodes( $args ) {
     extract($args);
 
     if (empty($objectid)) {
-        $msg = xarML('Missing or Invalid parameter \'objectidj\'!!');
+        $msg = xarML('Missing or Invalid parameter \'objectid\'!!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (empty($modid)) {
-        $msg = xarML('Missing or Invalid parameter \'modidj\'!!');
+        $msg = xarML('Missing or Invalid parameter \'modid\'!!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -377,7 +377,7 @@ function comments_adminapi_delete_module_nodes( $args ) {
     extract($args);
 
     if (!isset($modid) || empty($modid)) {
-        $msg = xarML('Missing or Invalid parameter \'modidj\'!!');
+        $msg = xarML('Missing or Invalid parameter \'modid\'!!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -431,7 +431,7 @@ function comments_adminapi_count_comments( $args ) {
     $where_status   = '';
 
     if (empty($type) || !eregi('^(all|module|object)$',$type)) {
-        $msg = xarML('Invalid Parameter \'type\' to function count_comments(). \'type\' must be of: all, module, or object.');
+        $msg = xarML('Invalid Parameter \'type\' to function count_comments(). \'type\' must be: all, module, or object.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } else {
@@ -471,7 +471,7 @@ function comments_adminapi_count_comments( $args ) {
     }
 
     if (empty($status) || !eregi('^(all|inactive|active)$',$status)) {
-        $msg = xarML('Invalid Parameter \'status\' to function count_module_comments(). \'status\' must be of: all, active, or inactive.');
+        $msg = xarML('Invalid Parameter \'status\' to function count_module_comments(). \'status\' must be: all, active, or inactive.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } else {

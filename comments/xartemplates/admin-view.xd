@@ -10,7 +10,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Comments is Xaraya Utility Module.</xar:mlstring></em>
+            <em><xar:mlstring>Comments is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Allows the use of consistant comments across any module that calls display hooks.</xar:mlstring></li>
