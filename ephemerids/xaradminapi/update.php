@@ -34,7 +34,7 @@ function ephemerids_adminapi_update($args)
                   xar_did       = ?,
                   xar_content   = ?,
                   xar_elanguage = ?
-              WHERE xar_eid = $eid";
+              WHERE xar_eid = ?";
     $bindvars = array($yid, $mid, $did, $content, $elanguage, $eid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
