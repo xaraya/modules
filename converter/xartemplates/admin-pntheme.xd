@@ -5,10 +5,10 @@
     <input type="hidden" name="confirm" id="confirm" value="1" />
     <input type="hidden" name="confirmation" id="confirmation" value="1" />
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<p><label for="theme"><xar:mlstring>Theme Name</xar:mlstring></label>:&nbsp;&nbsp;<input type="text" name="theme" id="theme" value="" size="32" maxlength="100" /></p>
-		<p><label for="id"><xar:mlstring><a href="http://www.xaraya.com/index.php?module=release&func=addid">Theme ID</a></xar:mlstring></label>:&nbsp;&nbsp;<input type="text" name="id" id="id" value="" size="32" maxlength="100" /></p>
-		<p><label for="author"><xar:mlstring>Author</xar:mlstring></label>:&nbsp;&nbsp;<input type="text" name="author" id="author" value="" size="40" maxlength="200" /></p>
-	<input type="submit" value="Create"  />
+        <p><label for="theme"><xar:mlstring>Theme Name</xar:mlstring></label>:&nbsp;&nbsp;<input type="text" name="theme" id="theme" value="" size="32" maxlength="100" /></p>
+        <p><label for="id"><xar:mlstring><a href="http://www.xaraya.com/index.php?module=release&func=addid">Theme ID</a></xar:mlstring></label>:&nbsp;&nbsp;<input type="text" name="id" id="id" value="" size="32" maxlength="100" /></p>
+        <p><label for="author"><xar:mlstring>Author</xar:mlstring></label>:&nbsp;&nbsp;<input type="text" name="author" id="author" value="" size="40" maxlength="200" /></p>
+    <input type="submit" value="Create"  />
 </form>
 </div>
 </div>
