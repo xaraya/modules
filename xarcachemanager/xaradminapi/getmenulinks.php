@@ -14,6 +14,11 @@ function xarcachemanager_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminXarCache')) {
         $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
                                                   'admin',
+                                                  'queries'),
+                             'title' => xarML('Configure the caching options for queries'),
+                             'label' => xarML('Query Caching'));
+        $menulinks[] = Array('url'   => xarModURL('xarcachemanager',
+                                                  'admin',
                                                   'flushcache'),
                              'title' => xarML('Flush the output cache of xarCache'),
                              'label' => xarML('Flush Cache'));
