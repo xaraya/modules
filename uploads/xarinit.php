@@ -156,8 +156,6 @@ function uploads_init()
  */
 function uploads_upgrade($oldversion)
 {
-    echo "<br />OLDVERSION: $oldversion";
-    
     // Upgrade dependent on old version number
     switch($oldversion) {
         case .01:
