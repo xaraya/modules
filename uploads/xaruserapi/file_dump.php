@@ -39,8 +39,7 @@ function uploads_userapi_file_dump( $args )
     }
 
     if (!is_readable($fileSrc) || !is_writable($fileSrc)) {
-        $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards.
-                      Please ensure that this application has sufficient access to do so.', $fileSrc);
+        $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $fileSrc);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
         return FALSE;
     }
@@ -90,8 +89,7 @@ function uploads_userapi_file_dump( $args )
                 }
             } while (TRUE);
        } else {
-            $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards.
-                        Please ensure that this application has sufficient access to do so.', $fileSrc);
+            $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $fileSrc);
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
             return FALSE;
        }
