@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.7 2003/07/18 19:41:17 garrett Exp $
+ * File: $Id: handleexception.php,v 1.9 2003/07/21 21:13:03 garrett Exp $
  *
  * AddressBook utilapi handleException
  *
@@ -96,8 +96,9 @@ function AddressBook_utilapi_handleException ($args) {
 						$message  = '';
 						$message .= "You are receiving this email because your AddressBook ";
 						$message .= "module is set to email error messages to your Site Admin account. ";
-						$message .= "You can stop this behaviour by editing the Admin Messages ";
-						$message .= "settings under Admin->AddressBook->ModifyConfig->AdminMessages.<br /><br />";
+						$message .= "You can stop this behavior by editing the Admin Messages ";
+						$message .= "settings under Admin->AddressBook->ModifyConfig->AdminMessages.<br />";
+						$message .= "Check <a href=\"http://xaraya.blacktower.com\">http://xaraya.blacktower.com</a> for AddressBook updates<br /><br />";
 	                	$message .= "On ".strftime("%A, %D, at %H:%M", time())."<br />";
 	                	$message .= "AddressBook ".$abModInfo['version']." Build "._AB_BUILD_VER."<br /><br />";
 	                	$message .= "The following error(s) occurred.<br /><br />";
@@ -105,12 +106,11 @@ function AddressBook_utilapi_handleException ($args) {
 	                    $message .=
 
 						$headers  = '';	
-	                    $headers .= "From: ".$from."\n";
-	                    $headers .= "Sender: ".$from."\n";
-	                    $headers .= "MIME-Version: 1.0\n";
-	                    $headers .= "Content-type: text/html; charset=iso-8859-1\n";
+	                    $headers .= "From: ".$from."\r\n";
+	                    $headers .= "Sender: ".$from."\r\n";
+	                    $headers .= "MIME-Version: 1.0\r\n";
+	                    $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 	
-//	                    mail ($sendTo,$subject,$message,$headers,"-f".$from);
 	                    mail ($sendTo,$subject,$message,$headers);
 	                }	
 
