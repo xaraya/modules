@@ -3,6 +3,7 @@ function netquery_user_main()
 {
     $data = xarModAPIFunc('netquery', 'user', 'mainapi');
     $clrlink = $data['clrlink'];
+    $data['authid'] = xarSecGenAuthKey();        
     if ($data['querytype'] == 'none')
     {
         return $data;
