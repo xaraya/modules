@@ -29,7 +29,6 @@ function keywords_adminapi_getallkey($args)
     }
 
     if (!xarSecurityCheck('AdminKeywords')) return;
-    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords_restr'];
@@ -37,10 +36,10 @@ function keywords_adminapi_getallkey($args)
     $query = "SELECT xar_id,
                      xar_keyword
               FROM $keywordstable
-              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid) . "
+              WHERE xar_moduleid = ?
               OR xar_moduleid = '0'
               ORDER BY xar_keyword ASC";
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query,array($moduleid));
     if (!$result) return;
 
     $keywords = array();

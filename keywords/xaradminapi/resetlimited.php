@@ -14,20 +14,12 @@
 function keywords_adminapi_resetlimited($args)
 {
    if (!xarSecurityCheck('AdminKeywords')) return;
-    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    
     $keywordstable = $xartable['keywords_restr'];
-
     $query = "DELETE FROM $keywordstable";
-
     $result =& $dbconn->Execute($query);
-    
-    if (!$result) {
-    return ;
+    if (!$result) return;
+    return true;
 }
-return true;
-}
-
 ?>

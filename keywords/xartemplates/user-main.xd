@@ -1,42 +1,13 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Module</xar:mlstring></span></div>
 <xar:if condition="empty($status)">
-    <xar:if condition="xarTplAddStyleLink('keywords', 'tabs')"></xar:if>
-    <div id="tabheader">
-    <ul>
-    <xar:if condition="$tab eq 0"> 
-    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#"><xar:mlstring>all</xar:mlstring></a></li>
-    <xar:else/>
-        <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#"><xar:mlstring>all</xar:mlstring></a></li>
-    </xar:if> 
-    <xar:if condition="$tab eq 1">
-    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#"><xar:mlstring>a - f</xar:mlstring></a></li>
-    <xar:else/> 
-    <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#"><xar:mlstring>a - f</xar:mlstring></a></li>
-    </xar:if>   
-    <xar:if condition="$tab eq 2">      
-    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#"><xar:mlstring>g - l</xar:mlstring></a></li>
-    <xar:else/>
-    <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#"><xar:mlstring>g - l</xar:mlstring></a></li>  
-    </xar:if>
-    <xar:if condition="$tab eq 3">
-    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#"><xar:mlstring>m - r</xar:mlstring></a></li>
-    <xar:else/>
-    <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#"><xar:mlstring>m - r</xar:mlstring></a></li>
-    </xar:if>
-    <xar:if condition="$tab eq 4">  
-    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#"><xar:mlstring>s - z</xar:mlstring></a></li>
-    <xar:else/>
-        <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#"><xar:mlstring>s - z</xar:mlstring></a></li>
-    </xar:if>
-    <xar:if condition="$tab eq 5">
-    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#"><xar:mlstring>other</xar:mlstring></a></li> 
-    <xar:else/>
-        <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#"><xar:mlstring>other</xar:mlstring></a></li>
-    </xar:if>
-    </ul>
-    </div>
-    <div style="clear: both; padding-top: 10px;"> 
+
+<xar:comment>
+	Nav Tabs moved to the includes folder
+</xar:comment>
+<xar:template file="navtabs" type="module" />
+	
+	<div style="clear: both; padding-top: 10px;"> 
     <p></p>
     <xar:if condition="empty($items)">
     <p><h4><xar:mlstring>No keywords found !</xar:mlstring></h4></p>

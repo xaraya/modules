@@ -1,0 +1,116 @@
+<xar:if condition="xarTplAddStyleLink('articles', 'navtabs')">
+    <div class="tabnav">
+        <div class="navhelp help" title="#xarML('Click on a tab to filter the keywords to be selected')#">
+            <xar:mlstring>
+                Filter
+            </xar:mlstring>
+            : 
+        </div>
+        <div class="tabnav-hairline"><!-- &nbsp; --></div>
+        <ul class="navlist">
+		<xar:if condition="$tab eq 0"> 
+			<li class="active">
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
+					<xar:mlstring>
+						All
+					</xar:mlstring>
+				</a>
+			</li>
+		<xar:else/>
+			<li>
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
+					<xar:mlstring>
+						All
+					</xar:mlstring>
+				</a>
+			</li>
+		</xar:if> 
+		<xar:if condition="$tab eq 1">
+			<li class="active">
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
+					<xar:mlstring>
+						a - f
+					</xar:mlstring>
+				</a>
+			</li>
+		<xar:else/> 
+			<li>
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#">
+					<xar:mlstring>
+						a - f
+					</xar:mlstring>
+				</a>
+			</li>
+		</xar:if>   
+		<xar:if condition="$tab eq 2">      
+			<li class="active">
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
+					<xar:mlstring>
+						g - l
+					</xar:mlstring>
+				</a>
+			</li>
+		<xar:else/>
+			<li>
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#">
+					<xar:mlstring>
+						g - l
+					</xar:mlstring>
+				</a>
+			</li>  
+		</xar:if>
+		<xar:if condition="$tab eq 3">
+			<li class="active">
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
+					<xar:mlstring>
+						m - r
+					</xar:mlstring>
+				</a>
+			</li>
+		<xar:else/>
+			<li>
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#">
+					<xar:mlstring>
+						m - r
+					</xar:mlstring>
+				</a>
+			</li>
+		</xar:if>
+		<xar:if condition="$tab eq 4">  
+			<li class="active">
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
+					<xar:mlstring>
+						s - z
+					</xar:mlstring>
+				</a>
+			</li>
+		<xar:else/>
+			<li>
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#">
+					<xar:mlstring>
+						s - z
+					</xar:mlstring>
+				</a>
+			</li>
+		</xar:if>
+		<xar:if condition="$tab eq 5">
+			<li class="active">
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
+					<xar:mlstring>
+						other
+					</xar:mlstring>
+				</a>
+			</li> 
+		<xar:else/>
+			<li>
+				<a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#">
+					<xar:mlstring>
+						other
+					</xar:mlstring>
+				</a>
+			</li>
+		</xar:if>
+        </ul>
+        <div class="tabnav-hairline"><!-- &nbsp; --></div>
+    </div>
+</xar:if>
