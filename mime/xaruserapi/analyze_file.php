@@ -38,19 +38,20 @@ function mime_userapi_analyze_file( $args )
     // return it as octet-stream
     $fileSize = fileSize($fileName);    
     if (!$fileSize) { 
-		$parts = explode('.', $fileName);
-		if (is_array($parts) && count($parts)) {
-			$extension =& basename(end($parts));
-			$typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
-			if (is_array($typeInfo) && count($typeInfo)) {
-				$mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
-				return $mimeType;
-			} 
-		} else {
-        	return 'application/octet-stream';
-		}
+        $parts = explode('.', $fileName);
+        if (is_array($parts) && count($parts)) {
+            $extension =& basename(end($parts));
+            $typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+            if (is_array($typeInfo) && count($typeInfo)) {
+                $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+                return $mimeType;
+            } else {
+                return 'application/octet-stream';
+            } 
+        } else {
+            return 'application/octet-stream';
+        }
     }
-    
     // Otherwise, actually test the contents of the file
     if (!($fp = @fopen($fileName, 'rb'))) {
         $msg = xarML('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
@@ -102,15 +103,15 @@ function mime_userapi_analyze_file( $args )
             }
         } 
 
-		$parts = explode('.', $fileName);
-		if (is_array($parts) && count($parts)) {
-			$extension =& basename(end($parts));
-			$typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
-			if (is_array($typeInfo) && count($typeInfo)) {
-				$mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
-				return $mimeType;
-			} 
-		}
+        $parts = explode('.', $fileName);
+        if (is_array($parts) && count($parts)) {
+            $extension =& basename(end($parts));
+            $typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+            if (is_array($typeInfo) && count($typeInfo)) {
+                $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+                return $mimeType;
+            } 
+        }
 
         if (!rewind($fp)) {
             $msg = xarML('Unable to rewind to beginning of file: [#(1)]', $fileName);
