@@ -114,10 +114,17 @@ function articles_adminapi_create($args)
         $nextId = $aid;
     }
 
+// CHECKME: why are we doing this here, instead of in xaradmin/create.php ?
     // Transform before we insert.
-    $summary =     xarModCallHooks('item', 'transform-input', $aid, $summary, 'articles');
-    $body    =     xarModCallHooks('item', 'transform-input', $aid, $body, 'articles');
-    $notes   =     xarModCallHooks('item', 'transform-input', $aid, $notes, 'articles');
+// TODO: switch to new-style hook call
+    list($summary,
+         $body,
+         $notes) = xarModCallHooks('item', 'transform-input', $nextId,
+                                   array($summary,
+                                         $body,
+                                         $notes),
+                                   // Specify module and itemtype
+                                   'articles', $ptid);
 
     // Add item
     $query = "INSERT INTO $articlestable (
@@ -156,14 +163,13 @@ function articles_adminapi_create($args)
 
     // Call create hooks for categories, hitcount etc.
     $args['aid'] = $aid;
+// Specify the module, itemtype and itemid so that the right hooks are called
     $args['module'] = 'articles';
-    $args['itemid'] = $aid;
     $args['itemtype'] = $ptid;
+    $args['itemid'] = $aid;
 // TODO: get rid of this
     $args['cids'] = $cids;
-    // FIXME: the extra 'articles' parameter is needed for xmlrpc at least, otherwise 
-    // it will be interpreted as 'base' and the wrong hooks will be called
-    xarModCallHooks('item', 'create', $aid, $args,'articles');
+    xarModCallHooks('item', 'create', $aid, $args);
 
     return $aid;
 }
