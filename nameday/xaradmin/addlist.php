@@ -22,7 +22,7 @@ function nameday_admin_addlist()
 
         $output->SetInputMode(_PNH_VERBATIMINPUT);
         $output->Title(xarML('Load names list from file'));
-	$output->SetInputMode(_PNH_PARSEINPUT);
+    $output->SetInputMode(_PNH_PARSEINPUT);
         $output->ConfirmAction(xarML('Load'),
                                pnModURL('nameday','admin','addlist'),
                                xarML('Cancel'),
@@ -37,15 +37,15 @@ function nameday_admin_addlist()
     }
 
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(xarML('Unable to load API.'));
-	return $output->GetOutput();
+    $output->Text(xarML('Unable to load API.'));
+    return $output->GetOutput();
     }
 
     if(pnModAPIFunc('nameday',
-		    'admin',
+            'admin',
                     'addlist',
-		    array())) {
-	pnSessionSetVar('statusmsg', xarML('Nameday Added Successfully.'));
+            array())) {
+    pnSessionSetVar('statusmsg', xarML('Nameday Added Successfully.'));
     }
     pnRedirect(pnModURL('nameday', 'admin', 'main'));
 

@@ -41,7 +41,7 @@ function nameday_adminapi_add($args)
     $ndlanguage = pnVarPrepForStore($ndlanguage);
     
     $query = "INSERT INTO $namedaytable ($namedaycolumn[ndid], $namedaycolumn[did], $namedaycolumn[mid], $namedaycolumn[content], $namedaycolumn[ndlanguage])
-				     VALUES ($nextId, '$did', '$mid', '$content', '$ndlanguage')";
+                     VALUES ($nextId, '$did', '$mid', '$content', '$ndlanguage')";
 
     $result = $dbconn->Execute($query);
 

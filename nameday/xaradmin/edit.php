@@ -25,8 +25,8 @@ function nameday_admin_edit()
         return true;
     }
     if(!pnModAPILoad('nameday', 'admin', 'edit')) {
-	$output->Text(xarML('Unable to load API.'));
-	return $output->GetOutput();
+    $output->Text(xarML('Unable to load API.'));
+    return $output->GetOutput();
     }
     $namedaylist = pnModAPIFunc('nameday',
                               'admin',
@@ -35,8 +35,8 @@ function nameday_admin_edit()
                               'content' => $content, 'ndlanguage' => $ndlanguage));
 
     if($namedaylist == false) {
-	$output->Text(xarML('No nameday Found.'));
-	return $output->GetOutput();
+    $output->Text(xarML('No nameday Found.'));
+    return $output->GetOutput();
     }
     $authid = pnSecGenAuthKey();
 
@@ -44,10 +44,10 @@ function nameday_admin_edit()
 
     foreach($namedaylist as $nameday1) {
 
-	$output->FormStart(pnModURL('nameday', 'admin', 'update'));
-    	$output->FormHidden('authid', $authid);
-	$output->FormHidden('ndid', $ndid);
-    	$output->LineBreak();
+    $output->FormStart(pnModURL('nameday', 'admin', 'update'));
+        $output->FormHidden('authid', $authid);
+    $output->FormHidden('ndid', $ndid);
+        $output->LineBreak();
 
         $output->SetInputMode(_PNH_VERBATIMINPUT);
 
@@ -59,7 +59,7 @@ function nameday_admin_edit()
         for ($i=1;$i<=12;$i++) $monlist[] = array('id' => $i,'name' => $i);
         $output->FormSelectMultiple('mid', $monlist, 0, 1, pnVarPrepForDisplay($mid));
 
-    	$output->LineBreak(2);
+        $output->LineBreak(2);
         $output->BoldText(''.xarML('Language').': ');
 
         $langlist = xarLocaleGetList(array('lang'=>'en'));
@@ -85,11 +85,11 @@ function nameday_admin_edit()
         $output->LineBreak(2);
         
         $output->BoldText(xarML('Names List'));
-    	$output->LineBreak();
-    	$output->FormTextArea('content',$nameday1['content'], 10, 60);
-    	$output->LineBreak();
-    	$output->FormSubmit(xarML('Save Modification?'));
-    	$output->FormEnd();
+        $output->LineBreak();
+        $output->FormTextArea('content',$nameday1['content'], 10, 60);
+        $output->LineBreak();
+        $output->FormSubmit(xarML('Save Modification?'));
+        $output->FormEnd();
         $output->SetInputMode(_PNH_PARSEINPUT);
     }
     $output->TableEnd();

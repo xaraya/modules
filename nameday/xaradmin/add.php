@@ -18,23 +18,23 @@ function nameday_admin_add()
     pnVarCleanFromInput('did', 'mid', 'content', 'ndlanguage');
 
     if(!pnSecConfirmAuthKey()) {
-	pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
-	pnRedirect(pnModURL('nameday', 'admin', 'main'));
-	return true;
+    pnSessionSetVar('errormsg', xarML('No authorisation to carry out operation'));
+    pnRedirect(pnModURL('nameday', 'admin', 'main'));
+    return true;
     }
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(xarML('Unable to load API.'));
-	return $output->GetOutput();
+    $output->Text(xarML('Unable to load API.'));
+    return $output->GetOutput();
     }
 
     if(pnModAPIFunc('nameday',
-		    'admin',
+            'admin',
                     'add',
-		    array('did' => $did, 
+            array('did' => $did, 
                           'mid' => $mid, 
                           'content' => $content, 
                           'ndlanguage' => $ndlanguage))) {
-	pnSessionSetVar('statusmsg', xarML('Nameday Added Successfully.'));
+    pnSessionSetVar('statusmsg', xarML('Nameday Added Successfully.'));
     }
     pnRedirect(pnModURL('nameday', 'admin', 'main'));
 

@@ -19,7 +19,7 @@ function nameday_admin_display()
     $authid = pnSecGenAuthKey();
 
     if(!(pnSecAuthAction(0, 'nameday::', '::', ACCESS_READ))) {
-	$output->Text(xarML('Not authorised to access nameday'));
+    $output->Text(xarML('Not authorised to access nameday'));
         return $output->GetOutput();
     }
     $output->Text(xarML('Current nameday'));
@@ -30,21 +30,21 @@ function nameday_admin_display()
     $output->TableStart('', $columnHeaders, 1);
 
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(xarML('Unable to load API.'));
-	return $output->GetOutput();
+    $output->Text(xarML('Unable to load API.'));
+    return $output->GetOutput();
     }
     $namedaylist = pnModAPIFunc('nameday', 'admin', 'display');
 
     if($namedaylist == false) {
-	$output->Text(xarML('No nameday Found.'));
+    $output->Text(xarML('No nameday Found.'));
         // if no nameday found, end the table or the footer gets pulled up the page.
-	$output->TableEnd();
-	return $output->GetOutput();
+    $output->TableEnd();
+    return $output->GetOutput();
     }
 
     foreach($namedaylist as $nameday1) {
-	$actions = array();
-	$output->SetOutputMode(_PNH_RETURNOUTPUT);
+    $actions = array();
+    $output->SetOutputMode(_PNH_RETURNOUTPUT);
 
         if(pnSecAuthAction(0, 'nameday::', "$nameday1[content]::$nameday1[ndid]", ACCESS_EDIT)) {
             $actions[] = $output->URL(pnModURL('nameday', 'admin', 'edit', 

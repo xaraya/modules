@@ -15,7 +15,7 @@
 function nameday_admin_main()
 {
     if(!(pnSecAuthAction(0, 'nameday::', '::', ACCESS_EDIT))) {
-	$output->Text(xarML('Not authorised to edit nameday'));
+    $output->Text(xarML('Not authorised to edit nameday'));
         return $output->GetOutput();
     }
 
@@ -24,7 +24,7 @@ function nameday_admin_main()
     $authid = pnSecGenAuthKey();
 
     if(!(pnSecAuthAction(0, 'nameday::', '::', ACCESS_EDIT))) {
-	$output->Text(xarML('Not authorised to edit nameday'));
+    $output->Text(xarML('Not authorised to edit nameday'));
         return $output->GetOutput();
     }
 

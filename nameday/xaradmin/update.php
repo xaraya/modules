@@ -26,7 +26,7 @@ function nameday_admin_update()
 
         $output->SetInputMode(_PNH_VERBATIMINPUT);
         $output->Title('Update nameday');
-	$output->SetInputMode(_PNH_PARSEINPUT);
+    $output->SetInputMode(_PNH_PARSEINPUT);
         $output->ConfirmAction(
             xarML('Save'), pnModURL('nameday','admin','update'),
             xarML('Cancel'), pnModURL('nameday','admin','display'),
@@ -40,8 +40,8 @@ function nameday_admin_update()
         return true;
     }
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(xarML('Unable to load API.'));
-	return $output->GetOutput();
+    $output->Text(xarML('Unable to load API.'));
+    return $output->GetOutput();
     }
     if (pnModAPIFunc('nameday',
                      'admin',

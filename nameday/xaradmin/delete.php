@@ -23,7 +23,7 @@ function nameday_admin_delete()
 
         $output->SetInputMode(_PNH_VERBATIMINPUT);
         $output->Title(xarML('Delete This Nameday?'));
-	$output->SetInputMode(_PNH_PARSEINPUT);
+    $output->SetInputMode(_PNH_PARSEINPUT);
         $output->ConfirmAction(xarML('Delete This Nameday?'),
                                pnModURL('nameday','admin','delete'),
                                xarML('Cancel'),
@@ -39,8 +39,8 @@ function nameday_admin_delete()
         return true;
     }
     if(!pnModAPILoad('nameday', 'admin')) {
-	$output->Text(xarML('Unable to load API.'));
-	return $output->GetOutput();
+    $output->Text(xarML('Unable to load API.'));
+    return $output->GetOutput();
     }
     if (pnModAPIFunc('nameday',
                      'admin',

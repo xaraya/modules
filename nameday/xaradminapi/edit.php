@@ -39,19 +39,19 @@ function nameday_adminapi_edit($args)
     $result = $dbconn->Execute($query);
 
     if($result->EOF) {
-	return false;
+    return false;
     }
 
     $resarray = array();
 
     while(list($ndid, $did, $mid, $content, $ndlanguage) = $result->fields) {
-	$result->MoveNext();
+    $result->MoveNext();
 
-	$resarray[] = array('ndid' => $ndid,
-			    'did' => $did,
-			    'mid' => $mid,
-			    'content' => $content,
-			    'ndlanguage' => $ndlanguage);
+    $resarray[] = array('ndid' => $ndid,
+                'did' => $did,
+                'mid' => $mid,
+                'content' => $content,
+                'ndlanguage' => $ndlanguage);
     }
     $result->Close();
 
