@@ -9,6 +9,9 @@ function pubsub_admin_updateconfig()
     xarVarFetch('settings','isset',$settings,'', XARVAR_DONT_SET);
     xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
     xarVarFetch('numitems','isset',$numitems,20, XARVAR_DONT_SET);
+    xarVarFetch('subjecttitle','isset',$subjecttitle,'', XARVAR_DONT_SET);
+    xarVarFetch('includechildren','isset',$includechildren,'', XARVAR_DONT_SET);
+
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
@@ -30,6 +33,17 @@ function pubsub_admin_updateconfig()
     } else {
         xarModSetVar('pubsub','itemsperpage',$numitems);
     }
+    if (empty($subjecttitle)) {
+        xarModSetVar('pubsub','subjecttitle',0);
+    } else {
+        xarModSetVar('pubsub','subjecttitle',1);
+    }
+    if (empty($includechildren)) {
+        xarModSetVar('pubsub','includechildren',0);
+    } else {
+        xarModSetVar('pubsub','includechildren',1);
+    }
+
 
     if (xarModIsAvailable('scheduler')) {
         if (!xarVarFetch('interval', 'str:1', $interval, '', XARVAR_NOT_REQUIRED)) return;

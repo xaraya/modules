@@ -111,6 +111,10 @@ function pubsub_admin_modifyconfig()
     if (empty($data['numitems'])) {
         $data['numitems'] = 20;
     }
+    $data['subjecttitle'] = xarModGetVar('pubsub','subjecttitle');
+    $data['includechildren'] = xarModGetVar('pubsub','includechildren');
+	
+	
 
     if (xarModIsAvailable('scheduler')) {
         $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');

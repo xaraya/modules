@@ -65,19 +65,68 @@ function pubsub_adminapi_processevent($args)
     $pubsubregtable     = $xartable['pubsub_reg'];
     $pubsubprocesstable = $xartable['pubsub_process'];
 
-    $query = "SELECT xar_pubsubid
-                FROM $pubsubeventstable, $pubsubregtable
-               WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                 AND $pubsubeventstable.xar_modid = " . xarVarPrepForStore($modid) . "
-                 AND $pubsubeventstable.xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                 AND $pubsubeventstable.xar_cid = " . xarVarPrepForStore($cid);
+	// Create an array to list the subscriptions that need to be processed.
+	$markSubscriptions = array();
 
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+	$includechildren = xarModGetVar('pubsub','includechildren');
+	if ( $includechildren == 1 )
+	{
+			
+		$query = "SELECT xar_pubsubid, xar_cid
+					FROM $pubsubeventstable, $pubsubregtable
+				   WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
+					 AND $pubsubeventstable.xar_modid = " . xarVarPrepForStore($modid) . "
+					 AND $pubsubeventstable.xar_itemtype = " . xarVarPrepForStore($itemtype);
+//					  . "
+//					 AND $pubsubeventstable. = " . xarVarPrepForStore($cid);
+	
+		$result =& $dbconn->Execute($query);
+		if (!$result) return;
 
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($pubsubid) = $result->fields;
+		for (; !$result->EOF; $result->MoveNext()) 
+		{
+			list($pubsubid, $xar_cid) = $result->fields;
+			
+			if( $xar_cid == $cid )
+			{
+				$markSubscriptions[] = $pubsubid;
+			} else {
+				
+				$ancestors = xarModAPIFunc('categories','user','getancestors'
+				                           , array('cid'=>$cid,'order'=>'self') );
+										
+				$ancestors = array_keys($ancestors);
+				
+				if( in_array($cid, $ancestors) )
+				{
+					$markSubscriptions[] = $pubsubid;
+				}
+			}
+		}
+		
 
+	} else {
+		$query = "SELECT xar_pubsubid
+					FROM $pubsubeventstable, $pubsubregtable
+				   WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
+					 AND $pubsubeventstable.xar_modid = " . xarVarPrepForStore($modid) . "
+					 AND $pubsubeventstable.xar_itemtype = " . xarVarPrepForStore($itemtype) . "
+					 AND $pubsubeventstable.xar_cid = " . xarVarPrepForStore($cid);
+	
+		$result =& $dbconn->Execute($query);
+		if (!$result) return;
+	
+
+		for (; !$result->EOF; $result->MoveNext()) 
+		{
+			list($pubsubid) = $result->fields;
+			
+			$markSubscriptions[] = $pubsubid;
+		}
+	}
+	
+	foreach( $markSubscriptions as $pubsubid )
+	{
         // Get next ID in table
         $nextId = $dbconn->GenId($pubsubprocesstable);
 

@@ -15,6 +15,20 @@
     <label for="numitems"><xar:mlstring>Items per Page :</xar:mlstring></label>
     <input type="text" name="numitems" id="numitems" value="#$numitems#" size="4" />
 <br/><br/>
+    <label for="subjecttitle"><xar:mlstring>Use Content's Title for EMail Subject:</xar:mlstring></label>
+    <xar:if condition="!empty($subjecttitle)">
+    <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" checked="checked" />
+    <xar:else/>
+    <input type="checkbox" name="subjecttitle" id="subjecttitle" value="1" />
+    </xar:if>
+<br/><br/>
+    <label for="includechildren"><xar:mlstring> Include Child Categories in Subscriptions:</xar:mlstring></label>
+    <xar:if condition="!empty($includechildren)">
+    <input type="checkbox" name="includechildren" id="includechildren" value="1" checked="checked" />
+    <xar:else/>
+    <input type="checkbox" name="includechildren" id="includechildren" value="1" />
+    </xar:if>
+<br/><br/>
 
 <h3><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h3>
     <p><xar:mlstring><b>Description:</b> first enable pubsub hooks for a particular module+itemtype,

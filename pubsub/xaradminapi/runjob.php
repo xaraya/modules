@@ -168,7 +168,13 @@ function pubsub_adminapi_runjob($args)
             $message .= "\n" . xarML('Link: #(1)',$tplData['link']);
          }
       // TODO: make configurable too ?
-         $subject = xarML('Publish / Subscribe Notification');
+	  
+         if(  xarModGetVar('pubsub','sendcontent') == 1 )
+		 {
+		     $subject = $tplData['title'];
+		 } else {
+		     $subject = xarML('Publish / Subscribe Notification');
+         }
          $fmail = xarConfigGetVar('adminmail');
          $fname = xarConfigGetVar('adminmail');
 
