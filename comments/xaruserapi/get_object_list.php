@@ -10,8 +10,10 @@
  * @param   integer     $itemtype   the item type that these nodes belong to
  * @returns array       A list of objectid's
  */
-function comments_userapi_get_object_list( $modid, $itemtype = null ) 
+function comments_userapi_get_object_list( $args ) 
 {
+    extract($args);
+
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                 'modid', 'userapi', 'get_object_list', 'comments');
