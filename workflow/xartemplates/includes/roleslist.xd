@@ -60,6 +60,7 @@
             <tr><td colspan="3"><xar:mlstring>No roles defined yet</xar:mlstring></td>
           </tr>    
         </xar:if>
-      </table>
-    </form>    
+        </table>
+      </form>
+    </div>
   </div>
