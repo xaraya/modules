@@ -84,8 +84,10 @@
                                     <div style="margin-left: #$type['indent']#px;">
                                         <select name="dynimages[#$typeId#][#$Id#]" onChange="javascript:navigator_image_changer('#$jsURL#', #$typeId#, '#$Id#');">
                                             <option value="0">Default</option>
-                                            <!--- The Default has a type == 0 so, if we are on that one,
-                                                  we use a different image list --->
+                                            <xar:comment>
+                                                  The Default has a type == 0 so, if we are on that one,
+                                                  we use a different image list
+                                            </xar:comment>
                                             <xar:if condition="$typeId eq 0">
                                                 <xar:foreach in="$fileListAll" value="$file">
                                                     <xar:if condition="isset($imageId) AND $imageId eq $file['fileId']">

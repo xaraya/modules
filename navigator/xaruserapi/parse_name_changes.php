@@ -1,6 +1,7 @@
 <?php
 
-function navigator_userapi_parse_name_changes( $args ) {
+function navigator_userapi_parse_name_changes( $args ) 
+{
 
     extract($args);
 

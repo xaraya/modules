@@ -13,7 +13,7 @@ function navigator_userapi_handle_image_tag( $args )
 
     extract($args);
 
-    if (!isset($id))) {
+    if (!isset($id)) {
         $msg = xarML('Required attribute \'#(1)\' for tag <xar:navigator-image> is missing. See tag documentation.', 'id');
         xarExceptionSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
         return '';

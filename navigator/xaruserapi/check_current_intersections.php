@@ -8,7 +8,8 @@
  * @copyright 2004 (c) The Charles and Helen Schwab Foundation
  */
 
-function navigator_userapi_check_current_intersections( $args ) {
+function navigator_userapi_check_current_intersections( $args ) 
+{
     extract($args);
 
     if (!isset($intersections) || !is_array($intersections) || !count($intersections)) {
@@ -51,3 +52,5 @@ function navigator_userapi_check_current_intersections( $args ) {
     }
     return FALSE;
 }
+
+?>

@@ -19,7 +19,8 @@
  * @returns array, or false on failure
  * @raise BAD_DATA
  */
-function navigator_userapi_get_current_cats( /* VOID */ ) {
+function navigator_userapi_get_current_cats( /* VOID */ ) 
+{
 
     // set up the list to be cached
     static $list = array();

@@ -1,9 +1,10 @@
 <?php
-function chsfnav_userapi_dynimages($args) {
+function chsfnav_userapi_dynimages($args) 
+{
     extract ($args);
     
-    if (!isset($side) || empty($side) || ($side != 'left' && $side != $side)) {
-        $msg = xarML('You must provide a side (left/right) for dynimages to display on!');
+    if (!isset($Id) || empty($Id) || ($Id != 'left' && $Id != $Id)) {
+        $msg = xarML('You must provide a Id (left/right) for dynimages to display on!');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
     }
@@ -18,7 +19,7 @@ function chsfnav_userapi_dynimages($args) {
             break;
         default:
         case 'tag':
-            $format = '<img src="%s" id="'.$side.'_img" alt="'.$side.'_img" />';
+            $format = '<img src="%s" id="'.$Id.'_img" alt="'.$Id.'_img" />';
             break;
     }
 
@@ -29,7 +30,8 @@ function chsfnav_userapi_dynimages($args) {
         $pid = 0;
         $typeId = 0;
     } else {
-        $pids = unserialize(xarModGetVar('chsfnav', 'category.default-parents'));
+        $pids = unserialize(xarModGetVar('chsfnav', 'categories.list.primary'));
+        xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$pids);
         if (count($cids) == 1) {
             $cids[1] = 0;
         }
@@ -60,12 +62,12 @@ function chsfnav_userapi_dynimages($args) {
         $siteDefaults = array();
     }
 
-    if (isset($images[$typeId][$side]) && !empty($images[$typeId][$side])) {
-        $fileId = $images[$typeId][$side]; 
-    } elseif (isset($images[0][$side]) && !empty($images[0][$side])) {
-        $fileId = $images[0][$side];
-    } elseif (isset($siteDefaults[0][$side]) && !empty($siteDefaults[0][$side])) {
-        $fileId = $siteDefaults[0][$side]; 
+    if (isset($images[$typeId][$Id]) && !empty($images[$typeId][$Id])) {
+        $fileId = $images[$typeId][$Id]; 
+    } elseif (isset($images[0][$Id]) && !empty($images[0][$Id])) {
+        $fileId = $images[0][$Id];
+    } elseif (isset($siteDefaults[0][$Id]) && !empty($siteDefaults[0][$Id])) {
+        $fileId = $siteDefaults[0][$Id]; 
     } else {
         $fileId = 0;
     }
