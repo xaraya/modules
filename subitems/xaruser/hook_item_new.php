@@ -8,7 +8,7 @@ function subitems_user_hook_item_new($args)
     if (!isset($extrainfo['module'])) {
         $extrainfo['module'] = xarModGetName();
     }
-    if (!isset($extrainfo['itemtype'])) {
+    if (empty($extrainfo['itemtype'])) {
         $extrainfo['itemtype'] = 0;
     }
 

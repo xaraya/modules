@@ -8,10 +8,10 @@ function subitems_user_hook_item_display($args)
     if (!isset($extrainfo['module'])) {
         $extrainfo['module'] = xarModGetName();
     }
-    if (!isset($extrainfo['itemtype'])) {
+    if (empty($extrainfo['itemtype'])) {
         $extrainfo['itemtype'] = 0;
     }
-    if (!isset($extrainfo['itemid'])) {
+    if (empty($extrainfo['itemid'])) {
         $extrainfo['itemid'] = $objectid;
     }
 
