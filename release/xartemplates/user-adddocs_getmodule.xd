@@ -1,11 +1,15 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Release Module</xar:mlstring>
+    </span>
+</div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
+    <h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
 
-<xar:mlstring>Enter your extension ID below, so the system can begin the release notification process.</xar:mlstring>
-<div align="center">
-    <br /><br />
+    <xar:mlstring>Enter your extension ID below, so the system can begin the release notification process.</xar:mlstring>
+    <div align="center">
+
     <form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="start" />
@@ -18,8 +22,10 @@
                     <input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
                 </td>
             </tr>
-        </table>            
-        <br /><br />
-        <input type="submit" value="Begin Release Notification"  tabindex="6" />
+        </table>
+        <div style="padding-top:10px;">
+            <input type="submit" value="Begin Release Notification"  tabindex="6" />
+        </div>
     </form>
+    </div>
 </div>

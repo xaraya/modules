@@ -1,4 +1,8 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Release Module</xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body" style="display:block;">
 <h2><xar:mlstring>Release Overview</xar:mlstring></h2>
 <xar:mlstring>The release module is Xaraya.com's tool of tracking module and theme information.  It does this in three distinct ways.</xar:mlstring>
@@ -7,3 +11,4 @@
 <li>Tracking Version History of Modules and Themes</li>
 <li>Providing Documentation for Modules and Themes</li>
 </ol>
+</div>
