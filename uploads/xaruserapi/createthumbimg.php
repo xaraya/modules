@@ -1,4 +1,18 @@
 <?php
+/* Create a thumbnail for an image
+   PARAMS:
+   		'file'       - Original File
+		'thumbwidth' - Width of thumbnail
+		'thumbheight'- Height of thumbnail
+		'newfile'    - Name of new Filer
+*/
+function uploads_userapi_createthumbimg($args)
+{
+	extract($args);
+	echo "Hello World";
+	createthumb( $file, $thumbwidth, $thumbheight, $newfile );
+}
+
 
 function ImageCreateFrom($file)
 {
@@ -28,6 +42,8 @@ function ImageCreateFrom($file)
     }
     return $im;
 }
+
+
 
 
 function createthumb($IMAGE_SOURCE,$THUMB_X,$THUMB_Y,$OUTPUT_FILE){
