@@ -5,15 +5,15 @@
 // Copyright (C) 2002 by the Xaraya Development Team.
 // http://www.xaraya.org
 // ----------------------------------------------------------------------
-// Original Author of file:
-// Purpose of file: Show Pinups of Coolpick.com
+// Original Author of file: Frank Besler <besfred@xaraya.com>
+// Purpose of file: Show Image feeds
 // ----------------------------------------------------------------------
 
 
 /**
  * the main user function
  */
-function pinup_user_main()
+function imagefeed_user_main()
 {
 
 	// basic data
@@ -27,6 +27,8 @@ function pinup_user_main()
 	// retriev the image location
     $match_flg = preg_match("°".$needle."([^\"]+)(\")°", $lines, $matches);
 
-    return array('piclocation' => $matches[1]);
+    return array('piclocation' => $matches[1],
+    			 'link' => 'http://coolpick.com/way/cool/syn/babe.html',
+    			 'title' => 'CoolPick.com');
 }
 ?>

@@ -5,26 +5,26 @@
 // Copyright (C) 2002 by the Xaraya Development Team.
 // http://www.xaraya.org
 // ----------------------------------------------------------------------
-// Original Author of file:
-// Purpose of file: Initialize Pinup Module
+// Original Author of file: Frank Besler <besfred@xaraya.com>
+// Purpose of file: Initialize Image Feed Module
 // ----------------------------------------------------------------------
 
 /**
- * initialise the pinup module
+ * initialise the image feed module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function pinup_init()
+function imagefeed_init()
 {
     return true;
 }
 
 /**
- * delete the pinup module
+ * delete the image feed module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function pinup_delete()
+function imagefeed_delete()
 {
     return true;
 }

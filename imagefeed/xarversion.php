@@ -1,9 +1,9 @@
 <?php
-// pinup module: infomation file
-$modversion['name']           = 'Pinup';
-$modversion['id']             = '6969';
-$modversion['version']        = '2.00';
-$modversion['description']    = 'CoolPick dot com - Daily Babe';
+// image feed module: infomation file
+$modversion['name']           = 'Image Feed';
+$modversion['id']             = '781';
+$modversion['version']        = '1.00';
+$modversion['description']    = 'Show an image feed';
 $modversion['credits']        = '';
 $modversion['help']           = '';
 $modversion['changelog']      = '';
