@@ -701,12 +701,12 @@ function workflow_delete()
     xarTplUnregisterTag('workflow-status');
     xarTplUnregisterTag('workflow-instances');
 
+    // Remove all process files
+    workflow_remove_processes();
+
     // Remove Masks and Instances
     xarRemoveMasks('workflow');
     xarRemoveInstances('workflow'); 
-
-    // Remove all process files
-    workflow_remove_processes();
 
     // Deletion successful
     return true;
