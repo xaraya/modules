@@ -110,7 +110,7 @@ function categories_adminapi_linkcat($args)
                     xar_itemtype,
                     xar_modid)
                   VALUES(?,?,?,?)";
-          $binvars = array($cid, $iid, $itemtype, $args['modid']);
+          $bindvars = array($cid, $iid, $itemtype, $args['modid']);
           $result =& $dbconn->Execute($sql,$bindvars);
           if (!$result) return;
        }
