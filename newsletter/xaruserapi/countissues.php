@@ -19,6 +19,8 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['publicationId'] publication the issue belongs to
+ * @param $args['owner'] count only logged user stories (1=true, 0=false)
+ * @param $args['display'] count 'published' or 'unpublished' or 'all' stories
  * @returns integer
  * @return number of items
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -44,7 +46,6 @@ function newsletter_userapi_countissues($args)
         $owner = 0;
     }
 
-
     // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -67,19 +68,24 @@ function newsletter_userapi_countissues($args)
                   WHERE $issuesTable.xar_pid != 0";
     }
 
+    // Check if showing stories created by a particular author
+    if ($owner) {
+        $userid = xarSessionGetVar('uid');
+        $query .= " AND   $issuesTable.xar_ownerid = ?";
+        $bindvars[] = (int) $userid;
+    }
+
     switch ($display) {
         case 'published':
             $query .= " AND $issuesTable.xar_datepublished > 0";
             break;
         case 'unpublished':
-        default:
             $query .= " AND $issuesTable.xar_datepublished = 0";
             break;
-    }
-
-    if ($owner) {
-        $query .= " AND $issuesTable.xar_ownerid = ?";
-        $bindvars[] = (int) $owner;
+        case 'all':
+        default:
+            $query .= " AND $issuesTable.xar_datepublished >= 0";
+            break;
     }
 
     $result =& $dbconn->Execute($query, $bindvars);

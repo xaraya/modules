@@ -19,6 +19,8 @@
  * @author Richard Cave
  * @param $args an array of arguments
  * @param $args['issueId'] issue the story belongs to
+ * @param $args['owner'] count only logged user stories (1=true, 0=false)
+ * @param $args['display'] count 'published' or 'unpublished' or 'all' stories
  * @returns integer
  * @return number of items
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -55,27 +57,14 @@ function newsletter_userapi_countstories($args)
     // Create query to select stories
     $bindvars = array();
     if ($issueId) {
-        if ($owner) {
-            $userid = xarSessionGetVar('uid');
-            $query = "SELECT COUNT(1)
-                      FROM  $topicsTable, $storiesTable
-                      WHERE $topicsTable.xar_issueid = ?
-                      AND   $topicsTable.xar_storyid = $storiesTable.xar_id
-                      AND   $storiesTable.xar_ownerid = ?
-                      AND   $storiesTable.xar_pid != 0";
+        // Get stories for to a certain issue
+        $query = "SELECT COUNT(1)
+                  FROM  $topicsTable, $storiesTable
+                  WHERE $topicsTable.xar_issueid = ?
+                  AND   $topicsTable.xar_storyid = $storiesTable.xar_id
+                  AND   $storiesTable.xar_pid != 0";
 
-            $bindvars[] = (int) $issueId;
-            $bindvars[] = (int) $userid;
-
-        } else {
-            $query = "SELECT COUNT(1)
-                      FROM  $topicsTable, $storiesTable
-                      WHERE $topicsTable.xar_issueid = ?
-                      AND   $topicsTable.xar_storyid = $storiesTable.xar_id
-                      AND   $storiesTable.xar_pid != 0";
-
-            $bindvars[] = (int) $issueId;
-        }
+        $bindvars[] = (int) $issueId;
     } else {
         // Get all stories
         $query = "SELECT COUNT(1)
@@ -83,13 +72,24 @@ function newsletter_userapi_countstories($args)
                   WHERE $storiesTable.xar_pid != 0";
     }
 
+    // Check if showing stories created by a particular author
+    if ($owner) {
+        $userid = xarSessionGetVar('uid');
+        $query .= " AND   $storiesTable.xar_ownerid = ?";
+        $bindvars[] = (int) $userid;
+    }
+
+    // Check display type
     switch ($display) {
         case 'published':
             $query .= " AND $storiesTable.xar_datepublished > 0";
             break;
         case 'unpublished':
-        default:
             $query .= " AND $storiesTable.xar_datepublished = 0";
+            break;
+        case 'all':
+        default:
+            $query .= " AND $storiesTable.xar_datepublished >= 0";
             break;
     }
 
