@@ -66,7 +66,7 @@ function scheduler_user_main()
             }
         }
         xarLogMessage("scheduler: Failed trigger attempt from host $ip ($hostname).");
-        return xarML('Wrong trigger');
+        return xarML('Wrong trigger')." $ip ($hostname) at " . date('j', time());
     }
 
     // check when we last ran the scheduler
