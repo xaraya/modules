@@ -14,7 +14,12 @@
  */
 function xarbb_latestpostsblock_init()
 {
-    return true;
+    return array(
+        'nocache' => 0, // cache by default
+        'pageshared' => 1, // share across pages
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
+    );
 }
 
 /**
