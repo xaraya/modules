@@ -270,6 +270,8 @@ function articles_topitemsblock_display($blockinfo)
         // MarieA: Bring the pubtype description back as $descr
 		if (!empty($vars['nopublimit'])) {
 			$article['pubtypedescr'] = $pubtypes[$article['pubtypeid']]['descr'];
+			//jojodee: while we are here bring the pubtype name back as well
+			$article['pubtypename'] = $pubtypes[$article['pubtypeid']]['name'];
 		}
         // this will also pass any dynamic data fields (if any)
         $items[] = $article;
