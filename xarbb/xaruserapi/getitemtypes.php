@@ -21,10 +21,6 @@
 function xarbb_userapi_getitemtypes($args)
 {
     $itemtypes = array();
-    //<jojodee>Item type still exists - just don't display in hook list - confusing
-    /*$itemtypes[0] = array('label' => xarML('Main Forum Configuration'),
-    				      'title' => xarML('Main Forum Configuration'),
-                          'url' => xarModURL('xarbb','user','main',array()));*/
 
     $forums = xarModAPIFunc('xarbb',
                             'user',
@@ -34,9 +30,8 @@ function xarbb_userapi_getitemtypes($args)
         $itemtypevalue = $forum['fid'];
         $itemtypes[$itemtypevalue] = array('label' => $forum['fname'] . ' ' . xarML('Forum'),
                                            'title' => xarML('Individual Forum Configuration'),
-                                           'url' => xarModURL('xarbb','user','main',array('fid' => $forum['fid'])));
+                                           'url' => xarModURL('xarbb','user','viewforum',array('fid' => $forum['fid'])));
     }
-
     return $itemtypes;
 }
 

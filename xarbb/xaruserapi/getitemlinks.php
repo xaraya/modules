@@ -31,7 +31,7 @@ function xarbb_userapi_getitemlinks($args)
 //    } 
 
     // forums
-    if ($itemtype > 0) {
+    if (empty($itemtype)) {
          $forums = xarModAPIFunc('xarbb','user','getallforums');
          if (empty($forums)) {
              return $itemlinks;
