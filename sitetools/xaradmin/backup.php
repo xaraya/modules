@@ -20,7 +20,7 @@
 function sitetools_admin_backup($args)
 {
    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('startbackup', 'str:1:', $startbackup, '', XARVAR_NOT_REQUIRED)) return;
+   if (!xarVarFetch('startbackup', 'str:2:', $startbackup, '', XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('usegz', 'int:1', $usegz, 0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('dbname', 'str:1', $dbname,'' , XARVAR_NOT_REQUIRED)) return;
@@ -73,6 +73,7 @@ function sitetools_admin_backup($args)
 
     //Start actual backup for all types here
     } elseif ($startbackup) {
+
         $confirm='';
         if ($startbackup =='partial'){
            $tabledata=array();
@@ -100,7 +101,7 @@ function sitetools_admin_backup($args)
             $data['dbname']      = $tabledata['dbname'];
             $dbname              = $tabledata['dbname'];
             $data['checkboxname']= 'SelectedTables['.htmlentities($dbname, ENT_QUOTES).'][]';
-       
+
             return $data;
         }
 
@@ -135,7 +136,11 @@ function sitetools_admin_backup($args)
 
         $data['deleteurl'] =$bkupdata['deleteurl'];
         $data['warning'] =$bkupdata['warning'];
-        $data['runningstatus'] =$bkupdata['runningstatus'];
+        if ($screen==0) {
+           $data['runningstatus'] ='';
+        } else {
+            $data['runningstatus'] =$bkupdata['runningstatus'];
+        }
         $data['bkfiletype'] =$bkupdata['bkfiletype'];
         $data['bkfilename'] =$bkupdata['bkfilename'];
         $data['bkname'] =$bkupdata['bkname'];
@@ -151,7 +156,7 @@ function sitetools_admin_backup($args)
 
 
    //Return data for display
-   return $data;
+  return $data;
 }
 
 ?>

@@ -22,6 +22,12 @@
 <xar:set name="$linehelp"><xar:mlstring>Line terminator - dependent on your database server environment. The *nix option should be fine for most systems. Older systems may require specific selection.</xar:mlstring></xar:set>
 <xar:set name="$colnumhelp"><xar:mlstring>Number of columns used to list database tables</xar:mlstring></xar:set>
 <xar:set name="$colnumberlabel"><xar:mlstring>No. of columns in database table display:</xar:mlstring></xar:set>
+<xar:set name="$defaultbktypel"><xar:mlstring>Default Backup Type used with Scheduler:</xar:mlstring></xar:set>
+<xar:set name="$bkdefaulthelp"><xar:mlstring>This is the default backup type, used by default with the Scheduler module.</xar:mlstring></xar:set>
+<xar:set name="$bkoption1"><xar:mlstring>*Full backup - complete inserts (default)</xar:mlstring></xar:set>
+<xar:set name="$bkoption2"><xar:mlstring>Full backup - standard inserts</xar:mlstring></xar:set>
+<xar:set name="$bkoption3"><xar:mlstring>Structure only</xar:mlstring></xar:set>
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 <div style="margin: auto;">
@@ -103,7 +109,9 @@
             <input type="text" name="colnumber" id="colnumber" size="2" maxlength="3" value="#$colnumber#" />
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
+
+<!-- Later if required
+   <div style="clear: both; padding-top: 5px;">
 		<span style="float: left; width: 30%; text-align: right;">
 		<span class="help" title="#$linehelp#">
             <label for="lineoption">#$lineopl#</label>
@@ -125,7 +133,34 @@
                <option value="\r" selected="selected">#$lineoption3#</option>
             </xar:if> </select>
         </span>
-     </div>    
+     </div> 
+-->
+     <div style="clear: both; padding-top: 5px;">
+		<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#$bkdefaulthelp#">
+            <label for="defaultbktype">#$defaultbktypel#</label>
+        </span>
+		</span>
+		<span style="float: right; width: 68%; text-align: left;">
+            <select name="defaultbktype" id="defaultbktype">
+            <xar:if condition="xarModGetVar('sitetools', 'defaultbktype') eq 'complete'">
+               <option value="complete" selected="selected">#$bkoption1#</option>
+               <option value="standard">#$bkoption2#</option>
+               <option value="structure">#$bkoption3#</option>
+            <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'standard'" />
+               <option value="complete">#$bkoption1#</option>
+               <option value="standard" selected="selected">#$bkoption2#</option>
+               <option value="structure">#$bkoption3#</option>
+            <xar:elseif condition="xarModGetVar('sitetools', 'defaultbktype') eq 'structure'" />
+               <option value="complete">#$bkoption1#</option>
+               <option value="standard">#$bkoption2#</option>
+               <option value="structure" selected="selected">#$bkoption3#</option>
+            </xar:if> </select>
+                </select>
+
+ 	   </span>
+    </div>
+
     <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
         <input type="submit" value="#$updatebutton#" align="center" />
     </span>

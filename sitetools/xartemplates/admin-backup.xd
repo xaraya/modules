@@ -6,7 +6,7 @@
 <xar:set name="$checktrue"><xar:mlstring>Select All</xar:mlstring></xar:set>
 <xar:set name="$checkfalse"><xar:mlstring>Deselect All</xar:mlstring></xar:set>
 <xar:set name="$screenlabel"><xar:mlstring>Running status display: </xar:mlstring></xar:set>
-<xar:set name="$screenhelp"><xar:mlstring>If checked, a running status of backup progresss is displayed.</xar:mlstring></xar:set>
+<xar:set name="$screenhelp"><xar:mlstring>If checked, a running status of backup progress is displayed.</xar:mlstring></xar:set>
 <xar:set name="$usegzlabel"><xar:mlstring>Create GZ backup file(if gz available)?</xar:mlstring></xar:set>
 <xar:set name="$usegzhelp"><xar:mlstring>If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.</xar:mlstring></xar:set>
 <xar:set name="$securitymessage"><xar:mlstring><b>WARNING:</b><br />Do not leave your backup file in a web browsable directory.<br />
@@ -65,7 +65,7 @@
                 <input type="checkbox" name="screen" id="screen" value="1" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="screen" id="screen" value="1" />
-            </xar:if>        TO DO: Currently on, need to be made configurable
+            </xar:if>       
 
         </span>
 
@@ -116,12 +116,13 @@
 	       <input type="submit" name="SelectedTablesOnly" value="#$confirmbutton#" />
         </span>
      </form>
-     <p><a href="javascript:history.back(-1)">#$goback#</a></p>     
+     <p><a href="javascript:history.back(-1)">#$goback#</a></p>
 <xar:elseif condition="$startbackup" />
-
-    <xar:loop name="$runningstatus">
-           #$loop:item['message']# <br />
-    </xar:loop>
+    <xar:if condition="$screen eq 1">
+        <xar:loop name="$runningstatus">
+               #$loop:item['message']# <br />
+        </xar:loop>
+    </xar:if>
     <div style="margin-top:20px;">
     <table width='90%' align='center' border='1'>
     <tr><th valign='middle' colspan='2'><xar:mlstring>Backup Summary</xar:mlstring>
