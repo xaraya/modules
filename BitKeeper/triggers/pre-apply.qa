@@ -135,6 +135,17 @@ for i in `bk sfiles -Ug | grep ".php$"`; do
 done
 passed 2.22
 
+# xarExceptionMajor is deprecated
+failed=0
+test="No use of deprecated functions"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`grep -n '[^function] .*xarexceptionmajor' $i`
+    if [ $? -ne 1 ] ; then
+        failed 3.10 "in $i" $result
+    fi
+done
+
+passed 3.10
 if [ $cancommit -eq 0 ] ; then
     echo 
     echo "PUSH ABORTED:"
