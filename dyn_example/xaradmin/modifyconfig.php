@@ -20,11 +20,11 @@ function dyn_example_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
 
     // Specify some labels and values for display
-    $data['boldlabel'] = xarVarPrepForDisplay(xarMLByKey('EXAMPLEDISPLAYBOLD'));
+    $data['boldlabel'] = xarML('Display item names in bold');
     $data['boldchecked'] = xarModGetVar('dyn_example','bold') ? 'checked' : '';
-    $data['itemslabel'] = xarVarPrepForDisplay(xarMLByKey('EXAMPLEITEMSPERPAGE'));
+    $data['itemslabel'] = xarML('Items Per Page');
     $data['itemsvalue'] = xarModGetVar('dyn_example', 'itemsperpage');
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
+    $data['updatebutton'] = xarML('Update Configuration');
 
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
