@@ -40,7 +40,7 @@ function polls_pollblock_info()
 function polls_pollblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecurityCheck('ViewPollBlock',1,'Pollblock',"$blockinfo[title]:All:All")) return;
+    if (!xarSecurityCheck('ViewPollBlock',0,'Pollblock',"$blockinfo[title]:All:All")) return;
 
     // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
