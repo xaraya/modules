@@ -37,7 +37,7 @@
                             <xar:mlvar>#$file#</xar:mlvar>
                         </xar:ml>
                     </xar:set>
-                    <a title="#$titlestring#" onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+                    <a title="#$titlestring#" href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
                         <img class="bkicon" src="#$icon#" alt="file" />
                     </a>
                 <xar:else/>
