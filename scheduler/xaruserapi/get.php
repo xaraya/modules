@@ -16,7 +16,7 @@ function scheduler_userapi_get($args)
     extract($args); 
 
     $invalid = array();
-    if (!empty($itemid)) {
+    if (isset($itemid)) {
         if (!is_numeric($itemid)) {
             $invalid[] = 'item id';
         }
@@ -45,7 +45,7 @@ function scheduler_userapi_get($args)
     } else {
         $jobs = unserialize($serialjobs);
     }
-    if (!empty($itemid)) {
+    if (isset($itemid)) {
         if (!isset($jobs[$itemid])) {
             return; // no exception here
         }
@@ -56,7 +56,7 @@ function scheduler_userapi_get($args)
                 break;
             }
         }
-        if (empty($itemid)) {
+        if (!isset($itemid)) {
             return; // no exception here
         }
     }
