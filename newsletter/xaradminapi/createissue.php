@@ -82,7 +82,7 @@ function newsletter_adminapi_createissue($args)
               xar_datepublished)
             VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    $bindvars = array((int) $nextd,
+    $bindvars = array((int) $nextId,
                         (int) $publicationId,
                         (string) $title,
                         (int) $ownerId, 
