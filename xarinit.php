@@ -60,15 +60,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // Create the issues table and column definitions
     $nwsltrIssues = $xartable['nwsltrIssues'];
@@ -92,15 +84,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // Create the topics table and column definitions
     $nwsltrTopics = $xartable['nwsltrTopics'];
@@ -118,15 +102,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // Create the owners table and column definitions
     $nwsltrOwners = $xartable['nwsltrOwners'];
@@ -144,15 +120,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // Create the disclaimers table and column definitions
     $nwsltrDisclaimers = $xartable['nwsltrDisclaimers'];
@@ -169,15 +137,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // Create the stories table and column definitions
     $nwsltrStories = $xartable['nwsltrStories'];
@@ -209,15 +169,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // Create the subscriptions table and column definitions
     $nwsltrSubscriptions = $xartable['nwsltrSubscriptions'];
@@ -234,15 +186,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // Create the alternative subscriptions table and column definitions
     $nwsltrAltSubscriptions = $xartable['nwsltrAltSubscriptions'];
@@ -261,16 +205,7 @@ function newsletter_init()
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
-
-    // Check for an error with the database
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-
+    if (!$dbconn->Execute($query)) return;
 
     // If Categories API loaded and available, generate proprietary
     // module master category cid and child subcids
