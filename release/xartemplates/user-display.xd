@@ -25,58 +25,53 @@
 </form>
 
 <xar:if condition="$version eq 2">
-<xar:loop name="$items">
-<b>#$type# Author:</b>&nbsp;&nbsp; <a href="#$contacturl#">#$realname#</a><br />
-<b>#$type# Name:</b>&nbsp;&nbsp; <a href="#$displaylink#">#$name#</a><br />
-<b>Date Added</b>:&nbsp;&nbsp; #$time#<br /><br />
-<b>Description of #$type#:</b>&nbsp;&nbsp; #$desc#<br /><br />
+	<xar:if condition="!empty($message)">
+		#$message#<br /><br />
+	<xar:else />
+		<xar:loop name="$items">
+		<b>#$type# Author:</b>&nbsp;&nbsp; <a href="#$contacturl#">#$realname#</a><br />
+		<b>#$type# Name:</b>&nbsp;&nbsp; <a href="#$displaylink#">#$name#</a><br />
+		<b>Date Added</b>:&nbsp;&nbsp; #$time#<br /><br />
+		<b>Description of #$type#:</b>&nbsp;&nbsp; #$desc#<br /><br />
 
-<b>Version:</b>&nbsp;&nbsp; #$version#<br />
-<xar:if condition="!empty($demolink)">
-<b>Demo Link:</b>&nbsp;&nbsp; <a href="#$demolink#">#$demolink#</a><br />
-</xar:if>
-<b>Download Link:</b>&nbsp;&nbsp; <a href="#$dllink#">#$dllink#</a><br />
-<xar:if condition="$price eq 2">
-<b>Price:</b>&nbsp;&nbsp; #$priceterms#<br />
-</xar:if>
-<b>Certified:</b>&nbsp;&nbsp; #$certifiedstatus#<br />
-<b>Changelog:</b>&nbsp;&nbsp; #$changelog#<br /><br />
-<b>Additional Notes:</b>&nbsp;&nbsp; #$notes#<br /><br />
-<b>Editor Notes:</b>&nbsp;&nbsp;<i> #$enotes# </i><br />
-<hr width="100%">
-</xar:loop>
-
-
-
+		<b>Version:</b>&nbsp;&nbsp; #$version#<br />
+		<xar:if condition="!empty($demolink)">
+		<b>Demo Link:</b>&nbsp;&nbsp; <a href="#$demolink#">#$demolink#</a><br />
+		</xar:if>
+		<b>Download Link:</b>&nbsp;&nbsp; <a href="#$dllink#">#$dllink#</a><br />
+		<xar:if condition="$price eq 2">
+		<b>Price:</b>&nbsp;&nbsp; #$priceterms#<br />
+		</xar:if>
+		<b>Certified:</b>&nbsp;&nbsp; #$certifiedstatus#<br />
+		<b>Changelog:</b>&nbsp;&nbsp; #$changelog#<br /><br />
+		<b>Additional Notes:</b>&nbsp;&nbsp; #$notes#<br /><br />
+		<b>Editor Notes:</b>&nbsp;&nbsp;<i> #$enotes# </i><br />
+		<hr width="100%">
+		</xar:loop>
+	</xar:if>
 
 <xar:elseif condition="$docs eq 2" />
-<xar:if condition="!empty($message)">
-	#$message#<br /><br />
-<xar:else />
-	<table border="0" cellpadding="2" cellspacing="2" width="100%">
-	<xar:loop name="$items">
-	<tr>
-		<td align="left" valign="top" width="20%" class="xar-accent">
-			<a href="#$docurl#">#$title#</a>
-		</td>
-		<td align="left" valign="top" class="xar-normal">
-			#$docsf#
-		</td>
-	</tr>
-	</xar:loop>
-	</table>
-</xar:if>
-
-
-
-
-
-
+	<xar:if condition="!empty($message)">
+		#$message#<br /><br />
+	<xar:else />
+		<table border="0" cellpadding="2" cellspacing="2" width="100%">
+		<xar:loop name="$items">
+		<tr>
+			<td align="left" valign="top" width="20%" class="xar-accent">
+				<a href="#$docurl#">#$title#</a>
+			</td>
+			<td align="left" valign="top" class="xar-normal">
+				#$docsf#
+			</td>
+		</tr>
+		</xar:loop>
+		</table>
+	</xar:if>
 
 <xar:elseif condition="$general eq 2" />
 
-<b>#$type# Name:</b> &nbsp;&nbsp; #$name# <br />
-<b>#$type# Author:</b>&nbsp;&nbsp; <a href="#$contacturl#">#$realname#</a><br />
-<b>#$type# Description:</b> &nbsp;&nbsp; #$desc#
-<br /><br />
-#$hooks#
+	<b>#$type# Name:</b> &nbsp;&nbsp; #$name# <br />
+	<b>#$type# Author:</b>&nbsp;&nbsp; <a href="#$contacturl#">#$realname#</a><br />
+	<b>#$type# Description:</b> &nbsp;&nbsp; #$desc#
+	<br /><br />
+	#$hooks#

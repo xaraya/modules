@@ -49,64 +49,68 @@ function release_user_viewids()
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
 
-        $uid = xarUserGetVar('uid');
+        // Basic Information
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
-        $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($item['desc']));
-        $items[$i]['type'] = xarVarPrepForDisplay($item['type']);
-
-        $items[$i]['edittitle'] = xarML('Edit');
-        $items[$i]['addtitle'] = xarML('Add');
-        $items[$i]['adddocstitle'] = xarML('Add');
-        $items[$i]['infotitle'] = xarML('View');
 
         $getuser = xarModAPIFunc('users',
                                  'user',
                                  'get',
                                   array('uid' => $item['uid']));
 
+        // Author Name and Contact URL
         $items[$i]['author'] = $getuser['name'];
-
         $items[$i]['contacturl'] = xarModURL('users',
                                              'user',
                                              'display',
                                               array('uid' => $item['uid']));
-
+        
+        // InfoURL
         $items[$i]['infourl'] = xarModURL('release',
                                           'user',
                                           'display',
                                           array('rid' => $item['rid']));
+        $items[$i]['infotitle'] = xarML('View');
 
-
+        // Edit
         if (($uid == $item['uid']) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
             $items[$i]['editurl'] = xarModURL('release',
                                               'user',
                                               'modifyid',
                                                array('rid' => $item['rid']));
+            $items[$i]['edittitle'] = xarML('Edit');
         } else {
+            $items[$i]['edittitle'] = '';
             $items[$i]['editurl'] = '';
         }
-
+        
+        // Add Release Note URL
         if (($uid == $item['uid']) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
             $items[$i]['addurl'] = xarModURL('release',
                                               'user',
                                               'addnotes',
                                                array('rid' => $item['rid'],
                                                      'phase' => 'start'));
+            $items[$i]['addtitle'] = xarML('Add');
         } else {
             $items[$i]['addurl'] = '';
+            $items[$i]['addtitle'] = '';
         }
 
+        // Add Docs URL
         if (($uid == $item['uid']) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
             $items[$i]['adddocs'] = xarModURL('release',
                                               'user',
                                               'adddocs',
                                                array('rid' => $item['rid'],
                                                      'phase' => 'start'));
+            $items[$i]['adddocstitle'] = xarML('Add');
         } else {
             $items[$i]['adddocs'] = '';
+            $items[$i]['adddocstitle'] = '';
         }
 
+        // Get Comments
         $items[$i]['comments'] = xarModAPIFunc('comments',
                                                'user',
                                                'get_count',
@@ -121,6 +125,7 @@ function release_user_viewids()
             $items[$i]['comments'] .= ' ';
         }
 
+        // Get Hits
         $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
                                                'user',
                                                'get',
@@ -139,6 +144,7 @@ function release_user_viewids()
     // Add the array of items to the template variables
     $data['items'] = $items;
     return $data;
+
 }
 
 function release_user_display()
@@ -195,8 +201,9 @@ function release_user_display()
                                         'numitems' => xarModGetVar('users',
                                                                   'itemsperpage'),
                                         'rid' => $rid));
-            if ($items == false){
-                $data['message'] = xarML('There are no releases based on your filters');
+
+            if (empty($items)){
+                $data['message'] = xarML('There is no version history on this module');
             }
 
             // Check individual permissions for Edit / Delete
@@ -884,7 +891,7 @@ function release_user_viewnotes()
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('users',
                                                                   'itemsperpage'),
-                                        'certified'=> $filter));
+                                        'certified'=> 2));
             
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
@@ -901,7 +908,24 @@ function release_user_viewnotes()
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('users',
                                                                   'itemsperpage'),
-                                        'price'    => $filter));
+                                        'price'    => 2));
+            
+            if ($items == false){
+                $data['message'] = xarML('There are no releases based on your filters');
+            }
+
+            break;
+
+        case 'free':
+
+            // The user API function is called.
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getallnotes',
+                                  array('startnum' => $startnum,
+                                        'numitems' => xarModGetVar('users',
+                                                                  'itemsperpage'),
+                                        'price'    => 1));
             
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');
@@ -918,7 +942,7 @@ function release_user_viewnotes()
                                   array('startnum' => $startnum,
                                         'numitems' => xarModGetVar('users',
                                                                   'itemsperpage'),
-                                        'supported'=> $filter));
+                                        'supported'=> 2));
             
             if ($items == false){
                 $data['message'] = xarML('There are no releases based on your filters');

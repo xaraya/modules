@@ -5,29 +5,24 @@
 
 <b><xar:mlstring>Sort By</xar:mlstring>:</b>
 <br /><br />
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>        
-		<td width="30%">
-			<xar:mlstring>Certification Status</xar:mlstring>:<br />
-			&nbsp;&nbsp;<a href="#xarModURL('release', 'user', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Certified</a> <br />
-			&nbsp;&nbsp;<a href="#xarModURL('release', 'user', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Non-Certified</a>
-		</td>
-		<td width="30%">
-			<xar:mlstring>Price</xar:mlstring>:<br />
-			&nbsp;&nbsp;<a href="#xarModURL('release', 'user', 'viewnotes', array('phase' => 'price', 'filter' => '2'))#">Commercial</a> <br />
-			&nbsp;&nbsp;<a href="#xarModURL('release', 'user', 'viewnotes', array('phase' => 'price', 'filter' => '1'))#">Free</a>
-		</td>
-		<td width="30%">
-			<xar:mlstring>Support</xar:mlstring>:<br />
-			&nbsp;&nbsp;<a href="#xarModURL('release', 'user', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Supported</a> <br />
-			&nbsp;&nbsp;<a href="#xarModURL('release', 'user', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Not Supported</a> 
-		</td>
-	</tr>
-</table>
+<form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+	<input type="radio" name="phase" id="phase" value="certified"  />
+	<xar:mlstring>Certified</xar:mlstring>
+	&nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="price"  />
+	<xar:mlstring>Commercial</xar:mlstring>
+	&nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="free"  />
+	<xar:mlstring>Free</xar:mlstring>
+	&nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="supported"  />
+	<xar:mlstring>Supported</xar:mlstring>
+
+&nbsp;&nbsp;<input type="submit" value="<xar:mlstring>Refresh</xar:mlstring>" align="middle" tabindex="6" />
+</form>
 <br /><br />
+
 <xar:if condition="!empty($message)">
 	<b>#$message#</b>
 <xar:else />
+
 <hr width="100%"><br />
 <xar:loop name="$items">
 <br />

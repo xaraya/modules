@@ -167,11 +167,11 @@ function release_adminapi_deleteid($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $releasetable = $xartable['release_ids'];
+    $releasetable = $xartable['release_id'];
 
     // Delete the item
     $query = "DELETE FROM $releasetable
-            WHERE xar_rnid = " . xarVarPrepForStore($rid);
+            WHERE xar_rid = " . xarVarPrepForStore($rid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -244,6 +244,14 @@ function release_adminapi_getmenulinks()
                                                   'addcore'),
                              'title' => xarML('Add Core Notifications'),
                              'label' => xarML('Add Core Release'));
+
+     }
+    if (xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
+        $menulinks[] = Array('url'   => xarModURL('release',
+                                                  'admin',
+                                                  'viewids'),
+                             'title' => xarML('View Registered IDs on the system'),
+                             'label' => xarML('View IDs'));
 
      }
     if (xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {

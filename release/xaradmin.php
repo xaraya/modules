@@ -22,6 +22,61 @@ function release_admin_main()
 
 }
 
+function release_admin_viewids()
+{
+    // Security check
+    if (!xarSecAuthAction(0, 'users::', '::', ACCESS_OVERVIEW)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        return;
+    }
+
+    $data = array();
+
+    // The user API function is called. 
+    $items = xarModAPIFunc('release',
+                           'user',
+                           'getallids');
+
+    if (empty($items)) {
+        $msg = xarML('There are no items to display in the release module');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+
+    // Check individual permissions for Edit / Delete
+    for ($i = 0; $i < count($items); $i++) {
+        $item = $items[$i];
+
+        $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
+        $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
+
+        if (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT)) {
+            $items[$i]['editurl'] = xarModURL('release',
+                                              'user',
+                                              'modifyid',
+                                              array('rid' => $item['rid']));
+        } else {
+            $items[$i]['editurl'] = '';
+        }
+
+        $items[$i]['edittitle'] = xarML('Edit');
+        if (xarSecAuthAction(0, 'release::', "::", ACCESS_DELETE)) {
+            $items[$i]['deleteurl'] = xarModURL('release',
+                                               'admin',
+                                               'deleteid',
+                                               array('rid' => $item['rid']));
+        } else {
+            $items[$i]['deleteurl'] = '';
+        }
+        $items[$i]['deletetitle'] = xarML('Delete');
+
+    }
+
+    // Add the array of items to the template variables
+    $data['items'] = $items;
+    return $data;
+}
+
 function release_admin_viewnotes()
 {
     // Security check
@@ -546,6 +601,51 @@ function release_admin_deletenote()
 
     // Redirect
     xarResponseRedirect(xarModURL('release', 'admin', 'viewnotes'));
+
+    // Return
+    return true;
+}
+
+function release_admin_deleteid()
+{
+    // Get parameters
+    list($rid,
+         $confirmation) = xarVarCleanFromInput('rid',
+                                              'confirmation');
+
+    // The user API function is called.
+    $data = xarModAPIFunc('release',
+                          'user',
+                          'getid',
+                          array('rid' => $rid));
+
+    if ($data == false) return;
+
+    // Security check
+    if (!xarSecAuthAction(0, 'users::Item', "::", ACCESS_DELETE)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        return;
+    }
+
+    // Check for confirmation.
+    if (empty($confirmation)) {
+        //Load Template
+        $data['authid'] = xarSecGenAuthKey();
+        return $data;
+    }
+
+    // If we get here it means that the user has confirmed the action
+
+    // Confirm authorisation code.
+    if (!xarSecConfirmAuthKey()) return;
+
+    if (!xarModAPIFunc('release',
+		               'admin',
+		               'deleteid', 
+                        array('rid' => $rid))) return;
+
+    // Redirect
+    xarResponseRedirect(xarModURL('release', 'admin', 'viewids'));
 
     // Return
     return true;
