@@ -9,8 +9,8 @@
 	<input type="hidden" name="confirmation" id="confirmation" value="1" />
 
 	<span class="xar-title"><xar:mlstring>Confirm deletion of forum</xar:mlstring></span><br /><br />
-
-	<input type="submit" value="Confirm"  tabindex="1" /><br /><br />
+    <xar:set name="$mlconfirm"><xar:mlstring>Confirm</xar:mlstring></xar:set>
+	<input type="submit" value="#mlconfirm#"  tabindex="1" /><br /><br />
 	
 	<a href="#xarModURL('xarbb', 'admin', 'view')#"><xar:mlstring>Cancel deletion of forum</xar:mlstring></a>
 </form>        

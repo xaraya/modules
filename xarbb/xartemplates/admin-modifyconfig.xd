@@ -17,7 +17,8 @@
 
 #$hooks#
 
-<p><input type="submit" value="Update Configuration"  tabindex="3" /></p>
+<xar:set name="$mlupdateconf"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
+<p><input type="submit" value="#mlupdateconf#"  tabindex="3" /></p>
 </form>
 </div>
 </div>
