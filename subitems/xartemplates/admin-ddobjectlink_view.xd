@@ -11,7 +11,7 @@
     <th><xar:mlstring>Itemtype</xar:mlstring></th>
     <th><xar:mlstring>Subitems Object</xar:mlstring></th>
     <th><xar:mlstring>Template</xar:mlstring></th>
-    
+    <th><xar:mlstring>Sorting</xar:mlstring></th>
 </tr>
 </thead>
 <tbody>
@@ -25,6 +25,11 @@
     <td>#$ddobject['itemtype']#</td>
     <td>(#$ddobject['objectid']#) <xar:if condition="!empty($ddobject['label'])">#$ddobject['label']#</xar:if></td>
     <td>#$ddobject['template']#</td>
+    <td>
+    <xar:foreach in="$ddobject['sort']" key="$col" value="$mod">
+        &bull; #$col# (#$mod#)<br />
+    </xar:foreach>
+    </td>
     <td><a href="#xarModUrl('subitems','admin','ddobjectlink_edit',array('objectid' => $ddobject['objectid']))#">edit</a> | 
     <a href="#xarModUrl('subitems','admin','ddobjectlink_delete',array('objectid' => $ddobject['objectid']))#">delete</a></td>
 </tr>

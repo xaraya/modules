@@ -66,7 +66,7 @@ function subitems_userapi_ddobjectlink_getall($args)
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the SelectLimit() command allows for simpler debug
     // operation if it is ever needed
-    $query = "SELECT xar_objectid,xar_module,xar_itemtype,xar_template
+    $query = "SELECT xar_objectid,xar_module,xar_itemtype,xar_template,xar_sort
             FROM {$xartable['subitems_ddobjects']}
             ORDER BY xar_module";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
@@ -79,13 +79,21 @@ function subitems_userapi_ddobjectlink_getall($args)
     // If more severe restrictions apply, e.g. for READ access to display
     // the details of the item, this *must* be verified by your function.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($objectid,$module, $itemtype,$template) = $result->fields;
+        list($objectid,$module, $itemtype,$template,$sort) = $result->fields;
 
-            $items[] = array(
+        if (empty($sort)) {
+            $sort = array();
+        } else {
+            $sort = @unserialize($sort);
+            if (!is_array($sort)) $sort = array();
+        }
+        
+        $items[] = array(
                 'objectid' => $objectid,
                 'module' => $module,
                 'itemtype' => $itemtype,
-                'template' => $template
+                'template' => $template,
+                'sort' => $sort
                 );
 
     }

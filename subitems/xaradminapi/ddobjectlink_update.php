@@ -17,10 +17,18 @@ function subitems_adminapi_ddobjectlink_update($args)
     if(!isset($objectid))
         $invalid[] = "objectid";
 
+    if(isset($sort))    {
+        if(!is_array($sort))
+            $invalid[] = "sort";
+        else
+            $sort = @serialize($sort);
+    }
+    
     // params in arg
     $params = array("template" => "xar_template",
                     "itemtype" => "xar_itemtype",
-                    "module" => "xar_module");
+                    "module" => "xar_module",
+                    "sort" => "xar_sort");
     foreach($params as $vvar => $dummy)    {
         if(isset($$vvar))    {
             $set = true;

@@ -34,7 +34,8 @@ function subitems_init()
         'xar_objectid' => array('type' => 'integer', 'null' => false, 'unsigned' => true, 'default' => '0','primary_key' => true),
         'xar_module' => array('type' => 'varchar', 'null' => false, 'size' => 255, 'default' => ''),
         'xar_itemtype' => array('type' => 'integer', 'null' => false, 'unsigned' => true, 'default' => '0'),
-        'xar_template' => array('type' => 'varchar','null' => false,'size' => 255,'default' => '')
+        'xar_template' => array('type' => 'varchar','null' => false,'size' => 255,'default' => ''),
+        'xar_sort' => array('type' => 'varchar','null' => false,'size' => 255,'default' => '')
         ));
     if (empty($query)) return; // throw back
 
@@ -106,10 +107,28 @@ function subitems_upgrade($oldversion)
             xarRegisterMask('AdminSubitems', 'All', 'subitems', 'All', 'All', 'ACCESS_ADMIN');
 
         case '1.0.1':
-            // Code to upgrade from version 1.0.1 goes here
-
-        case '2.0.0':
-            // Code to upgrade from version 2.0.0 goes here
+            
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            
+            $table = $xartable['subitems_ddobjects'];
+            
+            xarDBLoadTableMaintenanceAPI();
+            
+            $query = xarDBAlterTable($table,
+                array('command' => 'add',
+                    'field' => 'xar_sort',
+                    'type' => 'varchar',
+                    'null' => false,
+                    'size' => 255,
+                    'default' => ''
+                    ));
+            
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            
+        case '1.0.2':
+            
             break;
     }
     // Update successful

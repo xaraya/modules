@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'subitems';
 $modversion['id']             = '9356';
-$modversion['version']        = '1.0.1';
+$modversion['version']        = '1.0.2';
 $modversion['displayname']    = xarML('SubItems');
 $modversion['description']    = 'Dynamic data subitems';
 $modversion['credits']        = 'xardocs/credits.txt';

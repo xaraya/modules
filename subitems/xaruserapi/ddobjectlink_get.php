@@ -46,14 +46,14 @@ function subitems_userapi_ddobjectlink_get($args)
     else
         $where = "xar_module = '".xarVarPrepForStore($module)."' AND xar_itemtype = $itemtype";
 
-    $query = "SELECT xar_objectid,xar_module,xar_itemtype,xar_template
+    $query = "SELECT xar_objectid,xar_module,xar_itemtype,xar_template,xar_sort
             FROM {$xartable['subitems_ddobjects']}
             WHERE $where";
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-    // Check for no rows found, and if so, close the result set and return a dummy item
+    // Check for no rows found, and if so, close the result set and return an exception
     if ($result->EOF) {
         $result->Close();
         // some modules (e.g. roles) may have itemtype 0 and 1, which means that hooks
@@ -61,16 +61,25 @@ function subitems_userapi_ddobjectlink_get($args)
         return array('objectid' => 0);
     }
     // Obtain the item information from the result set
-    list($objectid, $module,$itemtype,$template) = $result->fields;
+    list($objectid, $module,$itemtype,$template,$sort) = $result->fields;
     // All successful database queries produce a result set, and that result
     // set should be closed when it has been finished with
     $result->Close();
+    
     // Create the item array
+    if (empty($sort)) {
+        $sort = array();
+    } else {
+        $sort = @unserialize($sort);
+        if (!is_array($sort)) $sort = array();
+    }
+        
     $item = array(
         'objectid' => $objectid,
         'module' => $module,
         'itemtype' => $itemtype,
-        'template' => $template);
+        'template' => $template,
+        'sort' => $sort);
     // Return the item array
     return $item;
 }

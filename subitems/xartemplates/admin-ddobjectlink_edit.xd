@@ -8,7 +8,7 @@
     // Add an authorisation ID - this adds a hidden field in the form that
     // contains an authorisation ID.  The authorisation ID is very important in
     // preventing certain attacks on the website
--->
+--> 
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
        <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />    
     
@@ -37,6 +37,37 @@
 <td>
     <input type="text" name="template" value="#$template['value']#" />
     <span style="color:red">#$template['error']->msg#</span>
+</td>
+</tr>
+<tr>
+<td>
+    <xar:mlstring>Sorting:</xar:mlstring>
+</td>
+<td>
+    <select name="sortby">
+    
+    <option value=""></option>
+    <xar:foreach in="$properties" key="$name" value="$property" >    
+    <xar:if condition="array_key_exists($name,$sort['value'])">
+    <option value="#$name#" selected><xar:data-label property="$properties[$name]" /></option>
+    <xar:else />
+    <option value="#$name#"><xar:data-label property="$properties[$name]" /></option>
+    </xar:if>
+    </xar:foreach>
+    </select>
+    <select name="sortmode">
+    <xar:if condition="in_array('ASC',$sort['value'])">
+        <option value="ASC" selected>Ascending</option>
+    <xar:else />
+    <option value="ASC" >Ascending</option>
+    </xar:if>
+    <xar:if condition="in_array('DESC',$sort['value'])">
+        <option value="DESC" selected>Descending</option>        
+    <xar:else />
+        <option value="DESC">Descending</option>        
+    </xar:if>        
+    </select>
+    <span style="color:red">#$sort['error']->msg#</span>
 </td>
 </tr>
 <tr><td colspan="2" align="center">

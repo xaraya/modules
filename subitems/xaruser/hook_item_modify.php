@@ -31,7 +31,14 @@ function subitems_user_hook_item_modify($args)
     if(!isset($ids))
         return;
 
-
+    if (!empty($ddobjectlink['sort'])) {
+        $sort = array();
+        foreach ($ddobjectlink['sort'] as $sortby => $sortmode) {
+            $sort[] = "$sortby $sortmode";
+        }
+    } else {
+        $sort = null;
+    }
 
     // when itemids == array() => it will return all ids, but we don't want this
     if(count($ids) > 0)    {
@@ -41,7 +48,8 @@ function subitems_user_hook_item_modify($args)
                    array(
                          'modid' => $object->moduleid,
                          'itemtype' => $object->itemtype,
-                         'itemids' => $ids
+                         'itemids' => $ids,
+                         'sort' => $sort
                          ));
     }
     else
