@@ -33,10 +33,23 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 20%; text-align: right;">
-		<xar:mlstring>Total topics and replies to display</xar:mlstring>
+		<xar:mlstring>Show only last reply per topic?</xar:mlstring>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="3" />
+		<input type="hidden" name="latestpost" value="off">
+		<xar:if condition="$latestpost eq 'on'">
+			<input type="checkbox" name="latestpost" value="on" checked="checked" tabindex="3" />
+		<xar:else/>
+			<input type="checkbox" name="latestpost" value="on" tabindex="3" />
+		</xar:if>
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Total topics and replies to display (or last replies)</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="4" />
 	</span>
 </div>
 <div style="clear: both; padding-top: 10px;">
@@ -44,7 +57,7 @@
 		<xar:mlstring>Truncate long titles to no more than </xar:mlstring>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="4" />
+		<input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="5" />
 		characters
 	</span>
 </div>

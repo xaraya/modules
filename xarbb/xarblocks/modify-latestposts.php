@@ -24,6 +24,9 @@ function xarbb_latestpostsblock_modify($blockinfo)
     if (empty($vars['addposts'])) {
         $vars['addposts'] = 'on';
     }
+    if (empty($vars['latestpost'])) {
+        $vars['latestpost'] = 'off';
+    }
     if (empty($vars['howmany'])) {
         $vars['howmany'] = 10;
     }
@@ -90,18 +93,19 @@ function xarbb_latestpostsblock_modify($blockinfo)
 
     // Send content to template
     $output =  array(
-                                'addtopics' => $vars['addtopics'],
-                                'addposts'  => $vars['addposts'],
-                                'howmany'   => $vars['howmany'],
-                                'forumid'   => $vars['forumid'],
-                                'forumlist' => $forumlist,
-                                'addauthor' => $vars['addauthor'],
-                                'addlink'   => $vars['addlink'],
-                                'addobject' => $vars['addobject'],
-                                'adddate'   => $vars['adddate'],
+                                'addtopics'   => $vars['addtopics'],
+                                'addposts'    => $vars['addposts'],
+                                'latestpost' => $vars['latestpost'],
+                                'howmany'     => $vars['howmany'],
+                                'forumid'     => $vars['forumid'],
+                                'forumlist'   => $forumlist,
+                                'addauthor'   => $vars['addauthor'],
+                                'addlink'     => $vars['addlink'],
+                                'addobject'   => $vars['addobject'],
+                                'adddate'     => $vars['adddate'],
                                 //'titleortext' => $vars['titleortext'],
-                                'truncate'  => $vars['truncate'],
-                                'forumlink' => $vars['forumlink']
+                                'truncate'    => $vars['truncate'],
+                                'forumlink'   => $vars['forumlink']
                                 );
 
     // Return output
@@ -115,6 +119,7 @@ function xarbb_latestpostsblock_update($blockinfo)
 {
     $vars['addtopics']   = xarVarCleanFromInput('addtopics');
     $vars['addposts']    = xarVarCleanFromInput('addposts');
+    $vars['latestpost']  = xarVarCleanFromInput('latestpost');
     $vars['howmany']     = xarVarCleanFromInput('howmany');
     $vars['forumid']     = xarVarCleanFromInput('forumid');
     $vars['addauthor']   = xarVarCleanFromInput('addauthor');

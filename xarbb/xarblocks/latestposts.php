@@ -55,6 +55,9 @@ function xarbb_latestpostsblock_display($blockinfo)
     if (empty($vars['addposts'])) {
         $vars['addposts'] = 'on';
     }
+    if (empty($vars['latestpost'])) {
+        $vars['latestpost'] = 'off';
+    }
     if (empty($vars['howmany'])) {
         $vars['howmany'] = 5;
     }
@@ -114,16 +117,17 @@ function xarbb_latestpostsblock_display($blockinfo)
                                                                        'numitems'=>$vars['howmany']));
     }
     $postlist=array();
-    //Get all latest topics for given forums
+    $topiclist=array();
+    //Get all topic posters for given topics
     foreach ($alltopics as $topics) {
         foreach ($topics as $topic) {
-            $forum=array();                                    	
+            $forum=array();
             $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
 
-            if ($vars['addtopics']=='on'){
+            if (($vars['addtopics']=='on') ||($vars['latestpost'] =='on')) {
                 $posterdata=xarModAPIFunc('roles',
-                                         'user',
-                                         'get',
+                                          'user',
+                                          'get',
                                           array('uid' => $topic['tposter']));
 
                 //Put each topic in consistent format for post comparison
@@ -140,19 +144,40 @@ function xarbb_latestpostsblock_display($blockinfo)
                           'link'      => xarModURL('xarbb','user','viewtopic',array('tid'=>$topic['tid'])),
                           'flink'     => xarModURL('xarbb','user','viewforum',array('fid'=>$topic['fid']))
                           );
+               if (($topic['treplies'] == 0) && ($vars['latestpost'] =='on') && ($vars['addtopics']=='on')){
+                  $topiclist[]=array(
+                          'tid'       => $topic['tid'],
+                          'fid'       => $topic['fid'],
+                          'fname'     => $forum['fname'],
+                          'title'     => substr($topic['ttitle'],0,$vars['truncate']),
+                          'poster'    => $topic['tposter'],
+                          'postername'=> $posterdata['name'],
+                          'ptime'     => $topic['tftime'],
+                          'ptext'     => substr($topic['tpost'],0,$vars['truncate']),
+                          'anon'      => 0,
+                          'link'      => xarModURL('xarbb','user','viewtopic',array('tid'=>$topic['tid'])),
+                          'flink'     => xarModURL('xarbb','user','viewforum',array('fid'=>$topic['fid']))
+                          );
+               }
             }
         }
     }
 
-    if ($vars['addposts']=='on'){ //separated - only do this work if required
+    if (($vars['addposts']=='on') || ($vars['latestpost'] =='on')) {
+        if ($vars['latestpost'] =='on') { //let's set how many posts to get
+            $getnumber =1; // we only want latest post
+        }else {
+            $getnumber = $vars['howmany'];
+        }
+
         foreach ($alltopics as $topics) {
             foreach ($topics as $topic) {
-                //Get all the most recent replies irrespective of topic
+                //Get all the most recent replies for each topic
                 $posts = xarModAPIFunc('xarbb',
-                                   'user',
-                                   'get_allposts',
+                                       'user',
+                                       'get_allposts',
                                    array('objectid'    => $topic['tid'],
-                                         'numitems'    => $vars['howmany']));
+                                         'numitems'    => $getnumber));
                 $forum=array();
                 $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
                  //Put post data in suitable list
@@ -176,12 +201,32 @@ function xarbb_latestpostsblock_display($blockinfo)
                                           'link'      => xarModURL('xarbb','user','viewtopic',array('tid'=>$topic['tid'])),
                                           'flink'     => xarModURL('xarbb','user','viewforum',array('fid'=>$topic['fid']))
                                           );
+                          if ($vars['latestpost'] =='on') {
+                                $topiclist[]=array(
+                                          'tid'       => $topic['tid'],
+                                          'fid'       => $topic['fid'],
+                                          'fname'     => $forum['fname'],
+                                          'title'     => substr($post['xar_title'],0,$vars['truncate']),
+                                          'poster'    => $post['xar_uid'],
+                                          'postername'=> $post['xar_author'],
+                                          'ptime'     => $post['xar_datetime'],
+                                          'ptext'     => substr($post['xar_text'],0,$vars['truncate']),
+                                          'anon'      => $post['xar_postanon'],
+                                          'link'      => xarModURL('xarbb','user','viewtopic',array('tid'=>$topic['tid'])),
+                                          'flink'     => xarModURL('xarbb','user','viewforum',array('fid'=>$topic['fid']))
+                                          );
+                          }
                     }
                 }
+
             }
         }
     }
-
+    //let's set the new list if we have latestpost only switched on
+    //The topic list only contains topics with no replies and first reply posts
+    if ($vars['latestpost'] =='on') {
+         $postlist=$topiclist;
+    }
     //Sort all the postlist by time
     usort($postlist, 'xarbb_datesort');
     $numposts=count($postlist);
@@ -198,6 +243,7 @@ function xarbb_latestpostsblock_display($blockinfo)
 
     $blockinfo['content']=array('items' => $blockposts,
                                 'vars'  => $vars);
+
     return $blockinfo;
 }
 
