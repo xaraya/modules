@@ -12,22 +12,20 @@
 
 function commerce_admin_server_info()
 {
+    //  $system = xtc_get_system_information();
+    if (!function_exists('ob_start')) {
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_contents();
+        ob_end_clean();
 
-
-  $system = xtc_get_system_information();
-  if (function_exists('ob_start')) {
-    ob_start();
-    phpinfo();
-    $phpinfo = ob_get_contents();
-    ob_end_clean();
-
-    $phpinfo = str_replace('border: 1px', '', $phpinfo);
-    ereg("(<style type=\"text/css\">{1})(.*)(</style>{1})", $phpinfo, $regs);
-    echo '<style type="text/css">' . $regs[2] . '</style>';
-    ereg("(<body>{1})(.*)({1})", $phpinfo, $regs);
-    echo $regs[2];
-  } else {
-    phpinfo();
-  }
+        $phpinfo = str_replace('border: 1px', '', $phpinfo);
+        ereg("(<style type=\"text/css\">{1})(.*)(</style>{1})", $phpinfo, $regs);
+        echo '<style type="text/css">' . $regs[2] . '</style>';
+        ereg("(<body>{1})(.*)({1})", $phpinfo, $regs);
+        echo $regs[2];
+    } else {
+        phpinfo();
+    }
 }
 ?>

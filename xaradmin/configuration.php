@@ -12,6 +12,7 @@
 
 function commerce_admin_configuration()
 {
+    include_once 'modules/xen/xarclasses/xenquery.php';
     $table =& xarDBGetTables();
 
     if(!xarVarFetch('action',   'str',  $action, "", XARVAR_DONT_SET)) {return;}
@@ -25,7 +26,7 @@ function commerce_admin_configuration()
         switch ($action) {
           case 'save':
             if(!xarVarFetch('cID', 'int',  $cID, NULL,  XARVAR_DONT_SET)) {return;}
-            $q = new xarQuery('UPDATE', $table['commerce_configuration']);
+            $q = new xenQuery('UPDATE', $table['commerce_configuration']);
             $tablefields = array(
                 array('name' => 'configuration_value','value' => $configuration_value),
                 array('name' => 'last_modified','value' => mktime()),
@@ -36,7 +37,7 @@ function commerce_admin_configuration()
         }
     }
 
-    $q = new xarQuery('SELECT',
+    $q = new xenQuery('SELECT',
                       $table['commerce_configuration_group'],
                       'configuration_group_title'
     );
@@ -45,7 +46,7 @@ function commerce_admin_configuration()
     if (!$cfg_group) return;
     $data['cfg_group'] = $q->row();
 
-    $q = new xarQuery('SELECT', $table['commerce_configuration']);
+    $q = new xenQuery('SELECT', $table['commerce_configuration']);
     $tablefields = array(
         'configuration_key',
         'configuration_value',
@@ -117,7 +118,7 @@ function commerce_admin_configuration()
         }
 
         if (($cID == $configuration['configuration_id']) && (!isset($cInfo)) && (substr($action, 0, 3) != 'new')) {
-            $q = new xarQuery('SELECT', $table['commerce_configuration']);
+            $q = new xenQuery('SELECT', $table['commerce_configuration']);
             $tablefields = array(
                 'configuration_key',
                 'date_added',

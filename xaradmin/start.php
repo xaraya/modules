@@ -42,6 +42,33 @@ CarpConf('poweredby','');
 //CarpShow("http://www.xt-commerce.com/modules/xp_syndication/mods/mylinks_rss.php","xt-links.cache");
 CarpConfReset();
 */
+/*$blocks = xarModAPIFunc('blocks','user','getall');
+$blockarray = array();
+foreach ($blocks as $block) {
+    if ($block['state'] == 2) {
+        if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $block['bid']))) return;
+        $blockarray[] = $block['bid'];
+    }
+}
+xarSessionSetVar('inactivated', serialize($blockarray));
+*/
+
+    // Hide the configmenu block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceconfig'));
+    if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the adminpanel block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'adminpanel'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the main menu block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'mainmenu'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
+    // Hide the admin block
+    $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceadmininfo'));
+    if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;
+
     // Hide the categories block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commercecategories'));
     if(!xarModAPIFunc('blocks', 'admin', 'deactivate', array('bid' => $blockinfo['bid']))) return;

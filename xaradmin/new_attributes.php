@@ -15,44 +15,64 @@
 
 function commerce_admin_new_attributes()
 {
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    $xartables = xarDBGetTables();
+    if(!xarVarFetch('action', 'str',  $action, '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('copy_product_id',  'int',  $copy_product_id, 0, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('pID',    'int',  $pID, NULL, XARVAR_DONT_SET)) {return;}
 
-  require('new_attributes_config.php');
+    require('modules/commerce/xarincludes/new_attributes_config.php');
+    $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
+    $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
+    $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $data['language']));
+//    $language_id = $currentlang['id'];
+    $language = $currentlang['code'];
 
-  require(DIR_FS_INC .'xtc_findTitle.inc.php');
+    $adminImages = $language ."/admin/images/buttons/";
+    $backLink = "<a href=\"javascript:history.back()\">";
 
-  $adminImages = $language ."/admin/images/buttons/";
-  $backLink = "<a href=\"javascript:history.back()\">";
+  if ( isset($pID) && $action == 'change') {
+    include('modules/commerce/xarincludes/new_attributes_change.php');
 
-  if ( isset($cPathID) && $_POST['action'] == 'change') {
-    include('new_attributes_change.php');
-
-    xtc_redirect( './' . FILENAME_CATEGORIES . '?cPath=' . $cPathID . '&pID=' . $_POST['current_product_id'] );
+//    xtc_redirect( './' . FILENAME_CATEGORIES . '?cPath=' . $cPathID . '&pID=' . $_POST['current_product_id'] );
   }
 
 
-  switch($_POST['action']) {
-    case 'edit':
-      if ($_POST['copy_product_id'] != 0) {
-          $attrib_query = new xenQuery("SELECT products_id, options_id, options_values_id, options_values_price, price_prefix, attributes_model, attributes_stock, options_values_weight, weight_prefix FROM products_attributes WHERE products_id = " . $_POST['copy_product_id']);
-      $q = new xenQuery();
-      if(!$q->run()) return;
-          while ($attrib_res = $q->output()) {
-              new xenQuery("INSERT into products_attributes (products_id, options_id, options_values_id, options_values_price, price_prefix, attributes_model, attributes_stock, options_values_weight, weight_prefix) VALUES ('" . $_POST['current_product_id'] . "', '" . $attrib_res['options_id'] . "', '" . $attrib_res['options_values_id'] . "', '" . $attrib_res['options_values_price'] . "', '" . $attrib_res['price_prefix'] . "', '" . $attrib_res['attributes_model'] . "', '" . $attrib_res['attributes_stock'] . "', '" . $attrib_res['options_values_weight'] . "', '" . $attrib_res['weight_prefix'] . "')");
-          }
-      }
-      $pageTitle = 'Edit Attributes -> ' . xtc_findTitle($_POST['current_product_id'], $languageFilter);
-      include('new_attributes_include.php');
-      break;
+    switch($action) {
+        case 'edit':
+            if ($copy_product_id != 0) {
+                $q = new xenQuery('SELECT',$xartables['commerce_product_attributes']);
+                $q->addfields('products_id', 'options_id', 'options_values_id', 'options_values_price', 'price_prefix', 'attributes_model', 'attributes_stock', 'options_values_weight', 'weight_prefix');
+                $q->eq('copy_product_id', $copy_product_id);
+                if(!$q->run()) return;
+                foreach ($q->output() as $attrib_res) {
+                    $q = new xenQuery('INSERT',$xartables['commerce_product_attributes']);
+                    $q->addfield('products_id', $pID);
+                    $q->addfield('options_id', $attrib_res['options_id']);
+                    $q->addfield('options_values_id', $attrib_res['options_values_id']);
+                    $q->addfield('options_values_price', $attrib_res['options_values_price']);
+                    $q->addfield('price_prefix', $attrib_res['price_prefix']);
+                    $q->addfield('attributes_model', $attrib_res['attributes_model']);
+                    $q->addfield('attributes_stock', $attrib_res['attributes_stock']);
+                    $q->addfield('options_values_weight', $attrib_res['options_values_weight']);
+                    $q->addfield('weight_prefix', $attrib_res['weight_prefix']);
+                    if(!$q->run()) return;
+                }
+            }
+            $pageTitle = 'Edit Attributes -> ' . xarModAPIFunc('commerce','user','findtitle', array('pID' => $pID, 'language_id' => $language_id));
+            include('modules/commerce/xarincludes/new_attributes_include.php');
+            break;
 
-    case 'change':
-      $pageTitle = 'Product Attributes Updated.';
-      include('new_attributes_change.php');
-      include('new_attributes_select.php');
-      break;
+        case 'change':
+            $pageTitle = 'Product Attributes Updated.';
+            include('modules/commerce/xarincludes/new_attributes_change.php');
+            include('modules/commerce/xarincludes/new_attributes_select.php');
+            break;
 
-    default:
-      $pageTitle = 'Edit Attributes';
-      include('new_attributes_select.php');
-      break;
-  }
+        default:
+            $pageTitle = 'Edit Attributes';
+            include('modules/commerce/xarincludes/new_attributes_select.php');
+            break;
+    }
+}
 ?>
