@@ -68,13 +68,14 @@ function articles_admin_privileges($args)
             // override whatever other params we might have here
             $ptid = $article['pubtypeid'];
         // TODO: review when we can handle multiple categories and/or subtrees in privilege instances
-            if (!empty($article['cids']) && count($article['cids']) > 0) {
+            if (!empty($article['cids']) && count($article['cids']) == 1) {
                 // if we don't have a category, or if we have one but this article doesn't belong to it
                 if (empty($cid) || !in_array($cid, $article['cids'])) {
-                    // we'll take the first category available... (for now)
+                    // we'll take that category
                     $cid = $article['cids'][0];
                 }
             } else {
+                // we'll take no categories
                 $cid = 0;
             }
             $uid = $article['authorid'];
