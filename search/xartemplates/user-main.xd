@@ -1,0 +1,74 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Search Module</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Search</xar:mlstring></h2>
+<div style="margin: auto;">
+<h4><xar:mlstring>Last 10 Searches Made</xar:mlstring></h4>
+<table width="100%">
+	<tr>
+		<th width="20%">
+			<xar:mlstring>Name</xar:mlstring>
+		</th>
+		<th width="60%">
+			<xar:mlstring>Keywords</xar:mlstring>
+		</th>
+		<th width="20%">
+			<xar:mlstring>Date and Time</xar:mlstring>
+		</th>
+	</tr>
+	<xar:loop name="$searchitems">
+	<xar:if condition="(($loop:index + 1) % 2)">
+	<tr>
+		<td width="20%">
+			#$loop:item['sname']#
+		</td>
+		<td width="60%">
+			<a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
+		</td>
+		<td width="20%">
+			#$loop:item['date']#
+		</td>
+	</tr>
+	<xar:else />
+	<tr>
+		<td class="xar-accent" width="20%">
+			#$loop:item['sname']#
+		</td>
+		<td class="xar-accent" width="60%">
+			<a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
+		</td>
+		<td class="xar-accent" width="20%">
+			#$loop:item['date']#
+		</td>
+	</tr>
+	</xar:if>
+	</xar:loop>
+</table>
+<br /><br />
+<xar:if condition="!empty($message)">
+	#$message#
+<xar:else />
+
+
+	<form action="&xar-modurl-search-user-main;" method="post">
+	<label for="q"><xar:mlstring>Search for</xar:mlstring></label>: <input type="text" name="q" id="q" size="20" />
+	&nbsp;&nbsp;&nbsp; <input type="submit" value="Search" />
+	&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset Form" />
+	<br /><br />
+	<label for="author"><xar:mlstring>By author</xar:mlstring></label>: <input type="text" name="author" id="author" size="20" />
+	<br /><br />
+
+	<xar:if condition="!empty($query)">
+	<xar:mlstring>Search term</xar:mlstring> : #$query#</b>
+	<br /><br />
+	</xar:if>
+	<xar:if condition="!empty($name)">
+	<xar:mlstring>Published by</xar:mlstring> : #$name#</b>
+	<br /><br />
+	</xar:if>
+
+	<hr />
+	#$output#
+	<br /><br />
+	</form>
+</xar:if>
+</div>
+</div>

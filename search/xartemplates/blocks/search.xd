@@ -1,0 +1,5 @@
+<form action="index.php?module=search" method="post">
+	<input type="hidden" name="module" id="module" value="search" />
+	<label for="q#$blockid#"><xar:mlstring>Search</xar:mlstring></label>
+	<input type="text" name="q" id="q#$blockid#" size="15" align="middle" />
+</form>
