@@ -35,11 +35,7 @@ function articles_featureditemsblock_init()
         'moreitems'         => array(),
         'showsummary'       => false,
         'linkpubtype'       => false,
-        'linkcat'           => false,
-        'nocache' => 0, // cache by default
-        'pageshared' => 1, // share across pages
-        'usershared' => 1, // share for group members
-        'cacheexpire' => null
+        'linkcat'           => false
     );
 }
 
@@ -142,7 +138,8 @@ function articles_featureditemsblock_display(& $blockinfo)
                 'showfeaturedbod'   => $vars['showfeaturedbod'],
                 'featureddesc'      => $featuredart['summary'],
                 'featuredbody'      => $featuredart['body'],
-                'featuredcids'      => $featuredart['cids']
+                'featuredcids'      => $featuredart['cids'],
+                'pubtypeid'         => $featuredart['pubtypeid']
             );
 
             // Get rid of the default fields so all we have left are the DD ones
