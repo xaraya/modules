@@ -80,8 +80,6 @@ function html_userapitransformoutput($text)
     // open and close the paragraphs tags before and after the transformed output.
     //$text = "<p> " . $text . " </p>\n";
     $text = str_replace ("<p></p>", "", $text);
-    $text = str_replace ("<br />", "", $text);
-    $text = str_replace ("<br>", "", $text);
     return $text;
 }
 
