@@ -23,7 +23,7 @@ function subitems_adminapi_getmenulinks()
                                                 'admin',
                                                 'ddobjectlink_view'),
                              'title' => xarML('View Links to DD-Objects'),
-                             'label' => xarML('Views Links'));
+                             'label' => xarML('View Links'));
 
         $menulinks[] = Array('url' => xarModURL('subitems',
                                                 'admin',

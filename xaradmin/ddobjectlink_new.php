@@ -22,7 +22,7 @@ function subitems_admin_ddobjectlink_new($args)
     } else {
         $result_array['no_errors'] = true;
         $result_array['module'] = array('value' => 182,'error' => '');
-        $result_array['itemtype'] = array('value' => '','error' => '');
+        $result_array['itemtype'] = array('value' => 0,'error' => '');
         $result_array['template'] = array('value' => '','error' => '');
         $result_array['objectid'] = array('value' => '','error' => '');
     }

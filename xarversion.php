@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
- * Example initialization functions
+ * Subitem module version info
  *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -12,7 +10,7 @@
  */
 $modversion['name']           = 'subitems';
 $modversion['id']             = '9356';
-$modversion['version']        = '1.0.2';
+$modversion['version']        = '1.1.0';
 $modversion['displayname']    = xarML('SubItems');
 $modversion['description']    = 'Dynamic data subitems';
 $modversion['credits']        = 'xardocs/credits.txt';

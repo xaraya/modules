@@ -33,7 +33,8 @@ function subitems_init()
         'xar_module' => array('type' => 'varchar', 'null' => false, 'size' => 255, 'default' => ''),
         'xar_itemtype' => array('type' => 'integer', 'null' => false, 'unsigned' => true, 'default' => '0'),
         'xar_template' => array('type' => 'varchar','null' => false,'size' => 255,'default' => ''),
-        'xar_sort' => array('type' => 'varchar','null' => false,'size' => 255,'default' => '')
+        'xar_sort' => array('type' => 'varchar','null' => false,'size' => 255,'default' => ''),
+        'xar_type' => array('type' => 'integer', 'null' => false, 'unsigned' => true, 'default' => '1')
         ));
     if (empty($query)) return; // throw back
 
@@ -51,7 +52,22 @@ function subitems_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-
+    
+    $subitemstable = $xartable['subitems_ddids'];
+    $p = xarDBGetSiteTablePrefix();
+    // Add some indexes, we're dealing with O(n^2) records here.
+    $query = xarDBCreateIndex($subitemstable,array('name'=> 'i_'.$p.'_subitems_itemid',  'fields' => array('xar_itemid')));
+    if(empty($query)) return; // no good
+    $result = &$dbconn->Execute($query);
+    if(!$result) return;
+    $query = xarDBCreateIndex($subitemstable,array('name'=> 'i_'.$p.'_subitems_objectid','fields' => array('xar_objectid')));
+    if(empty($query)) return; // no good
+    $result = &$dbconn->Execute($query);
+    if(!$result) return;
+    $query = xarDBCreateIndex($subitemstable,array('name'=> 'i_'.$p.'_subitems_ddid',    'fields' => array('xar_ddid')));
+    if(empty($query)) return; // no good
+    $result = &$dbconn->Execute($query);
+    if(!$result) return;
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('subitems', 'SupportShortURLs', 0);
@@ -97,36 +113,62 @@ function subitems_init()
  */
 function subitems_upgrade($oldversion)
 {
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $table = $xartable['subitems_ddobjects'];
+    $subitemstable = $xartable['subitems_ddids'];
+    
+    xarDBLoadTableMaintenanceAPI();
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case '1.0.0':
             // Code to upgrade from version 1.0.0 goes here
             xarRemoveMasks('subitems');
             xarRegisterMask('AdminSubitems', 'All', 'subitems', 'All', 'All', 'ACCESS_ADMIN');
-
+            // Fall through
         case '1.0.1':
-            
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            
-            $table = $xartable['subitems_ddobjects'];
-            
-            xarDBLoadTableMaintenanceAPI();
-            
             $query = xarDBAlterTable($table,
-                array('command' => 'add',
-                    'field' => 'xar_sort',
-                    'type' => 'varchar',
-                    'null' => false,
-                    'size' => 255,
-                    'default' => ''
-                    ));
-            
-            $result = &$dbconn->Execute($query);
+                array('command' => 'add', 'field' => 'xar_sort','type' => 'varchar',
+                    'null' => false, 'size' => 255, 'default' => '')
+                                     );
+            $result =& $dbconn->Execute($query);
             if (!$result) return;
-            
+            // Fall through
         case '1.0.2':
-            
+            // Upgrade from 1.0.2 : Add a bit field to be able to extend the
+            // types of links:
+            // 1: classic subitem link (default) : Single Direction From parent to child, both edit/view/delete
+            // 2: <todo> (idea is to have bidirectional links being able to specify on which side of the link editting/deleting is possible)
+            // By adding the flags together the flexibility of the links can be increased at will (and adapting the hook code of course)
+            $query = xarDBAlterTable($table,
+                                     array('command' => 'add',
+                                           'field' => 'xar_type',
+                                           'type' => 'integer',
+                                           'null' => false,
+                                           'unsigned' => true,
+                                           'default' => '1'
+                                           ));
+            if(empty($query)) return; // no good
+            $result =& $dbconn->Execute($query);
+            if(!$result) return;
+                
+            $p = xarDBGetSiteTablePrefix();
+            // Add some indexes, we're dealing with O(n^2) records here.
+            $query = xarDBCreateIndex($subitemstable,array('name'=> 'i_'.$p.'_subitems_itemid',  'fields' => array('xar_itemid')));
+            if(empty($query)) return; // no good
+            $result = &$dbconn->Execute($query);
+            if(!$result) return;
+            $query = xarDBCreateIndex($subitemstable,array('name'=> 'i_'.$p.'_subitems_objectid','fields' => array('xar_objectid')));
+            if(empty($query)) return; // no good
+            $result = &$dbconn->Execute($query);
+            if(!$result) return;
+            $query = xarDBCreateIndex($subitemstable,array('name'=> 'i_'.$p.'_subitems_ddid',    'fields' => array('xar_ddid')));
+            if(empty($query)) return; // no good
+            $result = &$dbconn->Execute($query);
+            if(!$result) return;
+            // Fall through
+        case '1.1.0':
+            // Current version is always last in this list
             break;
     }
     // Update successful
