@@ -334,8 +334,10 @@ function autolinks_upgrade($oldversion)
             if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
                 xarErrorHandled();
             }
-
-        case '1.6':
+            
+       case '1.6':
+            // compatability upgrade     
+       case '1.6.0':
             // The current version.
 
             // Create or update sample data.
