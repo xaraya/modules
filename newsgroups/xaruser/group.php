@@ -9,6 +9,8 @@ function newsgroups_user_group()
     xarVarFetch('group', 'str:1', $data['group']);
     xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED);
 
+    // Fix the input
+    $data['group'] = xarVarPrepForDisplay($data['group']);
     xarTplSetPageTitle(xarVarPrepForDisplay($data['group']));
 
     include_once 'modules/newsgroups/xarclass/NNTP.php';

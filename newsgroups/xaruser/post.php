@@ -5,8 +5,9 @@ function newsgroups_user_post()
     // Security Check
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
-    if (!xarVarFetch('phase','str:1:100',$phase,'new',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase','str:1:100',$phase,'new',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('group','str:1:',$group)) return;
+    $group = xarVarPrepForDisplay($group);
 
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Post to newsgroup')));
 
@@ -27,7 +28,8 @@ function newsgroups_user_post()
 
         case 'reply':
 
-            xarVarFetch('article', 'str:1', $article); 
+            xarVarFetch('article', 'str:1', $article);
+            $article = xarVarPrepForDisplay($article);
 
             include_once 'modules/newsgroups/xarclass/NNTP.php';
 
@@ -76,6 +78,12 @@ function newsgroups_user_post()
             if (!xarVarFetch('body','str::',$body)) return;
             if (!xarVarFetch('reference','str::',$reference, '',XARVAR_NOT_REQUIRED)) return;
 
+            $subject    = xarVarPrepForDisplay($subject);
+            $email      = xarVarPrepForDisplay($email);
+            $name       = xarVarPrepForDisplay($name);
+            $body       = xarVarPrepForDisplay($body);
+            $reference  = xarVarPrepForDisplay($reference);
+
             xarSecConfirmAuthKey();
 
             include_once 'modules/newsgroups/xarclass/NNTP.php';
@@ -106,9 +114,6 @@ function newsgroups_user_post()
             return true;
 
     }
-
     return $data;
-
 }
-
 ?>

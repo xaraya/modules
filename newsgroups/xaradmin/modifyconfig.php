@@ -8,7 +8,7 @@ function newsgroups_admin_modifyconfig()
     // Security Check
     if(!xarSecurityCheck('AdminNewsGroups')) return;
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     switch(strtolower($phase)) {
 
@@ -39,7 +39,7 @@ function newsgroups_admin_modifyconfig()
 
         case 'update':
 
-            if (!xarVarFetch('server','str:1:',$server,'news.xaraya.com',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('server','str:1:',$server,'news.xaraya.com',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
             if (!xarVarFetch('port','int:1:',$port,119,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('wildmat','isset',$wildmat,array(),XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('numitems','int:1:',$itemsperpage,50,XARVAR_NOT_REQUIRED)) return;
@@ -56,6 +56,7 @@ function newsgroups_admin_modifyconfig()
                 $cleanmat = array();
                 foreach ($wildmat as $pattern) {
                     if (empty($pattern)) continue;
+                    $pattern    = xarVarPrepForDisplay($pattern);
                     $cleanmat[] = trim($pattern);
                 }
                 $joinmat = join(',',$cleanmat);

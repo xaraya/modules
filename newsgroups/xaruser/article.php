@@ -7,8 +7,11 @@ function newsgroups_user_article()
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
     xarVarFetch('group', 'str:1', $group);
-    xarVarFetch('article', 'str:1', $article, 0, XARVAR_NOT_REQUIRED);
-    xarVarFetch('messageid', 'str:1', $messageid, '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('article', 'int', $article, 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('messageid', 'str:1', $messageid, '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
+
+    // fix the input
+    $group = xarVarPrepForDisplay($group);
 
     if (empty($article) && empty($messageid)) {
         xarResponseRedirect(xarModURL('newsgroups', 'user', 'group',
