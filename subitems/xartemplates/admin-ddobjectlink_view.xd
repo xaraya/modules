@@ -1,0 +1,34 @@
+<xar:template type="module" file="menu" />
+
+<div class="xar-mod-body">
+
+<h2><xar:mlstring>View Dynamicdata Object Links</xar:mlstring></h2><br />
+
+<table  cellpadding=8>
+<thead>
+<tr>
+	<th><xar:mlstring>Module</xar:mlstring></th>
+	<th><xar:mlstring>Itemtype</xar:mlstring></th>
+	<th><xar:mlstring>ObjectId</xar:mlstring></th>
+	<th><xar:mlstring>Template</xar:mlstring></th>
+	
+</tr>
+</thead>
+<tbody>
+<xar:foreach in="$ddobjects" value="$ddobject" >
+<tr>
+	<td>#$ddobject['module']#
+	<xar:if condition="isset($ddobject['modinfo'])">
+	(valid)
+	</xar:if>
+	</td>
+	<td>#$ddobject['itemtype']#</td>
+	<td>#$ddobject['objectid']#</td>
+	<td>#$ddobject['template']#</td>
+	<td><a href="#xarModUrl('subitems','admin','ddobjectlink_edit',array('objectid' => $ddobject['objectid']))#">edit</a> | 
+	<a href="#xarModUrl('subitems','admin','ddobjectlink_delete',array('objectid' => $ddobject['objectid']))#">delete</a></td>
+</tr>
+</xar:foreach>
+</tbody>
+</table>
+</div>

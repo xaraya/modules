@@ -1,0 +1,40 @@
+<xar:if condition="!empty($preview)">
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <td align="center">
+            <xar:mlstring>Preview</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <xar:data-display object="$object" />
+        </td>
+    </tr>
+</table>
+</xar:if>
+
+<form method="post" action="#xarModURL('subitems','admin','item_new')#">
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+<input type="hidden" name="confirm" value="1" />
+<input type="hidden" name="objectid" value="#$objectid#" />
+<input type="hidden" name="itemid" value="#$itemid#" />
+<input type="hidden" name="redirect" value="#$redirect#" />
+
+<table  border="0" cellpadding="4" cellspacing="0">
+
+<!-- this does most of the hard work :) -->
+<xar:data-form object="$object" />
+<xar:if condition="isset($hooks)">
+#$hooks#
+</xar:if>
+<tr>
+    <td colspan="2" align="center">
+        <input type="submit" name="preview" value="#xarML('Preview')#" />
+        &nbsp;&nbsp;&nbsp;
+        <input type="submit" name="create" value="#xarML('Create')#" />
+    </td>
+</tr>
+
+</table>
+</form>
+

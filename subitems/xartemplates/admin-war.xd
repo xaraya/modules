@@ -1,0 +1,64 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Wars Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#$action#</h2><br />
+<div style="margin: auto;">
+
+<!-- the specific template for the current admin function comes here -->
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form action="" method="POST" enctype="multipart/form-data">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="noinit" id="noinit" value="true" />
+<xar:if condition="isset($warid)">    
+    <input type="hidden" name="warid" id="warid" value="#$warid#" />
+</xar:if>
+
+<tr><td><label for="enemy">#$enemylabel#</label></td>
+<td><input type="text" name="enemy" id="enemy" size="32" value="#$enemy#" maxlength="32" />
+<xar:if condition="!empty($invalid['enemy'])">
+    <span style="color: red"><xar:mlstring>ERROR! This is not a valid input</xar:mlstring>
+</xar:if></td></tr>
+
+<tr><td><label for="reason">#$reasonlabel#</label></td>
+<td><input type="text" name="reason" id="reason" size="32" value="#$reason#" maxlength="32" />
+<xar:if condition="!empty($invalid['reason'])">
+    <span style="color: red"><xar:mlstring>ERROR! This is not a valid input</xar:mlstring>
+</xar:if></td></tr>
+
+<tr><td><label for="description">#$descriptionlabel#</label></td>
+<td><input type="text" name="description" id="description" size="32" value="#$description#" maxlength="150" />
+<xar:if condition="!empty($invalid['description'])">
+    <span style="color: red"><xar:mlstring>ERROR! This is not a valid input</xar:mlstring>
+</xar:if></td></tr>
+<xar:if condition="isset($details)" >
+<xar:template type="module" file="details" />
+<input type="hidden" name="details" value="true" />
+<xar:else>
+<input type="submit" name="details" value="Show Details" />
+</xar:if>
+<tr><td colspan="2">
+<xar:if condition="isset($hooks)">
+#$hooks#
+</xar:if>
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" name="confirm" value="#$button#" /></td></tr>
+</form>
+
+</table>
+<br />
+</div>
+</div>

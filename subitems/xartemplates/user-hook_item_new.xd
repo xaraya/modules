@@ -1,0 +1,4 @@
+<tr><td colspan=2>
+<h3 align="center">#$object->label#:</h3>
+<p align="center">Please create the Item first, after that Subitems can be created.</p>
+</td></tr>

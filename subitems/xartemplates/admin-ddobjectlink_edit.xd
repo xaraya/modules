@@ -1,0 +1,47 @@
+<xar:template type="module" file="menu" />
+
+<div class="xar-mod-body"><h2>#$heading#</h2><br />
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<form action="" method="POST" enctype="multipart/form-data">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
+       <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />    
+	
+<tr>
+<td>
+	Hook-Module Name:
+</td>
+<td>
+	<input type="text" name="modid" value="#$module['value']#" />
+	<span style="color:red">#$module['error']->msg#</span>
+</td>
+</tr>
+<tr>
+<td>
+	Hook-Module Itemtype:
+</td>
+<td>
+	<input type="text" name="itemtype" value="#$itemtype['value']#" />
+	<span style="color:red">#$itemtype['error']->msg#</span>
+</td>
+</tr>
+<tr>
+<td>
+	Hook-Module Template:
+</td>
+<td>
+	<input type="text" name="template" value="#$template['value']#" />
+	<span style="color:red">#$template['error']->msg#</span>
+</td>
+</tr>
+<tr><td colspan="2" align="center">
+    <input type="submit" name="confirm" value="#$submitbutton#" />
+</td></tr>
+</form>
+</table>
+</div>

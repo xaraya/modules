@@ -1,0 +1,38 @@
+<xar:if condition="!empty($preview)">
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <td align="center">
+            <xar:mlstring>Preview</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <xar:data-display object="$object" />
+        </td>
+    </tr>
+</table>
+</xar:if>
+
+<form method="post" action="#xarModURL('subitems','admin','item_delete')#">
+<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+<input type="hidden" name="confirm" value="1" />
+<input type="hidden" name="objectid" value="#$objectid#" />
+<input type="hidden" name="ddid" value="#$ddid#" />
+<input type="hidden" name="redirect" value="#$redirect#" />
+
+<table  border="0" cellpadding="4" cellspacing="0">
+
+<xar:if condition="isset($hooks)">
+#$hooks#
+</xar:if>
+<tr>
+    <td colspan="2" align="center">
+        <input type="submit" name="cancel" value="#xarML('Cancel')#" />
+        &nbsp;&nbsp;&nbsp;
+        <input type="submit" name="delete" value="#xarML('Delete')#" />
+    </td>
+</tr>
+
+</table>
+</form>
+

@@ -1,0 +1,50 @@
+<xar:template type="module" file="menu" />
+
+<div class="xar-mod-body"><h2><xar:mlstring>Delete Item?</xar:mlstring></h2><br />
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<form action="" method="POST" enctype="multipart/form-data">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
+<tr>
+<td>
+	Dynamicdata ObjectId:
+</td>
+<td>
+	#$objectid#
+</td>
+</tr>
+<tr>
+<td>
+	Hook-Module Id:
+</td>
+<td>
+	#$module#
+</td>
+</tr>
+<tr>
+<td>
+	Hook-Module Itemtype:
+</td>
+<td>
+	#$itemtype#
+</td>
+</tr>
+<tr>
+<td>
+	Hook-Module Template:
+</td>
+<td>
+	#$template#
+</td>
+</tr>
+<tr><td colspan="2" align="center">
+    <input type="submit" name="confirm" value="#xarMl('delete')#" />
+</td></tr>
+</form>
+</table>
+</div>
