@@ -23,6 +23,7 @@
  */
 function translations_adminapi_generate_theme_skels($args)
 {
+    // To suppress an error in safe mode we supply a @ here, no other way i think
     set_time_limit(0);
 
     // Get arguments

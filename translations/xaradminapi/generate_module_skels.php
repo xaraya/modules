@@ -23,7 +23,8 @@
  */
 function translations_adminapi_generate_module_skels($args)
 {
-    set_time_limit(0);
+    // To prevent an error in safe mode, we supply a @, no other way i think
+    @set_time_limit(0);
 
     // Get arguments
     extract($args);
@@ -78,18 +79,20 @@ function translations_adminapi_generate_module_skels($args)
     }
 
     $dirnames = xarModAPIFunc('translations','admin','get_module_dirs',array('moddir'=>$moddir));
+    xarLogVariable('dirnames',$dirnames);
     foreach ($dirnames as $dirname) {
         ${$dirname . "names"} = array();
         if (!preg_match('!^templates!i', $dirname, $matches)) {
-            $pattern = '/^([a-z\-_]+)\.php$/i';
+            $pattern = '/^([a-z0-9\-_]+)\.php$/i';
             $xtype = 'php';
         }
         else { 
-            $pattern = '/^([a-z\-_]+)\.xd$/i';
+            $pattern = '/^([a-z0-9\-_]+)\.xd$/i';
             $xtype = 'xd';
         }
         $subnames = xarModAPIFunc('translations','admin','get_module_files',
                          array('moddir'=>"modules/$moddir/xar$dirname",'pattern'=>$pattern));
+        xarLogVariable('subnames',$subnames);
         foreach ($subnames as $subname) {
             $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
             if ($xtype == 'xd') $parser = new TPLParser();

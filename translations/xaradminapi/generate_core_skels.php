@@ -24,7 +24,8 @@
  */
 function translations_adminapi_generate_core_skels($args)
 {
-    set_time_limit(0);
+    // To suppress an error in safe mode we supply a @, no other way i think.
+    @set_time_limit(0);
 
     // Get arguments
     extract($args);
