@@ -62,20 +62,20 @@ function messages_user_send()
         case "preview":
             if (!xarVarFetch('mid', 'int:1', $mid)) {
                 $data['mid'] = 1;
-                xarExceptionHandled();
+                xarErrorHandled();
             }
             
             if (!xarVarFetch('subject', 'str:1', $subject)) {
                 $data['no_subject'] = 1;
-                xarExceptionHandled();
+                xarErrorHandled();
             }
             if (!xarVarFetch('body', 'str:1', $body)){
                 $data['no_body'] = 1;
-                xarExceptionHandled();
+                xarErrorHandled();
             }
             if (!xarVarFetch('receipient', 'int:1', $receipient)){
                 $data['no_receipient'] = 1;
-                xarExceptionHandled();
+                xarErrorHandled();
             }
             // added call to transform text srg 09/22/03      
             list($body) = xarModCallHooks('item',
