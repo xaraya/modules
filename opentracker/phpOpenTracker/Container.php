@@ -160,8 +160,10 @@ class phpOpenTracker_Container {
       } else {
         $container['last_document'] = $container['document'];
       }
-
-      $container['document_url'] = isset($parameters['document_url']) ? $parameters['document_url'] : urldecode($_SERVER[$config['document_env_var']]);
+		//modified for xaraya
+      //$container['document_url'] = isset($parameters['document_url']) ? $parameters['document_url'] : urldecode($_SERVER[$config['document_env_var']]);
+      $container['document_url'] = isset($parameters['document_url']) ? $parameters['document_url'] : xarServerGetCurrentURL();
+      //end mod
 
       if ($config['clean_query_string']) {
         $container['document_url'] = preg_replace(
