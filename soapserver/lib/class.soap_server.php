@@ -34,7 +34,8 @@
      * @param string $wsdl path or URL to a WSDL file
  	* @access   public
  	*/
- 	function soap_server($wsdl=false){
+ 	function soap_server($wsdl=false)
+	{
  
  		// turn on debugging?
  		global $debug;
@@ -59,7 +60,8 @@
  	* @param    string $data usually is the value of $HTTP_RAW_POST_DATA
  	* @access   public
  	*/
- 	function service($data){
+ 	function service($data)
+	{
 		// print wsdl
  		global $QUERY_STRING;
  		if(isset($_SERVER['QUERY_STRING'])){
@@ -121,7 +123,8 @@
  	* @return	string XML response msg
  	* @access   private
  	*/
- 	function parse_request($data='') {
+ 	function parse_request($data='') 
+	{
  		$this->debug('entering parseRequest() on '.date('H:i Y-m-d'));
          $dump = '';
  		// get headers
@@ -284,7 +287,8 @@
  	* @return	boolean
  	* @access   private
  	*/
- 	function verify_method($operation,$request){
+ 	function verify_method($operation,$request)
+	{
  		if(isset($this->wsdl) && is_object($this->wsdl)){
  			if($this->wsdl->getOperationData($operation)){
  				return true;
@@ -303,7 +307,8 @@
  	* @param    string $out array of output values
  	* @access   public
  	*/
- 	function add_to_map($methodname,$in,$out){
+ 	function add_to_map($methodname,$in,$out)
+	{
  			$this->operations[$methodname] = array('name' => $methodname,'in' => $in,'out' => $out);
  	}
  
@@ -318,7 +323,8 @@
  	* @param	string $style (rpc|literal)
  	* @access   public
  	*/
- 	function register($name,$in=false,$out=false,$namespace=false,$soapaction=false,$style=false,$use=false){
+ 	function register($name,$in=false,$out=false,$namespace=false,$soapaction=false,$style=false,$use=false)
+	{
  	    if(false == $in) {
  		}
  		if(false == $out) {
@@ -358,7 +364,8 @@
  	* @param	string faultdetail
  	* @access   public
  	*/
- 	function fault($faultcode,$faultactor,$faultstring='',$faultdetail=''){
+ 	function fault($faultcode,$faultactor,$faultstring='',$faultdetail='')
+	{
  		$this->fault = new soap_fault($faultcode,$faultactor,$faultstring,$faultdetail);
  	}
  
@@ -367,7 +374,8 @@
      *
      * @access private
      */
-     function webDescription(){
+     function webDescription()
+	 {
  		$b = '
  		<?xml version="1.0"?>
  		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><title>NuSOAP: '.$this->wsdl->serviceName.'</title>
