@@ -60,7 +60,7 @@ function release_userapi_getallrids($args)
         // add this for SQL compliance when there are multiple JOINs
         // Add the LEFT JOIN ... ON ... parts from categories
         $from .= ' LEFT JOIN ' . $categoriesdef['table'];
-        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_release_id.xar_rid';
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_rid';
         
         if (!empty($categoriesdef['more'])) 
         {

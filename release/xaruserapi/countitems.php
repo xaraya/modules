@@ -27,25 +27,65 @@ function release_userapi_countitems($args)
     if (!isset($idtypes)) {
         $idtypes = 1;
     }
-    if ($idtypes == 3){
-        $whereclause= "WHERE xar_type = '0'";
-    }elseif ($idtypes==2) {
-        $whereclause= "WHERE xar_type = '1'";
-    }else {
-        $whereclause= "WHERE xar_type = '1' or xar_type = '0'";
-    }
-
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $releasetable = $xartable['release_id'];
-     $query = "SELECT COUNT(1)
-             FROM $releasetable "
-             .$whereclause;
+    //Joins on Catids
+    if(!empty($catid))
+    {
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
+                              array('modid'    => 773,
+                                    'itemtype' => 0,
+                                    'cids'     => array($catid),
+                                    'andcids'  => 1));
+    }
 
-    $result = &$dbconn->Execute($query);
+     $query = "SELECT COUNT(1)
+             FROM $releasetable";
+
+    $from ='';
+    $where = array();
+    if (!empty($catid) && count(array($catid)) > 0) 
+    {
+        // add this for SQL compliance when there are multiple JOINs
+        // Add the LEFT JOIN ... ON ... parts from categories
+        $from .= ' LEFT JOIN ' . $categoriesdef['table'];
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . $releasetable.'.xar_rid';
+
+        if (!empty($categoriesdef['more'])) 
+        {
+            //$from = ' ( ' . $from . ' ) ';
+            $from .= $categoriesdef['more'];
+        }
+        
+        $where[] = $categoriesdef['where'];
+        $query .= $from;
+    }
+
+    switch ($idtypes) {
+    case 3: // module
+        $where[] = "xar_type = '0'";
+        break;
+    case 2: // theme
+        $where[] = "xar_type = '1'";
+        break;
+    }
+
+    if (!empty($certified)) {
+        $where[] = " xar_certified = '" . xarVarPrepForStore($certified). "'";
+    }
+
+    if (count($where) > 0)
+    {
+        $query .= ' WHERE ' . join(' AND ', $where);
+    }
+
+    $query .= " ORDER BY xar_rid";
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

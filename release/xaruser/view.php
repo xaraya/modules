@@ -211,8 +211,8 @@ function release_user_view()
     $data['phase']=$phase;
     $data['catid'] = $catid;
     $data['pager'] = xarTplGetPager($startnum,
-        xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
-        xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase)),
+        xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes,'catid'=>$catid)),
+        xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase,'catid'=>$catid)),
         xarModGetUserVar('release', 'itemsperpage', $uid));
 
     // Add the array of items to the template variables
