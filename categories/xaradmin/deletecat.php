@@ -29,6 +29,12 @@ function categories_admin_deletecat()
         $data['yeslabel'] = xarML('Yes');
         $data['authkey'] = xarSecGenAuthKey();
 
+        $data['numcats'] = xarModAPIFunc('categories','user','countcats',
+                                         $cat);
+        $data['numcats'] -= 1;
+        $data['numitems'] = xarModAPIFunc('categories','user','countitems',
+                                          array('cids' => array('_'.$cid),
+                                                'modid' => 0));
         // Return output
         return xarTplModule('categories','admin','delete',$data);
     }
