@@ -60,6 +60,11 @@ function messages_user_send() {
 
             break;
         case "preview":
+            if (!xarVarFetch('mid', 'int:1', $mid)) {
+                $data['mid'] = 1;
+                xarExceptionHandled();
+            }
+            
             if (!xarVarFetch('subject', 'str:1', $subject)) {
                 $data['no_subject'] = 1;
                 xarExceptionHandled();
@@ -72,6 +77,11 @@ function messages_user_send() {
                 $data['no_receipient'] = 1;
                 xarExceptionHandled();
             }
+            // added call to transform text srg 09/22/03      
+            list($body) = xarModCallHooks('item',
+                                          'transform',
+                                           $mid,
+                                           array($body));
 
             $data['input_title']                = xarML('Preview your Message');
             $data['action']                     = 'preview';

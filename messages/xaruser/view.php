@@ -22,6 +22,8 @@ function messages_user_view( $args ) {
     }
 
     $read_messages = xarModGetUserVar('messages','read_messages');
+    
+                
     if (!empty($read_messages)) {
         $read_messages = unserialize($read_messages);
     } else {
@@ -40,6 +42,13 @@ function messages_user_view( $args ) {
 
     $data['message'] = $messages[0];
     $data['action']  = 'view';
+    
+    // added call to transform text srg 09/22/03      
+    list($data['message']['body']) = xarModCallHooks('item',
+         'transform',
+         $mid,
+         array($data['message']['body']));
+       
     /*
      * Add this message id to the list of 'seen' messages
      * if it's not already in there :)
