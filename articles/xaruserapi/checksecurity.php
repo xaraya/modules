@@ -147,6 +147,7 @@ function articles_userapi_checksecurity($args)
     // FIXME: the line within the foreach is known to give an illegal offset error, not sure how to properly
     // fix it. Only seen on using xmlrpc and bloggerapi.
     foreach ($cids as $cid) {
+        if (empty($cid) || !is_numeric($cid)) continue;
         $jointcids[$cid] = 1;
     }
 
