@@ -707,6 +707,9 @@ function articles_user_view($args)
 
 // TODO: improve the case where we have several icons :)
         $article['topic_icons'] = '';
+        $article['topic_images'] = array();
+        $articles['topic_urls'] = array();
+        $articles['topic_names'] = array();
         // categories this article belongs to
         $article['categories'] = array();
         if ($showcategories && !empty($article['cids']) &&
@@ -746,12 +749,16 @@ function articles_user_view($args)
                 }
                 $article['categories'][] = $item;
 
+                $article['topic_urls'][] = $catinfo[$cid]['link'];
+                $article['topic_names'][] = xarVarPrepForDisplay($catinfo[$cid]['name']);
+
                 if (!empty($catinfo[$cid]['image'])) {
                     $image = xarTplGetImage($catinfo[$cid]['image'],'categories');
                     $article['topic_icons'] .= '<a href="'. $catinfo[$cid]['link'] .'">'.
                                             '<img src="'. $image .
                                             '" alt="'. xarVarPrepForDisplay($catinfo[$cid]['name']) .'" />'.
                                             '</a>';
+                    $article['topic_images'][] = $image;
                 }
             }
         }

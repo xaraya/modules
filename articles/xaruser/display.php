@@ -121,6 +121,9 @@ function articles_user_display($args)
 
 // TODO: improve the case where we have several icons :)
     $data['topic_icons'] = '';
+    $data['topic_images'] = array();
+    $data['topic_urls'] = array();
+    $data['topic_names'] = array();
     if (count($cids) > 0) {
         if (!xarModAPILoad('categories', 'user')) return;
         $catlist = xarModAPIFunc('categories',
@@ -128,16 +131,23 @@ function articles_user_display($args)
                                 'getcatinfo',
                                 array('cids' => $cids));
         foreach ($catlist as $cat) {
+            $link = xarModURL('articles','user','view',
+                             array(//'status' => array(3,2),
+                                   'ptid' => $ptid,
+                                   'catid' => $cat['cid']));
+            $name = xarVarPrepForDisplay($cat['name']);
+
+            $data['topic_urls'][] = $link;
+            $data['topic_names'][] = $name;
+
             if (!empty($cat['image'])) {
-                $link = xarModURL('articles','user','view',
-                                 array(//'status' => array(3,2),
-                                       'ptid' => $ptid,
-                                       'catid' => $cat['cid']));
                 $image = xarTplGetImage($cat['image'],'categories');
                 $data['topic_icons'] .= '<a href="'. $link .'">'.
                                         '<img src="'. $image .
-                                        '" alt="'. xarVarPrepForDisplay($cat['name']) .'" />'.
+                                        '" alt="'. $name .'" />'.
                                         '</a>';
+                $data['topic_images'][] = $image;
+
                 break;
             }
         }
