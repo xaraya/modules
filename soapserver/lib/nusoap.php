@@ -418,7 +418,8 @@
      * @return mixed
      * @access public
      */
- 	function getPrefix($str){
+ 	function getPrefix($str)
+	{
  		if($pos = strrpos($str,':')){
  			// get prefix
  			return substr($str,0,$pos);
@@ -426,7 +427,8 @@
  		return false;
  	}
  
-     function varDump($data) {
+     function varDump($data) 
+	 {
  		ob_start();
  		var_dump($data);
  		$ret_val = ob_get_contents();
