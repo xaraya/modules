@@ -61,13 +61,17 @@ function changelog_userapi_getitems($args)
     $changelogtable = $xartable['changelog'];
 
     // Get items
-    $query = "SELECT xar_itemid, COUNT(*) as numchanges
-            FROM $changelogtable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
+    $query = "SELECT xar_itemid, 
+                     COUNT(*) as numchanges
+                FROM $changelogtable
+               WHERE xar_moduleid = ?
+                 AND xar_itemtype = ?";
+    $bindvars = array((int) $modid, (int) $itemtype);
+
     if (count($itemids) > 0) {
         $allids = join(', ',$itemids);
-        $query .= " AND xar_itemid IN ('" . xarVarPrepForStore($allids) . "')";
+        $query .= " AND xar_itemid IN ( ? ) ";
+        $bindvars[] = (string) $allids;
     }
     $query .= " GROUP BY xar_itemid";
     if ($sort == 'numchanges') {
@@ -77,9 +81,9 @@ function changelog_userapi_getitems($args)
     }
 
     if (!empty($numitems) && !empty($startnum)) {
-        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1);
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1, $bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query, $bindvars);
     }
     if (!$result) return;
 

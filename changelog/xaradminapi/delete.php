@@ -34,14 +34,17 @@ function changelog_adminapi_delete($args)
         if (empty($itemtype) || !is_numeric($itemtype)) {
             $itemtype = 0;
         }
-        $query .= " WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-                      AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
+        $query .= " WHERE xar_moduleid = ? 
+                      AND xar_itemtype = ?
+        $bindvars = array((int) $modid, (int) $itemtype);
+
         if (!empty($itemid)) {
-            $query .= " AND xar_itemid = '" . xarVarPrepForStore($itemid) . "'";
+            $query .= " AND xar_itemid = ?";
+            $bindvars[] = (int) $itemid;
         }
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

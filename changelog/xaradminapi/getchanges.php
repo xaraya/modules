@@ -47,21 +47,23 @@ function changelog_adminapi_getchanges($args)
                      $changelogtable.xar_status,
                      $changelogtable.xar_remark,
                      $rolestable.xar_name
-              FROM $changelogtable
-              LEFT JOIN $rolestable
-                ON $changelogtable.xar_editor = $rolestable.xar_uid
-              WHERE $changelogtable.xar_moduleid = " . xarVarPrepForStore($modid) . "
-                AND $changelogtable.xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                AND $changelogtable.xar_itemid = " . xarVarPrepForStore($itemid) . "
-              ORDER BY $changelogtable.xar_logid DESC";
+                FROM $changelogtable
+           LEFT JOIN $rolestable
+                  ON $changelogtable.xar_editor = $rolestable.xar_uid
+               WHERE $changelogtable.xar_moduleid = ?
+                 AND $changelogtable.xar_itemtype = ?
+                 AND $changelogtable.xar_itemid = ?
+            ORDER BY $changelogtable.xar_logid DESC";
+
+    $bindvars = array((int) $modid, (int) $itemtype, (int) $itemid);
 
     if (isset($numitems) && is_numeric($numitems)) {
         if (empty($startnum)) {
             $startnum = 1;
         }
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query, $bindvars);
     }
     if (!$result) return;
 

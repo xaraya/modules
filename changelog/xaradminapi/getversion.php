@@ -54,15 +54,17 @@ function changelog_adminapi_getversion($args)
                      $changelogtable.xar_remark,
                      $changelogtable.xar_content,
                      $rolestable.xar_name
-              FROM $changelogtable
-              LEFT JOIN $rolestable
-                ON $changelogtable.xar_editor = $rolestable.xar_uid
-              WHERE $changelogtable.xar_moduleid = " . xarVarPrepForStore($modid) . "
-                AND $changelogtable.xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                AND $changelogtable.xar_itemid = " . xarVarPrepForStore($itemid) . "
-                AND $changelogtable.xar_logid = " . xarVarPrepForStore($logid);
+                FROM $changelogtable
+           LEFT JOIN $rolestable
+                  ON $changelogtable.xar_editor = $rolestable.xar_uid
+               WHERE $changelogtable.xar_moduleid = ?
+                 AND $changelogtable.xar_itemtype = ?
+                 AND $changelogtable.xar_itemid = ? 
+                 AND $changelogtable.xar_logid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $modid, (int) $itemtype, (int) $itemid, (int) $logid);
+
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     $version = array();

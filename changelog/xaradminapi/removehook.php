@@ -47,10 +47,13 @@ function changelog_adminapi_removehook($args)
     $changelog = $xartable['changelog'];
 
     // Delete the entries
-    $queryl = "DELETE FROM $changelog
-               WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'";
+    $queryl = "DELETE 
+                 FROM $changelog
+                WHERE xar_moduleid = ?";
+    
+    $bindvars = array((int) $modid);
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;

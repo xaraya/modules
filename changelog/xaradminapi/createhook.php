@@ -114,18 +114,20 @@ function changelog_adminapi_createhook($args)
                                        xar_status,
                                        xar_remark,
                                        xar_content)
-            VALUES ($nextId,
-                    '" . xarVarPrepForStore($modid) . "',
-                    '" . xarVarPrepForStore($itemtype) . "',
-                    '" . xarVarPrepForStore($objectid) . "',
-                    '" . xarVarPrepForStore($editor) . "',
-                    '" . xarVarPrepForStore($hostname) . "',
-                    '" . xarVarPrepForStore($date) . "',
-                    '" . xarVarPrepForStore($status) . "',
-                    '" . xarVarPrepForStore($remark) . "',
-                    '" . xarVarPrepForStore($content) . "')";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $nextId,
+                      (int) $modid, 
+                      (int) $itemtype,
+                      (int) $objectid,
+                      (int) $editor,
+                      (string) $hostname.
+                      (int) $date,
+                      (string) $status,
+                      (string) $remark,
+                      (string) $content);
+
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
