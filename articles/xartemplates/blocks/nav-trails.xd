@@ -2,7 +2,7 @@
 <ul><span>You Are Here: &nbsp;</span>
 <xar:foreach in="$cattrees" value="$cattree">
 
-    <xar:if condition="isset($cattree['catparents']) && is_array($cattree['catparents']) && sizeof($cattree['catparents']) gt 0">
+    <xar:if condition="isset($cattree['catparents']) and is_array($cattree['catparents']) and sizeof($cattree['catparents']) gt 0">
     <xar:foreach in="$cattree['catparents']" value="$parent">
         <li>
         <xar:if condition="empty($parent['catlink'])">

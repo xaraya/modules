@@ -8,7 +8,7 @@
     <xar:if condition="!empty($showtitle)">
         <a href="#xarModURL('articles', 'user', 'display', array('aid' => $item['aid']))#">#$item['title']#</a>
     </xar:if>
-    <xar:if condition="!empty($showsummary) && !empty($item['summary'])">
+    <xar:if condition="!empty($showsummary) and !empty($item['summary'])">
         <p>
             #$item['summary']#
         </p>
