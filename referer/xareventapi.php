@@ -54,8 +54,8 @@ function referer_eventapi_OnServerRequest()
         $count = $row[0];
         if ($count == 1) {
             $query = "UPDATE $referertable
-                          SET xar_frequency = xar_frequency + 1
-                          SET xar_time = ?
+                          SET xar_frequency = xar_frequency + 1,
+                              xar_time = ?
                           WHERE xar_url = ?";
             $result =& $dbconn->Execute($query, array($time, $HTTP_REFERER));
              
