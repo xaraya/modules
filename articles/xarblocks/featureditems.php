@@ -139,7 +139,9 @@ function articles_featureditemsblock_display(& $blockinfo)
             'alttitle'          => $vars['alttitle'],
             'altsummary'        => $vars['altsummary'],
             'showfeaturedsum'   => $vars['showfeaturedsum'],
-            'featureddesc'      => $featuredart['summary'] 
+            'showfeaturedbod'   => $vars['showfeaturedbod'],
+            'featureddesc'      => $featuredart['summary'],
+            'featuredbody'      => $featuredart['body']
         );
     }
 
@@ -210,7 +212,7 @@ function articles_featureditemsblock_display(& $blockinfo)
 
     // Set the data to return.
     $blockinfo['content'] = $data;
-    return $blockinfo;
+   return $blockinfo;
 }
 
 /**

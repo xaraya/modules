@@ -1,4 +1,4 @@
-<xar:loop name="$feature">  
+<xar:loop name="$feature">
     <xar:if condition="!empty($loop:item['featuredlabel'])">
         <xar:if condition="!empty($loop:item['alttitle'])">
             <a href="#$loop:item['featuredlink']#">#$loop:item['alttitle']#</a>
@@ -14,7 +14,11 @@
                     #xarVarPrepHTMLDisplay($loop:item['featureddesc'])#
                 </xar:if>
             </xar:if>
+             <br />
         </xar:if>
+        <xar:if condition="$loop:item['showfeaturedbod'] eq true">
+                #$loop:item['featuredbody']#
+       </xar:if>
         <br />
     </xar:if>
 </xar:loop>

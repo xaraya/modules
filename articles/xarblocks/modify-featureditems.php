@@ -36,6 +36,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
     if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
     if (empty($vars['showfeaturedsum'])) {$vars['showfeaturedsum'] = false;}
+    if (empty($vars['showfeaturedbod'])) {$vars['showfeaturedbod'] = false;}
     if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
     if (empty($vars['showsummary'])) {$vars['showsummary'] = false;}
@@ -148,7 +149,7 @@ function articles_featureditemsblock_update($blockinfo)
     xarVarFetch('alttitle', 'str', $vars['alttitle'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('altsummary', 'str', $vars['altsummary'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('moreitems', 'list:id', $vars['moreitems'], NULL, XARVAR_NOT_REQUIRED);
-
+    xarVarFetch('showfeaturedbod', 'checkbox', $vars['showfeaturedbod'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showfeaturedsum', 'checkbox', $vars['showfeaturedsum'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED);
