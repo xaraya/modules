@@ -184,7 +184,7 @@
         </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
-        <input type="integer" name="tinyundolevel" id="tinyundolevel" value="#$tinyundolevel#" size="3" maxlength="3" /> px
+        <input type="integer" name="tinyundolevel" id="tinyundolevel" value="#$tinyundolevel#" size="3" maxlength="3" /> 
     </span>
     </div>
 
