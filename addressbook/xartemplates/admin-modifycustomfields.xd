@@ -9,6 +9,11 @@
   <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
   <div class="xar-mod-body" style="display:block;">
     <h2><xar:mlstring>Configure Custom Fields</xar:mlstring></h2>
+<!--- START WARN DISPLAY -----------------------------------------------------------  --->
+    <div style="text-align:center;">
+	<xar:template compile="false" file="mod-warn-msg" type="module" />
+	</div>
+<!--- END WARN DISPLAY -------------------------------------------------------------  --->
     <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
     <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
     <table width="60%"  border="0" cellspacing="1" cellpadding="5">
@@ -23,44 +28,44 @@
           </tr>
 <!-- Logic for displaying existing custom fields -->
                     <xar:if condition="isset($custfields)">
-                        <xar:loop name="$custfields">
+                        <xar:foreach in="$custfields" value="$cf">
                             <tr>
                                 <td align="center" valign="middle">
-                                    <input name="custLabel[]" id="custLabel[]" type="text" value="#$custLabel#" size="20" maxlength="30" />
+                                    <input name="custLabel[]" id="custLabel[]" type="text" value="#$cf['custLabel']#" size="20" maxlength="30" />
                                 </td>
                                 <td align="center" valign="middle">
                                     <select name="custType[]" id="custType[]" size="1">
-                                    <xar:loop name="$datatypes">
-                                      <xar:if condition="$id ne $custType">
-                                      <option value="#$id#">#$name#</option>
+                                    <xar:foreach in="$datatypes" value="$datatype">
+                                      <xar:if condition="$datatype['id'] ne $cf['custType']">
+                                      <option value="#$datatype['id']#">#$datatype['name']#</option>
                                       <xar:else />
-                                      <option value="#$id#" selected>#$name#</option>
+                                      <option value="#$datatype['id']#" selected>#$datatype['name']#</option>
                                       </xar:if>
-                                    </xar:loop>
+                                    </xar:foreach>
                                     </select>
                                     </td>
                   <td align="center" valign="middle">
-                                    <xar:if condition="$nr gt 4">
-                    <input type="checkbox" name="del[]" id="del[]" value="#$nr#"/>
+                                    <xar:if condition="$cf['nr'] gt 4">
+                    <input type="checkbox" name="del[]" id="del[]" value="#$cf['nr']#"/>
                                     <xar:else />
                     <input type="hidden" name="del[]" id="del[]" value=""/>&nbsp;
                                     </xar:if>
-                  <input type="hidden" name="id[]" id="id[]" value="#$nr#" />
+                  <input type="hidden" name="id[]" id="id[]" value="#$cf['nr']#" />
                                 </td>
                 <td align="center" valign="middle">
-                                <xar:if condition="$position eq 1">
-                                <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$nr#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4"></a>
+                                <xar:if condition="$cf['position'] eq 1">
+                                <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4"></a>
                                          
                                 <xar:else />
-                                    <xar:if condition="$position eq sizeof($custfields)">
-                                    <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$nr#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4"></a>
+                                    <xar:if condition="$cf['position'] eq sizeof($custfields)">
+                                    <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4"></a>
                                     <xar:else />
-                                    <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$nr#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4"></a><a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$nr#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4"></a>
+                                    <a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.incID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/up.gif" alt="#xarVarPrepHTMLDisplay(_AB_UP)#" border="0" hspace="4"></a><a href="javascript:document.modcustfield.submit();" onclick="javascript:document.modcustfield.decID.value=#$cf['nr']#;"><img src="modules/#$modInfo['directory']#/xarimages/down.gif" alt="#xarVarPrepHTMLDisplay(_AB_DOWN)#" border="0" hspace="4"></a>
                                     </xar:if>
                                 </xar:if>
                                 </td>
                             </tr>
-                        </xar:loop>
+                        </xar:foreach>
                     </xar:if>
 <!-- Logic for displaying existing custom fields -->
 <!-- Logic for displaying new custom field -->
@@ -70,9 +75,9 @@
             </td>
             <td align="center" valign="middle">
                         <select name="newtype" id="newtype" size="1">
-              <xar:loop name="$datatypes">
-                      <option value="#$id#">#$name#</option>
-                            </xar:loop>
+              <xar:foreach in="$datatypes" value="$datatype">
+                      <option value="#$datatype['id']#">#$datatype['name']#</option>
+              </xar:foreach>
             </select></td>
             <td align="center" valign="middle">&lt;==&nbsp;New</td>
             <td align="center" valign="middle">&nbsp;</td>

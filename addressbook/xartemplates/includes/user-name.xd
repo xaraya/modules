@@ -22,13 +22,13 @@
             <td align="right" valign="middle"><xar:mlstring>Prefix/Title</xar:mlstring>:</td>
             <td align="left" valign="middle">
                 <select name="prfx" id="prfx">
-                    <xar:loop name="$prfxs">
-                        <xar:if condition="$id ne $prfx">
-                  <option value="#$id#">#$name#</option>
+                    <xar:foreach in="$prfxs" value="$prefix">
+                        <xar:if condition="$prefix['id'] ne $prfx">
+                  <option value="#$prefix['id']#">#$prefix['name']#</option>
                         <xar:else />
-                  <option selected value="#$id#">#$name#</option>
+                  <option selected value="#$prefix['id']#">#$prefix['name']#</option>
                         </xar:if>
-                    </xar:loop>
+                    </xar:foreach>
         </select>
             </td>
         </tr>
@@ -58,9 +58,9 @@
             <td align="left" valign="middle">
                     <input name="autoCompanyFill" id="autoCompanyFill" type="hidden" value="0" />
                     <select name="comp_lookup" id="comp_lookup" onchange="this.form.action.value=1;this.form.autoCompanyFill.value=1;this.form.submit();">
-                    <xar:loop name="$companies">
-                      <option value="#$id#">#$name#</option>
-                    </xar:loop>
+                    <xar:foreach in="$companies" value="$company">
+                      <option value="#$company['id']#">#$company['name']#</option>
+                    </xar:foreach>
                     </select>
 
             </td>

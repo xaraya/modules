@@ -81,13 +81,13 @@
         <td align="right" valign="middle"><xar:mlstring>Category</xar:mlstring>:</td>
         <td align="left" valign="middle">
                 <select name="cat_id" id="cat_id">
-                    <xar:loop name="$cats">
-                        <xar:if condition="$id ne $cat_id">
-                            <option value="#$id#">#$name#</option>
+                    <xar:foreach in="$cats" value="$cat">
+                        <xar:if condition="$cat['id'] ne $cat_id">
+                            <option value="#$cat['id']#">#$cat['name']#</option>
                         <xar:else />
-                            <option selected value="#$id#">#$name#</option>
+                            <option selected value="#$cat['id']#">#$cat['name']#</option>
                         </xar:if>
-                    </xar:loop>
+                    </xar:foreach>
         </select>
         </td>
         <td width="100%" align="right" valign="middle">&nbsp;</td>

@@ -8,9 +8,15 @@
         <xar:mlstring>Administration - Address Book</xar:mlstring>
     </span>
 </div>
+<!--- START INFO DISPLAY -----------------------------------------------------------  --->
+<xar:if condition="!empty($abExceptions['abInfoMsg'])">
+<br />
+<div style="border-width: 1px; background-color:#CCFFCC; border-style: solid; border-color: #009900; padding: 2px; text-align:center;">
+  <strong><xar:template compile="false" file="mod-info-msg" type="module" /></strong>
+</div>
+<br />
+</xar:if>
+<!--- END INFO DISPLAY -------------------------------------------------------------  --->
 <!--- START DEBUG DISPLAY -----------------------------------------------------------  --->
 <xar:template compile="false" file="mod-debug" type="module" />
 <!--- END DEBUG DISPLAY -------------------------------------------------------------  --->
-<!--- START INFO DISPLAY -----------------------------------------------------------  --->
-<xar:template compile="false" file="mod-info-msg" type="module" />
-<!--- END INFO DISPLAY -------------------------------------------------------------  --->

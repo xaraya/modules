@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateconfig.php,v 1.2 2003/07/05 04:56:27 garrett Exp $
+ * File: $Id: updateconfig.php,v 1.3 2003/07/06 04:42:25 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -141,14 +141,14 @@ function AddressBook_adminapi_updateconfig($args) {
             $guestmode = 0;
             $usermode = 7;
 			xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
+						_AB_ERR_WARN, 
 						new abUserException(_AB_GLOBALPROTECTERROR));
         }
     }
     if ($guestmode > $usermode) {
         $usermode = $guestmode;
 		xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
+						_AB_ERR_WARN, 
 						new abUserException(_AB_GRANTERROR));
     }
 
@@ -159,7 +159,7 @@ function AddressBook_adminapi_updateconfig($args) {
 
     if ($sortdata_1 == $sortdata_2) {
 		xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
+						_AB_ERR_WARN, 
 						new abUserException(_AB_SORTERROR_1));
     }
     else {
@@ -168,7 +168,7 @@ function AddressBook_adminapi_updateconfig($args) {
     }
     if ($sortdata_3 == $sortdata_4) {
 		xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
+						_AB_ERR_WARN, 
 						new abUserException(_AB_SORTERROR_2));
     }
     else {
@@ -180,7 +180,7 @@ function AddressBook_adminapi_updateconfig($args) {
 
     if (strlen($special_chars_1) != strlen($special_chars_2)) {
 		xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_INFO, 
+						_AB_ERR_WARN, 
 						new abUserException(_AB_SPECIAL_CHARS_ERROR));
     }
     else {
@@ -208,7 +208,7 @@ function AddressBook_adminapi_updateconfig($args) {
 //    $msg = xarVarPrepHTMLDisplay();
 //    if (isset($error)) { $msg .= ' - '.$error; }
 	xarExceptionSet(XAR_USER_EXCEPTION, 
-					_AB_ERR_DEBUG, 
+					_AB_ERR_INFO, 
 					new abUserException(_AB_CONF_AB_SUCCESS));
 // END FIXME
 

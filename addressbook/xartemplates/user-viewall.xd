@@ -52,13 +52,13 @@
                                             <td colspan="1" rowspan="1" align="right" valign="middle"><xar:mlstring>Category</xar:mlstring>: </td>
                                             <td colspan="1" rowspan="1" align="left" valign="middle">
                                               <select name="catview" id="catview" size="1" onchange="javascript:this.form.submit();">
-                                              <xar:loop name="$cats">
-                                                <xar:if condition="$id ne $catview">
-                                                  <option value="#$id#">#$name#</option>
+                                              <xar:foreach in="$cats" value="$cat">
+                                                <xar:if condition="$cat['id'] ne $catview">
+                                                  <option value="#$cat['id']#">#$cat['name']#</option>
                                                 <xar:else />
-                                                  <option selected value="#$id#">#$name#</option>
+                                                  <option selected value="#$cat['id']#">#$cat['name']#</option>
                                                 </xar:if>
-                                              </xar:loop>
+                                              </xar:foreach>
                                               </select>
                                             </td>
                                           </tr>
@@ -85,13 +85,13 @@
                                             <td colspan="1" rowspan="1" align="right" valign="middle"><xar:mlstring>Sort&nbsp;by</xar:mlstring>: </td>
                                             <td colspan="1" rowspan="1" align="left" valign="middle">
                                               <select name="sortview" id="sortview" size="1" onchange="this.form.submit();">
-                                              <xar:loop name="$sortby">
-                                                <xar:if condition="$id ne $sortview">
-                                                  <option value="#$id#">#$name#</option>
+                                              <xar:foreach in="$sortby" value="$sb">
+                                                <xar:if condition="$sb['id'] ne $sortview">
+                                                  <option value="#$sb['id']#">#$sb['name']#</option>
                                                 <xar:else />
-                                                  <option selected value="#$id#">#$name#</option>
+                                                  <option selected value="#$sb['id']#">#$sb['name']#</option>
                                                 </xar:if>
-                                              </xar:loop>
+                                              </xar:foreach>
                                               </select>
                                             </td>
                                           </tr>
@@ -184,9 +184,9 @@
                   <td>
                                     <xar:if condition="!$all">
                                         <div style="text-align:center;">
-                                        <xar:loop name="$azLinks">
-                                            #$azLink#
-                                        </xar:loop>
+                                        <xar:foreach in="$azLinks" value="$link">
+                                            #$link['azLink']#
+                                        </xar:foreach>
                                         </div>
                                     </xar:if>
                                     <br />
@@ -200,16 +200,16 @@
                                     </div>
                           <br />
                                                     <div style="text-align:center;">
-                                                    <xar:loop name="$pageNav">
-                                                        <xar:if condition="$pageNum ne 1">
+                                                    <xar:foreach in="$pageNav" value="$pn">
+                                                        <xar:if condition="$pn['pageNum'] ne 1">
                                                             &nbsp;|&nbsp;
                                                         </xar:if>
-                                                        <xar:if condition="$pageNum eq $absolutePage">
+                                                        <xar:if condition="$pn['pageNum'] eq $absolutePage">
                                                             <b><u>#$pageNum#</u></b>
                                                         <xar:else />
-                                                            <a href="#$pageURL#">#$pageNum#</a>
+                                                            <a href="#$pn['pageURL']#">#$pn['pageNum']#</a>
                                                         </xar:if>
-                                                    </xar:loop>
+                                                    </xar:foreach>
                                                     </div>
                                                 </xar:if>
                                                 <xar:if condition="!xarModGetVar(__ADDRESSBOOK__, 'hidecopyright')">

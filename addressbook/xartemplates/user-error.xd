@@ -29,9 +29,9 @@
 			<br />
 	</div>
 	<div style="border-width: 1px; background-color:#EFEFEF; border-style: solid; border-color: #666666; padding: 2px; text-align:center;">
-			<xar:loop name="$abExceptions['xarSysException']">
-					#$type# = #$text#<br />
-			</xar:loop>
+			<xar:foreach in="$abExceptions['xarSysException']" value="sysExc">
+					#$sysExc['type']# = #$sysExc['text']#<br />
+			</xar:foreach>
 	</div>
 </xar:if>
 <!--- START DEBUG DISPLAY -----------------------------------------------------------  --->

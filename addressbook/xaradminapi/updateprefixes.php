@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateprefixes.php,v 1.3 2003/07/05 23:08:23 garrett Exp $
+ * File: $Id: updateprefixes.php,v 1.4 2003/07/06 04:42:25 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -76,43 +76,25 @@ function AddressBook_adminapi_updateprefixes($args) {
     }
 
     if(xarModAPIFunc(__ADDRESSBOOK__,'admin','updateItems',array('tablename'=>'prefixes','updates'=>$updates))) {
-//FIXME: <garrett> we want to say SUCCESS while at the same time
-//		printing additional informational messages. how can we
-//      prioritize them as done here? 
-//    $msg = xarVarPrepHTMLDisplay();
-//    if (isset($error)) { $msg .= ' - '.$error; }
 		xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_DEBUG, 
+						_AB_ERR_INFO, 
 						new abUserException('UPDATE - '._AB_SUCCESS));
-// END FIXME
     }
 
     if(isset($dels)) {
         $delete = "DELETE FROM $preTable WHERE nr IN ($dels)";
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteItems',array('tablename'=>'prefixes','delete'=>$delete))) {
-//FIXME: <garrett> we want to say SUCCESS while at the same time
-//		printing additional informational messages. how can we
-//      prioritize them as done here? 
-//    $msg = xarVarPrepHTMLDisplay();
-//    if (isset($error)) { $msg .= ' - '.$error; }
 		xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_DEBUG, 
+						_AB_ERR_INFO, 
 						new abUserException('DELETE - '._AB_SUCCESS));
-// END FIXME
         }
     }
 
     if( (isset($newname)) && ($newname != '') ) {
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','addItems',array('tablename'=>'prefixes','name'=>$newname))) {
-//FIXME: <garrett> we want to say SUCCESS while at the same time
-//		printing additional informational messages. how can we
-//      prioritize them as done here? 
-//    $msg = xarVarPrepHTMLDisplay();
-//    if (isset($error)) { $msg .= ' - '.$error; }
 		xarExceptionSet(XAR_USER_EXCEPTION, 
-						_AB_ERR_DEBUG, 
+						_AB_ERR_INFO, 
 						new abUserException('INSERT - '._AB_SUCCESS));
-// END FIXME
         }
     }
 

@@ -7,16 +7,16 @@
     <table border="1" cellpadding="2" cellspacing="0" bgcolor="#E6E6E6">
 <!--- Header row --->
         <tr>
-<xar:loop name="$headers">
-                <th>#$header#</th>
-</xar:loop>
+<xar:foreach in="$headers" value="$header">
+                <th>#$header['header']#</th>
+</xar:foreach>
                 <th><xar:mlstring>CONTACT</xar:mlstring></th>
                 <th><xar:mlstring>ACTION</xar:mlstring></th>
         </tr>
 <!--- Results --->
-<xar:loop name="$displayRows">
+<xar:foreach in="$displayRows" value="$row">
         <tr>
-        <xar:foreach in="$displayRow" value="$rowData">
+        <xar:foreach in="$row['displayRow']" value="$rowData">
                 <td bgcolor="#FFFFFF">#$rowData#</td>
         </xar:foreach>
                 <td bgcolor="#FFFFFF"><a href="#$detailURL#">Details</a>
@@ -27,5 +27,5 @@
                     </xar:if>
                     </td>
         </tr>
-</xar:loop>
+</xar:foreach>
 </table>
