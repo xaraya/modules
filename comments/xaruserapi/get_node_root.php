@@ -47,12 +47,14 @@ function comments_userapi_get_node_root( $args )
     // based on the objectid/modid pair
     $sql = "SELECT  $ctable[cid], $ctable[left], $ctable[right]
               FROM  $xartable[comments]
-             WHERE  $ctable[modid]='$modid'
-               AND  $ctable[itemtype]='$itemtype'
-               AND  $ctable[objectid]='$objectid'
-               AND  $ctable[status]='"._COM_STATUS_ROOT_NODE."'";
+             WHERE  $ctable[modid]=?
+               AND  $ctable[itemtype]=?
+               AND  $ctable[objectid]=?
+               AND  $ctable[status]=?";
+    // objectid is still a string for now
+    $bindvars = array((int) $modid, (int) $itemtype, (string) $objectid, (int) _COM_STATUS_ROOT_NODE);
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,$bindvars);
 
     if(!$result)
         return;
