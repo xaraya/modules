@@ -386,18 +386,34 @@ function categories_userapi_navigation($args)
 
                     // Create the top-level link.
                     // TODO: make this optional or flag it so the template can decide.
+                    // Re TODO: 'baseflag' = 0 for 'All'; 1 for cids below the 'base';
+                    //          2 at the base and 3 above.
                     $label = xarML('All');
                     $link = xarModURL($modname,$type,$func,
                                      array('itemtype' => $itemtype));
                     $join = '';
-                    $catitems[] = array('catlabel' => $label,
-                                        'catid' => $cid,
-                                        'catlink' => $link,
-                                        'catjoin' => $join);
+                    $baseflag = 0;
+
+                    $catitems[] = array(
+                        'catlabel' => $label,
+                        'catid' => $cid,
+                        'catlink' => $link,
+                        'catjoin' => $join,
+                        'baseflag' => $baseflag
+                    );
+
                     $join = ' &gt; ';
+                    $baseflag = 1;
 
                     // Loop for each ancestor and create an entry.
                     foreach ($parents as $cat) {
+                        if ($baseflag == 2) {$baseflag = 3;}
+
+                        // Is this cid a base cid?
+                        if ($baseflag == 1 && in_array($cat['cid'], $mastercids)) {
+                            $baseflag = 2;
+                        }
+
                         $label = xarVarPrepForDisplay($cat['name']);
                         if ($cat['cid'] == $cid && empty($itemid) && empty($andcids) && empty($istree)) {
                             $link = '';
@@ -422,10 +438,16 @@ function categories_userapi_navigation($args)
                                 $curcat = $cat;
                             }
                         }
-                        $catitems[] = array('catlabel' => $label,
-                                            'catid' => $cat['cid'],
-                                            'catlink' => $link,
-                                            'catjoin' => $join);
+                        // Flag up those within the base categories.
+                        // Let the template decide whether to display them.
+
+                        $catitems[] = array(
+                            'catlabel' => $label,
+                            'catid' => $cat['cid'],
+                            'catlink' => $link,
+                            'catjoin' => $join,
+                            'baseflag' => $baseflag
+                        );
                     }
 
                     if (!empty($istree)) {
@@ -452,7 +474,8 @@ function categories_userapi_navigation($args)
                         $catitems[] = array('catlabel' => $label,
                                             'catid' => join('-',$cids),
                                             'catlink' => $link,
-                                            'catjoin' => $join);
+                                            'catjoin' => $join,
+                                            'baseflag' => 4);
                     }
                     if (empty($andcids)) {
                         $label = xarML('All of these categories');
@@ -467,7 +490,8 @@ function categories_userapi_navigation($args)
                         $catitems[] = array('catlabel' => $label,
                                             'catid' => join('+',$cids),
                                             'catlink' => $link,
-                                            'catjoin' => $join);
+                                            'catjoin' => $join,
+                                            'baseflag' => 4);
                     }
                     $curcount = 0;
                     $data['cattrails'][] = array('catitems' => $catitems,

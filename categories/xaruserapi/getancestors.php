@@ -120,6 +120,7 @@ function categories_userapi_getancestors($args) {
 
     // Loop for each starting cid.
     foreach ($cids as $cid) {
+        if (!isset($cached[$cid])) {continue;}
         // Keep a trace of descendants as we walk back up the tree.
         // The descendants are not cached as they will vary
         // depending upon where the ancestor walk starts from.
