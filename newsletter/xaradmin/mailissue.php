@@ -337,8 +337,29 @@ function newsletter__bulk_email($args)
         }
     }
 
+    // Get fromname and fromemail information
+    if (empty($issue['fromname']) || empty($issue['fromemail'])) {
+        // Get publication information
+        $pubinfo = xarModAPIFunc('newsletter',
+                                 'user',
+                                 'getpublication',
+                                 array('id' => $issue['pid']));
+
+        // Check for exceptions
+        if (!isset($pubinfo) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
+            return; // throw back
+
+        // Set name and/or email
+        if (empty($fromname)) {
+            $issue['fromname'] = $pubinfo['fromname'];
+        }
+        if (empty($fromemail)) {
+            $issue['fromemail'] = $pubinfo['fromemail'];
+        }
+    }
+
     // Set recipient to owner email and publication name
-    $recipients[$publication['ownerEmail']] = $publication['title'] . ' Newsletter';
+    $recipients[$issue['fromemail']] = $issue['fromname'];
 
     // Mail the html issue to the subscription base
     if (!empty($htmlrecipients)) {
