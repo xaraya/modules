@@ -2,8 +2,6 @@
 <xar:if condition="!empty($noquote)">
     <center>#$nobookmarks#</center>
 <xar:else/>
-    <xar:loop name="$content">
-      <br /> <a href='#$loop:item['bm_url']#' target="_blank">#$loop:item['bm_name']#</a><br />
-      </xar:loop>
+       <br /><center> <a href='#$bm_url#' target="_blank">#$bm_name#</a></center><br />
     <br />
 </xar:if>

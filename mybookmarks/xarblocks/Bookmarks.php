@@ -91,8 +91,7 @@ function mybookmarks_bookmarksblock_display($blockinfo)
       if (empty($blockinfo['title'])){
             $blockinfo['title'] = xarML('My Bookmarks');
         }
-//         var_dump($blockinfo);
-        return $blockinfo;
+         return $blockinfo;
     }
     $uid = xarUserGetVar('uid');
     $bookmarks = array();
@@ -122,12 +121,14 @@ function mybookmarks_bookmarksblock_display($blockinfo)
                              'bm_name' => $bm_name,
                              'bm_url' => $bm_url);
         }
-    $blockinfo['emptymarks'] = '';
+
+
     $blockinfo['content']['bookmarks'] = $bookmarks;
 
     if (empty($blockinfo['title'])){
         $blockinfo['title'] = xarML('My Bookmarks');
     }
+
     return $blockinfo;
 }
 

@@ -66,6 +66,10 @@ function mybookmarks_randombookmarksblock_display($blockinfo)
     // Security check
     if(!xarSecurityCheck('Viewmybookmarks', 0)) return;
 
+    // Get variables from content block
+    $vars = @unserialize($data['content']);
+    $data = array();
+
     // Database information
     xarModDBInfoLoad('mybookmarks');
     list($dbconn) = xarDBGetConn();
@@ -87,7 +91,7 @@ function mybookmarks_randombookmarksblock_display($blockinfo)
         } else {
             $template = $blockinfo['template'];
         }
-        $blockinfo['content'] = xarTplBlock('mybookmarks', $template, array('title' => '',
+        $data['content'] = xarTplBlock('mybookmarks', $template, array('title' => '',
                                                                             'user_name' => '',
                                                                             'bm_url' => '',
                                                                             'content' => '',
@@ -96,6 +100,7 @@ function mybookmarks_randombookmarksblock_display($blockinfo)
         if (empty($blockinfo['title'])){
             $blockinfo['title'] = xarML('Random Bookmark');
         }
+        $blockinfo['content'] = $data;
         return $blockinfo;
     }
 
@@ -109,13 +114,12 @@ function mybookmarks_randombookmarksblock_display($blockinfo)
         $result = $dbconn->Execute($query);
         while(list($bm_id, $user_name, $bm_name, $bm_url) = $result->fields) {
             $result->MoveNext();
-            $content[] = array();
             if (empty($blockinfo['template'])) {
                 $template = 'mybookmarks';
             } else {
                 $template = $blockinfo['template'];
             }
-            $blockinfo['content'] = xarTplBlock('mybookmarks',$template, array('title' => $blockinfo['title'],
+            $data['content'] = xarTplBlock('mybookmarks',$template, array('title' => $blockinfo['title'],
                                                                          'bm_id' => $bm_id,
                                                                          'user_name' => $user_name,
                                                                          'bm_name' => $bm_name,
@@ -136,25 +140,23 @@ function mybookmarks_randombookmarksblock_display($blockinfo)
         $result = $dbconn->SelectLimit($query, 1,$p);
         while(list($bm_id, $user_name, $bm_name, $bm_url) = $result->fields) {
             $result->MoveNext();
-            $content[] = array();
             if (empty($blockinfo['template'])) {
                 $template = 'RandomBookmarks';
             } else {
                 $template = $blockinfo['template'];
             }
-            $blockinfo['content'] = xarTplBlock('mybookmarks',$template, array('title' => $blockinfo['title'],
+            $data = xarTplBlock('mybookmarks',$template, array('title' => $blockinfo['title'],
                                                                          'bm_id' => $bm_id,
                                                                          'user_name' => $user_name,
                                                                          'bm_name' => $bm_name,
-                                                                         'bm_url' => $bm_url,
-                                                                         'content' => $content));
+                                                                         'bm_url' => $bm_url));
         }
     }
 
     if (empty($blockinfo['title'])){
         $blockinfo['title'] = xarML('Random Bookmark');
     }
-
+    $blockinfo['content'] = $data;
     return $blockinfo;
 }
 
