@@ -67,7 +67,7 @@
             </div>
            <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 20%; text-align: right;">
-                    <span class="help" title="#xarML('Forum title for main forum listing pages')#"><label for="xarbbtitle"><xar:mlstring>Forum Home Lnk Title</xar:mlstring></label>:</span>
+                    <span class="help" title="#xarML('Forum title for main forum listing pages')#"><label for="xarbbtitle"><xar:mlstring>Forum Home Link Title</xar:mlstring></label>:</span>
                 </span>
                 <span style="float: right; width: 78%; text-align: left;">
                     <input type="text" name="xarbbtitle" id="xarbbtitle" value="#xarModGetVar('xarbb', 'xarbbtitle', 1)#" size="32" maxlength="100" />

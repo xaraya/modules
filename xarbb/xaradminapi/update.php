@@ -50,7 +50,7 @@ function xarbb_adminapi_update($args)
                 xar_fdesc   = ?,
                 xar_fstatus = ?
             WHERE xar_fid = ?";
-    $result =& $dbconn->Execute($query, array($fname, $fdesc, $fstatus, $fid));
+    $result =& $dbconn->Execute($query, array((string)$fname, (string)$fdesc, (int)$fstatus, (int)$fid));
     if (!$result) return;
 
     // Default categories is the master categories here
