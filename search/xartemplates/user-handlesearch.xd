@@ -19,6 +19,7 @@
   <span class="xar-mod-title"><xar:mlstring>Search again</xar:mlstring></span>
   <xar:foreach in="$searchform" key="$module" value="$form">
     #$form#
+  </xar:foreach>
 </div>
 
 <div>#$pager#</div>
