@@ -37,20 +37,6 @@ function images_userapi_encode_shorturl($args)
         $fileName = $fileId . '.' . $type[1];
     }
 
-    // clean the array of the items we already have
-    // so we can add any other values to the end of the url
-    unset($args['func']);
-    unset($args['fileId']);
-
-    if (!empty($args)) {
-
-        foreach ($args as $name => $value) {
-            $extra[] = "$name=$value";
-        }
-
-        $extras = '?' . implode('&', $extra);
-    }
-
     // default path is empty -> no short URL
     $path = '';
     // if we want to add some common arguments as URL parameters below
