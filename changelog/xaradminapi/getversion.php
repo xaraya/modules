@@ -18,7 +18,7 @@ function changelog_adminapi_getversion($args)
     if (!isset($modid) || !is_numeric($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module id', 'admin', 'getversion', 'changelog');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -28,14 +28,14 @@ function changelog_adminapi_getversion($args)
     if (!isset($itemid) || !is_numeric($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'admin', 'getversion', 'changelog');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
     if (!isset($logid) || !is_numeric($logid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'log id', 'admin', 'getversion', 'changelog');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

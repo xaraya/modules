@@ -33,13 +33,13 @@ function changelog_admin_showdiff($args)
     if (count($logidlist) < 2) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'number of versions', 'admin', 'showdiff', 'changelog');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     } elseif (!isset($changes[$logidlist[0]]) || !isset($changes[$logidlist[1]])) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'version ids', 'admin', 'showdiff', 'changelog');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
