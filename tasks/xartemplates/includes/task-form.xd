@@ -40,5 +40,5 @@
       </tr>
     </tbody>
   </table>
-  <input type="submit" value="#$submitbutton#" align="center" tabindex="5">
+  <input type="submit" value="#$submitbutton#"  tabindex="5">
 </form>
