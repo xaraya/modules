@@ -39,12 +39,18 @@ function authldap_init()
 
     // Add authldap to Site.User.AuthenticationModules in xar_config_vars
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
-    $authModules[] = 'authldap';
+    $authModulesUpdate = array();
 
-    // Sort array so authldap is before authsystem
-    sort($authModules);
+    // insert authldap right before authsystem
+    foreach ($authModules as $authType) {
+        if ($authType == 'authsystem') {
+            $authModulesUpdate[] = 'authldap';
+        }// if
+        $authModulesUpdate[] = $authType;
+    }// foreach
 
-    xarConfigSetVar('Site.User.AuthenticationModules',$authModules);
+    // save the setting
+    xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
 
     // Initialization successful
     return true;
@@ -55,7 +61,7 @@ function authldap_init()
  *
  *
  */
-function authldap_upgrade($oldVersion) 
+function authldap_upgrade($oldVersion)
 {
     switch($oldVersion) {
     case '1.0':
