@@ -28,7 +28,7 @@ function mime_userapi_analyze_file( $args )
     }
     
     // if that didn't work, try getimagesize to see if the file is an image
-    $fileInfo = getimagesize($fileName);
+    $fileInfo = @getimagesize($fileName);
     if (is_array($fileInfo)) {
         return $fileInfo['mime'];
     }

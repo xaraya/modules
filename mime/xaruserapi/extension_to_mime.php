@@ -45,12 +45,9 @@ function mime_userapi_extension_to_mime( $args ) {
                     return $mimeType;
                 } 
             } 
-        } 
-        
-        if (!isset($mimeType)) {        
-            return xarModAPIFunc('mime','user','analyze_file',
-                                  array('fileName' => $fileName));
-        } 
+        } else {
+            return 'application/octet-stream';
+        }        
     }
 }
 
