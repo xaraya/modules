@@ -35,17 +35,19 @@ function articles_admin_modifyconfig()
         $data['adminitemsperpage']      = empty($settings['adminitemsperpage']) ? 20 : $settings['adminitemsperpage'];
         $data['numcols']                = $settings['number_of_columns'];
         $data['defaultview']            = $settings['defaultview'];
-        $data['showcategories']         = !empty($settings['showcategories']) ? 'checked' : '';
-        $data['showprevnext']           = !empty($settings['showprevnext']) ? 'checked' : '';
-        $data['showcomments']           = !empty($settings['showcomments']) ? 'checked' : '';
-        $data['showhitcounts']          = !empty($settings['showhitcounts']) ? 'checked' : '';
-        $data['showratings']            = !empty($settings['showratings']) ? 'checked' : '';
-        $data['showarchives']           = !empty($settings['showarchives']) ? 'checked' : '';
-        $data['showmap']                = !empty($settings['showmap']) ? 'checked' : '';
-        $data['showpublinks']           = !empty($settings['showpublinks']) ? 'checked' : '';
-        $data['dotransform']            = !empty($settings['dotransform']) ? 'checked' : '';
-        $data['titletransform']         = !empty($settings['titletransform']) ? 'checked' : '';
-        $data['prevnextart']            = !empty($settings['prevnextart']) ? 'checked' : '';
+        $data['showcategories']         = !empty($settings['showcategories']) ? 'checked="checked"' : '';
+        $data['showcatcount']           = !empty($settings['showcatcount']) ? 'checked="checked"' : '';
+        $data['showprevnext']           = !empty($settings['showprevnext']) ? 'checked="checked"' : '';
+        $data['showcomments']           = !empty($settings['showcomments']) ? 'checked="checked"' : '';
+        $data['showhitcounts']          = !empty($settings['showhitcounts']) ? 'checked="checked"' : '';
+        $data['showratings']            = !empty($settings['showratings']) ? 'checked="checked"' : '';
+        $data['showarchives']           = !empty($settings['showarchives']) ? 'checked="checked"' : '';
+        $data['showmap']                = !empty($settings['showmap']) ? 'checked="checked"' : '';
+        $data['showpublinks']           = !empty($settings['showpublinks']) ? 'checked="checked"' : '';
+        $data['showpubcount']           = (isset($settings['showpubcount']) && empty($settings['showpubcount'])) ? '' : 'checked="checked"';
+        $data['dotransform']            = !empty($settings['dotransform']) ? 'checked="checked"' : '';
+        $data['titletransform']         = !empty($settings['titletransform']) ? 'checked="checked"' : '';
+        $data['prevnextart']            = !empty($settings['prevnextart']) ? 'checked="checked"' : '';
         $data['page_template']          = isset($settings['page_template']) ? $settings['page_template'] : '';
         $data['defaultstatus']          = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
     }
@@ -61,26 +63,32 @@ function articles_admin_modifyconfig()
     if (!isset($data['showcategories'])) {
         $data['showcategories'] = '';
     }
+    if (!isset($data['showcatcount'])) {
+        $data['showcatcount'] = 0;
+    }
     if (!isset($data['showprevnext'])) {
         $data['showprevnext'] = '';
     }
     if (!isset($data['showcomments'])) {
-        $data['showcomments'] = 'checked';
+        $data['showcomments'] = 'checked="checked"';
     }
     if (!isset($data['showhitcounts'])) {
-        $data['showhitcounts'] = 'checked';
+        $data['showhitcounts'] = 'checked="checked"';
     }
     if (!isset($data['showratings'])) {
         $data['showratings'] = '';
     }
     if (!isset($data['showarchives'])) {
-        $data['showarchives'] = 'checked';
+        $data['showarchives'] = 'checked="checked"';
     }
     if (!isset($data['showmap'])) {
-        $data['showmap'] = 'checked';
+        $data['showmap'] = 'checked="checked"';
     }
     if (!isset($data['showpublinks'])) {
         $data['showpublinks'] = '';
+    }
+    if (!isset($data['showpubcount'])) {
+        $data['showpubcount'] = 'checked="checked"';
     }
     if (!isset($data['dotransform'])) {
         $data['dotransform'] = '';
@@ -205,7 +213,7 @@ function articles_admin_modifyconfig()
     $data['pubfilters'] = $pubfilters;
 
     if (empty($ptid)) {
-        $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? 'checked' : '';
+        $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? 'checked="checked"' : '';
         $data['defaultpubtype'] = xarModGetVar('articles', 'defaultpubtype');
         if (empty($data['defaultpubtype'])) {
             $data['defaultpubtype'] = '';

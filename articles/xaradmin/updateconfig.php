@@ -19,6 +19,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultview',       'isset', $defaultview,       1,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showcategories',    'isset', $showcategories,    0,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('showcatcount',      'isset', $showcatcount,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showprevnext',      'isset', $showprevnext,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showcomments',      'isset', $showcomments,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showhitcounts',     'isset', $showhitcounts,     0,  XARVAR_NOT_REQUIRED)) {return;}
@@ -26,6 +27,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('showarchives',      'isset', $showarchives,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showmap',           'isset', $showmap,           0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showpublinks',      'isset', $showpublinks,      0,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('showpubcount',      'isset', $showpubcount,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('prevnextart',       'isset', $prevnextart,       0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page_template',     'isset', $page_template,     '', XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultstatus',     'isset', $defaultstatus,     0,  XARVAR_NOT_REQUIRED)) {return;}
@@ -46,6 +48,7 @@ function articles_admin_updateconfig()
     $settings['number_of_columns']  = $number_of_columns;
     $settings['defaultview']        = $defaultview;
     $settings['showcategories']     = $showcategories;
+    $settings['showcatcount']       = $showcatcount;
     $settings['showprevnext']       = $showprevnext;
     $settings['showcomments']       = $showcomments;
     $settings['showhitcounts']      = $showhitcounts;
@@ -55,6 +58,7 @@ function articles_admin_updateconfig()
     $settings['titletransform']     = $titletransform;
     $settings['showmap']            = $showmap;
     $settings['showpublinks']       = $showpublinks;
+    $settings['showpubcount']       = $showpubcount;
     $settings['dotransform']        = $dotransform;
     $settings['prevnextart']        = $prevnextart;
     $settings['page_template']      = $page_template;

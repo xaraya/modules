@@ -42,11 +42,6 @@ function articles_user_archive($args)
         $cids = null;
     }
 
-// TODO: make configurable
-    // show the number of articles for each publication type
-    $showpubcount = 1;
-//    $showcatcount = 0;
-
 // QUESTION: work with user-dependent time settings or not someday ?
     // Set the start and end date for that month
     if (!empty($month) && preg_match('/^(\d{4})-(\d+)$/',$month,$matches)) {
@@ -332,6 +327,15 @@ function articles_user_archive($args)
             $showpublinks = 0;
         }
     }
+    // show the number of articles for each publication type
+    if (!isset($showpubcount)) {
+        if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
+            $showpubcount = 1; // default yes
+        } else {
+            $showpubcount = 0;
+        }
+    }
+//    $showcatcount = 0; // unused here
 
     // return template out
     $data = array('months' => $months,

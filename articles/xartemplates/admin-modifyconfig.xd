@@ -118,6 +118,10 @@
         <td><input type="checkbox" name="showcategories" id="showcategories" value="1" #$showcategories# /></td>
     </tr>
     <tr>
+        <td><label for="showcatcount"><xar:mlstring>Show number of articles in category navigation</xar:mlstring> <i>($showcatcount)</i></label></td>
+        <td><input type="checkbox" name="showcatcount" id="showcatcount" value="1" #$showcatcount# /></td>
+    </tr>
+    <tr>
         <td><label for="showprevnext"><xar:mlstring> Show previous/next category</xar:mlstring> <i>($showprevnext)</i></label></td>
         <td><input type="checkbox" name="showprevnext" id="showprevnext" value="1" #$showprevnext# /></td>
     </tr>
@@ -152,6 +156,10 @@
     <tr>
         <td><label for="showpublinks"><xar:mlstring>Show links to publication types</xar:mlstring> <i>($showpublinks + includes/publinks.xd)</i></label></td>
         <td><input type="checkbox" name="showpublinks" id="showpublinks" value="1" #$showpublinks# /></td>
+    </tr>
+    <tr>
+        <td><label for="showpubcount"><xar:mlstring>Show number of articles in publication links</xar:mlstring> <i>($showpubcount)</i></label></td>
+        <td><input type="checkbox" name="showpubcount" id="showpubcount" value="1" #$showpubcount# /></td>
     </tr>
     <tr>
         <td><label for="showarchives"><xar:mlstring>Show link to archives</xar:mlstring> <i>($archivelink + $archivelabel)</i></label></td>

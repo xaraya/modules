@@ -156,10 +156,22 @@ function articles_user_view($args)
         xarTplSetPageTemplateName($settings['page_template']);
     }
 
-// TODO: make configurable
     // show the number of articles for each publication type
-    $showpubcount = 1;
-    $showcatcount = 0;
+    if (!isset($showpubcount)) {
+        if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
+            $showpubcount = 1; // default yes
+        } else {
+            $showpubcount = 0;
+        }
+    }
+    // show the number of articles for each category
+    if (!isset($showcatcount)) {
+        if (empty($settings['showcatcount'])) {
+            $showcatcount = 0; // default no
+        } else {
+            $showcatcount = 1;
+        }
+    }
 
     // support multi-column output
     if (!isset($numcols) || !is_numeric($numcols)) {
@@ -461,6 +473,7 @@ function articles_user_view($args)
 //}
     $data['showpublinks'] = $showpublinks;
     $data['showprevnext'] = $showprevnext;
+    $data['showcatcount'] = $showcatcount;
 
     if (empty($articles)) {
         // No articles

@@ -23,11 +23,6 @@ function articles_user_display($args)
         $preview = 0;
     }
 
-// TODO: make configurable
-    // show the number of articles for each publication type
-    $showpubcount = 1;
-    $showcatcount = 0;
-
     if ($preview) {
         if (!isset($article)) {
             return xarML('Invalid article');
@@ -67,6 +62,23 @@ function articles_user_display($args)
         $settings = unserialize(xarModGetVar('articles', 'settings'));
     } else {
         $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+    }
+
+    // show the number of articles for each publication type
+    if (!isset($showpubcount)) {
+        if (!isset($settings['showpubcount']) || !empty($settings['showpubcount'])) {
+            $showpubcount = 1; // default yes
+        } else {
+            $showpubcount = 0;
+        }
+    }
+    // show the number of articles for each category
+    if (!isset($showcatcount)) {
+        if (empty($settings['showcatcount'])) {
+            $showcatcount = 0; // default no
+        } else {
+            $showcatcount = 1;
+        }
     }
 
     // Initialize the data array
@@ -128,7 +140,7 @@ function articles_user_display($args)
 
     // multi-page output for 'body' field (mostly for sections at the moment)
     $themeName = xarVarGetCached('Themes.name','CurrentTheme');
-        if ($themeName != 'print'){
+    if ($themeName != 'print'){
         if (strstr($article['body'],'<!--pagebreak-->')) {
             if ($preview) {
                 $article['body'] = preg_replace('/<!--pagebreak-->/',
@@ -191,11 +203,11 @@ function articles_user_display($args)
             $data['previous'] = '';
             $data['next'] = '';
         }
-        } else {
-                $article['body'] = preg_replace('/<!--pagebreak-->/',
-                                                '',
-                                                $article['body']);
-        }
+    } else {
+        $article['body'] = preg_replace('/<!--pagebreak-->/',
+                                        '',
+                                        $article['body']);
+    }
 
 // TEST
     if (isset($prevnextart)) {
@@ -393,6 +405,7 @@ function articles_user_display($args)
     } else {
         $data['showpublinks'] = 0;
     }
+    $data['showcatcount'] = $showcatcount;
 
     // Tell the hitcount hook not to display the hitcount, but to save it
     // in the variable cache.
