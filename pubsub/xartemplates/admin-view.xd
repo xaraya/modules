@@ -21,9 +21,6 @@ ministration</xar:mlstring></span></div>
         <th>
                         #$templatelabel#
                 </th>
-        <th>
-                        #$optionslabel#
-                </th>
         </tr>
     <xar:loop name="$items">
     <tr>
@@ -42,19 +39,6 @@ ministration</xar:mlstring></span></div>
         <td>
 			#$template#
   	</td>
-         <td align="center">[
-           <xar:if condition="empty($editurl)">
-               #$edittitle#
-               <xar:else />
-                   <a href="#$editurl#">#$edittitle#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($deleteurl)">
-               #$deletetitle#
-               <xar:else />
-                   <a href="#$deleteurl#">#$deletetitle#</a>
-           </xar:if> ]
-        </td>
      </tr>
      </xar:loop>
 </table>

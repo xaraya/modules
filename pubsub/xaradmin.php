@@ -48,7 +48,6 @@ function pubsub_admin_view()
     $data['itemlabel'] = xarVarPrepForDisplay(xarMLByKey('Item'));
     $data['numsubscriberslabel'] = xarVarPrepForDisplay(xarMLByKey('Number of Subscribers'));
     $data['templatelabel'] = xarVarPrepForDisplay(xarMLByKey('Template'));
-    $data['optionslabel'] = xarVarPrepForDisplay(xarMLByKey('Options'));
     $data['authid'] = xarSecGenAuthKey();
     $data['pager'] = '';
 
@@ -65,28 +64,6 @@ function pubsub_admin_view()
 
     if (empty($events)) return;
     
-    // Check individual permissions for Edit / Delete
-    for ($i = 0; $i < count($events); $i++) {
-        $event = $events[$i];
-        if (xarSecAuthAction(0, 'Pubsub::', "::", ACCESS_EDIT)) {
-            $events[$i]['editurl'] = xarModURL('pubsub',
-                                              'admin',
-                                              'modify',
-                                              array('hid' => $event['hid']));
-        } else {
-            $events[$i]['editurl'] = '';
-        }
-        $events[$i]['edittitle'] = xarML('Edit');
-        if (xarSecAuthAction(0, 'Pubsub::', "::", ACCESS_DELETE)) {
-            $events[$i]['deleteurl'] = xarModURL('pubsub',
-                                                'admin',
-                                                'delete',
-                                                array('hid' => $event['hid']));
-        } else {
-            $events[$i]['deleteurl'] = '';
-        }
-        $events[$i]['deletetitle'] = xarML('Delete');
-    }
     $data['items'] = $events;
 
     // TODO: add a pager (once it exists in BL)
@@ -95,22 +72,4 @@ function pubsub_admin_view()
     // return the template variables defined in this template
     return $data;   
 }
-/**
- * Main administrative menu labels
-*/
-function pubsub_admin_getmenu()
-{
-    $menu = array();
-
-    $menu['status'] = xarGetStatusMsg();
-    $menu['title'] = xarML('Pubsub Administration');
-    $menu['view_events'] = xarML('View Events');
-    $menu['view_subscriptions'] = xarML('View Subscriptions');
-    $menu['view_templates'] = xarML('View Templates');
-    $menu['new_template'] = xarML('New Template');
-    
-    return $menu;
-
-}
-
 ?>
