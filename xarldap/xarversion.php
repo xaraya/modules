@@ -15,7 +15,7 @@
 
 $modversion['name']           = 'xarldap';
 $modversion['id']             = '25';
-$modversion['version']        = '1.0';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'LDAP API for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
