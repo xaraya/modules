@@ -110,6 +110,16 @@ function xarbb_user_viewforum()
  
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
+        list($topics[$i]['ttitle'],
+             $topics[$i]['tpost']) = xarModCallHooks('item',
+                                         'transform',
+                                         $fid,
+                                         array($topic['ttitle'],
+                                               $topic['tpost']),
+                                         'xarbb',
+                                         $fid);
+
+
         $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
         $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
 
