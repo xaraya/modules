@@ -141,7 +141,8 @@
  	* @param    string $string debug data
  	* @access   private
  	*/
- 	function debug($string){
+ 	function debug($string)
+	{
  		$this->debug_str .= get_class($this).": $string\n";
  	}
  
@@ -151,7 +152,8 @@
  	* @return   boolean $string error string
  	* @access   public
  	*/
- 	function getError(){
+ 	function getError()
+	{
  		if($this->error_str != ''){
  			return $this->error_str;
  		}
@@ -164,7 +166,8 @@
  	* @return   boolean $string error string
  	* @access   private
  	*/
- 	function setError($str){
+ 	function setError($str)
+	{
  		$this->error_str = $str;
  	}
  
@@ -175,7 +178,8 @@
  	* @return	string
      * @access	public
  	*/
- 	function serialize_val($val,$name=false,$type=false,$name_ns=false,$type_ns=false,$attributes=false,$use='encoded'){
+ 	function serialize_val($val,$name=false,$type=false,$name_ns=false,$type_ns=false,$attributes=false,$use='encoded')
+	{
      	if(is_object($val) && get_class($val) == 'soapval'){
 
          	return $val->serialize($use);
@@ -356,7 +360,8 @@
      * @return string message
      * @access public
      */
-     function serializeEnvelope($body,$headers=false,$namespaces=array(),$style='rpc'){
+     function serializeEnvelope($body,$headers=false,$namespaces=array(),$style='rpc')
+	 {
  	// serialize namespaces
      $ns_string = '';
  	foreach(array_merge($this->namespaces,$namespaces) as $k => $v){
@@ -381,7 +386,8 @@
  	"</SOAP-ENV:Envelope>";
      }
  
-     function formatDump($str){
+     function formatDump($str)
+	 {
  		$str = htmlspecialchars($str);
  		return nl2br($str);
      }
@@ -394,7 +400,8 @@
      * @return string
      * @access public
      */
- 	function getLocalPart($str){
+ 	function getLocalPart($str)
+	{
  		if($sstr = strrchr($str,':')){
  			// get unqualified name
  			return substr( $sstr, 1 );
@@ -438,7 +445,8 @@
  * @param    string $timestamp Unix time stamp
  * @access   public
  */
- function timestamp_to_iso8601($timestamp,$utc=true){
+ function timestamp_to_iso8601($timestamp,$utc=true)
+ {
  	$datestr = date('Y-m-d\TH:i:sO',$timestamp);
  	if($utc){
  		$eregStr =
@@ -466,7 +474,8 @@
  * @param    string $datestr ISO 8601 compliant date string
  * @access   public
  */
- function iso8601_to_timestamp($datestr){
+ function iso8601_to_timestamp($datestr)
+ {
  	$eregStr =
  	'([0-9]{4})-'.	// centuries & years CCYY-
  	'([0-9]{2})-'.	// months MM-
@@ -498,7 +507,6 @@
  
  
  
- ?><?php
  
  
  
@@ -510,7 +518,8 @@
  * @version  v 0.6.3
  * @access public
  */
- class soap_fault extends nusoap_base {
+ class soap_fault extends nusoap_base 
+ {
  
  	var $faultcode;
  	var $faultactor;
@@ -525,7 +534,8 @@
      * @param string $faultstring human readable error message
      * @param string $faultdetail
  	*/
- 	function soap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail=''){
+ 	function soap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail='')
+	{
  		$this->faultcode = $faultcode;
  		$this->faultactor = $faultactor;
  		$this->faultstring = $faultstring;
@@ -537,7 +547,8 @@
  	*
  	* @access   public
  	*/
- 	function serialize(){
+ 	function serialize()
+	{
  		$ns_string = '';
  		foreach($this->namespaces as $k => $v){
  			$ns_string .= "\n  xmlns:$k=\"$v\"";
@@ -575,7 +586,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class XMLSchema extends nusoap_base  {
+ class XMLSchema extends nusoap_base  
+ {
  	
  	// files
  	var $schema = '';
@@ -597,7 +609,8 @@
  	* @param    string $xml xml document URI
  	* @access   public
  	*/
- 	function XMLSchema($schema='',$xml=''){
+ 	function XMLSchema($schema='',$xml='')
+	{
  
  		$this->debug('xmlschema class instantiated, inside constructor');
  		// files
@@ -626,7 +639,8 @@
  	* @return boolean
      * @access public
      */
- 	function parseFile($xml,$type){
+ 	function parseFile($xml,$type)
+	{
  		// parse xml file
  		if($xml != ""){
  			$this->debug('parsing $xml');
@@ -649,7 +663,8 @@
      * @param string $type, (schema|xml)
  	* @access   private
  	*/
- 	function parseString($xml,$type){
+ 	function parseString($xml,$type)
+	{
  		// parse xml string
  		if($xml != ""){
  
@@ -696,7 +711,8 @@
  	* @param    string $attrs associative array of attributes
  	* @access   private
  	*/
- 	function schemaStartElement($parser, $name, $attrs) {
+ 	function schemaStartElement($parser, $name, $attrs) 
+	{
  		
  		// position in the total number of elements, starting from 0
  		$pos = $this->position++;
@@ -844,7 +860,8 @@
  	* @param    string $name element name
  	* @access   private
  	*/
- 	function schemaEndElement($parser, $name) {
+ 	function schemaEndElement($parser, $name) 
+	{
  		// position of current element is equal to the last value left in depth_array for my depth
  		if(isset($this->depth_array[$this->depth])){
          	$pos = $this->depth_array[$this->depth];
@@ -868,7 +885,8 @@
  	* @param    string $data element content
  	* @access   private
  	*/
- 	function schemaCharacterData($parser, $data){
+ 	function schemaCharacterData($parser, $data)
+	{
  		$pos = $this->depth_array[$this->depth];
  		$this->message[$pos]['cdata'] .= $data;
  	}
@@ -878,7 +896,8 @@
  	*
  	* @access   public
  	*/
- 	function serializeSchema(){
+ 	function serializeSchema()
+	{
  
  		$schemaPrefix = $this->getPrefixFromNamespace($this->XMLSchemaVersion);
  		$xml = '';
@@ -953,7 +972,8 @@
  	* @return	string expanded qname
  	* @access   private
  	*/
- 	function expandQname($qname){
+ 	function expandQname($qname)
+	{
  		// get element prefix
  		if(strpos($qname,':') && !ereg('^http://',$qname)){
  			// get unqualified name
@@ -976,7 +996,8 @@
  	* @param    string $string debug data
  	* @access   private
  	*/
- 	function xdebug($string){
+ 	function xdebug($string)
+	{
  		$this->debug(' xmlschema: '.$string);
  	}
  
@@ -991,7 +1012,8 @@
      * @return mixed
      * @access public
      */
- 	function getPHPType($type,$ns){
+ 	function getPHPType($type,$ns)
+	{
  		global $typemap;
  		if(isset($typemap[$ns][$type])){
  			//print "found type '$type' and ns $ns in typemap<br />";
@@ -1011,7 +1033,8 @@
      * @return string
      * @access public
      */
- 	function getLocalPart($str){
+ 	function getLocalPart($str)
+	{
  		if($sstr = strrchr($str,':')){
  			// get unqualified name
  			return substr( $sstr, 1 );
@@ -1028,7 +1051,8 @@
      * @return mixed
      * @access public
      */
- 	function getPrefix($str){
+ 	function getPrefix($str)
+	{
  		if($pos = strrpos($str,':')){
  			// get prefix
  			return substr($str,0,$pos);
@@ -1044,7 +1068,8 @@
      * @return mixed
      * @access public
      */
- 	function getNamespaceFromPrefix($prefix){
+ 	function getNamespaceFromPrefix($prefix)
+	{
  		if(isset($this->namespaces[$prefix])){
  			return $this->namespaces[$prefix];
  		}
@@ -1060,7 +1085,8 @@
      * @return mixed
      * @access public
      */
- 	function getPrefixFromNamespace($ns){
+ 	function getPrefixFromNamespace($ns)
+	{
  		foreach($this->namespaces as $p => $n){
  			if($ns == $n || $ns == $p){
  			    $this->usedNamespaces[$p] = $n;
@@ -1086,7 +1112,8 @@
      * @return mixed
      * @access public
      */
- 	function getTypeDef($type){
+ 	function getTypeDef($type)
+	{
  		if(isset($this->complexTypes[$type])){
  			return $this->complexTypes[$type];
  		} elseif(isset($this->elements[$type])){
@@ -1139,7 +1166,8 @@
      * @return string
      * @access public
  	*/
- 	function typeToForm($name,$type){
+ 	function typeToForm($name,$type)
+	{
  		// get typedef
  		if($typeDef = $this->getTypeDef($type)){
  			// if struct
@@ -1210,7 +1238,8 @@
  	* @param arrayType: namespace:name (http://www.w3.org/2001/XMLSchema:string)
  	*
  	*/
- 	function addComplexType($name,$typeClass='complexType',$phpType='array',$compositor='',$restrictionBase='',$elements=array(),$attrs=array(),$arrayType=''){
+ 	function addComplexType($name,$typeClass='complexType',$phpType='array',$compositor='',$restrictionBase='',$elements=array(),$attrs=array(),$arrayType='')
+	{
  		$this->complexTypes[$name] = array(
  	    'name'		=> $name,
  	    'typeClass'	=> $typeClass,
@@ -1226,7 +1255,6 @@
  
  
  
- ?><?php
  
  
  
@@ -1238,7 +1266,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class soapval extends nusoap_base {
+ class soapval extends nusoap_base 
+ {
  	/**
  	* constructor
  	*
@@ -1283,7 +1312,6 @@
  
  
  
- ?><?php
  
  
  
@@ -1295,7 +1323,8 @@
  * @version  v 0.6.3
  * @access public
  */
- class soap_transport_http extends nusoap_base {
+ class soap_transport_http extends nusoap_base 
+ {
  
  	var $username = '';
  	var $password = '';
@@ -1313,7 +1342,8 @@
  	/**
  	* constructor
  	*/
- 	function soap_transport_http($url){
+ 	function soap_transport_http($url)
+	{
  		$this->url = $url;
  		$u = parse_url($url);
  		foreach($u as $k => $v){
@@ -1328,7 +1358,8 @@
  		}
  	}
  	
- 	function connect($timeout){
+ 	function connect($timeout)
+	{
  		
  		// proxy
  		if($this->proxyhost != '' && $this->proxyport != ''){
@@ -1370,7 +1401,8 @@
  	* @return	string data
  	* @access   public
  	*/
- 	function send($data, $timeout=0) {
+ 	function send($data, $timeout=0) 
+	{
  		$this->debug('entered send() with data of length: '.strlen($data));
  		// get connnection
  		if(!$fp = $this->connect($timeout)){
@@ -1520,7 +1552,8 @@
  	* @return	string data
  	* @access   public
  	*/
- 	function sendHTTPS($data, $timeout=0) {
+ 	function sendHTTPS($data, $timeout=0) 
+	{
  	   	//global $t;
  		//$t->setMarker('inside sendHTTPS()');
  		$this->debug('entered sendHTTPS() with data of length: '.strlen($data));
@@ -1681,7 +1714,8 @@
  	* @param    string $pass
  	* @access   public
  	*/
- 	function setCredentials($username, $password) {
+ 	function setCredentials($username, $password) 
+	{
  		$this->username = $username;
  		$this->password = $password;
  	}
@@ -1692,7 +1726,8 @@
  	* @param    string $soapaction
  	* @access   public
  	*/
- 	function setSOAPAction($soapaction) {
+ 	function setSOAPAction($soapaction) 
+	{
  		$this->soapaction = $soapaction;
  	}
  	
@@ -1702,7 +1737,8 @@
  	* @param    string $enc encoding style. supported values: gzip, deflate, or both
  	* @access   public
  	*/
- 	function setEncoding($enc='gzip, deflate'){
+ 	function setEncoding($enc='gzip, deflate')
+	{
  		$this->encoding = $enc;
  		$this->protocol_version = '1.1';
  	}
@@ -1714,7 +1750,8 @@
  	* @param    string $proxyport
  	* @access   public
  	*/
- 	function setProxy($proxyhost, $proxyport) {
+ 	function setProxy($proxyhost, $proxyport) 
+	{
  		$this->proxyhost = $proxyhost;
  		$this->proxyport = $proxyport;
  	}
@@ -1727,7 +1764,8 @@
  	* @returns	string
  	* @access   public
  	*/
- 	function decodeChunked($buffer){
+ 	function decodeChunked($buffer)
+	{
  		// length := 0
  		$length = 0;
  		$new = '';
@@ -1779,8 +1817,6 @@
  
  
  
- ?><?php
- 
  
  
  /**
@@ -1794,7 +1830,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class soap_server extends nusoap_base {
+ class soap_server extends nusoap_base 
+ {
  
  	var $service = ''; // service name
      var $operations = array(); // assoc array of operations => opData
@@ -1815,7 +1852,8 @@
      * @param string $wsdl path or URL to a WSDL file
  	* @access   public
  	*/
- 	function soap_server($wsdl=false){
+ 	function soap_server($wsdl=false)
+	{
  
  		// turn on debugging?
  		global $debug;
@@ -1839,7 +1877,8 @@
  	* @param    string $data usually is the value of $HTTP_RAW_POST_DATA
  	* @access   public
  	*/
- 	function service($data){
+ 	function service($data)
+	{
  		// print wsdl
  		global $QUERY_STRING;
  		if(isset($_SERVER['QUERY_STRING'])){
@@ -1901,7 +1940,8 @@
  	* @return	string XML response msg
  	* @access   private
  	*/
- 	function parse_request($data='') {
+ 	function parse_request($data='') 
+	{
  		$this->debug('entering parseRequest() on '.date('H:i Y-m-d'));
          $dump = '';
  		// get headers
@@ -2056,7 +2096,8 @@
  	* @return	boolean
  	* @access   private
  	*/
- 	function verify_method($operation,$request){
+ 	function verify_method($operation,$request)
+	{
  		if(isset($this->wsdl) && is_object($this->wsdl)){
  			if($this->wsdl->getOperationData($operation)){
  				return true;
@@ -2075,7 +2116,8 @@
  	* @param    string $out array of output values
  	* @access   public
  	*/
- 	function add_to_map($methodname,$in,$out){
+ 	function add_to_map($methodname,$in,$out)
+	{
  			$this->operations[$methodname] = array('name' => $methodname,'in' => $in,'out' => $out);
  	}
  
@@ -2090,7 +2132,8 @@
  	* @param	string $style (rpc|literal)
  	* @access   public
  	*/
- 	function register($name,$in=false,$out=false,$namespace=false,$soapaction=false,$style=false,$use=false){
+ 	function register($name,$in=false,$out=false,$namespace=false,$soapaction=false,$style=false,$use=false)
+	{
  	    if(false == $in) {
  		}
  		if(false == $out) {
@@ -2130,7 +2173,8 @@
  	* @param	string faultdetail
  	* @access   public
  	*/
- 	function fault($faultcode,$faultactor,$faultstring='',$faultdetail=''){
+ 	function fault($faultcode,$faultactor,$faultstring='',$faultdetail='')
+	{
  		$this->fault = new soap_fault($faultcode,$faultactor,$faultstring,$faultdetail);
  	}
  
@@ -2171,7 +2215,8 @@
  		<script language="JavaScript" type="text/javascript">
  		<!--
  		// POP-UP CAPTIONS...
- 		function lib_bwcheck(){ //Browsercheck (needed)
+ 		function lib_bwcheck()
+		{ //Browsercheck (needed)
  		    this.ver=navigator.appVersion
  		    this.agent=navigator.userAgent
  		    this.dom=document.getElementById?1:0
@@ -2188,7 +2233,8 @@
  		}
  		var bw = new lib_bwcheck()
  		//Makes crossbrowser object.
- 		function makeObj(obj){
+ 		function makeObj(obj)
+		{
  		    this.evnt=bw.dom? document.getElementById(obj):bw.ie4?document.all[obj]:bw.ns4?document.layers[obj]:0;
  		    if(!this.evnt) return false
  		    this.css=bw.dom||bw.ie4?this.evnt.style:bw.ns4?this.evnt:0;
@@ -2198,18 +2244,21 @@
  		}
  		// A unit of measure that will be added when setting the position of a layer.
  		//var px = bw.ns4||window.opera?"":"px";
- 		function b_writeIt(text){
+ 		function b_writeIt(text)
+		{
  		    if (bw.ns4){this.wref.write(text);this.wref.close()}
  		    else this.wref.innerHTML = text
  		}
  		//Shows the messages
  		var oDesc;
- 		function popup(divid){
+ 		function popup(divid)
+		{
  		    if(oDesc = new makeObj(divid)){
  			oDesc.css.visibility = "visible"
  		    }
  		}
- 		function popout(){ // Hides message
+ 		function popout()
+		{ // Hides message
  		    if(oDesc) oDesc.css.visibility = "hidden"
  		}
  		//-->
@@ -2307,7 +2356,8 @@
  * @version  v 0.6.3
  * @access public 
  */
- class wsdl extends XMLSchema {
+ class wsdl extends XMLSchema 
+ {
      var $wsdl; 
      // define internal arrays of bindings, ports, operations, messages, etc.
      var $message = array();
@@ -2718,7 +2768,8 @@
  	* @param string $name element name
  	* @access private 
  	*/
- 	function end_element($parser, $name){ 
+ 	function end_element($parser, $name)
+	{ 
  		// unset schema status
  		if (ereg('types$', $name) || ereg('schema$', $name)) {
  			$this->status = "";
@@ -3161,8 +3212,6 @@
  
  
  
- ?><?php
- 
  
  
  /**
@@ -3173,7 +3222,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class soap_parser extends nusoap_base {
+ class soap_parser extends nusoap_base 
+ {
  
  	var $xml = '';
  	var $xml_encoding = '';
@@ -3211,7 +3261,8 @@
  	* @param    string $encoding character encoding scheme of message
  	* @access   public
  	*/
- 	function soap_parser($xml,$encoding='UTF-8',$method=''){
+ 	function soap_parser($xml,$encoding='UTF-8',$method='')
+	{
  		$this->xml = $xml;
  		$this->xml_encoding = $encoding;
  		$this->method = $method;
@@ -3273,7 +3324,8 @@
  	* @param    string $attrs associative array of attributes
  	* @access   private
  	*/
- 	function start_element($parser, $name, $attrs) {
+ 	function start_element($parser, $name, $attrs) 
+	{
  		// position in a total number of elements, starting from 0
  		// update class level pos
  		$pos = $this->position++;
@@ -3405,7 +3457,8 @@
  	* @param    string $name element name
  	* @access   private
  	*/
- 	function end_element($parser, $name) {
+ 	function end_element($parser, $name) 
+	{
  		// position of current element is equal to the last value left in depth_array for my depth
  		$pos = $this->depth_array[$this->depth--];
  
@@ -3471,7 +3524,8 @@
  	* @param    string $data element content
  	* @access   private
  	*/
- 	function character_data($parser, $data){
+ 	function character_data($parser, $data)
+	{
  		$pos = $this->depth_array[$this->depth];
  		if ($this->xml_encoding=='UTF-8'){
  			$data = utf8_decode($data);
@@ -3491,7 +3545,8 @@
  	* @return	mixed
  	* @access   public
  	*/
- 	function get_response(){
+ 	function get_response()
+	{
  		return $this->soapresponse;
  	}
  
@@ -3501,7 +3556,8 @@
  	* @return	string XML or empty if no headers
  	* @access   public
  	*/
- 	function getHeaders(){
+ 	function getHeaders()
+	{
  	    return $this->responseHeaders;
  	}
  
@@ -3511,7 +3567,8 @@
  	* @param    string $text string to translate
  	* @access   private
  	*/
- 	function decode_entities($text){
+ 	function decode_entities($text)
+	{
  		foreach($this->entities as $entity => $encoded){
  			$text = str_replace($encoded,$entity,$text);
  		}
@@ -3524,7 +3581,8 @@
  	* @param    string $pos position in node tree
  	* @access   private
  	*/
- 	function buildVal($pos){
+ 	function buildVal($pos)
+	{
  		if(!isset($this->message[$pos]['type'])){
  			$this->message[$pos]['type'] = '';
  		}
@@ -3579,9 +3637,6 @@
  
  
  
- ?><?php
- 
- 
  
  /**
  *
@@ -3602,7 +3657,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class soapclient extends nusoap_base  {
+ class soapclient extends nusoap_base  
+ {
  
  	var $username = '';
  	var $password = '';
@@ -3638,7 +3694,8 @@
  	* @param	int $portName optional portName in WSDL document
  	* @access   public
  	*/
- 	function soapclient($endpoint,$wsdl = false){
+ 	function soapclient($endpoint,$wsdl = false)
+	{
  		$this->endpoint = $endpoint;
  
  		// make values
@@ -3677,7 +3734,8 @@
  	* @return	mixed
  	* @access   public
  	*/
- 	function call($operation,$params=array(),$namespace='',$soapAction='',$headers=false,$rpcParams=null){
+ 	function call($operation,$params=array(),$namespace='',$soapAction='',$headers=false,$rpcParams=null)
+	{
  		$this->operation = $operation;
  		$this->fault = false;
  		$this->error_str = '';
@@ -3797,7 +3855,8 @@
  	* @return	array array of data pertaining to the operation
  	* @access   public
  	*/
- 	function getOperationData($operation){
+ 	function getOperationData($operation)
+	{
  		if(isset($this->operations[$operation])){
  			return $this->operations[$operation];
  		}
@@ -3817,7 +3876,8 @@
  	* @return	mixed native PHP types.
  	* @access   private
  	*/
- 	function send($msg, $soapaction = '', $timeout=0) {
+ 	function send($msg, $soapaction = '', $timeout=0) 
+	{
  		// detect transport
  		switch(true){
  			// http(s)
@@ -3888,7 +3948,8 @@
  	* @return	mixed value of the message, decoded into a PHP type
  	* @access   private
  	*/
-     function parseResponse($data) {
+     function parseResponse($data) 
+	 {
  		$this->debug('Entering parseResponse(), about to create soap_parser instance');
  		$parser = new soap_parser($data,$this->xml_encoding,$this->operation);
  		// if parse errors
@@ -3919,7 +3980,8 @@
  	* @param	$headers string XML
  	* @access   public
  	*/
- 	function setHeaders($headers){
+ 	function setHeaders($headers)
+	{
  		$this->requestHeaders = $headers;
  	}
  
@@ -3929,7 +3991,8 @@
  	* @return	mixed object SOAPx4 soapval object or empty if no headers
  	* @access   public
  	*/
- 	function getHeaders(){
+ 	function getHeaders()
+	{
  	    if($this->responseHeaders != '') {
  			return $this->responseHeaders;
  	    }
@@ -3942,7 +4005,8 @@
  	* @param    string $proxyport
  	* @access   public
  	*/
- 	function setHTTPProxy($proxyhost, $proxyport) {
+ 	function setHTTPProxy($proxyhost, $proxyport) 
+	{
  		$this->proxyhost = $proxyhost;
  		$this->proxyport = $proxyport;
  	}
@@ -3954,7 +4018,8 @@
  	* @param    string $password
  	* @access   public
  	*/
- 	function setCredentials($username, $password) {
+ 	function setCredentials($username, $password) 
+	{
  		$this->username = $username;
  		$this->password = $password;
  	}
@@ -3965,7 +4030,8 @@
  	* @param    string $enc
  	* @access   public
  	*/
- 	function setHTTPEncoding($enc='gzip, deflate'){
+ 	function setHTTPEncoding($enc='gzip, deflate')
+	{
  		$this->http_encoding = $enc;
  	}
  	
@@ -3974,7 +4040,8 @@
  	*
  	* @access   public
  	*/
- 	function useHTTPPersistentConnection(){
+ 	function useHTTPPersistentConnection()
+	{
  		$this->persistentConnection = true;
  	}
  	
@@ -3985,7 +4052,8 @@
  	*
  	* @access public
  	*/
- 	function getDefaultRpcParams() {
+ 	function getDefaultRpcParams() 
+	{
  		return $this->defaultRpcParams;
  	}
  
@@ -3997,7 +4065,8 @@
  	* @param    boolean $rpcParams
  	* @access public
  	*/
- 	function setDefaultRpcParams($rpcParams) {
+ 	function setDefaultRpcParams($rpcParams) 
+	{
  		$this->defaultRpcParams = $rpcParams;
  	}
  	
@@ -4007,7 +4076,8 @@
  	* @return   object soap_proxy object
  	* @access   public
  	*/
- 	function getProxy(){
+ 	function getProxy()
+	{
  		$evalStr = '';
  		foreach($this->operations as $operation => $opData){
  			if($operation != ''){
