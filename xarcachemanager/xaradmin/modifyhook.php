@@ -13,7 +13,7 @@ function xarcachemanager_admin_modifyhook($args)
 {
     extract($args);
     
-    if (!xarSecurityCheck('AdminXarCache', 0)) { return $args; }
+    if (!xarSecurityCheck('AdminXarCache', 0)) { return ''; }
 
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -40,8 +40,16 @@ function xarcachemanager_admin_modifyhook($args)
     }
     
     // we are only interested in the config of block output caching for now
-    if (($modname !== 'blocks') || !file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.blocklevel')) {
+    if ($modname !== 'blocks') {
+        error_log('not right, module name is ' . $modname);
         return '';
+    }
+    // only display config hooks if block level output caching has been enabled
+    // (check for the file rather than the constant so config options can be tweaked
+    //  even when output caching has been temporarily disabled)
+    if (!file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.blocklevel')) {
+        return '';
+        error_log('not right, file should exist');
     }
 
     $modid = xarModGetIDFromName($modname);
