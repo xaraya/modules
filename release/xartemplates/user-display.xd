@@ -6,47 +6,45 @@
 <xar:set name="goback"><xar:mlstring>Back to List View</xar:mlstring></xar:set>
 <xar:set name="listview">xarModURL('release','user','view')</xar:set>
 <xar:if condition="$general eq 2" >
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;">
-            <h3>Extension No:</h3>
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            Extension No:</span>
         </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <h3>#$rid#</h3>
-        </span>
-    </div>
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;">
-         <xar:if condition="$type == 0">
-            <h3><xar:mlstring>Module</xar:mlstring>:</h3>
-          <xar:else />
-            <h3><xar:mlstring>Theme</xar:mlstring>:</h3>
-          </xar:if>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <h3>#$extname#</h3>
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
+            <strong>#$rid#</strong></span>
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;;">
-           <h3>Display Name:</h3>
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+        <xar:if condition="$type == 0">
+            <xar:mlstring>Module</xar:mlstring>:</span>
+        <xar:else />
+            <xar:mlstring>Theme</xar:mlstring>:</span>
+        </xar:if>
         </span>
-        <span style="float: right; width: 78%; text-align: left;">
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
+            <strong>#$extname#</strong>
+        </span>
+    </div>
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            Name:</span>
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             #$displname#
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;;">
-           <h3>Description:</h3>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            Description:</span>
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             #$desc#
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;;">
-           <h3>Class:</h3>
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            Class:
         </span>
-        <span style="float: right; width: 78%; text-align: left;">
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
         <xar:if condition="$class == 0">
             <xar:mlstring>Core</xar:mlstring>
         <xar:else />
@@ -54,28 +52,25 @@
         </xar:if>
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;">
-           <h3>Author:</h3>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            Author:</span>
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             <a href="#$contacturl#">#$realname#</a>
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;">
-           <h3>Ext State:</h3>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            Ext State:</span>
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
             #$rstatesel#
         </span>
     </div>
-    <div style="clear: both; padding-top: 5px;">
-        <span style="float: left; width: 20%; text-align: left;">
-           <h3>Categories:</h3>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-	       <xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />
+    <div style="clear: both;">
+        <span style="float: left; width: 20%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+            Categories:</span>
+        <span style="float: right; width: 78%; margin-top:10px;text-align: left;">
+	        <xar:categories-navigation layout="" module="release" itemtype="" itemid="$rid" />
         </span>
     </div>
 </xar:if>
