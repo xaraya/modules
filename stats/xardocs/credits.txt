@@ -1,0 +1,5 @@
+// admin view by John Cox
+// rewrite and port to Xaraya: Frank Besler
+// POST-NUKE Content Management System
+// PHP-NUKE Web Portal System - http://phpnuke.org/
+// Thatware - http://thatware.org/

@@ -1,0 +1,123 @@
+<xar:template file="header" type="module" />
+	<div style="text-align:left">
+		<xar:ml>
+			<xar:mlstring>We have received <strong>#(1)</strong> page views since #(2), #(3) today, and #(4) yesterday.</xar:mlstring>
+			<xar:mlvar>#$hits['total']#</xar:mlvar>
+			<xar:mlvar>#$startdate#</xar:mlvar>
+			<xar:mlvar>#$hits['today']#</xar:mlvar>
+			<xar:mlvar>#$hits['yesterday']#</xar:mlvar>
+		</xar:ml>
+		<br /><br />
+		<xar:ml>
+			<xar:mlstring>The best day was #(1) (<strong>#(2)</strong> page views), while #(3) (<strong>#(4)</strong> page views) was a really poor day.</xar:mlstring>
+			<xar:mlvar>#$day['best']#</xar:mlvar>
+			<xar:mlvar>#$day['mosthits']#</xar:mlvar>
+			<xar:mlvar>#$day['worst']#</xar:mlvar>
+			<xar:mlvar>#$day['leasthits']#</xar:mlvar>
+		</xar:ml>
+		<br /><br />
+		<xar:ml>
+			<xar:mlstring>Most people visit us on <strong>#(1)</strong> with a total of <strong>#(2)</strong> page views, while <strong>#(3)</strong> is not really our best day with a total of <strong>#(4)</strong> page views.</xar:mlstring>
+			<xar:mlvar>#$weekday['best']#</xar:mlvar>
+			<xar:mlvar>#$weekday['mosthits']#</xar:mlvar>
+			<xar:mlvar>#$weekday['worst']#</xar:mlvar>
+			<xar:mlvar>#$weekday['leasthits']#</xar:mlvar>
+		</xar:ml>
+		<xar:ml>
+			<xar:mlstring>On average, our best hour (with <strong>#(1)</strong> page views) starts at <strong>#(2):00</strong>, while least traffic on our site is at <strong>#(3):00</strong> (with only <strong>#(4)</strong> page views).</xar:mlstring>
+			<xar:mlvar>#$hour['mosthits']#</xar:mlvar>
+			<xar:mlvar>#$hour['best']#</xar:mlvar>
+			<xar:mlvar>#$hour['worst']#</xar:mlvar>
+			<xar:mlvar>#$hour['leasthits']#</xar:mlvar>
+		</xar:ml>
+	</div>
+	<div>
+		<h3><xar:mlstring>Top 10 Browsers</xar:mlstring></h3>
+		<a href="#xarModURL('stats', 'user', 'details_browser')#"><xar:mlstring>More details</xar:mlstring></a>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$browsers">
+				<tr>
+					<td><img src="#$picpath#/#$loop:item['pic']#" border="0" alt="#$loop:item['name']#" /></td>
+					<td>#$loop:item['name']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+	<div>
+		<h3><xar:mlstring>Top 10 Operating systems</xar:mlstring></h3>
+		<a href="#xarModURL('stats', 'user', 'details_os')#"><xar:mlstring>More details</xar:mlstring></a>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$os">
+				<tr>
+					<td><img src="#$picpath#/#$loop:item['pic']#" border="0" alt="#$loop:item['name']#" /></td>
+					<td>#$loop:item['name']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+	<div>
+		<h3><xar:mlstring>Visitors by hour</xar:mlstring></h3>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$perhour">
+				<tr>
+					<td>#$loop:item['name']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+	<div>
+		<h3><xar:mlstring>Visitors by weekday</xar:mlstring></h3>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$perweekday">
+				<tr valign="bottom">
+					<td>#$loop:item['name']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+	<xar:if condition="!empty($last7days)">
+	<div>
+		<h3><xar:mlstring>Last Seven Days</xar:mlstring></h3>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$last7days">
+				<tr>
+					<td>#$loop:item['formated']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+	</xar:if>
+	<div>
+		<h3><xar:mlstring>Visitors by month</xar:mlstring></h3>
+		<table cellspacing="0" cellpadding="2">
+			<xar:loop name="$permonth">
+				<tr valign="bottom">
+					<td>#$loop:item['name']#</td>
+					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+	<div>
+		<h3><xar:mlstring>Miscellaneous stats</xar:mlstring></h3>
+		<table cellspacing="0" cellpadding="2">
+			<tr valign="bottom">
+				<td><img src="#$picpath#/users.gif" border="0" alt="" /></td>
+				<td><xar:mlstring>Registered users</xar:mlstring>:</td>
+				<td align="right">#$misc['users']#</td>
+			</tr>
+			<tr valign="bottom">
+				<td><img src="#$picpath#/sections.gif" border="0" alt="" /></td>
+				<td><xar:mlstring>System version</xar:mlstring>:</td>
+				<td align="right">#$misc['sysversion']#</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</div>
+<!-- end of stats template -->

@@ -1,0 +1,93 @@
+Hooks:
+
+add in stats/xarinit.php/init
+    // Set up module hooks
+    if (!xarModRegisterHook('item',
+                            'pageview',
+                            'API',
+                            'stats',
+                            'user',
+                            'count')) {
+        return false;
+    }
+add in stats/xarinit.php/delete
+    // Remove module hooks
+    if (!xarModUnregisterHook('item',
+                            'pageview',
+                            'API',
+                            'stats',
+                            'user',
+                            'count')) {
+        return false;
+    }
+replace in index.php
+//			if(xarModIsAvailable('stats')) {
+//				if (xarModAPILoad('stats', 'user')) {
+//					xarModAPIFunc('stats', 'user', 'count');
+//				}
+//			}
+with
+			xarModCallHooks('item', 'pageview',$modid,'');
+extend the stats table with a module id.
+add templates for module dependant stats.
+
+
+
+User Agents:
+=============
+Mandrake Linux 9 -> Galeon 1.2.5:    Mozilla/5.0 Galeon/1.2.5 (X11; Linux i686; U;) Gecko/0
+                 -> Konqueror 3.0.3: Mozilla/5.0 (compatible; Konqueror/3; Linux)
+                 -> Mozilla 1.1:     Mozilla/5.0 (X11; U; Linux i686; de-AT; rv:1.1) Gecko/20020826
+Windows XP       -> IE 6.0:          Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+									 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Q312461)
+									 Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; MyIE2; HotBar 4.1.8.0; .NET CLR 1.0.3705)
+				 -> Opera 6:         Opera/6.05 (Windows XP; U) [en]
+							      	 Mozilla/5.0 (Windows XP; U) Opera 6.05 [en]
+				 -> Mozilla 1.2.1:   Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.2.1) Gecko/20021130
+Gentoo Linux 1.4 -> Lynx 2.8.4rel.1: Lynx/2.8.4rel.1 libwww-FM/2.14 SSL-MM/1.4.1 OpenSSL/0.9.6g
+                 -> Links 2.1pre3:   Links (2.1pre3; Linux 2.4.20 i686; 80x24)  !!! unknown
+Windows 98       -> Mozilla 1.2.1:   Mozilla/5.0 (Windows; U; Win98; en-US; rv:1.2.1) Gecko/20021130
+				 -> Netscape 4.x:    Mozilla/4.78 [en] (Win98; U)  !!! moz
+Lindows 3        -> Netscape 7:      Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.0.1) Gecko/20020823 Netscape/7.0 
+Windows 2000     -> Phoenix 0.5:     Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.3a) Gecko/20021207 Phoenix/0.5
+				 -> IE 5.0:          Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)
+MacOSX 10.2      -> IE 5.22:         Mozilla/4.0 (compatible; MSIE 5.22; Mac_PowerPC)
+                 -> Chimera 0.6:     Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.0.1) Gecko/20021220 Chimera/0.6+
+				 -> Mozilla 1.2.1:   Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-US; rv:1.2.1) Gecko/20021130
+				 -> Netscape 7:      Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-US; rv:1.0.1) Gecko/20020823 Netscape/7.0
+				 -> Opera:			 Opera/6.0 (Macintosh; U) [en]
+				 -> Safari 1.0beta:  Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en-us) AppleWebKit/48 (like Gecko) Safari/48
+MaxOS 9          -> IE 5.16:	     Mozilla/4.0 (compatible; MSIE 5.16, Mac_PowerPC)
+
+/*
+pgsql:
+tiny
+small = int2 -> values <= 32767 ("7FFF")
+medium
+default = int4 -> values <= 2147483647 ("7FFF FFFF")
+big = int8
+
+mysql:
+tiny = unsigned "3" -> vals <= 255 "FF"
+     = signed   "4" -> vals <= 127 "7F"
+small = unsigned "5" -> vals <= 65535 "FFFF"
+      = signed "6" -> vals <= 32767 "7FFF"
+medium = unsigned "8" -> vals <= 16777215 "FFFFFF"
+       = signed "9" -> vals <= 8388607 "7FFFFF"
+default(10)
+big(20)
+
+text.tiny = TINYTEXT = 255
+text. = TEXT = 65535
+text.medium = MEDIUMTEXT = 16777215
+text.long = LONGTEXT = 4294967295
+
+*/
+
+
+TODO:
+- use events system / hooks
+- security/permission checks
+- look at unique hits. are they possible?
+- go for version 3. -> links, more templates, more functions...
+- make upgrade work
