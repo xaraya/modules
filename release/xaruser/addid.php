@@ -5,7 +5,7 @@ function release_user_addid()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
-    $phase = xarVarCleanFromInput('phase');
+    xarVarFetch('phase', 'enum:add:update', $phase, 'add', XARVAR_NOT_REQUIRED);
 
     if (empty($phase)){
         $phase = 'add';
@@ -44,21 +44,14 @@ function release_user_addid()
 
             case 'update':
 
-                list($uid,
-                     $regname,
-                     $displname,
-                     $desc,
-                     $idtype,
-                     $class,
-                     $rstate,
-                     $cids) = xarVarCleanFromInput('uid',
-                                                   'regname',
-                                                   'displname',
-                                                   'desc',
-                                                   'idtype',
-                                                   'class',
-                                                   'rstate',
-                                                   'modify_cids');
+                if (!xarVarFetch('uid', 'int:1:', $uid, 0, XARVAR_NOT_REQUIRED)) {return;}
+                if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('displname', 'str:1:', $displname, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('desc', 'str:1:', $desc, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('idtype', 'int:1:', $idtype, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('class', 'int:1:', $class, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('rstate', 'int:1:', $rstate, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('modify_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 
                 // Get the UID of the person submitting the module
                 $uid = xarUserGetVar('uid');
@@ -67,9 +60,7 @@ function release_user_addid()
                 if (!xarSecConfirmAuthKey()) return;
 
                 // The user API function is called. 
-                $newrid =  xarModAPIFunc('release',
-                                         'user',
-                                         'createid',
+                $newrid =  xarModAPIFunc('release', 'user', 'createid',
                                     array('uid' => $uid,
                                           'regname' => $regname,
                                           'displname' => $displname,
@@ -83,7 +74,7 @@ function release_user_addid()
                     if (xarCurrentErrorType() == XAR_SYSTEM_EXCEPTION) {
                         return; // throw back
                     }
-                    $reason = xarErrorValue();
+                    $reason = xarCurrentError();
                     if (!empty($reason)) {
                        $data['message'] = substr(strrchr($reason->toString(), '|'), 1);
                     }

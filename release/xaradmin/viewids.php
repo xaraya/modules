@@ -3,11 +3,10 @@
 function release_admin_viewids()
 {
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'enum:modules:themes:all:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
 
     // Security Check
     if(!xarSecurityCheck('EditRelease')) return;
-    $phase = xarVarCleanFromInput('phase');
 
     $uid = xarUserGetVar('uid');
 
