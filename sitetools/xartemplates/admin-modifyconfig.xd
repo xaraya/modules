@@ -14,7 +14,7 @@
 <xar:set name="$defado"><xar:mlstring>Default ADOdb Cache path is </xar:mlstring></xar:set>
 <xar:set name="$defrss"><xar:mlstring>Default RSS Cache path is </xar:mlstring></xar:set>
 <xar:set name="$deftem"><xar:mlstring>Default Template Cache path is </xar:mlstring></xar:set>
-<xar:set name="$bkup"><xar:mlstring>Back sure the backup path exists and is writeable chmod 777. No trailing slash.</xar:mlstring></xar:set>
+<xar:set name="$bkup"><xar:mlstring>Must be the full path to the backup directory on your server, where backup files will be created. It must be writeable chmod 777. No trailing slash.</xar:mlstring></xar:set>
 <xar:set name="$tshelp"><xar:mlstring>If checked a time stamp will be added to the backup file name.</xar:mlstring></xar:set>
 <xar:set name="$lineoption1"><xar:mlstring>*nix (default)</xar:mlstring></xar:set>
 <xar:set name="$lineoption2"><xar:mlstring>Windows</xar:mlstring></xar:set>
@@ -75,7 +75,7 @@
         </span>
 		</span>
 		<span style="float: right; width: 68%; text-align: left;">
-            <input type="text" name="backuppath" id="backuppath" size="40" maxlength="128" value="#$backuppath#" />
+            <input type="text" name="backuppath" id="backuppath" size="60" maxlength="128" value="#$backuppath#" />
         </span>
     </div>
     <div style="clear: both; padding-top: 5px;">
