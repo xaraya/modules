@@ -34,9 +34,9 @@ function comments_user_usermenu($args)
 
         case 'update':
 
-            $settings = xarVarCleanFromInput('settings');
+            if(!xarVarFetch('settings','array', $settings, array(), XARVAR_NOT_REQUIRED)) {return;}
 
-            if (!isset($settings) || count($settings) <= 0) {
+            if (count($settings) <= 0) {
                 $msg = xarML('Settings passed from form are empty!');
                 xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
