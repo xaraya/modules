@@ -111,10 +111,10 @@ function messages_adminapi_view( $args )
          $data['indicatoroutboxyes'] = '<img src="modules/messages/xarimages/green.gif" />';
          $data['indicatoroutboxno'] = '<img src="modules/messages/xarimages/red.gif" />';
          $data['messageslogo'] = '<img src="modules/messages/xarimages/xaraya_logo.gif" width="202" height="69"/>';
-         $data['limitinbox'] = xarML('10');
-         $data['outbox'] = xarML('10');
-         $data['limitreached1'] = xarML(' ');
-         $data['limitreached2'] = xarML(' ');
+         $data['limitinbox'] = '10';
+         $data['outbox'] = '10';
+         $data['limitreached1'] = ' ';
+         $data['limitreached2'] = ' ';
          $data['read_msg'] = $objects->properties['read_msg']->getValue();
          $data['imageread'] = '<img src="modules/messages/xarimages/check_read.gif" border="0"/>';
          $data['imageunread'] = '<img src="modules/messages/xarimages/check_unread.gif" border="0"/>';
