@@ -15,14 +15,14 @@
  *  - server_id
  */
 
-require 'config.php';
-require_once 'functions.php';
+require 'common.php';
 
 $server_id = $_POST['server_id'];
-$dn = stripslashes( $_POST['login_dn'] );
-$pass = stripslashes( $_POST['login_pass'] );
-$redirect = rawurldecode( $_POST['redirect'] );
-$anon_bind = $_POST['anonymous_bind'] == 'on' ? true : false;
+$dn = isset( $_POST['login_dn'] ) ? $_POST['login_dn'] : null;
+$uid = isset( $_POST['uid'] ) ? $_POST['uid'] : null;
+$pass = isset( $_POST['login_pass'] ) ? $_POST['login_pass'] : null;
+$redirect = isset( $_POST['redirect'] ) ? rawurldecode( $_POST['redirect'] ) : null;
+$anon_bind = isset( $_POST['anonymous_bind'] ) && $_POST['anonymous_bind'] == 'on' ? true : false;
 check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars( $server_id ) );
 
 if( ! $anon_bind ) {
@@ -37,29 +37,76 @@ if( $anon_bind ) {
 $host = $servers[$server_id]['host'];
 $port = $servers[$server_id]['port'];
 
+// Checks if the logni_attr option is enabled for this host,
+// which allows users to login with a simple username like 'jdoe' rather
+// than the fully qualified DN, 'uid=jdoe,ou=people,,dc=example,dc=com'.
+// We don't do this, of course, for anonymous binds.
+if ( login_attr_enabled( $server_id ) && ! $anon_bind ) {
+
+	// search for the "uid" first
+	$ds = ldap_connect ( $host, $port );
+	$ds or pla_error( "Could not contact '" . htmlspecialchars( $host ) . "' on port '" . htmlentities( $port ) . "'" );
+	@ldap_set_option( $ds, LDAP_OPT_PROTOCOL_VERSION, 3 );
+	// try to fire up TLS if specified in the config
+	if( isset( $servers[ $server_id ][ 'tls' ] ) && $servers[ $server_id ][ 'tls' ] == true ) {
+		function_exists( 'ldap_start_tls' ) or pla_error(
+				"Your PHP install does not support TLS" );
+		@ldap_start_tls( $ds ) or pla_error( "Could not start
+				TLS. Please check your ".
+				"LDAP server configuration.", ldap_error( $ds ), ldap_errno( $ds ) );
+	}
+	@ldap_bind ($ds) or pla_error( "Could not bind anonymously to server. " .
+				"Unless your server accepts anonymous binds, " .
+				"the login_attr feature will not work properly.");
+	$search_base = isset( $servers[$server_id]['base'] ) && '' != trim( $servers[$server_id]['base'] ) ?
+		$servers[$server_id]['base'] :
+		try_to_get_root_dn( $server_id );
+	$sr = @ldap_search($ds,$search_base,$servers[$server_id]['login_attr'] ."=". $uid, array("dn"), 0, 1);
+	$result = @ldap_get_entries($ds,$sr);
+	$dn = isset( $result[0]['dn'] ) ? $result[0]['dn'] : false;
+	@ldap_unbind( $ds );
+	if( false === $dn )
+		pla_error( "Could not find a user '" . htmlspecialchars( $uid ) . "'" );
+}
+
 // verify that the login is good 
 $ds = @ldap_connect( $host, $port );
 $ds or pla_error( "Could not connect to '" . htmlspecialchars( $host ) . "' on port '" . htmlentities( $port ) . "'" );
 
-// go with LDAP version 3 if possible (needed for renaming and Novell schema fetching)
+// go with LDAP version 3 if possible 
 @ldap_set_option( $ds, LDAP_OPT_PROTOCOL_VERSION, 3 );
-
-$bind_result = @ldap_bind( $ds, $dn, $pass );
-
-if( ! $bind_result )
-	pla_error( "Bad username/password. Try again" );
-
-$expire = $cookie_time==0 ? null : time()+$cookie_time;
-if( $anon_bind ) {
-	// we set the cookie val to 0 for anonymous binds.
-	$res1 = setcookie( "pla_login_dn_$server_id", '0', $expire, dirname( $_SERVER['PHP_SELF'] ) );
-	$res2 = setcookie( "pla_pass_$server_id", '0', $expire, dirname( $_SERVER['PHP_SELF'] ) );
-} else {
-	$res1 = setcookie( "pla_login_dn_$server_id", $dn, $expire, dirname( $_SERVER['PHP_SELF'] ) );
-	$res2 = setcookie( "pla_pass_$server_id", $pass, $expire, dirname( $_SERVER['PHP_SELF'] ) );
+if( isset( $servers[ $server_id ][ 'tls' ] ) && $servers[ $server_id ][ 'tls' ] == true ) {
+                function_exists( 'ldap_start_tls' ) or pla_error(
+                                "Your PHP install does not support TLS" );
+                ldap_start_tls( $ds ) or pla_error( "Could not start
+                                TLS. Please check your ".
+                                "LDAP server configuration.", ldap_error( $ds ), ldap_errno( $ds ) );
 }
-if( ! $res1 || ! $res2 )
-	pla_error( "Could not set cookie!" );
+
+if( $anon_bind )
+	$bind_result = @ldap_bind( $ds );
+else
+	$bind_result = @ldap_bind( $ds, $dn, $pass );
+
+if( ! $bind_result ) {
+	if( $anon_bind )
+		pla_error( "Could not bind anonymously to LDAP server.", ldap_error( $ds ), ldap_errno( $ds ) );
+	else
+		pla_error( "Bad username/password. Try again" );
+} 
+
+set_cookie_login_dn( $server_id, $dn, $pass, $anon_bind ) or pla_error( "Could not set cookie!" );
+
+// Clear out any pre-existing tree data in the session for this server
+session_start();
+if( session_is_registered( 'tree' ) )
+	if( isset( $_SESSION['tree'][$server_id] ) )
+		unset( $_SESSION['tree'][$server_id] );
+if( session_is_registered( 'tree_icons' ) )
+	if( isset( $_SESSION['tree_icons'][$server_id] ) )
+		unset( $_SESSION['tree_icons'][$server_id] );
+session_write_close();
+
 ?>
 
 <html>
@@ -90,14 +137,12 @@ if( ! $res1 || ! $res2 )
 	<center>
 	<br />
 	<br />
-	Logged in to <b><?php echo htmlspecialchars($servers[$server_id]['name']); ?></b><br />
+	<br />
+	Successfully logged in to server <b><?php echo htmlspecialchars($servers[$server_id]['name']); ?></b><br />
 	<?php if( $anon_bind ) { ?>
 		(anonymous bind)	
 	<?php } ?>
 	<br />
-	<br />
-	<br />
-	Click <a href="search.php?server_id=<?php echo $server_id?>">here</a> to go to the search form.
 	</center>
 
 <?php } ?>
@@ -105,5 +150,3 @@ if( ! $res1 || ! $res2 )
 </body>
 </html>
 
-<?php
-?>

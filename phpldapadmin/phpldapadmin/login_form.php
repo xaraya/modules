@@ -9,28 +9,29 @@
  *  - server_id
  */
 
-require 'config.php';
-require_once 'functions.php';
+require 'common.php';
 
-$server_id = $_GET['server_id'];
+$server_id = isset( $_GET['server_id'] ) ? $_GET['server_id'] : null;
+
+if( $server_id != null ) {
+		check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars( $server_id ) );
+}
+
 $server = $servers[$server_id];
 
-check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars( $server_id ) );
+include 'header.php'; ?>
 
-?>
-
-<?php include 'header.php'; ?>
 <body>
 
 <script language="javascript">
 <!--
 	function toggle_disable_login_fields( anon_checkbox )
 	{
-		if( anon_checkbox.checked) {
-			anon_checkbox.form.login_dn.disabled = true;
+		if( anon_checkbox.checked ) {
+			anon_checkbox.form.<?php echo login_attr_enabled( $server_id ) ? 'uid' : 'login_dn'; ?>.disabled = true;
 			anon_checkbox.form.login_pass.disabled = true;
 		} else {
-			anon_checkbox.form.login_dn.disabled = false;
+			anon_checkbox.form.<?php echo login_attr_enabled( $server_id ) ? 'uid' : 'login_dn'; ?>.disabled = false;
 			anon_checkbox.form.login_pass.disabled = false;
 		}
 	}
@@ -41,11 +42,11 @@ check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars
 <h3 class="title">Authenticate to server <b><?php echo $servers[$server_id]['name']; ?></b></h3>
 <br />
 
-<?php  if( $_SERVER['SERVER_PORT'] != 443 ) { ?>
+<?php  if( $_SERVER['SERVER_PORT'] != HTTPS_PORT ) { ?>
 
-<span style="color:red">Warning: this is an insecure (non-SSL) connection!<br />
- SSL is recommended when transmitting sensitive passwords.</span>
-<br />
+<center>
+<span style="color:red">Warning: This web connection is <acronym title="You are not using 'https'. Web browlser will transmit login information in clear text">unencrypted</acronym>.<br />
+ </span>
 
 <?php  } ?>
 
@@ -53,7 +54,7 @@ check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars
 
 <form action="login.php" method="post" name="login_form">
 <input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-<?php if( $_GET['redirect'] ) { ?>
+<?php if( isset( $_GET['redirect'] ) ) { ?>
 	<input type="hidden" name="redirect" value="<?php echo rawurlencode( $_GET['redirect'] ) ?>" />
 <?php } ?>
 <center>
@@ -61,11 +62,11 @@ check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars
 <tr>
 </tr>
 <tr>
-	<td colspan="2"><small>Anonymous Bind</small> <input type="checkbox" name="anonymous_bind" onclick="toggle_disable_login_fields(this)" /></td>
+	<td colspan="2"><small><label for="anonymous_bind_checkbox">Anonymous Bind</label></small> <input type="checkbox" name="anonymous_bind" onclick="toggle_disable_login_fields(this)" id="anonymous_bind_checkbox"/></td>
 </tr>
 <tr>
-	<td><small>Login <acronym title="Distinguished Name">DN</acronym></small></td>
-	<td><input type="text" name="login_dn" size="40" value="<?php echo $servers[$server_id]['login_dn']; ?>" name="login_dn" /></td>
+<td><small>Login <?php if ( ! login_attr_enabled( $server_id ) ) { echo '<acronym title="Distinguished Name">DN</acronym>';} ?></small></td>
+<td><input type="text" name="<?php echo login_attr_enabled( $server_id ) ? 'uid' : 'login_dn'; ?>" size="40" value="<?php echo $servers[$server_id]['login_dn']; ?>" /></td>
 </tr>
 <tr>
 	<td><small>Password</small></td>
@@ -77,5 +78,3 @@ check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars
 </table>
 </form>
 </center>
-<?php
-?>

@@ -1,15 +1,15 @@
 <?php
 
-require 'config.php';
+require 'common.php';
 
 // Common to all templates
-$container = stripslashes( $_POST['container'] );
+$container = $_POST['container'];
 $server_id = $_POST['server_id'];
 
 // Unique to this template
-$step = $_POST['step'];
-if( ! $step )
-	$step = 1;
+$step = 1;
+if( isset($_POST['step']) )
+    $step = $_POST['step'];
 
 	check_server_id( $server_id ) or die( "Bad server_id: " . htmlspecialchars( $server_id ) );
 	have_auth_info( $server_id ) or die( "Not enough information to login to server. Please check your configuration." );
@@ -23,7 +23,7 @@ if( ! $step )
 	<form action="creation_template.php" method="post" name="dns_form">
 	<input type="hidden" name="step" value="2" />
 	<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
-	<input type="hidden" name="template" value="<?php echo $_POST['template']; ?>" />
+	<input type="hidden" name="template" value="<?php echo htmlspecialchars( $_POST['template'] ); ?>" />
 
 	<center>
 	<table class="confirm">
@@ -40,7 +40,7 @@ if( ! $step )
 	<tr>
 		<td></td>
 		<td class="heading">Container <acronym title="Distinguished Name">DN</acronym>:</td>
-		<td><input type="text" name="container" size="40" value="<?php echo htmlspecialchars( utf8_decode( $container ) ); ?>" />
+		<td><input type="text" name="container" size="40" value="<?php echo htmlspecialchars( $container ); ?>" />
 		<?php draw_chooser_link( 'dns_form.container' ); ?></td>
 		</td>
 	</tr>
@@ -52,9 +52,9 @@ if( ! $step )
 
 <?php } elseif( $step == 2 ) {
 
-	$dc_name = trim( stripslashes( $_POST['dc_name'] ) );
-	$container = trim( stripslashes( $_POST['container'] ) );
-	$associateddomain = trim( stripslashes( $_POST['associateddomain'] ) );
+	$dc_name = trim( $_POST['dc_name'] );
+	$container = trim( $_POST['container'] );
+	$associateddomain = trim( $_POST['associateddomain'] );
 
 	dn_exists( $server_id, $container ) or
 		pla_error( "The container you specified (" . htmlspecialchars( $container ) . ") does not exist. " .

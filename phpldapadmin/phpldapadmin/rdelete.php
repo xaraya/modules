@@ -9,15 +9,17 @@
  *  - server_id
  */
 
-require 'config.php';
-require_once 'functions.php';
+require realpath( 'common.php' );
 
-$encoded_dn = $_POST['dn'];
-$dn = stripslashes( rawurldecode( $encoded_dn ) );
+$dn = $_POST['dn'];
+$encoded_dn = rawurlencode( $dn );
 $server_id = $_POST['server_id'];
 
 if( ! $dn )
 	pla_error( "You must specify a DN." );
+
+if( is_server_read_only( $server_id ) )
+	pla_error( "You cannot perform updates while server is in read-only mode" );
 
 check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars( $server_id ) );
 have_auth_info( $server_id ) or pla_error( "Not enough information to login to server. Please check your configuration." );
@@ -66,13 +68,13 @@ if( $del_result )
 		parent.left_frame.location.reload();
 	</script>
 
-	Object <b><?php echo htmlspecialchars( utf8_decode( $dn ) ); ?></b> and sub-tree deleted successfully.
+	Object <b><?php echo htmlspecialchars( $dn ); ?></b> and sub-tree deleted successfully.
 
 	<?php 
 
 
 } else {
-	pla_error( "Could not delete the object: " . htmlspecialchars( utf8_decode( $dn ) ), ldap_error( $ds ), ldap_errno( $ds ) );
+	pla_error( "Could not delete the object: " . htmlspecialchars( $dn ), ldap_error( $ds ), ldap_errno( $ds ) );
 }
 
 
@@ -86,29 +88,32 @@ function pla_rdelete( $server_id, $dn )
 	$ds = pla_ldap_connect( $server_id );
 
 	if( ! is_array( $children ) || count( $children ) == 0 ) {
-		echo "<nobr>Deleting " . htmlspecialchars( utf8_decode( $dn ) ) . "...";
+		echo "<nobr>Deleting " . htmlspecialchars( $dn ) . "...";
 		flush();
-		if( ldap_delete( $ds, $dn ) ) {
-			echo " <span style=\"color:green\">Success</span></nobr><br />\n";
-			return true;
-		} else {
-			pla_error( "Failed to delete dn: " . htmlspecialchars( utf8_decode( $dn ) ),
-	       				ldap_error( $ds ), ldap_errno( $ds ) );
-		}
+		if( true === preEntryDelete( $server_id, $dn ) )
+				if( @ldap_delete( $ds, $dn ) ) {
+						postEntryDelete( $server_id, $dn );
+						echo " <span style=\"color:green\">Success</span></nobr><br />\n";
+						return true;
+				} else {
+						pla_error( "Failed to delete dn: " . htmlspecialchars( $dn ),
+										ldap_error( $ds ), ldap_errno( $ds ) );
+				}
 	} else {
 		foreach( $children as $child_dn ) {
 			pla_rdelete( $server_id, $child_dn );
 		}
-		echo "<nobr>Deleting " . htmlspecialchars( utf8_decode( $dn ) ) . "...";
+		echo "<nobr>Deleting " . htmlspecialchars( $dn ) . "...";
 		flush();
-		if( ldap_delete( $ds, $dn ) ) {
-			echo " <span style=\"color:green\">Success</span></nobr><br />\n";
-			return true;
-		} else {
-			pla_errror( "Failed to delete dn: " . htmlspecialchars( utf8_decode( $dn ) ),
-	       				ldap_error( $ds ), ldap_errno( $ds ) );
-		}
+		if( true === preEntryDelete( $server_id, $dn ) )
+				if( @ldap_delete( $ds, $dn ) ) {
+						postEntryDelete( $server_id, $dn );
+						echo " <span style=\"color:green\">Success</span></nobr><br />\n";
+						return true;
+				} else {
+						pla_error( "Failed to delete dn: " . htmlspecialchars( ( $dn ) ),
+										ldap_error( $ds ), ldap_errno( $ds ) );
+				}
 	}
 
 }
-?>

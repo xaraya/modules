@@ -34,13 +34,12 @@ function phpldapadmin_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        //case 1.0:
-            // Code to upgrade from version 1.0 goes here
-            //break;
-        //case 2.0:
-            // Code to upgrade from version 2.0 goes here
-            //break;
-        default:
+        case '0.9.0':
+        case '0.9.1':
+        case '0.9.2':
+            break;
+        case '0.9.3':
+            // Code to upgrade from version '0.9.3' goes here
             break;
     }
 

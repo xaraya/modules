@@ -1,17 +1,16 @@
 <?php
 
-require 'config.php';
-
+require 'common.php';
 
 $file = $_GET['file'];
 
 // Security check (we don't want anyone tryting to get at /etc/passwd or something)
-preg_match( "/^djp/", $file ) or 
-	pla_error( "Unsafe file name: " . htmlspecialchars( $file ) );
+preg_match( "/^pla/", $file ) or 
+	pla_error( $lang['unsafe_file_name'] . htmlspecialchars( $file ) );
 
 $file = $jpeg_temp_dir . '/' . $file;
 file_exists( $file ) or
-	pla_error( "No such file: " . htmlspecialchars( $file ) );
+	pla_error( $lang['no_such_file'] . htmlspecialchars( $file ) );
 
 // little security measure here (prevents users from accessing
 // files, like /etc/passwd for example)

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  * expand.php
@@ -12,8 +12,7 @@
  * Note: this script is equal and opposite to collapse.php
  */
 
-require 'config.php';
-require_once 'functions.php';
+require 'common.php';
 
 // no expire header stuff
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -22,24 +21,30 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$dn = stripslashes( $_GET['dn'] );
+$dn = $_GET['dn'];
 $encoded_dn = rawurlencode( $dn );
 $server_id = $_GET['server_id'];
 
-check_server_id( $server_id ) or pla_error( "Bad server_id: " . htmlspecialchars( $server_id ) );
-have_auth_info( $server_id ) or pla_error( "Not enough information to login to server. Please check your configuration." );
+check_server_id( $server_id ) or pla_error( $lang['bad_server_id'] );
+have_auth_info( $server_id ) or pla_error( $lang['not_enough_login_info'] );
 
 session_start();
 
-session_is_registered( 'tree' ) or pla_error( "Your session tree is not registered. That's weird. Shouldn't ever happen".
-							". Just go back and it should be fixed automagically." );
+// dave commented this out since it was being triggered without reason in rare cases
+//session_is_registered( 'tree' ) or pla_error( "Your session tree is not registered. That's weird. Should never happen".
+//							". Just go back and it should be fixed automagically." );
+
 $tree = $_SESSION['tree'];
 $tree_icons = $_SESSION['tree_icons'];
 
-pla_ldap_connect( $server_id ) or pla_error( "Could not connect to LDAP server" );
+pla_ldap_connect( $server_id ) or pla_error( $lang['could_not_connect'] );
 $contents = get_container_contents( $server_id, $dn );
 
-sort( $contents );
+//echo "<pre>";
+//var_dump( $contents );
+//exit;
+
+usort( $contents, 'pla_compare_dns' );
 $tree[$server_id][$dn] = $contents;
 
 foreach( $contents as $dn )
@@ -47,7 +52,6 @@ foreach( $contents as $dn )
 
 $_SESSION['tree'] = $tree;
 $_SESSION['tree_icons'] = $tree_icons;
-session_write_close();
 
 // This is for Opera. By putting "random junk" in the query string, it thinks
 // that it does not have a cached version of the page, and will thus
@@ -55,6 +59,14 @@ session_write_close();
 $time = gettimeofday();
 $random_junk = md5( strtotime( 'now' ) . $time['usec'] );
 
-header( "Location: tree.php?foo=$random_junk#{$server_id}_{$encoded_dn}" );
+// If cookies were disabled, build the url parameter for the session id.
+// It will be append to the url to be redirect
+$id_session_param="";
+if(SID != ""){
+  $id_session_param = "&".session_name()."=".session_id();
+}
 
+session_write_close();
+
+header( "Location:tree.php?foo=$random_junk#{$server_id}_{$encoded_dn}$id_session_param" );
 ?>

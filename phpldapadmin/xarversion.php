@@ -16,7 +16,7 @@
 
 $modversion['name']           = 'phpLDAPadmin';
 $modversion['id']             = '1651';
-$modversion['version']        = '0.9.0';
+$modversion['version']        = '0.9.3';
 $modversion['description']    = 'Wrapper module for phpLDAPadmin (http://phpldapadmin.sourceforge.net/) for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
