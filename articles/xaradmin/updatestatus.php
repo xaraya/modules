@@ -15,12 +15,16 @@ function articles_admin_updatestatus()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-    if (!isset($aids) || count($aids) == 0 ||
-        !isset($status) || !is_numeric($status) || $status < 0 || $status > 3) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'parameters', 'admin', 'updatestatus', 'Articles');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+    if (!isset($aids) || count($aids) == 0) {
+        $msg = xarML('No articles selected');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+                       new DefaultUserException($msg));
+        return;
+    }
+    if (!isset($status) || !is_numeric($status) || $status < 0 || $status > 3) {
+        $msg = xarML('Invalid status');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_DATA',
+                       new DefaultUserException($msg));
         return;
     }
 
