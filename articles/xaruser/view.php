@@ -8,7 +8,7 @@
  * catid=1+2 : category 1 AND 2  == cids[0]=1&cids[1]=2&andcids=1
  *
  */
-function articles_user_view()
+function articles_user_view($args)
 {
     // Get parameters
     if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
@@ -21,6 +21,8 @@ function articles_user_view()
     if(!xarVarFetch('numcols',  'isset', $numcols,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('authorid', 'isset', $authorid,  NULL, XARVAR_DONT_SET)) {return;}
 
+    // Override if needed from argument array (e.g. ptid, numitems etc.)
+    extract($args);
 
     // Default parameters
     if (!isset($startnum)) {
@@ -76,57 +78,76 @@ function articles_user_view()
         }
     }
 
-    if (empty($settings['showcategories'])) {
-        $showcategories = 0;
-    } else {
-        $showcategories = 1;
+    if (!isset($showcategories)) {
+        if (empty($settings['showcategories'])) {
+            $showcategories = 0;
+        } else {
+            $showcategories = 1;
+        }
     }
-    if (empty($settings['showprevnext'])) {
-        $showprevnext = 0;
-    } else {
-        $showprevnext = 1;
+    if (!isset($showprevnext)) {
+        if (empty($settings['showprevnext'])) {
+            $showprevnext = 0;
+        } else {
+            $showprevnext = 1;
+        }
     }
 //    if (empty($settings['shownavigation'])) {
 //        $shownavigation = 0;
 //    } else {
 //        $shownavigation = 1;
 //    }
-    if (empty($settings['showcomments'])) {
-        $showcomments = 0;
-    } else {
-        $showcomments = 1;
+    if (!isset($showcomments)) {
+        if (empty($settings['showcomments'])) {
+            $showcomments = 0;
+        } else {
+            $showcomments = 1;
+        }
     }
-    if (empty($settings['showhitcounts'])) {
-        $showhitcounts = 0;
-    } else {
-        $showhitcounts = 1;
+    if (!isset($showhitcounts)) {
+        if (empty($settings['showhitcounts'])) {
+            $showhitcounts = 0;
+        } else {
+            $showhitcounts = 1;
+        }
     }
-    if (empty($settings['showratings'])) {
-        $showratings = 0;
-    } else {
-        $showratings = 1;
+    if (!isset($showratings)) {
+        if (empty($settings['showratings'])) {
+            $showratings = 0;
+        } else {
+            $showratings = 1;
+        }
     }
-    if (empty($settings['showarchives'])) {
-        $showarchives = 0;
-    } else {
-        $showarchives = 1;
+    if (!isset($showarchives)) {
+        if (empty($settings['showarchives'])) {
+            $showarchives = 0;
+        } else {
+            $showarchives = 1;
+        }
     }
-    if (empty($settings['showmap'])) {
-        $showmap = 0;
-    } else {
-        $showmap = 1;
+    if (!isset($showmap)) {
+        if (empty($settings['showmap'])) {
+            $showmap = 0;
+        } else {
+            $showmap = 1;
+        }
     }
-    if (empty($settings['showpublinks'])) {
-        $showpublinks = 0;
-    } else {
-        $showpublinks = 1;
+    if (!isset($showpublinks)) {
+        if (empty($settings['showpublinks'])) {
+            $showpublinks = 0;
+        } else {
+            $showpublinks = 1;
+        }
     }
-    if (empty($settings['dotransform'])) {
-        $dotransform = 0;
-    } else {
-        $dotransform = 1;
+    if (!isset($dotransform)) {
+        if (empty($settings['dotransform'])) {
+            $dotransform = 0;
+        } else {
+            $dotransform = 1;
+        }
     }
     // Page template for frontpage or depending on publication type (optional)
+    // Note : this cannot be overridden in templates
     if (!empty($settings['page_template'])) {
         xarTplSetPageTemplateName($settings['page_template']);
     }
@@ -194,10 +215,12 @@ function articles_user_view()
     // TODO: figure how to let users specify their settings
         //$numitems = xarModUserGetVar('itemsperpage');
     }
-    if (empty($settings['itemsperpage'])) {
-        $numitems = 20;
-    } else {
-        $numitems = $settings['itemsperpage'];
+    if (empty($numitems)) {
+        if (!empty($settings['itemsperpage'])) {
+            $numitems = $settings['itemsperpage'];
+        } else {
+            $numitems = 20;
+        }
     }
 
     // turn $catid into $cids array and set $andcids flag

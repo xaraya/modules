@@ -3,7 +3,7 @@
 /**
  * view article map
  */
-function articles_user_viewmap()
+function articles_user_viewmap($args)
 {
     // Don't use standard categories function for this
     //xarModLoad('categories', 'user');
@@ -16,6 +16,8 @@ function articles_user_viewmap()
     if(!xarVarFetch('catid', 'isset', $catid,  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('cids',  'isset', $cids,   NULL, XARVAR_DONT_SET)) {return;}
 
+    // Override if needed from argument array
+    extract($args);
 
     $default = xarModGetVar('articles','defaultpubtype'); 
     if (empty($by)) {

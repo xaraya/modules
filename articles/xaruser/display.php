@@ -186,6 +186,9 @@ function articles_user_display($args)
         }
 
 // TEST
+    if (isset($prevnextart)) {
+        $settings['prevnextart'] = $prevnextart;
+    }
     if (!empty($settings['prevnextart'])) {
         $prevart = xarModAPIFunc('articles','user','getprevious',
                                  array('aid' => $aid,
@@ -339,15 +342,24 @@ function articles_user_display($args)
     $data['publinks'] = xarModAPIFunc('articles','user','getpublinks',
                                      array('status' => array(3,2),
                                            'count' => $showpubcount));
+    if (isset($showmap)) {
+        $settings['showmap'] = $showmap;
+    }
     if (!empty($settings['showmap'])) {
         $data['maplabel'] = xarML('View Article Map');
         $data['maplink'] = xarModURL('articles','user','viewmap',
                                     array('ptid' => $ptid));
     }
+    if (isset($showarchives)) {
+        $settings['showarchives'] = $showarchives;
+    }
     if (!empty($settings['showarchives'])) {
         $data['archivelabel'] = xarML('View Archives');
         $data['archivelink'] = xarModURL('articles','user','archive',
                                         array('ptid' => $ptid));
+    }
+    if (isset($showpublinks)) {
+        $settings['showpublinks'] = $showpublinks;
     }
     if (!empty($settings['showpublinks'])) {
         $data['showpublinks'] = 1;
@@ -454,6 +466,7 @@ function articles_user_display($args)
     $template = $pubtypes[$pubtypeid]['name'];
 
     // Page template depending on publication type (optional)
+    // Note : this cannot be overridden in templates
     if (empty($preview) && !empty($settings['page_template'])) {
         xarTplSetPageTemplateName($settings['page_template']);
     }

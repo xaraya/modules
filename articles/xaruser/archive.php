@@ -5,14 +5,14 @@
  */
 function articles_user_archive($args)
 {
-    // Override if needed from argument array
-    extract($args);
-
     // Get parameters from user
     if (!xarVarFetch('ptid',  'isset', $ptid,  xarModGetVar('articles','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('sort',  'isset', $sort,  'd',                                       XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('month', 'isset', $month, '',                                        XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('cids',  'isset', $cids,   NULL, XARVAR_DONT_SET)) {return;}
+
+    // Override if needed from argument array
+    extract($args);
 
     if (empty($ptid)) {
         $ptid = null;
@@ -320,10 +320,12 @@ function articles_user_archive($args)
             $settings = unserialize($string);
         }
     }
-    if (!empty($settings['showpublinks'])) {
-        $showpublinks = 1;
-    } else {
-        $showpublinks = 0;
+    if (!isset($showpublinks)) {
+        if (!empty($settings['showpublinks'])) {
+            $showpublinks = 1;
+        } else {
+            $showpublinks = 0;
+        }
     }
 
     // return template out
