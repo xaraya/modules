@@ -499,6 +499,11 @@ class bkFile
         }
         return '';
     }
+
+    function bkAbsoluteName()
+    {
+        return $this->_repo->_root . '/' . $this->_file;
+    }
 }
 
 /**

@@ -27,7 +27,14 @@ function bkview_user_historyview($args)
     $repo =& $item['repo'];
 
     $the_file=new bkFile($repo,$file);
-
+    
+    if(xarModIsAvailable('mime') && file_exists($the_file->bkAbsoluteName())) {
+        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $the_file->bkAbsoluteName()));
+        $icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+    } else {
+        $icon = xarTplGetImage('file.gif','bkview');
+    }
+    
     $formatstring="'";
     if($user != '') $formatstring .="\$if(:P:=$user){";
     $formatstring .= ":AGE:|:P:|:REV:|\$each(:C:){(:C:)}";
@@ -45,6 +52,7 @@ function bkview_user_historyview($args)
         $histlist[$counter]['comments']=xarVarPrepForDisplay($comments);
         $histlist[$counter]['repoid'] = $repoid;
         $histlist[$counter]['file'] = $file;
+        $histlist[$counter]['icon'] = $icon;
         $counter++;
     }
     
