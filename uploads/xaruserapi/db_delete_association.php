@@ -47,7 +47,7 @@ function uploads_userapi_db_delete_assocation( $args ) {
     //add to uploads table
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable       = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     // table and column definitions
     $file_assoc_table   = $xartable['file_associations'];

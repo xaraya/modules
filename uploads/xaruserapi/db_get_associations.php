@@ -43,7 +43,7 @@ function uploads_userapi_db_get_associations( $args )  {
     
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $xartable =& xarDBGetTables();
         
         // table and column definitions
     $file_assoc_table = $xartable['file_associations'];

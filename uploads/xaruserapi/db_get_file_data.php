@@ -27,7 +27,7 @@ function uploads_userapi_db_get_file_data( $args )  {
     
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $xartable =& xarDBGetTables();
         
         // table and column definitions
     $fileData_table = $xartable['file_data'];

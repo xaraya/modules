@@ -5,8 +5,8 @@
 // Copyright (C) 2002 by the Xaraya Development Team. 
 // http://www.xaraya.org 
 // ---------------------------------------------------------------------- 
-// Original Author of file: Jim McDonald 
-// Purpose of file:  Table information for example module 
+// Original Author of file: Carl P. corliss
+// Purpose of file:  Table information for uploads module 
 // ---------------------------------------------------------------------- 
  
 /** 

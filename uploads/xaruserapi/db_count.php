@@ -72,7 +72,7 @@ function uploads_userapi_db_count( $args )  {
     
     // Get database setup
     $dbconn =& xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $xartable =& xarDBGetTables();
         
         // table and column definitions
     $fileEntry_table = $xartable['file_entry'];

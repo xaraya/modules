@@ -400,7 +400,7 @@ function uploads_upgrade($oldversion)
             xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
             xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
                          
-            $xartable = xarDBGetTables();
+            $xartable =& xarDBGetTables();
             $instances[0]['header'] = 'external';
             $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
             $instances[0]['limit']  = 0;
