@@ -34,7 +34,7 @@
 
 
 <p>
-<input type="submit" name="sbt" id="sbt" value="#xarMLByKey('OK')#" />
+<input type="submit" name="sbt" id="sbt" value="#xarML('OK')#" />
 </p>
 </form>
 <br />
