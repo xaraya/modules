@@ -4,7 +4,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto; width: 100%;">
 
-<form method="post" action="#xarModURL('autolinks', 'admin', 'view')#" method="post" enctype="application/x-www-form-urlencoded"/>
+<form method="post" action="#xarModURL('autolinks', 'admin', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
 <div>
     <span class="xar-mod-title"><xar:mlstring>Autolink Type:</xar:mlstring></span>
     <select name="tid" id="tid" onchange="this.form.submit()">

@@ -2,7 +2,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Move Autolink</xar:mlstring></h2><br />
 <div style="margin: auto;">
 
-<form method="post" action="#xarModURL('autolinks', 'admin', 'move')#" method="post" enctype="application/x-www-form-urlencoded"/>
+<form method="post" action="#xarModURL('autolinks', 'admin', 'move')#" method="post" enctype="application/x-www-form-urlencoded">
     <div>
         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
     </div>

@@ -20,7 +20,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Configure Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto;">
-<form method="post" action="#xarModURL('autolinks', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('autolinks', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
     <p>
         <input type="hidden" name="authid" id="authid" value="#$authid#"/>
         <input type="submit" name="submit" id="submit" value="#$submit#" align="middle"/>
