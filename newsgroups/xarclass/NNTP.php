@@ -828,37 +828,38 @@ class Net_NNTP extends Net_NNTP_Protocol
         if (PEAR::isError($headers)) {
             return $this->throwError($headers);
         }
-	
-	$return = array();
+	    
+        static $return = array();
 
 	// Loop through all header field lines
         foreach ($headers as $field) {
-	    // Separate header name and value
-	    if (!preg_match('/([\S]+)\:\s*(.*)\s*/', $field, $matches)) {
-		// Fail...
-	    }
-        if (isset($matches[1])){
-	        $name = $matches[1];
-        } else {
-            $name = '';
-        }
-	    $value = isset($matches[2]);
-	    unset($matches);
+	        // Separate header name and value
+	        if (!preg_match('/([\S]+)\:\s*([^\r\n]+)\s*/', $field, $matches)) {
+		        continue; // Fail...
+	        }
 
-	    // Add header to $return array
-    	    if (isset($return[$name]) AND is_array($return[$name])) {
-		// The header name has already been used at least two times.
-            	$return[$name][] = $value;
-            } elseif (isset($return[$name])) {
-		// The header name has already been used one time -> change to nedted values.
-            	$return[$name] = array($return[$name], $value);
+            if (isset($matches[1])){
+	            $name = $matches[1];
             } else {
-		// The header name has not used until now.
-        	$return[$name] = $value;
+                $name = '';
+            }
+	        $value = (isset($matches[2]) ? $matches[2] : '')	;
+	        unset($matches);
+
+	        // Add header to $return array
+            if (isset($return[$name]) AND is_array($return[$name])) {
+	            // The header name has already been used at least two times.
+                $return[$name][] = $value;
+            } elseif (isset($return[$name])) {
+		        // The header name has already been used one time -> change to nedted values.
+                $return[$name] = array($return[$name], $value);
+            } else {
+		        // The header name has not used until now.
+        	    $return[$name] = $value;
             }
         }
 
-	return $return;
+	    return $return;
     }
 
     // }}}
