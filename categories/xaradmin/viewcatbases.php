@@ -25,7 +25,8 @@ function categories_admin_viewcatbases()
         array(
             'modid' => $modid,
             'itemtype' => $itemtype,
-            'format' => 'flat'
+            'format' => 'flat',
+            'order' => 'module,itemtype'
         )
     );
 

@@ -7,6 +7,7 @@
  * @param $args['modid'] the id of the module (optional)
  * @param $args['itemtype'] the ID of the itemtype (optional)
  * @param $args['format'] return format: 'cids', 'tree' or 'flat' (default 'flat').
+ * @param $args['order'] columns to order by (optional)
  * @returns array of category bases
  * @return list of category bases
  */
@@ -31,7 +32,7 @@ function categories_userapi_getallcatbases($args)
     extract($args);
 
     if (empty($order)) {
-        $order = '';
+        $order = 'order';
     }
 
     if (empty($format)) {
@@ -158,7 +159,7 @@ function categories_userapi_getallcatbases($args)
             $bid = 1;
 
             foreach($cidlist as $cid) {
-                // When implemented as tables, this will be a join to the categories table.
+                // TODO: When implemented as tables, this will be a join to the categories table.
                 $catinfo = xarModAPIFunc(
                     'categories', 'user', 'getcatinfo',
                     array('cid' => $cid)
@@ -185,6 +186,9 @@ function categories_userapi_getallcatbases($args)
                     $result[$modinfo['modid']]['itemtypes'][$currentitemtype]['catbases'][$bid] = array(
                         'bid' => $bid,
                         'name' => '',
+                        'order' => $bid,
+                        'display' => true,
+                        'multiple' => true,
                         'category' => array(
                             'cid' => $catinfo['cid'],
                             'name' => $catinfo['name'],
@@ -196,6 +200,9 @@ function categories_userapi_getallcatbases($args)
                     $result[] = array(
                         'bid' => $bid,
                         'name' => '',
+                        'order' => $bid,
+                        'display' => true,
+                        'multiple' => true,
                         'cid' => $cid,
                         'catname' => $catinfo['name'],
                         'module' => $modinfo['module'],
@@ -219,7 +226,7 @@ function categories_userapi_getallcatbases($args)
         $order = explode(',', $order);
         foreach($order as $orderelement) {
             // TODO: allow reverse order using '-orderelement', e.g. '-cid'.
-            if ($orderelement == 'cid' || $orderelement == 'module' || $orderelement == 'modid') {
+            if ($orderelement == 'order' || $orderelement == 'cid' || $orderelement == 'module' || $orderelement == 'modid') {
                 $sortfunc = create_function(
                     '$a,$b',
                     'if ($a["'.$orderelement.'"]==$b["'.$orderelement.'"]) {return 0;}'

@@ -24,7 +24,7 @@
 
 <!--- Display the main table if there is data to display --->
 <xar:if condition="!empty($catbases)">
-    <table>
+    <table cellpadding="2" cellspacing="0">
         <xar:loop name="$catbases">
         <xar:if condition="$loop:index eq 0">
             <!--- Prepare table headings in the first iteration of the loop --->
@@ -56,13 +56,21 @@
             </tr>
         </xar:if>
 
-        <tr>
+        <xar:if condition="$moduletrack ne $loop:item['module'] or $itemtypetrack ne $loop:item['itemtype']">
+            <xar:set name="$boundary_row">true</xar:set>
+            <xar:set name="$row_class">'xar-accent'</xar:set>
+        <xar:else/>
+            <xar:set name="$boundary_row">false</xar:set>
+            <xar:set name="$row_class">''</xar:set>
+        </xar:if>
+
+        <tr class="#$row_class#">
             <td>#$loop:item['bid']#</td>
             <td>#$loop:item['name']#</td>
             <xar:if condition="empty($modid)">
                 <td>
-                    <xar:if condition="$moduletrack ne $loop:item['module'] or $itemtypetrack ne $loop:item['itemtype']">
-                        <a href="#xarModURL('categories', 'admin', 'viewcatbases', array('modid' => $loop:item['modid']))#" title="#xarML('List for this module only')#">#$loop:item['module']#</a>
+                    <xar:if condition="$boundary_row">
+                        <a href="#xarModURL('categories', 'admin', 'viewcatbases', array('modid' => $loop:item['modid']))#" title="#xarML('View for this module only')#">#$loop:item['module']#</a>
                     <xar:else/>
                         #$loop:item['module']#
                     </xar:if>
@@ -70,8 +78,8 @@
             </xar:if>
             <xar:if condition="!isset($itemtype)">
                 <td>
-                    <xar:if condition="$moduletrack ne $loop:item['module'] or $itemtypetrack ne $loop:item['itemtype']">
-                        <a href="#xarModURL('categories', 'admin', 'viewcatbases', array('modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#" title="#xarML('List for this module and item type only')#">#$loop:item['itemtype']#</a>
+                    <xar:if condition="$boundary_row">
+                        <a href="#xarModURL('categories', 'admin', 'viewcatbases', array('modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#" title="#xarML('View for this module and item type only')#">#$loop:item['itemtype']#</a>
                     <xar:else/>
                         #$loop:item['itemtype']#
                     </xar:if>
@@ -81,19 +89,22 @@
                     </xar:if>
                 </td>
             </xar:if>
-            <xar:if condition="$moduletrack ne $loop:item['module'] or $itemtypetrack ne $loop:item['itemtype']">
+
+            <xar:if condition="$boundary_row">
                 <xar:set name="$moduletrack">#$loop:item['module']#</xar:set>
                 <xar:set name="$itemtypetrack">#$loop:item['itemtype']#</xar:set>
             </xar:if>
+
             <td>
                 <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#" title="#xarML('Modify category')#">#$loop:item['catname']#</a>
             </td>
             <td style="text-align: center;">
-                <a href="#xarModURL('categories', 'admin', 'modifycatbase', array('cid' => $loop:item['cid']))#">
+                <!--- Pass the module and itemtype in for now - eventually just the bid will be sufficient --->
+                <a href="#xarModURL('categories', 'admin', 'modifycatbase', array('bid' => $loop:item['bid'], 'modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#">
                     <xar:mlstring>Modify</xar:mlstring>
                 </a>
                 &nbsp;|&nbsp;
-                <a href="#xarModURL('categories', 'admin', 'deletecatbase', array('cid' => $loop:item['cid']))#">
+                <a href="#xarModURL('categories', 'admin', 'deletecatbase', array('bid' => $loop:item['bid'], 'modid' => $loop:item['modid'], 'itemtype' => $loop:item['itemtype']))#">
                     <xar:mlstring>Delete</xar:mlstring>
                 </a>
             </td>

@@ -4,6 +4,7 @@
  * count number of category bases
  *
  * @param $args['module'] the name of the module (will be optional)
+ * @param $args['modid'] the ID of the module (will be optional)
  * @param $args['itemtype'] the ID of the itemtype (optional)
  * @returns int
  * @return number of categories
@@ -15,8 +16,14 @@ function categories_userapi_countcatbases($args)
 
     // Security check
     // TODO: do we need this?
-    if(!xarSecurityCheck('ViewCategories')) {return;}
+    if (!xarSecurityCheck('ViewCategories')) {return;}
 
+    // Only modid supplied
+    if (empty($module) && !empty($modid) && is_numeric($modid)) {
+        $modinfo = xarModGetInfo($modid);
+        $module = $modinfo['name'];
+    }
+    
     // Initialise the return value.
     $count = 0;
 
