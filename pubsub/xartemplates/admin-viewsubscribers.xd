@@ -40,7 +40,7 @@
             </xar:if>
         </td>
         <td>
-            #$item['subdate']#
+            #xarLocaleFormatDate("%a, %d-%B-%Y", $item['subdate'])#
         </td>
         <td>
             <a href="#xarModURL('pubsub','admin','viewsubscribers',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>

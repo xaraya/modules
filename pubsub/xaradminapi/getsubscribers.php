@@ -99,7 +99,7 @@ function pubsub_adminapi_getsubscribers($args)
                                   ,'modid'     => $modid
                                   ,'itemtype'  => $itemtype
                                   ,'cid'       => $cid
-                                  ,'subdate'   => xarLocaleFormatDate("%a, %d-%B-%Y",$subdate)
+                                  ,'subdate'   => $subdate
                                   ,'pubsubid'  => $pubsubid
                                   );
         }
