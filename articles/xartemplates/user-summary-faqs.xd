@@ -1,16 +1,20 @@
-<li>
-    <xar:if condition="!empty($categories) and count($categories) gt 0">
-        [ <xar:foreach in="$categories" value="$cat">
-            #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
-        </xar:foreach> ]
-    </xar:if>
-    <a class="xar-title" href="#$link#">#$title#</a>
-    <xar:if condition="!empty($counter)">
-        (#$counter#
-        <xar:mlstring>Reads</xar:mlstring>)
-    </xar:if>
-    <br />
-    #$summary#
-    <br />&nbsp;
-</li>
-
+<a name="#$aid#"></a>
+<br />
+<xar:if condition="!empty($categories) and count($categories) gt 0">
+    [ <xar:foreach in="$categories" value="$cat">
+        #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+    </xar:foreach> ]
+</xar:if>
+<a class="xar-title" href="#$link#">#$title#</a>
+<xar:if condition="!empty($counter)">
+    (#$counter#
+    <xar:mlstring>Reads</xar:mlstring>)
+</xar:if>
+<xar:if condition="!empty($notes)">
+    <xar:mlstring>by</xar:mlstring> #$notes#
+</xar:if>
+<xar:if condition="!empty($summary)">
+    <p><em>#$summary#</em></p>
+</xar:if>
+<p>#$body#</p>
+<p><a href="#xarServerGetCurrentURL()###titles"><xar:mlstring>Back to top</xar:mlstring></a></p>

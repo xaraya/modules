@@ -418,7 +418,7 @@ function articles_user_view()
             unset($pubcatcount);
         }
     } else {
-        xarVarSetCached('Blocks.categories','catcount',array());
+    //    xarVarSetCached('Blocks.categories','catcount',array());
     }
 //}
     $data['showpublinks'] = $showpublinks;
@@ -450,6 +450,8 @@ function articles_user_view()
                             array('modid' => xarModGetIDFromName('articles'),
                                   'objectids' => $aidlist));
     }
+
+    $data['titles'] = array();
 
     // test 2-column output on frontpage
     $columns = array();
@@ -610,6 +612,8 @@ function articles_user_view()
             $article['transform'] = array('summary','notes');
             $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
         }
+
+        $data['titles'][$article['aid']] = $article['title'];
 
         // fill in the summary template for this article
         $template = $pubtypes[$article['pubtypeid']]['name'];
