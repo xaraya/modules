@@ -135,7 +135,7 @@ function uploads_init()
     /**
      * Register hooks
      */
-    if (!xarModRegisterHook('item', 'transform', 'AkilPI',
+    if (!xarModRegisterHook('item', 'transform', 'API',
                             'uploads', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook');
          xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));

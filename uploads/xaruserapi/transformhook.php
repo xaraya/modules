@@ -14,16 +14,16 @@ function & uploads_userapi_transformhook ( $args )
         if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
             foreach ($extrainfo['transform'] as $key) {
                 if (isset($extrainfo[$key])) {
-                    $extrainfo[$key] = uploads_userapi_transform($extrainfo[$key]);
+                    $extrainfo[$key] =& uploads_userapi_transform($extrainfo[$key]);
                 }
             }
             return $extrainfo;
         }
         foreach ($extrainfo as $text) {
-            $result[] = uploads_userapi_transform($text);
+            $result[] =& uploads_userapi_transform($text);
         }
     } else {
-        $result = uploads_userapi_transform($extrainfo);
+        $result =& uploads_userapi_transform($extrainfo);
     }
     return $result;
 }
