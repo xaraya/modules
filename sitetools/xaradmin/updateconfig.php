@@ -1,15 +1,16 @@
 <?php
 /*
- * File: $Id: updateconfig.php,v 1.1 2003/09/19 09:16:03 jojodee Exp $
+ * File: $Id:
  *
- * SiteTools Module
+ * Update configuration variables
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by Jo Dalle Nogare
- * @link http://xaraya.athomeandabout.com
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage SiteTools module
- * @author jojodee <http://xaraya.athomeandabout.com >
+ * @author jojodee <jojodee@xaraya.com>
 */
 
 /**

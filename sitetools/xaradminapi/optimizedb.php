@@ -1,20 +1,23 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id:
  *
- * SiteTools Module
+ * Optimize a database
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by Jo Dalle Nogare
- * @link http://xaraya.athomeandabout.com
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage SiteTools module
- * @author jojodee <http://xaraya.athomeandabout.com >
+ * @author jojodee <jojodee@xaraya.com>
+ * optimize function based on original MySQL_Tools by Michaelius (michaelius@nukeland.de)
 */
 
 /**
  * @Optimize a database
  * @author jojodee@xaraya.com
+ * @author original MySQL_Tools by Michaelius (michaelius@nukeland.de)
  * @param database name, the physical database name (optional)
  * @param databaseType database type (optional)
  * @return array $data - table names, optimization state, saved, total save

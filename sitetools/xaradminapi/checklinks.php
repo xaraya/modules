@@ -1,20 +1,21 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id:
  *
- * SiteTools Module
+ * Check the status of all liks in the sitetools links table
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by jojodee
- * @link http://xaraya.athomeandabout.com
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage SiteTools module
- * @author Jo Dalle Nogare <http://xaraya.athomeandabout.com  contact:jojodee@xaraya.com>
+ * @author jojodee <jojodee@xaraya.com>
 */
 
 /**
  * Check the status of all links in the xar_sitetools_links table
- *
+ * @author mikespub
  * @param $args['skiplocal'] bool optional flag to skip local links (default false)
  * @param $args['status'] integer optional status of the links to check for
  * @param $args['notstatus'] integer optional status of the links NOT to check for

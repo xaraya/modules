@@ -1,15 +1,22 @@
 <?php
 /*
+ * File: $Id:
+ *
+ * Optimize tables in you mySQL database
+ *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @author jojodee@xaraya.com <http://xaraya.athomeandabout.com>
- * @based on optimize function by Michaelius <michaelius@nukeland.de>
+ *
+ * @subpackage SiteTools module
+ * @author jojodee <jojodee@xaraya.com>
 */
 
 /**
- * Optimize tables in your database
+ * @Optimize tables in your database
+ * @Only for mySQL datbase at this time
+ * @TODO: database abstraction classs
  */
 function sitetools_admin_optimize()
 {

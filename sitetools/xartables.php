@@ -8,7 +8,7 @@
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  * @subpackage SiteTools
- * @author jojodee, http://xaraya.athomeandabout.com
+ * @author jojodee <jojodee@xaraya.com>
  */
 
 /**

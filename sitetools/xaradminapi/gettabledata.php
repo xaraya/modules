@@ -1,14 +1,16 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id:
  *
- * SiteTools Module
+ * Get table information from a database
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by the Xaraya Development Team
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @author jojodee jojodee@xaraya.com <http://xaraya.athomeandabout.com>
+ *
+ * @subpackage SiteTools module
+ * @author jojodee <jojodee@xaraya.com>
 */
 
 /* @Get table information from a database for selection of tables for partial backup

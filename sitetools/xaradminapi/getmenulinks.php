@@ -2,21 +2,22 @@
 /*
  * File: $Id: getmenulinks.php,v 1.1 2003/09/19 09:16:03 jojodee Exp $
  *
- * SiteTools Module
+ * Standard utility functin to pass individual menu items to the main menu
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by jojodee
- * @link http://xaraya.athomeandabout.come
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage SiteTools module
- * @author Jo Dalle Nogare <http://xaraya.athomeandabout.com  contact:jojodee@xaraya.com>
+ * @author jojodee <jojodee@xaraya.com>
 */
 
 
 /**
  * utility function pass individual menu items to the main menu
  *
- * @author jojodee, http://xaraya.athomeandabout.com
+ * @author jojodee
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */

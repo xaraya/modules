@@ -1,5 +1,17 @@
 <?php
-
+/*
+ * File: $Id:
+ *
+ * Optimize the database using the scheduler module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage SiteTools module
+ * @author jojodee <jojodee@xaraya.com>
+*/
 /**
  * optimize the database (executed by the scheduler module)
  * 
@@ -17,8 +29,8 @@ function sitetools_schedulerapi_optimize($args)
             $dbname= xarDBGetName();
     }
 
-    //       It may return true (or some logging text) if it succeeds, and null if it fails
-//     return
+    //   It may return true (or some logging text) if it succeeds, and null if it fails
+    //   return
      $tabledata=xarModAPIFunc('sitetools','admin','optimizedb',
                       array('dbname' => $dbname));
 

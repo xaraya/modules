@@ -1,3 +1,4 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <xar:set name="$optibutton"><xar:mlstring>Optimize Now!</xar:mlstring></xar:set>
 <xar:set name="$optinote"><xar:mlstring>This option will optimize your MySQL database tables.
                                         </xar:mlstring></xar:set>

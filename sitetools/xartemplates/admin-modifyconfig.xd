@@ -1,3 +1,4 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <xar:set name="$updatebutton"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 <xar:set name="$adocachel"><xar:mlstring>ADOdb Cache Path:</xar:mlstring></xar:set>
 <xar:set name="$rsscachel"><xar:mlstring>RSS Cache Path:</xar:mlstring></xar:set>

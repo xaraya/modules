@@ -1,4 +1,18 @@
 <?php
+/*
+ * File: $Id:
+ *
+ * Delete a downloaded file from the server
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage SiteTools module
+ * @author jojodee <jojodee@xaraya.com>
+*/
+
 /*@function to deletethe just completed backup
  *@parameter $bkfile is the name of the backup file
  *

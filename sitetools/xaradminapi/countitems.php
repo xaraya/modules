@@ -1,17 +1,17 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id:
  *
- * SiteTools Module
+ * Standard function to count items in sitetools table
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by jojodee
- * @link http://xaraya.athomeandabout.come
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage SiteTools module
- * @author Jo Dalle Nogare <http://xaraya.athomeandabout.com  contact:jojodee@xaraya.com>
+ * @author jojodee <jojodee@xaraya.com>
 */
-
 
 /*
  * @returns integer

@@ -2,17 +2,19 @@
 /*
  * File: $Id: $
  *
- * SiteTools Module
+ * Check URLs and image links in articles, roles ...
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by Jo Dalle Nogare
- * @link http://xaraya.athomeandabout.com
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage SiteTools module
  * @author jojodee <http://xaraya.athomeandabout.com >
 */
 
 /**
+ * @author mikespub
  * Check URLs and images in articles, roles, ...
  */
 function sitetools_admin_links()

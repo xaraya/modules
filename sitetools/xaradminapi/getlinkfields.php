@@ -1,20 +1,21 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id:
  *
- * SiteTools Module
+ * Get fields containing links for different modules/itemtypes
  *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by jojodee
- * @link http://xaraya.athomeandabout.com
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
  *
  * @subpackage SiteTools module
- * @author Jo Dalle Nogare <http://xaraya.athomeandabout.com  contact:jojodee@xaraya.com>
+ * @author jojodee <jojodee@xaraya.com>
 */
 
 /**
  * Get fields containing links for different modules/itemtypes
- *
+ * @author mikespub
  * @returns array
  * @return array of module titles and their link fields
  * @raise DATABASE_ERROR
