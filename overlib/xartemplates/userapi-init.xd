@@ -1,6 +1,40 @@
 
 <!-- START::OVERLIB JAVASCRIPT INITIALIZATION -->
+<script type="text/javascript">
+<!-- overLIB Xaraya Module by Roger Raymond -->
+// Default Settings for overLIB popups
+ol_fgcolor = "#00ff00"; 
+ol_bgcolor = "#d0000d"; 
+ol_textcolor = "#000000"; 
+ol_capcolor = "#000000";
+ol_closecolor = "#000000"; 
+ol_textfont = "sans-serif"; 
+ol_captionfont = "sans-serif";
+ol_captionsize = 3; 
+ol_textsize = 2; 
+ol_border = 1; 
+ol_width = 350; 
+ol_offsetx = 10; 
+ol_offsety = 10;
+ol_sticky = 0; 
+ol_close = "<xar:mlstring>Close</xar:mlstring>"; 
+ol_closeclick = 0; 
+ol_autostatus = 2; 
+ol_snapx = 0; 
+ol_snapy = 0;
+ol_fixx = -1; 
+ol_fixy = -1; 
+ol_background = ""; 
+ol_fgbackground = ""; 
+ol_bgbackground = "";
+ol_padxl = 1; 
+ol_padxr = 1; 
+ol_padyt = 1; 
+ol_padyb = 1; 
+ol_capicon = ""; 
+ol_hauto = 1; 
+ol_vauto = 1;
+</script>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="modules/overlib/overlib_mini.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
+<script src="modules/overlib/overlib_mini.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 <!-- END::OVERLIB JAVASCRIPT INITIALIZATION -->
-

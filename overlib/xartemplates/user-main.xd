@@ -6,7 +6,8 @@
     caption="monkey" 
     text="some test text" 
     offsetx="5" 
-    offsety="5" />
+    offsety="5" 
+    sticky="true" />
 <xar:overlib-popup-close name="$olclose"/>
     
 <a href="javascript:void(0);" 
