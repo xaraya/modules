@@ -50,7 +50,7 @@
             </select>
         </span>
         </div>
-        
+
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
             <span class="help" title="#xarML('Enter the number of items to choose featured articles from.')#"><label for="itemlimit#$blockid#"><xar:mlstring>Limit</xar:mlstring></label>:</span>
@@ -59,7 +59,7 @@
             <input type="text" name="itemlimit" id="itemlimit#$blockid#" value="#$itemlimit#" size="3" maxlength="4" />&nbsp;&nbsp;<xar:mlstring>(0 for all articles)</xar:mlstring>
         </span>
         </div>
-        
+
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
             <span class="help" title="#xarML('Choose the article to display as a featured item.')#"><label for="featuredaid#$blockid#"><xar:mlstring>Featured Article</xar:mlstring></label>:</span>
@@ -114,6 +114,18 @@
         </span>
         </div>
 
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('If you wish to get dynamic data of the featured article in your template.')#"><label for="showdynamic#$blockid#"><xar:mlstring>Show dynamic data</xar:mlstring>:</label></span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="empty($showdynamic)">
+                <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" />
+            <xar:else />
+                <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" checked="checked" />
+            </xar:if>
+        </span>
+        </div>
 
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
