@@ -1,8 +1,8 @@
-#$title#
-<br />
-<ul>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Hit Count</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Top Viewed Items</xar:mlstring></h2>
+<div style="margin: auto;">
 <xar:foreach in="$moditems" value="$moditem">
-    <li> <a href="#$moditem['link']#">#$moditem['name']#</a> =&gt; #$moditem['numitems']# items </li>
+    &bull; <a href="#$moditem['link']#">#$moditem['name']#</a> =&gt; #$moditem['numitems']# items
     <ul>
     <xar:if condition="!empty($moditem['toplinks'])">
     <xar:foreach in="$moditem['toplinks']" value="$toplink">
@@ -15,4 +15,5 @@
     </xar:if>
     </ul>
 </xar:foreach>
-</ul>
+</div>
+</div>
