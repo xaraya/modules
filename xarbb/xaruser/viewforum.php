@@ -41,8 +41,8 @@ function xarbb_user_viewforum()
     $totaltopics=count($topics);
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
-
-        $topics[$i]['comments'] = xarVarPrepForDisplay($topic['treplies']);
+        $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
+        $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
 
         // While we are here, lets do the hot topics, etc.
         $redhotTopic    = xarModGetVar('xarbb', 'redhottopic');

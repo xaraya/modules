@@ -42,9 +42,10 @@ function xarbb_adminapi_deletealltopics($args)
     if(!xarSecurityCheck('ModxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
     $topics =  xarModAPIFunc("xarbb","user","getalltopics",array("fid" => $fid));
-    if(!$topics)
-     	return;
 
+    if ((!$topics) || (count($topics) ==0)) {
+     	return;
+    }
 
     foreach($topics as $topic)	   {
 		if(!xarModAPIFunc("xarbb","admin","deleteallreplies",array(

@@ -99,6 +99,8 @@ function xarbb_user_viewtopic()
                                                             array($comment['xar_text'],
                                                                   $comment['xar_title']));
 
+        $comments[$i]['xar_text']=xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
+        $comments[$i]['xar_title']=xarVarPrepHTMLDisplay($comments[$i]['xar_title']);
         // The user API function is called
         $comments[$i]['usertopics'] = xarModAPIFunc('xarbb',
                                                     'user',
