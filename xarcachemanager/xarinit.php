@@ -17,11 +17,6 @@
  */
 function xarcachemanager_init()
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    xarDBLoadTableMaintenanceAPI();
-
     // set up the output cache directory
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
 
@@ -106,6 +101,38 @@ function xarcachemanager_init()
                         new SystemException($msg));
         return false;
     }
+
+    // Set up database tables
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    $cacheblockstable = $xartable['cache_blocks'];
+
+    // Get a data dictionary object with item create methods.
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+
+    // Table didn't exist, create table
+    /*****************************************************************
+    * CREATE TABLE xar_cache_blocks (
+    * xar_bid int(11) NOT NULL default '0',
+    * xar_nocache tinyint(4) NOT NULL default '0',
+    * xar_dynamic tinyint(4) NOT NULL default '1',
+    * xar_priv tinyint(4) NOT NULL default '2',
+    * xar_priv int(11)
+    * );
+    *****************************************************************/
+    
+    $flds = "
+        xar_bid             I           NotNull DEFAULT 0,
+        xar_nocache         L           NotNull DEFAULT 0,
+        xar_dynamic         L           NotNull DEFAULT 0,
+        xar_priv            L           NotNull DEFAULT 0,
+        xar_expire          I           Null
+    ";
+    
+    // Create or alter the table as necessary.
+    $result = $datadict->changeTable($cacheblockstable, $flds);    
+    if (!$result) {return;}
     
     // Set up module variables
     xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
@@ -192,16 +219,16 @@ function xarcachemanager_upgrade($oldversion)
         case '0.2.0':
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
             break;
-        case 0.3:
+        case '0.3.0':
             // Code to upgrade from the 0.3 version (base block level caching)
             break;
-        case 0.4:
+        case '0.4.0':
             // Code to upgrade from the 0.4 version (base module level caching)
             break;
-        case 1.0:
+        case '1.0.0':
             // Code to upgrade from version 1.0 goes here
             break;
-        case 2.0:
+        case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
     }
@@ -248,11 +275,6 @@ function xarcachemanager_delete()
         @unlink($varCacheDir . '/config.caching.php');
     }
 
-    // Remove module variables
-    xarModDelVar('xarcachemanager','FlushOnNewComment');
-    xarModDelVar('xarcachemanager','FlushOnNewRating');
-    xarModDelVar('xarcachemanager','FlushOnNewPollvote');
-
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'create', 'API',
                               'xarcachemanager', 'admin', 'createhook')) {
@@ -267,9 +289,23 @@ function xarcachemanager_delete()
         return false;
     }
     if (!xarModUnregisterHook('module', 'updateconfig', 'API',
-                            'xarcachemanager', 'admin', 'updateconfighook')) {
+                              'xarcachemanager', 'admin', 'updateconfighook')) {
         return false;
     }
+
+    // Drop the tables
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    
+    $cacheblockstable = $xartable['cache_blocks'];
+    $result = $datadict->dropTable($cacheblockstable);
+
+    // Remove module variables
+    xarModDelVar('xarcachemanager','FlushOnNewComment');
+    xarModDelVar('xarcachemanager','FlushOnNewRating');
+    xarModDelVar('xarcachemanager','FlushOnNewPollvote');
+
 
     // Remove Masks and Instances
     xarRemoveMasks('xarcachemanager');

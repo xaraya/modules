@@ -25,7 +25,7 @@ function xarcachemanager_admin_updateconfig()
                                  'cachetimestamp',
                                  'blockexpiretime'
                                 );
-    
+
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
     // Security Check
@@ -102,7 +102,7 @@ function xarcachemanager_admin_updateconfig()
 
     $cachingConfig = join('', file($cachingConfigFile));
 
-    $cachingConfig = preg_replace('/\[\'Page.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
+    $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
     $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
     $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
     $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
