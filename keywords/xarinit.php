@@ -113,7 +113,7 @@ function keywords_init()
     if (!$result) return;
 
     xarModSetVar('keywords', 'SupportShortURLs', 1);
-    xarModSetVar('keywords', 'displaycolumns', 2);    
+    xarModSetVar('keywords', 'displaycolumns', 2);
     xarModSetVar('keywords', 'delimiters', ';,');
     xarModSetVar('keywords', 'restricted', 0);
     xarModSetVar('keywords', 'useitemtype', 0);
@@ -239,8 +239,7 @@ function keywords_upgrade($oldversion)
                         'keywords', 'user', 'search')) {
                     return;
                 }
-                return keywords_upgrade('1.0.2');
-            break;
+                
         case '1.0.2':
             //Alter table restr to add itemtype
             // Get database information
@@ -269,10 +268,9 @@ function keywords_upgrade($oldversion)
                     array('modName'  => 'keywords',
                             'blockType'=> 'keywordscategories'))) return;
 
-            break;
         case '1.0.3':
             xarModSetVar('keywords', 'useitemtype', 0);
-            break;
+
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
