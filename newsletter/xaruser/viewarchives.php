@@ -37,7 +37,8 @@ function newsletter_user_viewarchives($args)
     // Get parameters from the input
     if (!xarVarFetch('startnum', 'int:0:', $startnum, 1)) return;
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
-    if (!xarVarFetch('sortby', 'str:1:', $sortby, 'title')) return;
+    if (!xarVarFetch('sortby', 'str:1:', $sortby, 'datePublished')) return;
+    if (!xarVarFetch('orderby', 'str:1:', $orderby, 'ASC')) return;
 
     // Display will always be published
     if (!xarVarFetch('display', 'str:1:', $display, 'published')) return;
@@ -45,6 +46,12 @@ function newsletter_user_viewarchives($args)
     // Owner should always be set to zero
     if (!xarVarFetch('owner', 'int:0:1', $owner, 0)) return;
 
+
+    // If $sortby is 'datePublished', then set orderby to DESC so newest
+    // issues are on top
+    if ($sortby == 'datePublished') {
+        $orderby = 'DESC';
+    }
     // Get the user menu
     $data = xarModAPIFunc('newsletter', 'user', 'menu');
 
@@ -79,6 +86,7 @@ function newsletter_user_viewarchives($args)
                                                              'itemsperpage'),
                                   'phase' => 'issue',
                                   'sortby' => $sortby,
+                                  'orderby' => $orderby,
                                   'owner' => $owner,
                                   'display' => 'published',
                                   'publicationId' => $publicationId));

@@ -24,6 +24,7 @@
  * @param $args['display'] display 'published' or 'unpublished' stories/issues
  * @param $args['owner'] get stories/issues for this owner (1 = true, 0 = false)
  * @param $args['sortby'] sort by 'title', 'category', 'publication', 'date' or 'owner'
+ * @param $args['orderby'] order by 'ASC' or 'DESC' (default = ASC)
  * @param $args['publicationId'] get items for a specific publication
  * @param $args['issueId'] get items for a specific issue
  * @return array of items, or false on failure
@@ -53,6 +54,10 @@ function newsletter_userapi_get($args)
 
     if (!isset($issueId)) {
         $issueId = 0;
+    }
+
+    if (!isset($orderby)) {
+        $orderby = 'ASC';
     }
 
     // Argument check
@@ -392,13 +397,16 @@ function newsletter_userapi_get($args)
             if (isset($sortby)) {
                 switch ($sortby) {
                     case 'title':
-                        $query .= " ORDER BY $issuesTable.xar_title";
+                        $query .= " ORDER BY $issuesTable.xar_title $orderby";
                         break;
                     case 'publication':
-                        $query .= " ORDER BY $publicationsTable.xar_title";
+                        $query .= " ORDER BY $publicationsTable.xar_title $orderby";
                         break;
                     case 'owner':
-                        $query .= " ORDER BY $rolesTable.xar_name";
+                        $query .= " ORDER BY $rolesTable.xar_name $orderby";
+                        break;
+                    case 'datePublished':
+                        $query .= " ORDER BY $issuesTable.xar_datepublished $orderby";
                         break;
                 }
             }
