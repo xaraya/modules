@@ -552,7 +552,7 @@ function tasks_feedback()
 }
 
 function tasks_dateformatlist() {
-	$dateformatlist = array('Please choose a Date/Time Format',
+	$dateformatlist = array(xarML('Please choose a Date/Time Format'),
 							'%m/%d/%Y',
 							'%m.%d.%y',
 							'%B %d, %Y',

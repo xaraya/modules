@@ -1,18 +1,44 @@
 <?php
-error_reporting(2039);
 
+/**
+ * File: $Id$
+ *
+ * Administration gui for tasks
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * 
+ * @subpackage tasks
+ * @author Chad Kraeft
+ * @author Marcel van der Boom <marcel@xaraya.com>
+*/
+
+/**
+ * Administration entry point
+ *
+ */
 function tasks_admin_main()
 {
-    xarResponseRedirect(xarModURL('tasks','admin','modifyconfig'));
-	return true;
+    $data=array();
+    $data['welcome']=xarML('Welcome to the administration part of tasks module...');
+    $data['pageinfo']=xarML('Overview');
+	return $data;
 }
 
+/**
+ * View tasklist
+ *
+ */
 function tasks_admin_view()
 {
     xarResponseRedirect(xarModURL('tasks','user','view'));
 	return true;
 }
 
+/**
+ * Add a new task
+ *
+ */
 function tasks_admin_new($args)
 {
 	list($module,
@@ -585,96 +611,49 @@ function tasks_admin_delete($args)
 */
 function tasks_admin_modifyconfig()
 {
-	$output = new pnHTML();
-	
-	if (!pnModLoad('tasks','user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+    $data=array();
+ 	
+	if (!xarModLoad('tasks','user')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
         return true;
     }
 	
-    if (!pnSecAuthAction(0, 'tasks::', '', ACCESS_ADMIN)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
-        return true;
-    }
+//     if (!pnSecAuthAction(0, 'tasks::', '', ACCESS_ADMIN)) {
+//         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
+//         return true;
+//     }
 	
-	$output->SetInputMode(_PNH_VERBATIMINPUT);
-    $output->Text(tasks_menu());
+    //$output->Text(tasks_menu());
 
-    $output->Title(_TASKS_MODIFYCONFIG);
-
-    $output->FormStart(pnModURL('tasks', 'admin', 'updateconfig'));
-
-    $output->TableStart();
-	
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_MAXDISPLAYDEPTH));
-	$maxdepthdropdown = array();
+    // Construct maximum depth combobox
+    $maxdepthdropdown = array();
 	for($x=0; $x<10; $x++) {
 		$maxdepthdropdown[] = array('id'=>$x, 'name'=>$x);
 	}
-    $row[] = $output->FormSelectMultiple('maxdisplaydepth', $maxdepthdropdown, 0, 1, pnModGetVar('tasks', 'maxdisplaydepth'));
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
+    $data['maxdepthdropdown']=$maxdepthdropdown;
 
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_DATEFORMAT));
+    // Construct date format combobox
 	$dateformatlist = tasks_dateformatlist();
 	$dateformatdropdown = array();
 	foreach($dateformatlist as $formatid=>$format) {
 		$dateformatdropdown[] = array('id'	=> $formatid,
 									'name'	=> strftime($format,time()));
 	}
-    $row[] = $output->FormSelectMultiple('dateformat', $dateformatdropdown, 0, 1, pnModGetVar('tasks', 'dateformat'));
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
+    $data['dateformatdropdown']=$dateformatdropdown;
+    $data['dateformat']=xarModGetVar('tasks','dateformat');
+    $data['showoptions']= xarModGetVar('tasks','showoptions');
 
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_SHOWTASKLISTOPTIONS));
-    $row[] = $output->FormCheckbox('showoptions', pnModGetVar('tasks', 'showoptions'));
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-// WHICH ID TO RETURN DISPLAY TO (CURRENT | PARENT)
-	$returnfromoptions = array(array('id' => 0, 'name' => 'current task'),
-							array('id' => 1, 'name' => 'parent task'));
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_RETURNFROMADD));
-    $row[] = $output->FormSelectMultiple('returnfromadd', $returnfromoptions, 0, 1, pnModGetVar('tasks', 'returnfromadd'));
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_RETURNFROMEDIT));
-    $row[] = $output->FormSelectMultiple('returnfromedit', $returnfromoptions, 0, 1, pnModGetVar('tasks', 'returnfromedit'));
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_RETURNFROMSURFACE));
-    $row[] = $output->FormSelectMultiple('returnfromsurface', $returnfromoptions, 0, 1, pnModGetVar('tasks', 'returnfromsurface'));
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_TASKS_RETURNFROMMIGRATE));
-    $row[] = $output->FormSelectMultiple('returnfrommigrate', $returnfromoptions, 0, 1, pnModGetVar('tasks', 'returnfrommigrate'));
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-
-    $output->TableEnd();
-
-    $output->Linebreak(2);
-    $output->FormSubmit(_TASKS_UPDATE);
-    $output->FormEnd();
-
-    return $output->GetOutput();
+    // WHICH ID TO RETURN DISPLAY TO (CURRENT | PARENT)
+	$returnfromoptions = array(array('id' => 0, 'name' => xarML('Current task')),
+                               array('id' => 1, 'name' => xarML('Parent task'))
+                               );
+    $data['returnfromoptions']=$returnfromoptions;
+    $data['returnfromadd']=xarModGetVar('tasks','returnfromadd');
+    $data['returnfromedit']=xarModGetVar('tasks','returnfromedit');
+    $data['returnfromsurface']=xarModGetVar('tasks','returnfromsurface');
+    $data['returnfrommigrate']=xarModGetVar('tasks','returnfrommigrate');
+    $data['submitbutton']=xarML("Update tasks config");
+    return $data;
 }
 
 function tasks_admin_updateconfig()

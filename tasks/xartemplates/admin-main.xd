@@ -1,0 +1,11 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Tasks administration</xar:mlstring></span>
+</div>
+
+<div class="xarmod-body">
+  <h2>#$pageinfo#</h2>
+</div>
+
+<div>
+  <span >#$welcome#</span> 
+</div>

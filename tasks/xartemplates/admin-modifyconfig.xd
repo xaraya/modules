@@ -1,0 +1,97 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Tasks configuration</xar:mlstring></span>
+</div>
+
+<form action="&xar-modurl-tasks-admin-updateconfig;" method="post">
+<table>
+<tbody>
+  <tr align="left" valign="middle">
+    <td><xar:mlstring>Maximum number of subtask levels to cascade</xar:mlstring></td>
+    <td>
+      <select name="maxdisplaydepth" id="maxdisplaydepth" size="1" tabindex="1">
+        <xar:loop name="$maxdepthdropdown">
+          <option value="#$id#">#$name#</option>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td><xar:mlstring>Date format</xar:mlstring></td>
+    <td>
+      <select name="dateformat" id="dateformat" size="1" tabindex="2">
+        <xar:loop name="$dateformatdropdown">
+          <xar:if condition="$id eq $dateformat">
+            <option value="#$id#" selected="selected>>#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td><xar:mlstring>Show extra options in task list</xar:mlstring></td>
+    <td>
+      <input type="checkbox" name="showoptions" id="showoptions" value="#$showoptions#" tabindex="3">
+    </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td><xar:mlstring>Task to return to after new submission</xar:mlstring></td>
+    <td>
+      <select name="returnfromadd" id="returnfromadd" size="1" tabindex="4">
+        <xar:loop name="$returnfromoptions">
+          <xar:if condition="$returnfromadd eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td><xar:mlstring>Task to return to after edit submission</xar:mlstring></td>
+    <td>
+      <select name="returnfromedit" id="returnfromedit" size="1" tabindex="5">
+        <xar:loop name="$returnfromoptions">
+          <xar:if condition="$returnfromedit eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td><xar:mlstring>Task to return to after surfacing subtasks</xar:mlstring></td>
+    <td>
+      <select name="returnfromsurface" id="returnfromsurface" size="1" tabindex="6">
+        <xar:loop name="$returnfromoptions">
+          <xar:if condition="$returnfromsurface eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr align="left" valign="middle">
+    <td><xar:mlstring>Task to return to after migrating subtasks</xar:mlstring></td>
+    <td>
+      <select name="returnfrommigrate" id="returnfrommigrate" size="1" tabindex="7">
+        <xar:loop name="$returnfromoptions">
+          <xar:if condition="$returnfrommigrate eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+</tbody>
+</table>
+<input type="submit" value="#$submitbutton#">
+</form>
