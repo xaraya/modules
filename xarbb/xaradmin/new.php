@@ -90,8 +90,6 @@ function xarbb_admin_new()
             // Need to create a topic so we don't get the nasty empty error when viewing the forum.
             $ttitle = xarML('First Post');
             $tpost = xarML('This is your first topic');
-            $data['now']    = time();
-            xarModSetVar('xarbb', 'lastvisitdate.'.$forum['fid'], $data['now']);
 
             if (!xarModAPIFunc('xarbb',
                                'user',

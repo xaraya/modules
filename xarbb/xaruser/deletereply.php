@@ -16,9 +16,9 @@
 function xarbb_user_deletereply()
 {
     // Get parameters
-    list($cid,
-         $confirmation) = xarVarCleanFromInput('cid',
-                                               'confirmation');
+    if (!xarVarFetch('cid','int:1:',$cid)) return;
+    if (!xarVarFetch('obid','str:1:',$obid,$cid,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','int',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
 
     // for sec check
     if(!$comment = xarModAPIFunc('comments','user','get_one',array('cid' => $cid))) return;
@@ -52,17 +52,13 @@ function xarbb_user_deletereply()
                        'user',
                        'updateforumview',
                        array('fid'      => $topic['fid'],
-                             'deletereply'  => 1,
+                             'replies'  => 1,
+                             'move'     => 'negative',
                              'fposter'  => $topic['tposter']))) return;
 
     // Redirect
-    xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic',array(
-    	"tid" => $tid
-        )
-    ));
-
+    xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic',array("tid" => $tid)));
     // Return
     return true;
 }
-
 ?>

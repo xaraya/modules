@@ -493,6 +493,11 @@
 					</a>
 				</td>
 			</xar:sec>
+			<td width="20" align="center">
+				<a href="#xarModUrl('xarbb', 'user', 'movetopic', array('tid' => $tid))#">
+					<img src="#xarTplGetImage('new/topic_move.gif')#" alt="#xarML('Lock Topic')#" />
+				</a>
+			</td>
 		</tr>
 	</table>
 </xar:sec>

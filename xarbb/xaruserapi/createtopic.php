@@ -34,7 +34,7 @@ function xarbb_userapi_createtopic($args)
     if (!isset($ttitle) || !is_string($ttitle)) {
         $invalid[] = 'ttitle';
     } 
-    if (!isset($tpost) || !is_string($tpost)) {
+    if (!isset($tpost)) {
         $invalid[] = 'tpost';
     } 
     if (!isset($fid) || !is_numeric($fid)) {

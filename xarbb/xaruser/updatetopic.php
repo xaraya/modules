@@ -70,13 +70,11 @@ function xarbb_user_updatetopic()
                            'user',
                            'updateforumview',
                            array('fid'      => $forum['fid'],
-                                 'reply'    => 1,
+                                 'replies'  => 1,
+                                 'move'     => 'positive',
                                  'fposter'  => $poster))) return;
     }
-
-   xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
-
+    xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
     return;
 }
-
 ?>

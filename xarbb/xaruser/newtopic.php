@@ -155,6 +155,9 @@ function xarbb_user_newtopic()
                                    'user',
                                    'updateforumview',
                                    array('fid'      => $data['fid'],
+                                         'topics'   => 1,
+                                         'move'     => 'positive',
+                                         'replies'  => 1,
                                          'fposter'  => $tposter))) return;
              }
 

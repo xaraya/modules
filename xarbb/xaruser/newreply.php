@@ -17,7 +17,7 @@ function xarbb_user_newreply()
 {
     if (!xarVarFetch('tid','int:1:',$tid,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('cid','int:1:',$cid,'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase','str:1:',$phase,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase','str:1:',$phase,'',XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
 
     // Let's get the title, and check to see if we are
     if ((!empty($tid)) && (empty($cid))){

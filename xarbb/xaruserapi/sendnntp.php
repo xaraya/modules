@@ -25,25 +25,33 @@ function xarbb_userapi_sendnntp($args)
     // Get arguments from argument array
     extract($args);
     include_once 'modules/xarbb/xarclass/NNTP.php';
-    $tpost      = wordwrap($tpost, 72, "\n", 1);
+    //$tpost      = wordwrap($tpost, 72, "\n", 1);
     $email      = xarUserGetVar('email');
     $name       = xarUserGetVar('name');
+    $from       = $email .'('. $name .')';
     $settings   = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
     $server     = $settings['nntpserver'];
     $port       = $settings['nntpport'];
     $group      = $settings['nntpgroup'];
-    $addheader = "Content-Transfer-Encoding: quoted-printable\r\n".
-                 "Content-Type: text/plain; charset=ISO-8859-1;\r\n".
-                 "Mime-Version: 1.0\r\n".
-                 'X-HTTP-Posting-Host: '.gethostbyaddr(getenv("REMOTE_ADDR"))."\r\n";
 
-    if (!empty($reference)){
-        $addheader .= "References: " . $reference . "\r\n";
+    // We should allow adding a header in the nntp module
+    // $addheader = "Content-Transfer-Encoding: quoted-printable\r\n".
+    //             "Content-Type: text/plain; charset=ISO-8859-1;\r\n".
+    //             "Mime-Version: 1.0\r\n".
+    //             'X-HTTP-Posting-Host: '.gethostbyaddr(getenv("REMOTE_ADDR"))."\r\n";
+
+    if (empty($reference)){
+        $reference = '';
     }
-    $newsgroups = new Net_NNTP();
-    $newsgroups -> connect($server, $port);
-    $response = $newsgroups->post($ttitle, $group, $email .'('. $name .')', $tpost, $addheader);
-    $newsgroups -> quit();
+
+    if (!xarModAPIfunc('nntp', 'user', 'postarticle', array('server'     => $server, 
+                                                            'port'       => $port, 
+                                                            'newsgroups' => $group,
+                                                            'ref'        => $reference,
+                                                            'body'       => $tpost,
+                                                            'subject'    => $ttitle,
+                                                            'from'       => $from))) return;
+
     return true;
 }
 ?>

@@ -14,10 +14,6 @@
 */
 function xarbb_user_locktopic()
 {
-// We need to update the statistics about the forum and the topics here.
-// We do this by updating both tables at once and then giving the poster a chance to reply to the
-// topic or go back to the forum of which he came.
-
     if (!xarVarFetch('tid','int:1:',$tid)) return;
     if (!xarVarFetch('tstatus','int',$tstatus)) return;
 
@@ -34,8 +30,6 @@ function xarbb_user_locktopic()
                           array('fid' => $data['fid']));
 
     if(!xarSecurityCheck('ModxarBB',1,'Forum',$forum['catid'].':'.$forum['fid'])) return;
-
-    
 
     if (!xarModAPIFunc('xarbb',
                        'user',

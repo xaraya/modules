@@ -114,9 +114,15 @@
 		</td>
 		<td class="xar-norm" width="100%" >
 			<span class="xar-title">
-				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => $loop:item['tid']))#">
-				#$loop:item['ttitle']#
-				</a>
+				<xar:if condition="$loop:item['tstatus'] eq 5">
+					<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tpost']))#">
+						#$loop:item['ttitle']#
+					</a>
+				<xar:else />
+					<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => 	$loop:item['tid']))#">
+						#$loop:item['ttitle']#
+					</a>
+				</xar:if>
 			</span>
 		</td>
 		<td class="xar-accent" align="center" valign="middle" >
