@@ -1,5 +1,5 @@
 <div class="xar-norm">
-    <p class="xar-cm-note">
+    <p class="xar-cm-note xar-sub">
         <xar:mlstring>
             Note: Comments are owned by the poster. We are not responsible for their content..
         </xar:mlstring>
@@ -9,7 +9,7 @@
             Comments Settings 
         </xar:mlstring>        
     </h4>
-    <div class="xar-cm-wrapper xar-accent-outline">
+    <div class="xar-cm-wrapper  xar-accent xar-norm-outline">
         <form action="#$receipt['returnurl']['decoded']#" method="post">
             <div class="xar-cm-settings">
                 <label for="depth">
@@ -196,7 +196,7 @@
             <div class="xar-cm-settings">
                 <label for="reload">
                     <xar:mlstring>
-                        Force 
+                        Action 
                     </xar:mlstring>
                 </label>
                 <br />
