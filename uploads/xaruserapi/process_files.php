@@ -91,6 +91,10 @@ function uploads_userapi_process_files( $args ) {
             // Setup the uri structure so we have defaults if parse_url() doesn't create them
             $uri = parse_url($import);
             
+            if (!isset($uri['scheme']) || empty($uri['scheme'])) {
+                $uri['scheme'] = 'unknown';
+            }
+            
             switch ($uri['scheme']) {
                 case 'ftp': 
                     $fileList = xarModAPIFunc('uploads', 'user', 'import_external_ftp', array('uri' => $uri));
