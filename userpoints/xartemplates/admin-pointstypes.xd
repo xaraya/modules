@@ -24,7 +24,7 @@
 <tr>
 <td>
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-<xar:set name="$modules">#xarModAPIFunc('modules','admin','list')#</xar:set>
+<xar:set name="$modules">#xarModAPIFunc('modules','admin','getlist')#</xar:set>
 <select name="pmodule">
 <xar:foreach in="$modules" value="$module">
 <option value="#$module['name']#">#$module['name']#</option>
