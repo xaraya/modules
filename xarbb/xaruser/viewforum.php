@@ -199,10 +199,7 @@ function xarbb_user_viewforum()
         }
 
         $topics[$i]['topicpager'] = xarTplGetPager(1,
-                                                   xarModAPIFunc('comments', 'user', 'get_count',
-                                                        array('modid'       => xarModGetIDFromName('xarbb'),
-                                                              'itemtype'    => $fid,
-                                                              'objectid'    => $topic['tid'])),
+                                        $topic['treplies'],
                                         xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',
                                                                                       'tid'          => $topic['tid'])),
                                         $postperpage,
@@ -217,7 +214,7 @@ function xarbb_user_viewforum()
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('xarbb', 'user', 'counttopics', array('fid' => $fid)),
+                                    $data['ftopics'],
                                     xarModURL('xarbb', 'user', 'viewforum', array('startnum' => '%%',
                                                                                   'fid'          => $fid)),
                                     $settings['topicsperpage']);

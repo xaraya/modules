@@ -304,11 +304,7 @@ function xarbb_user_viewtopic($args)
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnum,
-                                    xarModAPIFunc('comments', 'user', 'get_count',
-                                    array('modid'       => $header['modid'],
-                                          'itemtype'    => $data['fid'],
-                                          'objectid'    => $header['objectid'])),
-
+                                    $topic['treplies'],
                                     xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',
                                                                                   'tid'          => $tid)),
                                     $postperpage);

@@ -22,6 +22,9 @@
  * @param $args['tid'] the last topic id
  * @param $args['ttitle'] the last topic title
  * @param $args['treplies'] the number of replies to the last topic
+ * @param $args['fpostid'] last post time (for sync)
+ * @param $args['ftopics'] total number of topics (for sync)
+ * @param $args['fposts'] total number of posts (for sync)
  */
 function xarbb_userapi_updateforumview($args)
 {
@@ -35,24 +38,16 @@ function xarbb_userapi_updateforumview($args)
         return;
     }
 
-/*
-    $forum = xarModAPIFunc('xarbb',
-                           'user',
-                           'getforum',
-                           array('fid' => $fid));
-    if (empty($forum)) {
-        $msg = xarML('No Such Forum Present');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
-*/
-
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $xbbforumstable = $xartable['xbbforums'];
-    $time = time();
+    if (isset($fpostid) && is_numeric($fpostid)) {
+        $time = $fpostid;
+    } else {
+        $time = time();
+    }
     $options = array();
     $options['tid'] = $tid;
     $options['ttitle'] = $ttitle;
@@ -65,19 +60,23 @@ function xarbb_userapi_updateforumview($args)
     $query = "UPDATE $xbbforumstable
             SET xar_fpostid     = ?,
                 xar_foptions    = ?,";
-    if (!empty($topics)) {
+    if (!empty($topics) && is_numeric($topics)) {
         if ($move == 'positive') {
             $query .= " xar_ftopics = (xar_ftopics + $topics),";
         } else {
             $query .= " xar_ftopics = (xar_ftopics - $topics),";
         }
+    } elseif (isset($ftopics) && is_numeric($ftopics)) { // for sync
+        $query .= " xar_ftopics = $ftopics,";
     }
-    if (!empty($replies)) {
+    if (!empty($replies) && is_numeric($replies)) {
         if ($move == 'positive') {
             $query .= " xar_fposts = (xar_fposts + $replies),";
         } else {
             $query .= " xar_fposts = (xar_fposts - $replies),";
         }
+    } elseif (isset($fposts) && is_numeric($fposts)) { // for sync
+        $query .= " xar_fposts = $fposts,";
     }
     $query .= "   xar_fposter   = ?
             WHERE xar_fid       = ?";
