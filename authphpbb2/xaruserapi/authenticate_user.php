@@ -164,13 +164,12 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
     {
         // connect to the invision database and get the user data
         //$inv_db = mysql_select_db($database, $connect);
-        $sql = "SELECT * FROM " . $table . 
-                " WHERE username='" . xarVarPrepForStore($username) . 
-                "' AND user_password='".xarVarPrepForStore($password)."'";
+        $query = "SELECT * FROM " . $table . " WHERE username=? AND user_password=?";
         
         $connect->SetFetchMode(ADODB_FETCH_ASSOC);
         
-        $result = $connect->Execute($sql);
+        $bindvars = array($username, $password);
+        $result =& $connect->Execute($query,$bindvars);
     
         if (!$result) {
             //error
