@@ -201,7 +201,7 @@
     </div>
 
     <span style="float: left; padding-top: 20px; width: 98%; text-align: center;">
-        <input type="submit" value="#$updatebutton#" align="center" />
+        <input type="submit" value="#$updatebutton#"  />
     </span>
   </form>
 

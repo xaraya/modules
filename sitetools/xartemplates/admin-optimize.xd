@@ -23,7 +23,7 @@
        #$optinote#
     </span>
     <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
-        <input type="submit" value="#$optibutton#" align="center" />
+        <input type="submit" value="#$optibutton#"  />
         </form>
     </span>
 

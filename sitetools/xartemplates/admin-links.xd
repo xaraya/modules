@@ -31,7 +31,7 @@
 </table>
 <p>
   <xar:set name="$findbutton"><xar:mlstring>Find Links</xar:mlstring></xar:set>
-  <input type="submit" name="find" value="#$findbutton#" align="center" />
+  <input type="submit" name="find" value="#$findbutton#"  />
   <label for="skiplocal">
   <xar:if condition="xarModGetVar('sitetools','links_skiplocal')">
     <input type="checkbox" name="skiplocal" value="1" id="skiplocal" checked="checked" />
