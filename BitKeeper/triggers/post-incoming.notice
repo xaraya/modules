@@ -41,7 +41,7 @@ then (
 		bk changes -v - < $BK_CSETLIST
      ) | sed 's/^/    /'
 		echo Links for the differences:
-		echo $(cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@\n\r | sed 's/ //')
+		echo $(cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //')
 fi
 # FIXME: subject spec should be" n changeset(s) pushed to <repo>, <firstcomment_trimmed>
 ) | mail -s "${NUMSETS} ${CHANGETEXT} pushed to ${REPO}: ${CSCOMMENT:0:40}..." xaraya_bk-notices@lists.xaraya.com
