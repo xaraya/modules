@@ -1,18 +1,19 @@
 <?php
 /**
  * File: $Id
- * 
- * MIME version information 
- * 
+ *
+ * MIME version information
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  * @subpackage MIME
- * @author Carl P. Corliss 
+ * @author Carl P. Corliss
  */
 $modversion['name']           = 'MIME API';
 $modversion['id']             = '999';
 $modversion['version']        = '1.0.0';
+$modversion['displayname']    = xarML('Mime');
 $modversion['description']    = 'Hook based module that returns the content-type of a given file.';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
