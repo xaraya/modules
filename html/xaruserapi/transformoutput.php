@@ -72,15 +72,15 @@ function html_userapitransformoutput($text)
     } elseif ($transformtype == 3){
         $text = $text;
     } elseif ($transformtype == 4){
-		// If the string contains end of line type tags, assume the user
-		// wants to provide html markup manually
-		if( strpos($text,"<b") OR strpos($text,"<p") )
-		{
-	        $text = $text;
-		} else {
-			// No html tags for dealing with end-of-line, transform as Breaks <br />
-	        $text = preg_replace("/\n/si","<br />",$text);
-		}
+        // If the string contains end of line type tags, assume the user
+        // wants to provide html markup manually
+        if( strpos($text,"<b") OR strpos($text,"<p") )
+        {
+            $text = $text;
+        } else {
+            // No html tags for dealing with end-of-line, transform as Breaks <br />
+            $text = preg_replace("/\n/si","<br />",$text);
+        }
     }
     //$text = preg_replace("/(\015\012)|(\015)|(\012)/","</p><p>",$text); 
     // This call is what is driving the bugs because it is transforming more
