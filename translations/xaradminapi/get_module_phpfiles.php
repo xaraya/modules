@@ -34,7 +34,7 @@ function translations_adminapi_get_module_phpfiles($args)
 //            }
             if (!preg_match('!^([a-z\-_]+)\.php$!i', $filename, $matches)) continue;
             $phpname = $matches[1];
-            if ($phpname == 'xarversion') continue;
+//            if ($phpname == 'xarversion') continue;
             if ($phpname == 'xartables') continue;
             $names[] = ereg_replace("^xar","",$phpname);
         }
