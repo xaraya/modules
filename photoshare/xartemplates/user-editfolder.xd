@@ -1,5 +1,5 @@
 <xar:template file="header" title="Test" />
-<script language="JavaScript">
+<script type="text/javascript">
     function openHelp()
     {
         var templateName = document.getElementById("template").value;
