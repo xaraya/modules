@@ -9,6 +9,33 @@ function overlib_userapi_bl_init()
     
 }
 
+/**
+ *  overlibPrepForJS
+ *  Takes text for display and formats it so it does not break on display
+ *  @param $s string the text to manipulate
+ *  @return string text to insert
+ *  @access private
+ */
+
+function __overlibPrepForJS($s)
+{
+    // remove linefeeds/carriage returns as this will
+    $s = preg_replace('/[\r|\n]/i','',$s); 
+    // escape single quotes and single quote entities
+	$squotes = array("'","&#39;");
+    $s = str_replace($squotes,"\'",$s); 
+    // convert double quotes to html entity
+	$s = str_replace('"','&quot;',$s); 
+	// ok, now we need to break really long lines
+	// correct interpretation of special characters
+	// we only want to break at spaces to allow for
+	$tmp = explode(' ',$s);
+    // we don't need these so free up some memory
+    unset($s,$squotes);
+    // return the new string
+	return join("'+' ",$tmp);
+}
+
 function overlib_userapi_bl_open($args=array())
 {
     // blocklayout tag functions must echo valid PHP code
@@ -22,9 +49,9 @@ function overlib_userapi_bl_open($args=array())
     //if (empty($trigger)) { $trigger = "onmouseover"; }
     if (empty($name)) { $name = '$olopen'; }
     $retval = "$name  = ";
-    $retval .= '"return overlib(\''.preg_replace(array("!'!","![\r\n]!"),array("\'",'\r'),$text).'\'';
+    $retval .= '"return overlib(\''.__overlibPrepForJS($text).'\'';
     if (isset($sticky) && (bool)$sticky) { $retval .= ",STICKY"; }
-    if (!empty($caption)) { $retval .= ",CAPTION,'".str_replace("'","\'",$caption)."'"; }
+    if (!empty($caption)) { $retval .= ",CAPTION,'".__overlibPrepForJS($caption)."'"; }
     if (!empty($fgcolor)) { $retval .= ",FGCOLOR,'$fgcolor'"; }
     if (!empty($bgcolor)) { $retval .= ",BGCOLOR,'$bgcolor'"; }
     if (!empty($textcolor)) { $retval .= ",TEXTCOLOR,'$textcolor'"; }
@@ -48,9 +75,9 @@ function overlib_userapi_bl_open($args=array())
     if (isset($offsety)) { $retval .= ",OFFSETY,$offsety"; }
     if (!empty($fgbackground)) { $retval .= ",FGBACKGROUND,'$fgbackground'"; }
     if (!empty($bgbackground)) { $retval .= ",BGBACKGROUND,'$bgbackground'"; }
-    if (!empty($closetext)) { $retval .= ",CLOSETEXT,'".str_replace("'","\'",$closetext)."'"; }
+    if (!empty($closetext)) { $retval .= ",CLOSETEXT,'".__overlibPrepForJS($closetext)."'"; }
     if (!empty($noclose)) { $retval .= ",NOCLOSE"; }
-    if (!empty($status)) { $retval .= ",STATUS,'".str_replace("'","\'",$status)."'"; }
+    if (!empty($status)) { $retval .= ",STATUS,'".__overlibPrepForJS($status)."'"; }
     if (!empty($autostatus)) { $retval .= ",AUTOSTATUS"; }
     if (!empty($autostatuscap)) { $retval .= ",AUTOSTATUSCAP"; }
     if (isset($inarray)) { $retval .= ",INARRAY,'$inarray'"; }
@@ -81,6 +108,7 @@ function overlib_userapi_bl_open($args=array())
 function overlib_userapi_bl_close($args=array())
 {
     extract($args); unset($args);
+    if (empty($name)) { $name = '$olclose'; }
     return "$name = 'return nd();'";
 }
 
