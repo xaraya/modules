@@ -13,6 +13,9 @@ function xlink_user_main($args)
 {
     xarVarFetch('base','isset',$base,'', XARVAR_DONT_SET);
     xarVarFetch('id','isset',$id,'', XARVAR_DONT_SET);
+    
+    $dbconn =& xarDBGetConn();
+
     extract($args);
 
     if (empty($base) && empty($id)) {
@@ -20,7 +23,7 @@ function xlink_user_main($args)
     } elseif (empty($id)) {
         return array('status' => 1,
                      'base' => xarVarPrepForDisplay($base),
-                     'where' => "basename eq '" . xarVarPrepForStore($base) ."'");
+                     'where' => "basename eq " .$dbconn->qstr($base));
     } elseif (empty($base)) {
         $base = '';
     }

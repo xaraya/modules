@@ -101,14 +101,16 @@ function xlink_adminapi_createhook($args)
                                        xar_moduleid,
                                        xar_itemtype,
                                        xar_itemid)
-            VALUES ($nextId,
-                    '" . xarVarPrepForStore($base) . "',
-                    '" . xarVarPrepForStore($refid) . "',
-                    '" . xarVarPrepForStore($modid) . "',
-                    '" . xarVarPrepForStore($itemtype) . "',
-                    '" . xarVarPrepForStore($objectid) . "')";
+            VALUES (?, ?, ?, ?, ?, ?)";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $nextId, 
+                      (string) $base, 
+                      (string) $refid,
+                      (int) $modid,
+                      (int) $itemtype,
+                      (int) $objectid);
+
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;

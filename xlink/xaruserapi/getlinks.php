@@ -47,18 +47,20 @@ function xlink_userapi_getlinks($args)
                      xar_basename,
                      xar_refid
               FROM $xlinktable
-              WHERE xar_moduleid = " . xarVarPrepForStore($modid) . "
-                AND xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                AND xar_itemid = " . xarVarPrepForStore($itemid) . "
+              WHERE xar_moduleid = ?
+                AND xar_itemtype = ?
+                AND xar_itemid = ?
               ORDER BY xar_basename ASC, xar_refid ASC";
+
+	$bindvars = array((int) $modid, (int) $itemtype, (int) $itemid);
 
     if (isset($numitems) && is_numeric($numitems)) {
         if (empty($startnum)) {
             $startnum = 1;
         }
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query, $bindvars);
     }
     if (!$result) return;
 

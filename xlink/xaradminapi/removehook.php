@@ -48,9 +48,9 @@ function xlink_adminapi_removehook($args)
 
     // Delete the entries
     $query = "DELETE FROM $xlink
-               WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'";
+               WHERE xar_moduleid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array((int) $modid));
     if (!$result) {
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;

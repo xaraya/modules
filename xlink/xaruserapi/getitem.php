@@ -52,13 +52,14 @@ function xlink_userapi_getitem($args)
                      xar_itemid
               FROM $xlinktable";
     if (!empty($id)) {
-        $query .= " WHERE xar_id = '" . xarVarPrepForStore($id) . "'";
+        $query .= " WHERE xar_id = ?";
+        $bindvars = array((int) $id);
     } else {
-        $query .= " WHERE xar_basename = '" . xarVarPrepForStore($basename) . "'
-                      AND xar_refid = '" . xarVarPrepForStore($refid) . "'";
+        $query .= " WHERE xar_basename = ? AND xar_refid = ?";
+        $bindvars = array((string) $basename, (string) $refid);
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     $item = array();

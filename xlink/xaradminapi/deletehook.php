@@ -76,12 +76,15 @@ function xlink_adminapi_deletehook($args)
     $xartable =& xarDBGetTables();
     $xlinktable = $xartable['xlink'];
 
-    $query = "DELETE FROM $xlinktable
-              WHERE xar_moduleid = " . xarVarPrepForStore($modid) . "
-                AND xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                AND xar_itemid = " . xarVarPrepForStore($itemid);
+    $query = "DELETE 
+                FROM $xlinktable
+               WHERE xar_moduleid = ?
+                 AND xar_itemtype = ?
+                 AND xar_itemid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array((int) $modid, (int) $itemtype, (int) $itemid);
+
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;

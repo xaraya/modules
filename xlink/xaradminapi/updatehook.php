@@ -136,13 +136,19 @@ function xlink_adminapi_updatehook($args)
     if (isset($oldbase) && isset($oldrefid)) {
         // Delete old link(s) for this module item
         $query = "DELETE FROM $xlinktable
-                  WHERE xar_moduleid = " . xarVarPrepForStore($modid) . "
-                    AND xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                    AND xar_itemid = " . xarVarPrepForStore($itemid) . "
-                    AND xar_basename = '" . xarVarPrepForStore($oldbase) . "'
-                    AND xar_refid = '" . xarVarPrepForStore($oldrefid) . "'";
+                  WHERE xar_moduleid = ?
+                    AND xar_itemtype = ?
+                    AND xar_itemid = ?
+                    AND xar_basename = ?
+                    AND xar_refid = ?";
 
-        $result =& $dbconn->Execute($query);
+        $bindvars = array((int) $modid,
+                          (int) $itemtype,
+                          (int) $itemid,
+                          (string) $oldbase,
+                          (string) $oldrefid);
+
+        $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) {
             // we *must* return $extrainfo for now, or the next hook will fail
             //return false;
@@ -161,14 +167,15 @@ function xlink_adminapi_updatehook($args)
                                        xar_moduleid,
                                        xar_itemtype,
                                        xar_itemid)
-            VALUES ($nextId,
-                    '" . xarVarPrepForStore($base) . "',
-                    '" . xarVarPrepForStore($refid) . "',
-                    '" . xarVarPrepForStore($modid) . "',
-                    '" . xarVarPrepForStore($itemtype) . "',
-                    '" . xarVarPrepForStore($objectid) . "')";
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $bindvars = array((int) $nextId,
+                      (string) $base,
+                      (string) $refid,
+                      (int) $modid,
+                      (int) $itemtype,
+                      (int) $objectid);
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) {
         // we *must* return $extrainfo for now, or the next hook will fail
         //return false;
