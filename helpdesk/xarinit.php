@@ -87,9 +87,8 @@ function helpdesk_init()
     xarModSetVar('helpdesk', 'ShowLastModifiedInSummary',1);
     xarModSetVar('helpdesk', 'ShowPriorityInSummary',1);
     xarModSetVar('helpdesk', 'ShowStatusInSummary',1);
-    xarModSetVar('helpdesk', 'AllowSoftwareChoice',1);
-    xarModSetVar('helpdesk', 'AllowVersionChoice',1);
-    xarModSetVar('helpdesk', 'EnableMyStatsHyperLink',1);
+    xarModSetVar('helpdesk', 'AllowDomainName', 1);
+    xarModSetVar('helpdesk', 'EnableMyStatsHyperLink', 1);
     // Module variable for testing
     xarModSetVar('helpdesk', 'debug message', '');
     
@@ -142,7 +141,7 @@ function helpdesk_init()
                               array('file' => $path . 'hd_priority.xml'));
     if (empty($objectid)) return;
     // save the object id for later
-    xarModSetVar('helpdesk','priorityobjectid',$objectid);    
+    xarModSetVar('helpdesk','priorityobjectid',$objectid);
     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => $path . 'hd_priority.data.xml'));
     if (empty($objectid)) return;
@@ -294,31 +293,27 @@ function helpdesk_delete()
     // Delete tables
     $query = xarDBDropTable($xartable['helpdesk_tickets']);
     $result =& $dbconn->Execute($query);
-    
+
     $objectid = xarModGetVar('helpdesk','priorityobjectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-    xarModDelVar('helpdesk','priorityobjectid');
-    
+
     $objectid = xarModGetVar('helpdesk','sourcesobjectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-    xarModDelVar('helpdesk','sourcesobjectid');
-    
+
     $objectid = xarModGetVar('helpdesk','statusobjectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-    xarModDelVar('helpdesk','statusobjectid');
-        
+
     $objectid = xarModGetVar('helpdesk','representativeobjectid');
     if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
-    xarModDelVar('helpdesk','representativeobjectid');
-    
+
     xarModDelAllVars('helpdesk');
     xarRemoveMasks('helpdesk');
     xarRemoveInstances('helpdesk');    

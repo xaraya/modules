@@ -112,24 +112,6 @@
             <td><input type="checkbox" name="assignedtodefaulttologgedin" value="1" #$checked# /></td>
         </tr>
         <tr>
-            <td><xar:mlstring>Allow Specifying of Software</xar:mlstring></td>
-            <xar:if condition="xarModGetVar('helpdesk', 'AllowSoftwareChoice')">
-                <xar:set name="$checked">'checked="checked"'</xar:set>
-            <xar:else />
-                <xar:set name="$checked">''</xar:set>
-            </xar:if>
-            <td><input type="checkbox" name="allowsoftwarechoice" value="1" #$checked# /></td>
-        </tr>
-        <tr>
-            <td><xar:mlstring>Allow Specifying of Software Version</xar:mlstring></td>
-            <xar:if condition="xarModGetVar('helpdesk', 'AllowVersionChoice')">
-                <xar:set name="$checked">'checked="checked"'</xar:set>
-            <xar:else />
-                <xar:set name="$checked">''</xar:set>
-            </xar:if>
-            <td><input type="checkbox" name="allowversionchoice" value="1" #$checked# /></td>
-        </tr>
-        <tr>
             <td><xar:mlstring>Allow Usage of Domain Names</xar:mlstring></td>
             <xar:if condition="xarModGetVar('helpdesk', 'AllowDomainName')">
                 <xar:set name="$checked">'checked="checked"'</xar:set>

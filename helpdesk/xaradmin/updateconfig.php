@@ -15,34 +15,53 @@ function helpdesk_admin_updateconfig()
         }
     }
 
+    xarVarFetch('enforceauthkey',       'isset', $enforceauthkey, '');
+    xarVarFetch('rowsperpage',          'isset', $rowsperpage, '');
+    xarVarFetch('pagecountlimit',       'isset', $pagecountlimit, '');
+    xarVarFetch('anonymouscansubmit',   'isset', $anonymouscansubmit, '');
+    xarVarFetch('usercansubmit',        'isset', $usercansubmit, '');
+    xarVarFetch('usercancheckstatus',   'isset', $usercancheckstatus, '');
+    xarVarFetch('techsseealltickets',   'isset', $techsseealltickets, '');
+    xarVarFetch('enableimages',         'isset', $enableimages, '');
+    xarVarFetch('allowcloseonsubmit',   'isset', $allowcloseonsubmit, '');
+    xarVarFetch('showopenbyinsummary',         'isset', $showopenbyinsummary, '');
+    xarVarFetch('showassignedtoinsummary',     'isset', $showassignedtoinsummary, '');
+    xarVarFetch('showclosedbyinsummary',       'isset', $showclosedbyinsummary, '');
+    xarVarFetch('openedbydefaulttologgedin',   'isset', $openedbydefaulttologgedin, '');
+    xarVarFetch('assignedtodefaulttologgedin', 'isset', $assignedtodefaulttologgedin, '');
+    xarVarFetch('showlastmodifiedinsummary',   'isset', $showlastmodifiedinsummary, '');
+    xarVarFetch('showdateenteredinsummary',    'isset', $showdateenteredinsummary, '');
+    xarVarFetch('showpriorityinsummary',       'isset', $showpriorityinsummary, '');
+    xarVarFetch('showstatusinsummary',         'isset', $showstatusinsummary, '');
+    xarVarFetch('allowdomainname',             'isset', $allowdomainname, '');
+    xarVarFetch('enablemystatshyperlink',      'isset', $enablemystatshyperlink, '');
+
     // Update module variables.  Note that depending on the HTML structure used
     // to obtain the information from the user it is possible that the values
     // might be unset, so it is important to check them all and assign them
     // default values if required
     // These two lines may be needed when images are added to the Help Desk
-    xarModSetVar('helpdesk', 'EnforceAuthKey', xarVarCleanFromInput('enforceauthkey'));
-    xarModSetVar('helpdesk', 'Default rows per page', xarVarCleanFromInput('rowsperpage'));
-    xarModSetVar('helpdesk', 'Page Count Limit',xarVarCleanFromInput('pagecountlimit'));
-    xarModSetVar('helpdesk', 'Anonymous can Submit', xarVarCleanFromInput('anonymouscansubmit'));
-    xarModSetVar('helpdesk', 'User can Submit', xarVarCleanFromInput('usercansubmit'));
-    xarModSetVar('helpdesk', 'User can check status', xarVarCleanFromInput('usercancheckstatus'));
-    xarModSetVar('helpdesk', 'Techs see all tickets', xarVarCleanFromInput('techsseealltickets'));
-    xarModSetVar('helpdesk', 'Enable Images',xarVarCleanFromInput('enableimages'));
-    xarModSetVar('helpdesk', 'AllowCloseOnSubmit',xarVarCleanFromInput('allowcloseonsubmit'));
-    xarModSetVar('helpdesk', 'ShowOpenedByInSummary',xarVarCleanFromInput('showopenbyinsummary'));
-    xarModSetVar('helpdesk', 'ShowAssignedToInSummary',xarVarCleanFromInput('showassignedtoinsummary'));
-    xarModSetVar('helpdesk', 'ShowClosedByInSummary',xarVarCleanFromInput('showclosedbyinsummary'));
-    xarModSetVar('helpdesk', 'OpenedByDefaultToLoggedIn',xarVarCleanFromInput('openedbydefaulttologgedin'));
-    xarModSetVar('helpdesk', 'AssignedToDefaultToLoggedIn',xarVarCleanFromInput('assignedtodefaulttologgedin'));
-    xarModSetVar('helpdesk',	'ShowLastModifiedInSummary',xarVarCleanFromInput('showlastmodifiedinsummary'));
-    xarModSetVar('helpdesk',	'ShowDateEnteredInSummary',xarVarCleanFromInput('showdateenteredinsummary'));
-    xarModSetVar('helpdesk', 'ShowPriorityInSummary',xarVarCleanFromInput('showpriorityinsummary'));
-    xarModSetVar('helpdesk', 'ShowStatusInSummary',xarVarCleanFromInput('showstatusinsummary'));
-    xarModSetVar('helpdesk', 'AllowSoftwareChoice',xarVarCleanFromInput('allowsoftwarechoice'));
-    xarModSetVar('helpdesk', 'AllowVersionChoice',xarVarCleanFromInput('allowversionchoice'));
-    xarModSetVar('helpdesk', 'AllowDomainName',xarVarCleanFromInput('allowdomainname'));
-    xarModSetVar('helpdesk', 'EnableMyStatsHyperLink',xarVarCleanFromInput('enablemystatshyperlink'));
-    
+    xarModSetVar('helpdesk', 'EnforceAuthKey',          $enforceauthkey);
+    xarModSetVar('helpdesk', 'Default rows per page',   $rowsperpage);
+    xarModSetVar('helpdesk', 'Page Count Limit',        $pagecountlimit);
+    xarModSetVar('helpdesk', 'Anonymous can Submit',    $anonymouscansubmit);
+    xarModSetVar('helpdesk', 'User can Submit',         $usercansubmit);
+    xarModSetVar('helpdesk', 'User can check status',   $usercancheckstatus);
+    xarModSetVar('helpdesk', 'Techs see all tickets',   $techsseealltickets);
+    xarModSetVar('helpdesk', 'Enable Images',           $enableimages);
+    xarModSetVar('helpdesk', 'AllowCloseOnSubmit',      $allowcloseonsubmit);
+    xarModSetVar('helpdesk', 'ShowOpenedByInSummary',   $showopenbyinsummary);
+    xarModSetVar('helpdesk', 'ShowAssignedToInSummary', $showassignedtoinsummary);
+    xarModSetVar('helpdesk', 'ShowClosedByInSummary',   $showclosedbyinsummary);
+    xarModSetVar('helpdesk', 'OpenedByDefaultToLoggedIn',   $openedbydefaulttologgedin);
+    xarModSetVar('helpdesk', 'AssignedToDefaultToLoggedIn', $assignedtodefaulttologgedin);
+    xarModSetVar('helpdesk', 'ShowLastModifiedInSummary',   $showlastmodifiedinsummary);
+    xarModSetVar('helpdesk', 'ShowDateEnteredInSummary',    $showdateenteredinsummary);
+    xarModSetVar('helpdesk', 'ShowPriorityInSummary',       $showpriorityinsummary);
+    xarModSetVar('helpdesk', 'ShowStatusInSummary',         $showstatusinsummary);
+    xarModSetVar('helpdesk', 'AllowDomainName',             $allowdomainname);
+    xarModSetVar('helpdesk', 'EnableMyStatsHyperLink',      $enablemystatshyperlink);
+
     if (!xarVarFetch('itemtype', 'int', $itemtype, 1, XARVAR_NOT_REQUIRED)) return;
             
     xarModCallHooks('module','updateconfig','helpdesk',
