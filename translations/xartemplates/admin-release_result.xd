@@ -2,7 +2,10 @@
 
 <h4><xar:mlstring>Getting the translated package</xar:mlstring></h4>
 <p>
-  A translation package archive has been created, with the translations for #xarSessionGetVar('translations_working_locale')#
+  <xar:ml>
+    <xar:mlstring>A translation package archive has been created, with the translations for #(1)</xar:mlstring>
+    <xar:mlvar>#xarSessionGetVar('translations_working_locale')#</xar:mlvar>
+  </xar:ml>
 </p>
 <p>
   <xar:ml>

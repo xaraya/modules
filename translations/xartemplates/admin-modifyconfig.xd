@@ -18,17 +18,20 @@
 
     <h4><xar:mlstring>Mode of operation</xar:mlstring></h4>
     <p>
-       In the future the multilanguage system (MLS) will work in three different modes. For now only the SINGLE mode is supported: 
+       <xar:mlstring>In the future the multilanguage system (MLS) will work in three different modes. For now only the SINGLE mode is supported:</xar:mlstring>
       <dl>
         <dt><input type="radio" name="mlsmode" value="SINGLE" #$single_checked# />
         <span class="xar-title"><xar:mlstring>Single language mode (SINGLE)</xar:mlstring></span>
         <dd>
+        <xar:mlstring>
         MLS uses only one character set, typically single byte but potentially multi byte if mb_string is 
         built in. All information is stored coherently with the chosen character set (at installation time), 
         and also user data is meaningful in the chosen character set.
+        </xar:mlstring>
         <dt><input type="radio" name="mlsmode" value="BOXED" #$boxed_checked#/>
-        <span class="xar-title">Per page mode (BOXED)</span>
+        <span class="xar-title"><xar:mlstring>Per page mode (BOXED)</xar:mlstring></span>
         <dd>
+        <xar:mlstring>
         MLS can use more than one character set in the site (the same consideration for the single or multi byte matter as 
         above can be applied here), but only one character set per page is used (this is an obvious concept maybe, 
         but important to understand). Due to this fact content cannot be shared across through different 
@@ -36,21 +39,26 @@
         they are referring to the same object, e.g. an article available in both English and Arabic). 
         Another point is that every operation involves only a single language. This mode can produce 
         unexpected results if mb_string is not installed.
+        </xar:mlstring>
         <dt><input type="radio" name="mlsmode" value="UNBOXED" #$unboxed_checked# />
         <span class="xar-title"><xar:mlstring>Full multilanguage (UNBOXED) (experimental!)</xar:mlstring></span>
         <dd>
+        <xar:mlstring>
         MLS uses an universal character set to represent everything (read: UTF-8). This guarantees that no 
         conversion is needed for the content representation. Every page is always shown according to 
         the user chosen language, but the page can contain texts in other languages 
         (for example a French article and comments inside an English page).
+        </xar:mlstring>
       </dl>
     </p>
 
     <h4><xar:mlstring>Translations storage</xar:mlstring></h4>
     <p>
+    <xar:mlstring>
       The translated information for xaraya and her modules can be stored in different back-ends.
       The following back-ends are supported:
-  	</p>
+    </xar:mlstring>
+    </p>
     <p>
       <label for="translationsbackend"><xar:mlstring>Translations Backend</xar:mlstring></label>:
 	    <select name="translationsbackend" id="translationsbackend" size="1">
@@ -58,8 +66,8 @@
 			    <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
 			    <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
 		    <xar:elseif condition="xarConfigGetVar('Site.MLS.TranslationsBackend') eq 'php'" />
-			    <option value="xml">XML (good for interoperability)</option>
-			    <option value="php" selected="selected">PHP (good for programmed access)</option>
+			    <option value="xml"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
+			    <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
 		    </xar:if>
 	    </select>
     </p>
@@ -70,11 +78,11 @@
 			    <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
 			    <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
 		    <xar:elseif condition="xarModGetVar('translations', 'release_backend_type') eq 'php'" />
-			    <option value="xml">XML (good for interoperability)</option>
-			    <option value="php" selected="selected">PHP (good for programmed access)</option>
+			    <option value="xml"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
+			    <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
 		    </xar:if>
 	    </select>
-	    (only PHP allowed for now)
+	    <xar:mlstring>(only PHP allowed for now)</xar:mlstring>
     </p>
 
     <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>

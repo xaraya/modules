@@ -30,4 +30,4 @@
 <a href="#xarModURL('translations', 'admin', 'release')#">
 ---->
 <a href="#xarModURL('translations', 'admin', 'start')#">
-<xar:mlkey>Release</xar:mlkey></a> (not yet implemented)<br />
+<xar:mlstring>Release</xar:mlstring></a> <xar:mlstring>(not yet implemented)</xar:mlstring><br />

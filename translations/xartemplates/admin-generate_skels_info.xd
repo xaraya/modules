@@ -13,6 +13,6 @@
 <p>
 <xar:mlstring>Now we're going to generate skels, this operation could take several minutes. Just take a break!</xar:mlstring>
 </p>
-<a href="#xarModURL('translations', 'admin', 'generate_skels')#"><xar:mlkey>GO</xar:mlkey></a><br />
+<a href="#xarModURL('translations', 'admin', 'generate_skels')#">#xarML('GO')#</a><br />
 <br />
 <xar:template type="module" file="opbar" />
