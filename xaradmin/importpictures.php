@@ -170,17 +170,9 @@ function pruneFiles( $FilesInDir, $image_import_dir )
                             xar_ulapp
                     FROM $uploadstable
                     WHERE xar_ulfile = '$filename' OR xar_ulhash = '$filename' OR xar_ulhash = '$image_import_dir$filename';";
-            $result = $dbconn->Execute($sql);
-            
-            // Check for an error with the database code, and if so set an appropriate
-            // error message and return
-            if ($dbconn->ErrorNo() != 0) {
-                $msg = xarMLByKey('DATABASE_ERROR', $sql);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                return;
-            }
-            
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
             // Check for no rows found, and if so, add file to pruned list
             if ($result->EOF) 
             {
