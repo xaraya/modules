@@ -57,6 +57,7 @@
                 </xar:if>
             </td>
         </tr>
+        <xar:if condition="$settings.PageDisplayView eq 1 ">
         <tr>
             <td><span class="help" title="If selected, the cache will be invalidated when new comments are posted for an item."><label for="cacheflushcomment">
                 <xar:mlstring>Flush Cache on New Comment:</xar:mlstring>
@@ -69,6 +70,31 @@
                 </xar:if>
             </td>
         </tr>
+        <tr>
+            <td><span class="help" title="If selected, the cache will be invalidated when a rating is posted for an item."><label for="cacheflushrating">
+                <xar:mlstring>Flush Cache on New Rating:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <xar:if condition="xarModGetVar('xarcachemanager','FlushOnNewRating')">
+                    <input type="checkbox" name="cacheflushrating" id="cacheflushrating" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="cacheflushrating" id="cacheflushrating" value="1" />
+                </xar:if>
+            </td>
+        </tr>
+        <tr>
+            <td><span class="help" title="If selected, the cache will be invalidated when a vote is caste on a poll hooked to an item."><label for="cacheflushpollvote">
+                <xar:mlstring>Flush Cache on New Hooked Poll Vote:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <xar:if condition="xarModGetVar('xarcachemanager','FlushOnNewPollvote')">
+                    <input type="checkbox" name="cacheflushpollvote" id="cacheflushpollvote" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="cacheflushpollvote" id="cacheflushpollvote" value="1" />
+                </xar:if>
+            </td>
+        </tr>
+        </xar:if>
         <tr>
             <td><span class="help" title="Adds a line to the bottom of cached pages stating the cache time."><label for="cachetimestamp">
                 <xar:mlstring>Show the "Last Modified" Stamp:</xar:mlstring>

@@ -80,6 +80,22 @@ function xarcachemanager_admin_updateconfig()
         xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
     }
 
+    // see if we need to flush the cache when a new rating is added for some item
+    xarVarFetch('cacheflushrating','isset',$cacheflushrating,0,XARVAR_NOT_REQUIRED);
+    if ($cacheflushcomment) {
+        xarModSetVar('xarcachemanager','FlushOnNewRating', 1);
+    } else {
+        xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
+    }
+
+    // see if we need to flush the cache when a new vote is cast on poll hooked to some item
+    xarVarFetch('cacheflushpullvote','isset',$cacheflushpollvote,0,XARVAR_NOT_REQUIRED);
+    if ($cacheflushcomment) {
+        xarModSetVar('xarcachemanager','FlushOnNewPollvote', 1);
+    } else {
+        xarModSetVar('xarcachemanager','FlushOnNewPollvote', 0);
+    }
+
     xarResponseRedirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
 
     return true;
