@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Search';
 $modversion['id']             = '32';
-$modversion['version']        = '0.2';
+$modversion['version']        = '0.2.0';
 $modversion['description']    = 'Search for data';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
