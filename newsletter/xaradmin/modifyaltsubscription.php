@@ -59,13 +59,13 @@ function newsletter_admin_modifyaltsubscription()
         // The user API function is called
         $subscriptions = xarModAPIFunc('newsletter',
                                        'user',
-                                       'get',
+                                       'getaltsubscriptionbyemail',
                                         array('id' => 0, // doesn't matter
-                                              'id' => $id,
+                                              'email' => $subscription['email'],
                                               'pid' => $publications[$idx]['id'],
                                               'phase' => 'altsubscription'));
 
-        if (empty($subscriptions)) {
+        if (!$subscriptions) {
             $subscription['publications'][$idx]['checked'] = '';
         } else {
             $subscription['publications'][$idx]['checked'] = 'checked';
