@@ -25,7 +25,7 @@ unset($tinyMCE_imglib_include);
 if (is_file('../../../../../../../../../var/ibrowser/ibrowserconfig.inc')) {
     include '../../../../../../../../../var/ibrowser/ibrowserconfig.inc';
 } else {
-   //  include '../../../../../ibrowserconfig.inc';
+     include '../../../../../ibrowserconfig.inc';
 }
 
 $tinyMCE_dir = 'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/';
