@@ -18,6 +18,10 @@ function xarcachemanager_admin_stats($args)
     $data = array();
     $data['tab'] = $tab;
 
+    // get the caching config settings from the config file
+    $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                      array('from' => 'file', 'tpl_prep' => TRUE));
+
     switch ($tab) {
         case 'autocache':
             if (!empty($reset)) {
@@ -110,6 +114,135 @@ function xarcachemanager_admin_stats($args)
 
         case 'overview':
         default:
+            if (file_exists($outputCacheDir . '/cache.touch') &&
+                file_exists($outputCacheDir . '/cache.pagelevel')) {
+                $data['pageCachingEnabled'] = 1;
+            } else {
+                $data['pageCachingEnabled'] = 0;
+            }
+            if ($data['pageCachingEnabled'] && !empty($data['settings']['PageCacheStorage'])) {
+                $pagestorage =& xarCache_getStorage(array('storage'  => $data['settings']['PageCacheStorage'],
+                                                          'type'     => 'page',
+                                                          'cachedir' => $outputCacheDir));
+                $data['pagecachesize'] = $pagestorage->getCacheSize(true);
+                $data['pagecacheitems'] = $pagestorage->getCacheItems();
+            } else {
+                $data['pagecachesize'] = 0;
+                $data['pagecacheitems'] = 0;
+            }
+            if ($data['pageCachingEnabled'] && !empty($data['settings']['PageLogFile']) &&
+                file_exists($data['settings']['PageLogFile']) && filesize($data['settings']['PageLogFile']) > 0) {
+                $data['pagelogsize'] = filesize($data['settings']['PageLogFile']);
+                $data['pageloglines'] = 0;
+                $fp = fopen($data['settings']['PageLogFile'],'r');
+                if ($fp) {
+                    while (!feof($fp)) {
+                        $dummy = fgets($fp,1024);
+                        $data['pageloglines']++;
+                    }
+                    fclose($fp);
+                }
+            } else {
+                $data['pagelogsize'] = 0;
+                $data['pageloglines'] = 0;
+            }
+
+            if (file_exists($outputCacheDir . '/cache.touch') &&
+                file_exists($outputCacheDir . '/cache.blocklevel')) {
+                $data['blockCachingEnabled'] = 1;
+            } else {
+                $data['blockCachingEnabled'] = 0;
+            }
+            if ($data['blockCachingEnabled'] && !empty($data['settings']['BlockCacheStorage'])) {
+                $blockstorage =& xarCache_getStorage(array('storage'  => $data['settings']['BlockCacheStorage'],
+                                                           'type'     => 'block',
+                                                           'cachedir' => $outputCacheDir));
+                $data['blockcachesize'] = $blockstorage->getCacheSize(true);
+                $data['blockcacheitems'] = $blockstorage->getCacheItems();
+            } else {
+                $data['blockcachesize'] = 0;
+                $data['blockcacheitems'] = 0;
+            }
+            if ($data['blockCachingEnabled'] && !empty($data['settings']['BlockLogFile']) &&
+                file_exists($data['settings']['BlockLogFile']) && filesize($data['settings']['BlockLogFile']) > 0) {
+                $data['blocklogsize'] = filesize($data['settings']['BlockLogFile']);
+                $data['blockloglines'] = 0;
+                $fp = fopen($data['settings']['BlockLogFile'],'r');
+                if ($fp) {
+                    while (!feof($fp)) {
+                        $dummy = fgets($fp,1024);
+                        $data['blockloglines']++;
+                    }
+                    fclose($fp);
+                }
+            } else {
+                $data['blocklogsize'] = 0;
+                $data['blockloglines'] = 0;
+            }
+
+        // FIXME: bring in line with other cache systems
+            if (file_exists($outputCacheDir . '/cache.touch')) {
+                $data['queryCachingEnabled'] = 1;
+            } else {
+                $data['queryCachingEnabled'] = 0;
+            }
+            $data['settings']['QueryCacheStorage'] = 'filesystem';
+            if ($data['blockCachingEnabled'] && !empty($data['settings']['BlockCacheStorage'])) {
+                $querystorage =& xarCache_getStorage(array('storage'  => $data['settings']['QueryCacheStorage'],
+                                                           'type'     => 'adodb',
+                                                           'cachedir' => 'var/cache'));
+                $data['querycachesize'] = $querystorage->getCacheSize(true);
+                $data['querycacheitems'] = $querystorage->getCacheItems() - 1; // index.html
+            } else {
+                $data['querycachesize'] = 0;
+                $data['querycacheitems'] = 0;
+            }
+
+            if (file_exists($outputCacheDir . '/cache.touch') &&
+                file_exists($outputCacheDir . '/cache.pagelevel') &&
+                file_exists($outputCacheDir . '/autocache.log')) {
+                $data['autoCachingEnabled'] = 1;
+            } else {
+                $data['autoCachingEnabled'] = 0;
+            }
+            $data['settings']['AutoCacheLogFile'] = $outputCacheDir . '/autocache.log';
+            if ($data['autoCachingEnabled'] && !empty($data['settings']['AutoCacheLogFile']) &&
+                file_exists($data['settings']['AutoCacheLogFile']) && filesize($data['settings']['AutoCacheLogFile']) > 0) {
+                $data['autocachelogsize'] = filesize($data['settings']['AutoCacheLogFile']);
+                $data['autocacheloglines'] = 0;
+                $fp = fopen($data['settings']['AutoCacheLogFile'],'r');
+                if ($fp) {
+                    while (!feof($fp)) {
+                        $dummy = fgets($fp,1024);
+                        $data['autocacheloglines']++;
+                    }
+                    fclose($fp);
+                }
+            } else {
+                $data['autocachelogsize'] = 0;
+                $data['autocacheloglines'] = 0;
+            }
+            if ($data['autoCachingEnabled'] && file_exists($outputCacheDir . '/autocache.stats')) {
+                $data['settings']['AutoCacheStatFile'] = $outputCacheDir . '/autocache.stats';
+            } else {
+                $data['settings']['AutoCacheStatFile'] = '';
+            }
+            if ($data['autoCachingEnabled'] && !empty($data['settings']['AutoCacheStatFile']) &&
+                file_exists($data['settings']['AutoCacheStatFile']) && filesize($data['settings']['AutoCacheStatFile']) > 0) {
+                $data['autocachestatsize'] = filesize($data['settings']['AutoCacheStatFile']);
+                $data['autocachestatlines'] = 0;
+                $fp = fopen($data['settings']['AutoCacheStatFile'],'r');
+                if ($fp) {
+                    while (!feof($fp)) {
+                        $dummy = fgets($fp,1024);
+                        $data['autocachestatlines']++;
+                    }
+                    fclose($fp);
+                }
+            } else {
+                $data['autocachestatsize'] = 0;
+                $data['autocachestatlines'] = 0;
+            }
             break;
     }
 

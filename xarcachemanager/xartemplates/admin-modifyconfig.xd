@@ -53,22 +53,6 @@
                 <input type="text" name="cachesizelimit" id="cachesizelimit" value="#$settings.OutputSizeLimit#" size="4" maxlength="4" />
             </td>
         </tr>
-<xar:comment> TODO
-        <tr>
-            <td><span class="help" title="#xarML('Specify where the cached data should be stored.')#">
-            <label for="cachestorage">
-                <xar:mlstring>Cache Storage:</xar:mlstring>
-            </label></span></td>
-            <td>
-                <select name="cachestorage" id="cachestorage">
-                    <option value="fs"><xar:mlstring>Filesystem</xar:mlstring></option>
-                    <option value="db"><xar:mlstring>Database</xar:mlstring></option>
-                    <option value="mc"><xar:mlstring>MemCached</xar:mlstring></option>
-                    <option value="..">...</option>
-                </select>
-            </td>
-        </tr>
-</xar:comment>
         <tr>
             <td colspan="2"><h3><xar:mlstring>Page Output Cache Settings</xar:mlstring></h3></td>
         </tr>
@@ -202,6 +186,44 @@
             </td>
         </tr>
         <tr>
+            <td><span class="help" title="#xarML('Specify where the cached data should be stored.')#">
+            <label for="pagecachestorage">
+                <xar:mlstring>Page Cache Storage:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <select name="pagecachestorage" id="pagecachestorage">
+                    <xar:if condition="$settings['PageCacheStorage'] eq 'filesystem'">
+                        <option value="filesystem" selected="selected"><xar:mlstring>Filesystem</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="filesystem"><xar:mlstring>Filesystem</xar:mlstring></option>
+                    </xar:if>
+<xar:comment> TODO
+                    <xar:if condition="$settings['PageCacheStorage'] eq 'database'">
+                        <option value="database" selected="selected"><xar:mlstring>Database</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="database"><xar:mlstring>Database</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="!extension_loaded('memcache')">
+                        <option value="memcached" disabled="disabled"><xar:mlstring>Memcache</xar:mlstring></option>
+                    <xar:elseif condition="$settings['PageCacheStorage'] eq 'memcache'"/>
+                        <option value="memcached" selected="selected"><xar:mlstring>Memcache</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="memcached"><xar:mlstring>Memcache</xar:mlstring></option>
+                    </xar:if>
+</xar:comment>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span class="help" title="#xarML('Specify if cache hits and misses should be logged, e.g. in var/logs/page.log')#">
+            <label for="pagelogfile">
+                <xar:mlstring>Page Cache Logfile:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <input type="text" name="pagelogfile" id="pagelogfile" value="#$settings.PageLogFile#" size="20" />
+            </td>
+        </tr>
+        <tr>
             <td colspan="2"><h3><xar:mlstring>Block Output Cache Settings</xar:mlstring></h3></td>
         </tr>
         <tr>
@@ -224,6 +246,44 @@
             </label></span></td>
             <td>
                 <input type="text" name="blockexpiretime" id="blockexpiretime" value="#$settings.BlockTimeExpiration#" size="9" maxlength="9" />
+            </td>
+        </tr>
+        <tr>
+            <td><span class="help" title="#xarML('Specify where the cached data should be stored.')#">
+            <label for="blockcachestorage">
+                <xar:mlstring>Block Cache Storage:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <select name="blockcachestorage" id="blockcachestorage">
+                    <xar:if condition="$settings['BlockCacheStorage'] eq 'filesystem'">
+                        <option value="filesystem" selected="selected"><xar:mlstring>Filesystem</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="filesystem"><xar:mlstring>Filesystem</xar:mlstring></option>
+                    </xar:if>
+<xar:comment> TODO
+                    <xar:if condition="$settings['BlockCacheStorage'] eq 'database'">
+                        <option value="database" selected="selected"><xar:mlstring>Database</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="database"><xar:mlstring>Database</xar:mlstring></option>
+                    </xar:if>
+                    <xar:if condition="!extension_loaded('memcache')">
+                        <option value="memcached" disabled="disabled"><xar:mlstring>Memcache</xar:mlstring></option>
+                    <xar:elseif condition="$settings['BlockCacheStorage'] eq 'memcache'"/>
+                        <option value="memcached" selected="selected"><xar:mlstring>Memcache</xar:mlstring></option>
+                    <xar:else/>
+                        <option value="memcached"><xar:mlstring>Memcache</xar:mlstring></option>
+                    </xar:if>
+</xar:comment>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span class="help" title="#xarML('Specify if cache hits and misses should be logged, e.g. in var/logs/block.log')#">
+            <label for="blocklogfile">
+                <xar:mlstring>Block Cache Logfile:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <input type="text" name="blocklogfile" id="blocklogfile" value="#$settings.BlockLogFile#" size="20" />
             </td>
         </tr>
     </table>

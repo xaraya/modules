@@ -85,33 +85,291 @@
     <br />
     <xar:if condition="empty($tab) or $tab eq 'overview'">
 
-        <xar:mlstring>to be defined</xar:mlstring>
+    <table class="xar-norm">
+    <tr>
+      <td valign="top">
+
+        <h3><xar:mlstring>Page Cache</xar:mlstring></h3>
+
+        <xar:if condition="!empty($pageCachingEnabled)">
+        <table class="xar-norm">
+            <tr>
+                <th>
+                    <xar:mlstring>Storage</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['PageCacheStorage'])">
+                        #$settings['PageCacheStorage']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Items</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($pagecacheitems)">
+                        #$pagecacheitems#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Size</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($pagecachesize)">
+                        #$pagecachesize#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Logfile</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['PageLogFile'])">
+                        #$settings['PageLogFile']#
+                    </xar:if>
+                </td>
+            </tr>
+            <xar:if condition="!empty($settings['PageLogFile'])">
+                <tr>
+                    <th>
+                        <xar:mlstring>Entries</xar:mlstring>
+                    </th>
+                    <td>
+                        #$pageloglines#
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <xar:mlstring>Logsize</xar:mlstring>
+                    </th>
+                    <td>
+                        #$pagelogsize#
+                    </td>
+                </tr>
+            </xar:if>
+        </table>
+        <xar:else/>
+            <xar:mlstring>Disabled</xar:mlstring>
+        </xar:if>
+
+      </td>
+      <td valign="top">
+
+        <h3><xar:mlstring>Block Cache</xar:mlstring></h3>
+
+        <xar:if condition="!empty($blockCachingEnabled)">
+        <table class="xar-norm">
+            <tr>
+                <th>
+                    <xar:mlstring>Storage</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['BlockCacheStorage'])">
+                        #$settings['BlockCacheStorage']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Items</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($blockcacheitems)">
+                        #$blockcacheitems#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Size</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($blockcachesize)">
+                        #$blockcachesize#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Logfile</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['BlockLogFile'])">
+                        #$settings['BlockLogFile']#
+                    </xar:if>
+                </td>
+            </tr>
+            <xar:if condition="!empty($settings['BlockLogFile'])">
+                <tr>
+                    <th>
+                        <xar:mlstring>Entries</xar:mlstring>
+                    </th>
+                    <td>
+                        #$blockloglines#
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <xar:mlstring>Logsize</xar:mlstring>
+                    </th>
+                    <td>
+                        #$blocklogsize#
+                    </td>
+                </tr>
+            </xar:if>
+        </table>
+        <xar:else/>
+            <xar:mlstring>Disabled</xar:mlstring>
+        </xar:if>
+
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">
+
+        <h3><xar:mlstring>Query Cache</xar:mlstring></h3>
+
+        <xar:if condition="!empty($queryCachingEnabled)">
+        <table class="xar-norm">
+            <tr>
+                <th>
+                    <xar:mlstring>Storage</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['QueryCacheStorage'])">
+                        #$settings['QueryCacheStorage']#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Items</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($querycacheitems)">
+                        #$querycacheitems#
+                    </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <xar:mlstring>Size</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($querycachesize)">
+                        #$querycachesize#
+                    </xar:if>
+                </td>
+            </tr>
+        </table>
+        <xar:else/>
+            <!-- xar:mlstring>Disabled</xar:mlstring -->
+        </xar:if>
+
+      </td>
+      <td valign="top">
+
+        <h3><xar:mlstring>Auto-Cache</xar:mlstring></h3>
+
+        <xar:if condition="!empty($autoCachingEnabled)">
+        <table class="xar-norm">
+            <tr>
+                <th>
+                    <xar:mlstring>Logfile</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['AutoCacheLogFile'])">
+                        #$settings['AutoCacheLogFile']#
+                    </xar:if>
+                </td>
+            </tr>
+            <xar:if condition="!empty($settings['AutoCacheLogFile'])">
+                <tr>
+                    <th>
+                        <xar:mlstring>Entries</xar:mlstring>
+                    </th>
+                    <td>
+                        #$autocacheloglines#
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <xar:mlstring>Logsize</xar:mlstring>
+                    </th>
+                    <td>
+                        #$autocachelogsize#
+                    </td>
+                </tr>
+            </xar:if>
+            <tr>
+                <th>
+                    <xar:mlstring>Statfile</xar:mlstring>
+                </th>
+                <td>
+                    <xar:if condition="!empty($settings['AutoCacheStatFile'])">
+                        #$settings['AutoCacheStatFile']#
+                    </xar:if>
+                </td>
+            </tr>
+            <xar:if condition="!empty($settings['AutoCacheStatFile'])">
+                <tr>
+                    <th>
+                        <xar:mlstring>Entries</xar:mlstring>
+                    </th>
+                    <td>
+                        #$autocachestatlines#
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <xar:mlstring>Statsize</xar:mlstring>
+                    </th>
+                    <td>
+                        #$autocachestatsize#
+                    </td>
+                </tr>
+            </xar:if>
+        </table>
+        <xar:else/>
+            <xar:mlstring>Disabled</xar:mlstring>
+        </xar:if>
+
+      </td>
+    </tr>
+    </table>
 
     <xar:comment> ----------------- Begin Page Statistics ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'page'" />
 
+        <h3><xar:mlstring>Page Cache Statistics</xar:mlstring></h3>
         <xar:mlstring>to be defined</xar:mlstring>
 
     <xar:comment> ----------------- Begin Block Statistics ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'block'" />
 
+        <h3><xar:mlstring>Block Cache Statistics</xar:mlstring></h3>
         <xar:mlstring>to be defined</xar:mlstring>
 
     <xar:comment> ----------------- Begin Query Statistics ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'query'" />
 
+        <h3><xar:mlstring>Query Cache Statistics</xar:mlstring></h3>
         <xar:mlstring>to be defined</xar:mlstring>
 
     <xar:comment> ----------------- Begin Auto-Cache Statistics ------------------- </xar:comment>
     <xar:elseif condition="$tab eq 'autocache'" />
 
-        <h2><xar:mlstring>Auto-Cache Statistics</xar:mlstring></h2>
+        <h3><xar:mlstring>Auto-Cache Statistics</xar:mlstring></h3>
         <form method="post" action="#xarModURL('xarcachemanager', 'admin', 'stats')#">
           <input type="hidden" name="tab" id="tab" value="autocache" />
           <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
           <input type="submit" name="reset" value="#xarML('Reset')#" />
         </form>
-        <table border="1" cellpadding="4" cellspacing="0">
+        <table class="xar-norm">
         <tr>
           <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'ratio'))#"><xar:mlstring>Ratio</xar:mlstring></a></th>
           <th><a href="#xarModURL('xarcachemanager','admin','stats',array('tab' => 'autocache','sort' => 'hit'))#"><xar:mlstring>Hit</xar:mlstring></a></th>

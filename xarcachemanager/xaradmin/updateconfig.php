@@ -6,18 +6,24 @@
 function xarcachemanager_admin_updateconfig()
 { 
     // Get parameters
-    if (!xarVarFetch('cacheenabled',     'isset',       $cacheenabled,     0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachetheme',       'str::24',     $cachetheme,       '',   XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachesizelimit',   'float:0.25:', $cachesizelimit,   0.25, XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachepages',       'isset',       $cachepages,       0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('pageexpiretime',   'str:1:9',     $pageexpiretime,   '0',  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachedisplayview', 'int:0:1',     $cachedisplayview, 0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachetimestamp',   'int:0:1',     $cachetimestamp,   0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('expireheader',     'int:0:1',     $expireheader,     0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('pagehookedonly',   'int:0:1',     $pagehookedonly,   0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('autoregenerate',   'isset',       $autoregenerate,   0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cacheblocks',      'isset',       $cacheblocks,      0,    XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('blockexpiretime',  'str:1:9',     $blockexpiretime,  '0',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cacheenabled',     'isset',       $cacheenabled,      0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachetheme',       'str::24',     $cachetheme,        '',   XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachesizelimit',   'float:0.25:', $cachesizelimit,    0.25, XARVAR_NOT_REQUIRED)) { return; }
+
+    if (!xarVarFetch('cachepages',       'isset',       $cachepages,        0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pageexpiretime',   'str:1:9',     $pageexpiretime,    '0',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachedisplayview', 'int:0:1',     $cachedisplayview,  0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachetimestamp',   'int:0:1',     $cachetimestamp,    0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('expireheader',     'int:0:1',     $expireheader,      0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagehookedonly',   'int:0:1',     $pagehookedonly,    0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('autoregenerate',   'isset',       $autoregenerate,    0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagecachestorage', 'str:1',       $pagecachestorage,  'filesystem', XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagelogfile',      'str',         $pagelogfile,       '',   XARVAR_NOT_REQUIRED)) { return; }
+
+    if (!xarVarFetch('cacheblocks',      'isset',       $cacheblocks,       0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('blockexpiretime',  'str:1:9',     $blockexpiretime,   '0',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('blockcachestorage','str:1',       $blockcachestorage, 'filesystem', XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('blocklogfile',     'str',         $blocklogfile,      '',   XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
@@ -95,7 +101,12 @@ function xarcachemanager_admin_updateconfig()
     $configSettings['Page.ShowTime'] = $cachetimestamp;
     $configSettings['Page.ExpireHeader'] = $expireheader;
     $configSettings['Page.HookedOnly'] = $pagehookedonly;
+    $configSettings['Page.CacheStorage'] = $pagecachestorage;
+    $configSettings['Page.LogFile'] = $pagelogfile;
+
     $configSettings['Block.TimeExpiration'] = $blockexpiretime;
+    $configSettings['Block.CacheStorage'] = $blockcachestorage;
+    $configSettings['Block.LogFile'] = $blocklogfile;
     
     xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
                   array('configSettings' => $configSettings,

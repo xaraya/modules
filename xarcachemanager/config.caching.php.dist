@@ -20,6 +20,10 @@ $cachingConfiguration['Page.ExpireHeader'] = 1;
 $cachingConfiguration['Page.CacheGroups'] = '';
 // Only cache the pages of modules hooked to xarCacheManager
 $cachingConfiguration['Page.HookedOnly'] = 0;
+// Store the cached pages in filesystem, database or memcache
+$cachingConfiguration['Page.CacheStorage'] = 'filesystem';
+// Keep a logfile of the cache hits and misses for pages, e.g. in var/logs/page.log
+$cachingConfiguration['Page.LogFile'] = '';
 
 // Allow session-less page caching of these URLs for first-time visitors
 $cachingConfiguration['Page.SessionLess'] = array();
@@ -39,4 +43,8 @@ $cachingConfiguration['AutoCache.KeepStats'] = 0;
 
 // Maximum life time of block cache in seconds
 $cachingConfiguration['Block.TimeExpiration'] = 7200;
+// Store the cached blocks in filesystem, database or memcache
+$cachingConfiguration['Block.CacheStorage'] = 'filesystem';
+// Keep a logfile of the cache hits and misses for blocks, e.g. in var/logs/block.log
+$cachingConfiguration['Block.LogFile'] = '';
 ?>

@@ -60,8 +60,20 @@ function xarcachemanager_admin_modifyconfig()
     if(!isset($data['settings']['PageExpireHeader'])) {
         $data['settings']['PageExpireHeader'] = 1;
     }
+    if(!isset($data['settings']['PageCacheStorage'])) {
+        $data['settings']['PageCacheStorage'] = 'filesystem';
+    }
+    if(!isset($data['settings']['PageLogFile'])) {
+        $data['settings']['PageLogFile'] = '';
+    }
     if(!isset($data['settings']['BlockTimeExpiration'])) {
         $data['settings']['BlockTimeExpiration'] = 7200;
+    }
+    if(!isset($data['settings']['BlockCacheStorage'])) {
+        $data['settings']['BlockCacheStorage'] = 'filesystem';
+    }
+    if(!isset($data['settings']['BlockLogFile'])) {
+        $data['settings']['BlockLogFile'] = '';
     }
 
     // convert the size limit from bytes to megabytes
