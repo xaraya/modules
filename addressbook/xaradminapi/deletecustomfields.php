@@ -49,7 +49,7 @@ function addressbook_adminapi_deleteCustomfields($args)
         $returnCode = FALSE;
     } else {
 
-        $xarTables = xarDBGetTables();
+        $xarTables =& xarDBGetTables();
         $cus_table = $xarTables['addressbook_customfields'];
         $adr_table = $xarTables['addressbook_address'];
 
