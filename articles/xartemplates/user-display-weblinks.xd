@@ -51,21 +51,21 @@
 #$hooks[$hookmodule]#
 </xar:foreach>
 </xar:if>
-
-<br />
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
-<table border="0" width="95%">
-<tr>
-    <xar:if condition="!empty($maplink)">
-    <td align="left">
-        <a href="#$maplink#">#$maplabel#</a>
-    </td>
-    </xar:if>
-    <xar:if condition="!empty($archivelink)">
-    <td align="right">
-        <a href="#$archivelink#">#$archivelabel#</a>
-    </td>
-    </xar:if>
-</tr>
-</table>
+	<ul style="padding: 10px;">
+		<xar:if condition="!empty($maplink)">
+			<li style="float: left; display: inline; text-align: left; width: 49%;">
+				<a href="#$maplink#">
+					#$maplabel#
+				</a>
+			</span>
+		</xar:if>
+		<xar:if condition="!empty($archivelink)">
+			<li style="float: right; display: inline; text-align: right; width: 49%;">
+				<a href="#$archivelink#">
+					#$archivelabel#
+				</a>
+			</span>
+		</xar:if>
+	</div>
 </xar:if>
