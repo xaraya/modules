@@ -26,7 +26,9 @@
 // Purpose of file:  Language defines for xaruserapi.php
 // ----------------------------------------------------------------------
 define('_NOTASKS', 'No (sub)tasks available');
-define('_GETFAILED', 'Tasks load failed');
+if (!defined('_GETFAILED')) {
+    define('_GETFAILED', 'Tasks load failed');
+}
 if (!defined('_XPROJECTNOAUTH')) {
 	define('_XPROJECTNOAUTH','Not authorised to access Tasks module');
 }
