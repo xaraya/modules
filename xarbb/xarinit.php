@@ -159,6 +159,9 @@ function xarbb_activate()
     xarModSetVar('xarbb', 'redhottopic', 20);
     xarModSetVar('xarbb', 'number_of_categories', 1);
     xarModSetVar('xarbb', 'topicsperpage', 50);
+    // If your module supports short URLs, the website administrator should
+    // be able to turn it on or off in your module administration
+    xarModSetVar('xarbb', 'SupportShortURLs', 0);
 
     $xarbbcid = xarModAPIFunc('categories',
         'admin',
@@ -204,6 +207,9 @@ function xarbb_delete()
     $query = xarDBDropTable($xbbtopicstable);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
+    // Delete any module variables
+    xarModDelVar('xarbb', 'SupportShortURLs');
 
     // Remove Masks and Instances
     xarRemoveMasks('xarbb');
