@@ -21,7 +21,7 @@ type_name       SELECT xar_name FROM [xar_]xarpages_types
 
 The masks (with explicit user functions) for the page component are:
 
-ACCESS_OVERVIEW	n/a
+ACCESS_OVERVIEW n/a
 ACCESS_READ     A page can be viewed (user display).
 ACCESS_COMMENT  n/a
 ACCESS_MODERATE A page content and hooks can be changed. Overview of pages allowed.
@@ -32,7 +32,7 @@ ACCESS_ADMIN    n/a
 
 The masks for the pagetype component are:
 
-ACCESS_OVERVIEW	n/a
+ACCESS_OVERVIEW n/a
 ACCESS_READ     n/a
 ACCESS_COMMENT  n/a
 ACCESS_MODERATE Overview of page type allowed.
