@@ -65,7 +65,7 @@ function bbcode_userapi_code($args)
     $new_offset = 0;
     foreach($tags_found as $k => $v) {
         if($v == 's') {
-            $message = & substr_replace($message, '<p>' . xarML('code') . ':</p><blockquote><div style="width: 90%; height: 100px; overflow: auto;">', $k + $new_offset, 7);
+            $message = & substr_replace($message, '<p>' . xarML('code') . ':</p><blockquote><div style="width: 90%; overflow: auto;">', $k + $new_offset, 7);
             $new_offset += 11;
         } else {
             $message = & substr_replace($message, '</div></blockquote>', $k + $new_offset, 8);
