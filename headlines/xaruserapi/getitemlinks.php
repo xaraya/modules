@@ -17,14 +17,13 @@ function headlines_userapi_getitemlinks($args)
 
     foreach ($args['itemids'] as $itemid) {
         $item = xarModAPIFunc('headlines', 'user', 'get',
-            array('hid' => $itemid));
+                              array('hid' => $itemid));
         if (!isset($item)) return;
-        $itemlinks[$itemid] = array('url' => xarModURL('headlines', 'user', 'view',
-                array('hid' => $itemid)),
-            'title' => xarML('Display Headline),
-            'label' => xarVarPrepForDisplay($item['title']));
-    } 
+        $itemlinks[$itemid] = array('url' => xarModURL('headlines', 'user', 'view',array('hid' => $itemid)),
+                                    'title' => xarML('Display Headline'),
+                                    'label' => xarVarPrepForDisplay($item['title']));
+    }  
     return $itemlinks;
-} 
+}
 
 ?>
