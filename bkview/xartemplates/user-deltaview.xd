@@ -3,7 +3,7 @@
 <table class="csets">
 <xar:loop name="$deltalist">
   <tr>
-    <td class="deltaline">#$loop:item['file']#@#$loop:item['revision']#&nbsp;#$date#&nbsp;#$loop:item['time']#&nbsp;#$loop:item['user']#@#$loop:item['domain']#
+    <td class="deltaline">#$loop:item['file']#@#$loop:item['revision']#&nbsp;#$loop:item['date']#&nbsp;#$loop:item['time']#&nbsp;#$loop:item['user']#@#$loop:item['domain']#
     <xar:if condition="$loop:item['file'] == 'ChangeSet'">
       <br/>
       <a href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#">

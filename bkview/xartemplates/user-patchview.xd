@@ -9,8 +9,8 @@
 	  </xar:ml>
   </div>
 	<div class="bkdiff">
-		<xar:loop name="$difflines">
-		  <div class="#$difflineclass#">#$loop:item['diffline']#</div>
+		<xar:loop name="$loop:item['difflines']">
+		  <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
 	  </xar:loop>
 	</div>
 </xar:loop>

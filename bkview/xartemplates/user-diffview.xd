@@ -17,6 +17,6 @@
 <br/>
 <div class="bkdiff">
 	<xar:loop name="$difflines">
-		<div class="#$difflineclass#">#$loop:item['diffline']#</div>
+		<div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
 	</xar:loop>
 </div>
