@@ -399,7 +399,7 @@
 		  </div>
 		</div>
 		<div style="text-align:center; margin:1em;">
-	                <input name="submit" type="submit" tabindex="27" value="#$btnCommitText#" align="middle" />
+	                <input name="submit" type="submit" tabindex="27" value="#$btnCommitText#"  />
 	                <input name="authid" type="hidden" id="authid" value="#$authid#" />
 	                <input name="formSubmit" type="hidden" id="formSubmit" value="1" />
 		</div>
