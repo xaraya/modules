@@ -156,7 +156,7 @@ function xarcachemanager_upgrade($oldversion)
                    owner to complete the upgrade.  If #(1) does not exist, 
                    please make #(2) writable by the web server process and 
                    #(1) will be created for you.', $cachingConfigFile, $varCacheDir);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                         new SystemException($msg));
         return false;
     }
@@ -363,7 +363,7 @@ function xarcachemanager_upgrade($oldversion)
                                directory can be manually created.  #(1) must be 
                                writable by the web service process owner for 
                                output caching to work.', $cacheOutputDir, $varCacheDir);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                                     new SystemException($msg));
                     return false;
                 }
@@ -530,7 +530,7 @@ function xarcachemanager_fs_setup($args)
                        $cacheOutputDir,
                        $defaultConfigFile,
                        $cachingConfigFile);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                             new SystemException($msg));
             return false;
         }           
@@ -540,7 +540,7 @@ function xarcachemanager_fs_setup($args)
     if (!is_writable($cachingConfigFile)) {
         $msg=xarML('The #(1) file must be writable by the web server for 
                    output caching to work.', $cachingConfigFile);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                         new SystemException($msg));
         return false;
     }
@@ -561,7 +561,7 @@ function xarcachemanager_fs_setup($args)
                            server process owner for output caching to work. 
                            Please change the permission on the #(1) directory
                            so that the web server can write to it.', $setupDir);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                                 new SystemException($msg));
                 return false;
             }

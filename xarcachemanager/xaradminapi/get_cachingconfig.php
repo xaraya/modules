@@ -90,7 +90,7 @@ function xarcachemanager_adminapi_get_cachingconfig($args)
         if (!file_exists($cachingConfigFile)) {
             $msg=xarML('That is strange.  The #(1) file seems to be 
                         missing.', $cachingConfigFile);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
                             new SystemException($msg));
                 
             return false;

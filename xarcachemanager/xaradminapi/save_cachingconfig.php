@@ -23,7 +23,7 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
         $msg=xarML('The caching configuration file is not writable by the web server.  
                    #(1) must be writable by the web server for 
                    the output caching to be managed by xarCacheManager.', $cachingConfigFile);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                         new SystemException($msg));
         return false;
     }

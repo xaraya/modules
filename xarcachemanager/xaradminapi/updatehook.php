@@ -30,7 +30,7 @@ function xarcachemanager_adminapi_updatehook($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'updatehook', 'xarcachemanager');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -51,7 +51,7 @@ function xarcachemanager_adminapi_updatehook($args)
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module name', 'admin', 'updatehook', 'xarcachemanager');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
