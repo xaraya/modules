@@ -27,3 +27,13 @@
 			</xar:if>
 		</span>
 		</div>
+
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Number of items to show.')#"><label for="maxitems#$blockid#"><xar:mlstring>Max Headlines to display</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="text" name="maxitems" id="maxitems#$blockid#" size="3" maxlength="3" value="#$maxitems#" />
+		</span>
+		</div>

@@ -99,6 +99,7 @@ function headlines_rssblock_display($blockinfo)
         return $blockinfo;
     } else {
         foreach ($info as $content){
+             $content = array_slice($content, 0, $vars['maxitems']);
              foreach ($content as $newline){
                     if(is_array($newline)) {
                         if ((isset($newline['description'])) && (!empty($vars['showdescriptions']))){
@@ -152,6 +153,11 @@ function headlines_rssblock_display($blockinfo)
  */
 function headlines_rssblock_insert($blockinfo) 
 {
+    if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxitems', 'int', $vars['maxitems'], 5, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], false, XARVAR_NOT_REQUIRED)) return;
+
+/*
     list($vars['rssurl'],
          $vars['maxitems'],
          $vars['showimage'],
@@ -163,14 +169,8 @@ function headlines_rssblock_insert($blockinfo)
                                                   'showsearch',
                                                   'showdescriptions',
                                                   'altstyle');
-    // Defaults
-    if (!isset($vars['rssurl'])) {
-        $vars['rssurl'] = '';
-    }
+*/
 
-    if (!isset($vars['showdescriptions'])) {
-        $vars['showdescriptions'] = 0;
-    }
     // Define a default block title
     if (empty($blockinfo['title'])) {
         $blockinfo['title'] = xarML('Headlines');
@@ -214,6 +214,9 @@ function headlines_rssblock_modify($blockinfo)
     }
     if (!isset($vars['showdescriptions'])) {
         $vars['showdescriptions'] = 0;
+    }
+    if (!isset($vars['maxitems'])) {
+        $vars['maxitems'] = 5;
     }
 
     $vars['blockid'] = $blockinfo['bid'];
