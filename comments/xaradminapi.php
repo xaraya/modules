@@ -98,7 +98,9 @@ function comments_adminapi_get_module_stats( $args ) {
         $itemtype = 0;
     }
     xarModAPILoad('comments','user');
-    $pages = comments_userapi_get_object_list( $modid, $itemtype );
+    $pages = xarModAPIFunc('comments','user','get_object_list',
+                            array( 'modid'    => $modid, 
+                                   'itemtype' => $itemtype ));
 
     if (!count($pages) || empty($pages)) {
         return array();
@@ -224,8 +226,6 @@ function comments_adminapi_delete_node( $args ) {
         return;
     }
 
-    xarModAPILoad('comments','user');
-
     // Grab the deletion node's left and right values
     // as well as the max right value for the comments table
     $del_node_lr = xarModAPIFunc('comments','user','get_node_lrvalues',array('cid'=>$node));
@@ -257,12 +257,12 @@ function comments_adminapi_delete_node( $args ) {
     // First we subtract 1 from all the deletion node's children's left and right values
     // and then we subtract 2 from all the nodes > the deletion node's right value
     // and <= the max right value for the table
-    xarModAPIFunc('comments','user','remove_gap',array( 'startpoint'=>$del_node_lr['xar_left'], 
-                                                        'endpoint' =>$del_node_lr['xar_right'],
-                                                        'gapsize' =>1));
-    xarModAPIFunc('comments','user','remove_gap',array('startpoint'=>$del_node_lr['xar_right'],
-                                                       'endpoint'  => $max_right, 
-                                                       'gapsize'   =>2));
+    xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $del_node_lr['xar_left'], 
+                                                       'endpoint'   => $del_node_lr['xar_right'],
+                                                       'gapsize'    => 1));
+    xarModAPIFunc('comments','user','remove_gap',array('startpoint' => $del_node_lr['xar_right'],
+                                                       'endpoint'   => $max_right, 
+                                                       'gapsize'    => 2));
 
     return $dbconn->Affected_Rows();
 }
@@ -352,11 +352,11 @@ function comments_adminapi_delete_object_nodes( $args ) {
         $itemtype = 0;
     }
 
-    xarModAPILoad('comments','user');
-
     // Grab the root node's values for the specified modid/objectid combo
-    $args = array('modid' => $modid, 'objectid' => $objectid, 'itemtype' => $itemtype);
-    $root_node = comments_userapi_get_node_root($args);
+    $args = array('modid'    => $modid, 
+                  'objectid' => $objectid, 
+                  'itemtype' => $itemtype);
+    $root_node = xarModAPIFunch('comments','user','get_node_root', $args);
 
     // Delete the entire branch in the tree for this objectid
     return xarModAPIFunc('comments','admin','delete_branch',
@@ -387,8 +387,9 @@ function comments_adminapi_delete_module_nodes( $args ) {
 
     $return_value = TRUE;
 
-    xarModAPILoad('comments','user');
-    $pages = comments_userapi_get_object_list( $modid, $itemtype );
+    $pages = xarModAPIFunc('comments','user','get_object_list', 
+                            array('modid' => $modid, 
+                                  'itemtype' => $itemtype ));
 
     if (count($pages) <= 0 || empty($pages)) {
         return $return_value;
