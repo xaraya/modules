@@ -87,12 +87,12 @@ function polls_user_vote($args)
         return;
     }
     // CHECKME: find some cleaner way to update the page cache if necessary
-    if (function_exists('xarPageFlushCached')) {
+    if (function_exists('xarOutputFlushCached')) {
         if (isset($callingmod) && 
             xarModGetVar('xarcachemanager','FlushOnNewPollvote')) {
             xarPageFlushCached("$callingmod-user-display-");
         } else {
-            xarPageFlushCached("polls-user-");
+            xarOutputFlushCached("polls-user-");
         }
     }
 
