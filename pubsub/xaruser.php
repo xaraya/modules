@@ -37,26 +37,37 @@ function pubsub_user_displayicon($args)
 // If they are logged in and have already subscribed it will display an
 // unsubscribe option.
 
-    extract($args);
-    if (!isset($extrainfo)) {
-         $extrainfo = array();
-    }
-		    
-    $cid = $extrainfo['cid'];
-    $itemtype = $extrainfo['itemtype'];
-    // When called via hooks, the module name may be empty, so we get it from
-    // the current module
-    if (empty($extrainfo['module'])) {
-    $modname = xarModGetName();
-    } else {
-         $modname = $extrainfo['module'];
-    }
-
-    $modid = xarModGetIDFromName($modname);
     // do nothing if user not logged in
     if (!xarUserIsLoggedIn()) {
          return;
     }
+
+    extract($args);
+    if (!isset($extrainfo)) {
+         $extrainfo = array();
+    }
+
+    $cid = $objectid; // assuming categories have display hooks someday
+    $itemtype = 0;
+    if (isset($extrainfo) && is_array($extrainfo)) {
+        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+            $itemtype = $extrainfo['itemtype'];
+        }
+        if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
+            $cid = $extrainfo['cid'];
+        }
+        if (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
+            $modname = $extrainfo['module'];
+        }
+    }
+
+    // When called via hooks, the module name may be empty, so we get it from
+    // the current module
+    if (empty($modname)) {
+        $modname = xarModGetName();
+    }
+
+    $modid = xarModGetIDFromName($modname);
 
     $data['modid'] = xarVarPrepForDisplay($modid);
     $data['cid'] = xarVarPrepForDisplay($cid);
@@ -75,6 +86,7 @@ function pubsub_user_displayicon($args)
  */
 function pubsub_user_subscribe($args)
 {
+    list($modid,$cid,$itemtype) = xarVarCleanFromInput('modid','cid','itemtype');
 
     extract($args);
     // Argument check
@@ -89,7 +101,7 @@ function pubsub_user_subscribe($args)
         $invalid[] = 'itemtype';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
         join(', ',$invalid), 'subscribe', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
@@ -101,6 +113,8 @@ function pubsub_user_subscribe($args)
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
     $pubsubeventcidstable = $xartable['pubsub_eventcids'];
+
+// TODO: make sure event is created if necessary
 
     // fetch eventid to subscribe to
     $query = "SELECT $pubsubeventstable.xar_eventid
@@ -115,6 +129,7 @@ function pubsub_user_subscribe($args)
     $eventid = $result->fields[0];
 
     if (!xarModAPILoad('pubsub','user')) return;    
+// TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
     pubsub_userapi_adduser($eventid);
 
     return;
@@ -130,6 +145,8 @@ function pubsub_user_subscribe($args)
  */
 function pubsub_user_unsubscribe($args)
 {
+    list($modid,$cid,$itemtype) = xarVarCleanFromInput('modid','cid','itemtype');
+
     extract($args);
     // Argument check
     $invalid = array();
