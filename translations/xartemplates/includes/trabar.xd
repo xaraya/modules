@@ -4,10 +4,10 @@
   </p>
 
     <form method="post" action="&xar-modurl-translations-admin-translate_subtype;">
-	<select name="defaultcontext" id="defaultcontext" size="1">
+    <select name="defaultcontext" id="defaultcontext" size="1">
     <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
-		<xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
-			<option value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
+        <xar:if condition="$subtypes[$i].':'.$subnames[$i] eq $selectedsubtype.':'.$selectedsubname">
+            <option value="#$subtypes[$i]#:#$subnames[$i]#" selected="selected">
             <xar:ml>
             <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
             <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
@@ -18,8 +18,8 @@
             <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
             </xar:ml>
             </option>
-		<xar:else />
-			<option value="#$subtypes[$i]#:#$subnames[$i]#">
+        <xar:else />
+            <option value="#$subtypes[$i]#:#$subnames[$i]#">
             <xar:ml>
             <xar:mlstring>#(1):#(2) (#(3) strings, #(4) keys; untranslated - #(5) strings, #(6) keys)</xar:mlstring>
             <xar:mlvar>#$subtypes[$i]#</xar:mlvar>
@@ -30,9 +30,9 @@
             <xar:mlvar>#$entrydata[$i]['numEmptyKeyEntries']#</xar:mlvar>
             </xar:ml>
             </option>
-		</xar:if>
+        </xar:if>
     </xar:for>
-	</select>
+    </select>
     <input type="submit" value="#xarML('Select')#"  />
     </form>
 <xar:else />

@@ -8,87 +8,87 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring> Translations Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Translations Configuration</xar:mlstring></h2><br />
 <div id="tabnav">
-	<div class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</div>
-	<xar:if condition="$tab eq 'locales'">
-		<div>
-			<a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#" class="active">
-				<xar:mlstring>Languages and Locales</xar:mlstring>
-			</a>
-		</div>	
-	<xar:else />
-		<div>
-			<a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#">	
-				<xar:mlstring>Languages and Locales</xar:mlstring>
-			</a>
-		</div>	
-	</xar:if>
-	<xar:if condition="$tab eq 'backends'">
-		<div>
-			<a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'backends'))#" class="active">
-				<xar:mlstring>Translations Backends</xar:mlstring>
-			</a>
-		</div>	
-	<xar:else />
-		<div>
-			<a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'backends'))#">	
-				<xar:mlstring>Translations Backends</xar:mlstring>
-			</a>
-		</div>	
-	</xar:if>
-	<xar:if condition="$tab eq 'display'">
-		<div>
-			<a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
-				<xar:mlstring>Translations Display</xar:mlstring>
-			</a>
-		</div>	
-	<xar:else />
-		<div>
-			<a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">	
-				<xar:mlstring>Translations Display</xar:mlstring>
-			</a>
-		</div>	
-	</xar:if>
-	</div>
-	<div style="border: 1px solid #ccc; text-align: left; width: 100%; border-top: none; padding-left: 5px;">
-	
+    <div class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</div>
+    <xar:if condition="$tab eq 'locales'">
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#" class="active">
+                <xar:mlstring>Languages and Locales</xar:mlstring>
+            </a>
+        </div>    
+    <xar:else />
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'locales'))#">    
+                <xar:mlstring>Languages and Locales</xar:mlstring>
+            </a>
+        </div>    
+    </xar:if>
+    <xar:if condition="$tab eq 'backends'">
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'backends'))#" class="active">
+                <xar:mlstring>Translations Backends</xar:mlstring>
+            </a>
+        </div>    
+    <xar:else />
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'backends'))#">    
+                <xar:mlstring>Translations Backends</xar:mlstring>
+            </a>
+        </div>    
+    </xar:if>
+    <xar:if condition="$tab eq 'display'">
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#" class="active">
+                <xar:mlstring>Translations Display</xar:mlstring>
+            </a>
+        </div>    
+    <xar:else />
+        <div>
+            <a href="#xarModURL('translations', 'admin', 'modifyconfig', array('tab' => 'display'))#">    
+                <xar:mlstring>Translations Display</xar:mlstring>
+            </a>
+        </div>    
+    </xar:if>
+    </div>
+    <div style="border: 1px solid #ccc; text-align: left; width: 100%; border-top: none; padding-left: 5px;">
+    
 <xar:comment> ----------------- Begin Locale Options ------------------- </xar:comment>
-	<xar:if condition="$tab eq 'locales'">
-		<!-- Initialization of some information -->
-		<xar:set name="mlsmode">#xarConfigGetVar('Site.MLS.MLSMode')#</xar:set>
-		<xar:set name="single_checked">''</xar:set>
-		<xar:if condition="$mlsmode == 'SINGLE'"><xar:set name="single_checked">'CHECKED'</xar:set></xar:if>
-		<xar:set name="boxed_checked">''</xar:set>
-		<xar:if condition="$mlsmode == 'BOXED'"><xar:set name="boxed_checked">'CHECKED'</xar:set></xar:if>
-		<xar:set name="unboxed_checked">''</xar:set>
-		<xar:if condition="$mlsmode == 'UNBOXED'"><xar:set name="unboxed_checked">'CHECKED'</xar:set></xar:if>
+    <xar:if condition="$tab eq 'locales'">
+        <!-- Initialization of some information -->
+        <xar:set name="mlsmode">#xarConfigGetVar('Site.MLS.MLSMode')#</xar:set>
+        <xar:set name="single_checked">''</xar:set>
+        <xar:if condition="$mlsmode == 'SINGLE'"><xar:set name="single_checked">'CHECKED'</xar:set></xar:if>
+        <xar:set name="boxed_checked">''</xar:set>
+        <xar:if condition="$mlsmode == 'BOXED'"><xar:set name="boxed_checked">'CHECKED'</xar:set></xar:if>
+        <xar:set name="unboxed_checked">''</xar:set>
+        <xar:if condition="$mlsmode == 'UNBOXED'"><xar:set name="unboxed_checked">'CHECKED'</xar:set></xar:if>
 
-		<form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
-			<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<input type="hidden" name="tab" id="tab" value="#$tab#" />
+        <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="tab" id="tab" value="#$tab#" />
 
                               <xar:template file="modifyconfig-locales" module="base" type="module"/>
 
-			<div style="clear: both; padding-top: 10px;">
-				<input type="submit" value="#$updatelabel#" />
-			</div>
-		</form>
-	
+            <div style="clear: both; padding-top: 10px;">
+                <input type="submit" value="#$updatelabel#" />
+            </div>
+        </form>
+    
 <xar:comment> ----------------- Begin Backends Options ------------------- </xar:comment>
-	<xar:elseif condition="$tab eq 'backends'" />
-		<form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
-			<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<input type="hidden" name="tab" id="tab" value="#$tab#" />
-			<div style="clear: both; padding-top: 10px;">
-				<h4><xar:mlstring>Translations storage</xar:mlstring></h4>
-				<p><xar:mlstring>The translated information for xaraya and her modules can be stored in different back-ends. The following back-ends are supported:</xar:mlstring></p>
-			</div>
+    <xar:elseif condition="$tab eq 'backends'" />
+        <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="tab" id="tab" value="#$tab#" />
+            <div style="clear: both; padding-top: 10px;">
+                <h4><xar:mlstring>Translations storage</xar:mlstring></h4>
+                <p><xar:mlstring>The translated information for xaraya and her modules can be stored in different back-ends. The following back-ends are supported:</xar:mlstring></p>
+            </div>
 
-			<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 20%; text-align: right;">
-				<span class="help" title="#xarML('Translations Backend')#"><label for="translationsbackend"><xar:mlstring>Translations Backend</xar:mlstring></label>:</span>
-			</span>
-			<span style="float: right; width: 78%; text-align: left;">
-			          <select name="translationsbackend" id="translationsbackend" size="1">
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Translations Backend')#"><label for="translationsbackend"><xar:mlstring>Translations Backend</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                      <select name="translationsbackend" id="translationsbackend" size="1">
                                         <xar:if condition="xarConfigGetVar('Site.MLS.TranslationsBackend') eq 'xml'">
                                                   <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
                                                   <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
@@ -97,13 +97,13 @@
                                                   <option value="php" selected="selected"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
                                         </xar:if>
                                         </select>
-			</span>
-			</div>
-			<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 20%; text-align: right;">
-				<span class="help" title="#xarML('Release Backend')#"><label for="releasebackend"><xar:mlstring>Release Backend</xar:mlstring></label>:</span>
-			</span>
-			<span style="float: right; width: 78%; text-align: left;">
+            </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Release Backend')#"><label for="releasebackend"><xar:mlstring>Release Backend</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
                                         <select name="releasebackend" id="releasebackend" size="1">
                                         <xar:if condition="xarModGetVar('translations', 'release_backend_type') eq 'xml'">
                                                   <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
@@ -114,59 +114,59 @@
                                         </xar:if>
                                         </select>
                                         <xar:mlstring>(only PHP allowed for now)</xar:mlstring>
-			</span>
-			</div>
+            </span>
+            </div>
 
-			<div style="clear: both; padding-top: 10px;">
-				<input type="submit" value="#$updatelabel#" />
-			</div>
-		</form>
+            <div style="clear: both; padding-top: 10px;">
+                <input type="submit" value="#$updatelabel#" />
+            </div>
+        </form>
 
 <xar:comment> ----------------- Begin Display Options ------------------- </xar:comment>
-	<xar:elseif condition="$tab eq 'display'" />
-		<form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
-			<input type="hidden" name="authid" id="authid" value="#$authid#" />
-			<input type="hidden" name="tab" id="tab" value="#$tab#" />
-			<div style="clear: both; padding-top: 10px;">
-				<h4><xar:mlstring>Display during translation</xar:mlstring></h4>
-				<p><xar:mlstring>While translating you will be confronted with a lot of information. The settings below allow you to configure what is displayed during translation.</xar:mlstring></p>
-			</div>
+    <xar:elseif condition="$tab eq 'display'" />
+        <form action="#xarModUrl('translations', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="tab" id="tab" value="#$tab#" />
+            <div style="clear: both; padding-top: 10px;">
+                <h4><xar:mlstring>Display during translation</xar:mlstring></h4>
+                <p><xar:mlstring>While translating you will be confronted with a lot of information. The settings below allow you to configure what is displayed during translation.</xar:mlstring></p>
+            </div>
 
-			<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 20%; text-align: right;">
-				<span class="help" title="#xarML('Show a bit of context for the translation. This could be helpfull for determining the exact translation')#"><label for="showcontext"><xar:mlstring>Show a context</xar:mlstring></label>:</span>
-			</span>
-			<span style="float: right; width: 78%; text-align: left;">
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Show a bit of context for the translation. This could be helpfull for determining the exact translation')#"><label for="showcontext"><xar:mlstring>Show a context</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
                                         <xar:if condition="$showcontext">
                                                   <input id="showcontext" type="checkbox" name="showcontext" checked="checked"/>
                                         <xar:else/>
                                                   <input id="showcontext" type="checkbox" name="showcontext" />
                                         </xar:if>
-			</span>
-			</div>
+            </span>
+            </div>
 
-			<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 20%; text-align: right;">
-				<span class="help" title="#xarML('References per translation string')#"><label for="maxreferences"><xar:mlstring>References per translation string</xar:mlstring></label>:</span>
-			</span>
-			<span style="float: right; width: 78%; text-align: left;">
-				<input type="text" name="maxreferences" value="#$maxreferences#" size="3" maxlength="3" />
-			</span>
-			</div>
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('References per translation string')#"><label for="maxreferences"><xar:mlstring>References per translation string</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <input type="text" name="maxreferences" value="#$maxreferences#" size="3" maxlength="3" />
+            </span>
+            </div>
 
-			<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 20%; text-align: right;">
-				<span class="help" title="#xarML('Number of lines to display in reference')#"><label for="maxcodelines"><xar:mlstring>Number of lines to display in reference</xar:mlstring></label>:</span>
-			</span>
-			<span style="float: right; width: 78%; text-align: left;">
-				<input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3" />
-			</span>
-			</div>
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Number of lines to display in reference')#"><label for="maxcodelines"><xar:mlstring>Number of lines to display in reference</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <input type="text" name="maxcodelines" value="#$maxcodelines#" size="3" maxlength="3" />
+            </span>
+            </div>
 
-			<div style="clear: both; padding-top: 10px;">
-				<input type="submit" value="#$updatelabel#" />
-			</div>
-		</form>
-	</xar:if>
+            <div style="clear: both; padding-top: 10px;">
+                <input type="submit" value="#$updatelabel#" />
+            </div>
+        </form>
+    </xar:if>
 </div>
 </div>
