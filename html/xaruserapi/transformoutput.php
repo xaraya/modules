@@ -64,12 +64,9 @@ function html_userapi_transformoutput($args)
  */
 function html_userapitransformoutput($text)
 {
-    //$text = nl2br($text);
-    // Credit to myphpnuke team and the text sanitizer.
-	$text    = preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text); 
-    $text    = str_replace("<br /><br><br />","<br />",$text); 
-
-    return $text;
+    $p = "<p>";
+    $text = str_replace(chr(13), "</p>$p" , $string );
+    $text = $p. $string. "</p>\n";
 }
 
 ?>
