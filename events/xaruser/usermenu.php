@@ -67,11 +67,9 @@ function events_user_usermenu()
             // First we need to get the data back from the template in order to process it.
             // The events module is not setting any user vars at this time, but an events
             // might be the number of items to be displayed per page.
-            list($uid,
-                 $itemsperpage,
-                 $name) = xarVarCleanFromInput('uid',
-                                               'itemsperpage',
-                                               'name');
+            if(!xarVarFetch('uid','int', $uid, 0, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('itemsperpage','int', $itemsperpage, 0, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('name','str', $name, '', XARVAR_NOT_REQUIRED)) {return;}
 
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
