@@ -55,43 +55,43 @@ class phpOpenTracker_Parser {
   * @static
   */
   function userAgent($string) {
-  	$result = array();
-  	if (xarModIsAvailable('sniffer')) {
-    	$uas = xarSessionGetVar('uaid');
-	    if (!$uas) {
-	        if(!xarModAPIFunc('sniffer','user','sniff')) return;
-	        $uas = xarSessionGetVar('uaid');
-	        // still doesnt work => quit
-	        if (!$uas) return;
-	    }
-	    $result['operating_system'] = xarSessionGetVar('osname') . ' ' . xarSessionGetVar('osversion');
-	    $result['user_agent'] = xarSessionGetVar('browsername') . ' ' . xarSessionGetVar('browserversion');
-  	} else {
-  	    if (preg_match('#\((.*?)\)#', $string, $tmp)) {
-	      $elements   = explode(';', $tmp[1]);
-	      $elements[] = $string;
-	    } else {
-	      $elements = array($string);
-	    }
-	
-	    if ($elements[0] != 'compatible') {
-	      $elements[] = substr($string, 0, strpos($string, '('));
-	    }
-	
-	    $result['operating_system'] = phpOpenTracker_Parser::match(
-	      $elements,
-	      phpOpenTracker_Parser::readRules(
-	        POT_CONFIG_PATH . 'operating_systems.php'
-	      )
-	    );
-	
-	    $result['user_agent'] = phpOpenTracker_Parser::match(
-	      $elements,
-	      phpOpenTracker_Parser::readRules(
-	        POT_CONFIG_PATH . 'user_agents.php'
-	      )
-	    );
-  	}
+      $result = array();
+      if (xarModIsAvailable('sniffer')) {
+        $uas = xarSessionGetVar('uaid');
+        if (!$uas) {
+            if(!xarModAPIFunc('sniffer','user','sniff')) return;
+            $uas = xarSessionGetVar('uaid');
+            // still doesnt work => quit
+            if (!$uas) return;
+        }
+        $result['operating_system'] = xarSessionGetVar('osname') . ' ' . xarSessionGetVar('osversion');
+        $result['user_agent'] = xarSessionGetVar('browsername') . ' ' . xarSessionGetVar('browserversion');
+      } else {
+          if (preg_match('#\((.*?)\)#', $string, $tmp)) {
+          $elements   = explode(';', $tmp[1]);
+          $elements[] = $string;
+        } else {
+          $elements = array($string);
+        }
+    
+        if ($elements[0] != 'compatible') {
+          $elements[] = substr($string, 0, strpos($string, '('));
+        }
+    
+        $result['operating_system'] = phpOpenTracker_Parser::match(
+          $elements,
+          phpOpenTracker_Parser::readRules(
+            POT_CONFIG_PATH . 'operating_systems.php'
+          )
+        );
+    
+        $result['user_agent'] = phpOpenTracker_Parser::match(
+          $elements,
+          phpOpenTracker_Parser::readRules(
+            POT_CONFIG_PATH . 'user_agents.php'
+          )
+        );
+      }
 
     return $result;
   }

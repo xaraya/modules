@@ -61,7 +61,7 @@ class phpOpenTracker_API_xarmod_top extends phpOpenTracker_API_Plugin {
         $topItems = array();
       }
     }
-	$xar_groupby = 'GROUP BY accesslog.accesslog_id';
+    $xar_groupby = 'GROUP BY accesslog.accesslog_id';
     $xar_groupby = '';
         $nestedQuery = sprintf(
           "SELECT xar_modname AS item
@@ -70,11 +70,11 @@ class phpOpenTracker_API_xarmod_top extends phpOpenTracker_API_Plugin {
                   %s visitors
             WHERE visitors.client_id    = %d
               AND visitors.accesslog_id = accesslog.accesslog_id
-              	  %s
+                    %s
                   %s
                   %s ".$xar_groupby,
             //GROUP BY accesslog.accesslog_id, data_table.string",
-			//end modification			
+            //end modification            
           $this->config['accesslog_table'],
           $selfJoinTable,
           $this->config['visitors_table'],
@@ -83,7 +83,7 @@ class phpOpenTracker_API_xarmod_top extends phpOpenTracker_API_Plugin {
           $constraint,
           $timerange
         );
-	  
+      
       
     if ($this->db->supportsNestedQueries()) {
       $queryTotalUnique = sprintf(

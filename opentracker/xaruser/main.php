@@ -7,53 +7,53 @@
  */
 function opentracker_user_main($args)
 { 
-	if(!xarSecurityCheck('OverviewOpentracker')) return;
-	
-	if (ini_get('safe_mode') <> 1)
-		@set_time_limit(0);
+    if(!xarSecurityCheck('OverviewOpentracker')) return;
+    
+    if (ini_get('safe_mode') <> 1)
+        @set_time_limit(0);
 
-	if (!xarVarFetch('page', 'str', $page, 'access_statistics', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('day', 'int:1:', $day,  date('j'), XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('month', 'int:1:', $month,  date('n'), XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('year', 'int:1:', $year,  date('Y'), XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('period', 'str', $period,  'total', XARVAR_NOT_REQUIRED)) return;
-	
+    if (!xarVarFetch('page', 'str', $page, 'access_statistics', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('day', 'int:1:', $day,  date('j'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('month', 'int:1:', $month,  date('n'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('year', 'int:1:', $year,  date('Y'), XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('period', 'str', $period,  'total', XARVAR_NOT_REQUIRED)) return;
+    
     extract($args); 
-	
+    
     $data['period'] = $period;
     $monthNames = array(
-	  xarML('January'),
-	  xarML('February'),
-	  xarML('March'),
-	  xarML('April'),
-	  xarML('May'),
-	  xarML('June'),
-	  xarML('July'),
-	  xarML('August'),
-	  xarML('September'),
-	  xarML('October'),
-	  xarML('November'),
-	  xarML('December')
-	);
-	
-	$limit = 10;
-	$clientID = 1;
+      xarML('January'),
+      xarML('February'),
+      xarML('March'),
+      xarML('April'),
+      xarML('May'),
+      xarML('June'),
+      xarML('July'),
+      xarML('August'),
+      xarML('September'),
+      xarML('October'),
+      xarML('November'),
+      xarML('December')
+    );
     
-	$dbconn =& xarDBGetConn();
+    $limit = 10;
+    $clientID = 1;
+    
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables(); 
-	
-	// Prevent caching
-	header('Expires: Sat, 22 Apr 1978 02:19:00 GMT');
-	header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-	header('Cache-Control: no-store, no-cache, must-revalidate');
-	header('Cache-Control: post-check=0, pre-check=0', false);
-	header('Pragma: no-cache');
+    
+    // Prevent caching
+    header('Expires: Sat, 22 Apr 1978 02:19:00 GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Cache-Control: post-check=0, pre-check=0', false);
+    header('Pragma: no-cache');
 
-	$buffer = '';
-	$time   = time();
-	$data = array();
-	$data['limit'] = $limit;
-	
+    $buffer = '';
+    $time   = time();
+    $data = array();
+    $data['limit'] = $limit;
+    
 switch ($period) {
   case 'month': {
     $start = mktime(0,   0,  0, $month, 1, $year);
@@ -72,40 +72,40 @@ switch ($period) {
     $end   = false;
     break;
 }
-	
-	$data['totalPageImpressions'] = xarModAPIFunc('opentracker', 'user', 'get_page_impressions', array ('start' => $start, 'end' => $end));
-	$data['totalVisitors'] = xarModAPIFunc('opentracker', 'user', 'get_visitors', array ('start' => $start, 'end' => $end));
-	
-	$data['top'] = xarModAPIFunc('opentracker', 'user', 'get_top_items', array ('start' => $start, 'end' => $end, 'limit' => $limit));
-	
-	list(
-		$data['top']['search_engines']['top_items'],
-		$data['top']['search_keywords']['top_items'],
-		$data['top']['search_engines']['unique_items'],
-		$data['top']['search_keywords']['unique_items'],
-	) = xarModAPIFunc('opentracker', 'user', 'get_searchengines',
-						array(
-							'start' => $start,
-							'end' => $end,
-							'limit' => $limit
-						));
+    
+    $data['totalPageImpressions'] = xarModAPIFunc('opentracker', 'user', 'get_page_impressions', array ('start' => $start, 'end' => $end));
+    $data['totalVisitors'] = xarModAPIFunc('opentracker', 'user', 'get_visitors', array ('start' => $start, 'end' => $end));
+    
+    $data['top'] = xarModAPIFunc('opentracker', 'user', 'get_top_items', array ('start' => $start, 'end' => $end, 'limit' => $limit));
+    
+    list(
+        $data['top']['search_engines']['top_items'],
+        $data['top']['search_keywords']['top_items'],
+        $data['top']['search_engines']['unique_items'],
+        $data['top']['search_keywords']['unique_items'],
+    ) = xarModAPIFunc('opentracker', 'user', 'get_searchengines',
+                        array(
+                            'start' => $start,
+                            'end' => $end,
+                            'limit' => $limit
+                        ));
 switch ($period)
 {
-	case 'total' :
+    case 'total' :
     $query =       
-	   	sprintf(
-	        'SELECT MIN(timestamp) AS first_access,
-	                MAX(timestamp) AS last_access
-	         FROM %s
-	         WHERE client_id = %d',
-	
-	        $xartable['accesslog'],
-	        xarVarPrepForStore($clientID)
-		);
+           sprintf(
+            'SELECT MIN(timestamp) AS first_access,
+                    MAX(timestamp) AS last_access
+             FROM %s
+             WHERE client_id = %d',
+    
+            $xartable['accesslog'],
+            xarVarPrepForStore($clientID)
+        );
 
     $result = &$dbconn->Execute($query); 
     if (!$result) return; 
-	list($firstAccess, $lastAccess) = $result->fields; 
+    list($firstAccess, $lastAccess) = $result->fields; 
 
     $month = $firstMonth = date('n', $firstAccess);
     $year  = $firstYear  = date('Y', $firstAccess);
@@ -131,11 +131,11 @@ switch ($period)
           'visitors_number' => $visitors,
           'visitors_percent' => ($data['totalVisitors'] > 0) ? number_format(((100 * $visitors) / $data['totalVisitors']), 2) : 0,
           'href' => xarModURL('opentracker', 'user', 'main', array(
-          																'month' => $month,
-          																'year' => $year,
-          																'period' => 'month'
-          															)
-          						),
+                                                                          'month' => $month,
+                                                                          'year' => $year,
+                                                                          'period' => 'month'
+                                                                      )
+                                  ),
           'displayname' => $monthNames[($month-1)]
       );
       
@@ -154,25 +154,25 @@ switch ($period)
     $data['first'] = date('d-M-Y', isset($firstAccess) ? $firstAccess : $time);
     $data['last'] = date('d-M-Y', isset($lastAccess)  ? $lastAccess  : $time);
     $data['graphurl'] = xarModUrl('opentracker', 'user', 'graph',
-    	array(
-			'start' => mktime(0, 0, 0, $lastMonth, 1, $lastYear -1),
-			'end' => $lastAccess,
-			'interval' => 'month',
-			'width' => 700,
-			'height' => 260
-    	));
+        array(
+            'start' => mktime(0, 0, 0, $lastMonth, 1, $lastYear -1),
+            'end' => $lastAccess,
+            'interval' => 'month',
+            'width' => 700,
+            'height' => 260
+        ));
     $data['item_statistics_title'] = xarML('Monthly Statistics');
-	$data['maintitle'] = xarML("Total Statistics (#(1) to #(2))", $data['first'], $data['last']);
-	break;
-	
-	case 'month':
+    $data['maintitle'] = xarML("Total Statistics (#(1) to #(2))", $data['first'], $data['last']);
+    break;
+    
+    case 'month':
     // Query Page Impressions for this client and each day of this month
     $pi = xarModAPIFunc('opentracker', 'user', 'get_page_impressions',
-    		array ('start' => $start, 'end' => $end, 'interval' => 86400));
+            array ('start' => $start, 'end' => $end, 'interval' => 86400));
 
     // Query visitors for this client and each day of this month
     $visitors = xarModAPIFunc('opentracker', 'user', 'get_visitors',
-    		array ('start' => $start, 'end' => $end, 'interval' => 86400));
+            array ('start' => $start, 'end' => $end, 'interval' => 86400));
 
     $data['statisticitems'] = array();
     // Loop through days
@@ -184,36 +184,36 @@ switch ($period)
           'visitors_number' => $visitors[$i]['value'],
           'visitors_percent' => $data['totalVisitors'] ? number_format(((100 * $visitors[$i]['value']) / $data['totalVisitors']), 2) : '0',
           'href' => xarModURL('opentracker', 'user', 'main', array(
-          																'month' => $month,
-          																'year' => $year,
-          																'day' => $i + 1,
-          																'period' => 'day'
-          															)
-          						),
+                                                                          'month' => $month,
+                                                                          'year' => $year,
+                                                                          'day' => $i + 1,
+                                                                          'period' => 'day'
+                                                                      )
+                                  ),
           'displayname' => $i +1
       );
     }
     $data['graphurl'] = xarModUrl('opentracker', 'user', 'graph',
-    	array(
-			'start' => $start,
-			'end' => $end,
-			'interval' => 'day',
-			'width' => 700,
-			'height' => 260
-    	));
+        array(
+            'start' => $start,
+            'end' => $end,
+            'interval' => 'day',
+            'width' => 700,
+            'height' => 260
+        ));
     $data['item_statistics_title'] = xarML('Daily Statistics');
     $data['maintitle'] = xarML("Monthly Statistics for #(1) #(2)", $monthNames[$month], $year);
-	break;
-	
+    break;
+    
   case 'day':
     $pi = xarModAPIFunc('opentracker', 'user', 'get_page_impressions',
-    		array ('start' => $start, 'end' => $end, 'interval' => 3600));
+            array ('start' => $start, 'end' => $end, 'interval' => 3600));
 
     // Query visitors for this client and each day of this month
     $visitors = xarModAPIFunc('opentracker', 'user', 'get_visitors',
-    		array ('start' => $start, 'end' => $end, 'interval' => 3600));
+            array ('start' => $start, 'end' => $end, 'interval' => 3600));
     
-   	$data['statisticitems'] = array();
+       $data['statisticitems'] = array();
     // Loop through hours
     for ($i = 0; $i < sizeof($pi); $i++) {
       $data['statisticitems'][] = array(
@@ -226,53 +226,53 @@ switch ($period)
       );
     }
     $data['graphurl'] = xarModUrl('opentracker', 'user', 'graph',
-    	array(
-			'start' => $start,
-			'end' => $end,
-			'interval' => 'hour',
-			'width' => 700,
-			'height' => 260
-    	));
+        array(
+            'start' => $start,
+            'end' => $end,
+            'interval' => 'hour',
+            'width' => 700,
+            'height' => 260
+        ));
     $data['item_statistics_title'] = xarML('Hourly Statistics');
     $data['maintitle'] = xarML("Daily Statistics for #(1). #(2) #(3)", $day, $monthNames[$month], $year);
   break;
-	
+    
 }
-	$data['top']['pages']['title'] = xarML('Top #(1) of #(2) Total Pages', $limit, $data['top']['pages']['unique_items']);
-	$data['top']['pages']['subtitle1'] = xarML('Page impressions');
-	$data['top']['pages']['subtitle2'] = xarML('Page');
-	$data['top']['mods']['title'] = xarML('Top #(1) of #(2) Total Xaraya modules (unused mods are excluded)', $limit, $data['top']['mods']['unique_items']);
-	$data['top']['mods']['subtitle1'] = xarML('Page impressions');
-	$data['top']['mods']['subtitle2'] = xarML('Xaraya module');
-	$data['top']['entry_pages']['title'] = xarML('Top #(1) of #(2) Total Entry Pages', $limit, $data['top']['entry_pages']['unique_items']);
-	$data['top']['entry_pages']['subtitle1'] = xarML('Visitors entered here');
-	$data['top']['entry_pages']['subtitle2'] = xarML('Page');
-	$data['top']['exit_pages']['title'] = xarML('Top #(1) of #(2) Exit Pages', $limit, $data['top']['exit_pages']['unique_items']);
-	$data['top']['exit_pages']['subtitle1'] = xarML('Visitors exited here');
-	$data['top']['exit_pages']['subtitle2'] = xarML('Page');
-	$data['top']['exit_targets']['title'] = xarML('Top #(1) of #(2) Exit Targets', $limit, $data['top']['exit_targets']['unique_items']);
-	$data['top']['exit_targets']['subtitle1'] = xarML('Clicks');
-	$data['top']['exit_targets']['subtitle2'] = xarML('Target URL');
-	$data['top']['hosts']['title'] = xarML('Top #(1) of #(2) Total Hosts', $limit, $data['top']['hosts']['unique_items']);
-	$data['top']['hosts']['subtitle1'] = xarML('Visitors from there');
-	$data['top']['hosts']['subtitle2'] = xarML('Host');
-	$data['top']['referers']['title'] = xarML('Top #(1) of #(2) Total Referers', $limit, $data['top']['referers']['unique_items']);
-	$data['top']['referers']['subtitle1'] = xarML('Visitors refered here');
-	$data['top']['referers']['subtitle2'] = xarML('Referer');
-	$data['top']['operating_systems']['title'] = xarML('Top #(1) of #(2) Operating Systems', $limit, $data['top']['operating_systems']['unique_items']);
-	$data['top']['operating_systems']['subtitle1'] = 
-		$data['top']['search_engines']['subtitle1'] =  
-		$data['top']['user_agents']['subtitle1'] = xarML('Visitors used this');
-	$data['top']['operating_systems']['subtitle2'] = xarML('Operating system');
-	$data['top']['user_agents']['title'] = xarML('Top #(1) of #(2) User Agents', $limit, $data['top']['user_agents']['unique_items']);
-	$data['top']['user_agents']['subtitle2'] = xarML('User agent');
-	$data['top']['search_keywords']['title'] = xarML('Top #(1) of #(2) Search keywords', $limit, $data['top']['search_keywords']['unique_items']);
-	$data['top']['search_keywords']['subtitle1'] = xarML('Visitors searched for this');
-	$data['top']['search_keywords']['subtitle2'] = xarML('Search Keyword(s)');
-	$data['top']['search_engines']['title'] = xarML('Top #(1) of #(2) Search engines', $limit, $data['top']['search_engines']['unique_items']);
-	$data['top']['search_engines']['subtitle2'] = xarML('Search Engine');
-	
-	$data['url'] = xarServerGetCurrentURL();
+    $data['top']['pages']['title'] = xarML('Top #(1) of #(2) Total Pages', $limit, $data['top']['pages']['unique_items']);
+    $data['top']['pages']['subtitle1'] = xarML('Page impressions');
+    $data['top']['pages']['subtitle2'] = xarML('Page');
+    $data['top']['mods']['title'] = xarML('Top #(1) of #(2) Total Xaraya modules (unused mods are excluded)', $limit, $data['top']['mods']['unique_items']);
+    $data['top']['mods']['subtitle1'] = xarML('Page impressions');
+    $data['top']['mods']['subtitle2'] = xarML('Xaraya module');
+    $data['top']['entry_pages']['title'] = xarML('Top #(1) of #(2) Total Entry Pages', $limit, $data['top']['entry_pages']['unique_items']);
+    $data['top']['entry_pages']['subtitle1'] = xarML('Visitors entered here');
+    $data['top']['entry_pages']['subtitle2'] = xarML('Page');
+    $data['top']['exit_pages']['title'] = xarML('Top #(1) of #(2) Exit Pages', $limit, $data['top']['exit_pages']['unique_items']);
+    $data['top']['exit_pages']['subtitle1'] = xarML('Visitors exited here');
+    $data['top']['exit_pages']['subtitle2'] = xarML('Page');
+    $data['top']['exit_targets']['title'] = xarML('Top #(1) of #(2) Exit Targets', $limit, $data['top']['exit_targets']['unique_items']);
+    $data['top']['exit_targets']['subtitle1'] = xarML('Clicks');
+    $data['top']['exit_targets']['subtitle2'] = xarML('Target URL');
+    $data['top']['hosts']['title'] = xarML('Top #(1) of #(2) Total Hosts', $limit, $data['top']['hosts']['unique_items']);
+    $data['top']['hosts']['subtitle1'] = xarML('Visitors from there');
+    $data['top']['hosts']['subtitle2'] = xarML('Host');
+    $data['top']['referers']['title'] = xarML('Top #(1) of #(2) Total Referers', $limit, $data['top']['referers']['unique_items']);
+    $data['top']['referers']['subtitle1'] = xarML('Visitors refered here');
+    $data['top']['referers']['subtitle2'] = xarML('Referer');
+    $data['top']['operating_systems']['title'] = xarML('Top #(1) of #(2) Operating Systems', $limit, $data['top']['operating_systems']['unique_items']);
+    $data['top']['operating_systems']['subtitle1'] = 
+        $data['top']['search_engines']['subtitle1'] =  
+        $data['top']['user_agents']['subtitle1'] = xarML('Visitors used this');
+    $data['top']['operating_systems']['subtitle2'] = xarML('Operating system');
+    $data['top']['user_agents']['title'] = xarML('Top #(1) of #(2) User Agents', $limit, $data['top']['user_agents']['unique_items']);
+    $data['top']['user_agents']['subtitle2'] = xarML('User agent');
+    $data['top']['search_keywords']['title'] = xarML('Top #(1) of #(2) Search keywords', $limit, $data['top']['search_keywords']['unique_items']);
+    $data['top']['search_keywords']['subtitle1'] = xarML('Visitors searched for this');
+    $data['top']['search_keywords']['subtitle2'] = xarML('Search Keyword(s)');
+    $data['top']['search_engines']['title'] = xarML('Top #(1) of #(2) Search engines', $limit, $data['top']['search_engines']['unique_items']);
+    $data['top']['search_engines']['subtitle2'] = xarML('Search Engine');
+    
+    $data['url'] = xarServerGetCurrentURL();
   ///
 
     xarTplSetPageTitle(xarVarPrepForDisplay($page)); 

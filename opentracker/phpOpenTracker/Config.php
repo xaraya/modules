@@ -85,21 +85,21 @@ class phpOpenTracker_Config {
         } else {
             $config["db_host"] = xarCore_getSystemVar('DB.Host');
         }
-      	$config["db_database"] = xarCore_getSystemVar('DB.Name');
-      	$config["db_user"] = xarCore_getSystemVar('DB.UserName');
-      	$config["db_password"] = xarCore_getSystemVar('DB.Password');
-      	$config["jpgraph_path"] = POT_CONFIG_PATH . "../../jpgraph/";
-      	
-      	$prefix = xarDBGetSiteTablePrefix();
-      	$config['additional_data_table']   = $prefix."_pot_add_data";
-		$config['accesslog_table']         = $prefix."_pot_accesslog";
-		$config['documents_table']         = $prefix."_pot_documents";
-		$config['exit_targets_table']      = $prefix."_pot_exit_targets";
-		$config['hostnames_table']         = $prefix."_pot_hostnames";
-		$config['operating_systems_table'] = $prefix."_pot_operating_systems";
-		$config['referers_table']          = $prefix."_pot_referers";
-		$config['user_agents_table']       = $prefix."_pot_user_agents";
-		$config['visitors_table']          = $prefix."_pot_visitors";
+          $config["db_database"] = xarCore_getSystemVar('DB.Name');
+          $config["db_user"] = xarCore_getSystemVar('DB.UserName');
+          $config["db_password"] = xarCore_getSystemVar('DB.Password');
+          $config["jpgraph_path"] = POT_CONFIG_PATH . "../../jpgraph/";
+          
+          $prefix = xarDBGetSiteTablePrefix();
+          $config['additional_data_table']   = $prefix."_pot_add_data";
+        $config['accesslog_table']         = $prefix."_pot_accesslog";
+        $config['documents_table']         = $prefix."_pot_documents";
+        $config['exit_targets_table']      = $prefix."_pot_exit_targets";
+        $config['hostnames_table']         = $prefix."_pot_hostnames";
+        $config['operating_systems_table'] = $prefix."_pot_operating_systems";
+        $config['referers_table']          = $prefix."_pot_referers";
+        $config['user_agents_table']       = $prefix."_pot_user_agents";
+        $config['visitors_table']          = $prefix."_pot_visitors";
 
       //end mod
     

@@ -1,12 +1,12 @@
 <?php
 /*=======================================================================
-// File: 	JPGRAPH_CANVAS.PHP
-// Description:	Canvas drawing extension for JpGraph
-// Created: 	2001-01-08
-// Author:	Johan Persson (johanp@aditus.nu)
-// Ver:		$Id: jpgraph_canvas.php,v 1.12 2003/01/09 12:56:56 aditus Exp $
+// File:     JPGRAPH_CANVAS.PHP
+// Description:    Canvas drawing extension for JpGraph
+// Created:     2001-01-08
+// Author:    Johan Persson (johanp@aditus.nu)
+// Ver:        $Id: jpgraph_canvas.php,v 1.12 2003/01/09 12:56:56 aditus Exp $
 //
-// License:	This code is released under QPL
+// License:    This code is released under QPL
 // Copyright (C) 2001,2002 Johan Persson
 //========================================================================
 */
@@ -23,36 +23,36 @@ class CanvasGraph extends Graph {
 //---------------
 // CONSTRUCTOR
     function CanvasGraph($aWidth=300,$aHeight=200,$aCachedName="",$timeout=0,$inline=1) {
-	$this->Graph($aWidth,$aHeight,$aCachedName,$timeout,$inline);
+    $this->Graph($aWidth,$aHeight,$aCachedName,$timeout,$inline);
     }
 
 //---------------
-// PUBLIC METHODS	
+// PUBLIC METHODS    
 
     function InitFrame() {
-	$this->StrokePlotArea();
+    $this->StrokePlotArea();
     }
 
     // Method description
     function Stroke($aStrokeFileName="") {
-	if( $this->texts != null ) {
-	    for($i=0; $i<count($this->texts); ++$i) {
-		$this->texts[$i]->Stroke($this->img);
-	    }
-	}				
-	$this->StrokeTitles();
+    if( $this->texts != null ) {
+        for($i=0; $i<count($this->texts); ++$i) {
+        $this->texts[$i]->Stroke($this->img);
+        }
+    }                
+    $this->StrokeTitles();
 
-	// If the filename is given as the special _IMG_HANDLER
-	// then the image handler is returned and the image is NOT
-	// streamed back
-	if( $aStrokeFileName == _IMG_HANDLER ) {
-	    return $this->img->img;
-	}
-	else {
-	    // Finally stream the generated picture					
-		$this->cache->PutAndStream($this->img,$this->cache_name,$this->inline,
-					   $aStrokeFileName);		
-	}
+    // If the filename is given as the special _IMG_HANDLER
+    // then the image handler is returned and the image is NOT
+    // streamed back
+    if( $aStrokeFileName == _IMG_HANDLER ) {
+        return $this->img->img;
+    }
+    else {
+        // Finally stream the generated picture                    
+        $this->cache->PutAndStream($this->img,$this->cache_name,$this->inline,
+                       $aStrokeFileName);        
+    }
     }
 } // Class
 /* EOF */

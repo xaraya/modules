@@ -102,7 +102,7 @@ class phpOpenTracker_API_top extends phpOpenTracker_API_Plugin {
         $topItems = array();
       }
     }
-	$xar_groupby = 'GROUP BY accesslog.accesslog_id, data_table.string';
+    $xar_groupby = 'GROUP BY accesslog.accesslog_id, data_table.string';
     switch ($parameters['what']) {
       case 'document':
       case 'exit_target':
@@ -188,7 +188,7 @@ class phpOpenTracker_API_top extends phpOpenTracker_API_Plugin {
                   %s
                   %s ".$xar_groupby,
             //GROUP BY accesslog.accesslog_id, data_table.string",
-			//end modification			
+            //end modification            
           $this->config['accesslog_table'],
           $selfJoinTable,
           $this->config['visitors_table'],

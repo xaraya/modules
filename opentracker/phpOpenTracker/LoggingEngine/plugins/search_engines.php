@@ -38,7 +38,7 @@ class phpOpenTracker_LoggingEngine_Plugin_search_engines extends phpOpenTracker_
   * @access public
   */
   function post() {
-  	$this->table = xarDBGetSiteTablePrefix() . '_pot_search_engines'; //added for xaraya
+      $this->table = xarDBGetSiteTablePrefix() . '_pot_search_engines'; //added for xaraya
     if ($this->container['first_request'] &&
         !empty($this->container['referer_orig'])) {
       if (!$ignoreRules = @file(POT_CONFIG_PATH . 'search_engines.ignore.php')) {

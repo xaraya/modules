@@ -31,7 +31,7 @@ class xarOpenTracker extends phpOpenTracker
       isset($parameters['add_data']) ? $parameters['add_data'] : array()
     );
   }
-	
+    
 }
 
 class xarOpenTracker_LoggingEngine extends phpOpenTracker_LoggingEngine 
@@ -47,21 +47,21 @@ class xarOpenTracker_LoggingEngine extends phpOpenTracker_LoggingEngine
       $this->_runPostPlugins();
     }
     
-	list($modName, $modType, $funcName) = xarRequestGetInfo();
+    list($modName, $modType, $funcName) = xarRequestGetInfo();
     $xarInstanceId = xarVarGetCached('opentracker', 'xarinstanceid');
     
     //autodetect some instanceid's
     if (!isset($xarInstanceId) && $modName == 'articles') {
-    	xarVarFetch('aid','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
+        xarVarFetch('aid','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
     }
     if (!isset($xarInstanceId) && $modName == '"profiles') {
-    	xarVarFetch('uid','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
+        xarVarFetch('uid','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
     }
     if (!isset($xarInstanceId)) {
-    	xarVarFetch('objectid','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
+        xarVarFetch('objectid','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
     }
     if (!isset($xarInstanceId)) {
-    	xarVarFetch('id','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
+        xarVarFetch('id','int', $xarInstanceId,   NULL, XARVAR_NOT_REQUIRED);
     }
     $this->db->query(
       sprintf(
@@ -69,34 +69,34 @@ class xarOpenTracker_LoggingEngine extends phpOpenTracker_LoggingEngine
            INTO %s
                 (client_id,   accesslog_id,
                  document_id, timestamp,
-        		 xar_uid,
-        		 xar_modname,
-        		 xar_modtype,
-        		 xar_modfunc,
-        		 xar_instanceid,
+                 xar_uid,
+                 xar_modname,
+                 xar_modtype,
+                 xar_modfunc,
+                 xar_instanceid,
                  entry_document)
          VALUES (%d, %d,
                  %d, %d,
-        		 %d,
-        		 '%s',
-        		 '%s',
-        		 '%s',
-        		 %d,
+                 %d,
+                 '%s',
+                 '%s',
+                 '%s',
+                 %d,
                  '%d')",
 
         $this->config['accesslog_table'], $this->container['client_id'],
         $this->container['accesslog_id'], $this->container['document_id'],
         $this->container['timestamp'],
         xarUserGetVar('uid'),
-	    $modName,
-	    $modType, 
-	    $funcName,
+        $modName,
+        $modType, 
+        $funcName,
         $xarInstanceId,
         $this->container['first_request'] ? 1 : 0
       )
     );
   }
-	
+    
 }
 
 ?>

@@ -10,14 +10,14 @@
  */
 function opentracker_userapi_get_visitors($args)
 {
-	extract($args);
-	if (!isset($start))
-		$start = false;
-	if (!isset($end))
-		$end = false;
-	if (!isset($interval))
-		$interval = false;
-	return xarOpenTracker::get(
+    extract($args);
+    if (!isset($start))
+        $start = false;
+    if (!isset($end))
+        $end = false;
+    if (!isset($interval))
+        $interval = false;
+    return xarOpenTracker::get(
         array(
           'client_id' => 1,
           'api_call'  => 'visitors',

@@ -42,30 +42,30 @@ function opentracker_userapi_get_top_items($args)
     // Query Top <$limit> items of category <$batchWhat[$i]>
     if ($batchWhat[$i] == 'mods')
     {
-	    $result = xarOpenTracker::get(
-		      array(
-		        'client_id' => 1,
-		        'api_call'  => 'xarmod_top',
-		        'start'     => $start,
-		        'end'       => $end,
-		        'limit'     => $limit
-		      )
-		    );
+        $result = xarOpenTracker::get(
+              array(
+                'client_id' => 1,
+                'api_call'  => 'xarmod_top',
+                'start'     => $start,
+                'end'       => $end,
+                'limit'     => $limit
+              )
+            );
     }
     else 
     {
-	    $result = xarOpenTracker::get(
-	      array(
-	        'client_id' => 1,
-	        'api_call'  => 'top',
-	        'what'      => $batchWhat[$i],
-	        'start'     => $start,
-	        'end'       => $end,
-	        'limit'     => $limit
-	      )
-	    );
+        $result = xarOpenTracker::get(
+          array(
+            'client_id' => 1,
+            'api_call'  => 'top',
+            'what'      => $batchWhat[$i],
+            'start'     => $start,
+            'end'       => $end,
+            'limit'     => $limit
+          )
+        );
     }
-	
+    
     $batchResult[$batchKeys[$i]]['top_items'] = array();
     for ($j = 0; $j < sizeof($result['top_items']); $j++) {
       // Get item template
