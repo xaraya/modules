@@ -13,6 +13,7 @@
 $modversion['name'] = 'Wizards';
 $modversion['id'] = '3007';
 $modversion['version'] = '1.0.0';
+$modversion['displayname']    = xarML('Wizards');
 $modversion['description'] = 'Wizard Scripts';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
