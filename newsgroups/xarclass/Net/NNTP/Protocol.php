@@ -625,9 +625,10 @@ class Net_NNTP_Protocol extends PEAR
 	        foreach($data as $line) {
 	            preg_match("/^(.*?)\s(.*?$)/", trim($line), $matches);
 	            $groups[$matches[1]] = (string) $matches[2];
+	               return $groups;
 	        }
 
-	        return $groups;
+
 		break;
 	    case 503: // RFC2980: 'program error, function not performed'
 		return PEAR::throwError('Internal server error, function not performed', $response, $this->currentStatusResponse());
