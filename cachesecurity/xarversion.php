@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * CacheSecurity version information
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -12,6 +12,7 @@
 $modversion['name']           = 'CacheSecurity';
 $modversion['id']                  = '91098';
 $modversion['version']         = '0.9.0';
+$modversion['displayname']      = xarML('CacheSecurity');
 $modversion['description']   = 'Manage the cache of Xaraya\'s security system';
 $modversion['credits']          = '';
 $modversion['help']              = '';
