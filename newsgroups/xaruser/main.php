@@ -17,6 +17,10 @@ function newsgroups_user_main()
 
     $newsgroups = new Net_NNTP();
     $newsgroups -> connect($server, $port);
+
+// TODO: pre-load complete list of newsgroups and let admin select
+//       instead of retrieving the list each time here
+
     if (empty($wildmat) || !strstr($wildmat,',')) {
         $data['items'] = $newsgroups->getGroups(true, $wildmat);
     } else {

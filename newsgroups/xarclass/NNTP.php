@@ -326,15 +326,19 @@ class Net_NNTP extends Net_NNTP_Protocol
      */
     function getGroups($dunno=TRUE, $wildmat='')
     {
-    // Get groups
-    $groups = $this->cmdList();
-    if (PEAR::isError($groups)) {
-        return $groups;
-    }
+    if (empty($wildmat)) {
+        // Get all groups
+        $groups = $this->cmdList();
+        if (PEAR::isError($groups)) {
+            return $groups;
+        }
 
-    // Deprecated / historical
-    foreach (array_keys($groups) as $k) {
+        // Deprecated / historical
+        foreach (array_keys($groups) as $k) {
             $groups[$k]['posting_allowed'] =& $groups[$k][3];
+        }
+    } else {
+        $groups = array();
     }
 
     // Get group descriptions
@@ -342,11 +346,18 @@ class Net_NNTP extends Net_NNTP_Protocol
     if (PEAR::isError($descriptions)) {
         return $descriptions;
     }
-    
+
     // Set known descriptions for groups
     if (count($descriptions) > 0) {
-            foreach ($descriptions as $k=>$v) {
-        $groups[$k]['desc'] = $v;
+        foreach ($descriptions as $k=>$v) {
+            // get missing group info if necessary
+            if (!empty($wildmat)) {
+                $info = $this->cmdGroup($k);
+                if (is_array($info)) {
+                    $groups[$k] = $info;
+                }
+            }
+            $groups[$k]['desc'] = $v;
         }
     }
 
