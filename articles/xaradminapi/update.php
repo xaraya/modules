@@ -56,7 +56,7 @@ function articles_adminapi_update($args)
     }
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 

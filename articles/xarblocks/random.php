@@ -81,7 +81,7 @@ function articles_randomblock_display($blockinfo)
 
 	// Database information
 	xarModDBInfoLoad('articles');
-	list($dbconn) = xarDBGetConn();
+	$dbconn =& xarDBGetConn();
 	$xartable =& xarDBGetTables();
 	$articlestable = $xartable['articles'];
 

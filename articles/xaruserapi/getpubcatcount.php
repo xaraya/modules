@@ -25,7 +25,7 @@ function articles_userapi_getpubcatcount($args)
     $pubcatcount = array();
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
 
     // Get the LEFT JOIN ... ON ...  and WHERE parts from articles
     $articlesdef = xarModAPIFunc('articles','user','leftjoin',$args);

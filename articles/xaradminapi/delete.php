@@ -45,7 +45,7 @@ function articles_adminapi_delete($args)
     xarModCallHooks('item', 'delete', $aid, $args);
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 

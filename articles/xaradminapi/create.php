@@ -103,7 +103,7 @@ function articles_adminapi_create($args)
     }
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $articlestable = $xartable['articles'];
 

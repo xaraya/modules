@@ -24,7 +24,7 @@ function articles_userapi_getpubtypes($args)
     }
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pubtypestable = $xartable['publication_types'];
 

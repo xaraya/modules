@@ -27,7 +27,7 @@ function articles_init()
     }
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     //Load Table Maintainance API
@@ -412,7 +412,7 @@ function articles_upgrade($oldversion)
 function articles_delete()
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     //Load Table Maintainance API

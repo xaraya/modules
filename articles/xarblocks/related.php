@@ -163,7 +163,7 @@ function blocks_related_block($row)
            $story // set by advarticle.php
            ;
 
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     if(!xarSecurityCheck('ReadArticlesBlock',1,'Block',$row['title'])) return;
