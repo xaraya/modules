@@ -61,21 +61,11 @@ function search_searchblock_info()
 function search_searchblock_display($blockinfo)
 { 
     // Security Check
-    if (!xarSecurityCheck('ReadSearch', 0)) return;
+    if (!xarSecurityCheck('ReadSearch', 0)) {return;}
 
-    if (empty($blockinfo['title'])) {
-        $blockinfo['title'] = xarML('Search');
-    } 
-
-    $args['name'] = xarUserGetVar('name');
-
-    $args['blockid'] = $blockinfo['bid'];
-    if (empty($blockinfo['template'])) {
-        $template = 'search';
-    } else {
-        $template = $blockinfo['template'];
-    }
-    $blockinfo['content'] = xarTplBlock('search', $template, $args);
+    $blockinfo['content'] = array(
+        'blockid' => $blockinfo['bid']
+    );
 
     return $blockinfo;
 } 
