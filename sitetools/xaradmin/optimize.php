@@ -1,15 +1,11 @@
 <?php
 /*
- * File: $Id: $
- *
- * SiteTools Module
- *
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2003 by Jo Dalle Nogare
- * @link http://xaraya.athomeandabout.com
- *
- * @subpackage SiteTools module
- * @author jojodee <http://xaraya.athomeandabout.com >
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @author jojodee@xaraya.com <http://xaraya.athomeandabout.com>
+ * @based on optimize function by Michaelius <michaelius@nukeland.de>
 */
 
 /**
@@ -34,8 +30,8 @@ function sitetools_admin_optimize()
     // If we get here it means that the user has confirmed the action
     $data=array();
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return
-   
+    if (!xarSecConfirmAuthKey()) return;
+
    // Start optimization api
 
         $data=array();
