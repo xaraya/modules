@@ -59,7 +59,7 @@ function stats_userapi_get_browser_data($args)
                 $brname = xarML('Konqueror');
                 break;
             default:
-				//$brname = xarML('Unknown');
+				$brname = xarML('Unknown');
 				$brpic  = 'question.gif';
 		}
         if(!$top10) $brname .= " $browser[agver]";
