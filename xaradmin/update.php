@@ -36,7 +36,7 @@ function bkview_admin_update($args)
                                                       'repopath' => $repopath))) {
         return; // throw back
     }
-    xarSessionSetVar('statusmsg', xarMLByKey('_BKVIEW_UPDATED'));
+    xarSessionSetVar('statusmsg', xarML('Repository updated'));
     xarResponseRedirect(xarModURL('bkview', 'admin', 'view'));
     return true;
 }
