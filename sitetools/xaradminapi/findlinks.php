@@ -29,6 +29,10 @@ function sitetools_adminapi_findlinks($args)
 
     // load APIs for table names etc.
     xarModAPILoad('roles','user');
+    xarModAPILoad('dynamicdata','user');
+    if (xarModIsAvailable('articles')) {
+        xarModAPILoad('articles','user');
+    }
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -47,50 +51,108 @@ function sitetools_adminapi_findlinks($args)
     // find links for articles
     if (!empty($fields['articles']) && xarModIsAvailable('articles')) {
         $modid = xarModGetIDFromName('articles');
+        $articlestable = $xartable['articles'];
         $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
         foreach ($fields['articles'] as $ptid => $fieldlist) {
-            $where = array();
-            foreach ($fieldlist as $field) {
-                $where[] = $field . " ne ''";
-            }
-            $whereclause = join(' or ',$where);
-            $getfields = $fieldlist;
-            if (!in_array('aid',$getfields)) $getfields[] = 'aid';
-            if (!in_array('title',$getfields)) $getfields[] = 'title';
-            $items = xarModAPIFunc('articles','user','getall',
-                                   array('ptid' => $ptid,
-                                         'fields' => $getfields,
-                                         'where' => $whereclause));
-            $serialized = array();
-            foreach ($fieldlist as $field) {
-                if ($pubtypes[$ptid]['config'][$field]['format'] == 'urltitle') {
-                    $serialized[$field] = 1;
-                }
-            }
             $descr = $pubtypes[$ptid]['descr'];
             $count[$descr] = 0;
-            foreach ($items as $item) {
-                $url = xarModURL('articles','user','display',
-                                 array('aid' => $item['aid']));
-                foreach ($fieldlist as $field) {
-                    if (empty($item[$field])) continue;
-                    if (!empty($serialized[$field])) {
-                        $info = unserialize($item[$field]);
-                        if (empty($info['link'])) continue;
-                        $item[$field] = $info['link'];
+            $articlefields = array();
+            $dynamicfields = array();
+            // get the list of defined columns for articles
+            $columns = array_keys($pubtypes[$ptid]['config']);
+            foreach ($fieldlist as $field) {
+                if (in_array($field,$columns)) {
+                    $articlefields[] = $field;
+                } else {
+                    $dynamicfields[] = $field;
+                }
+            }
+            if (count($articlefields) > 0) {
+                $where = array();
+                foreach ($articlefields as $field) {
+                    $where[] = $field . " ne ''";
+                }
+                $whereclause = join(' or ',$where);
+                $getfields = $articlefields;
+                if (!in_array('aid',$getfields)) $getfields[] = 'aid';
+                if (!in_array('title',$getfields)) $getfields[] = 'title';
+                $items = xarModAPIFunc('articles','user','getall',
+                                       array('ptid' => $ptid,
+                                             'fields' => $getfields,
+                                             'where' => $whereclause));
+                $serialized = array();
+                foreach ($articlefields as $field) {
+                    if ($pubtypes[$ptid]['config'][$field]['format'] == 'urltitle') {
+                        $serialized[$field] = 1;
                     }
-                    if ($skiplocal &&
-                        (!strstr($item[$field],'://') ||
-                          preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!",$item[$field])) ) {
-                        continue;
+                }
+                foreach ($items as $item) {
+                    $url = xarModURL('articles','user','display',
+                                     array('aid' => $item['aid']));
+                    foreach ($articlefields as $field) {
+                        if (empty($item[$field])) continue;
+                        if (!empty($serialized[$field])) {
+                            $info = unserialize($item[$field]);
+                            if (empty($info['link'])) continue;
+                            $item[$field] = $info['link'];
+                        }
+                        if ($skiplocal &&
+                            (!strstr($item[$field],'://') ||
+                              preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!",$item[$field])) ) {
+                            continue;
+                        }
+                        $id = $dbconn->GenId($linkstable);
+                        $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
+                                  VALUES ($id, '" . xarVarPrepForStore($item[$field]) . "', 0, $modid, $ptid, $item[aid], '" . xarVarPrepForStore($item['title']) . "', '" . xarVarPrepForStore($url) . "')";
+                        $result =& $dbconn->Execute($query);
+                        if (!$result) return;
+                        $count[$descr]++;
                     }
-                    $id = $dbconn->GenId($linkstable);
-                    $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
-                              VALUES ($id, '" . xarVarPrepForStore($item[$field]) . "', 0, $modid, $ptid, $item[aid], '" . xarVarPrepForStore($item['title']) . "', '" . xarVarPrepForStore($url) . "')";
-                    $result =& $dbconn->Execute($query);
-                    if (!$result) return;
-                    $count[$descr]++;
+                }
+            }
+            if (count($dynamicfields) > 0) {
+                $where = array();
+                foreach ($dynamicfields as $field) {
+                    $where[] = $field . " ne ''";
+                }
+                $whereclause = join(' or ',$where);
+                $object = new Dynamic_Object_List(array('moduleid' => $modid,
+                                                        'itemtype' => $ptid,
+                                                        'fieldlist' => $fieldlist,
+                                                        'where' => $whereclause));
+                $object->joinTable(array('table' => $articlestable,
+                                         'key' => 'aid',
+                                         'fields' => array('aid','title')));
+                $items = $object->getItems();
+                $serialized = array();
+                foreach ($dynamicfields as $field) {
+                    if ($object->properties[$field]->type == 41) { // urltitle
+                        $serialized[$field] = 1;
+                    }
+                }
+                foreach ($items as $item) {
+                    $url = xarModURL('articles','user','display',
+                                     array('aid' => $item['aid']));
+                    foreach ($dynamicfields as $field) {
+                        if (empty($item[$field])) continue;
+                        if (!empty($serialized[$field])) {
+                            $info = unserialize($item[$field]);
+                            if (empty($info['link'])) continue;
+                            $item[$field] = $info['link'];
+                        }
+                        if ($skiplocal &&
+                            (!strstr($item[$field],'://') ||
+                              preg_match("!://($server|localhost|127\.0\.0\.1)((:\d+)?/|$)!",$item[$field])) ) {
+                            continue;
+                        }
+                        $id = $dbconn->GenId($linkstable);
+                        $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
+                                  VALUES ($id, '" . xarVarPrepForStore($item[$field]) . "', 0, $modid, $ptid, $item[aid], '" . xarVarPrepForStore($item['title']) . "', '" . xarVarPrepForStore($url) . "')";
+                        $result =& $dbconn->Execute($query);
+                        if (!$result) return;
+                        $count[$descr]++;
+                    }
                 }
             }
         }
@@ -101,30 +163,25 @@ function sitetools_adminapi_findlinks($args)
         $modid = xarModGetIDFromName('roles');
         $rolestable = $xartable['roles'];
         // only 1 itemtype for now, but groups might have separate DD fields later on
-        $rolesobject = xarModAPIFunc('dynamicdata','user','getobject',
-                                     array('module' => 'roles'));
         $descr = array(0 => xarML('Users'),
                        1 => xarML('Groups'));
-
         foreach ($fields['roles'] as $itemtype => $fieldlist) {
             $where = array();
             foreach ($fieldlist as $field) {
                 $where[] = $field . " ne ''";
             }
             $whereclause = join(' or ',$where);
-            $getfields = $fieldlist;
-            //if (!in_array('uid',$getfields)) $getfields[] = 'uid';
-            if (!in_array('name',$getfields)) $getfields[] = 'name';
-            $items = xarModAPIFunc('dynamicdata','user','getitems',
-                                   array('module' => 'roles',
-                                         'itemtype' => $itemtype,
-                                     // join with the roles table for user name
-                                         'join' => $rolestable,
-                                         'fieldlist' => $getfields,
-                                         'where' => $whereclause));
+            $object = new Dynamic_Object_List(array('moduleid' => $modid,
+                                                    'itemtype' => $itemtype,
+                                                    'fieldlist' => $fieldlist,
+                                                    'where' => $whereclause));
+            $object->joinTable(array('table' => $rolestable,
+                                     'key' => 'uid',
+                                     'fields' => array('uid','name')));
+            $items = $object->getItems();
             $serialized = array();
             foreach ($fieldlist as $field) {
-                if ($rolesobject->properties[$field]->type == 41) { // urltitle
+                if ($object->properties[$field]->type == 41) { // urltitle
                     $serialized[$field] = 1;
                 }
             }

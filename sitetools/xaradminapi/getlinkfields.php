@@ -55,7 +55,6 @@ function sitetools_adminapi_getlinkfields($args)
                         break;
                 }
             }
-/*
             $object = xarModAPIFunc('dynamicdata','user','getobject',
                                     array('module' => 'articles',
                                           'itemtype' => $pubid));
@@ -78,7 +77,6 @@ function sitetools_adminapi_getlinkfields($args)
                     }
                 }
             }
-*/
             if (count($fields) > 0) {
                 $modules[$pubtype['descr']] = $fields;
             }
