@@ -123,7 +123,7 @@ function newsletter_init()
         return;
     }
 
-    // Create the topics table and column definitions
+    // Create the owners table and column definitions
     $nwsltrOwners = $xartable['nwsltrOwners'];
     $nwsltrOwnersColumn = &$xartable['nwsltrOwners_column'];
 
@@ -149,7 +149,7 @@ function newsletter_init()
         return;
     }
 
-    // Create the topics table and column definitions
+    // Create the disclaimers table and column definitions
     $nwsltrDisclaimers = $xartable['nwsltrDisclaimers'];
     $nwsltrDisclaimersColumn = &$xartable['nwsltrDisclaimers_column'];
 
@@ -174,7 +174,7 @@ function newsletter_init()
         return;
     }
 
-    // Create the topics table and column definitions
+    // Create the stories table and column definitions
     $nwsltrStories = $xartable['nwsltrStories'];
     $nwsltrStoriesColumn = &$xartable['nwsltrStories_column'];
 

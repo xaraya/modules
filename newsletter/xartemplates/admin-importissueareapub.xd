@@ -1,0 +1,36 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Newsletter</xar:mlstring>
+    </span>
+</div>
+<br />
+<div class="xar-mod-body">
+    <div class="contentBorder">
+        <div style="text-align: left;margin: auto;">        
+            <br />
+            <table border="0" cellpadding="2">
+                <tr>
+                    <td colspan="2" align="left">
+                        <b><xar:mlstring>Preparing to import Issue Area Publication data into Newsletter</xar:mlstring></b>
+                    </td>
+                </tr>
+                <xar:if condition="empty($error)">
+                    <xar:loop name="$output">
+                        <tr>
+                            <td align="left">
+                                #$loop:item#
+                            </td>
+                        </tr>
+                    </xar:loop>
+                <xar:else />
+                    <tr>
+                        <td align="left">
+                            <b>#$error#</b>
+                            <br />
+                        </td>
+                    </tr>
+                </xar:if>
+            </table>
+        </div>
+    </div>
+</div>

@@ -20,6 +20,7 @@
  * @param $args an array of arguments
  * @param $args['id'] id of the owner (uid in roles)
  * @param $args['rid'] group of the owner
+ * @param $args['signature'] the owner's signature
  * @returns newsletter owner ID on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -62,13 +63,27 @@ function newsletter_adminapi_createowner($args)
         return false;  // owner already exists
     }
 
-    // Add item
-    $query = "INSERT INTO $nwsltrTable (
-              xar_uid,
-              xar_rid)
-            VALUES (
-              " . xarVarPrepForStore($id) .",
-              " . xarVarPrepForStore($rid) .")";
+    // Check for signature
+    if (!isset($signature)) {
+        // Add item
+        $query = "INSERT INTO $nwsltrTable (
+                  xar_uid,
+                  xar_rid)
+                  VALUES (
+                  " . xarVarPrepForStore($id) .",
+                  " . xarVarPrepForStore($rid) .")";
+    } else {
+        // Add item
+        $query = "INSERT INTO $nwsltrTable (
+                  xar_uid,
+                  xar_rid,
+                  xar_signature)
+                VALUES (
+                  " . xarVarPrepForStore($id) .",
+                  " . xarVarPrepForStore($rid) .",
+                  '" . xarVarPrepForStore($signature) ."')";
+    }
+
     $result =& $dbconn->Execute($query);
 
     // Check for an error
