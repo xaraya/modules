@@ -1,8 +1,8 @@
-<?php 
+<?php
 /*
  * File: $Id: $
  *
- * Newsletter 
+ * Newsletter
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003-2004 by the Xaraya Development Team
@@ -15,6 +15,7 @@
 $modversion['name'] = 'Newsletter';
 $modversion['id'] = '1655';
 $modversion['version'] = '1.1.0';
+$modversion['displayname']    = xarML('Newsletter');
 $modversion['description'] = 'Newsletter publication.';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
