@@ -12,7 +12,7 @@
  * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
 */
 $modversion['name'] = 'categories';
-$modversion['version'] = '2.3';
+$modversion['version'] = '2.3.0';
 $modversion['id'] = '147';
 $modversion['description'] = 'Categorised data utility';
 $modversion['credits'] = 'xardocs/credits.txt';

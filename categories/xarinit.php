@@ -280,11 +280,11 @@ function categories_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             // fall through to the next upgrade
 
-        case 2.0:
+        case '2.0':
             // Code to upgrade from version 2.0 goes here
 
         // TODO: remove this for release
@@ -298,7 +298,7 @@ function categories_upgrade($oldversion)
             if (!$result) return;
             // fall through to the next upgrade
 
-        case 2.1:
+        case '2.1':
             // Code to upgrade from version 2.1 goes here
 
         // TODO: remove this for release
@@ -346,7 +346,7 @@ function categories_upgrade($oldversion)
             }
             // fall through to the next upgrade
 
-        case 2.2:
+        case '2.2':
             // Code to upgrade from version 2.2 goes here
 
             if (xarModIsAvailable('articles')) {
@@ -407,8 +407,9 @@ function categories_upgrade($oldversion)
             if (!$result) return;
 
             // fall through to the next upgrade
-
-        case 2.5:
+    case '2.3':
+            // compatability upgrade
+        case '2.5.0':
             // Code to upgrade from version 2.5 goes here
             break;
     }
