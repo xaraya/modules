@@ -30,7 +30,6 @@ goto sendit
 :defaultrange
 set range=-r+
 
-
 :error
 
 echo ===============================================================
