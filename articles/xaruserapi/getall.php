@@ -129,6 +129,7 @@ function articles_userapi_getall($args)
                                             'itemtype' => isset($ptid) ? $ptid : null,
                                             'modid' =>
                                               xarModGetIDFromName('articles')));
+        if (empty($categoriesdef)) return;
     }
 
     if (!empty($required['counter']) && xarModIsHooked('hitcount','articles',$ptid)) {
