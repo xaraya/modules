@@ -23,11 +23,11 @@ define('BK_NEWLINE_MARKER','<nl/>');
 // Include the repository class
 include_once("bkrepo.class.php");
 
-// Include the changeset class
-include_once("bkcset.class.php");
-
 // Include the delta class
 include_once("bkdelta.class.php");
+
+// Include the changeset class
+include_once("bkcset.class.php");
 
 // Include the repository file class
 include_once("bkfile.class.php");

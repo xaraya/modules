@@ -30,13 +30,13 @@ class bkDelta
    {
         $file = __fileproper($file);
         $this->file=$file;
-        $abspath =  $cset->_repo->_root . '/' . $this->file;
+        $abspath =  $cset->repo->_root . '/' . $this->file;
         $this->checkedout = file_exists($abspath);
         $this->rev=$rev;
         $this->cset=$cset;
         $cmd ="bk prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
         
-        $info = $this->cset->_repo->_run($cmd);
+        $info = $this->cset->repo->_run($cmd);
         list($date,$time,$age, $author,$domain, $comments) = explode('|',$info[0]);
         $this->date = $date;
         $this->time = $time;
@@ -49,13 +49,13 @@ class bkDelta
     function bkDiffs() 
    {
         $cmd="bk diffs -hu -R".$this->rev." ".$this->file;
-        return $this->cset->_repo->_run($cmd);
+        return $this->cset->repo->_run($cmd);
    }
     
     function bkAnnotate() 
    {
         $cmd="bk annotate -aum -r".$this->rev." ".$this->file;
-        return $this->cset->_repo->_run($cmd);
+        return $this->cset->repo->_run($cmd);
    }
     
     function bkFile() 
