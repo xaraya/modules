@@ -78,6 +78,12 @@ function bbcode_encode($message, $is_html_disabled) {
     // pad it with a space so we can distinguish between FALSE and matching the 1st char (index 0).
     // This is important; bbencode_quote(), bbencode_list(), and bbencode_code() all depend on it.
     $message = " " . $message;
+
+    // [CODE] and [/CODE] for posting code (HTML, PHP, C etc etc) in your posts.
+    $message = bbcode_encode_code($message, $is_html_disabled);
+
+    // change newlines to <br />'s
+    $message = preg_replace("/\n/si","\n<br />\n",$message);
     
     // First: If there isn't a "[" and a "]" in the message, don't bother.
     if (! (strpos($message, "[") && strpos($message, "]")) )
@@ -86,9 +92,6 @@ function bbcode_encode($message, $is_html_disabled) {
         $message = substr($message, 1);
         return $message;    
     }
-
-    // [CODE] and [/CODE] for posting code (HTML, PHP, C etc etc) in your posts.
-    $message = bbcode_encode_code($message, $is_html_disabled);
 
     // [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.    
     $message = bbcode_encode_quote($message);
@@ -107,6 +110,12 @@ function bbcode_encode($message, $is_html_disabled) {
 
     // [p] and [/p] for paragraphs
     $message = preg_replace("/\[p\](.*?)\[\/p\]/si", "<p>\\1</p>", $message);
+
+    // [sub] and [/sub] for subscripts
+    $message = preg_replace("/\[sub\](.*?)\[\/sub\]/si", "<sub>\\1</sub>", $message);
+
+    // [sup] and [/sup] for superscripts
+    $message = preg_replace("/\[sup\](.*?)\[\/sup\]/si", "<sup>\\1</sup>", $message);
 
     // [color=xxx] [/color] for text color
     $message = preg_replace("/\[color\=([a-zA-Z0-9_-]+)\](.*?)\[\/color\]/si", "<span style='color: \\1;'>\\2</span>", $message);
@@ -143,9 +152,6 @@ function bbcode_encode($message, $is_html_disabled) {
     $replacements[4] = '<a href="mailto:\1">\1</a>';
 
     $message = preg_replace($patterns, $replacements, $message);
-
-    // change newlines to <br />'s
-    $message = preg_replace("/\n/si","\n<br />\n",$message);
 
     // Remove our padding from the string..
     $message = substr($message, 1);
@@ -214,8 +220,8 @@ function bbcode_encode_quote($message)
                     // everything after the [/quote] tag.
                     $after_end_tag = substr($message, $curr_pos + 8);
 
-                    $message = $before_start_tag . "<table border='0' align=center width='85%'><tr><td>".xarML('Quote').":<hr></td></tr><tr><td><blockquote>";
-                    $message .= $between_tags . "</blockquote></td></tr><tr><td><hr></td></tr></table>";
+                    $message = $before_start_tag . xarML('Quote').":<blockquote>";
+                    $message .= $between_tags . "</blockquote>";
                     $message .= $after_end_tag;
                     
                     // Now.. we've screwed up the indices by changing the length of the string. 
@@ -374,8 +380,12 @@ function bbcode_encode_code($message, $is_html_disabled)
                 }
                 
                 $str_to_match = $start_tag . $before_replace . $end_tag;
+
+                if (phpversion() > "4.2.0"){
+                    highlight_string($after_replace, 1);
+                }
                 
-                $message = preg_replace("/$str_to_match/si", "<table border='0' align=center width='85%'><tr><td>".xarML('Code').":<hr></td></tr><tr><td><pre>".bbcode_br2nl($after_replace)."</pre></td></tr><tr><td><hr></td></tr></table>", $message);
+                $message = preg_replace("/$str_to_match/si", xarML('Code') . ": <blockquote><pre> " . bbcode_br2nl($after_replace) . "</pre></blockquote>", $message);
             }
         }
     }
@@ -460,21 +470,24 @@ function bbcode_encode_list($message)
 
                     // everything after the [list] tag, but before the [/list] tag.
                     $between_tags = substr($message, $start_index + $start_tag_length, $curr_pos - $start_index - $start_tag_length);
-                    // Need to replace [*] with <LI> inside the list.
-                    $between_tags = str_replace("[*]", "<LI>", $between_tags);
                     
+                    //$between_tags = str_replace("[*]", "<li>", $between_tags);
+
+                    // Need to replace [*] with <LI> inside the list.
+                    $between_tags = preg_replace("/\[li\](.*?)\[\/li\]/si", "<li>\\1</li>", $between_tags);
+                   
                     // everything after the [/list] tag.
                     $after_end_tag = substr($message, $curr_pos + 7);
 
                     if ($is_ordered)
                     {
-                        $message = $before_start_tag . "<OL TYPE=" . $start_char . ">";
-                        $message .= $between_tags . "</OL>";
+                        $message = $before_start_tag . "<ol type=" . $start_char . ">";
+                        $message .= $between_tags . "</ol>";
                     }
                     else
                     {
-                        $message = $before_start_tag . "<UL>";
-                        $message .= $between_tags . "</UL>";
+                        $message = $before_start_tag . "<ul>";
+                        $message .= $between_tags . "</ul>";
                     }
                     
                     $message .= $after_end_tag;
@@ -533,6 +546,6 @@ function escape_slashes($input)
  * removes instances of <br /> since sometimes they are stored in DB :(
  */
 function bbcode_br2nl($str) {
-    return preg_replace("=<br(>|([\s/][^>]*)>)\r?\n?=i", "\n", $str);
+    return preg_replace("=<br( />|([\s/][^>]*)>)\r?\n?=i", "\n", $str);
 }
 ?>
