@@ -45,14 +45,7 @@
                             <br />
                             <br />
                             <xar:sec catch="false" mask="Comments-Reply" instance="$header[modid]:$header[objectid]:ALL">
-                                <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;">
-                                    <input type="hidden" name="header[modid]" value="#$header['modid']#" />
-                                    <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
-                                    <input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
-                                    <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
-                                    <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
-                                    <input type="submit" name="submit" id="submit-reply#$loop:item['xar_cid']#" value="reply" />
-                                </form>
+                                <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;"> <input type="hidden" name="header[modid]" value="#$header['modid']#" /> <input type="hidden" name="header[objectid]" value="#$header['objectid']#" /> <input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" /> <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" /> <input type="submit" name="submit" id="submit-reply#$loop:item['xar_cid']#" value="reply" /> </form>
                             </xar:sec>
 							<xar:if condition="xarUserIsLoggedIn()">
 								<xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$loop:item['xar_cid']) or $loop:item['xar_uid'] eq $package['uid']">
