@@ -2,7 +2,7 @@
 // $Id: s.xarversion.php 1.16 03/01/25 20:48:08-05:00 John.Cox@mcnabb. $
 $modversion['name'] = 'XML-RPC server';
 $modversion['id'] = '743';
-$modversion['version'] = '1.2';
+$modversion['version'] = '1.2.0';
 $modversion['description'] = 'Base XML-RPC server, support for multiple APIs through other modules';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
