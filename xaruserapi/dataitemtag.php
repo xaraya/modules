@@ -17,10 +17,10 @@ function reports_userapi_dataitemtag($args)
         $code = ';
         $cachekey = md5("'.$name.'".'.$dataset.'->fields[\''.$unique_id.'\']);
         $cacheFile = "var/cache/reports/$cachekey.'.$extension.'";
-        $fp = @fopen($cacheFile,"w");
+        $fp = fopen($cacheFile,"w");
         if (!empty($fp)) {
-            @fwrite($fp,substr('.$dataset.'->fields[\''.$name.'\'],'.$offset.'));
-            @fclose($fp);
+            fwrite($fp,substr('.$dataset.'->fields[\''.$name.'\'],'.$offset.'));
+            fclose($fp);
         }
         $'.$name.'="$cacheFile"';
         // Deliver the code back, having set the name to the link to the cached file

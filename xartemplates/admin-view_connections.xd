@@ -1,8 +1,7 @@
 <xar:template file="admin-menu" type="module"/>
+<h3><xar:mlstring>Define connections</xar:mlstring></h3>
+
 <table>
-  <tr>
-    <th colspan="7"><xar:mlstring>Define connections</xar:mlstring></th>
-  </tr>
   <tr>
     <th><xar:mlstring>Connection name</xar:mlstring></th>
     <th><xar:mlstring>Description</xar:mlstring></th>

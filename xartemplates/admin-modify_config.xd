@@ -1,9 +1,7 @@
 <xar:template file="admin-menu" type="module"/>
 
+<h3><xar:mlstring>Modify configuration</xar:mlstring></h3>
 <table>
-  <tr>
-    <th colspan="2"><xar:mlstring>Modify configuration</xar:mlstring></th>
-  </tr>
   <tr>
     <form action="&xar-modurl-reports-admin-update_config;" method="post">
     <input type="hidden" name="authid" value="#$authid#"/>

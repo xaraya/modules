@@ -1,9 +1,6 @@
 <xar:template file="admin-menu" type="module"/>
-
+<h3><xar:mlstring>Create a new report</xar:mlstring></h3>
 <table>
-  <tr>
-    <th>Create a new report</th>
-  </tr>
   <tr>
     <td>
       <form action="&xar-modurl-reports-admin-create_report;" method="post">
