@@ -128,8 +128,10 @@ function sitetools_admin_deletecache($args)
                     return $msg;
             } else {
                 $handle=opendir($templpath);
+                
                 // iansym::these are the files we do not want to delete
                 $skip_array = array('.','..','index.htm','index.html','SCCS');
+                
                 while (false !== ($file = readdir($handle))) {
                   // check the skip array and delete files that are not in it
                   if(!in_array($file,$skip_array)) {
