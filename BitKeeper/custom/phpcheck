@@ -3,8 +3,17 @@
 # Run some sanity checks for php sourcefiles
 
 STARTDIR=`bk root`
-cd $STARTDIR
-for i in `bk sfiles -gU  | grep ".php"`; do
- bk get -qS $i
- php -q -l -f $i
-done
+
+echo "Checking whole repository for php errors..."
+
+for i in `bk sfiles -g $STARTDIR | grep "\.php"`; do
+    bk get -qS $i
+    errmsg=`php -q -l -f $i`
+    if [ $? -ne 0 ]; then
+      echo
+      echo $errmsg
+    else
+      echo -n . 
+    fi
+done 
+echo
