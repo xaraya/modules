@@ -123,20 +123,20 @@ img.xar-xarpages-tree {
 /* Styles for pages of different statuses. */
 
 .xar-xarpages-status-ACTIVE {
-	background-image: url("../xarimages/enabled.gif");
-	background-repeat: no-repeat;
-	background-position: left;
-	padding-left: 20px;
+    background-image: url("../xarimages/enabled.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+    padding-left: 20px;
 }
 .xar-xarpages-status-INACTIVE {
-	background-image: url("../xarimages/disabled.gif");
-	background-repeat: no-repeat;
-	background-position: left;
-	padding-left: 20px;
+    background-image: url("../xarimages/disabled.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+    padding-left: 20px;
 }
 .xar-xarpages-status-TEMPLATE {
-	background-image: url("../xarimages/template.gif");
-	background-repeat: no-repeat;
-	background-position: left;
-	padding-left: 20px;
+    background-image: url("../xarimages/template.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+    padding-left: 20px;
 }
