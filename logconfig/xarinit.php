@@ -41,7 +41,7 @@ function logconfig_init()
     if (is_dir($dir)) {
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
-                if (($file != '.') AND ($file != '..')) {
+                if (($file != '.') AND ($file != '..') AND ($file != 'SCCS')) {
                     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => "modules/logconfig/loggers/$file"));
                     if (empty($objectid)) return;
