@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Xaraya HTML Module
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -16,6 +16,7 @@
 $modversion['name'] = 'HTML';
 $modversion['id'] = '779';
 $modversion['version'] = '1.4.0';
+$modversion['displayname']    = xarML('HTML');
 $modversion['description'] = 'Configure the allowed HTML or your site';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
