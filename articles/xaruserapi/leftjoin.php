@@ -159,10 +159,22 @@ function articles_userapi_leftjoin($args)
         }
     }
 
-    if (!empty($search)) {
+    if (!empty($search)) 
+    {
         // TODO : improve + make use of full-text indexing for recent MySQL versions ?
-        // 1. find quoted text
+
         $normal = array();
+
+        // 0. Check for "'equal whole string' searchType"
+        if( $searchtype == 'equal whole string' )
+        {
+            $normal[] = $search;
+            $search   = "";
+            $searchtype = 'eq';
+        }
+        
+        
+        // 1. find quoted text
         if (preg_match_all('#"(.*?)"#',$search,$matches)) {
             foreach ($matches[1] as $match) {
                 $normal[] = $match;
@@ -177,6 +189,8 @@ function articles_userapi_leftjoin($args)
                 $search = trim(preg_replace("#'$match'#",'',$search));
             }
         }
+
+
         // 2. find mandatory +text to include
         // 3. find mandatory -text to exclude
         // 4. find normal text
@@ -187,6 +201,7 @@ function articles_userapi_leftjoin($args)
             $searchfields = array('title','summary','body');
         }
         $find = array();
+
         foreach ($normal as $text) {
             // TODO: use XARADODB to escape wildcards (and use portable ones) ??
             $text = str_replace('%','\%',$text);
@@ -207,6 +222,7 @@ function articles_userapi_leftjoin($args)
                 }
             }
         }
+        
         $whereclauses[] = '(' . join(' OR ',$find) . ')';
     }
     if (count($whereclauses) > 0) {

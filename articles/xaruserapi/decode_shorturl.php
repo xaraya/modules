@@ -210,22 +210,25 @@ function articles_decodeAIDUsingTitle( $params, $ptid = '' )
     {
         $searchArgs['pubtypeid'] = $ptid;
         $decodedTitle = urldecode($params[2]);
-        $decodedTitle = str_replace("'","\'",$decodedTitle);
-        $searchArgs['where']     = "title = '".$decodedTitle."'";
     } else {
         $decodedTitle = urldecode($params[1]);
-        $decodedTitle = str_replace("'","\'",$decodedTitle);
-        $searchArgs['where']     = "title = '".$decodedTitle."'";
     }
+    
+    $decodedTitle = str_replace("\\'","'", $decodedTitle);
+    $searchArgs['search'] = $decodedTitle;
+    $searchArgs['searchfields'] = array('title');
+    $searchArgs['searchtype'] = 'equal whole string';
 
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     
     if( (count($articles) == 0) && (strpos($decodedTitle,'_') != false) )
     {
-        $searchArgs['where']     = "title = '".str_replace('_',' ',$decodedTitle)."'";
+        $searchArgs['search'] = str_replace('_',' ',$decodedTitle);
+        $searchArgs['searchfields'] = array('title');
+        $searchArgs['searchtype'] = 'equal whole string';
         $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     }
-
+    
     if( count($articles) == 1 )
     {
         $theArticle = $articles[0];

@@ -317,12 +317,10 @@ function articles_encodeUsingTitle( $aid )
     $dupeResolutionMethod = 'Append Date';
 
     $searchArgs = array();
-    $conn =& xarDBGetConn();
-    $qtitle = $conn->qstr($article['title']);
-    //$searchArgs['where'] = "title = {$qtitle}";
-    $searchArgs['search'] = $qtitle;
+    $searchArgs['search'] = $article['title'];
     $searchArgs['searchfields'] = array('title');
-    $searchArgs['searchtype'] = 'eq';
+    $searchArgs['searchtype'] = 'equal whole string';
+    
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
 
     if( strpos($article['title'],'_') === FALSE )
@@ -330,10 +328,17 @@ function articles_encodeUsingTitle( $aid )
         $article['title'] = str_replace(' ','_',$article['title']);
     }
 
+    // Check to find out how many articles come back from the search.
     if( count($articles) == 1 )
     {
+        // Only finding one article through search, we're good to go.
         $path = rawurlencode($article['title']);
+    } elseif (count($articles) == 0) {
+        // Can't find article through search, won't be able to find it on decode
+        // default to just the article ID
+        $path = $aid;
     } else {
+        // Finding multiple articles through search, add a duplication resolution flag
         switch( $dupeResolutionMethod )
         {
             case 'Append AID':
