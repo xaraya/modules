@@ -68,14 +68,13 @@
                 </xar:if>
 			</td>
 		</tr>
+    </table>
 
-        <xar:if condition="!empty($typehooks)">
+    <xar:if condition="!empty($typehooks)">
         <xar:foreach in="$typehooks" key="$typehookmodule">
         #$typehooks[$typehookmodule]#
         </xar:foreach>
-        </xar:if>
-    
-    </table>
+    </xar:if>
 
     <xar:if condition="!empty($itemhooks)">
         <h2><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h2>
