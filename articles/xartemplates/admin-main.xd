@@ -4,7 +4,7 @@
 <h2><xar:mlstring>Overview</xar:mlstring></h2>
 <div style="margin: auto;">
 
-<h3><xar:mlstring>Welcome to the administration of articles</xar:mlstring></h3>
+<h3><xar:mlstring>Welcome to the administration of Articles</xar:mlstring></h3>
 <p><xar:mlstring>If this is your first visit to this part of your Xaraya site,
 please take a minute to read through the following introduction,
 in order to explore the different possibilities offered by the
@@ -19,7 +19,7 @@ different sections, frequently asked questions, and so on.</xar:mlstring></p>
 can make use of a different set of data fields, with a different
 meaning for each data field. For example, the 'summary' field
 could be used for an Introduction in news articles, for providing
-some Details about a question in FAQs, or not be used at all for
+some details about a question in FAQs, or not be used at all for
 section documents.</xar:mlstring></p>
 
 <p><xar:mlstring>There is a specific menu where you can manage those <strong>publication types</strong>,
@@ -44,7 +44,7 @@ use specific categories for each type of article, or any combination
 that you might prefer for your site.</xar:mlstring></p>
 
 <p><xar:mlstring>Before you start specifying which article types will be using what categories,
-you should create the categorisation you want via the
+you should create the categorization you want via the
 <a href="index.php?module=categories&amp;type=admin">Categories</a>
 administration menu. A default set of categories has been defined for
 articles when you installed this module, as an example to get you started.

@@ -5,7 +5,7 @@
             the articles module will automatically use the templates 
             <em>user-display-[publicationtype].xd</em>
             and <em>user-summary-[publicationtype].xd</em>. 
-            If those templates don't exist when you try to preview or display a new article, 
+            If those templates do not exist when you try to preview or display a new article, 
             you'll get this warning :-)
         </xar:mlstring>
     </p>

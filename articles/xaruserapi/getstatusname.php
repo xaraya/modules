@@ -18,7 +18,7 @@ function articles_userapi_getstatusname( $args )
 			$name = xarML('Frontpage');
 			break;
 		default:
-			$name = xarML('Unkown');
+			$name = xarML('Unknown');
 	}
 	
 	return $name;

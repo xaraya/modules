@@ -7,7 +7,7 @@
             the articles module will automatically use the templates 
             <em>user-display-[publicationtype].xd</em>
             and <em>user-summary-[publicationtype].xd</em>. 
-            If those templates don't exist when you try to preview or display a new article, 
+            If those templates do not exist when you try to preview or display a new article, 
             you'll get this warning :-)
         </xar:mlstring>
     </p>
@@ -38,7 +38,7 @@
     <xar:if condition="!empty($previous) and !empty($next)">
     <p>#$pager#</p>
     </xar:if>
-    <p><xar:mlstring><em>More fields may be available via dynamicdata ..</em></xar:mlstring></p>
+    <p><em><xar:mlstring>More fields may be available via dynamicdata ..</xar:mlstring></em></p>
     <xar:if condition="!empty($hooks)">
         <xar:foreach in="$hooks" key="$hookmodule">
         <p>#$hooks[$hookmodule]#</p>
