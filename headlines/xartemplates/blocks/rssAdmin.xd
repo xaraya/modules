@@ -21,9 +21,9 @@
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
 			<xar:if condition = "$showdescriptions eq 1">
-			<input type="checkbox" name="showdescriptions#$blockid#" value="1" checked>
+			<input type="checkbox" name="showdescriptions" value="1" checked>
 			<xar:else />
-			<input type="checkbox" name="showdescriptions#$blockid#" value="1">
+			<input type="checkbox" name="showdescriptions" value="1">
 			</xar:if>
 		</span>
 		</div>

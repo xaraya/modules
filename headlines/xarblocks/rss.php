@@ -112,8 +112,7 @@ function headlines_rssblock_display($blockinfo)
                         } else {
                             $link = '';
                         }
-
-                        $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description);
+                    $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description);
                 }
             }
         }
@@ -132,6 +131,7 @@ function headlines_rssblock_display($blockinfo)
     } else {
         $template = $blockinfo['template'];
     }
+
     $feed = xarTplBlock('headlines',$template,  array('feedcontent'  => $feedcontent,
                                                       'blockid'      => $blockinfo['bid'],
                                                       'chantitle'    => $chantitle,
@@ -140,7 +140,6 @@ function headlines_rssblock_display($blockinfo)
 
     $blockinfo['content'] = $feed;
     return $blockinfo;
-
 }
 
 /**
@@ -160,9 +159,6 @@ function headlines_rssblock_insert($blockinfo)
                                                   'showsearch',
                                                   'showdescriptions',
                                                   'altstyle');
-    // Remove old URL if there
-    // unset($row['url']);
-
     // Defaults
     if (!isset($vars['rssurl'])) {
         $vars['rssurl'] = '';
@@ -171,19 +167,11 @@ function headlines_rssblock_insert($blockinfo)
     if (!isset($vars['showdescriptions'])) {
         $vars['showdescriptions'] = 0;
     }
-
-    //$args['content'] = implode("LINESPLIT", $content);
-
     // Define a default block title
     if (empty($blockinfo['title'])) {
         $blockinfo['title'] = xarML('Headlines');
     }
-
     $blockinfo['content']= serialize($vars);
-
-    // Refresh data
-    // $vars = blocks_rss_refresh($vars, 1);
-
     return $blockinfo;
 }
 
@@ -217,10 +205,9 @@ function headlines_rssblock_modify($blockinfo)
     if (!isset($vars['rssurl'])) {
         $vars['rssurl'] = '';
     }
-
-      if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) {
-            $vars['rssurl'] = '';
-      }
+    if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) {
+        $vars['rssurl'] = '';
+    }
     if (!isset($vars['showdescriptions'])) {
         $vars['showdescriptions'] = 0;
     }
@@ -230,5 +217,4 @@ function headlines_rssblock_modify($blockinfo)
 
     return $content;
 }
-
 ?>
