@@ -42,8 +42,8 @@ function ratings_userapi_rate($args)
 
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ratingstable = $xartable['ratings'];
 
     // Multipe rate check

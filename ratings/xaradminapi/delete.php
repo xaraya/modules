@@ -29,8 +29,8 @@ function ratings_adminapi_delete($args)
     // if we're coming from the delete GUI (or elsewhere)
     } elseif (!empty($confirm)) {
         // Database information
-        list($dbconn) = xarDBGetConn();
-        $xartable = xarDBGetTables();
+        $dbconn =& xarDBGetConn();
+        $xartable =& xarDBGetTables();
         $ratingstable = $xartable['ratings'];
 
         $query = "DELETE FROM $ratingstable ";

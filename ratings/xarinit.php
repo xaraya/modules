@@ -17,8 +17,8 @@
 function ratings_init()
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
     // Create table
@@ -187,8 +187,8 @@ function ratings_delete()
     xarModDelVar('ratings', 'seclevel');
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
     // Delete tables

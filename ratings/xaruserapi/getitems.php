@@ -46,8 +46,8 @@ function ratings_userapi_getitems($args)
     if(!xarSecurityCheck('ReadRatings')) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ratingstable = $xartable['ratings'];
 
     // Get items

@@ -37,8 +37,8 @@ function ratings_adminapi_deleteall($args)
     // avoid potential security holes or just too much wasted processing
 	if(!xarSecurityCheck('DeleteRatings')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $ratingstable = $xartable['ratings'];
 
     $query = "DELETE FROM $ratingstable
