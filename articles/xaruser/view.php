@@ -325,22 +325,6 @@ function articles_user_view($args)
         }
     }
 
-    // add a hit for the categories we're viewing here
-// TODO: move off to categories
-    if (count($cids) > 0 && xarModIsHooked('hitcount','categories')) {
-        foreach ($cids as $cid) {
-            if (empty($cid)) {
-                continue;
-            }
-            // if we're viewing all items below a certain category, i.e. catid = _NN
-            $cid = str_replace('_', '', $cid);
-            // FIXME: if this fails, an exception will be set, so it needs to be cleared?
-            xarModAPIFunc('hitcount','admin','update',
-                         array('modname' => 'categories',
-                               'objectid' => $cid));
-        }
-    }
-
     // every field you always wanted to know about but were afraid to ask for :)
     $extra = array();
     $extra[] = 'author';
