@@ -98,7 +98,11 @@ function autolinks_userapi_getreplace($args)
                 if ($name{0} != '_') {
                     // e.g. a DD property named 'a' will be evaluated as $template_data['a']
                     // and a DD property named 'a_b_c' will be evaluated as $template_data['a']['b']['c']
-                    @eval('$template_data[\'' . str_replace('_', '\'][\'', $name) . '\'] = $value;');
+                    if (strpos($name, '_') !== FALSE) {
+                        @eval('$template_data[\'' . str_replace('_', '\'][\'', $name) . '\'] = $value;');
+                    }
+                    // Bug 2867: also provide the flat (non-array) variable.
+                    $template_data[$name] = $value;
                 }
             }
         }

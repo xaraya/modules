@@ -1,13 +1,14 @@
 <xar:comment> $Id$ </xar:comment>
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
-<div style="margin: auto; width: 100%;">
+<div>
 
 <form method="post" action="#xarModURL('autolinks', 'admin', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
 <div>
     <span class="xar-mod-title"><xar:mlstring>Autolink Type:</xar:mlstring></span>
-    <select name="tid" id="tid" onchange="this.form.submit()">
+    <select name="tid" id="tid">
         <option value="0"><xar:mlstring>All Autolink Types</xar:mlstring></option>
         <xar:if condition="isset($types)">
             <xar:foreach in="$types" key="$tidkey" value="$type">
@@ -24,14 +25,15 @@
 </form>
 
 <xar:if condition="!empty($items)">
-<xar:comment> TODO: module classes? </xar:comment>
-<table style="width: auto; border: 1px solid #666666; empty-cells: inherit; border-collapse: collapse;" cellspacing="0" cellpadding="4">
+
+<div class="xar-norm-outline" xstyle="padding: 0px 0px 5px 0px;">
+<table cellspacing="0" cellpadding="4" border="1">
     <tr>
-        <th style="border: 1px solid #666666;"><xar:mlstring>Type</xar:mlstring></th>
-        <th style="border: 1px solid #666666;"><xar:mlstring>Name</xar:mlstring></th>
-        <th style="border: 1px solid #666666;"><xar:mlstring>Matching Key</xar:mlstring></th>
-        <th style="border: 1px solid #666666;"><xar:mlstring>URL</xar:mlstring></th>
-        <th style="border: 1px solid #666666;"><xar:mlstring>Options</xar:mlstring></th>
+        <th><xar:mlstring>Type</xar:mlstring></th>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Matching Key</xar:mlstring></th>
+        <th><xar:mlstring>URL</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$items" value="$item">
         <xar:comment> TODO: set classes rather than style colours; do we have standard classes for enabled/disabled items? </xar:comment>
@@ -42,7 +44,7 @@
         </xar:if>
 
         <tr style="background-color: #$bgrow#;">
-            <td style="border: 1px solid #666666;">
+            <td>
                 <xar:if condition="empty($item['edittypeurl'])">
                     #xarVarPrepForDisplay($item['type_name'])#
                 <xar:else/>
@@ -50,7 +52,7 @@
                 </xar:if>
             </td>
 
-            <td style="border: 1px solid #666666;">
+            <td>
                 <xar:if condition="empty($item['editurl'])">
                     <xar:if condition="!empty($item['comment'])">
                         <span title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['name'])#</span>
@@ -66,7 +68,7 @@
                 </xar:if>
             </td>
 
-            <td style="border: 1px solid #666666;">
+            <td>
                 <xar:if condition="!empty($item['match_re'])">
                     <em>#xarVarPrepForDisplay($item['keyword'])#</em>
                 <xar:else/>
@@ -74,7 +76,7 @@
                 </xar:if>
             </td>
 
-            <td style="border: 1px solid #666666;">
+            <td>
                 <xar:if condition="!empty($item['title'])">
                     <span title="#xarVarPrepForDisplay($item['title'])#">#xarVarPrepForDisplay($item['url'])#</span>
                 <xar:else/>
@@ -82,7 +84,7 @@
                 </xar:if>
             </td>
 
-            <td align="center" style="border: 1px solid #666666;">
+            <td>
                 <xar:if condition="!empty($item['enabled'])">
                     <xar:set name="$enablelabel"><xar:mlstring>Disable</xar:mlstring></xar:set>
                 <xar:else/>
@@ -130,6 +132,7 @@
         </xar:if>
     </xar:foreach>
 </table>
+</div>
 <br />
 
 <!-- add the pager here -->
