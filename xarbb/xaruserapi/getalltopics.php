@@ -93,7 +93,7 @@ function xarbb_userapi_getalltopics($args)
         $query .= " AND {$categoriesdef['itemtype']} = 0";
      } else {
          // <mrb> is count($tids) > 0 always?
-         $bindmarkers = '?' . str_repeat(',?'count($tids) -1);
+         $bindmarkers = '?' . str_repeat(',?',count($tids) -1);
          $bindvars = array_merge($bindvars, $tids);
         $query .= " AND xar_tid IN ($bindmarkers)";
     }
