@@ -39,20 +39,18 @@ function referer_admin_view()
             'user',
             'getall',
             array('startnum' => $startnum,
-                'numitems' => xarModGetVar('referer',
-                    'itemsperpage'))); 
+                  'numitems' => xarModGetVar('referer', 'itemsperpage'))); 
         $data['sort'] = 1;
     } else {
         $items = xarModAPIFunc('referer',
             'user',
             'getallbytime',
             array('startnum' => $startnum,
-                'numitems' => xarModGetVar('referer',
-                    'itemsperpage'))); 
+                  'numitems' => xarModGetVar('referer', 'itemsperpage'))); 
         $data['sort'] = 2;
     }
     // Check for exceptions
-    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($items)) return; // throw back
      
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
@@ -63,7 +61,6 @@ function referer_admin_view()
     } 
     // Add the array of items to the template variables
     $data['items'] = $items; 
-    // substr($url,0,strpos($url,'/',strpos($url,'/',strpos($url,'/')+1)+1));  :-)))
 
     // Generate a one-time authorisation code for this operation
     $authid = xarSecGenAuthKey();

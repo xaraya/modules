@@ -1,26 +1,42 @@
-<xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
-<script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var fieldRequired = Array("itemsperpage");
-    // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Items Per Page");
-//-->
-</script>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Referer Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Referer Configuration</xar:mlstring></h2>
-    <div style="margin: auto;">
-    <form action="#xarModURL('referer', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
-        <div style="clear: both; padding-top: 10px;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('Enter the number of items to display per page.')#"><label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring>:</label></span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('referer', 'itemsperpage')#" />
-        </span>
-        </div>
-        <br /><br /><span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#xarML('Submit')#" /></span>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('referer', 'forms')"></xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Referer Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <form class="xar-formwidget" action="#xarModUrl('referer', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Settings
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <p class="param">
+                <label for="itemsperpage">
+                    <span class="help" title="#xarML('Enter the number of referers to display per page')#">
+                        <xar:mlstring>
+                            Referers Per Page
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('referer', 'itemsperpage')#" />
+            </p>
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
     </form>
-    </div>
 </div>
