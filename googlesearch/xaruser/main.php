@@ -70,9 +70,14 @@ function googlesearch_user_main()
         $soapclient = new soapclient("http://api.google.com/search/beta2");
         $result = $soapclient->call("doGoogleSearch", $args, "urn:GoogleSearch");
 
-        $data['estimatedTotalResultsCount'] = $result['estimatedTotalResultsCount']; 
-        $data['searchQuery']                = $result['searchQuery'];
-        $data['links']                      = $result['resultElements'];
+        if (!empty($result['faultcode'])) {
+            $data['message']                    = $result['faultstring'];
+            $data['links']                      = '';
+        } else {
+            $data['estimatedTotalResultsCount'] = $result['estimatedTotalResultsCount']; 
+            $data['searchQuery']                = $result['searchQuery'];
+            $data['links']                      = $result['resultElements'];
+        }
     } else {
         $data['links']                      = '';
     }

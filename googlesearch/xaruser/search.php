@@ -84,9 +84,14 @@ function googlesearch_user_search()
           $result = $soapclient->call("doGoogleSearch", $args, "urn:GoogleSearch");
           xarModSetVar('googlesearch', 'queryCount', $queryCount+1);
 
-          $data['estimatedTotalResultsCount'] = $result['estimatedTotalResultsCount'];
-          $data['searchQuery']                = $result['searchQuery'];
-          $data['links']                      = $result['resultElements'];
+          if (!empty($result['faultcode'])) {
+            $data['message']                    = $result['faultstring'];
+            $data['links']                      = '';
+          } else {
+            $data['estimatedTotalResultsCount'] = $result['estimatedTotalResultsCount'];
+            $data['searchQuery']                = $result['searchQuery'];
+            $data['links']                      = $result['resultElements'];
+          }
 
         } else {
           $data['message'] = xarML('Sorry, we have reached the maximum number of google searches for today');

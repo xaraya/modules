@@ -15,6 +15,9 @@
 		#$loop:item['snippet']# (#$loop:item['cachedSize']#)<br /><br /></li>
 	</xar:loop>
 	</ul>
+<xar:elseif condition="!empty($message)" />
+    <h2><xar:mlstring>Search Results</xar:mlstring></h2>
+    #$message#
 </xar:if>
 </div>
 </div>
