@@ -479,68 +479,26 @@ function translations_create_trabar($subtype, $subname)
 
         $contexts = $GLOBALS['MLS']->getContexts();
         foreach ($contexts as $context) {
-                $traLabels[$j] = $context->getLabel();
-                $enabledTras[$j] = true;
-                $traURLs[$j] = xarModURL('translations', 'admin', 'translate_context',array('name'=>$context->getName()));
-                $j++;
+            $traLabels[$j] = $context->getLabel();
+            $enabledTras[$j] = true;
+            $traURLs[$j] = xarModURL('translations', 'admin', 'translate_context',array('name'=>$context->getName()));
+            $j++;
         }
         // $enabledTras = array(true, true, true, true, true, true, true, true);
 
-        switch ($subtype) {
-            case 'file':
-            $currentTra = array_search($subname, $traLabels);
-            break;
-            case 'init':
-            if ($subname == '') {
-                $currentTra = array_search('init', $traLabels);
+        if ($subtype !="") {
+                if($subtype =="file") {
+                $currentTra = array_search("init", $traLabels);
             }
-            break;
-            case 'core':
-            if ($subname == '') {
-                $currentTra = array_search('Common', $traLabels);
+            else {
+                $currentContext = $GLOBALS['MLS']->getContextByName($subtype);
+                $currentTra = array_search($currentContext->getLabel(), $traLabels);
             }
-            break;
-            case 'templates':
-            if ($subname == '') {
-                $currentTra = array_search('Templates', $traLabels);
-            }
-            break;
-            case 'templateincludes':
-            if ($subname == '') {
-                $currentTra = array_search('Included Templates', $traLabels);
-            }
-            break;
-            case 'blocks':
-            if ($subname == '') {
-                $currentTra = array_search('Blocks', $traLabels);
-            }
-            break;
-            case 'templateblocks':
-            if ($subname == '') {
-                $currentTra = array_search('Block Templates', $traLabels);
-            }
-            break;
-            case 'admin':
-            if ($subname == '') {
-                $currentTra = array_search('Admin', $traLabels);
-            }
-            break;
-            case 'adminapi':
-            if ($subname == '') {
-                $currentTra = array_search('AdminAPI', $traLabels);
-            }
-            break;
-            case 'user':
-            if ($subname == '') {
-                $currentTra = array_search('User', $traLabels);
-            }
-            break;
-            case 'userapi':
-            if ($subname == '') {
-                $currentTra = array_search('UserAPI', $traLabels);
-            }
-            break;
         }
+        else {
+            $currentTra = 99;
+        }
+
         break;
         case XARMLS_DNTYPE_THEME:
         // TODO
