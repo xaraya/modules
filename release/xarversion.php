@@ -1,7 +1,8 @@
-<?php 
-$modversion['name'] = 'Latest Releases';
+<?php
+$modversion['name'] = 'release';
 $modversion['id'] = '773';
-$modversion['version'] = '0.0.10';
+$modversion['version'] = '0.0.11';
+//$modversion['displayname']    = xarML('Latest releases');
 $modversion['description'] = 'Release information for themes and modules';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
@@ -12,7 +13,7 @@ $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'niceguyeddie@xaraya.com';
 $modversion['user'] = 1;
 $modversion['admin'] = 1;
-$modversion['securityschema'] = array('sendfriend::' => '::');
+$modversion['securityschema'] = array('' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
 ?>
