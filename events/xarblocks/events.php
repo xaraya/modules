@@ -58,7 +58,7 @@ function events_eventsblock_display($blockinfo)
 
     // Database information
     xarModDBInfoLoad('events');
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =xarDBGetTables();
     $eventstable = $xartable['events'];
 
