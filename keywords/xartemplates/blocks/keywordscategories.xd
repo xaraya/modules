@@ -1,5 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
-<!--
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html
 Global variables : itemid, itemtype, modid
 Available variables for each related categories (items) :
 $item['keyword'],$item['modid'],$item['itemtype'],$item['itemid'],

@@ -1,11 +1,9 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
-<!--
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html
 Global variables : itemid, itemtype, modid
 Available variables for each related articles (items) :
 $item['keyword'],$item['modid'],$item['itemtype'],$item['itemid'],
 $item['title'],$item['summary'],$item['authorid'],$item['pubdate'],$item['pubtypeid'],$item['status'],
 -->
-
 <xar:if condition="!empty($items)">
     <br />
 
