@@ -51,7 +51,7 @@ function images_user_display($args)
 
     // Load API
     if (!pnModAPILoad('images', 'user')) {
-        $output->Text(_LOADFAILED);
+        $output->Text(xarML('Load of module API failed'));
         return $output->GetOutput();
     }
 
@@ -62,7 +62,7 @@ function images_user_display($args)
                               array('iid' => $iid));
 
     if (!is_array($imageinfo)) {
-        $output->Text(_IMAGESITEMFAILED);
+        $output->Text(xarML('Failed to get item'));
     }
 
     list($image, $format) = $imageinfo;

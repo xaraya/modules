@@ -39,7 +39,7 @@ function images_userapi_get($args)
 
     // Argument check
     if (!isset($iid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
+        pnSessionSetVar('errormsg', xarML('Bad arguments for API function'));
         return false;
     }
 

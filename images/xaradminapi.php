@@ -52,7 +52,7 @@ function images_adminapi_create($args)
 
     // Security check
     if (!authorised(0, 'Images::Item', "$title::", ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _IMAGESNOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to carry out that operation'));
         return false;
     }
 
@@ -131,7 +131,7 @@ function images_adminapi_delete($args)
 
     // Security check
     if (!authorised(0, 'Images::Item', "::$iid", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _IMAGESNOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to carry out that operation'));
         return false;
     }
 
@@ -187,7 +187,7 @@ function images_adminapi_update($args)
 
     // Security check
     if (!authorised(0, 'Images::Item', "$title::$aid", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _IMAGESNOAUTH);
+        pnSessionSetVar('errormsg', xarML('Not authorised to carry out that operation'));
         return false;
     }
 

@@ -37,7 +37,7 @@ function images_admin_main()
 
     // Security check
     if (!pnSecAuthAction(0, 'Images::Category', '::', ACCESS_DELETE)) {
-        $output->Text(_IMAGESNOAUTH);
+        $output->Text(xarML('Not authorised to carry out that operation'));
         return $output->GetOutput();
     }
 
@@ -60,7 +60,7 @@ function images_admin_new()
 
     // Security check
     if (!pnSecAuthAction(0, 'Images::Item', '::', ACCESS_ADD)) {
-        $output->Text(_IMAGESNOAUTH);
+        $output->Text(xarML('Not authorised to carry out that operation'));
         return $output->GetOutput();
     }
 
@@ -78,7 +78,7 @@ function images_admin_new()
     $output->SetInputMode(_PNH_PARSEINPUT);
 
     // Title
-    $output->Title(_IMAGESADD);
+    $output->Title(xarML('Add Image'));
 
     // Start form
     $output->UploadMode();
@@ -90,7 +90,7 @@ function images_admin_new()
     // Image title
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_IMAGESTITLE). ' ');
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Title')). ' ');
     $row[] = $output->FormTextArea('title', '', 1, 40);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -101,7 +101,7 @@ function images_admin_new()
     // Image description
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_IMAGESDESCRIPTION). ' ');
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Description')). ' ');
     $row[] = $output->FormTextArea('description', '', 4, 40);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -112,7 +112,7 @@ function images_admin_new()
     // Image format
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_IMAGESFORMAT). ' ');
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Format')). ' ');
     $row[] = $output->FormSelectMultiple('format', $formatinfo);
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -123,7 +123,7 @@ function images_admin_new()
     // Image file
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_IMAGESFILE). ' ');
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('File')). ' ');
     $row[] = $output->FormFile('file');
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -134,7 +134,7 @@ function images_admin_new()
     // End form
     $output->TableEnd();
     $output->Linebreak(2);
-    $output->FormSubmit(_IMAGESADD);
+    $output->FormSubmit(xarML('Add Image'));
     $output->FormEnd();
 
 
@@ -176,7 +176,7 @@ function images_admin_create()
 
     if ($iid != false) {
         // Success
-        pnSessionSetVar('statusmsg', _IMAGESCREATED);
+        pnSessionSetVar('statusmsg', xarML('Image created'));
     }
 
     pnRedirect(pnModURL('images', 'admin', 'view'));
@@ -194,7 +194,7 @@ function images_admin_modifyconfig()
 
     // Security check
     if (!pnSecAuthAction(0, 'Images::Category', '::', ACCESS_ADMIN)) {
-        $output->Text(_IMAGESNOAUTH);
+        $output->Text(xarML('Not authorised to carry out that operation'));
         return $output->GetOutput();
     }
 
@@ -204,7 +204,7 @@ function images_admin_modifyconfig()
     $output->SetInputMode(_PNH_PARSEINPUT);
 
     // Title
-    $output->Title(_IMAGESMODIFYCONFIG);
+    $output->Title(xarML('Modify Images Configuration'));
 
     // Start form
     $output->FormStart(pnModURL('images', 'admin', 'updateconfig'));
@@ -215,7 +215,7 @@ function images_admin_modifyconfig()
     // Display style
     $row = array();
     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(pnVarPrepForDisplay(_IMAGESDISPLAYNEWS));
+    $row[] = $output->Text(pnVarPrepForDisplay(xarML('Display in news format')));
     $row[] = $output->FormCheckbox('displaynews', pnModGetVar('images', 'displaynews'));
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -226,7 +226,7 @@ function images_admin_modifyconfig()
     // End form
     $output->TableEnd();
     $output->Linebreak(2);
-    $output->FormSubmit(_IMAGESUPDATECONFIG);
+    $output->FormSubmit(xarML('Update images configuration'));
     $output->FormEnd();
     
     return $output->GetOutput();
@@ -270,7 +270,7 @@ function images_adminmenu()
     $output->Linebreak(2);
 
     // Start options menu
-    $output->TableStart(_IMAGES);
+    $output->TableStart(xarML('Images'));
 
     // Menu options
     $columns = array();
@@ -278,15 +278,15 @@ function images_adminmenu()
     $columns[] = $output->URL(pnModURL('images',
                                         'admin',
                                         'new'),
-                              _IMAGESNEW); 
+                              xarML('New Image')); 
 //    $columns[] = $output->URL(pnModURL('images',
 //                                        'admin',
 //                                        'view'),
-//                              _IMAGESVIEW); 
+//                              xarML('View Images')); 
 //    $columns[] = $output->URL(pnModURL('images',
 //                                        'admin',
 //                                        'modifyconfig'),
-//                              _IMAGESMODIFYCONFIG); 
+//                              xarML('Modify Images Configuration')); 
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
 
     $output->SetInputMode(_PNH_VERBATIMINPUT);
@@ -298,15 +298,15 @@ function images_adminmenu()
     $columns[] = $output->URL(pnModURL('images',
                                         'admin',
                                         'newcat'),
-                              _IMAGESNEWCAT); 
+                              xarML('New Image Category')); 
     $columns[] = $output->URL(pnModURL('images',
                                         'admin',
                                         'viewcats'),
-                              _IMAGESVIEWCAT); 
+                              xarML('View Image Categories')); 
     $columns[] = $output->URL(pnModURL('images',
                                         'admin',
                                         'viewcattree'),
-                              _IMAGESVIEWCATTREE); 
+                              xarML('View Image Categories Tree')); 
     $output->SetOutputMode(_PNH_KEEPOUTPUT);
 
     $output->SetInputMode(_PNH_VERBATIMINPUT);
