@@ -13,7 +13,7 @@ function paypalipn_adminapi_create($args)
     // if not then set an appropriate error message and return
     if (!isset($args)) {
         $msg = xarML('Invalid Parameter Count);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $var_dump = $args['var_dump'];
