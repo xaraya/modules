@@ -15,6 +15,8 @@
 
 function cachesecurity_adminapi_hook($args)
 {
+    $wasOn = xarModAPIFunc('cachesecurity','admin','ison');
+    
     if (!xarModAPIFunc('cachesecurity','admin','turnoff')) return;
 
     //For now we just synchronize all
@@ -23,10 +25,20 @@ function cachesecurity_adminapi_hook($args)
     //Whoever wants to finish this will be more than welcome.
     //Nice help for that: 
     //http://fungus.teststation.com/~jon/treehandling/TreeHandling.htm
-    if (!xarModAPIFunc('cachesecurity','admin','syncall')) return;
+    if (!xarModAPIFunc(
+        'cachesecurity','admin','unsetsynchronized', array('part'=>'privsgraph')
+    )) return;
 
-    if (!xarModAPIFunc('cachesecurity','admin','turnon')) return;
-  
+    if (!xarModAPIFunc(
+        'cachesecurity','admin','unsetsynchronized', array('part'=>'rolesgraph')
+    )) return;
+
+    //Synchronizing everything again is just too slow depending on the site.
+    if ($wasOn && xarConfigGetVar('CacheSecurity.AutoSync')) {
+        if (!xarModAPIFunc('cachesecurity','admin','syncall')) return;
+        if (!xarModAPIFunc('cachesecurity','admin','turnon')) return;
+    }
+    
     //I know this doesnt make any sense, whatsoever but what can i do?
     return $args['extrainfo'];
 }

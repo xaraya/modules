@@ -126,6 +126,33 @@
     	        		<td><xar:mlstring>Turns on the security caching system.</xar:mlstring></td>
         	    	</tr>	
        	    	</xar:if>
+
+            	<xar:if condition="$autosync">
+	            	<tr>
+    	        		<td>
+		            		<div style="background-color: green">
+		            			<xar:mlstring>On</xar:mlstring>
+		            		</div>
+    	        		</td>
+        	      		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('authid' => $authid, 'autosync' => 'false'))#">
+            	  			<xar:mlstring>Turn Off</xar:mlstring>
+	              		</a></td>
+    	        		<td><xar:mlstring>Turns off the automatic synchronization of the cache security system.</xar:mlstring></td>
+        	    	</tr>	
+       	    	<xar:else />
+	            	<tr>
+    	        		<td>
+		            		<div style="background-color: red">
+		            			<xar:mlstring>Off</xar:mlstring>
+		            		</div>
+    	        		</td>
+        	      		<td><a href="#xarModURL('cachesecurity', 'admin', 'view', array('authid'=>$authid, 'autosync' => 'true'))#">
+            	  			<xar:mlstring>Turn On</xar:mlstring>
+	              		</a></td>
+    	        		<td><xar:mlstring>Turns on the automatic synchronization of the cache security system.</xar:mlstring></td>
+        	    	</tr>	
+       	    	</xar:if>
+
             </table>
         </div>
     </div>
