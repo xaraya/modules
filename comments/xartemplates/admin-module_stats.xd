@@ -78,7 +78,7 @@
                             #$loop:item['inactive']#
                         </td>
                         <td align="center" valign="center" width="20%">
-                            <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
+                            <a href="#$loop:item['delete_url']#"><b><xar:mlstring>Delete</xar:mlstring></b></a>
                         </td>
                     </tr>
                     <tr>

@@ -172,6 +172,6 @@
         </tr>
     </table>
     <br /><br />
-    <input type="submit" value="Update Configuration"  tabindex="3" />
+    <input type="submit" value="#xarML('Update Configuration')#"  tabindex="3" />
 </form>
 </div>
