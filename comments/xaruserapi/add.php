@@ -40,7 +40,7 @@ function comments_userapi_add($args)
         return;
     }
 
-    if (!isset($pid) || empty($pid)) 
+    if (!isset($pid) || empty($pid)) {
         $pid = 0;
     }
 
