@@ -10,7 +10,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Censor Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Censored Word</xar:mlstring></h2>
 	<div style="margin: auto;">
-	<form action="#xarModURL('censor', 'admin', 'update')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" />
+	<form action="#xarModURL('censor', 'admin', 'update')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
 		<div style="clear: both; padding-top: 10px;">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<input type="hidden" name="cid" id="cid" value="#$cid#" />
