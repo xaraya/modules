@@ -30,21 +30,21 @@ function images_init()
         return;
     }
     
-    if(xarServerGetVar('PATH_TRANSLATED')) {
-        $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
-    } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
-        $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
-    } else {
-        $base_directory = './';
-    }
-    
     // Load any predefined constants
     xarModAPILoad('images', 'user');
     
     // Set up module variables
     xarModSetVar('images', 'type.graphics-library', _IMAGES_LIBRARY_GD);
-    xarModSetVar('images', 'path.derivative-store', $base_directory . '/images/.thumbs');
-    
+    xarModSetVar('images', 'path.derivative-store', 'Put a real directory in here...!');
+
+/*
+    xarRegisterMask('ViewUploads',  'All','images','Image','All','ACCESS_READ');
+    xarRegisterMask('AddUploads',   'All','images','Image','All','ACCESS_ADD');
+    xarRegisterMask('EditUploads',  'All','images','Image','All','ACCESS_EDIT');
+    xarRegisterMask('DeleteUploads','All','images','Image','All','ACCESS_DELETE');
+*/
+    xarRegisterMask('AdminImages', 'All','images','Image','All','ACCESS_ADMIN');
+
     $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),
                              new xarTemplateAttribute('height',      XAR_TPL_OPTIONAL | XAR_TPL_STRING),
                              new xarTemplateAttribute('width',       XAR_TPL_OPTIONAL | XAR_TPL_STRING),

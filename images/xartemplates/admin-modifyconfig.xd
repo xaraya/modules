@@ -1,0 +1,59 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Images Administration</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>Modify Images Configuration</xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+
+        <form method="post" name="post" id="post" action="#xarModURL('images', 'admin', 'updateconfig')#">
+            <input type="hidden" name="authid" value="#$authid#">
+            <p>
+                <strong><xar:mlstring>Derivatives Storage Directory</xar:mlstring>:</strong>&nbsp;&nbsp;
+                <input type="text" name="path[derivative-store]" value="#$path['derivative-store']#" size="70">
+                <br />
+                <xar:mlstring>
+                    This is the full path to the directory where Derivative images will be stored.  
+                    It is stronly recommended that this directory be located outside of your web directory.
+                    <br />NOTE: This directory MUST be writable by the webserver.
+                </xar:mlstring>
+            </p>
+            <p>
+                <strong>
+                    <xar:mlstring>
+                        Select Graphics Library:
+                    </xar:mlstring>
+                </strong>&nbsp;&nbsp;
+
+                <xar:if condition="$libtype['graphics-library'] eq $library['GD']">
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" checked="checked" /> GD
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" disabled="true" /> Image Magick
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" disabled="true" /> NetPBM
+<!--
+                <xar:elseif condition="$libtype['graphics-library'] eq $library['ImageMagick']" />
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" checked="checked" /> Image Magick
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" /> NetPBM
+                <xar:else />
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['GD']#" /> GD
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['ImageMagick']#" /> Image Magick
+                    <input type="radio" name="libtype[graphics-library]" value="#$library['NetPBM']#" checked="checked" /> NetPBM
+-->
+                </xar:if>
+                <br />
+                <xar:mlstring>
+                    <em>
+                        <strong>Note:</strong> currently, only GD >= 2.0.1 is supported
+                    </em>
+                </xar:mlstring>
+            </p>
+            <p>
+                <input type="submit" name="update" value="#xarMl('Update Configuration')#">
+            </p>
+        </form>
+    </div>
+</div>
