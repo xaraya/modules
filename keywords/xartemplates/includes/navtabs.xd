@@ -90,7 +90,7 @@
                         s - z
                     </xar:mlstring>
                 </a>
-        <dd>
+        </dd>
         </xar:if>
         <xar:if condition="$tab eq 5">
         <dd class="active">
@@ -107,6 +107,6 @@
                         other
                     </xar:mlstring>
                 </a>
-        <dd>
+        </dd>
         </xar:if>
     </dl>

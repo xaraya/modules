@@ -35,36 +35,35 @@
             <xar:set name="i">1</xar:set>
             <xar:set name="j">0</xar:set>
             <!-- Begin first list column div -->
+            <!-- TODO: well, what can i say, does the author still know what happens here? -->
             <div style="float:left; width: #$divwidth#%; text-align: left;">
                 <ul>
-                <xar:foreach in="$items" value="$item">
-                    <xar:set name="j">++$j</xar:set>
-                    <xar:if condition="$i++ lt $totitemspercol">
-                        <li>
-                            <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                        </li>
-                <xar:elseif condition="($j eq $totitems)" />
-                        <li>
-                            <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                        </li>
-                        <xar:set name="i">1</xar:set>
-                <xar:else />
-                        <li>
-                            <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
-                        </li>
-                  </ul>
-             </div> <!-- end list column -->
+                    <xar:foreach in="$items" value="$item">
+                        <xar:set name="j">++$j</xar:set>
+                        <xar:if condition="$i++ lt $totitemspercol">
+                            <li>
+                                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                            </li>
+                        <xar:elseif condition="($j eq $totitems)" />
+                            <li>
+                                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                            </li>
+                            <xar:set name="i">1</xar:set>
+                        <xar:else />
+                            <li>
+                                <a href="#$item['url']#">#$item['label']#</a> (#$item['count']#)
+                            </li>
+                            </ul>
+                            </div> <!-- end list column -->
 
-                     <!-- begin list column -->
-             <div style="float:left; width: #$divwidth#%; text-align: left;">
-                   <ul>
-                   <xar:set name="i">1</xar:set>
-               </xar:if>
-           </xar:foreach>
-
-                   </ul>
-
-              </div>              <!-- end last column div -->
+                            <!-- begin list column -->
+                            <div style="float:left; width: #$divwidth#%; text-align: left;">
+                                <ul>
+                                    <xar:set name="i">1</xar:set>
+                        </xar:if>
+                    </xar:foreach>
+               </ul>
+            </div>              <!-- end last column div -->
         </div>  <!-- End all column wrapping div -->
     </xar:if>
     </div>    <!-- End div for wrapping whole if section -->
