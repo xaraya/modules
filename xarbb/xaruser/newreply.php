@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * File: $Id$
  * 
@@ -51,7 +51,7 @@ function xarbb_user_newreply()
                               array('cid' => $cid));
 
         foreach ($data as $comment){
-            $package['title'] = xarVarPrepForDisplay($comment['xar_title']);
+            $package['title'] = $comment['xar_title']; //prepped in template 
             if ($phase == 'quote'){
                 $package['text'] = '[quote]'. $comment['xar_text'] .'[/quote]';
             } elseif ($phase == 'edit') {
