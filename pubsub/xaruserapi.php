@@ -70,22 +70,21 @@ function pubsub_userapi_adduser($args)
 
     // check not already subscribed
     $query = "SELECT xar_pubsubid
- 	    FROM $pubsubregtable
-	    WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "',
-	          xar_userid '" . xarVarPrepForStore($userid) . "'";
+ 	          FROM $pubsubregtable
+	          WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "',
+	                xar_userid '" . xarVarPrepForStore($userid) . "'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
     if (count($result) > 0) {
         pubsub_user_subscribed();
-    #    $msg = xarML('Item already exists in function #(1)() in module #(2)',
-    #                'subscribe', 'Pubsub');
-    #    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-    #                  new SystemException($msg));
+    //   $msg = xarML('Item already exists in function #(1)() in module #(2)',
+    //               'subscribe', 'Pubsub');
+    //   xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+    //                 new SystemException($msg));
         return;
     }
 
-    
     // Get next ID in table
     $nextId = $dbconn->GenId($pubsubregtable);
 
@@ -148,7 +147,7 @@ function pubsub_userapi_deluser($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubregtable
-            WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
+              WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
 
@@ -200,8 +199,8 @@ function pubsub_userapi_updatesubscription($args)
 
     // Update the item
     $query = "UPDATE $pubsubregtable
-            SET xar_actionid = '" . xarVarPrepForStore($actionid) . "'
-            WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
+              SET xar_actionid = '" . xarVarPrepForStore($actionid) . "'
+              WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
 
@@ -239,7 +238,7 @@ function pubsub_userapi_getsubscriptions($args)
 
     // fetch items
     $query = "SELECT xar_pubsubid FROM $pubsubregtable
-            WHERE xar_userid = '" . xarVarPrepForStore($userid) . "'";
+              WHERE xar_userid = '" . xarVarPrepForStore($userid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
 
@@ -278,7 +277,7 @@ function pubsub_userapi_delsubscriptions($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubregtable
-            WHERE xar_userid = '" . xarVarPrepForStore($userid) . "'";
+              WHERE xar_userid = '" . xarVarPrepForStore($userid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
 
@@ -299,27 +298,43 @@ function pubsub_userapi_getall($args)
         return $events;
     }
 
+    // Load categories API
+    if (!xarModAPILoad('categories', 'user')) {
+        $msg = xarML('Unable to load #(1) #(2) API',
+                     'categories','user');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD',
+                           new SystemException($msg));
+                                                                                               return false;
+    }
+
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];
-    $itemstable = $xartable['items'];
     $pubsubtemplatetable = $xartable['pubsub_template'];
     $pubsubeventstable = $xartable['pubsub_events'];
+    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
-    $query = "SELECT $modulestable.xar_name AS ModuleName,     
-               $categoriestable.xar_name AS Category,        
-               $itemstable.xar_item_name AS Item,        
-               COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers, 
-               $pubsubtemplatetable.xar_template AS Template        
-       FROM $pubsubeventstable, $modulestable, $categoriestable, $itemstable, $pubsubtemplatetable 
-       WHERE $pubsubeventstable.xar_modid = $modulestable.xar_id AND     
-               $pubsubeventstable.xar_cid = $categoriestable.xar_cid AND     
-               $pubsubeventstable.xar_iid = $itemstable.xar_id       
-               $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid AND
-               $pubsubtemplatetable.xar_eventid = $pubsubeventstable.xar_eventid
-       GROUP BY $pubsubeventstable.xar_eventid"; 
+    $query = "SELECT $modulestable.xar_name AS ModuleName,
+                     $categoriestable.xar_name AS Category,        
+                     COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers, 
+                     $pubsubtemplatetable.xar_template AS Template        
+              FROM $pubsubeventstable, 
+                   $pubsubeventcidstable,
+                   $modulestable, 
+                   $categoriestable, 
+                   $pubsubtemplatetable, 
+                   $pubsubregtable
+              WHERE $pubsubeventstable.xar_modid = $modulestable.xar_id
+              AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+              AND   $pubsubeventcidstable.xar_cid = $categoriestable.xar_cid
+              AND   $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
+              AND   $pubsubtemplatetable.xar_eventid = $pubsubeventstable.xar_eventid
+              GROUP BY $pubsubeventstable.xar_eventid"; 
+
+// ???         $pubsubeventstable.xar_itemtype = $itemstable.xar_id       
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

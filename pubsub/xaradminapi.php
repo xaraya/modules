@@ -34,7 +34,7 @@ function pubsub_adminapi_createhook($args)
     }
     
     $cid = $extrainfo['cid'];
-    $iid = $extrainfo['iid'];
+    $itemtype = $extrainfo['itemtype'];
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
     if (empty($extrainfo['module'])) {
@@ -57,13 +57,16 @@ function pubsub_adminapi_createhook($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
+    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
 
     // check this event isn't already in the DB
-    $query = "SELECT xar_eventid
- 	    FROM $pubsubeventstable
-	    WHERE xar_modid '" . xarVarPrepForStore($modid) . "',
-	          xar_iid '" . xarVarPrepForStore($iid) . "',
-	          xar_cid '" . xarVarPrepForStore($cid) . "'";
+    $query = "SELECT $pubsubeventstable.xar_eventid
+ 	    FROM  $pubsubeventstable, $pubsubeventcidstable
+	    WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+	    AND   $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
+        AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+	    AND   $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+        
     $result = $dbconn->Execute($query);
     if (!$result) return;
     if (count($result) > 0) {
@@ -77,19 +80,29 @@ function pubsub_adminapi_createhook($args)
     // Get next ID in table
     $nextId = $dbconn->GenId($pubsubeventstable);
 
-    // Add item
+    // Add item to events table
     $query = "INSERT INTO $pubsubeventstable (
               xar_eventid,
               xar_modid,
-              xar_cid,
-	      xar_iid,
+	          xar_itemtype,
 	      xar_groupdescr)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($modid) . "',
-              '" . xarVarPrepForStore($cid) . "',
-              '" . xarVarPrepForStore($iid) . "',
+              '" . xarVarPrepForStore($itemtype) . "',
               '" . xarvarPrepForStore($groupdescr) . "')";
+
+    $dbconn->Execute($query);
+    if (!$result) return;
+
+    // Add category to event categories table
+    $query = "INSERT INTO $pubsubeventcidstable (
+              xar_eventid,
+              xar_cid)
+            VALUES (
+              $nextId,
+              '" . xarVarPrepForStore($cid) . "')";
+
     $dbconn->Execute($query);
     if (!$result) return;
 
@@ -110,7 +123,7 @@ function pubsub_adminapi_deletehook($args)
         $extrainfo = array();
     }
     $cid = $extrainfo['cid'];
-    $iid = $extrainfo['iid'];
+    $itemtype = $extrainfo['itemtype'];
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -132,18 +145,21 @@ function pubsub_adminapi_deletehook($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
+    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
 
     // check this event isn't already in the DB
-    $query = "SELECT xar_eventid
- 	    FROM $pubsubeventstable
-	    WHERE xar_modid '" . xarVarPrepForStore($modid) . "',
-	          xar_iid '" . xarVarPrepForStore($iid) . "',
-	          xar_cid '" . xarVarPrepForStore($cid) . "'";
+    $query = "SELECT $pubsubeventstable.xar_eventid
+        FROM  $pubsubeventstable, $pubsubeventcidstable
+        WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+        AND   $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
+        AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+        AND   $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+        
     $result = $dbconn->Execute($query);
     if (!$result) return;
     $eventid = $result->fields[0];
     
-    # call delete function
+    // call delete function
     pubsub_adminapi_delevent($eventid);
 }
 
@@ -186,8 +202,14 @@ function pubsub_adminapi_delevent($args)
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
 
-    // Delete item
+    // Delete item from events table
     $query = "DELETE FROM $pubsubeventstable
+            WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
+    $dbconn->Execute($query);
+    if (!$result) return;
+
+    // Delete item from event categoriess table
+    $query = "DELETE FROM $pubsubeventcidstable
             WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
@@ -273,8 +295,6 @@ function pubsub_adminapi_updateevent($args)
  */
 function pubsub_adminapi_processevent($args)
 {
-// This function will create a new 
-
     // Get arguments from argument array
     extract($args);
     $invalid = array();
@@ -434,12 +454,13 @@ function pubsub_adminapi_runjob($args)
 	// need to create the $tplData array with all the information in it
 
 									
-        // Check for exceptions
-        if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; 
+    // Check for exceptions
+    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; 
    
-        // call BL with the template to parse it and generate the HTML
-        $html = xarTplString($template, $tplData);
-        $plaintext = strip_tags($html);
+    // call BL with the template to parse it and generate the HTML
+    $html = xarTplString($template, $tplData);
+    $plaintext = strip_tags($html);
+
 	if ($action = "htmlmail") { 
 	    $boundary = "b" . md5(uniqid(time()));
 	    $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
@@ -475,9 +496,9 @@ function pubsub_adminapi_runjob($args)
          pubsub_adminapi_deljob($handlingid);
     } else {
         // invalid action - update queue accordingly
-	pubsub_adminapi_updatejob($handlingid,$pubsubid,$objectid,'error');
-	$msg = xarML('Invalid #(1) action',
-                 'Pubsub');
+    	pubsub_adminapi_updatejob($handlingid,$pubsubid,$objectid,'error');
+    	$msg = xarML('Invalid #(1) action',
+                     'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                  new SystemException($msg));
         return;
@@ -526,7 +547,7 @@ function pubsub_adminapi_deljob($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubprocesstable
-            WHERE xar_handlingid = '" . xarVarPrepForStore($handlingid) . "'";
+              WHERE xar_handlingid = '" . xarVarPrepForStore($handlingid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
 
@@ -586,9 +607,9 @@ function pubsub_adminapi_updatejob($args)
 
     // Update the item
     $query = "UPDATE $pubsubprocesstable
-            SET xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "',
-                xar_objectid = '" . xarVarPrepForStore($objectid) . "',
-                xar_status = '" . xarVarPrepForStore($status) . "'
+              SET xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "',
+                  xar_objectid = '" . xarVarPrepForStore($objectid) . "',
+                  xar_status = '" . xarVarPrepForStore($status) . "'
             WHERE xar_handlingid = '" . xarVarPrepForStore($handlingid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
@@ -606,8 +627,6 @@ function pubsub_adminapi_updatejob($args)
  */
 function pubsub_adminapi_addtemplate($args)
 {
-// This function will create a new 
-
     // Get arguments from argument array
     extract($args);
     $invalid = array(); 
@@ -627,7 +646,7 @@ function pubsub_adminapi_addtemplate($args)
 
     // Security check
     if (!xarSecAuthAction(0, 'Pubsub', '::', ACCESS_ADD)) {
-	$msg = xarML('Not authorized to add #(1) items',
+	    $msg = xarML('Not authorized to add #(1) items',
                     'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
@@ -641,8 +660,8 @@ function pubsub_adminapi_addtemplate($args)
 
     // check this event isn't already in the DB
     $query = "SELECT xar_templateid
-            FROM $pubsubtemplatetable
-            WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "'";
+              FROM $pubsubtemplatetable
+              WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
@@ -714,7 +733,7 @@ function pubsub_adminapi_deltemplate($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubtemplatetable
-            WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
+              WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
 
@@ -770,9 +789,9 @@ function pubsub_adminapi_updatetemplate($args)
 
     // Update the item
     $query = "UPDATE $pubsubtemplatetable
-            SET xar_template = '" . xarVarPrepForStore($template) . "',
-                xar_eventid = '" . xarVarPrepForStore($eventid) . "'
-            WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
+              SET xar_template = '" . xarVarPrepForStore($template) . "',
+                  xar_eventid = '" . xarVarPrepForStore($eventid) . "'
+              WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
     $dbconn->Execute($query);
     if (!$result) return;
 

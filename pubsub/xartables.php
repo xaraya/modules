@@ -30,6 +30,12 @@ function pubsub_xartables()
     // Table name
     $xartable['pubsub_events'] = $pubsub_events;
 
+    // Name for pubsub event category ids database entities
+    $pubsub_eventcids = xarDBGetSiteTablePrefix() . '_pubsub_eventcids';
+
+    // Table name
+    $xartable['pubsub_eventcids'] = $pubsub_eventcids;
+
     // Name for pubsub event registration database entities
     $pubsub_reg = xarDBGetSiteTablePrefix() . '_pubsub_reg';
 

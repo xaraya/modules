@@ -12,7 +12,7 @@
             <b><xar:mlstring>What is it?</xar:mlstring></b>
         </td>
         <td align="left" valign="top">
-            <xar:mlstring>The Pubsub module allows users to subscribe to eevnts on your system such as new articles being posted in a particular category or replies on a forum thread.  It also allows you to use predetermined hooks from Xaraya if you have them installed and activated.</xar:mlstring>
+            <xar:mlstring>The Pubsub module allows users to subscribe to events on your system such as new articles being posted in a particular category or replies on a forum thread.  It also allows you to use predetermined hooks from Xaraya if you have them installed and activated.</xar:mlstring>
         </td>
    </tr>
    <tr>

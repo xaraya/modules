@@ -43,7 +43,7 @@ function pubsub_user_displayicon($args)
     }
 		    
     $cid = $extrainfo['cid'];
-    $iid = $extrainfo['iid'];
+    $itemtype = $extrainfo['itemtype'];
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
     if (empty($extrainfo['module'])) {
@@ -60,7 +60,7 @@ function pubsub_user_displayicon($args)
 
     $data['modid'] = xarVarPrepForDisplay($modid);
     $data['cid'] = xarVarPrepForDisplay($cid);
-    $data['iid'] = xarVarPrepForDisplay($iid);
+    $data['itemtype'] = xarVarPrepForDisplay($itemtype);
 
     return $data;
 }
@@ -69,7 +69,7 @@ function pubsub_user_displayicon($args)
  * subscribe user to a pubsub element
  * @param $args['modid'] module ID of event 
  * @param $args['cid'] cid of event
- * @param $args['iid'] iid of event 
+ * @param $args['itemtype'] itemtype of event 
  * @returns output
  * @return output with pubsub information
  */
@@ -85,8 +85,8 @@ function pubsub_user_subscribe($args)
     if (!isset($cid) || !is_numeric($cid)) {
         $invalid[] = 'cid';
     }
-    if (!isset($iid) || !is_numeric($iid)) {
-        $invalid[] = 'iid';
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+        $invalid[] = 'itemtype';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
@@ -100,13 +100,16 @@ function pubsub_user_subscribe($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
+    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
 
     // fetch eventid to subscribe to
-    $query = "SELECT xar_eventid
- 	    FROM $pubsubeventstable
-    	    WHERE xar_modid '" . xarVarPrepForStore($modid) . "',
-    	          xar_cid '" . xarVarPrepForStore($cid) . "',
-  	          xar_iid '" . xarVarPrepForStore($iid) . "'";
+    $query = "SELECT $pubsubeventstable.xar_eventid
+ 	    FROM  $pubsubeventstable, $pubsubeventcidstable
+	    WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+	    AND   $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
+        AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+	    AND   $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+        
     $result = $dbconn->Execute($query);
     if (!$result) return;
     $eventid = $result->fields[0];
@@ -121,13 +124,12 @@ function pubsub_user_subscribe($args)
  * unsubscribe user from a pubsub element
  * @param $args['modid'] module ID of event 
  * @param $args['cid'] cid of event
- * @param $args['iid'] iid of event 
+ * @param $args['itemtype'] itemtype of event 
  * @returns output
  * @return output with pubsub information
  */
 function pubsub_user_unsubscribe($args)
 {
-
     extract($args);
     // Argument check
     $invalid = array();
@@ -137,8 +139,8 @@ function pubsub_user_unsubscribe($args)
     if (!isset($cid) || !is_numeric($cid)) {
         $invalid[] = 'cid';
     }
-    if (!isset($iid) || !is_numeric($iid)) {
-        $invalid[] = 'iid';
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+        $invalid[] = 'itemtype';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
@@ -152,13 +154,16 @@ function pubsub_user_unsubscribe($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
+    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
 
     // fetch eventid to subscribe to
     $query = "SELECT xar_eventid
- 	    FROM $pubsubeventstable
-    	    WHERE xar_modid '" . xarVarPrepForStore($modid) . "',
-    	          xar_cid '" . xarVarPrepForStore($cid) . "',
-  	          xar_iid '" . xarVarPrepForStore($iid) . "'";
+ 	    FROM $pubsubeventstable, $pubsubeventcidstable
+	    WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+	    AND   $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
+        AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+	    AND   $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+        
     $result = $dbconn->Execute($query);
     if (!$result) return;
     $eventid = $result->fields[0];
@@ -207,7 +212,6 @@ function pubsub_user_remove($args)
  */
 function pubsub_user_subscribed($args)
 {
-
     extract($args);
     $invalid = array();
     if (!isset($actionid) || !is_numeric($actionid)) {

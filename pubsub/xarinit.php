@@ -34,11 +34,20 @@ function pubsub_init()
     $eventsfields = array(
         'xar_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_modid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_cid'=>array('type'=>'integer','null'=>FALSE),
-        'xar_iid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_itemtype'=>array('type'=>'integer','null'=>FALSE),
         'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE)
     );
     $query = xarDBCreateTable($pubsubeventstable,$eventsfields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
+    $eventcidsfields = array(
+        'xar_eid'=>array('type'=>'integer','null'=>FALSE,'primary_key'=>TRUE),
+        'xar_cid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_flag'=>array('type'=>'integer','null'=>FALSE,'default'=>'0')
+    );
+    $query = xarDBCreateTable($pubsubeventcidstable,$eventcidsfields);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -208,6 +217,13 @@ function pubsub_delete()
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['pubsub_events']);
+    if (empty($query)) return; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
+    $query = xarDBDropTable($xartable['pubsub_eventcids']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.
