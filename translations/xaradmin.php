@@ -219,7 +219,46 @@ function translations_create_trabar($subtype, $subname, $backend=NULL)
         }
         break;
         case XARMLS_DNTYPE_THEME:
-        // TODO
+
+        $sessthemeid = xarSessionGetVar('translations_themeid');
+        if (!xarVarFetch('themeid', 'id', $themeid, $sessthemeid)) return;
+        xarSessionSetVar('translations_themeid', $themeid);
+
+        if (!$themeinfo = xarModGetInfo($themeid,'theme')) return;
+        $themename = $themeinfo['name'];
+        $themedir = $themeinfo['osdirectory'];
+
+        $selectedsubtype = $subtype;
+        $selectedsubname = $subname;
+
+        $theme_contexts_list[] = 'themes:'.$themename.'::common';
+
+        $dirnames = xarModAPIFunc('translations','admin','get_theme_dirs',array('themedir'=>$themedir));
+        foreach ($dirnames as $dirname) {
+            $pattern = '/^([a-z\-_]+)\.xt$/i';
+            $subnames = xarModAPIFunc('translations','admin','get_theme_files',
+                                  array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));
+            foreach ($subnames as $subname) {
+                $theme_contexts_list[] = 'themes:'.$themename.':'.$dirname.':'.$subname;
+            }
+        }
+
+        $subtypes = array();
+        $subnames = array();
+        $entrydata = array();
+        foreach ($theme_contexts_list as $theme_context) {
+            list ($dntype1, $dnname1, $ctxtype1, $ctxname1) = explode(':',$theme_context);
+            $args = array();
+            $ctxtype2 = 'themes:'.$ctxtype1;
+            $args['subtype'] = $ctxtype2;
+            $args['subname'] = $ctxname1;
+            $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
+            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                $entrydata[] = $entry;
+                $subtypes[] = $ctxtype2;
+                $subnames[] = $ctxname1;
+            }
+        }
         break;
     }
 
