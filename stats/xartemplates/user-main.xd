@@ -62,7 +62,7 @@
 		</xar:if>
 	</div>
 	<div style="text-align: center;">
-		<h3><xar:mlstring>Visitors by hour</xar:mlstring></h3>
+		<h3><xar:mlstring>Page Views by hour</xar:mlstring></h3>
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$perhour">
 				<tr>
@@ -73,7 +73,7 @@
 		</table>
 	</div>
 	<div style="text-align: center;">
-		<h3><xar:mlstring>Visitors by weekday</xar:mlstring></h3>
+		<h3><xar:mlstring>Page Views by weekday</xar:mlstring></h3>
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$perweekday">
 				<tr valign="bottom">
@@ -97,7 +97,7 @@
 	</div>
 	</xar:if>
 	<div style="text-align: center;">
-		<h3><xar:mlstring>Visitors by month</xar:mlstring></h3>
+		<h3><xar:mlstring>Page Views by month</xar:mlstring></h3>
 		<table cellspacing="0" cellpadding="2">
 			<xar:loop name="$permonth">
 				<tr valign="bottom">
