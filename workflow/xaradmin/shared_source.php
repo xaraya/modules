@@ -22,32 +22,32 @@ include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 // The galaxia source editor for activities and
 // processes.
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 if (!isset($_REQUEST['pid'])) {
-	$tplData['msg'] =  xarML("No process indicated");
+    $tplData['msg'] =  xarML("No process indicated");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 $tplData['pid'] =  $_REQUEST['pid'];
 
 if (isset($_REQUEST['code'])) {
-	unset ($_REQUEST['template']);
+    unset ($_REQUEST['template']);
 
-	$_REQUEST['save'] = 'y';
+    $_REQUEST['save'] = 'y';
 }
 
 $proc_info = $processManager->get_process($_REQUEST['pid']);
@@ -59,54 +59,54 @@ $procname = $proc_info['normalized_name'];
 $tplData['warn'] =  '';
 
 if (!isset($_REQUEST['activityId']))
-	$_REQUEST['activityId'] = 0;
+    $_REQUEST['activityId'] = 0;
 
 $tplData['activityId'] =  $_REQUEST['activityId'];
 
 if ($_REQUEST['activityId']) {
-	$act_info = $activityManager->get_activity($_REQUEST['pid'], $_REQUEST['activityId']);
+    $act_info = $activityManager->get_activity($_REQUEST['pid'], $_REQUEST['activityId']);
 
-	$actname = $act_info['normalized_name'];
+    $actname = $act_info['normalized_name'];
 
-	if (isset($_REQUEST['template'])) {
-		$tplData['template'] =  'y';
+    if (isset($_REQUEST['template'])) {
+        $tplData['template'] =  'y';
 
-		$source = GALAXIA_PROCESSES."/$procname/code/templates/$actname" . '.tpl';
-	} else {
-		$tplData['template'] =  'n';
+        $source = GALAXIA_PROCESSES."/$procname/code/templates/$actname" . '.tpl';
+    } else {
+        $tplData['template'] =  'n';
 
-		$source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
-	}
+        $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
+    }
 
-	// Then editing an activity
-	$tplData['act_info'] =  $act_info;
+    // Then editing an activity
+    $tplData['act_info'] =  $act_info;
 } else {
-	$tplData['template'] =  'n';
-	$tplData['act_info'] =  array('isInteractive' => 'n', 'type' => 'shared');
-	// Then editing shared code
-	$source = GALAXIA_PROCESSES."/$procname/code/shared.php";
+    $tplData['template'] =  'n';
+    $tplData['act_info'] =  array('isInteractive' => 'n', 'type' => 'shared');
+    // Then editing shared code
+    $source = GALAXIA_PROCESSES."/$procname/code/shared.php";
 }
 
 //First of all save
 if (isset($_REQUEST['source'])) {
-	// security check on paths
-	$basedir = GALAXIA_PROCESSES . "/$procname/code/";
-	$basepath = realpath($basedir);
-	$sourcepath = realpath($_REQUEST['source_name']);
-	if (substr($sourcepath,0,strlen($basepath)) == $basepath) {
-		$fp = fopen($_REQUEST['source_name'], "wb");
+    // security check on paths
+    $basedir = GALAXIA_PROCESSES . "/$procname/code/";
+    $basepath = realpath($basedir);
+    $sourcepath = realpath($_REQUEST['source_name']);
+    if (substr($sourcepath,0,strlen($basepath)) == $basepath) {
+        $fp = fopen($_REQUEST['source_name'], "wb");
 
-		if (get_magic_quotes_gpc()) {
-			$_REQUEST['source'] = stripslashes($_REQUEST['source']);
-		}
-		fwrite($fp, $_REQUEST['source']);
-		fclose ($fp);
-		if ($_REQUEST['activityId']) {
-			$activityManager->compile_activity($_REQUEST['pid'], $_REQUEST['activityId']);
-		}
-	} else {
-		die('potential hack attack');
-	}
+        if (get_magic_quotes_gpc()) {
+            $_REQUEST['source'] = stripslashes($_REQUEST['source']);
+        }
+        fwrite($fp, $_REQUEST['source']);
+        fclose ($fp);
+        if ($_REQUEST['activityId']) {
+            $activityManager->compile_activity($_REQUEST['pid'], $_REQUEST['activityId']);
+        }
+    } else {
+        die('potential hack attack');
+    }
 }
 
 $tplData['source_name'] =  $source;
@@ -123,11 +123,11 @@ $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
 $errors = array();
 
 if (!$valid) {
-	$errors = $activityManager->get_error();
+    $errors = $activityManager->get_error();
 
-	$proc_info['isValid'] = 'n';
+    $proc_info['isValid'] = 'n';
 } else {
-	$proc_info['isValid'] = 'y';
+    $proc_info['isValid'] = 'y';
 }
 
 $tplData['errors'] =  $errors;

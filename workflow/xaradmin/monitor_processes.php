@@ -20,17 +20,17 @@ function workflow_admin_monitor_processes()
 include_once(GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 // Filtering data to be received by request and
@@ -41,34 +41,34 @@ $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['filter_active']) && $_REQUEST['filter_active'])
-	$wheres[] = "isActive='" . $_REQUEST['filter_active'] . "'";
+    $wheres[] = "isActive='" . $_REQUEST['filter_active'] . "'";
 
 if (isset($_REQUEST['filter_valid']) && $_REQUEST['filter_valid'])
-	$wheres[] = "isValid='" . $_REQUEST['filter_valid'] . "'";
+    $wheres[] = "isValid='" . $_REQUEST['filter_valid'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-	$wheres[] = "pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "pId=" . $_REQUEST['filter_process'] . "";
 
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_asc';
+    $sort_mode = 'name_asc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+    $sort_mode = $_REQUEST["sort_mode"];
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 1;
+    $offset = 1;
 } else {
-	$offset = $_REQUEST["offset"];
+    $offset = $_REQUEST["offset"];
 }
 
 $tplData['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+    $find = $_REQUEST["find"];
 } else {
-	$find = '';
+    $find = '';
 }
 
 $tplData['find'] =  $find;
@@ -83,15 +83,15 @@ $tplData['cant_pages'] =&  $cant_pages;
 $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-	$tplData['next_offset'] =  $offset + $maxRecords;
+    $tplData['next_offset'] =  $offset + $maxRecords;
 } else {
-	$tplData['next_offset'] =  -1;
+    $tplData['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-	$tplData['prev_offset'] =  $offset - $maxRecords;
+    $tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
-	$tplData['prev_offset'] =  -1;
+    $tplData['prev_offset'] =  -1;
 }
 
 $tplData['items'] =&  $items["data"];
@@ -125,14 +125,14 @@ $all_procs = $processMonitor->monitor_list_all_processes('name_asc');
 $tplData['all_procs'] =&  $all_procs;
 
 $sameurl_elements = array(
-	'offset',
-	'sort_mode',
-	'where',
-	'find',
-	'filter_valid',
-	'filter_process',
-	'filter_active',
-	'processId'
+    'offset',
+    'sort_mode',
+    'where',
+    'find',
+    'filter_valid',
+    'filter_process',
+    'filter_active',
+    'processId'
 );
 
 $tplData['stats'] =  $processMonitor->monitor_stats();

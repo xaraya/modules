@@ -20,17 +20,17 @@ function workflow_admin_monitor_activities()
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 // Filtering data to be received by request and
@@ -41,42 +41,42 @@ $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['filter_isInteractive']) && $_REQUEST['filter_isInteractive'])
-	$wheres[] = "isInteractive='" . $_REQUEST['filter_isInteractive'] . "'";
+    $wheres[] = "isInteractive='" . $_REQUEST['filter_isInteractive'] . "'";
 
 if (isset($_REQUEST['filter_isAutoRouted']) && $_REQUEST['filter_isAutoRouted'])
-	$wheres[] = "isAutoRouted='" . $_REQUEST['filter_isAutoRouted'] . "'";
+    $wheres[] = "isAutoRouted='" . $_REQUEST['filter_isAutoRouted'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-	$wheres[] = "pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "pId=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
-	$wheres[] = "activityId=" . $_REQUEST['filter_activity'] . "";
+    $wheres[] = "activityId=" . $_REQUEST['filter_activity'] . "";
 
 if (isset($_REQUEST['filter_type']) && $_REQUEST['filter_type'])
-	$wheres[] = "type='" . $_REQUEST['filter_type'] . "'";
+    $wheres[] = "type='" . $_REQUEST['filter_type'] . "'";
 
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
     // FIXME: this string is wrongly converted by convert_sortmode
-	//$sort_mode = 'pId_asc, flowNum_asc';
-	$sort_mode = 'pId_asc';
+    //$sort_mode = 'pId_asc, flowNum_asc';
+    $sort_mode = 'pId_asc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+    $sort_mode = $_REQUEST["sort_mode"];
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 1;
+    $offset = 1;
 } else {
-	$offset = $_REQUEST["offset"];
+    $offset = $_REQUEST["offset"];
 }
 
 $tplData['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+    $find = $_REQUEST["find"];
 } else {
-	$find = '';
+    $find = '';
 }
 
 $tplData['find'] =  $find;
@@ -91,15 +91,15 @@ $tplData['cant_pages'] =&  $cant_pages;
 $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-	$tplData['next_offset'] =  $offset + $maxRecords;
+    $tplData['next_offset'] =  $offset + $maxRecords;
 } else {
-	$tplData['next_offset'] =  -1;
+    $tplData['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-	$tplData['prev_offset'] =  $offset - $maxRecords;
+    $tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
-	$tplData['prev_offset'] =  -1;
+    $tplData['prev_offset'] =  -1;
 }
 
 $tplData['items'] =&  $items["data"];
@@ -146,9 +146,9 @@ foreach (array_keys($tplData['items']) as $index) {
 }
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-	$where = ' pId=' . $_REQUEST['filter_process'];
+    $where = ' pId=' . $_REQUEST['filter_process'];
 } else {
-	$where = '';
+    $where = '';
 }
 
 $all_acts = $processMonitor->monitor_list_all_activities('name_asc',$where);
@@ -158,16 +158,16 @@ $tplData['types'] =&  $types;
 
 $tplData['stats'] =  $processMonitor->monitor_stats();
 $sameurl_elements = array(
-	'offset',
-	'sort_mode',
-	'where',
-	'find',
-	'filter_isInteractive',
-	'filter_isAutoRouted',
-	'filter_activity',
-	'filter_type',
-	'processId',
-	'filter_process'
+    'offset',
+    'sort_mode',
+    'where',
+    'find',
+    'filter_isInteractive',
+    'filter_isAutoRouted',
+    'filter_activity',
+    'filter_type',
+    'processId',
+    'filter_process'
 );
 
 $tplData['mid'] =  'tiki-g-monitor_activities.tpl';

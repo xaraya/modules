@@ -21,28 +21,28 @@ include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
 // The galaxia process manager PHP script.
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 // Check if we are editing an existing process
 // if so retrieve the process info and assign it.
 if (!isset($_REQUEST['pid']))
-	$_REQUEST['pid'] = 0;
+    $_REQUEST['pid'] = 0;
 
 if ($_REQUEST["pid"]) {
-	$info = $processManager->get_process($_REQUEST["pid"]);
-	$info['graph'] = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
-	$mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
+    $info = $processManager->get_process($_REQUEST["pid"]);
+    $info['graph'] = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
+    $mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
         if (file_exists($info['graph']) && file_exists($mapfile)) {
             $map = join('',file($mapfile));
             $url = xarModURL('workflow','admin','activities',
@@ -53,13 +53,13 @@ if ($_REQUEST["pid"]) {
             $info['graph'] = '';
         }
 } else {
-	$info = array(
-		'name' => '',
-		'description' => '',
-		'version' => '1.0',
-		'isActive' => 'n',
-		'pId' => 0
-	);
+    $info = array(
+        'name' => '',
+        'description' => '',
+        'version' => '1.0',
+        'isActive' => 'n',
+        'pId' => 0
+    );
 }
 
 $tplData['proc_info'] = $info;
@@ -70,39 +70,39 @@ $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['filter'])) {
-	if ($_REQUEST['filter_name']) {
-		$wheres[] = " name='" . $_REQUEST['filter_name'] . "'";
-	}
+    if ($_REQUEST['filter_name']) {
+        $wheres[] = " name='" . $_REQUEST['filter_name'] . "'";
+    }
 
-	if ($_REQUEST['filter_active']) {
-		$wheres[] = " isActive='" . $_REQUEST['filter_active'] . "'";
-	}
+    if ($_REQUEST['filter_active']) {
+        $wheres[] = " isActive='" . $_REQUEST['filter_active'] . "'";
+    }
 
-	$where = implode('and', $wheres);
+    $where = implode('and', $wheres);
 }
 
 if (isset($_REQUEST['where'])) {
-	$where = $_REQUEST['where'];
+    $where = $_REQUEST['where'];
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'lastModif_desc';
+    $sort_mode = 'lastModif_desc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+    $sort_mode = $_REQUEST["sort_mode"];
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 1;
+    $offset = 1;
 } else {
-	$offset = $_REQUEST["offset"];
+    $offset = $_REQUEST["offset"];
 }
 
 $tplData['offset'] = $offset;
 
 if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+    $find = $_REQUEST["find"];
 } else {
-	$find = '';
+    $find = '';
 }
 
 $tplData['find'] =  $find;
@@ -117,40 +117,40 @@ $tplData['cant_pages'] =  $cant_pages;
 $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-	$tplData['next_offset'] =  $offset + $maxRecords;
+    $tplData['next_offset'] =  $offset + $maxRecords;
 } else {
-	$tplData['next_offset'] =  -1;
+    $tplData['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-	$tplData['prev_offset'] =  $offset - $maxRecords;
+    $tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
-	$tplData['prev_offset'] =  -1;
+    $tplData['prev_offset'] =  -1;
 }
 
 $tplData['items'] =  $items["data"];
 
 if ($_REQUEST['pid']) {
-	$valid = $activityManager->validate_process_activities($_REQUEST['pid']);
+    $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
 
-	$errors = array();
+    $errors = array();
 
-	if (!$valid) {
-		$processManager->deactivate_process($_REQUEST['pid']);
+    if (!$valid) {
+        $processManager->deactivate_process($_REQUEST['pid']);
 
-		$errors = $activityManager->get_error();
-	}
+        $errors = $activityManager->get_error();
+    }
 
-	$tplData['errors'] =  $errors;
+    $tplData['errors'] =  $errors;
 }
 
 $sameurl_elements = array(
-	'offset',
-	'sort_mode',
-	'where',
-	'find',
-	'filter_name',
-	'filter_active'
+    'offset',
+    'sort_mode',
+    'where',
+    'find',
+    'filter_name',
+    'filter_active'
 );
 
 $all_procs = $items = $processManager->list_processes(0, -1, 'name_desc', '', '');

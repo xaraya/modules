@@ -20,17 +20,17 @@ function workflow_admin_monitor_instances()
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 // Filtering data to be received by request and
@@ -41,83 +41,83 @@ $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['update'])) {
-	foreach ($_REQUEST['update_status'] as $key => $val) {
-		$processMonitor->update_instance_status($key, $val);
-	}
+    foreach ($_REQUEST['update_status'] as $key => $val) {
+        $processMonitor->update_instance_status($key, $val);
+    }
 
-	foreach ($_REQUEST['update_actstatus'] as $key => $val) {
-		$parts = explode(':', $val);
+    foreach ($_REQUEST['update_actstatus'] as $key => $val) {
+        $parts = explode(':', $val);
 
-		$processMonitor->update_instance_activity_status($key, $parts[1], $parts[0]);
-	}
+        $processMonitor->update_instance_activity_status($key, $parts[1], $parts[0]);
+    }
 }
 
 if (isset($_REQUEST['delete'])) {
-	foreach (array_keys($_REQUEST['inst'])as $ins) {
-		$processMonitor->remove_instance($ins);
-	}
+    foreach (array_keys($_REQUEST['inst'])as $ins) {
+        $processMonitor->remove_instance($ins);
+    }
 }
 
 if (isset($_REQUEST['remove_aborted'])) {
-	$processMonitor->remove_aborted();
+    $processMonitor->remove_aborted();
 }
 
 if (isset($_REQUEST['remove_all'])) {
-	$processMonitor->remove_all($_REQUEST['filter_process']);
+    $processMonitor->remove_all($_REQUEST['filter_process']);
 }
 
 if (isset($_REQUEST['sendInstance'])) {
-	//activityId indicates the activity where the instance was
-	//and we have to send it to some activity to be determined
-	include_once (GALAXIA_LIBRARY.'/src/API/Instance.php');
+    //activityId indicates the activity where the instance was
+    //and we have to send it to some activity to be determined
+    include_once (GALAXIA_LIBRARY.'/src/API/Instance.php');
 
-	$dbconn =& xarDBGetConn();
-	$dbconn->SetFetchMode(ADODB_FETCH_ASSOC);
-	$instance = new Instance($dbconn);
-	$instance->getInstance($_REQUEST['sendInstance']);
-	// Do not add a workitem since the instance must be already completed!
-	$instance->complete($_REQUEST['activityId'], true, false);
-	unset ($instance);
+    $dbconn =& xarDBGetConn();
+    $dbconn->SetFetchMode(ADODB_FETCH_ASSOC);
+    $instance = new Instance($dbconn);
+    $instance->getInstance($_REQUEST['sendInstance']);
+    // Do not add a workitem since the instance must be already completed!
+    $instance->complete($_REQUEST['activityId'], true, false);
+    unset ($instance);
 }
 
 if (isset($_REQUEST['filter_status']) && $_REQUEST['filter_status'])
-	$wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
+    $wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
 
 if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
-	$wheres[] = "actstatus='" . $_REQUEST['filter_act_status'] . "'";
+    $wheres[] = "actstatus='" . $_REQUEST['filter_act_status'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-	$wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
-	$wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
+    $wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
 
 if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
-	$wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
+    $wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
 
 if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
-	$wheres[] = "owner='" . $_REQUEST['filter_owner'] . "'";
+    $wheres[] = "owner='" . $_REQUEST['filter_owner'] . "'";
 
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'instanceId_asc';
+    $sort_mode = 'instanceId_asc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+    $sort_mode = $_REQUEST["sort_mode"];
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 1;
+    $offset = 1;
 } else {
-	$offset = $_REQUEST["offset"];
+    $offset = $_REQUEST["offset"];
 }
 
 $tplData['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+    $find = $_REQUEST["find"];
 } else {
-	$find = '';
+    $find = '';
 }
 
 $tplData['find'] =  $find;
@@ -132,15 +132,15 @@ $tplData['cant_pages'] =&  $cant_pages;
 $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-	$tplData['next_offset'] =  $offset + $maxRecords;
+    $tplData['next_offset'] =  $offset + $maxRecords;
 } else {
-	$tplData['next_offset'] =  -1;
+    $tplData['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-	$tplData['prev_offset'] =  $offset - $maxRecords;
+    $tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
-	$tplData['prev_offset'] =  -1;
+    $tplData['prev_offset'] =  -1;
 }
 
 $maxtime = 0;
@@ -180,9 +180,9 @@ $all_procs = $processMonitor->monitor_list_all_processes('name_asc');
 $tplData['all_procs'] =&  $all_procs;
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-	$where = ' pId=' . $_REQUEST['filter_process'];
+    $where = ' pId=' . $_REQUEST['filter_process'];
 } else {
-	$where = '';
+    $where = '';
 }
 
 $all_acts = $processMonitor->monitor_list_all_activities('name_desc', $where);
@@ -194,27 +194,27 @@ $tplData['types'] =&  $types;
 $tplData['stats'] =  $processMonitor->monitor_stats();
 
 $all_statuses = array(
-	'aborted',
-	'active',
-	'completed',
-	'exception'
+    'aborted',
+    'active',
+    'completed',
+    'exception'
 );
 
 $tplData['all_statuses'] =  $all_statuses;
 
 $sameurl_elements = array(
-	'offset',
-	'sort_mode',
-	'where',
-	'find',
-	'filter_user',
-	'filter_status',
-	'filter_act_status',
-	'filter_type',
-	'processId',
-	'filter_process',
-	'filter_owner',
-	'filter_activity'
+    'offset',
+    'sort_mode',
+    'where',
+    'find',
+    'filter_user',
+    'filter_status',
+    'filter_act_status',
+    'filter_type',
+    'processId',
+    'filter_process',
+    'filter_owner',
+    'filter_activity'
 );
 
 $tplData['statuses'] =  $processMonitor->monitor_list_statuses();

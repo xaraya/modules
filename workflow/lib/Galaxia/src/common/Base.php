@@ -8,7 +8,7 @@ database connection, database methods and the Observable interface.
 */
 class Base extends Observable {
   var $db;  // The ADODB object used to access the database
-	var $num_queries = 0;
+    var $num_queries = 0;
 
   // Constructor receiving a ADODB database object.
   function Base($db)
@@ -19,111 +19,111 @@ class Base extends Observable {
     $this->db = $db;
   }
 
-	// copied from tikilib.php
-	function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) {
-		$this->convert_query($query);
-		if ($numrows == -1 && $offset == -1)
-			$result = $this->db->Execute($query, $values);
-		else
-			$result = $this->db->SelectLimit($query, $numrows, $offset, $values);
-		if (!$result && $reporterrors)
-			$this->sql_error($query, $values, $result);
-		$this->num_queries++;
-		return $result;
-	}
+    // copied from tikilib.php
+    function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) {
+        $this->convert_query($query);
+        if ($numrows == -1 && $offset == -1)
+            $result = $this->db->Execute($query, $values);
+        else
+            $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+        if (!$result && $reporterrors)
+            $this->sql_error($query, $values, $result);
+        $this->num_queries++;
+        return $result;
+    }
 
-	function getOne($query, $values = null, $reporterrors = true) {
-		$this->convert_query($query);
-		$result = $this->db->SelectLimit($query, 1, 0, $values);
-		if (!$result && $reporterrors)
-			$this->sql_error($query, $values, $result);
+    function getOne($query, $values = null, $reporterrors = true) {
+        $this->convert_query($query);
+        $result = $this->db->SelectLimit($query, 1, 0, $values);
+        if (!$result && $reporterrors)
+            $this->sql_error($query, $values, $result);
 
-		$res = $result->fetchRow();
-		$this->num_queries++;
-		if ($res === false)
-			return (NULL); //simulate pears behaviour
-		list($key, $value) = each($res);
-		return $value;
-	}
+        $res = $result->fetchRow();
+        $this->num_queries++;
+        if ($res === false)
+            return (NULL); //simulate pears behaviour
+        list($key, $value) = each($res);
+        return $value;
+    }
 
-	function sql_error($query, $values, $result) {
-		global $ADODB_LASTDB;
+    function sql_error($query, $values, $result) {
+        global $ADODB_LASTDB;
 
-		trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
-		// only for debugging.
-		print_r($values);
-		//echo "<br/>";
-		die;
-	}
+        trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+        // only for debugging.
+        print_r($values);
+        //echo "<br/>";
+        die;
+    }
 
-	// functions to support DB abstraction
-	function convert_query(&$query) {
-		global $ADODB_LASTDB;
+    // functions to support DB abstraction
+    function convert_query(&$query) {
+        global $ADODB_LASTDB;
 
-		switch ($ADODB_LASTDB) {
-		case "oci8":
-			$query = preg_replace("/`/", "\"", $query);
-			// convert bind variables - adodb does not do that 
-			$qe = explode("?", $query);
-			$query = '';
-			for ($i = 0; $i < sizeof($qe) - 1; $i++) {
-				$query .= $qe[$i] . ":" . $i;
-			}
-			$query .= $qe[$i];
-			break;
-		case "postgres7":
-		case "sybase":
-			$query = preg_replace("/`/", "\"", $query);
-			break;
-		}
-	}
+        switch ($ADODB_LASTDB) {
+        case "oci8":
+            $query = preg_replace("/`/", "\"", $query);
+            // convert bind variables - adodb does not do that 
+            $qe = explode("?", $query);
+            $query = '';
+            for ($i = 0; $i < sizeof($qe) - 1; $i++) {
+                $query .= $qe[$i] . ":" . $i;
+            }
+            $query .= $qe[$i];
+            break;
+        case "postgres7":
+        case "sybase":
+            $query = preg_replace("/`/", "\"", $query);
+            break;
+        }
+    }
 
-	function convert_sortmode($sort_mode) {
-		global $ADODB_LASTDB;
+    function convert_sortmode($sort_mode) {
+        global $ADODB_LASTDB;
 
-		switch ($ADODB_LASTDB) {
-		case "pgsql72":
-		case "postgres7":
-		case "oci8":
-		case "sybase":
-			// Postgres needs " " around column names
-			//preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
-			$sort_mode = str_replace("_", "\" ", $sort_mode);
-			$sort_mode = "\"" . $sort_mode;
-			break;
-		case "mysql3":
-		case "mysql":
-		default:
-			$sort_mode = str_replace("_", "` ", $sort_mode);
-			$sort_mode = "`" . $sort_mode;
-			break;
-		}
-		return $sort_mode;
-	}
+        switch ($ADODB_LASTDB) {
+        case "pgsql72":
+        case "postgres7":
+        case "oci8":
+        case "sybase":
+            // Postgres needs " " around column names
+            //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
+            $sort_mode = str_replace("_", "\" ", $sort_mode);
+            $sort_mode = "\"" . $sort_mode;
+            break;
+        case "mysql3":
+        case "mysql":
+        default:
+            $sort_mode = str_replace("_", "` ", $sort_mode);
+            $sort_mode = "`" . $sort_mode;
+            break;
+        }
+        return $sort_mode;
+    }
 
-	function convert_binary() {
-		global $ADODB_LASTDB;
+    function convert_binary() {
+        global $ADODB_LASTDB;
 
-		switch ($ADODB_LASTDB) {
-		case "pgsql72":
-		case "oci8":
-		case "postgres7":
-			return;
-			break;
-		case "mysql3":
-		case "mysql":
-			return "binary";
-			break;
-		}
-	}
+        switch ($ADODB_LASTDB) {
+        case "pgsql72":
+        case "oci8":
+        case "postgres7":
+            return;
+            break;
+        case "mysql3":
+        case "mysql":
+            return "binary";
+            break;
+        }
+    }
 
-	function qstr($string, $quoted = null)
-	{
-		if (!isset($quoted)) {
-			$quoted = get_magic_quotes_gpc();
-		}
-		return $this->db->qstr($string,$quoted);
-	}
+    function qstr($string, $quoted = null)
+    {
+        if (!isset($quoted)) {
+            $quoted = get_magic_quotes_gpc();
+        }
+        return $this->db->qstr($string,$quoted);
+    }
 
 } //end of class
 

@@ -46,24 +46,24 @@ $user_roles = $activity->getUserRoles($user);
 // Only check roles if this is an interactive
 // activity
 if ($activity->isInteractive()) {
-	if (!count(array_intersect($act_roles, $user_roles))) {
-		return xarML("You can't execute this activity");
-	}
+    if (!count(array_intersect($act_roles, $user_roles))) {
+        return xarML("You can't execute this activity");
+    }
 }
 
 $act_role_names = $activity->getActivityRoleNames($user);
 
 // FIXME: what's this for ?
 foreach ($act_role_names as $role) {
-	$name = 'tiki-role-' . $role['name'];
+    $name = 'tiki-role-' . $role['name'];
 
-	if (in_array($role['roleId'], $user_roles)) {
+    if (in_array($role['roleId'], $user_roles)) {
                 $tplData[$name] = 'y';
                 $$name = 'y';
-	} else {
+    } else {
                 $tplData[$name] = 'n';
                 $$name = 'n';
-	}
+    }
 }
 
     $source = GALAXIA_PROCESSES.'/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';

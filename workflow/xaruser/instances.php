@@ -51,17 +51,17 @@ include_once (GALAXIA_LIBRARY.'/GUI.php');
 
 // Check if feature is enabled and permissions
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'user', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'user', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_use_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'user', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'user', 'error', $tplData);
+    die;
 }
 
 $action = 0;
@@ -71,71 +71,71 @@ $action = 0;
 // filter_active, filter_valid, find, sort_mode,
 // filter_process
 if (isset($_REQUEST['send']) || isset($_REQUEST['send_x'])) {
-	$GUI->gui_send_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-	$action = 1;
+    $GUI->gui_send_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    $action = 1;
 } elseif (isset($_REQUEST['abort']) || isset($_REQUEST['abort_x'])) {
-	$GUI->gui_abort_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-	$action = 1;
+    $GUI->gui_abort_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    $action = 1;
 } elseif (isset($_REQUEST['exception']) || isset($_REQUEST['exception_x'])) {
-	$GUI->gui_exception_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-	$action = 1;
+    $GUI->gui_exception_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    $action = 1;
 } elseif (isset($_REQUEST['resume']) || isset($_REQUEST['resume_x'])) {
-	$GUI->gui_resume_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-	$action = 1;
+    $GUI->gui_resume_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    $action = 1;
 } elseif (isset($_REQUEST['grab']) || isset($_REQUEST['grab_x'])) {
-	$GUI->gui_grab_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-	$action = 1;
+    $GUI->gui_grab_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    $action = 1;
 } elseif (isset($_REQUEST['release']) || isset($_REQUEST['release_x'])) {
-	$GUI->gui_release_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-	$action = 1;
+    $GUI->gui_release_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    $action = 1;
 }
 
 if ($action && !empty($_REQUEST['return_url'])) {
-	xarResponseRedirect($_REQUEST['return_url']);
-	return true;
+    xarResponseRedirect($_REQUEST['return_url']);
+    return true;
 }
 
 $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['filter_status']) && $_REQUEST['filter_status'])
-	$wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
+    $wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
 
 if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
-	$wheres[] = "gia.status='" . $_REQUEST['filter_act_status'] . "'";
+    $wheres[] = "gia.status='" . $_REQUEST['filter_act_status'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-	$wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
-	$wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
+    $wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
 
 if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
-	$wheres[] = "gia.user='" . $_REQUEST['filter_user'] . "'";
+    $wheres[] = "gia.user='" . $_REQUEST['filter_user'] . "'";
 
 if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
-	$wheres[] = "owner='" . $_REQUEST['filter_owner'] . "'";
+    $wheres[] = "owner='" . $_REQUEST['filter_owner'] . "'";
 
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'pId_asc, instanceId_asc';
+    $sort_mode = 'pId_asc, instanceId_asc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+    $sort_mode = $_REQUEST["sort_mode"];
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 1;
+    $offset = 1;
 } else {
-	$offset = $_REQUEST["offset"];
+    $offset = $_REQUEST["offset"];
 }
 
 $tplData['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+    $find = $_REQUEST["find"];
 } else {
-	$find = '';
+    $find = '';
 }
 
 $tplData['find'] =  $find;
@@ -150,15 +150,15 @@ $tplData['cant_pages'] =&  $cant_pages;
 $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-	$tplData['next_offset'] =  $offset + $maxRecords;
+    $tplData['next_offset'] =  $offset + $maxRecords;
 } else {
-	$tplData['next_offset'] =  -1;
+    $tplData['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-	$tplData['prev_offset'] =  $offset - $maxRecords;
+    $tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
-	$tplData['prev_offset'] =  -1;
+    $tplData['prev_offset'] =  -1;
 }
 
 foreach ($items['data'] as $index => $info) {
@@ -189,9 +189,9 @@ $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '')
 $tplData['all_procs'] =&  $processes['data'];
 
 $all_statuses = array(
-	'aborted',
-	'active',
-	'exception'
+    'aborted',
+    'active',
+    'exception'
 );
 
 $tplData['statuses'] =  $all_statuses;
@@ -200,18 +200,18 @@ $tplData['statuses'] =  $all_statuses;
 //include_once ('tiki-section_options.php');
 
 $sameurl_elements = array(
-	'offset',
-	'sort_mode',
-	'where',
-	'find',
-	'filter_user',
-	'filter_status',
-	'filter_act_status',
-	'filter_type',
-	'processId',
-	'filter_process',
-	'filter_owner',
-	'filter_activity'
+    'offset',
+    'sort_mode',
+    'where',
+    'find',
+    'filter_user',
+    'filter_status',
+    'filter_act_status',
+    'filter_type',
+    'processId',
+    'filter_process',
+    'filter_owner',
+    'filter_activity'
 );
 
 $tplData['mid'] =  'tiki-g-user_instances.tpl';

@@ -20,17 +20,17 @@ function workflow_admin_monitor_workitems()
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'monitor', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'monitor', 'error', $tplData);
+    die;
 }
 
 // Filtering data to be received by request and
@@ -41,37 +41,37 @@ $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['filter_instance']) && $_REQUEST['filter_instance'])
-	$wheres[] = "instanceId=" . $_REQUEST['filter_instance'] . "";
+    $wheres[] = "instanceId=" . $_REQUEST['filter_instance'] . "";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
-	$wheres[] = "gp.pId=" . $_REQUEST['filter_process'] . "";
+    $wheres[] = "gp.pId=" . $_REQUEST['filter_process'] . "";
 
 if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
-	$wheres[] = "ga.activityId=" . $_REQUEST['filter_activity'] . "";
+    $wheres[] = "ga.activityId=" . $_REQUEST['filter_activity'] . "";
 
 if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
-	$wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
+    $wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
 
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'instanceId_asc, `itemId_asc';
+    $sort_mode = 'instanceId_asc, `itemId_asc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+    $sort_mode = $_REQUEST["sort_mode"];
 }
 
 if (!isset($_REQUEST["offset"])) {
-	$offset = 1;
+    $offset = 1;
 } else {
-	$offset = $_REQUEST["offset"];
+    $offset = $_REQUEST["offset"];
 }
 
 $tplData['offset'] =&  $offset;
 
 if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+    $find = $_REQUEST["find"];
 } else {
-	$find = '';
+    $find = '';
 }
 
 $tplData['find'] =  $find;
@@ -86,15 +86,15 @@ $tplData['cant_pages'] =&  $cant_pages;
 $tplData['actual_page'] =  1 + (($offset - 1) / $maxRecords);
 
 if ($items["cant"] >= ($offset + $maxRecords)) {
-	$tplData['next_offset'] =  $offset + $maxRecords;
+    $tplData['next_offset'] =  $offset + $maxRecords;
 } else {
-	$tplData['next_offset'] =  -1;
+    $tplData['next_offset'] =  -1;
 }
 
 if ($offset > 1) {
-	$tplData['prev_offset'] =  $offset - $maxRecords;
+    $tplData['prev_offset'] =  $offset - $maxRecords;
 } else {
-	$tplData['prev_offset'] =  -1;
+    $tplData['prev_offset'] =  -1;
 }
 
 $maxtime = 0;
@@ -124,25 +124,25 @@ $all_procs = $processMonitor->monitor_list_all_processes('name_asc');
 $tplData['all_procs'] =&  $all_procs;
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
-	$where = ' pId=' . $_REQUEST['filter_process'];
+    $where = ' pId=' . $_REQUEST['filter_process'];
 } else {
-	$where = '';
+    $where = '';
 }
 
 $all_acts = $processMonitor->monitor_list_all_activities('name_desc', $where);
 $tplData['all_acts'] =&  $all_acts;
 
 $sameurl_elements = array(
-	'offset',
-	'sort_mode',
-	'where',
-	'find',
-	'filter_user',
-	'filter_activity',
-	'filter_process',
-	'filter_instance',
-	'processId',
-	'filter_process'
+    'offset',
+    'sort_mode',
+    'where',
+    'find',
+    'filter_user',
+    'filter_activity',
+    'filter_process',
+    'filter_instance',
+    'processId',
+    'filter_process'
 );
 
 $types = $processMonitor->monitor_list_activity_types();

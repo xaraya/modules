@@ -20,24 +20,24 @@ function workflow_admin_workitem()
 include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
-	$tplData['msg'] =  xarML("This feature is disabled");
+    $tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
-	$tplData['msg'] =  xarML("Permission denied");
+    $tplData['msg'] =  xarML("Permission denied");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 if (!isset($_REQUEST['itemId'])) {
-	$tplData['msg'] =  xarML("No item indicated");
+    $tplData['msg'] =  xarML("No item indicated");
 
-	return xarTplModule('workflow', 'admin', 'error', $tplData);
-	die;
+    return xarTplModule('workflow', 'admin', 'error', $tplData);
+    die;
 }
 
 $wi = $processMonitor->monitor_get_workitem($_REQUEST['itemId']);
@@ -49,11 +49,11 @@ $tplData['wi'] =&  $wi;
 $tplData['stats'] =  $processMonitor->monitor_stats();
 
 $sameurl_elements = array(
-	'offset',
-	'sort_mode',
-	'where',
-	'find',
-	'itemId'
+    'offset',
+    'sort_mode',
+    'where',
+    'find',
+    'itemId'
 );
 
 $tplData['mid'] =  'tiki-g-view_workitem.tpl';
