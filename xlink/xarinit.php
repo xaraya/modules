@@ -18,8 +18,8 @@
  */
 function xlink_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $xlinktable = $xartable['xlink'];
 
@@ -174,8 +174,8 @@ function xlink_upgrade($oldversion)
  */
 function xlink_delete()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 

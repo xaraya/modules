@@ -86,8 +86,8 @@ function xlink_adminapi_createhook($args)
         return $extrainfo;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $xlinktable = $xartable['xlink'];
 
 // TODO: generate auto-increment per base if necessary

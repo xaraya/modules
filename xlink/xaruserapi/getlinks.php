@@ -38,8 +38,8 @@ function xlink_userapi_getlinks($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $xlinktable = $xartable['xlink'];
 
     // Get links for this module item

@@ -72,8 +72,8 @@ function xlink_adminapi_deletehook($args)
         return $extrainfo;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $xlinktable = $xartable['xlink'];
 
     $query = "DELETE FROM $xlinktable

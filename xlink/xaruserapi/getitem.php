@@ -39,8 +39,8 @@ function xlink_userapi_getitem($args)
         }
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $xlinktable = $xartable['xlink'];
 
     // Get module item for this id

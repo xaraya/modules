@@ -128,8 +128,8 @@ function xlink_adminapi_updatehook($args)
         }
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $xlinktable = $xartable['xlink'];
 
 // TODO: re-evaluate having 1 or more references to the same module item
