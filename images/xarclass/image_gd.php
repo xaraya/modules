@@ -27,8 +27,8 @@ class Image_GD extends Image_Properties
         
         // If the original height and widht are the same
         // as the new height and width, return true
-        if ($this->_owidth == $this->width && 
-            $this->_oheight == $this->height) {
+        if ($this->original_width == $this->width && 
+            $this->original_height == $this->height) {
                 return TRUE;
         } 
         
@@ -45,7 +45,9 @@ class Image_GD extends Image_Properties
                 $this->_tmpFile = tempnam(NULL, 'xarimage-');
             }
             $newImage = imageCreateTrueColor($this->width, $this->height);
-            imageCopyResampled($newImage, $origImage, 0, 0, 0, 0, $this->width, $this->height, $this->_owidth, $this->_oheight);
+            imageCopyResampled($newImage, $origImage, 0, 0, 0, 0, 
+                               $this->width, $this->height, 
+                               $this->original_width, $this->original_height);
             imageJPEG($newImage, $this->_tmpFile);
             imageDestroy($newImage);
             imageDestroy($origImage);

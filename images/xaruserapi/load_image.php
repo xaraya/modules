@@ -8,7 +8,7 @@ function & images_userapi_load_image( $args )
     if (!isset($fileId) || empty($fileId)) {
         $mesg = xarML('Invalid parameter \'#(1)\' to API function \'#(2)\' in module \'#(3)\'', 
                       'fileId', 'load_object', 'iamges');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($mesg));
         return;
     }
     
