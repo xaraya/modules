@@ -75,6 +75,7 @@ function keywords_init()
     if (!$result) return;
 
     xarModSetVar('keywords', 'SupportShortURLs', 1);
+    xarModSetVar('keywords', 'delimiters', ';, ');
 
 // TODO: optionally restrict to known keywords (coming from somewhere to be defined)
     xarModSetVar('keywords', 'restricted', 0);

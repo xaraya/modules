@@ -9,6 +9,7 @@ function keywords_admin_updateconfig()
     xarVarFetch('restricted','isset',$restricted,'', XARVAR_DONT_SET);
     xarVarFetch('keywords','isset',$keywords,'', XARVAR_DONT_SET);
     xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
+    xarVarFetch('delimiters','isset',$delimiters,'', XARVAR_DONT_SET);
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
@@ -33,6 +34,9 @@ function keywords_admin_updateconfig()
         xarModSetVar('keywords','restricted',0);
     } else {
         xarModSetVar('keywords','restricted',1);
+    }
+    if (isset($delimiters)) {
+        xarModSetVar('keywords','delimiters',$delimiters);
     }
 
     xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));

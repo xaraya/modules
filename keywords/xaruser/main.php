@@ -86,7 +86,7 @@ function keywords_user_main($args)
                      'items' => $items);
     }
     $items = xarModAPIFunc('keywords','user','getitems',
-                          array('keyword' => $keyword,
+                          array('keyword' => urldecode($keyword),
                                  'id' => $id));
     if (!isset($items)) return;
     if (!isset($items[$id])) {

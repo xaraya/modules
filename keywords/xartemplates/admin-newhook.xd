@@ -1,8 +1,8 @@
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
+	<div style="padding-top: 10px;">
+	<span style="float: left; text-align: right;">
 		<xar:mlstring>Keywords</xar:mlstring>:
 	</span>
-	<span style="float: right; width: 78%; text-align: left;">
+	<span style="float: right; text-align: left;">
 		<input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
 	</span>
 	</div>

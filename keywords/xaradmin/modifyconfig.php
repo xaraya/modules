@@ -60,6 +60,7 @@ function keywords_admin_modifyconfig()
     }
     $data['isalias'] = xarModGetVar('keywords','SupportShortURLs');
     $data['restricted'] = xarModGetVar('keywords','restricted');
+    $data['delimiters'] = xarModGetVar('keywords','delimiters');
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;

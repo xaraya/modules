@@ -70,6 +70,9 @@ function keywords_admin_newhook($args)
         $keywords = '';
     }
 
+    //retrieve the list of allowed delimiters
+    $delimiters = xarModGetVar('keywords','delimiters');
+    
 /*
     // extract individual keywords from the input string (comma, semi-column or space separated)
     if (strstr($keywords,',')) {
@@ -118,7 +121,8 @@ function keywords_admin_newhook($args)
 
     return xarTplModule('keywords','admin','newhook',
                         array('keywords' => $keywords,
-                              'wordlist' => $wordlist));
+                              'wordlist' => $wordlist,
+                              'delimiters'=>$delimiters));
 }
 
 ?>

@@ -11,6 +11,13 @@
     <input type="checkbox" name="isalias" id="isalias" value="1" />
     </xar:if>
 	<br /><br />
+    <label for="delimiters"><xar:mlstring>Valid Delimiter List :</xar:mlstring></label>
+    <xar:if condition="!empty($delimiters)">
+        <input type="text" name="delimiters" id="delimiters" value="#$delimiters#" size="40" />
+    <xar:else/>
+        <input type="text" name="delimiters" id="delimiters" value="" size="40" />
+    </xar:if>
+    <br/><br/>
     <label for="restricted"><xar:mlstring>Restrict keywords to the following allowed list : TODO</xar:mlstring></label>
     <xar:if condition="!empty($restricted)">
     <input type="checkbox" name="restricted" id="restricted" value="1" checked="checked" />

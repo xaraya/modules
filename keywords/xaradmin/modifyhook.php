@@ -29,6 +29,10 @@ function keywords_admin_modifyhook($args)
         return $msg;
     }
 
+    //retrieve the list of allowed delimiters.  use the first one as the default.
+    $delimiters = xarModGetVar('keywords','delimiters');
+    $delimiter = substr($delimiters,0,1);
+    
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
     if (empty($extrainfo['module'])) {
@@ -65,7 +69,7 @@ function keywords_admin_modifyhook($args)
                                     'itemid' => $itemid));
 
     if (isset($oldwords) && count($oldwords) > 0) {
-        $keywords = join(' ',$oldwords);
+        $keywords = join($delimiter,$oldwords);
     }
 
     if (isset($extrainfo['keywords'])) {
@@ -79,6 +83,8 @@ function keywords_admin_modifyhook($args)
     if (empty($keywords)) {
         $keywords = '';
     }
+    
+
 
 /*
     // extract individual keywords from the input string (comma, semi-column or space separated)
@@ -128,7 +134,8 @@ function keywords_admin_modifyhook($args)
 
     return xarTplModule('keywords','admin','modifyhook',
                         array('keywords' => $keywords,
-                              'wordlist' => $wordlist));
+                              'wordlist' => $wordlist,
+                              'delimiters'=>$delimiters));
 }
 
 ?>

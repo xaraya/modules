@@ -57,14 +57,32 @@ function keywords_adminapi_createhook($args)
         return $extrainfo;
     }
 
+    // get the list of delimiters to work with
+    $delimiters = xarModGetVar('keywords','delimiters');
+    $dellength = strlen($delimiters);
+    
     // extract individual keywords from the input string (comma, semi-column or space separated)
-    if (strstr($keywords,',')) {
+    for ($i=0; $i<$dellength; $i++) {
+        $delimiter = substr($delimiters,$i,1);
+        if (strstr($keywords,$delimiter)) {
+            $words = explode($delimiter,$keywords);
+        }
+    }
+    //if nothing has been separated, just plop the whole string (possibly only one keyword) into words.
+    if (!isset($words)) {
+        $words = array();
+        $words[] = $keywords;
+    }
+    
+    // old way of doing it with hardcoded delimiters
+    /*if (strstr($keywords,',')) {
         $words = explode(',',$keywords);
     } elseif (strstr($keywords,';')) {
         $words = explode(';',$keywords);
     } else {
         $words = explode(' ',$keywords);
-    }
+    }*/
+    
     $cleanwords = array();
     foreach ($words as $word) {
         $word = trim($word);
