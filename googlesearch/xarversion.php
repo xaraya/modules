@@ -15,6 +15,7 @@
 $modversion['name'] = 'googlesearch';
 $modversion['id'] = '809';
 $modversion['version'] = '1.1.0';
+$modversion['displayname']    = xarML('GoogleSearch');
 $modversion['description'] = 'Queries Google Search terms and retrieves cached pages VIA Soap';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
