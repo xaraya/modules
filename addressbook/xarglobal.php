@@ -264,8 +264,8 @@ define('_AB_MRS',               xarML('Mrs.'));
 /**
  * Developer QA Contact information
  */
-define('_AB_DEVQA_NAME',	__ADDRESSBOOK__."QualityControl");
-define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
+define('_AB_DEVQA_NAME',    __ADDRESSBOOK__."QualityControl");
+define('_AB_DEVQA_EMAIL',    __ADDRESSBOOK__."@blacktower.com");
 
 ////////////////
 //

@@ -32,10 +32,10 @@ function addressbook_utilapi_checkforie()
             return FALSE;
         }
         return TRUE;
-	} else {
+    } else {
         xarErrorFree();
-        xarCoreExceptionFree();	
-	}
+        xarCoreExceptionFree();    
+    }
     return FALSE;
 
 } //END checkForIE
