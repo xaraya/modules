@@ -135,7 +135,10 @@ function comments_renderer_array_markdepths_bychildren(&$comments_list) {
 function comments_renderer_array_markdepths_bypid(&$comments_list) {
 
     if (empty($comments_list) || !count($comments_list)) {
-        // TODO: raise exception and return
+        $msg = xarML('Empty comments list');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+                       new DefaultUserException($msg));
+        return;
     }
 
     // start the initial depth off at zero
@@ -353,7 +356,9 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL) {
     // if $CommentList isn't an array or it is empty,
     // raise an exception and return an empty array
     if (!is_array($CommentList) || count($CommentList) == 0) {
-        // TODO: Raise Exception
+        $msg = xarML('List of related comments isn\'t an array or it is empty');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+                       new DefaultUserException($msg));
         return array();
     }
 
@@ -368,7 +373,10 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL) {
     if (isset($CommentList[0]['depth']) < 0) {
         if (!isset($CommentList[0]['children'])) {
             if (!isset($CommentList[0]['pid'])) {
-                // TODO: Raise Exception
+                $msg = xarML('Pid Field is missing');
+                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+                                new DefaultUserException($msg));
+                return;
             } else {
                 comments_renderer_array_markdepths_pid($CommentList);
             }
@@ -665,7 +673,7 @@ function comments_renderer_array_sortvalue($value=NULL) {
 function  comments_renderer_array_sort( &$comment_list, $sortby, $direction) {
     
     if (!isset($comment_list) || !is_array($comment_list)) {
-        $msg = xarML('Missing or invalid arguement [#(1)] for #(2) function #(3) in module #(4)',
+        $msg = xarML('Missing or invalid argument [#(1)] for #(2) function #(3) in module #(4)',
                                  'comment_list','renderer','array_sort',$modName);
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
         return false;
