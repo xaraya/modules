@@ -47,8 +47,7 @@ function sitecloud_user_main()
 
     for ($i = 0; $i < count($links); $i++) {
         $link = $links[$i];
-        //$link['udated'] = time() - $link['date'];
-        $links[$i]['updated'] = trim(xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z",($link['date'])));
+        $links[$i]['updated'] = $link['date'];
         $links[$i]['when']    = time() - $link['date'];
     }
 

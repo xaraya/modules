@@ -14,7 +14,7 @@
     <xar:if condition="$loop:item['when'] lt 3600">
         <p>
             <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z", $loop:item['updated'])#
         </p>
     </xar:if>
     </xar:loop>
@@ -23,7 +23,7 @@
     <xar:if condition="($loop:item['when'] lt 7200) AND ($loop:item['when'] gt 3600)">
         <p>
             <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z", $loop:item['updated'])#
         </p>
     </xar:if>
     </xar:loop>
@@ -32,7 +32,7 @@
     <xar:if condition="($loop:item['when'] lt 14400) AND ($loop:item['when'] gt 7200)">
         <p>
             <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z", $loop:item['updated'])#
         </p>
     </xar:if>
     </xar:loop>
@@ -41,7 +41,7 @@
     <xar:if condition="($loop:item['when'] lt 86400) AND ($loop:item['when'] gt 14400)">
         <p>
             <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z", $loop:item['updated'])#
         </p>
     </xar:if>
     </xar:loop>
@@ -50,7 +50,7 @@
     <xar:if condition="($loop:item['when'] lt 604800) AND ($loop:item['when'] gt 86400)">
         <p>
             <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z", $loop:item['updated'])#
         </p>
     </xar:if>
     </xar:loop>
@@ -59,7 +59,7 @@
     <xar:if condition="$loop:item['when'] gt 604800">
         <p>
             <a href="#$loop:item['title']#">#$loop:item['url']#</a><br />
-            <xar:mlstring>Updated</xar:mlstring>&nbsp; #$loop:item['updated']#
+            <xar:mlstring>Updated</xar:mlstring>&nbsp; #xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z", $loop:item['updated'])#
         </p>
     </xar:if>
     </xar:loop>
