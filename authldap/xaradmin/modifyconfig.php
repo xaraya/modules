@@ -40,7 +40,7 @@ function authldap_admin_modifyconfig()
 
     // Allow anonymous bind to server (true/false)
     if ($ldap->anonymous_bind == 'true') {    
-        $data['anonymousbindvalue'] = xarVarPrepForDisplay("checked");
+        $data['anonymousbindvalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['anonymousbindvalue'] = "";
     }
@@ -53,7 +53,7 @@ function authldap_admin_modifyconfig()
 
     // Search user dn (true/false)
     if ($ldap->search_user_dn == 'true') {    
-        $data['searchuserdnvalue'] = xarVarPrepForDisplay("checked");
+        $data['searchuserdnvalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['searchuserdnvalue'] = "";
     }
@@ -69,14 +69,14 @@ function authldap_admin_modifyconfig()
 
     // Use TLS - LDAP Protocol 3 only
     if ($ldap->tls == 'true') {
-        $data['tls'] = xarVarPrepForDisplay("checked");
+        $data['tls'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['tls'] = "";
     }
 
     // Add user to xar_roles
     if (xarModGetVar('authldap','add_user') == 'true') {    
-        $data['adduservalue'] = xarVarPrepForDisplay("checked");
+        $data['adduservalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['adduservalue'] = "";
     }
@@ -89,14 +89,14 @@ function authldap_admin_modifyconfig()
 
     // Failover to local authentication of LDAP fails
     if (xarModGetVar('authldap','failover') == 'true') {    
-        $data['failovervalue'] = xarVarPrepForDisplay("checked");
+        $data['failovervalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['failovervalue'] = "";
     }
 
     // Store user's LDAP password in Xaraya database?
     if (xarModGetVar('authldap','store_user_password') == 'true') {    
-        $data['storepasswordvalue'] = xarVarPrepForDisplay("checked");
+        $data['storepasswordvalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['storepasswordvalue'] = "";
     }

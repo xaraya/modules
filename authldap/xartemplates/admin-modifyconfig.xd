@@ -12,7 +12,7 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
-                    <td colspan=2>
+                    <td colspan="2">
                         <xar:mlstring>The LDAP server settings are also configurable from the</xar:mlstring>
                         <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#">xarldap module</a>.
                     </td>
