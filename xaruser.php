@@ -1,4 +1,5 @@
 <?php
+
 // File: $Id$
 // ----------------------------------------------------------------------
 // Xaraya eXtensible Management System
