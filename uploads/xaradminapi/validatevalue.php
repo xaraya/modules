@@ -55,11 +55,10 @@ function uploads_adminapi_validatevalue($args)
     xarModAPILoad('uploads','user');
 
     if (isset($methods) && count($methods) > 0) {
-        $typeCheck = 'enum:0';
-        $typeCheck .= in_array('stored',$methods) ? ':' . _UPLOADS_GET_STORED : '';
-        $typeCheck .= in_array('external',$methods) ? ':' . _UPLOADS_GET_EXTERNAL : '';
-        $typeCheck .= in_array('trusted',$methods) ? ':' . _UPLOADS_GET_LOCAL : '';
-        $typeCheck .= in_array('upload',$methods) ? ':' . _UPLOADS_GET_UPLOAD : '';
+        $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
+        $typeCheck .= (isset($methods['external']) && $methods['external'])  ? ':' . _UPLOADS_GET_EXTERNAL : '';
+        $typeCheck .= (isset($methods['trusted']) && $methods['trusted']) ? ':' . _UPLOADS_GET_LOCAL : '';
+        $typeCheck .= (isset($methods['upload']) && $methods['upload']) ? ':' . _UPLOADS_GET_UPLOAD : '';
         $typeCheck .= ':';
     } else {
         $typeCheck = 'enum:0:' . _UPLOADS_GET_STORED;
@@ -74,6 +73,7 @@ function uploads_adminapi_validatevalue($args)
     if (!isset($action)) {
         $action = -2;
     }
+
 
     $args['action']    = $action;
     switch ($action) {
@@ -114,7 +114,8 @@ function uploads_adminapi_validatevalue($args)
             break;
         case _UPLOADS_GET_STORED:
 
-            if (!xarVarFetch($id . '_attach_stored', 'list:str:1:', $fileList, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch($id . '_attach_stored', 'list:int:1:', $fileList, 0, XARVAR_NOT_REQUIRED)) return;
+
 
             // If we've made it this far, then fileList was empty to start,
             // so don't complain about it being empty now
