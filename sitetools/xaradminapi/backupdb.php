@@ -35,10 +35,6 @@ function sitetools_adminapi_backupdb ($args)
     } else {
        $GZ_enabled = false;
     }
-    //Set the backup type to full if not set
-    if (!isset($startbackup)) {
-//          $startbackup='complete';
-      }
 
     if ($screen=='') $screen==false;
 
@@ -304,8 +300,7 @@ function sitetools_adminapi_backupdb ($args)
     			    for ($i = 0; $i < mysql_num_fields($result); $i++) {
 	    			    $fieldnames[] = mysql_field_name($result, $i);
 		    	    }
-//		    	    if ($startbackup=='complete') {
-			        if ($_REQUEST['startbackup'] == 'complete') {
+		    	    if ($startbackup=='complete') {
 				        $insertstatement = 'INSERT INTO '.$backtickchar.$SelectedTables["$dbname"]["$t"].$backtickchar.' ('.implode(', ', $fieldnames).') VALUES (';
     			    } else {
 	    			    $insertstatement = 'INSERT INTO '.$backtickchar.$SelectedTables["$dbname"]["$t"].$backtickchar.' VALUES (';
@@ -361,7 +356,7 @@ function sitetools_adminapi_backupdb ($args)
 	        fclose($fp);
 	    }
 
-    	$items['completetime']= FormattedTimeRemaining(getmicrotime() - $starttime, 2);
+
 	    if ($startbackup == 'structure') {
 	        if (file_exists($backupabsolutepath.$strubackupfilename)) {
 		        unlink($backupabsolutepath.$strubackupfilename); // Windows won't allow overwriting via rename
@@ -370,7 +365,6 @@ function sitetools_adminapi_backupdb ($args)
             $items['bkfiletype']=xarML('Structure backup filename: ');
             $items['bkfilename']=$backupabsolutepath.$strubackupfilename;
             $items['bkname']=$strubackupfilename;
-            $items['bkfilesize']=FileSizeNiceDisplay(filesize($backupabsolutepath.$strubackupfilename), 2);
     	} else if ($backuptype == 'full') {
 	        if (file_exists($backupabsolutepath.$fullbackupfilename)) {
 		        unlink($backupabsolutepath.$fullbackupfilename); // Windows won't allow overwriting via rename
@@ -379,7 +373,6 @@ function sitetools_adminapi_backupdb ($args)
             $items['bkfiletype']=xarML('Full backup filename: ');
             $items['bkfilename']=$backupabsolutepath.$fullbackupfilename;
             $items['bkname']=$fullbackupfilename;
-            $items['bkfilesize']=FileSizeNiceDisplay(filesize($backupabsolutepath.$fullbackupfilename), 2);
         } else {
    	        if (file_exists($backupabsolutepath.$partbackupfilename)) {
 		        unlink($backupabsolutepath.$partbackupfilename); // Windows won't allow overwriting via rename
@@ -388,10 +381,9 @@ function sitetools_adminapi_backupdb ($args)
             $items['bkfiletype']=xarML('Partial backup filename: ');
             $items['bkfilename']=$backupabsolutepath.$partbackupfilename;
             $items['bkname']=$partbackupfilename;
-            $items['bkfilesize']=FileSizeNiceDisplay(filesize($backupabsolutepath.$partbackupfilename), 2);
         }
- // TODO
-        // $items['deleteurl']="<a href=".xarModURL('sitetools','admin','deletediskfile', array('filename' => $items['bkfilename'])).">".xarML('Delete backup file now')."</a>";
+       $items['bkfilesize']=FileSizeNiceDisplay(filesize($items['bkfilename']), 2);
+    	$items['completetime']= FormattedTimeRemaining(getmicrotime() - $starttime, 2);
         $items['deleteurl']="[Click to Delete]";
     } else {
         $items['warning']=1;
@@ -399,7 +391,7 @@ function sitetools_adminapi_backupdb ($args)
     $items['runningstatus']=$runningstatus;
     $items['backuptype']=$backuptype;
     $items['btype']=$btype;
-//    $items['startbackup']=$startbackup;
+
 
    //Return data for display
    return $items;
