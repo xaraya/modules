@@ -41,10 +41,12 @@ function keywords_userapi_getwordslimited($args)
 
     // Get restricted keywords for this module item
 
+    $useitemtype = xarModGetVar('keywords','useitemtype');
+
     $query = "SELECT xar_id,
                      xar_keyword
              FROM $keywordstable ";
-    if (isset($itemtype)) {
+    if (!empty($useitemtype) && isset($itemtype)) {
           $query .= " WHERE xar_moduleid = '0' OR ( xar_moduleid= " . xarVarPrepForStore($moduleid) ." AND  xar_itemtype = ". xarVarPrepForStore($itemtype) ." ) ORDER BY xar_keyword ASC";
        } else {
           $query .= " WHERE xar_moduleid = '0' OR  xar_moduleid= " . xarVarPrepForStore($moduleid) ." ORDER BY xar_keyword ASC";
