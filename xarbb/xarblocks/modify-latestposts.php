@@ -31,7 +31,7 @@ function xarbb_latestpostsblock_modify($blockinfo)
         $vars['howmany'] = 10;
     }
     if (empty($vars['forumid'])) {
-        $vars['forumid'] = Array('all');
+        $vars['forumid'] = Array(0 =>'all');
     }
     if (!isset($vars['addauthor'])) {
         $vars['addauthor'] = '2';
@@ -57,45 +57,25 @@ function xarbb_latestpostsblock_modify($blockinfo)
     }
 */
 
-    // get the list of modules+itemtypes that comments is hooked to
-    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
-                                   array('hookModName' => 'comments'));
-
-    $forumlist = array();
-    $forumnum=array();
-    $forumlist['all'] = xarML('All Forums');
-    $modname='xarbb';
-
-            // Get the list of all item types for this module (if any)
-            $mytypes = xarModAPIFunc('xarbb','user','getitemtypes');
-            // we have hooks for individual item types here
-            if (!isset($mytypes[0])) {
-                foreach ($mytypes as $itemtype => $val) {
-                    if (isset($mytypes[$itemtype])) {
-                        $type = $mytypes[$itemtype]['label'];
-                    } else {
-                        $type = xarML('type #(1)',$itemtype);
-                    }
-                    $forumlist["$itemtype"] = ' - ' . $type;
-                }
-            } else {
-                $forumlist[$modname] = ucwords($modname);
-                // allow selecting individual item types here too (if available)
-                if (!empty($mytypes) && count($mytypes) > 0) {
-                    foreach ($mytypes as $itemtype => $mytype) {
-                        if (!isset($mytype['label'])) continue;
-                        $forumlist["$itemtype"] = ' - ' . $mytype['label'];
-                    }
-                }
-
-            }
+   //We have getallforums function now, so let's use that and clean out this silly mess
+   $forumlist=array();
+   $forumset=array();
+   $forumset =xarModAPIFunc('xarbb','user','getallforums');
+   $forumlist[0]='all';
+   if (!empty($forumset)) {
+       foreach ($forumset as $forumitem) {
+                        $fid=$forumitem['fid'];
+                        $forumitem[$fid] = ' - ' . $forumitem['fname'];
+                        $forumlist[$fid]=$forumitem[$fid];
+       }
+   }
 
 
     // Send content to template
     $output =  array(
                                 'addtopics'   => $vars['addtopics'],
                                 'addposts'    => $vars['addposts'],
-                                'latestpost' => $vars['latestpost'],
+                                'latestpost'  => $vars['latestpost'],
                                 'howmany'     => $vars['howmany'],
                                 'forumid'     => $vars['forumid'],
                                 'forumlist'   => $forumlist,
@@ -117,32 +97,16 @@ function xarbb_latestpostsblock_modify($blockinfo)
  */
 function xarbb_latestpostsblock_update($blockinfo)
 {
-    /*Something wrong with this fetch, but I don't know the block.
-    Jojo, please review
     if (!xarVarFetch('addtopics', 'checkbox', $vars['addtopics'], false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('addposts', 'checkbox', $vars['addposts'], false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('latestpost', 'checkbox', $vars['latestpost'], false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('howmany', 'int:1', $vars['howmany'], '10', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('truncate', 'int:1', $vars['truncate'], '20', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('forumid','isset',$forumid)) return;
-    if (!xarVarFetch('addauthor', 'int:1', $vars['addauthor'], '0',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('addlink', 'int:1', $vars['addlink'], '0',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('forumlink', 'int:1', $vars['forumlink'], '0',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('howmany', 'int:1:', $vars['howmany'], '10', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], '20', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('forumid','isset', $vars['forumid'],'all',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addauthor', 'int:1:', $vars['addauthor'], '0',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addlink', 'int:1:', $vars['addlink'], '2',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('forumlink', 'int:1:', $vars['forumlink'], '2',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], false, XARVAR_NOT_REQUIRED)) return;
-    */
-
-    $vars['addtopics']   = xarVarCleanFromInput('addtopics');
-    $vars['addposts']    = xarVarCleanFromInput('addposts');
-    $vars['latestpost']  = xarVarCleanFromInput('latestpost');
-    $vars['howmany']     = xarVarCleanFromInput('howmany');
-    $vars['forumid']     = xarVarCleanFromInput('forumid');
-    $vars['addauthor']   = xarVarCleanFromInput('addauthor');
-    $vars['addlink']     = xarVarCleanFromInput('addlink');
-    $vars['addobject']   = xarVarCleanFromInput('addobject');
-    $vars['adddate']     = xarVarCleanFromInput('adddate');
-//    $vars['titleortext'] = xarVarCleanFromInput('titleortext');
-    $vars['truncate']    = xarVarCleanFromInput('truncate');
-    $vars['forumlink']   = xarVarCleanFromInput('forumlink');
 
     $blockinfo['content'] = serialize($vars);
 

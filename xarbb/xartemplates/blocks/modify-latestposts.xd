@@ -64,9 +64,13 @@
         <xar:mlstring>Include topics and posts from the following forums</xar:mlstring>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-        <select name="forumid[]" tabindex="5" multiple="multiple" size="3">
+        <select name="forumid[]" tabindex="5" multiple="multiple" size="5">
             <xar:foreach in="$forumlist" key="$key" value="$value">
-                <xar:if condition="in_array($key,$forumid)">
+                <xar:if condition="$key eq '0' and in_array(0,$forumid)">
+                    <option value="all" selected="selected"><xar:mlstring>All Forums</xar:mlstring></option>
+                <xar:elseif condition="$key eq '0'" />
+                    <option value="all" ><xar:mlstring>All Forums</xar:mlstring></option>
+                <xar:elseif condition="in_array($key,$forumid)" />
                     <option value="#$key#" selected="selected">#$value#</option>
                 <xar:else/>
                     <option value="#$key#">#$value#</option>
@@ -75,6 +79,8 @@
         </select>
     </span>
 </div>
+
+
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
         <xar:mlstring>Topic title</xar:mlstring>

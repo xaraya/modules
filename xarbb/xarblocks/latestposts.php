@@ -67,8 +67,7 @@ function xarbb_latestpostsblock_display($blockinfo)
         $vars['howmany'] = 5;
     }
     if (empty($vars['forumid'])) {
-        $vars['forumid'] = Array('All forums');
-        $vars['forumid'][0]='all';        
+        $vars['forumid'] = array(0 =>'all');
     }
     if (!isset($vars['addauthor'])) {   
         $vars['addauthor'] = '2';
@@ -110,22 +109,25 @@ function xarbb_latestpostsblock_display($blockinfo)
     } else {
        //we already have the array in forumid
         $forumdata=$vars['forumid']; //in $forums[$i]
+
         foreach ($forumdata as $forum) {
             $forumset[]=xarModAPIFunc('xarbb','user','getforum', array('fid'=>$forum));
 
         }
     }
+
     $modid=xarModGetIDFromName('xarbb');
     $alltopics=array();
     $forumnames = array();
     //Get all latest topics for given forums
     foreach($forumset as $forum) {
-// TODO: retrieve topics from all (selected) forums at once ?
+    // TODO: retrieve topics from all (selected) forums at once ?
         $alltopics[]=xarModAPIFunc('xarbb','user','getalltopics',array('fid'=>$forum['fid'],
                                                                        'numitems'=>$vars['howmany']));
         // keep track of the forum names
         $forumnames[$forum['fid']] = $forum['fname'];
     }
+
     $postlist=array();
     $topiclist=array();
     $usernames = array();
