@@ -120,14 +120,32 @@ function xarbb_user_viewtopic($args)
 
     $data['items'] = array();
 
+// TODO: retrieve from session variable, module user variable, forum setting or URL param
+//       depending on how customisable/cacheable we want to make this ?
+//    $postsortby = 'celko'; // unsupported - see below
+    $postsortorder = 'ASC';
+
+// TODO: support threaded/nested display too - cfr. bug 1443
+//    $postrender = 'flat';
+
+// Note: comments get_multiple() can only return comments in Celko order or reverse Celko order
+//       at the moment. This is equivalent to sorting by cid or time here - other postsortby
+//       options would require a lot more work, so I would forget about those for now...
+    if (!empty($postsortorder) && strtoupper($postsortorder) == 'DESC') {
+        $reverse = true;
+    } else {
+        $reverse = false; // default normal Celko order
+    }
+
     $comments = xarModAPIFunc('comments',
                               'user',
                               'get_multiple',
-                              array('modid'       => $header['modid'],
-                                    'itemtype'    => $data['fid'],
-                                    'objectid'    => $header['objectid'],
+                              array('modid'    => $header['modid'],
+                                    'itemtype' => $data['fid'],
+                                    'objectid' => $header['objectid'],
                                     'startnum' => $startnum,
-                                    'numitems' => $postperpage));
+                                    'numitems' => $postperpage,
+                                    'reverse'  => $reverse));
 /*
     $todolist = array();
     $todolist['transform'] = array();

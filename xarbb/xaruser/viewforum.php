@@ -54,11 +54,18 @@ function xarbb_user_viewforum()
     // TODO, should be a forum setting
     $hotTopic               = $settings['hottopic'];
 
+// TODO: retrieve from session variable, module user variable, forum setting or URL param
+//       depending on how customisable/cacheable we want to make this ?
+    $topicsortby = 'time';
+    $topicsortorder = 'DESC';
+
     // The user API function is called
     $topics = xarModAPIFunc('xarbb',
                             'user',
                             'getalltopics',
                             array('fid' => $fid,
+                                  'sortby' => $topicsortby,
+                                  'order' => $topicsortorder,
                                   'startnum' => $startnum,
                                   'numitems' => $settings['topicsperpage']));
     $totaltopics=count($topics);

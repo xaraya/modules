@@ -17,6 +17,8 @@
  *
  * @param $args['fid'] forum id, or
  * @param $args['tids'] array of topic ids
+ * @param $args['sortby'] string optional sort field (default 'time')
+ * @param $args['order'] string optional sort order (default 'DESC' for time, replies etc.)
  * @returns array
  * @return array of links, or false on failure
  */
@@ -97,8 +99,62 @@ function xarbb_userapi_getalltopics($args)
          $bindvars = array_merge($bindvars, $tids);
         $query .= " AND xar_tid IN ($bindmarkers)";
     }
-    // FIXME we should add possibility change sorting order
-    $query .= " ORDER BY xar_ttime DESC";
+    if (empty($sortby)) {
+        $sortby = 'time';
+    }
+    switch ($sortby) {
+/*
+// TODO: we need some extra indexes on xar_xbbtopics if we want to sort by title, replies, replier or ftime
+//       but this causes unnecessary overhead if we don't want to sort by them :-)
+        case 'title':
+            if (!empty($order) && strtoupper($order) == 'DESC') {
+                $query .= " ORDER BY xar_ttitle DESC";
+            } else {
+                $query .= " ORDER BY xar_ttitle ASC"; // default ascending
+            }
+            break;
+
+        case 'replier':
+            if (!empty($order) && strtoupper($order) == 'DESC') {
+                $query .= " ORDER BY xar_treplier DESC";
+            } else {
+                $query .= " ORDER BY xar_treplier ASC"; // default ascending
+            }
+            break;
+
+        case 'ftime': // time of first post (= topic)
+            if (!empty($order) && strtoupper($order) == 'ASC') {
+                $query .= " ORDER BY xar_tftime ASC";
+            } else {
+                $query .= " ORDER BY xar_tftime DESC"; // default descending
+            }
+            break;
+
+        case 'replies':
+            if (!empty($order) && strtoupper($order) == 'ASC') {
+                $query .= " ORDER BY xar_treplies ASC";
+            } else {
+                $query .= " ORDER BY xar_treplies DESC"; // default descending
+            }
+            break;
+*/
+        case 'poster':
+            if (!empty($order) && strtoupper($order) == 'DESC') {
+                $query .= " ORDER BY xar_tposter DESC";
+            } else {
+                $query .= " ORDER BY xar_tposter ASC"; // default ascending
+            }
+            break;
+
+        case 'time':
+        default:
+            if (!empty($order) && strtoupper($order) == 'ASC') {
+                $query .= " ORDER BY xar_ttime ASC";
+            } else {
+                $query .= " ORDER BY xar_ttime DESC"; // default descending
+            }
+            break;
+    }
 
     // Need to run the query and add $numitems to ensure pager works
     if (isset($numitems) && is_numeric($numitems)) {
