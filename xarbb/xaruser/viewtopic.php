@@ -37,7 +37,8 @@ function xarbb_user_viewtopic()
     //                          'gettopic',
     //                          array('tid' => $tid));
 
-
+    $data['pager'] = '';
+    
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
                                                       'transform',
@@ -179,8 +180,6 @@ function xarbb_user_viewtopic()
     
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
-    //TODO: Topic is still showing on consecutive Pager pages - works fine on Windows ??
-    // short URLs does not make any difference on *nix
     $data['pager'] = xarTplGetPager($startnum,
                                     xarModAPIFunc('comments', 'user', 'get_count',
                                     array('modid'       => $header['modid'],
