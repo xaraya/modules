@@ -55,10 +55,10 @@ function comments_user_display($args) {
 
     // FIXME: clean up return url handling
 
-    $settings_uri = "&depth={$package['settings']['depth']}"
-                  . "&order={$package['settings']['order']}"
-                  . "&sortby={$package['settings']['sortby']}"
-                  . "&render={$package['settings']['render']}";
+    $settings_uri = "&amp;depth={$package['settings']['depth']}"
+                  . "&amp;order={$package['settings']['order']}"
+                  . "&amp;sortby={$package['settings']['sortby']}"
+                  . "&amp;render={$package['settings']['render']}";
 
     if (isset($args['modid'])) {
         $header['modid'] = $args['modid'];
