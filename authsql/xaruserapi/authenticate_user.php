@@ -225,7 +225,7 @@ function authsql_userapi_authenticate_user($args)
                 return XARUSER_AUTH_FAILED; 
             }
         } else {
-			/* use anonymous role */
+            /* use anonymous role */
             $rid = 2;
         }
     } else {
