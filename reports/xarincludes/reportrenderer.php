@@ -103,7 +103,7 @@ function getRootNode($file) {
 	}
 	while ($data = fread($fp, 4096)) {
 	    if (!xml_parse($parser, $data, feof($fp))) {
-            //			echo $data."<br>";
+            //			echo $data."<br/>";
     		PDF_die("[XML::PARSER]", "Invalid XML file");
     	}
 	}
@@ -214,7 +214,7 @@ class document {
 	var $report;
 	
 	function document($node, &$db, $filter="") {
-		//		echo "document element<br>";
+		//		echo "document element<br/>";
 		// Default page is A4
 		$this->page=(strlen($node->attrs["PAGE"])>0)?strtoupper($node->attrs["PAGE"]):"A4";
         PDF_in("[DOCUMENT][PAGE]", $this->page, array("A6", "A5", "A4", "A3", "A2", "A1", "A0") );
@@ -258,7 +258,7 @@ class datasource {
 	var $repeat;
 	
 	function datasource($node, &$db) {
-		//		echo "datasource element<br>";
+		//		echo "datasource element<br/>";
 		$this->db=$db;
 		$this->fields=$node->nodes[$node->getNode("FIELDS",1)]->cdata;
 		$this->table=$node->nodes[$node->getNode("TABLE",1)]->cdata;
@@ -277,12 +277,12 @@ class datasource {
 		}
 	}
 	function getData(&$renderer, &$datasource) {
-//		echo $renderer->solveexp($this->sql,$datasource)."<br>";
+//		echo $renderer->solveexp($this->sql,$datasource)."<br/>";
 		$this->rs=$this->db->Execute($renderer->solveexp($this->sql,$datasource)) or PDF_die("[DOCUMENT]::[DATASOURCE]:getData()",$this->db->ErrorMsg());
 		$this->rs_current=0;
 		$this->rs_lastpage=0;
 		$this->rs_total=$this->rs->RecordCount();
-//		echo "<br>".$this->rs_total."<br>";
+//		echo "<br/>".$this->rs_total."<br/>";
 		$this->repeat=0;
 	}
 	
@@ -333,35 +333,35 @@ class headerfooter {
 
 class documentheader extends headerfooter {
 	function documentheader($node) {
-		//		echo "docheader<br>";
+		//		echo "docheader<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[DOCUMENTHEADER]");
 	}
 }
 
 class documentfooter extends headerfooter {
 	function documentfooter($node) {
-		//		echo "docfooter<br>";
+		//		echo "docfooter<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[DOCUMENTFOOTER]");
 	}
 }
 
 class pageheader extends headerfooter {
 	function pageheader($node) {
-		//		echo "pageheader<br>";
+		//		echo "pageheader<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[PAGEHEADER]");
 	}
 }
 
 class pagefooter extends headerfooter {
 	function pagefooter($node) {
-		//		echo "pagefooter<br>";
+		//		echo "pagefooter<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[PAGEFOOTER]");
 	}
 }
 
 class detailheader extends headerfooter {
 	function detailheader($node) {
-		//		echo "detailheader<br>";
+		//		echo "detailheader<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[DETAIL]::[HEADER]");
 	}
 }
@@ -928,9 +928,9 @@ class renderer {
 
 	function solveexp($exp, &$datasource) {
 		//		$exp=$this->putthis($exp);
-		//echo "In solveexp exp=".$exp."<br>";
+		//echo "In solveexp exp=".$exp."<br/>";
 		if ($exp!="") {
-			//echo $exp."<br>";
+			//echo $exp."<br/>";
 			// Check for function
 			$brace= strpos($exp,"(");
 			if (!is_integer($brace)) {
@@ -949,7 +949,7 @@ class renderer {
             eval($str);
 		}
 		if (isset($ret)) {
-			//echo "$exp=".$ret."<br>";
+			//echo "$exp=".$ret."<br/>";
 			return $ret;
 		} else {
 			return "";
