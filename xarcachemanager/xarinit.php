@@ -189,6 +189,7 @@ function xarcachemanager_upgrade($oldversion)
             fclose ($fp);
             break;
         case 0.2:
+        case '0.2.0':
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
             break;
         case 0.3:
