@@ -5,7 +5,9 @@
  * @param action - 'create' or 'get': create samples or return the samples array.
  * @returns int
  * @return autolink ID on success, false on failure
+ * @todo convert this into a multi-lingual XML file and an import function
  */
+
 function autolinks_adminapi_samples($args)
 {
     // If required, create default autolink type and update unlinked autolinks to point to it.
@@ -14,9 +16,7 @@ function autolinks_adminapi_samples($args)
 
     extract($args);
 
-    if (!isset($action)) {
-        $action = 'noop';
-    }
+    if (!isset($action)) {$action = 'noop';}
 
     $setuptypes = array(
         'autolink-types' => array(
@@ -187,6 +187,7 @@ function autolinks_adminapi_samples($args)
                    ),
                 )
             ),
+
             'autolink-type:tid:5' => array(
                 'type_name' => xarML('Generic Module'),
                 'template_name' => 'generic',
@@ -251,7 +252,7 @@ function autolinks_adminapi_samples($args)
                 ),
                 'links' => array(
                     'link:lid:9' => array(
-                        'name' => xarML('Uploads'),
+                        'name' => xarML('uploads'),
                         'keyword' => '#ulid:([\d]+)#',
                         'match_re' => '1',
                         'title' => '',
@@ -307,17 +308,37 @@ function autolinks_adminapi_samples($args)
             'autolink-type:tid:7' => array(
                 'type_name' => xarML('External CSS'),
                 'template_name' => 'externalcss',
+                'dynamic_replace' => '0',
                 'type_desc' => xarML('External URLs. These URLs are given an attribute "external".'
                     .' Your theme will need to provide the styling for these external links.'),
                 'links' => array(
                     'link:lid:1' => array(
-                        'name' => xarML('Any external URL'),
+                        'name' => xarML('external_url'),
                         'keyword' => '(http://(?!demo.xaraya.com)[-.a-z]+/)[^\s.;?!]*',
                         'match_re' => '1',
                         'title' => 'Visit the site: $2',
                         'url' => '$1',
                         'comment' => 'Matches any URL to an external website home page. Does not match the current site (demo.xaraya.com in this example) - which is left up to other links to catch.',
                         'sample' => 'http://www.xaraya.com/ http://demo.xaraya.com/ http://xxx/abc/123',
+                        'enabled' => '0'
+                    )
+                ),
+            ),
+
+            'autolink-type:tid:8' => array(
+                'type_name' => xarML('Mailto'),
+                'template_name' => 'mailto',
+                'dynamic_replace' => '0',
+                'type_desc' => xarML('E-mail links, that may be obfuscated.'),
+                'links' => array(
+                    'link:lid:1' => array(
+                        'name' => xarML('mailto'),
+                        'keyword' => 'mailto:(([A-Za-z._]+)@([A-Za-z._]+))',
+                        'match_re' => '1',
+                        'title' => 'Send an e-mail to $3',
+                        'url' => '$3&#064;$4',
+                        'comment' => 'Matches "mailto:x@y.z" strings',
+                        'sample' => 'mailto:xaraya@example.com mailto:fred@com',
                         'enabled' => '0'
                     )
                 ),
@@ -330,7 +351,7 @@ function autolinks_adminapi_samples($args)
 
     if ($action == 'create') {
         // Security check
-        if(!xarSecurityCheck('AdminAutolinks')) {return;}
+        if (!xarSecurityCheck('AdminAutolinks')) {return;}
 
         foreach ($setuptypes['autolink-types'] as $setuptype) {
             // Check if a type for that template exists.
@@ -344,6 +365,7 @@ function autolinks_adminapi_samples($args)
                 unset($objectid);
 
                 // Create the autolink type
+                xarVarValidate('pre:lower', $setuptype['type_name']);
                 $tid = xarModAPIfunc('autolinks', 'admin', 'createtype', $setuptype);
                 if ($tid) {
                     // Now if this is the default type, point existing links to it.
@@ -406,6 +428,7 @@ function autolinks_adminapi_samples($args)
                     if (isset($setuptype['links'])) {
                         foreach ($setuptype['links'] as $samplelink) {
                             $samplelink['tid'] = $tid;
+                            xarVarValidate('pre:ftoken:lower', $samplelink['name']);
                             $lid = xarModAPIfunc('autolinks', 'admin', 'create', $samplelink);
 
                             if ($lid && isset($samplelink['dd_properties'])) {

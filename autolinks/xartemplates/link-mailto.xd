@@ -1,4 +1,7 @@
-<xar:comment> 'mailto' link. </xar:comment>
+<xar:comment>
+    'mailto' link.
+    TODO: use a class or inline style rather than an inline image here.
+</xar:comment>
 <xar:comment> Default image alt text, if not over-ridden. </xar:comment>
 <xar:if condition="empty($imgalt)">
     <xar:set name="$imgalt"><xar:mlstring>External link icon</xar:mlstring></xar:set>
