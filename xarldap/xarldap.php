@@ -23,7 +23,8 @@
  * @throws none
  * @todo none
  */
-class xarldap {
+class xarldap 
+{
     var $server;         // The LDAP server
     var $port_number;    // The port number (default is 389)
     var $anonymous_bind; // Anonymous bind to the LDAP server
@@ -49,7 +50,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function xarldap() {
+    function xarldap() 
+    {
         $this->server = '127.0.0.1';
         $this->port_number = 389;
         $this->anonymous_bind = true;
@@ -76,7 +78,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function exists() {
+    function exists() 
+    {
         if (!extension_loaded('ldap')) {
             $msg=xarML('Your PHP configuration does not seem to include the required LDAP extension. Please refer to http://www.php.net/manual/en/ref.ldap.php on how to install it.');
             xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
@@ -101,7 +104,8 @@ class xarldap {
      * @throws  XAR_SYSTEM_EXCEPTION
      * @todo    none
     */
-    function open() {
+    function open() 
+    {
         // Get/set the current xarldap paramteres
         $this->get_parameters();
 
@@ -147,7 +151,8 @@ class xarldap {
      * @throws  XAR_SYSTEM_EXCEPTION
      * @todo    none
     */
-    function close() {
+    function close() 
+    {
 
         // Close LDAP connection
         return ldap_close($this->connection);
@@ -166,7 +171,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function bind($bindrdn = '', $password = '') {
+    function bind($bindrdn = '', $password = '') 
+    {
 
         if ($bindrdn != '' and $password != '') {
             $ldapbind = @ldap_bind($this->connection,
@@ -192,7 +198,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function anonymous_bind() {
+    function anonymous_bind() 
+    {
 
         return $this->bind();
     }
@@ -209,7 +216,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function admin_bind() {
+    function admin_bind() 
+    {
 
         // Admin password is encrypted - so decrypt
         $admin_password = $this->encrypt($this->admin_password, 0);
@@ -229,7 +237,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function bind_to_server() {
+    function bind_to_server() 
+    {
 
         $bindResult = false;
 
@@ -257,7 +266,8 @@ class xarldap {
      * @throws  none
      * @todo    expand search parameters
     */
-    function search($base_dn, $filter) {
+    function search($base_dn, $filter) 
+    {
         // A resource ID is always returned when using URLs for the 
         // host parameter even if the host does not exist.  This will
         // cause a PHP exception if the host does not exist, so 
@@ -286,7 +296,8 @@ class xarldap {
      * @throws  none
      * @todo    expand search parameters
     */
-    function search_user_dn($username) {
+    function search_user_dn($username) 
+    {
         if ($this->search_user_dn == 'true') {
             $searchResult = $this->search($this->bind_dn,
                                           $this->uid_field . "=" . $username);
@@ -321,7 +332,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function user_search($username) {
+    function user_search($username) 
+    {
 
         // Open ldap connection
         if (!$this->open())
@@ -364,7 +376,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function get_entries($result) {
+    function get_entries($result) 
+    {
         $info = ldap_get_entries($this->connection, $result);
         return $info;
     }
@@ -382,7 +395,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function get_attribute_value($entry, $attribute) {
+    function get_attribute_value($entry, $attribute) 
+    {
         // what to do with more than one entry for user info?
         //$num_entries = ldap_count_entries($this->connection,$entry);
 
@@ -413,7 +427,8 @@ class xarldap {
      * @throws  none
      * @todo    check error return
     */
-    function get_option($option) {
+    function get_option($option) 
+    {
         if (ldap_get_option($this->connection, $option, $value)) {
             return $value;
         } else {
@@ -434,7 +449,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function set_option($option, $value) {
+    function set_option($option, $value) 
+    {
 
         // Check that values are the right type
         switch ($option){ 
@@ -527,7 +543,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function get_parameters() {
+    function get_parameters() 
+    {
         // Get all the current values out of the module variables
         $this->server = $this->get_variable('server');
         $this->port_number = $this->get_variable('port_number');
@@ -556,7 +573,8 @@ class xarldap {
      * @throws  none
      * @todo    none
     */
-    function set_parameters() {
+    function set_parameters() 
+    {
         // Get all the current values out of the module variables
         $this->set_variable('server', $this->server);
         $this->set_variable('port_number', $this->port_number);
