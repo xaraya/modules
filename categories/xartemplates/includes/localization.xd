@@ -28,8 +28,7 @@
                 <xar:else />
                     <option value="#$categories[$i]['cid']#">
                 </xar:if>
-
-                #$categories[$i]['slash_separated']#
+                #$categories[$i]['slash_separated']#</option>
             </xar:for>
         </select></td>
     </tr>
