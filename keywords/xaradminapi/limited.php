@@ -31,11 +31,15 @@ $invalid = array();
         return;
     } 
 
- $key = explode(",",$keyword);
+ 
+ $key = xarModAPIFunc('keywords',
+                         'admin',
+                         'separekeywords',
+                          array('keywords' => $keyword));
  
  foreach ($key as $keyres) {
-   $keyres = trim($keyres);	
- 	
+   $keyres = trim($keyres);     
+        
  $dbconn =& xarDBGetConn();
  $xartable =& xarDBGetTables(); 
  $keywordstable = $xartable['keywords_restr'];

@@ -1,4 +1,4 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <h2><xar:mlstring>Display Keyword Assignment</xar:mlstring></h2>
 <xar:if condition="!empty($id) and is_numeric($id)">
     <xar:data-display module="keywords" itemid="$id" />

@@ -1,0 +1,14 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<h2><xar:mlstring>Search in Keywords</xar:mlstring></h2>
+<xar:if condition="!empty($keys) and count($keys) gt 0">
+    <h4><xar:mlstring>Keywords Found</xar:mlstring>:</h4>
+    <ul>
+        <xar:foreach in="$keys" key="$id" value="$item">
+            <li><a href="#xarModURL('keywords', 'user', 'main', array('keyword' => $item['keyword']))#">#$item['keyword']#</a></li>
+        </xar:foreach>
+    </ul>
+<xar:else/>
+    <xar:if condition="!empty($status)">
+        <p>#$status#</p>
+    </xar:if>
+</xar:if>

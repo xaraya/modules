@@ -23,6 +23,8 @@
  */
 function keywords_userapi_getitems($args)
 {
+    if (!xarSecurityCheck('ReadKeywords')) return;
+    
     extract($args);
 
     if (!empty($id)) {

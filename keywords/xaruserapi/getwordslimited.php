@@ -21,6 +21,8 @@
  */
 function keywords_userapi_getwordslimited($args)
 {
+    if (!xarSecurityCheck('ReadKeywords')) return;
+	
     extract($args);
 
     if (!isset($moduleid) || !is_numeric($moduleid)) {

@@ -17,6 +17,28 @@
  */
 function keywords_userapi_getlist($args)
 {
+    if (!xarSecurityCheck('ReadKeywords')) return;
+    
+    extract($args); 
+
+    if (!isset($tab)){
+        $tab='0';
+    }
+ 
+    if ($tab == '0'){ 
+        $where = null;
+    } elseif ($tab == '1'){
+        $where = " WHERE xar_keyword REGEXP '^[A-F]'";
+    } elseif ($tab == '2'){    
+        $where = " WHERE xar_keyword REGEXP '^[G-L]'";
+    } elseif ($tab == '3'){    
+        $where = " WHERE xar_keyword REGEXP '^[M-R]'";
+    } elseif ($tab == '4'){    
+        $where = " WHERE xar_keyword REGEXP '^[S-Z]'";
+    } elseif ($tab == '5'){    
+        $where = " WHERE xar_keyword REGEXP '^[^A-Z]'"; 
+    }                
+     
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
@@ -24,7 +46,7 @@ function keywords_userapi_getlist($args)
     // Get count per keyword from the database
     if (!empty($args['count'])) {
         $query = "SELECT xar_keyword, COUNT(xar_id)
-                  FROM $keywordstable
+                  FROM $keywordstable $where
                   GROUP BY xar_keyword
                   ORDER BY xar_keyword ASC";
         $result =& $dbconn->Execute($query);
@@ -46,7 +68,7 @@ function keywords_userapi_getlist($args)
 
     // Get distinct keywords from the database
     $query = "SELECT DISTINCT xar_keyword
-              FROM $keywordstable
+              FROM $keywordstable  $where
               ORDER BY xar_keyword ASC";
     $result =& $dbconn->Execute($query);
     if (!$result) return;

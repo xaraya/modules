@@ -39,6 +39,8 @@ function keywords_admin_newhook($args)
         return $msg;
     }
 
+    
+
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
     if (empty($extrainfo['module'])) {
@@ -82,6 +84,9 @@ function keywords_admin_newhook($args)
 
     //retrieve the list of allowed delimiters
     $delimiters = xarModGetVar('keywords','delimiters');
+    
+    //retrieve the list of allowed delimiters.  use the first one as the default.
+    $delimiter = substr($delimiters,0,1);
     
 /*
     // extract individual keywords from the input string (comma, semi-column or space separated)
@@ -145,6 +150,7 @@ function keywords_admin_newhook($args)
                         array('keywords' => $keywords,
                               //'wordlist' => $wordlist,
                               'delimiters'=>$delimiters,
+                              'delimiter' => $delimiter,
                               'restricted' => $restricted)); 
 }
 

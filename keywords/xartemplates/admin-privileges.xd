@@ -1,4 +1,4 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Hooked Modules for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
 <div style="margin: auto;">
@@ -45,19 +45,19 @@
 </th><td>
     <select name="extlevel" id="extlevel">
         <xar:if condition="$extlevel eq 0">
-        	<option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
+            <option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
         <xar:else />
-        	<option value="0"><xar:mlstring>No Access</xar:mlstring></option>
+            <option value="0"><xar:mlstring>No Access</xar:mlstring></option>
         </xar:if>
         <xar:if condition="$extlevel eq 200">
-        	<option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
+            <option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
         <xar:else />
-        	<option value="200"><xar:mlstring>Read</xar:mlstring></option>
+            <option value="200"><xar:mlstring>Read</xar:mlstring></option>
         </xar:if>
         <xar:if condition="$extlevel eq 800">
-        	<option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
+            <option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
         <xar:else />
-        	<option value="800"><xar:mlstring>Admin</xar:mlstring></option>
+            <option value="800"><xar:mlstring>Admin</xar:mlstring></option>
         </xar:if>
     </select>
 </td></tr>

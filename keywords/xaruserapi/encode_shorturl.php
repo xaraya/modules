@@ -37,12 +37,15 @@ function keywords_userapi_encode_shorturl($args)
     // specify some short URLs relevant to your module
     if ($func == 'main') {
         $path = '/' . $module . '/'; 
-        if (!empty($keyword)) {
-            $path .= $keyword . '/';
-            if (!empty($id)) {
-                $path .= $id;
+        if (!empty($tab)) {
+            $path .= 'tab' . $tab . '/';
+            } elseif (!empty($keyword)) {
+                  $path .= $keyword . '/';
+                  if (!empty($id)) {
+                   $path .= $id;
             }
-        }
+            }
+       
 
     } else {
         // anything else that you haven't defined a short URL equivalent for

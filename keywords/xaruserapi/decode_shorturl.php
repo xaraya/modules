@@ -24,17 +24,23 @@ function keywords_userapi_decode_shorturl($params)
 { 
     // Initialise the argument list we will return
     $args = array(); 
-
     $module = 'keywords';
-
-    if (!empty($params[1])) {
+    
+      if (empty($params[1])) {
+          return array('main', $args);
+     } elseif (preg_match('/^tab[0-5]$/', $params[1])) {
+        $args['tab'] = $params[1]{3};
+        return array('main',$args);
+     } elseif (!empty($params[1])){
         $args['keyword'] = urldecode($params[1]);
         if (!empty($params[2]) && is_numeric($params[2])) {
             $args['id'] = $params[2];
         }
-    }
-    return array('main',$args);
+        return array('main',$args);
+        } else {
+    
+    
     // default : return nothing -> no short URL decoded
 } 
-
+}
 ?>

@@ -15,28 +15,38 @@
  */
 function keywords_user_main($args)
 {
+if (!xarSecurityCheck('ReadKeywords')) return;
+
     xarVarFetch('keyword','isset',$keyword,'', XARVAR_DONT_SET);
     xarVarFetch('id','isset',$id,'', XARVAR_DONT_SET);
-    extract($args);
+    xarVarFetch('tab','isset',$tab,'0', XARVAR_DONT_SET);
+    
+    //extract($args);
 
     if (empty($keyword)) {
         // get the list of keywords that are in use
         $words = xarModAPIFunc('keywords','user','getlist',
-                               array('count' => 1));
+                               array('count' => 1,
+                                     'tab' => $tab));
+         
         $items = array();
         foreach ($words as $word => $count) {
             if (empty($word)) continue;
             $items[] = array('url' => xarModURL('keywords','user','main',
                                                 array('keyword' => urlencode($word))),
-                             'label' => xarVarPrepForDisplay($word),
-                             'count' => $count);
+                                                'label' => xarVarPrepForDisplay($word),
+                                                'count' => $count);
         }
+      
         return array('status' => 0,
-                     'items' => $items);
+                     'items' => $items,
+                     'tab' => $tab);
+                     
     } elseif (empty($id)) {
         // get the list of items to which this keyword is assigned
         $items = xarModAPIFunc('keywords','user','getitems',
                                array('keyword' => $keyword));
+                             
         if (!isset($items)) return;
 
         // build up a list of item ids per module & item type
@@ -74,9 +84,10 @@ function keywords_user_main($args)
                         $items[$id]['label'] = $itemlinks[$itemid]['label'];
                     } else {
                         $items[$id]['url'] = xarModURL($modinfo['name'],'user','display',
+                        //$items[$id]['url'] = xarModURL($modinfo['name'],'user','main',
                                                        array('itemtype' => $itemtype,
                                                              'itemid' => $itemid));
-                        // you could skip those in the template
+                         // you could skip those in the template
                     }
                     if (!empty($itemtype)) {
                         if (isset($mytypes) && isset($mytypes[$itemtype])) {
@@ -91,12 +102,13 @@ function keywords_user_main($args)
             }
         }
         unset($modules);
+       
         return array('status' => 1,
                      'keyword' => xarVarPrepForDisplay($keyword),
                      'items' => $items);
     }
     $items = xarModAPIFunc('keywords','user','getitems',
-                          array('keyword' => urldecode($keyword),
+                          array('keyword' => urlencode($keyword),
                                  'id' => $id));
     if (!isset($items)) return;
     if (!isset($items[$id])) {
@@ -125,8 +137,9 @@ function keywords_user_main($args)
                          array('itemtype' => $item['itemtype'],
                                'itemid' => $item['itemid']));
     }
-
+  
     xarResponseRedirect($url);
+    
     return true;
 }
 

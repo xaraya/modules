@@ -1,13 +1,58 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Module</xar:mlstring></span></div>
 <xar:if condition="empty($status)">
-    <h2><xar:mlstring>Overview of Keywords</xar:mlstring></h2>
+    <xar:if condition="xarTplAddStyleLink('keywords', 'tabs')"></xar:if>
+    <div id="tabheader">
+    <ul>
+    <xar:if condition="$tab eq 0"> 
+    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#"><xar:mlstring>all</xar:mlstring></a></li>
+    <xar:else/>
+        <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#"><xar:mlstring>all</xar:mlstring></a></li>
+    </xar:if> 
+    <xar:if condition="$tab eq 1">
+    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#"><xar:mlstring>a - f</xar:mlstring></a></li>
+    <xar:else/> 
+    <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '1'))#"><xar:mlstring>a - f</xar:mlstring></a></li>
+    </xar:if>   
+    <xar:if condition="$tab eq 2">      
+    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#"><xar:mlstring>g - l</xar:mlstring></a></li>
+    <xar:else/>
+    <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '2'))#"><xar:mlstring>g - l</xar:mlstring></a></li>  
+    </xar:if>
+    <xar:if condition="$tab eq 3">
+    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#"><xar:mlstring>m - r</xar:mlstring></a></li>
+    <xar:else/>
+    <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '3'))#"><xar:mlstring>m - r</xar:mlstring></a></li>
+    </xar:if>
+    <xar:if condition="$tab eq 4">  
+    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#"><xar:mlstring>s - z</xar:mlstring></a></li>
+    <xar:else/>
+        <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '4'))#"><xar:mlstring>s - z</xar:mlstring></a></li>
+    </xar:if>
+    <xar:if condition="$tab eq 5">
+    <li id="current"><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#"><xar:mlstring>other</xar:mlstring></a></li> 
+    <xar:else/>
+        <li><a href="#xarModURL('keywords', 'user', 'main', array('tab' => '5'))#"><xar:mlstring>other</xar:mlstring></a></li>
+    </xar:if>
+    </ul>
+    </div>
+    <div style="clear: both; padding-top: 10px;"> 
+    <p></p>
+    <xar:if condition="empty($items)">
+    <p><h4><xar:mlstring>No keywords found !</xar:mlstring></h4></p>
+    <xar:else />
     <ul>
     <xar:foreach in="$items" value="$item">
         <li><a href="#$item['url']#">#$item['label']#</a> (#$item['count']#) </li>
     </xar:foreach>
     </ul>
+    </xar:if>
+    </div>
 <xar:elseif condition="$status eq 1 and !empty($keyword)" />
-    <h2><xar:ml><xar:mlstring>Keyword : #(1)</xar:mlstring><xar:mlvar>#$keyword#</xar:mlvar></xar:ml></h2>
+    <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+    <h4><xar:ml><xar:mlstring>Keyword : #(1)</xar:mlstring><xar:mlvar>#$keyword#</xar:mlvar></xar:ml></h4>
+    </div>
+    <div>
     <ul>
     <xar:foreach in="$items" key="$id" value="$item">
         <li>
@@ -17,15 +62,20 @@
         <xar:if condition="!empty($item['url']) and !empty($item['label'])">
             <a href="#$item['url']#">#$item['label']#</a>
         <xar:elseif condition="!empty($item['url'])"/>
-            <xar:comment> you could skip these items </xar:comment>
+            <!--- you could skip these items --->
             <a href="#$item['url']#"><xar:ml><xar:mlstring>item #(1)</xar:mlstring><xar:mlvar>#$item['itemid']#</xar:mlvar></xar:ml></a>
         <xar:else/>
-            <xar:comment> you could skip these items </xar:comment>
+            <!--- you could skip these items --->
             <xar:mlstring>item</xar:mlstring> #$item['moduleid']# #$item['itemtype']# #$item['itemid']#</a>
         </xar:if>
         </li>
     </xar:foreach>
     </ul>
+    <p><a href="javascript:history.back(-1)"><xar:mlstring>Click here to go back</xar:mlstring></a></p>
+</div>
+<xar:elseif condition="$status eq 1 and empty($keyword)" />
+<xar:mlstring>No keywords</xar:mlstring>
+
 <xar:elseif condition="$status eq 2" />
     <h2><xar:mlstring>Overview of Keyword Assignments</xar:mlstring></h2>
     <xar:mlstring>Unable to find corresponding item</xar:mlstring>

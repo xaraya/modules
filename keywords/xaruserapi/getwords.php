@@ -24,6 +24,8 @@
  */
 function keywords_userapi_getwords($args)
 {
+    if (!xarSecurityCheck('ReadKeywords')) return;
+    
     extract($args);
 
     if (!isset($modid) || !is_numeric($modid)) {

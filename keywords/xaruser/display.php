@@ -20,6 +20,8 @@
  */
 function keywords_user_display($args)
 {
+    if (!xarSecurityCheck('ReadKeywords')) return;
+    
     xarVarFetch('itemid','isset',$itemid,'', XARVAR_DONT_SET);
     extract($args);
 

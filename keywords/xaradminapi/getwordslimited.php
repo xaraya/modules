@@ -54,7 +54,11 @@ function keywords_adminapi_getwordslimited($args)
         $result->MoveNext();
     }
     $result->Close();
-    $keywords = implode(",", $keywords);
+    
+    $delimiters = xarModGetVar('keywords','delimiters');
+    $delimiter = substr($delimiters,0,1);
+    $keywords = implode($delimiter, $keywords);
+    //$keywords = implode(",", $keywords);
     return $keywords;
 }
 ?>

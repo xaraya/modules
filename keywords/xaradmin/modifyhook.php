@@ -74,7 +74,7 @@ function keywords_admin_modifyhook($args)
     }
 
 
-	$restricted = xarModGetVar('keywords','restricted');
+        $restricted = xarModGetVar('keywords','restricted');
         if ($restricted == '0') {
            $oldwords = xarModAPIFunc('keywords',
                                      'user',
@@ -147,25 +147,25 @@ function keywords_admin_modifyhook($args)
     }
 */
 
-	} else {
-			
-			$keywords = xarModAPIFunc('keywords','user','getwords',
+        } else {
+                        
+                        $keywords = xarModAPIFunc('keywords','user','getwords',
                            array('modid' => $modid,
                                  'itemtype' => $itemtype,
                                  'itemid' => $itemid));
         
         
         
-        	$keywords1 = xarModAPIFunc('keywords',
+                $keywords1 = xarModAPIFunc('keywords',
                                 'admin',
                                 'getallkey',
                                  array('moduleid' => $modid));
                                  
        
-			$wordlist=array_diff($keywords1,$keywords);
+                        $wordlist=array_diff($keywords1,$keywords);
 
                                  
-     		}
+                }
 
     return xarTplModule('keywords',
                         'admin',
@@ -173,6 +173,7 @@ function keywords_admin_modifyhook($args)
                         array('keywords' => $keywords,
                               'wordlist' => $wordlist,
                               'delimiters' => $delimiters,
+                              'delimiter' => $delimiter,
                               'restricted' => $restricted));
 }
 

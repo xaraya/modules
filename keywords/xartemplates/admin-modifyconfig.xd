@@ -1,50 +1,50 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html ---> 
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br />
-<div style="margin: auto;">
-<form method="post" action="#xarModURL('keywords', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Keywords Administration</xar:mlstring></span></div> 
+<div class="xar-mod-body"><h2><xar:mlstring>Configure</xar:mlstring></h2><br /> 
+<div style="margin: auto;"> 
+<form method="post" action="#xarModURL('keywords', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" > 
+<input type="hidden" name="authid" id="authid" value="#$authid#" /> 
 <div style="clear: both; padding-top: 10px;"> 
- <span style="float: left; width: 20%; text-align: right;">
+ <span style="float: left; width: 20%; text-align: right;"> 
  <span class="help" title="#xarML('Activate short url support.')#"><label for="isalias"><xar:mlstring>Enable Short URLs :</xar:mlstring></label></span> 
  </span> 
- <span style="float: right; width: 78%; text-align: left;">
+ <span style="float: right; width: 78%; text-align: left;"> 
 <xar:if condition="!empty($isalias)"> 
-<input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
-<xar:else/>
-<input type="checkbox" name="isalias" id="isalias" value="1" />
-</xar:if> 
- </span> 
-</div> 
- 
-<div style="clear: both; padding-top: 10px;"> 
- <span style="float: left; width: 20%; text-align: right;">
- <span class="help" title="#xarML('Define keywords delimiters list.')#"><label for="delimiters"><xar:mlstring>Valid Delimiter List :</xar:mlstring></label></span>
- </span> 
- <span style="float: right; width: 78%; text-align: left;">
-<xar:if condition="!empty($delimiters)">
-<input type="text" name="delimiters" id="delimiters" value="#$delimiters#" size="40" />
+<input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" /> 
 <xar:else/> 
-<input type="text" name="delimiters" id="delimiters" value="" size="40" />
+<input type="checkbox" name="isalias" id="isalias" value="1" /> 
 </xar:if> 
  </span> 
 </div> 
  
 <div style="clear: both; padding-top: 10px;"> 
  <span style="float: left; width: 20%; text-align: right;"> 
- <span class="help" title="#xarML('Restrict keywords to the following allowed list.')#"><label for="restricted"><xar:mlstring>Restrict keywords:</xar:mlstring></label></span>
+ <span class="help" title="#xarML('Define keywords delimiters list. Not use space if you want to use multi words keyword.')#"><label for="delimiters"><xar:mlstring>Valid Delimiter List :</xar:mlstring></label></span> 
  </span> 
- <span style="float: right; width: 78%; text-align: left;">
- <select name="restricted" id="restricted" onchange="javascript:this.form.action = '&xar-modurl-keywords-admin-modifyconfig;';this.form.submit();">
- <xar:if condition="$restricted eq 1">
- <option value="1" selected="selected">#xarML('Yes')#</option>
+ <span style="float: right; width: 78%; text-align: left;"> 
+<xar:if condition="!empty($delimiters)"> 
+<input type="text" name="delimiters" id="delimiters" value="#$delimiters#" size="40" /> 
+<xar:else/> 
+<input type="text" name="delimiters" id="delimiters" value="" size="40" /> 
+</xar:if> 
+ </span> 
+</div> 
+ 
+<div style="clear: both; padding-top: 10px;"> 
+ <span style="float: left; width: 20%; text-align: right;"> 
+ <span class="help" title="#xarML('Restrict keywords to the following allowed list.')#"><label for="restricted"><xar:mlstring>Restrict keywords:</xar:mlstring></label></span> 
+ </span> 
+ <span style="float: right; width: 78%; text-align: left;"> 
+ <select name="restricted" id="restricted" onchange="javascript:this.form.action = '&xar-modurl-keywords-admin-modifyconfig;';this.form.submit();"> 
+ <xar:if condition="$restricted eq 1"> 
+ <option value="1" selected="selected">#xarML('Yes')#</option> 
  <xar:else /> 
- <option value="1">#xarML('Yes')#</option>
+ <option value="1">#xarML('Yes')#</option> 
  </xar:if> 
  <xar:if condition="$restricted eq 0"> 
- <option value="0" selected="selected">#xarML('No')#</option>
+ <option value="0" selected="selected">#xarML('No')#</option> 
 <xar:else/> 
- <option value="0">#xarML('No')#</option>
+ <option value="0">#xarML('No')#</option> 
 </xar:if> 
  </select> 
  </span> 
@@ -52,17 +52,18 @@
 <xar:if condition="$restricted eq 1"> 
 <xar:foreach in="$settings" key="$modname" value="$config">
  <div style="clear: both; padding-top: 10px;">
- <span style="float: left; width: 100%;  text-align: left;"><b>#$config['label']#</b></span>
- <span style="float: left; width: 20%; text-align: right;"> 
-<span class="help" title="#xarML('Define keywords delimiters list.')#"><label for="keywords[#$modname#]"><xar:mlstring>Allowed Keywords (comma-separated list)</xar:mlstring> :</label></span>
+ <span style="float: left; width: 100%;  text-align: left;"><b>#$config['label']#</b></span> 
+ <span style="float: left; width: 15%; text-align: left;"> 
+<span class="help" title="#xarML('Define keywords for the hooked module.')#"><label for="keywords[#$modname#]"><xar:mlstring>Allowed Keywords</xar:mlstring> :</label></span>
  </span> 
- <span style="float: right; width: 78%; text-align: left;">
-<input type="text" name="keywords[#$modname#]" id="keywords[#$modname#]" value="#$config['keywords']#" size="40" />
+ <span style="float: right; width: 83%; text-align: left;"> 
+<input type="text" name="keywords[#$modname#]" id="keywords[#$modname#]" value="#$config['keywords']#" size="40" /> 
  </span> 
- </div> 
+ </div>
 </xar:foreach> 
 </xar:if> 
-<br /><br /><br />
+<br /><br /><br />  
 <input type="submit" value="Update Keywords Configuration" /> 
+
 </form> 
-</div> 
+</div>

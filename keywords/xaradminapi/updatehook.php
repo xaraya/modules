@@ -102,6 +102,12 @@ function keywords_adminapi_updatehook($args)
         $keywords = '';
     }
 
+ $words = xarModAPIFunc('keywords',
+                         'admin',
+                         'separekeywords',
+                          array('keywords' => $keywords));
+                          
+/*
     // get the list of delimiters to work with
     $delimiters = xarModGetVar('keywords','delimiters');
     $dellength = strlen($delimiters);
@@ -118,6 +124,7 @@ function keywords_adminapi_updatehook($args)
         $words = array();
         $words[] = $keywords;
     }
+   */
     
     // old way with hardcoded separators
     /*if (strstr($keywords,',')) {

@@ -51,6 +51,7 @@ function keywords_admin_new($args)
     }
     $data['authid'] = xarSecGenAuthKey();
     $data['confirm'] = xarML('Create');
+   
     return $data;
 }
 ?>

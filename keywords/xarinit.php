@@ -22,6 +22,7 @@ function keywords_init()
     $xartable =& xarDBGetTables();
 
     $keywordstable = $xartable['keywords'];
+    $restrkeywordstable = $xartable['keywords_restr'];
 
     xarDBLoadTableMaintenanceAPI();
     $query = xarDBCreateTable($xartable['keywords'],
@@ -73,6 +74,7 @@ function keywords_init()
     $query = xarDBCreateIndex($keywordstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+   
 
     $query = xarDBCreateTable($xartable['keywords_restr'],
                              array('xar_id'         => array('type'        => 'integer',
@@ -95,9 +97,19 @@ function keywords_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
+    
+     // avoid duplicate keywords for the same module item
+    $index = array(
+        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_keywords',
+        'fields'    => array('xar_keyword','xar_moduleid'),
+        'unique'    => false
+    );
+    $query = xarDBCreateIndex($restrkeywordstable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     xarModSetVar('keywords', 'SupportShortURLs', 1);
-    xarModSetVar('keywords', 'delimiters', ';, ');
+    xarModSetVar('keywords', 'delimiters', ';,');
     xarModSetVar('keywords', 'restricted', 0);
     xarModSetVar('keywords', 'default', 'xaraya');
 
@@ -128,6 +140,11 @@ function keywords_init()
     if (!xarModRegisterHook('item', 'display', 'GUI',
                            'keywords', 'user', 'displayhook')) {
         return false;
+    }
+    
+    if (!xarModRegisterHook('item', 'search', 'GUI',
+                           'keywords', 'user', 'search')) {
+        return;
     }
 
 /* // TODO: show items you created/edited someday ?
@@ -197,6 +214,11 @@ function keywords_upgrade($oldversion)
                 // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
                 $result = &$dbconn->Execute($query);
                 if (!$result) return;
+                
+                 if (!xarModRegisterHook('item', 'search', 'GUI',
+                           'keywords', 'user', 'search')) {
+        return;
+    }
 
             break;
         case '2.0.0':
@@ -263,6 +285,13 @@ function keywords_delete()
                            'keywords', 'admin', 'deletehook')) {
         return false;
     }
+    
+    if (!xarModUnregisterHook('item', 'search', 'GUI',
+                              'keywords', 'user', 'search')) {
+        return;
+    }
+    
+    
     // when a whole module is removed, e.g. via the modules admin screen
     // (set object ID to the module name !)
     if (!xarModUnregisterHook('module', 'remove', 'API',
