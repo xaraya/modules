@@ -227,6 +227,7 @@ function bbcode_encode_quote($message)
   if($is_well_formed && empty($stack)) {
     //No str_ireplace until PHP 5.0 :-(
     $message = preg_replace('/\[quote\]/i', '<p>' . xarML('Quote') . ':</p><blockquote>', $message);
+    $message = wordwrap($message);
     $message = preg_replace('/\[\/quote\]/i', '</blockquote>', $message);
     return $message;
   }
