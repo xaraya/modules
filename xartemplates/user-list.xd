@@ -19,7 +19,7 @@ Timezone:
 
 <h1>Current time for #$selected_tz#</h1>
 <p>
-<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz))</xar:set>
+<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz))</xar:set>
 UTC = #xarLocaleGetFormattedUTCDate('long',time())#&nbsp;
 #xarLocaleGetFormattedUTCTime('long',time())#<br />
 LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
@@ -28,12 +28,12 @@ LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
 
 <hr />
 
-<xar:set name="$test_tz">'America/New_York'</xar:set>
+<xar:set name="test_tz">'America/New_York'</xar:set>
 <h3>Hard Coded Test For #$test_tz#</h3>
 <h3>Should be -0400</h3>
 <p>
 <xar:set name="timestamp">gmmktime(5,59,0,10,31,2004)</xar:set>
-<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
+<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
 UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
 #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
 LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
@@ -43,7 +43,7 @@ LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
 <h3>Should be -0500</h3>
 <p>
 <xar:set name="timestamp">gmmktime(6,0,0,10,31,2004)</xar:set>
-<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
+<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
 UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
 #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
 LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
@@ -53,7 +53,7 @@ LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
 <h3>Should be -0500</h3>
 <p>
 <xar:set name="timestamp">gmmktime(6,59,0,4,4,2004)</xar:set>
-<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
+<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
 UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
 #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
 LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
@@ -63,7 +63,7 @@ LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
 <h3>Should be -0400</h3>
 <p>
 <xar:set name="timestamp">gmmktime(7,0,0,4,4,2004)</xar:set>
-<xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
+<xar:set name="currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$test_tz,'timestamp'=>$timestamp))</xar:set>
 UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
 #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
 LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
