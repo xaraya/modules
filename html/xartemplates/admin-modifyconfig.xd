@@ -35,6 +35,7 @@
 		<div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
 			<input type="submit" value="#$submitlabel#" />
 		</div>
+	</div>
 </form>
 </div>
 </div>
