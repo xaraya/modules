@@ -104,8 +104,8 @@ class Net_NNTP_Header
      */
     function Net_NNTP_Header()
     {
-	// Reset object
-	$this->reset();
+    // Reset object
+    $this->reset();
     }
 
     // }}}
@@ -119,7 +119,7 @@ class Net_NNTP_Header
      */
     function reset()
     {
-	$this->fields = array();
+    $this->fields = array();
     }
 
     // }}}
@@ -129,7 +129,7 @@ class Net_NNTP_Header
      * Create a new instance of Net_NNTP_Header
      *
      * @param optional mixed $input Can be any of the following:
-     * 	   	                    (string) RFC2822 style header lines (CRLF included)
+     *                                (string) RFC2822 style header lines (CRLF included)
      *                              (array)  RFC2822 style header lines (CRLF not included)
      *                              (object) Net_NNTP_Header object
      *                              (object) Net_NNTP_Message object
@@ -140,51 +140,51 @@ class Net_NNTP_Header
      */
     function & create($input = null)
     {
-	switch (true) {
+    switch (true) {
 
-	    // Null
-	    case is_null($input);
-		$Object = new Net_NNTP_Header();
-	        return $Object;
-		break;
+        // Null
+        case is_null($input);
+        $Object = new Net_NNTP_Header();
+            return $Object;
+        break;
 
 
-	    // Object
-	    case is_object($input);
-		switch (true) {
-		    
-		    // Header
-		    case is_a($input, 'net_nntp_header'):
-			return $input;
-			break;
-			
-		    // Message
-		    case is_a($input, 'net_nntp_message'):
-			return $input->getHeader();
-			break;
-			
-		    // Unknown object/class
-		    default:
-			return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
-		}
-		break;
+        // Object
+        case is_object($input);
+        switch (true) {
+            
+            // Header
+            case is_a($input, 'net_nntp_header'):
+            return $input;
+            break;
+            
+            // Message
+            case is_a($input, 'net_nntp_message'):
+            return $input->getHeader();
+            break;
+            
+            // Unknown object/class
+            default:
+            return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
+        }
+        break;
 
-	    // String & Array
-	    case is_string($input);
-	    case is_array($input);
-	        $Object = new Net_NNTP_Header();
-		$R = $Object->setFields($input)
+        // String & Array
+        case is_string($input);
+        case is_array($input);
+            $Object = new Net_NNTP_Header();
+        $R = $Object->setFields($input)
 ;
-		if (PEAR::isError($R)) {
-		    return $R;
-		}
-		return $Object;
-		break;
+        if (PEAR::isError($R)) {
+            return $R;
+        }
+        return $Object;
+        break;
 
-	    // Unknown type
-	    default:
-		return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
-	}
+        // Unknown type
+        default:
+        return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
+    }
     }
 
     // }}}
@@ -202,16 +202,16 @@ class Net_NNTP_Header
      */
     function add($tag, $value, $index = null)
     {
-	// Add header to $return array
-    	if (isset($this->fields[$tag]) && is_array($this->fields[$tag])) {
-	    // The header name has already been used at least two times.
+    // Add header to $return array
+        if (isset($this->fields[$tag]) && is_array($this->fields[$tag])) {
+        // The header name has already been used at least two times.
             $this->fields[$tag][] = $value;
         } elseif (isset($this->fields[$tag])) {
-	    // The header name has already been used one time -> change to nedted values.
+        // The header name has already been used one time -> change to nedted values.
             $this->fields[$tag] = array($this->fields[$tag], $value);
         } else {
-	    // The header name has not used until now.
-	    $this->fields[$tag] = $value;
+        // The header name has not used until now.
+        $this->fields[$tag] = $value;
         }
     }
 
@@ -230,20 +230,20 @@ class Net_NNTP_Header
      */
     function replace($tag, $value, $index = null)
     {
-	if (isset($this->fields[$tag])) {
-	    if ($index === null) {
-		$this->fields[$tag] = $value;
-	    } else {
-		if (is_array($this->fields[$tag])) {
-		    $this->fields[$tag][$index] = $value;
-		} else {
+    if (isset($this->fields[$tag])) {
+        if ($index === null) {
+        $this->fields[$tag] = $value;
+        } else {
+        if (is_array($this->fields[$tag])) {
+            $this->fields[$tag][$index] = $value;
+        } else {
 //TODO: Currently ignores $index, and just replaces the value
-		    $this->fields[$tag] = $value;
-		}
-	    }
-	} else {
-	    $this->fields[$tag] = $value;
-	}
+            $this->fields[$tag] = $value;
+        }
+        }
+    } else {
+        $this->fields[$tag] = $value;
+    }
     }
 
     // }}}
@@ -260,19 +260,19 @@ class Net_NNTP_Header
      */
     function delete($tag, $index = null)
     {
-	if (isset($this->fields[$tag])) {
-	    if ($index == null) {
-		unset($this->fields[$tag]);
-	    } else {
-		if (is_array($this->fields[$tag])) {
-		    unset($this->fields[$tag][$index]);
-		} else {
-		    unset($this->fields[$tag]);
-		}
-	    }
-	} else {
-	    // Do nothing...
-	}
+    if (isset($this->fields[$tag])) {
+        if ($index == null) {
+        unset($this->fields[$tag]);
+        } else {
+        if (is_array($this->fields[$tag])) {
+            unset($this->fields[$tag][$index]);
+        } else {
+            unset($this->fields[$tag]);
+        }
+        }
+    } else {
+        // Do nothing...
+    }
     }
 
     // }}}
@@ -290,19 +290,19 @@ class Net_NNTP_Header
      */
     function get($tag, $index = 0)
     {
-	if (!isset($this->fields[$tag])) {
-	    return null;
-	}
+    if (!isset($this->fields[$tag])) {
+        return null;
+    }
 
-	if (is_array($this->fields[$tag])) {
-	    return $this->fields[$tag][$index];
-	} else {
-	    if ($index == 0) {
-		return $this->fields[$tag];
-	    } else {
-	        return null;
-	    }
-	}
+    if (is_array($this->fields[$tag])) {
+        return $this->fields[$tag][$index];
+    } else {
+        if ($index == 0) {
+        return $this->fields[$tag];
+        } else {
+            return null;
+        }
+    }
     }
 
     // }}}
@@ -320,16 +320,16 @@ class Net_NNTP_Header
      */
     function getAll($tag)
     {
-	if (!isset($this->fields[$tag])) {
-	    array();
-	}
+    if (!isset($this->fields[$tag])) {
+        array();
+    }
 
-	if (is_array($this->fields[$tag])) {
-	    return $this->fields[$tag];
-	} else {
+    if (is_array($this->fields[$tag])) {
+        return $this->fields[$tag];
+    } else {
 // TODO: What to do, when not array but index is set...
-	    return array($this->fields[$tag]);
-	}
+        return array($this->fields[$tag]);
+    }
     }
 
     // }}}
@@ -346,15 +346,15 @@ class Net_NNTP_Header
      */
     function count($tag)
     {
-	if (!isset($this->fields[$tag])) {
-	    return 0;
-	}
+    if (!isset($this->fields[$tag])) {
+        return 0;
+    }
 
-	if (is_array($this->fields[$tag])) {
-	    return count($this->fields[$tag]);
-	} else {
-	    return 1;
-	}
+    if (is_array($this->fields[$tag])) {
+        return count($this->fields[$tag]);
+    } else {
+        return 1;
+    }
     }
 
     // }}}
@@ -370,7 +370,7 @@ class Net_NNTP_Header
      */
     function tags()
     {
-	return array_keys($this->fields);
+    return array_keys($this->fields);
     }
 
     // }}}
@@ -384,19 +384,19 @@ class Net_NNTP_Header
      */
     function clean()
     {
-	foreach (array_keys($this->fields) as $tag) {
-	    if (is_array($this->fields[$tag])) {
-		foreach (array_keys($this->fields[$tag]) as $i) {
-		    if (trim($this->fields[$tag][$i]) == '') {
-			unset($this->fields[$tag][$i]);
-		    }
-		}
-	    } else {
-		if (trim($this->fields[$tag]) == '') {
-		    unset($this->fields[$tag]);
-		}
-	    }
-	}
+    foreach (array_keys($this->fields) as $tag) {
+        if (is_array($this->fields[$tag])) {
+        foreach (array_keys($this->fields[$tag]) as $i) {
+            if (trim($this->fields[$tag][$i]) == '') {
+            unset($this->fields[$tag][$i]);
+            }
+        }
+        } else {
+        if (trim($this->fields[$tag]) == '') {
+            unset($this->fields[$tag]);
+        }
+        }
+    }
     }
 
     // }}}
@@ -406,7 +406,7 @@ class Net_NNTP_Header
      * Import RFC2822 style header lines given in $input into the object
      * 
      * @param mixed $input Can be any of the following:
-     * 	 	           (string) RFC2822 style header lines (CRLF included)
+     *                     (string) RFC2822 style header lines (CRLF included)
      *                     (array)  RFC2822 style header lines (CRLF not included)
      *                     (object) Net_NNTP_Header object
      *                     (object) Net_NNTP_Message object
@@ -417,39 +417,39 @@ class Net_NNTP_Header
      */
     function setFields(&$input, $flags = NET_NNTP_HEADER_SET_DEFAULT)
     {
-	switch (true) {
+    switch (true) {
 
-	    // Object
-	    case is_object($input):
-		switch (true) {
-		    case is_a($input, 'net_nntp_header'):
-			$this =& $input;
-			break;
-		    
-		    case is_a($input, 'net_nntp_message'):
-			$this =& $input->getHeader();
-			break;
-		    
-		    // Unknown type
-		    default:
-			return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
-		}
-		break;
+        // Object
+        case is_object($input):
+        switch (true) {
+            case is_a($input, 'net_nntp_header'):
+            $this =& $input;
+            break;
+            
+            case is_a($input, 'net_nntp_message'):
+            $this =& $input->getHeader();
+            break;
+            
+            // Unknown type
+            default:
+            return PEAR::throwError('Unsupported object/class: '.get_class($input), null);
+        }
+        break;
 
-	    // String
-	    case is_string($input):
-		$this->fields = $this->_parseString($input, $flags);
-		break;
+        // String
+        case is_string($input):
+        $this->fields = $this->_parseString($input, $flags);
+        break;
 
-	    // Array
-	    case is_array($input):
-		$this->fields = $this->_parseArray($input, $flags);
-		break;
+        // Array
+        case is_array($input):
+        $this->fields = $this->_parseArray($input, $flags);
+        break;
 
-	    // Unknown type
-	    default:
-		return PEAR::throwError('Unsupported type: '.gettype($input), null);
-	}
+        // Unknown type
+        default:
+        return PEAR::throwError('Unsupported type: '.gettype($input), null);
+    }
     }
 
     // }}}
@@ -466,7 +466,7 @@ class Net_NNTP_Header
      */
     function getFields()
     {
-	return $this->fields;
+    return $this->fields;
     }
 
     // }}}
@@ -483,7 +483,7 @@ class Net_NNTP_Header
      */
     function getFieldsString($flags = NET_NNTP_HEADER_GET_DEFAULT)
     {
-	return $this->_regenerateString($this->fields, $flags);
+    return $this->_regenerateString($this->fields, $flags);
     }
 
     // }}}
@@ -500,7 +500,7 @@ class Net_NNTP_Header
      */
     function getFieldsArray($flags = NET_NNTP_HEADER_GET_DEFAULT)
     {
-	return $this->_regenerateArray($this->fields, $flags);
+    return $this->_regenerateArray($this->fields, $flags);
     }
 
     // }}}
@@ -518,27 +518,27 @@ class Net_NNTP_Header
      */
     function _parseString($string, $flags)
     {
-    	// Clean the header lines
-	if (($flags & NET_NNTP_HEADER_SET_CLEAN) == NET_NNTP_HEADER_SET_CLEAN) {
-	    $string = $this->cleanString($string);
-	}
+        // Clean the header lines
+    if (($flags & NET_NNTP_HEADER_SET_CLEAN) == NET_NNTP_HEADER_SET_CLEAN) {
+        $string = $this->cleanString($string);
+    }
 
-    	// Unfold the header lines
-	if (($flags & NET_NNTP_HEADER_SET_UNFOLD) == NET_NNTP_HEADER_SET_UNFOLD) {
-	    $string = $this->unfoldString($string);
-	}
+        // Unfold the header lines
+    if (($flags & NET_NNTP_HEADER_SET_UNFOLD) == NET_NNTP_HEADER_SET_UNFOLD) {
+        $string = $this->unfoldString($string);
+    }
 
-	// Convert to array
-	$array = explode("\r\n", $string);
+    // Convert to array
+    $array = explode("\r\n", $string);
 
-	// Remove body if present
-	$i = array_search('', $array);
-	if ($i != null) {
-	    array_splice($array, $i, (count($array))-$i);
-	}
+    // Remove body if present
+    $i = array_search('', $array);
+    if ($i != null) {
+        array_splice($array, $i, (count($array))-$i);
+    }
 
-	// Forward to _parse()
-	return $this->_parse($array, $flags);
+    // Forward to _parse()
+    return $this->_parse($array, $flags);
     }
 
     // }}}
@@ -556,24 +556,24 @@ class Net_NNTP_Header
      */
     function _parseArray($array, $flags)
     {
-    	// Clean the header lines
-	if (($flags & NET_NNTP_HEADER_SET_CLEAN) == NET_NNTP_HEADER_SET_CLEAN) {
-	    $array = $this->cleanArray($array);
-	}
+        // Clean the header lines
+    if (($flags & NET_NNTP_HEADER_SET_CLEAN) == NET_NNTP_HEADER_SET_CLEAN) {
+        $array = $this->cleanArray($array);
+    }
 
-    	// Unfold the header lines
-	if (($flags & NET_NNTP_HEADER_SET_UNFOLD) == NET_NNTP_HEADER_SET_UNFOLD) {
-	    $array = $this->unfoldArray($array);
-	}
+        // Unfold the header lines
+    if (($flags & NET_NNTP_HEADER_SET_UNFOLD) == NET_NNTP_HEADER_SET_UNFOLD) {
+        $array = $this->unfoldArray($array);
+    }
 
-	// Remove body if present
-	$i = array_search('', $array);
-	if ($i != null) {
-	    array_splice($array, $i, count($array)-$i);
-	}
+    // Remove body if present
+    $i = array_search('', $array);
+    if ($i != null) {
+        array_splice($array, $i, count($array)-$i);
+    }
 
-	// Forward to _parse()
-	return $this->_parse($array, $flags);
+    // Forward to _parse()
+    return $this->_parse($array, $flags);
     }
 
     // }}}
@@ -592,40 +592,40 @@ class Net_NNTP_Header
      */
     function _parse($array, $flags)
     {
-	// Init return variable
-	$return = array();
+    // Init return variable
+    $return = array();
 
-	// Loop through all headers
+    // Loop through all headers
         foreach ($array as $field) {
-	    // Separate header name and value
-	    if (!preg_match('/([\S]+)\:\s*(.*)\s*/', $field, $matches)) {
-		// Fail...
-	    }
-	    $name = $matches[1];
-	    $value = $matches[2];
-	    unset($matches);
+        // Separate header name and value
+        if (!preg_match('/([\S]+)\:\s*(.*)\s*/', $field, $matches)) {
+        // Fail...
+        }
+        $name = $matches[1];
+        $value = $matches[2];
+        unset($matches);
 
-	    // Change header name to lower case
-	    if (($flags & NET_NNTP_HEADER_SET_KEEPCASE) != NET_NNTP_HEADER_SET_KEEPCASE) {
- 		$name = strtolower($name);
-	    }
-	    
-	    // Decode header value acording to RFC 2047
-	    if (($flags & NET_NNTP_HEADER_SET_DECODE) == NET_NNTP_HEADER_SET_UNFOLD) {
-		$value
+        // Change header name to lower case
+        if (($flags & NET_NNTP_HEADER_SET_KEEPCASE) != NET_NNTP_HEADER_SET_KEEPCASE) {
+         $name = strtolower($name);
+        }
+        
+        // Decode header value acording to RFC 2047
+        if (($flags & NET_NNTP_HEADER_SET_DECODE) == NET_NNTP_HEADER_SET_UNFOLD) {
+        $value
  = $this->decodeString($value);
-	    }
-	    
-	    // Add header to $return array
-    	    if (isset($return[$name]) AND is_array($return[$name])) {
-		// The header name has already been used at least two times.
-            	$return[$name][] = $value;
+        }
+        
+        // Add header to $return array
+            if (isset($return[$name]) AND is_array($return[$name])) {
+        // The header name has already been used at least two times.
+                $return[$name][] = $value;
             } elseif (isset($return[$name])) {
-		// The header name has already been used one time -> change to nedted values.
-            	$return[$name] = array($return[$name], $value);
+        // The header name has already been used one time -> change to nedted values.
+                $return[$name] = array($return[$name], $value);
             } else {
-		// The header name has not used until now.
-        	$return[$name] = $value;
+        // The header name has not used until now.
+            $return[$name] = $value;
             }
         }
 
@@ -647,8 +647,8 @@ class Net_NNTP_Header
      */
     function _regenerateString($array, $flags)
     {
-	// ( Forward to _regenerateArray() and then convert to string )
-	return implode("\r\n", $this->_regenerateArray($array, $flags));
+    // ( Forward to _regenerateArray() and then convert to string )
+    return implode("\r\n", $this->_regenerateArray($array, $flags));
     }
 
     // }}}
@@ -666,35 +666,35 @@ class Net_NNTP_Header
      */
     function _regenerateArray($array, $flags)
     {
-	// Init return variable
-	$return = array();
+    // Init return variable
+    $return = array();
 
-	// Loop through headers
+    // Loop through headers
         foreach ($array as $name => $value) {
-	    // Encode header values acording to RFC 2047
-	    if (($flags & NET_NNTP_HEADER_GET_ENCODE) == NET_NNTP_HEADER_GET_ENCODE) {
-		if (is_array($value)) {
-		    foreach(array_keys($value) as $key) {
-			$value[$key] = $this->encodeString($value[$key]);
-		    }
-		} else {
-		    $value = $this->encodeString($value);
-		}
-	    }
-
-	    if (is_array($value)) {
-    		foreach ($value as $sub_value) {
-        	    $return[] = $name.': '.$sub_value;
-		}
-	    } else {
-        	$return[] = $name.': '.$value;
-	    }
+        // Encode header values acording to RFC 2047
+        if (($flags & NET_NNTP_HEADER_GET_ENCODE) == NET_NNTP_HEADER_GET_ENCODE) {
+        if (is_array($value)) {
+            foreach(array_keys($value) as $key) {
+            $value[$key] = $this->encodeString($value[$key]);
+            }
+        } else {
+            $value = $this->encodeString($value);
+        }
         }
 
-	// Fold headers
-	if (($flags & NET_NNTP_HEADER_GET_FOLD) == NET_NNTP_HEADER_GET_FOLD) {
-	    $return = $this->foldArray($return);
-	}
+        if (is_array($value)) {
+            foreach ($value as $sub_value) {
+                $return[] = $name.': '.$sub_value;
+        }
+        } else {
+            $return[] = $name.': '.$value;
+        }
+        }
+
+    // Fold headers
+    if (($flags & NET_NNTP_HEADER_GET_FOLD) == NET_NNTP_HEADER_GET_FOLD) {
+        $return = $this->foldArray($return);
+    }
 
         return $return;
     }
@@ -713,13 +713,13 @@ class Net_NNTP_Header
      */
     function unfoldString($string)
     {
-	// Correct \r to \r\n
-    	$string = preg_replace("/\r?\n/", "\r\n", $string);
+    // Correct \r to \r\n
+        $string = preg_replace("/\r?\n/", "\r\n", $string);
 
-	// Unfold multiline headers
-    	$string = preg_replace("/\r\n(\t| )+/", ' ', $string);
+    // Unfold multiline headers
+        $string = preg_replace("/\r\n(\t| )+/", ' ', $string);
 
-	return $string;
+    return $string;
     }
 
     // }}}
@@ -736,26 +736,26 @@ class Net_NNTP_Header
      */
     function unfoldArray($array)
     {
-	// Unfold multiline headers
-	for ($i = count($array)-1; $i>0; $i--) {
+    // Unfold multiline headers
+    for ($i = count($array)-1; $i>0; $i--) {
 
-	    // Check for leading whitespace
-	    if (preg_match('/^(\x09|\x20)/', $array[$i])) {
-		    
-	        // Remove folding \r\n
-    	        if (substr($array[$i-1], -2) == "\r\n") {
-	            $array[$i-1] = substr($array[$i-1], 0, -2);
-    	        }
-			
-	        // Append folded line to prev line
-	        $array[$i-1] = $array[$i-1].' '.ltrim($array[$i], " \t");
-			
-	        // Remove folded line
-		array_splice($array, $i, 1);
-	    }
-	}
+        // Check for leading whitespace
+        if (preg_match('/^(\x09|\x20)/', $array[$i])) {
+            
+            // Remove folding \r\n
+                if (substr($array[$i-1], -2) == "\r\n") {
+                $array[$i-1] = substr($array[$i-1], 0, -2);
+                }
+            
+            // Append folded line to prev line
+            $array[$i-1] = $array[$i-1].' '.ltrim($array[$i], " \t");
+            
+            // Remove folded line
+        array_splice($array, $i, 1);
+        }
+    }
 
-	return $array;
+    return $array;
     }
 
     // }}}
@@ -773,18 +773,18 @@ class Net_NNTP_Header
      */
     function foldArray($array, $maxlen = 78)
     {
-	$return = array();
+    $return = array();
 
-	foreach (array_keys($array) as $key) {
-	    $tmp = $this->_foldExplode($array[$key], $maxlen);
-	    $prepend = '';
-	    foreach (array_keys($tmp) as $key2) {
-		$return[] = $prepend.$tmp[$key2];
-		$prepend = "\t";
-	    }
-	}
+    foreach (array_keys($array) as $key) {
+        $tmp = $this->_foldExplode($array[$key], $maxlen);
+        $prepend = '';
+        foreach (array_keys($tmp) as $key2) {
+        $return[] = $prepend.$tmp[$key2];
+        $prepend = "\t";
+        }
+    }
 
-	return $return;	
+    return $return;    
     }
 
     // }}}
@@ -802,9 +802,9 @@ class Net_NNTP_Header
      */
     function foldString($string, $maxlen = 78)
     {
-	$array = $this->_foldExplode($string, $maxlen);
-	$return = implode("\r\n\t", $array);
-	return $return;
+    $array = $this->_foldExplode($string, $maxlen);
+    $return = implode("\r\n\t", $array);
+    return $return;
     }
 
     // }}}
@@ -826,43 +826,43 @@ class Net_NNTP_Header
 )
 //TODO:
     {
-	if ($maxlen < 20) {
-	    $maxlen = 20;
-	}
+    if ($maxlen < 20) {
+        $maxlen = 20;
+    }
 
-	if ($maxlen > 998) {
-	    $maxlen = 998;
-	}
+    if ($maxlen > 998) {
+        $maxlen = 998;
+    }
 
-	if (strlen($string) <= $maxlen) {
-	    return array($string);
-    	}
+    if (strlen($string) <= $maxlen) {
+        return array($string);
+        }
       
-	$min = (int) ($maxlen * (2/5)) - 4;
+    $min = (int) ($maxlen * (2/5)) - 4;
         $max = $maxlen - 5;                   // 4 for leading spcs + 1 for [\,\;]
 
-	// try splitting at ',' or ';'   >2/5 along the line
+    // try splitting at ',' or ';'   >2/5 along the line
         // Split the line up
-	// next split a whitespace
-	// else we are looking at a single word and probably don't want to split
-	$exp = array();
+    // next split a whitespace
+    // else we are looking at a single word and probably don't want to split
+    $exp = array();
         $exp[] = "[^\"]\{$min,$max}?[\,\;]\s";
         $exp[] = "[^\"]\{1,$max}\s";
         $exp[] = "[^\s\"]*(?:\"[^\"]*\"[^\s\"]*)+\s";
-	$exp[] = "[^\s\"]+\s";
+    $exp[] = "[^\s\"]+\s";
 
-	$exp ="/^\s*(".implode('|', $exp).")(.*)\$/x";
-	$tmp = $string;
-	$return = array();
+    $exp ="/^\s*(".implode('|', $exp).")(.*)\$/x";
+    $tmp = $string;
+    $return = array();
 
-	while ((strlen($tmp) > $max) && (preg_match($exp, $tmp, $match))) {
-	    $return[] = $match[1];
-	    $tmp = $match[2];
-	}
+    while ((strlen($tmp) > $max) && (preg_match($exp, $tmp, $match))) {
+        $return[] = $match[1];
+        $tmp = $match[2];
+    }
 
-	$return[] = $tmp;
-	
-	return $return;
+    $return[] = $tmp;
+    
+    return $return;
     }
 
     // }}}
@@ -929,12 +929,12 @@ class Net_NNTP_Header
      */
     function encodeString($string)
     {
-	// TODO: could be better! (Look into CPAN's Encode::MIME::Header)
-	
-	$charset = 'iso-8859-1';
-	
+    // TODO: could be better! (Look into CPAN's Encode::MIME::Header)
+    
+    $charset = 'iso-8859-1';
+    
         preg_match_all('/(\w*[\x80-\xFF]+\w*)/', $string, $matches);
-	foreach ($matches[1] as $value) {
+    foreach ($matches[1] as $value) {
             $replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $value);
             $string = str_replace($value, '=?' . $charset . '?Q?' . $replacement . '?=', $string);
         }
@@ -956,12 +956,12 @@ class Net_NNTP_Header
      */
     function cleanString($string)
     {
-	// Correct missing CR's before LF's
+    // Correct missing CR's before LF's
         $string = preg_replace("!\r?\n!", "\r\n", $string);
 
-	// Remove empty lines from start and end.
-	// TODO: This should be done better...
-	$string = trim($string, "\r\n");
+    // Remove empty lines from start and end.
+    // TODO: This should be done better...
+    $string = trim($string, "\r\n");
 
         return $string
 ;
@@ -981,21 +981,21 @@ class Net_NNTP_Header
      */
     function cleanArray($input)
     {
-	// Remove empty lines from the start
-	while (reset($input) == "\r\n") {
-	    array_shift($input);
-	}
-	// Remove empty lines from the end
-	while (end($input) == "\r\n") {
-	    array_pop($input);
-	}
+    // Remove empty lines from the start
+    while (reset($input) == "\r\n") {
+        array_shift($input);
+    }
+    // Remove empty lines from the end
+    while (end($input) == "\r\n") {
+        array_pop($input);
+    }
 
-	// Run backwards through all lines
-	for ($i = count($input)-1; $i > 0; $i--) {
+    // Run backwards through all lines
+    for ($i = count($input)-1; $i > 0; $i--) {
 
-	    // Remove \r\n from the end
-	    $input = preg_replace("/\r?\n$/", '', $input);
-	}
+        // Remove \r\n from the end
+        $input = preg_replace("/\r?\n$/", '', $input);
+    }
 
         return $input;
     }
