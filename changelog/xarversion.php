@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Change Log initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -13,6 +13,7 @@
 $modversion['name']           = 'Change Log';
 $modversion['id']             = '185';
 $modversion['version']        = '1.1.0';
+$modversion['displayname']    = xarML('ChangeLog');
 $modversion['description']    = 'Keep track of changes to module items';
 $modversion['credits']        = '';
 $modversion['help']           = '';
