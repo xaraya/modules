@@ -192,7 +192,7 @@ function articles_user_archive($args)
                                        'enddate' => $enddate,
                                        'status' => $status,
                                        'cids' => $cids,
-                                       'andcids' => false,
+                                       'andcids' => $andcids,
                                        'fields' => array('aid','title',
                                                   'pubdate','pubtypeid','cids')
                                       )
