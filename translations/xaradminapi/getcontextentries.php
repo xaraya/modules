@@ -110,7 +110,7 @@ function translations_grab_source_code($references, $maxReferences = NULL)
 {
     $result = array();
     //static $files = array(); <-- this just takes too much memory
-    $showContext = xarModGetVar('translations','showContext');
+    $showContext = xarModGetVar('translations','showcontext');
     if(!$showContext) {
         $result[] = xarML('References have been disabled');
         return $result;
@@ -121,6 +121,7 @@ function translations_grab_source_code($references, $maxReferences = NULL)
     $currentFileData = '';
     $currentFileName = '';
     $referencesCount = count($references);
+    $maxCodeLines = xarModGetVar('translations', 'maxcodelines');
     if ($maxReferences == NULL) {
         $maxReferences = $referencesCount;
     }
@@ -136,7 +137,6 @@ function translations_grab_source_code($references, $maxReferences = NULL)
                 $currentFileData = array();
             }
         }
-        $maxCodeLines = xarModGetVar('translations', 'maxcodelines');
         $j = $ref['line'] - ($maxCodeLines/2) - 1;
         if ($j < 0) $j = 0;
         $source = array('pre'=>'', 'code'=>'', 'post'=>'');
