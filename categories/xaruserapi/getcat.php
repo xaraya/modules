@@ -61,7 +61,7 @@ function categories_userapi_getcat($args)
     }
 
     $categoriestable = $xartable['categories'];
-
+    $bindvars = array();
     $SQLquery = "SELECT
                         COUNT(P2.xar_cid) AS indent,
                         P1.xar_cid,
@@ -113,7 +113,8 @@ function categories_userapi_getcat($args)
 
         if ($getchildren)
         {
-          $SQLquery .= "(P1.xar_left BETWEEN ".$return_child_left." AND ".$cat['right'].")";
+            $SQLquery .= "(P1.xar_left BETWEEN ? AND ?)";
+            $bindvars[] = $return_child_left; $bindvars[] = $cat['right']
         }
 
         if ($getparents && $getchildren)
@@ -123,7 +124,8 @@ function categories_userapi_getcat($args)
 
         if ($getparents)
         {
-             $SQLquery .= "(".$return_parent_left ." BETWEEN P1.xar_left AND P1.xar_right)";
+             $SQLquery .= "( ? BETWEEN P1.xar_left AND P1.xar_right)";
+            $bindvars[] = $return_parent_left;
         }
 
         if ($getchildren || $getparents)
@@ -134,7 +136,8 @@ function categories_userapi_getcat($args)
         else
         {// !(isset($getchildren)) && !(isset($getparents))
             // Return ONLY the info about the category with the given CID
-            $SQLquery .= " AND (P1.xar_cid = ".xarVarPrepForStore($cid).") ";
+            $SQLquery .= " AND (P1.xar_cid = ?) ";
+            $bindvars[] = $cid;
         }
 
     }
@@ -146,7 +149,8 @@ function categories_userapi_getcat($args)
            return Array();
        }
        $SQLquery .= " AND P1.xar_left
-                      NOT BETWEEN ".$ecat['left']." AND ".$ecat['right']." ";
+                      NOT BETWEEN ? AND ? ";
+       $bindvars[] = $ecat['left']; $bindvars[] = $ecat['right'];
     }
 
     // Have to specify all selected attributes in GROUP BY
@@ -156,10 +160,12 @@ function categories_userapi_getcat($args)
     // Postgre doesnt accept the output name ('indent' here) as a parameter in the where/having clauses
     // Bug #620
     if (isset($minimum_depth) && is_numeric($minimum_depth)) {
-        $having[] = "COUNT(P2.xar_cid) >= " . $minimum_depth;
+        $having[] = "COUNT(P2.xar_cid) >= ?";
+        $bindvars[] = $minimum_depth;
     }
     if (isset($maximum_depth) && is_numeric($maximum_depth)) {
-        $having[] = "COUNT(P2.xar_cid) < " . $maximum_depth;
+        $having[] = "COUNT(P2.xar_cid) < ?";
+        $bindvars[] = $maximum_depth;
     }
     if (count($having) > 0) {
 // TODO: make sure this is supported by all DBs we want
@@ -172,15 +178,15 @@ function categories_userapi_getcat($args)
     $expire = xarModGetVar('categories','cache.userapi.getcat');
     if (is_numeric($count) && $count > 0 && is_numeric($start) && $start > -1) {
         if (!empty($expire)){
-            $result = $dbconn->CacheSelectLimit($expire,$SQLquery, $count, $start);
+            $result = $dbconn->CacheSelectLimit($expire,$SQLquery, $count, $start, $bindvars);
         } else {
-            $result = $dbconn->SelectLimit($SQLquery, $count, $start);
+            $result = $dbconn->SelectLimit($SQLquery, $count, $start, $bindvars);
         }
     } else {
         if (!empty($expire)){
-            $result = $dbconn->CacheExecute($expire,$SQLquery);
+            $result = $dbconn->CacheExecute($expire,$SQLquery,$bindvars);
         } else {
-            $result = $dbconn->Execute($SQLquery);
+            $result = $dbconn->Execute($SQLquery, $bindvars);
         }
     }
 

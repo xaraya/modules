@@ -47,7 +47,7 @@ function categories_userapi_countcats($args)
                BETWEEN P1.xar_left AND
                        P1.xar_right
                    AND P1.xar_cid
-                        = ".xarVarPrepForStore($cid);
+                        = ".xar Var Prep For Store($cid); // making my greps happy <mrb>
 */
     } else {
         $sql = "SELECT COUNT(xar_cid) AS childnum

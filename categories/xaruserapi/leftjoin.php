@@ -28,6 +28,7 @@
  *               'cid'   => 'nuke_categories_linkage.xar_cid',
  *               ...
  *               'modid' => 'nuke_categories_linkage.xar_modid')
+ * @todo think about qstr() and bindvars here, this function return a string, so it's a bit harder
  */
 function categories_userapi_leftjoin($args)
 {

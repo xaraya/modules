@@ -19,6 +19,7 @@ function categories_userapi_countitems_deprecated($args)
     $categorieslinkagetable = $xartable['categories_linkage'];
     
     // Check if we have active CIDs
+    $bindvars = array();
     if (count($cids) > 0) {
         // We do.  We just need to know how many articles there are in these
         // categories
@@ -33,13 +34,15 @@ function categories_userapi_countitems_deprecated($args)
         $sql .= "  WHERE ";
         
         $allcids = join(', ', $cids);
-        $sql .= "xar_cid IN (" . xarVarPrepForStore($allcids) . ") ";
+        $bindmarkers - '?' . str_repeat(',?',count($cids)-1);
+        $bindvars = $cids;
+        $sql .= "xar_cid IN ($bindmarkers) ";
 
         if (isset($table) && isset($field) && isset($where)) {
             $sql .= " AND $where ";
         }
 
-        $result = $dbconn->Execute($sql);
+        $result = $dbconn->Execute($sql,$bindvars);
         if (!$result) return;
 
         $num = $result->fields[0];
