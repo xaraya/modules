@@ -74,7 +74,7 @@ function articles_randomblock_display($blockinfo)
     }
     
     // get cids for security check in getall
-    $fields = array('aid', 'title', 'pubtypeid', 'cids', 'authorid');
+    $fields = array('aid', 'title', 'body', 'notes', 'pubtypeid', 'cids', 'authorid');
 
     if (!empty($vars['showpubdate'])) {
             array_push($fields, 'pubdate');
