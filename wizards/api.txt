@@ -1,0 +1,14 @@
+The following is a list of the current methods of the wizard class
+
+Method              Purpose
+
+getName()           returns the name of the wizard displayed on the listings page
+getDescription()    returns the description of the wizard displayed on the listings page
+getStatus()         returns the status of this wizard (currently not used)
+getMessage()        returns the message this wizard displays on completion of its task
+
+setModule($x)       sets the module this wizard belongs to (currently not used)
+setName($x)         sets the name of the wizard displayed on the listings page
+setDescription($x)  sets the description of the wizard displayed on the listings page
+setStatus($x)       sets the status of this wizard (currently not used)
+setMessage($x)      sets the message this wizard displays on completion of its task

@@ -1,0 +1,47 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Wizards Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/roles/xarimages/admin.gif')" >
+                <img src="modules/roles/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/roles/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>What is it?</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The Wizards module is a handy way of making advanced, specific Xaraya functionality available to your <b>users</b> and <b>admins</b>.  Wizards are a collection of simple "one-click" scripts, each of which performs a specific task.</xar:mlstring>:</p>
+            <p><xar:mlstring>Wizards let you take advantage of the entire Xaraya API and put that functionality at the disposal of your users in a flexible way you define and control.</xar:mlstring>:</p>
+			<ul>
+			<li><xar:mlstring>Wixards are <b>extensible</b>. The module comes with a number of predefined wizards, but you can easily create more.</xar:mlstring></li>
+			<li><xar:mlstring>You can configure wizards to be available to your admins, users, or both.</xar:mlstring></li>
+			</ul>
+		</div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>How to use it?</xar:mlstring></p>
+        </div>
+         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>First, use the Modify Config menu option on the Wizards admin menu to define whether wizards will be available to users, admins or both.</xar:mlstring></p>
+			<p><xar:mlstring>The module comes with a predefined RunScripts privilege that allows access to the wizards. Assign this privilege to whatever user group that you want to give access to. (Note: Admins automatically have access to wizards if they are enabled.)</xar:mlstring></p>
+			<p><xar:mlstring>The wizard scripts that appear on the user and admin menus of the module are located in /modules/wizards/xarwizards/admin and  /modules/wizards/xarwizards/user respectively. Removing a script from its directory will remove it from the menu.</xar:mlstring></p>
+			<p><xar:mlstring>By using the existing scripts as templates, you can create new wizards with your own chosen functionality and add them to either menu. A simple Example wizard script is included for this purpose.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Blocks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>none.</xar:mlstring></p>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Hooks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>none.</xar:mlstring></p>
+        </div>
+    </div>
+</div>
