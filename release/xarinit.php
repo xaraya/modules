@@ -484,9 +484,15 @@ function release_upgrade($oldversion)
     }
         break;
         case '0.1.0':
+            xarModAPIFunc('modules','admin','add_module_alias', array(
+                'modName' => 'release',
+                'aliasModName' => 'rid'));
+            return true;
+        break;
+        case '0.1.1':
         return false;
-
     }
+
     return true;
 }
 /**

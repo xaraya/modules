@@ -26,7 +26,10 @@ function release_userapi_decode_shorturl($params)
 { 
     // Initialise the argument list we will return
     $args = array(); 
-     if (empty($params[1])) {
+    if ($params[0] == 'rid') {
+        $args['rid'] = (int) $params[1];
+        return array('display', $args);
+    } elseif (empty($params[1])) {
         // nothing specified -> we'll go to the main function
         return array('main', $args);
     } elseif (preg_match('/^index/i', $params[1])) {

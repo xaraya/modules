@@ -1,7 +1,7 @@
 <?php
 $modversion['name'] = 'release';
 $modversion['id'] = '773';
-$modversion['version'] = '0.1.0';
+$modversion['version'] = '0.1.1';
 $modversion['displayname']    = xarML('Release');
 $modversion['description'] = 'Registration and Release information for themes and modules';
 $modversion['credits'] = 'xardocs/credits.txt';
