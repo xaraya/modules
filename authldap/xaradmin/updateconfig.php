@@ -32,6 +32,7 @@ function authldap_admin_updateconfig()
          $adduseruname,
          $adduseremail,
          $storepassword,
+         $failover,
          $defaultgroup ) = xarVarCleanFromInput('ldapserver',
                                                 'portnumber',
                                                 'anonymousbind',
@@ -44,6 +45,7 @@ function authldap_admin_updateconfig()
                                                 'adduseruname', 
                                                 'adduseremail', 
                                                 'storepassword', 
+                                                'failover', 
                                                 'defaultgroup');
 
     // Confirm authorisation code
@@ -103,6 +105,13 @@ function authldap_admin_updateconfig()
     } else {
         xarModSetVar('authldap', 'store_user_password', 'true');
     }
+
+    if(!$failover) {
+        xarModSetVar('authldap', 'failover', 'false');
+    } else {
+        xarModSetVar('authldap', 'failover', 'true');
+    }
+
 
     // Get default users group
     if (!isset($defaultgroup)) {

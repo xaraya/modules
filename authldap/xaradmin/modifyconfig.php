@@ -79,7 +79,14 @@ function authldap_admin_modifyconfig()
 
     // User email
     $data['adduseremailvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','add_user_email'));
-        
+
+    // Failover to local authentication of LDAP fails
+    if (xarModGetVar('authldap','failover') == 'true') {    
+        $data['failovervalue'] = xarVarPrepForDisplay("checked");
+    } else {
+        $data['failovervalue'] = "";
+    }
+
     // Store user's LDAP password in Xaraya database?
     if (xarModGetVar('authldap','store_user_password') == 'true') {    
         $data['storepasswordvalue'] = xarVarPrepForDisplay("checked");

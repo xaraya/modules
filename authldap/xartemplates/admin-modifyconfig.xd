@@ -13,7 +13,7 @@
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
                     <td colspan=2>
-                        <xar:mlstring>The LDAP server settings are also configurable from within the</xar:mlstring>
+                        <xar:mlstring>The LDAP server settings are also configurable from the</xar:mlstring>
                         <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#">xarldap module</a>.
                     </td>
                 </tr>
@@ -22,7 +22,7 @@
                         <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="ldapserver" value="#$ldapservervalue#" />
+                        <input type="text" name="ldapserver" size="30" value="#$ldapservervalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -30,7 +30,7 @@
                         <xar:mlstring>LDAP Server Port Number</xar:mlstring> 
                     </td>
                     <td>
-                        <input type="text" name="portnumber" value="#$portnumbervalue#" />
+                        <input type="text" name="portnumber" size="10" value="#$portnumbervalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -43,10 +43,10 @@
                 </tr>
                 <tr align="left" valign="top">
                     <td>
-                        <xar:mlstring>LDAP bind DN</xar:mlstring> 
+                        <xar:mlstring>LDAP Bind DN</xar:mlstring> 
                     </td>
                     <td>
-                        <input type="text" name="binddn" value="#$binddnvalue#" />
+                        <input type="text" name="binddn" size="30" value="#$binddnvalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -54,7 +54,7 @@
                         <xar:mlstring>LDAP UserID Field Name</xar:mlstring> 
                     </td>
                     <td>
-                        <input type="text" name="uidfield" value="#$uidfieldvalue#" />
+                        <input type="text" name="uidfield" size="30" value="#$uidfieldvalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -70,7 +70,7 @@
                         <xar:mlstring>LDAP Admin ID</xar:mlstring> 
                     </td>
                     <td>
-                        <input type="text" name="adminid" value="#$adminidvalue#" />
+                        <input type="text" name="adminid" size="30" value="#$adminidvalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -78,7 +78,28 @@
                         <xar:mlstring>LDAP Admin Password</xar:mlstring> 
                     </td>
                     <td>
-                        <input type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
+                        <input type="password" name="adminpasswd" size="30" value="#$adminpasswdvalue#" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Authentication Configuration</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td colspan=2>
+                        <xar:mlstring>If the LDAP Server is unavailable for authentication, Xaraya authentication can be used as a failover authentication system.  If failover to Xaraya is allowed, then this will only occur if authentication by LDAP is not available.  If the LDAP bind is successful but the user is not authenticated, then the failover will not be permitted.</xar:mlstring>
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Allow Authentication by Xaraya if the LDAP Server is Unavailable?</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="failover" value="1" #$failovervalue# />
                     </td>
                 </tr>
             </table>
@@ -104,10 +125,20 @@
                 </tr>
                 <tr align="left" valign="top">
                     <td>
+                        <xar:mlstring>Store User's LDAP Password in the Xaraya Database?</xar:mlstring>
+                        <br />
+                
+                    </td>
+                    <td>
+                        <input type="checkbox" name="storepassword" value="1" #$storepasswordvalue# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
                         <xar:mlstring>LDAP Username Attribute Name</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="adduseruname" value="#$adduserunamevalue#" />
+                        <input type="text" name="adduseruname" size="30" value="#$adduserunamevalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -115,15 +146,7 @@
                         <xar:mlstring>LDAP Email Attribute Name</xar:mlstring>
                     </td>
                     <td>
-                        <input type="text" name="adduseremail" value="#$adduseremailvalue#" />
-                    </td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        <xar:mlstring>Store user's LDAP password in Xaraya database?</xar:mlstring>
-                    </td>
-                    <td>
-                        <input type="checkbox" name="storepassword" value="1" #$storepasswordvalue# />
+                        <input type="text" name="adduseremail" size="30" value="#$adduseremailvalue#" />
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -143,10 +166,11 @@
                     </td>
                 <tr align="left" valign="top">
                     <td>
+                        <br />
                         <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
                     </td>
                     <td>
-                        <!-- submit button -->
+                        <br />
                         <input type="submit" value="#$submitbutton#" align="middle" />
                     </td>
                 </tr>
