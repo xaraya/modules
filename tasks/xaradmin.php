@@ -61,7 +61,7 @@ function tasks_admin_new($args)
 // 		return;
 //     }
 
-// NEED TO INVESTIGATEN THIS
+// NEED TO INVESTIGATE THIS
 // 	if($module == "tasks" && $type == "admin" && $func == "new") {
 // 	    $output->Text(tasks_menu());
 // 	}
@@ -84,11 +84,10 @@ function tasks_admin_new($args)
     //$data['feedback']=tasks_feedback();
 
     $data['parentid']= $parentid;
-    $data['modname']= $modname;
+    $data['modname']= $module;
     $data['objectid']= $objectid;
 
     $data['submitbutton']=xarML('Add task');
-
     return $data;
 /*
 // EXTRANEOUS	
@@ -118,7 +117,7 @@ function tasks_admin_create($args)
 		$name,
 		$description,
 		$status,
-		$priority) =	pnVarCleanFromInput('parentid',
+		$priority) =	xarVarCleanFromInput('parentid',
 											'modname',
 											'objectid',
 											'name',
@@ -128,25 +127,18 @@ function tasks_admin_create($args)
 
     extract($args);
 
-    if (!pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_ADMINAPILOADFAILED);
-        pnRedirect(pnModURL('tasks', 'user', 'view'));
-        return true;
-    }
-
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    $returnid = pnModAPIFunc('tasks',
-						'admin',
-						'create',
+    $returnid = xarModAPIFunc('tasks','admin','create',
 						array('parentid' 	=> $parentid,
-							'modname' 		=> $modname,
-							'objectid' 		=> $objectid,
-							'name' 			=> $name,
-							'status' 		=> $status,
-							'priority' 		=> $priority,
-							'description'	=> $description));
+                              'modname' 		=> $modname,
+                              'objectid' 		=> $objectid,
+                              'name' 			=> $name,
+                              'status' 		=> $status,
+                              'priority' 		=> $priority,
+                              'description'	=> $description,
+                              'private' => 0));
 
     if ($returnid != false) {
         // Success

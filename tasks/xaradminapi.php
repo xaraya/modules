@@ -1,26 +1,43 @@
 <?php
-function xtasks_adminapi_create($args)
+
+/**
+ * File: $Id$
+ *
+ * Administrative API functions for tasks module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * 
+ * @subpackage tasks
+ * @author Chad Kraeft
+*/
+
+/**
+ * Create a new task
+ *
+ */
+function tasks_adminapi_create($args)
 {
     extract($args);
 
     if (empty($name)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_create: ' . _XTASKS_MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_create: ' . _TASKS_MODARGSERROR);
         return false;
     }
 	
-//     if (!pnSecAuthAction(0, 'xTasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
-//         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_create: ' . _XTASKS_NOAUTH);
+//     if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
+//         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_create: ' . _TASKS_NOAUTH);
 //         return false;
 //     }
 		
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $xartable['tasks'];
 
-    $nextId = $dbconn->GenId($xtaskstable);
+    $nextId = $dbconn->GenId($taskstable);
 
-    $sql = "INSERT INTO $xtaskstable (
+    $sql = "INSERT INTO $taskstable (
               xar_id,
 			   xar_parentid,
 			   xar_modname,
@@ -46,16 +63,16 @@ function xtasks_adminapi_create($args)
             VALUES (
               $nextId,
 			  " . ($parentid ? $parentid : 0) . ",
-			  '" . pnVarPrepForStore($modname) . "',
+			  '" . xarVarPrepForStore($modname) . "',
 			  " . ($objectid ? $objectid : 0) . ",
-              '" . pnVarPrepForStore($name) . "',
-              " . pnVarPrepForStore($status) . ",
-              " . pnVarPrepForStore($priority) . ",
-              '" . pnVarPrepForStore($description) . "',
+              '" . xarVarPrepForStore($name) . "',
+              " . xarVarPrepForStore($status) . ",
+              " . xarVarPrepForStore($priority) . ",
+              '" . xarVarPrepForStore($description) . "',
               " . ($private ? $private : "0") . ",
-              " . pnSessionGetVar('uid') . ",
-              " . pnSessionGetVar('uid') . ",
-              " . pnSessionGetVar('uid') . ",
+              " . xarSessionGetVar('uid') . ",
+              " . xarSessionGetVar('uid') . ",
+              " . xarSessionGetVar('uid') . ",
               " . time() . ",
 			  0,
 			  " . time() . ",
@@ -67,52 +84,52 @@ function xtasks_adminapi_create($args)
 			  '',
 			  '')";			  
 
-// PRIVATE INITIALLY SET BASED ON USER PREFERENCE
-
+    // PRIVATE INITIALLY SET BASED ON USER PREFERENCE
+    
     $res =& $dbconn->Execute($sql);
     if (!$res) return;
 
-    $id = $dbconn->PO_Insert_ID($xtaskstable, 'xar_id');
+    $id = $dbconn->PO_Insert_ID($taskstable, 'xar_id');
 
-    $returnid = (pnModGetVar('xtasks','returnfromedit') ? $id : $parentid);
+    $returnid = (xarModGetVar('tasks','returnfromedit') ? $id : $parentid);
 	return $returnid;
 }
 
-function xtasks_adminapi_update($args)
+function tasks_adminapi_update($args)
 {
     extract($args);
 
     if (!isset($id)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_update: ' . _MODARGSERROR);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_update: ' . _MODARGSERROR);
         return false;
     }
 
-    if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_update: ' . _LOADFAILED);
+    if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_update: ' . _LOADFAILED);
         return $output->GetOutput();
     }
 
-    $task = pnModAPIFunc('xtasks',
+    $task = pnModAPIFunc('tasks',
 						'user',
 						'get',
 						array('id' => $id));
 			
 	if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_update: ' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_update: ' . _TASKS_NOSUCHITEM);
         return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_update: ' . _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_update: ' . _TASKS_NOAUTH);
         return false;
     }
 			
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 
-    $sql = "UPDATE $xtaskstable
+    $sql = "UPDATE $taskstable
               SET xar_name = '" . pnVarPrepForStore($name) . "',
 				  xar_status = " . pnVarPrepForStore($status) . ",
 				  xar_priority = " . pnVarPrepForStore($priority) . ",
@@ -122,45 +139,45 @@ function xtasks_adminapi_update($args)
     $res =& $dbconn->Execute($sql);
     if (!$res) return;
 
-    $returnid = (pnModGetVar('xtasks','returnfromedit') ? $id : $task['parentid']);
+    $returnid = (pnModGetVar('tasks','returnfromedit') ? $id : $task['parentid']);
 	return $returnid;
 }
 
-function xtasks_adminapi_close($args)
+function tasks_adminapi_close($args)
 {
     extract($args);
 
     if (!isset($id)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_close: ' . _MODARGSERROR);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_close: ' . _MODARGSERROR);
         return false;
     }
 
-    if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_close: ' . _LOADFAILED);
+    if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_close: ' . _LOADFAILED);
         return $output->GetOutput();
     }
 
-    $task = pnModAPIFunc('xtasks',
+    $task = pnModAPIFunc('tasks',
 						'user',
 						'get',
 						array('id' => $id));
 			
 	if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_close: ' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_close: ' . _TASKS_NOSUCHITEM);
         return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_close: ' . _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_close: ' . _TASKS_NOAUTH);
         return false;
     }
 			
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 
-    $sql = "UPDATE $xtaskstable
+    $sql = "UPDATE $taskstable
               SET xar_status = 1,
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
@@ -168,45 +185,45 @@ function xtasks_adminapi_close($args)
     $res =& $dbconn->Execute($sql);
     if (!$res) return;
 
-    $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
+    $returnid = (pnModGetVar('tasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $task['parentid'];
 }
 
-function xtasks_adminapi_open($args)
+function tasks_adminapi_open($args)
 {
     extract($args);
 
     if (!isset($id)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_open: ' . _MODARGSERROR);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_open: ' . _MODARGSERROR);
         return false;
     }
 
-    if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_open: ' . _LOADFAILED);
+    if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_open: ' . _LOADFAILED);
         return $output->GetOutput();
     }
 
-    $task = pnModAPIFunc('xtasks',
+    $task = pnModAPIFunc('tasks',
 						'user',
 						'get',
 						array('id' => $id));
 			
 	if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_open: ' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_open: ' . _TASKS_NOSUCHITEM);
         return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_open: ' . _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_open: ' . _TASKS_NOAUTH);
         return false;
     }
 			
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 
-    $sql = "UPDATE $xtaskstable
+    $sql = "UPDATE $taskstable
               SET xar_status = 0,
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
@@ -214,46 +231,46 @@ function xtasks_adminapi_open($args)
     $res =& $dbconn->Execute($sql);
     if (!$res) return;
 
-    $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
+    $returnid = (pnModGetVar('tasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $task['parentid'];
 }
 
-function xtasks_adminapi_approve($args)
+function tasks_adminapi_approve($args)
 {
     extract($args);
 
     if (!isset($id)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_approve: ' . _MODARGSERROR);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _MODARGSERROR);
         return false;
     }
 
-    if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_approve: ' . _LOADFAILED);
+    if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _LOADFAILED);
         return $output->GetOutput();
     }
 
-    $task = pnModAPIFunc('xtasks',
+    $task = pnModAPIFunc('tasks',
 						'user',
 						'get',
 						array('id' => $id));
 			
 	if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_approve: ' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _TASKS_NOSUCHITEM);
         return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '::$task[basetaskid]', ACCESS_EDIT)
-			|| !pnSecAuthAction(0, 'xtasks::', "$name::$id", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_approve: ' . _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
+			|| !pnSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _TASKS_NOAUTH);
         return false;
     }
 			
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 
-    $sql = "UPDATE $xtaskstable
+    $sql = "UPDATE $taskstable
               SET xar_date_approved = '" . time() . "'
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
@@ -261,48 +278,48 @@ function xtasks_adminapi_approve($args)
     $res =& $dbconn->Execute($sql);
     if (!$res) return;
 
-    $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
+    $returnid = (pnModGetVar('tasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $returnid;
 }
 
-function xtasks_adminapi_publish($args)
+function tasks_adminapi_publish($args)
 {
     extract($args);
 
     if (!isset($id)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_publish: ' . _MODARGSERROR);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _MODARGSERROR);
         return false;
     }
 
-    if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_publish: ' . _LOADFAILED);
+    if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _LOADFAILED);
         return $output->GetOutput();
     }
 
-    $task = pnModAPIFunc('xtasks',
+    $task = pnModAPIFunc('tasks',
 						'user',
 						'get',
 						array('id' => $id));
 			
 	if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_publish: ' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _TASKS_NOSUCHITEM);
         return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '::$task[basetaskid]', ACCESS_EDIT)
-			|| !pnSecAuthAction(0, 'xtasks::', "$name::$id", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_publish: ' . _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
+			|| !pnSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _TASKS_NOAUTH);
         return false;
     }
 			
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 
 	$private = $task['private'];
 
-    $sql = "UPDATE $xtaskstable
+    $sql = "UPDATE $taskstable
               SET xar_private = " . ($task['private'] ? "0" : "1") . ",
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
@@ -310,47 +327,47 @@ function xtasks_adminapi_publish($args)
     $res = & $dbconn->Execute($sql);
     if (!$res) return;
 
-    $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
+    $returnid = (pnModGetVar('tasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $returnid;
 }
 
-function xtasks_adminapi_accept($args)
+function tasks_adminapi_accept($args)
 {
     extract($args);
 
     if (!isset($id)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_accept: ' . _MODARGSERROR);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _MODARGSERROR);
         return false;
     }
 
-    if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_accept: ' . _LOADFAILED);
+    if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _LOADFAILED);
         return $output->GetOutput();
     }
 
-    $task = pnModAPIFunc('xtasks',
+    $task = pnModAPIFunc('tasks',
 						'user',
 						'get',
 						array('id' => $id));
 			
 	if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_accept: ' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _TASKS_NOSUCHITEM);
         return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '::$task[basetaskid]', ACCESS_EDIT)
-			|| !pnSecAuthAction(0, 'xtasks::', "$name::$id", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_accept: ' . _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
+			|| !pnSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _TASKS_NOAUTH);
         return false;
     }
 			
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 
 	// NEED CHECK TO ENSURE LOGGED IN
-    $sql = "UPDATE $xtaskstable
+    $sql = "UPDATE $taskstable
               SET xar_owner = " . pnSessionGetVar('uid') . ",
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
@@ -358,53 +375,53 @@ function xtasks_adminapi_accept($args)
     $res =& $dbconn->Execute($sql);
     if (!$res) return;
 
-    $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
+    $returnid = (pnModGetVar('tasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $returnid;
 }
 
 // DEPRECATED
 /*
-function xtasks_adminapi_delete($args)
+function tasks_adminapi_delete($args)
 {
     extract($args);
 
     if (!isset($id) || !is_numeric($id)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_delete: ' . _XTASKS_MODARGSERROR);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_delete: ' . _TASKS_MODARGSERROR);
         return false;
     }
 
-    if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_delete: ' . _XTASKS_LOADFAILED);
+    if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_delete: ' . _TASKS_LOADFAILED);
         return $output->GetOutput();
     }
 
     // does it exist ?
-    $task = pnModAPIFunc('xtasks',
+    $task = pnModAPIFunc('tasks',
 							'user',
 							'get',
 							array('id' => $id));
 
     if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_delete: ' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_delete: ' . _TASKS_NOSUCHITEM);
         return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '::$task[basetaskid]', ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_delete: ' . _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_DELETE)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_delete: ' . _TASKS_NOAUTH);
         return false;
     }
 
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $xtaskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 
-    $sql = "DELETE FROM $xtaskstable
+    $sql = "DELETE FROM $taskstable
             WHERE xar_id = " . pnVarPrepForStore($id);
     $result = $dbconn->Execute($sql);
     if (!$result) return;
 
-    $switchboardtable = $pntable['xtasks_switchboard'];
+    $switchboardtable = $pntable['tasks_switchboard'];
 
     $sql = "DELETE FROM $switchboardtable
             WHERE xar_id = " . pnVarPrepForStore($id);
@@ -414,14 +431,14 @@ function xtasks_adminapi_delete($args)
     return true;
 }
 */
-function xtasks_adminapi_migrate($args)
+function tasks_adminapi_migrate($args)
 {
     extract($args);
 
 	if (!isset($targetfocus)) $targetfocus = 0;
 
-	if (!pnModAPILoad('xtasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_LOADFAILED);
+	if (!pnModAPILoad('tasks', 'user')) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_migrate: ' . _TASKS_LOADFAILED);
         return false;
     }
 
@@ -439,7 +456,7 @@ function xtasks_adminapi_migrate($args)
 	}
 	
 	if(count($affectedtasks) <= 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_NOAFFECTEDTASKS);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_migrate: ' . _TASKS_NOAFFECTEDTASKS);
         return false;
 	}
 	
@@ -448,25 +465,25 @@ function xtasks_adminapi_migrate($args)
 		$id = ($targetfocus > 0 ? $targetfocus : $affectedid);
 	} else $id = $parentid;
 // echo "id: $id, parentid: $parentid, targetfocus: $targetfocus, affectedid: $affectedid<br>";
-    $parenttask = pnModAPIFunc('xtasks',
+    $parenttask = pnModAPIFunc('tasks',
 							'user',
 							'get',
 							array('id' => $id));
 			
 	if ($parenttask == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _XTASKS_NOSUCHITEM);
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
         return false;
     }
 
-    if (!pnSecAuthAction(0, 'xTasks::task', '::$parenttask[basetaskid]', ACCESS_MODERATE)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . $parenttask['basetaskid'] .  _XTASKS_NOAUTH);
+    if (!pnSecAuthAction(0, 'tasks::task', '::$parenttask[basetaskid]', ACCESS_MODERATE)) {
+        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_adminapi_migrate: ' . $parenttask['basetaskid'] .  _TASKS_NOAUTH);
         return false;
     }
 
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $taskstable = $pntable['xtasks'];
+    $taskstable = $pntable['tasks'];
 	
 	if($targetfocus > 0) {
 		// - 1 => Migrate selected tasks under taskfocus (taskfocus[any] = 1)
@@ -475,7 +492,7 @@ function xtasks_adminapi_migrate($args)
 		$res =& $dbconn->Execute($sql);
 	    if (!$res) return;
 
-		$returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $targetfocus : $parentid);
+		$returnid = (pnModGetVar('tasks','returnfrommigrate') ? $targetfocus : $parentid);
 		return $returnid;
 
 	} elseif($taskoption == 1) {
@@ -486,7 +503,7 @@ function xtasks_adminapi_migrate($args)
 		$res =& $dbconn->Execute($sql);
 	    if (!$res) return;
 
-		$returnid = (pnModGetVar('xtasks','returnfromsurface') ? $parentid : $parenttask['parentid']);
+		$returnid = (pnModGetVar('tasks','returnfromsurface') ? $parentid : $parenttask['parentid']);
 		return $returnid;
 	
 	} elseif($taskoption == 2) {

@@ -62,7 +62,7 @@ function tasks_init()
     xarModSetVar('tasks', 'returnfromedit', 0);
     xarModSetVar('tasks', 'returnfromsurface', 1);
     xarModSetVar('tasks', 'returnfrommigrate', 0);
-    xarModSetVar('tasks', 'maxdisplaydepth', 0);
+    xarModSetVar('tasks', 'maxdisplaydepth', 9);
 	
     return true;
 }

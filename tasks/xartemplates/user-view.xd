@@ -1,0 +1,116 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Tasks lists</xar:mlstring></span>
+</div>
+
+<table border="0" width="100%">
+  <tr>
+    <td align=center>
+      <a href="&xar-modurl-tasks-user-view;"><xar:mlstring>View tasks</xar:mlstring></a> | 
+      <a href="&xar-modurl-tasks-admin-new;"><xar:mlstring>New task</xar:mlstring></a>
+    </td>
+  </tr>
+</table>
+
+<!-- Filter form -->
+<form action="#$filterformtarget#" method="post" enctype="application/x-www-form-urlencoded">
+  <input type="hidden" name="id" id="id" value="#$parentid#" />
+  <input type="hidden" name="modname" id="modname" value="#$modname#" />
+  <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
+
+  <select name="displaydepth" id="displaydepth" size="1" tabindex="1">
+    <xar:loop name="$depthdropdown">
+      <xar:if condition="$id eq $maxdepth">
+        <option value="#$id#" selected="selected">#$name#</option>
+      <xar:else/>
+        <option value="#$id#" selected="selected">#$name#</option>
+      </xar:if>
+    </xar:loop>
+  </select>
+
+  <select name="filter" id="filter" size="1" tabindex="2">
+    <xar:loop name="$filteroptions">
+      <xar:if condition="$id eq $filter">
+        <option value="#$id#" selected="selected">#$name#</option>
+      <xar:else/>
+        <option value="#$id#" selected="selected">#$name#</option>
+      </xar:if>
+    </xar:loop>
+  </select>
+  <input type="submit" value="#$filtersubmit#" align="middle" tabindex="3" />
+</form>
+
+<!-- Migrate form -->
+<form action="&xar-modurl-tasks-admin-migrate;" method="post" enctype="application/x-www-form-urlencoded">
+  <input type="hidden" name="parentid" id="parentid" value="#$parentid#" />
+  <input type="hidden" name="modname" id="modname" value="#$modname#" />
+  <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />
+  <table border="0" width="80%">
+    <tr><th align="center"><xar:mlstring>Tasks</xar:mlstring></th></tr>
+    <tr><td>
+      <table border="1" width="100%">
+        <tr>
+          <th><xar:mlstring>Tasks</xar:mlstring></th>
+          <th><xar:mlstring>Description</xar:mlstring></th>
+          <th><xar:mlstring>?</xar:mlstring></th>
+          <th><xar:mlstring>!</xar:mlstring></th>
+          <th><xar:mlstring>X</xar:mlstring></th>
+          <th><xar:mlstring>X/##</xar:mlstring></th>
+          <th><xar:mlstring>Options</xar:mlstring></th>
+        </tr>
+        <xar:loop name="$tasks">
+          <!-- TODO: base background color on depth -->
+          <tr valign="middle">
+            <td align="left" width="100%" colspan="2">
+              <b>#$indent#<a href="#$url#">#$name#</a></b>
+            </td>
+            <td align="center">#$private#</td>
+            <td align="center">#$priority#</td>
+            <td align="center">#$closed#</td>
+            <td align="center">#$closedsubtasks# / #$ttlsubtasks# </td>
+            <td align="center">
+              <input type="checkbox" name="taskcheck[#$id#]" id="taskcheck[#$id#]" value="1"/>
+              <input type="submit" name="taskfocus[#$id#" value=" + "/>
+            </td>
+          </tr>
+          <!-- TODO: base background color on depth -->
+          <tr>
+            <td align="left" valign="top" width="30%">
+              <xar:if condition="$depth eq 1">
+                #$indent#[<xar:mlstring>created</xar:mlstring>:#$date_created#]<br/>
+                #$indent#[<xar:mlstring>modified</xar:mlstring>:#$date_changed#]<br/>
+              </xar:if>
+              <xar:if condition="$depth <=2">
+                #$indent#[<xar:mlstring>creator</xar:mlstring>: #$creator#]<br/>
+                #$indent#[<xar:mlstring>assigned to</xar:mlstring>: #$owner#]
+              </xar:if>
+              &nbsp;
+            </td>
+            <td align="left" valign="top" width="100% colspan="6">
+              #$description#
+              <xar:if condition="xarModGetVar('tasks','showoptions')">
+                [<i>
+                <xar:foreach in="$options" value="$link">
+                  <a href="#$link#>test</a>
+                </xar:foreach>
+                </i>]
+              </xar:if>
+            </td>
+            
+          </tr>
+        </xar:loop>
+        <tr>
+          <td colspan="6" align="right">
+            <xar:mlstring>Selected tasks</xar:mlstring>
+              <select name="taskoption" id="taskoption" size="1" tabindex="4">
+                <xar:loop name="$taskoptions">
+                  <option value="#$id#" selected="selected">#$name#</option>
+                </xar:loop>
+              </select>
+            <input type="submit" value="#$tasksubmitbutton#" align="middle" tabindex="5" />
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</form>

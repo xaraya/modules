@@ -1,0 +1,41 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Task view</xar:mlstring></span>
+</div>
+
+<xar:if condition="$task['parentid'] gt 0">
+  <a name="task"/>(<a href="##top">top</a>)
+  #$displaybase#
+  <xar:mlstring>Viewing task</xar:mlstring>
+<xar:else/>
+  <xar:mlstring>Viewing root task</xar:mlstring>
+</xar:if>
+
+<br/>
+<xar:mlstring>Task name</xar:mlstring>:<b>#$task['name']#</b>
+<xar:if condition="$task['parentid'] gt 0">
+  <br/>
+  <xar:mlstring>Parent</xar:mlstring>:
+  <xar:if condition="!empty($parent['name'])">
+    <a href="#$parentlink#">#$parent['name']#</a>
+  <xar:else/>
+    <a href="&xar-modurl-tasks-user-view;">
+      <xar:mlstring>Overview</xar:mlstring>
+    </a>
+  </xar:if>
+</xar:if>
+  
+
+<br/>
+<xar:mlstring>Task description</xar:mlstring>: #$task['description']#<br/>
+<br/>
+<xar:foreach in="$options" value="$option">
+  <a href="#$option['link']#">#$option['label']#</a>&nbsp;
+</xar:foreach>
+
+<br/><br/>
+<xar:if condition="$id eq $mainid">
+  <a name="addtask">(<a href="##top">top</a>)
+  #$addtaskform#
+  <a name="tasklist">(<a href="##top">top</a>)
+  #$subtaskview#
+</xar:if>
