@@ -12,7 +12,7 @@
 		<table border="0" cellpadding="5">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Module or Theme ID</xar:mlstring>
+					<label for="rid"><xar:mlstring>Module or Theme ID</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />

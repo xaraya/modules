@@ -30,7 +30,7 @@
 		<table border="0" cellpadding="2" cellspacing="2" width="100%">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<label for="name"><xar:mlstring>Documentation Item Title</xar:mlstring></label>
+					<label for="title"><xar:mlstring>Documentation Item Title</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<input type="text" name="title" id="title" value="" size="25" maxlength="60" tabindex="2" />
@@ -38,7 +38,7 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
-					<label for="desc"><xar:mlstring>Documentation</xar:mlstring></label>
+					<label for="doc"><xar:mlstring>Documentation</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<textarea name="doc" id="doc" tabindex="4" rows="10" cols="50" /></textarea> 

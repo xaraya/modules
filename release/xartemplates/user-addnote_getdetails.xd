@@ -41,7 +41,7 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Download Link</xar:mlstring>
+					<label for="dllink"><xar:mlstring>Download Link</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<input type="text" name="dllink" value="" size="30" maxlength="100" />
@@ -50,7 +50,7 @@
 			<xar:if condition="$pricecheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Price</xar:mlstring>
+					<label for="price"><xar:mlstring>Price</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<input type="text" name="price" value="" size="10" maxlength="100" />
@@ -60,7 +60,7 @@
 			<xar:if condition="$democheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Demo Link</xar:mlstring>
+					<label for="demolink"><xar:mlstring>Demo Link</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<input type="text" name="demolink" value="" size="30" maxlength="100" />
@@ -70,7 +70,7 @@
 			<xar:if condition="$supportcheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Supported Link</xar:mlstring>
+					<label for="supportlink"><xar:mlstring>Supported Link</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<input type="text" name="supportlink" value="" size="30" maxlength="100" />
@@ -79,7 +79,7 @@
 			</xar:if>
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>ChangeLog</xar:mlstring>
+					<label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<textarea name="changelog" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
@@ -87,7 +87,7 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Additional Notes</xar:mlstring>
+					<label for="notes"><xar:mlstring>Additional Notes</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
 					<textarea name="notes" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
