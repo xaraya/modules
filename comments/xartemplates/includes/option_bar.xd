@@ -1,5 +1,5 @@
 <div class="xar-accent" style="padding: 1px;">
-    <div class="xar-norm" style="padding: 4px;" align="center">
+    <div class="xar-norm" style="padding: 4px; text-align: center;">
         <h2> 
             <xar:mlstring>
                 Comments Rendering Settings 
@@ -9,28 +9,28 @@
             <div class="xar-mod-body xar-norm-outline" style="padding: 0px;">
                 <table width="100%" border="0" cellspacing="1" cellpadding="1">
                     <tr>
-                        <th nowrap="nowrap">
+                        <th style="word-wrap: nowrap;">
                             <label class="xar-mod-title" for="depth"> 
                                 <xar:mlstring>
                                     Depth 
                                 </xar:mlstring>
                             </label> 
                         </th>
-                        <th nowrap="nowrap">
+                        <th style="word-wrap: nowrap;">
                             <label class="xar-mod-title" for="render"> 
                                 <xar:mlstring>
                                     Style 
                                 </xar:mlstring>
                             </label> 
                         </th>
-                        <th nowrap="nowrap">
+                        <th style="word-wrap: nowrap;">
                             <label class="xar-mod-title" for="sortby"> 
                                 <xar:mlstring>
                                     Sort by 
                                 </xar:mlstring>
                             </label> 
                         </th>
-                        <th nowrap="nowrap">
+                        <th style="word-wrap: nowrap;">
                             <label class="xar-mod-title" for="order"> 
                                 <xar:mlstring>
                                     Order 
