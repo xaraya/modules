@@ -52,7 +52,7 @@ function translations_adminapi_get_theme_dirs($args)
     if (file_exists("themes/$themedir")) {
         $dd = opendir("themes/$themedir");
         while ($filename = readdir($dd)) {
-            if ($filename == 'blocks' || $filename == 'modules' || $filename == 'pages') 
+            if ($filename == 'blocks' || $filename == 'modules' || $filename == 'pages' || $filename == 'includes') 
                 searchDir("themes/$themedir/$filename", $prefix);
         }
         closedir($dd);
