@@ -22,7 +22,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Authentication by AuthphpBB2 is automatically enabled/available once the AuthphpBB2 module has been initialized.  To disable AuthphpBB2 authentication, you must remove the module. But if your phpBB2 settins differ from the defautl ones (they are, sure) you need to set them up in "Admin panel/authphpbb2/Modify Config".</xar:mlstring>
+            <xar:mlstring>Authentication by AuthphpBB2 is automatically available once the AuthphpBB2 module has been initialized.  To enable/disable AuthphpBB2 authentication, you must adjust the setting in the modify config screen. But if your phpBB2 settins differ from the defautl ones (they are, sure) you need to set them up in "Admin panel/authphpbb2/Modify Config".</xar:mlstring>
             <br />
             <xar:mlstring>Notices:</xar:mlstring>
             <ul>
