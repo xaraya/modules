@@ -56,6 +56,12 @@ function xlink_user_main($args)
     // FIXME: can we redirect without changing address?
     // if so, we could have complete replacement for short url encode/decode in data,
     // which would obviously be more flexible (user configurable)
+// Well, you could always try to call the module function yourself here :)
+// return xarModFunc($modinfo['name'],'user','display',
+//                   array('itemtype' => $item['itemtype'],
+//                         'itemid' => $item['itemid']));
+// Of course, it would help if you knew which function and parameters to use,
+// like DD does :-)
     xarResponseRedirect($url);
     return true;
 }
