@@ -1,4 +1,3 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <xar:set name="$updatebutton"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 <xar:set name="$adocachel"><xar:mlstring>ADOdb Cache Path:</xar:mlstring></xar:set>
 <xar:set name="$rsscachel"><xar:mlstring>RSS Cache Path:</xar:mlstring></xar:set>
@@ -33,10 +32,6 @@
 <xar:set name="$schedulingoff"><xar:mlstring>not scheduled</xar:mlstring></xar:set>
 <xar:set name="$schedulinghelp"><xar:mlstring>Specify how often this job should be executed</xar:mlstring></xar:set>
 <xar:set name="$schedulingnote"><xar:mlstring>Please note that if you stop the scheduler or if it isn't triggered, these jobs will not be executed.</xar:mlstring></xar:set>
-<!--- add more jobs here --->
-<xar:set name="$schedule['optimize']"><xar:mlstring>Run Optimize Job</xar:mlstring></xar:set>
-<xar:set name="$schedule['backup']"><xar:mlstring>Run Backup Job</xar:mlstring></xar:set>
-
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>

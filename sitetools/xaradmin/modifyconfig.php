@@ -47,7 +47,11 @@ function sitetools_admin_modifyconfig()
     if (xarModIsAvailable('scheduler')) {
         $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
         $data['interval'] = array();
-        foreach ($schedulerapi as $func) {
+        //Define for each job type
+        $data['schedule']['optimize']=xarML('Run Optimize Job');
+        $data['schedule']['backup']=xarML('Run Backup Job');
+       foreach ($schedulerapi as $func) {
+
             // see if we have a scheduler job running to execute this function
             $job = xarModAPIFunc('scheduler','user','get',
                                  array('module' => 'sitetools',
@@ -57,6 +61,7 @@ function sitetools_admin_modifyconfig()
                 $data['interval'][$func] = '';
             } else {
                 $data['interval'][$func] = $job['interval'];
+
             }
         }
     } else {
@@ -73,7 +78,8 @@ function sitetools_admin_modifyconfig()
     } else {
         $data['hooks'] = $hooks;
     } 
-    // Return the template variables defined in this function
-    return $data;
+
+   // Return the template variables defined in this function
+ return $data;
 }
 ?>
