@@ -211,7 +211,7 @@
                             <xar:if condition="isset($header['branchout'])">
                                 <input type="hidden" id="header-cid" name="header[cid]" value="#$header['cid']#" /> <input type="hidden" id="header-branchout" name="header[branchout]" value="#$header['branchout']#" /> 
                             </xar:if>
-                            <input type="hidden" id="receipt-returnurl-encoded" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" /> <input type="hidden" id="receipt-returnurl-decoded" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" /> <input type="submit" value="Refresh" /> 
+                            <input type="hidden" id="receipt-returnurl-encoded" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" /> <input type="hidden" id="receipt-returnurl-decoded" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" /> <input type="submit" value="Refresh" id="Reload" /> 
                         </td>
                     </tr>
                 </table>
