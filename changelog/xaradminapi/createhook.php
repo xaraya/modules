@@ -70,7 +70,7 @@ function changelog_adminapi_createhook($args)
     if (isset($extrainfo['changelog_remark']) && is_string($extrainfo['changelog_remark'])) {
         $remark = $extrainfo['changelog_remark'];
     } else {
-        $remark = xarVarCleanFromInput('changelog_remark');
+        xarVarFetch('changelog_remark', 'str:1:', $remark, NULL, XARVAR_NOT_REQUIRED);
         if (empty($remark)){
             $remark = '';
         }
