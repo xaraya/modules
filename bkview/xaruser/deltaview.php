@@ -33,19 +33,32 @@ function bkview_user_deltaview($args)
         $the_file = new bkFile($repo,$file);
         $rev = $the_file->bkChangeSet($rev);
     }
+    
     // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
     if(!empty($changeset->_deltas)) {
         foreach($changeset->_deltas as $delta_id => $delta) {
             // Repo id is a xaraya thing, add it sneaky to the object because we dont
             // want it in the class
+            
+            // Make sure our delta object contains what we need
             $delta->repoid = $repoid;
             $delta->cset ='';
-            //$arr = (array) $delta;
-            //xarLogVariable('delta',$arr);
+
+            $absfile = $repo->_root . '/' . $delta->file;
+            if(xarModIsAvailable('mime') && file_exists($absfile)) {
+                $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $absfile));
+                $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+            } else {
+                $delta->icon = xarTplGetImage('file.gif','bkview');
+            }
+            // construct an array which has each part of the path to the file in an index
             $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->file)) . "']";
-            $type = $arrayindex . "['type']";
-            eval("$type = 'file';");
+            
+            // add the type member to it and set it to the 'file' value
+            $type = $arrayindex . "['type']"; eval("$type = 'file';");
+                
+            // Add the delta revision as member and set it to the delta, converted to an array
             $arrayindex .= "['".$delta->rev."']";
             // mwuhahaha
             eval("$arrayindex = (array) \$delta;");
