@@ -3,7 +3,7 @@
 /**
  * Manage definition of instances for privileges (unfinished)
  */
-function xlink_admin_privileges()
+function xlink_admin_privileges($args)
 { 
     // Security Check
     if (!xarSecurityCheck('AdminXLink')) return;

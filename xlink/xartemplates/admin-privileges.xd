@@ -2,7 +2,7 @@
 <div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Hooked Modules for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
 <div style="margin: auto;">
 
-<form method="post" action="&xar-modurl-changelog-admin-privileges;">
+<form method="post" action="&xar-modurl-xlink-admin-privileges;">
     <input type="hidden" name="extpid" id="extpid" value="#$extpid#" />
     <input type="hidden" name="extname" id="extname" value="#$extname#" />
     <input type="hidden" name="extrealm" id="extrealm" value="#$extrealm#" />
