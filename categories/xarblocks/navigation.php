@@ -805,15 +805,34 @@ function categories_navigationblock_display($blockinfo)
 
                     // Generate list of sibling categories
                     foreach ($siblings as $cat) {
-                        $label = xarVarPrepForDisplay($cat['name']);
-                        $link = xarModURL($modname,$type,$func,
-                                         array('itemtype' => $itemtype,
-                                               'catid' => $cat['cid']));
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
                             $count = 0;
+
+                            // Note: when hiding empty categories, check the deep count
+                            // as a child category may be empty, but it could still have
+                            // descendants with items.
+
+                            if (!empty($showempty) || !empty($deepcount[$cat['cid']])) {
+                                // We are not hiding empty categories - set count to zero.
+                                $count = 0;
+                            } else {
+                                // We want to hide empty categories - so skip this loop.
+                                continue;
+                            }
                         }
+                        
+                        $label = xarVarPrepForDisplay($cat['name']);
+                        $link = xarModURL(
+                            $modname, $type, $func,
+                            array(
+                                'itemtype' => $itemtype,
+                                'catid' => $cat['cid']
+                            )
+                        );
+                        
+                        
                         $savecid = $cat['cid'];
                         $catchildren = array();
                         if ($cat['cid'] == $cid) {
