@@ -20,6 +20,7 @@
             <li>it relies on the bk-daemon which has to be started in a specific way, the bkview module is less restrictive, it just requires BK to be installed</li>
             <li>bkweb is packaged as is, it's not extensible, bkview is delivered as php module, so extra features are added easily</li>
             <li>bkview is embedded into xaraya, so it can use the features from any other xaraya module if necessary</li>
+            <li>bkweb relies on a bitkeeper server to be up, which has cause some outages for us, bkview is an alternative</li>
         </ol>
         <br/>
         This module has the following disadvantages:
@@ -49,7 +50,7 @@
         The following issues are known and part of the todo-list:
         <ol>
             <li>Counting of csets isn't consistent (discrepancy with bkweb, assuming that one is correct</li>
-            <li>No security is in place</li>
+            <li><strike>No</strike> Only simple security is in place</li>
             <li>It doesn't work on windows</li>
         </ol>
     </div>
