@@ -146,7 +146,7 @@
           </xar:if>
         </select> date
         &nbsp;&nbsp;        
-        <input type="submit" value="Refresh">
+        <input type="submit" value="#xarML('Refresh')#">
         <br />
       </form>
     </td>                          
