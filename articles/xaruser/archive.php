@@ -10,6 +10,7 @@ function articles_user_archive($args)
     if (!xarVarFetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('month', 'str',          $month, '',   XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('cids',  'array',        $cids,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('catid', 'str',          $catid, '',   XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);
@@ -34,6 +35,26 @@ function articles_user_archive($args)
 
     $seencid = array();
     $andcids = false;
+    // turn $catid into $cids array and set $andcids flag
+    if (!empty($catid)) {
+        if (strpos($catid,' ')) {
+            $cids = explode(' ',$catid);
+            $andcids = true;
+        } elseif (strpos($catid,'+')) {
+            $cids = explode('+',$catid);
+            $andcids = true;
+        } elseif (strpos($catid,'-')) {
+            $cids = explode('-',$catid);
+            $andcids = false;
+        } else {
+            $cids = array($catid);
+            if (strstr($catid,'_')) {
+                $andcids = false; // don't combine with current category
+            } else {
+                $andcids = true;
+            }
+        }
+    }
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
             if (!empty($cid) && preg_match('/^_?[0-9]+$/',$cid)) {
@@ -42,7 +63,7 @@ function articles_user_archive($args)
         }
         $cids = array_keys($seencid);
         sort($cids,SORT_NUMERIC);
-        if (count($cids) > 1) {
+        if (empty($catid) && count($cids) > 1) {
             $andcids = true;
         }
     } else {
