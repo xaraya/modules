@@ -4,11 +4,11 @@
     <xar:mlstring>
         Legenda: Case Sensitive: [CS]
     </xar:mlstring>
-    &nbsp&nbsp&nbsp
+    &nbsp;&nbsp;&nbsp;
     <xar:mlstring>
     Match Case: [EX]act corrispondence [ST]art of string [EN]d of string [EV]erywhere
     </xar:mlstring>
-    &nbsp&nbsp&nbsp
+    &nbsp;&nbsp;&nbsp;
     <xar:mlstring>
         Actions: [E]dit [R]emove
     </xar:mlstring>
@@ -46,7 +46,7 @@
                             [<xar:mlstring>EV</xar:mlstring>]
                        </xar:if>
             [ #$loop:item['locale']# ]
-                &nbsp&nbsp&nbsp
+                &nbsp;&nbsp;&nbsp;
         </div>    
         #$loop:item['keyword']#
             </div>
@@ -81,7 +81,7 @@
                             [<xar:mlstring>EV</xar:mlstring>]
                        </xar:if>
             [ #$loop:item['locale']# ]
-            &nbsp&nbsp&nbsp
+            &nbsp;&nbsp;&nbsp;
         </div>    
                 #$loop:item['keyword']#
             </div>

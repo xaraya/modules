@@ -46,7 +46,7 @@
             <span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Locale</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-    <select multiple size=5 name="locale[]" id="locale">
+    <select multiple="multiple" size="5" name="locale[]" id="locale">
     <xar:loop name="$locales">
     <option value="#$loop:item['value']#">#$loop:item['name']#</option>
     </xar:loop>
