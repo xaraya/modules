@@ -154,6 +154,7 @@ function ratings_upgrade($oldversion)
             ratings_init();
 
             break;
+        case '1.2':
     }
 
     return true;

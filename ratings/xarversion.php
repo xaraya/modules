@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Ratings';
 $modversion['id']             = '41';
-$modversion['version']        = '1.2';
+$modversion['version']        = '1.2.0';
 $modversion['description']    = 'Rate Xaraya items';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
