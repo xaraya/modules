@@ -20,7 +20,7 @@ function translations_admin_generate_skels_info()
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     $tran_type = xarSessionGetVar('translations_dnType');
-    $druidbar = translations_create_generate_skels_druidbar(INFO,$tran_type);
+    $druidbar = translations_create_generate_skels_druidbar(GEN,$tran_type);
     $opbar = translations_create_opbar(GEN_SKELS);
     $tplData = array_merge($druidbar, $opbar);
     $tplData['dnType'] = translations__dnType2Name($tran_type);

@@ -27,7 +27,7 @@ function translations_admin_module_overview()
 
     xarSessionSetVar('translations_dnName', $tplData['name']);
 
-    $druidbar = translations_create_choose_a_module_druidbar(OVERVIEW);
+    $druidbar = translations_create_module_overview_druidbar(INFO);
     $opbar = translations_create_opbar(OVERVIEW);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
