@@ -23,7 +23,7 @@ function dyn_example_user_display($args)
     if (empty($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'user', 'display', 'dyn_example');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return $msg;
     }

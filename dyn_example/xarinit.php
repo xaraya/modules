@@ -26,7 +26,7 @@ function dyn_example_init()
 
     if (!$testmod) {
         $msg = xarML('Please activate the Dynamic Data module first...');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
+        xarErrorSet(XAR_USER_EXCEPTION, 'MODULE_NOT_ACTIVE',
                         new DefaultUserException($msg));
         return;
     }
