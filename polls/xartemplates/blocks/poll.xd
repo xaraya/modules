@@ -1,29 +1,28 @@
 <xar:if condition="$canvote">
+<form method="post" action="#xarModUrl('polls', 'user', 'vote')#">
 <table border="0" cellpadding="2" cellspacing="0" width="100%">
-<form method="post" action="&xar-modurl-polls-user-vote;">
-<input type="hidden" name="authid" value="#$authid#">
-<input type="hidden" name="pid" value="#$pid#">
 <tr>
     <td colspan="2">#$title#</td>
 </tr>
 <xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
 <tr>
 	<td>
+		<input type="hidden" name="authid" value="#$authid#" />
+		<input type="hidden" name="pid" value="#$pid#" />
+		<input type="hidden" name="blockvote" value="1" />
         <xar:if condition="$type eq 'single'">
             <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
         <xar:elseif  condition="$type eq 'multi'" />
             <input type="checkbox" name="option_#$i#" id="option_#$bid#_#$i#" value="#$i#" />
         </xar:if>
 	</td>
-    <td width="90%"><label for="option_#$bid#_#$i#">#$options[$i]['name']#</label></td>
+    <td style="width: 90%;"><label for="option_#$bid#_#$i#">#$options[$i]['name']#</label></td>
 </tr>
 </xar:for>
 </table>
-<br />
         <div style="text-align:center; margin: auto;">
-        <input type="submit" value="#$buttonlabel#" style="text-align:center; margin: auto;">
+        <p><input type="submit" value="#$buttonlabel#" style="text-align:center; margin: auto;" /></p>
         </div>
-        <input type="hidden" name="blockvote" value="1" />
 </form>
 
 <xar:else />
