@@ -1,4 +1,4 @@
-<?
+<?php
 #######################################################################################
 #xoapWeather - Process XML feeds from weather.com for display on a website            #
 #			   keeping with in weather.com's standards for cacheing requests and links#
@@ -18,6 +18,11 @@
 #along with this program; if not, write to the Free Software                          #
 #Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.          #
 #######################################################################################
+
+/**
+ *  This file was modified by Roger Raymond for use in Xaraya
+ */
+
 
 ########################################################
 # VERSION 1.1										   #
@@ -503,8 +508,8 @@ class xoapWeather
     *	@param	None
     *	@return	$cc Array Current Conditions Data
     */
-
-    function getFile($type='cc',$units='s') {
+    function getFile($type='cc',$units='s') 
+    {
         if($type=='cc') {
             switch($units) {
                 case 's':
