@@ -28,7 +28,12 @@ function articles_randomblock_init()
         'showsummary' => true,
         'showpubdate' => false,
         'showsubmit' => false,
-        'showdynamic' => false
+        'showdynamic' => false,
+// TODO: use (something like) this for the default block caching configuration ?
+        'nocache' => 0, // Cache this block
+        'pageshared' => 1, // Share across all pages
+        'usershared' => 1, // Share between group members
+        'cacheexpire' => null // Default cache expiration time
     );
 }
 
@@ -77,63 +82,55 @@ function articles_randomblock_display($blockinfo)
     $fields = array('aid', 'title', 'body', 'notes', 'pubtypeid', 'cids', 'authorid');
 
     if (!empty($vars['showpubdate'])) {
-            array_push($fields, 'pubdate');
+        array_push($fields, 'pubdate');
     }
     if (!empty($vars['showsummary'])) {
-            array_push($fields, 'summary');
+        array_push($fields, 'summary');
+    }
+    if (!empty($vars['showauthor'])) {
+        array_push($fields, 'author');
     }
     if (!empty($vars['alttitle'])) {
-            $blockinfo['title'] = $vars['alttitle'];
+        $blockinfo['title'] = $vars['alttitle'];
     }
     if (empty($vars['pubtypeid'])) {
-            $vars['pubtypeid'] = 0;
+        $vars['pubtypeid'] = 0;
     }
     
-    
     if (!empty($vars['catfilter'])) {
-            // use admin defined category 
-            $cidsarray = array($vars['catfilter']);
-            $cid = $vars['catfilter'];
+        // use admin defined category 
+        $cidsarray = array($vars['catfilter']);
+        $cid = $vars['catfilter'];
     } else {
         $cid = 0;
         $cidsarray = array();
     }
     
     if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles')) {
-            array_push($fields, 'dynamicdata');
+        array_push($fields, 'dynamicdata');
     }
-    
-    $articles = xarModAPIFunc(
-    'articles','user','getall',
-    array(
-            'ptid' => $vars['pubtypeid'],
-            'cids' => $cidsarray,
-            'andcids' => 'false',
-            'status' => $statusarray,
-            'fields' => $fields    )
-    );
-    $nbarticles = count($articles);
-    if (empty($vars['numitems'])) $vars['numitems'] = $nbarticles;
-    if (!isset($articles) || !is_array($articles) || $nbarticles == 0) {
-            return;
-    } else {
-            if ($nbarticles <= $vars['numitems']) $randomarticle = array_rand($articles, $nbarticles);
-            else $randomarticle = array_rand($articles, $vars['numitems']);
-            if(!is_array($randomarticle)) $randomarticle = array($randomarticle);
 
-            foreach ($randomarticle as $randomaid) {
-                if (!empty($articles[$randomaid]['authorid']) && !empty($vars['showauthor'])) {
-                    $articles[$randomaid]['authorname'] = xarUserGetVar('name', $articles[$randomaid]['authorid']);
-                    if (empty($articles[$randomaid]['authorname'])) {
-                        xarErrorHandled();
-                        $articles[$randomaid]['authorname'] = xarML('Unknown');
-                    }
-                }
-                $vars['items'][] = $articles[$randomaid];
-            }
-                
-    }
+    if (empty($vars['numitems'])) $vars['numitems'] = 1;
     
+    $articles = xarModAPIFunc('articles','user','getrandom',
+                              array('ptid' => $vars['pubtypeid'],
+                                    'cids' => $cidsarray,
+                                    'andcids' => false,
+                                    'status' => $statusarray,
+                                    'numitems' => $vars['numitems'],
+                                    'fields' => $fields));
+    if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
+        return;
+    } else {
+        foreach (array_keys($articles) as $key) {
+            // for template compatibility :-(
+            if (!empty($articles[$key]['author']) && !empty($vars['showauthor'])) {
+                $articles[$key]['authorname'] = $articles[$key]['author'];
+            }
+            $vars['items'][] = $articles[$key];
+        }
+    }
+
     // Pass details back for rendering.
     if (count($vars['items']) > 0) {
         $blockinfo['content'] = $vars;
