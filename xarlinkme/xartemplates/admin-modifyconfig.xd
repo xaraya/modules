@@ -18,10 +18,10 @@
        <td><input type="text" name="pagetitle" id="pagetitle" size="40"  maxlength="40" value="#$pagetitle#" /></td>
    </tr>
    <tr><td><label for="pagetitle">#$instructionslabel#</label></td>
-       <td><textarea name="instructions" wrap="soft" rows="4" cols="40" />#$instructions#</textarea></td>
+       <td><textarea name="instructions" rows="4" cols="40" />#$instructions#</textarea></td>
    </tr>
    <tr><td><label for="instructions2">#$instructions2label#</label></td>
-       <td><textarea name="instructions2" wrap="soft" rows="3" cols="40" />#$instructions2#</textarea></td>
+       <td><textarea name="instructions2" rows="3" cols="40" />#$instructions2#</textarea></td>
    </tr>
    <tr><td><label for="txtintro">#$txtintrolabel#</label></td>
        <td><input type="text" name="txtintro" id="txtintro" value="#$txtintro#" size="40"  maxlength="60" /></td>
