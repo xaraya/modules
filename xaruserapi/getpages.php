@@ -77,7 +77,8 @@ function xarpages_userapi_getpages($args)
 
     // Used to prune a single branch of the tree.
     if (isset($left_exclude) && is_array($left_exclude)) {
-        $where[] = 'tpages.xar_left NOT between ? AND ?';
+        //'tpages.xar_left NOT between ? AND ?' - does not work on some databases
+        $where[] = '(tpages.xar_left < ? OR tpages.xar_left > ?)';
         $bind[] = (int)$left_exclude[0];
         $bind[] = (int)$left_exclude[1];
     }
