@@ -322,10 +322,10 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 		TinyMCE_advanced_foreColor = "" + colorElm.color.toUpperCase();
 
 	// Reset old states
-	tinyMCE.switchClassSticky(editor_id + '_left', 'mceButtonNormal');
-	tinyMCE.switchClassSticky(editor_id + '_right', 'mceButtonNormal');
-	tinyMCE.switchClassSticky(editor_id + '_center', 'mceButtonNormal');
-	tinyMCE.switchClassSticky(editor_id + '_full', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_justifyleft', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_justifyright', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_justifycenter', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_justifyfull', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_bold', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_italic', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_underline', 'mceButtonNormal');
@@ -336,6 +336,8 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 	tinyMCE.switchClassSticky(editor_id + '_sup', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_table', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_anchor', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_link', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_unlink', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_row_before', 'mceButtonDisabled', true);
 	tinyMCE.switchClassSticky(editor_id + '_row_after', 'mceButtonDisabled', true);
 	tinyMCE.switchClassSticky(editor_id + '_delete_row', 'mceButtonDisabled', true);
@@ -350,6 +352,13 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 	if (anchorName) {
 		TinyMCE_advanced_anchorName = anchorName.getAttribute("name");
 		tinyMCE.switchClassSticky(editor_id + '_anchor', 'mceButtonSelected');
+	}
+
+	// Get link
+	var anchorLink = tinyMCE.getParentElement(node, "a", "href");
+	if (anchorLink) {
+		tinyMCE.switchClassSticky(editor_id + '_link', 'mceButtonSelected');
+		tinyMCE.switchClassSticky(editor_id + '_unlink', 'mceButtonSelected');
 	}
 
 	// Handle visual aid
@@ -526,7 +535,7 @@ function TinyMCE_advanced_setupCSSClasses(editor_id) {
 		}
 
 		// Only do this once
-		if (csses != null)
+		if (csses != null && csses.length > 0)
 			selectElm.setAttribute('cssImported', 'true');
 	}
 }

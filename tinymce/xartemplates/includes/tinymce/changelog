@@ -1,3 +1,11 @@
+Version 1.31 (2004-09-18)
+	Added Canadian French lnaguage pack, contributed by Virtuelcom.
+	Added so link/unlink buttons gets selected when user enters a link element.
+	Fxied URL bug when drag dropping/copy pasting images in Mozilla.
+	Fixed so mso style attribs don't get trimmed if auto_cleanup_word option is set to false.
+	Fixed bug with text alignment buttons.
+	Fixed bug with CSS auto import function in MSIE.
+	Fixed initialization bugs and issues.
 Version 1.30 (2004-09-10)
 	Fixed bug issue where the editor was stealing focus from location bar.
 	Fixed bug issue with absolute aligned images lost focus when using tools.
