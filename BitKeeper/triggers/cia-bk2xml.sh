@@ -26,8 +26,11 @@ REV="$1"
 cia_address="cia@cia.navi.cx"
 
 author=`echo $BK_USER | sed 's/\&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g'`
-# Use the virgin name within our hierarchy as the module name (i.e. core/modules/themes/languages)
-module=`basename $(dirname $BKD_ROOT) | sed 's/\&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g'`
+# Use the virgin/scenario name within our hierarchy 
+VIRGIN=$(basename $(dirname ${BKD_ROOT}))
+REPO=$(basename ${BKD_ROOT})
+module="$VIRGIN/$REPO "
+#module=`basename $(dirname $BKD_ROOT) | sed 's/\&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g'`
 log=`bk changes -r"$REV" -d":C:" | sed 's/\&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g'`
 tag=`bk changes -r"$REV" -d":TAG:" | sed 's/\&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g'`
 for file in `bk changes -n -v -r"$REV" -d"\\\$unless(:GFILE:=ChangeSet){:GFILE:}" | sort -u | sed 's/\&/\&amp;/g;s/</\&lt;/g;s/>/\&gt;/g'`; do
