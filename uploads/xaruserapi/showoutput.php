@@ -16,13 +16,16 @@ function uploads_userapi_showoutput($args)
     if (empty($format)) {
         $format = 'fileupload';
     }
+    if (empty($multiple)) {
+        $multiple = false;
+    }
 
     $data = array();
 
     // Check to see if an old value is present. Old values just file names
     // and do not start with a semicolon (our delimiter)
-    if (xarModAPIFunc('uploads', 'adminapi', 'dd_value_needs_conversion', $value)) {
-        $newValue = xarModAPIFunc('uplodas', 'adminapi', 'dd_convert_value', array('value' =>$value));
+    if (xarModAPIFunc('uploads', 'admin', 'dd_value_needs_conversion', $value)) {
+        $newValue = xarModAPIFunc('uplodas', 'admin', 'dd_convert_value', array('value' =>$value));
 
         // if we were unable to convert the value, then go ahead and and return
         // an empty string instead of processing the value and bombing out
@@ -38,28 +41,34 @@ function uploads_userapi_showoutput($args)
     // The explode will create an empty indice,
     // so we get rid of it with array_filter :-)
     $value = array_filter(explode(';', $value));
-    if (!$this->multiple) {
+    if (!$multiple) {
         $value = array(current($value));
     }
 
     // make sure to remove any indices which are empty
     $value = array_filter($value);
 
-/*
-    // FIXME: Quick Fix - Forcing return of raw array of fileId's with their metadata for now
-    // The stuff below has been commented out until time is available for a more permanent fix
-    // Rabbitt :: March 29th, 2004
-
-    if (is_array($value) && count($value)) {
-        $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
-    } else {
-        $data['Attachments'] = '';
+    if (empty($value)) {
+        return array();
     }
 
-    $data['format'] = $format;
-    return xarTplModule('uploads', 'user', 'attachment-list', $data, NULL);
-*/
-    return xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
+
+    // FIXME: Quick Fix - Forcing return of raw array of fileId's with their metadata for now
+    // Rabbitt :: March 29th, 2004
+
+    if (isset($style) && $style = 'icon') {
+        if (is_array($value) && count($value)) {
+            $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
+        } else {
+            $data['Attachments'] = '';
+        }
+
+        $data['format'] = $format;
+        return xarTplModule('uploads', 'user', 'attachment-list', $data, NULL);
+    } else {
+        // return a raw array for now
+        return xarModAPIFunc('uploads', 'user', 'db_get_file', array('fileId' => $value));
+    }
 }
 
 ?>
