@@ -789,7 +789,15 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
 
 function comments_renderer_wrap_words(&$str, $chars) 
 {
-    $str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
+    // Added for bug 4210 wrapping on multibyte words
+    $before_lt="[\\x21-\\x3B]"; //"space" is x20 and "<" is x3C
+    $equal="[\\x3D]";           //"=" is x3D
+    $after_gt="[\\x3F-\\x7F]";  //">" is x3E 
+    $single = $before_lt."|".$equal."|".$after_gt;
+    $pattern = "/(".$single."){".$chars.",".$chars."}/";
+    $str = preg_replace($pattern, '\0 ',$str);
+
+    //$str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
 }
  
 
