@@ -1,29 +1,30 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#"> #$chantitle# </a></h2>
+<div style="margin: auto;">
 <xar:if condition="empty($warning)">
-    <br />
-    <h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#"> #$chantitle# </a></h2>
     <xar:if condition="!empty($chandesc)">
-         #$chandesc#<br/><br/>
+         <p>#$chandesc#</p>
     </xar:if>
-    <h3><xar:mlstring>Recent Headlines</xar:mlstring></h3>
     <xar:if condition="!empty($feedcontent)">
-        <xar:loop name="$feedcontent"><p>
+        <xar:loop name="$feedcontent">
             <xar:if condition="!empty($link)">
                 <!-- NOTE: target="_blank" is not XHTML compliant -->
-                &bull;<a href = "#$link#" target = "_BLANK"> #$title# </a> <br />
+                <h3>&bull;<a href = "#$link#"> #$title# </a> </h3>
             <xar:else />
-                &bull; <b>#$title#</b> <br />
+                <h3>&bull; #$title#</h3>
             </xar:if>
             <xar:if condition="!empty($description)">
-                #$description#
-            </xar:if></p>
+                <p>#$description#</p>
+            </xar:if>
         </xar:loop>
     </xar:if>
 <xar:else />
     #$warning#
 </xar:if>
-<br /><br />
-<a href="#xarModURL('headlines', 'user', 'main')#"><xar:mlstring>Back to main headlines</xar:mlstring></a>
+<p><a href="#xarModURL('headlines', 'user', 'main')#"><xar:mlstring>Back to main headlines</xar:mlstring></a></p>
 <xar:if condition="!empty($hooks)">
-    <h2><xar:mlstring>Options</xar:mlstring>:</h2>
+    <h3><xar:mlstring>Options</xar:mlstring>:</h3>
     #$hooks#
 </xar:if>
+</div>
+</div>
