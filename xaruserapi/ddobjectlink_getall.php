@@ -12,10 +12,6 @@
  */
 function subitems_userapi_ddobjectlink_getall($args)
 {
-    // Get arguments from argument array - all arguments to this function
-    // should be obtained from the $args array, getting them from other places
-    // such as the environment is not allowed, as that makes assumptions that
-    // will not hold in future versions of Xaraya
     extract($args);
     // Optional arguments.
     // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value

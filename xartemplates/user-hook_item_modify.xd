@@ -1,51 +1,54 @@
-<div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-        #$object->label#:
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
-<table cellpadding=4 width="100%">
-<thead>
-<tr>
-    <xar:foreach in="$properties" key="$name">
-        <th align="center" class="xar-normal" style="text-align: center;">
-        <xar:data-label property="$properties[$name]" />
-        </th>
-    </xar:foreach>                
-    <th></th>
-</tr>
-</thead>
-<tbody>    
-<xar:foreach in="$values" key="$uid">
-
-    <tr>
-    
-    <xar:foreach in="$properties" key="$name">
-    <td>
-    
-    <xar:if condition="isset($values[$uid][$name])">
-    <xar:data-output property="$properties[$name]" value="$values[$uid][$name]" />
-    <xar:else />
-            &nbsp;
-    </xar:if>
-    
-    </td>
-    </xar:foreach>
-    <td>
-        <a href="#xarModUrl('subitems','admin','item_modify',array('objectid' => $objectid,'ddid' => $uid))#"><xar:mlstring>Edit</xar:mlstring></a> |
-        <a href="#xarModUrl('subitems','admin','item_delete',array('objectid' => $objectid,'ddid' => $uid))#"><xar:mlstring>Delete</xar:mlstring></a>
-    </td>
-    </tr>
+<xar:foreach in="$subitems" key="$objectid" value="$subobject">
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            #$subobject.object:label#:
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <table cellpadding="4" width="100%">
+                <thead>
+                    <tr>
+                        <xar:foreach in="$subobject.properties" key="$name">
+                            <th align="center" class="xar-normal" style="text-align: center;">
+                                <xar:data-label property="$subobject['properties'][$name]" />
+                            </th>
+                        </xar:foreach>                
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>    
+                    <xar:foreach in="$subobject.values" key="$uid">
+                        <tr>
+                            <xar:foreach in="$subobject.properties" key="$name">
+                                <td>
+                                    <xar:if condition="isset($subobject.values.$uid.$name)">
+                                        <xar:data-output property="$subobject['properties'][$name]" value="$subobject['values'][$uid][$name]" />
+                                    <xar:else />
+                                        &nbsp;
+                                    </xar:if>
+                                </td>
+                            </xar:foreach>
+                            <td>
+                                <a href="&xar-modurl-subitems-admin-item_modify;&amp;objectid=#$subobject.objectid#&amp;ddid=#$uid#">
+                                    <xar:mlstring>Edit</xar:mlstring>
+                                </a> |
+                                <a href="&xar-modurl-subitems-admin-item_delete;&amp;objectid=#$subobject.objectid#&amp;ddid=#$uid#">
+                                    <xar:mlstring>Delete</xar:mlstring>
+                                </a>
+                            </td>
+                        </tr>
+                    </xar:foreach>
+                    <tr>
+                        <xar:foreach in="$subobject.properties" key="$name">
+                            <td></td>
+                        </xar:foreach>
+                        <td>
+                            <a href="&xar-modurl-subitems-admin-item_new;&amp;objectid=#$subobject.objectid#&amp;itemid=#$subobject.itemid#">
+                                <xar:mlstring>Add Item</xar:mlstring>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </span>
+    </div>
 </xar:foreach>
-<tr>
-
-<xar:foreach in="$properties" key="$name">
-<td></td>
-</xar:foreach>
-
-    <td><a href="#xarModUrl('subitems','admin','item_new',array('objectid' => $objectid,'itemid' => $itemid))#"><xar:mlstring>Add Item</xar:mlstring></a></td>
-</tr>
-</tbody>
-</table>
-    </span>
-</div>
-

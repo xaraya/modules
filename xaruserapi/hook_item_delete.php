@@ -17,7 +17,11 @@ function subitems_userapi_hook_item_delete($args)
     // a object should be linked to this hook
     if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$extrainfo)) return $extrainfo;
     // nothing to see here
-    if (empty($ddobjectlink['objectid'])) return $extrainfo;
+    if (empty($ddobjectlink)) return $extrainfo;
+        
+    // TODO: support multiple items too here? (perhaps not needed)
+    $ddobjectlink = $ddobjectlink[0];
+        
     $objectid = $ddobjectlink['objectid'];
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)

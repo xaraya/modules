@@ -1,78 +1,70 @@
 <xar:template type="module" file="menu" />
 
-<div class="xar-mod-body"><h2>#$heading#</h2><br />
-
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
-<form action="" method="POST" enctype="multipart/form-data">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
---> 
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
-       <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />    
-    
-<tr>
-<td>
-    <xar:mlstring>Hooked Module Name:</xar:mlstring>
-</td>
-<td>
-    <input type="text" name="modid" value="#$module['value']#" />
-    <span style="color:red">#$module['error']->msg#</span>
-</td>
-</tr>
-<tr>
-<td>
-    <xar:mlstring>Hooked Item Type:</xar:mlstring>
-</td>
-<td>
-    <input type="text" name="itemtype" value="#$itemtype['value']#" />
-    <span style="color:red">#$itemtype['error']->msg#</span>
-</td>
-</tr>
-<tr>
-<td>
-    <xar:mlstring>Template to use:</xar:mlstring>
-</td>
-<td>
-    <input type="text" name="template" value="#$template['value']#" />
-    <span style="color:red">#$template['error']->msg#</span>
-</td>
-</tr>
-<tr>
-<td>
-    <xar:mlstring>Sorting:</xar:mlstring>
-</td>
-<td>
-    <select name="sortby">
-    
-    <option value=""></option>
-    <xar:foreach in="$properties" key="$name" value="$property" >    
-    <xar:if condition="array_key_exists($name,$sort['value'])">
-    <option value="#$name#" selected><xar:data-label property="$properties[$name]" /></option>
-    <xar:else />
-    <option value="#$name#"><xar:data-label property="$properties[$name]" /></option>
-    </xar:if>
-    </xar:foreach>
-    </select>
-    <select name="sortmode">
-    <xar:if condition="in_array('ASC',$sort['value'])">
-        <option value="ASC" selected><xar:mlstring>Ascending</xar:mlstring></option>
-    <xar:else />
-    <option value="ASC" ><xar:mlstring>Ascending</xar:mlstring></option>
-    </xar:if>
-    <xar:if condition="in_array('DESC',$sort['value'])">
-        <option value="DESC" selected><xar:mlstring>Descending</xar:mlstring></option>        
-    <xar:else />
-        <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>        
-    </xar:if>        
-    </select>
-    <span style="color:red">#$sort['error']->msg#</span>
-</td>
-</tr>
-<tr><td colspan="2" align="center">
-    <input type="submit" name="confirm" value="#$submitbutton#" />
-</td></tr>
-</form>
-</table>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Edit Link to #(1)</xar:mlstring>
+            <xar:mlvar>#$label#</xar:mlvar>
+        </xar:ml>
+    </h2><br />
+    <table width="100%" border="0" cellspacing="1" cellpadding="8">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
+            <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />    
+            <tr>
+                <td><xar:mlstring>Hooked Module Name:</xar:mlstring></td>
+                <td>
+                    <input type="text" name="modid" value="#$module['value']#" />
+                    <span style="color:red">#$module.error:msg#</span>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:mlstring>Hooked Item Type:</xar:mlstring></td>
+                <td>
+                    <input type="text" name="itemtype" value="#$itemtype['value']#" />
+                    <span style="color:red">#$itemtype.error:msg#</span>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:mlstring>Template to use:</xar:mlstring></td>
+                <td>
+                    <input type="text" name="template" value="#$template['value']#" />
+                    <span style="color:red">#$template.error:msg#</span>
+                </td>
+            </tr>
+            <tr>
+                <td><xar:mlstring>Sorting:</xar:mlstring></td>
+                <td>    
+                    <select name="sortby">
+                        <option value=""></option>
+                        <xar:foreach in="$properties" key="$name" value="$property" >    
+                            <xar:if condition="array_key_exists($name,$sort['value'])">
+                                <option value="#$name#" selected><xar:data-label property="$properties[$name]" /></option>
+                            <xar:else />
+                                <option value="#$name#"><xar:data-label property="$properties[$name]" /></option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <select name="sortmode">
+                        <xar:if condition="in_array('ASC',$sort['value'])">
+                            <option value="ASC" selected><xar:mlstring>Ascending</xar:mlstring></option>
+                        <xar:else />
+                            <option value="ASC" ><xar:mlstring>Ascending</xar:mlstring></option>
+                        </xar:if>
+                        <xar:if condition="in_array('DESC',$sort['value'])">
+                            <option value="DESC" selected><xar:mlstring>Descending</xar:mlstring></option>        
+                        <xar:else />
+                            <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>        
+                        </xar:if>        
+                    </select>
+                    <span style="color:red">#$sort.error:msg#</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="confirm" value="#xarML('Update DDSubobjectlink')#" />
+                </td>
+            </tr>
+        </form>
+    </table>
 </div>

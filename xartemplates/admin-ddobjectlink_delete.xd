@@ -1,50 +1,31 @@
 <xar:template type="module" file="menu" />
 
-<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Delete Link to #(1) ?</xar:mlstring><xar:mlvar>#$label#</xar:mlvar></xar:ml></h2><br />
-
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
-<form action="" method="POST" enctype="multipart/form-data">
-<!--
-    // Add an authorisation ID - this adds a hidden field in the form that
-    // contains an authorisation ID.  The authorisation ID is very important in
-    // preventing certain attacks on the website
--->
-    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
-<tr>
-<td>
-    <xar:mlstring>Subitems Object:</xar:mlstring>
-</td>
-<td>
-    (#$objectid#) #$label#
-</td>
-</tr>
-<tr>
-<td>
-    <xar:mlstring>Hooked Module Name:</xar:mlstring>
-</td>
-<td>
-    #$module#
-</td>
-</tr>
-<tr>
-<td>
-    <xar:mlstring>Hooked Item Type:</xar:mlstring>
-</td>
-<td>
-    #$itemtype#
-</td>
-</tr>
-<tr>
-<td>
-    <xar:mlstring>Template to use:</xar:mlstring>
-</td>
-<td>
-    #$template#
-</td>
-</tr>
-<tr><td colspan="2" align="center">
-    <input type="submit" name="confirm" value="#xarMl('delete')#" />
-</td></tr>
-</form>
-</table>
+<div class="xar-mod-body">
+    <h2><xar:ml><xar:mlstring>Delete Link to #(1) ?</xar:mlstring><xar:mlvar>#$label#</xar:mlvar></xar:ml></h2><br />
+    <table width="100%" border="0" cellspacing="1" cellpadding="8">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
+            <tr>
+                <td><xar:mlstring>Subitems Object:</xar:mlstring></td>
+                <td>(#$objectid#) #$label#</td>
+            </tr>
+            <tr>
+                <td><xar:mlstring>Hooked Module Name:</xar:mlstring></td>
+                <td>#$module#</td>
+            </tr>
+            <tr>
+                <td><xar:mlstring>Hooked Item Type:</xar:mlstring></td>
+                <td>#$itemtype#</td>
+            </tr>
+            <tr>
+                <td><xar:mlstring>Template to use:</xar:mlstring></td>
+                <td>#$template#</td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="confirm" value="#xarMl('delete')#" />
+                </td>
+            </tr>
+        </form>
+    </table>
 </div>

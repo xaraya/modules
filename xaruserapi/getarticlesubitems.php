@@ -18,8 +18,11 @@ function subitems_userapi_getarticlesubitems($args)
     $subitemArgs['itemtype'] =  $ptid;   
     $ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',$subitemArgs);
     // nothing to see here
-    if (empty($ddobjectlink['objectid'])) return array();
-
+    if (empty($ddobjectlink) return array();
+    
+    // TODO: Support multiple subitems here too
+    $ddobjectlink = $ddobjectlink[0];
+        
     // Get the Object from DD
     $ddobjectArgs =  array();   
     $ddobjectArgs['objectid'] =  $ddobjectlink['objectid'];   

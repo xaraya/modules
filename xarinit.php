@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
  * subitems initialization functions
  *
  * @copyright (C) 2003 by the Xaraya Development Team.

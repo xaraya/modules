@@ -3,18 +3,21 @@
 function subitems_admin_ddobjectlink_edit($args)
 {
     extract($args);
-
-    if(!xarVarFetch('objectid','int:1:',$objectid)) return;
+    
+    // The subobject which is linked to a parent
+    if(!xarVarFetch('objectid','int:1:',$subobjectid)) return;
+    
     if(!xarVarFetch('confirm','str:0',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurityCheck('AdminSubitems')) return;
 
-    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',array('objectid' => $objectid))) return;
+    if(!$ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',array('objectid' => $subobjectid))) return;
     // nothing to see here
-    if (empty($ddobjectlink['objectid'])) return xarML('This item does not exist');
+    if (empty($ddobjectlink)) return xarML('This item does not exist');
 
+    $subobjectlink = $ddobjectlink[0];
     if($confirm)    {
         $result_array = xarVarBatchFetch(
                                          array('modid','str:1:','module'),
@@ -31,20 +34,19 @@ function subitems_admin_ddobjectlink_edit($args)
                                             array($result_array['sortby']['value'] => $result_array['sortmode']['value']),
                                           'error' => '');
         }
-    }
-    else    {
+    }  else  {
         $result_array['no_errors'] = true;
-        $result_array['module'] = array('value' => $ddobjectlink['module'],'error' => '');
-        $result_array['itemtype'] = array('value' => $ddobjectlink['itemtype'],'error' => '');
-        $result_array['template'] = array('value' => $ddobjectlink['template'],'error' => '');
-        $result_array['sort'] = array('value' => $ddobjectlink['sort'],'error' => '');
+        $result_array['module'] = array('value' => $subobjectlink['module'],'error' => '');
+        $result_array['itemtype'] = array('value' => $subobjectlink['itemtype'],'error' => '');
+        $result_array['template'] = array('value' => $subobjectlink['template'],'error' => '');
+        $result_array['sort'] = array('value' => $subobjectlink['sort'],'error' => '');
     }    
 
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
 
         if(!xarModAPIFunc('subitems','admin','ddobjectlink_update',array(
-            "objectid" => $objectid,
+            "objectid" => $subobjectid,
             "module" => $result_array['module']['value'],
             "itemtype" => $result_array['itemtype']['value'],
             "template" => $result_array['template']['value'],
@@ -56,24 +58,21 @@ function subitems_admin_ddobjectlink_edit($args)
     }
     
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
-                             array('objectid' => $objectid,
+    $subobject =& xarModAPIFunc('dynamicdata','user','getobject',
+                             array('objectid' => $subobjectid,
                                      'status' => 1));
-    if (!isset($object)) return;
+    if (!isset($subobject)) return;
     
     $data = xarModAPIFunc('subitems','admin','menu');
     $data = array_merge($result_array,$data);
-    $data['properties'] =  $object->getProperties();
-    $data['submitbutton'] = xarML("Update DDSubobjectlink");
-    $objectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',
-                                array('objectid' => $objectid));
-    if (!empty($objectinfo)) {
-        $data['label'] = $objectinfo['label'];
-    } else {
-        $data['label'] = xarML('Unknown');
-    }
-    $data['heading'] = xarML('Edit Link to #(1)',$data['label']);
-    $data['objectid'] = $objectid;
+    $data['properties'] =  $subobject->getProperties();
+    $subobjectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                array('objectid' => $subobjectid));
+ 
+    $data['label'] = xarML('Unknown');
+    if (!empty($subobjectinfo)) $data['label'] = $subobjectinfo['label'];
+    
+    $data['objectid'] = $subobjectid;
 
     return $data;
 }

@@ -27,8 +27,6 @@ function subitems_admin_ddobjectlink_new($args)
     }
 
     // if(!xarVarFetch('objectid','int:1:',$objectid)) return;
-
-
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
 
@@ -45,9 +43,6 @@ function subitems_admin_ddobjectlink_new($args)
 
     $data = xarModAPIFunc('subitems','admin','menu');
     $data = array_merge($result_array,$data);
-    $data['submitbutton'] = xarML("Create New DDSubobjectlink");
-    $data['heading'] = xarML("Add Link to Subitems");
-
     return $data;
 }
 

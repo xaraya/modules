@@ -7,38 +7,43 @@ function subitems_admin_item_new($args)
 {
     extract($args);
 
-    if(!xarVarFetch('objectid','int:',$objectid)) return;
-    if(!xarVarFetch('itemid','int:',$itemid)) return;
+    // The subobject we're adding an item for
+    if(!xarVarFetch('objectid','int:',$subobjectid)) return;
+    
+    // The itemid of the parent to which we want to be linked
+    if(!xarVarFetch('itemid','int:',$parentitemid)) return;
+    
     if(!xarVarFetch('redirect','str:1',$redirect,xarServerGetVar('HTTP_REFERER'),XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('create','str:1',$create,'',XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('confirm','str:1',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
-                             array('objectid' => $objectid));
-    if (!isset($object)) return;
+    $subobject =& xarModAPIFunc('dynamicdata','user','getobject',
+                             array('objectid' => $subobjectid));
+    if (!isset($subobject)) return;
+    
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('AddDynamicDataItem',1,'Item',$object->moduleid.':'.$object->itemtype.':All')) return;
+    if(!xarSecurityCheck('AddDynamicDataItem',1,'Item',$subobject->moduleid.':'.$subobject->itemtype.':All')) return;
 
     if($confirm)    {
         // check the authorisation key
         if (!xarSecConfirmAuthKey()) return; // throw back
 
         // check the input values for this object
-        $isvalid = $object->checkInput();
+        $isvalid = $subobject->checkInput();
 
         if($create && $isvalid)   {
-            // create the item here
-            $ddid = $object->createItem();
+            // create the subitem here
+            $ddid = $subobject->createItem();
             if (empty($ddid)) return; // throw back
 
             // connect ids -> write db
             if(!xarModAPIFunc('subitems','admin','dditem_attach',
-                              array('itemid' => $itemid,
-                                    'ddid' => $ddid,
-                                    'objectid' => $objectid))) return;
+                              array('itemid'   => $parentitemid,
+                                    'ddid'     => $ddid,
+                                    'objectid' => $subobjectid))) return;
 
             // back to the caller module
             xarResponseRedirect($redirect);
@@ -47,22 +52,26 @@ function subitems_admin_item_new($args)
     }
 
     $data['preview'] = $confirm;
-    $data['object'] = $object;
+    $data['object'] = $subobject;
     $data['redirect'] = xarVarPrepHTMLDisplay($redirect);
-    $data['itemid'] = $itemid;
-    $data['objectid'] = $objectid;
+    $data['itemid'] = $parentitemid;
+    $data['objectid'] = $subobjectid;
 
-    // get the subitems link for this object
+    // get the subitems link for this object NOTE: nested subitems?
+    // FIXME: suppose a nested subitem was defined, the data will not be 
+    // set for it then
+    // FIXME: this is only for the template?
     $ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',
-                                  array('objectid' => $objectid));
+                                  array('objectid' => $subobjectid));
     // nothing to see here
-    if (empty($ddobjectlink) || empty($ddobjectlink['objectid'])) return;
+    if (empty($ddobjectlink)) return;
 
-    // set the template if available
-    $template = $object->name;
-    if(!empty($ddobjectlink['template']))
-        $template = $ddobjectlink['template'];
-
+    foreach($ddobjectlink as $index => $subobjectlink) {
+        // set the template if available
+        $template = $subobject->name;
+        if(!empty($subobjectlink['template']))
+            $template = $subobjectlink['template'];
+    }
     // Return the template variables defined in this function
     return xarTplModule('subitems','admin','item_new',$data,$template);
 }

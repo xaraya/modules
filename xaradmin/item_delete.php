@@ -7,24 +7,28 @@ function subitems_admin_item_delete($args)
 {
     extract($args);
 
-    if(!xarVarFetch('objectid','int:',$objectid)) return;
+    // The subobject we're deleting an item from
+    if(!xarVarFetch('objectid','int:',$subobjectid)) return;
+    
+    // The item id withing this subobject
     if(!xarVarFetch('ddid','int:',$ddid)) return;
+    
     if(!xarVarFetch('redirect','str:1',$redirect,xarServerGetVar('HTTP_REFERER'),XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('delete','str:1',$delete,'',XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('confirm','str:1',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object =& xarModAPIFunc('dynamicdata','user','getobject',
-                             array('objectid' => $objectid,
+    $subobject =& xarModAPIFunc('dynamicdata','user','getobject',
+                             array('objectid' => $subobjectid,
                                    'itemid' => $ddid));
-    if (!isset($object)) return;
+    if (!isset($subobject)) return;
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('DeleteDynamicDataItem',1,'Item',$object->moduleid.':'.$object->itemtype.':'.$ddid)) return;
+    if(!xarSecurityCheck('DeleteDynamicDataItem',1,'Item',$subobject->moduleid.':'.$subobject->itemtype.':'.$ddid)) return;
 
     // get the values for this item
-    $newid = $object->getItem();
+    $newid = $subobject->getItem();
     if (!isset($newid) || $newid != $ddid) return;
 
     if ($confirm) {
@@ -33,13 +37,13 @@ function subitems_admin_item_delete($args)
 
         if ($delete) {
             // delete the item here
-            $ddid = $object->deleteItem();
+            $ddid = $subobject->deleteItem();
             if (empty($ddid)) return; // throw back
 
             // detach ids -> write db
             if(!xarModAPIFunc('subitems','admin','dditem_detach',
                               array('ddid' => $ddid,
-                                    'objectid' => $objectid))) return;
+                                    'objectid' => $subobjectid))) return;
         } else {       // cancel
             // do nothing but return
         }
@@ -50,22 +54,23 @@ function subitems_admin_item_delete($args)
     }
 
     $data['preview'] = "1";
-    $data['object'] = $object;
+    $data['object'] = $subobject;
     $data['redirect'] = xarVarPrepHTMLDisplay($redirect);
     $data['ddid'] = $ddid;
-    $data['objectid'] = $objectid;
+    $data['objectid'] = $subobjectid;
 
     // get the subitems link for this object
     $ddobjectlink = xarModAPIFunc('subitems','user','ddobjectlink_get',
-                                  array('objectid' => $objectid));
+                                  array('objectid' => $subobjectid));
     // nothing to see here
-    if (empty($ddobjectlink) || empty($ddobjectlink['objectid'])) return;
+    if (empty($ddobjectlink)) return;
 
     // set the template if available
-    $template = $object->name;
-    if(!empty($ddobjectlink['template']))
-        $template = $ddobjectlink['template'];
-
+    foreach($ddobjectlink as $index => $subobjectlink) {
+        $template = $subobject->name;
+        if(!empty($subobjectlink['template']))
+            $template = $subobjectlink['template'];
+    }
     // Return the template variables defined in this function
     return xarTplModule('subitems','admin','item_delete',$data,$template);
 }

@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id: s.xaruserapi.php 1.24 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
- * Example event API functions
+ * Placholder for event API functions for subitems module
  *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>

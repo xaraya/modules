@@ -23,16 +23,15 @@ function subitems_admin_ddobjectlink_delete($args)
     $data = xarModAPIFunc('subitems','admin','menu');
     $item = xarModAPIFunc('subitems','user','ddobjectlink_get',array('objectid' => $objectid));
     // nothing to see here
-    if (empty($item) || empty($item['objectid'])) return xarML('This item does not exist');
-
-    $data = array_merge($item,$data);
+    if (empty($item)) return xarML('This item does not exist');
+   
+    // We retrieved by objectid, so there should only be one (cant have the same subobject linked twice)
+    $data = array_merge($item[0],$data);
     $objectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',
                                 array('objectid' => $objectid));
-    if (!empty($objectinfo)) {
-        $data['label'] = $objectinfo['label'];
-    } else {
-        $data['label'] = xarML('Unknown');
-    }
+
+    $data['label'] = xarML('Unknown');
+    if (!empty($objectinfo)) $data['label'] = $objectinfo['label'];
     return $data;
 }
 

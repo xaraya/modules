@@ -1,7 +1,7 @@
 <?php
     function subitems_admin_main()
     {
-        $data = Array();
+        $data = array();
         return $data;
     }
 ?>

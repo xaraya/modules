@@ -49,10 +49,6 @@ function subitems_adminapi_ddobjectlink_update($args)
     }
 
 
-    // Security Check
-    // it would have to be ModxarBB, but because posting results in an update, it has to be Post Permission
- //   if(!xarSecurityCheck('ReadxarBB',1,'Forum',"$fid:All")) return;    // todo
-
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

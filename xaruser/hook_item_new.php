@@ -2,7 +2,7 @@
 
 function subitems_user_hook_item_new($args)
 {
-        extract($args);
+    extract($args);
     // extrainfo -> module,itemtype,itemid
     if (!isset($extrainfo['module'])) {
         $extrainfo['module'] = xarModGetName();
