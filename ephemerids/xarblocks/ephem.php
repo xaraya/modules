@@ -21,7 +21,7 @@ function ephemerids_ephemblock_init()
 function ephemerids_ephemblock_info()
 {
     return array('text_type' => 'Ephemerids',
-    'module' => 'Ephemerids',
+    'module' => 'articles',
     'text_type_long' => 'Ephemerids',
     'allow_multiple' => false,
     'form_content' => false,
@@ -31,23 +31,30 @@ function ephemerids_ephemblock_info()
 
 function ephemerids_ephemblock_display($blockinfo)
 {
-    // Database information
-    xarModDBInfoLoad('Ephemerids');
-    $dbconn =& xarDBGetConn();
+    // Security check
+    if(!xarSecurityCheck('ReadArticlesBlock',1,'Block',$blockinfo['title'])) return;
 
-    $xartable =& xarDBGetTables();
-    $ephemtable = $xartable['ephem'];
-
-    // Security Check
-    if(!xarSecurityCheck('ReadEphemerids', 0)) return;
+    // Get database setup
+    $dbconn         =& xarDBGetConn();
+    $xartable       =& xarDBGetTables();
+    $articlestable  = $xartable['articles'];
+    $today          = date();
 
     $data['items'] = array();
     $data['emptycontent'] = false;
 
-    // The admin API function is called. 
-    $ephemlist = xarModAPIFunc('ephemerids',
-                               'user',
-                               'getalltoday');
+    $query = "SELECT xar_aid,
+                   xar_title,
+                   xar_summary,
+                   xar_pubdate,
+                   xar_pubtypeid,
+                   xar_status,
+                   xar_language
+            FROM $articlestable
+            WHERE xar_pubdate LIKE $today";
+    $result =& $dbconn->SelectLimit($query);
+    if (!$result) return;
+
 
     $data['items'] = $ephemlist;
     if (empty($data['items'])) {
