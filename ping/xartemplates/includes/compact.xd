@@ -21,7 +21,7 @@
                         </a>
                     ] 
                 </div>
-				#$loop:item['url']#
+                #$loop:item['url']#
             </div>
             <xar:else />
             <div class="xar-accent-outline" style="position:relative;top:-1.5em;left:51%;width:49%;height:1.5em;margin-bottom:-1.3em;border-width:0px 0px 1px 0px;">
@@ -37,8 +37,8 @@
                         </a>
                     ] 
                 </div>
-				#$loop:item['url']#
+                #$loop:item['url']#
             </div>
-			</xar:if>
+            </xar:if>
     </xar:loop>
 </div>
