@@ -21,10 +21,12 @@
   * @returns resultrarray
   * @access private
   */
- function webservices_userapi__callSOAP($methodname, $params, $endpoint, $namespace)
+ function soapserver_userapi_callsoap( $args )
  {
+ 	// $methodname, $params, $endpoint, $namespace
+	extract($args);
      
-     include_once('modules/webservices/lib/nusoap.php');
+     include_once('modules/soapserver/lib/nusoap.php');
      
      $soapclient =& new soapclient($endpoint['site'].$endpoint['path']);
      
@@ -35,6 +37,15 @@
          // throw exception
      } else {
          $return_val = $soapclient->call($methodname, $params, $namespace);
+		 
+		 echo "<pre>";
+		 print_r($soapclient->debug_str);
+		 if( isset( $soapclient->return ) )
+		 {
+			 print_r($soapclient->return);
+		 }
+		 echo "</pre>";
+		 
          if($err = $soapclient->getError()){
              // handle error however
              echo 'Request: <xmp>'.$soapclient->request.'</xmp>';

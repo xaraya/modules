@@ -17,26 +17,40 @@
 /**
  * modify webservices configuration
  */
-function webservices_user_calltest()
+function soapserver_user_calltest()
 {
-
+/*
     // Get parameters
     // I guess these are required, still added the 'not required' just for being sure...
     if (!xarVarFetch('googlekey', 'isset', $key,    NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('phrase',    'isset', $phrase, NULL, XARVAR_DONT_SET)) return;
 
     // Security Check
-    if(!xarSecurityCheck('ReadWS')) return;
+//    if(!xarSecurityCheck('ReadWS')) return;
 
     // The API function is called.
-    $answer = xarModAPIFunc('webservices',
+    $answer = xarModAPIFunc('soapserver',
                             'user',
-                            'call',
+                            'callsoap',
                             array('type' => 'soap',
                                   'methodname' => 'doSpellingSuggestion',
                                   'params' => array('key' => $key, 'phrase' => $phrase),
                                   'endpoint' => array('site' => 'http://api.google.com', 'path' => '/search/beta2'),
                                   'namespace' => 'urn:GoogleSearch'));
+*/
+
+    // The API function is called.
+    $answer = xarModAPIFunc('soapserver',
+                            'user',
+                            'callsoap',
+                            array('type' => 'soap',
+                                  'methodname' => 'wsModAPISimpleFunc',
+                                  'params' => array('username' => 'admin', 'password' => 'admin', 'module' => 'articles', 'func' => 'getAll', 'type' => 'user'),
+                                  'endpoint' => array('site' => 'http://epicsaga.com', 'path' => '/ws.php?type=soap'),
+                                  'namespace' => 'urn:XarayaSoap'));
+
+	print_r($answer);
+
     // Success
     $data['answer'] = $answer;
 

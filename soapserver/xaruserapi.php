@@ -65,12 +65,15 @@ function wsModAPIFunc(&$request_data)
 	}
 	
 	$out = xarModAPIFunc($module,$type,$func, $args);
-
+	
+	return "hello world";
+/*
     if (empty($out)) {
 		return new soap_fault('Server', 'Xaraya', xarExceptionRender('text') . " for module '$module' type '$type' func '$func' with args " . join('-',$args), ''); 
     } else {
     	return array('output' => $out);
 	}
+*/	
 }
 
 function wsModApiSimpleFunc(&$request_data) { 
