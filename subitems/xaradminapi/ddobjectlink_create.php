@@ -63,18 +63,20 @@ function subitems_adminapi_ddobjectlink_create($args)
     // the SQL statement relatively easy to read.  Also, separating out
     // the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
-    $query = "INSERT INTO {$xartable['subitems_ddobjects']} (
-              xar_objectid,
-              xar_module,
-              xar_itemtype,
-              xar_template)
-            VALUES (
-                $objectid,
-                '".xarVarPrepForStore($module)."',
-                $itemtype,
-                '".xarVarPrepForStore($template)."'
-                )";
-    $result = &$dbconn->Execute($query);
+    $query = "INSERT 
+                INTO {$xartable['subitems_ddobjects']} (
+                       xar_objectid,
+                       xar_module,
+                       xar_itemtype,
+                       xar_template)
+             VALUES (?, ?, ?, ?)";
+
+    $bindvars = array((int) $objectid, 
+                      (string) $module, 
+                      (int) $itemtype, 
+                      (string) $template);
+
+    $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

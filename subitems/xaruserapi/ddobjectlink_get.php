@@ -41,15 +41,18 @@ function subitems_userapi_ddobjectlink_get($args)
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the Execute() command allows for simpler debug operation
     // if it is ever needed
-    if(isset($objectid))
-        $where = "xar_objectid = $objectid";
-    else
-        $where = "xar_module = '".xarVarPrepForStore($module)."' AND xar_itemtype = $itemtype";
-
+    if(isset($objectid)) {
+        $where = "xar_objectid = ?";
+        $bindvars = array((int) $objectid);
+    } else {
+        $where = "xar_module = ? AND xar_itemtype = ?";
+        $bindvars = array((string) $module, (int) $itemtype);
+    }
+    
     $query = "SELECT xar_objectid,xar_module,xar_itemtype,xar_template,xar_sort
-            FROM {$xartable['subitems_ddobjects']}
-            WHERE $where";
-    $result = &$dbconn->Execute($query);
+                FROM {$xartable['subitems_ddobjects']}
+               WHERE $where";
+    $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

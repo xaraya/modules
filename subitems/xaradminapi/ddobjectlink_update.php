@@ -60,15 +60,26 @@ function subitems_adminapi_ddobjectlink_update($args)
     // now
     $time = date('Y-m-d G:i:s');
 
+    if (!isset($bindvars)) {
+        $bindvars = array();
+    }
+
     foreach($params as $vvar => $field)    {
-        if(isset($$vvar))
-            $update[] = $field ."='".xarVarPrepForStore($$vvar)."'";
+        if(isset($$vvar)) {
+            $update[] = $field ." = ?";
+            if ('itemtype' == $var) {
+                $bindvars[] = (int) $$var;
+            } else {
+                $bindvars[] = (string) $$var;
+            }
+        }
     }
 
     // Update item
-    $query = "UPDATE {$xartable['subitems_ddobjects']} SET ".join(",",$update)." WHERE xar_objectid = $objectid";
+    $query = "UPDATE {$xartable['subitems_ddobjects']} SET ".join(",",$update)." WHERE xar_objectid = ?";
+    $bindvars[] = (int) $objectid;
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // Let any hooks know that we have created a new topic
