@@ -27,7 +27,8 @@ function bloggerapi_init()
     xarModSetVar('bloggerapi','bloggerpubtype','0');
     xarRegisterMask('AdminBloggerAPI','All','bloggerapi','All','All','ACCESS_ADMIN');
 
-    return true; }
+    return bloggerapi_upgrade('1.0.0'); 
+}
 
 /**
  * upgrade the bloggerapi module from an old version

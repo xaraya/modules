@@ -34,7 +34,6 @@ function bloggerapi_userapi_editpost($msg)
 	$sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
 	$sn4=$msg->getParam(4);  $content   = $sn4->scalarval();
     $sn5=$msg->getParam(5);  $publish   = $sn5->scalarval();
-	xarLogVariable('publish',$publish);
 
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or password while editing post",$username);
@@ -54,7 +53,6 @@ function bloggerapi_userapi_editpost($msg)
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
         $modId = xarModGetIDFromName('articles');
         $cids = array_keys(xarModAPIFunc('categories','user','getlinks',array('iids'=>$iids,'modid'=>$modId,'itemtype' => $pubType,'reverse'=>0)));
-        xarLogVariable('Categories retrieved', $cids, XARLOG_LEVEL_WARNING);
         if (!xarModAPIFunc('articles','admin','update',array('aid'=>$article['aid'], 'title'=>$title,
                                                             'summary'=>$content, 'ptid' => $pubType, 'cids' => $cids,
                                                             'bodytype'=>'normal', 'bodytext'=>$article['body'],'language'=>' '))) {

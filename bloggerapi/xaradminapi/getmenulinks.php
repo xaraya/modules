@@ -27,9 +27,7 @@ function bloggerapi_adminapi_getmenulinks()
 {
 	// Security Check
 	if (xarSecurityCheck('AdminBloggerAPI',0)) {
-		$menulinks[] = Array('url'   => xarModURL('bloggerapi',
-																							'admin',
-																							'modifyconfig'),
+		$menulinks[] = Array('url'   => xarModURL('bloggerapi','admin','modifyconfig'),
 												 'title' => xarML('Modify the configuration of the Bloggerapi module'),
 												 'label' => xarML('Modify Config'));
 	}
