@@ -295,7 +295,8 @@ function autolinks_util_export_callbacklinktype($value, $level, $extrainfo)
 
 // This is a useful function to be made available in a separate module.
 
-function autolinks_util_export_arraytoxml($array, $level=0, $callbacks='', $extrainfo = array()) {
+function autolinks_util_export_arraytoxml($array, $level=0, $callbacks='', $extrainfo = array()) 
+{
     $xml = '';
     $indent = '   ';
 
