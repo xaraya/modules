@@ -46,6 +46,11 @@ function AddressBook_utilapi_handleException ($args) {
         $abExceptions = array();
 
         global $ExceptionStack;
+// FIXME: verify with new exception handling
+        if (!isset($ExceptionStack)) {
+            global $ErrorStack;
+            $ExceptionStack =& $ErrorStack;
+        }
         while (!$ExceptionStack->isempty()) {
 
             $exception = $ExceptionStack->pop();
