@@ -363,13 +363,13 @@ function xmlrpc_cd($parser, $data)
         // replace characters that eval would
         // do special things with
 		if(isset($_xh[$parser]['ac'])) {
-			$_xh[$parser]['ac'].=str_replace('$', '\$',
-                                             str_replace('"', '\"', str_replace(chr(92),
-                                                                                $xmlrpc_backslash, $data)));
-		} else {
-			$_xh[$parser]['ac']=str_replace('$', '\$',
-                                            str_replace('"', '\"', str_replace(chr(92),
-                                                                               $xmlrpc_backslash, $data)));
+			$_xh[$parser]['ac'] .= str_replace('$'    ,'\$',
+                                   str_replace('"'   ,'\"', 
+                                   str_replace(chr(92), $xmlrpc_backslash, $data)));
+		} else { 
+			$_xh[$parser]['ac']  = str_replace('$', '\$', 
+                                   str_replace('"', '\"', 
+                                   str_replace(chr(92), $xmlrpc_backslash, $data)));
             
 		}
         
@@ -391,13 +391,14 @@ function xmlrpc_dh($parser, $data)
 			$_xh[$parser]['qt']=1; 
 			$_xh[$parser]['lv']=2; 
 		}
-		$_xh[$parser]['ac'].=str_replace('$', '\$',
-                                         str_replace('"', '\"', str_replace(chr(92),
-                                                                            $xmlrpc_backslash, $data)));
+		$_xh[$parser]['ac'].= str_replace('$', '\$',
+                              str_replace("\"", "\\\"", 
+                              str_replace(chr(92), $xmlrpc_backslash, $data)));
     }
 }
 
-class xmlrpc_client {
+class xmlrpc_client 
+{
     var $path;
     var $server;
     var $port;
@@ -409,11 +410,13 @@ class xmlrpc_client {
     var $cert="";
     var $certpass="";
     
-    function xmlrpc_client($path, $server, $port=0) {
+    function xmlrpc_client($path, $server, $port=0) 
+    {
         $this->port=$port; $this->server=$server; $this->path=$path;
     }
     
-    function setDebug($in) {
+    function setDebug($in) 
+    {
 		if ($in) { 
 			$this->debug=1;
 		} else {
@@ -421,17 +424,20 @@ class xmlrpc_client {
 		}
     }
     
-    function setCredentials($u, $p) {
+    function setCredentials($u, $p) 
+    {
         $this->username=$u;
         $this->password=$p;
     }
     
-    function setCertificate($cert, $certpass) {
+    function setCertificate($cert, $certpass) 
+    {
         $this->cert = $cert;
         $this->certpass = $certpass;
     }
     
-    function send($msg, $timeout=0, $method='http') {
+    function send($msg, $timeout=0, $method='http') 
+    {
         // where msg is an xmlrpcmsg
         $msg->debug=$this->debug;
         
@@ -449,8 +455,8 @@ class xmlrpc_client {
         }
     }
     
-    function sendPayloadHTTP10($msg, $server, $port, $timeout=0,
-                               $username="", $password="") {
+    function sendPayloadHTTP10($msg, $server, $port, $timeout=0, $username="", $password="") 
+    {
         if ($port==0) $port=80;
         if($timeout>0)
             $fp=fsockopen($server, $port,
@@ -494,9 +500,8 @@ class xmlrpc_client {
     
     // contributed by Justin Miller <justin@voxel.net>
     // requires curl to be built into PHP
-    function sendPayloadHTTPS($msg, $server, $port, $timeout=0,
-                              $username="", $password="", $cert="",
-                              $certpass="") {
+    function sendPayloadHTTPS($msg, $server, $port, $timeout=0, $username="", $password="", $cert="", $certpass="") 
+    {
         global $xmlrpcerr, $xmlrpcstr;
         if ($port == 0) $port = 443;
         
@@ -555,13 +560,15 @@ class xmlrpc_client {
     
 } // end class xmlrpc_client
 
-class xmlrpcresp {
+class xmlrpcresp 
+{
     var $xv;
     var $fn;
     var $fs;
     var $hdrs;
     
-    function xmlrpcresp($val, $fcode=0, $fstr="") {
+    function xmlrpcresp($val, $fcode=0, $fstr="") 
+    {
         if ($fcode!=0) {
             $this->xv=0;
             $this->fn=$fcode;
@@ -572,50 +579,52 @@ class xmlrpcresp {
         }
     }
     
-    function faultCode() { 
+    function faultCode() 
+    { 
 		if (isset($this->fn)) 
 			return $this->fn;
 		else
 			return 0; 
 	}
     
-    function faultString() { return $this->fs; }
-    function value() { return $this->xv; }
+    function faultString() 
+    { 
+        return $this->fs; 
+    }
     
-    function serialize() { 
-        $rs="<methodResponse>\n";
-        if ($this->fn) {
-            $rs.="<fault>
-  <value>
-    <struct>
-      <member>
-        <name>faultCode</name>
-        <value><int>" . $this->fn . "</int></value>
-      </member>
-      <member>
-        <name>faultString</name>
-        <value><string>" . $this->fs . "</string></value>
-      </member>
-    </struct>
-  </value>
-</fault>";
+    function value() 
+    { 
+        return $this->xv; 
+    }
+    
+    // FIXME: Use the BL response template to replace this
+    function serialize() 
+    { 
+        $data = array();
+        if($this->fn) {
+            $faultCode = $this->fn;
+            $faultString = $this->fs;
+            return xarModApiFunc('xmlrpcserver','user','createfaultresponse',array('errno' => $faultCode, 'errorstring' => $faultString));
         } else {
             // FIXME: $this->xv should ALWAYS be an object
+            $rs="<methodResponse>\n";
             $rs.="<params>\n<param>\n" . (is_object($this->xv)?$this->xv->serialize():"") . 
                 "</param>\n</params>";
+            $rs.="\n</methodResponse>";
         }
-        $rs.="\n</methodResponse>";
         return $rs;
     }
 }
 
-class xmlrpcmsg {
+class xmlrpcmsg 
+{
     var $payload;
     var $methodname;
     var $params=array();
     var $debug=0;
     
-    function xmlrpcmsg($meth, $pars=0) {
+    function xmlrpcmsg($meth, $pars=0) 
+    {
 		$this->methodname=$meth;
 		if (is_array($pars) && sizeof($pars)>0) {
 			for($i=0; $i<sizeof($pars); $i++) 
@@ -623,15 +632,18 @@ class xmlrpcmsg {
 		}
     }
     
-    function xml_header() {
+    function xml_header() 
+    {
         return "<?xml version=\"1.0\"?>\n<methodCall>\n";
     }
     
-    function xml_footer() {
+    function xml_footer() 
+    {
         return "</methodCall>\n";
     }
     
-    function createPayload() {
+    function createPayload() 
+    {
         $this->payload=$this->xml_header();
         $this->payload.="<methodName>" . $this->methodname . "</methodName>\n";
         //	if (sizeof($this->params)) {
@@ -647,23 +659,37 @@ class xmlrpcmsg {
         $this->payload=str_replace("\n", "\r\n", $this->payload);
     }
     
-    function method($meth="") {
+    function method($meth="") 
+    {
         if ($meth!="") {
             $this->methodname=$meth;
         }
         return $this->methodname;
     }
     
-    function serialize() {
+    function serialize() 
+    {
 		$this->createPayload();
 		return $this->payload;
     }
     
-    function addParam($par) { $this->params[]=$par; }
-    function getParam($i) { return $this->params[$i]; }
-    function getNumParams() { return sizeof($this->params); }
+    function addParam($par) 
+    { 
+        $this->params[]=$par; 
+    }
     
-    function parseResponseFile($fp) {
+    function getParam($i) 
+    { 
+        return $this->params[$i]; 
+    }
+    
+    function getNumParams() 
+    { 
+        return sizeof($this->params); 
+    }
+    
+    function parseResponseFile($fp) 
+    {
         $ipd="";
         
         while($data=fread($fp, 32768)) {
@@ -672,7 +698,8 @@ class xmlrpcmsg {
         return $this->parseResponse($ipd);
     }
     
-    function parseResponse($data="") {
+    function parseResponse($data="") 
+    {
         global $_xh,$xmlrpcerr,$xmlrpcstr;
         global $xmlrpc_defencoding;
         
@@ -782,11 +809,13 @@ class xmlrpcmsg {
     
 }
 
-class xmlrpcval {
+class xmlrpcval 
+{
     var $me=array();
     var $mytype=0;
     
-    function xmlrpcval($val=-1, $type="") {
+    function xmlrpcval($val=-1, $type="") 
+    {
 		global $xmlrpcTypes;
 		$this->me=array();
 		$this->mytype=0;
@@ -802,7 +831,8 @@ class xmlrpcval {
 		}
     }
     
-    function addScalar($val, $type="string") {
+    function addScalar($val, $type="string") 
+    {
 		global $xmlrpcTypes, $xmlrpcBoolean;
         
 		if ($this->mytype==1) {
@@ -838,7 +868,8 @@ class xmlrpcval {
 		return 1;
     }
     
-    function addArray($vals) {
+    function addArray($vals) 
+    {
 		global $xmlrpcTypes;
 		if ($this->mytype!=0) {
 			echo "<b>xmlrpcval</b>: already initialized as a [" . 
@@ -851,7 +882,8 @@ class xmlrpcval {
 		return 1;
     }
     
-    function addStruct($vals) {
+    function addStruct($vals) 
+    {
         global $xmlrpcTypes;
         if ($this->mytype!=0) {
             echo "<b>xmlrpcval</b>: already initialized as a [" . 
@@ -863,7 +895,8 @@ class xmlrpcval {
         return 1;
     }
     
-    function dump($ar) {
+    function dump($ar) 
+    {
         reset($ar);
         while ( list( $key, $val ) = each( $ar ) ) {
             echo "$key => $val<br/>";
@@ -874,7 +907,8 @@ class xmlrpcval {
         }
     }
     
-    function kindOf() {
+    function kindOf() 
+    {
         switch($this->mytype) {
         case 3:
             return "struct";
@@ -890,7 +924,8 @@ class xmlrpcval {
         }
     }
     
-    function serializedata($typ, $val) {
+    function serializedata($typ, $val) 
+    {
 		$rs="";
 		global $xmlrpcTypes, $xmlrpcBase64, $xmlrpcString,
 			$xmlrpcBoolean;
@@ -937,11 +972,13 @@ class xmlrpcval {
 		return $rs;
     }
     
-    function serialize() {
+    function serialize() 
+    {
         return $this->serializeval($this);
     }
     
-    function serializeval($o) {
+    function serializeval($o) 
+    {
 		global $xmlrpcTypes;
 		$rs="";
 		$ar=$o->me;
@@ -953,20 +990,24 @@ class xmlrpcval {
 		return $rs;
     }
     
-    function structmem($m) {
+    function structmem($m) 
+    {
 		$nv=$this->me["struct"][$m];
 		return $nv;
     }
     
-	function structreset() {
+	function structreset() 
+    {
 		reset($this->me["struct"]);
 	}
 	
-	function structeach() {
+	function structeach() 
+    {
 		return each($this->me["struct"]);
 	}
     
-    function getval() {
+    function getval() 
+    {
 		// UNSTABLE
 		global $xmlrpcBoolean, $xmlrpcBase64;
 		reset($this->me);
@@ -996,14 +1037,16 @@ class xmlrpcval {
 		return $b;
     }
     
-    function scalarval() {
+    function scalarval() 
+    {
 		global $xmlrpcBoolean, $xmlrpcBase64;
 		reset($this->me);
 		list($a,$b)=each($this->me);
 		return $b;
     }
     
-    function scalartyp() {
+    function scalartyp() 
+    {
 		global $xmlrpcI4, $xmlrpcInt;
 		reset($this->me);
 		list($a,$b)=each($this->me);
@@ -1012,12 +1055,14 @@ class xmlrpcval {
 		return $a;
     }
     
-    function arraymem($m) {
+    function arraymem($m) 
+    {
 		$nv=$this->me["array"][$m];
 		return $nv;
     }
     
-    function arraysize() {
+    function arraysize() 
+    {
 		reset($this->me);
 		list($a,$b)=each($this->me);
 		return sizeof($b);
@@ -1025,7 +1070,8 @@ class xmlrpcval {
 }
 
 // date helpers
-function iso8601_encode($timet, $utc=0) {
+function iso8601_encode($timet, $utc=0) 
+{
 	// return an ISO8601 encoded string
 	// really, timezones ought to be supported
 	// but the XML-RPC spec says:
@@ -1050,7 +1096,8 @@ function iso8601_encode($timet, $utc=0) {
 	return $t;
 }
 
-function iso8601_decode($idate, $utc=0) {
+function iso8601_decode($idate, $utc=0) 
+{
 	// return a timet in the localtime, or UTC
 	$t=0;
 	if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})",
@@ -1072,7 +1119,8 @@ function iso8601_decode($idate, $utc=0) {
  ****************************************************************/
 if (!function_exists("xmlrpc_decode"))
 {
-function xmlrpc_decode($xmlrpc_val) {
+function xmlrpc_decode($xmlrpc_val) 
+{
     $kind = $xmlrpc_val->kindOf();
     
     if($kind == "scalar") {
@@ -1113,7 +1161,8 @@ function xmlrpc_decode($xmlrpc_val) {
  ****************************************************************/
 if (!function_exists("xmlrpc_encode"))
 {
-function xmlrpc_encode($php_val) {
+function xmlrpc_encode($php_val) 
+{
     global $xmlrpcInt;
     global $xmlrpcDouble;
     global $xmlrpcString;
@@ -1126,6 +1175,7 @@ function xmlrpc_encode($php_val) {
     
     switch($type) {
     case "array":
+    case "struct":
     case "object":
         $arr = array();
         while (list($k,$v) = each($php_val)) {
