@@ -1,0 +1,14 @@
+// ----------------------------------------------------------------------
+// Credits
+//
+// Invision Power Board:
+//     Forum software produced by Invision Power Services
+//     http://www.invisionboard.com/
+// 
+// Module Author:   
+//     Brian McCloskey <brian@nexusden.com>
+//
+// Additional Credit:
+//     Marie Altobelli - initial authinvision module
+//
+// ----------------------------------------------------------------------

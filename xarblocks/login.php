@@ -1,0 +1,82 @@
+<?php
+/**
+ * File: $Id$
+ *
+ * Login via a block.
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage Roles Module
+ * @author Jim McDonald
+*/
+
+/**
+ * initialise block
+ */
+function authinvision2_loginblock_init()
+{
+    return array(
+        'showlogout' => 0,
+        'logouttitle' => ''
+    );
+}
+
+/**
+ * get information on block
+ */
+function authinvision2_loginblock_info()
+{
+    return array(
+        'text_type' => 'Login',
+        'module' => 'authinvision2',
+        'text_type_long' => 'User login'
+    );
+}
+
+/**
+ * Display func.
+ * @param $blockinfo array containing title,content
+ */
+function authinvision2_loginblock_display($blockinfo)
+{
+    // Security Check
+    if(!xarSecurityCheck('ViewLogin',0,'Block',"Login:" . $blockinfo['title'] . ":" . $blockinfo['bid'],'All')) return;
+
+    // Get variables from content block
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
+
+    // Display logout block if user is already logged in
+    // e.g. when the login/logout block also contains a search box
+    if (xarUserIsLoggedIn()) {
+        if (!empty($vars['showlogout'])) {
+            $args['name'] = xarUserGetVar('name');
+
+            // Since we are logged in, set the template base to 'logout'.
+            $blockinfo['_bl_template_base'] = 'logout';
+
+            if (!empty($vars['logouttitle'])) {
+                $blockinfo['title'] = $vars['logouttitle'];
+            }
+        } else {
+            return;
+        }
+    } else {
+        // URL of this page
+        // TODO: check this - it doesn't look quite right.
+        $args['return_url'] = xarServerGetCurrentURL();
+    }
+
+    // Used in the templates.
+    $args['blockid'] = $blockinfo['bid'];
+
+    $blockinfo['content'] = $args;
+    return $blockinfo;
+}
+
+?>

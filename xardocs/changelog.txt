@@ -1,0 +1,26 @@
+// ----------------------------------------------------------------------
+// Changelog
+//
+// 27 November 2004: 1.0
+//  - Includes initial support for IPB's Converge technology, as well
+//    as a provided class for using with IPB's ipb_member_sync.php
+//    module.
+//
+// 18 December 2004: 1.2.0
+//  - Updated authinvision2 to work with Xaraya 0.9.11 as well as
+//    offload IPB login/logout to the Events API.
+//
+// 27 February 2005: 1.3.0
+//  - Fixed a problem with DB connections when the same connection
+//    information is used for both Xaraya and IPB databases.  Also
+//    added a login block that addes an extra checkbox to make the
+//    user "invisible" (only affects IPB logins).
+//
+// 01 March 2005: 1.3.1
+//  - This is a maintenance release intended to fix the class module
+//    used in Invision Board to login to Xaraya.  No code changes
+//    for the authinvision2 module itself, this update only upgrades
+//    the provided IPB module from XarayaIPB-1.0.3.tar.gz to 
+//    XarayaIPB-1.0.4.tar.gz
+//
+// ----------------------------------------------------------------------
