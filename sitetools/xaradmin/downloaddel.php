@@ -32,7 +32,7 @@ function sitetools_admin_downloaddel ($args)
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }
        // Free the exception to tell Xaraya that you handled it
-       xarExceptionFree();
+       xarErrorFree();
        return $status;
   }
    $info=array();
@@ -49,7 +49,7 @@ function sitetools_admin_downloaddel ($args)
           $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
        }
        // Free the exception to tell Xaraya that you handled it
-       xarExceptionFree();
+       xarErrorFree();
        return $status;
   }
 

@@ -61,7 +61,7 @@ function sitetools_admin_optimize()
                 $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
             }
             // Free the exception to tell Xaraya that you handled it
-            xarExceptionFree();
+            xarErrorFree();
             return $status;
         }
 
