@@ -6,7 +6,7 @@
  * annotated view for a file 
  *
  * @package modules
- * @copyright (C) 2003 by the Xaraya Development Team.
+ * @copyright (C) 2004 The Digital Development Foundation, Inc.
  * @link http://www.xaraya.com
  * 
  * @subpackage bkview
