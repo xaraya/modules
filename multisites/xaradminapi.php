@@ -228,8 +228,8 @@ function multisites_adminapi_delete($args)
 
     // Argument check
     if (!isset($msid)) {
-      $msg = xarML('Invalid Parameter Count');
-//                      join(', ',$invalid), 'admin', 'delete', 'multisites'); FIX THIS
+      $msg = xarML('Invalid Parameter',
+            'item ID', 'admin', 'delete', 'Multisites');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -271,5 +271,4 @@ function multisites_adminapi_delete($args)
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

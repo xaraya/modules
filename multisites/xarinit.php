@@ -54,7 +54,7 @@ function multisites_init()
     xarConfigSetVar('System.MS.Master',0);
    // Set up an initial value for a module variable.
     xarModSetVar('multisites', 'servervar', 'HTTP_HOST');
-    xarModSetVar('multisites', 'sitefolder', 'xarsites');
+    xarModSetVar('multisites', 'masterfolder', 'xarsites');
     xarModSetVar('multisites', 'themepath', 'themes');
     xarModSetVar('multisites', 'varpath', 'var');
     xarModSetVar('multisites', 'itemsperpage', 10);
@@ -119,7 +119,7 @@ global $HTTP_HOST;
     xarConfigSetVar('System.MS.Master',0);
     //Delete module vars
     xarModDelVar('multisites', 'servervar');
-    xarModDelVar('multisites', 'sitefolder');
+    xarModDelVar('multisites', 'masterfolder');
     xarModDelVar('multisites', 'themepath');
     xarModDelVar('multisites', 'varpath');
     xarModDelVar('multisites', 'itemsperpage');
