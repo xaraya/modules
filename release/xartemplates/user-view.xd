@@ -1,60 +1,77 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Registered Extension List</xar:mlstring></span></div>
-<xar:set name="addextension">xarModURL('release','user','addid')</xar:set>
-<xar:set name="releaseoverview">xarModURL('release','user','main')</xar:set>
-<xar:set name="extlisturl">xarModURL('release','user','view')</xar:set>
-<xar:set name="extreleaseurl">xarModURL('release','user','viewnotes')</xar:set>
-<xar:set name="extdocsurldev">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'87'))</xar:set>
-<xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
-<xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xaraya Web Application Framework</xar:mlstring></span></div>
+<xar:set name="addextension">
+    xarModURL('release','user','addid')
+</xar:set>
+<xar:set name="commenthook">
+    xarModIsHooked('comments')
+</xar:set>
+<xar:set name="hithook">
+    xarModIsHooked('hitcount')
+</xar:set>
+<!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<div style="width:98%;">
+    <div style="clear:both;width:98%;">
+        <span style="float:left; text-align:right;">
             <xar:if condition="xarUserIsLoggedIn()">
-                 <h2 style="width:48%;float:left; text-align:left;">
-                     [<a href="#$addextension#"><xar:mlstring>Register an Extension</xar:mlstring></a>]</h2>
-                 </h2>
+                <h2>[<a href="#$addextension#"><xar:mlstring>Add Extension</xar:mlstring></a>]</h2>
             <xar:else />
                 <h2><xar:mlstring>Please Log In to Add an Extension</xar:mlstring></h2>
             </xar:if>
-        <h2 style="width:48%; float:right; text-align:right;">
-            [<a href="#$releaseoverview#"><xar:mlstring>Help: Extensions &amp; Releases </xar:mlstring></a>]
-        </h2>
-</div>	
+         </span>
+    </div>
     <div style="clear:both;width:98%;">
        <span style="float:left; text-align:left; ">
-       <form action="#xarModURL('release', 'user', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
+           <form action="#xarModURL('release', 'user', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
            <xar:if condition="!empty($catid)">
-                <input type="hidden" name="catid" value="#$catid#" />
+               <input type="hidden" name="catid" value="#$catid#" />
            </xar:if>
-       </form>
+           <xar:comment> jojodee: Don't think we need this with Categories now - complicates it
+     	   <input type="radio" name="phase" id="phase" value="themes"  />
+      	   <xar:mlstring>Themes</xar:mlstring>
+	       &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="modules"  />
+	       <xar:mlstring>Modules</xar:mlstring>
+	       &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="all"  />
+	       <xar:mlstring>All</xar:mlstring>
+	       &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
+           </xar:comment>
+           </form>
        </span>
+           <xar:comment>
+           <span style="float:right; text-align:right; width:20%;">
+               <xar:if condition="xarUserIsLoggedIn()">
+                   <a href="#$addextension#">[Add Extension]</a>
+               </xar:if>
+           </span>
+           </xar:comment>
     </div>
     <xar:if condition="!isset($phase) or empty($phase)">
         <xar:set name="displayphase"><xar:mlstring>All</xar:mlstring></xar:set>
     <xar:else />
         <xar:set name="displayphase">ucfirst($phase)</xar:set>
         <div style="clear:both; text-align:left; margin-top:20px;margin-bottom:20px;width:100%;">
-        <xar:ml>
-            <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
-            <xar:mlvar>#$displayphase#</xar:mlvar>
-        </xar:ml>
+            <xar:ml>
+                <xar:mlstring>Currently displaying filtered by: <b>#(1)</b></xar:mlstring>
+                <xar:mlvar>#$displayphase#</xar:mlvar>
+            </xar:ml>
         </div>
     </xar:if>
     <div style="clear:both;">
-       <span style="float:left; text-align:left; width:98%;"> 
-       <xar:if condition="!empty($catid) and ($catid ne '10')">
+       <span style="float:left; text-align:left; width:98%;">
+        <xar:if condition="!empty($catid)">
             <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="1" showempty="1" />
-       <xar:else />
-            <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="11" showcatcount="1" showempty="1" />
-       </xar:if>
+        <xar:else />
+            <xar:categories-navigation layout="trails"  showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="1" showempty="1" />
+        </xar:if>
        </span>
     </div>
     <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
+
     <xar:if condition="$numitems lt '1'">
         <xar:mlstring>There are no extensions to display</xar:mlstring>
     <xar:else />
         <div class="xar-accent">
-            <table width="100%" border="0" cellspacing="2" cellpadding="2">
-            <tr>
+        <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        <tr>
 		    <th width="5%">
 			    <a href="#xarModURL('release','user','view',array('sort'=>'id'))#"><xar:mlstring>ID</xar:mlstring></a>
 		    </th>
@@ -64,35 +81,39 @@
 		    <th width="25%" align="left">
 			    <a href="#xarModURL('release','user','view',array('sort'=>'author'))#"><xar:mlstring>Author (uid sort)</xar:mlstring></a>
 		    </th>
-
 		    <th width="5%">
 			    <xar:mlstring>Release</xar:mlstring>
 		    </th>
-<xar:comment>jojodee: Taking out docs link here until docs actually works
+            <xar:comment>jojodee: Taking out docs link here until docs actually works
              Putting in State instead for now
             <th width="10%">
 			    <xar:mlstring>Docs</xar:mlstring>
 		    </th>
-</xar:comment>
+            </xar:comment>
             <th width="10%">
 			    <xar:mlstring>State</xar:mlstring>
 		    </th>
+            <xar:if condition="$commenthook eq true">
             <th width="5%">
 			    <xar:mlstring>Comments</xar:mlstring>
 		    </th>
+            </xar:if>
+            <xar:if condition="$hithook eq true">
 		    <th width="5%">
 			    <xar:mlstring>Hits</xar:mlstring>
 		    </th>
+            </xar:if>
 		    <th width="15%">
 			    <xar:mlstring>Info</xar:mlstring>
 		    </th>
-	        </tr>
-    	    <xar:loop name="$items">
-	            <xar:if condition="(($loop:index + 1) % 2)">
-                    <xar:set name="$rowclass">'xar-accent'</xar:set>
-                <xar:else/>
-                    <xar:set name="$rowclass">'xar-alt'</xar:set>
-                </xar:if>
+	    </tr>
+	    <xar:loop name="$items">
+	      <xar:if condition="(($loop:index + 1) % 2)">
+          <xar:set name="$rowclass">'xar-alt'</xar:set>
+          <xar:else/>
+          <xar:set name="$rowclass">'xar-accent'</xar:set>
+          </xar:if>
+
 	        <tr>
 		        <td width="5%" class="#$rowclass#">
 			        #$loop:item['rid']#
@@ -110,8 +131,8 @@
 			          <a href="#$loop:item['addurl']#">#$loop:item['addtitle']#</a>
 		          </xar:if>
 		        </td>
-<xar:comment>jojodee: Taking out docs link here until docs actually works
-             Putting in State instead for now
+             <xar:comment>jojodee: Taking out docs link here until docs actually works
+                Putting in State instead for now
 		        <td width="10%" class="#$rowclass#">
 		          <xar:if condition="empty($loop:item['adddocs'])">
 			          			        #$loop:item['docs']#  #$loop:item['adddocstitle']#
@@ -119,17 +140,21 @@
 			          			        #$loop:item['docs']# | <a href="#$loop:item['adddocs']#">#$loop:item['adddocstitle']#</a>
 		          </xar:if>
 		        </td>
-</xar:comment>
+              </xar:comment>
 		        <td width="10%" class="#$rowclass#">
 			        #$loop:item['extstate']#
 		        </td>
+                <xar:if condition="$commenthook eq true">
 		        <td width="5%" class="#$rowclass#">
 			        #$loop:item['comments']#
 		        </td>
-		        <td width="5%" class="#$rowclass#">
+	            </xar:if>
+                <xar:if condition="$hithook eq true">
+    	        <td width="5%" class="#$rowclass#">
 			        #$loop:item['hitcount']#
 		        </td>
-		        <td width="15%" class="#$rowclass#">
+	            </xar:if>
+    	        <td width="15%" class="#$rowclass#">
 		          <xar:if condition="empty($loop:item['editurl'])">
 			        <a href="#$loop:item['infourl']#">#$loop:item['infotitle']#</a>
                   <xar:else />
@@ -145,16 +170,17 @@
         #$pager#
         </p>
     </xar:if>
-</div>
+
+    </div>
     <div style="clear: both;">
-        <span style="float: left; width: 50%; margin-top:10px;text-align: left;">
+    <span style="float: left; width: 100%; margin-top:10px;text-align: left;">
         <h3><xar:mlstring>Syndicate this list</xar:mlstring></h3>
         <ol>
     	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#"><xar:mlstring>Entire List</xar:mlstring></a></li>
 	    <li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#"><xar:mlstring>Modules</xar:mlstring></a></li>
     	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#"><xar:mlstring>Themes</xar:mlstring></a></li>
         </ol>
-        </span>
-
+    </span>
     </div>
 </div>
+
