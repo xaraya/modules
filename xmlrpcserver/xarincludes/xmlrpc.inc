@@ -70,7 +70,7 @@ $xmlrpcTypes=array(
                    $xmlrpcArray => 2,
                    $xmlrpcStruct => 3);
 
-$xmlEntities=array(     "amp" => "&",
+$xmlEntities=array(  "amp" => "&",
                      "quot" => '"',
                      "lt" => "<",
                      "gt" => ">",
@@ -99,7 +99,7 @@ $xmlrpcstr["curl_fail"]="CURL error";
 $xmlrpc_defencoding="UTF-8";
 
 $xmlrpcName="XML-RPC for PHP";
-$xmlrpcVersion="1.02";
+$xmlrpcVersion="1.02-xar-1";
 
 // let user errors start at 800
 $xmlrpcerruser=800; 
