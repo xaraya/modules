@@ -5,7 +5,9 @@
 function helpdesk_userapi_deleteticket($args)
 {
     extract($args);
-    $ticket_id = xarVarCleanFromInput('ticket_id');
+    
+    xarVarFetch('ticket_id', 'id', $ticket_id, null);
+    
     // Database information
     $dbconn =& xarDBGetConn();
     $xartable       =& xarDBGetTables();
