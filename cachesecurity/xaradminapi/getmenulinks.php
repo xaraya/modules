@@ -21,7 +21,7 @@ function cachesecurity_adminapi_getmenulinks()
         if (!xarModAPIFunc('cachesecurity','admin','ison')) {
             $menulinks[] = Array('url'   => xarModURL('cachesecurity',
                                                        'admin',
-                                                       'switchonoff', 
+                                                       'turnon', 
                                                        array('authid' => xarSecGenAuthKey())),
                                   // In order to display the tool tips and label in any language,
                                   // we must encapsulate the calls in the xarML in the API.
@@ -37,7 +37,7 @@ function cachesecurity_adminapi_getmenulinks()
                                   // we must encapsulate the calls in the xarML in the API.
                                   'title' => xarML('Turn the security cache system off.'),
                                   'label' => xarML('Turn off'),
-                                  'func' => 'switchonoff');
+                                  'func' => 'turnoff');
         }
     }
 
