@@ -100,6 +100,7 @@ function articles_userapi_leftjoin($args)
         if (preg_match_all("/'(.*?)'/",$where,$matches)) {
             foreach ($matches[1] as $match) {
                 $found[$idx] = $match;
+                $match = preg_quote($match);
                 $where = trim(preg_replace("#'$match'#","'~$idx~'",$where));
                 $idx++;
             }
@@ -153,12 +154,14 @@ function articles_userapi_leftjoin($args)
         if (preg_match_all('#"(.*?)"#',$search,$matches)) {
             foreach ($matches[1] as $match) {
                 $normal[] = $match;
+                $match = preg_quote($match);
                 $search = trim(preg_replace("#\"$match\"#",'',$search));
             }
         }
         if (preg_match_all("/'(.*?)'/",$search,$matches)) {
             foreach ($matches[1] as $match) {
                 $normal[] = $match;
+                $match = preg_quote($match);
                 $search = trim(preg_replace("#'$match'#",'',$search));
             }
         }
