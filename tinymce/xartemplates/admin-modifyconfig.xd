@@ -106,7 +106,7 @@
 
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 30%; text-align: right;">
-        span class="help" title="#xarML('List of instances, separated by commas, to replace if specific area mode selected')#">
+        <span class="help" title="#xarML('List of instances, separated by commas, to replace if specific area mode selected')#">
                 <label for="tinyinstances"><xar:mlstring>List areas to replace (not supported yet)</xar:mlstring></label>
         </span>
     </span>
