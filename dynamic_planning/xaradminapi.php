@@ -67,8 +67,8 @@ function dynamic_planning_adminapi_create($args)
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules
-    $trackstable = $pntable['tracks'];
-    $trackscolumn = &$pntable['tracks_column'];
+    $trackstable = $pntable['dp_tracks'];
+    $trackscolumn = &$pntable['dp_tracks_column'];
 
     // Get next ID in table - this is required prior to any insert that
     // uses a unique ID, and ensures that the ID generation is carried
@@ -178,8 +178,8 @@ function dynamic_planning_adminapi_delete($args)
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules
-    $trackstable = $pntable['tracks'];
-    $trackscolumn = &$pntable['tracks_column'];
+    $trackstable = $pntable['dp_tracks'];
+    $trackscolumn = &$pntable['dp_tracks_column'];
 
     // Delete the item - the formatting here is not mandatory, but it does
     // make the SQL statement relatively easy to read.  Also, separating
@@ -251,8 +251,8 @@ function dynamic_planning_adminapi_update($args)
     $pntable = pnDBGetTables();
 
     // It's good practice to name the table and column definitions you
-    $trackstable = $pntable['tracks'];
-    $trackscolumn = &$pntable['tracks_column'];
+    $trackstable = $pntable['dp_tracks'];
+    $trackscolumn = &$pntable['dp_tracks_column'];
 
     // Update the item - the formatting here is not mandatory, but it does
     $sql = "UPDATE $trackstable
@@ -323,8 +323,8 @@ function dynamic_planning_adminapi_updatetask($args)
     $pntable = pnDBGetTables();
 
     // It's good practice to name the table and column definitions you
-    $taskstable = $pntable['tasks'];
-    $taskscolumn = &$pntable['tasks_column'];
+    $taskstable = $pntable['dp_tasks'];
+    $taskscolumn = &$pntable['dp_tasks_column'];
 
     // Update the item - the formatting here is not mandatory, but it does
     $sql = "UPDATE $taskstable

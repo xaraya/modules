@@ -48,8 +48,8 @@ function dynamic_planning_userapi_getall($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $trackstable = $pntable['tracks'];
-    $trackscolumn = &$pntable['tracks_column'];
+    $trackstable = $pntable['dp_tracks'];
+    $trackscolumn = &$pntable['dp_tracks_column'];
 
     // Get items - the formatting here is not mandatory, but it does make the
     $sql = "SELECT $trackscolumn[trackid],
@@ -114,8 +114,8 @@ function dynamic_planning_userapi_get($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $taskstable = $pntable['tasks'];
-    $taskscolumn = &$pntable['tasks_column'];
+    $taskstable = $pntable['dp_tasks'];
+    $taskscolumn = &$pntable['dp_tasks_column'];
 
     // Get item - the formatting here is not mandatory, but it does make the
     $sql = "SELECT $taskscolumn[taskid],
@@ -174,8 +174,8 @@ function dynamic_planning_userapi_gettrack($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $trackstable = $pntable['tracks'];
-    $trackscolumn = &$pntable['tracks_column'];
+    $trackstable = $pntable['dp_tracks'];
+    $trackscolumn = &$pntable['dp_tracks_column'];
 
     $sql = "SELECT $trackscolumn[trackname],
                    $trackscolumn[tracklead],
@@ -211,8 +211,8 @@ function dynamic_planning_userapi_gettask($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
-    $taskstable = $pntable['tasks'];
-    $taskscolumn = &$pntable['tasks_column'];
+    $taskstable = $pntable['dp_tasks'];
+    $taskscolumn = &$pntable['dp_tasks_column'];
 
     $sql = "SELECT $taskscolumn[trackid],
                    $taskscolumn[tasktitle],
@@ -263,8 +263,8 @@ function template_userapi_countitems()
 
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
-    $templatetable = $pntable['template'];
-    $templatecolumn = &$pntable['template_column'];
+    $templatetable = $pntable['dp_template'];
+    $templatecolumn = &$pntable['dp_template_column'];
 
     // Get item - the formatting here is not mandatory, but it does make the
     // SQL statement relatively easy to read.  Also, separating out the sql

@@ -34,21 +34,21 @@ function dynamic_planning_init()
 {
     // Get datbase setup 
     
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
 
     // create table
-    $trackstable = $pntable['tracks'];
-    $trackscolumn = &$pntable['tracks_column'];
+    $dp_trackstable = $xartable['dp_tracks'];
+    $dp_trackscolumn = &$xartable['dp_tracks_column'];
 
-    $sql = "CREATE TABLE $trackstable (
-            $trackscolumn[trackid] int(11) NOT NULL auto_increment,
-            $trackscolumn[trackname] text,
-            $trackscolumn[tracklead] text,
-	    $trackscolumn[tracktext] text,
-	    $trackscolumn[trackstatus] text,
-	    $trackscolumn[trackcat] int(11),
-            PRIMARY KEY(pn_trackid))";
+    $sql = "CREATE TABLE $dp_trackstable (
+            $dp_trackscolumn[trackid] int(11) NOT NULL auto_increment,
+            $dp_trackscolumn[trackname] text,
+            $dp_trackscolumn[tracklead] text,
+            $dp_trackscolumn[tracktext] text,
+            $dp_trackscolumn[trackstatus] text,
+            $dp_trackscolumn[trackcat] int(11),
+            PRIMARY KEY(xar_trackid))";
     $dbconn->Execute($sql);
 
     // Check for an error 
@@ -58,21 +58,21 @@ function dynamic_planning_init()
     }
 
     // Create the table
-    $taskstable = $pntable['tasks'];
-    $taskscolumn = &$pntable['tasks_column'];
+    $dp_taskstable = $xartable['dp_tasks'];
+    $dp_taskscolumn = &$xartable['dp_tasks_column'];
 
-    $sql = "CREATE TABLE $taskstable (
-            $taskscolumn[taskid] int(11) NOT NULL auto_increment,
-            $taskscolumn[trackid] int(11) DEFAULT '0' NOT NULL,
-            $taskscolumn[tasktitle] varchar(80),
-            $taskscolumn[tasktext] text,
-            $taskscolumn[taskstart] date,
-            $taskscolumn[taskend] date,
-	    $taskscolumn[tasklast] date,
-            $taskscolumn[taskpercent] int(11) DEFAULT '0' NOT NULL,
-            $taskscolumn[tasksteps] text,
-            $taskscolumn[taskteam] text,
-            PRIMARY KEY(pn_taskid))";
+    $sql = "CREATE TABLE $dp_taskstable (
+            $dp_taskscolumn[taskid] int(11) NOT NULL auto_increment,
+            $dp_taskscolumn[trackid] int(11) DEFAULT '0' NOT NULL,
+            $dp_taskscolumn[tasktitle] varchar(80),
+            $dp_taskscolumn[tasktext] text,
+            $dp_taskscolumn[taskstart] date,
+            $dp_taskscolumn[taskend] date,
+            $dp_taskscolumn[tasklast] date,
+            $dp_taskscolumn[taskpercent] int(11) DEFAULT '0' NOT NULL,
+            $dp_taskscolumn[tasksteps] text,
+            $dp_taskscolumn[taskteam] text,
+            PRIMARY KEY(xar_taskid))";
     $dbconn->Execute($sql);
 
     // Check for an error
@@ -87,8 +87,8 @@ function dynamic_planning_init()
     // than just left blank, this helps the user-side code and means that
     // there doesn't need to be a check to see if the variable is set in
     // the rest of the code as it always will be
-    pnModSetVar('dynamic_planning', 'bold', 0);
-    pnModSetVar('dynamic_planning', 'itemsperpage', 10);
+    xarModSetVar('dynamic_planning', 'bold', 0);
+    xarModSetVar('dynamic_planning', 'itemsperpage', 10);
 
     // Initialisation successful
     return true;
@@ -102,6 +102,9 @@ function dynamic_planning_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
+        case '1.0':
+        case '1.0.0':
+            break;
         default:
             // No Upgrade path yet 
             break;
@@ -119,15 +122,15 @@ function dynamic_planning_upgrade($oldversion)
 function dynamic_planning_delete()
 {
     // Get datbase setup 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
     
     // Set table names
-    $trackstable = $pntable['tracks'];
-    $taskstable  = $pntable['tasks'];
+    $dp_trackstable = $xartable['dp_tracks'];
+    $dp_taskstable  = $xartable['dp_tasks'];
     
     // Drop the table 
-    $sql = "DROP TABLE $trackstable";
+    $sql = "DROP TABLE $dp_trackstable";
     $dbconn->Execute($sql);
 
     // Check for an error 
@@ -138,7 +141,7 @@ function dynamic_planning_delete()
     }
 
     // Drop the table 
-    $sql = "DROP TABLE $taskstable";
+    $sql = "DROP TABLE $dp_taskstable";
     $dbconn->Execute($sql);
 
     // Check for an error 
@@ -149,8 +152,8 @@ function dynamic_planning_delete()
     }
 
     // Delete any module variables
-    pnModDelVar('Dyanmic_Planning', 'itemsperpage');
-    pnModDelVar('Dynamic_Planning', 'bold');
+    xarModDelVar('dynamic_planning', 'itemsperpage');
+    xarModDelVar('dynamic_planning', 'bold');
 
     // Deletion successful
     return true;

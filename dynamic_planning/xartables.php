@@ -35,46 +35,46 @@
 function dynamic_planning_xartables()
 {
     // Initialise table array
-    $pntable = array();
+    $xartable = array();
 
     // Set name for Tracks table
-    $tracks = pnConfigGetVar('prefix') . '_tracks';
+    $dp_tracks = xarDBGetSiteTablePrefix() . '_dp_tracks';
 
     // Set the table name
-    $pntable['tracks'] = $tracks;
+    $xartable['dp_tracks'] = $dp_tracks;
 
     // Set the column names.  
-    $pntable['tracks_column'] = 
+    $xartable['dp_tracks_column'] = 
     
-    array('trackid'     => $tracks . '.pn_trackid',
-          'trackname'   => $tracks . '.pn_trackname',
-          'tracklead'   => $tracks . '.pn_tracklead',
-	  'tracktext'   => $tracks . '.pn_tracktext',
-	  'trackstatus' => $tracks . '.pn_trackstatus',
-	  'trackcat'    => $tracks . '.pn_trackcat');
+    array('trackid'     => $dp_tracks . '.xar_trackid',
+          'trackname'   => $dp_tracks . '.xar_trackname',
+          'tracklead'   => $dp_tracks . '.xar_tracklead',
+          'tracktext'   => $dp_tracks . '.xar_tracktext',
+          'trackstatus' => $dp_tracks . '.xar_trackstatus',
+          'trackcat'    => $dp_tracks . '.xar_trackcat');
 
     // Set name for Tasks table
-    $tasks = pnConfigGetVar('prefix') . '_tasks';
+    $dp_tasks = xarConfigGetVar('prefix') . '_dp_tasks';
 
     // Set the table name
-    $pntable['tasks'] = $tasks;
+    $xartable['dp_tasks'] = $dp_tasks;
 
     // Set the column names.
-    $pntable['tasks_column'] = 
+    $xartable['dp_tasks_column'] = 
 
-    array('taskid'      => $tasks . '.pn_taskid',
-          'trackid'     => $tasks . '.pn_trackid',
-	  'tasktitle'   => $tasks . '.pn_tasktitle',
-          'tasktext'    => $tasks . '.pn_tasktext',
-          'taskstart'   => $tasks . '.pn_taskstart',
-          'taskend'     => $tasks . '.pn_taskend',
-          'tasklast'    => $tasks . '.pn_tasklast',
-          'taskpercent' => $tasks . '.pn_taskpercent',
-          'tasksteps'   => $tasks . '.pn_tasksteps',
-	  'taskteam'    => $tasks . '.pn_taskteam');
+    array('taskid'      => $dp_tasks . '.xar_taskid',
+          'trackid'     => $dp_tasks . '.xar_trackid',
+          'tasktitle'   => $dp_tasks . '.xar_tasktitle',
+          'tasktext'    => $dp_tasks . '.xar_tasktext',
+          'taskstart'   => $dp_tasks . '.xar_taskstart',
+          'taskend'     => $dp_tasks . '.xar_taskend',
+          'tasklast'    => $dp_tasks . '.xar_tasklast',
+          'taskpercent' => $dp_tasks . '.xar_taskpercent',
+          'tasksteps'   => $dp_tasks . '.xar_tasksteps',
+          'taskteam'    => $dp_tasks . '.xar_taskteam');
 
     // Return the table information
-    return $pntable;
+    return $xartable;
 }
 
 ?>
