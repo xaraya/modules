@@ -40,13 +40,14 @@ function sitecontact_userapi_encode_shorturl($args)
     // specify some short URLs relevant to your module
     if ($func == 'main') {
         $path = '/' . $module . '/';
+        if (isset($message) && is_numeric($message)) {
+            $path = '/' . $module . '/' . $message;
+        }
     } elseif ($func == 'contactus') {
         $path = '/' . $module . '/contactus';
         if (isset($message) && is_numeric($message)) {
             $path = '/' . $module . '/contactus/' . $message;
-        } else {
         }
-    } else {
     }
     // add some other module arguments as standard URL parameters
     if (!empty($path)) {

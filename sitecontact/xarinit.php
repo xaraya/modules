@@ -22,6 +22,8 @@ function sitecontact_init()
 {
     xarModSetVar('sitecontact', 'itemsperpage', 10);
     xarModSetVar('sitecontact', 'SupportShortURLs', 0);
+    xarModSetVar('sitecontact', 'usehtmlemail', 0);
+    xarModSetVar('sitecontact', 'allowcopy', 1);
     xarModSetVar('sitecontact', 'customtitle','Contact and Feedback');
     xarModSetVar('sitecontact', 'customtext',
     'Thank you for visiting. We appreciate your feedback.
@@ -98,9 +100,12 @@ function sitecontact_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case '0.5':
-              return sitecontact_upgrade(1.0);
-        case '1.0':
+        case '0.0.1':
+        //Add two mod vars in version 0.0.2
+            xarModSetVar('sitecontact', 'usehtmlemail', 0);
+            xarModSetVar('sitecontact', 'allowcopy', 1);
+            return sitecontact_upgrade('0.0.2');
+        case '0.0.2':
             // Code to upgrade from version 1.0 goes here
             break;
         case '2.0.0':
@@ -119,9 +124,7 @@ function sitecontact_upgrade($oldversion)
 function sitecontact_delete()
 {
     // Delete any module variables
-    xarModDelVar('sitecontact', 'itemsperpage');
-
-     xarModDelVar('sitecontact', 'SupportShortURLs');
+     xarModDelAllVars('sitecontact');
     // UnRegister blocks
 /*    if (!xarModAPIFunc('blocks',
                        'admin',

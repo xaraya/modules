@@ -13,7 +13,7 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 30%; text-align: right;">
-        <span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short URLSs [DO NOT USE - NOT WORKING]</xar:mlstring></label>:</span>
+        <span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short URLSs</xar:mlstring></label>:</span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
         <xar:if condition="xarModGetVar('sitecontact', 'SupportShortURLs')">
@@ -23,7 +23,7 @@
         </xar:if>
     </span>
     </div>
-    
+
     <div style="clear: both; width: 98%;padding-top: 10px;">
         <span style="float: left; width: 30%; text-align: right;">
         <span class="help" title="#xarML('Custom title for your contact page.')#">
@@ -70,7 +70,38 @@
 
     </span>
     </div>
-
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Allow sending of copy to feedback sender')#">
+            <label for="allowcopy">
+                <xar:mlstring>Allow a copy of note to feedback sender?</xar:mlstring>
+            </label>
+        </span>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+        <xar:if condition="xarModGetVar('sitecontact', 'allowcopy')">
+            <input type="checkbox" name="allowcopy" id="allowcopy" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="allowcopy" id="allowcopy" value="1" />
+        </xar:if>
+    </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Allow HTML in feedback emails')#">
+            <label for="usehtmlemail">
+                <xar:mlstring>Use HTML Email?</xar:mlstring>
+            </label>
+        </span>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+        <xar:if condition="xarModGetVar('sitecontact', 'usehtmlemail')">
+            <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="usehtmlemail" id="usehtmlemail" value="1" />
+        </xar:if>
+    </span>
+    </div>
     <div style="clear: both; padding-top: 20px;">
     <span style="float: left; width: 30%; text-align: right;margin-top:40px;margin-bottom:40px;">
         <span class="help" title="#xarML('Included in email to user - use HTML only if email configured for HTML')#"><label for="notetouser">

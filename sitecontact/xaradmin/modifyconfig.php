@@ -25,6 +25,8 @@ function sitecontact_admin_modifyconfig()
     $data['customtext'] = xarModGetVar('sitecontact', 'customtext');
     $data['customtitle'] = xarModGetVar('sitecontact', 'customtitle');
     $data['optiontext'] = xarModGetVar('sitecontact', 'optiontext');
+    $data['usehtmlemail']= xarModGetVar('sitecontact', 'usehtmlemail');
+    $data['allowcopy'] = xarModGetVar('sitecontact', 'allowcopy');
     $data['webconfirmtext'] = xarModGetVar('sitecontact', 'webconfirmtext');
     $notetouser = xarModGetVar('sitecontact', 'notetouser');
     if (!isset($notetouser) || (trim($notetouser)=='')) {

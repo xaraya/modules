@@ -33,8 +33,17 @@ function sitecontact_user_main()
     $data['submit'] = xarML('Submit');
     $customtext = xarModGetVar('sitecontact','customtext');
     $customtitle = xarModGetVar('sitecontact','customtitle');
-    $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
-    $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
+    $usehtmlemail= xarModGetVar('sitecontact', 'usehtmlemail');
+    $allowcopy = xarModGetVar('sitecontact', 'allowcopy');
+    if ($usehtmlemail==1){
+        $data['customtitle']=xarVarPrepHTMLDisplay($customtitle);
+        $data['customtext'] = xarVarPrepHTMLDisplay($customtext);
+    } else {
+         $data['customtitle']=xarVarPrepForDisplay($customtitle);
+         $data['customtext'] = xarVarPrepForDisplay($customtext);
+    }
+    $data['usehtmlemail'] = $usehtmlemail;
+    $data['allowcopy'] = $allowcopy;
     $optiontext = xarModGetVar('sitecontact','optiontext');
     $optionset = array();
     $selectitem=array();

@@ -37,13 +37,13 @@ function sitecontact_userapi_decode_shorturl($params)
         // some search engine/someone tried using index.html (or similar)
         // -> we'll go to the main function
         return array('main', $args);
-    } elseif (preg_match('/^list/i', $params[1])) {
+    } elseif (preg_match('/^contactus/i', $params[1])) {
         // something that starts with 'list' is probably for the view function
         // Note : make sure your encoding/decoding is consistent ! :-)
-        return array('main', $args);
+        return array('contactus', $args);
     } elseif (preg_match('/^(\d+)/', $params[1], $matches)) {
          $messageid = $matches[1];
-        $args['message'] = $messagid;
+        $args['message'] = $messageid;
         return array('main', $args);
     } else {
 
