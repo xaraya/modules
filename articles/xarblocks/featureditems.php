@@ -197,12 +197,7 @@ function articles_featureditemsblock_display($blockinfo)
 
     // Populate block info and pass to theme
     if (!empty($vars['featuredaid'])) {
-        if (empty($blockinfo['template'])) {
-            $template = 'featureditems';
-        } else {
-            $template = $blockinfo['template'];
-        }
-        $blockinfo['content'] = xarTplBlock('articles',$template,$data);
+        $blockinfo['content'] = xarTplBlock('articles', 'featureditems', $data);
 
         return $blockinfo;
     }
