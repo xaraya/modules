@@ -3,6 +3,7 @@
 $modversion['name'] = 'dynamic_planning';
 $modversion['id'] = '144';
 $modversion['version'] = '1.0.0';
+$modversion['displayname']    = xarML('Dynamic Planning');
 $modversion['description'] = 'Project Planning Module';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';

@@ -2,6 +2,7 @@
 // $Id: s.Version.php 1.1 02/06/25 17:44:31-00:00 clnelson $ $Name: <Not implemented> $
 $modversion['name'] = 'Dynamic Planning Module';
 $modversion['version'] = '1.0';
+$modversion['displayname']    = xarML('Dynamic Planning');
 $modversion['description'] = 'Project Management module';
 $modversion['credits'] = '';
 $modversion['help'] = '';
