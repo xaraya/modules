@@ -1,0 +1,44 @@
+<?php
+/**
+ * Events Block
+ *
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @subpackage events
+ * @author Events module development team
+ */
+
+/**
+ * modify block settings
+ */
+function events_eventsblock_modify($blockinfo)
+{
+    // Get current content
+    $vars = @unserialize($blockinfo['content']);
+
+    // Defaults
+    if (empty($vars['numitems'])) {
+        $vars['numitems'] = 5;
+    }
+    
+    // Send content to template
+    $output = xarTplBlock('events','eventsAdmin', array('numitems' => $vars['numitems']));
+
+    // Return output
+    return $output;
+}
+
+/**
+ * update block settings
+ */
+function events_eventsblock_update($blockinfo)
+{
+    $vars['numitems'] = xarVarCleanFromInput('numitems');
+
+    $blockinfo['content'] = serialize($vars);
+
+    return $blockinfo;
+}
+
+?>

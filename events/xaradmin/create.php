@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * This is a standard function that is called with the results of the
  * form supplied by events_admin_new() to create a new item
@@ -35,7 +34,7 @@ function events_admin_create($args)
         //Let us first clear any session vars that were once set.
         xarSessionDelVar('statusmsg');
         // Lets Explain why the form was sent back
-        xarSessionSetVar('statusmsg', xarML('EXAMPLEERRORINFORM'));
+        xarSessionSetVar('statusmsg', xarML('Error!'));
         xarResponseRedirect(xarModURL('events', 'admin', 'new', array('name' => $name, 'number' =>$number)));
     }
 
@@ -66,7 +65,7 @@ function events_admin_create($args)
     if (!isset($exid) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
-    xarSessionSetVar('statusmsg', xarML('EXAMPLECREATED'));
+    xarSessionSetVar('statusmsg', xarML('Event was successfully created'));
 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work

@@ -1,171 +1,122 @@
 <?php
 /**
- * File: $Id: s.others.php 1.8 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
- * Example block
- *
+ * Events Block
+ * 
+ * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * @subpackage example
- * @author Example module development team
+ *
+ * @subpackage events
+ * @author Events module development team 
  */
 
 /**
  * initialise block
  */
-function example_othersblock_init()
+function events_othersblock_init()
 {
-    // Security
-    xarSecAddSchema('Example:Othereventsblock:', 'Block title::');
-}
+    return array(
+        'numitems' => 5
+    );
+} 
 
 /**
  * get information on block
  */
-function example_othersblock_info()
-{
+function events_othersblock_info()
+{ 
     // Values
-    return array('text_type' => 'Otherevents',
-                 'module' => 'example',
-                 'text_type_long' => 'Show other example items when 1 is displayed',
-                 'allow_multiple' => true,
-                 'form_content' => false,
-                 'form_refresh' => false,
-                 'show_preview' => true);
-}
+    return array(
+        'text_type' => 'Others',
+        'module' => 'events',
+        'text_type_long' => 'Show other events items when 1 is displayed',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+        'show_preview' => true
+    );
+} 
 
 /**
  * display block
  */
-function example_othersblock_display($blockinfo)
-{
-
-    // See if we are currently displaying an example item
+function events_othersblock_display($blockinfo)
+{ 
+    // See if we are currently displaying an events item
     // (this variable is set in the user display function)
-    if (!xarVarIsCached('Blocks.example','exid')) {
+    if (!xarVarIsCached('Blocks.events', 'eventid')) {
         // if not, we don't show this
         return;
-    }
+    } 
 
-    $current_exid = xarVarGetCached('Blocks.example','exid');
-    if (empty($current_exid) || !is_numeric($current_exid)) {
+    $current_eventid = xarVarGetCached('Blocks.events', 'eventid');
+    if (empty($current_eventid) || !is_numeric($current_eventid)) {
         return;
-    }
+    } 
 
     // Security check
-    if (!xarSecAuthAction(0,
-                         'Example:Othereventsblock:',
-                         "$blockinfo[title]::",
-                         ACCESS_READ)) {
-        return;
-    }
+    if (!xarSecurityCheck('OverviewEvents', 0, 'Event', $blockinfo['title'])) {return;}
 
-    // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
+    // Get variables from content block.
+    // Content is a serialized array for legacy support, but will be
+    // an array (not serialized) once all blocks have been converted.
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Defaults
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
-    }
+    } 
 
     // Database information
-    xarModDBInfoLoad('example');
+    xarModDBInfoLoad('events');
     $dbconn =& xarDBGetConn();
-    $xartable =xarDBGetTables();
-    $exampletable = $xartable['example'];
+    $xartable =& xarDBGetTables();
+    $eventstable = $xartable['events']; 
 
     // Query
-    $sql = "SELECT xar_exid,
-                   xar_name
-            FROM $exampletable
-            WHERE xar_exid != ?
-            ORDER by xar_exid DESC";
-    $result =& $dbconn->SelectLimit($sql, $vars['numitems'], -1, array($current_exid));
+    $sql = "SELECT xar_eventid, xar_name
+            FROM $eventstable
+            WHERE xar_eventid != $current_eventid
+            ORDER by xar_eventid DESC";
+    $result = $dbconn->SelectLimit($sql, $vars['numitems']);
 
     if ($dbconn->ErrorNo() != 0) {
         return;
-    }
+    } 
 
     if ($result->EOF) {
         return;
-    }
+    } 
+
     // Create output object
-    $output = new pnHTML();
+    $items = array();
 
     // Display each item, permissions permitting
     for (; !$result->EOF; $result->MoveNext()) {
-        list($exid, $name) = $result->fields;
+        list($eventid, $name) = $result->fields;
 
-        if (xarSecAuthAction(0,
-                            'Example::',
-                            "$name::$exid",
-                            ACCESS_OVERVIEW)) {
-            if (xarSecAuthAction(0,
-                                'Example::',
-                                "$name::$exid",
-                                ACCESS_READ)) {
-                $output->URL(xarModURL('example',
-                                      'user',
-                                      'display',
-                                      array('exid' => $exid)),
-                             $name);
-            } else {
-                $output->Text($name);
+        if (xarSecurityCheck('ViewEvents', 0, 'Item', "$name:All:$eventid")) {
+            if (xarSecurityCheck('ReadEvents', 0, 'Item', "$name:All:$eventid")) {
+                $item = array();
+                $item['link'] = xarModURL(
+                    'events', 'user', 'display',
+                    array('eventid' => $eventid)
+                );
+                
             }
-            $output->Linebreak();
-        }
+            $item['name'] = $name;
+        } 
+        $items[] = $item;
+    } 
 
-    }
-    $output->Linebreak();
-
-// TODO: shouldn't this stuff be BL-able too ??
-// Besides the fact that title & content are placed according to some
-// master block template, why can't we create content via BL ?
-
-    // Populate block info and pass to theme
-    $blockinfo['content'] = $output->GetOutput();
-    return $blockinfo;
-}
-
-
-/**
- * modify block settings
- */
-function example_othersblock_modify($blockinfo)
-{
-
-    // Get current content
-    $vars = @unserialize($blockinfo['content']);
-
-    // Defaults
-    if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
-    }
-
-    // Send content to template
-    $output = xarTplBlock('example','othersAdmin', array('numitems' => $vars['numitems']));
-
-    // Return output
-    return $output;
-
-}
-
-/**
- * update block settings
- */
-function example_othersblock_update($blockinfo)
-{
-    if (!xarVarFetch('numitems', 'int:1', $numitems, 1, XARVAR_NOT_REQUIRED)) return;
-
-    // Define a default block title
-    if (empty($blockinfo['title'])) {
-        $blockinfo['title'] = xarML('Other example items');
-    }
-
-    $blockinfo['content'] = serialize($vars);
+    $blockinfo['content'] = array('items' => $items);
 
     return $blockinfo;
-}
+} 
 
 ?>

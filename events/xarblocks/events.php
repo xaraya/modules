@@ -1,11 +1,10 @@
 <?php
 /**
- * File: $Id: s.events.php 1.8 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- *
  * Events Block
  *
+ * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
- * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
  * @subpackage events
  * @author Events module development team
@@ -18,6 +17,9 @@ function events_eventsblock_init()
 {
     // Security
     xarSecAddSchema('Events:Eventsblock:', 'Block title::');
+    return array(
+        'numitems' => 5
+    );
 }
 
 /**
@@ -26,13 +28,14 @@ function events_eventsblock_init()
 function events_eventsblock_info()
 {
     // Values
-    return array('text_type' => 'Events',
-                 'module' => 'events',
-                 'text_type_long' => 'Show events events items (alphabetical)',
-                 'allow_multiple' => true,
-                 'form_content' => false,
-                 'form_refresh' => false,
-                 'show_preview' => true);
+    return array(
+        'text_type' => 'Events',
+        'module' => 'events',
+        'text_type_long' => 'Show events events items (alphabetical)',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+         'show_preview' => true);
 }
 
 /**
@@ -41,15 +44,14 @@ function events_eventsblock_info()
 function events_eventsblock_display($blockinfo)
 {
     // Security check
-    if (!xarSecAuthAction(0,
-                         'Events:Eventsblock:',
-                         "$blockinfo[title]::",
-                         ACCESS_READ)) {
-        return;
-    }
+    if (!xarSecurityCheck('OverviewEvents', 0, 'Event', $blockinfo['title'])) {return;}
 
     // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Defaults
     if (empty($vars['numitems'])) {
@@ -76,74 +78,35 @@ function events_eventsblock_display($blockinfo)
     if ($result->EOF) {
         return;
     }
+
     // Create output object
-    $output = new pnHTML();
+    $data['items'] = array();
 
     // Display each item, permissions permitting
     for (; !$result->EOF; $result->MoveNext()) {
-        list($exid, $name) = $result->fields;
-
-        if (xarSecAuthAction(0,
-                            'Events::',
-                            "$name::$exid",
-                            ACCESS_OVERVIEW)) {
-            if (xarSecAuthAction(0,
-                                'Events::',
-                                "$name::$exid",
-                                ACCESS_READ)) {
-                $output->URL(xarModURL('events',
-                                      'user',
-                                      'display',
-                                      array('exid' => $exid)),
-                             $name);
+        list($eventid, $name) = $result->fields;
+        if (!xarSecurityCheck('OverviewEvents', 0, 'Event', "$name:All:$eventid")) {
+            if (!xarSecurityCheck('ReadEvents', 0, 'Event', "$name:All:$eventid")) {
+                $item['link'] = xarModURL(
+                    'events', 'user', 'display',
+                    array('eventid' => $item['eventid'])
+                );
+                // Security check 2 - else only display the item name (or whatever is
+                // appropriate for your module)
             } else {
-                $output->Text($name);
+                $item['link'] = '';
             }
-            $output->Linebreak();
+            // Add this item to the list of items to be displayed
+            $data['items'][] = $item;
         }
-
     }
-    $output->Linebreak();
 
-// TODO: shouldn't this stuff be BL-able too ??
-// Besides the fact that title & content are placed according to some
-// master block template, why can't we create content via BL ?
+    $data['blockid'] = $blockinfo['bid'];
 
-    // Populate block info and pass to theme
-    $blockinfo['content'] = $output->GetOutput();
-    return $blockinfo;
-}
-
-
-/**
- * modify block settings
- */
-function events_eventsblock_modify($blockinfo)
-{
-    // Get current content
-    $vars = @unserialize($blockinfo['content']);
-
-    // Defaults
-    if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
-    }
-    
-    // Send content to template
-    $output = xarTplBlock('events','eventsAdmin', array('numitems' => $vars['numitems']));
-
-    // Return output
-    return $output;
-}
-
-/**
- * update block settings
- */
-function events_eventsblock_update($blockinfo)
-{
-    $vars['numitems'] = xarVarCleanFromInput('numitems');
-
-    $blockinfo['content'] = serialize($vars);
-
+    // Now we need to send our output to the template.
+    // Just return the template data.
+    $blockinfo['content'] = $data;
+            
     return $blockinfo;
 }
 
