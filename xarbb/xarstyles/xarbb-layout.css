@@ -111,6 +111,19 @@ div.xarbb-tablewrapper table td.message {
 	vertical-align: top;
 }
 
+div.xarbb-tablewrapper table td.newtopictitle,
+div.xarbb-tablewrapper table td.newtopicfield,
+div.xarbb-tablewrapper table td.newtopicbottom {
+    padding-top: .5em;
+    padding-bottom: .25em;
+	vertical-align: top;
+}
+div.xarbb-tablewrapper table td.newtopictitle {width: 9em;}
+div.xarbb-tablewrapper table td input#ttitle {width: 100%;}
+div.xarbb-tablewrapper table td textarea#tpost {width: 100%; height:20em;}
+div.xarbb-tablewrapper table td.newtopicbottom { text-align: center;}
+
+
 div.xarbb-tablewrapper table td p.hiddensignature { border-top: 1px dotted #000; }
 
 /* notes just below table */
