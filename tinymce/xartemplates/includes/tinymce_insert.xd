@@ -13,7 +13,7 @@
 <xar:if condition="$tinyaskfirst eq 'true'">
     <xar:set name="tinyaskit">'ask : "true"'</xar:set>
 <xar:else />
-    <xar:set name="tinyaskit">''</xar:set>
+    <xar:set name="tinyaskit">'ask : ""'</xar:set>
 </xar:if>
 
 <!-- tinyMCE -->
