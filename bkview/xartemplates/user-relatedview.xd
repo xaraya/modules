@@ -2,7 +2,7 @@
 
 <div style="float: left; margin-top:1em; width: 100%">
     <xar:loop name="$csets">
-      <xar:template file="user-cset" subdata="$loop:item"/>
+      <xar:template file="user-delta" subdata="$loop:item"/>
     </xar:loop>
   </div>
 </div>

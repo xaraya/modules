@@ -40,6 +40,7 @@ function bkview_user_relatedview($args)
     $counter=1;
     while (list($key,$val) = each($list)) {
         list($age, $author, $rev, $comments) = explode('|',$val);
+        $csets[$counter]['file'] = 'ChangeSet';
         $csets[$counter]['age']=$age;
         $csets[$counter]['author']=$author;
         $csets[$counter]['rev']=$rev;

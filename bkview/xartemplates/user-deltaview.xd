@@ -3,7 +3,7 @@
 <div style="float: left; margin-top: 1em; width: 100%">
 
     <!-- Summary of the cset -->
-    <xar:template file="user-cset" subdata="$cset"/>
+    <xar:template file="user-delta" subdata="$cset"/>
     
     <!-- Let's try something daring, recursive templating -->
     <div class="xar-mod-title" style="margin-top: 1em;">

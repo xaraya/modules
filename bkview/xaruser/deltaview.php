@@ -88,6 +88,7 @@ function bkview_user_deltaview($args)
     $data['repoid']=$repoid;
     $data['name_value']=$item['reponame'];
     $data['hooks'] = $hooks;
+    $data['cset']['file'] = 'ChangeSet';
     $data['cset']['rev'] = $rev;
     $data['cset']['repoid'] = $repoid;
     $data['cset']['age'] = $changeset->bkGetAge();
