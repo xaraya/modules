@@ -148,7 +148,7 @@ function articles_user_display($args)
         if (strstr($article['body'],'<!--pagebreak-->')) {
             if ($preview) {
                 $article['body'] = preg_replace('/<!--pagebreak-->/',
-                                                '<hr/><div align="center">'.xarML('Page Break').'</div><hr/>',
+                                                '<hr/><div style="text-align: center;">'.xarML('Page Break').'</div><hr/>',
                                                 $article['body']);
                 $data['previous'] = '';
                 $data['next'] = '';
