@@ -60,8 +60,8 @@ function authsso_userapi_authenticate_user($args)
     $ssoconfig['ldapmail'] = xarModGetVar('authsso', 'ldapmail');
 
     // match the remote_user to a xaraya uname
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Get user information from roles
     $userRole = xarModAPIFunc('roles',
