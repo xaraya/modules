@@ -437,18 +437,15 @@ function html_upgrade($oldversion)
  */
 function html_delete()
 {
+
     // Remove module variables
     xarModDelVar('html', 'itemsperpage');
-
-    // Remove Masks and Instances
     xarRemoveMasks('html');
     xarRemoveInstances('html');
 
     // Get the database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
-    // Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
 
     // Generate the SQL to drop the table using the API
@@ -468,7 +465,7 @@ function html_delete()
     if (!$result) return;
 
     // Set the html back to safe html tags
-    $allowedhtml = 'a:25:{s:3:\"!--\";s:1:\"2\";s:1:\"a\";s:1:\"2\";s:1:\"b\";s:1:\"2\";s:10:\"blockquote\";s:1:\"2\";s:2:\"br\";s:1:\"2\";s:6:\"center\";s:1:\"2\";s:3:\"div\";s:1:\"2\";s:2:\"em\";s:1:\"2\";s:4:\"font\";i:0;s:2:\"hr\";s:1:\"2\";s:1:\"i\";s:1:\"2\";s:3:\"img\";i:0;s:2:\"li\";s:1:\"2\";s:7:\"marquee\";i:0;s:2:\"ol\";s:1:\"2\";s:1:\"p\";s:1:\"2\";s:3:\"pre\";s:1:\"2\";s:4:\"span\";i:0;s:6:\"strong\";s:1:\"2\";s:2:\"tt\";s:1:\"2\";s:2:\"ul\";s:1:\"2\";s:5:\"table\";s:1:\"2\";s:2:\"td\";s:1:\"2\";s:2:\"th\";s:1:\"2\";s:2:\"tr\";s:1:\"2\";}';
+    $allowedhtml = 'a:25:{s:3:"!--";s:1:"2";s:1:"a";s:1:"2";s:1:"b";s:1:"2";s:10:"blockquote";s:1:"2";s:2:"br";s:1:"2";s:6:"center";s:1:"2";s:3:"div";s:1:"2";s:2:"em";s:1:"2";s:4:"font";i:0;s:2:"hr";s:1:"2";s:1:"i";s:1:"2";s:3:"img";i:0;s:2:"li";s:1:"2";s:7:"marquee";i:0;s:2:"ol";s:1:"2";s:1:"p";s:1:"2";s:3:"pre";s:1:"2";s:4:"span";i:0;s:6:"strong";s:1:"2";s:2:"tt";s:1:"2";s:2:"ul";s:1:"2";s:5:"table";s:1:"2";s:2:"td";s:1:"2";s:2:"th";s:1:"2";s:2:"tr";s:1:"2";}';
 
     // I'm lazy.  So shoot me, one time thing:
     $allowedhtml = unserialize($allowedhtml);
