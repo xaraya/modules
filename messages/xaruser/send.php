@@ -28,7 +28,6 @@ function messages_user_send()
             if (!xarVarFetch('body', 'str:1', $body)) return;
             if (!xarVarFetch('receipient', 'int:1', $receipient)) return;
 
-	    phpinfo();
             xarModAPIFunc('messages',
                           'user',
                           'create',
@@ -87,9 +86,9 @@ function messages_user_send()
             $data['input_title']                = xarML('Preview your Message');
             $data['action']                     = 'preview';
 
-            $data['message']['sender']          = xarUserGetVar('uname');
+            $data['message']['sender']          = xarUserGetVar('name');
             $data['message']['senderid']        = xaruserGetVar('uid');
-            $data['message']['receipient']      = xarUserGetVar('uname',$receipient);
+            $data['message']['receipient']      = xarUserGetVar('name',$receipient);
             $data['message']['receipient_id']   = $receipient;
             $data['message']['subject']         = $subject;
             $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', microtime());

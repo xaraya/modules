@@ -4,7 +4,7 @@
             <!-- <xar:mlstring>Message-Posting-Host:</xar:mlstring> #$message['posting-host']# -->
             <span class="xar-sub">
                 <h4 style="display: inline;">
-                    <xar:mlstring>Subject:</xar:mlstring> #$message['subject']#
+                    <xar:mlstring>Subject:</xar:mlstring> #xarVarPrepForDisplay($message['subject'])#
                 </h4>
                 <br />
                 <xar:mlstring>From:</xar:mlstring> #$message['sender']#
@@ -16,7 +16,7 @@
             </span>
         </div>
         <div class="xar-norm" style="padding: 4px;" align="left">
-            #$message['body']# <br />
+            #xarVarPrepHTMLDisplay($message['body'])# <br />
         </div>
         <xar:if condition="isset($action) AND $action ne 'preview' AND $action ne 'check'">
             <div class="xar-norm" style="padding: 4px;" align="left">

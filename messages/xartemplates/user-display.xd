@@ -86,7 +86,7 @@
                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
                     </td>
                     <td class="xar-norm" nowrap="nowrap" align="left">
-                        &nbsp;|&nbsp;<a href="#$loop:item['view_link']#">#$loop:item['subject']#</a>
+                        &nbsp;|&nbsp;<a href="#$loop:item['view_link']#">#xarVarPrepForDisplay($loop:item['subject'])#</a>
                     </td>
                     <td class="xar-norm" nowrap="nowrap" align="left">
                         &nbsp;|&nbsp;#$loop:item['date']#
@@ -109,7 +109,7 @@
                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
                     </td>
                     <td class="xar-accent" nowrap="nowrap" align="left">
-                        &nbsp;|&nbsp;<a href="#$loop:item['view_link']#">#$loop:item['subject']#</a>
+                        &nbsp;|&nbsp;<a href="#$loop:item['view_link']#">#xarVarPrepForDisplay($loop:item['subject'])#</a>
                     </td>
                     <td class="xar-accent" nowrap="nowrap" align="left">
                         &nbsp;|&nbsp;#$loop:item['date']#

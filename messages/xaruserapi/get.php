@@ -29,8 +29,8 @@ function messages_userapi_get( $args )
         $message['mid']           = $node['xar_cid'];
         $message['sender']        = $node['xar_author'];
         $message['sender_id']     = $node['xar_uid'];
-        $message['receipient']    = xarUserGetVar('uname');
-        $message['receipient_id'] = xarUserGetVar('uid');
+        $message['receipient']    = xarUserGetVar('name',$node['xar_objectid']);
+        $message['receipient_id'] = $node['xar_objectid'];
         $message['posting_host']  = $node['xar_hostname'];
         $message['raw_date']      = $node['xar_datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['xar_datetime']);

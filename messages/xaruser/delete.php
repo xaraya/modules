@@ -31,6 +31,12 @@ function messages_user_delete()
         return $data;
     }
 
+    if ($messages[0]['receipient_id'] != xarUserGetVar('uid') &&
+        $messages[0]['sender_id'] != xaruserGetVar('uid')) {
+        $data['error'] = xarML("You are NOT authorized to view someone else's mail!");
+        return $data;
+    }
+
     switch($action) {
         case "confirmed":
 

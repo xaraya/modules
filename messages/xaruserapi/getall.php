@@ -26,7 +26,7 @@ function messages_userapi_getall( $args )
         $message['raw_date']      = $node['xar_datetime'];
         $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['xar_datetime']);
         $message['body']          = $node['xar_text'];
-        $message['reciepient']    = xarUserGetVar('uname');
+        $message['receipient']    = xarUserGetVar('name');
         $message['reciepient_id'] = xarUserGetVar('uid');
 
         if (!in_array($message['mid'], $read_messages)) {

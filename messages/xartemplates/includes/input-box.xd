@@ -10,7 +10,7 @@
                         <xar:mlstring>From:</xar:mlstring>
                     </td>
                     <td>
-                        #xarUserGetVar('uname')#
+                        #xarUserGetVar('name')#
                     </td>
                 </tr>
                 <tr>
@@ -49,7 +49,7 @@
                             </span>
                         </xar:if>
                         <xar:if condition="!empty($subject)">
-                            <input type="text" name="subject" id="subject" size="50" maxlength="85" value="#$subject#" tabindex="1" />
+                            <input type="text" name="subject" id="subject" size="50" maxlength="85" value="#xarVarPrepForDisplay($subject)#" tabindex="1" />
                         <xar:else />
                             <input type="text" name="subject" id="subject" size="50" maxlength="85" value="" tabindex="1" />
                         </xar:if>
@@ -66,7 +66,7 @@
                             </span>
                         </xar:if>
                         <xar:if condition="isset($body)">
-                            <textarea cols="57" rows="10" name="body" id="body" tabindex="2">#$body#</textarea>
+                            <textarea cols="57" rows="10" name="body" id="body" tabindex="2">#xarVarPrepForDisplay($body)#</textarea>
                         <xar:else />
                             <textarea cols="57" rows="10" name="body" id="body" tabindex="2"></textarea>
                         </xar:if>
