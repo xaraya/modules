@@ -47,14 +47,18 @@ function bloggerapi_userapi_getpost($msg) {
 	if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
 	}	else {
+        // FIXME: title flagging should be configurable
+        $content="<title>".$article['title']."</title>".$article['summary'];
+
 		// convert date to iso date code
 		$t = iso8601_encode($article['pubdate']);
         
 		// create a struct for the response
         $data['userid']=$article['authorid'];
         $data['dateCreated']=$t;
-				// FIXME: xmlrpc only requires <, > and & to be prepped, what do we do?
-        $data['content']=xarVarPrepForDisplay($article['summary']);
+        // FIXME: xmlrpc only requires <, > and & to be prepped, what do we do?
+        // FIXME: <mrb> it was unclear by me what needed prepping, only <,> and &??
+        $data['content']=xarVarPrepForDisplay($content);
         $data['postid']=$article['aid'];
         $output = _bloggerapi_createresponse('getpost',$data);
 	}

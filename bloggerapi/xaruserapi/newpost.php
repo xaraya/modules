@@ -42,7 +42,7 @@ function bloggerapi_userapi_newpost($msg) {
     } else {
         // Fix for w.bloggar via marsel@phatcom.net (David Taylor)
         ereg("<title>(.*)</title>",$content, $title);
-        $title = xarML($title[1]);
+        $title = $title[1];
         $content = ereg_replace("<title>(.*)</title>","",$content);
         if (empty($title)){
 	        $title = xarML("Post from #(1) on: #(2)",$username,date("Y-m-d"));

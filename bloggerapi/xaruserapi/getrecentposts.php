@@ -68,11 +68,13 @@ function bloggerapi_userapi_getrecentposts($msg) {
         $articlelist=array(); $i = 0;
 		$data=array();
         foreach ($articles as $article) {
+            // FIXME: the title flagging needs to be configurable
+            $content="<title>".$article['title']."</title>".$article['summary'];
             // convert date to iso date code
             $t = iso8601_encode($article['pubdate']);
             $article_list[$i]['authorid']=$article['authorid'];
             $article_list[$i]['dateCreated'] = $t;
-            $article_list[$i]['content'] = xarVarPrepForDisplay($article['summary']);
+            $article_list[$i]['content'] = xarVarPrepForDisplay($content);
             $article_list[$i]['postid'] = $article['aid'];
 
             $i++;
