@@ -10,7 +10,7 @@ function headlines_userapi_countitems()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // Security Check
-	if(!xarSecurityCheck('OverviewHeadlines')) return;
+    if(!xarSecurityCheck('OverviewHeadlines')) return;
     $headlinestable = $xartable['headlines'];
     $query = "SELECT COUNT(1)
             FROM $headlinestable";

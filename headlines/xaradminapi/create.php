@@ -17,7 +17,7 @@ function headlines_adminapi_create($args)
         return;
     }
     // Security Check
-	if(!xarSecurityCheck('AddHeadlines')) return;
+    if(!xarSecurityCheck('AddHeadlines')) return;
 
     $order = xarModAPIFunc('headlines', 'user', 'countitems');
 

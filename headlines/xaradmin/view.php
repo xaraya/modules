@@ -21,7 +21,7 @@ function headlines_admin_view()
 
     
     // Security Check
-	if(!xarSecurityCheck('EditHeadlines')) return;
+    if(!xarSecurityCheck('EditHeadlines')) return;
 
     // The user API function is called
     $links = xarModAPIFunc('headlines',

@@ -21,7 +21,7 @@ function headlines_userapi_getall($args)
     $links = array();
 
     // Security Check
-	if(!xarSecurityCheck('OverviewHeadlines')) return;
+    if(!xarSecurityCheck('OverviewHeadlines')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $headlinestable = $xartable['headlines'];

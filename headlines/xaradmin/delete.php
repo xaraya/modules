@@ -12,7 +12,7 @@ function headlines_admin_delete()
     if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     // Security Check
-	if(!xarSecurityCheck('DeleteHeadlines')) return;
+    if(!xarSecurityCheck('DeleteHeadlines')) return;
 
     // The user API function is called
     $link = xarModAPIFunc('headlines',

@@ -9,7 +9,7 @@
 function headlines_schedulerapi_compare()
 {
     // Security Check
-	if(!xarSecurityCheck('OverviewHeadlines')) return;
+    if(!xarSecurityCheck('OverviewHeadlines')) return;
     $links  = xarModAPIFunc('headlines', 'user', 'getall');
     foreach ($links as $link){
         // We need to grab the current url right now for the string and the date

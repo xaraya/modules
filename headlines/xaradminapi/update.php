@@ -25,7 +25,7 @@ function headlines_adminapi_update($args)
 
     if ($link == false) return;
     // Security Check
-	if(!xarSecurityCheck('EditHeadlines')) return;
+    if(!xarSecurityCheck('EditHeadlines')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

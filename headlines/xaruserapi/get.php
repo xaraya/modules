@@ -17,7 +17,7 @@ function headlines_userapi_get($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('OverviewHeadlines')) return;
+    if(!xarSecurityCheck('OverviewHeadlines')) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

@@ -3,7 +3,7 @@ function headlines_admin_new()
 {
     
     // Security Check
-	if(!xarSecurityCheck('AddHeadlines')) return;
+    if(!xarSecurityCheck('AddHeadlines')) return;
     $item = array();
 
     $item['module'] = 'headlines';

@@ -24,7 +24,7 @@ function headlines_adminapi_delete($args)
     if ($link == false) return;
 
     // Security Check
-	if(!xarSecurityCheck('DeleteHeadlines')) return;
+    if(!xarSecurityCheck('DeleteHeadlines')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

@@ -10,7 +10,7 @@ function headlines_admin_modify($args)
     if (!xarVarFetch('obid','str:1:',$obid,$hid,XARVAR_NOT_REQUIRED)) return;
 
     // Security Check
-	if(!xarSecurityCheck('EditHeadlines')) return;
+    if(!xarSecurityCheck('EditHeadlines')) return;
     $data = array();
 
     $data = xarModAPIFunc('headlines',

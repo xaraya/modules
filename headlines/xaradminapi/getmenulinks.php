@@ -11,7 +11,7 @@ function headlines_adminapi_getmenulinks()
 {
 
     // Security Check
-	if(xarSecurityCheck('AddHeadlines')) {
+    if(xarSecurityCheck('AddHeadlines')) {
 
         $menulinks[] = Array('url'   => xarModURL('headlines',
                                                   'admin',
