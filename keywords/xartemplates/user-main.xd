@@ -4,32 +4,32 @@
 <div class="xar-mod-head">
 	<span class="xar-mod-title">
 		<xar:mlstring>
-			Keywords Module 
+			Keywords Module
 		</xar:mlstring>
 	</span>
 </div>
 <xar:set name="totitems">
-	count($items) 
-</xar:set>
-<xar:set name="totitemspercol">
-	round($totitems/$displaycolumns) 
-</xar:set>
-<xar:set name="divwidth">
-	round(95/$displaycolumns) 
+	count($items)
 </xar:set>
 <xar:if condition="empty($status)">
 	<xar:comment>
-		Nav Tabs moved to the includes folder 
+		Nav Tabs moved to the includes folder
 	</xar:comment>
 	<xar:template file="navtabs" type="module" />
 	<div style="clear: both; padding-top: 10px;">
 		<xar:if condition="empty($items)">
 			<h4>
 				<xar:mlstring>
-					No keywords found ! 
+					No keywords found !
 				</xar:mlstring>
 			</h4>
     <xar:else /> <!-- Start the list column output -->
+        <xar:set name="totitemspercol">
+        	round($totitems/$displaycolumns)
+        </xar:set>
+        <xar:set name="divwidth">
+        	round(95/$displaycolumns)
+        </xar:set>
         <!-- Begin the column wrapping div -->
         <div style="clear:both;">
             <xar:set name="i">1</xar:set>

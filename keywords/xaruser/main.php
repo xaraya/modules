@@ -23,6 +23,9 @@ if (!xarSecurityCheck('ReadKeywords')) return;
     
     //extract($args);
     $displaycolumns= xarModGetVar('keywords','displaycolumns');
+    if (!isset($displaycolumns) or (empty($displaycolumns))){
+        $displaycolumns=1;
+    }
 
     if (empty($keyword)) {
         // get the list of keywords that are in use
