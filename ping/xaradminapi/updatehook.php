@@ -95,6 +95,28 @@ function ping_adminapi_updatehook($args)
             return $extrainfo;
         }
         unset($client);
+        $client         = new xmlrpc_client("/RPC2", "api.my.yahoo.com", 80);
+        $message        = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['viewlink'])));
+        $result         = $client->send($message);
+        if (!$result || $result->faultCode()) {
+            $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            // we *must* return $extrainfo for now, or the next hook will fail
+            //return false;
+            return $extrainfo;
+        }
+        unset($client);
+        $client         = new xmlrpc_client("/rpc/ping", "rpc.technorati.com", 80);
+        $message        = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['viewlink'])));
+        $result         = $client->send($message);
+        if (!$result || $result->faultCode()) {
+            $msg = xarML('Ping failed to send for #(1) function #(2)() in module #(3)', 'admin', 'updatehook', 'ping');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            // we *must* return $extrainfo for now, or the next hook will fail
+            //return false;
+            return $extrainfo;
+        }
+        unset($client);
         if (xarThemeIsAvailable('rss')){
             $client         = new xmlrpc_client("/RPC2", "rssrpc.weblogs.com", 80);
             $message        = new xmlrpcmsg("rssUpdate", array(new xmlrpcval($data['sitename']), new xmlrpcval($data['rsslink'])));
