@@ -328,7 +328,7 @@
                             <xar:mlstring>
                                 Posted 
                             </xar:mlstring>
-                            : #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $tftime)# 
+                            : #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['xar_datetime'])#
                             <br />
                             <strong class="xar-sub">
                                 <xar:mlstring>
