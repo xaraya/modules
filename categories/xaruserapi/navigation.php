@@ -230,8 +230,17 @@ function categories_userapi_navigation($args)
             // try to get cids from input
             xarVarFetch('cids',    'isset', $cids,    NULL,  XARVAR_DONT_SET);
             xarVarFetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED);
+            // for preview of hooked new/modified items
+            xarVarFetch('new_cids',    'isset', $newcids,    NULL,  XARVAR_DONT_SET);
+            xarVarFetch('modify_cids', 'isset', $modifycids, NULL,  XARVAR_DONT_SET);
 
-            if (empty($cids)) {
+            if (!empty($cids)) {
+                // found some cids
+            } elseif (!empty($newcids)) {
+                $cids = $newcids;
+            } elseif (!empty($modifycids)) {
+                $cids = $modifycids;
+            } else {
                 $cids = array();
                 if ((empty($module) || $module == $modname) && !empty($itemid)) {
                     $links = xarModAPIFunc('categories','user','getlinks',
