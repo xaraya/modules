@@ -26,8 +26,8 @@
   </xar:ml>
 </p>
 
-<!----
+<xar:comment>-
 <a href="#xarModURL('translations', 'admin', 'release')#">
----->
+-</xar:comment>
 <a href="#xarModURL('translations', 'admin', 'start')#">
 <xar:mlstring>Release</xar:mlstring></a> <xar:mlstring>(not yet implemented)</xar:mlstring><br />
