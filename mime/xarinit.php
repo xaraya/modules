@@ -26,7 +26,7 @@
  */
 function mime_init() {
 
-    $error = false;
+    $error = FALSE;
     
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
@@ -68,15 +68,15 @@ function mime_init() {
         
         $result =& $dbconn->Execute($query);
         if (!$result) {
-            $tables[$table] = false;
-            $error |= true;
+            $tables[$table] = FALSE;
+            $error |= TRUE;
         } else {
-            $tables[$table] = true;
-            $error |= false;
+            $tables[$table] = TRUE;
+            $error |= FALSE;              
         }
-    }
-
-    // if there were any errors during the
+    } 
+    
+    // if there were any errors during the 
     // table creation, make sure to remove any tables
     // that might have been created
     if ($error) {
@@ -87,27 +87,29 @@ function mime_init() {
             if(!$result)
                 return;
         }
-        return false;
+        return FALSE;
     }
-
+    
+    include_once "modules/mime/xarincludes/mime.magic.php";
+    xarModAPIFunc('mime','user','import_mimelist', array('mimeList' => $mime_list));
+    
     // Initialisation successful
-    return true;
+    return TRUE;
 }
 
 /**
  *  Delete all tables, unregister hooks, remove
- *  priviledge instances, and anything else related to
+ *  priviledge instances, and anything else related to 
  *  this module
- */
-
-
-
-
+ */              
+              
+              
+    
 
 function mime_delete()
 {
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();
+    xarDBLoadTableMaintenanceAPI();    
 
     // Get database information
     list($dbconn) = xarDBGetConn();
@@ -118,13 +120,13 @@ function mime_delete()
     $queries[1] = xarDBDropTable($xartable['mime_subtype']);
     $queries[2] = xarDBDropTable($xartable['mime_extension']);
     $queries[3] = xarDBDropTable($xartable['mime_magic']);
-
+    
     foreach( $queries as $query) {
         $result =& $dbconn->Execute($query);
     }
 
     // Deletion successful
-    return true;
+    return TRUE;
 
 }
 
@@ -135,7 +137,8 @@ function mime_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case .1:
+        case '0.0.0':
+            // fall through to the next upgrade
         case '0.1.0':
             mime_init();
             include_once "modules/mime/xarincludes/mime.magic.php";
@@ -150,7 +153,7 @@ function mime_upgrade($oldversion)
             // Code to upgrade from version 2.5 goes here
             break;
     }
-    return true;
+    return TRUE;
 }
 
 ?>
