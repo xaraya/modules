@@ -1,7 +1,23 @@
 <?php
-error_reporting(2039);
 
-// TASK VIEW
+/**
+ * File: $Id$
+ *
+ * User GUI functions for tasks module
+ *
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * 
+ * @subpackage tasks
+ * @author Chad Kraeft
+ * @author Marcel van der Boom <marcel@xaraya.com>
+*/
+
+
+/**
+ * Task list view
+ *
+ */
 function tasks_user_main()
 {
 	xarResponseRedirect(xarModURL('tasks','user','view'));
@@ -17,25 +33,17 @@ function tasks_user_view($args)
 	
 	extract($args);
     
-    $output = new pnHTML();
-    
-	if($module == "tasks"
-       && ($type == "user" || $type == "")
-       && ($func == "view" || $func == "")) {
-		$output->Text(tasks_menu());
-	}
+// 	if($module == "tasks"
+//        && ($type == "user" || $type == "")
+//        && ($func == "view" || $func == "")) {
+// 		$output->Text(tasks_menu());
+// 	}
     
 	$maxlevel = xarSessionGetVar('maxlevel');
 	if(!isset($displaydepth)) {
 		$displaydepth = ($maxlevel ? $maxlevel : 1);
 	}
 	xarSessionSetVar('maxlevel', $displaydepth);
-
-    if (!xarModAPILoad('tasks', 'user')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        $output->Text(tasks_feedback());
-		return $output->GetOutput();
-    }
 
     $tasks = xarModAPIFunc('tasks','user','getall',
                            array('parentid' => $parentid,
@@ -49,9 +57,9 @@ function tasks_user_view($args)
     
 	$basetaskid = xarModAPIFunc('tasks', 'user', 'getroot', array('id' => $parentid));
   
-	if($module == "tasks" && ($type == "user" || $type == "") && $func == "view") {
-		$output->Text(tasks_feedback());
-	}
+// 	if($module == "tasks" && ($type == "user" || $type == "") && $func == "view") {
+// 		$output->Text(tasks_feedback());
+// 	}
 
     $data['filterformtarget']=xarModURL('tasks','user',
                                         ($parentid ? 'display':'view'),

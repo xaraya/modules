@@ -247,12 +247,6 @@ function tasks_admin_update($args)
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!xarModAPILoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
-        return true;
-    }
-
     if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'update',
@@ -317,12 +311,6 @@ function tasks_admin_open($args)
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!xarModAPILoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
-        return true;
-    }
-
     if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'open',
@@ -344,12 +332,6 @@ function tasks_admin_approve($args)
 
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
-
-    if (!xarModAPILoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
-        return true;
-    }
 
     if($returnid = xarModAPIFunc('tasks',
 								'admin',
@@ -373,12 +355,6 @@ function tasks_admin_publish($args)
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!xarModAPILoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
-        return true;
-    }
-
     if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'publish',
@@ -400,12 +376,6 @@ function tasks_admin_accept($args)
 
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
-
-    if (!xarModAPILoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
-        return true;
-    }
 
     if($returnid = xarModAPIFunc('tasks',
 								'admin',
@@ -586,13 +556,6 @@ function tasks_admin_migrate($args)
 
     extract($args);
 
-    if (!xarModAPILoad('tasks','admin')
-			|| !xarModLoad('tasks','user')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarRedirect(xarModURL('tasks'));
-        return true;
-    }
-
     if($newid = xarModAPIFunc('tasks',
 								'admin',
 								'migrate',
@@ -609,13 +572,9 @@ function tasks_admin_migrate($args)
 	}
 
 	if(empty($newid) || $newid == 0) {
-		xarRedirect(xarModURL('tasks',
-							'user',
-							'view'));
+		xarRedirect(xarModURL('tasks','user','view'));
 	} else {
-		xarRedirect(xarModURL('tasks',
-							'user',
-							'display',
+		xarRedirect(xarModURL('tasks','user','display',
 							array('id' => $newid,
 									'modname' => $modname,
 									'objectid' => $objectid,
@@ -643,13 +602,6 @@ function tasks_admin_gantt($args)
 	
 	$output = new xarHTML();
 	
-	if (!xarModAPILoad('tasks', 'user')
-			|| !xarModLoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-		$output->Text(tasks_feedback());
-        return $output->GetOutput();
-    }
-
     $tasks = xarModAPIFunc('tasks',
                           'user',
                           'getall',
