@@ -63,13 +63,13 @@
             <th nowrap width="15%" align="left">
                 <xar:mlstring>From</xar:mlstring>
             </th>
-            <th nowrap width="50%" align="left">
+            <th nowrap width="50%" align="center">
                 <xar:mlstring>Subject</xar:mlstring>
             </th>
-            <th nowrap width="15%" align="left">
+            <th nowrap width="15%" align="center">
                 <xar:mlstring>Date</xar:mlstring>
             </th>
-            <th nowrap width="10%" align="left">
+            <th nowrap width="10%" align="center">
                 <xar:mlstring>Action</xar:mlstring>
             </th>
         </tr>
@@ -85,14 +85,14 @@
                     <td class="xar-norm" nowrap="nowrap" align="left">
                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
                     </td>
-                    <td class="xar-norm" nowrap="nowrap" align="left">
-                        #$loop:item['subject']#
+                    <td class="xar-norm" nowrap="nowrap" align="center">
+                    <a href="#$loop:item['view_link']#">#$loop:item['subject']#</a>
                     </td>
                     <td class="xar-norm" nowrap="nowrap" align="left">
                         #$loop:item['date']#
                     </td>
-                    <td class="xar-norm" nowrap="nowrap" align="left">
-                        <a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
+                    <td class="xar-norm" nowrap="nowrap" align="right">
+                        &nbsp;|&nbsp;<a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
                         <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
                         <a href="#$loop:item['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
                     </td>
@@ -108,14 +108,14 @@
                     <td class="xar-accent" nowrap="nowrap" align="left">
                         <a href="#$loop:item['user_link']#" title="#xarML('View user info')#">#$loop:item['sender']#</a>
                     </td>
-                    <td class="xar-accent" nowrap="nowrap" align="left">
-                        #$loop:item['subject']#
+                    <td class="xar-accent" nowrap="nowrap" align="center">
+                        <a href="#$loop:item['view_link']#">#$loop:item['subject']#</a>
                     </td>
                     <td class="xar-accent" nowrap="nowrap" align="left">
                         #$loop:item['date']#
                     </td>
-                    <td class="xar-accent" nowrap="nowrap" align="left">
-                        <a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
+                    <td class="xar-accent" nowrap="nowrap" align="right">
+                        &nbsp;|&nbsp;<a href="#$loop:item['view_link']#" title="#xarML('View message')#"><xar:mlstring>View</xar:mlstring></a> |
                         <a href="#$loop:item['reply_link']#" title="#xarML('Reply to Message')#"><xar:mlstring>Reply</xar:mlstring></a> |
                         <a href="#$loop:item['delete_link']#" title="#xarML('Delete Message')#"><xar:mlstring>Delete</xar:mlstring></a>
                     </td>
@@ -123,6 +123,10 @@
             </xar:if>
         </xar:loop>
     </table>
+        <hr>
+        <div align="right">
+        <a href="index.php?module=messages&func=send&action=post"><img src="modules/messages/xarimages/newpm.gif" border="0"></a>
+        </div>
 <xar:else />
     <br />
     <div class="xar-norm">
