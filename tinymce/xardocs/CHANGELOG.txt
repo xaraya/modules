@@ -1,3 +1,16 @@
+* Version 0.1.0
+- Upgrade to TinyMCE 1.31
+- Multiple bug fixes
+- Ability to set number of Undo levels - better for performance
+- Configuration for ensuring Inline styles using style="" rather than eg border=0
+  This makes for XHTML 1.0 Strict compliance, and useful when the Class drop down box is not available
+- Known issue in IE on Windows when short URLS are used on a page where an editor
+  instance is created or used to modify a document
+  eg Comments creation to an article which uses short URLS.
+  Temp workaround: 
+  Either turn short URLs off for that module, Use "Ask" so the editor is not automatically 
+  used for that specific textarea, or only add the template tags to specific module templates to
+  restrict the editor instance.
 
 * Version 0.0.3
 - Upgrade to TinyMCE 1.30

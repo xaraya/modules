@@ -49,9 +49,8 @@ function tinymce_admin_updateconfig()
     xarModSetVar('tinymce', 'tinywidth', $tinywidth);
     xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
     xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
-    if ($defaulteditor =='true') {
-       xarModSetVar('base','editor','tinymce');
-    }
+    xarModSetVar('base','editor', $defaulteditor);
+    
     //Turn our settings into javascript for insert into template
     //Let's call the variable jstext
     $jstext='';

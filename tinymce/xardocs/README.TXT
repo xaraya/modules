@@ -1,15 +1,15 @@
-INSTALLATION AND USE - TinyMCE Version 0.0.3
+INSTALLATION AND USE - XarTinyMCE Version 0.1.0
 
-TinyMCE is a very configurable, lightweight WYSIWYG editor. 
-It has limited options compared to HTMLArea, but is earlier in it's 
-development stage so I expect further enhancements. In addition, it is very 
+XarTinyMCE is a very configurable, lightweight WYSIWYG editor.
+It has limited options compared to HTMLArea, but is earlier in it's
+development stage so I expect further enhancements. In addition, it is very
 configurable and has some nice features not available in other wysiwyg editors.
 
-See the documentation included in the docs directory of the module for 
+See the documentation included in the docs directory of the module for
 browse compatibility, and further options for customization.
 
 The current version of this Xaraya integration provides for some basic
-configuration options via a user interface in the admin configuration area for TinyMCE.
+configuration options via a user interface in the admin configuration area for XarTinyMCE.
 
 ****************************
 To INSTALL and get started:
@@ -19,16 +19,19 @@ To INSTALL and get started:
    b. go to the Adminpanel menu -> Modules -> View All
    c. Click on the "install" link of the tinymce module
 
-2. The TinyMCE editor is not turned on by default.
-   Once the tinymce module is installed it needs to be turned on. To do this:
+2. The XarTinyMCE editor is not turned on by default.
+   Once the tinymce module is installed it needs to be turned on by default.
+   With this version you can set XarTinyMCE as the default WYSIWYG from the module's
+   configuration.
+   In case you have other editors, you can also set the default in Base module:
    a. go to the Adminpanels menu -> Base -> Modify Config
    b. choose the tab "Other"
    c. on the wysiwyg editor dropdown choose "tinymce" as the default editor
 
-3. In order to make modules in Xaraya use the tinymce module to display wysiwyg,
+3. In order to make modules in Xaraya use the XarTinyMCE module to display WYSIWYG,
     you need to add the following snippet at the top of any of your page templates.
     eg usually this is default.xt in themes/yourtheme/pages directory.
-    You may have more than one page template and can choose to add it to one or more. 
+    You may have more than one page template and can choose to add it to one or more.
     You may wish to add it to one specific module or other template where you wish
     to convert the textarea to WYSIWYG (eg Xarbb newreply.xt or newtopic.xt):
 
@@ -38,14 +41,14 @@ To INSTALL and get started:
 
 ******************************
 To UPGRADE:
-1. Remove all files in the tinymce module directory and all files in it and 
+1. Remove all files in the tinymce module directory and all files in it and
    replace with the upgrade module and files
 2. Go to your Administration -> Modules ->View All
    Click Upgrade
    Click Activate
-3. Go to Administration -> TinyMCE -> Modify Config
+3. Go to Administration -> XarTinyMCE -> Modify Config
    Check any new or upgraded options are filled in.
-   
+
    That's it!
 ******************************
 

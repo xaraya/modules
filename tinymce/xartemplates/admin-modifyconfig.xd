@@ -9,6 +9,7 @@
 <div style="margin: auto;">
 <form method="post" action="&xar-modurl-tinymce-admin-updateconfig;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
     <p>
         <xar:mlstring>To use XarTinyMCE you must make sure that you:</xar:mlstring>
     </p>
@@ -23,22 +24,24 @@
         </pre>
     <h4><xar:mlstring>2. Set HTML tags in HTML Module</xar:mlstring></h4>
         <p style="margin-left:20px;">
-            <xar:mlstring>Set HTML tags like like code, pre, span, image, h1, and so on) in the HTML module</xar:mlstring>
+            <xar:mlstring>Go to the HTML module and <a href="index.php?module=html&type=admin&func=set" rel="
+            ext">set HTML tags allowed</a> like like code, pre, span, image, h1, and so on so they will be 
+            rendered in your WYSIWYG editing.</xar:mlstring>
         </p>
     <h4><xar:mlstring>3. Set XarTinyMCE as default editor</xar:mlstring></h4>
-        <p style="margin-left:20px;"><xar:mlstring>Set XarTinyMCE as default WYSIWYG editor here: </xar:mlstring>
+        <p style="margin-left:20px;"><xar:mlstring>Set XarTinyMCE as default WYSIWYG editor: </xar:mlstring>
             <select name="defaulteditor" id="defaulteditor" size="1">
-            <xar:if condition="$defaulteditor eq 'false'">
-               <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-               <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
-            <xar:elseif condition="$tinyinlinestyle eq 'true'" />
-               <option value="false"><xar:mlstring>No</xar:mlstring></option>
-               <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+            <xar:if condition="$defaulteditor eq 'tinymce'">
+               <option value="tinymce" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value=""><xar:mlstring>No</xar:mlstring></option>
+            <xar:elseif condition="$defaulteditor ne 'tinymce'" />
+               <option value="tinymce"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value="#$defaulteditor#" selected="selected"><xar:mlstring>No</xar:mlstring></option>
             </xar:if>
             </select>
         </p>
         <p style="margin-left:20px;">
-            <xar:mlstring>(You can also set this in Base Module - Modify Config - Other Tab)</xar:mlstring>
+            <xar:mlstring>(You can also set installed editors in <a href="index.php?module=base&type=admin&func=modifyconfig&tab=other" rel="ext">Base Module - Modify Config - Other Tab</a>)</xar:mlstring>
          </p>
      <h4><xar:mlstring>4. Set XarTinyMCE Configurations options</xar:mlstring></h4>
      <div style="clear: both; width: 98%; padding-top: 10px;">
