@@ -106,7 +106,7 @@ function xarbb_adminapi_create($args)
 
     if (empty($cids)) {
         //Set them to the master categories
-        $cids[] = xarModGetVar('xarbb', 'mastercids');
+        $cids = explode(';',xarModGetVar('xarbb', 'mastercids'));
     }
     // Let any hooks know that we have created a new forum
     $args['module'] = 'xarbb';

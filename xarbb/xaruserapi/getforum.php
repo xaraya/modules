@@ -60,6 +60,7 @@ function xarbb_userapi_getforum($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+// FIXME: if forums are assigned to more than 1 category, this will only return the first one
     list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
 
