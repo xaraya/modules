@@ -79,7 +79,7 @@ function articles_topitemsblock_display($blockinfo)
         $vars['showdynamic'] = 0;
     }
 	if (empty($vars['status'])) {
-        $vars['status'] = '3,2';
+        $vars['status'] = array(3,2);
     }
     
     // see if we're currently displaying an article
@@ -180,8 +180,11 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     // frontpage or approved status
-    //$status = array(3,2');
-	$statusarray = array($vars['status']);
+    if (!is_array($vars['status'])) {
+        $statusarray = array($vars['status']);
+    } else {
+	    $statusarray = $vars['status'];
+    }
 	
     // get cids for security check in getall
     $fields = array('aid','title','pubtypeid','cids');
@@ -335,7 +338,7 @@ function articles_topitemsblock_modify($blockinfo)
                                  array('id' => 'date',
                                        'name' => xarML('Date')));
 
-	$vars['statusoptions'] = array(array('id' => '3,2',
+	$vars['statusoptions'] = array(array('id' => '',
                                          'name' => xarML('All Published')),
                                    array('id' => '3',
                                          'name' => xarML('Frontpage')),

@@ -234,7 +234,7 @@ function articles_featureditemsblock_modify($blockinfo)
     }
 
     if (empty($vars['status'])) {
-        $vars['status'] = '3,2';
+        $vars['status'] = array(3,2);
     }
 
     if (empty($vars['itemlimit'])) {
@@ -282,7 +282,11 @@ function articles_featureditemsblock_modify($blockinfo)
 
     $vars['fields'] = array('aid','title');
 
-    $statusarray = array($vars['status']);
+    if (!is_array($vars['status'])) {
+        $statusarray = array($vars['status']);
+    } else {
+	    $statusarray = $vars['status'];
+    }
 
     if(!empty($vars['catfilter'])) {
         $cidsarray = array($vars['catfilter']);
@@ -305,7 +309,7 @@ function articles_featureditemsblock_modify($blockinfo)
 
     $vars['categorylist'] = xarModAPIFunc('categories','user','getcat');
 
-    $vars['statusoptions'] = array(array('id' => '3,2',
+    $vars['statusoptions'] = array(array('id' => '',
                                          'name' => xarML('All Published')),
                                    array('id' => '3',
                                          'name' => xarML('Frontpage')),
