@@ -148,6 +148,7 @@ functions.js is deprecated and replicates confirmlink.js
                         <div class="xar-sub">
                             <xar:if condition="isset($properties['avatar']) and !empty($posterdata[$tposter]['avatar'])">
                                 <xar:data-output property="$properties['avatar']" value="$posterdata[$tposter]['avatar']" />
+                            <br />
                             </xar:if>
                             <xar:mlstring>
                                 Joined
@@ -157,8 +158,9 @@ functions.js is deprecated and replicates confirmlink.js
                             <xar:mlstring>
                                 Posts 
                             </xar:mlstring>
-                            : #$usertopics# 
+                            : #$usertopics#
                             <xar:if condition="isset($properties['location']) and !empty($posterdata[$tposter]['location'])">
+                               <br />
                                 <xar:mlstring>
                                    Location 
                                 </xar:mlstring>
@@ -171,19 +173,13 @@ functions.js is deprecated and replicates confirmlink.js
                 <td class="xar-norm message">
                     <div class="xarbb-messagecontrols">
                         <div class="leftnote">
+                           <span class="xar-sub">
                             <xar:mlstring>
-                                Posted 
+                                Posted
                             </xar:mlstring>
                             : #xarLocaleGetFormattedDate('medium', $tftime)# #xarLocaleGetFormattedTime('medium', $tftime)#
-                            <br />
-                            <strong class="xar-sub">
-                                <xar:mlstring>
-                                    Subject 
-                                </xar:mlstring>
-                                : 
-                                #$transformedtitle# 
-                            </strong>
-                        </div>
+                            </span>
+                          </div>
                         <div class="rightnote">
                             <xar:if condition="xarUserIsLoggedIn()">
                                 <xar:if condition="$tstatus ne 3">
@@ -219,6 +215,16 @@ functions.js is deprecated and replicates confirmlink.js
                                     </a>
                                 </xar:sec>
                             </xar:if>
+                        </div>
+                        <xar:comment>Placement of subject for full width of message containing div</xar:comment>
+                        <div style="float:left;">
+                           <strong class="xar-sub">
+                                <xar:mlstring>
+                                    Subject
+                                </xar:mlstring>
+                                :
+                                #$transformedtitle#
+                            </strong>
                         </div>
                     </div>
                     <div>
@@ -308,7 +314,7 @@ functions.js is deprecated and replicates confirmlink.js
                 <td class="xar-norm author">
                     <strong>
                         <xar:comment>
-                            Reply post could be anonymous - need to check 
+                            Reply post could be anonymous - need to check
                         </xar:comment>
                         <xar:if condition="$item['xar_postanon'] eq 0">
                             <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
@@ -317,7 +323,7 @@ functions.js is deprecated and replicates confirmlink.js
                             <xar:else />
                             <xar:sec catch="false" mask="modXarBB">
                                 <xar:mlstring>
-                                    Anonymous 
+                                    Anonymous
                                 </xar:mlstring>
                                 (#$item['xar_author']#) 
                                 <xar:else />
@@ -352,7 +358,6 @@ functions.js is deprecated and replicates confirmlink.js
                                     : 
                                     <xar:data-output property="$properties['location']" value="$posterdata[$item['xar_uid']]['location']" />
                                     <br />
-                                    <br />
                                 </xar:if>
                             </xar:if>
                         </span>
@@ -361,20 +366,12 @@ functions.js is deprecated and replicates confirmlink.js
                 <td class="#$myclass# message">
                     <div class="xarbb-messagecontrols">
                         <div class="leftnote">
+                            <span class="xar-sub">
                             <xar:mlstring>
-                                Posted 
+                                Posted
                             </xar:mlstring>
                             : #xarLocaleGetFormattedDate('medium', $item['xar_datetime'])# #xarLocaleGetFormattedTime('medium', $item['xar_datetime'])#
-                            <br />
-                            <strong class="xar-sub">
-                                <xar:mlstring>
-                                    Subject 
-                                </xar:mlstring>
-                                : 
-                                <a name="#$item['xar_cid']#" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid),NULL, $item['xar_cid'])#">
-                                    #$item['xar_title']# 
-                                </a>
-                            </strong>
+                            </span>
                         </div>
                         <div class="rightnote">
                             <xar:if condition="xarUserIsLoggedIn()">
@@ -411,10 +408,20 @@ functions.js is deprecated and replicates confirmlink.js
                                 </xar:sec>
                             </xar:if>
                         </div>
+                        <div style="float:left;">
+                            <strong class="xar-sub">
+                                <xar:mlstring>
+                                    Subject
+                                </xar:mlstring>
+                                :
+                                <a name="#$item['xar_cid']#" href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $tid),NULL, $item['xar_cid'])#">
+                                    #$item['xar_title']# 
+                                </a>
+                            </strong>
+                        </div>
                     </div>
                     <div>
-                        #$item['xar_text']# 
-                        <br />
+                        #$item['xar_text']#
                         <xar:if condition="$item['xar_postanon'] eq 0">
                             <xar:if condition="isset($properties['signature']) and !empty($posterdata[$item['xar_uid']]['signature'])">
                                 <p class="hiddensignature">
