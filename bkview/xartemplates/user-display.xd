@@ -2,28 +2,28 @@
 <xar:template file="user-menu" type="module"/>
 
 <div class="xar-mod-body">
-<table><tr><td>
-<ul>
-  <xar:while condition="list($range,$text)= each($rangetext)">
-    <li><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#">#$text#</a></li>
-  </xar:while>
-  <li>
-    <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#">
-      <xar:ml>
-        <xar:mlstring>All #(1) Changesets ( #(2) empty merges)</xar:mlstring>
-        <xar:mlvar>#$allsets#</xar:mlvar>
-        <xar:mlvar>#$mrgsets#</xar:mlvar>
-      </xar:ml>
-    </a>
-  </li>    
-</ul>
-</td><td valign="top">
+  <div style="float:left;">
+    <ul>
+      <xar:while condition="list($range,$text)= each($rangetext)">
+        <li><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#">#$text#</a></li>
+      </xar:while>
+      <li>
+        <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#">
+          <xar:ml>
+            <xar:mlstring>All #(1) Changesets ( #(2) empty merges)</xar:mlstring>
+            <xar:mlvar>#$allsets#</xar:mlvar>
+            <xar:mlvar>#$mrgsets#</xar:mlvar>
+          </xar:ml>
+        </a>
+      </li>    
+    </ul>
+  </div>
 
-<xar:if condition="!empty($hooks)">
-<xar:foreach in="$hooks" key="$hookmod" value="$hookout">
-#$hookout#
-</xar:foreach>
-</xar:if>
-
-</td></tr></table>
+  <div>
+    <xar:if condition="!empty($hooks)">
+      <xar:foreach in="$hooks" key="$hookmod" value="$hookout">
+        #$hookout#
+      </xar:foreach>
+    </xar:if>
+  </div>
 </div>

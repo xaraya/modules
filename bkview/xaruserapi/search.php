@@ -109,6 +109,7 @@ function _bk_search_csets($repo, $terms,$object_id) {
     $matches = $repo->bkSearch($terms);
     $itemtype = xarML('Changeset comment');
     $dots = xarML('...');
+    $results = array();
     foreach($matches as $match) {
         list($rev,$comment) = explode('|', $match);
         $result = array('result' => xarML('Changeset') . ' ' . $rev,
