@@ -1,7 +1,7 @@
 <xar:comment>
     ideally the external stylesheet should be supplied with this template
 </xar:comment>
-<div class="chsf-caption-block">
+<div class="navigator-caption-block">
     <xar:if condition="isset($image_output) AND is_array($image_output) AND count($image_output)">
         <xar:foreach in="$image_output" key="$imageId" value="$image">
             <xar:image-resize src="$imageId" width="200px" constrain="1" label="Image" />

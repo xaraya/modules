@@ -30,6 +30,11 @@ function navigator_userapi_dynimages($args)
         $typeId = 0;
     } else {
         $pids = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
+
+        if (empty($pids) || !count($pids)) {
+            return;
+        }
+
         xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$pids);
         if (count($cids) == 1) {
             $cids[1] = 0;

@@ -21,7 +21,8 @@ function navigator_eventapi_OnServerRequest($arg)
     $styleList = @unserialize(xarModGetVar('navigator', 'style.list.inline'));
 
     // Make sure the list menu get's it's styles included as well...
-    xarTplAddStyleLink('navigator','navigator-listmenu');
+    xarTplAddStyleLink('navigator', 'navigator-listmenu');
+    xarTplAddStyleLink('navigator', 'navigator-caption');
 
     if (!isset($styleList) || !is_array($styleList) || !count($styleList)) {
         return FALSE;

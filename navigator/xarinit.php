@@ -20,6 +20,11 @@ function navigator_init()
      * Register Privilege masks
      */
 
+    // make sure there isn't any crap left
+    // over from a previous install...
+
+    navigator_delete();
+
     xarRegisterMask('ReadNavigator', 'All', 'navigator',
                     'Item', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('AdminNavigator', 'All', 'navigator',
@@ -47,6 +52,10 @@ function navigator_init()
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                         array('modName' => 'navigator',
                               'blockType' => 'jsnav'))) return;
+
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                        array('modName' => 'navigator',
+                              'blockType' => 'caption'))) return;
 
     if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                         array('modName' => 'navigator',
@@ -116,9 +125,13 @@ function navigator_delete()
                        array('modName' => 'navigator',
                              'blockType' => 'jsnav'))) return;
 
-    if (!xarModAPIFunc('blocks', 'admin', 'delete_block_type',
+    if (!xarModAPIFunc('blocks', 'admin', 'delete_type',
                        array('modName' => 'navigator',
                              'blockType' => 'newsletter_sub'))) return;
+
+    if (!xarModAPIFunc('blocks', 'admin', 'delete_type',
+                       array('modName' => 'navigator',
+                             'blockType' => 'caption'))) return;
 
     // Deletion successful
     return true;

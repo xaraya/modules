@@ -8,14 +8,14 @@
  * @copyright (C) 2003 by the Schwab Foundation
  * @link http://wwwk.schwabfoundation.org
  *
- * @subpackage chsfnav module
+ * @subpackage navigator module
  * @author Richard Cave <caveman : rcave@xaraya.com>
 */
 
 /**
  * initialise block
  */
-function chsfnav_chsfcaptionblock_init()
+function navigator_captionblock_init()
 {
     return true;
 }
@@ -23,12 +23,12 @@ function chsfnav_chsfcaptionblock_init()
 /**
  * get information on block
  */
-function chsfnav_chsfcaptionblock_info()
+function navigator_captionblock_info()
 {
     // Values
-    return array('text_type' => 'CHSFcaption',
-                 'module' => 'chsfnav',
-                 'text_type_long' => 'CHSF Image w/ Caption',
+    return array('text_type' => 'caption',
+                 'module' => 'navigator',
+                 'text_type_long' => 'Navigator Image w/ Caption',
                  'allow_multiple' => false,
                  'form_content' => false,
                  'form_refresh' => false,
@@ -38,26 +38,25 @@ function chsfnav_chsfcaptionblock_info()
 /**
  * display block
  */
-function chsfnav_chsfcaptionblock_display($blockinfo)
+function navigator_captionblock_display($blockinfo)
 {
     // Security Check
     if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:All")) {
         return;
     }
 
-    $args['module'] = 'chsfnav';
-    $args['moduleid'] = xarModGetIDFromName('chsfnav');
+    $args['module'] = 'navigator';
+    $args['moduleid'] = xarModGetIDFromName('navigator');
     $args['itemtype'] = $blockinfo['bid'];
     $args['objectid'] = $blockinfo['bid'];
     $args['itemid']   = $blockinfo['bid'];
-
 
     // Make sure the fileupload property is using the uploads functions
     xarVarSetCached('Hooks.uploads', 'ishooked', TRUE);
 
     // Grab the properties for this block and prep them for display
     list($properties) = xarModAPIFunc('dynamicdata','user','getitemfordisplay',
-                                    array('module'   => 'chsfnav',
+                                    array('module'   => 'navigator',
                                           'itemtype' => $blockinfo['bid'],
                                           'itemid'   => $args['itemid'],
                                           'preview'  => 1));
@@ -84,7 +83,7 @@ function chsfnav_chsfcaptionblock_display($blockinfo)
 /**
  * modify block settings
  */
-function chsfnav_chsfcaptionblock_modify($blockinfo)
+function navigator_captionblock_modify($blockinfo)
 {
     $image_args['name']           = 'image';
     $image_args['label']          = 'Image';
@@ -104,8 +103,8 @@ function chsfnav_chsfcaptionblock_modify($blockinfo)
     $caption_args['order']         = 2;
     $caption_args['validation']    = '';
 
-    $args['module']       = 'chsfnav';
-    $args['moduleid']     = xarModGetIDFromName('chsfnav');
+    $args['module']       = 'navigator';
+    $args['moduleid']     = xarModGetIDFromName('navigator');
     $args['modid']        = &$args['moduleid'];
     $args['itemtype']     = $blockinfo['bid'];
     $args['itemid']       = 0;
@@ -166,10 +165,10 @@ function chsfnav_chsfcaptionblock_modify($blockinfo)
 
     // Now prepare the properties for input display
     list($properties) = xarModAPIFunc('dynamicdata','user','getitemfordisplay',
-                                        array('module'   => 'chsfnav',
-                                                'itemtype' => $blockinfo['bid'],
-                                                'itemid'   => $blockinfo['bid'],
-                                                'preview'  => 1));
+                                        array('module'   => 'navigator',
+                                              'itemtype' => $blockinfo['bid'],
+                                              'itemid'   => $blockinfo['bid'],
+                                              'preview'  => 1));
     $data = array();
 
     if (!empty($properties) && count($properties) > 0) {
@@ -187,9 +186,9 @@ function chsfnav_chsfcaptionblock_modify($blockinfo)
 /**
  * update block settings
  */
-function chsfnav_chsfcaptionblock_update($blockinfo)
+function navigator_captionblock_update($blockinfo)
 {
-    $args['extrainfo']['module']   = 'chsfnav';
+    $args['extrainfo']['module']   = 'navigator';
     $args['extrainfo']['itemid']   = 0;
     $args['extrainfo']['itemtype'] = $blockinfo['bid'];
     $args['objectid'] = $blockinfo['bid'];
@@ -206,7 +205,7 @@ function chsfnav_chsfcaptionblock_update($blockinfo)
 /**
  * built-in block help/information system.
  */
-function chsfnav_chsfcaptionblock_help()
+function navigator_captionblock_help()
 {
     return '';
 }
