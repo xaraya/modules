@@ -69,9 +69,8 @@ function newsgroups_user_post()
             }
             $data['authid']     = xarSecGenAuthKey();
             $data['group']      = $group;
-            $data['message']    = $data['From'];
-            $data['message']    .= xarML(' wrote in message');
-            $data['message']    .= $data['Message-ID'] ."\n\n";
+            $data['message']    = xarML('#(1) wrote in message #(2)', $data['From'], $data['Message-ID']);
+            $data['message']    .= "\n\n";
 
             $data['format'] = '';
              foreach($data['raw'] as $datatmp) {
