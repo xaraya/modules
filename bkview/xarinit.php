@@ -14,19 +14,22 @@
 */
 
 /**
+ * Global things for this file
+ *
+ */
+xarDBLoadTableMaintenanceAPI();
+
+list($dbconn) = xarDBGetConn();
+$xartable = xarDBGetTables();
+$bkviewtable = $xartable['bkview'];
+
+/**
  * initialise the bkview module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
 function bkview_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-
-    $bkviewtable = $xartable['bkview'];
-
-    xarDBLoadTableMaintenanceAPI();
-
     $fields = array(
         'xar_repoid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_name'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
@@ -51,6 +54,11 @@ function bkview_init()
     // xarRegisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     xarRegisterMask('ViewAllRepositories','All','bkview','All','All','ACCESS_READ','Being able to view information contained in a repository');
     xarRegisterMask('AdminAllRepositories','All','bkview','All','All','ACCESS_ADMIN','Being able to administer repositories');
+
+
+    // item:search:api hook registration
+    xarRegisterHook('item','search','API','bkview','user','search');
+
     return true;
 }
 
@@ -63,11 +71,10 @@ function bkview_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case 1.0:
-            // Code to upgrade from version 1.0 goes here
+            // Hook was added
+            xarModRegisterHook('item','search','API','bkview','user','search');
             break;
-        case 2.0:
-            // Code to upgrade from version 2.0 goes here
-            break;
+
     }
 
     // Update successful
@@ -81,18 +88,13 @@ function bkview_upgrade($oldversion)
  */
 function bkview_delete()
 {
-    // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
-    // return arrays but we handle them differently.  For xarDBGetConn()
-    // we currently just want the first item, which is the official
-    // database handle.  For xarDBGetTables() we want to keep the entire
-    // tables array together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    // The order is important
+    // 1. make the module less function (hooks)
+    // 2. remove the data
+    // 3. remove the security
 
-    // adodb does not provide the functionality to abstract table creates
-    // across multiple databases.  Xaraya offers the xarDropeTable function
-    // contained in the following file to provide this functionality.
-    xarDBLoadTableMaintenanceAPI();
+    // Unregister the hook
+    if (!xarModUnregisterHook('item','search','API','bkview','search')) return;
 
     // Generate the SQL to drop the table using the API
     $sql = xarDBDropTable($xartable['bkview']);
@@ -100,6 +102,9 @@ function bkview_delete()
 
     // Drop the table
     if(!$dbconn->Execute($sql)) return;
+
+    // Remove the masks
+    if(!xarRemoveMasks('bkview')) return;
 
     // Deletion successful
     return true;
