@@ -78,7 +78,7 @@
     </p>
 
     <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
-	  <p><input type="submit" value="#$updatelabel#" align="middle" /></p>
+	  <p><input type="submit" value="#$updatelabel#"  /></p>
     </form>
   </div>
 </div>
