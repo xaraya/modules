@@ -1,12 +1,4 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
-<!-- TODO Put this in the forum list and stop using this tag -->
-<table border="0" cellpadding="3" cellspacing="0" width="100%">
-	<tr>
-		<td><!--- we show the category count here too --->
-			<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" showcatcount="1" />
-		</td>
-	</tr>
-</table>
 <table width="100%" cellspacing="0" cellpadding="2">
 	<tr> 
 		<td align="left" valign="bottom">
@@ -81,58 +73,96 @@
 			</xar:mlstring>
 		</th>
 	</tr>
-<!-- THIS IS HOW PHPBB DOES THE CAT ROW
-	<tr> 
+	<xar:loop name="$items">
+	<tr class="xar-accent"> 
 		<td colspan="2">
 			<span>
-				<a href="caturl">
-					category
-				</a>
+				<xar:if condition="isset($loop:item['catname'])">
+					<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $loop:item['cid']))#">
+						#$loop:item['catname']#
+					</a>
+				<xar:else />
+					<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $loop:item['cid']))#">
+						#$loop:item['name']#
+					</a>
+				</xar:if>
 			</span>
 		</td>
 		<td colspan="3" align="right">
 			&nbsp;
 		</td>
-  </tr>
--->
+	</tr>
+	<xar:foreach in="$loop:item['cbchild']" value="$cats">
+		<tr> 
+			<td class="xar-norm" align="center" valign="middle">
+				<img src="#xarTplGetImage('new/folder_cat.gif')#" alt="#xarML('Category')#" />
+			</td>
 
-  <!-- BEGIN FORUMS -->
-<xar:loop name="$items">
-	<tr> 
-		<td class="xar-norm" align="center" valign="middle">
-			#$loop:item['timeimage']#
-		</td>
-		<td class="xar-norm" width="100%" height="50">
-			<span class="xar-title">
-				<xar:if condition="$loop:item['fstatus'] ne 1">
-					<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $loop:item['fid']))#" title="#$loop:item['fname']#">
-						#$loop:item['fname']#
+			<td class="xar-norm" width="100%" height="50">
+				<span class="xar-title">
+					<a href="#xarModURL('xarbb', 'user', 'main', array('catid' => $cats['cid']))#" title="#$cats['name']#">
+						#$cats['name']#
 					</a><br />
-				<xar:else />
-					#$loop:item['fname']#<br />
-				</xar:if>
-			</span> 
-			<span class="xar-norm">
-				#$loop:item['fdesc']#<br />
-			</span>
-		</td>
-		<td class="xar-accent" align="center" valign="middle">
-			<span class="xar-sub">
-				#$loop:item['ftopics']#
-			</span>
-		</td>
-		<td class="xar-norm" align="center" valign="middle">
-			<span class="xar-sub">
-				#$loop:item['fposts']#
-			</span>
-		</td>
-		<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
-			<span class="gensmall">
-				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['fpostid'])#<br />
-				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
-			</span>
-		</td>
-  </tr>
+				</span> 
+				<span class="xar-norm">
+					#$cats['description']#<br />
+				</span>
+			</td>
+			<td class="xar-accent" align="center" valign="middle">
+				<span class="xar-sub">
+					<!-- #$forum['ftopics']# -->
+				</span>
+			</td>
+			<td class="xar-norm" align="center" valign="middle">
+				<span class="xar-sub">
+					<!-- #$forum['fposts']# -->
+				</span>
+			</td>
+			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
+				<span class="gensmall">
+					<!-- #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])#<br />
+					<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a> -->
+				</span>
+			</td>
+		</tr>
+	</xar:foreach>
+	<xar:foreach in="$loop:item['forums']" value="$forum">
+		<tr> 
+			<td class="xar-norm" align="center" valign="middle">
+				#$forum['timeimage']#
+			</td>
+			<td class="xar-norm" width="100%" height="50">
+				<span class="xar-title">
+					<xar:if condition="$forum['fstatus'] ne 1">
+						<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $forum['fid']))#" title="#$forum['fname']#">
+							#$forum['fname']#
+						</a><br />
+					<xar:else />
+						#$forum['fname']#<br />
+					</xar:if>
+				</span> 
+				<span class="xar-norm">
+					#$forum['fdesc']#<br />
+				</span>
+			</td>
+			<td class="xar-accent" align="center" valign="middle">
+				<span class="xar-sub">
+					#$forum['ftopics']#
+				</span>
+			</td>
+			<td class="xar-norm" align="center" valign="middle">
+				<span class="xar-sub">
+					#$forum['fposts']#
+				</span>
+			</td>
+			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
+				<span class="gensmall">
+					#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])#<br />
+					<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a>
+				</span>
+			</td>
+		</tr>
+	</xar:foreach>
 </xar:loop>
   <!-- END forumrow -->
   <!-- END catrow -->
