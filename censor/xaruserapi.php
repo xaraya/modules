@@ -151,6 +151,14 @@ function censor_userapi_transform($args)
     }
 
     if (is_array($extrainfo)) {
+        if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
+            foreach ($extrainfo['transform'] as $key) {
+                if (isset($extrainfo[$key])) {
+                    $extrainfo[$key] = censor_userapitransform($extrainfo[$key]);
+                }
+            }
+            return $extrainfo;
+        }
         $transformed = array();
         foreach($extrainfo as $text) {
             $transformed[] = censor_userapitransform($text);
