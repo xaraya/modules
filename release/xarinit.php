@@ -5,7 +5,7 @@
 // Copyright (C) 2002 by the Xaraya Development Team.
 // http://www.xaraya.org
 // ----------------------------------------------------------------------
-// Original Author of file: John Cox via phpMailer Team 
+// Original Author of file: John Cox via phpMailer Team
 // Purpose of file:  Initialisation functions for the Mail Hook
 // ----------------------------------------------------------------------
 
@@ -113,7 +113,7 @@ function release_init()
                                    'xar_notes'          => array('type'        => 'text',
                                                                  'default'     => ''),
                                    'xar_time'           => array('type'        => 'datetime',
-                                                                 'null'        => false, 
+                                                                 'null'        => false,
                                                                  'default'     => '0000-00-00 00:00:00'),
                                    'xar_enotes'         => array('type'        => 'text',
                                                                  'default'     => ''),
@@ -156,7 +156,7 @@ function release_init()
                                                                  'null'        => false,
                                                                  'default'     => ''),
                                    'xar_time'           => array('type'        => 'datetime',
-                                                                 'null'        => false, 
+                                                                 'null'        => false,
                                                                  'default'     => '0000-00-00 00:00:00'),
                                    'xar_approved'       => array('type'        => 'integer',
                                                                  'null'        => false,
@@ -166,9 +166,9 @@ function release_init()
     if (!$result) return;
 
     // Register Masks
-    xarRegisterMask('OverviewRelease','All','release','All','All',ACCESS_READ);
-    xarRegisterMask('EditRelease','All','release','All','All',ACCESS_EDIT);
-    xarRegisterMask('DeleteRelease','All','release','All','All',ACCESS_DELETE);
+    xarRegisterMask('OverviewRelease','All','release','All','All','ACCESS_READ');
+    xarRegisterMask('EditRelease','All','release','All','All','ACCESS_EDIT');
+    xarRegisterMask('DeleteRelease','All','release','All','All','ACCESS_DELETE');
 
     return true;
 }
