@@ -13,13 +13,15 @@
  * @author John Cox
 */
 
-function xarbb_user_viewtopic()
+function xarbb_user_viewtopic($args)
 {
    // Get parameters from whatever input we need
     if(!xarVarFetch('startnum', 'id', $startnum,1, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('post', 'str', $post, 2, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('tid', 'id', $tid)) return;
     if(!xarVarFetch('view', 'str', $view,'', XARVAR_NOT_REQUIRED)) return;
 
+    extract($args);
     // redirect to previous/next topic
     if (!empty($view)) {
         if ($view == 'next') {
@@ -262,6 +264,8 @@ function xarbb_user_viewtopic()
     $data['deleteimg']   = '<img src="' . xarTplGetImage('new/icon_delete.gif') . '" alt="'.xarML('Delete').'" />';
     $data['ipimg']       = '<img src="' . xarTplGetImage('new/icon_ip.gif') . '" alt="'.xarML('IP').'" />';
     $data['closed']      = '<img src="' . xarTplGetImage('new/reply-locked.gif') . '" alt="'.xarML('Closed Topic').'" />';
+
+    $data['post']       = $post;
 
     $item = array();
     $item['module'] = 'xarbb';

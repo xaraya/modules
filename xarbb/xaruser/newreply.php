@@ -35,8 +35,7 @@ function xarbb_user_newreply()
 
         $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$data['fid']));
         $data['allowhtml']      = $settings['allowhtml'];
-        $data['allowbbcode']      = $settings['allowbbcode']; 
-
+        $data['allowbbcode']    = $settings['allowbbcode']; 
  
         $package['title'] = xarVarPrepForDisplay($data['ttitle']);
         if ($phase == 'quote'){

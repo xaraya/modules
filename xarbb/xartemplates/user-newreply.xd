@@ -221,5 +221,5 @@
     </span>
 </div>
 
-<xar:set name="topic_view">xarModFunc('xarbb','user','viewtopic',$tid);</xar:set>
+<xar:set name="topic_view">xarModFunc('xarbb','user','viewtopic', array('tid' => $tid, 'post' => 1));</xar:set>
 #$topic_view#
