@@ -53,10 +53,10 @@
         <xar:else />
             <div style="clear: both; padding: 5px;">
                 <span>
-                    #$addusermaildomain#:
+                    #$maildomain#:
                 </span>
                 <span>
-                    <input type="text" name="addusermaildomain" value="#$addusermailvalue#" />
+                    <input type="text" name="maildomain" value="#$mailvalue#" />
                 </span>
             </div>
         </xar:if>

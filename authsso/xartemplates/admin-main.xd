@@ -64,7 +64,6 @@
             <ul>
                 <li><xar:mlstring>Rework to make natively pluggable with external auth systems other than the web server (i.e. allow xaraya to trust the authentication of other external systems, or to validate a ticket issued by a third party SSO product).</xar:mlstring></li>
                 <li><xar:mlstring>Make integration with other external user information options easily configurable and extendable.</xar:mlstring></li>
-                <li><xar:mlstring>Allow site administrators to designate a local authsystem administrator account.</xar:mlstring></li>
                 <li><xar:mlstring>Allow site administrators to configure which modules or pages do not auto sign in the web server authenticated user.</xar:mlstring></li>
             </ul>
         </div>

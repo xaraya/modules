@@ -19,50 +19,29 @@
  */
 function authsso_admin_updateconfig()
 {
-    // Get parameters
-
-    list(
-         $adduser,
-         $addusermaildomain,
-         $useldap,
-         $ldapnamevalue,
-         $ldapmailvalue,
-         $defaultgroup
-        ) = xarVarCleanFromInput(
-                                 'adduser',
-                                 'addusermaildomain',
-                                 'useldap',
-                                 'ldapnamevalue',
-                                 'ldapmailvalue',
-                                 'defaultgroup'
-                                );
-
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
+    
+    // Security check
+    if(!xarSecurityCheck('AdminAuthSSO')) return;
+    
+    // Get parameters
+    if (!xarVarFetch('adduser', 'checkbox', $adduser, true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maildomain', 'str:1:64', $maildomain, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useldap', 'checkbox', $useldap, true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ldapnamevalue', 'str:1:64', $ldapnamevalue, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ldapmailvalue', 'str:1:64', $ldapmailvalue, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('defaultgroup', 'str:1:64', $defaultgroup, '', XARVAR_NOT_REQUIRED)) return;
 
-    // update the data
-    if(!$adduser) {
-        xarModSetVar('authsso', 'add_user', 'false');
-    } else {
-        xarModSetVar('authsso', 'add_user', 'true');
-    }
-    if(!$useldap) {
-        xarModSetVar('authsso', 'getfromldap', 'false');
-    } else {
-        xarModSetVar('authsso', 'getfromldap', 'true');
-    }
-    if(isset($addusermaildomain)) {
-        xarModSetVar('authsso', 'add_user_maildomain', $addusermaildomain);
-    }
-    if(isset($ldapnamevalue)) {
-        xarModSetVar('authsso', 'ldapdisplayname', $ldapnamevalue);
-    }
-    if(isset($ldapmailvalue)) {
-        xarModSetVar('authsso', 'ldapmail', $ldapmailvalue);
-    }
+    // update the config
+    xarModSetVar('authsso', 'add_user', $adduser);
+    xarModSetVar('authsso', 'getfromldap', $useldap);
+    xarModSetVar('authsso', 'add_user_maildomain', $maildomain);
+    xarModSetVar('authsso', 'ldapdisplayname', $ldapnamevalue);
+    xarModSetVar('authsso', 'ldapmail', $ldapmailvalue);
 
     // Get default users group
-    if (!isset($defaultgroup)) {
+    if (empty($defaultgroup)) {
         // See if Users role exists
         if( xarFindRole("Users"))
             $defaultgroup = 'Users';

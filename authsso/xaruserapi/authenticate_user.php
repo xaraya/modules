@@ -26,11 +26,10 @@
 function authsso_userapi_authenticate_user($args)
 {
     extract($args);
-    // Don't use authsso for install created admin
-    // Todo: allow admin to select the name of the
-    //       local admin in module configuration.
-    $adminuser = xarFindRole("Admin");
-    $adminname = $adminuser->getName();
+    // Don't use authsso for designated admin
+    $roles = new xarRoles();
+    $adminuser = $roles->getRole(xarModGetVar('roles','admin'));
+    $adminname = $adminuser->getUname();
     if ($uname == $adminname) {
         return XARUSER_AUTH_FAILED;
     } else {

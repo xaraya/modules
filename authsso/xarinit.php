@@ -21,12 +21,15 @@ function authsso_init()
     // ToDo: sanity check
 
     // ToDo: Set up module variables
-    xarModSetVar('authsso', 'add_user', 'true');
+    xarModSetVar('authsso', 'add_user', '1');
     xarModSetVar('authsso', 'add_user_maildomain', 'example.com');
     xarModSetVar('authsso', 'defaultgroup', 'Users');
-    xarModSetVar('authsso', 'getfromldap', 'false');
+    xarModSetVar('authsso', 'getfromldap', '0');
     xarModSetVar('authsso', 'ldapdisplayname', 'displayname');
     xarModSetVar('authsso', 'ldapmail', 'mail');
+    if (xarFindRole("Users")) {
+        xarModSetVar('authsso', 'defaultgroup', 'Users');
+    }
 
     // Define mask definitions for security checks
     xarRegisterMask('AdminAuthSSO', 'All', 'authsso', 'All', 'All', 'ACCESS_ADMIN');

@@ -30,20 +30,20 @@ function authsso_admin_modifyconfig()
     $data['configadmin'] = xarVarPrepForDisplay(xarML('Configure AuthSSO'));
     $data['adduser'] = xarVarPrepForDisplay(xarML('Add SSO User to Xaraya Database on Login'));
     $data['adduserhelp'] = xarVarPrepForDisplay(xarML('If a user has been authenticated by the web server but does not have a login account to Xaraya, the user will not be able to login. By selecting this option, a user that has been authenticated by the web server will be automatically added to the Xaraya database and allowed to login.'));
-    if (xarModGetVar('authsso', 'add_user') == 'true') {
+    if (xarModGetVar('authsso', 'add_user')) {
         $data['adduservalue'] = 'checked';
     } else {
         $data['adduservalue'] = '';
     }
     $data['useldap'] = xarVarPrepForDisplay(xarML('Use LDAP to Retrieve User Information'));
     $data['useldaphelp'] = xarVarPrepForDisplay(xarML('User information can be retrieved from an LDAP server via the xarLDAP module. Be sure that xarLDAP is configured appropriately.'));
-    if (xarModGetVar('authsso','getfromldap') == 'true') {
+    if (xarModGetVar('authsso','getfromldap')) {
         $data['useldapvalue'] = 'checked';
     } else {
         $data['useldapvalue'] = '';
     }
-    $data['addusermaildomain'] = xarVarPrepForDisplay(xarML('Mail Domain of Added User'));
-    $data['addusermailvalue'] = xarVarPrepForDisplay(xarModGetVar('authsso','add_user_maildomain'));
+    $data['maildomain'] = xarVarPrepForDisplay(xarML('Mail Domain of Added User'));
+    $data['mailvalue'] = xarVarPrepForDisplay(xarModGetVar('authsso','add_user_maildomain'));
     $data['ldapnameattr'] = xarVarPrepForDisplay(xarML('LDAP Display Name Attribute'));
     $data['ldapnamevalue'] = xarVarPrepForDisplay(xarModGetVar('authsso','ldapdisplayname'));
     $data['ldapmailattr'] = xarVarPrepForDisplay(xarML('LDAP Email Attribute'));
@@ -55,7 +55,7 @@ function authsso_admin_modifyconfig()
     $data['defaultgroup'] = xarModGetVar('authsso', 'defaultgroup');
 
     // Get default users group
-    if (!isset($data['defaultgroup'])) {
+    if (empty($data['defaultgroup'])) {
         // See if Users role exists
         if ( xarFindRole("Users"))
             $data['defaultgroup'] = 'Users';
