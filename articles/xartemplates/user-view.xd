@@ -55,6 +55,26 @@
         </a>
     </xar:if>
 </xar:if>
+
+<xar:comment>Added to automatically display an alpha pager when articles are sorted by title.</xar:comment>
+<xar:if condition="isset($sort) && ($sort == 'title')">
+	<xar:comment>TODO: fix this to use modURL or something</xar:comment>
+	<xar:set name="$baselinkurl">"index.php?module=articles&func=view&ptid=".$ptid."&displayletter"</xar:set>
+	<div style="text-align: center;">
+		<xar:for start="$i = 65" test="$i le 90" iter="$i++">
+			<xar:set name="$letter">chr($i)</xar:set>
+	
+			<xar:if condition="$displayletter == $letter">
+				<b style="font-size:large;">#$letter#</b>
+			<xar:else />
+				<a href="#$baselinkurl#=#$letter#">#$letter#</a>
+			</xar:if>
+	
+		</xar:for>
+		<a href="#$baselinkurl#=other">Other</a>
+	</div>
+</xar:if>
+
 <div style="text-align: center;">
     #$pager# 
 </div>

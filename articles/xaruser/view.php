@@ -26,6 +26,10 @@ function articles_user_view($args)
 //    if(!xarVarFetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 //    if(!xarVarFetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
+
+	// Added to impliment an Alpha Pager
+    if(!xarVarFetch('displayletter', 'str', $displayletter,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
 
@@ -242,6 +246,13 @@ function articles_user_view($args)
 
     $data['pager'] = '';
 
+	// Add Sort to data passed to template so that we can automatically turn on alpha pager, if needed
+	$data['sort'] = $sort;	
+	
+	// Add current display letter, so that we can highlight the current filter in the alpha pager
+	$data['displayletter']=$displayletter;
+	
+
     // Get the users requested number of stories per page.
     // If user doesn't care, use the site default
     if (xarUserIsLoggedIn())
@@ -343,6 +354,51 @@ function articles_user_view($args)
     if (empty($where)) {
         $where = null;
     }
+
+
+	// Modify the where clause if an Alpha filter has been specified.
+	if (!empty($displayletter))
+	{
+		$displayletter = strtoupper($displayletter);
+		if( preg_match("/^[a-z|A-Z]$/",$displayletter) )
+		{
+			$extrawhere = "title LIKE '$displayletter%'";
+		} else {
+			$extrawhere= " title NOT LIKE 'a%'"
+			            ." and title NOT LIKE 'b%'"
+			            ." and title NOT LIKE 'c%'"
+			            ." and title NOT LIKE 'd%'"
+			            ." and title NOT LIKE 'e%'"
+			            ." and title NOT LIKE 'f%'"
+			            ." and title NOT LIKE 'g%'"
+			            ." and title NOT LIKE 'h%'"
+			            ." and title NOT LIKE 'i%'"
+			            ." and title NOT LIKE 'j%'"
+			            ." and title NOT LIKE 'k%'"
+			            ." and title NOT LIKE 'l%'"
+			            ." and title NOT LIKE 'm%'"
+			            ." and title NOT LIKE 'n%'"
+			            ." and title NOT LIKE 'o%'"
+			            ." and title NOT LIKE 'p%'"
+			            ." and title NOT LIKE 'q%'"
+			            ." and title NOT LIKE 'r%'"
+			            ." and title NOT LIKE 's%'"
+			            ." and title NOT LIKE 't%'"
+			            ." and title NOT LIKE 'u%'"
+			            ." and title NOT LIKE 'v%'"
+			            ." and title NOT LIKE 'w%'"
+			            ." and title NOT LIKE 'x%'"
+			            ." and title NOT LIKE 'y%'"
+			            ." and title NOT LIKE 'z%'";
+		}
+		if( $where == null )
+		{
+			$where = $extrawhere;
+		} else {
+			$where .= $extrawhere;
+		}
+		
+	}
 
     // Get articles
     $articles = xarModAPIFunc('articles',
@@ -757,6 +813,7 @@ function articles_user_view($args)
                                                     'catid' => $catid,
                                                     'authorid' => $authorid,
                                                     'sort' => ($sort == $defaultsort ? null : $sort),
+                                                    'displayletter' => $displayletter,
                                                     'startnum' => '%%')),
                                     $numitems);
 
