@@ -12,7 +12,7 @@
                 <br />
                 <xar:if condition="$search eq 'user'">
                     <xar:mlstring>Found user</xar:mlstring>
-                    #$value#
+                    &nbsp;#$value#
                     <br /><br />
                     <a href="#xarModURL('xarldap', 'admin', 'usersearch')#">Search for another user.</a>
                 </xar:if>
@@ -27,7 +27,7 @@
                 <br />
                 <xar:if condition="$search eq 'user'">
                     <xar:mlstring>Could not find user</xar:mlstring>
-                    #$value#
+                    &nbsp;#$value#
                     <br /><br />
                     <a href="#xarModURL('xarldap', 'admin', 'usersearch')#">Search for another user.</a>
                 </xar:if>
