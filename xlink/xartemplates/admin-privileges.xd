@@ -44,19 +44,19 @@
 </th><td>
     <select name="extlevel" id="extlevel">
         <xar:if condition="$extlevel eq 0">
-        	<option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
+            <option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
         <xar:else />
-        	<option value="0"><xar:mlstring>No Access</xar:mlstring></option>
+            <option value="0"><xar:mlstring>No Access</xar:mlstring></option>
         </xar:if>
         <xar:if condition="$extlevel eq 200">
-        	<option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
+            <option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
         <xar:else />
-        	<option value="200"><xar:mlstring>Read</xar:mlstring></option>
+            <option value="200"><xar:mlstring>Read</xar:mlstring></option>
         </xar:if>
         <xar:if condition="$extlevel eq 800">
-        	<option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
+            <option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
         <xar:else />
-        	<option value="800"><xar:mlstring>Admin</xar:mlstring></option>
+            <option value="800"><xar:mlstring>Admin</xar:mlstring></option>
         </xar:if>
     </select>
 </td></tr>
