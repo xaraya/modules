@@ -1,15 +1,11 @@
 <xar:comment>Template for xartinycme wysiwyg editor</xar:comment>
 
-<xar:set name="jsstring">xarModGetVar('tinymce','jstext')</xar:set>
-<xar:set name="currentmod">xarModGetName()</xar:set>
-<xar:set name="serverbaseurl">xarServerGetBaseURL()</xar:set>
+<xar:comment>Include the static JavaScript</xar:comment>
+<xar:base-include-javascript position="head" module="tinymce" filename="tinymce/jscripts/tiny_mce/tiny_mce.js" />
 
-
-<!-- XarTinyMCE -->
-<script type="text/javascript" src="#$serverbaseurl#modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-    <xar:set name="tinyloaded">xarTplGetJavaScript('head', 'tinymce')</xar:set>
-    <xar:if condition="empty($tinyloaded)">
-        <xar:set name="dynajs">xarTplAddJavaScript('body', 'code', 'tinyMCE.init({'.$jsstring.'});', 'tinymce')</xar:set>
-    </xar:if>
-<!-- /XarTinyMCE -->
-
+<xar:comment>Include the dynamic JavaScript, if not already included.</xar:comment>
+<xar:set name="tinyloaded">xarTplGetJavaScript('head', 'tinymce')</xar:set>
+<xar:if condition="empty($tinyloaded)">
+    <xar:set name="jsstring">xarModGetVar('tinymce','jstext')</xar:set>
+    <xar:set name="dynajs">xarTplAddJavaScript('head', 'code', 'tinyMCE.init({'.$jsstring.'});', 'tinymce')</xar:set>
+</xar:if>
