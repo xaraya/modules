@@ -23,13 +23,18 @@ function workflow_init()
 
     xarDBLoadTableMaintenanceAPI();
 
-    // 'user' is a reserved word in PostgreSQL and must be surrounded
-    // by double quotes to be used as a column name
+    // Galaxia developers use quotes around column names. 
+    // Since PostgreSQL creates column names in lowercase by
+    // default, the column names must be surrounded by quotes.
     $dbtype  = xarCore_getSystemVar('DB.Type');
-    if ($dbtype == 'postgres') {
-        $usercol = '"user"';
-    } else {
-        $usercol = 'user';
+    switch ($dbtype) {
+        case 'postgres':
+                $qte = '"';
+            break;
+        case 'mysql':
+        default:
+                $qte = '';
+            break;
     }
 
 // From file db/tiki.sql of TikiWiki 1.8 in CVS :
@@ -54,16 +59,16 @@ function workflow_init()
     $table = $xartable['workflow_activities'];
 
     $fields = array(
-        'activityId'        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'name'              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
-        'normalized_name'   => array('type'=>'varchar','size'=>80,'null'=>TRUE),
-        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'type'              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
-        'isAutoRouted'      => array('type'=>'char','size'=>1,'null'=>TRUE),
-        'flowNum'           => array('type'=>'integer','null'=>TRUE),
-        'isInteractive'     => array('type'=>'char','size'=>1,'null'=>TRUE),
-        'lastModif'         => array('type'=>'integer','null'=>TRUE),
-        'description'       => array('type'=>'text','null'=>TRUE)
+        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        $qte.'normalized_name'.$qte   => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'type'.$qte              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
+        $qte.'isAutoRouted'.$qte      => array('type'=>'char','size'=>1,'null'=>TRUE),
+        $qte.'flowNum'.$qte           => array('type'=>'integer','null'=>TRUE),
+        $qte.'isInteractive'.$qte     => array('type'=>'char','size'=>1,'null'=>TRUE),
+        $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>TRUE),
+        $qte.'description'.$qte       => array('type'=>'text','null'=>TRUE)
     );
 
     // Create the table DDL
@@ -71,7 +76,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -93,8 +99,8 @@ function workflow_init()
     $table = $xartable['workflow_activity_roles'];
 
     $fields = array(
-        'activityId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
-        'roleId'            => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE)
+        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        $qte.'roleId'.$qte            => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE)
     );
 
     // Create the table DDL
@@ -102,7 +108,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -129,12 +136,12 @@ function workflow_init()
     $table = $xartable['workflow_instance_activities'];
 
     $fields = array(
-        'instanceId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
-        'activityId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
-        'started'           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'ended'             => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        $usercol            => array('type'=>'varchar','size'=>200,'null'=>TRUE),
-        'status'            => array('type'=>'varchar','size'=>20,'null'=>TRUE)
+        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        $qte.'started'.$qte           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'ended'.$qte             => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        $qte.'status'.$qte            => array('type'=>'varchar','size'=>20,'null'=>TRUE)
     );
 
     // Create the table DDL
@@ -142,7 +149,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -172,15 +180,15 @@ function workflow_init()
     $table = $xartable['workflow_instance_comments'];
 
     $fields = array(
-        'cId'               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'instanceId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        $usercol            => array('type'=>'varchar','size'=>200,'null'=>TRUE),
-        'activityId'        => array('type'=>'integer','null'=>TRUE),
-        'hash'              => array('type'=>'varchar','size'=>32,'null'=>TRUE),
-        'title'             => array('type'=>'varchar','size'=>250,'null'=>TRUE),
-        'comment'           => array('type'=>'text','null'=>TRUE),
-        'activity'          => array('type'=>'varchar','size'=>80,'null'=>TRUE),
-        'timestamp'         => array('type'=>'integer','null'=>TRUE)
+        $qte.'cId'.$qte               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>TRUE),
+        $qte.'hash'.$qte              => array('type'=>'varchar','size'=>32,'null'=>TRUE),
+        $qte.'title'.$qte             => array('type'=>'varchar','size'=>250,'null'=>TRUE),
+        $qte.'comment'.$qte           => array('type'=>'text','null'=>TRUE),
+        $qte.'activity'.$qte          => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        $qte.'timestamp'.$qte         => array('type'=>'integer','null'=>TRUE)
     );
 
     // Create the table DDL
@@ -188,7 +196,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -218,15 +227,15 @@ function workflow_init()
     $table = $xartable['workflow_instances'];
 
     $fields = array(
-        'instanceId'        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'started'           => array('type'=>'integer','null'=>TRUE),
-        'owner'             => array('type'=>'varchar','size'=>200,'null'=>TRUE),
-        'nextActivity'      => array('type'=>'integer','null'=>TRUE),
-        'nextUser'          => array('type'=>'varchar','size'=>200,'null'=>TRUE),
-        'ended'             => array('type'=>'integer','null'=>TRUE),
-        'status'            => array('type'=>'varchar','size'=>20,'null'=>TRUE),
-        'properties'        => array('type'=>'blob','null'=>TRUE)
+        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'started'.$qte           => array('type'=>'integer','null'=>TRUE),
+        $qte.'owner'.$qte             => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        $qte.'nextActivity'.$qte      => array('type'=>'integer','null'=>TRUE),
+        $qte.'nextUser'.$qte          => array('type'=>'varchar','size'=>200,'null'=>TRUE),
+        $qte.'ended'.$qte             => array('type'=>'integer','null'=>TRUE),
+        $qte.'status'.$qte            => array('type'=>'varchar','size'=>20,'null'=>TRUE),
+        $qte.'properties'.$qte        => array('type'=>'blob','null'=>TRUE)
     );
 
     // Create the table DDL
@@ -234,7 +243,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -263,14 +273,14 @@ function workflow_init()
     $table = $xartable['workflow_processes'];
 
     $fields = array(
-        'pId'               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'name'              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
-        'isValid'           => array('type'=>'char','size'=>1,'null'=>TRUE),
-        'isActive'          => array('type'=>'char','size'=>1,'null'=>TRUE),
-        'version'           => array('type'=>'varchar','size'=>12,'null'=>TRUE),
-        'description'       => array('type'=>'text','null'=>TRUE),
-        'lastModif'         => array('type'=>'integer','null'=>TRUE),
-        'normalized_name'   => array('type'=>'varchar','size'=>80,'null'=>TRUE)
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        $qte.'isValid'.$qte           => array('type'=>'char','size'=>1,'null'=>TRUE),
+        $qte.'isActive'.$qte          => array('type'=>'char','size'=>1,'null'=>TRUE),
+        $qte.'version'.$qte           => array('type'=>'varchar','size'=>12,'null'=>TRUE),
+        $qte.'description'.$qte       => array('type'=>'text','null'=>TRUE),
+        $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>TRUE),
+        $qte.'normalized_name'.$qte   => array('type'=>'varchar','size'=>80,'null'=>TRUE)
     );
 
     // Create the table DDL
@@ -278,7 +288,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -304,11 +315,11 @@ function workflow_init()
     $table = $xartable['workflow_roles'];
 
     $fields = array(
-        'roleId'            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'lastModif'         => array('type'=>'integer','null'=>TRUE),
-        'name'              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
-        'description'       => array('type'=>'text','null'=>TRUE)
+        $qte.'roleId'.$qte            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'lastModif'.$qte         => array('type'=>'integer','null'=>TRUE),
+        $qte.'name'.$qte              => array('type'=>'varchar','size'=>80,'null'=>TRUE),
+        $qte.'description'.$qte       => array('type'=>'text','null'=>TRUE)
     );
 
     // Create the table DDL
@@ -316,7 +327,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -340,9 +352,9 @@ function workflow_init()
     $table = $xartable['workflow_transitions'];
 
     $fields = array(
-        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'actFromId'         => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
-        'actToId'           => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE)
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'actFromId'.$qte         => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE),
+        $qte.'actToId'.$qte           => array('type'=>'integer','null'=>FALSE,'default'=>'0','primary_key'=>TRUE)
     );
 
 
@@ -351,7 +363,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -375,9 +388,9 @@ function workflow_init()
     $table = $xartable['workflow_user_roles'];
 
     $fields = array(
-        'pId'               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'roleId'            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        $usercol            => array('type'=>'varchar','size'=>200,'null'=>FALSE,'default'=>'','primary_key'=>TRUE)
+        $qte.'pId'.$qte               => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'roleId'.$qte            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>FALSE,'default'=>'','primary_key'=>TRUE)
     );
 
 
@@ -386,7 +399,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
@@ -415,15 +429,15 @@ function workflow_init()
     $table = $xartable['workflow_workitems'];
 
     $fields = array(
-        'itemId'            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'instanceId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'orderId'           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'activityId'        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'type'              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
-        'properties'        => array('type'=>'blob','null'=>TRUE),
-        'started'           => array('type'=>'integer','null'=>TRUE),
-        'ended'             => array('type'=>'integer','null'=>TRUE),
-        $usercol            => array('type'=>'varchar','size'=>200,'null'=>TRUE)
+        $qte.'itemId'.$qte            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        $qte.'instanceId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'orderId'.$qte           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'activityId'.$qte        => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        $qte.'type'.$qte              => array('type'=>'varchar','size'=>20,'null'=>TRUE),
+        $qte.'properties'.$qte        => array('type'=>'blob','null'=>TRUE),
+        $qte.'started'.$qte           => array('type'=>'integer','null'=>TRUE),
+        $qte.'ended'.$qte             => array('type'=>'integer','null'=>TRUE),
+        $qte.'user'.$qte              => array('type'=>'varchar','size'=>200,'null'=>TRUE)
     );
 
     // Create the table DDL
@@ -431,7 +445,8 @@ function workflow_init()
     if (empty($query)) return false; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
