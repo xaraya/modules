@@ -85,6 +85,34 @@ function xarbb_user_viewforum()
                                   'startnum' => $startnum,
                                   'numitems' => $settings['topicsperpage']));
     $totaltopics=count($topics);
+
+    $topiclist = array();
+    $isuser = array();
+    for ($i = 0; $i < $totaltopics; $i++) {
+        $topiclist[] = $topics[$i]['tid'];
+        $isuser[$topics[$i]['tposter']] = 1;
+        $isuser[$topics[$i]['treplier']] = 1;
+    }
+    $hits = xarModAPIFunc('hitcount',
+                          'user',
+                          'getitems',
+                          array('modname' => 'xarbb',
+                                'itemtype' => $fid,
+                                'itemids' => $topiclist));
+    $userlist = array_keys($isuser);
+    $users = array();
+    if (count($userlist) > 0) {
+// TODO: find/make better roles API for this ?
+        $selection = ' AND xar_uid IN (' . join(', ',$userlist) . ') ';
+        $roles = xarModAPIFunc('roles',
+                               'user',
+                               'getall',
+                               array('selection' => $selection));
+        foreach ($roles as $role) {
+            $users[$role['uid']] = $role;
+        }
+        unset($roles);
+    }
  
     for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
@@ -139,12 +167,11 @@ function xarbb_user_viewforum()
                 break;
         }
 
-        $topics[$i]['hitcount'] = xarModAPIFunc('hitcount',
-                                                'user',
-                                                'get',
-                                                array('modname' => 'xarbb',
-                                                      'itemtype' => $topic['fid'],
-                                                      'objectid' => $topic['tid']));
+        if (!empty($hits[$topic['tid']])) {
+            $topics[$i]['hitcount'] = $hits[$topic['tid']];
+        } else {
+            $topics[$i]['hitcount'] = 0;
+        }
 
         if (!$topics[$i]['hitcount']) {
             $topics[$i]['hitcount'] = '0';
@@ -154,12 +181,11 @@ function xarbb_user_viewforum()
             $topics[$i]['hitcount'] .= ' ';
         }
 
-        $getname = xarModAPIFunc('roles',
-                                 'user',
-                                 'get',
-                                 array('uid' => $topic['tposter']));
-
-        $topics[$i]['name'] = $getname['name'];
+        if (isset($users[$topic['tposter']])) {
+            $topics[$i]['name'] = $users[$topic['tposter']]['name'];
+        } else {
+            $topics[$i]['name'] = '-';
+        }
 
         // And we need to know who did the last reply
 
@@ -170,12 +196,11 @@ function xarbb_user_viewforum()
             $topics[$i]['authorid'] = $topic['treplier'];
         }
 
-        $getreplyname = xarModAPIFunc('roles',
-                                      'user',
-                                      'get',
-                                      array('uid' => $topics[$i]['authorid']));
-
-        $topics[$i]['replyname'] = $getreplyname['name'];
+        if (isset($users[$topics[$i]['authorid']])) {
+            $topics[$i]['replyname'] = $users[$topics[$i]['authorid']]['name'];
+        } else {
+            $topics[$i]['replyname'] = '-';
+        }
     }
     sort_topics($topics);
     $data['items'] = $topics;
