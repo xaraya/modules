@@ -9,7 +9,7 @@ function headlines_admin_create($args)
 
       if (!ereg("^http://|https://|ftp://", $url)) {
         $msg = xarML('Invalid Address for Feed');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
       }
 
@@ -50,7 +50,7 @@ function headlines_admin_create($args)
 
     if (!empty($info['warning'])){
         $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 

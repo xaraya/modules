@@ -13,7 +13,7 @@ function headlines_adminapi_delete($args)
     // Argument check
     if (!isset($hid)) {
         $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2)', 'admin', 'delete', 'Headlines');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // The user API function is called

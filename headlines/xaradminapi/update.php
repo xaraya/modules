@@ -13,7 +13,7 @@ function headlines_adminapi_update($args)
     if ((!isset($hid)) ||
         (!isset($url))) {
         $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'update', 'Headlines');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

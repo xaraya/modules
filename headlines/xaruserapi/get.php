@@ -12,7 +12,7 @@ function headlines_userapi_get($args)
 
     if (empty($hid) || !is_numeric($hid)) {
         $msg = xarML('Invalid Headline ID');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

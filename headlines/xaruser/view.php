@@ -93,7 +93,7 @@ function headlines_user_view()
 
     } else {
         $msg = xarML('There is a problem with a feed.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
