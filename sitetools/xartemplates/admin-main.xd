@@ -17,7 +17,7 @@
         <li><xar:mlstring>Delete Template, RSS or ADOdb cache files</xar:mlstring></li>
         <li><xar:mlstring>Browse template cache files</xar:mlstring></li>        
             
-        <li><xar:mlstring>Backup your MySQL database tables //FUNCTIONAL,STILL TO DOs, NEEDS TESTING</xar:mlstring></li>
+        <li><xar:mlstring>Backup your MySQL database tables (MySQL 3.22 or higher required) Testing feedback appreciated.</xar:mlstring></li>
         <li><xar:mlstring>Web Link Checker - check web links, image links and so on.</xar:mlstring></li>
             </ul>
        <p>A number of SiteTool functions also work in conjunction with the Scheduler module to schedule regular maintenance activies such as optimizing your database,
