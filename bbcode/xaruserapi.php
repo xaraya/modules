@@ -90,6 +90,21 @@ function bbcode_encode($message, $is_html_disabled)
         $message = str_replace ("<p></p>", "", $message);
     }
 
+	// matches an "xxxx://yyyy" URL at the start of a line, or after a space. 
+	// xxxx can only be alpha characters. 
+	// yyyy is anything up to the first space, newline, comma, double quote or < 
+	$message = preg_replace("#(^|[\n ])([\w]+?://[^ \"\n\r\t<]*)#is", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $message); 
+
+	// matches a "www|ftp.xxxx.yyyy[/zzzz]" kinda lazy URL thing 
+	// Must contain at least 2 dots. xxxx contains either alphanum, or "-" 
+	// zzzz is optional.. will contain everything up to the first space, newline, 
+	// comma, double quote or <. 
+	$message = preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r<]*)#is", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $message); 
+
+	// matches an email@domain type address at the start of a line, or after a space.
+	// Note: Only the followed chars are valid; alphanums, "-", "_" and or ".".
+	$message = preg_replace("#(^|[\n ])([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>", $message);
+
     
     // First: If there isn't a "[" and a "]" in the message, don't bother.
     if (! (strpos($message, "[") && strpos($message, "]"))){
@@ -123,7 +138,8 @@ function bbcode_encode($message, $is_html_disabled)
         // [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.    
         $message = bbcode_encode_quote($message);
         $message = bbcode_encode_code($message, $is_html_disabled);
-        $message = bbcode_encode_list($message);
+        // Remove the list function for a bit.  Need to work on this one.
+        //$message = bbcode_encode_list($message);
 
         // [u] and [/u] for underline text.
         $message = preg_replace("/\[u\](.*?)\[\/u\]/si", "<span style='text-decoration: underline;'>\\1</span>", $message);
@@ -163,34 +179,6 @@ function bbcode_encode($message, $is_html_disabled)
         // [url=www.phpbb.com]phpBB[/url] code.. (no xxxx:// prefix).
         $patterns[3] = "#\[url=(.*?)\](.*?)\[/url\]#si";
         $replacements[3] = '<a href="http://\1">\2</a>';
-
-        // [email]user@domain.tld[/email] code..
-        $patterns[4] = "#\[email\](.*?)\[/email\]#si";
-        $replacements[4] = '<a href="mailto:\1">\1</a>';
-
-        // [google]string[/google] code..
-        $patterns[5] = "#\[google\](.*?)\[/google\]#si";
-        $replacements[5] = '<a href="http://www.google.com/search?q=\\1">\\1</a>';
-
-        // [yahoo]string[/yahoo] code..
-        $patterns[6] = "#\[yahoo\](.*?)\[/yahoo\]#si";
-        $replacements[6] = '<a href="http://search.yahoo.com/search?p=\\1">\\1</a>';
-
-        // [msn]string[/msn] code..
-        $patterns[7] = "#\[msn\](.*?)\[/msn\]#si";
-        $replacements[7] = '<a href="http://search.msn.com/results.asp?q=\\1">\\1</a>';
-
-        // [dictionary]string[/dictionary] code..
-        $patterns[8] = "#\[dictionary\](.*?)\[/dictionary\]#si";
-        $replacements[8] = '<a href="http://dictionary.reference.com/search?q=\\1">\\1</a>';
-
-        // [wiki]string[/wiki] code..
-        $patterns[9] = "#\[wiki\](.*?)\[/wiki\]#si";
-        $replacements[9] = '<a href="http://www.wikipedia.org/wiki/\\1">\\1</a>';
-
-        // [thesaurus]string[/thesaurus] code..
-        $patterns[10] = "#\[thesaurus\](.*?)\[/thesaurus\]#si";
-        $replacements[10] = '<a href="http://thesaurus.reference.com/search?q=\\1">\\1</a>';
 
         $message = preg_replace($patterns, $replacements, $message);
 

@@ -1,0 +1,7 @@
+<xar:if condition="!empty($replace3)">
+	<a href="#$replace1##$replace2#">#$replace3</a>
+	<xar:elseif condition="!empty($replace2)" />
+	<a href="#$replace1##$replace2#">#$replace1##$replace2#</a>
+	<xar:else />
+	<a href="http://#$replace1#">#$replace1#</a>
+</xar:if>

@@ -59,6 +59,19 @@ function bbcode_init()
                    "'[i]','italics','[i]Your Text[/i] will produce', '[i]Your Text[/i]'",
                    "'[sub]','sub','[sub]Your Text[/sub] will produce', '[sub]Your Text[/sub]'",
                    "'[sup]','sup','[sup]Your Text[/sup] will produce', '[sup]Your Text[/sup]'",
+                   "'[color]','color','[color=red]Your Text[/color] will produce', '[color=red]Your Text[/color]'",
+                   "'[size]','size','[size=2]Your Text[/size] will produce', '[size=2]Your Text[/size]'",
+                   "'[img]','image','[image]http://www.your-url-for-this-image.com[/img] will produce', '[image]http://www.your-url-for-this-image.com[/img]'",
+                   "'[url]','url','[url]http://www.your-url.com[/url] will produce', '[url]http://www.your-url.com[/url]'",
+                   "'[email]','email','[email]your@email.com[/email] will produce', '[email]your@email.com[/email]'",
+                   "'[google]','google','[google]Your Text[/google] will produce', '[google]Your Text[/google]'",
+                   "'[yahoo]','yahoo','[yahoo]Your Text[/yahoo] will produce', '[yahoo]Your Text[/yahoo]'",
+                   "'[msn]','msn','[msn]Your Text[/msn] will produce', '[msn]Your Text[/msn]'",
+                   "'[dictionary]','dictionary','[dictionary]Your Text[/dictionary] will produce', '[dictionary]Your Text[/dictionary]'",
+                   "'[wiki]','wiki','[wiki]Your Text[/wiki] will produce', '[wiki]Your Text[/wiki]'",
+                   "'[thesaurus]','thesaurus','[thesaurus]Your Text[/thesaurus] will produce', '[thesaurus]Your Text[/thesaurus]'",
+                   "'[code]','code','[code]Your Text[/code] will produce', '[code]Your Text[/code]'",
+                   "'[quote]','quote','[quote]Your Text[/quote] will produce', '[quote]Your Text[/quote]'",
                    "'[you]','you','[you] will produce', 'The viewers name, likeso: [you]'");
 
     foreach ($codes as $code) {

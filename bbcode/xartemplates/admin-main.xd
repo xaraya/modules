@@ -16,6 +16,9 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p><xar:mlstring>The BBCode module allows you to use BBCode style mark-up in your content instead of, or with, HTML mark-up.</xar:mlstring></p>
         </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>Adding custom bb-code is available.  This is a three step process.  First, you will need to add the tag to the system via the "add" function in your admin.  Secondly, you will need to add the corresponding API function to html/modules/bbcode/xaruserapi folder.  Examples are included.  Finally, you will need to add a template for this function in the html/modules/bbcode/xartemplates or to your theme directly.  This can be resource intensive.  If you do not want to use the advanced bb-code, turn the option off in the modify configuration section.  The advance bbcode can also be used to create custom functions to your content, by which you have the ability to place blocks, etc, into your content.  This functionality is advanced, but an example has been provided via the [you] tag which transform to the reader's name.</xar:mlstring></p>
+        </div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <p><xar:mlstring>Included Blocks</xar:mlstring></p>
         </div>

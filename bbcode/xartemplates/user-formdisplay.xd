@@ -7,7 +7,6 @@
     <input type="button" accesskey="u" name="addbbcode4" value=" u " style="font-style: underline;" onclick="bbstyle(4)" onmouseover="helpline('u')" />
     <input type="button" accesskey="q" name="addbbcode6" value="Quote" onclick="bbstyle(6)" onmouseover="helpline('q')" />
     <input type="button" accesskey="c" name="addbbcode8" value="Code" onclick="bbstyle(8)" onmouseover="helpline('c')" />
-    <input type="button" accesskey="l" name="addbbcode10" value="List" onclick="bbstyle(10)" onmouseover="helpline('l')" />
     <input type="button" accesskey="p" name="addbbcode14" value="Img" onclick="bbstyle(14)" onmouseover="helpline('p')" />
     <input type="button" accesskey="w" name="addbbcode16" value="URL" style="text-decoration: underline;" onclick="bbstyle(16)" onmouseover="helpline('w')" />
 </span>
