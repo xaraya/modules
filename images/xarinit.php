@@ -45,12 +45,18 @@ function images_init()
 */
     xarRegisterMask('AdminImages', 'All','images','Image','All','ACCESS_ADMIN');
 
+    if (!xarModRegisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook')) {
+         $msg = xarML('Could not register hook.');
+         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+         return;
+    }
+
     $imageAttributes = array(new xarTemplateAttribute('src',         XAR_TPL_REQUIRED | XAR_TPL_STRING),
                              new xarTemplateAttribute('height',      XAR_TPL_OPTIONAL | XAR_TPL_STRING),
                              new xarTemplateAttribute('width',       XAR_TPL_OPTIONAL | XAR_TPL_STRING),
                              new xarTemplateAttribute('constrain',   XAR_TPL_OPTIONAL | XAR_TPL_STRING),
                              new xarTemplateAttribute('label',       XAR_TPL_REQUIRED | XAR_TPL_STRING));
-    xarTplRegisterTag('images', 'image', $imageAttributes, 'images_userapi_handle_image_tag');
+    xarTplRegisterTag('images', 'image-resize', $imageAttributes, 'images_userapi_handle_image_tag');
      
     // Initialisation successful
     return true;
