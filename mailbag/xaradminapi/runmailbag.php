@@ -28,25 +28,29 @@ function mailbag_adminapi_runmailbag()
    if($mailbagdebug) echo "Connect to POP3 server<br>";
 
     // Setup connection to mail server
-    if( ($i = strpos(xarModGetVar('mail', 'popserver'), ":" )) > 0 ) {
+    if( ($i = strpos(xarModGetVar('mail', 'popserver'), ":" )) > 0 ) 
+    {
         $h = substr(xarModGetVar('mailbag', 'popserver'), 0, $i );
         $p = intval(substr(xarModGetVar('mailbag', 'popserver'), $i + 1 ) );
     }
-    else {
+    else 
+    {
         $h = xarModGetVar('mailbag', 'popserver');
         $p = 110;
     }
 
     // Open connection
     $mbsocket = fsockopen( $h, $p, $errno, $errstr, 15 );
-    if( !$mbsocket ) {
+    if( !$mbsocket ) 
+    {
         die ( "POP3 server connection refused: " . $h . ":" . $p );
     }
 
     // Get POP banner. If it begins with a '+' things are ok, otherwise
     // there is an error.
     $line = fgets( $mbsocket, 500 );
-    if( substr( $line, 0, 1 ) != "+" ) {
+    if( substr( $line, 0, 1 ) != "+" ) 
+    {
         $errstr = substr( $line, 5 );
         die ("POP3 server connection error: ".$errstr);
     }
@@ -54,7 +58,8 @@ function mailbag_adminapi_runmailbag()
     // Send the username and test for a '+' result.
     fputs( $mbsocket, "USER " . xarModGetVar('mailbag', 'popuser') . "\r\n" );
     $line = fgets( $mbsocket, 500 );
-    if( substr( $line, 0, 1 ) != "+" ) {
+    if( substr( $line, 0, 1 ) != "+" ) 
+    {
         $errstr = substr( $line, 5 );
         die ("POP3 server username error: ".$errstr);
     }
@@ -62,7 +67,8 @@ function mailbag_adminapi_runmailbag()
     // Send the password and test for a '+' result.
     fputs( $mbsocket, "PASS " . xarModGetVar('mailbag', 'poppass') . "\r\n" );
     $line = fgets( $mbsocket, 500 );
-    if( substr( $line, 0, 1 ) != "+" ) {
+    if( substr( $line, 0, 1 ) != "+" ) 
+    {
         $errstr = substr( $line, 5 );
         die ("POP3 server password error: ".$errstr);
     }
@@ -83,7 +89,8 @@ function mailbag_adminapi_runmailbag()
 
     fputs( $mbsocket, "LIST\r\n" );
     $line = chop( fgets( $mbsocket, 500 ) );
-    if( substr( $line, 0, 1 ) == "+" ) {
+    if( substr( $line, 0, 1 ) == "+" ) 
+    {
         $i = 1;
         while( ($line = chop( fgets( $mbsocket, 500 ) )) != "." )
             $msgindex[$i++]['size'] = intval( substr( $line, strrpos( $line, " " ) ) );
@@ -93,70 +100,81 @@ function mailbag_adminapi_runmailbag()
     // Get the required message headers
     // ----------------------------------------------------------------------
 
-    for( $i = 1; $i <= $msgcount; $i++ ) {
+    for( $i = 1; $i <= $msgcount; $i++ ) 
+    {
    
         if ($mailbagdebug) echo "Load header info of message ".$i."<br>";
 
         // Request the top of the message (the headers) plus 0 lines of body
         fputs( $mbsocket, "TOP $i 0\r\n" );
         $line = chop( fgets( $mbsocket, 500 ) );
-        if( substr( $line, 0, 1 ) == "+" ) {
+        if( substr( $line, 0, 1 ) == "+" ) 
+        {
             // Now we'll get back lines of text containing the headers.  We
             // read until we get a line containing nothing but a period.
             $headerlist = "";
             $lastheader="none";
-            while( ($line = chop( fgets( $mbsocket, 1000 ) )) != "." ) {
+            while( ($line = chop( fgets( $mbsocket, 1000 ) )) != "." ) 
+            {
                 $headerlist .= $line."\n";
 
-                if (!empty($msgindex[$i][$lastheader]) && preg_match("/^\s/", $line)) {
+                if (!empty($msgindex[$i][$lastheader]) && preg_match("/^\s/", $line)) 
+                {
                     // This is a folded header line (like TO: often is)
                     // so it belongs to the lastheader we read
                     $msgindex[$i][$lastheader] .= " ".B64QPDecode(trim($line));
                 }
 
                 // FROM:
-                else if( strcasecmp( substr( $line, 0, 5 ), "FROM:" ) == 0 ) {
+                else if( strcasecmp( substr( $line, 0, 5 ), "FROM:" ) == 0 ) 
+                {
                     $f = B64QPDecode( substr( $line, 5 ) );
                     $msgindex[$i]['from'] = trim( $f );
                     $lastheader="from";
                 }
 
                 // REPLY-TO:
-                else if( strcasecmp( substr( $line, 0, 9 ), "REPLY-TO:" ) == 0 ) {
+                else if( strcasecmp( substr( $line, 0, 9 ), "REPLY-TO:" ) == 0 ) 
+                {
                     $r = B64QPDecode( substr( $line, 9 ) );
                     $msgindex[$i]['replyto'] = trim( $r );
                     $lastheader="replyto";
                 }
 
                 // TO:
-                else if( strcasecmp( substr( $line, 0, 3 ), "TO:" ) == 0 ) {
+                else if( strcasecmp( substr( $line, 0, 3 ), "TO:" ) == 0 ) 
+                {
                     $t = B64QPDecode( substr( $line, 3 ) );
                     $msgindex[$i]['to'] = trim( $t );
                     $lastheader="to";
                 }
 
                 // CC:
-                else if( strcasecmp( substr( $line, 0, 3 ), "CC:" ) == 0 ) {
+                else if( strcasecmp( substr( $line, 0, 3 ), "CC:" ) == 0 ) 
+                {
                     $c = B64QPDecode( substr( $line, 3 ) );
                     $msgindex[$i]['cc'] = trim( $c );
                     $lastheader="cc";
                 }
 
                 // BCC:
-                else if( strcasecmp( substr( $line, 0, 4 ), "BCC:" ) == 0 ) {
+                else if( strcasecmp( substr( $line, 0, 4 ), "BCC:" ) == 0 ) 
+                {
                     $b = B64QPDecode( substr( $line, 4 ) );
                     $msgindex[$i]['bcc'] = trim( $b );
                     $lastheader="bcc";
                 }
 
                 // SUBJECT:
-                else if( strcasecmp( substr( $line, 0, 8 ), "SUBJECT:" ) == 0  ) {
+                else if( strcasecmp( substr( $line, 0, 8 ), "SUBJECT:" ) == 0  ) 
+                {
                     $s = B64QPDecode( substr( $line, 8 ) );
                     $msgindex[$i]['subject'] = trim( $s );
                 }
 
                 // DATE:
-                else if( strcasecmp( substr( $line, 0, 5 ), "DATE:" ) == 0 ) {
+                else if( strcasecmp( substr( $line, 0, 5 ), "DATE:" ) == 0 ) 
+                {
                     $d = substr( $line, 5 );
                     // Eliminate "GMT" if it's present.
                     $d = ereg_replace( "\"GMT\"", "", $d );
@@ -188,7 +206,6 @@ function mailbag_adminapi_runmailbag()
         }
     }
 
-
     // ----------------------------------------------------------------------
     // Check MailBag error log for messages to be processed (errorcode = 99)
     // ----------------------------------------------------------------------
@@ -211,26 +228,35 @@ function mailbag_adminapi_runmailbag()
 
         // Get sender from from or reply-to fields
         $emailfrom = '';
-        if (!empty($msg['replyto'])) {
+        if (!empty($msg['replyto'])) 
+        {
             $match = eregi("([[:alnum:]\._=-]+)@([[:alnum:]\._-]+)\.([[:alpha:]]+)", $msg['replyto'], $from);
             $emailfrom = $from[0];
-        } elseif(!empty($msg['from'])) {
+        } 
+        elseif(!empty($msg['from'])) 
+        {
             $match = eregi("([[:alnum:]\._=-]+)@([[:alnum:]\._-]+)\.([[:alpha:]]+)", $msg['from'], $from);
             $emailfrom = $from[0];
-        } else {
+        } 
+        else 
+        {
             $mailerror = 'There is no Sender.';
         }
+        
+        if ($mailbagdebug) echo $mailerror;
         
         // ----------------------------------------------------------------------
         // Check sender blacklist
         // ----------------------------------------------------------------------
-        if(!empty($sblacklist[$emailfrom])){
+        if(!empty($sblacklist[$emailfrom]))
+        {
             $mailerror = "Mailbag Blacklisted" . ": " . $emailfrom;
             mailbagreply($emailfrom, $mailerror);
         }
         
         if(!empty($emailfrom))
             $user = xarModAPIFunc('roles', 'user', 'get', array('email' => $emailfrom));
+            
         if(!empty($user) && is_array($user))
         {
             $from_userid = $user['uid'];
@@ -241,6 +267,7 @@ function mailbag_adminapi_runmailbag()
             $user = xarModAPIFunc('roles', 'user', 'get', array('uname' => 'Anonymous'));
             $from_userid = $user['uid'];
             $from_uname = $user['uname'];
+            //echo var_dump($user);
         }
         
         // ----------------------------------------------------------------------
@@ -262,35 +289,6 @@ function mailbag_adminapi_runmailbag()
                     $match = array();
                 }
                 
-                /*
-                    NOTE: We don't have topics in Xaraya so I don't think we need this code
-                    but I'm not sure yet
-                else 
-                {
-                    // ----------------------------------------------------------------------
-                    // Check for mail list "to e-mail address" settings
-                    // ----------------------------------------------------------------------
-                    for ($a = 0; $a < count($maillist); $a++) 
-                    {
-                        if ($maillist[$a]['to_email'] != "") 
-                        {
-                            if (eregi($maillist[$a]['to_email'], $to[$j]) != "") 
-                            {
-                                $maillistid = $a+1;
-                            
-                                $column = &$pntable['topics_column'];
-                                $res = $dbconn->Execute("SELECT $column[topicname]
-                                                        FROM $pntable[topics]
-                                                        WHERE $column[tid]='".$maillist[$a][to_topic]."'");
-                                list($to_tname) = $res->fields;
-                                $res->close();
-                                
-                                $emailto = array(); // reset array. Mail List is only sent to one recipient
-                                $emailto[] = $to_tname;
-                            }
-                        }
-                    }
-                }*/
                 $j++;
             }
         }
@@ -302,11 +300,12 @@ function mailbag_adminapi_runmailbag()
             while($j<=count($cc) && count($emailto)<=xarModGetVar('mailbag', 'maxrecip'))
             {
 //            for($j=0; ($j<=count($cc) && count($emailto)<=xarModGetVar('mailbag', 'maxrecip')); $j++) {
-                if (eregi("([[:alnum:]\._=-]+)@(".xarModGetVar('mailbag', 'emaildomain').")", $cc[$j], $match)) {
+                if (eregi("([[:alnum:]\._=-]+)@(".xarModGetVar('mailbag', 'emaildomain').")", $cc[$j], $match)) 
+                {
                     $emailto[] = $match[1];
                     $match = array();
                 }
-            };
+            }
         }
         
         if(!empty($msg['bcc']))
@@ -315,7 +314,8 @@ function mailbag_adminapi_runmailbag()
             $j = 0;
             while($j<=count($cc) && count($emailto)<=xarModGetVar('mailbag', 'maxrecip'))
             {
-                if(eregi("([[:alnum:]\._=-]+)@(".xarModGetVar('mailbag', 'emaildomain').")", $bcc[$j], $match)) {
+                if(eregi("([[:alnum:]\._=-]+)@(".xarModGetVar('mailbag', 'emaildomain').")", $bcc[$j], $match)) 
+                {
                     $emailto[] = $match[1];
                     $match = array();
                 }
@@ -329,7 +329,8 @@ function mailbag_adminapi_runmailbag()
         // ----------------------------------------------------------------------
 
         $subject = xarVarPrepForDisplay($msg['subject']);
-        if ($msg['size'] > xarModGetVar('MailBag', 'maxsize')) {
+        if ($msg['size'] > xarModGetVar('mailbag', 'maxsize'))
+        {
             $mailerror=_MAILBAGMAILISLARGERTHAN." ".xarModGetVar('mailbag', 'maxsize')." bytes";
             mailbagreply($emailfrom, $mailerror);
         }
@@ -349,8 +350,13 @@ function mailbag_adminapi_runmailbag()
         if (!$mailerror && $key <= $msgcount) 
         {
             //$msg['text'] = '';
-            fputs( $mbsocket, "RETR $i\r\n" );
+            fputs( $mbsocket, "RETR $key\r\n" );
             $line = fgets( $mbsocket, 500 );
+
+            echo "<br>" . $key . " : ";
+            echo $line . "<hr>";
+
+            $boundary = array();
             if( substr( $line, 0, 1 ) == "+" ) 
             {
                 // Read the header
@@ -365,16 +371,20 @@ function mailbag_adminapi_runmailbag()
                 if( eregi( "boundary *= *[\"]*([^\r\n\"]+)", $headerlist, $reg ) ) 
                 {
                     $boundary[0] = "--" . $reg[1];
-                    FindBoundary( $boundary[0] );
+                    FindBoundary( $boundary[0], $mbsocket );
                     $headerlist = "";
-                } else
+                } 
+                else
+                {
                     $boundary[0] = "=_";
+                }
                 $b2 = $boundary[0] . "--";
 
                 while( sizeof( $boundary ) > 0 && $line != "." && $line != $b2 ) 
                 {
                     // Read the MIME headers for this part
-                    if( $headerlist == "" ) {
+                    if( $headerlist == "" ) 
+                    {
                         $parthdr = "";
                         while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != "" )
                         {
@@ -398,7 +408,7 @@ function mailbag_adminapi_runmailbag()
                     {
                         array_unshift( $boundary, "--" . $reg[1] );
                         $b2 = $boundary[0] . "--";
-                        FindBoundary( $boundary[0] );
+                        FindBoundary( $boundary[0], $mbsocket );
                         continue;
                     } 
                     else
@@ -433,37 +443,53 @@ function mailbag_adminapi_runmailbag()
                     if( strcasecmp( $parttype, "text/plain" ) == 0 ) 
                     {
                         if( stristr( $parthdr, "base64" ) )
-                            $line = ExtractBASE64( $boundary[0], $i );
+                            $line = ExtractBASE64( $boundary[0], $key, $mbsocket, $msg['text'] );
                         else if( $qp )
-                            $line = ExtractQP( $boundary[0], true, $i );
+                            $line = ExtractQP( $boundary[0], true, $key, $mbsocket, $msg['text'] );
                         else
-                            $line = ExtractTEXT( $boundary[0], true, $i );
+                            $line = ExtractTEXT( $boundary[0], true, $key, $mbsocket, $msg['text'] );
                     }
 
                     // If the part is HTML, and HTML is allowed, insert into $msgindex[$i][text]
                     else if(strcasecmp( $parttype, "text/html" ) == 0 && xarModGetVar('mailbag', 'allowhtml') == '1') 
                     {
-                        if ($msg[text]) $msg[text] = "";
+                        //if ($msg['text']) $msg['text'] = "";
                     
                         if( $qp ) {
-                            $line = ExtractQP( $boundary[0], false, $i );
+                            $line = ExtractQP( $boundary[0], false, $key, $mbsocket, $msg['text'] );
                         }
                         else 
                         {
-                            $line = ExtractTEXT( $boundary[0], false, $i );
+                            $line = ExtractTEXT( $boundary[0], false, $key, $mbsocket, $msg['text']);
                         }
                     }
 
                     // Otherwise we simply skip the data. Attachments are not supported by MailBag
                     else
-                        $line = FindBoundary( $boundary[0] );
+                        $line = FindBoundary( $boundary[0], $mbsocket );
 
-                    while( $line == $b2 ) {
+                    echo sizeOf($boundary) . $line. "<hr>";
+                    
+                    /*
+                    while( $line == $b2 ) 
+                    {
+                        //echo var_dump($boundary) . " $key "  ."<hr>";
                         array_shift( $boundary );
-                        $b2 = $boundary[0] . "--";
-                        FindBoundary( $boundary[0] );
-                    }
+                        if(!empty($boundary[0]))
+                        {
+                            $b2 = $boundary[0] . "--";
+                            FindBoundary( $boundary[0], $mbsocket );
+                        }
+                        else
+                        {
+                            $b2 = '--';
+                        }
+                    }*/
                 }
+            }
+            else
+            {
+                $mailerror = "There is a problem with the retrieval";
             }
 
             // Remove unwanted HTML tags from message body
@@ -477,21 +503,22 @@ function mailbag_adminapi_runmailbag()
             }
             
             // Check if message body has been found
-            if(empty($msg['text'])) {
+            if(empty($msg['text'])) 
+            {
                 $mailerror = 'Error in Mailbag'; //_MAILBAGNOHTMLORTEXT;
                 $mailbagerrorcode = 2;
             }
 
         }
         
-        
+        echo "<hr>" . var_dump($msg) . "<hr>";
         
         /**
             If there was no error, then it is time to route the message
         */
         if(!$mailerror)
         {
-            echo var_dump($msg) . "<hr>";
+            //echo var_dump($msg) . "<hr>";
         }
         /**
             Otherwise lets figure out the error and log it
@@ -499,133 +526,9 @@ function mailbag_adminapi_runmailbag()
         */
         else
         {
-            echo $mailerror;
+            //echo $mailerror;
         }
-    }
-    
-
-    // ----------------------------------------------------------------------
-    // Loop through all messages
-    // ----------------------------------------------------------------------
-/*
-    for($i = 0; $i < ($msgcount + $errcount); $i++) {
-        if ($mailbagdebug) echo "Process message ".$i."<br>";
-        $mailbagerrorcode = "";
-        $maillistid = "";
-
-        // ----------------------------------------------------------------------
-        // Message processing: Sender (FROM)
-        // ----------------------------------------------------------------------
-
-        // Get sender from from or reply-to fields
-        if (!empty($msgindex[$i]['replyto'])) {
-          $match = eregi("([[:alnum:]\._=-]+)@([[:alnum:]\._-]+)\.([[:alpha:]]+)", $msgindex[$i]['replyto'], $from);
-        } elseif(!empty($msgindex[$i]['from'])) {
-          $match = eregi("([[:alnum:]\._=-]+)@([[:alnum:]\._-]+)\.([[:alpha:]]+)", $msgindex[$i]['from'], $from);
-        }
-        $emailfrom = '';
-        if(!empty($from[0]))
-            $emailfrom = $from[0];
-
-        // ----------------------------------------------------------------------
-        // Check sender blacklist
-        // ----------------------------------------------------------------------
-        //if (in_array($emailfrom, $sblacklist)) {
-        if(!empty($sblacklist[$emailfrom])){
-            $mailerror = "Mailbag Blacklist" . ": " . $emailfrom;
-            mailbagreply($emailfrom, $mailerror);
-        }
-        
-        $user = xarModAPIFunc('roles', 'user', 'get', array('email' => $emailfrom));
-        if($user)
-        {
-            $from_userid = $user['uid'];
-            $from_uname = $user['uname'];
-        }
-        else
-        {
-            $from_userid = 2;
-            $from_uname = 'Anon';
-        }
-
-        // ----------------------------------------------------------------------
-        // Message processing: Recipients (TO, CC, BCC)
-        // ----------------------------------------------------------------------
-
-        $emailto = array();
-        $match = array();
-
-        $to = explode(", ", $msgindex[$i]['to']);
-        $j = 0;
-        while( $j <= count($to) && count($emailto) < xarModGetVar('mailbag', 'maxrecip'))
-        {
-            if (!empty($to[$j]) && eregi("([[:alnum:]\._=-]+)@(".xarModGetVar('mailbag', 'emaildomain').")", $to[$j], $match)) 
-            {
-                $emailto[] = $match[1];
-                $match = array();
-            } 
-            else 
-            {
-                // ----------------------------------------------------------------------
-                // Check for mail list "to e-mail address" settings
-                // ----------------------------------------------------------------------
-                for ($a = 0; $a < count($maillist); $a++) 
-                {
-                    if ($maillist[$a]['to_email'] != "") 
-                    {
-                        if (eregi($maillist[$a]['to_email'], $to[$j]) != "") 
-                        {
-                            $maillistid = $a+1;
-                        
-                            $column = &$pntable['topics_column'];
-                            $res = $dbconn->Execute("SELECT $column[topicname]
-                                                    FROM $pntable[topics]
-                                                    WHERE $column[tid]='".$maillist[$a][to_topic]."'");
-                            list($to_tname) = $res->fields;
-                            $res->close();
-                            
-                            $emailto = array(); // reset array. Mail List is only sent to one recipient
-                            $emailto[] = $to_tname;
-                        }
-                    }
-                }
-            }
-            $j++;
-        };
-        
-        if(!empty($msgindex[$i]['cc']))
-        {
-            $cc = explode(", ", $msgindex[$i]['cc']);
-            for($j=0; ($j<=count($cc) && count($emailto)<=xarModGetVar('mailbag', 'maxrecip')); $j++) {
-                if (eregi("([[:alnum:]\._=-]+)@(".xarModGetVar('mailbag', 'emaildomain').")", $cc[$j], $match)) {
-                    $emailto[] = $match[1];
-                    $match = array();
-                }
-            };
-        }
-        
-        if(!empty($msgindex[$i]['bcc']))
-        {        
-            $bcc = explode(", ", $msgindex[$i]['bcc']);
-            for($j=0; ($j<=count($bcc) && count($emailto)<=xarModGetVar('MailBag', 'maxrecip')); $j++) {
-                if(eregi("([[:alnum:]\._=-]+)@(".xarModGetVar('MailBag', 'emaildomain').")", $bcc[$j], $match)) {
-                    $emailto[] = $match[1];
-                    $match = array();
-                }
-            };
-        }
-        if ($mailbagdebug) echo implode(", ", $emailto);
-*/
-
-
-
-
-
-
-
-    }//End of for loop
-
-
+    }// End of Loop
 
 
 

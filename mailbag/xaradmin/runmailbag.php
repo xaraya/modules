@@ -6,7 +6,7 @@
 */
 function mailbag_admin_runmailbag()
 {
-    xarModAPIFunc('mailbag', 'admin', 'runmailbag');
+    xarModAPIFunc('mailbag', 'admin', 'mailbag');
 
     return;
 }
