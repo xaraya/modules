@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'Change Log';
 $modversion['id']             = '185';
-$modversion['version']        = '1.1';
+$modversion['version']        = '1.1.0';
 $modversion['description']    = 'Keep track of changes to module items';
 $modversion['credits']        = '';
 $modversion['help']           = '';

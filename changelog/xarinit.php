@@ -164,12 +164,15 @@ function changelog_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             if (!xarModRegisterHook('item', 'display', 'GUI',
                                     'changelog', 'user', 'displayhook')) {
                 return false;
             }
+            break;
+        case '1.1':
+            // compatability upgrade
             break;
         case 2.0:
             // Code to upgrade from version 2.0 goes here
