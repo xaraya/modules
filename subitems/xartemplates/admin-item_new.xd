@@ -15,7 +15,12 @@
 </table>
 </xar:if>
 
-<form method="post" action="#xarModURL('subitems','admin','item_new')#">
+<xar:set name="$withupload">#$object->upload#</xar:set>
+<xar:if condition="!empty($withupload)">
+    <form method="post" action="#xarModURL('subitems','admin','item_new')#" enctype="multipart/form-data">
+<xar:else/>
+    <form method="post" action="#xarModURL('subitems','admin','item_new')#">
+</xar:if>
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 <input type="hidden" name="confirm" value="1" />
 <input type="hidden" name="objectid" value="#$objectid#" />
