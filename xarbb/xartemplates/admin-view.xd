@@ -5,92 +5,31 @@
 <h2><xar:mlstring>View Forums</xar:mlstring></h2>
 
 <xar:if condition="!$isforums">
-<div style="width:98%; font-weight:bold; text-align:center;">
-<p>
-<xar:mlstring>There are no forums currently registered.</xar:mlstring>
-</p>
-<a href="#$addforum#"><xar:mlstring>Please click here to add a forum.</xar:mlstring></a>
-
-</div>
+	<div style="width:98%; font-weight:bold; text-align:center;">
+		<p>
+			<xar:mlstring>
+				There are no forums currently registered.
+			</xar:mlstring>
+		</p>
+		<a href="#$addforum#">
+			<xar:mlstring>
+				Please click here to add a forum.
+			</xar:mlstring>
+		</a>
+	</div>
 <xar:else />
-<table width="98%%" border="0" cellpadding="4">
-    <tr>
-        <th>
-			<xar:mlstring>Forum Name</xar:mlstring>
-		</th>
-        <th>
-			<xar:mlstring>Forum Description</xar:mlstring>
-		</th>
-        <th>
-			<xar:mlstring>Forum Status</xar:mlstring>
-		</th>
-        <th>
-			<xar:mlstring>Options</xar:mlstring>
-		</th>
-	</tr>
-    <xar:loop name="$items">
-	<xar:if condition="(($loop:index + 1) % 2)">
-    <tr>
-        <td class="xar-norm">
-			#$loop:item['fname']#
-		</td>
-        <td class="xar-norm" align="center">
-			#$loop:item['fdesc']#
-		</td>
-        <td class="xar-norm" align="center">
-			#$loop:item['fstatus']#
-		</td>
-		<td align="center" class="xar-norm">
-           <xar:if condition="empty($loop:item['editurl'])">
-               #$loop:item['edittitle']#
-               <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
-               <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
-           </xar:if>
-        </td>
-    </tr>
-	<xar:else />
-    <tr>
-        <td class="xar-accent">
-			#$loop:item['fname']#
-		</td>
-        <td class="xar-accent" align="center">
-			#$loop:item['fdesc']#
-		</td>
-        <td class="xar-accent" align="center">
-			#$loop:item['fstatus']#
-		</td>
-		<td align="center" class="xar-accent">
-           <xar:if condition="empty($loop:item['editurl'])">
-               #$loop:item['edittitle']#
-               <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
-               <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
-           </xar:if>
-        </td>
-    </tr>
-	</xar:if> 
-    </xar:loop>
-</table>
-</div>
+
+<xar:template file="navtabs" type="module" />
+
 <div style="width:98%; font-weight:bold; margin-top:20px;">
-<p>
-<a href="#$addforum#"><xar:mlstring>Add a forum</xar:mlstring></a>
-</p>
+	<p>
+		<a href="#$addforum#">
+			<xar:mlstring>
+				Add a forum
+			</xar:mlstring>
+		</a>
+	</p>
 </div>
 
 <br />
-<!-- add the pager here -->
-#$pager#
 </xar:if>
-

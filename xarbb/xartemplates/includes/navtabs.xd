@@ -1,0 +1,37 @@
+<xar:if condition="xarTplAddStyleLink('xarbb', 'navtabs')">
+	<div id="navhelp" class="help" title="#xarML('Click on a tab to display forums configuration')#">
+		<xar:mlstring>
+			Forums
+		</xar:mlstring>
+		: 
+		<div id="tabnav">
+			<ul id="navlist">
+				<xar:loop name="$tabs">
+					<xar:if condition="$loop:item['fid'] eq $fid"> 
+						<li id="active">
+						   <xar:if condition="empty($loop:item['editurl'])">
+							   #$loop:item['fname']#
+						   <xar:else />
+								<a href="#$loop:item['editurl']#">
+									#$loop:item['fname']#
+								</a>
+						   </xar:if>
+						</li>
+						<xar:else />
+						<li>
+						   <xar:if condition="empty($loop:item['editurl'])">
+							   #$loop:item['fname']#
+						   <xar:else />
+								<a href="#$loop:item['editurl']#">
+									#$loop:item['fname']#
+								</a>
+						   </xar:if>
+						</li>
+					</xar:if>
+				</xar:loop>
+			</ul>
+			<div class="tabnav-hairline"><!-- &nbsp; --></div>
+		</div>
+	</div>
+</xar:if>
+<br /><br />

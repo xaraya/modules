@@ -10,6 +10,11 @@
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
+
+<xar:template file="navtabs" type="module" />
+<xar:template file="navtabs-action" type="module" />
+
+
 	<h2><xar:mlstring>Modify Existing Forum</xar:mlstring></h2>
     <div style="clear: both; padding-top: 10px; width:98%;">
 	<xar:if condition="!empty($warning)">

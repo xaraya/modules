@@ -100,6 +100,29 @@ function xarbb_admin_modify()
             $data['authid'] = xarSecGenAuthKey();
             $data['createlabel'] = xarML('Submit');
 
+            // For Tabs:
+            // The user API function is called
+            $links = xarModAPIFunc('xarbb',
+                                   'user',
+                                   'getallforums');
+            $totlinks=count($links);
+            // Check individual permissions for Edit / Delete
+            for ($i = 0; $i < $totlinks; $i++) {
+                $link = $links[$i];
+
+                if (xarSecurityCheck('EditxarBB', 0)) {
+                    $links[$i]['editurl'] = xarModURL('xarbb',
+                                                      'admin',
+                                                      'modify',
+                                                      array('fid' => $link['fid']));
+                } else {
+                    $links[$i]['editurl'] = '';
+                }
+            }
+            // Add the array of items to the template variables
+            $data['tabs'] = $links;
+            $data['action'] = '1';
+
             break;
 
         case 'update':
@@ -190,7 +213,6 @@ function xarbb_admin_modify()
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'modify', array('fid' => $fid)));
             break;
         }
-
 	return $data;
 }
 ?>

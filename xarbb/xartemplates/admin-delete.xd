@@ -2,6 +2,10 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
+
+<xar:template file="navtabs" type="module" />
+<xar:template file="navtabs-action" type="module" />
+
 <h2><xar:mlstring>Delete a Forum</xar:mlstring></h2>
 <form method="post" action="#xarModURL('xarbb', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
