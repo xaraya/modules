@@ -38,7 +38,7 @@ function translations_admin_show_status()
     unset($tmp);
 
     // modules
-    if (!($mods = xarModAPIFunc('modules','admin','GetList', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
+    if (!($mods = xarModAPIFunc('modules','admin','getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
     $modentries = array();
     $mod_totalentries = 0; $mod_untranslated = 0; $mod_keytotalentries = 0; $mod_keyuntranslated =0;
     foreach($mods as $mod) {
@@ -66,7 +66,7 @@ function translations_admin_show_status()
     }
 
     // themes
-    if (!($themes = xarModAPIFunc('themes','admin','GetThemeList', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
+    if (!($themes = xarModAPIFunc('themes','admin','getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
 
     $themeentries = array();
     $theme_totalentries = 0; $theme_untranslated =0; $theme_keytotalentries = 0; $theme_keyuntranslated = 0;
