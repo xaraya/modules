@@ -77,7 +77,7 @@
 			</td>
 			<td class="xar-norm" style="border: 1px solid #000;">
 				<xar:if condition="$loop:item['fstatus'] ne 1">
-					<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $loop:item['fid']))#" title="#$loop:item['fname']#">
+					<a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $loop:item['fid']))#" title="#$loop:item['fname']#">
 						#$loop:item['fname']#
 					</a><br />
 				<xar:else />
@@ -86,7 +86,7 @@
 			</td>
 			<td class="xar-norm">
 				<xar:if condition="$loop:item['fstatus'] ne 1">
-					<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $loop:item['fid'], 'tid' => $loop:item['tid']))#">
+					<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('fid' => $loop:item['fid'], 'tid' => $loop:item['tid']))#">
 						#$loop:item['ttitle']#
 					</a><br />
 				<xar:else />
