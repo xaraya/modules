@@ -24,7 +24,12 @@ class iCal_Parser
     var $property;
     
     // pointers
-    var $vcal_pos; // what vcalendar are we parsing
+    var $vcal_pos;      // what vcalendar are we parsing
+    var $tz_pos;        // what vtimezone are we parsing
+    var $event_pos;     // what vevent are we parsing
+    var $todo_pos;      // what vtodo are we parsing
+    var $freebusy_pos;  // what vfreebusy are we parsing
+    var $alarm_pos;     // what valarm are we parsing
     
     // containers
     var $vcalendar  = array();
@@ -142,7 +147,7 @@ class iCal_Parser
 			$nextline = preg_replace('/[\r\n]/', '', $nextline);
 			// check for folding
             while(substr($nextline,0,1) == ' ') {
-				$this->line = $line . substr($nextline, 1);
+				$this->line = $this->line . substr($nextline, 1);
 				$nextline = fgets($this->ifile, 1024);
 				$nextline = preg_replace('/[\r\n]/', '', $nextline);
 			}
@@ -162,6 +167,12 @@ class iCal_Parser
                 
                 case 'BEGIN:VEVENT' :
                     $this->current = _VEVENT_;
+                    // set up the new VEVENT array 
+                    if(!isset($this->vcalendar[$this->vcal_pos]['vevent'])) {
+                        $this->vcalendar[$this->vcal_pos]['vevent'] = array();
+                    }
+                    $this->event_pos = count($this->vcalendar[$this->vcal_pos]['vevent']);
+                    $this->vcalendar[$this->vcal_pos]['vevent'][$this->event_pos] = array();
                     break;
                     
                 case 'END:VEVENT' :
@@ -170,6 +181,12 @@ class iCal_Parser
                     
                 case 'BEGIN:VTODO' :
                     $this->current = _VTODO_;
+                    // set up the new VTODO array 
+                    if(!isset($this->vcalendar[$this->vcal_pos]['vtodo'])) {
+                        $this->vcalendar[$this->vcal_pos]['vtodo'] = array();
+                    }
+                    $this->todo_pos = count($this->vcalendar[$this->vcal_pos]['vtodo']);
+                    $this->vcalendar[$this->vcal_pos]['vtodo'][$this->todo_pos] = array();
                     break;
                 
                 case 'END:VTODO' :
@@ -178,6 +195,12 @@ class iCal_Parser
                     
                 case 'BEGIN:VFREEBUSY' :
                     $this->current = _VFREEBUSY_;
+                    // set up the new VFREEBUSY array 
+                    if(!isset($this->vcalendar[$this->vcal_pos]['vfreebusy'])) {
+                        $this->vcalendar[$this->vcal_pos]['vfreebusy'] = array();
+                    }
+                    $this->freebusy_pos = count($this->vcalendar[$this->vcal_pos]['vfreebusy']);
+                    $this->vcalendar[$this->vcal_pos]['vfreebusy'][$this->freebusy_pos] = array();
                     break;
                 
                 case 'END:VFREEBUSY' :
@@ -186,6 +209,12 @@ class iCal_Parser
                     
                 case 'BEGIN:VALARM' :
                     $this->current = _VALARM_;
+                    // set up the new VALARM array 
+                    if(!isset($this->vcalendar[$this->vcal_pos]['valarm'])) {
+                        $this->vcalendar[$this->vcal_pos]['valarm'] = array();
+                    }
+                    $this->alarm_pos = count($this->vcalendar[$this->vcal_pos]['valarm']);
+                    $this->vcalendar[$this->vcal_pos]['valarm'][$this->alarm_pos] = array();
                     break;
                 
                 case 'END:VALARM' :
@@ -253,6 +282,14 @@ class iCal_Parser
         
             case _VTIMEZONE_ :
                 $this->__parse_vtimezone();
+                break;
+            
+            case _VEVENT_ :
+                $this->__parse_vevent();
+                break;
+                
+            case _VTODO_ :
+                $this->__parse_vtodo();
                 break;
                 
             case _VCALENDAR_:
@@ -373,7 +410,109 @@ class iCal_Parser
     
     function __parse_vevent()
     {
-    
+        // set up our link to the current VEVENT object
+        $el =& $this->vcalendar[$this->vcal_pos]['vevent'][$this->event_pos];
+        
+        switch ($this->property) {
+            
+            case 'SEQUENCE':
+                $el['SEQUENCE'] = $this->data;
+                break;
+                
+            case 'SUMMARY':
+                $this->data = str_replace("\\n", "<br/>", $this->data);
+				$this->data = str_replace("\\r", "<br/>", $this->data);
+                // why do the phpical devs do this?
+				$this->data = htmlentities(urlencode($this->data));
+                $el['SUMMARY'] = $this->data;
+                break;
+                
+            case 'DESCRIPTION':
+                $this->data = str_replace("\\n", "<br/>", $this->data);
+				$this->data = str_replace("\\r", "<br/>", $this->data);
+                // why do the phpical devs do this?
+				$this->data = htmlentities(urlencode($this->data));
+                $el['DESCRIPTION'] = $this->data;
+                break;
+                
+            case 'CLASS':
+                $el['CLASS'] = $this->data;
+                break;
+            
+            case 'STATUS':
+                $el['STATUS'] = $this->data;
+                break;
+                
+            case 'CATEGORIES':
+                $el['CATEGORIES'] = $this->data;
+                break;
+            
+            case 'PRIORITY':
+                $el['PRIORITY'] = $this->data;
+                break;
+                
+            case 'DURATION':
+			    // allow for multiple durations if they exist
+                $durations = explode(',',strtoupper($this->data));
+                foreach($durations as $key=>$duration) {
+                    if(!isset($el['DURATION'][$key])) {
+                        $el['DURATION'][$key] = array();
+                    }
+                    preg_match('/^[+-]?P            # [0] start of a valid period definition 
+                                 ([0-9]{1,2})?      # [1] how long is it going for           
+                                 ([WD])?            # [2] weeks or days                      
+                                 ([T])?             # [3] do we have a time value            
+                                 ([0-9]{1,2}[H])?   # [4] hour durations                     
+                                 ([0-9]{1,2}[M])?   # [5] minute durations                   
+                                 ([0-9]{1,2}[S])?   # [6] second durations                   
+                                /x',$this->data,$matches);
+                    
+                    $el['DURATION'][$key]['days'] = $matches[2] == 'D' ? $matches[1] : null;
+                    $el['DURATION'][$key]['weeks'] = $matches[2] == 'W' ? $matches[1] : null;
+                    if(isset($matches[4])) {
+                        $el['DURATION'][$key]['hours'] = str_replace('H','',$matches[4]);
+                    } else {
+                        $el['DURATION'][$key]['hours'] = null;
+                    }
+                    if(isset($matches[5])) {
+                        $el['DURATION'][$key]['minutes'] = str_replace('M','',$matches[5]);
+                    } else {
+                        $el['DURATION'][$key]['minutes'] = null;
+                    }
+                    if(isset($matches[6])) {
+                        $el['DURATION'][$key]['seconds'] = str_replace('S','',$matches[6]);
+                    } else {
+                        $el['DURATION'][$key]['seconds'] = null;
+                    }
+                    // get the total amount in seconds for easier math
+                    $total =  (int) ($el['DURATION'][$key]['weeks'] * 60 * 60 * 24 * 7);
+                    $total += (int) ($el['DURATION'][$key]['days'] * 60 * 60 * 24);
+                    $total += (int) ($el['DURATION'][$key]['hours'] * 60 * 60);
+                    $total += (int) ($el['DURATION'][$key]['minutes'] * 60);
+                    $total += (int)  $el['DURATION'][$key]['seconds'];
+                    $el['DURATION'][$key]['total'] = $total;
+                }
+                break;
+                
+            case 'UID':
+                $el['UID'] = $this->data;
+                break;
+            
+            case 'RRULE':
+                $this->data = str_replace('RRULE:', '', $this->data);
+				$rrule = split (';', $this->data);
+				foreach ($rrule as $recur) {
+					preg_match('/(.*)=(.*)/i', $recur, $match);
+					$el['RRULE'][$match[1]] = $match[2];
+				}
+                break;
+            
+            default:
+                $el[$this->property] = $this->data;
+                break;
+        
+        }
+        
     }
     
     function __parse_vtodo()
