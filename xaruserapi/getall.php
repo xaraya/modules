@@ -35,7 +35,7 @@ function bkview_userapi_getall($args)
 
     $bkviewtable = $xartable['bkview'];
 
-    $sql = "SELECT xar_repoid  FROM $bkviewtable ORDER BY xar_repoid";
+    $sql = "SELECT xar_repoid  FROM $bkviewtable ORDER BY xar_name";
     $result =& $dbconn->Execute($sql);
     if(!$result) return;
 
