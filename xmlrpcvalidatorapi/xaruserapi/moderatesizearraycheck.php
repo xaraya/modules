@@ -14,7 +14,8 @@
 */
 
 
-function xmlrpcvalidatorapi_userapi_moderatesizearraycheck($msg) {
+function xmlrpcvalidatorapi_userapi_moderatesizearraycheck($msg) 
+{
 	$ar=$msg->getParam(0);
 	$sz=$ar->arraysize();
 	$first=$ar->arraymem(0);

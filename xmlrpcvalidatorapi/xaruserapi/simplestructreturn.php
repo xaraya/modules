@@ -14,7 +14,8 @@
 */
 
 
-function xmlrpcvalidatorapi_userapi_simplestructreturn($msg) {
+function xmlrpcvalidatorapi_userapi_simplestructreturn($msg) 
+{
     $sno=$msg->getParam(0);
 	$v=$sno->scalarval();
 	return new xmlrpcresp(new xmlrpcval(array(

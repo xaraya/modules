@@ -13,7 +13,8 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcvalidatorapi_userapi_easystruct($msg) {
+function xmlrpcvalidatorapi_userapi_easystruct($msg) 
+{
     $sno=$msg->getParam(0);
 	$moe=$sno->structmem("moe");
 	$larry=$sno->structmem("larry");

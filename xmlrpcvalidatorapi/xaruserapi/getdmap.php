@@ -17,7 +17,8 @@
  * Construct the description map
  *
  */
-function xmlrpcvalidatorapi_userapi_getdmap() {
+function xmlrpcvalidatorapi_userapi_getdmap() 
+{
     // Data types for xmlrpc
     // FIXME: should go to userapi of xmlrpc server module
     $xmlrpcI4="i4";

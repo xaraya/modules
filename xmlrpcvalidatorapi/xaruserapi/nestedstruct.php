@@ -14,7 +14,8 @@
 */
 
 
-function xmlrpcvalidatorapi_userapi_nestedstruct($msg) {
+function xmlrpcvalidatorapi_userapi_nestedstruct($msg) 
+{
     $sno=$msg->getParam(0);
 	
 	$twoK=$sno->structmem("2000");

@@ -18,7 +18,8 @@
  * Main admin entry function
  *
 */
-function xmlrpcvalidatorapi_admin_main() {
+function xmlrpcvalidatorapi_admin_main() 
+{
     // Return the template for the overview
     return array();
 }
