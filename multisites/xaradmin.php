@@ -22,7 +22,9 @@ else {
 	}	
 
 /**
- * the main administration function
+ * The standard overview screen on entry to the Multisite module.
+ * @ returns output
+ * @return output with Multisite Overview and Menu information
  */
 function multisites_admin_main()
 {
@@ -37,8 +39,8 @@ function multisites_admin_main()
 	} else {
 		xarResponseRedirect(xarModURL('multisites', 'admin', 'modifyconfig'));
 	}
-
-
+   // success
+    return true;
 }
 
 function multisites_admin_modifyconfig()
@@ -49,25 +51,48 @@ function multisites_admin_modifyconfig()
            return;
     }
 
-    $data['server_name'] = $HTTP_SERVER_VARS['SERVER_NAME'];
-    $data['http_host'] = $HTTP_SERVER_VARS['HTTP_HOST'];
-    $data['authid'] = xarSecGenAuthKey();
+	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+	$lIsMaster=xarConfigGetVar('System.MS.Master');
+    $masterurl=xarModGetVar('multisites','masterurl');
+    $servervar=xarModGetVar('multisites','servervar');
+    $currenthost=$_SERVER[$servervar];
+ 	if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
+    // The master multisite has been configured and this is the master - continue
 
-    //Submit button
-    $data['btnUpdateConfig'] = xarML('Update Multisite Configuration');
+        $data['modifysite']=1;
+
+        //Submit button
+        $data['btnSetConfig'] = xarML('Change Multisite Configuration');
+
+	} else {
+        $data['modifysite']=0;
+      //Submit button
+        $data['btnSetConfig'] = xarML('Set Multisite Configuration');
+    }
+        $data['authid'] = xarSecGenAuthKey();
+
+        $data['SERVER_NAME'] = $HTTP_SERVER_VARS['SERVER_NAME'];
+        $data['HTTP_HOST']   = $HTTP_SERVER_VARS['HTTP_HOST'];
+        $data['sitefolder']  = xarModGetVar('multisites','sitefolder');
+        $data['DNexts']      = xarModGetVar('multisites','DNexts');
 
     // Return the template variables defined in this function
     return $data;
-
 }
 
 function multisites_admin_updateconfig()
 {
+	    global $HTTP_SERVER_VARS;
+
         list($servervar,
              $themepath,
-             $varpath) = xarVarCleanFromInput('servervar',
-                                              'themepath',
-                                              'varpath');
+             $varpath,
+             $sitefolder,
+             $DNexts) = xarVarCleanFromInput('servervar',
+                                                 'themepath',
+                                                 'varpath',
+                                                 'sitefolder',
+                                                 'DNexts');
 
     // Auth Key
     if (!xarSecConfirmAuthKey()) return;
@@ -76,25 +101,549 @@ function multisites_admin_updateconfig()
     if (!xarSecurityCheck('AdminMultisites')) {
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
         return;
-    }  
+    }
 
     if (!isset($servervar)) {
-        $servervar = 'httphost';
+        $servervar = 'HTTP_HOST';
     }
     if (!isset($themepath)) {
-        $themepath = 'var/default/themes';
+        $themepath = 'themes';
     }
     if (!isset($varpath)) {
-        $varpath = 'var/default';
+        $varpath = 'var';
     }
-
+    // If Master created, we don't want to set the system Master and $masterurl again
+    // Just update mod vars
     xarModSetVar('multisites', 'servervar', $servervar);
     // Hmmm, needs more thought.
+    //<jojodee> setting anyway for now, but don't think we want this $themepath and $varpath to be changeable
     xarModSetVar('multisites', 'themepath', $themepath);
     xarModSetVar('multisites', 'varpath', $varpath);
+    xarModSetVar('multisites', 'sitefolder', $sitefolder);
+    xarModSetVar('multisites', 'DNexts', $DNexts);
+
+    $setconfig = xarModFunc('multisites',
+                            'admin',
+                            'setconfig',
+                            array('sitefolder' => $sitefolder,
+                                  'servervar'  => $servervar,
+                                  'DNexts'     => $DNexts));
+
+    if (!$setconfig) {
+        $msg = xarML('Unable to configure Master Multisite');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+       return false;
+    }
+
+   xarResponseRedirect(xarModURL('multisites', 'admin', 'view'));
+
+    return true;
+}
+
+
+function multisites_admin_adminconfig()
+{
+      // Security check
+    if (!xarSecurityCheck('AdminMultisites')) {
+           return;
+    }
+   $data['authid'] = xarSecGenAuthKey();
+     //Submit button
+    $data['btnUpdateAdmin'] = xarML('Update Admin Configuration');
+
+    // Return the template variables defined in this function
+    return $data;
 
 }
 
+
+function multisites_admin_updateadminconfig()
+{
+        list($itemsperpage) = xarVarCleanFromInput('itemsperpage');
+
+    // Auth Key
+    if (!xarSecConfirmAuthKey()) return;
+
+    // Security
+    if (!xarSecurityCheck('AdminMultisites')) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        return;
+    }
+
+     if (!isset($itemsperpage)) {
+        $itemsperpage=10;
+    }
+
+    xarModSetVar('multisites', 'itemsperpage', $itemsperpage);
+
+
+    xarResponseRedirect(xarModURL('multisites', 'admin', 'adminconfig'));
+
+    return true;
+}
+
+/**
+ * Standard function to list and view existing subsites
+ * Options to inactivate, delete and edit subsites
+ * Multisite configuration in _admin_modifyconfig() must be set to continue here
+ */
+function multisites_admin_view()
+{
+global $HTTP_SERVER_VARS;
+
+    // Get parameters from whatever input we need
+    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+
+    // Set up an array for item data
+    $data['items'] = array();
+
+    // Check if the Master site has been set up
+	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+	$lIsMaster=xarConfigGetVar('System.MS.Master');
+    $masterurl=xarModGetVar('multisites','masterurl');
+    $servervar=xarModGetVar('multisites','servervar');
+    $currenthost=$_SERVER[$servervar];
+ 	if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
+    // The master multisite has been configured and this is the master - continue
+        $data['mastersite']= true;
+        $data['authid'] = xarSecGenAuthKey();
+
+        // Call the xarTPL helper function to produce a pager in case of there
+        // being many items to display.
+        $data['pager'] = xarTplGetPager($startnum,
+              xarModAPIFunc('multisites', 'user', 'countitems'),
+              xarModURL('multisites', 'admin', 'view', array('startnum' => '%%')),
+              xarModGetVar('multisites', 'itemsperpage'));
+
+        // Security Check
+        if(!xarSecurityCheck('AdminMultisites')) return;
+
+        // Labels for display
+        $data['sitelabel'] = xarVarPrepForDisplay(xarML('Site Name'));
+        $data['prefixlabel'] = xarVarPrepForDisplay(xarML('Table Prefix'));
+        $data['dblabel'] = xarVarPrepForDisplay(xarML('Database'));
+        $data['sharelabel'] = xarVarPrepForDisplay(xarML('Shared'));
+        $data['statuslabel'] = xarVarPrepForDisplay(xarML('Status'));
+        $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
+
+       // The user API function is called
+       $sites = xarModAPIFunc('multisites',
+                              'user',
+                              'getall',
+                        array('startnum' => $startnum,
+                             'numitems' => xarModGetVar('multisites',
+                                                       'itemsperpage')));
+       $data['siteno']=count($sites);
+        if (empty($sites)) {
+           $msg = xarML('No sites in database.', 'multisites');
+           xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+           return;
+       }
+
+       // Check individual permissions for Edit/Delete/Enable
+       $authid = xarSecGenAuthKey();
+
+       for ($i = 0; $i < count($sites); $i++) {
+           $item = $sites[$i];
+         if (xarSecurityCheck('EditMultisites', 0, 'Item', "$item[mssite]:All:$item[msid]")) {
+               $sites[$i]['enableurl'] = xarModURL('multisites',
+                   'admin',
+                   'changestatus',
+                   array('msid' => $item['msid']));
+           } else {
+               $sites[$i]['enableurl'] = '';
+           }
+           $sites[$i]['enablelabel'] = xarML('Change Status');
+           if (xarSecurityCheck('EditMultisites', 0, 'Item', "$item[mssite]:All:$item[msid]")) {
+               $sites[$i]['editurl'] = xarModURL('multisites',
+                   'admin',
+                   'modify',
+                   array('msid' => $item['msid']));
+           } else {
+               $sites[$i]['editurl'] = '';
+           }
+           $sites[$i]['editlabel'] = xarML('Configure');
+           if (xarSecurityCheck('DeleteMultisites', 0, 'Item', "$item[mssite]:All:$item[msid]")) {
+            $sites[$i]['deleteurl'] = xarModURL('multisites',
+                'admin',
+                'delete',
+                array('msid' => $item['msid']));
+           } else {
+            $sites[$i]['deleteurl'] = '';
+           }
+           $sites[$i]['deletelabel'] = xarML('Delete');
+        }
+           // Add the array of items to the template variables
+
+          $data['items'] = $sites;
+          $data['masterurl'] =$masterurl;
+
+    } else {  // The master site has not been configured, or this is not the master
+      $data['mastersite']= false;
+      $data['infomsg']=xarML('The Master Multisite has not yet been configured! <br /><br />
+                              Please configure the Master Site from the menu option Multisites - Master Config.
+                              <br /><br />You can then add new sites through the menu option Multisites - Add Sites.
+                              <br /><br />Return here to View Sites once your have added sites to view!');
+
+    }
+
+    // Return the template variables defined in this function
+    return $data;
+}
+
+/**
+ * add a new site (domain or subdomain)
+ */
+function multisites_admin_addsite()
+{
+   global $HTTP_SERVER_VARS;
+  // Security check
+    if (!xarSecurityCheck('AdminMultisites')) {
+        return;
+    }
+      // Check if the Master site has been set up
+	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+	$lIsMaster=xarConfigGetVar('System.MS.Master');
+    $masterurl=xarModGetVar('multisites','masterurl');
+    $servervar=xarModGetVar('multisites','servervar');
+    $currenthost=$_SERVER[$servervar];
+ 	if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
+       // This is the master, and Master site has been set up
+
+       $data['authid']     = xarSecGenAuthKey();
+       $data['mastersite'] = true;
+       $data['siteDN']     = '';
+       $data['sysPrefix']  = xarDBGetSystemTablePrefix();
+       $data['msPrefix']   = '';
+       $data['siteDB']     = xarDBGetName(); // database to be used, defaults to Master
+
+        // Select item values (site status).
+       // Default is a 'pending' state. So no need to display when creating the new site
+       $data['siteStatus'] = array(
+            'Pending' => xarML('Pending'),
+            'Active' => xarML('Active'),
+            'Inactive' => xarML('Inactive'));
+
+      //TO DO: maybe add some extras later when I think of what
+       $data['sharedTables']= xarDBGetSystemTablePrefix(); // prefix sharing to be used, defaults to Master
+
+       //Submit button
+       $data['btnAddSite'] = xarML('Create New Site');
+   } else {  //this is not the Master, or Master site not configured
+      $data['mastersite']= false;
+      $data['infomsg']=xarML('Multisites must be configured first before you can Add a site! <br /><br />
+                              Please configure the master site from the menu option Multisites - Master Config.
+                              <br /><br />The Master site can then return here to Add Sites.');
+   }
+    // Return the template variables defined in this function
+    return $data;
+}
+
+/**
+ * This is a standard function that is called with the results of the
+ * form supplied by xarModFunc('multisites','admin','add') to create a new site
+  */
+function multisites_admin_createsite($args)
+{
+global $HTTP_SERVER_VARS;
+
+    extract($args);
+
+    list($siteDN,
+         $msPrefix,
+         $siteDB,
+         $sharedTables,
+         $siteStatus) = xarVarCleanFromInput('siteDN',
+                                             'msPrefix',
+                                             'siteDB',
+                                             'sharedTables',
+                                             'siteStatus');
+
+   // Auth Key
+    if (!xarSecConfirmAuthKey()) return;
+
+    // Security
+    if (!xarSecurityCheck('AdminMultisites')) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        return;
+    }
+
+       // Get site folder name
+    $sitefolder = multisites_admin_cleanDN($siteDN);
+
+    if (!$sitefolder) {
+        $msg = xarML("Could not clean ".$siteDN);
+        xarExceptionSet(XAR_USER_EXCEPTION, 'ERROR-CLEANDN', new DefaultUserException($msg));
+        return $msg;
+    }
+    
+    //Check the prefix does not already exist
+    $prefixexists = xarModAPIFunc('multisites',
+                                     'user',
+                                     'getall',
+                               array('where'   =>
+                                   'WHERE xar_msprefix = "'.$msPrefix.'" AND xar_msdb = "'.$siteDB.'"'));
+
+    if ($prefixexists) {
+            $msg = xarML("Sorry, a subsite already exists in database '".$siteDB."'\nwith database prefix '".$msPrefix."'\nPlease use a different table prefix.");
+            xarExceptionSet(XAR_USER_EXCEPTION, 'ALREADY_EXISTS', new DefaultUserException($msg));
+            return $msg;
+    }
+
+    $cWhereIsPerso =xarModGetVar('multisites','sitefolder');
+    //Create new sitefolder data tree
+    $var = is_dir($cWhereIsPerso."/".$sitefolder);
+        if ($var == true) { // the folder and perhaps site already exists
+           $msg = xarML("The subsite ".$siteDN." already exists!\nRemove this subsite and recreate, or edit the exising subsite.");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'EXISTING_DIRECTORY', new DefaultUserException($msg));
+                return $msg;
+            } else {
+            $oldumask = umask(0);
+            if (!mkdir($cWhereIsPerso."/".$sitefolder,0777)) {
+                $msg = xarML("The subsite directory ".$cWhereIsPerso."/".$sitefolder." was not created!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
+                return $msg;
+            }
+
+            umask($oldumask);
+        }
+        $var = is_dir($cWhereIsPerso."/".$sitefolder."/var");
+        if ($var == false) {
+            $oldumask = umask(0);
+            if (!mkdir($cWhereIsPerso."/".$sitefolder."/var",0777)) {
+                $msg = xarML("The subsite var directory ".$cWhereIsPerso."/".$sitefolder."/var was not created!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_CREATED', new DefaultUserException($msg));
+                return $msg;
+            }
+            umask($oldumask);
+        }
+
+        // copy the master config.system.php file to the new master/var directory
+        $filenamein = $cWhereIsPerso."/master/var/config.system.php";
+        $filenameout= $cWhereIsPerso."/".$sitefolder."/var/config.system.php";
+        if (!copy($filenamein,$filenameout)) {
+            $msg = xarML("Unable to copy master config to ".$cWhereIsPerso."/".$sitefolder."/var");
+            xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT COPY FILE', new DefaultUserException($msg));
+            return $msg;
+        }
+       // update the new subsite config file
+       $configfile =getcwd().'/'.$cWhereIsPerso."/".$sitefolder."/var/config.system.php";
+       if (!(empty($COMSPEC))) {
+           $configfile = str_replace("/","\\",$configfile); //windows
+       } else {
+           $configfile = str_replace("\\","/",$configfile);
+       }
+       
+       $newConfig = file($configfile);
+       $fd = fopen($configfile, 'w');
+       while (list ($line_num, $line) = each ($newConfig)) {
+           if (strstr($line,"\$systemConfiguration['DB.Name']")) {
+               $newConfig[$line_num]="\$systemConfiguration['DB.Name']='".$siteDB."';";
+               $line                ="\$systemConfiguration['DB.Name']='".$siteDB."';";
+           }
+           if (strstr($line,"\$systemConfiguration['DB.TablePrefix']")) {
+               $newConfig[$line_num]="\$systemConfiguration['DB.TablePrefix']='".$msPrefix."';";
+               $line                ="\$systemConfiguration['DB.TablePrefix']='".$msPrefix."';";
+           }
+           if (strstr($line,"?>")) {
+               $newConfig[$line_num]="// Multisites: Set this Multisite SubSite Active.\n\$systemConfiguration['MS.Active'] = '1';\n\n?>";
+               $line                ="// Multisites: Set this Multisite SubSite Active.\n\$systemConfiguration['MS.Active'] = '1';\n\n?>";
+           }
+           fwrite ($fd, trim($line)."\n");
+       }
+       fclose ($fd);
+       
+       //Update new site to the Master multisite table
+        $msid = xarModAPIFunc('multisites',
+                              'admin',
+                              'create',
+                        array('mssite'   => $siteDN,
+                              'msprefix' => $msPrefix,
+                              'msdb'     => $siteDB,
+                              'msshare'  => $sharedTables,
+                              'msstatus' => $siteStatus));
+
+        if (!$msid) return;
+
+   xarResponseRedirect(xarModURL('multisites', 'admin', 'view'));
+   // success
+   return true;
+}
+
+/**
+ * This is a function that is called with the results of the
+ * form supplied by xarModFunc('multisites','admin','updateconfig') to create a new Master Site
+ * This function is run once to setup the Master site, and then to modify settings if required
+ */
+function multisites_admin_setconfig($args)
+{
+global $HTTP_SERVER_VARS;
+    extract($args);
+
+    list($servervar,
+         $themepath,
+         $varpath,
+         $cWhereIsPerso,
+         $DNexts) = xarVarCleanFromInput('servervar',
+                                         'themepath',
+                                         'varpath',
+                                         'sitefolder',
+                                         'DNexts');
+   //check security
+   if (!xarSecurityCheck('AdminMultisites')) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION');
+        return;
+   }
+    //Check the site folder exists
+    $var = is_dir($cWhereIsPerso);
+    if ($var == true) {
+          // echo "The Site Data directory exisits";
+    } else {
+            $msg = xarML("The Site Data Directory ".$cWhereIsPerso." does not exist!\n Please create it and chmod 777.");
+            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DIRECTORY', new DefaultUserException($msg));
+    return false;
+    }
+    //Check the site data folder is writable
+    $var = is_writeable($cWhereIsPerso);
+    if ($var == true) {
+          // echo "The directory is writable";
+    } else {
+            $msg = xarML("The Site Data Directory ".$cWhereIsPerso." is not writeable!\n
+                          Please chmod 777 and try again.");
+            xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
+    return false;
+    }
+
+    //Check the master config data folder is writable
+    $var = is_writeable('./var/config.system.php');
+    if ($var == true) {
+          // echo "The file is writable";
+    } else {
+            $msg = xarML('The master config.system.php file  /var/config.system.php is not writeable!\n
+                          Please chmod 666 and try again.');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
+    return false;
+    }
+    // If this is the first time initializing the master site then we need to do this:
+    // Copy the master site existing config file to the data/var directory (for use later and backup)
+    // First make the directory tree starting with a 'master' directory and 'var' subdirectory
+    //Only do this if this is the first run and setting the Master Site
+   // Set and get some vars here
+	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
+	$lIsMaster=xarConfigGetVar('System.MS.Master');
+	$currenthttp = $_SERVER[$servervar];
+	$masterurl = xarConfigGetVar('multisites','masterurl');
+    if (($lIsMultisites==1) and ($lIsMaster==0)) {
+        $var = is_dir ($cWhereIsPerso."/master");
+        if ($var == false) {
+            $oldumask = umask(0);
+            if (!mkdir($cWhereIsPerso."/master",0777)) {
+                $msg = xarML("The Site Data Directory ".$cWhereIsPerso."/master is not writeable!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
+                return false;
+            }
+            umask($oldumask);
+        }
+        $var = is_dir ($cWhereIsPerso."/master/var");
+        if ($var == false) {
+            $oldumask = umask(0);
+            if (!mkdir($cWhereIsPerso."/master/var",0777)) {
+                $msg = xarML("The Site Data Directory ".$cWhereIsPerso."/master/var is not writeable!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
+                return false;
+            }
+            umask($oldumask);
+        }
+        // copy the master config.system.php file to the new master/var directory
+        $filenamein = "var/config.system.php";
+        $filenameout=$cWhereIsPerso."/master/var/config.system.php";
+        if (!copy($filenamein,$filenameout)) {
+            $msg = xarML("Unable to copy master config to ".$cWhereIsPerso."/master/var.");
+            xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT COPY FILE', new DefaultUserException($msg));
+            return false;
+        }
+     }
+    //Update the master config.system.php file for multisite functioning.
+    //Read in existing old config file content into the array, strip out existing multisite changes
+    //Don't like this much - assumes that the str in filter below will never exist in config.system.php
+    //except if a multisite setup
+    umask();
+    $oldConfig=file('./var/config.system.php');
+    $fd = fopen('./var/config.system.php','r');
+    while (list ($line_num, $line) = each ($oldConfig)) {
+        if ((strstr($line,"<?php")) ||
+            (strstr($line,"?>")) ||
+            (strstr($line,"GLOBALS")) ||
+            (strstr($line,"file_exists")) ||
+            (strstr($line,"else")) ||
+            (strstr($line,"}")) ||
+            (strstr($line,"Multisites")) ||
+            (strstr($line,"'MS."))) {
+           // do nothing
+        }else{
+          $holdConfig[$line_num]=$oldConfig[$line_num];
+        }
+     }
+    fclose($fd);
+
+     //Get all the subdomain and domain extensions required for this site
+     //Put in an array til we need them
+     $ext_array = explode(',',xarModGetVar('multisites','DNexts'));
+      usort($ext_array,"multisites_admin_lengthcmp");
+     //Create the new config data for the master site
+     $newConf=file('./var/config.system.php');
+     $oldumask = umask(0);
+
+     $IOk=fopen('./var/config.system.php','w');
+     if ($IOk) {
+        fwrite($IOk, "<?php\n");
+        fwrite($IOk, "\$GLOBALS['myhostName'] = \$_SERVER['".$servervar."'];\n");
+        fwrite($IOk, "\$GLOBALS['myhostName'] = str_replace('www.','',\$GLOBALS['myhostName']);\n");
+        foreach ($ext_array as $key => $ext) {
+            fwrite($IOk, "\$GLOBALS['myhostName'] = str_replace('".$ext."','',\$GLOBALS['myhostName']);\n");
+        }
+        fwrite($IOk, "if (file_exists('".$cWhereIsPerso."/'.\$GLOBALS['myhostName'].'/var/config.system.php')) {\n");
+        fwrite($IOk, "include_once ('".$cWhereIsPerso."/'.\$GLOBALS['myhostName'].'/var/config.system.php');\n");
+        fwrite($IOk, "} else {\n");
+        while (list ($line_num, $line) = each($holdConfig)) {
+            fwrite($IOk,$line);
+        }
+        fwrite($IOk,"// Multisites: Set this as the Multisite Master.\n");
+        fwrite($IOk,"\$systemConfiguration['MS.Master'] = '1';\n");
+        fwrite($IOk,"// Multisites: Set multisite flag on.\n");
+        fwrite($IOk,"\$systemConfiguration['MS.MultiSites'] = '1';\n");
+        fwrite($IOk,"}\n");
+        fwrite($IOk, "?>\n");
+        fclose($IOk);
+     } else {
+        //echo "Can't modify the old config file";
+        return false;
+     }
+     umask($oldumask);
+     //If this is the first run and setting the Master Site
+     //Set the System config to flag this as the Master Site Configured
+     //Update the site database with the Master(?)
+     if (($lIsMultisites==1) and ($lIsMaster==0)) {
+         $masterurl=$_SERVER[$servervar];
+         xarModSetVar('multisites', 'masterurl',$masterurl);
+         xarConfigSetVar('System.MS.Master',1);
+         list($dbconn) = xarDBGetConn();
+       // Call Multisites API function is called
+        $msid = xarModAPIFunc('multisites',
+                              'admin',
+                              'create',
+                        array('mssite' => $masterurl,
+                              'msprefix' => xarDBGetSystemTablePrefix(),
+                              'msdb' => xarDBGetName(),
+                              'msshare' => 'Master',
+                              'msstatus' =>1));
+
+        if (!$msid) return;
+
+     }
+
+return true;
+}
 
 function multisites_admin_mainload()
 {
@@ -114,7 +663,7 @@ global $HTTP_HOST,$SERVER_NAME;
 	// is the multisites already created ?
 
     $output->SetInputMode(_PNH_VERBATIMINPUT);
-	$master = xarModGetVar('multisites','master');
+	$master = xarConfigGetVar('System.MS.Master');
 
 	if (	empty($master) )  {
 		// it means this form has never been used and saved, so this server
@@ -167,7 +716,7 @@ global $HTTP_HOST,$SERVER_NAME;
 	    $row = array();
 	    $output->SetOutputMode(_PNH_RETURNOUTPUT);
 	    $row[] = $output->Text(xarVarPrepForDisplay(_MULTISITESWHEREIS));
-	    $row[] = $output->FormText('cWhereIsPerso', 'sitesettings/', 40, 40);
+	    $row[] = $output->FormText('cWhereIsPerso', 'msdata/', 40, 40);
 	    $output->SetOutputMode(_PNH_KEEPOUTPUT);
 	    $output->SetInputMode(_PNH_VERBATIMINPUT);
 	    $output->TableAddrow($row, 'left');
@@ -176,7 +725,7 @@ global $HTTP_HOST,$SERVER_NAME;
     	$output->TableColStart( 2, 'left', 'top');
 // I dont understand why that function cleanDN does not work here ...		
     	$output->Text( 	
-				_MULTISITES_SUITE1 . 
+				_MULTISITES_SUITE1 .
 				cleanDN($HTTP_HOST) . 
 				_MULTISITES_SUITE2 . 
 				cleanDN($HTTP_HOST) . 
@@ -353,7 +902,7 @@ print('<hr>');
 	}
 	
 
-
+//Old function setup for PN - can be removed
 function multisites_admin_initconfig() {
 	$lNext = false;
     if (!xarSecurityCheck('AdminMultisites')) {
@@ -544,6 +1093,7 @@ function multisites_admin_initconfig() {
 //    Header("Location: admin.php");
 		}
 
+
 function template_admin_updateconfig()
 {
     // Get parameters from whatever input we need.  All arguments to this
@@ -579,6 +1129,32 @@ function template_admin_updateconfig()
     // Return
     return true;
 }
+
+// Need new cleanDN function - to clean all extensions that people may want to use
+// The multisite config has already setup modvar called DNexts. Let's use this
+
+function multisites_admin_cleanDN($siteDN)
+{
+  $siteext =xarModGetVar('multisites','DNexts');
+
+  $ext_array = explode(',',$siteext);
+  // sort so for examp .com.au is before .com
+  usort ($ext_array,"multisites_admin_lengthcmp");
+  // get rid of www prefix and all dn extensions
+  $siteDN = str_replace('www.','',$siteDN);
+  foreach ($ext_array as $key => $ext) {
+    $siteDN = str_replace($ext,'',$siteDN);
+  }
+ return $siteDN;
+}
+// Sorts the array of domain extensions - eg must do .com.au before .com else wrong outcome
+function multisites_admin_lengthcmp ($a, $b) {
+    if (strlen($a) > strlen($b)) return 0;
+    return ($a > $b) ? -1 : 1;
+}
+
+
+
 
 ######################################################################
 function cleanDN($nomServeur) {
