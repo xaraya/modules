@@ -23,23 +23,23 @@
         <dt><input type="radio" name="mlsmode" value="SINGLE" #$single_checked# />
         <span class="xar-title"><xar:mlstring>Single language mode (SINGLE)</xar:mlstring></span>
         <dd>
-        MLS uses only one charset, typically single byte but potentially multi byte if mb_string is 
-        built in. Every information is stored coherently with the chosen charset (installation time), 
-        and also user data is meaningful in the chosen charset.
+        MLS uses only one character set, typically single byte but potentially multi byte if mb_string is 
+        built in. All information is stored coherently with the chosen character set (at installation time), 
+        and also user data is meaningful in the chosen character set.
         <dt><input type="radio" name="mlsmode" value="BOXED" #$boxed_checked#/>
         <span class="xar-title">Per page mode (BOXED)</span>
         <dd>
-        MLS can use more than one charset in the site (same consideration for the single or multi byte matter as 
-        above can be applied here), but only one charset per page is used (this is an obvious concept maybe, 
+        MLS can use more than one character set in the site (the same consideration for the single or multi byte matter as 
+        above can be applied here), but only one character set per page is used (this is an obvious concept maybe, 
         but important to understand). Due to this fact content cannot be shared across through different 
         language areas (for example an Arabic comment won't be shown in the English area even if 
-        they are referring to the same object, say an article available in both English and Arabic). 
+        they are referring to the same object, e.g. an article available in both English and Arabic). 
         Another point is that every operation involves only a single language. This mode can produce 
         unexpected results if mb_string is not installed.
         <dt><input type="radio" name="mlsmode" value="UNBOXED" #$unboxed_checked# />
         <span class="xar-title"><xar:mlstring>Full multilanguage (UNBOXED) (experimental!)</xar:mlstring></span>
         <dd>
-        MLS uses an universal charset to represent everything (read: UTF-8). This guarantees that no 
+        MLS uses an universal character set to represent everything (read: UTF-8). This guarantees that no 
         conversion is needed for the content representation. Every page is always shown according to 
         the user chosen language, but the page can contain texts in other languages 
         (for example a French article and comments inside an English page).
