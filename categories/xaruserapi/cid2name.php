@@ -6,7 +6,7 @@ function categories_userapi_cid2name ($args)
 {
     extract($args);
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
 
     if (empty($cid) || !is_numeric($cid)) {

@@ -25,7 +25,7 @@ function categories_userapi_getcat($args) {
     extract($args);
 
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     if (!isset($return_itself)) {
         $return_itself = false;

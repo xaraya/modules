@@ -24,7 +24,7 @@ function categories_adminapi_createcatdirectly($args)
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
 
     // Get next ID in table

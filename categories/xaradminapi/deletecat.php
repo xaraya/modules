@@ -58,7 +58,7 @@ function categories_adminapi_deletecat($args)
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     // Deleting a category
 

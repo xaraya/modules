@@ -22,7 +22,7 @@ function categories_userapi_getparents($args) {
     }
 
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     $categoriestable = $xartable['categories'];
 

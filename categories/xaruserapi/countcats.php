@@ -21,7 +21,7 @@ function categories_userapi_countcats($args)
 
     // Database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
 
     // Get number of categories

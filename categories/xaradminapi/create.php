@@ -53,7 +53,7 @@ function categories_adminapi_create ($args)
         $point_of_insertion = $cat['right'];
     } else {
         list($dbconn) = xarDBGetConn();
-        $xartable = xarDBGetTables();
+        $xartable =& xarDBGetTables();
         $categoriestable = $xartable['categories'];
         $query = "SELECT MAX(xar_right) FROM " . $categoriestable;
         $result = $dbconn->Execute($query);

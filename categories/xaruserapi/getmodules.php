@@ -20,7 +20,7 @@ function categories_userapi_getmodules($args)
 
     // Database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories_linkage'];
 
     // Get items

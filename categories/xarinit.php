@@ -29,7 +29,7 @@ function categories_init()
 {
     // Get database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     /* CREATE TABLE xar_categories (
      *  xar_cid          int(11) NOT NULL auto_increment,
@@ -207,7 +207,7 @@ function categories_init()
     * Format is
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $categorytable =$xartable['categories'];
     $query1 = "SELECT DISTINCT xar_name FROM ".$categorytable;
     $query2 = "SELECT DISTINCT xar_cid FROM ".$categorytable;
@@ -290,7 +290,7 @@ function categories_upgrade($oldversion)
         // TODO: remove this for release
             // Get database information
             list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $xartable =& xarDBGetTables();
 
             $query = "ALTER TABLE $xartable[categories]
                       ADD COLUMN xar_image varchar(255) NOT NULL";
@@ -356,7 +356,7 @@ function categories_upgrade($oldversion)
 
             // Get database information
             list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $xartable =& xarDBGetTables();
             $linkagetable = $xartable['categories_linkage'];
 
             xarDBLoadTableMaintenanceAPI();
@@ -431,7 +431,7 @@ function categories_delete()
 {
     // Get database information
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
 
     // Delete categories table
     $query = "DROP TABLE ".$xartable['categories'];

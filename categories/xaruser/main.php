@@ -63,7 +63,7 @@ function categories_user_main()
     }
 
 /* test only - requires *_categories_symlinks table for symbolic links :
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     if (empty($xartable['categories_symlinks'])) {
         $xartable['categories_symlinks'] = xarDBGetSiteTablePrefix() . '_categories_symlinks';
     }

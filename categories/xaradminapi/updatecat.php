@@ -62,7 +62,7 @@ function categories_adminapi_updatecat($args)
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $categoriestable = $xartable['categories'];
 
     // Get inside if the category is supposed to move

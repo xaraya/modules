@@ -15,7 +15,7 @@ function categories_userapi_countitems_deprecated($args)
     
     // Get database setup
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $xartable =& xarDBGetTables();
     $categorieslinkagetable = $xartable['categories_linkage'];
     
     // Check if we have active CIDs
