@@ -1,11 +1,11 @@
-<?
+<?php
 /**
  * modify configuration
  */
 function googlesearch_admin_modifyconfig()
 {
     // Security Check
-	if(!xarSecurityCheck('Admingooglesearch')) return;
+  if(!xarSecurityCheck('Admingooglesearch')) return;
     $hooks = xarModCallHooks('module', 'modifyconfig', 'googlesearch', array('module' => 'googlesearch'));
     if (empty($hooks)) {
         $data['hooks'] = '';
