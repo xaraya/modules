@@ -10,10 +10,10 @@
  * @subpackage MIME
  * @author Carl P. Corliss 
  */
-$modversion['name']           = 'MIME';
+$modversion['name']           = 'MIME API';
 $modversion['id']             = '999';
 $modversion['version']        = '.1';
-$modversion['description']    = 'MIME utiltity module. \nHook based module that returns the content-type of a file.';
+$modversion['description']    = 'Hook based module that returns the content-type of a given file.';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
 $modversion['changelog']      = 'xardocs/changelog.txt';
@@ -24,6 +24,6 @@ $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 0;
 $modversion['user']           = 1;
 $modversion['securityschema'] = array();
-$modversion['class']          = 'Complete';
-$modversion['category']       = 'Utility';
+$modversion['class']          = 'Utility';
+$modversion['category']       = 'Content';
 ?>

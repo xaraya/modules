@@ -21,7 +21,7 @@ function mime_init()
 // Initialisation successful
     include('modules/mime/xarincludes/mime.magic.php');
 
-    xarModSetVar('mime','mime.magic',serialize($mime));
+    xarModSetVar('mime','mime.magic',serialize($mime_list));
 
     return true;
 }
