@@ -30,6 +30,22 @@ function categories_userapi_navigation($args)
          }
     }
 
+    // Get root cids for tree layout (if any)
+    if ($layout == 1) {
+        if (empty($catid) && empty($cids)) {
+            $rootcids = null;
+        } elseif (!empty($cids)) {
+            $rootcids = $cids;
+        } elseif (strpos($catid,' ')) {
+            $rootcids = explode(' ',$catid);
+        } elseif (strpos($catid,'+')) {
+            $rootcids = explode('+',$catid);
+        } else {
+            $rootcids = explode('-',$catid);
+        }
+        $catid = null;
+    }
+
 // TODO: for multi-module pages, we'll need some other reference point(s)
 //       (e.g. cross-module categories defined in categories admin ?)
     // Get current module
@@ -49,23 +65,29 @@ function categories_userapi_navigation($args)
     }
 
     // Get current item type (if any)
-    if (empty($itemtype)) {
+    if (!isset($itemtype)) {
         if (xarVarIsCached('Blocks.categories','itemtype')) {
             $itemtype = xarVarGetCached('Blocks.categories','itemtype');
+        } else {
+            // try to get itemtype from input
+            xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
         }
-        if (empty($itemtype)) {
-            $itemtype = null;
-        }
+    }
+    if (empty($itemtype)) {
+        $itemtype = null;
     }
 
     // Get current item id (if any)
-    if (empty($itemid)) {
+    if (!isset($itemid)) {
         if (xarVarIsCached('Blocks.categories','itemid')) {
             $itemid = xarVarGetCached('Blocks.categories','itemid');
+        } else {
+            // try to get itemid from input
+            xarVarFetch('itemid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
         }
-        if (empty($itemid)) {
-            $itemid = null;
-        }
+    }
+    if (empty($itemid)) {
+        $itemid = null;
     }
 
     // Get number of categories for this module + item type
@@ -94,18 +116,13 @@ function categories_userapi_navigation($args)
     }
 
     // See if we need to show a count per category
-    if (empty($showcatcount)) {
+    if (!isset($showcatcount)) {
         $showcatcount = 0;
     }
 
     // See if we need to show the children of current categories
-    if (empty($showchildren)) {
+    if (!isset($showchildren)) {
         $showchildren = 1;
-    }
-
-    // Load categories user API
-    if (!xarModAPILoad('categories','user')) {
-        return;
     }
 
     // Get current category counts (optional array of cid => count)
@@ -142,14 +159,12 @@ function categories_userapi_navigation($args)
 
 
     // Get current categories
-    if (empty($catid) && empty($cids)) {
-        if (xarVarIsCached('Blocks.categories','catid')) {
-           $catid = xarVarGetCached('Blocks.categories','catid');
-        }
-        if (empty($catid)) {
-            // try to get catid from input
-            $catid = xarVarCleanFromInput('catid');
-        }
+    if (xarVarIsCached('Blocks.categories','catid')) {
+       $catid = xarVarGetCached('Blocks.categories','catid');
+    }
+    if (empty($catid)) {
+        // try to get catid from input
+        xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET);
     }
     // turn $catid into $cids array (and set $andcids flag)
     if (!empty($catid)) {
@@ -172,12 +187,12 @@ function categories_userapi_navigation($args)
         }
         if (empty($cids)) {
             // try to get cids from input
-            if(!xarVarFetch('cids',    'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
-            if(!xarVarFetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED)) {return;}
+            xarVarFetch('cids',    'isset', $cids,    NULL,  XARVAR_DONT_SET);
+            xarVarFetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED);
 
             if (empty($cids)) {
                 $cids = array();
-                if (!empty($itemid)) {
+                if ((empty($module) || $module == $modname) && !empty($itemid)) {
                     $links = xarModAPIFunc('categories','user','getlinks',
                                           array('modid' => $modid,
                                                 'iids' => array($itemid)));
@@ -200,6 +215,7 @@ function categories_userapi_navigation($args)
     }
 
     $data = array();
+    $data['cids'] = $cids;
 
     switch ($layout) {
 
@@ -260,7 +276,7 @@ function categories_userapi_navigation($args)
             }
             break;
 
-        case 2:
+        case 2: // crumbtrails
             $template = 'trails';
             if (empty($cids) || count($cids) == 0) {
                 $template = 'rootcats';
@@ -277,8 +293,8 @@ function categories_userapi_navigation($args)
                 foreach ($catlist as $cat) {
                 // TODO: now this is a tricky part...
                     $link = xarModURL($modname,$type,$func,
-                                     array('catid' => $cat['cid'],
-                                           'itemtype' => $itemtype));
+                                     array('itemtype' => $itemtype,
+                                           'catid' => $cat['cid']));
                     $label = xarVarPrepForDisplay($cat['name']);
                     $data['catitems'][] = array('catlabel' => $label,
                                                 'catid' => $cat['cid'],
@@ -323,8 +339,8 @@ function categories_userapi_navigation($args)
                         } else {
                         // TODO: now this is a tricky part...
                             $link = xarModURL($modname,$type,$func,
-                                             array('catid' => $cat['cid'],
-                                                   'itemtype' => $itemtype));
+                                             array('itemtype' => $itemtype,
+                                                   'catid' => $cat['cid']));
                         }
                         if ($cat['cid'] == $cid) {
                             // show optional count
@@ -356,8 +372,8 @@ function categories_userapi_navigation($args)
                     if (!empty($itemid) || !empty($andcids)) {
                         $label = xarML('Any of these categories');
                         $link = xarModURL($modname,$type,$func,
-                                          array('catid' => join('-',$cids),
-                                                'itemtype' => $itemtype));
+                                          array('itemtype' => $itemtype,
+                                                'catid' => join('-',$cids)));
                         $join = '';
                         $catitems[] = array('catlabel' => $label,
                                             'catid' => join('-',$cids),
@@ -367,8 +383,8 @@ function categories_userapi_navigation($args)
                     if (empty($andcids)) {
                         $label = xarML('All of these categories');
                         $link = xarModURL($modname,$type,$func,
-                                          array('catid' => join('+',$cids),
-                                                'itemtype' => $itemtype));
+                                          array('itemtype' => $itemtype,
+                                                'catid' => join('+',$cids)));
                         if (!empty($itemid)) {
                             $join = '-';
                         } else {
@@ -403,8 +419,8 @@ function categories_userapi_navigation($args)
                     $curcat['itemtype'] = 0;
                     $curcat['itemid'] = $cids[0];
                     $curcat['returnurl'] = xarModURL($modname,$type,$func,
-                                                     array('catid' => $cids[0],
-                                                           'itemtype' => $itemtype));
+                                                     array('itemtype' => $itemtype,
+                                                           'catid' => $cids[0]));
                     // calling item display hooks *for the categories module* here !
                     $data['cathooks'] = xarModCallHooks('item','display',$cid,$curcat,'categories');
                     // saving the current cat id for use e.g. with DD tags (<xar:data-display module="categories" itemid="$catid" />)
@@ -432,10 +448,6 @@ function categories_userapi_navigation($args)
                     $data['catname'] = xarVarPrepForDisplay($curcat['name']);
                 }
                 if ($showchildren == 2) {
-                    // Load categories user API
-                    if (!xarModAPILoad('categories','visual')) {
-                        return;
-                    }
                     // Get child categories (all sub-levels)
                     $childlist = xarModAPIFunc('categories','visual','listarray',
                                               array('cid' => $cids[0]));
@@ -449,8 +461,8 @@ function categories_userapi_navigation($args)
                         $label = xarVarPrepForDisplay($info['name']);
                     // TODO: now this is a tricky part...
                         $link = xarModURL($modname,$type,$func,
-                                         array('catid' => $info['id'],
-                                               'itemtype' => $itemtype));
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $info['id']));
                         if (!empty($catcount[$info['id']])) {
                             $count = $catcount[$info['id']];
                         } else {
@@ -489,8 +501,8 @@ function categories_userapi_navigation($args)
                     // TODO: now this is a tricky part...
                         $label = xarVarPrepForDisplay($cat['name']);
                         $link = xarModURL($modname,$type,$func,
-                                         array('catid' => $cat['cid'],
-                                               'itemtype' => $itemtype));
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -542,7 +554,7 @@ function categories_userapi_navigation($args)
             }
             break;
 
-        case 1:
+        case 1: // tree
         default:
             $template = 'tree';
             $data['cattrees'] = array();
@@ -559,8 +571,42 @@ function categories_userapi_navigation($args)
                         $label = xarVarPrepForDisplay($cat['name']);
                     // TODO: now this is a tricky part...
                         $link = xarModURL($modname,$type,$func,
-                                         array('catid' => $cat['cid'],
-                                               'itemtype' => $itemtype));
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+                        }
+                        if ($cat['cid'] == $cid) {
+                            $catparents[] = array('catlabel' => $label,
+                                                  'catid' => $cat['cid'],
+                                                  'catlink' => $link,
+                                                  'catcount' => $count);
+                        } else {
+                            $catitems[] = array('catlabel' => $label,
+                                                'catid' => $cat['cid'],
+                                                'catlink' => $link,
+                                                'catcount' => $count);
+                        }
+                    }
+                    $data['cattrees'][] = array('catitems' => $catitems,
+                                                'catparents' => $catparents);
+                }
+            } elseif (isset($rootcids) && count($rootcids) > 0) {
+                foreach ($rootcids as $cid) {
+                    $catparents = array();
+                    $catitems = array();
+                    // Get child categories
+                    $children = xarModAPIFunc('categories','user','getchildren',
+                                             array('cid' => $cid,
+                                                   'return_itself' => true));
+                    foreach ($children as $cat) {
+                        $label = xarVarPrepForDisplay($cat['name']);
+                    // TODO: now this is a tricky part...
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -611,8 +657,8 @@ function categories_userapi_navigation($args)
                         $cat = $parents[$parentid];
                         $label = xarVarPrepForDisplay($cat['name']);
                         $link = xarModURL($modname,$type,$func,
-                                         array('catid' => $cat['cid'],
-                                               'itemtype' => $itemtype));
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -637,8 +683,8 @@ function categories_userapi_navigation($args)
                     foreach ($siblings as $cat) {
                         $label = xarVarPrepForDisplay($cat['name']);
                         $link = xarModURL($modname,$type,$func,
-                                         array('catid' => $cat['cid'],
-                                               'itemtype' => $itemtype));
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
                         if (!empty($catcount[$cat['cid']])) {
                             $count = $catcount[$cat['cid']];
                         } else {
@@ -649,16 +695,14 @@ function categories_userapi_navigation($args)
                         if ($cat['cid'] == $cid) {
                             if (empty($itemid) && empty($andcids)) {
                                 $link = '';
-                            } else {
-                                $label .= ' +';
                             }
                             if ($showchildren && !empty($children) && count($children) > 0) {
                                 foreach ($children as $cat) {
                                     $clabel = xarVarPrepForDisplay($cat['name']);
                                 // TODO: now this is a tricky part...
                                     $clink = xarModURL($modname,$type,$func,
-                                                      array('catid' => $cat['cid'],
-                                                            'itemtype' => $itemtype));
+                                                      array('itemtype' => $itemtype,
+                                                            'catid' => $cat['cid']));
                                     if (!empty($catcount[$cat['cid']])) {
                                         $ccount = $catcount[$cat['cid']];
                                     } else {

@@ -1,6 +1,6 @@
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
-    <xar:mlstring>Category Layout</xar:mlstring>
+    <label for="layout#$blockid#"><xar:mlstring>Category layout</xar:mlstring></label>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
     <select name="layout" id="layout#$blockid#">
@@ -13,6 +13,22 @@
         </xar:loop>
         </select>
      </span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+      <label for="startmodule#$blockid#"><xar:mlstring>Show categories</xar:mlstring></label>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+      <select name="startmodule" id="startmodule#$blockid#">
+        <xar:loop name="$modules">
+        <xar:if condition="$startmodule eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
+        <xar:else />
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
+        </xar:if>
+        </xar:loop>
+        </select>
+    </span>
 </div>
 
 <div style="clear: both; padding-top: 10px;">
@@ -29,7 +45,7 @@
 </div>
 <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
-      <xar:mlstring>Show children</xar:mlstring>
+      <label for="showchildren#$blockid#"><xar:mlstring>Show children</xar:mlstring></label>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
       <select name="showchildren" id="showchildren#$blockid#">

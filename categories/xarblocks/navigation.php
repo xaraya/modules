@@ -40,14 +40,41 @@ function categories_navigationblock_display($blockinfo)
     // Security Check
     if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:All")) return;
 
+    // Get variables from content block
+    $vars = @unserialize($blockinfo['content']);
+    extract($vars);
+
+    // Get requested layout
+    if (empty($layout)) {
+        $layout = 1; // default tree here
+    }
+
+    if (!empty($startmodule)) {
+        // static behaviour
+        list($module,$itemtype,$rootcid) = explode('.',$startmodule);
+        if (empty($rootcid)) {
+            $rootcids = null;
+        } elseif (strpos($rootcid,' ')) {
+            $rootcids = explode(' ',$rootcid);
+        } elseif (strpos($rootcid,'+')) {
+            $rootcids = explode('+',$rootcid);
+        } else {
+            $rootcids = explode('-',$rootcid);
+        }
+    }
+
 // TODO: for multi-module pages, we'll need some other reference point(s)
 //       (e.g. cross-module categories defined in categories admin ?)
     // Get current module
-    if (xarVarIsCached('Blocks.categories','module')) {
-       $modname = xarVarGetCached('Blocks.categories','module');
-    }
-    if (empty($modname)) {
-        $modname = xarModGetName();
+    if (empty($module)) {
+        if (xarVarIsCached('Blocks.categories','module')) {
+           $modname = xarVarGetCached('Blocks.categories','module');
+        }
+        if (empty($modname)) {
+            $modname = xarModGetName();
+        }
+    } else {
+        $modname = $module;
     }
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
@@ -55,57 +82,109 @@ function categories_navigationblock_display($blockinfo)
     }
 
     // Get current item type (if any)
-    if (xarVarIsCached('Blocks.categories','itemtype')) {
-        $itemtype = xarVarGetCached('Blocks.categories','itemtype');
+    if (!isset($itemtype)) {
+        if (xarVarIsCached('Blocks.categories','itemtype')) {
+            $itemtype = xarVarGetCached('Blocks.categories','itemtype');
+        } else {
+            // try to get itemtype from input
+            xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
+        }
     }
     if (empty($itemtype)) {
         $itemtype = null;
     }
 
     // Get current item id (if any)
-    if (xarVarIsCached('Blocks.categories','itemid')) {
-        $itemid = xarVarGetCached('Blocks.categories','itemid');
+    if (!isset($itemid)) {
+        if (xarVarIsCached('Blocks.categories','itemid')) {
+            $itemid = xarVarGetCached('Blocks.categories','itemid');
+        } else {
+            // try to get itemid from input
+            xarVarFetch('itemid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
+        }
     }
     if (empty($itemid)) {
         $itemid = null;
     }
 
-    // get number of categories from current settings
-    if (!empty($itemtype)) {
-        $numcats = (int) xarModGetVar($modname, 'number_of_categories.'.$itemtype);
+    if (isset($rootcids)) {
+        $mastercids = $rootcids;
     } else {
-        $numcats = (int) xarModGetVar($modname, 'number_of_categories');
-    }
-    if (empty($numcats) || !is_numeric($numcats)) {
-        // no categories to show here -> return empty output
-        return;
+        // Get number of categories for this module + item type
+        if (!empty($itemtype)) {
+            $numcats = (int) xarModGetVar($modname, 'number_of_categories.'.$itemtype);
+        } else {
+            $numcats = (int) xarModGetVar($modname, 'number_of_categories');
+        }
+        if (empty($numcats) || !is_numeric($numcats)) {
+            // no categories to show here -> return empty output
+            return;
+        }
+
+        // Get master cids for this module + item type
+        if (!empty($itemtype)) {
+            $cidlist = xarModGetVar($modname,'mastercids.'.$itemtype);
+        } else {
+            $cidlist = xarModGetVar($modname,'mastercids');
+        }
+        if (empty($cidlist)) {
+            // no categories to show here -> return empty output
+            return;
+        } else {
+            $mastercids = explode(';',$cidlist);
+            sort($mastercids,SORT_NUMERIC);
+        }
     }
 
-    // try to get master cids from current settings
-    if (!empty($itemtype)) {
-        $cidlist = xarModGetVar($modname,'mastercids.'.$itemtype);
-    } else {
-        $cidlist = xarModGetVar($modname,'mastercids');
-    }
-    if (empty($cidlist)) {
-        // no categories to show here -> return empty output
-        return;
-    } else {
-        $mastercids = explode(';',$cidlist);
-        sort($mastercids,SORT_NUMERIC);
+    // See if we need to show a count per category
+    if (!isset($showcatcount)) {
+        $showcatcount = 0;
     }
 
-    // Load categories user API
-    if (!xarModAPILoad('categories','user')) return;
+    // See if we need to show the children of current categories
+    if (!isset($showchildren)) {
+        $showchildren = 1;
+    }
 
-// TODO: sanitize
+    // Get current category counts (optional array of cid => count)
+    if (empty($showcatcount)) {
+        $catcount = array();
+    } elseif (empty($catcount)) {
+        if (xarVarIsCached('Blocks.categories','catcount')) {
+            $catcount = xarVarGetCached('Blocks.categories','catcount');
+        } else {
+            // get number of items per category (for this module)
+            $catcount = xarModAPIFunc('categories','user','groupcount',
+                                     array('modid' => $modid));
+            xarVarSetCached('Blocks.categories','catcount',$catcount);
+        }
+    }
+
+    // Specify type=... & func = ... arguments for xarModURL()
+    if (empty($type)) {
+        if (xarVarIsCached('Blocks.categories','type')) {
+            $type = xarVarGetCached('Blocks.categories','type');
+        }
+        if (empty($type)) {
+            $type = 'user';
+        }
+    }
+    if (empty($func)) {
+        if (xarVarIsCached('Blocks.categories','func')) {
+            $func = xarVarGetCached('Blocks.categories','func');
+        }
+        if (empty($func)) {
+            $func = 'view';
+        }
+    }
+
     // Get current categories
     if (xarVarIsCached('Blocks.categories','catid')) {
-       $catid = xarVarGetCached('Blocks.categories','catid');
+       $catcid = xarVarGetCached('Blocks.categories','catid');
     }
-    if (empty($catid)) {
+    if (empty($catcid)) {
         // try to get catid from input
-        $catid = xarVarCleanFromInput('catid');
+        xarVarFetch('catid', 'isset', $catcid, NULL, XARVAR_DONT_SET);
     }
     // turn $catid into $cids array (and set $andcids flag)
     if (!empty($catid)) {
@@ -119,7 +198,7 @@ function categories_navigationblock_display($blockinfo)
             $cids = explode('-',$catid);
             $andcids = false;
         }
-    } else {
+    } elseif (empty($cids)) {
         if (xarVarIsCached('Blocks.categories','cids')) {
             $cids = xarVarGetCached('Blocks.categories','cids');
         }
@@ -128,12 +207,12 @@ function categories_navigationblock_display($blockinfo)
         }
         if (empty($cids)) {
             // try to get cids from input
-            if(!xarVarFetch('cids',    'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
-            if(!xarVarFetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED)) {return;}
+            xarVarFetch('cids',    'isset', $cids,    NULL,  XARVAR_DONT_SET);
+            xarVarFetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED);
 
             if (empty($cids)) {
                 $cids = array();
-                if (!empty($itemid)) {
+                if ((empty($module) || $module == $modname) && !empty($itemid)) {
                     $links = xarModAPIFunc('categories','user','getlinks',
                                           array('modid' => $modid,
                                                 'iids' => array($itemid)));
@@ -144,511 +223,560 @@ function categories_navigationblock_display($blockinfo)
             }
         }
     }
-
-// TODO: allow override by module (via xarVarGetCached)
-    // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
-
-    // Defaults
-    if (empty($vars['layout'])) {
-        $vars['layout'] = 1;
-    }
-    if (empty($vars['showcatcount'])) {
-        $vars['showcatcount'] = 0;
-    }
-    if (empty($vars['showchildren'])) {
-        $vars['showchildren'] = 0;
+    if (count($cids) > 0) {
+        $seencid = array();
+        foreach ($cids as $cid) {
+            if (empty($cid) || ! is_numeric($cid)) {
+                continue;
+            }
+            $seencid[$cid] = 1;
+        }
+        $cids = array_keys($seencid);
     }
 
-    // Get current category counts (optional array of cid => count)
-    if (empty($vars['showcatcount'])) {
-        $catcount = array();
-    } elseif (xarVarIsCached('Blocks.categories','catcount')) {
-        $catcount = xarVarGetCached('Blocks.categories','catcount');
-    } else {
-        // get number of items per category (for this module)
-        $catcount = xarModAPIFunc('categories','user','groupcount',
-                                 array('modid' => $modid));
-        xarVarSetCached('Blocks.categories','catcount',$catcount);
-    }
-
-// TODO: use hooks/widgets/... someday ?
-
-    // Specify type=... & func = ... arguments for xarModURL()
-    if (xarVarIsCached('Blocks.categories','type')) {
-        $type = xarVarGetCached('Blocks.categories','type');
-    }
-    if (empty($type)) {
-        $type = 'user';
-    }
-    if (xarVarIsCached('Blocks.categories','func')) {
-        $func = xarVarGetCached('Blocks.categories','func');
-    }
-    if (empty($func)) {
-        $func = 'view';
-    }
+    $data = array();
+    $data['cids'] = $cids;
 
     $blockinfo['content'] = '';
-    $data = array();
 
     // Generate output
-    switch ($vars['layout']) {
+    switch ($layout) {
 
-    case 3: // prev/next (bottom block)
-        if (empty($cids) || count($cids) != 1 || in_array($cids[0], $mastercids)) {
-            // nothing to show here
-            return;
-        } else {
-            $template = 'nav-prevnext';
-            // See if we need to show anything
-            if (xarVarIsCached('Blocks.categories','showprevnext')) {
-                $showprevnext = xarVarGetCached('Blocks.categories','showprevnext');
+        case 3: // prev/next category
+            $template = 'prevnext';
+            if (empty($cids) || count($cids) != 1 || in_array($cids[0], $mastercids)) {
+                // nothing to show here
+                return;
+            } else {
+                // See if we need to show anything
                 if (empty($showprevnext)) {
+                    if (xarVarIsCached('Blocks.categories','showprevnext')) {
+                        $showprevnext = xarVarGetCached('Blocks.categories','showprevnext');
+                        if (empty($showprevnext)) {
+                            return;
+                        }
+                    }
+                }
+                $cat = xarModAPIFunc('categories','user','getcatinfo',
+                                array('cid' => $cids[0]));
+                if (empty($cat)) {
                     return;
                 }
-            }
-            $cat = xarModAPIFunc('categories','user','getcatinfo',
-                                array('cid' => $cids[0]));
-            if (empty($cat)) {
-                return;
-            }
-            $neighbours = xarModAPIFunc('categories','user','getneighbours',
-                                       $cat);
-            if (empty($neighbours) || count($neighbours) == 0) {
-                return;
-            }
-            foreach ($neighbours as $neighbour) {
-//                if ($neighbour['link'] == 'parent') {
-//                    $data['uplabel'] = $neighbour['name'];
-//                    $data['uplink'] = xarModURL($modname,$type,$func,
-//                                               array('itemtype' => $itemtype,
-//                                                     'catid' => $neighbour['cid']));
-//                } elseif ($neighbour['link'] == 'previous') {
-                if ($neighbour['link'] == 'previous') {
-                    $data['prevlabel'] = $neighbour['name'];
-                    $data['prevlink'] = xarModURL($modname,$type,$func,
-                                                 array('itemtype' => $itemtype,
-                                                       'catid' => $neighbour['cid']));
-                } elseif ($neighbour['link'] == 'next') {
-                    $data['nextlabel'] = $neighbour['name'];
-                    $data['nextlink'] = xarModURL($modname,$type,$func,
-                                                 array('itemtype' => $itemtype,
-                                                       'catid' => $neighbour['cid']));
+                $neighbours = xarModAPIFunc('categories','user','getneighbours',
+                                           $cat);
+                if (empty($neighbours) || count($neighbours) == 0) {
+                    return;
                 }
-            }
-            if (!isset($data['nextlabel']) &&
-                !isset($data['prevlabel'])) {
-                return;
-            }
-//            if (!isset($data['uplabel'])) {
-//                $data['uplabel'] = '&nbsp;';
-//            }
-        }
-        break;
-
-    case 2: // crumbtrails (top block)
-        if (empty($cids) || count($cids) == 0) {
-            $template = 'nav-rootcats';
-            $data['cattitle'] = xarML('Browse in');
-            $data['catitems'] = array();
-
-            // Get root categories
-            $catlist = xarModAPIFunc('categories','user','getcatinfo',
-                                    array('cids' => $mastercids));
-            $join = '';
-            foreach ($catlist as $cat) {
-            // TODO: now this is a tricky part...
-                $link = xarModURL($modname,$type,$func,
-                                 array('catid' => $cat['cid'],
-                                       'itemtype' => $itemtype));
-                $label = xarVarPrepForDisplay($cat['name']);
-                $data['catitems'][] = array('catlabel' => $label,
-                                            'catlink' => $link,
-                                            'catjoin' => $join);
-                $join = ' | ';
-            }
-        } else {
-            $template = 'nav-trails';
-            if (!empty($andcids)) {
-                $data['cattitle'] = xarML('Browse in');
-            } else {
-                $data['cattitle'] = xarML('Browse in');
-            }
-            $data['cattrails'] = array();
-
-            $descriptions = array();
-// TODO: stop at root categories
-            foreach ($cids as $cid) {
-                // Get category information
-                $parents = xarModAPIFunc('categories','user','getparents',
-                                        array('cid' => $cid));
-                if (empty($parents)) {
-                    continue;
+                foreach ($neighbours as $neighbour) {
+//                    if ($neighbour['link'] == 'parent') {
+//                        $data['uplabel'] = $neighbour['name'];
+//                        $data['upcid'] = $neighbour['cid'];
+//                        $data['uplink'] = xarModURL($modname,$type,$func,
+//                                                   array('itemtype' => $itemtype,
+//                                                         'catid' => $neighbour['cid']));
+//                    } elseif ($neighbour['link'] == 'previous') {
+                    if ($neighbour['link'] == 'previous') {
+                        $data['prevlabel'] = $neighbour['name'];
+                        $data['prevcid'] = $neighbour['cid'];
+                        $data['prevlink'] = xarModURL($modname,$type,$func,
+                                                     array('itemtype' => $itemtype,
+                                                           'catid' => $neighbour['cid']));
+                    } elseif ($neighbour['link'] == 'next') {
+                        $data['nextlabel'] = $neighbour['name'];
+                        $data['nextcid'] = $neighbour['cid'];
+                        $data['nextlink'] = xarModURL($modname,$type,$func,
+                                                     array('itemtype' => $itemtype,
+                                                           'catid' => $neighbour['cid']));
+                    }
                 }
-                $catitems = array();
-                $curcount = 0;
-            // TODO: now this is a tricky part...
-                $label = xarML('All');
-                $link = xarModURL($modname,$type,$func,
-                                 array('itemtype' => $itemtype));
+                if (!isset($data['nextlabel']) &&
+                    !isset($data['prevlabel'])) {
+                    return;
+                }
+//                if (!isset($data['uplabel'])) {
+//                    $data['uplabel'] = '&nbsp;';
+//                }
+            }
+            break;
+
+        case 2: // crumbtrails
+            $template = 'trails';
+            if (empty($cids) || count($cids) == 0) {
+                $template = 'rootcats';
+                $data['cattitle'] = xarML('Browse in');
+                $data['catitems'] = array();
+
+                // Get root categories
+                $catlist = xarModAPIFunc('categories','user','getcatinfo',
+                                        array('cids' => $mastercids));
                 $join = '';
-                $catitems[] = array('catlabel' => $label,
-                                    'catlink' => $link,
-                                    'catjoin' => $join);
-                $join = ' &gt; ';
-                foreach ($parents as $cat) {
+                if (empty($catlist) || !is_array($catlist)) {
+                    return;
+                }
+                foreach ($catlist as $cat) {
+                // TODO: now this is a tricky part...
+                    $link = xarModURL($modname,$type,$func,
+                                     array('itemtype' => $itemtype,
+                                           'catid' => $cat['cid']));
                     $label = xarVarPrepForDisplay($cat['name']);
-                    if ($cat['cid'] == $cid && empty($itemid) && empty($andcids)) {
-                        $link = '';
-                    } else {
-                    // TODO: now this is a tricky part...
-                        $link = xarModURL($modname,$type,$func,
-                                         array('catid' => $cat['cid'],
-                                               'itemtype' => $itemtype));
-                    }
-                    if ($cat['cid'] == $cid) {
-                        // show optional count
-                        if (isset($catcount[$cat['cid']])) {
-                            $curcount = $catcount[$cat['cid']];
-                        }
-                        if (!empty($cat['description'])) {
-                            $descriptions[] = xarVarPrepHTMLDisplay($cat['description']);
-                        } else {
-                            $descriptions[] = xarVarPrepForDisplay($cat['name']);
-                        }
-                        // save current category info for icon etc.
-                        if (count($cids) == 1) {
-                            $curcat = $cat;
-                        }
-                    }
-                    $catitems[] = array('catlabel' => $label,
-                                        'catlink' => $link,
-                                        'catjoin' => $join);
+                    $data['catitems'][] = array('catlabel' => $label,
+                                                'catid' => $cat['cid'],
+                                                'catlink' => $link,
+                                                'catjoin' => $join);
+                    $join = ' | ';
                 }
-                $data['cattrails'][] = array('catitems' => $catitems,
-                                             'catcount' => $curcount);
-            }
-
-            // Add filters to select on all categories or any categories
-            if (count($cids) > 1) {
-                $catitems = array();
-                if (!empty($itemid) || !empty($andcids)) {
-                    $label = xarML('Any of these categories');
-                    $link = xarModURL($modname,$type,$func,
-                                      array('catid' => join('-',$cids),
-                                            'itemtype' => $itemtype));
-                    $join = '';
-                    $catitems[] = array('catlabel' => $label,
-                                        'catlink' => $link,
-                                        'catjoin' => $join);
-                }
-                if (empty($andcids)) {
-                    $label = xarML('All of these categories');
-                    $link = xarModURL($modname,$type,$func,
-                                      array('catid' => join('+',$cids),
-                                            'itemtype' => $itemtype));
-                    if (!empty($itemid)) {
-                        $join = '-';
-                    } else {
-                        $join = '';
-                    }
-                    $catitems[] = array('catlabel' => $label,
-                                        'catlink' => $link,
-                                        'catjoin' => $join);
-                }
-                $curcount = 0;
-                $data['cattrails'][] = array('catitems' => $catitems,
-                                             'catcount' => $curcount);
-            }
-
-        // TODO: move off to nav-trails template ?
-            // Build category description
-            if (!empty($itemid)) {
-                $data['catdescr'] = join(' + ', $descriptions);
-            } elseif (!empty($andcids)) {
-                $data['catdescr'] = join(' ' . xarML('and') . ' ', $descriptions);
             } else {
-                $data['catdescr'] = join(' ' . xarML('or') . ' ', $descriptions);
-            }
-
-            if (count($cids) != 1) {
-                break;
-            }
-            // set the page title to the current module + category if no item is displayed
-            if (empty($itemid)) {
-                // Get current title
-                if (xarVarIsCached('Blocks.categories','title')) {
-                    $title = xarVarGetCached('Blocks.categories','title');
+                $template = 'trails';
+                if (!empty($andcids)) {
+                    $data['cattitle'] = xarML('Browse in');
+                } else {
+                    $data['cattitle'] = xarML('Browse in');
                 }
-                if (empty($title)) {
-                    $modinfo = xarModGetInfo($modid);
-                    $title = $modinfo['displayname'];
-                }
-                $title = xarVarPrepForDisplay($title);
-                $title .= ' :: ' . xarVarPrepForDisplay($curcat['name']);
-                xarTplSetPageTitle($title);
-            }
+                $data['cattrails'] = array();
 
-        // TODO: don't show icons when displaying items ?
-            if (!empty($curcat['image'])) {
-                // find the image in categories (we need to specify the module here)
-                $data['catimage'] = xarTplGetImage($curcat['image'],'categories');
-                $data['catname'] = xarVarPrepForDisplay($curcat['name']);
-            }
-            if ($vars['showchildren'] == 2) {
-                // Load categories user API
-                if (!xarModAPILoad('categories','visual')) return;
-
-                // Get child categories (all sub-levels)
-                $childlist = xarModAPIFunc('categories','visual','listarray',
-                                          array('cid' => $cids[0]));
-                if (empty($childlist) || count($childlist) == 0) {
-                    break;
-                }
-                foreach ($childlist as $info) {
-                    if ($info['id'] == $cids[0]) {
+                $descriptions = array();
+    // TODO: stop at root categories
+                foreach ($cids as $cid) {
+                    // Get category information
+                    $parents = xarModAPIFunc('categories','user','getparents',
+                                            array('cid' => $cid));
+                    if (empty($parents)) {
                         continue;
                     }
-                    $label = xarVarPrepForDisplay($info['name']);
+                    $catitems = array();
+                    $curcount = 0;
                 // TODO: now this is a tricky part...
+                    $label = xarML('All');
                     $link = xarModURL($modname,$type,$func,
-                                     array('catid' => $info['id'],
-                                           'itemtype' => $itemtype));
-                    if (!empty($catcount[$info['id']])) {
-                        $count = $catcount[$info['id']];
-                    } else {
-                        $count = 0;
+                                     array('itemtype' => $itemtype));
+                    $join = '';
+                    $catitems[] = array('catlabel' => $label,
+                                        'catid' => $cid,
+                                        'catlink' => $link,
+                                        'catjoin' => $join);
+                    $join = ' &gt; ';
+                    foreach ($parents as $cat) {
+                        $label = xarVarPrepForDisplay($cat['name']);
+                        if ($cat['cid'] == $cid && empty($itemid) && empty($andcids)) {
+                            $link = '';
+                        } else {
+                        // TODO: now this is a tricky part...
+                            $link = xarModURL($modname,$type,$func,
+                                             array('itemtype' => $itemtype,
+                                                   'catid' => $cat['cid']));
+                        }
+                        if ($cat['cid'] == $cid) {
+                            // show optional count
+                            if (isset($catcount[$cat['cid']])) {
+                                $curcount = $catcount[$cat['cid']];
+                            }
+                            if (!empty($cat['description'])) {
+                                $descriptions[] = xarVarPrepHTMLDisplay($cat['description']);
+                            } else {
+                                $descriptions[] = xarVarPrepForDisplay($cat['name']);
+                            }
+                            // save current category info for icon etc.
+                            if (count($cids) == 1) {
+                                $curcat = $cat;
+                            }
+                        }
+                        $catitems[] = array('catlabel' => $label,
+                                            'catid' => $cat['cid'],
+                                            'catlink' => $link,
+                                            'catjoin' => $join);
                     }
-/* don't show descriptions in (potentially) multi-level trees
-                    if (!empty($info['description'])) {
-                        $descr = xarVarPrepHTMLDisplay($info['description']);
-                    } else {
-                        $descr = '';
-                    }
-*/
-                    $data['catlines'][] = array('catlabel' => $label,
-                                                'catlink' => $link,
-                                              //  'catdescr' => $descr,
-                                                'catcount' => $count,
-                                                'beforetags' => $info['beforetags'],
-                                                'aftertags' => $info['aftertags']);
-
+                    $data['cattrails'][] = array('catitems' => $catitems,
+                                                 'catcount' => $curcount);
                 }
-                unset($childlist);
-            } elseif ($vars['showchildren'] == 1) {
-                // Get child categories (1 level only)
-                $children = xarModAPIFunc('categories','user','getchildren',
-                                         array('cid' => $cids[0]));
-                if (empty($children) || count($children) == 0) {
+
+                // Add filters to select on all categories or any categories
+                if (count($cids) > 1) {
+                    $catitems = array();
+                    if (!empty($itemid) || !empty($andcids)) {
+                        $label = xarML('Any of these categories');
+                        $link = xarModURL($modname,$type,$func,
+                                          array('itemtype' => $itemtype,
+                                                'catid' => join('-',$cids)));
+                        $join = '';
+                        $catitems[] = array('catlabel' => $label,
+                                            'catid' => join('-',$cids),
+                                            'catlink' => $link,
+                                            'catjoin' => $join);
+                    }
+                    if (empty($andcids)) {
+                        $label = xarML('All of these categories');
+                        $link = xarModURL($modname,$type,$func,
+                                          array('itemtype' => $itemtype,
+                                                'catid' => join('+',$cids)));
+                        if (!empty($itemid)) {
+                            $join = '-';
+                        } else {
+                            $join = '';
+                        }
+                        $catitems[] = array('catlabel' => $label,
+                                            'catid' => join('+',$cids),
+                                            'catlink' => $link,
+                                            'catjoin' => $join);
+                    }
+                    $curcount = 0;
+                    $data['cattrails'][] = array('catitems' => $catitems,
+                                                 'catcount' => $curcount);
+                }
+
+            // TODO: move off to nav-trails template ?
+                // Build category description
+                if (!empty($itemid)) {
+                    $data['catdescr'] = join(' + ', $descriptions);
+                } elseif (!empty($andcids)) {
+                    $data['catdescr'] = join(' ' . xarML('and') . ' ', $descriptions);
+                } else {
+                    $data['catdescr'] = join(' ' . xarML('or') . ' ', $descriptions);
+                }
+
+                if (count($cids) != 1) {
                     break;
                 }
-                $data['catlines'] = array();
-            // TODO: don't show icons when displaying items ?
-                $data['caticons'] = array();
-                $numicons = 0;
-                foreach ($children as $cat) {
-                // TODO: now this is a tricky part...
-                    $label = xarVarPrepForDisplay($cat['name']);
-                    $link = xarModURL($modname,$type,$func,
-                                     array('catid' => $cat['cid'],
-                                           'itemtype' => $itemtype));
-                    if (!empty($catcount[$cat['cid']])) {
-                        $count = $catcount[$cat['cid']];
-                    } else {
-                        $count = 0;
+
+                if (!empty($curcat)) {
+/*
+                    $curcat['module'] = 'categories';
+                    $curcat['itemtype'] = 0;
+                    $curcat['itemid'] = $cids[0];
+                    $curcat['returnurl'] = xarModURL($modname,$type,$func,
+                                                     array('itemtype' => $itemtype,
+                                                           'catid' => $cids[0]));
+                    // calling item display hooks *for the categories module* here !
+                    $data['cathooks'] = xarModCallHooks('item','display',$cid,$curcat,'categories');
+*/
+                    // saving the current cat id for use e.g. with DD tags (<xar:data-display module="categories" itemid="$catid" />)
+                    $data['catid'] = $curcat['cid'];
+                }
+/*
+                // set the page title to the current module + category if no item is displayed
+                if (empty($itemid)) {
+                    // Get current title
+                    if (empty($title)) {
+                        if (xarVarIsCached('Blocks.categories','title')) {
+                            $title = xarVarGetCached('Blocks.categories','title');
+                        }
                     }
-                    if (!empty($cat['image'])) {
-                        // find the image in categories (we need to specify the module here)
-                        $image = xarTplGetImage($cat['image'],'categories');
-                        $numicons++;
-                        $data['caticons'][] = array('catlabel' => $label,
-                                                    'catlink' => $link,
-                                                    'catimage' => $image,
-                                                    'catcount' => $count,
-                                                    'catnum' => $numicons);
-                    } else {
-                        if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
-                            $descr = xarVarPrepHTMLDisplay($cat['description']);
+                    if (!empty($curcat['name'])) {
+                        $title = xarVarPrepForDisplay($curcat['name']);
+                    }
+                    xarTplSetPageTitle($title);
+                }
+*/
+            // TODO: don't show icons when displaying items ?
+                if (!empty($curcat['image'])) {
+                    // find the image in categories (we need to specify the module here)
+                    $data['catimage'] = xarTplGetImage($curcat['image'],'categories');
+                    $data['catname'] = xarVarPrepForDisplay($curcat['name']);
+                }
+                if ($showchildren == 2) {
+                    // Get child categories (all sub-levels)
+                    $childlist = xarModAPIFunc('categories','visual','listarray',
+                                              array('cid' => $cids[0]));
+                    if (empty($childlist) || count($childlist) == 0) {
+                        break;
+                    }
+                    foreach ($childlist as $info) {
+                        if ($info['id'] == $cids[0]) {
+                            continue;
+                        }
+                        $label = xarVarPrepForDisplay($info['name']);
+                    // TODO: now this is a tricky part...
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $info['id']));
+                        if (!empty($catcount[$info['id']])) {
+                            $count = $catcount[$info['id']];
+                        } else {
+                            $count = 0;
+                        }
+    /* don't show descriptions in (potentially) multi-level trees
+                        if (!empty($info['description'])) {
+                            $descr = xarVarPrepHTMLDisplay($info['description']);
                         } else {
                             $descr = '';
                         }
-                        $beforetags = '<li>';
-                        $aftertags = '</li>';
+    */
                         $data['catlines'][] = array('catlabel' => $label,
+                                                    'catid' => $info['id'],
                                                     'catlink' => $link,
-                                                    'catdescr' => $descr,
+                                                  //  'catdescr' => $descr,
+                                                    'catdescr' => '',
                                                     'catcount' => $count,
-                                                    'beforetags' => $beforetags,
-                                                    'aftertags' => $aftertags);
+                                                    'beforetags' => $info['beforetags'],
+                                                    'aftertags' => $info['aftertags']);
+
                     }
-                }
-                unset($children);
-                if (count($data['catlines']) > 0) {
-                    $numitems = count($data['catlines']);
-                    // add leading <ul> tag
-                    $data['catlines'][0]['beforetags'] = '<ul>' .
-                                               $data['catlines'][0]['beforetags'];
-                    // add trailing </ul> tag
-                    $data['catlines'][$numitems - 1]['aftertags'] .= '</ul>';
-                    // add new column
-                    if ($numitems > 7) {
-                        $miditem = round(($numitems + 0.5) / 2) - 1;
-                        $data['catlines'][$miditem]['aftertags'] .=
-                                               '</ul></td><td valign="top"><ul>';
+                    unset($childlist);
+                } elseif ($showchildren == 1) {
+                    // Get child categories (1 level only)
+                    $children = xarModAPIFunc('categories','user','getchildren',
+                                             array('cid' => $cids[0]));
+                    if (empty($children) || count($children) == 0) {
+                        break;
+                    }
+                    $data['catlines'] = array();
+                // TODO: don't show icons when displaying items ?
+                    $data['caticons'] = array();
+                    $numicons = 0;
+                    foreach ($children as $cat) {
+                    // TODO: now this is a tricky part...
+                        $label = xarVarPrepForDisplay($cat['name']);
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+                        }
+                        if (!empty($cat['image'])) {
+                            // find the image in categories (we need to specify the module here)
+                            $image = xarTplGetImage($cat['image'],'categories');
+                            $numicons++;
+                            $data['caticons'][] = array('catlabel' => $label,
+                                                        'catid' => $cat['cid'],
+                                                        'catlink' => $link,
+                                                        'catimage' => $image,
+                                                        'catcount' => $count,
+                                                        'catnum' => $numicons);
+                        } else {
+                            if (!empty($cat['description']) && $cat['description'] != $cat['name']) {
+                                $descr = xarVarPrepHTMLDisplay($cat['description']);
+                            } else {
+                                $descr = '';
+                            }
+                            $beforetags = '<li>';
+                            $aftertags = '</li>';
+                            $data['catlines'][] = array('catlabel' => $label,
+                                                        'catid' => $cat['cid'],
+                                                        'catlink' => $link,
+                                                        'catdescr' => $descr,
+                                                        'catcount' => $count,
+                                                        'beforetags' => $beforetags,
+                                                        'aftertags' => $aftertags);
+                        }
+                    }
+                    unset($children);
+                    if (count($data['catlines']) > 0) {
+                        $numitems = count($data['catlines']);
+                        // add leading <ul> tag
+                        $data['catlines'][0]['beforetags'] = '<ul>' .
+                                                   $data['catlines'][0]['beforetags'];
+                        // add trailing </ul> tag
+                        $data['catlines'][$numitems - 1]['aftertags'] .= '</ul>';
+                        // add new column
+                        if ($numitems > 7) {
+                            $miditem = round(($numitems + 0.5) / 2) - 1;
+                            $data['catlines'][$miditem]['aftertags'] .=
+                                                   '</ul></td><td valign="top"><ul>';
+                        }
                     }
                 }
             }
-        }
-        break;
+            break;
 
-    case 1: // tree (side block)
-    default:
-        $template = 'nav-tree';
-        // Get current title
-        if (xarVarIsCached('Blocks.categories','title')) {
-           $title = xarVarGetCached('Blocks.categories','title');
-        }
-        if (empty($title)) {
-            $modinfo = xarModGetInfo($modid);
-            $title = $modinfo['displayname'];
-        }
-        $blockinfo['title'] = xarML('Browse in #(1)',$title);
-        $data['cattrees'] = array();
-
-        if (empty($cids) || count($cids) == 0) {
-            foreach ($mastercids as $cid) {
-                $catparents = array();
-                $catitems = array();
-                // Get child categories
-                $children = xarModAPIFunc('categories','user','getchildren',
-                                         array('cid' => $cid,
-                                               'return_itself' => true));
-                foreach ($children as $cat) {
-                    $label = xarVarPrepForDisplay($cat['name']);
-                // TODO: now this is a tricky part...
-                    $link = xarModURL($modname,$type,$func,
-                                     array('catid' => $cat['cid'],
-                                           'itemtype' => $itemtype));
-                    if (!empty($catcount[$cat['cid']])) {
-                        $count = $catcount[$cat['cid']];
-                    } else {
-                        $count = 0;
-                    }
-                    if ($cat['cid'] == $cid) {
-                        $catparents[] = array('catlabel' => $label,
-                                              'catlink' => $link,
-                                              'catcount' => $count);
-                    } else {
-                        $catitems[] = array('catlabel' => $label,
-                                            'catlink' => $link,
-                                            'catcount' => $count);
-                    }
+        case 1: // tree
+        default:
+            $template = 'tree';
+            // Get current title
+            if (empty($title) && empty($module)) {
+                if (xarVarIsCached('Blocks.categories','title')) {
+                    $title = xarVarGetCached('Blocks.categories','title');
                 }
-                $data['cattrees'][] = array('catitems' => $catitems,
-                                            'catparents' => $catparents);
             }
-        } else {
-            foreach ($cids as $cid) {
-                $catparents = array();
-                $catitems = array();
-                // Get category information
-                $parents = xarModAPIFunc('categories','user','getparents',
-                                        array('cid' => $cid));
-                if (empty($parents)) {
-                    continue;
+            if (empty($title) && !empty($itemtype)) {
+                // Get the list of all item types for this module (if any)
+                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                                         // don't throw an exception if this function doesn't exist
+                                         array(), 0);
+                if (isset($mytypes) && !empty($mytypes[$itemtype])) {
+                    $title = $mytypes[$itemtype]['label'];
                 }
-            // TODO: do something with parents
-                $root = '';
-                $parentid = 0;
-                foreach ($parents as $id => $info) {
-                    if (empty($root)) {
-                        $root = xarVarPrepForDisplay($info['name']);
-                    }
-                    if ($id = $cid) {
-                        $parentid = $info['parent'];
-                    }
-                }
-                // yes, this excludes the top-level categories too :-)
-                if (empty($parentid) || empty($root)) {
-                    $parentid = $cid;
-            //        return;
-                }
-                if (!empty($parents[$parentid])) {
-                    $cat = $parents[$parentid];
-                    $label = xarVarPrepForDisplay($cat['name']);
-                    $link = xarModURL($modname,$type,$func,
-                                     array('catid' => $cat['cid'],
-                                           'itemtype' => $itemtype));
-                    if (!empty($catcount[$cat['cid']])) {
-                        $count = $catcount[$cat['cid']];
-                    } else {
-                        $count = 0;
-                    }
-                    $catparents[] = array('catlabel' => $label,
-                                          'catlink' => $link,
-                                          'catcount' => $count);
-                }
+            }
+            if (empty($title)) {
+                $modinfo = xarModGetInfo($modid);
+                $title = ucwords($modinfo['displayname']);
+            }
+            $blockinfo['title'] = xarML('Browse in #(1)',$title);
 
-                // Get sibling categories
-                $siblings = xarModAPIFunc('categories','user','getchildren',
-                                         array('cid' => $parentid));
-                if ($vars['showchildren'] && $parentid != $cid) {
+            $data['cattrees'] = array();
+
+            if (empty($cids) || count($cids) == 0) {
+                foreach ($mastercids as $cid) {
+                    $catparents = array();
+                    $catitems = array();
                     // Get child categories
                     $children = xarModAPIFunc('categories','user','getchildren',
-                                             array('cid' => $cid));
-                }
-
-                // Generate list of sibling categories
-                foreach ($siblings as $cat) {
-                    $label = xarVarPrepForDisplay($cat['name']);
-                    $link = xarModURL($modname,$type,$func,
-                                     array('catid' => $cat['cid'],
-                                           'itemtype' => $itemtype));
-                    if (!empty($catcount[$cat['cid']])) {
-                        $count = $catcount[$cat['cid']];
-                    } else {
-                        $count = 0;
-                    }
-                    $catchildren = array();
-                    if ($cat['cid'] == $cid) {
-                        if (empty($itemid) && empty($andcids)) {
-                            $link = '';
+                                             array('cid' => $cid,
+                                                   'return_itself' => true));
+                    foreach ($children as $cat) {
+                        $label = xarVarPrepForDisplay($cat['name']);
+                    // TODO: now this is a tricky part...
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
                         } else {
-                            $label .= ' +';
+                            $count = 0;
                         }
-                        if ($vars['showchildren'] && !empty($children) && count($children) > 0) {
-                            foreach ($children as $cat) {
-                                $clabel = xarVarPrepForDisplay($cat['name']);
-                            // TODO: now this is a tricky part...
-                                $clink = xarModURL($modname,$type,$func,
-                                                  array('catid' => $cat['cid'],
-                                                        'itemtype' => $itemtype));
-                                if (!empty($catcount[$cat['cid']])) {
-                                    $ccount = $catcount[$cat['cid']];
-                                } else {
-                                    $ccount = 0;
+                        if ($cat['cid'] == $cid) {
+                            $catparents[] = array('catlabel' => $label,
+                                                  'catid' => $cat['cid'],
+                                                  'catlink' => $link,
+                                                  'catcount' => $count);
+                        } else {
+                            $catitems[] = array('catlabel' => $label,
+                                                'catid' => $cat['cid'],
+                                                'catlink' => $link,
+                                                'catcount' => $count);
+                        }
+                    }
+                    $data['cattrees'][] = array('catitems' => $catitems,
+                                                'catparents' => $catparents);
+                }
+            } elseif (isset($rootcids) && count($rootcids) > 0) {
+                foreach ($rootcids as $cid) {
+                    $catparents = array();
+                    $catitems = array();
+                    // Get child categories
+                    $children = xarModAPIFunc('categories','user','getchildren',
+                                             array('cid' => $cid,
+                                                   'return_itself' => true));
+                    foreach ($children as $cat) {
+                        $label = xarVarPrepForDisplay($cat['name']);
+                    // TODO: now this is a tricky part...
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+                        }
+                        if ($cat['cid'] == $cid) {
+                            $catparents[] = array('catlabel' => $label,
+                                                  'catid' => $cat['cid'],
+                                                  'catlink' => $link,
+                                                  'catcount' => $count);
+                        } else {
+                            $catitems[] = array('catlabel' => $label,
+                                                'catid' => $cat['cid'],
+                                                'catlink' => $link,
+                                                'catcount' => $count);
+                        }
+                    }
+                    $data['cattrees'][] = array('catitems' => $catitems,
+                                                'catparents' => $catparents);
+                }
+            } else {
+                foreach ($cids as $cid) {
+                    $catparents = array();
+                    $catitems = array();
+                    // Get category information
+                    $parents = xarModAPIFunc('categories','user','getparents',
+                                            array('cid' => $cid));
+                    if (empty($parents)) {
+                        continue;
+                    }
+                // TODO: do something with parents
+                    $root = '';
+                    $parentid = 0;
+                    foreach ($parents as $id => $info) {
+                        if (empty($root)) {
+                            $root = xarVarPrepForDisplay($info['name']);
+                        }
+                        if ($id = $cid) {
+                            $parentid = $info['parent'];
+                        }
+                    }
+                    // yes, this excludes the top-level categories too :-)
+                    if (empty($parentid) || empty($root)) {
+                        $parentid = $cid;
+                //        return;
+                    }
+                    if (!empty($parents[$parentid])) {
+                        $cat = $parents[$parentid];
+                        $label = xarVarPrepForDisplay($cat['name']);
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+                        }
+                        $catparents[] = array('catlabel' => $label,
+                                              'catid' => $cat['cid'],
+                                              'catlink' => $link,
+                                              'catcount' => $count);
+                    }
+
+                    // Get sibling categories
+                    $siblings = xarModAPIFunc('categories','user','getchildren',
+                                             array('cid' => $parentid));
+                    if ($showchildren && $parentid != $cid) {
+                        // Get child categories
+                        $children = xarModAPIFunc('categories','user','getchildren',
+                                                 array('cid' => $cid));
+                    }
+
+                    // Generate list of sibling categories
+                    foreach ($siblings as $cat) {
+                        $label = xarVarPrepForDisplay($cat['name']);
+                        $link = xarModURL($modname,$type,$func,
+                                         array('itemtype' => $itemtype,
+                                               'catid' => $cat['cid']));
+                        if (!empty($catcount[$cat['cid']])) {
+                            $count = $catcount[$cat['cid']];
+                        } else {
+                            $count = 0;
+                        }
+                        $savecid = $cat['cid'];
+                        $catchildren = array();
+                        if ($cat['cid'] == $cid) {
+                            if (empty($itemid) && empty($andcids)) {
+                                $link = '';
+                            }
+                            if ($showchildren && !empty($children) && count($children) > 0) {
+                                foreach ($children as $cat) {
+                                    $clabel = xarVarPrepForDisplay($cat['name']);
+                                // TODO: now this is a tricky part...
+                                    $clink = xarModURL($modname,$type,$func,
+                                                      array('itemtype' => $itemtype,
+                                                            'catid' => $cat['cid']));
+                                    if (!empty($catcount[$cat['cid']])) {
+                                        $ccount = $catcount[$cat['cid']];
+                                    } else {
+                                        $ccount = 0;
+                                    }
+                                    $catchildren[] = array('clabel' => $clabel,
+                                                           'cid' => $cat['cid'],
+                                                           'clink' => $clink,
+                                                           'ccount' => $ccount);
                                 }
-                                $catchildren[] = array('clabel' => $clabel,
-                                                       'clink' => $clink,
-                                                       'ccount' => $ccount);
                             }
                         }
+                        $catitems[] = array('catlabel' => $label,
+                                            'catid' => $savecid,
+                                            'catlink' => $link,
+                                            'catcount' => $count,
+                                            'catchildren' => $catchildren);
                     }
-                    $catitems[] = array('catlabel' => $label,
-                                        'catlink' => $link,
-                                        'catcount' => $count,
-                                        'catchildren' => $catchildren);
+                    $data['cattrees'][] = array('catitems' => $catitems,
+                                                'catparents' => $catparents);
                 }
-                $data['cattrees'][] = array('catitems' => $catitems,
-                                            'catparents' => $catparents);
             }
-        }
-        break;
+            break;
     }
     $data['blockid'] = $blockinfo['bid'];
 
     // Populate block info and pass to theme
-    $blockinfo['content'] = xarTplBlock('categories',$template,$data);
+    $blockinfo['content'] = xarTplBlock('categories','nav',$data,$template);
     if (!empty($blockinfo['content'])) {
         return $blockinfo;
     }
@@ -673,6 +801,9 @@ function categories_navigationblock_modify($blockinfo)
     if (empty($vars['showchildren'])) {
         $vars['showchildren'] = 0;
     }
+    if (empty($vars['startmodule'])) {
+        $vars['startmodule'] = '';
+    }
 
     $vars['layouts'] = array(array('id' => 1,
                                    'name' => 'Tree (Side Block)'),
@@ -688,6 +819,126 @@ function categories_navigationblock_modify($blockinfo)
                               array('id' => 2,
                                     'name' => xarML('All children')));
 
+    $vars['modules'] = array();
+    $vars['modules'][] = array('id' => '',
+                               'name' => xarML('Adapt dynamically to current page'));
+
+    // get the list of hooked modules
+    $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
+                                   array('hookModName' => 'categories'));
+    if (isset($hookedmodules) && is_array($hookedmodules)) {
+        foreach ($hookedmodules as $modname => $value) {
+            // try to get master cids for this module
+            $cidlist = xarModGetVar($modname, 'mastercids');
+            if (!empty($cidlist)) {
+                $mastercids = explode(';',$cidlist);
+                sort($mastercids,SORT_NUMERIC);
+                $catlist = xarModAPIFunc('categories','user','getcatinfo',
+                                         array('cids' => $mastercids));
+                if (empty($catlist)) $catlist = array();
+
+                $modlabel = xarML('#(1) module',ucwords($modname));
+                $name = $modlabel . ' [';
+                $join = '';
+                foreach ($catlist as $cat) {
+                    $name .= $join . $cat['name'];
+                    $join = ' | ';
+                }
+                $name .= ']';
+                // start from all base categories
+                $vars['modules'][] = array('id' => "$modname.0.0",
+                                           'name' => $name);
+                if (count($catlist) > 1) {
+                    // start from one particular base category
+                    foreach ($catlist as $cat) {
+                        $name = '&nbsp;&nbsp;&nbsp;' . $modlabel . ' [' . $cat['name'] . ']';
+                        $vars['modules'][] = array('id' => "$modname.0.$cat[cid]",
+                                                   'name' => $name);
+                    }
+                }
+            }
+            // Get the list of all item types for this module (if any)
+            $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                                     // don't throw an exception if this function doesn't exist
+                                     array(), 0);
+            if (!isset($mytypes)) $mytypes = array();
+            // we have hooks for individual item types here
+            if (!isset($value[0])) {
+                foreach ($value as $itemtype => $val) {
+                    // try to get master cids for this module + itemtype
+                    $cidlist = xarModGetVar($modname, "mastercids.$itemtype");
+                    if (empty($cidlist)) continue;
+                    $mastercids = explode(';',$cidlist);
+                    sort($mastercids,SORT_NUMERIC);
+                    $catlist = xarModAPIFunc('categories','user','getcatinfo',
+                                             array('cids' => $mastercids));
+                    if (empty($catlist)) continue;
+
+                    if (isset($mytypes[$itemtype])) {
+                        $modlabel = xarML('#(1) type',$mytypes[$itemtype]['label']);
+                    } else {
+                        $modlabel = xarML('#(1) module #(2)',ucwords($modname),$itemtype);
+                    }
+                    $modlabel = '&nbsp;&nbsp;&nbsp;' . $modlabel;
+                    $name = $modlabel . ' [';
+                    $join = '';
+                    foreach ($catlist as $cat) {
+                        $name .= $join . $cat['name'];
+                        $join = ' | ';
+                    }
+                    $name .= ']';
+                    // start from all base categories
+                    $vars['modules'][] = array('id' => "$modname.$itemtype.0",
+                                               'name' => $name);
+                    if (count($catlist) > 1) {
+                        // start from one particular base category
+                        foreach ($catlist as $cat) {
+                            $name = '&nbsp;&nbsp;&nbsp;' . $modlabel . ' [' . $cat['name'] . ']';
+                            $vars['modules'][] = array('id' => "$modname.$itemtype.$cat[cid]",
+                                                       'name' => $name);
+                        }
+                    }
+                }
+            } else {
+                foreach ($mytypes as $itemtype => $info) {
+                    // try to get master cids for this module + itemtype
+                    $cidlist = xarModGetVar($modname, "mastercids.$itemtype");
+                    if (empty($cidlist)) continue;
+                    $mastercids = explode(';',$cidlist);
+                    sort($mastercids,SORT_NUMERIC);
+                    $catlist = xarModAPIFunc('categories','user','getcatinfo',
+                                             array('cids' => $mastercids));
+                    if (empty($catlist)) continue;
+
+                    if (isset($mytypes[$itemtype])) {
+                        $modlabel = xarML('#(1) type',$mytypes[$itemtype]['label']);
+                    } else {
+                        $modlabel = xarML('#(1) module #(2)',ucwords($modname),$itemtype);
+                    }
+                    $modlabel = '&nbsp;&nbsp;&nbsp;' . $modlabel;
+                    $name = $modlabel . ' [';
+                    $join = '';
+                    foreach ($catlist as $cat) {
+                        $name .= $join . $cat['name'];
+                        $join = ' | ';
+                    }
+                    $name .= ']';
+                    // start from all base categories
+                    $vars['modules'][] = array('id' => "$modname.$itemtype.0",
+                                               'name' => $name);
+                    if (count($catlist) > 1) {
+                        // start from one particular base category
+                        foreach ($catlist as $cat) {
+                            $name = '&nbsp;&nbsp;&nbsp;' . $modlabel . ' [' . $cat['name'] . ']';
+                            $vars['modules'][] = array('id' => "$modname.$itemtype.$cat[cid]",
+                                                       'name' => $name);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     $vars['blockid'] = $blockinfo['bid'];
     // Return output
     return xarTplBlock('categories','nav-admin',$vars);
@@ -702,7 +953,7 @@ function categories_navigationblock_update($blockinfo)
     if(!xarVarFetch('layout',       'isset', $vars['layout'],        NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showcatcount', 'isset', $vars['showcatcount'],  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showchildren', 'isset', $vars['showchildren'],  NULL, XARVAR_DONT_SET)) {return;}
-
+    if(!xarVarFetch('startmodule',  'isset', $vars['startmodule'],   NULL, XARVAR_DONT_SET)) {return;}
 
     $blockinfo['content'] = serialize($vars);
 

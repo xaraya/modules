@@ -1,6 +1,6 @@
 <xar:if condition="empty($refcid)">
     <xar:set name="$refcid">0</xar:set>
-    <xar:set name="$position">1</xar:set>
+    <xar:set name="$position">2</xar:set>
 </xar:if>
 
 <xar:if condition="count($categories) eq 0">

@@ -1,40 +1,49 @@
-<xar:loop id="cattrees" name="$cattrees">
-    <xar:loop id="parents" name="$loop:cattrees:item['catparents']">
-        <xar:if condition="empty($loop:parents:item['catlink'])">
-            #$loop:parents:item['catlabel']#
+<xar:foreach in="$cattrees" value="$cattree">
+    <xar:foreach in="$cattree['catparents']" value="$catparent">
+        <xar:if condition="empty($catparent['catlink'])">
+            #$catparent['catlabel']#
         <xar:else />
-            <a href="#$loop:parents:item['catlink']#">#$loop:parents:item['catlabel']#</a>
+            <a href="#$catparent['catlink']#">#$catparent['catlabel']#</a>
         </xar:if>
-        <xar:if condition="!empty($loop:parents:item['catcount'])">
-            (#$loop:parents:item['catcount']#)
+        <xar:if condition="count($cids) gt 0 and in_array($catparent['catid'],$cids)">
+            +
+        </xar:if>
+        <xar:if condition="!empty($catparent['catcount'])">
+            (#$catparent['catcount']#)
         </xar:if>
         <br />
-    </xar:loop>
-    <xar:loop id="catitems" name="$loop:cattrees:item['catitems']">
+    </xar:foreach>
+    <xar:foreach in="$cattree['catitems']" value="$catitem">
         &bull;&nbsp;
-        <xar:if condition="empty($loop:catitems:item['catlink'])">
-            <b>#$loop:catitems:item['catlabel']#</b>
+        <xar:if condition="empty($catitem['catlink'])">
+            <b>#$catitem['catlabel']#</b>
         <xar:else />
-            <a href="#$loop:catitems:item['catlink']#">#$loop:catitems:item['catlabel']#</a>
+            <a href="#$catitem['catlink']#">#$catitem['catlabel']#</a>
         </xar:if>
-        <xar:if condition="!empty($loop:catitems:item['catcount'])">
-            (#$loop:catitems:item['catcount']#)
+        <xar:if condition="count($cids) gt 0 and in_array($catitem['catid'],$cids)">
+            +
+        </xar:if>
+        <xar:if condition="!empty($catitem['catcount'])">
+            (#$catitem['catcount']#)
         </xar:if>
         <br />
-        <xar:if condition="!empty($loop:catitems:item['catchildren']) and count($loop:catitems:item['catchildren']) gt 0">
-        <xar:loop id="catchildren" name="$loop:catitems:item['catchildren']">
+        <xar:if condition="!empty($catitem['catchildren']) and count($catitem['catchildren']) gt 0">
+        <xar:foreach in="$catitem['catchildren']" value="$catchild">
             &nbsp;&nbsp;&bull;&nbsp;
-            <xar:if condition="empty($loop:catchildren:item['clink'])">
-                <b>#$loop:catchildren:item['clabel']#</b>
+            <xar:if condition="empty($catchild['clink'])">
+                <b>#$catchild['clabel']#</b>
             <xar:else />
-                <a href="#$loop:catchildren:item['clink']#">#$loop:catchildren:item['clabel']#</a>
+                <a href="#$catchild['clink']#">#$catchild['clabel']#</a>
             </xar:if>
-            <xar:if condition="!empty($loop:catchildren:item['ccount'])">
-                (#$loop:catchildren:item['ccount']#)
+            <xar:if condition="count($cids) gt 0 and in_array($catchild['cid'],$cids)">
+                +
+            </xar:if>
+            <xar:if condition="!empty($catchild['ccount'])">
+                (#$catchild['ccount']#)
             </xar:if>
             <br />
-        </xar:loop>
+        </xar:foreach>
         </xar:if>
-    </xar:loop>
+    </xar:foreach>
     <br />
-</xar:loop>
+</xar:foreach>

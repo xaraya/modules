@@ -39,7 +39,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                * <xar:mlstring>in modules/categories/xarimages</xar:mlstring><br /><xar:mlstring>(theme-dependent versions can be placed in</xar:mlstring><br /><xar:mlstring>themes/[theme name]/modules/categories/images)</xar:mlstring>
+                * <xar:mlstring>in modules/categories/xarimages</xar:mlstring><br /><xar:mlstring>(theme-dependent versions can then be placed in</xar:mlstring><br /><xar:mlstring>themes/[theme name]/modules/categories/images)</xar:mlstring>
              </td>
         </tr>
         <xar:if condition="!empty($hooks)">
