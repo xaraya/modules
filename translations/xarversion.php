@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id$
 $modversion['name'] = 'Translations';
 $modversion['id'] = '77';
@@ -15,5 +15,5 @@ $modversion['admin'] = 1;
 $modversion['user'] = 0;
 $modversion['securityschema'] = array('translations::' => 'Locale string:Backend name:Module name');
 $modversion['class'] = 'Complete';
-$modversion['category'] = 'Users & Groups';
+$modversion['category'] = 'Content';
 ?>
