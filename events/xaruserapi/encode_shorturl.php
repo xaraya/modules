@@ -68,7 +68,7 @@ function events_userapi_encode_shorturl($args)
         //     foreach ($other as $id => $val) {
         //        $path .= $join . 'other['.$id.']='.$val;
         //        // change the join character (once would be enough)
-        //        $join = '&amp;';
+        //        $join = '&';
         //     }
         // }
 
@@ -99,11 +99,11 @@ function events_userapi_encode_shorturl($args)
     if (!empty($path)) {
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
-            $join = '&amp;';
+            $join = '&';
         }
         if (!empty($catid)) {
             $path .= $join . 'catid=' . $catid;
-            $join = '&amp;';
+            $join = '&';
         } elseif (!empty($cids) && count($cids) > 0) {
             if (!empty($andcids)) {
                 $catid = join('+',$cids);
@@ -111,7 +111,7 @@ function events_userapi_encode_shorturl($args)
                 $catid = join('-',$cids);
             }
             $path .= $join . 'catid=' . $catid;
-            $join = '&amp;';
+            $join = '&';
         }
     }
 
