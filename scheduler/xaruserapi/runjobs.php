@@ -29,11 +29,11 @@ function scheduler_userapi_runjobs($args = array())
             $interval = $matches[2];
             $skip = 0;
             switch ($interval) {
-				case 'n':	// Minutes
+                case 'n':    // Minutes
                     if ($now - $lastrun < $count * 60) {
                         $skip = 1;
                     }
-					break;
+                    break;
                 case 'h':
                     if ($now - $lastrun < $count * 60 * 60) {
                         $skip = 1;
@@ -97,7 +97,7 @@ function scheduler_userapi_runjobs($args = array())
     } else {
         $newjobs = array();
     }
-	
+    
     // set the job information
     foreach ($hasrun as $id) {
         if (!isset($newjobs[$id])) continue;

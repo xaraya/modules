@@ -72,9 +72,9 @@ function scheduler_user_main()
     // check when we last ran the scheduler
     $lastrun = xarModGetVar('scheduler', 'lastrun');
     $now = time();
-/*	
+/*    
     if (!empty($lastrun) && $lastrun > $now - ((60*5)-1) )  // Make sure it's been at least five minutes
-	{
+    {
         $diff = time() - $lastrun;
         return xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
     }
