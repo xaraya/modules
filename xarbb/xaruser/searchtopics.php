@@ -204,7 +204,9 @@ function xarbb_user_searchtopics()
                                             $topicsperpage);
         }
     }
-
+    $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
+    $data['xarbbtitle'] = isset($xarbbtitle) ? $xarbbtitle :'';
+    
     return $data;
 
 }

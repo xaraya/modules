@@ -15,12 +15,18 @@
         </div>
     </div>
     <h4>
-             <a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
-                    #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
-                    <xar:mlstring>
-                        Forum Index
-                    </xar:mlstring>
-            </a><br />
+        <a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
+        <xar:if condition="!empty($xarbbtitle)">
+            #$xarbbtitle#
+        <xar:else />
+            #xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# #xarModGetVar('themes', 'SiteSlogan', 0)#
+        </xar:if>
+        #xarModGetVar('themes', 'SiteTitleSeparator', 0)#
+        <xar:mlstring>
+            Forum Index
+        </xar:mlstring>
+        </a>
+        <br />
     </h4>
 </div>
 <div class="xarbb-tablewrapper">
