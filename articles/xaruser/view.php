@@ -238,7 +238,11 @@ function articles_user_view($args)
             $andcids = false;
         } else {
             $cids = array($catid);
-            $andcids = true;
+            if (strstr($catid,'_')) {
+                $andcids = false; // don't combine with current category
+            } else {
+                $andcids = true;
+            }
         }
     } else {
         if (empty($cids)) {
@@ -449,7 +453,7 @@ function articles_user_view($args)
 
     if (empty($articles)) {
         // No articles
-        $data['output'] = xarML('No articles');
+        $data['output'] = '';
         if ($ishome) {
             $template = 'frontpage';
         } elseif (!empty($ptid)) {

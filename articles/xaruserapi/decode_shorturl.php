@@ -71,7 +71,7 @@ function articles_userapi_decode_shorturl($params)
             return array('redirect', $args);
         }
 
-    } elseif (preg_match('/^c([0-9 +-]+)/',$params[1],$matches)) {
+    } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[1],$matches)) {
         $catid = $matches[1];
         $args['catid'] = $catid;
         if (!empty($params[2])) {
@@ -99,7 +99,7 @@ function articles_userapi_decode_shorturl($params)
                         $aid = $matches[1];
                         $args['aid'] = $aid;
                         return array('display', $args);
-                    } elseif (preg_match('/^c([0-9 +-]+)/',$params[2],$matches)) {
+                    } elseif (preg_match('/^c(_?[0-9 +-]+)/',$params[2],$matches)) {
                         $catid = $matches[1];
                         $args['catid'] = $catid;
                         return array('view', $args);
