@@ -557,7 +557,8 @@ function escape_slashes($input)
  *
  * removes instances of <br /> since sometimes they are stored in DB :(
  */
-function bbcode_br2nl($str) {
+function bbcode_br2nl($str) 
+{
     return preg_replace("=<br( />|([\s/][^>]*)>)\r?\n?=i", "\n", $str);
 }
 ?>
