@@ -12,17 +12,18 @@
   @author Chris Dudley <miko@xaraya.com>
   @author Garrett Hunter <garrett@blacktower.com>
 --->
-<xar:if condition="$modname eq 'articles'">
-    <xar:if condition="isset($subscribe)">
-    <p><xar:mlstring>Subscribe</xar:mlstring>: <a href="#xarModURL('pubsub','user','subscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#xarML('Subscribe')#" /></a></p>
+<xar:if condition="!isset($donotdisplay)">
+    <xar:if condition="$modname eq 'articles'">
+        <xar:if condition="isset($subscribe)">
+        <p><xar:mlstring>Subscribe</xar:mlstring>: <a href="#xarModURL('pubsub','user','subscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#xarML('Subscribe')#" /></a></p>
+        <xar:else />
+        <p><xar:mlstring>Unsubscribe</xar:mlstring>: <a href="#xarModURL('pubsub','user','unsubscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/unsubscribe.gif" alt="#xarML('Unsubscribe')#" /></a></p>
+        </xar:if>
     <xar:else />
-    <p><xar:mlstring>Unsubscribe</xar:mlstring>: <a href="#xarModURL('pubsub','user','unsubscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/unsubscribe.gif" alt="#xarML('Unsubscribe')#" /></a></p>
-    </xar:if>
-<xar:else />
-    <xar:if condition="isset($subscribe)">
-    &nbsp;<a href="#xarModURL('pubsub','user','subscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#xarML('Subscribe')#" /></a>
-    <xar:else />
-    &nbsp;<a href="#xarModURL('pubsub','user','unsubscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/unsubscribe.gif" alt="#xarML('Unsubscribe')#" /></a>
+        <xar:if condition="isset($subscribe)">
+        &nbsp;<a href="#xarModURL('pubsub','user','subscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#xarML('Subscribe')#" /></a>
+        <xar:else />
+        &nbsp;<a href="#xarModURL('pubsub','user','unsubscribe',array('returnurl'=>$returnurl,'modid' => $modid, 'cid' => $cid, 'itemtype' => $itemtype))#"><img src="modules/pubsub/xarimages/unsubscribe.gif" alt="#xarML('Unsubscribe')#" /></a>
+        </xar:if>
     </xar:if>
 </xar:if>
-
