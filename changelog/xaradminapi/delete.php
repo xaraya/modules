@@ -39,7 +39,7 @@ function changelog_adminapi_delete($args)
         $bindvars = array((int) $modid, (int) $itemtype);
 
         if (!empty($itemid)) {
-            $query .= " AND xar_itemid = ?";
+            $query = " AND xar_itemid = ?";
             $bindvars[] = (int) $itemid;
         }
     }
