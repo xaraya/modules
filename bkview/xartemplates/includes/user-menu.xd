@@ -125,9 +125,9 @@
   </div>
 </xar:if>
 
-<div class="xar-mod-title">
+<div class="xar-mod-title" style="width: 100%; overflow: hidden;">
     <xar:if condition="!empty($name_value)">
         #$name_value# : 
     </xar:if>
-    #$pageinfo# 
+    #$pageinfo#
 </div>

@@ -1,47 +1,19 @@
-.bktagged { 
-  background-color: #CCE6FF;
-  border: thin solid black;
-  color: inherit;
-}
-
-.csets { 
-  border: thin solid black;
-  border-collapse: collapse;
-  border-spacing: 0;
-  padding-left: 5pt;
-  padding-right: 5pt;
-  vertical-align: top;
-}
- 
-.deltaline { 
-  border-top: thin solid black;
-  font-weight: bold;
-  padding-left: 5pt;
-  padding-right: 5pt;
-}
-
 .comments { 
   font-family: monospace;
-  padding-left: 10pt;
-  border: thin solid black;
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.bkdiffsep { 
-  font-family: monospace;
-  padding: 3pt;
+  padding: 5pt 5pt 5pt 10pt;
+  overflow: hidden;
+  line-height: 2ex;
 }
 
 .precontainer {
     border: thin solid gray;
+    padding: 5pt 5pt 5pt 10pt;
     margin-top: 10pt;
     margin-bottom: 10pt;
-    padding: 4pt;
     overflow: auto;
 }
 
-.diffs {
+.precontent {
   font-family: monospace;
   background-color: inherit;
   white-space: pre;
@@ -52,15 +24,9 @@
 .removed { color: gray;}
 .nochange { color: black;}
 
-/* Annotated view of a file */
-.bkannotate {
-  font-family: monospace;
-  white-space: pre;
-  line-height: 2ex;
+img.bkicon {
+    width: 18pt;
+    padding: 0;
+    border: 0;
+    margin: 0;
 }
-
-
-
-
-
-

@@ -1,43 +1,48 @@
-<xar:template file="user-menu" type="module"/>
+<xar:template file="user-menu" />
 
-<div style="float:left; margin-top: 1em;">
+<div style="float:left; margin-top: 1em; width: 100%;">
     <xar:if condition="count($csets) gt 0">
-        <table class="csets">
-          <tr>
-            <th><xar:mlstring>Age</xar:mlstring></th>
-            <th><xar:mlstring>Author</xar:mlstring></th>
-            <th><xar:mlstring>Rev</xar:mlstring></th>
-            <th align="left" width="100%"><xar:mlstring>Comments</xar:mlstring></th>
-          </tr>
-          
-          <xar:loop name="$csets">
-            <tr class="csets" align="top">
-              <td class="csets" nowrap>
-                <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">#$loop:item['age']#</a>
-              </td>
-              <td class="csets">
-                <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$loop:item['author']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">#$loop:item['author']#</a>
-              </td>
-              <xar:if condition="!empty($loop:item['tag'])">
-                <td class="bktagged">
-                  <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">#$loop:item['rev']#</a>
-                  <br />#$loop:item['tag']#
-                  <xar:else/>
-                  <td class="csets">
-                    <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">#$loop:item['rev']#</a>
-              </xar:if>
-            </td>
-              <td class="comments">#$loop:item['comments']#</td>
-            </tr>
-          </xar:loop>
-        </table>
+      <xar:loop name="$csets">
+        <div class="xar-norm-outline " style="margin-bottom: 5pt; padding-left: 2pt;">
+          <xar:set name="csetclass">'xar-norm'</xar:set>
+          <xar:set name="csettag">''</xar:set>
+          <xar:if condition="!empty($loop:item['tag'])">
+            <xar:set name="csetclass">'xar-accent'</xar:set>
+            <xar:set name="csettag">#$loop:item['tag']#</xar:set>
+          </xar:if>
+          <div class="#$csetclass#">
+            <span><xar:mlstring>ChangeSet</xar:mlstring></span>
+            <span>
+              <a href="&xar-modurl-bkview-user-deltaview;&amp;rev=#$loop:item['rev']#&amp;repoid=#$repoid#" onclick="return loadContent(this.href);">
+                #$loop:item['rev']#</a>
+                #$loop:item['tag']#
+            </span>
+            <span><xar:mlstring>by</xar:mlstring></span>
+            <span>
+              <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$loop:item['author']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">
+                #$loop:item['author']#
+              </a>
+            </span>
+            
+            <span>
+              <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#&amp;taggedonly=#$taggedonly#&amp;showmerge=1" onclick="return loadContent(this.href);">
+                #$loop:item['age']#
+              </a>
+            </span>
+            <span><xar:mlstring>ago</xar:mlstring></span>
+          </div>
+          <div class="comments">
+            #$loop:item['comments']#
+          </div>
+        </div>
+      </xar:loop>
     <xar:else/>
         <div>
           <xar:mlstring>I didn't find any changesets matching the criteria.</xar:mlstring>
         </div>
         <xar:if condition="!$showmerge">
           <xar:if condition="!isset($user)">
-            <xar:set name="$user">''</xar:set>
+            <xar:set name="user">''</xar:set>
           </xar:if>
           <div>
             <xar:mlstring>Merge changesets were not included in this view.</xar:mlstring><br/>

@@ -44,11 +44,11 @@ function bkview_user_patchview($args)
             while(list(,$line) = each($diff)) {
                 if (strlen($line) >0) {
                     if ($line[0]=='+') 
-                        $deltalist[$counter]['difflines'][$linecounter]['difflineclass']='diffadded';
+                        $deltalist[$counter]['difflines'][$linecounter]['difflineclass']='precontent added';
                     elseif ($line[0]=='-') 
-                        $deltalist[$counter]['difflines'][$linecounter]['difflineclass']='diffremoved';
+                        $deltalist[$counter]['difflines'][$linecounter]['difflineclass']='precontent removed';
                     else 
-                        $deltalist[$counter]['difflines'][$linecounter]['difflineclass']='diffnochange';
+                        $deltalist[$counter]['difflines'][$linecounter]['difflineclass']='precontent nochange';
                     
                     $deltalist[$counter]['difflines'][$linecounter]['diffline']= htmlspecialchars("$line\n");
                 }
