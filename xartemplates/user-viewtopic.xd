@@ -587,10 +587,16 @@
     <xar:sec mask="ModxarBB" catch="false">
         <div style="clear:left;">
             <xar:if condition="$tstatus ne 3">
-                <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'tid' => $tid))#">
-                    <img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
-                </a>
+                <xar:if condition="$tstatus eq 0">
+                    <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'tid' => $tid))#">
+                        <img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
+                    </a>
                 <xar:else />
+                    <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'options' => 1, 'tid' => $tid))#">
+                        <img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
+                    </a>          
+                </xar:if>
+            <xar:else />
                 <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 0, 'tid' => $tid))#">
                     <img src="#xarTplGetImage('new/topic_unlock.gif')#" alt="#xarML('Unlock Topic')#" />
                 </a>

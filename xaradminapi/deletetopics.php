@@ -47,10 +47,9 @@ function xarbb_adminapi_deletetopics($args)
         $result =& $dbconn->Execute($query, array($tid));
         if (!$result) return;
         // Let any hooks know that we have deleted a topic
-        $args['module']     = 'xarbb';
-        $args['itemtype']   = $topic['fid']; // forum
-        $args['itemid']     = $topic['tid'];
-        $args['objectid']   = $topic['tid'];
+        $args['module'] = 'xarbb';
+        $args['itemtype'] =$topic['fid']; // forum
+        $args['itemid']= $tid;
         xarModCallHooks('item', 'delete', $tid, $args);
     }
     // Let the calling process know that we have finished successfully

@@ -340,6 +340,16 @@ function xarbb_user_viewtopic($args)
     $data['forums'] = xarModAPIFunc('xarbb',
                                     'user',
                                     'getallforums');
+    
+    // Lets check our options as well for a dual status topic
+    if (!empty($topic['toptions'])){
+        $topicoptions = unserialize($data['toptions']);
+        // OK, just need to trick the topic now if the conditions are set.
+        if (!empty($topicoptions['lock'])){
+            $data['tstatus'] = 3;
+        }
+    }
+
     return $data;
 }
 ?>
