@@ -34,7 +34,7 @@ function sniffer_userapi_getsniff($args)
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
                      'id', 'userapi', 'getsniff', 'sniffer');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

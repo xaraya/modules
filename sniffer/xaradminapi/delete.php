@@ -36,7 +36,7 @@ function sniffer_adminapi_delete($args)
     if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
                      'id', 'adminapi', 'delete', 'sniffer');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -48,7 +48,7 @@ function sniffer_adminapi_delete($args)
 
     if ($sniff == false) {
         $msg = xarML('No Such Sniff Present', 'sniffer');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
 

@@ -37,7 +37,7 @@ function sniffer_admin_showchart()
     // Check that the GD library is available
     if (!extension_loaded('gd')) {
         $msg = xarML('The GD graphics library is required to chart.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION',
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION',
                        new SystemException($msg));
         return;
     }

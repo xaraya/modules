@@ -81,7 +81,7 @@ function sniffer_admin_delete()
     if (!xarSecConfirmAuthKey()) {
         $msg = xarML('Invalid authorization key for deleting #(1) Sniff #(2)',
                     'Sniffer', xarVarPrepForDisplay($id));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION',
                        new SystemException($msg));
         return;
     }
