@@ -86,11 +86,15 @@ function comments_user_displayall($args) {
     $modname = array();
     $modview = array();
     $modlist['all'] = xarML('All');
+    // make sure we only retrieve comments from hooked modules
+    $todolist = array();
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $module => $value) {
             $modid = xarModGetIDFromName($module);
             if (!isset($modname[$modid])) $modname[$modid] = array();
             if (!isset($modview[$modid])) $modview[$modid] = array();
+            $modname[$modid][0] = ucwords($module);
+            $modview[$modid][0] = xarModURL($module,'user','view');
             // Get the list of all item types for this module (if any)
             $mytypes = xarModAPIFunc($module,'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
@@ -100,13 +104,11 @@ function comments_user_displayall($args) {
                      $modname[$modid][$itemtype] = $mytypes[$itemtype]['label'];
                      $modview[$modid][$itemtype] = $mytypes[$itemtype]['url'];
                  }
-            } else {
-                $modname[$modid][0] = ucwords($module);
-                $modview[$modid][0] = xarModURL($module,'user','view');
             }
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 foreach ($value as $itemtype => $val) {
+                    $todolist[] = "$module.$itemtype";
                     if (isset($mytypes[$itemtype])) {
                         $type = $mytypes[$itemtype]['label'];
                     } else {
@@ -115,6 +117,7 @@ function comments_user_displayall($args) {
                     $modlist["$module.$itemtype"] = ucwords($module) . ' - ' . $type;
                 }
             } else {
+                $todolist[] = $module;
                 $modlist[$module] = ucwords($module);
                 // allow selecting individual item types here too (if available)
                 if (!empty($mytypes) && count($mytypes) > 0) {
@@ -127,7 +130,12 @@ function comments_user_displayall($args) {
         }
     }
 
-    $args['modarray']=$modarray;
+    // replace 'all' with the list of hooked modules (+ xarbb if necessary ?)
+    if (count($modarray) == 1 && $modarray[0] == 'all') {
+        $args['modarray'] = $todolist;
+    } else {
+        $args['modarray'] = $modarray;
+    }
 
     $comments = xarModAPIFunc('comments','user','get_multipleall',$args);
     $settings = xarModAPIFunc('comments','user','getoptions');
@@ -135,9 +143,6 @@ function comments_user_displayall($args) {
     if (!empty($args['order'])) {
         $settings['order']=$args['order'];        
     }
-
-    $hoursnow=strftime("%H","now");
-    $timenow=time("now");   
 
     // get title and link for all module items (where possible)
     $items = array();
@@ -169,8 +174,13 @@ function comments_user_displayall($args) {
         }
     }
 
+    $timenow = time();   
+    $hoursnow = xarLocaleFormatDate("%H",$timenow);
+    $dateprev = '';
+
     // add title, url and truncate comments if requested
-    for ($i=0;$i<sizeof($comments);$i++) {   
+    $numcomments = count($comments);
+    for ($i=0;$i<$numcomments;$i++) {   
         $modid = $comments[$i]['xar_modid'];
         $itemtype = $comments[$i]['xar_itemtype'];
         $itemid = $comments[$i]['xar_objectid'];
@@ -191,36 +201,31 @@ function comments_user_displayall($args) {
                 $comments[$i]['xar_title']=substr($comments[$i]['xar_title'],0,$args['truncate']).'...';
             }
         }
-        $dateprev = '';
         if ($args['adddaysep']=='on') {
         // find out whether to change day separator        
-            $msgunixtime=strtotime($comments[$i]['xar_datetime']);
-            $msgdate=strftime("%b %d, %Y",$msgunixtime);
-            $msgday=strftime("%A",$msgunixtime);          
+            $msgunixtime=$comments[$i]['xar_datetime'];
+            $msgdate=xarLocaleFormatDate("%b %d, %Y",$msgunixtime);
+            $msgday=xarLocaleFormatDate("%A",$msgunixtime);          
 
             $comments[$i]['daychange']=0;
-            
+
             $hoursdiff=($timenow - $msgunixtime)/3600;        
             if($hoursdiff<$hoursnow && $msgdate!=$dateprev) {
                 $comments[$i]['daychange']=xarML('Today');
-                $dateprev=$msgdate;
             }
             elseif($hoursdiff>=$hoursnow && $hoursdiff<$hoursnow+24 && ($msgdate!=$dateprev) ) {
                 $comments[$i]['daychange']=xarML('Yesterday');
-                $dateprev=$msgdate;
             }
             elseif($hoursdiff>=$hoursnow+24 && $hoursdiff<$hoursnow+48 && $msgdate!=$dateprev) {
                 $comments[$i]['daychange']=xarML('Two days ago');
-                $dateprev=$msgdate;
             }
             elseif ($hoursdiff>=$hoursnow+48 && $hoursdiff<$hoursnow+144 && $msgdate!=$dateprev) {
                 $comments[$i]['daychange']=xarML("$msgday");
-                $dateprev=$msgdate;
             }
             elseif ($hoursdiff>=$hoursnow+144 && $msgdate!=$dateprev) {
                 $comments[$i]['daychange']=$msgdate;
-                $dateprev=$msgdate;
             }
+            $dateprev=$msgdate;
         }        
     }                       
 
