@@ -1,3 +1,5 @@
+<xar:template file="admin-menu" type="module"/>
+
 <xar:template type="module" file="toplink" />
 <br />
 <xar:mlstring>Xaraya version number</xar:mlstring>: #$verNum#<br />
