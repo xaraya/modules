@@ -45,6 +45,11 @@ function comments_admin_modifyconfig()
     if(!xarSecurityCheck('Comments-Admin'))
         return;
 
+    $numstats = xarModGetVar('comments','numstats');
+    if (empty($numstats)) {
+        xarModSetVar('comments', 'numstats', 100);
+    }
+
     $output['authid'] = xarSecGenAuthKey();
 
     return $output;
@@ -121,6 +126,11 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'render', $xar_render);
     xarModSetVar('comments', 'sortby', $xar_sortby);
     xarModSetVar('comments', 'order', $xar_order);
+
+    if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
+    xarModSetVar('comments', 'numstats', $numstats);
+    xarModSetVar('comments', 'showtitle', $showtitle);
 
     //Redirect
     xarResponseRedirect(xarModURL('comments', 'admin', 'modifyconfig'));
@@ -255,10 +265,11 @@ function comments_admin_module_stats( ) {
     $inactive = xarModAPIFunc('comments','user','getitems',
                               array('modid' => $modid,
                                     'itemtype' => $itemtype,
-                                    'itemids' => array_keys($moditems)));
+                                    'itemids' => array_keys($moditems),
+                                    'status' => 'inactive'));
 
     // get the title and url for the items
-    $showtitle = xarModGetVar('categories','showtitle');
+    $showtitle = xarModGetVar('comments','showtitle');
     if (!empty($showtitle)) {
        $itemids = array_keys($moditems);
        $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',

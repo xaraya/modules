@@ -131,6 +131,28 @@
                             </xar:if>
                         </td>
                     </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Number of items shown in statistics</xar:mlstring>
+                        </td>
+                        <td>
+                            <xar:set name="$numstats">#xarModGetVar('comments','numstats')#</xar:set>
+                            <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
+                        </td>
+                    </tr>
+                    <tr align="left" valign="middle">
+                        <td>
+                            <xar:mlstring>Show the item title in statistics</xar:mlstring>
+                        </td>
+                        <td>
+                            <xar:set name="$showtitle">#xarModGetVar('comments','showtitle')#</xar:set>
+                            <xar:if condition="!empty($showtitle)">
+                                <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
+                            <xar:else/>
+                                <input type="checkbox" name="showtitle" id="showtitle" value="1" />
+                            </xar:if>
+                        </td>
+                    </tr>
                     <!--- DISABLED -- TODO: finish comments authorization scheme
                     <tr align="left" valign="middle">
                         <td>
