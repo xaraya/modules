@@ -706,7 +706,7 @@ class renderer {
 		// Render and show the document
 		$this->openPDF($doc,1);
         $this->render($doc);
-        die("just before closepdf");
+        //die("just before closepdf");
 		$content = $this->closePDF();
 		$this->report->datasource->dbClose();
         return $content;
@@ -742,7 +742,7 @@ class renderer {
 			$this->renderblock($document->report->documentheader, 0, 0, $document->width - $document->left - $document->right, 
                                $document->report->documentheader->height,$document->report->datasource, 
                                $document->report->detail->flow, $document->report->detail->width);
-            die("block rendered");
+            //die("block rendered");
             $this->renderdetail($document->report->detail, 0, 0, $document->width - $document->left - $document->right, 
                                 $document->report->detail->height, $document->report->datasource, 
                                 $document->report->detail->flow, $document->report->detail->width);
@@ -945,7 +945,7 @@ class renderer {
 				}
 			}
 			// FIXME: This allows only ONE expression in tag because we require it to be methods or php globals!!!
-            echo $str;
+            //echo $str;
             eval($str);
 		}
 		if (isset($ret)) {

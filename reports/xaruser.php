@@ -104,6 +104,10 @@ function reports_user_generate($args) {
 	//$error = XMLParseFile(&$parser,$testfile,1,$testfile.".cache");
     //dumparray($parser->structure,">>");
 	//die();
+
+    if ($conn_id == 1) {
+        $repconn =& $dbconn;
+    } else {
 	$sql = "SELECT $ccols[server],$ccols[type],$ccols[database],$ccols[user],$ccols[password] "
 		." FROM $ctab "
 		."WHERE $ccols[id] = '".xarVarPrepForStore($conn_id)."'";
@@ -127,15 +131,27 @@ function reports_user_generate($args) {
     }else {
         $repconn->PConnect($repserver,$repdbuser,$reppasswd,$repdbname,$replocale);
     }
-    
+    }
+
     $doc=new document(getRootNode($reploc."/".$xmlfile),$repconn,"\"\"");
     
     $rend= new renderer($doc->width, $doc->height,$doc->left, $doc->right, $doc->top, $doc->bottom, $doc->report->pageheader, $doc->report->pagefooter, $vars);
     
     $content = $rend->writePDF($doc);
-    die("after content");
+    //die("after content");
+
+    $content = ltrim($content);
+    // copied from stream() function in class.pdf.php
+    header("Content-type: application/pdf");
+    header("Content-Length: ".strlen($content));
+    $fileName = (isset($options['Content-Disposition'])?$options['Content-Disposition']:'file.pdf');
+    header("Content-Disposition: inline; filename=".$fileName);
+    if (isset($options['Accept-Ranges']) && $options['Accept-Ranges']==1){
+        header("Accept-Ranges: ".strlen($content)); 
+    }
     echo $content;
-	return true;
+    exit;
+//	return true;
 }
 
 ?>

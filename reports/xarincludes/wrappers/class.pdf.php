@@ -1383,7 +1383,8 @@ function selectFont($fontName,$encoding='',$set=1){
 function setCurrentFont(){
   if (strlen($this->currentBaseFont)==0){
     // then assume an initial font
-    $this->selectFont('./fonts/Helvetica.afm');
+//    $this->selectFont('./fonts/Helvetica.afm');
+    $this->selectFont('modules/reports/xarincludes/fonts/Helvetica.afm');
   }
   $cf = substr($this->currentBaseFont,strrpos($this->currentBaseFont,'/')+1);
   if (strlen($this->currentTextState)
