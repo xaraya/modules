@@ -15,9 +15,9 @@ function images_user_display( $args ) {
     extract ($args);
     
     if (!xarVarFetch('fileId', 'int:1:', $fileId)) return;
-    if (!xarVarFetch('width',  'int:1:', $width, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('height', 'int:1:', $height, '', XARVAR_NOT_REQUIRED)) return;
-     
+    if (!xarVarFetch('width',  'str:1:', $width,  '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) return;
+ 
     $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId));
     if (!is_object($image)) {
         $msg = xarML('Unable to load image : [#(1)]', $fileLocation);
@@ -26,13 +26,44 @@ function images_user_display( $args ) {
     }
     $fileType = $image->mime;
     $fileName = $image->fileName;
-    if (isset($height) && is_numeric($height)) {
-        $image->setHeight($height);
-    } 
+
+    if (isset($width) && !empty($width)) {
+        $width = urldecode($width);
+        eregi('([0-9]+)(px|%)', $width, $parts);
+        $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
+        switch ($type) {
+            case _IMAGES_UNIT_TYPE_PERCENT:
+                $image->setPercent(array('wpercent' => $width));
+                break;
+            default:
+            case _IMAGES_UNIT_TYPE_PIXELS:
+                $image->setWidth($parts[1]);
+                
+        }
+
+        if (!isset($height) || empty($height)) {
+            $image->Constrain('width');
+        }
+    }
     
-    if (isset($width) && is_numeric($width)) {
-        $image->setWidth($width);
-    }    
+    if (isset($height) && !empty($height)) {
+        $height = urldecode($height);
+        eregi('([0-9]+)(px|%)', $height, $parts);
+        $type = ($parts[2] == '%') ? _IMAGES_UNIT_TYPE_PERCENT : _IMAGES_UNIT_TYPE_PIXELS;
+        switch ($type) {
+            case _IMAGES_UNIT_TYPE_PERCENT:
+                $image->setPercent(array('hpercent' => $height));
+                break;
+            default:
+            case _IMAGES_UNIT_TYPE_PIXELS:
+                $image->setHeight($parts[1]);
+                
+        }
+
+        if (!isset($width) || empty($width)) {
+            $image->Constrain('height');
+        }
+    }
     
     $fileLocation = $image->getDerivative();
     

@@ -31,7 +31,7 @@ function & images_userapi_transformhook ( $args )
 function & images_userapi_transform ( $body )
 {
     
-    while(eregi('#(image-resize):([^#]*)#', $body, $parts)) {
+    while(eregi('#(image-resize):([0-9]+):([^#]*)#', $body, $parts)) {
         // first argument is always the complete haystack
         // get rid of it
         array_shift($parts);
@@ -40,14 +40,19 @@ function & images_userapi_transform ( $body )
         // get rid of the type and id so all we have left are the arguments now :)
         array_shift($parts);
         array_shift($parts);
+
+        // The remaining indice should be the only one and should contain the arguments
+        // that we will package and send to the resize function
+        assert('count($parts) == 1');
+        $parts = $parts[0];        
         
         switch ( $type )  {
             case 'image-resize':
+                $parts = explode(':', $parts);
                 // with image-resize, all we want to pass back to the content is the url
                 // location of the resized image so it can be dropped in a <img> tag 
                 // like so: <img src="#image-resize:23:200::true#" alt="some alt text" />
                 list($width, $height, $constrain) = $parts;
-                
                 if (!empty($width)) {
                     $args['width'] = $width;
                 } 
@@ -57,23 +62,31 @@ function & images_userapi_transform ( $body )
                 }
                 
                 if (!empty($constrain)) {
-                    $args['constrain'] == (int) ((bool) $constrain);
+                    $args['constrain'] = (int) ((bool) $constrain);
                 }
                 
                 $args['label'] = 'empty';
                 $args['src']   = $id;
-                
+
                 if (!xarModAPIFunc('images', 'user', 'resize', $args)) {
                     return;
                 } else {
                     unset($args['label']);
                     unset($args['constrain']);
+                    unset($args['src']);
+                    
+                    $args['fileId'] = $id;
+                    
+                    $args['width']  = urlencode($args['width']);
+                    $args['height'] = urlencode($args['height']);
+                    
                     $replacement = xarModURL('images', 'user', 'display', $args);
                 }  
                 break;
         }
         $parts = implode(':', $parts);
         $body = ereg_replace("#$type:$id:$parts#", $replacement, $body);
+
     }
 
     return $body;
