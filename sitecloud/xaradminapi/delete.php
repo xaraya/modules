@@ -25,8 +25,8 @@ function sitecloud_adminapi_delete($args)
     // Security Check
 	if(!xarSecurityCheck('Deletesitecloud')) return;
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $sitecloudtable = $xartable['sitecloud'];
     // Delete the item
     $query = "DELETE FROM $sitecloudtable

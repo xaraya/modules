@@ -15,8 +15,8 @@ function sitecloud_userapi_get($args)
     }
     // Security Check
 	if(!xarSecurityCheck('Overviewsitecloud')) return;
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $sitecloudtable = $xartable['sitecloud'];
     // Get headline
     $query = "SELECT xar_id,

@@ -22,8 +22,8 @@ function sitecloud_adminapi_create($args)
     $date       = time();
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $sitecloudtable = $xartable['sitecloud'];
 
     // Get next ID in table

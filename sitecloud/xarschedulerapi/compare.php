@@ -23,8 +23,8 @@ function sitecloud_schedulerapi_compare()
 
         if ($compare['string'] != $link['string']){
             // Get datbase setup
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $sitecloudtable = $xartable['sitecloud'];
 
             // Update the link
