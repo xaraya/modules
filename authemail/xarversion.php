@@ -11,6 +11,7 @@
 $modversion['name'] = 'authemail';
 $modversion['id'] = '10513';
 $modversion['version'] = '0.1';
+$modversion['displayname'] = xarML('Authemail');
 $modversion['description'] = 'Xaraya email authentication module';
 $modversion['credits'] = '';
 $modversion['help'] = '';
