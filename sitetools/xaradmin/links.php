@@ -101,6 +101,8 @@ function sitetools_admin_links()
 
     if (!xarVarFetch('todo', 'isset', $todo, array(), XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('skiplocal', 'isset', $skiplocal, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('method', 'isset', $method, 'GET', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('follow', 'isset', $follow, 0, XARVAR_NOT_REQUIRED)) return;
 
     // build up field list per module & itemtype
     $fields = array();
@@ -128,6 +130,8 @@ function sitetools_admin_links()
     xarModSetVar('sitetools','links_todo',serialize($data['todo']));
     xarModSetVar('sitetools','links_count',serialize($data['count']));
     xarModSetVar('sitetools','links_skiplocal',$skiplocal);
+    xarModSetVar('sitetools','links_method',$method);
+    xarModSetVar('sitetools','links_follow',$follow);
 
     // some clean-up of previous link checks
     if (!empty($data['checked'])) {
@@ -154,8 +158,12 @@ function sitetools_admin_startcheck()
     }
 
     $skiplocal = xarModGetVar('sitetools','links_skiplocal');
+    $method = xarModGetVar('sitetools','links_method');
+    $follow = xarModGetVar('sitetools','links_follow');
     xarModAPIFunc('sitetools','admin','checklinks',
-                  array('skiplocal' => $skiplocal));
+                  array('skiplocal' => $skiplocal,
+                        'method' => $emthod,
+                        'follow' => $follow));
 }
 
 ?>

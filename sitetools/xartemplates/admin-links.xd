@@ -40,6 +40,29 @@
     <input type="checkbox" name="skiplocal" value="1" id="skiplocal" />
   </xar:if>
   <xar:mlstring>Skip local links</xar:mlstring></label>
+  <label for="follow">
+  <xar:if condition="xarModGetVar('sitetools','links_follow')">
+    <input type="checkbox" name="follow" value="1" id="follow" checked="checked" />
+  <xar:else/>
+    <input type="checkbox" name="follow" value="1" id="follow" />
+  </xar:if>
+  <xar:mlstring>Follow redirects</xar:mlstring></label>
+  <xar:set name="method">xarModGetVar('sitetools','links_method')</xar:set>
+  <label for="method1">
+  <xar:if condition="!empty($method) and $method eq 'HEAD'">
+    <input type="radio" name="method" id="method1" value="HEAD" checked="checked" />
+  <xar:else/>
+    <input type="radio" name="method" id="method1" value="HEAD" />
+  </xar:if>
+  HEAD</label>
+  <label for="method2">
+  <xar:if condition="empty($method) or $method eq 'GET'">
+    <input type="radio" name="method" id="method2" value="GET" checked="checked" />
+  <xar:else/>
+    <input type="radio" name="method" id="method2" value="GET" />
+  </xar:if>
+  GET
+  </label>
 </p>
 </form>
 

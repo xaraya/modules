@@ -140,6 +140,9 @@ function sitetools_init()
     xarModSetVar('sitetools','timestamp',1);
     xarModSetVar('sitetools','colnumber',3);
     xarModSetVar('sitetools','defaultbktype','complete');
+    xarModSetVar('sitetools','links_skiplocal',1);
+    xarModSetVar('sitetools','links_method','GET');
+    xarModSetVar('sitetools','links_follow',0);
     /**
      * Register the module components that are privileges objects
      * Format is

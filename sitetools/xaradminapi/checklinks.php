@@ -17,6 +17,8 @@
  * Check the status of all links in the xar_sitetools_links table
  * @author mikespub
  * @param $args['skiplocal'] bool optional flag to skip local links (default false)
+ * @param $args['method'] string the request method to use (default is HEAD, alternative is GET)
+ * @param $args['follow'] bool indicates if we want to follow redirects or not (default is true)
  * @param $args['status'] integer optional status of the links to check for
  * @param $args['notstatus'] integer optional status of the links NOT to check for
  * @param $args['where'] string optional where clause (e.g. 'xar_status <> 200')
@@ -29,6 +31,8 @@ function sitetools_adminapi_checklinks($args)
     extract($args);
 
     if (!isset($skiplocal)) $skiplocal = false;
+    if (!isset($method)) $method = 'HEAD';
+    if (!isset($follow)) $follow = true;
    
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -85,7 +89,9 @@ function sitetools_adminapi_checklinks($args)
         list($link) = $result->fields;
         $status = xarModAPIFunc('base','user','checklink',
                                 array('url' => $link,
-                                      'skiplocal' => $skiplocal));
+                                      'method' => $method,
+                                      'skiplocal' => $skiplocal,
+                                      'follow' => $follow));
         if (!is_numeric($status)) {
             $date = xarLocaleFormatDate('%x %X %z',time());
             $msg = xarML('#(1) : #(2)/#(3) links checked - #(4)',$date,$count,$numitems,$status);
