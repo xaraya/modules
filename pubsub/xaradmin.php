@@ -10,7 +10,7 @@
  * @link http://www.xaraya.org
  *
  * @subpackage Pubsub Module
- * @author Chris Dudley <miko@xarayac.com>
+ * @author Chris Dudley <miko@xaraya.com>
 */
 
 /**
