@@ -6,7 +6,7 @@
                     #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
                 </xar:foreach> ]
             </xar:if>
-            <a class="xar-title" href="#$redirect#">#$title#</a><br />
+            <a class="xar-title" href="#$link#">#$title#</a><br />
             <xar:mlstring>Description</xar:mlstring>: #$summary#<br />
             <xar:mlstring>Added on</xar:mlstring>: #$date#
             <xar:if condition="!empty($rating)">
