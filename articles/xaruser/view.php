@@ -290,7 +290,7 @@ function articles_user_view($args)
         $seencid = array();
         foreach ($cids as $cid) {
             // make sure cids are numeric
-            if (!empty($cid) && is_numeric($cid)) {
+            if (!empty($cid) && preg_match('/^_?[0-9]+$/',$cid)) {
                 $seencid[$cid] = 1;
             }
         }

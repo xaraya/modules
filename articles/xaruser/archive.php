@@ -36,7 +36,7 @@ function articles_user_archive($args)
     $andcids = false;
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
-            if (!empty($cid) && is_numeric($cid)) {
+            if (!empty($cid) && preg_match('/^_?[0-9]+$/',$cid)) {
                 $seencid[$cid] = 1;
             }
         }

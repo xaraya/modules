@@ -153,7 +153,7 @@ function articles_user_search($args)
     $catid = null;
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
-            if (empty($cid) || !is_numeric($cid)) continue;
+            if (empty($cid) || !preg_match('/^_?[0-9]+$/',$cid)) continue;
             $seencid[$cid] = 1;
         }
         $cids = array_keys($seencid);
