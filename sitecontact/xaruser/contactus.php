@@ -135,7 +135,7 @@ function sitecontact_user_contactus()
         $message .= xarML('Subject:').'        '.html_entity_decode($requesttext);
         $message .="\n\n";
         $message .= xarML('Comments:')."\n".html_entity_decode($usermessage);
-        $message .="\n";
+        $message .="\n\n";
         $message .=('____________________________________________________________');
         $message .="\n\n";
         $message .=xarML('Site Name:')." ".$sitename."\n";
@@ -192,7 +192,7 @@ function sitecontact_user_contactus()
 
     //Let's do admin text message
     $adminmessage   ="\n". xarML('Submitted By:').' '.$username;
-    $adminmessage  .="\n";
+    $adminmessage  .="\n\n";
     $adminmessage  .= ('____________________________________________________________');
     $adminmessage  .="\n";
     $adminmessage  .= xarML('Name:').' '.$username;
@@ -204,7 +204,7 @@ function sitecontact_user_contactus()
     $adminmessage  .= xarML('Subject: ').html_entity_decode($requesttext);
     $adminmessage  .="\n\n";
     $adminmessage  .= xarML('Comments:')."\n".html_entity_decode($usermessage);
-    $adminmessage  .="\n";
+    $adminmessage  .="\n\n";
     $adminmessage  .=('____________________________________________________________');
     $adminmessage  .="\n\n";
     $adminmessage  .=xarML('User information:');
@@ -212,7 +212,7 @@ function sitecontact_user_contactus()
     $adminmessage  .=xarML('Sender:').'   '.$useripaddress;
     $adminmessage  .="\n";
     $adminmessage  .=xarML('Referer:').'   '.$userreferer;
-    $adminmessage  .="\n";
+    $adminmessage  .="\n\n";
     $adminmessage  .=('____________________________________________________________');
     $adminmessage  .="\n";
     $adminmessage .=xarML('Site Name:').'  '.$sitename."\n";
