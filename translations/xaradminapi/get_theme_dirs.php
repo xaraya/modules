@@ -80,6 +80,7 @@ function translations_adminapi_get_theme_dirs($args)
         }
         closedir($dd);
     }
+    sort($staticNames);
     return $staticNames;
 }
 
