@@ -84,12 +84,14 @@ class Album
 		$this->version = $gallery->album_version;
 	}
 
-	function isRoot() {
+	function isRoot() 
+    {
 		if ($this->fields["parentAlbumName"]) return 0;
 		else return 1;
 	}
 
-	function getNestedAlbum($index) {
+	function getNestedAlbum($index) 
+    {
 		
 		$albumName = $this->isAlbumName($index);
 		$album = new Album();
@@ -97,7 +99,8 @@ class Album
 		return $album;	
 	}
 
-	function getRootAlbumName() {
+	function getRootAlbumName() 
+    {
 
 		if ($this->fields['parentAlbumName']) {
 			$parentAlbum = new Album();
@@ -109,7 +112,8 @@ class Album
 		return $returnValue;
 	}
 			
-	function versionOutOfDate() {
+	function versionOutOfDate() 
+    {
 		global $gallery;
 		if (strcmp($this->version, $gallery->album_version)) {
 			return 1;
@@ -121,7 +125,8 @@ class Album
 	 * Whenever you change this code, you should bump the $gallery->album_version
 	 * appropriately.
 	 */	
-	function integrityCheck() {
+	function integrityCheck() 
+    {
 		global $gallery;
 
 		if (!strcmp($this->version, $gallery->album_version)) {
@@ -222,13 +227,15 @@ class Album
 
 
 
-	function shufflePhotos() {
+	function shufflePhotos() 
+    {
 		$this->updateSerial = 1;
 
 		shuffle($this->photos);
 	}
 
-	function sortPhotos($sort,$order) {
+	function sortPhotos($sort,$order) 
+    {
 		$this->updateSerial = 1;
 
 		// if we are going to use sort, we need to set the historic dates.
@@ -320,7 +327,8 @@ class Album
 		usort($this->photos, create_function('$a,$b', $func));
 	}
 
-	function getThumbDimensions($index, $size=0) {
+	function getThumbDimensions($index, $size=0) 
+    {
 
 		$photo = $this->getPhoto($index);
 		$album = $this;
@@ -335,7 +343,8 @@ class Album
 		return $photo->getThumbDimensions($size);
 	}
 
-	function hasHighlight() {
+	function hasHighlight() 
+    {
 		if ($this->numPhotos(1) == 0) {
 			return 0;
 		}
@@ -349,7 +358,8 @@ class Album
 		return 0;
 	}
 
-	function getHighlight() {
+	function getHighlight() 
+    {
 		if ($this->numPhotos(1) == 0) {
 			return null;
 		}
@@ -363,7 +373,8 @@ class Album
 		return 1;
 	}
 
-	function setHighlight($index) {
+	function setHighlight($index) 
+    {
 		$this->updateSerial = 1;
 
 		for ($i = 1; $i <= $this->numPhotos(1); $i++) {
@@ -372,7 +383,8 @@ class Album
 		}
 	}
 
-	function load($name,$loadphotos=TRUE) {
+	function load($name,$loadphotos=TRUE) 
+    {
 		global $gallery;
 
 		$this->transient->photosloaded = FALSE;
@@ -408,7 +420,8 @@ class Album
 	}
 
 
-	function loadPhotos($dir){
+	function loadPhotos($dir)
+    {
 		if (!$this->loadPhotosFromFile("$dir/photos.dat") &&
 			!$this->loadPhotosFromFile("$dir/photos.dat.bak") &&
 		    !$this->loadPhotosFromFile("$dir/photos.bak")) {
@@ -419,7 +432,8 @@ class Album
 		return 1;
 	}
 
-	function loadFromFile($filename) {
+	function loadFromFile($filename) 
+    {
 
 		$tmp = unserialize(getFile($filename));
 		if (strcasecmp(get_class($tmp), "album")) {
@@ -434,7 +448,8 @@ class Album
 		return 1;
 	}
 
-	function loadPhotosFromFile($filename) {
+	function loadPhotosFromFile($filename) 
+    {
 		$tmp = unserialize(getFile($filename));
 		if (!is_Array($tmp)){
 			$tmp = unserialize(getFile($filename, true));
@@ -461,7 +476,8 @@ class Album
 		return 1;
 	}
 
-	function isLoaded() {
+	function isLoaded() 
+    {
 		if ($this->fields["name"]) {
 			return 1;
 		} else {
@@ -469,12 +485,14 @@ class Album
 		}
 	}
 
-	function isResized($index) {
+	function isResized($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return ($photo->isResized());
 	}
 
-	function save($resetModDate=1) {
+	function save($resetModDate=1) 
+    {
 		global $gallery;
 		$dir = $this->getAlbumDir();
 		$savephotosuccess = FALSE;
@@ -543,7 +561,8 @@ class Album
 		return $success;
 	}
 
-	function delete() {
+	function delete() 
+    {
 		$safe_to_scrub = 0;
 		$dir = $this->getAlbumDir();
 
@@ -584,7 +603,8 @@ class Album
 		rmdir($dir);
 	}
 
-	function resizePhoto($index, $target, $pathToResized="") {
+	function resizePhoto($index, $target, $pathToResized="") 
+    {
 		$this->updateSerial = 1;
 
 		$photo = &$this->getPhoto($index);
@@ -593,7 +613,8 @@ class Album
 		}
 	}
 
-	function addPhoto($file, $tag, $originalFilename, $caption, $pathToThumb="", $extraFields=array() ) {
+	function addPhoto($file, $tag, $originalFilename, $caption, $pathToThumb="", $extraFields=array() ) 
+    {
 		global $gallery;
 
 		$this->updateSerial = 1;
@@ -655,29 +676,34 @@ class Album
 		return 0;
 	}
 
-	function addNestedAlbum($albumName) {
+	function addNestedAlbum($albumName) 
+    {
 		$this->updateSerial = 1;
 		$item = new AlbumItem();
 		$item->isAlbumName = $albumName;
 		$this->photos[] = $item;
 	}
 
-	function hidePhoto($index) {
+	function hidePhoto($index) 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->hide();
 	}
 	
-	function unhidePhoto($index) {
+	function unhidePhoto($index) 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->unhide();
 	}
 
-	function isHidden($index) {
+	function isHidden($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->isHidden();
 	}
 
-	function deletePhoto($index, $forceResetHighlight="0", $recursive=1) {
+	function deletePhoto($index, $forceResetHighlight="0", $recursive=1) 
+    {
 		$this->updateSerial = 1;
 		$photo = array_splice($this->photos, $index-1, 1);
 		// need to check for nested albums and delete them ...
@@ -703,11 +729,13 @@ class Album
 		}
 	}
 
-	function newPhotoName() {
+	function newPhotoName() 
+    {
 		return $this->fields["nextname"]++;
 	}
 
-	function getThumbnailTag($index, $size=0, $attrs="") {
+	function getThumbnailTag($index, $size=0, $attrs="") 
+    {
 		$photo = $this->getPhoto($index);
 		if ($photo->isAlbumName) {
 			$myAlbum = $this->getNestedAlbum($index);
@@ -717,7 +745,8 @@ class Album
 		}
 	}
 
-	function getHighlightedItem() {
+	function getHighlightedItem() 
+    {
 		$index = $this->getHighlight();
 		if (!isset($index)) {
 			return array(null, null);
@@ -735,7 +764,8 @@ class Album
 		return array($album, $photo);
 	}
 
-	function getHighlightAsThumbnailTag($size=0, $attrs="") {
+	function getHighlightAsThumbnailTag($size=0, $attrs="") 
+    {
 		list ($album, $photo) = $this->getHighlightedItem();
 		if ($photo) {
 			return $photo->getThumbnailTag($album->getAlbumDirURL("highlight"), $size, $attrs);
@@ -744,7 +774,8 @@ class Album
 		}
 	}
 
-	function getHighlightTag($size=0, $attrs="") {
+	function getHighlightTag($size=0, $attrs="") 
+    {
 		list ($album, $photo) = $this->getHighlightedItem();
 		if ($photo) {
 			return $photo->getHighlightTag($album->getAlbumDirURL("highlight"), $size, $attrs);
@@ -753,7 +784,8 @@ class Album
 		}
 	}
 
-	function getPhotoTag($index, $full) {
+	function getPhotoTag($index, $full) 
+    {
 		$photo = $this->getPhoto($index);
 		if ($photo->isMovie()) {
 			return $photo->getThumbnailTag($this->getAlbumDirURL("thumb"));
@@ -762,23 +794,27 @@ class Album
 		}
 	}
 
-	function getPhotoPath($index, $full=0) {
+	function getPhotoPath($index, $full=0) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->getPhotoPath($this->getAlbumDirURL("full"), $full);
 	}
 
-	function getPhotoId($index) {
+	function getPhotoId($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->getPhotoId($this->getAlbumDirURL("full"));
 	}
 
-	function getAlbumDir() {
+	function getAlbumDir() 
+    {
 		global $gallery;
 
 		return $gallery->app->albumDir . "/{$this->fields['name']}";
 	}
 
-	function getAlbumDirURL($type) {
+	function getAlbumDirURL($type) 
+    {
 		global $gallery;
 
 		if (!empty($this->transient->mirrorUrl)) {
@@ -818,7 +854,8 @@ class Album
 		return $gallery->app->albumDirURL . $albumPath;
 	}
 
-	function numHidden() {
+	function numHidden() 
+    {
 		$cnt = 0;
 		for ($i = 1; $i <= $this->numPhotos(1); $i++) {
 			$photo = $this->getPhoto($i);
@@ -829,7 +866,8 @@ class Album
 		return $cnt;
 	}
 
-	function numPhotos($show_hidden=0) {
+	function numPhotos($show_hidden=0) 
+    {
 		if ($show_hidden) {
 			return sizeof($this->photos);
 		} else {
@@ -837,7 +875,8 @@ class Album
 		}
 	}
 
-	function getIds($show_hidden=0) {
+	function getIds($show_hidden=0) 
+    {
 		foreach ($this->photos as $photo) {
 			if (!$photo->isHidden() || $show_hidden) {
 				$ids[] = $photo->getPhotoId($this->getAlbumDir());
@@ -846,7 +885,8 @@ class Album
 		return $ids;
 	}
 
-	function &getPhoto($index) {
+	function &getPhoto($index) 
+    {
 		if ($index >= 1 && $index <= sizeof($this->photos)) { 
 			return $this->photos[$index-1];
 		} else {
@@ -854,7 +894,8 @@ class Album
 		}
 	}
 
-	function getPhotoIndex($id) {
+	function getPhotoIndex($id) 
+    {
 		for ($i = 1; $i <= $this->numPhotos(1); $i++) {
 			$photo = $this->getPhoto($i);
 			if (!strcmp($photo->getPhotoId($this->getAlbumDir()), $id)) {
@@ -864,22 +905,26 @@ class Album
 		return -1;
 	}
 
-	function setPhoto($photo, $index) {
+	function setPhoto($photo, $index) 
+    {
 		$this->updateSerial = 1;
 		$this->photos[$index-1] = $photo;		
 	}
 
-	function getCaption($index) {
+	function getCaption($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->getCaption();
 	}
 
-	function setCaption($index, $caption) {
+	function setCaption($index, $caption) 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->setCaption($caption);
 	}
 
-	function getUploadDate($index) {
+	function getUploadDate($index) 
+    {
 		$photo = $this->getPhoto($index);
 		$uploadDate = $photo->getUploadDate();
 		if (!$uploadDate) { // populating old photos with data
@@ -890,12 +935,14 @@ class Album
 		return $uploadDate;
 	}
 
-	function setUploadDate($index, $uploadDate="") {
+	function setUploadDate($index, $uploadDate="") 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->setUploadDate($uploadDate);
 	}
 
-	function getItemCaptureDate($index) {
+	function getItemCaptureDate($index) 
+    {
 		$photo = $this->getPhoto($index);
 		$itemCaptureDate = $photo->getItemCaptureDate();
 		if (!$itemCaptureDate) { // populating old photos with data
@@ -906,42 +953,50 @@ class Album
 		return $itemCaptureDate;
 	}
 
-	function setItemCaptureDate($index, $itemCaptureDate="") {
+	function setItemCaptureDate($index, $itemCaptureDate="") 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->setItemCaptureDate($itemCaptureDate);
 	}
 	
-	function numComments($index) {
+	function numComments($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->numComments();
 	}
 
-	function getComment($photoIndex, $commentIndex) {
+	function getComment($photoIndex, $commentIndex) 
+    {
 		$photo = $this->getPhoto($photoIndex);
 		return $photo->getComment($commentIndex);
 	}
 
-	function addComment($index, $comment, $IPNumber, $name) {
+	function addComment($index, $comment, $IPNumber, $name) 
+    {
             $photo = &$this->getPhoto($index);
             $photo->addComment($comment, $IPNumber, $name);
 	}
 
-	function deleteComment($index, $comment_index) {
+	function deleteComment($index, $comment_index) 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->deleteComment($comment_index);
 	}
 
-	function getKeywords($index) {
+	function getKeywords($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->getKeywords();
 	}
 
-	function setKeyWords($index, $keywords) {
+	function setKeyWords($index, $keywords) 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->setKeywords($keywords);
-        }
+    }
 
-	function rotatePhoto($index, $direction) {
+	function rotatePhoto($index, $direction) 
+    {
 		$this->updateSerial = 1;
 		$photo = &$this->getPhoto($index);
 		$retval = $photo->rotate($this->getAlbumDir(), $direction, $this->fields["thumb_size"]);
@@ -955,35 +1010,41 @@ class Album
 		}
 	}
 
-	function makeThumbnail($index) {
+	function makeThumbnail($index) 
+    {
 		$this->updateSerial = 1;
 		$photo = &$this->getPhoto($index);
 		$photo->makeThumbnail($this->getAlbumDir(), $this->fields["thumb_size"]);
 	}
 
-	function movePhoto($index, $newIndex) {
+	function movePhoto($index, $newIndex) 
+    {
 		/* Pull photo out */
 		$photo = array_splice($this->photos, $index-1, 1);
 		array_splice($this->photos, $newIndex, 0, $photo);
 	}
 
-	function isMovie($id) {
+	function isMovie($id) 
+    {
 		$index = $this->getPhotoIndex($id);
 		$photo = $this->getPhoto($index);
 		return $photo->isMovie();
 	}
 
-	function isAlbumName($index) {
+	function isAlbumName($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->isAlbumName;
 	}
 
-	function setIsAlbumName($index, $name) {
+	function setIsAlbumName($index, $name) 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->setIsAlbumName($name);
 	}
 	
-	function resetClicks() {
+	function resetClicks() 
+    {
 		$this->fields["clicks"] = 0;
 		$this->fields["clicks_date"] = time();
 		$resetModDate=0;
@@ -991,7 +1052,8 @@ class Album
 
 	}
 	
-	function resetAllClicks() {
+	function resetAllClicks() 
+    {
 		$this->resetClicks();
 		for ($i=1; $i<=$this->numPhotos(1); $i++) {
 			$this->resetItemClicks($i);
@@ -1000,7 +1062,8 @@ class Album
 		$this->save($resetModDate);
 	}
 
-	function getClicks() {
+	function getClicks() 
+    {
 		// just in case we have no clicks yet...
 		if (!isset($this->fields["clicks"])) {
 			$this->resetClicks();
@@ -1008,7 +1071,8 @@ class Album
 		return $this->fields["clicks"];
 	}
 
-	function getClicksDate() {
+	function getClicksDate() 
+    {
                 $time = $this->fields["clicks_date"];
 
                 // albums may not have this field.
@@ -1020,7 +1084,8 @@ class Album
                 return date("M d, Y", $time);
         }
 
-	function incrementClicks() {
+	function incrementClicks() 
+    {
 		if (strcmp($this->fields["display_clicks"], "yes")) {
 			return;
 		}
@@ -1030,12 +1095,14 @@ class Album
 	        $this->save($resetModDate);
 	}
 
-	function getItemClicks($index) {
+	function getItemClicks($index) 
+    {
 		$photo = $this->getPhoto($index);
 		return $photo->getItemClicks();
 	}
 
-	function incrementItemClicks($index) {
+	function incrementItemClicks($index) 
+    {
 		if (strcmp($this->fields["display_clicks"], "yes")) {
 			return;
 		}
@@ -1047,12 +1114,14 @@ class Album
 		$this->save($resetModDate);
 	}
 
-	function resetItemClicks($index) {
+	function resetItemClicks($index) 
+    {
 		$photo = &$this->getPhoto($index);
 		$photo->resetItemClicks();
 	}
 
-	function getExif($index, $forceRefresh=0) {
+	function getExif($index, $forceRefresh=0) 
+    {
 		global $gallery;
 
 		if (empty($gallery->app->use_exif)) {
@@ -1078,7 +1147,8 @@ class Album
 		return $exif;
 	}
 
-	function getLastModificationDate() {
+	function getLastModificationDate() 
+    {
 		global $gallery;
 		$dir = $this->getAlbumDir();
 
@@ -1093,7 +1163,8 @@ class Album
 		return date("M d, Y", $time);
 	}
 
-	function setNestedProperties() {
+	function setNestedProperties() 
+    {
 		for ($i=1; $i <= $this->numPhotos(1); $i++) {
 			if ($this->isAlbumName($i)) {
 				$nestedAlbum = new Album();
@@ -1121,7 +1192,8 @@ class Album
 			}
 		}
 	}
-	function setNestedExtraFields() {
+	function setNestedExtraFields() 
+    {
 		for ($i=1; $i <= $this->numPhotos(1); $i++) {
 			if ($this->isAlbumName($i)) {
 				$nestedAlbum = new Album();
@@ -1133,7 +1205,8 @@ class Album
 		}
 	}
 
-	function getPerm($permName, $uid) {
+	function getPerm($permName, $uid) 
+    {
 		$perm = $this->fields["perms"][$permName];
 		if ($perm[$uid]) {
 			return true;
@@ -1160,7 +1233,8 @@ class Album
 		return false;
 	}
 
-	function getPermUids($permName) {
+	function getPermUids($permName) 
+    {
 	    global $gallery;
 	    
 	    $perms = array();
@@ -1174,7 +1248,8 @@ class Album
 	    return $perms;
 	}
 
-	function setPerm($permName, $uid, $bool) {
+	function setPerm($permName, $uid, $bool) 
+    {
 		if ($bool) {
 			$this->fields["perms"][$permName][$uid] = 1;
 		} else {
@@ -1183,7 +1258,8 @@ class Album
 	}
 
 	// ------------- 
-	function canRead($uid) {
+	function canRead($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
@@ -1197,111 +1273,131 @@ class Album
 		return $this->getPerm("canRead", $uid);
 	}
 
-	function setRead($uid, $bool) {
+	function setRead($uid, $bool) 
+    {
 		$this->setPerm("canRead", $uid, $bool);
 	}
 
 	// ------------- 
-	function canWrite($uid) {
+	function canWrite($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
 		return $this->getPerm("canWrite", $uid);
 	}
 
-	function setWrite($uid, $bool) {
+	function setWrite($uid, $bool) 
+    {
 		$this->setPerm("canWrite", $uid, $bool);
 	}
 
 	// ------------- 
-	function canDelete($uid) {
+	function canDelete($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
 		return $this->getPerm("canDelete", $uid);
 	}
 
-	function setDelete($uid, $bool) {
+	function setDelete($uid, $bool) 
+    {
 		$this->setPerm("canDelete", $uid, $bool);
 	}
 
 	// ------------- 
-	function canDeleteFrom($uid) {
+	function canDeleteFrom($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
 		return $this->getPerm("canDeleteFrom", $uid);
 	}
 
-	function setDeleteFrom($uid, $bool) {
+	function setDeleteFrom($uid, $bool) 
+    {
 		$this->setPerm("canDeleteFrom", $uid, $bool);
 	}
 
 	// ------------- 
-	function canAddTo($uid) {
+	function canAddTo($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
 		return $this->getPerm("canAddTo", $uid);
 	}
 
-	function setAddTo($uid, $bool) {
+	function setAddTo($uid, $bool) 
+    {
 		$this->setPerm("canAddTo", $uid, $bool);
 	}
 
 	// ------------- 
-	function canChangeText($uid) {
+	function canChangeText($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
 		return $this->getPerm("canChangeText", $uid);
 	}
 
-	function setChangeText($uid, $bool) {
+	function setChangeText($uid, $bool) 
+    {
 		$this->setPerm("canChangeText", $uid, $bool);
 	}
 
 	// ------------- 
-	function canCreateSubAlbum($uid) {
+	function canCreateSubAlbum($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
 		return $this->getPerm("canCreateSubAlbum", $uid);
 	}
 
-	function setCreateSubAlbum($uid, $bool) {
+	function setCreateSubAlbum($uid, $bool) 
+    {
 		$this->setPerm("canCreateSubAlbum", $uid, $bool);
 	}
 
 	// ------------- 
-	function canViewFullImages($uid) {
+	function canViewFullImages($uid) 
+    {
 		if ($this->isOwner($uid)) {
 			return true;
 		}
 		return $this->getPerm("canViewFullImages", $uid);
 	}
 
-	function setViewFullImages($uid, $bool) {
+	function setViewFullImages($uid, $bool) 
+    {
 		$this->setPerm("canViewFullImages", $uid, $bool);
 	}
 
 	// ------------- 
-	function isOwner($uid) {
+	function isOwner($uid) 
+    {
 		return (!strcmp($uid, $this->fields["owner"]));
 	}
 
-	function setOwner($uid) {
+	function setOwner($uid) 
+    {
 		$this->fields["owner"] = $uid;
 	}
 
-	function getOwner() {
+	function getOwner() 
+    {
 		global $gallery;
 		return $gallery->userDB->getUserByUid($this->fields["owner"]);
 	}
-	function getExtraFields() {
+	function getExtraFields() 
+    {
 		return $this->fields["extra_fields"];
 	}
-	function setExtraFields($extra_fields) {
+	function setExtraFields($extra_fields) 
+    {
 		$this->fields["extra_fields"]=$extra_fields;
 	}
 	function getExtraField($index, $field)
