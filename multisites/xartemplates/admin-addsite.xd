@@ -34,7 +34,7 @@
 					    <input type="text" name="siteDN" id="siteDN" size="40" maxlength="60" value="#$siteDN#" />
 					</td>
 					<td><br />
-					    <xar:mlstring>Domain or subdomain eg hosting.mydomain.com</xar:mlstring>
+					    <xar:mlstring>Domain or subdomain <span style="color: red">eg hosting.mydomain.com</span></xar:mlstring>
 					</td>
 					</tr>
 					<tr align="left" valign="middle">
@@ -42,34 +42,35 @@
 							<xar:mlstring>Site Table Prefix:</xar:mlstring>
 						</td>
 						<td>
-						<input type="text" name="msPrefix" id="msPrefix" size="10" maxlength="15" value="#$msPrefix#" />
+						<input type="text" name="msPrefix" id="msPrefix" size="15" maxlength="20" value="#$msPrefix#" />
 						</td>
-						<td><xar:mlstring>Prefix of site tables<br />(system prefix is&nbsp; </xar:mlstring>'#$sysPrefix#').
+						<td><xar:mlstring>Prefix of tables for new site (system prefix is&nbsp; </xar:mlstring>'#$sysPrefix#').
 						</td>
 					</tr>
-					<tr align=left" valign="middle">
+					<tr align="left" valign="middle">
+						<td>
+							<xar:mlstring>Shared tables prefix:</xar:mlstring>
+						</td>
+						<td>
+						<input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sysPrefix#" />
+						</td>
+						<td><xar:mlstring>Change to the same SITE prefix for a standalone site.</xar:mlstring>
+						</td>
+					</tr>
+
+					<tr align="left" valign="middle">
 						<td>
 							<xar:mlstring>Site Database:</xar:mlstring>
 						</td>
 						<td>
 						<input type="text" name="siteDB" id="siteDB" size="20" maxlength="30" value="#$siteDB#" />
 						</td>
-						<td><xar:mlstring>Defaults to master site database</xar:mlstring>
+						<td><xar:mlstring>Defaults to the same database as the Master System site</xar:mlstring>
 						</td>
 					</tr>
 <!--- TO DO: Additional options to be added later
-					<tr align=left" valign="middle">
-						<td>
-							<xar:mlstring>Shared tables prefix:</xar:mlstring>
-						</td>
-						<td>
-						<input type="text" name="sharedTables" id="sharedTables" size="20" maxlength="30" value="#$sharedTables#" />
-						</td>
-						<td><xar:mlstring>Defaults to master site prefix</xar:mlstring>
-						</td>
-					</tr>
 
-					<tr align=left" valign="middle">
+					<tr align="left" valign="middle">
 						<td>
 							<xar:mlstring>Site Status:</xar:mlstring>
 						</td>
@@ -88,12 +89,14 @@
 						</td>
 					</tr>
 --->
-	                <tr valign = "left">
+	                <tr align="left" valign="middle">
 				        <td>
                             <xar:mlstring>Create Database</xar:mlstring>?
                         </td>
                         <td>
    			                <input type="checkbox" name="createdb" id="createdb" value="1" /> /Not functional TO DO
+				        </td>
+				        <td><xar:mlstring>You must have the correct priviledges to create a DATABASE. Create it manually first if you have problems.</xar:mlstring>
 				        </td>
 				   </tr>
                     <tr align="center" valign="middle">

@@ -35,9 +35,9 @@ function multisites_init()
     $fields = array(
         'xar_msid'       => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'xar_mssite'     => array('type' => 'varchar', 'size' => 128, 'null' => false),
-        'xar_msprefix'   => array('type' => 'varchar', 'size' => 15, 'null' => false),
+        'xar_msprefix'   => array('type' => 'varchar', 'size' => 20, 'null' => false),
         'xar_msdb'       => array('type' => 'varchar', 'size' => 128, 'null' => false),
-        'xar_msshare'    => array('type' => 'varchar', 'size' => 128, 'null' => false, 'default' =>''),
+        'xar_msshare'    => array('type' => 'varchar', 'size' => 20, 'null' => false, 'default' =>''),
         'xar_msstatus'   => array('type' => 'integer', 'size' => 'tiny', 'null'=>false, 'default'=>'1'),
         'xar_sitefolder' => array('type' => 'varchar', 'size' => 128, 'null' => false)
         );

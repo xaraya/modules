@@ -22,7 +22,7 @@
 <xar:elseif condition="$modifysite eq 1" />
 <xar:set name="$btntxt"><xar:mlstring>Change Multisite Configuration</xar:mlstring></xar:set>
      <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-	    <p><xar:mlstring>THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.<br /><br />
+	    <p><xar:mlstring><span style="color: red">THIS SITE IS ALREADY CONFIGURED AS THE MASTER MULTISITE SITE.</span><br /><br />
         You should only make changes to this configuration, if</xar:mlstring>:</p>
              <ul>
                 
@@ -73,9 +73,9 @@
           One or the other may not always work on your system, depending on the 
           way your server is configured.</xar:mlstring><br /> <br /></td>
       <tr align="left" valign="middle"> 
-        <td> <span style="margin-left:1.2em;"><xar:mlstring>Your SERVER_NAME 
-          value&nbsp;=&nbsp;&nbsp;</xar:mlstring>#$SERVER_NAME#</span><br /> <span style="font:bold; margin-left:1.2em;"><xar:mlstring>Your 
-          HTTP_HOST value&nbsp;&nbsp;=&nbsp;</xar:mlstring>#$HTTP_HOST#</span> 
+        <td>
+        <span style="margin-left:1.2em;"><xar:mlstring>Your SERVER_NAME value&nbsp;=&nbsp;&nbsp;</xar:mlstring>#$SERVER_NAME#</span><br />
+          <span style="font:bold; margin-left:1.2em;"><xar:mlstring>Your HTTP_HOST value&nbsp;&nbsp;=&nbsp;</xar:mlstring></span><span style="color: red">#$HTTP_HOST#</span>
         </td>
         <td><select name="servervar" id="servervar" size="1" tabindex="1">
             <xar:if condition="xarModGetVar('multisites', 'servervar') eq 'HTTP_HOST'"> 
@@ -121,7 +121,7 @@
 						(/Don't want this changed!)</td>
 					</tr>
 --->
-					<tr align=left" valign="middle">
+					<tr align="left" valign="middle">
 						<td width="30%">
 							<xar:mlstring>Default Master Data Directory Path</xar:mlstring>:
 						</td>
@@ -130,12 +130,12 @@
 						<xar:mlstring>NOTE: Do not enter trailing slashes.</xar:mlstring>
 						</td>
 					</tr>
-			        <tr align=left" valign="middle">
+			        <tr align="left" valign="middle">
 						<td colspan="2"><br />
 						</td>
 				    </tr>
 
-					<tr align=left" valign="middle">
+					<tr align="left" valign="middle">
 						<td width="30%">
 							<xar:mlstring>Domain &amp; subdomain extensions</xar:mlstring>:
 						</td>
@@ -144,10 +144,10 @@
 						<xar:mlstring>Separate each by a comma (,)</xar:mlstring>
 						</td>
 					</tr>
-			        <tr align=left" valign="middle">
-						
-        <td colspan="2"> <xar:mlstring>The common extensions are .com, .net, .org. 
-          However, if for example you use a subdomain or domain such as www.domain.biz 
+			        <tr align="left" valign="middle">
+
+        <td colspan="2"> <xar:mlstring>The common extensions are .com, .net, .org.
+          However, if for example you use a subdomain or domain such as www.domain.biz
           as a site, you will need to add the .biz extension to the list.</xar:mlstring></td>
 		           <tr align="center" valign="middle">
                       <td colspan="2"><br /><br /><input type="submit" value="#$btntxt#" align="middle" tabindex="3" />

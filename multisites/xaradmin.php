@@ -106,6 +106,8 @@ function multisites_admin_updateconfig($args)
     xarModSetVar('multisites', 'varpath', $varpath);
     xarModSetVar('multisites', 'masterfolder', $masterfolder);
     xarModSetVar('multisites', 'DNexts', $DNexts);
+    xarConfigSetVar('System.DB.TablePrefix',xarDBGetSystemTablePrefix());
+    xarConfigSetVar('Site.DB.TablePrefix',xarDBGetSystemTablePrefix());
 
     $setconfig = xarModFunc('multisites',
                             'admin',
@@ -299,7 +301,7 @@ function multisites_admin_addsite()
        $data['authid']     = xarSecGenAuthKey();
        $data['mastersite'] = true;
        $data['siteDN']     = '';
-       $data['sysPrefix']  = xarDBGetSystemTablePrefix();
+       $data['sysPrefix']  = xarDBGetSystemTablePrefix();// prefix sharing, defaults to Sys Master
        $data['msPrefix']   = '';
        $data['siteDB']     = xarDBGetName(); // database to be used, defaults to Master
        $data['createdb']   = false;
@@ -312,7 +314,6 @@ function multisites_admin_addsite()
                  'Inactive' => xarML('Inactive'));
 
       //TO DO: maybe add some extras later when I think of what
-       $data['sharedTables']= xarDBGetSystemTablePrefix(); // prefix sharing, defaults to Master
 
    } else {  //this is not the Master, or Master site not configured
       $data['mastersite']= false;
@@ -341,7 +342,7 @@ global $HTTP_SERVER_VARS;
     }
     if (!xarVarFetch('msPrefix', 'str:2:', $msPrefix)) return;
     if (!xarVarFetch('siteDB', 'str:2:', $siteDB)) return;
-    if (!xarVarFetch('sharedTables', 'str:2:', $sharedTables, $siteDB )) return;
+    if (!xarVarFetch('sharedTables', 'str:2:', $sharedTables, $msPrefix )) return;
     if (!xarVarFetch('siteStatus', 'int:1:', $siteStatus,'0')) return;
     if (!xarVarFetch('createdb', 'int:1:', $createdb, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
@@ -378,7 +379,7 @@ global $HTTP_SERVER_VARS;
                                    'WHERE xar_msprefix = "'.$msPrefix.'" AND xar_msdb = "'.$siteDB.'"'));
 
     if ($prefixexists) {
-            $msg = xarML("Sorry, a subsite already exists in database '".$siteDB."'\nwith database prefix '".$msPrefix."'\nPlease use a different table prefix.");
+            $msg = xarML("Sorry, a subsite already exists in database ".$siteDB." with database prefix ".$msPrefix." Please use a different table prefix.");
             xarExceptionSet(XAR_USER_EXCEPTION, 'ALREADY_EXISTS', new DefaultUserException($msg));
             return $msg;
     }
@@ -386,20 +387,18 @@ global $HTTP_SERVER_VARS;
     $cWhereIsPerso =xarModGetVar('multisites','masterfolder');
 
     $masterdb=xarDBGetName();
-    // TO DO - option to create database, create tables
 
-    //Set the new config vars
+     //Set the new config vars
     $setmultisite = xarMSConfigSetVar('System.MS.MultiSites',
-                                   '1',
-					  	           $msPrefix,
-						           xarDBGetSiteTablePrefix(),
-						           $siteDB,
-                                   $masterdb);
+                                      '1',
+					  	              $msPrefix,
+						              xarDBGetSiteTablePrefix(),
+						              $siteDB,
+                                      $masterdb);
     if (!$setmultisite) {
-            $msg = xarML("Unable to set configuration vars for ".$siteDN.
-                         "/nDelete the new site from the Multisite Table, check your database and tables exists and try again.");
-            xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE', new DefaultUserException($msg));
-            return $msg;
+       $msg = xarML('Unable to set configuration vars for '.$siteDN.' Check your database and tables exist and try again.');
+       xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE', new DefaultUserException($msg));
+    return;
     }
 
     $setmultisite = xarMSConfigSetVar('Site.DB.TablePrefix',
@@ -410,8 +409,21 @@ global $HTTP_SERVER_VARS;
                                    $masterdb);
 
     if (!$setmultisite) {
-            xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE ".$siteDB', new DefaultUserException($msg));
-            return $msg;
+       $msg = xarML('Unable to set configuration vars for '.$siteDN.' Check your database and tables exist and try again.');
+       xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE ".$siteDB', new DefaultUserException($msg));
+       return;
+    }
+    $setmultisite = xarMSConfigSetVar('System.DB.TablePrefix',
+                                   $sharedTables,
+					  	           $msPrefix,
+						           xarDBGetSiteTablePrefix(),
+						           $siteDB,
+                                   $masterdb);
+
+    if (!$setmultisite) {
+       $msg = xarML('Unable to set configuration vars for '.$siteDN.' Check your database and tables exist and try again.');
+       xarExceptionSet(XAR_USER_EXCEPTION, 'UNABLE TO CONNECT TO DATABASE ".$siteDB', new DefaultUserException($msg));
+       return;
     }
     // TO DO - set subsite mod vars
 
@@ -448,7 +460,7 @@ global $HTTP_SERVER_VARS;
     if (!copy($filenamein,$filenameout)) {
         $msg = xarML("Unable to copy master config to ".$cWhereIsPerso."/".$sitedir."/var");
         xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT COPY FILE', new DefaultUserException($msg));
-        return $msg;
+        return;
     }
     // update the new subsite config file
     $configfile =getcwd().'/'.$cWhereIsPerso."/".$sitedir."/var/config.system.php";
@@ -468,6 +480,10 @@ global $HTTP_SERVER_VARS;
         if (strstr($line,"\$systemConfiguration['DB.TablePrefix']")) {
              $newConfig[$line_num]="\$systemConfiguration['DB.TablePrefix']='".$msPrefix."';";
              $line                ="\$systemConfiguration['DB.TablePrefix']='".$msPrefix."';";
+        }
+        if (strstr($line,"\$siteConfiguration['DB.TablePrefix']")) {
+             $newConfig[$line_num]="\$siteConfiguration['DB.TablePrefix']='".$sharedTables."';";
+             $line                ="\$siteConfiguration['DB.TablePrefix']='".$sharedTables."';";
         }
         if (strstr($line,"?>")) {
              $newConfig[$line_num]="// Multisites: Set this Multisite SubSite Active.\n\$systemConfiguration['MS.Active'] = '1';\n\n?>";
@@ -490,7 +506,21 @@ global $HTTP_SERVER_VARS;
                               'sitefolder' => $sitefolder));
 
     if (!$msid) return;
+    
+    // TO DO - option to create database, create tables - then should be enough
+    // to give some time for proper multisites planned and implemented
 
+/* TO DO - fix this and put in separate function with table creation when done.
+     if ($createdb) {
+        xarModAPILoad('installer','admin');
+        $dbtype =xarDBGetType();
+        if (!xarModAPIFunc('installer', 'admin', 'createdb', array('dbName' => $siteDB, 'dbType' =>$dbtype ))) {
+             $msg = 'The database cannot be created. Please create the database '.$siteDB. ' first and return to configure your site';
+             xarExceptionSet(XAR_USER_EXCEPTION, 'CANNOT CREATE DATABSE', new DefaultUserException($msg));
+          return;
+        }
+    }
+*/
    xarResponseRedirect(xarModURL('multisites', 'admin', 'view'));
    // success
    return true;
@@ -721,6 +751,7 @@ global $HTTP_SERVER_VARS;
             (strstr($line,"file_exists")) ||
             (strstr($line,"else")) ||
             (strstr($line,"}")) ||
+            (strstr($line,"siteConfiguration['DB.TablePrefix']")) ||
             (strstr($line,"Multisites")) ||
             (strstr($line,"'MS."))) {
            // do nothing
@@ -729,7 +760,7 @@ global $HTTP_SERVER_VARS;
         }
      }
     fclose($fd);
-
+     $siteprefix = xarDBGetSiteTablePrefix();
      //Get all the subdomain and domain extensions required for this site
      //Put in an array til we need them
      $ext_array = explode(',',xarModGetVar('multisites','DNexts'));
@@ -754,6 +785,8 @@ global $HTTP_SERVER_VARS;
         while (list ($line_num, $line) = each($holdConfig)) {
             fwrite($IOk,$line);
         }
+        fwrite($IOk,"// Multisites: Set site prefix (same as system).\n");
+        fwrite($IOk,"\$siteConfiguration['DB.TablePrefix'] = '".xarDBGetSiteTablePrefix()."';\n");
         fwrite($IOk,"// Multisites: Set this as the Multisite Master.\n");
         fwrite($IOk,"\$systemConfiguration['MS.Master'] = '1';\n");
         fwrite($IOk,"// Multisites: Set multisite flag on.\n");
@@ -1761,7 +1794,7 @@ function xarMSConfigSetVar($name,
         $msg = xarML('Empty name.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
-    return;
+    return $msg;
     }
    // Connect to master db - and get the config table
    list($dbconn) 	= xarDBGetConn();
@@ -1777,7 +1810,7 @@ function xarMSConfigSetVar($name,
 					  $msdb  // new site database - maybe same as master
 					  );
    if (!$dbsite) return;
-   
+
    //make sure we are getting the table with the prefix we want
    $configtable 		= str_replace($masterprefix,$msprefix,$configtable);
    //check the var exists already
