@@ -37,7 +37,9 @@ function mime_userapi_getall_extensions( $args ) {
                    xar_mime_extension_id, 
                    xar_mime_extension_name
               FROM $extension_table
-            $where";
+            $where
+          ORDER BY xar_mime_subtype_id,
+                   xar_mime_extension_name";
 
     $result = $dbconn->Execute($sql);
 

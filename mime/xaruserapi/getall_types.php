@@ -21,7 +21,8 @@ function mime_userapi_getall_types( /* VOID */ ) {
     
     $sql = "SELECT xar_mime_type_id, 
                    xar_mime_type_name 
-              FROM $type_table";
+              FROM $type_table
+          ORDER BY xar_mime_type_name";
 
     $result = $dbconn->Execute($sql);
 
@@ -44,7 +45,6 @@ function mime_userapi_getall_types( /* VOID */ ) {
     }
 
     $result->Close();
-
     return $typeInfo;
         
 }    

@@ -38,7 +38,9 @@ function mime_userapi_getall_subtypes( $args ) {
                    xar_mime_subtype_id, 
                    xar_mime_subtype_name 
               FROM $subtype_table
-            $where";
+            $where
+          ORDER BY xar_mime_type_id,
+                   xar_mime_subtype_name ASC ";
 
     $result = $dbconn->Execute($sql);
 

@@ -39,7 +39,9 @@ function mime_userapi_getall_magic( $args ) {
                    xar_mime_magic_offset,
                    xar_mime_magic_length
               FROM $magic_table
-            $where";
+            $where
+          ORDER BY xar_mime_subtype_id,
+                   xar_mime_magic_offset";
 
     $result = $dbconn->Execute($sql);
 
