@@ -4,8 +4,7 @@
     <a href="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#">
         Image only (debug)
     </a>
-    <form action="&xar-modurl-bkview-user-graphview;" method="post">
-        <input type="hidden" name="repoid" value="#$repoid#"/>
+    <form action="&xar-modurl-bkview-user-graphview;&amp;repoid=#$repoid#" method="post">
         <input type="hidden" name="file" value="#$file#"/>
         <input type="hidden" name="end" value="#$end#"/>
         <label for="bkgraph_startrange"><xar:mlstring>Start graph at:</xar:mlstring></label>

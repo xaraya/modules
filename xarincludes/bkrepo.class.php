@@ -340,6 +340,8 @@ class bkRepo
                 
         // First, lets determine continuous lines in the range, this always
         // produces the lines to the latest revision
+        // FIXME: how can we decrease the amount of data this returns
+        // so we can do something like 1.1..1.10 to get real old stuff
         $cmd = "bk _lines -R$startRev $file";
         $rawdata = $this->_run($cmd);
         $newData = array(); 
