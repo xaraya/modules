@@ -15,8 +15,8 @@
 
 function cachesecurity_adminapi_syncall()
 {
-    if (!xarModAPIFunc('cachesecurity','admin','syncmasks')) return;
-    if (!xarModAPIFunc('cachesecurity','admin','syncprivileges')) return;
+//    if (!xarModAPIFunc('cachesecurity','admin','syncmasks')) return;
+//    if (!xarModAPIFunc('cachesecurity','admin','syncprivileges')) return;
     if (!xarModAPIFunc('cachesecurity','admin','syncprivsgraph')) return;
     if (!xarModAPIFunc('cachesecurity','admin','syncrolesgraph')) return;
 

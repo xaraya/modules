@@ -33,10 +33,12 @@
             </xar:mlstring>
             <ul>
                 <li><xar:mlstring>Synchronize All - synchronizes all of the security caches at once.</xar:mlstring></li>
-                <li><xar:mlstring>Synchronize Masks - synchronizes just the security masks cache.</xar:mlstring></li>
-                <li><xar:mlstring>Synchronize Masks Structure - synchronizes just the security masks structure cache.</xar:mlstring></li>
-                <li><xar:mlstring>Synchornize Privileges - synchronizes just the security privileges cache.</xar:mlstring></li>
+                <li><xar:mlstring>Synchronize Roles Structure - synchronizes just the security roles structure cache.</xar:mlstring></li>
                 <li><xar:mlstring>Synchornize Privileges Structure - synchronizes just the security privileges structure cache.</xar:mlstring></li>
+<xar:comment>
+                <li><xar:mlstring>Synchronize Masks - synchronizes just the security masks cache.</xar:mlstring></li>
+                <li><xar:mlstring>Synchornize Privileges - synchronizes just the security privileges cache.</xar:mlstring></li>
+</xar:comment>
                 <li><xar:mlstring>Turns On/Off - Turn the security caching on and off.</xar:mlstring></li>
             </ul>
         </div>

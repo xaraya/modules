@@ -19,8 +19,8 @@ function cachesecurity_xartables()
     $tables = array();
     $sitePrefix = xarDBGetSiteTablePrefix();
 
-    $tables['security_cache_privileges'] = $sitePrefix . '_seccache_privileges';
-    $tables['security_cache_masks']      = $sitePrefix . '_seccache_masks';
+//    $tables['security_cache_privileges'] = $sitePrefix . '_seccache_privileges';
+//    $tables['security_cache_masks']      = $sitePrefix . '_seccache_masks';
 
     $tables['security_cache_rolesgraph']      = $sitePrefix . '_seccache_rolesgraph';
     $tables['security_cache_privsgraph']      = $sitePrefix . '_seccache_privsgraph';

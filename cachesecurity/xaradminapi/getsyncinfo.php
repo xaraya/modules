@@ -7,12 +7,15 @@ function cachesecurity_adminapi_getsyncinfo()
 {
     $files = array();
 
+/*
     $files['masks'] = xarModAPIFunc(
         'cachesecurity','admin','filename', array('part'=>'masks')
      );
     $files['privileges'] = xarModAPIFunc(
         'cachesecurity','admin','filename', array('part'=>'privileges')
      );
+*/
+
     $files['rolesgraph'] = xarModAPIFunc(
         'cachesecurity','admin','filename', array('part'=>'rolesgraph')
      );

@@ -89,7 +89,7 @@ function cachesecurity_init()
 *  KEY i_xar_seccache_privmain (xar_realm,xar_module,xar_component,xar_instance1,xar_instance2,xar_instance3,xar_instance4,xar_instance5,xar_instance6,xar_level,xar_priv_id)
 *) TYPE=MyISAM;
 ******/
-
+/*
     $query = xarDBCreateTable($tables['security_cache_privileges'],
              array('xar_priv_id'  => array('type'       => 'integer',
                                       'null'        => false,
@@ -161,7 +161,7 @@ function cachesecurity_init()
     if (!$dbconn->Execute($query)) return;
 
     xarDB_importTables(array('security_cache_privileges' => $tables['security_cache_privileges']));
-
+*/
 /*****
 *
 * CREATE TABLE xar_seccache_masks (
@@ -182,7 +182,7 @@ function cachesecurity_init()
 *) TYPE=MyISAM;
 ******/
 
-
+/*
     $query = xarDBCreateTable($tables['security_cache_masks'],
              array('xar_mask_id'  => array('type'       => 'integer',
                                       'null'        => false,
@@ -259,7 +259,7 @@ function cachesecurity_init()
     if (!$dbconn->Execute($query)) return;
 
     xarDB_importTables(array('security_cache_masks' => $tables['security_cache_masks']));
-
+*/
 /*****
 *
 CREATE TABLE xar_seccache_privsgraph (
@@ -398,7 +398,7 @@ function cachesecurity_delete()
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
-
+/*
     $query = xarDBDropTable($tables['security_cache_privileges']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
@@ -406,7 +406,7 @@ function cachesecurity_delete()
     $query = xarDBDropTable($tables['security_cache_masks']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;
-
+*/
     $query = xarDBDropTable($tables['security_cache_rolesgraph']);
     if (empty($query)) return; // throw back
     if (!$dbconn->Execute($query)) return;

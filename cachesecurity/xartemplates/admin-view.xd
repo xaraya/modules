@@ -31,6 +31,7 @@
               		</a></td>
             		<td><xar:mlstring>Synchronizes all of the security caches at once.</xar:mlstring></td>
             	</tr>	
+<xar:comment>
             	<tr>
             		<td>
             			<xar:if condition="$syncinfo['masks']">
@@ -65,6 +66,7 @@
               		</a></td>
             		<td><xar:mlstring>Synchronizes just the security privileges cache.</xar:mlstring></td>
             	</tr>	
+</xar:comment>
             	<tr>
             		<td>
             			<xar:if condition="$syncinfo['privsgraph']">
