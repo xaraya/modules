@@ -38,8 +38,8 @@ define(_TODOLIST_SUBMIT	,"Valide");
 define(_TODOLIST_TEXT	,"Texte");
 define(_TODOLIST_THE_SEARCH,"Chercher");
 define(_TODOLIST_TODO	,"choses à faire");
-define(_TODOLIST_TODO_ADDED1,"ToDo ";
-define(_TODOLIST_TODO_ADDED2," ajoutée à la base de données";
+define(_TODOLIST_TODO_ADDED1,"ToDo ");
+define(_TODOLIST_TODO_ADDED2," ajoutée à la base de données");
 define(_TODOLIST_TOP	,"haut");
 define(_TODOLIST_USER	,"Utilisateur");
 ?>

@@ -37,8 +37,8 @@ define(_TODOLIST_SUBMIT	,"registra");
 define(_TODOLIST_TEXT	,"Testo");
 define(_TODOLIST_THE_SEARCH,"Cerca");
 define(_TODOLIST_TODO	,"cose da fare");
-define(_TODOLIST_TODO_ADDED1,"ToDo ";
-define(_TODOLIST_TODO_ADDED2," aggiunto al database";
+define(_TODOLIST_TODO_ADDED1,"ToDo ");
+define(_TODOLIST_TODO_ADDED2," aggiunto al database");
 define(_TODOLIST_TOP	,"inizio");
 define(_TODOLIST_USER	,"utente");
 ?>

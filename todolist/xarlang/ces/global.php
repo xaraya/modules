@@ -11,7 +11,7 @@ define(_TODOLIST_ALL	,"vse");
 define(_TODOLIST_BACK	,"zpet");
 define(_TODOLIST_CHANGE	,"zmenit");
 define(_TODOLIST_CHANGED_BY,"zmeneno");
-define(_TODOLIST_CHANGED_ON,"zmeneno";
+define(_TODOLIST_CHANGED_ON,"zmeneno");
 define(_TODOLIST_CHOOSE_EXISTING_PROJECT,"Vyberte existujici projekt");
 define(_TODOLIST_CHOOSE_EXISTING_USER	,"Vyberte existujiciho uzivatele");
 define(_TODOLIST_CHOOSE_MODULE	,"Vyberte modul administrace");
