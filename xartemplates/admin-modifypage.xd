@@ -101,6 +101,7 @@
                         <input type="text" name="template" id="template" maxlength="100" value="#xarVarPrepForDisplay($page.template)#" />
 
                         <xar:if condition="!empty($templates)">
+                            <xar:mlstring>or</xar:mlstring>
                             <select name="template_select" id="template_select">
                                 <xar:if condition="$page.template eq ''">
                                     <option value="" selected="selected" style="color: gray;">[<xar:mlstring>inherited</xar:mlstring>]</option>
@@ -149,6 +150,7 @@
                         <xar:comment><xar:data-input name="thisname" type="filelist" value="23" validation="modules/xarpages/xarimages" /></xar:comment>
 
                         <xar:if condition="!empty($custom_apis.func)">
+                            <xar:mlstring>or</xar:mlstring>
                             <select name="function_select">
                                 <xar:if condition="$page.function eq ''">
                                     <option value="" selected="selected" style="color: gray;">[<xar:mlstring>None</xar:mlstring>]</option>
@@ -167,6 +169,7 @@
                         <input type="text" name="encode_url" id="encode_url" maxlength="100" value="#xarVarPrepForDisplay($page.encode_url)#" />
 
                         <xar:if condition="!empty($custom_apis.encode)">
+                            <xar:mlstring>or</xar:mlstring>
                             <select name="encode_url_select">
                                 <xar:if condition="$page.encode_url eq ''">
                                     <option value="" selected="selected" style="color: gray;">[<xar:mlstring>None</xar:mlstring>]</option>
@@ -183,7 +186,9 @@
                     <p class="param">
                         <label for="decode_url"><xar:mlstring>Custom URL Decode</xar:mlstring></label>
                         <input type="text" name="decode_url" id="decode_url" maxlength="100" value="#xarVarPrepForDisplay($page.decode_url)#" />
+
                         <xar:if condition="!empty($custom_apis.decode)">
+                            <xar:mlstring>or</xar:mlstring>
                             <select name="decode_url_select">
                                 <xar:if condition="$page.decode_url eq ''">
                                     <option value="" selected="selected" style="color: gray;">[<xar:mlstring>None</xar:mlstring>]</option>
