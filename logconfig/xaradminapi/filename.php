@@ -5,8 +5,7 @@
  */
 function logconfig_adminapi_filename ()
 {
-    $logConfigFile = xarCoreGetVarDirPath() . '/logs/config.log.php';
-    return $logConfigFile;
+    return xarLogConfigFile();
 }
 
 ?>
