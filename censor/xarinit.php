@@ -83,11 +83,11 @@ function censor_init()
 function censor_upgrade($oldversion)
 {
     switch ($oldversion) {
-	 	
-        case '1.0.0': 	
-	
-	    xarDBLoadTableMaintenanceAPI();
-	    $dbconn =& xarDBGetConn();
+         
+        case '1.0.0':     
+    
+        xarDBLoadTableMaintenanceAPI();
+        $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $censortable = $xartable['censor'];
         
@@ -100,8 +100,8 @@ function censor_upgrade($oldversion)
                                         'default' => '0'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-	
-	    $query = xarDBAlterTable($censortable,
+    
+        $query = xarDBAlterTable($censortable,
                                   array('command' => 'add',
                                         'field'   => 'xar_match_case',
                                         'type'    => 'char',
@@ -120,9 +120,9 @@ function censor_upgrade($oldversion)
                                         'default' => 'ALL'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-	    //inserire update default
-	    
-	    $query = "UPDATE $censortable SET xar_case_sensitive = 0";
+        //inserire update default
+        
+        $query = "UPDATE $censortable SET xar_case_sensitive = 0";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
             
@@ -133,8 +133,8 @@ function censor_upgrade($oldversion)
             $query = "UPDATE $censortable SET xar_locale = 'ALL'";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-	    
-	    return censor_upgrade('1.1.0');
+        
+        return censor_upgrade('1.1.0');
             break;
         
         case '1.1.0':

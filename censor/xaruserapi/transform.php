@@ -71,8 +71,8 @@ function transform($text)
                       } elseif ($tmpcensor['match_case'] == 3) {      
                             $alsearch[] = '/' . preg_quote($tmpcensor['keyword'], '/'). '/i';
                           }
-			  } else {
-		      if ($tmpcensor['match_case'] == 0) { 
+              } else {
+              if ($tmpcensor['match_case'] == 0) { 
                           $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpcensor['keyword'], '/'). ')(?![\w@:-])(?!\.\w)/';
                       } elseif ($tmpcensor['match_case'] == 1) {
                             $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpcensor['keyword'], '/'). ')/';
