@@ -66,7 +66,7 @@
                 <br /><br />
                 <xar:mlstring><b>Note:</b>  You will not be able to create a publication until at least one user is added to the Newsletter Publisher group.</xar:mlstring>
                 <br /><br />
-                <a href="#xarModURL('newsletter', 'admin', 'newowner')#">Click here to add a Newsletter user.</a>
+                <a href="#xarModURL('newsletter', 'admin', 'viewusers')#">Click here to add a Newsletter user.</a>
                 <br /><br />
                 <b><xar:mlstring>3.  Add publication and story categories</xar:mlstring></b>
                 <br /><br />
