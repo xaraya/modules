@@ -305,7 +305,7 @@ function uploads_userapi_store( $args )
                        'user',
                                'main',
                                array('ulid' => $ulid));
-      return array('ulid'=>$ulid, 'link'=>$uploadlink, 'filesize'=>$filesize, 'filetype'=>$type);
+      return array('ulid'=>$ulid, 'ulfile' => $ulfile, 'link'=>$uploadlink, 'filesize'=>$filesize, 'filetype'=>$type);
   }
     elseif ($utype == 'text') {
       //open the uploaded file and return the text.
@@ -396,7 +396,7 @@ function uploads_userapi_store( $args )
                                'user',
                                'main',
                                array('ulid' => $ulid));
-      return array('ulid'=>$ulid, 'link'=>$uploadlink, 'filesize'=>$filesize, 'filetype'=>$type);
+      return array('ulid'=>$ulid, 'ulfile' => $ulfile, 'link'=>$uploadlink, 'filesize'=>$filesize, 'filetype'=>$type);
     }
 }
 
