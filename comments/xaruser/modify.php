@@ -12,11 +12,9 @@
  */
 function comments_user_modify() 
 {
-
     $header                       = xarRequestGetVar('header');
     $package                      = xarRequestGetVar('package');
     $receipt                      = xarRequestGetVar('receipt');
-
     $receipt['post_url']          = xarModURL('comments','user','modify');
     $header['input-title']        = xarML('Modify Comment');
 
@@ -81,9 +79,13 @@ function comments_user_modify()
                 xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
                 return;
             }
+            // call transform input hooks
+            // should we look at the title as well?
+            $package['text-transformed'] = xarModCallHooks('item', 'transform-input', 0, $package['text'], 
+                                                           'comments', 'comments'); 
             xarModAPIFunc('comments','user','modify',
                                         array('cid'      => $header['cid'],
-                                              'text'     => $package['text'],
+                                              'text'     => $package['text-transformed'],
                                               'title'    => $package['title'],
                                               'postanon' => $package['postanon']));
 
@@ -158,5 +160,4 @@ function comments_user_modify()
     return $output;
 
 }
-
 ?>

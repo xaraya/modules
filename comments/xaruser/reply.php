@@ -11,7 +11,6 @@
 
 function comments_user_reply() 
 {
-
     if (!xarSecurityCheck('Comments-Post'))
         return;
 
@@ -46,12 +45,17 @@ function comments_user_reply()
                 xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
                 return;
             }
+            // call transform input hooks
+            // should we look at the title as well?
+            $package['text-transformed'] = xarModCallHooks('item', 'transform-input', 0, $package['text'], 
+                                                           'comments', 'comments'); 
+                                                           
             xarModAPIFunc('comments','user','add',
                            array('modid'    => $header['modid'],
                                  'itemtype' => $header['itemtype'],
                                  'objectid' => $header['objectid'],
                                  'pid'      => $header['pid'],
-                                 'comment'  => $package['text'],
+                                 'comment'  => $package['text-transformed'],
                                  'title'    => $package['title'],
                                  'postanon' => $package['postanon']));
 
