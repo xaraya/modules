@@ -85,6 +85,14 @@
                 </select>
             </span>
         </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span><xar:mlstring>phpBB2 URL (without ending slash)</xar:mlstring>: </span>
+            </span>
+            <span>
+                    <input type="text" name="forumurl" value="#$forumurl#" />
+            </span>
+        </div>
         <br />
         <!-- submit button -->
         <span style="padding: 20px; ">

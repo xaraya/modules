@@ -22,8 +22,8 @@ function authphpbb2_admin_updateconfig()
          $database,
          $username,
          $password,
-         $prefix
-//         $forumroot
+         $prefix,
+         $forumurl
         ) = xarVarCleanFromInput(
                                  'adduser',
                                  'defaultgroup',
@@ -32,8 +32,8 @@ function authphpbb2_admin_updateconfig()
                                  'database', 
                                  'username', 
                                  'password', 
-                                 'prefix'
-//                                 'forumroot'
+                                 'prefix',
+                                 'forumurl'
                                 );
 
     // Confirm authorisation code
@@ -63,7 +63,7 @@ function authphpbb2_admin_updateconfig()
     xarModSetVar('authphpbb2', 'username', $username);
     xarModSetVar('authphpbb2', 'password', $password);
     xarModSetVar('authphpbb2', 'prefix', $prefix);
-//    xarModSetVar('authphpbb2', 'forumroot', $forumroot);
+    xarModSetVar('authphpbb2', 'forumurl', $forumurl);
 
     // and refresh display
     xarResponseRedirect(xarModURL('authphpbb2', 'admin', 'modifyconfig'));

@@ -43,8 +43,8 @@ function authphpbb2_userapi_authenticate_user($args)
     // OK, authentication worked
     // now we still have to fetch the $uid for return
 
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
 
     // Get user information from roles
     $userRole = xarModAPIFunc('roles',
@@ -58,48 +58,48 @@ function authphpbb2_userapi_authenticate_user($args)
     		return XARUSER_AUTH_FAILED;
     		
         // add a user that does NOT exist in the database
-			// get username from array
-			$realname = $user_info['username'];
-			// get email from array
-			$email = $user_info['user_email'];
+		// get username from array
+		$realname = $user_info['username'];
+		// get email from array
+		$email = $user_info['user_email'];
 
-            // call role module to create new user role
-            $now = time();
-            $rid = xarModAPIFunc('roles',
-                                 'admin',
-                                 'create',
-                                 array('uname' => $uname, 
-                                       'realname' => $realname, 
-                                       'email' => $email, 
-                                       'pass' => $pass,
-                                       'date'     => $now,
-                                       'valcode'  => 'createdbyphpbb2',
-                                       'state'   => 3,
-                                       'authmodule'  => 'authphpbb2'));
+        // call role module to create new user role
+        $now = time();
+        $rid = xarModAPIFunc('roles',
+                             'admin',
+                             'create',
+                             array('uname' => $uname, 
+                                   'realname' => $realname, 
+                                   'email' => $email, 
+                                   'pass' => $pass,
+                                   'date'     => $now,
+                                   'valcode'  => 'createdbyphpbb2',
+                                   'state'   => 3,
+                                   'authmodule'  => 'authphpbb2'));
 
-            if (!$rid)
-                return XARUSER_AUTH_FAILED;
+        if (!$rid)
+        	return XARUSER_AUTH_FAILED;
 
-            $usergroup = xarModGetVar('authphpbb2','defaultgroup');
+		$usergroup = xarModGetVar('authphpbb2','defaultgroup');
 
-            // Get the list of groups
-            if (!$groupRoles = xarGetGroups()) return; // throw back
+        // Get the list of groups
+        if (!$groupRoles = xarGetGroups()) return; // throw back
 
-            $groupId = 0;
-            while (list($key,$group) = each($groupRoles)) {
-                if ($group['name'] == $usergroup) { 
-                    $groupId = $group['uid'];
-                    break;
-                }
+        $groupId = 0;
+        while (list($key,$group) = each($groupRoles)) {
+            if ($group['name'] == $usergroup) { 
+                $groupId = $group['uid'];
+                break;
             }
+        }
 
-            if ($groupId == 0) return; // throw back
+        if ($groupId == 0) return; // throw back
 
-            // Insert the user into the default users group
-            if( !xarMakeRoleMemberByID($rid, $groupId))
+        // Insert the user into the default users group
+        if( !xarMakeRoleMemberByID($rid, $groupId))
                return XARUSER_AUTH_FAILED; 
 			
-        } else {
+    } else {
         $rid = $userRole['uid'];
     }
     
@@ -159,55 +159,56 @@ function authphpbb2__get_phpbb2_userdata($connect,$username,$pass)
     $prefix = xarModGetVar('authphpbb2','prefix');
     $password = md5($pass);
     $table = $prefix.'users';
-    
+
     if($connect)  //just double-checking the connection.
-        {
-            // connect to the invision database and get the user data
-            //$inv_db = mysql_select_db($database, $connect);
-            $sql = "SELECT * FROM " . $table . 
+    {
+        // connect to the invision database and get the user data
+        //$inv_db = mysql_select_db($database, $connect);
+        $sql = "SELECT * FROM " . $table . 
         		" WHERE username='" . xarVarPrepForStore($username) . 
         		"' AND user_password='".xarVarPrepForStore($password)."'";
-            
-            $connect->SetFetchMode(ADODB_FETCH_ASSOC);
-            
-            $result = $connect->Execute($sql);
-            
-            if (!$result) {
-                //error
-                $msg = "phpBB2: Query to $table has failed: " . $db->ErrorMsg();
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
-                                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                error_log("phpBB2 Error: Query to $table failed");
-                return false;
-            } 
-            if ($result->EOF)
-                {
-                    //incorrect login
-                    $msg = xarML('Wrong username (#(1)) or pass (not shown).', $username);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                    $result->Close();
-                    return false;
-                }
-            else {
-                //correct login.  return uid.
-                if ($result->fields['user_active']=='0') 
-                    {
-                        //user inactive
-                        $msg = xarML('User #(1) not activated.', $username);
-                        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                        $result->Close();
-                        return false;	
-                    }
-                else
-                    {
-                        $user_data=$result->fields;
-                        $result->Close();
-                        return $user_data;
-                    }
-            }
+        
+        $connect->SetFetchMode(ADODB_FETCH_ASSOC);
+        
+        $result = $connect->Execute($sql);
+    
+        if (!$result) {
+        	//error
+            $msg = "phpBB2: Query to $table has failed: " . $connect->ErrorMsg();
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
+                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+            error_log("phpBB2 Error: Query to $table failed");
+            return false;
+        } 
+        if ($result->EOF)
+        {
+        	//incorrect login
+        $msg = xarML('Wrong username (#(1)) or pass (not shown).', $username);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+            $result->Close();
+            return false;
         }
+        else {
+            //correct login.  return uid.
+            	if ($result->fields['user_active']=='0') 
+            	{
+            		//user inactive
+			        $msg = xarML('User #(1) not activated.', $username);
+            		xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                		new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+                	$result->Close();
+            		return false;	
+            	}
+            	else
+            	{
+            		$user_data=$result->fields;
+            		$result->Close();
+                	return $user_data;
+            	}
+        }
+    }
 }
+
 
 ?>

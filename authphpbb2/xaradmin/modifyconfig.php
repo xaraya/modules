@@ -63,6 +63,8 @@ function authphpbb2_admin_modifyconfig()
     }
     $data['groups'] = $groups;
 
+    $data['forumurl'] = xarVarPrepForDisplay(xarModGetVar('authphpbb2','forumurl'));
+
     // Send the values to the template
     return $data;
 }
