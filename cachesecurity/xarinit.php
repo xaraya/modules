@@ -83,32 +83,32 @@ CREATE TABLE xar_seccache_rolesgraph (
     xarDB_importTables(array('security_cache_rolesgraph' => $tables['security_cache_rolesgraph']));
 
     // Set up database tables
-	$query = xarDBCreateTable($tables['security_cache_privsmasks'],
-    	array(
-    		'xar_priv_id'  => array(
-    			'type'       => 'integer',
-        		'null'        => false,
-                'default'     => '0',
-                'increment'   => false,
-                'primary_key' => false),
-			'xar_mask_id'  => array(
-				'type'       => 'integer',
+    $query = xarDBCreateTable($tables['security_cache_privsmasks'],
+        array(
+            'xar_priv_id'  => array(
+                'type'       => 'integer',
                 'null'        => false,
                 'default'     => '0',
                 'increment'   => false,
                 'primary_key' => false),
-		));
+            'xar_mask_id'  => array(
+                'type'       => 'integer',
+                'null'        => false,
+                'default'     => '0',
+                'increment'   => false,
+                'primary_key' => false),
+        ));
 
     if (!$dbconn->Execute($query)) return;
 
-	$index = array(
-    	'name'      => 'i_'.$sitePrefix.'_seccache_privsmasks_main',
+    $index = array(
+        'name'      => 'i_'.$sitePrefix.'_seccache_privsmasks_main',
         'fields'    => array('xar_priv_id', 'xar_mask_id'),
         'unique'    => true);
     $query = xarDBCreateIndex($tables['security_cache_privsmasks'],$index);
     if (!$dbconn->Execute($query)) return;
 
-	xarDB_importTables(array('security_cache_privsmasks' => $tables['security_cache_privsmasks']));
+    xarDB_importTables(array('security_cache_privsmasks' => $tables['security_cache_privsmasks']));
 
     //set up configvars
     xarConfigSetVar('CacheSecurity.on', false);
