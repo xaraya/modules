@@ -476,7 +476,8 @@ function XARCookSpaces($pagearray)
     return preg_replace("/ {3,8}/", "\t", $pagearray);
 } 
 
-class XARStack {
+class XARStack 
+{
     var $items = array();
     var $size = 0;
 
