@@ -99,7 +99,7 @@ function hookbridge_adminpriv_commondata( $args )
             ));
 
     $data['common']['menu_label'] = xarML( 'Configure' );
-    $data['common']['menu']       = xarModAPIFunc('hookbridge','private','adminconfigmenu',0 );
+    $data['common']['menu']       = xarModAPIFunc('hookbridge','private','adminconfigmenu',array('itemtype'=>0,'itemtype_array'=>$data['common']['itemtype_array']) );
 
     /*
      * Populate the rest of the template
