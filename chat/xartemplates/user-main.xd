@@ -3,7 +3,7 @@
 <div class="xar-mod-body"><h2>Chat</h2>
     <div style="margin: auto;">
 
-        <applet code=IRCApplet.class archive="irc.jar,pixx.jar" codebase="modules/chat/xarjava" width="640" height="400">
+        <applet code="IRCApplet.class" archive="irc.jar,pixx.jar" codebase="modules/chat/xarjava" width="640" height="400">
         <param name="CABINETS" value="irc.cab,securedirc.cab,pixx.cab" />
         <xar:if condition="xarUserIsLoggedIn()">
             <param name="nick" value="#xarUserGetVar('uname')#" />
