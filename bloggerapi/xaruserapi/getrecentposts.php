@@ -56,8 +56,8 @@ function bloggerapi_userapi_getrecentposts($args)
             array('startnum' => 1, 'ptid' => null, 'numitems' => $numberOfPosts, 'cids' => $cids));
         
         if (count($articles)==0) {
-                    $cat = xarModAPIFunc('categories','user','getcat',array('return_itself'=>true,'cid'=>$blogid));
-                    $err = xarML("No posts found in category (#(1))",$cat[0]['name']);
+            $cat = xarModAPIFunc('categories','user','getcat',array('return_itself'=>true,'cid'=>$blogid));
+            $err = xarML("No posts found in category (#(1))",$cat[0]['name']);
         }
     }
     
