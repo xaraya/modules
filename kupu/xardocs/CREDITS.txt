@@ -1,0 +1,4 @@
+The kupu module for Xaraya is a wrapper around the popular kupu wysiwyg web editor.
+Kupu is distributed by OSCOM (http://kupu.oscom.org/).
+
+For the full credits please go here:http://codespeak.net/svn/kupu/trunk/kupu/doc/CREDITS.txt
