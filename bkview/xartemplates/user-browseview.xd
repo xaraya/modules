@@ -1,74 +1,80 @@
 <xar:template file="user-menu" type="module"/>
 
-<div class="xar-mod-head">
+<div style="float:left;">
+
+  <!-- Header for the folder list -->
+  <div class="xar-mod-head">
     <span><xar:mlstring>Folders</xar:mlstring></span>
-</div>
-
-<div id="bkdirlist">
-  <xar:loop name="$dirlist">
-	<div style="float:left; min-width: #$maxlen#em;">
-      <img src="#$imgloc#/dir.gif" alt="directory"/>
-      <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">#$loop:item['dirname']#</a>
-    </div>
-  </xar:loop>
-</div>
-
-<br style="clear:both;" />
-<br />
-
-<table class="csets">
-  <tr>
-  	<th>&nbsp;</th>
-  	<th><xar:mlstring>File</xar:mlstring></th>
-  	<th><xar:mlstring>Rev</xar:mlstring></th>
-  	<th><xar:mlstring>Csets</xar:mlstring></th>
-  	<th><xar:mlstring>Age</xar:mlstring></th>
-  	<th><xar:mlstring>Author</xar:mlstring></th>
-  	<th align="left" width="100%"><xar:mlstring>Comments</xar:mlstring></th>
-  </tr>
-
-  <xar:loop name="$files">
-    <tr class="csets">
-        <td class="csets">
+  </div>
+    
+  <!-- Block with the folders -->
+  <div id="bkdirlist" style="margin-bottom: 50px;">
+    <xar:loop name="$dirlist">
+      <div style="float:left; min-width: #$maxlen#em;">
+        <img src="#$imgloc#/dir.gif" alt="directory"/>
+        <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">
+          #$loop:item['dirname']#
+        </a>
+      </div>
+    </xar:loop>
+  </div>
+    
+  
+    
+    <table class="csets">
+      <tr>
+        <th colspan="2"><xar:mlstring>File</xar:mlstring></th>
+        <th><xar:mlstring>Rev</xar:mlstring></th>
+        <th><xar:mlstring>Csets</xar:mlstring></th>
+        <th><xar:mlstring>Age</xar:mlstring></th>
+        <th><xar:mlstring>Author</xar:mlstring></th>
+        <th align="left" width="100%"><xar:mlstring>Comments</xar:mlstring></th>
+      </tr>
+        
+      <xar:loop name="$files">
+        <tr class="csets">
+          <td class="csets">
             <a href="&xar-modurl-bkview-user-downloadfile;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
-                <img src="#$imgloc#/file.gif" alt="file" />
+              <img src="#$imgloc#/file.gif" alt="file" />
             </a>
-        </td>
-        <td class="csets">
+          </td>
+          <td class="csets">
             <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
-				#$loop:item['basename']#
+              #$loop:item['basename']#
             </a>
-        </td>
-        <xar:if condition="!empty($loop:item['tag']) && $loop:item['relfile']!='ChangeSet'">
+          </td>
+          <xar:if condition="!empty($loop:item['tag']) && $loop:item['relfile']!='ChangeSet'">
             <td class="xar-accent bktagged">
-        <xar:else/>
+          <xar:else />
             <td class="csets">
-        </xar:if>
-		
-		<xar:if condition="$loop:item['relfile']=='ChangeSet'">
+          </xar:if>
+      
+          <xar:if condition="$loop:item['relfile']=='ChangeSet'">
             <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">
-		<xar:else/>
+          <xar:else/>
             <a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#&amp;rev=#$loop:item['rev']#">
-                #$loop:item['rev']#<br />#$loop:item['tag']#
+              #$loop:item['rev']#<br />#$loop:item['tag']#
             </a>
-		</xar:if>
-        </td>
-        <td class="csets">
+          </xar:if>
+          </td>
+          <td class="csets">
             <a href="&xar-modurl-bkview-user-relatedview;&amp;repoid=#$repoid#&amp;file=#$loop:item['relfile']#">
-				<xar:mlstring>Csets</xar:mlstring>
-			</a>
-		</td>
-        <td class="csets" nowrap>
+              <xar:mlstring>Csets</xar:mlstring>
+            </a>
+          </td>
+          <td class="csets" nowrap>
             <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['age_code']#">
-                #$loop:item['age']#
+              #$loop:item['age']#
             </a>
-        </td>
-        <td class="csets" nowrap>
+          </td>
+          <td class="csets" nowrap>
             <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;user=#$loop:item['author']#">
-                #$loop:item['author']#
+              #$loop:item['author']#
             </a>
-        </td>
-        <td class="comments">#$loop:item['comments']#</td>
-	</tr>
-  </xar:loop>
-</table>
+          </td>
+          <td class="comments">#$loop:item['comments']#</td>
+        </tr>
+      </xar:loop>
+    </table>
+  </div>
+</div>
