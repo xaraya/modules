@@ -26,6 +26,14 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Date Added</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$time#
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Module or Theme Name</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">

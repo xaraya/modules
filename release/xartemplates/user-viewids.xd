@@ -3,7 +3,6 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
 
-<br /><br />
 <div align="center">
 <div class="xar-accent">
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -28,6 +27,12 @@
 		</th>
 		<th width="25%">
 			<xar:mlstring>Name</xar:mlstring>
+		</th>
+		<th width="5%">
+			<xar:mlstring>Comments</xar:mlstring>
+		</th>
+		<th width="5%">
+			<xar:mlstring>Viewed</xar:mlstring>
 		</th>
 	</tr>
 	<xar:loop name="$items">
@@ -66,6 +71,12 @@
 		<td align="center" valign="top" width="25%" class="xar-norm">
 			#$name#
 		</td>
+		<td width="5%" class="xar-norm">
+			#$comments#
+		</td>
+		<td width="5%" class="xar-norm">
+			#$hitcount#
+		</td>
 	</tr>
 	<xar:else />
 	<tr>
@@ -101,6 +112,12 @@
 		</td>
 		<td align="center" valign="top" width="25%" class="xar-accent">
 			#$name#
+		</td>
+		<td width="5%" class="xar-accent">
+			#$comments#
+		</td>
+		<td width="5%" class="xar-accent">
+			#$hitcount#
 		</td>
 	</tr>
 	</xar:if>

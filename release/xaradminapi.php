@@ -238,6 +238,14 @@ function release_adminapi_deletedoc($args)
 
 function release_adminapi_getmenulinks()
 {
+    if (xarSecAuthAction(0, 'release::', '::', ACCESS_ADMIN)) {
+        $menulinks[] = Array('url'   => xarModURL('release',
+                                                  'admin',
+                                                  'addcore'),
+                             'title' => xarML('Add Core Notifications'),
+                             'label' => xarML('Add Core Release'));
+
+     }
     if (xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'admin',
@@ -246,31 +254,12 @@ function release_adminapi_getmenulinks()
                              'label' => xarML('View Notifications'));
 
      }
-
-    if (xarSecAuthAction(0, 'release::', '::', ACCESS_ADMIN)) {
-        $menulinks[] = Array('url'   => xarModURL('release',
-                                                  'admin',
-                                                  'addcore'),
-                             'title' => xarML('Add Core Notifications'),
-                             'label' => xarML('View Notifications'));
-
-     }
-
     if (xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'admin',
                                                   'viewdocs'),
                              'title' => xarML('View Release Docs'),
                              'label' => xarML('View Documentation'));
-
-     }
-
-    if (xarSecAuthAction(0, 'release::', '::', ACCESS_ADD)) {
-        $menulinks[] = Array('url'   => xarModURL('release',
-                                                  'admin',
-                                                  'adddocs'),
-                             'title' => xarML('Add Release Docs'),
-                             'label' => xarML('Add Documentation'));
 
      }
 

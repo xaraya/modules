@@ -45,21 +45,27 @@ function release_userapi_getallids($args)
                      xar_name,
                      xar_desc,
                      xar_type,
+                     xar_certified,
                      xar_approved
             FROM $releasetable
             ORDER BY xar_rid";
+    if (!empty($certified)) {
+        $query .= " WHERE xar_certified = '" . xarVarPrepForStore($certified). "'";
+    }
+
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rid, $uid, $name, $desc, $type, $approved) = $result->fields;
+        list($rid, $uid, $name, $desc, $type, $certified, $approved) = $result->fields;
         if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
             $releaseinfo[] = array('rid'        => $rid,
                                    'uid'        => $uid,
                                    'name'       => $name,
                                    'desc'       => $desc,
                                    'type'       => $type,
+                                   'certified'  => $certified,
                                    'approved'   => $approved);
         }
     }
@@ -93,13 +99,14 @@ function release_userapi_getid($args)
                      xar_name,
                      xar_desc,
                      xar_type,
+                     xar_certified,
                      xar_approved
             FROM $releasetable
             WHERE xar_rid = " . xarVarPrepForStore($rid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    list($rid, $uid, $name, $desc, $type, $approved) = $result->fields;
+    list($rid, $uid, $name, $desc, $type, $certified, $approved) = $result->fields;
     $result->Close();
 
     if (!xarSecAuthAction(0, 'Release::', "$name::$rid", ACCESS_READ)) {
@@ -111,6 +118,7 @@ function release_userapi_getid($args)
                          'name'       => $name,
                          'desc'       => $desc,
                          'type'       => $type,
+                         'certified'  => $certified,
                          'approved'   => $approved);
 
     return $releaseinfo;
@@ -158,6 +166,7 @@ function release_userapi_createid($args)
               xar_name,
               xar_desc,
               xar_type,
+              xar_certified,
               xar_approved
               )
             VALUES (
@@ -166,6 +175,7 @@ function release_userapi_createid($args)
               '" . xarVarPrepForStore($name) . "',
               '" . xarVarPrepForStore($desc) . "',
               '" . xarVarPrepForStore($type) . "',
+              '" . xarVarPrepForStore($certified) . "',
               '" . xarVarPrepForStore($approved) . "')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -227,6 +237,7 @@ function release_userapi_updateid($args)
                 xar_name = '" . xarVarPrepForStore($name) . "',
                 xar_type = '" . xarVarPrepForStore($type) . "',
                 xar_desc = '" . xarVarPrepForStore($desc) . "',
+                xar_certified = '" . xarVarPrepForStore($certified) . "',
                 xar_approved = '" . xarVarPrepForStore($approved) . "'
             WHERE xar_rid = " . xarVarPrepForStore($rid);
     $result =& $dbconn->Execute($query);
@@ -278,23 +289,31 @@ function release_userapi_getallnotes($args)
                      xar_supportlink,
                      xar_changelog,
                      xar_notes,
+                     xar_time,
                      xar_enotes,
                      xar_certified,
                      xar_approved
             FROM $releasenotes";
     if (!empty($approved)) {
-        $query .= " WHERE xar_approved = '" . xarVarPrepForStore($approved). "'";
+        $query .= " WHERE xar_approved = '" . xarVarPrepForStore($approved). "'
+                    ORDER by xar_time DESC";
     } elseif (!empty($certified)) {
         $query .= " WHERE xar_certified = '" . xarVarPrepForStore($certified) . "'
-                    AND xar_approved = 2";
+                    AND xar_approved = 2
+                    ORDER by xar_time DESC";
     } elseif (!empty($supported)) {
         $query .= " WHERE xar_supported = '" . xarVarPrepForStore($supported) . "'
-                    AND xar_approved = 2";
+                    AND xar_approved = 2
+                    ORDER by xar_time DESC";
     } elseif (!empty($price)) {
         $query .= " WHERE xar_price = '" . xarVarPrepForStore($price) . "'
-                    AND xar_approved = 2";
+                    AND xar_approved = 2
+                    ORDER by xar_time DESC";
+    } elseif (!empty($rid)) {
+        $query .= " WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
+                    AND xar_approved = 2
+                    ORDER by xar_time DESC";
     }
-
 
             //ORDER BY xar_rnid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
@@ -302,7 +321,7 @@ function release_userapi_getallnotes($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $enotes, $certified, $approved) = $result->fields;
+        list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time,  $enotes, $certified, $approved) = $result->fields;
         if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
@@ -316,6 +335,7 @@ function release_userapi_getallnotes($args)
                                    'supportlink'=> $supportlink,
                                    'changelog'  => $changelog,
                                    'notes'      => $notes,
+                                   'time'       => $time,
                                    'enotes'     => $enotes,
                                    'certified'  => $certified,
                                    'approved'   => $approved);
@@ -358,6 +378,7 @@ function release_userapi_getnote($args)
                      xar_supportlink,
                      xar_changelog,
                      xar_notes,
+                     xar_time,
                      xar_enotes,
                      xar_certified,
                      xar_approved
@@ -366,7 +387,7 @@ function release_userapi_getnote($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $enotes, $certified, $approved) = $result->fields;
+    list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved) = $result->fields;
     $result->Close();
 
     if (!xarSecAuthAction(0, 'Release::', "$rnid::$rid", ACCESS_READ)) {
@@ -385,6 +406,7 @@ function release_userapi_getnote($args)
                          'supportlink'=> $supportlink,
                          'changelog'  => $changelog,
                          'notes'      => $notes,
+                         'time'       => $time,
                          'enotes'     => $enotes,
                          'certified'  => $certified,
                          'approved'   => $approved);
@@ -424,7 +446,7 @@ function release_userapi_createnote($args)
 
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
-
+    $time = date('Y-m-d G:i:s');
     $query = "INSERT INTO $releasetable (
                      xar_rnid,
                      xar_rid,
@@ -438,6 +460,7 @@ function release_userapi_createnote($args)
                      xar_supportlink,
                      xar_changelog,
                      xar_notes,
+                     xar_time,
                      xar_certified,
                      xar_approved
               )
@@ -454,6 +477,7 @@ function release_userapi_createnote($args)
               '" . xarVarPrepForStore($supportlink) . "',
               '" . xarVarPrepForStore($changelog) . "',
               '" . xarVarPrepForStore($notes) . "',
+              '$time',
               '" . xarVarPrepForStore($certified) . "',
               '" . xarVarPrepForStore($approved) . "')";
     $result =& $dbconn->Execute($query);
@@ -501,6 +525,7 @@ function release_userapi_getdocs($args)
                      xar_title,
                      xar_docs,
                      xar_type,
+                     xar_time,
                      xar_approved
             FROM $releasedocstable";
     if (!empty($apporved)) {
@@ -521,13 +546,14 @@ function release_userapi_getdocs($args)
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rdid, $rid, $title, $docs, $type, $approved) = $result->fields;
+        list($rdid, $rid, $title, $docs, $type, $time, $approved) = $result->fields;
         if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
             $releasedocs[] = array('rdid'       => $rdid,
                                    'rid'        => $rid,
                                    'title'      => $title,
                                    'docs'       => $docs,
                                    'type'       => $type,
+                                   'time'       => $time,
                                    'approved'   => $approved);
         }
     }
@@ -537,6 +563,54 @@ function release_userapi_getdocs($args)
     // Return the users
     return $releasedocs;
 
+}
+
+function release_userapi_getdoc($args)
+{
+    extract($args);
+
+    if (!isset($rdid)) {
+        $msg = xarML('Invalid Parameter Count',
+                    join(', ',$invalid), 'userapi', 'get', 'Autolinks');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
+
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+
+    $releasetable = $xartable['release_docs'];
+
+    // Get link
+    $query = "SELECT xar_rdid,
+                     xar_rid,
+                     xar_title,
+                     xar_docs,
+                     xar_type,
+                     xar_time,
+                     xar_approved
+            FROM $releasetable
+            WHERE xar_rdid = " . xarVarPrepForStore($rdid);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    list($rdid, $rid, $title, $docs, $type, $time, $approved) = $result->fields;
+    $result->Close();
+
+    if (!xarSecAuthAction(0, 'Release::', "$name::$rid", ACCESS_READ)) {
+        return false;
+    }
+
+    $releaseinfo = array('rdid'       => $rdid,
+                         'rid'        => $rid,
+                         'title'      => $title,
+                         'docs'       => $docs,
+                         'type'       => $type,
+                         'time'       => $time,
+                         'approved'   => $approved);
+
+    return $releaseinfo;
 }
 
 function release_userapi_createdoc($args)
@@ -570,13 +644,14 @@ function release_userapi_createdoc($args)
 
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
-
+    $time = date('Y-m-d G:i:s');
     $query = "INSERT INTO $releasetable (
               xar_rdid,
               xar_rid,
               xar_title,
               xar_docs,
               xar_type,
+              xar_time,
               xar_approved
               )
             VALUES (
@@ -585,6 +660,7 @@ function release_userapi_createdoc($args)
               '" . xarVarPrepForStore($title) . "',
               '" . xarVarPrepForStore($doc) . "',
               '" . xarVarPrepForStore($type) . "',
+              '$time',
               '" . xarVarPrepForStore($approved) . "')";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -612,7 +688,7 @@ function release_userapi_getmenulinks()
                                                   'user',
                                                   'viewnotes'),
                              'title' => xarML('View all theme and module releases'),
-                             'label' => xarML('View Release Notes'));
+                             'label' => xarML('Recent Releases'));
         $menulinks[] = Array('url'   => xarModURL('release',
                                                   'user',
                                                   'addid'),

@@ -1,0 +1,22 @@
+<xar:loop name="$items">
+<item>
+	<title>#$name# - #$version#</title>
+	<link>#$displaylink#</link>
+	<description>#$desc#</description>
+	<guid isPermaLink="false">http://www.dinerminor.com</guid> 
+	<content:encoded>
+ <![CDATA[ 
+<xar:if condition="!empty($demolink)">
+<p><b>Demo Link:</b>&nbsp;&nbsp; <a href="#$demolink#">#$demolink#</a></p>
+</xar:if>
+<p><b>Download Link:</b>&nbsp;&nbsp; <a href="#$dllink#">#$dllink#</a></p>
+<xar:if condition="$price eq 2">
+<p><b>Price:</b>&nbsp;&nbsp; #$priceterms#<br /></p>
+</xar:if>
+<p><b>Changelog:</b>&nbsp;&nbsp; #$changelog#</p>
+<p><b>Additional Notes:</b>&nbsp;&nbsp; #$notes#</p>
+<p><b>Editor Notes:</b>&nbsp;&nbsp;<i> #$enotes# </i></p>
+]]> 
+	</content:encoded>
+</item>
+</xar:loop>

@@ -28,26 +28,19 @@
 <xar:if condition="!empty($message)">
 	<b>#$message#</b>
 <xar:else />
-
+<hr width="100%"><br />
 <xar:loop name="$items">
+<br />
 <b>#$type# Author:</b>&nbsp;&nbsp; <a href="#$contacturl#">#$realname#</a><br />
 <b>#$type# Name:</b>&nbsp;&nbsp; <a href="#$displaylink#">#$name#</a><br />
-<b>Description of #$type#:</b>&nbsp;&nbsp; #$desc#<br /><br />
+<b>Date Added</b>:&nbsp;&nbsp; #$time#<br /><br />
+<b>Description of #$type#:</b>&nbsp;&nbsp; #$desc#<br />
+<b>Version:</b>&nbsp;&nbsp; #$version#<br /><br />
 
-<b>Version:</b>&nbsp;&nbsp; #$version#<br />
-<xar:if condition="!empty($demolink)">
-<b>Demo Link:</b>&nbsp;&nbsp; <a href="#$demolink#">#$demolink#</a><br />
-</xar:if>
-<b>Download Link:</b>&nbsp;&nbsp; <a href="#$dllink#">#$dllink#</a><br />
-<xar:if condition="$price eq 1">
-<b>Price:</b>&nbsp;&nbsp; #$priceterms#<br />
-</xar:if>
-<b>Certified:</b>&nbsp;&nbsp; #$certifiedstatus#<br />
-<b>Changelog:</b>&nbsp;&nbsp; #$changelog#<br /><br />
-<b>Additional Notes:</b>&nbsp;&nbsp; #$notes#<br /><br />
-<b>Editor Notes:</b>&nbsp;&nbsp;<i> #$notes# </i><br />
+<b><xar:mlstring>Comments</xar:mlstring></b> #$comments# <br />
+<b><xar:mlstring>Read</xar:mlstring></b> #$hitcount#<br />
+<br />
 <hr width="100%">
-
 </xar:loop>
 
 </xar:if>

@@ -240,7 +240,7 @@ function release_admin_viewdocs()
                                     array('approved' => 1));
 
             if ($items == false){
-                $data['message'] = xarML('There are no releases based on your filters');
+                $data['message'] = xarML('There are no pending release notes');
             }
 
             break;
