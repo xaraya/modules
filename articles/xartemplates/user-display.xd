@@ -33,10 +33,8 @@ If those templates don't exist when you try to preview or display a new article,
     </tr>
     <xar:if condition="!empty($previous) and !empty($next)">
     <tr>
-    <td align="left">
-        #$previous#
-    </td><td align="right">
-        #$next#
+    <td colspan="2" align="right">
+        #$pager#
     </td>
     </tr>
     </xar:if>

@@ -135,48 +135,54 @@ function articles_user_display($args)
                 $data['next'] = '';
             } else {
                 $pages = explode('<!--pagebreak-->',$article['body']);
-                if (empty($page)) {
-                    $page = 1;
-                } elseif ($page > count($pages)) {
-                    $page = count($pages);
-                }
-                $article['body'] = $pages[$page - 1];
-                $numpages = count($pages);
-                unset($pages);
-            // TODO: use BL widget ?
-                if ($page > 1) {
-                    // only count first page hits
-                    xarVarSetCached('Hooks.hitcount','nocount',1);
 
-                    $data['previous'] = '<a href="' . xarModURL('articles','user','display',
-                                                               array('aid' => $aid))
-                                        . '">&lt;&lt; </a>&nbsp;&nbsp;';
-                    if ($page > 2) {
-                        $data['previous'] .= '<a href="' . xarModURL('articles','user','display',
-                                                             array('aid' => $aid,
-                                                                   'page' => $page - 1));
-                    } else {
-                        $data['previous'] .= '<a href="' . xarModURL('articles','user','display',
-                                                             array('aid' => $aid));
-                    }
-                    $data['previous'] .= '">' . xarML('prev')
-                                      . ' (' . ($page -1) . '/' . $numpages . ')</a>';
-                } else {
-                    $data['previous'] = '&nbsp;';
+                // For documents with many pages, the pages can be
+                // arranged in blocks.
+                $pageBlockSize = 10;
+
+                // Get pager information: one item per page.
+                $pagerinfo = xarTplPagerInfo((empty($page) ? 1 : $page), count($pages), 1, $pageBlockSize);
+
+                // Retrieve current page and total pages from the pager info.
+                // These will have been normalised to ensure they are in range.
+                $page = $pagerinfo['currentpage'];
+                $numpages = $pagerinfo['totalpages'];
+
+                // Discard everything but the current page.
+                $article['body'] = $pages[$page - 1];
+                unset($pages);
+
+                if ($page > 1) {
+                    // Don't count page hits after the first page.
+                    xarVarSetCached('Hooks.hitcount','nocount',1);
                 }
-                if ($page < $numpages) {
-                    $data['next'] = '<a href="' . xarModURL('articles','user','display',
-                                                             array('aid' => $aid,
-                                                                   'page' => $page + 1))
-                                      . '">' . xarML('next')
-                                      . ' (' . ($page + 1) . '/' . $numpages . ')</a>&nbsp;&nbsp;';
-                    $data['next'] .= '<a href="' . xarModURL('articles','user','display',
-                                                             array('aid' => $aid,
-                                                                   'page' => $numpages))
-                                      . '"> &gt;&gt;</a>';
-                } else {
-                    $data['next'] = '&nbsp;';
-                }
+
+                // Pass in the pager info so a complete custom pager
+                // can be created in the template if required.
+                $data['pagerinfo'] = $pagerinfo;
+
+                // Get the rendered pager.
+                // The pager template (last parameter) could be an
+                // option for the publication type.
+                $urlmask = xarModURL(
+                    'articles','user','display',
+                    array('aid' => $aid, 'page' => '%%')
+                );
+                $data['pager'] = xarTplGetPager(
+                    $page, $numpages, $urlmask,
+                    1, $pageBlockSize, 'multipage'
+                );
+
+                // Next two assignments for legacy templates.
+                // TODO: deprecate them?
+                $data['next'] = xarTplGetPager(
+                    $page, $numpages, $urlmask,
+                    1, $pageBlockSize, 'multipagenext'
+                );
+                $data['previous'] = xarTplGetPager(
+                    $page, $numpages, $urlmask,
+                    1, $pageBlockSize, 'multipageprev'
+                );
             }
         } else {
             $data['previous'] = '';
