@@ -33,7 +33,7 @@ function metaweblogapi_userapi_getpost($args)
         $data['userid']=$article['authorid'];
         $data['dateCreated']=iso8601_encode($article['pubdate']);
         $data['categories'] = array();
-        $data['content']=xarVarPrepForDisplay($article['summary'];);
+        $data['content']=xarVarPrepForDisplay($article['summary']);
         $data['postid']=$article['aid'];
         $output = xarModAPIFunc('xmlrpcserver','user','createresponse',
                                 array('module'  => 'metaweblogapi',
