@@ -369,6 +369,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
             // You also need to go through Configure Hooks for pubsub again, to refresh the hooklist
 
             // fall through to the next upgrade
+        case '1.3':
 
         default:
             break;
