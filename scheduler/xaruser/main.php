@@ -54,6 +54,18 @@ function scheduler_user_main()
             break;
     }
     if (!$isvalid) {
+        if (!empty($ip)) {
+            $hostname = @gethostbyaddr($ip);
+            // same player, shoot again...
+            if (empty($hostname)) {
+                $hostname = @gethostbyaddr($ip);
+            }
+            
+            if (empty($hostname)) {
+                $hostname = 'unknown';
+            }
+        }
+        xarLogMessage("scheduler: Failed trigger attempt from host $ip ($hostname).");
         return xarML('Wrong trigger');
     }
 
