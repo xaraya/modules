@@ -43,7 +43,7 @@
         <td>
             <b>Message</b>
         <br />
-            <textarea name="body" rows="20" cols="79" >#xarVarPrepForDisplay($message)#</textarea>
+            <textarea name="body" rows="20" cols="79" >#xarVarPrepEmailDisplay(xarVarPrepForDisplay($message))#</textarea>
         </td>
     </tr>
 </table>

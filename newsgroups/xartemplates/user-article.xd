@@ -24,7 +24,7 @@
                 <div class="xar-norm" style="padding: 3px;">
 
                     <xar:mlstring>Subject</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Subject'])#</b><br />
-                    <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['From'])#</b><br />
+                    <xar:mlstring>From</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepEmailDisplay(xarVarPrepForDisplay($headers['From']))#</b><br />
                     <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b><xar:if condition="!empty($headers['Organization'])">#xarVarPrepForDisplay($headers['Organization'])#<xar:else/>-</xar:if></b><br />
                     <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Date'])#</b><br />
                     <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Newsgroups'])#</b><br />
@@ -40,7 +40,7 @@
                     </xar:if>
                     <br />
                     <br />
-                    #$article#
+                    #xarVarPrepEmailDisplay($article)#
                 </div>
             </div>
             <p>#$pager#</p>

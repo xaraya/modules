@@ -23,13 +23,13 @@
     <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#xarVarPrepForDisplay($loop:item['Subject'])#</a></span></td>
-        <td>#xarVarPrepForDisplay($loop:item['From'])#</td>
+        <td>#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['From']))#</td>
         <td>#xarVarPrepForDisplay($loop:item['Date'])#</td>
     </tr>
     <xar:else />
     <tr>
         <td class="xar-accent"><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#xarVarPrepForDisplay($loop:item['Subject'])#</a></span></td>
-        <td class="xar-accent">#xarVarPrepForDisplay($loop:item['From'])#</td>
+        <td class="xar-accent">#xarVarPrepEmailDisplay(xarVarPrepForDisplay($loop:item['From']))#</td>
         <td class="xar-accent">#xarVarPrepForDisplay($loop:item['Date'])#</td>
     </tr>
     </xar:if>
