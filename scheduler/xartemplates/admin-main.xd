@@ -1,0 +1,61 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Scheduler Administration</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><em><xar:mlstring>This module allows you to schedule Xaraya jobs at certain times of the day/week/month (cron)</xar:mlstring></em></p>
+            <xar:mlstring>Those jobs could be for instance :</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>sending a daily digest mail</xar:mlstring></li>
+                <li><xar:mlstring>expiring temporary user passwords</xar:mlstring></li>
+                <li><xar:mlstring>escalating a workflow process</xar:mlstring></li>
+                <li><xar:mlstring>doing a backup of the database</xar:mlstring></li>
+                <li><xar:mlstring>refreshing cache files</xar:mlstring></li>
+                <li><xar:mlstring>...</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring><p>The scheduler module relies on other modules to actually execute whatever jobs are scheduled, so first you need to find out which <b>module functions</b> can be scheduled. To be continued...</p>
+            <p>Then you need some kind of <b>trigger</b> to wake up the scheduler - this can be done e.g. by requesting a specific webpage automatically from your own system via a Unix cron entry or Windows AT command,
+            or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>, or by relying on web hits from your visitors if your site is relatively busy.</p>
+            <p>The rest will be handled by the scheduler module :-)</p>
+            </xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>trigger</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>to be defined</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>
