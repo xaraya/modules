@@ -5,14 +5,14 @@
 <!-- tinyMCE -->
 <script language="javascript" type="text/javascript" src="../jscripts/tiny_mce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript">
-	tinyMCE.init({
-		theme : "advanced",
-		mode : "textareas",
-		plugins : "table",
-		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,formatselect,fontselect,fontsizeselect,forecolor",
-		theme_advanced_buttons3_add_before : "tablecontrols,separator",
-		extended_valid_elements : "font[face|size|color]"
-	});
+    tinyMCE.init({
+        theme : "advanced",
+        mode : "textareas",
+        plugins : "table",
+        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,formatselect,fontselect,fontsizeselect,forecolor",
+        theme_advanced_buttons3_add_before : "tablecontrols,separator",
+        extended_valid_elements : "font[face|size|color]"
+    });
 </script>
 <!-- /tinyMCE -->
 
@@ -25,12 +25,12 @@ Read more about the features and possible settings of TinyMCE in the <a href="..
 <br>
 
 <!-- Form with textare element with width: 100% -->
-<form method="post" action="post.php">
+<form method="post" action="http://tinymce.moxiecode.com/dump.php?example=true">
 <textarea id="elm1" name="elm2" style="width:100%" rows="15">
-	<h3>Test mail header 3</h3>
-	Some <b>element</b>. <br /> This editor instance has a 100% width to it.
-	<p>Some paragraph. <a href="http://www.sourceforge.net">Some link</a></p>
-	<img src="logo.jpg">
+    <h3>Test mail header 3</h3>
+    Some <b>element</b>. <br /> This editor instance has a 100% width to it.
+    <p>Some paragraph. <a href="http://www.sourceforge.net">Some link</a></p>
+    <p><img src="logo.jpg"></p>
 </textarea>
 </form>
 

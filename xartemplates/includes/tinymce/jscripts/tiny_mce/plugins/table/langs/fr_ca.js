@@ -2,10 +2,10 @@
 
 tinyMCELang['lang_table_desc'] = 'Insérer un nouveau tableau';
 tinyMCELang['lang_table_insert_row_before_desc'] = 'Insérer une ligne avant';
-tinyMCELang['lang_table_insert_row_after_desc'] = 'Insérer une ligne aprés';
+tinyMCELang['lang_table_insert_row_after_desc'] = 'Insérer une ligne après';
 tinyMCELang['lang_table_delete_row_desc'] = 'Supprimer la ligne';
 tinyMCELang['lang_table_insert_col_before_desc'] = 'Insérer une colonne avant';
-tinyMCELang['lang_table_insert_col_after_desc'] = 'Insérer une colonne aprés';
+tinyMCELang['lang_table_insert_col_after_desc'] = 'Insérer une colonne après';
 tinyMCELang['lang_table_delete_col_desc'] = 'Supprimer la colonne';
 tinyMCELang['lang_insert_table_title'] = 'Insérer/Modifier le tableau';
 tinyMCELang['lang_insert_table_width'] = 'Largeur';

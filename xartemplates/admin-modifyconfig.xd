@@ -387,10 +387,7 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
-            <xar:comment>
                 <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="80" maxlength="240" />
-            </xar:comment>
-               <textarea name="tinyextended" id="tinyextended" cols="50" rows="4" >#$tinyextended#</textarea>
             <p><xar:mlstring>Make sure you have 'style' and 'class' as allowed attributes in img or a tags if you need them.
             *[*] allows all tags and attributes. Use with disallowed tags below. Your HTML module settings will
             finally filter all tags (but not attributes).</xar:mlstring></p>
@@ -405,10 +402,7 @@
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
-             <xar:comment>
                 <input type="text" name="tinyinvalid" id="tinyinvalid" value="#$tinyinvalid#" size="80" maxlength="240" />
-             </xar:comment>
-               <textarea name="tinyinvalid" id="tinyinvalid" cols="50" rows="4" >#$tinyinvalid#</textarea>
             </span>
         </div>
 

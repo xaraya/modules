@@ -8,7 +8,7 @@ function TinyMCE_advimage_getInsertImageTemplate() {
     var template = new Array();
 
     template['file']   = '../../plugins/advimage/image.htm';
-    template['width']  = 380;
+    template['width']  = 430;
     template['height'] = 380; 
 
     // Language specific width and height addons
@@ -24,5 +24,5 @@ function TinyMCE_advimage_getInsertImageTemplate() {
 function TinyMCE_advimage_handleEvent(editor_id, body, doc) {
 	// Convert all links to absolute
 
-	alert(editor_id + "," + body.innerHTML);
+    alert(editor_id + "," + body.innerHTML);
 }

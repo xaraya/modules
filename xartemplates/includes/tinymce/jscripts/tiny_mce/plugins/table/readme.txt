@@ -13,8 +13,8 @@ Initialization example:
     plugins : "table",
     theme_advanced_buttons3_add_before : "tablecontrols"
   });
-		html += tinyMCE.getControlHTML("row_props");
-		html += tinyMCE.getControlHTML("cell_props");
+        html += tinyMCE.getControlHTML("row_props");
+        html += tinyMCE.getControlHTML("cell_props");
 
 Table controls:
   tablecontrols               All table control below and some separators between them.

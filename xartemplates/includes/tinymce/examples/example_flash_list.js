@@ -3,7 +3,7 @@
 // option is defined in TinyMCE init.
 
 var tinyMCEFlashList = new Array(
-	// Name, URL
-	["Some Flash 1", "test1.swf"],
-	["Some Flash 2", "test2.swf"]
+    // Name, URL
+    ["Some Flash 1", "test1.swf"],
+    ["Some Flash 2", "test2.swf"]
 );
