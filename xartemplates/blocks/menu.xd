@@ -7,12 +7,12 @@
             the root of the menu tree
     If the root page is 'empty' then don't display it - go straight for the next level.
     An empty root page creates a multi-homed menu, while a non-empty root page creates
-    a single-homed menu.
+    a single-homed menu. This can also be forced with the 'multi_homed' option.
 
     Menu titles can be set with a DD field on each page called 'menu_title'.
 </xar:comment>
 
-<xar:if condition="$root_page.status eq 'EMPTY'">
+<xar:if condition="$root_page.status eq 'EMPTY' or !empty($multi_homed)">
     <xar:template file="menu" subdata="array('parent'=&gt;$root_page,'pages'=&gt;$pages,'root_depth'=&gt;$root_page.depth+1)" />
 <xar:else />
     <ul>

@@ -20,6 +20,7 @@
 function xarpages_menublock_init()
 {
     return array(
+        'multi_homed' => true
     );
 }
 
@@ -58,7 +59,8 @@ function xarpages_menublock_display($blockinfo)
     // TODO:
     // We want a few facilities:
     // 1. Set a root higher than the real tree root. Pages will only
-    //    be displayed once that root is reached.
+    //    be displayed once that root is reached. Effectively set one
+    //    or more trees, at any depth, that this menu will cover.
     // 2. Set a 'max depth' value, so only a preset max number of levels
     //    are rendered in a tree.
     // 3. Set behaviour when no current page in the xarpages module is
@@ -81,13 +83,13 @@ function xarpages_menublock_display($blockinfo)
     }
 
     // Pass the cached data into the block.
-    $vars = xarVarGetCached('Blocks.xarpages', 'pagedata');
+    $vars = array_merge($vars, xarVarGetCached('Blocks.xarpages', 'pagedata'));
 
-    // Set the root page.
     // TODO: allow the root page to be set at a variety of points.
     // If, for example, the root page is set several levels up the tree,
     // then the menu will remain static and open at just one level, 
     // until a page within that sub-tree is selected.
+    // Set the root page.
     if (!empty($vars['ancestors'])) {
         $vars['root_page'] =& reset($vars['ancestors']);
     } else {

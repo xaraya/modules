@@ -1,2 +1,8 @@
 <div>
+    <xar:if condition="!empty($multi_homed)">
+        <input id="multi_homed_#$bid#" name="multi_homed" type="checkbox" value="true" checked="checked" />
+    <xar:else />
+        <input id="multi_homed_#$bid#" name="multi_homed" type="checkbox" value="true" />
+    </xar:if>
+    <label for="multi_homed_#$bid#"><xar:mlstring>Multi-homed (hides single root page)</xar:mlstring></label>
 </div>

@@ -28,6 +28,11 @@ function xarpages_menublock_modify($blockinfo)
         $vars = $blockinfo['content'];
     }
 
+    // Defaults
+    if (!isset($vars['multi_homed'])) {
+        $vars['multi_homed'] = true;
+    }
+
     $vars['bid'] = $blockinfo['bid'];
 
     return $vars;
@@ -48,8 +53,8 @@ function xarpages_menublock_update($blockinfo)
     // Reference to content array.
     $vars =& $blockinfo['content'];
 
-    if (xarVarFetch('content_type', 'pre:lower:passthru:enum:text:html:php:custom:data', $content_type, 'text', XARVAR_NOT_REQUIRED)) {
-        $vars['content_type'] = $content_type;
+    if (xarVarFetch('multi_homed', 'bool', $multi_homed, true, XARVAR_NOT_REQUIRED)) {
+        $vars['multi_homed'] = $multi_homed;
     }
 
     return $blockinfo;

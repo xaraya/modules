@@ -147,6 +147,7 @@ function xarpages_user_display($args)
         array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
         $pid_ancestor = $data['pages'][$pid_ancestor]['parent_key'];
     }
+    $data['pages'][$pid_ancestor]['is_ancestor'] = true;
     array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
     $data['ancestors'] = $ancestors;
 

@@ -57,6 +57,7 @@ function xarpages_userapi_getpagestree($args)
 
         // Don't allow item 0 to loop back onto itself.
         // Item 0 points to all the root pages retrieved.
+        // FIXME: set 'has_children' for the root page too, if necessary.
         if ($key != 0 || $page['parent_key'] != 0) {
             // Set flag for menus.
             // FIXME: the isset() is necessary because some parent pages
