@@ -37,7 +37,7 @@ function comments_admin_delete( )
                     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                     return;
                 }
-                $itemtype = xarVarCleanFromInput('itemtype');
+                if (!xarVarFetch('itemtype','int:1',$itemtype)) return;
                 if (empty($itemtype)) {
                     $itemtype = 0;
                 }
@@ -56,8 +56,7 @@ function comments_admin_delete( )
         }
     }
 
-    $submitted = xarVarCleanFromInput('submitted');
-
+    if (!xarVarFetch('submitted', 'str:1:', $submitted)) return;
     // if we're gathering submitted info form the delete
     // confirmation then we are ok to check delete choice,
     // then delete in the manner specified (or not) and
