@@ -8,6 +8,7 @@
 
 <p><xar:mlstring>Hot Topic</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="hottopic" id="hottopic" value="#xarModGetVar('xarbb', 'hottopic')#" size="2" maxlength="3" /></p>
 <p><xar:mlstring>Red Hot Topic</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="redhottopic" id="redhottopic" value="#xarModGetVar('xarbb', 'redhottopic')#" size="2" maxlength="4" /></p>
+<p><xar:mlstring>Posts Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="postsperpage" id="postsperpage" value="#xarModGetVar('xarbb', 'postsperpage')#" size="2" maxlength="4" /></p>
 <p><xar:mlstring>Topics Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="topicsperpage" id="topicsperpage" value="#xarModGetVar('xarbb', 'topicsperpage')#" size="2" maxlength="4" /></p>
 <p><xar:mlstring>Forums Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="forumsperpage" id="forumsperpage" value="#xarModGetVar('xarbb', 'forumsperpage')#" size="2" maxlength="4" /></p>
 <p><xar:mlstring>Support short URLs</xar:mlstring>:&nbsp;&nbsp;

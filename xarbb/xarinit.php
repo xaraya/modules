@@ -169,7 +169,8 @@ function xarbb_init()
     xarModSetVar('xarbb', 'hottopic', 10);
     xarModSetVar('xarbb', 'redhottopic', 20);
     xarModSetVar('xarbb', 'topicsperpage', 50);
-    xarModSetVar('xarbb', 'forumsperpage', 20);    
+    xarModSetVar('xarbb', 'forumsperpage', 20);
+    xarModSetVar('xarbb', 'postsperpage', 20);
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('xarbb', 'SupportShortURLs', 0);
@@ -206,7 +207,7 @@ function xarbb_init()
 }
 
 /**
- * upgrade the smiley module from an old version
+ * upgrade xarbb from an earlier version
  */
 function xarbb_upgrade($oldversion)
 {
@@ -242,6 +243,7 @@ function xarbb_upgrade($oldversion)
         case '1.0.0':
         // New modvars
             xarModSetVar('xarbb', 'forumsperpage', 20);
+            xarModSetVar('xarbb', 'postsperpage', 20);
        // Get database information
             list($dbconn) = xarDBGetConn();
             $xartable = xarDBGetTables();
@@ -305,7 +307,8 @@ function xarbb_delete()
     xarModDelVar('xarbb', 'redhottopic');
     xarModDelVar('xarbb', 'topicsperpage');
     xarModDelVar('xarbb', 'forumsperpage');
-    
+    xarModDelVar('xarbb', 'postsperpage');    
+
     // Remove Masks and Instances
     xarRemoveMasks('xarbb');
     xarRemoveInstances('xarbb');

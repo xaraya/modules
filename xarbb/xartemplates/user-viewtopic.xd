@@ -124,6 +124,7 @@
 </xar:if>
 <br />
 <!--- Display the topic post itself --->
+<xar:if condition="$startnum eq 1">
 <table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
   <tr>
     <td width="100" align="center" class="xar-accent">&nbsp;</td>
@@ -201,6 +202,7 @@
     </td>
   </tr>
 </table>
+</xar:if>
 <!--- Display each post reply --->
 <xar:foreach in="$items" value="$item">
 <table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">

@@ -28,6 +28,9 @@ function xarbb_userapi_getalltopics($args)
     if (!isset($startnum)) {
         $startnum = 1;
     }
+    if (!isset($numitems)) {
+        $numitems = -1;
+    } 
     if (empty($cids)) {
         $cids = array();
     }

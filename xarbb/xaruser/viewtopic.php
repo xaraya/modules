@@ -17,8 +17,11 @@ include 'includes/xarDate.php';
 
 function xarbb_user_viewtopic()
 {
+   // Get parameters from whatever input we need
+    if(!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('tid', 'id', $tid)) return;
 
-    $tid = xarVarCleanFromInput('tid');
+    //$tid = xarVarCleanFromInput('tid');
 
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
@@ -37,10 +40,10 @@ function xarbb_user_viewtopic()
 
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
-                                              'transform',
-                                              $tid,
-                                              array($data['tpost'],
-                                                    $data['ttitle']));
+                                                      'transform',
+                                                       $tid,
+                                                 array($data['tpost'],
+                                                       $data['ttitle']));
 
     // The user API function is called
     // <jojodee> Do we need to call this? - is not same data returned in gettopic call above
@@ -72,13 +75,18 @@ function xarbb_user_viewtopic()
 
     // Need to load the renderer since we are making a direct call to the API
     //<jojodee> Do we really need to load this here? Not just for display?
-        if (!xarModLoad('comments','renderer')) return;
+    if (!xarModLoad('comments','renderer')) return;
 
+    //Get posts for each page
+    $postsforpage=xarModGetVar('xarbb', 'postsperpage');
     $comments = xarModAPIFunc('comments',
                               'user',
                               'get_multiple',
                               array('modid'       => $header['modid'],
-                                    'objectid'    => $header['objectid']));
+                                    'objectid'    => $header['objectid'],
+                                    'startnum' => $startnum,
+                                    'numitems' => xarModGetVar('xarbb', 'postsperpage')));
+
     $totalcomments=count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
@@ -138,7 +146,9 @@ function xarbb_user_viewtopic()
     $data['posterdatestamp'] = $regdatestamp;
     $data['usertopics'] = $topiccount;
     $data['xbbname']    = xarModGetVar('themes', 'SiteName');
-
+    
+    //Pager data - to prevent topic should on every additional pager page
+    $data['startnum'] = $startnum;
 
     //images - add some alt text
     $data['newtopic']   = '<img src="' . xarTplGetImage('newpost.gif') . '" alt="'.xarML('New Topic').'" />';
@@ -155,14 +165,33 @@ function xarbb_user_viewtopic()
     $item['module'] = 'xarbb';
     $item['itemtype'] = 2; // Forum Topics
     $item['itemid'] = $tid;
+
+
     // for display hooks, we need to pass a returnurl
     $item['returnurl'] = xarModURL('xarbb','user','viewtopic',
-                                   array('tid' => $tid));
+                                   array('tid' => $tid,
+                                         'startnum'=>$startnum));
+
     $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
 
     // Let's suppress the hitcount hook from showing.
     $data['hooks']['hitcount'] = '';
+    
+    // Call the xarTPL helper function to produce a pager in case of there
+    // being many items to display.
+    //TODO: Topic is still showing on consecutive Pager pages - works fine on Windows ??
+    // short URLs does not make any difference on *nix
+    $data['pager'] = xarTplGetPager($startnum,
+                                    xarModAPIFunc('comments', 'user', 'get_count',
+                                    array('modid'       => $header['modid'],
+                                          'objectid'    => $header['objectid'])),
+
+                                    xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',
+                                                                                  'tid'          => $tid)),
+                                    xarModGetVar('xarbb', 'postsperpage'));
+
     // Return the template variables defined in this function
+
     return $data;
 }
 
