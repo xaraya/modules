@@ -250,7 +250,7 @@ function pubsub_adminapi_updateevent($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All::$eventid')) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:$eventid:All:All")) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -511,7 +511,7 @@ function pubsub_adminapi_deljob($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('DeletePubSub', 1, 'item', 'All::$handlingid')) return;
+    if (!xarSecurityCheck('DeletePubSub', 1, 'item', "All:All:$handlingid:All")) return;
     
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -565,7 +565,7 @@ function pubsub_adminapi_updatejob($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All::$handlingid')) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:$handlingid:All")) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
@@ -729,7 +729,7 @@ function pubsub_adminapi_updatetemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', 'All::$templateid')) return;
+    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$templateid")) return;
 
     // Get database setup
     list($dbconn) = xarDBGetConn();
