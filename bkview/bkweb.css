@@ -1,6 +1,7 @@
 .bktagged { 
   background-color: #CCE6FF;
   border: thin solid black;
+  color: inherit;
 }
 
 .csets { 
@@ -33,27 +34,30 @@
 }
 
 .diffadded {
-	font-family: monospace;
+  font-family: monospace;
   color: blue;
-	white-space: pre;
+  background-color: inherit;
+  white-space: pre;
 }
 
 .diffremoved {
 	font-family: monospace;
-	color: grey;
+	color: gray;
+    background-color: inherit;
 	white-space: pre;
 }
 
 .diffnochange {
 	font-family: monospace;
 	color: black;
+    background-color: inherit;
 	white-space: pre;
 }
 
 
 /* Annotated view of a file */
 .bkannotate {
-	font-family: monospace;
+  font-family: monospace;
   white-space: pre;
   font-size: smaller;
 }
