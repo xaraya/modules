@@ -454,7 +454,8 @@
  					$paramStr = substr($paramStr,0,strlen($paramStr)-1);
  				}
  				$opData['namespace'] = !isset($opData['namespace']) ? 'http://testuri.com' : $opData['namespace'];
- 				$evalStr .= "function $operation ($paramStr){
+ 				$evalStr .= "function $operation ($paramStr)
+				{
  					// load params into array
  					\$params = array($paramStr);
  					return \$this->call('$operation',\$params,'".$opData['namespace']."','".$opData['soapAction']."');
@@ -463,7 +464,8 @@
  			}
  		}
  		$r = rand();
- 		$evalStr = 'class soap_proxy_'.$r.' extends soapclient {
+ 		$evalStr = 'class soap_proxy_'.$r.' extends soapclient 
+            {
  				'.$evalStr.'
  			}';
  		//print "proxy class:<pre>$evalStr</pre>";
