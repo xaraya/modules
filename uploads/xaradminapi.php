@@ -25,6 +25,7 @@ function uploads_adminapi_download( $args )
 						        , 'ulname'=>$ulname)
 						 );
 						 
+						 
     // Check if download is not approved for viewing
     if( $info['ulhash'] == '' )
     {
@@ -41,6 +42,11 @@ function uploads_adminapi_download( $args )
         $fname=$info['ulfile'];
         $uploads_directory = xarModGetVar('uploads', 'uploads_directory');
         $file=trim($uploads_directory).trim($info['ulhash']);
+        
+        if( !file_exists( $file ) )
+        {
+	        $file=trim($info['ulhash']);
+		}
         
         if( !file_exists( $file ) )
         {
@@ -73,7 +79,7 @@ function uploads_adminapi_download( $args )
 				{
 					// echo "Need to convert<br>";
 					// echo "Loaded image, converting<br>";
-					createthumb($file,$thumbwidth,$thumbwidth,$newfile);
+					createthumb($file,$thumbwidth,$thumbheight,$newfile);
     }
 				// Thumbnail already exists, or has just been created.  Set $file to thumbnail
 				$file = $newfile;
