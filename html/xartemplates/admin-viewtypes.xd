@@ -1,8 +1,8 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <h2><xar:mlstring>View Tag Types</xar:mlstring></h2>
-<div align="center">
-<table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent">
+<div  class="xar-fullwidth" align="center">
+<table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2" class="xar-accent">
     <tr>
         <th>
              <xar:mlstring>Type</xar:mlstring>
@@ -12,7 +12,7 @@
         </th>
     </tr>
     <xar:loop name="$items">
-        <xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+        <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         </td>
         <td class="xar-norm" align="center">

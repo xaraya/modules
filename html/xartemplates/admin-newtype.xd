@@ -10,9 +10,9 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Add Tag Type</xar:mlstring></h2>
     <div style="margin: auto;">
 
-    <form method="post" action="&xar-modurl-html-admin-createtype;" method="post" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
+    <form class="xar-fullwidth" method="post" action="&xar-modurl-html-admin-createtype;" method="post" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <table width="100%" border="0" cellspacing="1" cellpadding="2">
+    <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
         <tr>
             <td class="xar-norm">
                 <label for="tagtype"><xar:mlstring>Tag Type</xar:mlstring></label>:
