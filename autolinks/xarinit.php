@@ -531,18 +531,58 @@ function autolinks_init_upgrade_data()
             'type_name' => xarML('Articles'),
             'template_name' => 'article',
             'dynamic_replace' => '1',
-            'type_desc' => xarML('Various links for fetching articles links.'),
+            'type_desc' => xarML('Various links for fetching articles links. You must set up a DD property named "aid" with a default value of "$2" for these link types to work. Also create a DD property named "ptid" with a default value "$3". A DD property "text" will allow you to use alternative text for the link.'),
             'links' => array(
                 array(
                     'name' => xarML('Article title by article ID'),
                     'keyword' => '\[article:title:aid:([\d]+)\]',
                     'match_re' => '1',
-                    'title' => '$2',
+                    'title' => '',
                     'url' => 'display',
                     'comment' => 'Use format: [article:title:aid:<article-id>]',
                     'sample' => 'Valid article: [article:title:aid:1]; invalid: [article:title:aid:9999]',
                     'enabled' => '0'
-                )
+                ),
+                array(
+                    'name' => xarML('readfirst'),
+                    'keyword' => '\[readfirst:([\d]+)\]',
+                    'match_re' => '1',
+                    'title' => '',
+                    'url' => 'readfirst',
+                    'comment' => 'Use format: [readfirst:<article-id>]',
+                    'sample' => '[readfirst:1]',
+                    'enabled' => '0'
+                ),
+                array(
+                    'name' => xarML('readfirst2'),
+                    'keyword' => '\[readfirst:([\d]+):([\d]+)\]',
+                    'match_re' => '1',
+                    'title' => '',
+                    'url' => 'readfirst',
+                    'comment' => 'Use format: [readfirst:<aid>:<ptid>]',
+                    'sample' => '[readfirst:1:2]',
+                    'enabled' => '0'
+                ),
+                array(
+                    'name' => xarML('readnext'),
+                    'keyword' => '\[readnext:([\d]+)\]',
+                    'match_re' => '1',
+                    'title' => '',
+                    'url' => 'readnext',
+                    'comment' => 'Use format: [readnext:<article-id>]',
+                    'sample' => '[readnext:1]',
+                    'enabled' => '0'
+                ),
+                array(
+                    'name' => xarML('readlast'),
+                    'keyword' => '\[readlast:([\d]+)\]',
+                    'match_re' => '1',
+                    'title' => '',
+                    'url' => 'readlast',
+                    'comment' => 'Use format: [readfirst:<article-id>]',
+                    'sample' => '[readlast:1]',
+                    'enabled' => '0'
+                ),
             )
         )
     );

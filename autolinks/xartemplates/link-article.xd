@@ -1,22 +1,62 @@
 <!---
     Over-ride values (through DD):
-    'linktitle' - the title for the link.
+    'aid'    - mandatory article ID. Arrenge for this to be passed in
+               from an RE match of the article ID.
+    'ptid'   - optional value that will be added to a link if supplied.
+    'url'    - select different portions of this template. Values are:
+               * 'display' - show article title in the link
+               * 'readfirst' - readfirst-type link as defined at 
+                 http://docs.xaraya.com/docs/rfcs/rfc0032.html#rfc.section.4.1.1
+               * 'readnext' - readnext-type link
+               * 'readlast' - readnext-type link
+    'title'  - set the tool-tip title of the link
+    'text'   - alternative text for link when displaying types
+               'readfirst'/'readnext'/'readlast'
 --->
-<!--- The trigger - the URL - can be used to select different portions of this template. --->
-<xar:if condition="$url eq 'display'">
-    <!--- Provide a link to an article, given its aid. --->
-    <xar:set name="$aidarray['aid']">#$title#</xar:set>
-    <xar:set name="$article">#xarModAPIfunc('articles','user','get',$aidarray)#</xar:set>
-    <xar:if condition="!empty($article['title'])">
-    <xar:if condition="empty($linktitle)">
-        <xar:set name="$linktitle"><xar:mlstring>Click here to read the article</xar:mlstring></xar:set>
-    </xar:if>
-    <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay($linktitle)#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
-    <xar:else/>
-    <!--- Display error if the article could not be fetched (invalid number or no permission. --->
-    <span class="xar-error">[<xar:mlstring>article ID not available:</xar:mlstring> #$title#]</span>
-    </xar:if>
-<xar:else/>
-    <!--- No recognised trigger - just return what was matched. --->
+<xar:if condition="empty($aid)">
     #$match#
+<xar:else/>
+    <!--- Array used to fetch the article or create a URL. --->
+    <xar:set name="$aidarray['aid']">#$aid#</xar:set>
+
+    <!--- The trigger - the URL - can be used to select different portions of this template. --->
+    <xar:if condition="$url eq 'display'">
+        <!--- Provide a link to an article, given its aid, extracting the article title to display. --->
+        <!--- Title text over-ride. --->
+        <xar:if condition="empty($title)">
+            <xar:set name="$title"><xar:mlstring>Click here to read the article</xar:mlstring></xar:set>
+        </xar:if>
+        <!--- Fetch the article from its API. --->
+        <xar:set name="$article">#xarModAPIfunc('articles','user','get',$aidarray)#</xar:set>
+        <xar:if condition="!empty($article['title'])">
+            <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay($title)#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
+        <xar:else/>
+            <!--- Display error if the article could not be fetched (invalid number or no permission. --->
+            <span class="xar-error">[<xar:mlstring>Article not available:</xar:mlstring> ID #$aid#]</span>
+        </xar:if>
+    <xar:elseif condition="$url eq 'readfirst' or $url eq 'readnext' or $url eq 'readlast'"/>
+        <!--- If the ptid is passed in, then use that. --->
+        <xar:if condition="!empty($ptid)">
+            <xar:set name="$aidarray['ptid']">#$ptid#</xar:set>
+        </xar:if>
+
+        <xar:if condition="empty($text) and $url eq 'readfirst'">
+            <xar:set name="$text"><xar:mlstring>Click here to read the first article</xar:mlstring></xar:set>
+        </xar:if>
+        <xar:if condition="empty($text) and $url eq 'readnext'">
+            <xar:set name="$text"><xar:mlstring>Click here to read the next article</xar:mlstring></xar:set>
+        </xar:if>
+        <xar:if condition="empty($text) and $url eq 'readlast'">
+            <xar:set name="$text"><xar:mlstring>Click here to read the last article</xar:mlstring></xar:set>
+        </xar:if>
+
+        <xar:if condition="!empty($title)">
+            <a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay($title)#">#xarVarPrepForDisplay($text)#</a>
+        <xar:else/>
+            <a href="#xarModURL('articles','user','display',$aidarray)#" >#xarVarPrepForDisplay($text)#</a>
+        </xar:if>
+    <xar:else/>
+        <!--- No recognised trigger - just return what was matched. --->
+        #$match#
+    </xar:if>
 </xar:if>
