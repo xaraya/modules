@@ -1,0 +1,47 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Moveabletype API Administration</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </div>
+             
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <h3><xar:mlstring>What is it?</xar:mlstring></h3>
+            
+            <p>
+                <xar:mlstring>The Moveabletype API is a XML-RPC API used for blogging,
+                which builds on the MetaWeblog API and the Blogger API. It both adds
+                new xmlrpc methods (mt.*) and extends some of the metaWeblog.* methods.
+                For this reason, the Moveabletype module will only function if the
+                other two are also installed.</xar:mlstring>
+            </p>
+        
+            <p>
+            <xar:mlstring>You can find the specification of the Moveabletype API at </xar:mlstring>
+            <a href="http://www.sixapart.com/movabletype/docs/mtmanual_programmatic.html##xmlrpc%20api">http://www.sixapart.com/movabletype/docs/mtmanual_programmatic.html##xmlrpc%20api</a>
+            </p>
+            
+            <h3><xar:mlstring>How does it work?</xar:mlstring></h3>
+            <p>
+                Blogging through this API basically works the same as with the bloggerapi or the
+                metaweblog module. This API just adds a couple of nifty features like:
+                <ul>
+                    <li>support for summaries and extended entries</li>
+                    <li>support for keywords</li>
+                    <li>initiate text filters (if the server supports it)</li>
+                    <li>trackback management</li>
+                    <li>allow/dissalow comments, trackback pings</li>
+                </ul>
+            </p>
+            <p>
+                Not all of these features are supported by Xaraya at the moment.
+            </p>
+        </div>
+    </div>
+</div>
