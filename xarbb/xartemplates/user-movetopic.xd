@@ -37,7 +37,10 @@
 			</label>&nbsp; 
 			<select name="fid">
 				<xar:loop name="$items">
+				<xar:set name="curfid">#$loop:item['fid']#</xar:set>
+				<xar:if condition="$fid ne $curfid">
 					<option value="#$loop:item['fid']#">#$loop:item['fname']#</option>
+				</xar:if>
 				</xar:loop>
 			</select><br />
 			<table border="0" cellspacing="0" cellpadding="0">
