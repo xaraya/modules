@@ -1,15 +1,20 @@
-<!-- headline of module -->
-<table border="0" width="100%">
-    <tr>
-        <th align="center">#$title#</th>
-    </tr>
-</table>
-<br />
-<!-- module body template -->
+<div class="xar-mod-head"><span class="xar-mod-title">#$title#</span></div>
+<div class="xar-mod-body">
 <div align="center">
     <a href="#$link#">
-       <img src="#$piclocation#" alt="" />
-       <br /><br />
-       #$title#</a>
+    <xar:if condition="!empty($piclocation)">
+        <img src="#$piclocation#" alt="" />
+    <xar:else/>
+        <xar:mlstring>Not Found</xar:mlstring>
+    </xar:if>
+    <br /><br />
+    #$descr#</a>
+<xar:if condition="!empty($hookoutput)">
+    <p>
+    <xar:foreach in="$hookoutput" key="$hookmodule">
+        #$hookoutput[$hookmodule]#
+    </xar:foreach>
+    </p>
+</xar:if>
 </div>
-<!-- end of pinup template -->
+</div>
