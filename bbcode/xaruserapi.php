@@ -22,12 +22,9 @@ function bbcode_userapi_transform($args)
     extract($args);
 
     // Argument check
-    if ((!isset($objectid)) ||
-        (!isset($extrainfo))) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'create', 'bbcode');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+    if (!isset($extrainfo)) {
+        $msg = xarML('Invalid Parameter Count in #(3), #(1)api_#(2)', 'user', 'transform', 'bbcode');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
