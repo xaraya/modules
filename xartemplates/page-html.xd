@@ -1,0 +1,20 @@
+
+<xar:set name="dummy">#xarTplSetPageTitle($current_page.desc)#</xar:set>
+
+<xar:comment><xar:set name="dummy">var_dump($ancestors)</xar:set></xar:comment>
+
+<div>
+    You are here:
+    <xar:loop name="$ancestors">
+        &gt;&gt; <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item.pid))#">#$loop:item.desc#</a>
+    </xar:loop>
+</div>
+
+<div>
+    See Also:
+    <xar:loop name="$current_page.children">
+        &gt;&gt; <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$loop:item))#">#$loop:item#</a>
+    </xar:loop>
+</div>
+
+<div>#$current_page.dd.body#</div>
