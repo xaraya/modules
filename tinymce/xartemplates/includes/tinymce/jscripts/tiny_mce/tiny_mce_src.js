@@ -215,15 +215,15 @@ function TinyMCE_init(settings) {
 	else
 		addEventListener("load", TinyMCE_onLoad, false);
 
-	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.baseURL + '/themes/' + this.settings['theme'] + '/editor_template.js"></script>');
-	document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.baseURL + '/langs/' + this.settings['language'] +  '.js"></script>');
+	document.write('<sc'+'ript type="text/javascript" src="' + tinyMCE.baseURL + '/themes/' + this.settings['theme'] + '/editor_template.js"></script>');
+	document.write('<sc'+'ript type="text/javascript" src="' + tinyMCE.baseURL + '/langs/' + this.settings['language'] +  '.js"></script>');
 	document.write('<link href="' + this.settings['editor_css'] + '" rel="stylesheet" type="text/css">');
 
 	// Add theme plugins
 	var themePlugins = this.settings['plugins'].split(',');
 	if (this.settings['plugins'] != '') {
 		for (var i=0; i<themePlugins.length; i++)
-			document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCE.baseURL + '/plugins/' + themePlugins[i] + '/editor_plugin.js"></script>');
+			document.write('<sc'+'ript type="text/javascript" src="' + tinyMCE.baseURL + '/plugins/' + themePlugins[i] + '/editor_plugin.js"></script>');
 	}
 }
 
@@ -2016,7 +2016,7 @@ function TinyMCE_importThemeLanguagePack(theme_name) {
 	if (typeof theme_name == "undefined")
 		theme_name = tinyMCE.settings['theme'];
 
-	document.write('<script language="javascript" type="text/javascript" src="' + tinyMCE.baseURL + '/themes/' + theme_name + '/langs/' + tinyMCE.settings['language'] +  '.js"></script>');	
+	document.write('<script type="text/javascript" src="' + tinyMCE.baseURL + '/themes/' + theme_name + '/langs/' + tinyMCE.settings['language'] +  '.js"></script>');	
 }
 
 function TinyMCE_importPluginLanguagePack(theme_name, valid_languages) {
@@ -2028,7 +2028,7 @@ function TinyMCE_importPluginLanguagePack(theme_name, valid_languages) {
 			lang = tinyMCE.settings['language'];
 	}
 
-	document.write('<script language="javascript" type="text/javascript" src="' + tinyMCE.baseURL + '/plugins/' + theme_name + '/langs/' + lang +  '.js"></script>');	
+	document.write('<script type="text/javascript" src="' + tinyMCE.baseURL + '/plugins/' + theme_name + '/langs/' + lang +  '.js"></script>');	
 }
 
 /**
