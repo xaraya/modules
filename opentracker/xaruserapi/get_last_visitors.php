@@ -13,7 +13,8 @@
  * @return item array, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
  */
-function opentracker_userapi_get_last_visitors($args) {
+function opentracker_userapi_get_last_visitors($args) 
+{
     extract($args);
     
     if (!isset($modname)) {

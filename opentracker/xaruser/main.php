@@ -275,7 +275,8 @@ switch ($period)
     return $data; 
 } 
 
-function top($clientID, $limit, $start = false, $end = false) {
+function top($clientID, $limit, $start = false, $end = false) 
+{
   $batchKeys = array(
     'pages',
     'entry_pages',
