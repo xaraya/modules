@@ -42,7 +42,7 @@ function logconfig_init()
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
                 if (substr($file, -4) == '.xml') 
-		{
+		        {
                     $objectid = xarModAPIFunc('dynamicdata','util','import',
                               array('file' => "modules/logconfig/loggers/$file"));
                     if (empty($objectid)) return;
