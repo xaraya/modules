@@ -6,8 +6,11 @@
 
 function xarpages_user_display($args)
 {
-    extract($args);
-
+    // Don't extract all args - we only want to check pid here.
+    if (isset($args['pid'])) {
+        $pid = $args['pid'];
+    }
+    
     // Fetch the page ID.
     // This may have been calculated from a path in the
     // short URL decode function.
@@ -148,6 +151,11 @@ function xarpages_user_display($args)
 
     // Save the current page ID. This is used by blocks in 'automatic' mode.
     xarVarSetCached('Blocks.xarpages', 'current_pid', $pid);
+
+    // Save a copy of the args passed into this function in the data array.
+    // This allows, for example, form errors to be passed into the page
+    // if called direct from the form processing handler.
+    $data['args'] = $args;
 
     // Add in flags etc. to the data indicating where the current
     // page is in relation to the page tree.
