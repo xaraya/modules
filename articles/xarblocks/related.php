@@ -17,6 +17,10 @@ function articles_relatedblock_init()
     return array(
         'numitems' => 5,
         'showvalue' => true,
+        'nocache' => 1, // don't cache by default
+        'pageshared' => 0, // don't share across pages
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
 }
 

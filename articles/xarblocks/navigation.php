@@ -20,7 +20,11 @@ function articles_navigationblock_init()
         'showchildren' => 0,
         'showempty' => false,
         'startmodule' => '',
-        'dynamictitle' => false
+        'dynamictitle' => false,
+        'nocache' => 1, // don't cache by default
+        'pageshared' => 0, // don't share across pages here
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
 }
 

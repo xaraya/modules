@@ -30,7 +30,6 @@ function articles_randomblock_init()
         'showpubdate' => false,
         'showsubmit' => false,
         'showdynamic' => false,
-// TODO: use (something like) this for the default block caching configuration ?
         'nocache' => 0, // Cache this block
         'pageshared' => 1, // Share across all pages
         'usershared' => 1, // Share between group members

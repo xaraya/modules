@@ -29,7 +29,11 @@ function articles_topitemsblock_init()
         'showvalue' => true,
         'showsummary' => false,
         'showdynamic' => false,
-        'status' => '2,3'
+        'status' => '2,3',
+        'nocache' => 0, // cache by default
+        'pageshared' => 1, // share across pages (change if you use dynamic pubtypes et al.)
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
 }
 

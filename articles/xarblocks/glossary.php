@@ -17,7 +17,11 @@ function articles_glossaryblock_init()
     return array(
         'paramname' => 'glossaryterm',
         'ptid' => 0,
-        'cid' => 0
+        'cid' => 0,
+        'nocache' => 1, // don't cache by default
+        'pageshared' => 0, // don't share across pages
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
 }
 
