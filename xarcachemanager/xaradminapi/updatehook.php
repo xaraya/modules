@@ -74,10 +74,10 @@ function xarcachemanager_adminapi_updatehook($args)
     switch($modname) {
         case 'blocks':
             // first, save the new settings
-            xarVarFetch('nocache', 'isset', $nocache, array());
-            xarVarFetch('pageshared', 'isset', $pageshared, array());
-            xarVarFetch('usershared', 'isset', $usershared, array());
-            xarVarFetch('cacheexpire', 'isset', $cacheexpire, array());
+            xarVarFetch('nocache', 'isset', $nocache, 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('pageshared', 'isset', $pageshared, 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('usershared', 'isset', $usershared, 0, XARVAR_NOT_REQUIRED);
+            xarVarFetch('cacheexpire', 'str:1:9', $cacheexpire, NULL, XARVAR_NOT_REQUIRED);
 
             if (empty($nocache)) {
                 $nocache = 0;
@@ -85,8 +85,8 @@ function xarcachemanager_adminapi_updatehook($args)
             if (empty($pageshared)) {
                 $pageshared = 0;
             }
-            if (empty($cacheexpire)) {
-                $cacheexpire = 0;
+            if (!isset($cacheexpire)) {
+                $cacheexpire = 'NULL';
             }
             if ($cacheexpire > 0 ) {
                 $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
@@ -110,11 +110,11 @@ function xarcachemanager_adminapi_updatehook($args)
                                                   xar_page,
                                                   xar_user,
                                                   xar_expire)
-                        VALUES ('" . xarVarPrepForStore($objectid) . "',
-                                '" . xarVarPrepForStore($nocache) . "',
-                                '" . xarVarPrepForStore($pageshared) . "',
-                                '" . xarVarPrepForStore($usershared) . "',
-                                '" . xarVarPrepForStore($cacheexpire) . "')";
+                        VALUES (" . xarVarPrepForStore($objectid) . ",
+                                " . xarVarPrepForStore($nocache) . ",
+                                " . xarVarPrepForStore($pageshared) . ",
+                                " . xarVarPrepForStore($usershared) . ",
+                                " . xarVarPrepForStore($cacheexpire) . ")";
             $result =& $dbconn->Execute($query);
             
             // blocks could be anywhere, we're not smart enough not know exactly where yet

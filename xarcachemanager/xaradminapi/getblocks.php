@@ -44,16 +44,15 @@ function xarcachemanager_adminapi_getblocks($args)
         if (empty($usershared)) {
             $usershared = 0;
         }
-        if (empty($cacheexpire)) {
+        /*if (empty($cacheexpire)) {
             $cacheexpire = 0;
-        }
+        }*/
         if ($cacheexpire > 0 ) {
             $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                           array('starttime' => $cacheexpire,
                                                 'direction' => 'from'));
-        } else {
-            $cacheexpire = '';
         }
+        
         $key = $bid2key[$bid];
         $blocks[$key]['nocache'] = $nocache;
         $blocks[$key]['pageshared'] = $pageshared;

@@ -50,9 +50,11 @@ function xarcachemanager_admin_blocks($args)
                 $expire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                           array('starttime' => $expire,
                                                 'direction' => 'to'));
-            } else {
+            } elseif ($expire === '0') {
                 $expire = 0;
-            }
+            } else {
+                $expire = 'NULL';
+            } 
             $newblocks[$bid]['cacheexpire'] = $expire;
         }
         $systemPrefix = xarDBGetSystemTablePrefix();
@@ -70,11 +72,11 @@ function xarcachemanager_admin_blocks($args)
                                                   xar_page,
                                                   xar_user,
                                                   xar_expire)
-                        VALUES ('" . xarVarPrepForStore($block['bid']) . "',
-                                '" . xarVarPrepForStore($block['nocache']) . "',
-                                '" . xarVarPrepForStore($block['pageshared']) . "',
-                                '" . xarVarPrepForStore($block['usershared']) . "',
-                                '" . xarVarPrepForStore($block['cacheexpire']) . "')";
+                        VALUES (" . xarVarPrepForStore($block['bid']) . ",
+                                " . xarVarPrepForStore($block['nocache']) . ",
+                                " . xarVarPrepForStore($block['pageshared']) . ",
+                                " . xarVarPrepForStore($block['usershared']) . ",
+                                " . xarVarPrepForStore($block['cacheexpire']) . ")";
             $result =& $dbconn->Execute($query);
             if (!$result) return;
         }
