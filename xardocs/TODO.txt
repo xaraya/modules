@@ -1,0 +1,20 @@
+Various stuff to do:
+
+- Privileges (registered, but not yet actually used)
+- Import/export (itemtypes and items, with hook data, esp. DD)
+- Sample page types and pages (use the import function for this)
+- Sample functions (perhaps handling a publication type and categories)
+- A screen to give sample mod_rewrite rules to support the config (i.e. to
+  remove the index.php/[xarpages] part of the path.
+- Creation of sample blocks - a crumb-trail, a CSS menu etc.
+- A site map example page
+- Write a module delete/remove function
+- Have a really good think about how to implement searches. This won't be
+  easy as each page type could get its data from a different place, and this
+  module has no inside knowledge of how to access that data
+- Some good docs with examples and diagrams
+
+
+To get this thing working in the meantime, create a page type called 'html'
+and set up a DD column for it called 'body' - a large textarea field would
+be good. Create pages and away you go.
