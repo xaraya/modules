@@ -90,7 +90,7 @@ function headlines_init()
 function headlines_upgrade($oldVersion)
 {
     // Upgrade dependent on old version number
-    switch($oldversion) {
+    switch($oldVersion) {
         case 0.1:
             // Version 0.1 didn't have a 'order' field, it was added
             // in version 0.2
