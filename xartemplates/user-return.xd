@@ -31,11 +31,24 @@
                 <p>
                     <xar:mlstring>Your message has been entered successfully.</xar:mlstring>
                 </p>
-                <p>
-                    <a href="#$topicreturn#">
-                        <xar:mlstring>Click here</xar:mlstring>
-                    </a> <xar:mlstring>to view your message.</xar:mlstring>
-                </p>
+                <xar:if condition="!empty($replyreturn)">
+                    <p>
+                        <a href="#$replyreturn#">
+                            <xar:mlstring>Click here</xar:mlstring>
+                        </a> <xar:mlstring>to view your message.</xar:mlstring>
+                    </p>
+                    <p>
+                        <a href="#$topicreturn#">
+                            <xar:mlstring>Click here</xar:mlstring>
+                        </a> <xar:mlstring>to return to the topic.</xar:mlstring>
+                    </p>
+                <xar:else />
+                    <p>
+                        <a href="#$topicreturn#">
+                            <xar:mlstring>Click here</xar:mlstring>
+                        </a> <xar:mlstring>to view your message.</xar:mlstring>
+                    </p>
+                </xar:if>
                 <p>
                     <a href="#$forumreturn#">
                         <xar:mlstring>Click here</xar:mlstring>

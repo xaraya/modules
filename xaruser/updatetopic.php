@@ -33,18 +33,21 @@ function xarbb_user_updatetopic()
         return;
     }
 
+    // get the number of comments
+    // Need to move this outside the modify condition so we can return to the topic
+    // Bug 3517
+    // Start by updating the topic stats.
+    $modid = xarModGetIDFromName('xarbb');
+    $count = xarModAPIFunc('comments',
+                           'user',
+                           'get_count',
+                            array('modid'       => $modid,
+                                  'itemtype'    => $data['fid'],
+                                  'objectid'    => $tid));
+
     //Don't count up if the topic is being edited ? Need to add modify test here.
     if ($modify != 1){
-        // Start by updating the topic stats.
-        $modid = xarModGetIDFromName('xarbb');
 
-        // get the number of comments
-        $count = xarModAPIFunc('comments',
-                               'user',
-                               'get_count',
-                                array('modid'       => $modid,
-                                      'itemtype'    => $data['fid'],
-                                      'objectid'    => $tid));
         // get the last comment
         $comments = xarModAPIFunc('comments',
                                   'user',
@@ -82,11 +85,13 @@ function xarbb_user_updatetopic()
     }
 
     $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
-    $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid));
+    $replyreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid, 'startnum' => $count));
+    $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid, 'startnum' => $count));
     $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
     $xarbbtitle = isset($xarbbtitle) ? $xarbbtitle :'';
     $data = xarTplModule('xarbb','user', 'return', array('forumreturn'     => $forumreturn,
                                                          'topicreturn'     => $topicreturn,
+                                                         'replyreturn'     => $replyreturn,
                                                          'xarbbtitle'      => $xarbbtitle));
     return $data;
 }
