@@ -33,7 +33,7 @@ function pubsub_user_displayicon($args)
     if (xarUserIsLoggedIn()) {
         $userid = xarUserGetVar('uid');
     } else {
-        return;
+        return '';
     }
     if (!isset($extrainfo)) {
          $extrainfo = array();
