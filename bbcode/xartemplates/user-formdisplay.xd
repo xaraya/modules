@@ -127,7 +127,7 @@
 		</xar:mlstring>
 	</option>
 </select>
-<a href="javascript:bbstyle(-1)" class="xar-bbcode-genmed" onmouseover="helpline('a')">Close Tags</a>
+<a href="javascript:bbstyle(-1)" class="xar-bbcode-genmed" onmouseover="helpline('a')"><xar:mlstring>Close Tags</xar:mlstring></a>
 <span class="gensmall">
-	<input type="text" name="helpbox" maxlength="100" class="helpline" value="Tip: Styles can be applied quickly to selected text." />
+	<input type="text" name="helpbox" maxlength="100" class="helpline" value="#xarML('Tip: Styles can be applied quickly to selected text.')#" />
 </span>
