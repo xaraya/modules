@@ -16,6 +16,9 @@ li.delta {
 }
 </style>
 
+<xar:if condition="empty($deltatree)">
+  <xar:mlstring>No deltas in this changeset</xar:mlstring>
+<xar:else/>
 <ul class="subtree">
   <xar:foreach in="$deltatree" key="$nodename" value="$delta">
     <xar:if condition="$nodename != 'ChangeSet'">
@@ -50,3 +53,4 @@ li.delta {
     </xar:if>
   </xar:foreach>
 </ul>
+</xar:if>

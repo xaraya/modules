@@ -29,17 +29,19 @@ function bkview_user_deltaview($args)
 
     // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
-    foreach($changeset->_deltas as $delta_id => $delta) {
-        // Repo id is a xaraya thing, add it sneaky to the object because we dont
-        // want it in the class
-        $delta->repoid = $repoid;
-        $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->_file)) . "']";
-        $type = $arrayindex . "['type']";
-        eval("$type = 'file';");
-        $arrayindex .= "['".$delta->_rev."']";
-        // mwuhahaha
-        eval("$arrayindex = \$delta;");
-    }
+    if(!empty($changeset->deltas)) {
+        foreach($changeset->_deltas as $delta_id => $delta) {
+            // Repo id is a xaraya thing, add it sneaky to the object because we dont
+            // want it in the class
+            $delta->repoid = $repoid;
+            $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->_file)) . "']";
+            $type = $arrayindex . "['type']";
+            eval("$type = 'file';");
+            $arrayindex .= "['".$delta->_rev."']";
+            // mwuhahaha
+            eval("$arrayindex = \$delta;");
+        }
+    }   
     //xarLogMessage('deltatree :' . print_r($deltatree,true),XARLOG_LEVEL_WARNING);
     $data['deltatree'] =  array('deltatree' => $deltatree);
     $hooks='';
