@@ -94,23 +94,28 @@ function newsletter_admin_mailissue()
                                         'gettemplatefile',
                                         array('filename' => $templateName));
 
-    // If there is not text file template, then assume 
+    // If there is no text file template, then assume 
     // that we're using the HTML template
     if (!file_exists($sourceFileNameText)) {
-        // The text only issue will need some beautification 
-        // before it can be emailed
-        // First, strip out the html tags
-        $issueText = strip_tags($issueHTML);
-        // Next, strip out &nbsp, etc
-        $issueText = html_entity_decode($issueText);
-        // Next, strip out leading and trailing white spaces from the file
-        $textArray = explode("\n", $issueText);
-        for ($idx = 0; $idx < count($textArray); $idx++)
-            $textArray[$idx] = trim($textArray[$idx]);
-        $issueText = implode("\n", $textArray);
+        // We need to strip out <html>, <title>, <body>, etc
+        // from the HTML template
+        $stripTags = array('html','body','meta','link','head');
+        foreach ($stripTags as $tag) {
+            $issueText = preg_replace("/<\/?" . $tag . "(.|\s)*?>/","",$issueHTML);
+        }
+        // Stripping opening and closing tags AND what's in between
+        $stripTagsAndContent = array('title');
+        foreach ($stripTagsAndContent as $tag) {
+            $issueText = preg_replace("/<" . $tag . ">(.|\s)*?<\/" . $tag . ">/","",$issueHTML);
+        }
     } else {
-        // Call blocklayout with the template to parse it and generate HTML
+        // Call blocklayout with the template to parse and generate text file
         $issueText = xarTplFile($sourceFileNameText, $templateVarArray);
+
+        // FIX ME!
+        // Ugly hack until the white space issue is resolved in block layout
+        $issueText = preg_replace( '!<br.*>!iU', "\n", $issueText );
+
         // Just in case...
         $issueText = strip_tags($issueText);
     }

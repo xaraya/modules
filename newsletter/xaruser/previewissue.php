@@ -80,8 +80,20 @@ function newsletter_user_previewissue($args)
                                     'gettemplatefile',
                                     array('filename' => $templateName));
 
-    if (!$sourceFileName)
-        return;      
+    // Check if a file was returned
+    if (!$sourceFileName) {
+        // Try to get the text template
+        $templateName = $publication['templateText'];
+
+        $sourceFileName = xarModAPIFunc('newsletter',
+                                        'user',
+                                        'gettemplatefile',
+                                        array('filename' => $templateName));
+
+        if (!$sourceFileName) {
+            return;      
+        }
+    }
         
     // Call blocklayout with the template to parse it and generate HTML
     $issueHTML = xarTplFile($sourceFileName,$templateVarArray);

@@ -25,6 +25,10 @@
                 <td>#$name#</td>
             </tr>
             <tr>
+                <td><xar:mlstring>User Name:</xar:mlstring></td>
+                <td>#$uname#</td>
+            </tr>
+            <tr>
                 <td><xar:mlstring>Email:</xar:mlstring></td>
                 <td>#$email#</td>
             </tr>
