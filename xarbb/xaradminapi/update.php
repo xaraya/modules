@@ -51,8 +51,15 @@ function xarbb_adminapi_update($args)
                 xar_fstatus = ?
             WHERE xar_fid = ?";
     $result =& $dbconn->Execute($query, array($fname, $fdesc, $fstatus, $fid));
-     if (!$result) return;
+    if (!$result) return;
 
+    // Default categories is the master categories here
+    if (empty($cids) || !is_array($cids) ||
+        // catch common mistake of using array('') instead of array()
+        (count($cids) > 0 && empty($cids[0])) ) {
+        //Set them to the master categories
+        $cids = explode(';',xarModGetVar('xarbb', 'mastercids'));
+    }
     // Let any hooks know that we have modified a forum itemtype
     $args['module'] = 'xarbb';
     $args['itemtype'] = 0; // forum

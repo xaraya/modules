@@ -21,8 +21,9 @@ function xarbb_admin_modify()
 {
     // Get parameters
     if (!xarVarFetch('fid','id', $fid)) return;
-	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('phase',      'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('cids',       'array',  $cids,  NULL,   XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('modify_cids','array',  $cids,  NULL,   XARVAR_DONT_SET)) return;
 
     switch(strtolower($phase)) {
         case 'form':
