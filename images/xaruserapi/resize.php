@@ -110,7 +110,7 @@ function images_userapi_resize($args)
                 return FALSE;
             }
         } else {
-            $msg = xarML('Unable to resize image \'#(1)\'!', $fileLocation);
+            $msg = xarML('Unable to resize image \'#(1)\'!', $image->fileLocation);
             xarExceptionSet(XAR_USER_EXCEPTION, xarML('Image Manipulation Failed'), new DefaultUserException($msg));
             return FALSE;
         }

@@ -79,6 +79,8 @@ function images_upgrade($oldversion)
             // Code to upgrade from version 2.5.0 goes here
             break;
     }
+    
+    return true;
 }
 
 /**
