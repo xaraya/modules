@@ -1,4 +1,4 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <br/>
 <xar:if condition="isset($words) and count($words) gt 0">
 <b><xar:mlstring>Keywords :</xar:mlstring></b>
