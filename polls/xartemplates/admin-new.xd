@@ -17,8 +17,8 @@
             <xar:mlstring>Poll type</xar:mlstring>:
         </td>
         <td>
-            <input type="radio" name="polltype" value="single" checked>&nbsp;<xar:mlstring>Single Vote</xar:mlstring><br />
-            <input type="radio" name="polltype" value="multi">&nbsp;<xar:mlstring>Multiple Vote</xar:mlstring><br />
+            <input type="radio" name="polltype" value="single" checked="checked">&nbsp;<xar:mlstring>Single Choice</xar:mlstring><br />
+            <input type="radio" name="polltype" value="multi">&nbsp;<xar:mlstring>Multiple Choice</xar:mlstring><br />
         </td>
     </tr>
     <tr>

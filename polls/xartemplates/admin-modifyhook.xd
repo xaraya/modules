@@ -16,12 +16,12 @@
                 <input type="radio" name="poll[type]" id="poll_type_single" value="single" checked="checked" />
             <xar:else />
                 <input type="radio" name="poll[type]" id="poll_type_single" value="single" />
-            </xar:if>&nbsp;<label for="poll_type_single"><xar:mlstring>Single Vote</xar:mlstring></label>
+            </xar:if>&nbsp;<label for="poll_type_single"><xar:mlstring>Single Choice</xar:mlstring></label>
             <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'multi'">
                 <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" checked="checked" />
             <xar:else />
                 <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" />
-            </xar:if>&nbsp;<label for="poll_type_multi"><xar:mlstring>Multiple Vote</xar:mlstring></label>
+            </xar:if>&nbsp;<label for="poll_type_multi"><xar:mlstring>Multiple Choice</xar:mlstring></label>
 	</span>
 	</div>
 

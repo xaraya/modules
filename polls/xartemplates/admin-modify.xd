@@ -22,12 +22,12 @@
             <input type="radio" name="polltype" value="single" checked="checked" />
         <xar:else />
             <input type="radio" name="polltype" value="single" />
-        </xar:if>&nbsp;<xar:mlstring>Single Vote</xar:mlstring>
+        </xar:if>&nbsp;<xar:mlstring>Single Choice</xar:mlstring>
         <xar:if condition="$polltype eq 'multi'">
             <input type="radio" name="polltype" value="multi" checked="checked" />
         <xar:else />
             <input type="radio" name="polltype" value="multi" />
-        </xar:if>&nbsp;<xar:mlstring>Multiple Vote</xar:mlstring>
+        </xar:if>&nbsp;<xar:mlstring>Multiple Choice</xar:mlstring>
         </td>
     </tr>
     <tr>
