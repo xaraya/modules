@@ -28,10 +28,18 @@
        name="attach_reset" title="#xarML('Reset')#">Reset</a> 
     <br />
     
-    <xar:template file="attach_trusted" type="module" />
-    <xar:template file="attach_external" type="module" />
-    <xar:template file="attach_upload" type="module" />
+    <div id="#$id#_attach_trusted" style="display: none;">
+    	<xar:template file="attach_trusted" type="module" />
+    </div>
 
+    <div id="#$id#_attach_external" style="display: none;">
+    	<xar:template file="attach_external" type="module" />
+    </div>
+    
+    <div id="#$id#_attach_upload" style="display: none;">
+    	<xar:template file="attach_upload" type="module" />
+    </div>
+    
     <div id="#$id#_attach_stored" style="display: none;">
         <xar:template file="attach_stored" type="module" />
     </div>

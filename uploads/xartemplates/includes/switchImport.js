@@ -31,7 +31,7 @@ function switchImport(sType, iTypeId, iObjectId) {
             oForm.elements[iObjectId + '_attach_external'].value = null;
             oForm.elements[iObjectId + '_attach_type'].value = iTypeId
             break;
-        case 4: // turn on upload import and off everything else
+        case 4: // turn on stored and off everything else
             document.getElementById(iObjectId + "_attach_stored").style.display = "block";
             document.getElementById(iObjectId + "_attach_upload").style.display = "none";
             document.getElementById(iObjectId + "_attach_external").style.display = "none";
@@ -47,7 +47,7 @@ function switchImport(sType, iTypeId, iObjectId) {
             document.getElementById(iObjectId + "_attach_external").style.display = "none";
             document.getElementById(iObjectId + "_attach_trusted").style.display = "none";
             
-            oForm.elements[iObjectId + '_attach_type'].value = 0;
+            oForm.elements[iObjectId + '_attach_type'].value = -1;
             break;
     }
 
