@@ -1,0 +1,45 @@
+<table border="0" width="100%">
+    <tr>
+        <th colspan="4" align="center">
+            <xar:mlstring>Release Module :: View Modules and Themes</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+
+<center>
+<br />
+<br />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+    <tr>        
+		<th width="5%">
+            <xar:mlstring>ID</xar:mlstring>
+		</th>
+        <th width="15%">
+            <xar:mlstring>Name</xar:mlstring>
+		</th>
+        <th width="10%">
+            <xar:mlstring>Type</xar:mlstring>
+		</th>
+        <th width="70%" align="left">
+            <xar:mlstring>Description</xar:mlstring>
+		</th>
+	</tr>
+    <xar:loop name="$items">
+    <tr onmouseover="this.style.backgroundColor='##C1A88F';this.style.cursor='hand';" onmouseout="this.style.backgroundColor='##F1EFED';this.style.cursor='hand';">
+        <td align="center" valign="top">
+			#$rid#
+		</td>
+        <td align="center" valign="top">
+			#$name#
+		</td>
+		<td align="center" valign="top">
+			#$type#
+		</td>
+        <td>
+			#$desc#
+		</td>
+    </tr>
+    </xar:loop>
+</table>
+<br />

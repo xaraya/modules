@@ -1,0 +1,19 @@
+<xar:if condition="!empty($theme)">
+	<xar:if condition="$theme eq 'rss'">
+		put something here
+	</xar:if>
+<xar:else />
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">
+            <xar:mlstring>Release Module</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+<br /><br />
+<xar:mlstring>The release module is a work in progress.  The eventual hope is that this module will give backend support to all</xar:mlstring> <a href="http://www.xaraya.com" target="_BLANK"><xar:mlstring> Xaraya </xar:mlstring> </a><xar:mlstring>  modules and themes.  Currently the only option available is to create and maintain the modules and theme ids for reference.  More options will be available as I have a chance to complete them. </xar:mlstring>
+
+<br /><br />
+
+<a href="modules/release/xartemplates/user-main.xd"><xar:mlstring>Template for this module page</xar:mlstring></a> -- You can view the page source of this module to see an example of a BlockLayout template.
+</xar:if>

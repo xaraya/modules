@@ -1,0 +1,55 @@
+<table border="0" width="100%">
+    <tr>
+        <th colspan="4" align="center">
+            <xar:mlstring>Release Module :: Reserve an ID</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+
+
+<center>
+	<br /><br />
+	<form action="#xarModURL('release', 'user', 'addid')#" method="post" enctype="application/x-www-form-urlencoded">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<input type="hidden" name="phase" id="phase" value="update" />	
+		<table border="0" cellpadding="5">
+			<tr>
+				<td>
+					<xar:mlstring>Module or Theme ID</xar:mlstring>
+				</td>
+				<td>
+					<input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<xar:mlstring>Module or Theme Name</xar:mlstring>
+				</td>
+				<td>
+					<input type="text" name="name" id="name" value="" size="25" maxlength="60" tabindex="2" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<xar:mlstring>Description</xar:mlstring>
+				</td>
+				<td>
+					<textarea name="desc" id="desc" tabindex="4" rows="10" cols="30" /></textarea> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<xar:mlstring>Type</xar:mlstring>
+				</td>
+				<td>
+					<select name="idtype">
+						<option name="module"><xar:mlstring>Module</xar:mlstring></option>
+						<option name="theme"><xar:mlstring>Theme</xar:mlstring></option>
+					</select>
+				</td>
+			</tr>
+		</table>			
+		<br /><br />
+		<input type="submit" value="<xar:mlstring>Create ID</xar:mlstring>" align="middle" tabindex="6" />
+	</form>
+</center>
