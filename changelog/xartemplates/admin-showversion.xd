@@ -1,0 +1,42 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Show version</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<a href="#$link#"><xar:mlstring>Back to overview of changes</xar:mlstring></a>
+<br /><br />
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+    <tr>
+        <td><xar:mlstring>Editor</xar:mlstring></td>
+        <td class="xar-norm"><a href="#$profile#">#$editorname#</a></td>
+    </tr>
+    <xar:if condition="$showhost">
+    <tr>
+        <td><xar:mlstring>Hostname</xar:mlstring></td>
+        <td class="xar-norm">#$hostname#</td>
+    </tr>
+    </xar:if>
+    <tr>
+        <td><xar:mlstring>Status</xar:mlstring></td>
+        <td class="xar-norm">#$status#</td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Date</xar:mlstring></td>
+        <td class="xar-norm">#$date#</td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Remark</xar:mlstring></td>
+        <td class="xar-norm">#$remark#</td>
+    </tr>
+    <tr>
+        <td class="xar-norm"><xar:mlstring>Fields</xar:mlstring></td>
+        <td class="xar-norm">&nbsp;</td>
+    </tr>
+    <xar:foreach in="$fields" key="$field" value="$value">
+    <tr>
+        <td>#$field#</td>
+        <td class="xar-norm">#$value# </td>
+    </tr>
+    </xar:foreach>
+</table>
+</div>
+</div>
+

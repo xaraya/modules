@@ -1,0 +1,11 @@
+<tr align="left" valign="middle">
+    <td>
+        <xar:if condition="!empty($link)">
+            <a href="#$link#"><xar:mlstring>Change Log</xar:mlstring></a>
+        <xar:else />
+            <xar:mlstring>Change Log</xar:mlstring>
+        </xar:if>
+    </td>
+    <td><input type="text" name="changelog_remark" value="#$remark#" size="40" /> </td>
+</tr>
+

@@ -1,0 +1,25 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Log Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<table border="0" width="100%">
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>What is it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>The Change Log module is a utility module that allows you to keep track of changes in module items.</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>How to use it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>
+For each hooked module, specify the fields you want to keep track of - someday, perhaps... :-)
+            </xar:mlstring>
+        </td>
+    </tr>
+</table>
+</div>
+</div>
