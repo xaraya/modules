@@ -21,7 +21,7 @@
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function ping_adminapi_updatehook($args)
+function ping_adminapi_createhook($args)
 {
     extract($args);
 
@@ -62,7 +62,7 @@ function ping_adminapi_updatehook($args)
     } else {
         $itemtype = 0;
     }
-/*  Articles is not passing the status in the extrainfo, so a little work needs to be done there.
+/*
     if (!isset($extrainfo['ping_update']) || (!is_numeric($extrainfo['status']) && $extrainfo['status'] < 2 || $extrainfo['status'] > 3)) {
 
         // Don't want to send a ping if our status from the articles don't show that it is published, or if the ping_update is not there.
