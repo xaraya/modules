@@ -11,9 +11,11 @@ function subitems_admin_modifyconfig()
     // helps if all of the module pages have a standard menu at the top to
     // support easy navigation
     $data = xarModAPIFunc('subitems', 'admin', 'menu');
+
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-   // if (!xarSecurityCheck('AdminWars')) return;
+    if (!xarSecurityCheck('AdminSubitems')) return;
+
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
