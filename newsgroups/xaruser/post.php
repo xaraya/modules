@@ -66,7 +66,7 @@ function newsgroups_user_post()
              }
 
             //var_dump($data['format']);
-            $data['message']    .= xarVarPrepForDisplay($data['format']);
+            $data['message']    .= $data['format'];
 
             break;
 
@@ -81,7 +81,7 @@ function newsgroups_user_post()
             $subject    = xarVarPrepForDisplay($subject);
             $email      = xarVarPrepForDisplay($email);
             $name       = xarVarPrepForDisplay($name);
-            $body       = xarVarPrepForDisplay($body);
+            //$body       = xarVarPrepForDisplay($body);
             $reference  = xarVarPrepForDisplay($reference);
 
             xarSecConfirmAuthKey();
