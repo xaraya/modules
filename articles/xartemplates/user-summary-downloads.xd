@@ -1,0 +1,12 @@
+<div class="article-view">
+	<h3><a href="#$link#">#$title#</a></h3>
+		<xar:if condition="!empty($categories) and count($categories) gt 0">
+			[ <xar:foreach in="$categories" value="$cat">
+				#$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+			</xar:foreach> ]
+		</xar:if>
+	<h5><xar:mlstring>Summary</xar:mlstring>:</h5>
+	<p>#$summary#</p>
+	<h5><xar:mlstring>Download</xar:mlstring>:</h5>
+	<p><a href="var/uploads/#$notes#" title="#$notes#">#$notes#</a></p>
+</div>
