@@ -8,33 +8,32 @@
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <input type="hidden" name="confirm" id="confirm" value="true" />
             <span style="align: center">
-                #$instructions#
+                #$instructions# #$instructionhelp#
             </span>
-            <table border="0" cellpadding="8" cellspacing="0">
+            <table class="xar-norm">
+                <xar:foreach in="$cachekeys" key="$type" value="$keylist">
                 <tr>
                     <td>
-                        <span class="help" title="#$instructionhelp#"><label for="flushkey"><xar:mlstring>Cache Key</xar:mlstring></label></span>:
+                        <label for="flushkey_#$type#">#$type#</label>
                     </td>
                     <td>
-                        <select name="flushkey" id="flushkey" size="1">
+                        <select name="flushkey[#$type#]" id="flushkey_#$type#">
                             <option value="-" selected="selected"> - - - </option>
-                            <xar:loop name="$cachekeys">
-                                <option value="#$loop:item#">
-                                    #$loop:item#
+                            <xar:foreach in="$keylist" value="$key">
+                                <option value="#$key#">#$key#</option>
+                            </xar:foreach>
+                            <xar:if condition="count($keylist) gt 0">
+                                <option value="*">
+                                     <xar:ml><xar:mlstring>* Flush all #(1) cache keys *</xar:mlstring><xar:mlvar>#$type#</xar:mlvar></xar:ml>
                                 </option>
-                            </xar:loop>
-                            <xar:if condition="$empty ne 1">
-                            <xar:loop name="$cachedirs">
-                                <option value="#$loop:item#">
-                                     * Flush all #$loop:key# cache keys * 
-                                </option>
-                            </xar:loop>
-                            <option value=""> * Flush all cache keys * </option>
                             </xar:if>
                         </select>
                     </td>
-                    <td>
-                        <input type="submit" value="Flush"  />
+                </tr>
+                </xar:foreach>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="#xarML('Flush')#"  />
                     </td>
                 </tr>
             </table>
@@ -53,20 +52,19 @@
         </span>
     </div>
 </xar:if>
-<div style="clear: both; padding: 10px;"><xar:mlstring>The Output Cache size is currently:</xar:mlstring> #$cachesize#</div>
 <div style="clear: both; padding: 10px;">
     <table border="1">
         <thead>
             <tr>
-                <th><xar:mlstring>Directory</xar:mlstring></th>
+                <th><xar:mlstring>Cache Type</xar:mlstring></th>
                 <th><xar:mlstring>Size in MB</xar:mlstring></th>
             </tr>
         </thead>
         <tbody>
-            <xar:foreach in="$outputdirs" value="$outputdir">
+            <xar:foreach in="$cachesize" key="$type" value="$size">
                 <tr>
-                    <td>#$outputdir['name']#</td>
-                    <td>#$outputdir['size']#</td>
+                    <td>#$type#</td>
+                    <td>#$size#</td>
                 </tr>
             </xar:foreach>
         </tbody>

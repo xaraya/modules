@@ -18,16 +18,15 @@ function xarcachemanager_admin_flushcache($args)
 
     extract($args);
 
-    if (!xarVarFetch('flushkey', 'str', $flushkey, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('flushkey', 'isset', $flushkey, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
-    
-    $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
-    $outputDirs = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachedirs', $outputCacheDir);
+
+    $cachetypes = xarModAPIFunc('xarcachemanager','admin','getcachetypes');
 
     //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
     if (!defined('XARCACHE_IS_ENABLED')) {
         include_once('includes/xarCache.php');
-        xarCache_init(array('cacheDir' => $outputCacheDir));
+        xarCache_init();
     }
 
     if (empty($confirm)) {
@@ -35,13 +34,10 @@ function xarcachemanager_admin_flushcache($args)
         $data = array();
 
         $data['message']    = false;
-        $data['cachekeys'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachekeys', $outputCacheDir);
-        $data['cachedirs'] = $outputDirs;
-
-        if (!$data['cachekeys']) {
-            $data['empty']  = true;
-        } else {
-            $data['empty']  = false;
+        $data['cachetypes'] = $cachetypes;
+        $data['cachekeys'] = array();
+        foreach (array_keys($cachetypes) as $type) {
+            $data['cachekeys'][$type] = xarModAPIFunc('xarcachemanager', 'admin', 'getcachekeys', $type);
         }
 
         $data['instructions'] = xarML("Please select a cache key to be flushed.");
@@ -56,15 +52,18 @@ function xarcachemanager_admin_flushcache($args)
         if (!xarSecConfirmAuthKey()) return;
 
         //Make sure their is an authkey selected
-        if ($flushkey == '-') {
+        if (empty($flushkey) || !is_array($flushkey)) {
             $data['notice'] = xarML("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
-            if (!empty($flushkey) && !strpos($flushkey, '-')) {
-                xarOutputFlushCached('', $flushkey);
-            } else {
-                xarOutputFlushCached($flushkey);
+            foreach ($flushkey as $type => $key) {
+                if (empty($key) || $key == '-') continue;
+                if ($key == '*') {
+                    xarOutputFlushCached('',$type);
+                } else {
+                    xarOutputFlushCached($key,$type);
+                }
             }
-            $data['notice'] = xarML("Cached #(1) files have been successfully flushed.", $flushkey);
+            $data['notice'] = xarML("Cached files have been successfully flushed.");
         }
         
         $data['returnlink'] = Array('url'   => xarModURL('xarcachemanager',
@@ -76,12 +75,14 @@ function xarcachemanager_admin_flushcache($args)
         $data['message'] = true;
     }
     
-    $data['cachesize'] = round(xarCacheGetDirSize($outputCacheDir) / 1048576, 2) . ' MB';
-    
-    foreach ($outputDirs as $dirname => $dirpath) {
-        $data['outputdirs'][] = array('name' => $dirname,
-                                      'size' => round(xarCacheGetDirSize($dirpath) / 1048576, 2) . ' MB'
-                                      );
+    $data['cachesize'] = array();
+    foreach (array_keys($cachetypes) as $type) {
+        $cachesize = xarModAPIFunc('xarcachemanager', 'admin', 'getcachesize', $type);
+        if (!empty($cachesize)) {
+            $data['cachesize'][$type] = round($cachesize / 1048576, 2);
+        } else {
+            $data['cachesize'][$type] = '0.00';
+        }
     }
 
     return $data;

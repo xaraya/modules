@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Construct and array of the current cache keys
+ * Get the current size of a cache type
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 Xaraya
@@ -10,21 +10,21 @@
  * @subpackage xarCacheManager module
  * @author jsb
  *
- * @param $type cachetype to start the search for cachekeys
- * @returns array
- * @return sorted array of cachekeys
+ * @param $type cachetype to get the size for
+ * @returns int
+ * @return size of the cache
 */
 
-function xarcachemanager_adminapi_getcachekeys($type = '')
+function xarcachemanager_adminapi_getcachesize($type = '')
 {
-    $cachekeys = array();
+    $cachesize = 0;
 
     // get cache type settings
     $cachetypes = xarModAPIFunc('xarcachemanager','admin','getcachetypes');
 
     // check if we have some settings for this cache type
     if (empty($type) || empty($cachetypes[$type])) {
-        return $cachekeys;
+        return $cachesize;
     }
 
     // get default cache directory
@@ -47,14 +47,12 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
                                               'type'     => $type,
                                               'cachedir' => $cachedir));
     if (empty($cachestorage)) {
-        return $cachekeys;
+        return $cachesize;
     }
 
-    // get cache keys
-    $cachekeys = $cachestorage->getCachedKeys();
+    // get cache size
+    $cachesize = $cachestorage->getCacheSize();
 
-    sort($cachekeys);
-
-    return $cachekeys;
+    return $cachesize;
 }
 ?>
