@@ -68,17 +68,16 @@ function xarcachemanager_admin_pages($args)
         $cachegroups = join(';', $grouplist); 
     
         xarVarFetch('sessionless','isset',$sessionless,'',XARVAR_NOT_REQUIRED);
-        $sessionlesslist = '';
+        $sessionlesslist = array();
         if (!empty($sessionless)) {
             $urls = preg_split('/\s+/',$sessionless,-1,PREG_SPLIT_NO_EMPTY);
             $baseurl = xarServerGetBaseURL();
-            $checkurls = array();
             foreach ($urls as $url) {
+                // jsb: hmmm, do we really want to limit the seesionless url list
+                // to those that are under the current baseurl?  I run my sites with
+                // one base url, but many people use alternates.
                 if (empty($url) || !strstr($url,$baseurl)) continue;
-                $checkurls[] = $url;
-            }
-            if (count($checkurls) > 0) {
-                $sessionlesslist = "'" . join("','",$checkurls) . "'";
+                $sessionlesslist[] = $url;
             }
         }
 
@@ -95,30 +94,24 @@ function xarcachemanager_admin_pages($args)
         if (empty($autocache['maxpages'])) {
             $autocache['maxpages'] = 0;
         }
-        $includelist = '';
+        $includelist = array();
         if (!empty($autocache['include'])) {
             $urls = preg_split('/\s+/',$autocache['include'],-1,PREG_SPLIT_NO_EMPTY);
             $baseurl = xarServerGetBaseURL();
-            $checkurls = array();
             foreach ($urls as $url) {
+                // jsb: cfr. above note on sessionless url check
                 if (empty($url) || !strstr($url,$baseurl)) continue;
-                $checkurls[] = $url;
-            }
-            if (count($checkurls) > 0) {
-                $includelist = "'" . join("','",$checkurls) . "'";
+                $includelist[] = $url;
             }
         }
-        $excludelist = '';
-        if (!empty($autocache['include'])) {
+        $excludelist = array();
+        if (!empty($autocache['exclude'])) {
             $urls = preg_split('/\s+/',$autocache['exclude'],-1,PREG_SPLIT_NO_EMPTY);
             $baseurl = xarServerGetBaseURL();
-            $checkurls = array();
             foreach ($urls as $url) {
+                // jsb: cfr. above note on sessionless url check
                 if (empty($url) || !strstr($url,$baseurl)) continue;
-                $checkurls[] = $url;
-            }
-            if (count($checkurls) > 0) {
-                $excludelist = "'" . join("','",$checkurls) . "'";
+                $excludelist[] = $url;
             }
         }
         if (empty($autocache['keepstats'])) {
@@ -127,31 +120,19 @@ function xarcachemanager_admin_pages($args)
             $autocache['keepstats'] = 1;
         }
 
-        if (!is_writable($cachingConfigFile)) {
-            $msg=xarML('The caching configuration file is not writable by the web server.  
-                       #(1) must be writable by the web server for 
-                       the output caching to be managed by xarCacheManager.', $cachingConfigFile);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                            new SystemException($msg));
-            return false;
-        }
-    
-        $cachingConfig = join('', file($cachingConfigFile));
-   
-        $cachingConfig = preg_replace('/\[\'Page.CacheGroups\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Page.CacheGroups'] = '$cachegroups';", $cachingConfig);
-    
-        $cachingConfig = preg_replace('/\[\'Page.SessionLess\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['Page.SessionLess'] = array($sessionlesslist);", $cachingConfig);
-
-        $cachingConfig = preg_replace('/\[\'AutoCache.Period\'\]\s*=\s*(.*?);/', "['AutoCache.Period'] = $autocache[period];", $cachingConfig);
-        $cachingConfig = preg_replace('/\[\'AutoCache.Threshold\'\]\s*=\s*(.*?);/', "['AutoCache.Threshold'] = $autocache[threshold];", $cachingConfig);
-        $cachingConfig = preg_replace('/\[\'AutoCache.MaxPages\'\]\s*=\s*(.*?);/', "['AutoCache.MaxPages'] = $autocache[maxpages];", $cachingConfig);
-        $cachingConfig = preg_replace('/\[\'AutoCache.Include\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Include'] = array($includelist);", $cachingConfig);
-        $cachingConfig = preg_replace('/\[\'AutoCache.Exclude\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Exclude'] = array($excludelist);", $cachingConfig);
-        $cachingConfig = preg_replace('/\[\'AutoCache.KeepStats\'\]\s*=\s*(.*?);/', "['AutoCache.KeepStats'] = $autocache[keepstats];", $cachingConfig);
-
-        $fp = fopen ($cachingConfigFile, 'wb');
-        fwrite ($fp, $cachingConfig);
-        fclose ($fp);
+        $configSettings = array();
+        $configSettings['Page.CacheGroups'] = $cachegroups;
+        $configSettings['Page.SessionLess'] = $sessionlesslist;
+        $configSettings['AutoCache.Period'] = $autocache['period'];
+        $configSettings['AutoCache.Threshold'] = $autocache['threshold'];
+        $configSettings['AutoCache.MaxPages'] = $autocache['maxpages'];
+        $configSettings['AutoCache.Include'] = $includelist;
+        $configSettings['AutoCache.Exclude'] = $excludelist;
+        $configSettings['AutoCache.KeepStats'] = $autocache['keepstats'];
+        
+        xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                      array('configSettings' => $configSettings,
+                            'cachingConfigFile' => $cachingConfigFile));
 
         // set the cache dir
         $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output';

@@ -99,28 +99,18 @@ function xarcachemanager_admin_updateconfig()
     // updated the config.caching settings
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
     
-    if (!is_writable($cachingConfigFile)) {
-        $msg=xarML('The caching configuration file is not writable by the web server.  
-                   #(1) must be writable by the web server for 
-                   the output caching to be managed by xarCacheManager.', $cachingConfigFile);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                        new SystemException($msg));
-        return false;
-    }
-
-    $cachingConfig = join('', file($cachingConfigFile));
-
-    $cachingConfig = preg_replace('/\[\'Output.DefaultTheme\'\]\s*=\s*(\'|\")(.*)\\1;/', "['Output.DefaultTheme'] = '$cachetheme';", $cachingConfig);
-    $cachingConfig = preg_replace('/\[\'Output.SizeLimit\'\]\s*=\s*(|\")(.*)\\1;/', "['Output.SizeLimit'] = $cachesizelimit;", $cachingConfig);
-    $cachingConfig = preg_replace('/\[\'Page.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.TimeExpiration'] = $pageexpiretime;", $cachingConfig);
-    $cachingConfig = preg_replace('/\[\'Page.DisplayView\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.DisplayView'] = $cachedisplayview;", $cachingConfig);
-    $cachingConfig = preg_replace('/\[\'Page.ShowTime\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ShowTime'] = $cachetimestamp;", $cachingConfig);
-    $cachingConfig = preg_replace('/\[\'Page.ExpireHeader\'\]\s*=\s*(|\")(.*)\\1;/', "['Page.ExpireHeader'] = $expireheader;", $cachingConfig);
-    $cachingConfig = preg_replace('/\[\'Block.TimeExpiration\'\]\s*=\s*(|\")(.*)\\1;/', "['Block.TimeExpiration'] = $blockexpiretime;", $cachingConfig);
-
-    $fp = fopen ($cachingConfigFile, 'wb');
-    fwrite ($fp, $cachingConfig);
-    fclose ($fp);
+    $configSettings = array();
+    $configSettings['Output.DefaultTheme'] = $cachetheme;
+    $configSettings['Output.SizeLimit'] = $cachesizelimit;
+    $configSettings['Page.TimeExpiration'] = $pageexpiretime;
+    $configSettings['Page.DisplayView'] = $cachedisplayview;
+    $configSettings['Page.ShowTime'] = $cachetimestamp;
+    $configSettings['Page.ExpireHeader'] = $expireheader;
+    $configSettings['Block.TimeExpiration'] = $blockexpiretime;
+    
+    xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                  array('configSettings' => $configSettings,
+                        'cachingConfigFile' => $cachingConfigFile));
 
     // see if we need to flush the cache when a new comment is added for some item
     xarVarFetch('cacheflushcomment','isset',$cacheflushcomment,0,XARVAR_NOT_REQUIRED);
