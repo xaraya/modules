@@ -44,21 +44,9 @@
 						<td>
 						<input type="text" name="msPrefix" id="msPrefix" size="15" maxlength="20" value="#$msPrefix#" />
 						</td>
-						<td><xar:mlstring>Prefix of tables for new site (system prefix is&nbsp; </xar:mlstring>'#$sysPrefix#').
+						<td><xar:mlstring>Prefix of tables for new site. <span style="color: red">You must enter a prefix here.</span></xar:mlstring>
 						</td>
 					</tr>
-<!--- TO DO: Add later when site - system prefix sharing is fixed
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Shared tables prefix:</xar:mlstring>
-						</td>
-						<td>
-						<input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sysPrefix#" />
-						</td>
-						<td><xar:mlstring>Change to the same SITE prefix for a standalone site.</xar:mlstring>
-						</td>
-					</tr>
---->
 					<tr align="left" valign="middle">
 						<td>
 							<xar:mlstring>Site Database:</xar:mlstring>
@@ -69,6 +57,17 @@
 						<td><xar:mlstring>Defaults to the same database as the Master System site</xar:mlstring>
 						</td>
 					</tr>
+					<tr align="left" valign="middle">
+						<td>
+							<xar:mlstring>Shared tables prefix:</xar:mlstring>
+						</td>
+						<td>
+						<input type="text" name="sharedTables" id="sharedTables" size="15" maxlength="20" value="#$sharedTables#" />
+						</td>
+						<td><xar:mlstring>LEAVE EMPTY unless you want to share System tables. Enter the System Table prefix.</xar:mlstring>
+						</td>
+					</tr>
+
 <!--- TO DO: Additional options to be added later
 
 					<tr align="left" valign="middle">

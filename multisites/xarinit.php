@@ -20,11 +20,11 @@ function multisites_init()
 {
 	$lIsMultisites = xarConfigGetVar('System.MS.MultiSites');
 	$lIsMaster=xarConfigGetVar('System.MS.Master');
- 	if (($lIsMultisites==1) and ($lIsMaster==1)){
+ 	if (($lIsMultisites==1) and ($lIsMaster!=2)){ //jojodee: allow 'sub' masters only to initialize - not implemented yet
 		// this XARAYA is the master, since this var has been created by the master (the DN used to initialize the module), in the new config.php
 		// forbidden to initialize this module or forbidden to create it a second time.
 		return false;
-		}
+   }
    // Setup a database table to hold subsites (may or may not need this in the end???)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -131,13 +131,11 @@ global $HTTP_HOST;
     xarRemoveMasks('multisites');
     xarRemoveInstances('multisites');
 
-    // Remove the multisite config.system.php file - must be chmod 666
-    // Write back the single site version
-  //Check the master config data folder is writable
-  //if so return it to normal state. Don't throw an error, let remove finish to completion
+     // Write back the single site version
+    //Check the master config data folder is writable
+    //if so return it to normal state else send a message.
     $var = is_writeable('./var/config.system.php');
     if ($var == true) {
-          // echo "The file is writable";
         $oldConfig=file('./var/config.system.php');
         $fd = fopen('./var/config.system.php','r');
         while (list ($line_num, $line) = each ($oldConfig)) {
@@ -172,8 +170,10 @@ global $HTTP_HOST;
         //return false; No - let uninstall complete
         }
         umask($oldumask);
-    } else { // No - don't do anything atm if not writeable - let uninstall complete
-    // return false;
+    } else {
+          $msg = xarML("Could not write /var/config.system.php! Please manually copy back your original single site config.system.php file!");
+          xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
+          return $msg;
     }
 
 return true;
