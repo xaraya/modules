@@ -68,8 +68,8 @@ function example_userapi_getall($args)
     // currently just want the first item, which is the official database
     // handle.  For xarDBGetTables() we want to keep the entire tables array
     // together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
     // It's good practice to name the table definitions you are
     // using - $table doesn't cut it in more complex modules
     $exampletable = $xartable['example']; 

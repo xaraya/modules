@@ -62,8 +62,8 @@ function example_othersblock_display($blockinfo)
     } 
     // Database information
     xarModDBInfoLoad('example');
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $exampletable = $xartable['example']; 
     // Query
     $sql = "SELECT xar_exid,
