@@ -43,6 +43,7 @@ class xoapWeather
         $this->statusCheck();
         $this->setUnits();
         $this->setLocation();
+        $this->setExtraParams();
     }
 
     /**
@@ -286,7 +287,7 @@ class xoapWeather
                 'cached'=>true,
                 'cachedir'=>'cache/rss',
                 'refresh'=>$refresh,
-                'extension'=>'xml',
+                'extension'=>'.xml',
                 'archive'=>false  
             ));
         $this->errorCheck($data);
@@ -422,7 +423,7 @@ class xoapWeather
             array(
                 'url'=>$stream,
                 'cached'=>false,
-                'extension'=>'xml',
+                'extension'=>'.xml',
                 'archive'=>false  
             ));
         $this->errorCheck($data);
