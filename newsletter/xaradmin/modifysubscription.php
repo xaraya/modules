@@ -64,38 +64,6 @@ function newsletter_admin_modifysubscription()
             // should all be either html or text mail
             $data['htmlmail'] = $subscriptions[0]['htmlmail'];
             $data['name'] = $subscriptions[0]['name'];
-        } else {
-    // Get the subscription information
-    $subscription = xarModAPIFunc('newsletter',
-                                  'user',
-                                  'getaltsubscription',
-                                  array('id' => $uid));
-
-    // Check for exceptions
-    if (!isset($subscription) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
-        return; // throw back
-
-    // Add publications
-    $subscription['publications'] = $publications;
-
-    // See if the user is already subscribed
-    for ($idx = 0; $idx < count($publications); $idx++) {
-        
-        // The user API function is called
-        $subscriptions = xarModAPIFunc('newsletter',
-                                       'user',
-                                       'getaltsubscriptionbyemail',
-                                        array('id' => 0, // doesn't matter
-                                              'email' => $subscription['email'],
-                                              'pid' => $publications[$idx]['id'],
-                                              'phase' => 'altsubscription'));
-
-        if (!$subscriptions) {
-            $subscription['publications'][$idx]['checked'] = '';
-        } else {
-            $subscription['publications'][$idx]['checked'] = 'checked';
-        }
-    }
         }
     }
 
