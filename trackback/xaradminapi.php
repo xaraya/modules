@@ -16,6 +16,7 @@
  * @param $args['extrainfo'] extra information
  * @param $args['modname'] name of the calling module (not used in hook calls)
  * @param $args['url'] url where the item is tracked (not used in hook calls)
+ * @param $args['blogname'] name of the site where the item is tracked (not used in hook calls)
  * @param $args['title'] title of the trackback post (not used in hook calls)
  * @param $args['excerpt'] exccerpt from the trackback post (not used in hook calls)
  * @returns int
@@ -75,6 +76,12 @@ function trackback_adminapi_create($args)
          } 
     }
 
+    if (!isset($blogname)) {
+         if (isset($extrainfo['blogname'])) {
+             $blogname = $extrainfo['blogname'];
+         } 
+    }
+
     if (!isset($excerpt)) {
          if (isset($extrainfo['excerpt'])) {
              $excerpt = $extrainfo['excerpt'];
@@ -85,12 +92,14 @@ function trackback_adminapi_create($args)
                                        xar_moduleid,
                                        xar_itemid,
                                        xar_url,
+                                       xar_blog_name,
                                        xar_title,
                                        xar_excerpt)
             VALUES ($nextId,
                     '" . xarVarPrepForStore($modid) . "',
                     '" . xarVarPrepForStore($objectid) . "',
                     '" . xarVarPrepForStore($url) . "',
+                    '" . xarVarPrepForStore($blogname) . "',
                     '" . xarVarPrepForStore($title) . "',
                     '" . xarVarPrepForStore($excerpt) . "')";
 

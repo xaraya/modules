@@ -1,9 +1,9 @@
 <?php
 // $Id: s.xarversion.php 1.6 03/01/25 20:48:07-05:00 John.Cox@mcnabb. $
-$modversion['name'] = 'Trackback';
-$modversion['id'] = '177';
+$modversion['name'] = 'trackback';
+$modversion['id'] = '183';
 $modversion['version'] = '1.0';
-$modversion['description'] = 'Implements Trackback for Xaraya';
+$modversion['description'] = 'Implements the Trackback Specification for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
 $modversion['changelog'] = 'xardocs/changelog.txt';

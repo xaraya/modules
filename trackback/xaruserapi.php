@@ -46,7 +46,7 @@ function trackback_userapi_get($args)
     $trackbacktable = $xartable['trackback'];
 
     // Get items
-    $query = "SELECT xar_url, xar_title, xar_excerpt
+    $query = "SELECT xar_url, xar_blog_name, xar_title, xar_excerpt
             FROM $trackbacktable
             WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
               AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'";
@@ -54,8 +54,9 @@ function trackback_userapi_get($args)
     if (!$result) return;
 
     $res['url'] = $result->fields[0];
-    $res['title'] = $result->fields[1];
-    $res['exerpt'] = $result->fields[2];
+    $res['blogname'] = $result->fields[1];
+    $res['title'] = $result->fields[2];
+    $res['exerpt'] = $result->fields[3];
     $result->close();
 
     return $res;
