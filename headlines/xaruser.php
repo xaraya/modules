@@ -179,6 +179,8 @@ function headlines_user_view()
 
     if (isset($links['catid'])) {
         $data['catid'] = $links['catid'];
+    } else {
+        $data['catid'] = '';
     }
     $data['hid'] = $hid;
 
