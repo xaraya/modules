@@ -20,7 +20,7 @@
         </tr>
     </table>
 	<br /><br />
-	<input type="submit" value="#$updatelabel#" align="middle" />
+	<input type="submit" value="#$updatelabel#"  />
 </form>
 </div>
 </div>
