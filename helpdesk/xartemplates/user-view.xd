@@ -6,7 +6,7 @@
             <xar:mlstring>HelpDesk - View Tickets</xar:mlstring>
         </span>
     </div>
-
+    <br />
    <xar:categories-navigation layout="trails" showchildren="1" module="helpdesk" itemtype="10" catid="0" showcatcount="0" showempty="1" />
 </xar:if>
 
