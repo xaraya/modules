@@ -20,19 +20,15 @@ function categories_adminapi_removehook($args)
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID (= module name)', 'admin', 'removehook', 'categories');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID (= module name)', 'admin', 'removehook', 'categories');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
     $modid = xarModGetIDFromName($objectid);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module ID', 'admin', 'removehook', 'categories');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'module ID', 'admin', 'removehook', 'categories');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return false;
     }
 
@@ -49,10 +45,8 @@ function categories_adminapi_removehook($args)
     $dbconn->Execute($sql);
 
     if ($dbconn->ErrorNo() != 0) {
-        $msg = xarML('Database error for #(1) function #(2)() in module #(3)',
-                    'admin', 'removehook', 'categories');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException($msg));
+        $msg = xarML('Database error for #(1) function #(2)() in module #(3)','admin', 'removehook', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR', new SystemException($msg));
         return false;
     }
 

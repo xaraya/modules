@@ -1,21 +1,30 @@
 <?php
-// File: $Id: s.xarinit.php 1.15 03/01/12 13:52:09+00:00 mikespub@sasquatch.pulpcontent.com $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Modified by: Nuncanada
-// Purpose of file:  Initialisation functions for categories
-// ----------------------------------------------------------------------
+/**
+ * File: $Id: s.xarinit.php 1.22 03/01/26 20:03:00-05:00 John.Cox@mcnabb. $
+ *
+ * Categories System
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage categories module
+ * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+*/
 
 //Load Table Maintainance API
 xarDBLoadTableMaintenanceAPI();
 
 /**
- * initialise the categories module
- */
+ * Initialise the categories module
+ *
+ * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @access  public
+ * @param   none
+ * @return  true on success or void or false on failure
+ * @throws  'DATABASE_ERROR'
+ * @todo    nothing
+*/
 function categories_init()
 {
     // Get database information
@@ -97,15 +106,6 @@ function categories_init()
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
-
-    // Check database result
-    if ($dbconn->ErrorNo() != 0) {
-        echo mysql_error();
-        categories_delete();
-        xarSessionSetVar('errormsg', xarML('Internal DB error'));
-        return false;
-    }
 
     $index = array('name'      => 'i_' . xarDBGetSiteTablePrefix() . '_cat_linkage_1',
                    'fields'    => array('xar_cid'),
@@ -256,8 +256,15 @@ function categories_init()
 }
 
 /**
- * upgrade the categories module from an old version
- */
+ * Upgrade the categories module from an old version
+ *
+ * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @access  public
+ * @param   $oldVersion
+ * @return  true on success or false on failure
+ * @throws  no exceptions
+ * @todo    nothing
+*/
 function categories_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
@@ -336,8 +343,14 @@ function categories_upgrade($oldversion)
 }
 
 /**
- * delete the categories module
- */
+ * Delete the categories module
+ *
+ * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @access  public
+ * @param   no parameters
+ * @return  true on success or false on failure
+ * @todo    restore the default behaviour prior to 1.0 release
+*/
 function categories_delete()
 {
     // Get database information
@@ -360,37 +373,21 @@ function categories_delete()
 
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'new', 'GUI',
-                             'categories', 'admin', 'newhook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'newhook')) return;
     if (!xarModUnregisterHook('item', 'create', 'API',
-                             'categories', 'admin', 'createhook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'createhook')) return;
     if (!xarModUnregisterHook('item', 'modify', 'GUI',
-                             'categories', 'admin', 'modifyhook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'modifyhook')) return;
     if (!xarModUnregisterHook('item', 'update', 'API',
-                             'categories', 'admin', 'updatehook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'updatehook'))return;
     if (!xarModUnregisterHook('item', 'delete', 'API',
-                             'categories', 'admin', 'deletehook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'deletehook'))return;
     if (!xarModUnregisterHook('module', 'modifyconfig', 'GUI',
-                             'categories', 'admin', 'modifyconfighook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'modifyconfighook'))return;
     if (!xarModUnregisterHook('module', 'updateconfig', 'API',
-                             'categories', 'admin', 'updateconfighook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'updateconfighook'))return;
     if (!xarModUnregisterHook('module', 'remove', 'API',
-                             'categories', 'admin', 'removehook')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook'));
-    }
+                             'categories', 'admin', 'removehook')) return;
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',

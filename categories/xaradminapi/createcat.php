@@ -32,8 +32,9 @@ function categories_adminapi_createcat($args)
     if ((!isset($name))        ||
         (!isset($description)))
     {
-        xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-        return false;
+        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     if (!isset($image)) {
@@ -47,8 +48,9 @@ function categories_adminapi_createcat($args)
             (!isset($inorout))
            )
         {
-            xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-            return false;
+            $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            return;
         }
     }
 
@@ -60,7 +62,6 @@ function categories_adminapi_createcat($args)
 
     if (isset($catexists) && ($catexists == 0)) {
 
-        if (!xarModAPILoad('categories', 'user')) return;
        $n = xarModAPIFunc('categories', 'user', 'countcats', Array());
 
        if ($n == 0) {
@@ -77,13 +78,13 @@ function categories_adminapi_createcat($args)
                 )
             );
        } else {
-          xarSessionSetVar('errormsg', xarML('That category already exists'));
-          return false;
+            $msg = xarML('That category already exists', join(', ', $invalid), 'admin', 'createcat', 'categories');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            return;
        }
     } else {
 
        // Obtain current information on the reference category
-        if (!xarModAPILoad('categories', 'user')) return;
        $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid'=>$refcid));
 
        if ($cat == false) {

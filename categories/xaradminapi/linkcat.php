@@ -28,12 +28,10 @@ function categories_adminapi_linkcat($args)
         (!isset($args['modid']))
        )
     {
-        xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-        return false;
+        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'linkcat', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
-
-    // Confirm that each category exists
-    if (!xarModAPILoad('categories', 'user')) return;
 
     foreach ($args['cids'] as $cid) {
         $cat = xarModAPIFunc('categories',
@@ -45,8 +43,9 @@ function categories_adminapi_linkcat($args)
                              )
                             );
          if ($cat == false) {
-             xarSessionSetVar('errormsg', xarML('Unknown category'));
-             return false;
+            $msg = xarML('Unknown Category');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            return;
          }
     }
 

@@ -10,8 +10,9 @@ function categories_adminapi_createcatdirectly($args)
         (!isset($description)) ||
         (!isset($point_of_insertion)))
     {
-        xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-        return false;
+        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     if (!isset($image)) {

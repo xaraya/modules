@@ -14,12 +14,6 @@ function categories_admin_modifycat()
         $repeat = 1;
     }
 
-    // Load Visual API Functions
-    if (!xarModAPILoad('categories', 'visual')) return;
-
-    // Load Visual API Functions
-    if (!xarModAPILoad('categories', 'user')) return;
-
     $data = array();
 
     $data['imageoptions'] = array();

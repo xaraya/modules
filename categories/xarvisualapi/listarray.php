@@ -37,8 +37,9 @@ function categories_visualapi_listarray ($args)
     );
 
     if ($categories === false) {// If it returned false
-       xarSessionSetVar('errormsg', xarML('Error obtaining category'));
-       return false;
+        $msg = xarML('Error obtaining category');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
     }
 
     if (!empty($args['cid']) && is_numeric($args['cid'])) {

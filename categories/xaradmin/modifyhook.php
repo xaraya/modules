@@ -18,11 +18,9 @@ function categories_admin_modifyhook($args)
     }
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'modifyhook', 'categories');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object ID', 'admin', 'modifyhook', 'categories');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     // When called via hooks, the module name may be empty, so we get it from
@@ -35,11 +33,9 @@ function categories_admin_modifyhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'modifyhook', 'categories');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'modifyhook', 'categories');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     if (empty($extrainfo['number_of_categories'])) {
@@ -82,7 +78,6 @@ function categories_admin_modifyhook($args)
         // try to get cids from input
         $cids = xarVarCleanFromInput('cids');
         if (empty($cids) || !is_array($cids)) {
-            if (!xarModAPILoad('categories', 'user')) return;
             $links = xarModAPIFunc('categories', 'user', 'getlinks',
                                    array('iids' => array($objectid),
                                          'modid' => $modid,
@@ -108,8 +103,6 @@ function categories_admin_modifyhook($args)
             $seencid[$cid]++;
         }
     }
-
-    if (!xarModAPILoad('categories', 'visual')) return;
 
     $items = array();
     for ($n = 0; $n < $numcats; $n++) {

@@ -1,5 +1,16 @@
 <?php
-// $Id: xarversion.php,v 1.5 2002/08/09 18:44:07 johnny Exp $
+/**
+ * File: $Id: s.xarinit.php 1.22 03/01/26 20:03:00-05:00 John.Cox@mcnabb. $
+ *
+ * Categories System
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage categories module
+ * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+*/
 $modversion['name'] = 'categories';
 $modversion['version'] = '2.2';
 $modversion['id'] = '147';

@@ -25,8 +25,9 @@ function categories_adminapi_create ($args)
         (!is_numeric($parent_id))
        )
     {
-        xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-        return false;
+        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     if (!isset($image)) {
@@ -38,8 +39,6 @@ function categories_adminapi_create ($args)
 
     if(!xarSecurityCheck('AddCategories')) return;
 
-    if (!xarModAPILoad('categories', 'user')) return;
-
     if ($parent_id != 0)
     {
        $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', Array('cid'=>$parent_id));
@@ -47,7 +46,7 @@ function categories_adminapi_create ($args)
        if ($cat == false)
        {
           xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                          new SystemException(__FILE__.'('.__LINE__.'): Unable to load the categories module´s user API'));
+          new SystemException(__FILE__.'('.__LINE__.'): Unable to load the categories module´s user API'));
           return false;
        }
 //       $point_of_insertion = $cat['left'] + 1;

@@ -82,8 +82,9 @@ function categories_adminapi_updatecat($args)
            ($refcat['left'] <= $cat['right'])
           )
        {
-          xarSessionSetVar('errormsg', xarML('Category reference sibling'));
-          return false;
+            $msg = xarML('Category references siblings.');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            return;
        }
 
        // Security check
@@ -187,6 +188,5 @@ function categories_adminapi_updatecat($args)
 
     return true;
 }
-
 
 ?>

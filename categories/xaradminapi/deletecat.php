@@ -13,8 +13,9 @@ function categories_adminapi_deletecat($args)
 
     // Argument check
     if (!isset($cid)) {
-        xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-        return false;
+        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     // Obtain current information on the reference category
@@ -28,8 +29,9 @@ function categories_adminapi_deletecat($args)
     $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', $args);
 
     if ($cat == false) {
-       xarSessionSetVar('errormsg', xarML('That category does not exist'));
-       return false;
+        $msg = xarML('Category does not exist', join(', ', $invalid), 'admin', 'create', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     // These are set to be used later on
@@ -43,8 +45,9 @@ function categories_adminapi_deletecat($args)
                                $args);
 
     if ($categories == false || count($categories) == 0) {
-       xarSessionSetVar('errormsg', xarML('That category does not exist'));
-       return false;
+        $msg = xarML('Category does not exist', join(', ', $invalid), 'admin', 'create', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     // Useful Variables set...

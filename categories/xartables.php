@@ -1,15 +1,27 @@
 <?php
-// File: $Id: s.xartables.php 1.7 02/11/28 18:37:07-06:00 strat@stratagem.com $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Modified by: Nuncanada
-// Purpose of file:  Initialisation functions for categories
-// ----------------------------------------------------------------------
+/**
+ * File: $Id: s.xarinit.php 1.22 03/01/26 20:03:00-05:00 John.Cox@mcnabb. $
+ *
+ * Categories System
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage categories module
+ * @author Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+*/
 
+/**
+ * specifies module tables namees
+ *
+ * @author  Jim McDonald, Flávio Botelho <nuncanada@xaraya.com>, mikespub <postnuke@mikespub.net>
+ * @access  public
+ * @param   none
+ * @return  $xartable array
+ * @throws  no exceptions
+ * @todo    nothing
+*/
 function categories_xartables()
 {
     // Initialise table array

@@ -37,9 +37,6 @@ function categories_admin_updatecat()
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-    // Load API
-    if (!xarModAPILoad('categories', 'admin')) return;
-
     //Reverses the order of cids with the 'last children' option:
     //Look at bug #997
 

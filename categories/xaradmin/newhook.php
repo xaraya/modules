@@ -27,11 +27,9 @@ function categories_admin_newhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'modifyhook', 'categories');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return $msg;
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)','module name', 'admin', 'modifyhook', 'categories');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     if (empty($extrainfo['number_of_categories'])) {
@@ -91,8 +89,6 @@ function categories_admin_newhook($args)
             $seencid[$cid]++;
         }
     }
-
-    if (!xarModAPILoad('categories', 'visual')) return;
 
     $items = array();
     for ($n = 0; $n < $numcats; $n++) {

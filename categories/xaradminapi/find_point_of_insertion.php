@@ -35,8 +35,9 @@ function categories_adminapi_find_point_of_insertion($args) {
               break;
 
               default:
-                 xarSessionSetVar('errormsg', xarML('Valid values: IN or OUT'));
-                 return false;
+                $msg = xarML('Valid values: IN or OUT');
+                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+                return;
               break;
            }
 
@@ -52,14 +53,16 @@ function categories_adminapi_find_point_of_insertion($args) {
               break;
 
               default:
-                 xarSessionSetVar('errormsg', xarML('Valid values: IN or OUT'));
-                 return false;
+                $msg = xarML('Valid values: IN or OUT');
+                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+                return;
               break;
            }
        break;
        default:
-           xarSessionSetVar('errormsg', xarML('Valid values: RIGHT or LEFT'));
-           return false;
+        $msg = xarML('Valid values: RIGHT or LEFT');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
        break;
     }
     return $point_of_insertion;

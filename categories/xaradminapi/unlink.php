@@ -14,8 +14,9 @@ function categories_adminapi_unlink($args)
     if ((!isset($modid)) ||
         (!isset($iid)))
     {
-        xarSessionSetVar('errormsg', xarML('Bad arguments for API function'));
-        return false;
+        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'linkcat', 'categories');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
     }
 
     // Confirm linkage exists

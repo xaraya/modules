@@ -31,7 +31,7 @@ function categories_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('categories',
                                                    'admin',
-                                                   'config'),
+                                                   'modifyconfig'),
                               'title' => xarML('Config the Categories module'),
                               'label' => xarML('Modify Config'));
     }

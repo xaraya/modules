@@ -41,8 +41,9 @@ function categories_visualapi_treearray ($args)
     );
 
     if ($categories === false) {// If it returned false
-       xarSessionSetVar('errormsg', xarML('Error obtaining category'));
-       return false;
+        $msg = xarML('Error obtaining category.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
     }
 
     // Outputing Location Options

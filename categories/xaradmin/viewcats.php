@@ -9,10 +9,8 @@ function categories_admin_viewcats()
     if(!xarVarFetch('pagerstart',   'isset', $pagerstart,    NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('catsperpage',  'isset', $catsperpage,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('useJSdisplay', 'isset', $useJSdisplay,  NULL, XARVAR_DONT_SET)) {return;}
-
-
-    // Load User API Functions
-    if (!xarModAPILoad('categories', 'user')) return;
+    // Security check
+    if(!xarSecurityCheck('ReadCategories')) return;
 
     $data = Array ();
     $data['reloadlabel'] = xarML('Reload');
@@ -31,10 +29,6 @@ function categories_admin_viewcats()
     }
 
     $data['pagertotal'] = xarModAPIFunc('categories', 'user', 'countcats', array());
-
-    // Security check
-    if(!xarSecurityCheck('ReadCategories')) return;
-
 
     $categories = xarModAPIFunc('categories',
                                 'user',
