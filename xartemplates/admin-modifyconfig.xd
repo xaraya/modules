@@ -1,8 +1,9 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Blogger API Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Blogger API Configuration</xar:mlstring></h2><br />
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Modify Blogger API Configuration</xar:mlstring></h2><br />
 <div style="margin: auto;">
-<form method="post" action="&xar-modurl-bloggerapi-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" >
-  <input type="hidden" name="authid" value="#$authid#">
+<form method="post" action="&xar-modurl-bloggerapi-admin-updateconfig;" enctype="application/x-www-form-urlencoded" >
+  <input type="hidden" name="authid" value="#$authid#" />
     <table border="0" width="100%">
       <tr>
         <td>
@@ -15,11 +16,10 @@
                 <select id="bloggerpubtype" name="bloggerpubtype" tabindex="1">
                   <xar:loop name="$pubtypes">
                     <xar:if condition="xarModGetVar('bloggerapi','bloggerpubtype') eq $loop:item['ptid']">
-                      <option value="#$loop:item['ptid']#" selected="selected">
+                      <option value="#$loop:item['ptid']#" selected="selected">#$loop:item['name']# : #$loop:item['descr']#</option>
                     <xar:else/>
-                      <option value="#$loop:item['ptid']#">
+                      <option value="#$loop:item['ptid']#">#$loop:item['name']# : #$loop:item['descr']#</option>
                     </xar:if>
-                    #$loop:item['name']# : #$loop:item['descr']#</option>
                   </xar:loop>
                 </select>
               </td>
@@ -33,11 +33,10 @@
                 <select id="draftstatus" name="draftstatus" tabindex="2">
                   <xar:foreach in="$states" key="$state_id" value="$state_name">
                     <xar:if condition="xarModGetVar('bloggerapi','draftstatus') eq $state_id">
-                      <option value="#$state_id#" selected="selected">
+                      <option value="#$state_id#" selected="selected">#$state_name#</option>
                     <xar:else/>
-                      <option value="#$state_id#">
+                      <option value="#$state_id#">#$state_name#</option>
                     </xar:if>
-                    #$state_name#
                   </xar:foreach>
                 </select>
               </td>
@@ -50,11 +49,10 @@
                 <select id="publishstatus" name="publishstatus" tabindex="2">
                   <xar:foreach in="$states" key="$state_id" value="$state_name">
                     <xar:if condition="xarModGetVar('bloggerapi','publishstatus') eq $state_id">
-                      <option value="#$state_id#" selected="selected">
+                      <option value="#$state_id#" selected="selected">#$state_name#</option>
                     <xar:else/>
-                      <option value="#$state_id#">
+                      <option value="#$state_id#">#$state_name#</option>
                     </xar:if>
-                    #$state_name#
                   </xar:foreach>
                 </select>
               </td>
