@@ -1,0 +1,43 @@
+<?php
+function netquery_admin_lgview()
+{
+    if(!xarSecurityCheck('EditNetquery')) return;
+    $data['items'] = array();
+    $data['authid'] = xarSecGenAuthKey();
+    $routers = xarModAPIFunc('netquery', 'admin', 'getrouters', array('startnum' => '1'));
+    if (empty($routers)) {
+        $msg = xarML('There are no looking glass routers registered');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+    for ($i = 0; $i < count($routers); $i++) {
+        $router = $routers[$i];
+        if (xarSecurityCheck('EditNetquery',0)) {
+            $routers[$i]['editurl'] = xarModURL('netquery', 'admin', 'lgmodify', array('router_id' => $router['router_id']));
+        } else {
+            $routers[$i]['editurl'] = '';
+        }
+        $routers[$i]['edittitle'] = xarML('Edit');
+        if (xarSecurityCheck('DeleteNetquery',0)) {
+            $routers[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'lgdelete', array('router_id' => $router['router_id']));
+        } else {
+            $routers[$i]['deleteurl'] = '';
+        }
+        $routers[$i]['deletetitle'] = xarML('Delete');
+    }
+    $data['items'] = $routers;
+    $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'modifyconfig'),
+                             'title' => xarML('Return to main configuration'),
+                             'label' => xarML('Modify Config'));
+    $data['lgvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
+                             'title' => xarML('View-edit-add looking glass routers'),
+                             'label' => xarML('Edit LG Routers'));
+    $data['lgalink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgnew'),
+                             'title' => xarML('Add a new looking glass router'),
+                             'label' => xarML('Add LG Router'));
+    $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
+                             'title' => xarML('Netquery online administration manual'),
+                             'label' => xarML('Online Manual'));
+    return $data;
+}
+?>

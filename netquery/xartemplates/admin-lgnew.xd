@@ -1,0 +1,86 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Add a New Looking Glass Router</xar:mlstring></h2>
+<p><xar:mlstring><b>Note</b>: Router name and address are required. Any other settings override
+Looking Glass defaults. Enabled defaults may be disabled, but disabled defaults cannot be enabled.
+Individual daemon port passwords take precedence over the router user password.</xar:mlstring></p>
+<form method="post" action="#xarModURL('netquery', 'admin', 'lgnew', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" >
+    <input type="hidden" name="authid" value="#$authid#" />
+        <table>
+            <tr align="right"><td align="left">
+                    New Router - Name - Addr:
+            </td><td>
+                <input type="text" name="router_router" id="router_router" value="" size="21" maxlength="100" />
+            </td><td>
+                <input type="text" name="router_address" id="router_address" value="" size="21" maxlength="100" />
+            </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="router_use_argc" id="router_use_argc" value="1">
+                <xar:mlstring>Use full table</xar:mlstring>
+            </td><td>
+                <xar:mlstring>User:</xar:mlstring>
+                <input type="text" name="router_username" id="router_username" value="" size="10" maxlength="20" />
+            </td><td>
+                <xar:mlstring>Password:</xar:mlstring>
+                <input type="text" name="router_password" id="router_password" value="" size="10" maxlength="20" />
+            </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="router_zebra" id="router_zebra" value="1">
+                <xar:mlstring>Use zebra</xar:mlstring>
+            </td><td>
+                <xar:mlstring>Port:</xar:mlstring>
+                <input type="text" name="router_zebra_port" id="router_zebra_port" value="" size="10" maxlength="10" />
+            </td><td>
+                <xar:mlstring>Password:</xar:mlstring>
+                <input type="text" name="router_zebra_password" id="router_zebra_password" value="" size="10" maxlength="20" />
+            </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="router_ripd" id="router_ripd" value="1">
+                <xar:mlstring>Use ripd</xar:mlstring>
+            </td><td>
+                <xar:mlstring>Port:</xar:mlstring>
+                <input type="text" name="router_ripd_port" id="router_ripd_port" value="" size="10" maxlength="10" />
+            </td><td>
+                <xar:mlstring>Password:</xar:mlstring>
+                <input type="text" name="router_ripd_password" id="router_ripd_password" value="" size="10" maxlength="20" />
+            </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="router_ripngd" id="router_ripngd" value="1">
+                <xar:mlstring>Use ripngd</xar:mlstring>
+            </td><td>
+                <xar:mlstring>Port:</xar:mlstring>
+                <input type="text" name="router_ripngd_port" id="router_ripngd_port" value="" size="10" maxlength="10" />
+            </td><td>
+                <xar:mlstring>Password:</xar:mlstring>
+                <input type="text" name="router_ripngd_password" id="router_ripngd_password" value="" size="10" maxlength="20" />
+            </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="router_ospfd" id="router_ospfd" value="1">
+                <xar:mlstring>Use ospfd</xar:mlstring>
+            </td><td>
+                <xar:mlstring>Port:</xar:mlstring>
+                <input type="text" name="router_ospfd_port" id="router_ospfd_port" value="" size="10" maxlength="10" />
+            </td><td>
+                <xar:mlstring>Password:</xar:mlstring>
+                <input type="text" name="router_ospfd_password" id="router_ospfd_password" value="" size="10" maxlength="20" />
+            </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="router_bgpd" id="router_bgpd" value="1">
+                <xar:mlstring>Use bgpd</xar:mlstring>
+            </td><td>
+                <xar:mlstring>Port:</xar:mlstring>
+                <input type="text" name="router_bgpd_port" id="router_bgpd_port" value="" size="10" maxlength="10" />
+            </td><td>
+                <xar:mlstring>Password:</xar:mlstring>
+                <input type="text" name="router_bgpd_password" id="router_bgpd_password" value="" size="10" maxlength="20" />
+            </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="router_ospf6d" id="router_ospf6d" value="1">
+                <xar:mlstring>Use ospf6d</xar:mlstring>
+            </td><td>
+                <xar:mlstring>Port:</xar:mlstring>
+                <input type="text" name="router_ospf6d_port" id="router_ospf6d_port" value="" size="10" maxlength="10" />
+            </td><td>
+                <xar:mlstring>Password:</xar:mlstring>
+                <input type="text" name="router_ospf6d_password" id="router_ospf6d_password" value="" size="10" maxlength="20" />
+            </td></tr>
+            <tr><td colspan=3>
+                <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
+                <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
+            </td></tr>
+        </table>
+</form>
+</div>

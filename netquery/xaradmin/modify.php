@@ -1,23 +1,26 @@
 <?php
-
 function netquery_admin_modify()
 {
-    if(!xarSecurityCheck('EditNetquery')) return;
+    if (!xarSecurityCheck('EditNetquery')) return;
     if (!xarVarFetch('whois_id','int',$whois_id)) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-
+    if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     switch(strtolower($phase)) {
         case 'form':
         default:
             $data = xarModAPIFunc('netquery',
                                   'admin',
-                                  'getwhois',
+                                  'getlink',
                                   array('whois_id' => $whois_id));
             if ($data == false) return;
             $data['authid']         = xarSecGenAuthKey();
             $data['submitlabel']    = xarML('Submit');
+            $data['cancellabel']    = xarML('Cancel');
             break;
         case 'update':
+            if ((!isset($Submit)) || ($Submit != 'Submit')) {
+                xarResponseRedirect(xarModURL('netquery', 'admin', 'view'));
+            }
             if (!xarVarFetch('whois_ext', 'str:1:100', $whois_ext)) return;
             if (!xarVarFetch('whois_server', 'str:1:100', $whois_server)) return;
             if (!xarSecConfirmAuthKey()) return;

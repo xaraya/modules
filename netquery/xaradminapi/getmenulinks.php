@@ -2,29 +2,28 @@
 /**
  * utility function pass individual menu items to the main menu
  */
-
 function netquery_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AdminNetquery', 0)) {
         $menulinks[] = Array('url'   => xarModURL('netquery',
                                                   'admin',
                                                   'modifyconfig'),
-                              'title' => xarML('Modify Netquery configuration'),
-                              'label' => xarML('Modify Config'));
+                              'title' => xarML('Modify main configuration settings'),
+                              'label' => xarML('Modify Configuration'));
     }
     if (xarSecurityCheck('EditNetquery', 0)) {
         $menulinks[] = Array('url'   => xarModURL('netquery',
                                                   'admin',
                                                   'view'),
-                              'title' => xarML('View and edit whois lookup links'),
-                              'label' => xarML('Edit Whois'));
+                              'title' => xarML('View-edit-add whois lookup links'),
+                              'label' => xarML('Edit Whois Links'));
     }
     if (xarSecurityCheck('AddNetquery', 0)) {
         $menulinks[] = Array('url'   => xarModURL('netquery',
                                                   'admin',
-                                                  'new'),
-                              'title' => xarML('Add a new whois lookup link'),
-                              'label' => xarML('Add Whois'));
+                                                  'lgview'),
+                              'title' => xarML('View-edit-add looking glass routers'),
+                              'label' => xarML('Edit LG Routers'));
     }
     if (empty($menulinks)){
         $menulinks = '';

@@ -1,14 +1,14 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<h2><xar:mlstring>View-Edit Whois Lookup Links</xar:mlstring></h2>
+<h2><xar:mlstring>View-Edit Looking Glass Routers</xar:mlstring></h2>
 <div class="xar-accent">
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <tr>
         <th>
-            <xar:mlstring>Domain.TLD</xar:mlstring>
+            <xar:mlstring>Router</xar:mlstring>
         </th>
         <th>
-            <xar:mlstring>Whois Lookup Server</xar:mlstring>
+            <xar:mlstring>Address</xar:mlstring>
         </th>
         <th>
             <xar:mlstring>Options</xar:mlstring>
@@ -18,10 +18,10 @@
     <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td class="xar-norm">
-            #$loop:item['whois_ext']#
+            #$loop:item['router']#
         </td>
         <td class="xar-norm">
-            #$loop:item['whois_server']#
+            #$loop:item['address']#
         </td>
         <td align="center" class="xar-norm">
            <xar:if condition="empty($loop:item['editurl'])">
@@ -40,10 +40,10 @@
     <xar:else />
     <tr>
         <td class="xar-accent">
-            #$loop:item['whois_ext']#
+            #$loop:item['router']#
         </td>
         <td class="xar-accent">
-            #$loop:item['whois_server']#
+            #$loop:item['address']#
         </td>
         <td align="center" class="xar-accent">
            <xar:if condition="empty($loop:item['editurl'])">
@@ -64,7 +64,7 @@
 </table>
 </div>
 </div>
-<p><a href="#$wialink['url']#">#$wialink['title']#</a> -
+<p><a href="#$lgalink['url']#">#$lgalink['title']#</a> -
 <a href="#$cfglink['url']#">#$cfglink['title']#</a> -
 <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
 <script language="javascript" type="text/javascript">

@@ -16,10 +16,7 @@
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>The Netquery module includes whois, DNS, ping, traceroute and port check
             query functions. Availability of each query type, local and remote execution, and all
-            entries in the whois lookup data table are configurable by the administrator. </xar:mlstring>
-            <xar:if condition="1 eq 1">
-                <a href=javascript:openwindow("#$helplink['url']#");>#$helplink['label']#</a>
-            </xar:if>
+            entries in the whois and looking glass data tables are configurable by the administrator.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -27,17 +24,19 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>From the menu, you have three choices: </xar:mlstring>
+            <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a><xar:mlstring>
+            - From the menu, you have three choices: </xar:mlstring>
             <ul>
-            <li><a href="#xarModURL('netquery', 'admin', 'modifyconfig')#"><xar:mlstring>Modify
-            Config</xar:mlstring></a><xar:mlstring>: From this menu option, you can select which Netquery functions
-            will be available to users of your site and configure local and remote excution.</xar:mlstring></li>
-            <li><a href="#xarModURL('netquery', 'admin', 'view')#"><xar:mlstring>Edit
-            Whois</xar:mlstring></a><xar:mlstring>: From this menu option, you can edit or delete existing
-            "lookup links" between whois servers and domain name.ext (TLD) entries.</xar:mlstring></li>
-            <li><a href="#xarModURL('netquery', 'admin', 'new')#"><xar:mlstring>Add
-            Whois</xar:mlstring></a><xar:mlstring>: From this menu option, you can create new "lookup
-            links" beteen whois servers and domain name.ext (TLD) entries.</xar:mlstring></li>
+            <li><a href="#$cfglink['url']#">#$cfglink['label']#</a><xar:mlstring>: From this
+            menu option, you can select which Netquery functions will be available to users of
+            your site, configure local and remote excution and set defaults for "looking glass"
+            queries.</xar:mlstring></li>
+            <li><a href="#$wivlink['url']#">#$wivlink['label']#</a><xar:mlstring>: From this
+            menu option, you can edit, add or delete whois "lookup links" between top level domain
+            (TLD) entries and whois servers.</xar:mlstring></li>
+            <li><a href="#$lgvlink['url']#">#$lgvlink['label']#</a><xar:mlstring>: From this
+            menu option, you can edit, add or delete "looking glass" router entries overriding
+            default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
             </ul>
         </div>
         <br />
@@ -62,7 +61,6 @@
         </div>
     </div>
 </div>
-
 <script language="javascript" type="text/javascript">
     function openwindow(hlpfile)
     {

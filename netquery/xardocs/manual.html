@@ -14,7 +14,7 @@
     }
     .help-topic {
         font-weight : bold;
-        font-size : 1em;        
+        font-size : 1em;
         color : white;
         background-color : black;
     }
@@ -30,30 +30,76 @@
         background-color: #cccccc;
     }
     .item-desc {
-
     }
 </style>
 </head>
 <body>
+<h1 align="center"><a name="top">Netquery 1.1 Manual</a></h1>
+
+<h2><a name="summary">Summary</a></h2>
+
+<p>Netquery provides you and, at your discretion, users of your site with a range of common network tools,
+including Whois lookups, DNS queries, ICMP pings, traceroutes and server port checking. Each feature can
+be enabled or disabled individually by the administrator. Local execution and/or a remote server script
+can be used for the ping and traceroute features and are fully configurable. The administrator can also
+configure all entries in the whois and looking glass data tables to add, edit and delete Whois server/TLD
+associations and to specify both default and router-specific settings for looking glass feature execution.</p>
+
+<h2><a name="whatfor">What Can Netquery Do For Me?</a></h2>
+
+<p>Netquery has been designed and developed with site administrators, hosting service providers and
+other technically inclined users clearly in mind.  In particular, every effort has been made to keep
+adminstrative tasks such as module installation and configuration as easy and intuitive as possible
+taking into account the wide range of hosted sites and dedicated server environments in which it may
+be used.</p>
+
+<p>Netquery can certainly provide site adminstrators and technicians with readily available and highly
+useful information about their ISP performance and their Internet environment generally. But it's
+<b>not</b> just for "network nerds".  Ordinary users of your web site can also benefit from access to
+Netquery's functions and features. In particular, perhaps, the ability to view their own Internet
+connection from the downstream ("outside-in") direction is especially useful to your end users as that
+is the routing they depend on most.</p>
+
+<p>Have you ever wondered who owns that disturbing web site that your child stumbled upon while
+browsing, and would you like to have some accurate contact information to complain about its lack of
+COPA protections?  Or maybe you've joined the rapidly growing world of "always connected" Internet
+access and are concerned about whether your newly bought "firewall" software really has closed all of
+the entry ports to your system. Perhaps you're an ardent gamer who worries about "lag times" and
+would like to know where those game-losing extra milliseconds are coming from.  Netquery can answer
+all those questions and more.  Read on.<p>
+<h2><a name="startup">Getting Started</a></h2>
+
+<p>Getting started with Netquery is about as easy as anything could possibly be.  Just install it and
+take a quick look at its pre-set admin options to see if you want to change any of them.  Depending
+on which package you downloaded, options will be pre-configured for UNIX/Linux sytems (the .tar.gz
+download) or for Microsoft Windows systems (the .zip download).  Of course, either package can be
+reconfigured to suit your needs and preferences.</p>
+
+<p>The following table summarizes the set-up steps and all available administrative options.</p>
+
 <table class="main" cellpadding=4 cellspacing=1>
     <tr class="help-topic">
-        <td class="help-topic" colspan=2>Netquery Administration</td>
+        <td class="help-topic" colspan=2><a name="admin">Netquery Administration</a></td>
+    </tr>
+    <tr><td class="item-heading" colspan=2>Installation As Content Management System (CMS) Module</td></tr>
+    <tr>
+        <td class="item">1. Unzip and Copy</td>
+        <td class="item-desc">Copy the unzipped download into your CMS modules folder as Netquery sub-folder.</td>
     </tr>
     <tr>
-        <td class="help-desc" colspan=2>
-        <p>Netquery provides users of your site with a range of common network tools, including
-        Whois lookups, DNS queries, ICMP ping, traceroute and server port checking. Each feature
-        can be enabled or disabled individually by the administrator. Local execution and/or a
-        remote server script can be used for the ping and traceroute features. The administrator
-        can also configure the Whois feature to specify which Whois server is associated with each
-        domain name.ext (TLD) entry and can add, modify and delete those entries in the Netquery
-        Whois data table.</p>
-        <p><b>Please Note</b>: The local ping and traceroute options require read/execute permission
-        for your operating system's ping and traceroute executables. The Netquery Log option requires
-        write permission for the specified path/filename. (Installation default is var/logs/netquery.log)</p>
-        <p>     
-        </td>
-    <tr><td class="item-heading" colspan=2>Netquery Configuration Options</td></tr>
+        <td class="item">2. Install and Activate</td>
+        <td class="item-desc">From the CMS's admin menu, install and activate the new Netquery module as usual.</td>
+    </tr>
+    <tr>
+        <td class="item">3. Choose Your Options</td>
+        <td class="item-desc">From Netquery's admin menu, select and configure options you want to make available.</td>
+    </tr>
+    <tr><td class="item-heading" colspan=2>Netquery Options Configuration</td></tr>
+    <tr>
+        <td class="item">Enable Netquery Log</td>
+        <td class="item-desc">Logs actions and <a href="#datetime">datetime</a>
+        to specified path/filename. (Requires write permission.)</td>
+    </tr>
     <tr>
         <td class="item">Enable Whois Search</td>
         <td class="item-desc">Whois lookups are automated based on server->domain data entries. (See below.)</td>
@@ -69,6 +115,10 @@
     <tr>
         <td class="item">Enable DNS (Dig) Query</td>
         <td class="item-desc">DNS queries using the *nix dig function. (Not available on Windows servers.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Port Check</td>
+        <td class="item-desc">Checks specified server for availability of specified port.</td>
     </tr>
     <tr>
         <td class="item">Enable Local ICMP Ping</td>
@@ -87,37 +137,769 @@
         <td class="item-desc">Traceroute from remote server to specified target. (Remote script <b>url</b>?<b>param</b>=target)</td>
     </tr>
     <tr>
-        <td class="item">Enable Port Check</td>
-        <td class="item-desc">Checks specified server for availability of specified port.</td>
+        <td class="item">Enable Looking Glass</td>
+        <td class="item-desc">Interrogates looking glass routers using IPv4 and IPv6 daemons.</td>
     </tr>
-    <tr>
-        <td class="item">Enable Netquery Log</td>
-        <td class="item-desc">Logs all Netquery actions to the specified path/filename. (Requires write permission.)</td>
-    </tr>
-    <tr><td class="item-heading" colspan=2>Edit-Add-Delete Whois Lookup Links</td></tr>
-    <tr>
-        <td class="item">General</td>
-        <td class="item-desc">This admin menu option displays a list of whois server - TLD pairs.</td>
-    </tr>
+    <tr><td class="item-heading" colspan=2>Whois Lookup Configuration</td></tr>
     <tr>
         <td class="item">Edit</td>
-        <td class="item-desc">This option for each listed whois pair allows you to edit that "linkage".</td>
+        <td class="item-desc">This option for each listed whois TLD-server pair allows you to edit that "linkage".</td>
     </tr>
     <tr>
         <td class="item">Delete</td>
-        <td class="item-desc">This option for each listed whois pair allows you to remove that "linkage".</td>
+        <td class="item-desc">This option for each listed whois TLD-server pair allows you to remove that "linkage".</td>
     </tr>
     <tr>
         <td class="item">Add New</td>
-        <td class="item-desc">This option allows you to add a new whois server - TLD pair.</td>
+        <td class="item-desc">This option allows you to add a new whois TLD-server pair.</td>
+    </tr>
+    <tr><td class="item-heading" colspan=2>Looking Glass Configuration</td></tr>
+    <tr>
+        <td class="item">Edit</td>
+        <td class="item-desc">This option for each listed looking glass router allows you to edit its settings.</td>
     </tr>
     <tr>
-        <td class="item">*NOTE*</td>
-        <td class="item-desc"> 
-            Deleting all whois pairs from the Netquery database will produce an error. Disable the whois feature in the main admin menu instead.
-        </td>
+        <td class="item">Delete</td>
+        <td class="item-desc">This option for each listed looking glass router allows you to remove that router.</td>
+    </tr>
+    <tr>
+        <td class="item">Add New</td>
+        <td class="item-desc">This option allows you to add a new looking glass router.</td>
+    </tr>
+    <tr>
+        <td class="help-desc" colspan=2>
+        <p><b>Important Notes</b>:<br>
+        - Netquery's local ping and traceroute options require read/execute permission for your
+        server OS executables.<br>
+        - The Netquery Log option requires write permission for the specified path/filename.<br>
+        - Deleting all whois pairs from the database table will produce an error. Disable the
+        whois feature option instead.<br>
+        - Looking glass default settings, except disabled items, may be overridden by individual
+        router settings.<br>
+        - Individual looking glass daemon port passwords take precedence over the default user password.
+        </p></td>
     </tr>
 </table>
 
+<h2><a name="adminnotes">Administrator Items</a></h2>
+
+<p>In many cases, unless you need to use other external scripts or have special path requirements, you
+won't need to change any configuration settings. <b>However</b>, unless you run your own web server and
+can set permissions on its system executables, you will probably need to disable the local execution ping
+and traceroute features. Very few hosting services allow the read/execute permissions required for those
+local functions. A listing of alternative server scripts for use with the external traceroute and ping
+features can be found at <a href="http://www.traceroute.org/" target="_blank">Traceroute.org</a></p>
+
+<p>When Netquery is initially installed, its whois and looking glass data tables contain only a few
+commonly used examples. To assist with populating your whois data table, you can look for TLD server
+information at <a href="http://www.internic.net/whois.html" target="_blank">Internic</a> which contains
+the integrated database of all the global top level domains.  You may also wish to refer to the
+<a href="http://www.iana.org/cctld/cctld-whois.htm">IANA</a> list of country registrars.  To assist with
+populating the looking glass data table you can find lists of routers at
+<a href="http://www.nanog.org/lookingglass.html" target="_blank">Nanog.org</a> and at
+<a href="http://www.bgp4.net/cgi-bin/bgp4wiki.cgi?Route_Server_Wiki" target="_blank">Bgp4.net</a>.</p>
+
+<p>Because Netquery's looking glass configuration provides both default and individual router settings
+it is important to understand their order of operational precedence.  For entered items (username,
+password, daemon port, daemon password) individual daemon passwords take precedence over the user
+password and individual router entries take precedence over the default configuaration entries.
+(For example, leaving a router's "bgpd port" entry blank (or set to zero) means that the default "bgpd
+port" entry will be used.) For enabled/disabled items, disabling the main configuration item disables
+it for all routers. (For example, if "Use bgpd" has been enabled (checked) in the main configuration
+for looking glass, it can be disabled for an individual router, but NOT vice versa.)</p>
+
+<h2><a name="using">Using Netquery</a></h2>
+
+<p>It is beyond this manual's scope to provide a complete background course on the Internet itself and
+on the entire range of issues involved in examining various aspects of its complex structure, topology
+and day-to-day operations. Instead, we'll focus here on actual usage and application of Netquery's
+"looking glass" tools and we'll include a few useful links to other documentation for those who might
+like to pursue some of the underlying issues in greater depth.  Let it suffice to say that the better
+one understands those issues and their impacts on both service providers and end users, the more useful
+Netquery becomes.</p>
+
+<h3><a name="whois">Whois Lookups</a></h3>
+<p>All domain names on the Internet are registered with "domain name registrars".  Domain name
+registrars are entities which have been allocated the authority to register names for a specific
+subset of domain names. Most Domain name registrars provide a "whois" function, where you can ask
+"whois domain.name" and they will tell you who has registered that domain name.</p>
+
+<p>Netquery`s whois lookup feature provides to the user the same information that has been provided
+by the owner of the site domain in question to the top level domain (TLD) registrar. To use it, simply
+enter the name of the site domain (without any "www." or other prefix) and select the TLD (e.g, ".com")
+from the available drop-down listing.</p>
+
+<p>The drop-down TLD listing and associated whois lookup server data is fully under the control of
+the Netquery administrator who may add, delete and change entries to suit his/her web site's purposes
+and its users. If you don't find the TLD you're looking for in the available drop-down listing, you can
+ask this site's administrator to add it.</p>
+
+<p>More info:
+<a href="http://www.icann.org/" target="_blank">ICANN</a></p>
+
+<h3><a name="whoisip">Whois IP Lookups</a></h3>
+<p>This Netquery feature provides owner-registrar information on a particular IP address, useful
+when you do not have the domain information needed to use the Whois Lookup feature described above.
+<p>More info:
+<a href="http://www.arin.net/whois/" target="_blank">ARIN</a></p>
+
+<h3><a name="dnslookup">DNS Lookups</a></h3>
+<p>DNS stands for Domain Name System. This system is used to associate a domain name
+(e.g. www.mydomainname.com) with one or multiple IP addresses. Now, an IP (Internet Protocol) address
+is like a phone number to a computer. Every computer has one but just like a phone number, sometimes
+an IP address can be hard to remember. This is why there is DNS. Instead of having to remember,
+216.226.138.60 we only have to remember www.simplehost.com.</p>
+
+<p>The domain registrar from whom a domain name is purchased will assign two IP addresses to that domain
+name. These IP addresses are the primary and secondary nameservers which are responsible for propagating,
+on the Internet, that domain name and its associated IP address.</p>
+
+<p>Netquery can provide users with both forward and reverse DNS resolutions. If the user enters a domain
+name, it will be reslved to its IP address.  If the user enters an IP address, it will be resolved to its
+domain name, if one has been allocated and propagated for that IP address.
+<p>More info:
+<a href="http://www.phpwebhosting.biz/faq_dns.php" target="_blank">phpweb</a>
+<a href="http://www.simplehost.com/tutorials/dns.htm" target="_blank">simplehost</a>
+<a href="http://www.insan.co.id/tutor.eng/dns.html" target="_blank">tutor</a></p>
+
+<h3><a name="dnsdig">DNS Dig Queries</a></h3>
+<p>Netquery's Dig tool is available only on web sites that run on UNIX/Linux servers. Microsoft Windows
+servers do not support this feature.  Where available, it provides essentially the same functionality
+as the DNS lookup feature, but uses the UNIX/Linux command set to execute the actual function.</p>
+
+<p>More info:
+<a href="http://www.oreilly.com/catalog/dns3/chapter/ch02.html" target="_blank">oreilly</a>
+<a href="http://www.isi.edu/in-notes/rfc1591.txt" target="_blank">ISI Text</a></p>
+
+<h3><a name="port">Port Checks</a></h3>
+<p>Port checks can be an important part of securing your computing system, especially for those who
+operate with "always connected" (cable, ADSL, etc) Internet services. To use this Netquery feature,
+simply enter the host address and port number you wish to check and the results will tell you whether
+it is open and accespting connections.
+<p>More info:
+<a href="http://www.iana.org/assignments/port-numbers" target="_blank">IANA</a>
+<a href="http://advice.networkice.com/advice/Exploits/Ports/default.htm" target="_blank">UDP</a>
+<a href="http://www.chebucto.ns.ca/~rakerman/port-table.html" target="_blank">TCP-IP</a>
+<a href="http://www.portsdb.org/" target="_blank">Ports dB</a>
+<a href="http://www.sans.org/newsletters/" target="_blank">SANS</a>
+<a href="http://www.grc.com/su-reading.htm" target="_blank">Shields Up</a>
+<a href="http://www.auditmypc.com/" target="_blank">PC Audit</a></p>
+
+<h3><a name="ping">ICMP Pings</a></h3>
+<p>As its name suggests, the ping feature can be compared to a submariner's sonar. It is a utility
+that simply checks whether the target computer is currently connected to the internet and responding.
+You should be aware that some servers (e.g., microsoft.com) are deliberately configured so that they
+do not respond to ICMP pings.</p>
+
+<p>More info:
+<a href="http://ftp.arl.mil/~mike/ping.html" target="_blank">mike</a>
+<a href="http://www.cymru.com/Documents/icmp-messages.html" target="_blank">ICMP</a></p>
+
+<h3><a name="traceroute">Traceroutes</a></h3>
+<p>Traceroute can be used to show you how a site is physically connected to the Internet.  Along the
+way you will also gain an understanding of how networks inter-connect. Traceroute can be used to
+determine the specific network route taken to reach a specific remote host.</p>
+
+<p>In a simplified way, this is how traceroute works. Every IP packet can specify how many hops it
+can go through before it is no longer forwarded on. When a packet is no longer forwarded on, that
+router just forgets all about it, but it also will usually send out a message to the source host saying,
+"Hey, sorry, but your packet died here." So, traceroute cleverly manipulates these values so that the
+first round of packets it sends out to the designated host are specified such that they can only go
+through one hop before dying. So that first hop gets those packets, sees that it's not supposed to
+forward them on any further and doesn't, and then sends a message back to the source host telling it
+that the packets died. When traceroute receives the "your packets died here" message from the router,
+it knows that's the first hop. It then sends on the second round of packets specifying that they can
+only go through TWO hops, and the cycle continues. It finishes when it gets a response from the final
+destination. For each hop, traceroute then displays the RTT, Round Trip Time, or the time difference
+between when the probe was sent from traceroute and the time the response arrived for each packet.</p>
+
+<p>More info:
+<a href="http://www.cisco.com/warp/public/63/ping_traceroute.html" target="_blank">Cisco</a>
+<a href="http://www.visualware.com/whitepapers/tutorials/tracert.html" target="_blank">visualware</a></p>
+
+<h3><a name="port">Looking Glass</a></h3>
+<p>Looking glass extends Netquery's scope by providing capabilites for interrogating routers (Cisco,
+Zebra, Juniper) used in wide area networks that comprise the Internet. It is intended for advanced
+users who have an in-depth understanding of network topology and router functions. The looking glass
+feature in Netquery 1.1 contains the following commands for both IPv4 and IPv6: OSPF neighborship,
+BGP neighborship, OSPF RT, BGP RR, Zebra Any RR, and Zebra Interface Info.</p>
+
+<p>More info:
+<a href="http://www.bind.com/routing.html" target="_blank">Bind.com</a>
+<a href="http://www.bgpexpert.com/resources.php" target="_blank">BGP Expert</a>
+<a href="http://www.routeviews.org/" target="_blank">Routeviews</a></p>
+
+<h2><a name="datetime">Appendix 1</a>: Log Datetime Formatting</h2>
+
+<p>The following table lists recognised characters for use in the datetime format configuration string.
+Any other unrecognised characters included in the string are recorded as is.</p>
+
+<TABLE
+CLASS="main"
+>
+<COL><COL><COL>
+<THEAD
+><TR
+CLASS="help-topic"
+><TH
+CLASS="help-topic"
+>Character</TH
+><TH
+>Description</TH
+><TH
+>Example Values</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+><VAR
+CLASS="literal"
+>a</VAR
+></TD
+><TD
+>Lowercase Ante meridiem and Post meridiem</TD
+><TD
+><VAR
+CLASS="literal"
+>am</VAR
+> or <VAR
+CLASS="literal"
+>pm</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>A</VAR
+></TD
+><TD
+>Uppercase Ante meridiem and Post meridiem</TD
+><TD
+><VAR
+CLASS="literal"
+>AM</VAR
+> or <VAR
+CLASS="literal"
+>PM</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>B</VAR
+></TD
+><TD
+>Swatch Internet time</TD
+><TD
+><VAR
+CLASS="literal"
+>000</VAR
+> through <VAR
+CLASS="literal"
+>999</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>c</VAR
+></TD
+><TD
+>ISO 8601 date (added in PHP 5)</TD
+><TD
+>2004-02-12T15:19:21+00:00</TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>d</VAR
+></TD
+><TD
+>Day of the month, 2 digits with leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>01</VAR
+> to <VAR
+CLASS="literal"
+>31</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>D</VAR
+></TD
+><TD
+>A textual representation of a day, three letters</TD
+><TD
+><VAR
+CLASS="literal"
+>Mon</VAR
+> through <VAR
+CLASS="literal"
+>Sun</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>F</VAR
+></TD
+><TD
+>A full textual representation of a month, such as January or March</TD
+><TD
+><VAR
+CLASS="literal"
+>January</VAR
+> through <VAR
+CLASS="literal"
+>December</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>g</VAR
+></TD
+><TD
+>12-hour format of an hour without leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>1</VAR
+> through <VAR
+CLASS="literal"
+>12</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>G</VAR
+></TD
+><TD
+>24-hour format of an hour without leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>0</VAR
+> through <VAR
+CLASS="literal"
+>23</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>h</VAR
+></TD
+><TD
+>12-hour format of an hour with leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>01</VAR
+> through <VAR
+CLASS="literal"
+>12</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>H</VAR
+></TD
+><TD
+>24-hour format of an hour with leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>00</VAR
+> through <VAR
+CLASS="literal"
+>23</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>i</VAR
+></TD
+><TD
+>Minutes with leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>00</VAR
+> to <VAR
+CLASS="literal"
+>59</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>I</VAR
+> (capital i)</TD
+><TD
+>Whether or not the date is in daylights savings time</TD
+><TD
+><VAR
+CLASS="literal"
+>1</VAR
+> if Daylight Savings Time, <VAR
+CLASS="literal"
+>0</VAR
+> otherwise.</TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>j</VAR
+></TD
+><TD
+>Day of the month without leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>1</VAR
+> to <VAR
+CLASS="literal"
+>31</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>l</VAR
+> (lowercase 'L')</TD
+><TD
+>A full textual representation of the day of the week</TD
+><TD
+><VAR
+CLASS="literal"
+>Sunday</VAR
+> through <VAR
+CLASS="literal"
+>Saturday</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>L</VAR
+></TD
+><TD
+>Whether it's a leap year</TD
+><TD
+><VAR
+CLASS="literal"
+>1</VAR
+> if it is a leap year, <VAR
+CLASS="literal"
+>0</VAR
+> otherwise.</TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>m</VAR
+></TD
+><TD
+>Numeric representation of a month, with leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>01</VAR
+> through <VAR
+CLASS="literal"
+>12</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>M</VAR
+></TD
+><TD
+>A short textual representation of a month, three letters</TD
+><TD
+><VAR
+CLASS="literal"
+>Jan</VAR
+> through <VAR
+CLASS="literal"
+>Dec</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>n</VAR
+></TD
+><TD
+>Numeric representation of a month, without leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>1</VAR
+> through <VAR
+CLASS="literal"
+>12</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>O</VAR
+></TD
+><TD
+>Difference to Greenwich time (GMT) in hours</TD
+><TD
+>Example: <VAR
+CLASS="literal"
+>+0200</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>r</VAR
+></TD
+><TD
+><A
+HREF="http://www.faqs.org/rfcs/rfc2822"
+TARGET="_blank"
+>RFC 2822</A
+> formatted date</TD
+><TD
+>Example: <VAR
+CLASS="literal"
+>Thu, 21 Dec 2000 16:01:07 +0200</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>s</VAR
+></TD
+><TD
+>Seconds, with leading zeros</TD
+><TD
+><VAR
+CLASS="literal"
+>00</VAR
+> through <VAR
+CLASS="literal"
+>59</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>S</VAR
+></TD
+><TD
+>English ordinal suffix for the day of the month, 2 characters</TD
+><TD
+>&#13;<VAR
+CLASS="literal"
+>st</VAR
+>, <VAR
+CLASS="literal"
+>nd</VAR
+>, <VAR
+CLASS="literal"
+>rd</VAR
+>or
+<VAR
+CLASS="literal"
+>th</VAR
+>. Works well with <VAR
+CLASS="literal"
+>j</VAR
+>
+</TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>t</VAR
+></TD
+><TD
+>Number of days in the given month</TD
+><TD
+><VAR
+CLASS="literal"
+>28</VAR
+> through <VAR
+CLASS="literal"
+>31</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>T</VAR
+></TD
+><TD
+>Timezone setting of this machine</TD
+><TD
+>Examples: <VAR
+CLASS="literal"
+>EST</VAR
+>, <VAR
+CLASS="literal"
+>MDT</VAR
+> ...</TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>U</VAR
+></TD
+><TD
+>Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)</TD
+><TD
+>See also <A
+HREF="http://www.php.net/manual/en/function.time.php"
+TARGET="_blank"
+><B
+CLASS="function"
+>time()</B
+></A
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>w</VAR
+></TD
+><TD
+>Numeric representation of the day of the week</TD
+><TD
+><VAR
+CLASS="literal"
+>0</VAR
+> (for Sunday) through <VAR
+CLASS="literal"
+>6</VAR
+> (for Saturday)</TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>W</VAR
+></TD
+><TD
+>ISO-8601 week number of year, weeks starting on Monday (added in PHP 4.1.0)</TD
+><TD
+>Example: <VAR
+CLASS="literal"
+>42</VAR
+> (the 42nd week in the year)</TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>Y</VAR
+></TD
+><TD
+>A full numeric representation of a year, 4 digits</TD
+><TD
+>Examples: <VAR
+CLASS="literal"
+>1999</VAR
+> or <VAR
+CLASS="literal"
+>2003</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>y</VAR
+></TD
+><TD
+>A two digit representation of a year</TD
+><TD
+>Examples: <VAR
+CLASS="literal"
+>99</VAR
+> or <VAR
+CLASS="literal"
+>03</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>z</VAR
+></TD
+><TD
+>The day of the year (starting from 0)</TD
+><TD
+><VAR
+CLASS="literal"
+>0</VAR
+> through <VAR
+CLASS="literal"
+>365</VAR
+></TD
+></TR
+><TR
+><TD
+><VAR
+CLASS="literal"
+>Z</VAR
+></TD
+><TD
+>Timezone offset in seconds. The offset for timezones west of UTC is always
+negative, and for those east of UTC is always positive.</TD
+><TD
+><VAR
+CLASS="literal"
+>-43200</VAR
+> through <VAR
+CLASS="literal"
+>43200</VAR
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+>
 </body>
 </html>
