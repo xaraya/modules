@@ -43,6 +43,9 @@
             <li><a href="#$ptvlink['url']#">#$ptvlink['label']#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete port services data entries, including
             keyword comments on vulnerabilities displayed to port lookup users.</xar:mlstring></li>
+            <li><a href="#$flvlink['url']#">#$flvlink['label']#</a><xar:mlstring>: From this
+            menu option, you can edit, add or delete the flagging data used for services and
+            exploits, including keywords, font colors and search lookup URLs.</xar:mlstring></li>
             </ul>
         </div>
         <br />

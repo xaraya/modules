@@ -22,6 +22,7 @@ function netquery_init()
     xarRegisterMask('DeleteNetquery','All','netquery','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminNetquery','All','netquery','All','All','ACCESS_ADMIN');
     create_exectable();
+    create_flagstable();
     create_whoistable();
     create_lgrequesttable();
     create_lgroutertable();
@@ -35,17 +36,22 @@ function netquery_upgrade($oldversion)
             xarModSetVar('netquery', 'looking_glass_enabled', 1);
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
+            create_flagstable();
             create_lgrequesttable();
             create_lgroutertable();
             create_portstable();
         case '1.1.0':
             xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'whois_max_limit', 3);
+            create_flagstable();
             create_portstable();
         case '1.2.0':
             xarModSetVar('netquery', 'whois_max_limit', 3);
+            create_flagstable();
             create_portstable();
         case '1.3.0':
+            create_flagstable();
+        case '1.3.1':
         default:
             break;
     }
@@ -72,6 +78,7 @@ function netquery_delete()
     drop_lgroutertable();
     drop_lgrequesttable();
     drop_whoistable();
+    drop_flagstable();
     drop_exectable();
     return true;
 }

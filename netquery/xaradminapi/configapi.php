@@ -22,21 +22,34 @@ function netquery_adminapi_configapi()
     $data['traceexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'trace'));
     $data['logfile'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'log'));
     $data['lgdefault'] = xarModAPIFunc('netquery', 'admin', 'getlgrdata', array('router' => 'default'));
+    $data['whoislimits'] = Array(1, 2, 3, 4, 5);
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));
+    $data['flvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'flview'),
+                             'title' => xarML('Edit service/exploit flags'),
+                             'label' => xarML('Edit Service Flags'));
     $data['wivlink'] = Array('url'   => xarModURL('netquery', 'admin', 'wiview'),
-                             'title' => xarML('Edit whois lookup links'),
+                             'title' => xarML('Edit whois TLD/server links'),
                              'label' => xarML('Edit Whois Links'));
     $data['lgvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
                              'title' => xarML('Edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));
     $data['ptvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
-                             'title' => xarML('Edit port services data'),
+                             'title' => xarML('Edit services and exploits'),
                              'label' => xarML('Edit Port Services'));
     $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
+    $logfile = $data['logfile'];
+    $logfile = $logfile['exec_local'];
+    if (file_exists($logfile)) {
+        $data['loglink'] = Array('url'   => xarML($logfile),
+                                 'title' => xarML('View operations logfile'),
+                                 'label' => xarML('View Log'));
+    } else {
+    	$data['loglink'] = '';
+    }
     return $data;
 }
 ?>

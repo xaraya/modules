@@ -20,4 +20,6 @@ Version 1.2 2004-10-22
 Version 1.3 2004-11-08
    - added MultiWhois with configurable maximum limit
    - added Port Check lookup table (See credits)
-   - updated manual and other refs to reflect changes
+Version 1.3.1 2004-11-18
+   - added editable service/exploits flags table
+   - changed to $_Server['REMOTE_ADDR'] superglobal

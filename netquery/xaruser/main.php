@@ -65,7 +65,7 @@ function netquery_user_main()
     {
         $readbuf = '';
         $nextServer = '';
-        $target = $data['addr'];
+        $target = $data['host'];
         $whois_server = "whois.arin.net";
         $msg = ('<p><b>IP Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
         if (!$target = gethostbyname($target)) {
@@ -162,13 +162,8 @@ function netquery_user_main()
         foreach($portdata as $portdatum)
         {
           if (!empty($portdatum['protocol'])) {
-            if ($portdatum['flag'] == 1) {
-                $notes = '<font color="red">[trojan]</font> <a href="http://www.google.com/search?num=20&hl=en&ie=UTF-8&q='.$portdatum['comment'].'+trojan" target="_blank">'.$portdatum['comment'].'</a>';
-            } else if ($portdatum['flag'] == 2) {
-                $notes = '<font color="purple">[backdoor]</font> <a href="http://www.google.com/search?num=20&hl=en&ie=UTF-8&q='.$portdatum['comment'].'+backdoor" target="_blank">'.$portdatum['comment'].'</a>';
-            } else {
-                $notes = '<a href="http://www.google.com/search?num=20&hl=en&ie=UTF-8&q='.$portdatum['comment'].'" target="_blank">'.$portdatum['comment'].'</a>';
-            }
+            $flagdata = xarModAPIFunc('netquery', 'user', 'getflagdata', array('flagnum' => $portdatum['flag']));
+            $notes = '<font color="'.$flagdata['fontclr'].'">['.$flagdata['keyword'].']</font> <a href="'.$flagdata['lookup_1'].$portdatum['comment'].'" target="_blank">'.$portdatum['comment'].'</a>';
             $msg .= '<tr><td>'.$portdatum['protocol'].'</td><td>'.$portdatum['service'].'</td><td>'.$notes.'</td></tr>';
           }
         }

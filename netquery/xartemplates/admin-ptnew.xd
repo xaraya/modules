@@ -9,6 +9,7 @@
 <form method="post" action="#xarModURL('netquery', 'admin', 'ptnew')#" method="post" enctype="application/x-www-form-urlencoded" >
 <input type="hidden" name="authid" value="#$authid#" />
 <input type="hidden" name="phase" id="phase" value="update" />
+<input type="hidden" name="portnum" id="portnum" value="#$portnum#" />
 <tr><td colspan=4>
 <span><xar:mlstring>Adding a New Port Service Datum</xar:mlstring></span>
 </tr></td><tr><td>
@@ -31,11 +32,16 @@
 <input type="text" name="port_comment" id="port_comment" value="" size="25" maxlength="50" />
 </td><td>
 <select name="port_flag" id="port_flag" tabindex="0">
-          <option selected value="0">0</option>
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          </select>
+    <xar:foreach in="$flags" value="$flagg">
+        <xar:if condition="!empty($flagg['keyword'])">
+            <xar:if condition="$flagg['flagnum'] eq $flag">
+                <option selected value="#$flagg['flagnum']#">#$flagg['keyword']#</option>
+            <xar:else />
+                <option value="#$flagg['flagnum']#">#$flagg['keyword']#</option>
+            </xar:if>
+        </xar:if>
+    </xar:foreach>
+</select>
 </tr></td><tr><td colspan=4 align="center">
 <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
 <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />

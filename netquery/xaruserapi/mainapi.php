@@ -55,11 +55,12 @@ function netquery_userapi_mainapi()
     }
     $data['domain'] = $domain;
     $data['whois_ext'] = $whois_ext;
-    xarVarFetch('maxp', 'int:1:', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
-    xarVarFetch('addr', 'str:1:', $data['addr'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
-    xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_HOST'], XARVAR_NOT_REQUIRED);
+    $data['maxpoptions'] = array(4, 5, 6, 7, 8, 9, 10);
+    $data['httpoptions'] = array('HEAD', 'GET');
+    xarVarFetch('maxp', 'int:1:10', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
+    xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
     xarVarFetch('server', 'str:1:', $data['server'], 'None', XARVAR_NOT_REQUIRED);
-    xarVarFetch('portnum', 'int:1:', $data['portnum'], '80', XARVAR_NOT_REQUIRED);
+    xarVarFetch('portnum', 'int:1:100000', $data['portnum'], '80', XARVAR_NOT_REQUIRED);
     xarVarFetch('httpurl', 'str:1:', $data['httpurl'], 'http://'.$_SERVER['SERVER_NAME'].'/', XARVAR_NOT_REQUIRED);
     xarVarFetch('httpreq', 'str:1:', $data['httpreq'], 'HEAD', XARVAR_NOT_REQUIRED);
     xarVarFetch('request', 'str:1:', $data['request'], 'IPv4 BGP neighborship', XARVAR_NOT_REQUIRED);
@@ -85,7 +86,6 @@ function netquery_userapi_getexec($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $ExecTable = $xartable['netquery_exec'];
-
     $query = "SELECT * FROM $ExecTable WHERE exec_type = ?";
     $bindvars = array($exec_type);
     $result =& $dbconn->Execute($query,$bindvars);
@@ -100,6 +100,62 @@ function netquery_userapi_getexec($args)
                   'exec_remote_t'  => $exec_remote_t);
     $result->Close();
     return $exec;
+}
+function netquery_userapi_getflags($args)
+{
+    extract($args);
+    if ((!isset($startnum)) || (!is_numeric($startnum))) {
+        $startnum = 1;
+    }
+    if ((!isset($numitems)) || (!is_numeric($numitems))) {
+        $numitems = -1;
+    }
+    $flags = array();
+    $dbconn =& xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $FlagsTable = $xartable['netquery_flags'];
+    $query = "SELECT * FROM $FlagsTable ORDER BY flagnum";
+    $result =& $dbconn->SelectLimit($query, (int)$numitems, (int)$startnum-1);
+    if (!$result) return;
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($flag_id, $flagnum, $keyword, $fontclr, $backclr, $lookup_1, $lookup_2) = $result->fields;
+        $flags[] = array('flag_id'  => $flag_id,
+                         'flagnum'  => $flagnum,
+                         'keyword'  => $keyword,
+                         'fontclr'  => $fontclr,
+                         'backclr'  => $backclr,
+                         'lookup_1' => $lookup_1,
+                         'lookup_2' => $lookup_2);
+    }
+    $result->Close();
+    return $flags;
+}
+function netquery_userapi_getflagdata($args)
+{
+    extract($args);
+    if (!isset($flagnum)) {
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $FlagsTable = $xartable['netquery_flags'];
+    $query = "SELECT * FROM $FlagsTable WHERE flagnum = ?";
+    $bindvars = array($flagnum);
+    $result =& $dbconn->Execute($query,$bindvars);
+    if (!$result) return;
+    list($flag_id, $flagnum, $keyword, $fontclr, $backclr, $lookup_1, $lookup_2) = $result->fields;
+    if(!xarSecurityCheck('OverviewNetquery')) return;
+    $flagdata = array('flag_id'  => $flag_id,
+                      'flagnum'  => $flagnum,
+                      'keyword'  => $keyword,
+                      'fontclr'  => $fontclr,
+                      'backclr'  => $backclr,
+                      'lookup_1' => $lookup_1,
+                      'lookup_2' => $lookup_2);
+    $result->Close();
+    return $flagdata;
 }
 function netquery_userapi_getlinks($args)
 {

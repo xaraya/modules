@@ -2,7 +2,7 @@
 function netquery_admin_ptview()
 {
     if(!xarSecurityCheck('EditNetquery')) return;
-    if (!xarVarFetch('portnum', 'int:1:', $portnum, '80', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
+    if (!xarVarFetch('portnum', 'int:1:100000', $portnum, '80', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     $data['items'] = array();
     $data['authid'] = xarSecGenAuthKey();
     $portdata = xarModAPIFunc('netquery', 'admin', 'getportdata', array('port' => $portnum));
@@ -35,7 +35,7 @@ function netquery_admin_ptview()
     $data['ptvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
                              'title' => xarML('Edit port services data'),
                              'label' => xarML('Edit Ports'));
-    $data['ptalink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptnew'),
+    $data['ptalink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptnew', array('portnum' => $portnum)),
                              'title' => xarML('Add port service data'),
                              'label' => xarML('Add Port'));
     $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),

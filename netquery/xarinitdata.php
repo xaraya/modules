@@ -41,13 +41,65 @@ function create_exectable()
         $query ="INSERT INTO $ExecTable (`exec_id`, `exec_type`, `exec_local`, `exec_winsys`, `exec_remote`, `exec_remote_t`) VALUES
         (1, 'ping', 'ping.exe', 1, 'http://noc.thunderworx.net/cgi-bin/public/ping.pl', 'target'),
         (2, 'trace', 'tracert.exe', 1, 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', 'target'),
-        (3, 'log', 'logs/netquery.log', 1, 'Y-m-d H:i:s', '-');";
+        (3, 'log', 'var/logs/nq_log.txt', 1, 'Y-m-d H:i:s', '-');";
     } else {
         $query ="INSERT INTO $ExecTable (`exec_id`, `exec_type`, `exec_local`, `exec_winsys`, `exec_remote`, `exec_remote_t`) VALUES
         (1, 'ping', 'ping.exe', 0, 'http://noc.thunderworx.net/cgi-bin/public/ping.pl', 'target'),
         (2, 'trace', 'traceroute.exe', 0, 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', 'target'),
-        (3, 'log', 'logs/netquery.log', 0, 'Y-m-d H:i:s', '-');";
+        (3, 'log', 'var/logs/nq_log.txt', 0, 'Y-m-d H:i:s', '-');";
     }
+    $result =& $dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
+
+function drop_flagstable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $FlagsTable = $xartable['netquery_flags'];
+    xarDBLoadTableMaintenanceAPI();
+    $query = xarDBDropTable($FlagsTable);
+    if (empty($query)) return;
+    $result = &$dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+    }
+    return;
+}
+function create_flagstable()
+{
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $FlagsTable = $xartable['netquery_flags'];
+    xarDBLoadTableMaintenanceAPI();
+    $flagfields = array(
+         'flag_id'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+        ,'flagnum'  => array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+        ,'keyword'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
+        ,'fontclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
+        ,'backclr'  => array('type'=>'varchar','size'=>20,'null'=>FALSE,'default'=>'')
+        ,'lookup_1' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'')
+        ,'lookup_2' => array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>''));
+    $query = xarDBCreateTable($FlagsTable,$flagfields);
+    if (empty($query)) return;
+    $result =& $dbconn->Execute($query);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = xarML('DATABASE_ERROR', $sql);
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+            new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+    $query = "INSERT INTO $FlagsTable (`flag_id`, `flagnum`, `keyword`, `fontclr`, `backclr`, `lookup_1`, `lookup_2`) VALUES
+    (1, 0, 'service', 'black', 'white', 'http://www.google.com/search?num=20&hl=en&ie=UTF-8&q=port+service+', ''),
+    (2, 1, 'trojan', 'red', 'white', 'http://www.google.com/search?num=20&hl=en&ie=UTF-8&q=trojan+', ''),
+    (3, 2, 'backdoor', 'purple', 'white', 'http://www.google.com/search?num=20&hl=en&ie=UTF-8&q=backdoor+', '');";
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);

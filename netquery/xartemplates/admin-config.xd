@@ -11,78 +11,89 @@ requires write permission for the specified filepath. Looking Glass defaults ena
 may be overridden by individual router settings.  Disabled LG items below are disabled for all LG
 routers. LG daemon port passwords take precedence over the default LG user password.</xar:mlstring></p>
 
-<h4><xar:mlstring>Netquery Options</xar:mlstring></h4>
+<h4><xar:mlstring>Netquery Options</xar:mlstring>
+ ~ <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></h4>
 
 <table>
 
 <form action="#xarModURL('netquery', 'admin', 'config')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />
-            <tr align="left"><td>
+            <tr align="left"><td colspan=3>
                     <xar:if condition="xarModGetVar('netquery', 'capture_log_enabled')">
                         <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Netquery Log</xar:mlstring>
+                    <xar:if condition="!empty($loglink)">
+                        ~ <a href=javascript:openwindow("#$loglink['url']#");>#$loglink['label']#</a>
+                    </xar:if>
             </td></tr><tr align="right"><td colspan=2>
                 <span class="help" title="#xarML('Netquery capture log PATH/FILENAME')#"><label for="logfile_local"><xar:mlstring>At Filepath:</xar:mlstring></label></span>
                 <input type="text" name="logfile_local" id="logfile_local" value="#$logfile['exec_local']#" size="30" maxlength="100" />
             </td><td>&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="logfile_remote"><xar:mlstring>Datetime Fmt:</xar:mlstring></label></span>
                 <input type="text" name="logfile_remote" id="logfile_remote" value="#$logfile['exec_remote']#" size="11" maxlength="100" />
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$whois_enabled">
                         <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Whois Search</xar:mlstring>
-            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    ~ <a href="#$wivlink['url']#">#$wivlink['title']#</a>
+            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('Maximum simultaneous whois lookups')#"><label for="whois_max_limit"><xar:mlstring>Max Entries:</xar:mlstring></label></span>
                 <select name="whois_max_limit" id="whois_max_limit">
-                <option selected>#$whois_max_limit#</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </td></tr><tr align="left"><td>
+                <xar:foreach in="$whoislimits" value="$whoislimit">
+                    <xar:if condition="!empty($whoislimit)">
+                        <xar:if condition="$whoislimit eq $whois_max_limit">
+                            <option selected value="#$whoislimit#">#$whoislimit#</option>
+                        <xar:else />
+                            <option value="#$whoislimit#">#$whoislimit#</option>
+                        </xar:if>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$whoisip_enabled">
                         <input type="checkbox" name="whoisip_enabled" id="whoisip_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="whoisip_enabled" id="whoisip_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Whois IP Search</xar:mlstring>
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$dns_lookup_enabled">
                         <input type="checkbox" name="dns_lookup_enabled" id="dns_lookup_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="dns_lookup_enabled" id="dns_lookup_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable DNS Lookup</xar:mlstring>
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$dns_dig_enabled">
                         <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable DNS (Dig) Query</xar:mlstring>
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$port_check_enabled">
                         <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Port Check</xar:mlstring>
-            </td></tr><tr align="left"><td>
+                    ~ <a href="#$ptvlink['url']#">#$ptvlink['title']#</a>
+                    ~ <a href="#$flvlink['url']#">#$flvlink['title']#</a>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$http_req_enabled">
                         <input type="checkbox" name="http_req_enabled" id="http_req_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="http_req_enabled" id="http_req_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable HTTP Request</xar:mlstring>
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$ping_enabled">
                         <input type="checkbox" name="ping_enabled" id="ping_enabled" value="1" checked="checked">
                     <xar:else />
@@ -99,7 +110,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                     <xar:else />
                         <input type="checkbox" name="pingexec_winsys" id="pingexec_winsys" value="1">
                     </xar:if>
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$ping_remote_enabled">
                         <input type="checkbox" name="ping_remote_enabled" id="ping_remote_enabled" value="1" checked="checked">
                     <xar:else />
@@ -112,7 +123,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
             </td><td>
                 <span class="help" title="#xarML('Remote ping script url?PARAM=target')#"><label for="pingexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
                 <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec['exec_remote_t']#" size="6" maxlength="10" />
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$trace_enabled">
                         <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1" checked="checked">
                     <xar:else />
@@ -129,7 +140,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                     <xar:else />
                         <input type="checkbox" name="traceexec_winsys" id="traceexec_winsys" value="1"><br />
                     </xar:if>
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$trace_remote_enabled">
                         <input type="checkbox" name="trace_remote_enabled" id="trace_remote_enabled" value="1" checked="checked">
                     <xar:else />
@@ -142,13 +153,14 @@ routers. LG daemon port passwords take precedence over the default LG user passw
             </td><td>
                 <span class="help" title="#xarML('Remote script traceroute url?PARAM=target')#"><label for="traceexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
                 <input type="text" name="traceexec_remote_t" id="traceexec_remote_t" value="#$traceexec['exec_remote_t']#" size="6" maxlength="10" />
-            </td></tr><tr align="left"><td>
+            </td></tr><tr align="left"><td colspan=3>
                     <xar:if condition="$looking_glass_enabled">
                         <input type="checkbox" name="looking_glass_enabled" id="looking_glass_enabled" value="1" checked="checked">
                     <xar:else />
                         <input type="checkbox" name="looking_glass_enabled" id="looking_glass_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Looking Glass</xar:mlstring>
+                    ~ <a href="#$lgvlink['url']#">#$lgvlink['title']#</a>
             </td></tr><tr align="right"><td align="left">&nbsp;&nbsp;&nbsp;
                     <xar:if condition="$lgdefault['use_argc']">
                         <input type="checkbox" name="lgdefault_use_argc" id="lgdefault_use_argc" value="1" checked="checked">
@@ -252,10 +264,6 @@ routers. LG daemon port passwords take precedence over the default LG user passw
 </div>
 </div>
 
-<p><a href="#$wivlink['url']#">#$wivlink['title']#</a> -
-<a href="#$lgvlink['url']#">#$lgvlink['title']#</a> -
-<a href="#$ptvlink['url']#">#$ptvlink['title']#</a> -
-<a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
 <script language="javascript" type="text/javascript">
     function openwindow(hlpfile)
     {
