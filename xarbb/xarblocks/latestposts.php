@@ -114,7 +114,7 @@ function xarbb_latestpostsblock_display($blockinfo)
                                                                        'numitems'=>$vars['howmany']));
     }
     $postlist=array();
-    //Get all latest posts for a given topic
+    //Get all latest topics for given forums
     foreach ($alltopics as $topics) {
         foreach ($topics as $topic) {
             $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
@@ -144,37 +144,40 @@ function xarbb_latestpostsblock_display($blockinfo)
     }
 
     if ($vars['addposts']=='on'){
-        //Get all the most recent replies irrespective of topic of forum
-        $posts = xarModAPIFunc('comments',
-                               'user',
-                               'get_multipleall',
-                               array('modid'       => $modid,
-                                     'numitems'    => $vars['howmany']));
-         //Put post data in suitable list
-         foreach ($posts as $post) {
-                 $posterdata=xarModAPIFunc('roles',
+        foreach ($alltopics as $topics) {
+            foreach ($topics as $topic) {
+                //Get all the most recent replies irrespective of topic
+                $posts = xarModAPIFunc('xarbb',
+                                   'user',
+                                   'get_allposts',
+                                   array('objectid'    => $topic['tid'],
+                                         'numitems'    => $vars['howmany']));
+                 //Put post data in suitable list
+                 if (count($posts) >0 ) {
+                     foreach ($posts as $post) {
+                         $posterdata=xarModAPIFunc('roles',
                                                   'user',
                                                   'get',
-                                                  array('uname' => $post['xar_author']));
-         $topic=xarModAPIFunc('xarbb','user','gettopic',array('tid'=>$post['xar_objectid']));
-         $forum=xarModAPIFunc('xarbb','user','getforum',array('fid'=>$topic['fid']));
+                                                  array('uid' => $post['xar_uid']));
 
                                     $postlist[]=array(
                                           'tid'       => $topic['tid'],
                                           'fid'       => $topic['fid'],
                                           'fname'     => $forum['fname'],
-                                          'title'     => substr($post['xar_subject'],0,$vars['truncate']),
-                                          'poster'    => $posterdata['uid'],
-                                          'postername'=> $post['xar_author'],
+                                          'title'     => substr($post['xar_title'],0,$vars['truncate']),
+                                          'poster'    => $post['xar_uid'],
+                                          'postername'=> $posterdata['uname'],
                                           'ptime'     => $post['xar_datetime'],
                                           'ptext'     => substr($post['xar_text'],0,$vars['truncate']),
                                           'anon'      => $post['xar_postanon'],
                                           'link'      => xarModURL('xarbb','user','viewtopic',array('tid'=>$topic['tid'])),
                                           'flink'     => xarModURL('xarbb','user','viewforum',array('fid'=>$topic['fid']))
                                           );
-
+                    }
+                }
             }
         }
+    }
 
     //Sort all the postlist by time
     usort($postlist, 'xarbb_datesort');
