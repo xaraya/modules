@@ -26,8 +26,6 @@
  */
 function newsletter_admin_modifystory($args=array()) 
 {
-    
-    
     // set a default value for form error messages
     // this will get overwritten w/ the extract call if formErrorMsg was passed in args
     $formErrorMsg=array();
@@ -174,7 +172,6 @@ function newsletter_admin_modifystory($args=array())
     $story['publicationId'] = $publicationId;
     $story['categories'] = array();
     $story['number_of_categories'] = xarModGetVar('newsletter', 'number_of_categories');
-
     if ($publicationId != 0) {
 
         // Only show categories for publication
@@ -206,6 +203,15 @@ function newsletter_admin_modifystory($args=array())
             // Merge the category arrays
             $story['categories'] = array_merge($story['categories'], $grandchildren);
         }
+    }
+
+    // Make sure some categories were returned.  If there were no
+    // categories created under this publication category, then the
+    // stories will not display.
+    if (empty($story['categories'])) {
+        $msg = xarML('No story categories were found for this publication.  Please create these categories before continuing.');
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        return;
     }
 
     // Get the list of owners

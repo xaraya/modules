@@ -225,6 +225,15 @@ function newsletter_admin_newstory($args)
         $data['publication_title'] = '';
     }
 
+    // Make sure some categories were returned.  If there were no
+    // categories created under this publication category, then the
+    // stories will not display.
+    if (empty($story['categories'])) {
+        $msg = xarML('No story categories were found for this publication.  Please create these categories before continuing.');
+        xarErrorSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        return;
+    }
+
     // Set publication
     $data['publicationId'] = $publicationId;
 
