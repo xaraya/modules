@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.9 2003/07/21 21:13:03 garrett Exp $
+ * File: $Id: handleexception.php,v 1.10 2003/07/23 20:13:45 garrett Exp $
  *
  * AddressBook utilapi handleException
  *
@@ -20,7 +20,7 @@
  *
  * @param array - this should be the same array that contains the template
  *                data. This func will add the additional params to the output
- *		          stream. The templates may then decide how best to display the
+ *                stream. The templates may then decide how best to display the
  *                error / warning / message. For SYSTEM_EXCEPTIONS we redirect
  *                the user to a special landing page and send a message to both
  *                the site admin and / or the developer (configured in Admin Panel)
@@ -29,7 +29,7 @@
  * @return array abInfoMsg - if an _AB_ERR_INFO is encountered
  * @return array abWarnMsg - if an _AB_ERR_WARN is encountered
  * @return array abErroMsg - if an _AB_ERR_ERROR is encountered
- * @return array abDebugMsg - if an _AB_ERR_DEBUG is encountered 
+ * @return array abDebugMsg - if an _AB_ERR_DEBUG is encountered
  */
 function AddressBook_utilapi_handleException ($args) {
 
@@ -56,63 +56,90 @@ function AddressBook_utilapi_handleException ($args) {
             switch ($exception['major']) {
                 case XAR_SYSTEM_EXCEPTION:
                     $xarException['type'] = $exception['exceptionId'];
-                    $xarException['text'] = $abExc->abExceptionRender('html');
+                    $xarException['text'] = $abExc->abExceptionRender();
+                    $xarException['htmltext'] = $abExc->abExceptionRender('html');
                     $abExceptions['xarSysException'][] = $xarException;
                     xarExceptionHandled();
 
-				    /**
-				     * if configured, kick out an email to the admin & developer
-		             */		
-		            $rptErrAdminFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrAdminFlag');
-				    $rptErrDevFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrDevFlag');
-		            if ($rptErrAdminFlag || $rptErrDevFlag) {
-								
-		  			    $to = array();
-					    if ($rptErrAdminFlag) {
-						    $adminEmail= xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail');
-							if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$adminEmail))) {
-								$adminEmail = "unknown@".$_SERVER['SERVER_NAME'];
-							}
-		
-							$to[] = array ('name'=>"Site Admin"
-							              ,'email'=>$adminEmail);
-						}
-						if ($rptErrDevFlag) {
-							$to[] = array ('name'=>_AB_DEVQA_NAME
-							               ,'email'=>_AB_DEVQA_EMAIL);
-						}
-			
-					    $abModInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
-						$sendTo = '';
-						$i=0;
-						foreach ($to as $addr) {
-							if ($i++ == 1) $sendTo .=",";
-							$sendTo .= $addr['name']." <".$addr['email'].">";
-						}						
-	                	$from = __ADDRESSBOOK__." Module <".__ADDRESSBOOK__."@".$_SERVER['SERVER_NAME'].">";
-	                	
-	                	$subject = __ADDRESSBOOK__." Exception Raised";
+                    /**
+                     * if configured, kick out an email to the admin & developer
+                     */
+                    $rptErrAdminFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrAdminFlag');
+                    $rptErrDevFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrDevFlag');
+                    if ($rptErrAdminFlag || $rptErrDevFlag) {
 
-						$message  = '';
-						$message .= "You are receiving this email because your AddressBook ";
-						$message .= "module is set to email error messages to your Site Admin account. ";
-						$message .= "You can stop this behavior by editing the Admin Messages ";
-						$message .= "settings under Admin->AddressBook->ModifyConfig->AdminMessages.<br />";
-						$message .= "Check <a href=\"http://xaraya.blacktower.com\">http://xaraya.blacktower.com</a> for AddressBook updates<br /><br />";
-	                	$message .= "On ".strftime("%A, %D, at %H:%M", time())."<br />";
-	                	$message .= "AddressBook ".$abModInfo['version']." Build "._AB_BUILD_VER."<br /><br />";
-	                	$message .= "The following error(s) occurred.<br /><br />";
-	                    $message .= $xarException['text'];
-	                    $message .=
+                        $to = array();
+                        if ($rptErrAdminFlag) {
+                            $adminEmail= xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail');
+                            if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$adminEmail))) {
+                                $adminEmail = "unknown@".$_SERVER['SERVER_NAME'];
+                            }
 
-						$headers  = '';	
-	                    $headers .= "From: ".$from."\r\n";
-	                    $headers .= "Sender: ".$from."\r\n";
-	                    $headers .= "MIME-Version: 1.0\r\n";
-	                    $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-	
-	                    mail ($sendTo,$subject,$message,$headers);
-	                }	
+                            $to[] = array ('name'=>"Site Admin"
+                                          ,'email'=>$adminEmail);
+                        }
+                        if ($rptErrDevFlag) {
+                            $to[] = array ('name'=>_AB_DEVQA_NAME
+                                           ,'email'=>_AB_DEVQA_EMAIL);
+                        }
+
+                        $abModInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
+
+                        $from = array ('name' => __ADDRESSBOOK__." Module"
+                                      ,'email' => __ADDRESSBOOK__."@".$_SERVER['SERVER_NAME']
+                                      );
+
+                        $subject = __ADDRESSBOOK__." Exception Raised";
+
+                        //Plain Text formatted message
+                        $message  = '';
+                        $message .= "You are receiving this email because your AddressBook ";
+                        $message .= "This is an automatically generated email from the Xaraya ";
+                        $message .= "AddressBook Module. An error was encountered in the ";
+                        $message .= "AddressBook module and an email has been generated for ";
+                        $message .= "the development team.\n\n";
+
+                        $message .= "You may disable these emails under Admin->AddressBook->";
+                        $message .= "ModifyConfig->AdminMessages. Visit http://xaraya.blacktower.com ";
+                        $message .= "for AddressBook updates.\n\n";
+
+                        $message .= "**** Exception Details ****\n";
+                        $message .= "Version: ".$abModInfo['version']."\n";
+                        $message .= "Build "._AB_BUILD_VER."\n\n";
+                        $message .= "The following error(s) occurred.\n\n";
+                        $message .= $xarException['text'];
+
+                        //HTML formatted message
+                        $htmlmessage .= "You are receiving this email because your AddressBook ";
+                        $htmlmessage .= "This is an automatically generated email from the Xaraya ";
+                        $htmlmessage .= "AddressBook Module. An error was encountered in the ";
+                        $htmlmessage .= "AddressBook module and an email has been generated for ";
+                        $htmlmessage .= "the development team.<br /><br />";
+
+                        $htmlmessage .= "You may disable these emails under Admin->AddressBook->";
+                        $htmlmessage .= "ModifyConfig->AdminMessages. Visit <a href=\"http://xaraya.blacktower.com\">http://xaraya.blacktower.com</a> ";
+                        $htmlmessage .= "for AddressBook updates.<br /><br />";
+
+                        $htmlmessage .= "**** Exception Details ****<br />";
+                        $htmlmessage .= "Version: ".$abModInfo['version']."<br />";
+                        $htmlmessage .= "Build "._AB_BUILD_VER."<br /><br />";
+                        $htmlmessage .= "The following error(s) occurred.<br /><br />";
+                        $htmlmessage .= $xarException['htmltext'];
+
+                        // following vars are required by xarMail api
+                        $xarMail = array (
+                                 'subject' => $subject
+                                ,'message' => $message
+                                ,'htmlmessage' => $htmlmessage
+                                ,'from' => $from['email']
+                                ,'fromname' => $from['name']
+                                );
+                        foreach ($to as $addr) {
+                            $xarMail['info'] = $addr['email'];
+                            $xarMail['name'] = $addr['name'];
+                            xarModAPIFunc('mail','admin','sendmail',$xarMail);
+                        }
+                    }
 
                     break;
 
@@ -151,13 +178,13 @@ function AddressBook_utilapi_handleException ($args) {
         }
         xarExceptionFree();
 
-		$output['abExceptions'] = $abExceptions;
-		/**
-		 * For system errors we will redirect to a special error handling page
-		 * for a more user friendly message
-		 */
+        $output['abExceptions'] = $abExceptions;
+        /**
+         * For system errors we will redirect to a special error handling page
+         * for a more user friendly message
+         */
         if (isset($abExceptions['xarSysException'])) {
-			$output = xarTplModule(__ADDRESSBOOK__,'user','error',$output);
+            $output = xarTplModule(__ADDRESSBOOK__,'user','error',$output);
         }
     } // END if
 
