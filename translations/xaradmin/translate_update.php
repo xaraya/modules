@@ -17,10 +17,20 @@
 
 function translations_admin_translate_update()
 {
-// Security Check
+    // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!xarVarFetch('subtype', 'regexp:/^(file|templates|templateincludes|templateblocks|blocks|admin|adminapi|user|userapi)$/', $subtype)) return;
+    $contexts = $GLOBALS['MLS']->getContexts();
+    $regexstring = "";
+    $i=0;
+    foreach($contexts as $context) {
+        if ($i>0) $regexstring .= "|";
+        $regexstring .= $context->getName();
+        $i++;
+    }
+    $regexstring = 'regexp:/^(' . $regexstring . ')$/';
+    if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+    // if (!xarVarFetch('subtype', 'regexp:/^(file|templates|templateincludes|templateblocks|blocks|admin|adminapi|user|userapi)$/', $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
     if (!xarVarFetch('numEntries', 'int:0:', $numEntries)) return;
     if (!xarVarFetch('numKeyEntries', 'int:0:', $numKeyEntries)) return;

@@ -50,6 +50,15 @@ class PHPTranslationsGenerator {
             case XARMLS_DNTYPE_MODULE:
             $this->baseDir = "$modules_dir/$dnName/";
             if (!file_exists($this->baseDir)) mkdir($this->baseDir, 0777);
+
+            $allcontexts = $GLOBALS['MLS']->getContexts();
+            foreach ($allcontexts as $context) {
+                $contextName = $context->getName();
+                $contextDir = $context->getDir();
+                if ($contextName == 'core' || $contextName == 'file') continue;
+                if (!file_exists($this->baseDir.$contextDir)) mkdir($this->baseDir.$contextDir, 0777);
+            }
+/*
             if (!file_exists($this->baseDir.'blocks')) mkdir($this->baseDir.'blocks', 0777);
             if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
             if (!file_exists($this->baseDir.'templates/includes')) mkdir($this->baseDir.'templates/includes', 0777);
@@ -58,6 +67,7 @@ class PHPTranslationsGenerator {
             if (!file_exists($this->baseDir.'adminapi')) mkdir($this->baseDir.'adminapi', 0777);
             if (!file_exists($this->baseDir.'user')) mkdir($this->baseDir.'user', 0777);
             if (!file_exists($this->baseDir.'userapi')) mkdir($this->baseDir.'userapi', 0777);
+*/
             break;
             case XARMLS_DNTYPE_THEME:
             $this->baseDir = "$themes_dir/$dnName/";
