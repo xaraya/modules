@@ -1,77 +1,206 @@
 <?php
-class Cpdf {
-//======================================================================
-// pdf class
-//
-// wayne munro - R&OS ltd
-// pdf@ros.co.nz
-// http://www.ros.co.nz/pdf
-//
-// this code is a little rough in places, but at present functions well enough
-// for the uses that we have put it to. There are a number of possible enhancements
-// and if there is sufficient interest then we will extend the functionality.
-//
-// note that the adobe font AFM files are included, along with some serialized versions
-// of their crucial data, though if the serialized versions are not there, then this 
-// class will re-create them from the base AFM file for the selected font (if it is there).
-// At present only the basic fonts are supported (one of the many restrictions)
-//
-// this does not yet create a linearised pdf file, this is desirable and will be investigated
-// also there is no compression or encryption of the content streams, this will also be added
-// as soon as possible.
-//
-// The site above will have the latest news regarding this code, as well as somewhere to
-// register interest in being notified as to future enhancements, and to leave feedback.
-//
-// IMPORTANT NOTE
-// there is no warranty, implied or otherwise with this software.
-// 
-// LICENCE
-// This code has been placed in the Public Domain for all to enjoy.
-//
-// version 0.09
-//======================================================================
+/**
+* Cpdf
+*
+* http://www.ros.co.nz/pdf
+*
+* A PHP class to provide the basic functionality to create a pdf document without
+* any requirement for additional modules.
+*
+* Note that they companion class CezPdf can be used to extend this class and dramatically
+* simplify the creation of documents.
+*
+* IMPORTANT NOTE
+* there is no warranty, implied or otherwise with this software.
+* 
+* LICENCE
+* This code has been placed in the Public Domain for all to enjoy.
+*
+* @author		Wayne Munro <pdf@ros.co.nz>
+* @version 	009
+* @package	Cpdf
+*/
 
-var $numObj=0; // the number of pdf objects in the current document
-var $objects = array(); // this array contains all of the pdf objects, ready for final assembly
-var $catalogId; // object ID of the document catalog
+  /**
+   * Some defines to make it easier to place this file in different locations
+   *
+   */
+define('FONT_LOCATION','modules/reports/xarincludes/fonts');
+
+class Cpdf {
+
+/**
+* the current number of pdf objects in the document
+*/
+var $numObj=0;
+/**
+* this array contains all of the pdf objects, ready for final assembly
+*/
+var $objects = array();
+/**
+* the objectId (number within the objects array) of the document catalog
+*/
+var $catalogId;
+/**
+* array carrying information about the fonts that the system currently knows about
+* used to ensure that a font is not loaded twice, among other things
+*/
 var $fonts=array(); 
+/**
+* a record of the current font
+*/
 var $currentFont='';
+/**
+* the current base font
+*/
 var $currentBaseFont='';
+/**
+* the number of the current font within the font array
+*/
 var $currentFontNum=0;
+/**
+* 
+*/
 var $currentNode;
+/**
+* object number of the current page
+*/
 var $currentPage;
+/**
+* object number of the currently active contents block
+*/
 var $currentContents;
+/**
+* number of fonts within the system
+*/
 var $numFonts=0;
+/**
+* current colour for fill operations, defaults to inactive value, all three components should be between 0 and 1 inclusive when active
+*/
 var $currentColour=array('r'=>-1,'g'=>-1,'b'=>-1);
+/**
+* current colour for stroke operations (lines etc.)
+*/
 var $currentStrokeColour=array('r'=>-1,'g'=>-1,'b'=>-1);
+/**
+* current style that lines are drawn in
+*/
 var $currentLineStyle='';
+/**
+* an array which is used to save the state of the document, mainly the colours and styles
+* it is used to temporarily change to another state, the change back to what it was before
+*/
 var $stateStack = array();
+/**
+* number of elements within the state stack
+*/
 var $nStateStack = 0;
+/**
+* number of page objects within the document
+*/
 var $numPages=0;
-var $stack=array(); // the stack will be used to place object Id's onto while others are worked on
+/**
+* object Id storage stack
+*/
+var $stack=array();
+/**
+* number of elements within the object Id storage stack
+*/
 var $nStack=0;
+/**
+* an array which contains information about the objects which are not firmly attached to pages
+* these have been added with the addObject function
+*/
 var $looseObjects=array();
+/**
+* array contains infomation about how the loose objects are to be added to the document
+*/
 var $addLooseObjects=array();
+/**
+* the objectId of the information object for the document
+* this contains authorship, title etc.
+*/
 var $infoObject=0;
+/**
+* number of images being tracked within the document
+*/
 var $numImages=0;
+/**
+* an array containing options about the document
+* it defaults to turning on the compression of the objects
+*/
 var $options=array('compression'=>1);
+/**
+* the objectId of the first page of the document
+*/
 var $firstPageId;
+/**
+* used to track the last used value of the inter-word spacing, this is so that it is known
+* when the spacing is changed.
+*/
 var $wordSpaceAdjust=0;
+/**
+* the object Id of the procset object
+*/
 var $procsetObjectId;
-var $fontFamilies = array(); // define the relationships between fonts, used to switch to bold italic etc
-var $currentTextState = ''; // track if the current font is bolded or italiced
-var $messages=''; // store messages during processing, can be selected afterwards to give debug info
-var $arc4=''; // place to store the encryption array.
+/**
+* store the information about the relationship between font families
+* this used so that the code knows which font is the bold version of another font, etc.
+* the value of this array is initialised in the constuctor function.
+*/
+var $fontFamilies = array();
+/**
+* track if the current font is bolded or italicised
+*/
+var $currentTextState = ''; 
+/**
+* messages are stored here during processing, these can be selected afterwards to give some useful debug information
+*/
+var $messages='';
+/**
+* the ancryption array for the document encryption is stored here
+*/
+var $arc4='';
+/**
+* the object Id of the encryption information
+*/
 var $arc4_objnum=0;
+/**
+* the file identifier, used to uniquely identify a pdf document
+*/
 var $fileIdentifier='';
+/**
+* a flag to say if a document is to be encrypted or not
+*/
 var $encrypted=0;
+/**
+* the ancryption key for the encryption of all the document content (structure is not encrypted)
+*/
 var $encryptionKey='';
+/**
+* array which forms a stack to keep track of nested callback functions
+*/
 var $callback = array();
+/**
+* the number of callback functions in the callback array
+*/
 var $nCallback = 0;
-var $destinations = array(); // store label->id pairs for named destinations, these wil be used to replace internal links
-//------------------------------------------------------------------------------
-// document constructor - starts a new document
+/**
+* store label->id pairs for named destinations, these will be used to replace internal links
+* done this way so that destinations can be defined after the location that links to them
+*/
+var $destinations = array();
+/**
+* store the stack for the transaction commands, each item in here is a record of the values of all the 
+* variables within the class, so that the user can rollback at will (from each 'start' command)
+* note that this includes the objects array, so these can be large.
+*/
+var $checkpoint = '';
+/**
+* class constructor
+* this will start a new document
+* @var array array of 4 numbers, defining the bottom left and upper right corner of the page. first two are normally zero.
+*/
 function Cpdf ($pageSize=array(0,0,612,792)){
   $this->newDocument($pageSize);
   
@@ -81,22 +210,24 @@ function Cpdf ($pageSize=array(0,0,612,792)){
 
 }
 
-// ==============================================================================
-// Document object methods (internal use only)
-//
-// There is about one object method for each type of object in the pdf document
-// Each function has the same call list ($id,$action,$options).
-// $id = the object ID of the object, or what it is to be if it is being created
-// $action = a string specifying the action to be performed, though ALL must support:
-//           'new' - create the object with the id $id
-//           'out' - produce the output for the pdf object
-// $options = optional, a string or array containing the various parameters for the object
-//
-// These, in conjunction with the output function are the ONLY way for output to be produced 
-// within the pdf 'file'.
-// ==============================================================================
+/**
+* Document object methods (internal use only)
+*
+* There is about one object method for each type of object in the pdf document
+* Each function has the same call list ($id,$action,$options).
+* $id = the object ID of the object, or what it is to be if it is being created
+* $action = a string specifying the action to be performed, though ALL must support:
+*           'new' - create the object with the id $id
+*           'out' - produce the output for the pdf object
+* $options = optional, a string or array containing the various parameters for the object
+*
+* These, in conjunction with the output function are the ONLY way for output to be produced 
+* within the pdf 'file'.
+*/
 
-// destination object, used to specify the location for the user to jump to, presently on opening
+/**
+*destination object, used to specify the location for the user to jump to, presently on opening
+*/
 function o_destination($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -129,7 +260,9 @@ function o_destination($id,$action,$options=''){
   }
 }
 
-// set the viewer preferences
+/**
+* set the viewer preferences
+*/
 function o_viewerPreferences($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -165,7 +298,9 @@ function o_viewerPreferences($id,$action,$options=''){
   }
 }
 
-// define the document catalog, the overall controller for the document
+/**
+* define the document catalog, the overall controller for the document
+*/
 function o_catalog($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -213,7 +348,9 @@ function o_catalog($id,$action,$options=''){
   }
 }
 
-// object which is a parent to the pages in the document
+/**
+* object which is a parent to the pages in the document
+*/
 function o_pages($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -297,7 +434,7 @@ function o_pages($id,$action,$options=''){
           $res.="\n>>";
           if (isset($o['info']['mediaBox'])){
             $tmp=$o['info']['mediaBox'];
-            $res.="\n/MediaBox [".$tmp[0].' '.$tmp[1].' '.$tmp[2].' '.$tmp[3].']';
+            $res.="\n/MediaBox [".sprintf('%.3f',$tmp[0]).' '.sprintf('%.3f',$tmp[1]).' '.sprintf('%.3f',$tmp[2]).' '.sprintf('%.3f',$tmp[3]).']';
           }
         }
         $res.="\n >>\nendobj";
@@ -309,7 +446,9 @@ function o_pages($id,$action,$options=''){
   }
 }
 
-// define the outlines in the doc, empty for now
+/**
+* define the outlines in the doc, empty for now
+*/
 function o_outlines($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -337,7 +476,9 @@ function o_outlines($id,$action,$options=''){
   }
 }
 
-// an object to hold the font description
+/**
+* an object to hold the font description
+*/
 function o_font($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -384,6 +525,7 @@ function o_font($id,$action,$options=''){
           case 'Widths':
           case 'FontDescriptor':
           case 'SubType':
+          $this->addMessage('o_font '.$k." : ".$v);
             $o['info'][$k] = $v;
             break;
         }
@@ -418,7 +560,9 @@ function o_font($id,$action,$options=''){
   }
 }
 
-// a font descriptor, needed for including additional fonts
+/**
+* a font descriptor, needed for including additional fonts
+*/
 function o_fontDescriptor($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -467,7 +611,9 @@ function o_fontDescriptor($id,$action,$options=''){
   }
 }
 
-// the font encoding
+/**
+* the font encoding
+*/
 function o_fontEncoding($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -502,7 +648,9 @@ function o_fontEncoding($id,$action,$options=''){
   }
 }
 
-// the document procset, solves some problems with printing to old PS printers
+/**
+* the document procset, solves some problems with printing to old PS printers
+*/
 function o_procset($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -535,7 +683,9 @@ function o_procset($id,$action,$options=''){
   }
 }
 
-// define the document information
+/**
+* define the document information
+*/
 function o_info($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -577,7 +727,9 @@ function o_info($id,$action,$options=''){
   }
 }
 
-// an action object, used to link to URLS initially
+/**
+* an action object, used to link to URLS initially
+*/
 function o_action($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -617,8 +769,10 @@ function o_action($id,$action,$options=''){
   }
 }
 
-// an annotation object, this will add an annotation to the current page.
-// initially will support just link annotations 
+/**
+* an annotation object, this will add an annotation to the current page.
+* initially will support just link annotations 
+*/
 function o_annotation($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -668,7 +822,9 @@ function o_annotation($id,$action,$options=''){
   }
 }
 
-// a page object, it also creates a contents object to hold its contents
+/**
+* a page object, it also creates a contents object to hold its contents
+*/
 function o_page($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -735,7 +891,9 @@ function o_page($id,$action,$options=''){
   }
 }
 
-// the contents objects hold all of the content which appears on pages
+/**
+* the contents objects hold all of the content which appears on pages
+*/
 function o_contents($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -783,7 +941,9 @@ function o_contents($id,$action,$options=''){
   }
 }
 
-// an image object, will be an XObject in the document, includes description and data
+/**
+* an image object, will be an XObject in the document, includes description and data
+*/
 function o_image($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -797,12 +957,22 @@ function o_image($id,$action,$options=''){
       $this->objects[$id]['info']['Width']=$options['iw'];
       $this->objects[$id]['info']['Height']=$options['ih'];
       if (!isset($options['type']) || $options['type']=='jpg'){
-        $this->objects[$id]['info']['ColorSpace']='/DeviceRGB';
+        if (!isset($options['channels'])){
+          $options['channels']=3;
+        }
+        switch($options['channels']){
+          case 1:
+            $this->objects[$id]['info']['ColorSpace']='/DeviceGray';
+            break;
+          default:
+            $this->objects[$id]['info']['ColorSpace']='/DeviceRGB';
+            break;
+        }
         $this->objects[$id]['info']['Filter']='/DCTDecode';
         $this->objects[$id]['info']['BitsPerComponent']=8;
       } else if ($options['type']=='png'){
         $this->objects[$id]['info']['Filter']='/FlateDecode';
-        $this->objects[$id]['info']['DecodeParms']='<< /Predictor 15 /Colors '.$options['ncolor'].' /Columns '.$options['iw'].'>>';
+        $this->objects[$id]['info']['DecodeParms']='<< /Predictor 15 /Colors '.$options['ncolor'].' /Columns '.$options['iw'].' /BitsPerComponent '.$options['bitsPerComponent'].'>>';
         if (strlen($options['pdata'])){
           $tmp = ' [ /Indexed /DeviceRGB '.(strlen($options['pdata'])/3-1).' ';
           $this->numObj++;
@@ -811,6 +981,14 @@ function o_image($id,$action,$options=''){
           $tmp.=$this->numObj.' 0 R';
           $tmp .=' ]';
           $this->objects[$id]['info']['ColorSpace'] = $tmp;
+          if (isset($options['transparency'])){
+            switch($options['transparency']['type']){
+              case 'indexed':
+                $tmp=' [ '.$options['transparency']['data'].' '.$options['transparency']['data'].'] ';
+                $this->objects[$id]['info']['Mask'] = $tmp;
+                break;
+            }
+          }
         } else {
           $this->objects[$id]['info']['ColorSpace']='/'.$options['color'];
         }
@@ -838,6 +1016,9 @@ function o_image($id,$action,$options=''){
   }
 }
 
+/**
+* encryption object.
+*/
 function o_encryption($id,$action,$options=''){
   if ($action!='new'){
     $o =& $this->objects[$id];
@@ -901,87 +1082,112 @@ function o_encryption($id,$action,$options=''){
   }
 }
       
-// ==============================================================================
-// ARC4 functions
+/**
+* ARC4 functions
+* A series of function to implement ARC4 encoding in PHP
+*/
 
-  function md5_16($string){
-    // calculate the 16 byte version of the 128 bit md5 digest of the string
-    $tmp = md5($string);
-    $out='';
-    for ($i=0;$i<=30;$i=$i+2){
-      $out.=chr(hexdec(substr($tmp,$i,2)));
-    }
-    return $out;
+/**
+* calculate the 16 byte version of the 128 bit md5 digest of the string
+*/
+function md5_16($string){
+  $tmp = md5($string);
+  $out='';
+  for ($i=0;$i<=30;$i=$i+2){
+    $out.=chr(hexdec(substr($tmp,$i,2)));
+  }
+  return $out;
+}
+
+/**
+* initialize the encryption for processing a particular object 
+*/
+function encryptInit($id){
+  $tmp = $this->encryptionKey;
+  $hex = dechex($id);
+  if (strlen($hex)<6){
+    $hex = substr('000000',0,6-strlen($hex)).$hex;
+  }
+  $tmp.= chr(hexdec(substr($hex,4,2))).chr(hexdec(substr($hex,2,2))).chr(hexdec(substr($hex,0,2))).chr(0).chr(0);
+  $key = $this->md5_16($tmp);
+  $this->ARC4_init(substr($key,0,10));
+}
+
+/**
+* initialize the ARC4 encryption
+*/
+function ARC4_init($key=''){
+  $this->arc4 = '';
+  // setup the control array
+  if (strlen($key)==0){
+    return;
+  }
+  $k = '';
+  while(strlen($k)<256){
+    $k.=$key;
+  }
+  $k=substr($k,0,256);
+  for ($i=0;$i<256;$i++){
+    $this->arc4 .= chr($i);
+  }
+  $j=0;
+  for ($i=0;$i<256;$i++){
+    $t = $this->arc4[$i];
+    $j = ($j + ord($t) + ord($k[$i]))%256;
+    $this->arc4[$i]=$this->arc4[$j];
+    $this->arc4[$j]=$t;
+  }    
+}
+
+/**
+* ARC4 encrypt a text string
+*/
+function ARC4($text){
+  $len=strlen($text);
+  $a=0;
+  $b=0;
+  $c = $this->arc4;
+  $out='';
+  for ($i=0;$i<$len;$i++){
+    $a = ($a+1)%256;
+    $t= $c[$a];
+    $b = ($b+ord($t))%256;
+    $c[$a]=$c[$b];
+    $c[$b]=$t;
+    $k = ord($c[(ord($c[$a])+ord($c[$b]))%256]);
+    $out.=chr(ord($text[$i]) ^ $k);
   }
   
-  function encryptInit($id){
-    // initialize the encryption for processing object $id
-    $tmp = $this->encryptionKey;
-    $hex = dechex($id);
-    $tmp.= chr(hexdec(substr($hex,0,2))).chr(hexdec(substr($hex,2,2))).chr(hexdec(substr($hex,4,2))).chr(0).chr(0);
-    $key = $this->md5_16($tmp);
-    $this->ARC4_init(substr($key,0,10));
-  }
+  return $out;
+}
 
-  function ARC4_init($key=''){
-    $this->arc4 = '';
-    // setup the control array
-    if (strlen($key)==0){
-      return;
-    }
-    $k = '';
-    while(strlen($k)<256){
-      $k.=$key;
-    }
-    $k=substr($k,0,256);
-    for ($i=0;$i<256;$i++){
-      $this->arc4 .= chr($i);
-    }
-    $j=0;
-    for ($i=0;$i<256;$i++){
-      $t = $this->arc4[$i];
-      $j = ($j + ord($t) + ord($k[$i]))%256;
-      $this->arc4[$i]=$this->arc4[$j];
-      $this->arc4[$j]=$t;
-    }    
-//    $this->key = $key;
-  }
+/**
+* functions which can be called to adjust or add to the document
+*/
 
-  function ARC4($text){
-    $len=strlen($text);
-    $a=0;
-    $b=0;
-    $c = $this->arc4;
-    $out='';
-    for ($i=0;$i<$len;$i++){
-      $a = ($a+1)%256;
-      $t= $c[$a];
-      $b = ($b+ord($t))%256;
-      $c[$a]=$c[$b];
-      $c[$b]=$t;
-      $k = ord($c[(ord($c[$a])+ord($c[$b]))%256]);
-      $out.=chr(ord($text[$i]) ^ $k);
-    }
-    
-    return $out;
-  }
-
-// ==============================================================================
-
+/**
+* add a link in the document to an external URL
+*/
 function addLink($url,$x0,$y0,$x1,$y1){
-  // add a link in the document.
   $this->numObj++;
   $info = array('type'=>'link','url'=>$url,'rect'=>array($x0,$y0,$x1,$y1));
   $this->o_annotation($this->numObj,'new',$info);
 }
 
+/**
+* add a link in the document to an internal destination (ie. within the document)
+*/
 function addInternalLink($label,$x0,$y0,$x1,$y1){
-  // add a link in the document.
   $this->numObj++;
   $info = array('type'=>'ilink','label'=>$label,'rect'=>array($x0,$y0,$x1,$y1));
   $this->o_annotation($this->numObj,'new',$info);
 }
 
+/**
+* set the encryption of the document
+* can be used to turn it on and/or set the passwords which it will have.
+* also the functions that the user will have are set here, such as print, modify, add
+*/
 function setEncryption($userPass='',$ownerPass='',$pc=array()){
   $p=bindec(11000000);
 
@@ -1009,10 +1215,15 @@ function setEncryption($userPass='',$ownerPass='',$pc=array()){
   }
 }
 
+/**
+* should be used for internal checks, not implemented as yet
+*/
 function checkAllHere(){
-  // make sure that anything that needs to be in the file has been included
 }
 
+/**
+* return the pdf stream as a string returned from the function
+*/
 function output($debug=0){
 
   if ($debug){
@@ -1053,8 +1264,13 @@ function output($debug=0){
   return $content;
 }
 
-// ==============================================================================
-
+/**
+* intialize a new document
+* if this is called on an existing document results may be unpredictable, but the existing document would be lost at minimum
+* this function is called automatically by the constructor function
+*
+* @access private
+*/
 function newDocument($pageSize=array(0,0,612,792)){
   $this->numObj=0;
   $this->objects = array();
@@ -1085,21 +1301,26 @@ function newDocument($pageSize=array(0,0,612,792)){
   $this->firstPageId = $this->currentContents;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* open the font file and return a php structure containing it.
+* first check if this one has been done before and saved in a form more suited to php
+* note that if a php serialized version does not exist it will try and make one, but will
+* require write access to the directory to do it... it is MUCH faster to have these serialized
+* files.
+*
+* @access private
+*/
 function openFont($font){
-  // open the font file and return a php structure containing it.
-  // first check if this one has been done before and saved in a form more suited to php
-  // note that if a php serialized version does not exist it will try and make one, but will
-  // require write access to the directory to do it... it is MUCH faster to have these serialized
-  // files.
-  
   // assume that $font contains both the path and perhaps the extension to the file, split them
   $pos=strrpos($font,'/');
   if ($pos===false){
-    $dir = './';
+      /**
+       XARAYA MODIFICATION
+      **/
+    $dir = FONT_LOCATION . '/';
     $name = $font;
   } else {
+    
     $dir=substr($font,0,$pos+1);
     $name=substr($font,$pos+1);
   }
@@ -1196,14 +1417,15 @@ function openFont($font){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* if the font is not loaded then load it and make the required object
+* else just make it the current font
+* the encoding array can contain 'encoding'=> 'none','WinAnsiEncoding','MacRomanEncoding' or 'MacExpertEncoding'
+* note that encoding='none' will need to be used for symbolic fonts
+* and 'differences' => an array of mappings between numbers 0->255 and character names.
+*
+*/
 function selectFont($fontName,$encoding='',$set=1){
-  // if the font is not loaded then load it and make the required object
-  // else just make it the current font
-  // the encoding array can contain 'encoding'=> 'none','WinAnsiEncoding','MacRomanEncoding' or 'MacExpertEncoding'
-  // note that encoding='none' will need to be used for symbolic fonts
-  //    and 'differences' => an array of mappings between numbers 0->255 and character names.
   if (!isset($this->fonts[$fontName])){
     // load the file
     $this->openFont($fontName);
@@ -1229,6 +1451,7 @@ function selectFont($fontName,$encoding='',$set=1){
         // then perhaps only the encoding has been set
         $options['encoding']=$encoding;
       }
+      $fontObj = $this->numObj;
       $this->o_font($this->numObj,'new',$options);
       $this->fonts[$fontName]['fontNum']=$this->numFonts;
       // if this is a '.afm' font, and there is a '.pfa' file to go with it ( as there
@@ -1249,14 +1472,13 @@ function selectFont($fontName,$encoding='',$set=1){
       $this->addMessage('selectFont: checking for - '.$fbfile);
       if (substr($fontName,-4)=='.afm' && strlen($fbtype) ){
         $adobeFontName = $this->fonts[$fontName]['FontName'];
-        $fontObj = $this->numObj;
+//        $fontObj = $this->numObj;
         $this->addMessage('selectFont: adding font file - '.$fbfile.' - '.$adobeFontName);
         // find the array of fond widths, and put that into an object.
         $firstChar = -1;
         $lastChar = 0;
         $widths = array();
         foreach ($this->fonts[$fontName]['C'] as $num=>$d){
-//          echo $num."<br>";
           if (intval($num)>0 || $num=='0'){
             if ($lastChar>0 && $num>$lastChar+1){
               for($i=$lastChar+1;$i<$num;$i++){
@@ -1268,6 +1490,20 @@ function selectFont($fontName,$encoding='',$set=1){
               $firstChar = $num;
             }
             $lastChar = $num;
+          }
+        }
+        // also need to adjust the widths for the differences array
+        if (isset($options['differences'])){
+          foreach($options['differences'] as $charNum=>$charName){
+            if ($charNum>$lastChar){
+              for($i=$lastChar+1;$i<=$charNum;$i++){
+                $widths[]=0;
+              }
+              $lastChar=$charNum;
+            }
+            if (isset($this->fonts[$fontName]['C'][$charName])){
+              $widths[$charNum-$firstChar]=$this->fonts[$fontName]['C'][$charName]['WX'];
+            }
           }
         }
         $this->addMessage('selectFont: FirstChar='.$firstChar);
@@ -1291,8 +1527,6 @@ function selectFont($fontName,$encoding='',$set=1){
         set_magic_quotes_runtime($tmp);
         fclose($fp);
 
-//        $data = substr($data,4);
-        
         // create the font descriptor
         $this->numObj++;
         $fontDescriptorId = $this->numObj;
@@ -1345,6 +1579,10 @@ function selectFont($fontName,$encoding='',$set=1){
         if ($fbtype=='ttf'){
           $tmp['SubType']='TrueType';
         }
+        $this->addMessage('adding extra info to font.('.$fontObj.')');
+        foreach($tmp as $fk=>$fv){
+          $this->addMessage($fk." : ".$fv);
+        }
         $this->o_font($fontObj,'add',$tmp);
 
       } else {
@@ -1369,22 +1607,25 @@ function selectFont($fontName,$encoding='',$set=1){
   return $this->currentFontNum;
 }
 
-// ------------------------------------------------------------------------------
-
-// returns the current font number, taking into account the settings of the 
-// currentTextState
-// note that this system is quite flexible, a <b><i> font can be completely different to a
-// <i><b> font, and even <b><b> will have to be defined within the family to have meaning
-// This function is to be called whenever the currentTextState is changed, it will update
-// the currentFont setting to whatever the appropriatte family one is.
-// If the user calls selectFont themselves then that will reset the currentBaseFont, and the currentFont
-// This function will change the currentFont to whatever it should be, but will not change the 
-// currentBaseFont.
+/**
+* sets up the current font, based on the font families, and the current text state
+* note that this system is quite flexible, a <b><i> font can be completely different to a
+* <i><b> font, and even <b><b> will have to be defined within the family to have meaning
+* This function is to be called whenever the currentTextState is changed, it will update
+* the currentFont setting to whatever the appropriatte family one is.
+* If the user calls selectFont themselves then that will reset the currentBaseFont, and the currentFont
+* This function will change the currentFont to whatever it should be, but will not change the 
+* currentBaseFont.
+*
+* @access private
+*/
 function setCurrentFont(){
   if (strlen($this->currentBaseFont)==0){
     // then assume an initial font
-//    $this->selectFont('./fonts/Helvetica.afm');
-    $this->selectFont('modules/reports/xarincludes/fonts/Helvetica.afm');
+      /**
+        XARAYA modification
+      **/
+      $this->selectFont(FONT_LOCATION . '/Helvetica.afm');
   }
   $cf = substr($this->currentBaseFont,strrpos($this->currentBaseFont,'/')+1);
   if (strlen($this->currentTextState)
@@ -1394,6 +1635,7 @@ function setCurrentFont(){
     // and this font has a family, and the current setting exists within it
     // select the font, then return it
     $nf = substr($this->currentBaseFont,0,strrpos($this->currentBaseFont,'/')+1).$this->fontFamilies[$cf][$this->currentTextState];
+    $this->addMessage("Calling selectfont with : $nf");
     $this->selectFont($nf,'',0);
     $this->currentFont = $nf;
     $this->currentFontNum = $this->fonts[$nf]['fontNum'];
@@ -1405,22 +1647,26 @@ function setCurrentFont(){
   }
 }
 
-// ------------------------------------------------------------------------------
-
-// function for the user to find out what the ID is of the first page that was created during
-// startup - useful if they wish to add something to it later.
+/**
+* function for the user to find out what the ID is of the first page that was created during
+* startup - useful if they wish to add something to it later.
+*/
 function getFirstPageId(){
   return $this->firstPageId;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* add content to the currently active object
+*
+* @access private
+*/
 function addContent($content){
   $this->objects[$this->currentContents]['c'].=$content;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* sets the colour for fill operations
+*/
 function setColor($r,$g,$b,$force=0){
   if ($r>=0 && ($force || $r!=$this->currentColour['r'] || $g!=$this->currentColour['g'] || $b!=$this->currentColour['b'])){
     $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$r).' '.sprintf('%.3f',$g).' '.sprintf('%.3f',$b).' rg';
@@ -1428,8 +1674,9 @@ function setColor($r,$g,$b,$force=0){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* sets the colour for stroke operations
+*/
 function setStrokeColor($r,$g,$b,$force=0){
   if ($r>=0 && ($force || $r!=$this->currentStrokeColour['r'] || $g!=$this->currentStrokeColour['g'] || $b!=$this->currentStrokeColour['b'])){
     $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$r).' '.sprintf('%.3f',$g).' '.sprintf('%.3f',$b).' RG';
@@ -1437,14 +1684,16 @@ function setStrokeColor($r,$g,$b,$force=0){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* draw a line from one set of coordinates to another
+*/
 function line($x1,$y1,$x2,$y2){
   $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$x1).' '.sprintf('%.3f',$y1).' m '.sprintf('%.3f',$x2).' '.sprintf('%.3f',$y2).' l S';
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* draw a bezier curve based on 4 control points
+*/
 function curve($x0,$y0,$x1,$y1,$x2,$y2,$x3,$y3){
   // in the current line style, draw a bezier curve from (x0,y0) to (x3,y3) using the other two points
   // as the control points for the curve.
@@ -1452,18 +1701,31 @@ function curve($x0,$y0,$x1,$y1,$x2,$y2,$x3,$y3){
   $this->objects[$this->currentContents]['c'].= ' '.sprintf('%.3f',$x2).' '.sprintf('%.3f',$y2).' '.sprintf('%.3f',$x3).' '.sprintf('%.3f',$y3).' c S';
 }
 
-// ------------------------------------------------------------------------------
+/**
+* draw a part of an ellipse
+*/
 function partEllipse($x0,$y0,$astart,$afinish,$r1,$r2=0,$angle=0,$nSeg=8){
   $this->ellipse($x0,$y0,$r1,$r2,$angle,$nSeg,$astart,$afinish,0);
 }
-// ------------------------------------------------------------------------------
 
-function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1){
-  // draws an ellipse in the current line style
-  // centered at $x0,$y0, radii $r1,$r2
-  // if $r2 is not set, then a circle is drawn
-  // nSeg is not allowed to be less than 2, as this will simply draw a line (and will even draw a 
-  // pretty crappy shape at 2, as we are approximating with bezier curves.
+/**
+* draw a filled ellipse
+*/
+function filledEllipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360){
+  return $this->ellipse($x0,$y0,$r1,$r2=0,$angle,$nSeg,$astart,$afinish,1,1);
+}
+
+/**
+* draw an ellipse
+* note that the part and filled ellipse are just special cases of this function
+*
+* draws an ellipse in the current line style
+* centered at $x0,$y0, radii $r1,$r2
+* if $r2 is not set, then a circle is drawn
+* nSeg is not allowed to be less than 2, as this will simply draw a line (and will even draw a 
+* pretty crappy shape at 2, as we are approximating with bezier curves.
+*/
+function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1,$fill=0){
   if ($r1==0){
     return;
   }
@@ -1512,33 +1774,36 @@ function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$clos
     $c0=$c1;
     $d0=$d1;    
   }
-  if ($close){
-    $this->objects[$this->currentContents]['c'].=' s'; // small 's' signifies closing the path as well
+  if ($fill){
+    $this->objects[$this->currentContents]['c'].=' f';
   } else {
-    $this->objects[$this->currentContents]['c'].=' S';
+    if ($close){
+      $this->objects[$this->currentContents]['c'].=' s'; // small 's' signifies closing the path as well
+    } else {
+      $this->objects[$this->currentContents]['c'].=' S';
+    }
   }
   if ($angle !=0){
     $this->objects[$this->currentContents]['c'].=' Q';
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* this sets the line drawing style.
+* width, is the thickness of the line in user units
+* cap is the type of cap to put on the line, values can be 'butt','round','square'
+*    where the diffference between 'square' and 'butt' is that 'square' projects a flat end past the
+*    end of the line.
+* join can be 'miter', 'round', 'bevel'
+* dash is an array which sets the dash pattern, is a series of length values, which are the lengths of the
+*   on and off dashes.
+*   (2) represents 2 on, 2 off, 2 on , 2 off ...
+*   (2,1) is 2 on, 1 off, 2 on, 1 off.. etc
+* phase is a modifier on the dash pattern which is used to shift the point at which the pattern starts. 
+*/
 function setLineStyle($width=1,$cap='',$join='',$dash='',$phase=0){
-  // this sets the line drawing style.
-  // width, is the thickness of the line in user units
-  // cap is the type of cap to put on the line, values can be 'butt','round','square'
-  //    where the diffference between 'square' and 'butt' is that 'square' projects a flat end past the
-  //    end of the line.
-  // join can be 'miter', 'round', 'bevel'
-  // dash is an array which sets the dash pattern, is a series of length values, which are the lengths of the
-  //   on and off dashes.
-  //   (2) represents 2 on, 2 off, 2 on , 2 off ...
-  //   (2,1) is 2 on, 1 off, 2 on, 1 off.. etc
-  // phase is a modifier on the dash pattern which is used to shift the point at which the pattern starts. 
 
   // this is quite inefficient in that it sets all the parameters whenever 1 is changed, but will fix another day
-
   $string = '';
   if ($width>0){
     $string.= $width.' w';
@@ -1562,8 +1827,9 @@ function setLineStyle($width=1,$cap='',$join='',$dash='',$phase=0){
   $this->objects[$this->currentContents]['c'].="\n".$string;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* draw a polygon, the syntax for this is similar to the GD polygon command
+*/
 function polygon($p,$np,$f=0){
   $this->objects[$this->currentContents]['c'].="\n";
   $this->objects[$this->currentContents]['c'].=sprintf('%.3f',$p[0]).' '.sprintf('%.3f',$p[1]).' m ';
@@ -1577,20 +1843,26 @@ function polygon($p,$np,$f=0){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* a filled rectangle, note that it is the width and height of the rectangle which are the secondary paramaters, not
+* the coordinates of the upper-right corner
+*/
 function filledRectangle($x1,$y1,$width,$height){
-  $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$x1).' '.sprintf('%.3f',$y1).' '.$width.' '.$height.' re f';
+  $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$x1).' '.sprintf('%.3f',$y1).' '.sprintf('%.3f',$width).' '.sprintf('%.3f',$height).' re f';
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* draw a rectangle, note that it is the width and height of the rectangle which are the secondary paramaters, not
+* the coordinates of the upper-right corner
+*/
 function rectangle($x1,$y1,$width,$height){
-  $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$x1).' '.sprintf('%.3f',$y1).' '.$width.' '.$height.' re S';
+  $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$x1).' '.sprintf('%.3f',$y1).' '.sprintf('%.3f',$width).' '.sprintf('%.3f',$height).' re S';
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* add a new page to the document
+* this also makes the new page the current active object
+*/
 function newPage($insert=0,$id=0,$pos='after'){
 
   // if there is a state saved, then go up the stack closing them
@@ -1635,8 +1907,10 @@ function newPage($insert=0,$id=0,$pos='after'){
   return $this->currentContents;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* output the pdf code, streaming it to the browser
+* the relevant headers are set so that hopefully the browser will recognise it
+*/
 function stream($options=''){
   // setting the options allows the adjustment of the headers
   // values at the moment are:
@@ -1664,30 +1938,44 @@ function stream($options=''){
   echo ltrim($tmp);
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* return the height in units of the current font in the given size
+*/
 function getFontHeight($size){
   if (!$this->numFonts){
-    $this->selectFont('./fonts/Helvetica');
+      /**
+       XARAYA modification
+      **/
+    $this->selectFont(FONT_LOCATION . '/Helvetica');
   }
   // for the current font, and the given size, what is the height of the font in user units
   $h = $this->fonts[$this->currentFont]['FontBBox'][3]-$this->fonts[$this->currentFont]['FontBBox'][1];
   return $size*$h/1000;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* return the font decender, this will normally return a negative number
+* if you add this number to the baseline, you get the level of the bottom of the font
+* it is in the pdf user units
+*/
 function getFontDecender($size){
   // note that this will most likely return a negative value
   if (!$this->numFonts){
-    $this->selectFont('./fonts/Helvetica');
+      /**
+       XARAYA modification
+      **/
+    $this->selectFont(FONT_LOCATION . '/Helvetica');
   }
   $h = $this->fonts[$this->currentFont]['FontBBox'][1];
   return $size*$h/1000;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* filter the text, this is applied to all text just before being inserted into the pdf document
+* it escapes the various things that need to be escaped, and so on
+*
+* @access private
+*/
 function filterText($text){
   $text = str_replace('\\','\\\\',$text);
   $text = str_replace('(','\(',$text);
@@ -1701,7 +1989,12 @@ function filterText($text){
   return $text;
 }
 
-// ------------------------------------------------------------------------------
+/**
+* given a start position and information about how text is to be laid out, calculate where 
+* on the page the text will end
+*
+* @access private
+*/
 function PRVTgetTextPosition($x,$y,$angle,$size,$wa,$text){
   // given this information return an array containing x and y for the end position as elements 0 and 1
   $w = $this->getTextWidth($size,$text);
@@ -1710,25 +2003,30 @@ function PRVTgetTextPosition($x,$y,$angle,$size,$wa,$text){
   $nspaces=count($words)-1;
   $w += $wa*$nspaces;
   $a = deg2rad((float)$angle);
-  return array(cos($a)*$w+$x,sin($a)*$w+$y);
+  return array(cos($a)*$w+$x,-sin($a)*$w+$y);
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* wrapper function for PRVTcheckTextDirective1
+*
+* @access private
+*/
 function PRVTcheckTextDirective(&$text,$i,&$f){
   $x=0;
   $y=0;
   return $this->PRVTcheckTextDirective1($text,$i,$f,0,$x,$y);
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* checks if the text stream contains a control directive
+* if so then makes some changes and returns the number of characters involved in the directive
+* this has been re-worked to include everything neccesary to fins the current writing point, so that
+* the location can be sent to the callback function if required
+* if the directive does not require a font change, then $f should be set to 0
+*
+* @access private
+*/
 function PRVTcheckTextDirective1(&$text,$i,&$f,$final,&$x,&$y,$size=0,$angle=0,$wordSpaceAdjust=0){
-  // checks if the text stream contains a control directive
-  // if so then makes some changes and returns the number of characters involved in the directive
-  // this has been re-worked to include everything neccesary to fins the current writing point, so that
-  // the location can be sent to the callback function if required
-  // if the directive does not require a font change, then $f should be set to 0
   $directive = 0;
   $j=$i;
   if ($text[$j]=='<'){
@@ -1736,6 +2034,9 @@ function PRVTcheckTextDirective1(&$text,$i,&$f,$final,&$x,&$y,$size=0,$angle=0,$
     switch($text[$j]){
       case '/':
         $j++;
+        if (strlen($text) <= $j){
+          return $directive;
+        }
         switch($text[$j]){
           case 'b':
           case 'i':
@@ -1774,12 +2075,22 @@ function PRVTcheckTextDirective1(&$text,$i,&$f,$final,&$x,&$y,$size=0,$angle=0,$
                 if ($final){
                   // need to assess the text position, calculate the text width to this point
                   // can use getTextWidth to find the text width I think
-//                  $parm = isset($bits[1])?$bits[1]:'';
                   $tmp = $this->PRVTgetTextPosition($x,$y,$angle,$size,$wordSpaceAdjust,substr($text,0,$i));
-                  $info = array('x'=>$tmp[0],'y'=>$tmp[1],'status'=>'end','p'=>$parm,'nCallback'=>$this->nCallback);
+                  $info = array('x'=>$tmp[0],'y'=>$tmp[1],'angle'=>$angle,'status'=>'end','p'=>$parm,'nCallback'=>$this->nCallback);
                   $x=$tmp[0];
                   $y=$tmp[1];
-                  $this->$func($info);
+                  $ret = $this->$func($info);
+                  if (is_array($ret)){
+                    // then the return from the callback function could set the position, to start with, later will do font colour, and font
+                    foreach($ret as $rk=>$rv){
+                      switch($rk){
+                        case 'x':
+                        case 'y':
+                          $$rk=$rv;
+                          break;
+                      }
+                    }
+                  }
                   // also remove from to the stack
                   // for simplicity, just take from the end, fix this another day
                   $this->nCallback--;
@@ -1830,7 +2141,7 @@ function PRVTcheckTextDirective1(&$text,$i,&$f,$final,&$x,&$y,$size=0,$angle=0,$
               // can use getTextWidth to find the text width I think
               // also add the text height and decender
               $tmp = $this->PRVTgetTextPosition($x,$y,$angle,$size,$wordSpaceAdjust,substr($text,0,$i));
-              $info = array('x'=>$tmp[0],'y'=>$tmp[1],'status'=>'start','p'=>$parm,'f'=>$func,'height'=>$this->getFontHeight($size),'decender'=>$this->getFontDecender($size));
+              $info = array('x'=>$tmp[0],'y'=>$tmp[1],'angle'=>$angle,'status'=>'start','p'=>$parm,'f'=>$func,'height'=>$this->getFontHeight($size),'decender'=>$this->getFontDecender($size));
               $x=$tmp[0];
               $y=$tmp[1];
               if (!isset($noClose) || !$noClose){
@@ -1839,7 +2150,18 @@ function PRVTcheckTextDirective1(&$text,$i,&$f,$final,&$x,&$y,$size=0,$angle=0,$
                 $info['nCallback']=$this->nCallback;
                 $this->callback[$this->nCallback]=$info;
               }
-              $this->$func($info);
+              $ret = $this->$func($info);
+              if (is_array($ret)){
+                // then the return from the callback function could set the position, to start with, later will do font colour, and font
+                foreach($ret as $rk=>$rv){
+                  switch($rk){
+                    case 'x':
+                    case 'y':
+                      $$rk=$rv;
+                      break;
+                  }
+                }
+              }
             }
           }
         }
@@ -1849,16 +2171,20 @@ function PRVTcheckTextDirective1(&$text,$i,&$f,$final,&$x,&$y,$size=0,$angle=0,$
   return $directive;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* add text to the document, at a specified location, size and angle on the page
+*/
 function addText($x,$y,$size,$text,$angle=0,$wordSpaceAdjust=0){
-  if (!$this->numFonts){$this->selectFont('./fonts/Helvetica');}
+    /**
+     XARAYA MODIFICATION
+    **/
+    if (!$this->numFonts){$this->selectFont(FONT_LOCATION . '/Helvetica');}
 
   // if there are any open callbacks, then they should be called, to show the start of the line
   if ($this->nCallback>0){
     for ($i=$this->nCallback;$i>0;$i--){
       // call each function
-      $info = array('x'=>$x,'y'=>$y,'status'=>'sol','p'=>$this->callback[$i]['p'],'nCallback'=>$this->callback[$i]['nCallback'],'height'=>$this->callback[$i]['height'],'decender'=>$this->callback[$i]['decender']);
+      $info = array('x'=>$x,'y'=>$y,'angle'=>$angle,'status'=>'sol','p'=>$this->callback[$i]['p'],'nCallback'=>$this->callback[$i]['nCallback'],'height'=>$this->callback[$i]['height'],'decender'=>$this->callback[$i]['decender']);
       $func = $this->callback[$i]['f'];
       $this->$func($info);
     }
@@ -1931,7 +2257,7 @@ function addText($x,$y,$size,$text,$angle=0,$wordSpaceAdjust=0){
     for ($i=$this->nCallback;$i>0;$i--){
       // call each function
       $tmp = $this->PRVTgetTextPosition($x,$y,$angle,$size,$wordSpaceAdjust,$text);
-      $info = array('x'=>$tmp[0],'y'=>$tmp[1],'status'=>'eol','p'=>$this->callback[$i]['p'],'nCallback'=>$this->callback[$i]['nCallback'],'height'=>$this->callback[$i]['height'],'decender'=>$this->callback[$i]['decender']);
+      $info = array('x'=>$tmp[0],'y'=>$tmp[1],'angle'=>$angle,'status'=>'eol','p'=>$this->callback[$i]['p'],'nCallback'=>$this->callback[$i]['nCallback'],'height'=>$this->callback[$i]['height'],'decender'=>$this->callback[$i]['decender']);
       $func = $this->callback[$i]['f'];
       $this->$func($info);
     }
@@ -1939,8 +2265,10 @@ function addText($x,$y,$size,$text,$angle=0,$wordSpaceAdjust=0){
 
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* calculate how wide a given text string will be on a page, at a given size.
+* this can be called externally, but is alse used by the other class functions
+*/
 function getTextWidth($size,$text){
   // this function should not change any of the settings, though it will need to
   // track any directives which change during calculation, so copy them at the start
@@ -1948,7 +2276,10 @@ function getTextWidth($size,$text){
   $store_currentTextState = $this->currentTextState;
 
   if (!$this->numFonts){
-    $this->selectFont('./fonts/Helvetica');
+      /**
+       XARAYA MODIFICATION
+      **/
+      $this->selectFont(FONT_LOCATION . '/Helvetica');
   }
 
   // converts a number or a float to a string so it can get the width
@@ -1988,8 +2319,11 @@ function getTextWidth($size,$text){
   return $w*$size/1000;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* do a part of the calculation for sorting out the justification of the text
+*
+* @access private
+*/
 function PRVTadjustWrapText($text,$actual,$width,&$x,&$adjust,$justification){
   switch ($justification){
     case 'left':
@@ -2015,8 +2349,12 @@ function PRVTadjustWrapText($text,$actual,$width,&$x,&$adjust,$justification){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* add text to the page, but ensure that it fits within a certain width
+* if it does not fit then put in as much as possible, splitting at word boundaries
+* and return the remainder.
+* justification and angle can also be specified for the text
+*/
 function addTextWrap($x,$y,$width,$size,$text,$justification='left',$angle=0,$test=0){
   // this will display the text, and if it goes beyond the width $width, will backtrack to the 
   // previous space or hyphen, and return the remainder of the text.
@@ -2027,7 +2365,8 @@ function addTextWrap($x,$y,$width,$size,$text,$justification='left',$angle=0,$te
   // but will need to be re-set before printing, so that the chars work out right
   $store_currentTextState = $this->currentTextState;
 
-  if (!$this->numFonts){$this->selectFont('./fonts/Helvetica');}
+  // XARAYA MODIFICATION
+  if (!$this->numFonts){$this->selectFont(FONT_LOCATION.'/Helvetica');}
   if ($width<=0){
     // error, pretend it printed ok, otherwise risking a loop
     return '';
@@ -2127,7 +2466,12 @@ function addTextWrap($x,$y,$width,$size,$text,$justification='left',$angle=0,$te
   return '';
 }
 
-// ------------------------------------------------------------------------------
+/**
+* this will be called at a new page to return the state to what it was on the 
+* end of the previous page, before the stack was closed down
+* This is to get around not being able to have open 'q' across pages
+*
+*/
 function saveState($pageEnd=0){
   if ($pageEnd){
     // this will be called at a new page to return the state to what it was on the 
@@ -2149,8 +2493,9 @@ function saveState($pageEnd=0){
   $this->objects[$this->currentContents]['c'].="\nq";
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* restore a previously saved state
+*/
 function restoreState($pageEnd=0){
   if (!$pageEnd){
     $n = $this->nStateStack;
@@ -2164,13 +2509,13 @@ function restoreState($pageEnd=0){
   $this->objects[$this->currentContents]['c'].="\nQ";
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* make a loose object, the output will go into this object, until it is closed, then will revert to
+* the current one.
+* this object will not appear until it is included within a page.
+* the function will return the object number
+*/
 function openObject(){
-  // make a loose object, the output will go into this object, until it is closed, then will revert to
-  // the current one.
-  // this object will not appear until it is included within a page.
-  // the function will return the object number
   $this->nStack++;
   $this->stack[$this->nStack]=array('c'=>$this->currentContents,'p'=>$this->currentPage);
   // add a new object of the content type, to hold the data flow
@@ -2182,8 +2527,9 @@ function openObject(){
   return $this->numObj;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* open an existing object for editing
+*/
 function reopenObject($id){
    $this->nStack++;
    $this->stack[$this->nStack]=array('c'=>$this->currentContents,'p'=>$this->currentPage);
@@ -2194,8 +2540,9 @@ function reopenObject($id){
    }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* close an object
+*/
 function closeObject(){
   // close the object, as long as there was one open in the first place, which will be indicated by
   // an objectId on the stack.
@@ -2208,8 +2555,9 @@ function closeObject(){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* stop an object from appearing on pages from this point on
+*/
 function stopObject($id){
   // if an object has been appearing on pages up to now, then stop it, this page will
   // be the last one that could contian it.
@@ -2218,8 +2566,9 @@ function stopObject($id){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* after an object has been created, it wil only show if it has been added, using this function.
+*/
 function addObject($id,$options='add'){
   // add the specified object to the page
   if (isset($this->looseObjects[$id]) && $this->currentContents!=$id){
@@ -2263,8 +2612,9 @@ function addObject($id,$options='add'){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* add content to the documents info object
+*/
 function addInfo($label,$value=0){
   // this will only work if the label is one of the valid ones.
   // modify this so that arrays can be passed as well.
@@ -2279,8 +2629,9 @@ function addInfo($label,$value=0){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* set the viewer preferences of the document, it is up to the browser to obey these.
+*/
 function setPreferences($label,$value=0){
   // this will only work if the label is one of the valid ones.
   if (is_array($label)){
@@ -2292,6 +2643,11 @@ function setPreferences($label,$value=0){
   }
 }
 
+/**
+* extract an integer from a position in a byte stream
+*
+* @access private
+*/
 function PRVT_getBytes(&$data,$pos,$num){
   // return the integer represented by $num bytes from $pos within $data
   $ret=0;
@@ -2302,7 +2658,10 @@ function PRVT_getBytes(&$data,$pos,$num){
   return $ret;
 }
 
-// ------------------------------------------------------------------------------
+/**
+* add a PNG image into the document, from a file
+* this should work with remote files
+*/
 function addPngFromFile($file,$x,$y,$w=0,$h=0){
   // read in a png file, interpret it, then add to the system
   $error=0;
@@ -2310,11 +2669,14 @@ function addPngFromFile($file,$x,$y,$w=0,$h=0){
   set_magic_quotes_runtime(0);
   $fp = @fopen($file,'rb');
   if ($fp){
-    $data = fread($fp,filesize($file));
+    $data='';
+    while(!feof($fp)){
+      $data .= fread($fp,1024);
+    }
     fclose($fp);
   } else {
     $error = 1;
-    $errormsg = 'trouble opening file';
+    $errormsg = 'trouble opening file: '.$file;
   }
   set_magic_quotes_runtime($tmp);
   
@@ -2350,6 +2712,7 @@ function addPngFromFile($file,$x,$y,$w=0,$h=0){
           $info['compressionMethod']=ord($data[$p+18]);
           $info['filterMethod']=ord($data[$p+19]);
           $info['interlaceMethod']=ord($data[$p+20]);
+//print_r($info);
           $haveHeader=1;
           if ($info['compressionMethod']!=0){
             $error=1;
@@ -2366,6 +2729,51 @@ function addPngFromFile($file,$x,$y,$w=0,$h=0){
         case 'IDAT':
           $idata.=substr($data,$p+8,$chunkLen);
           break;
+        case 'tRNS': 
+          //this chunk can only occur once and it must occur after the PLTE chunk and before IDAT chunk 
+          //print "tRNS found, color type = ".$info['colorType']."<BR>"; 
+          $transparency = array();
+          if ($info['colorType'] == 3) { // indexed color, rbg 
+          /* corresponding to entries in the plte chunk 
+          Alpha for palette index 0: 1 byte 
+          Alpha for palette index 1: 1 byte 
+          ...etc... 
+          */ 
+            // there will be one entry for each palette entry. up until the last non-opaque entry.
+            // set up an array, stretching over all palette entries which will be o (opaque) or 1 (transparent)
+            $transparency['type']='indexed';
+            $numPalette = strlen($pdata)/3;
+            $trans=0;
+            for ($i=$chunkLen;$i>=0;$i--){
+              if (ord($data[$p+8+$i])==0){
+                $trans=$i;
+              }
+            }
+            $transparency['data'] = $trans;
+            
+          } elseif($info['colorType'] == 0) { // grayscale 
+          /* corresponding to entries in the plte chunk 
+          Gray: 2 bytes, range 0 .. (2^bitdepth)-1 
+          */ 
+//            $transparency['grayscale']=$this->PRVT_getBytes($data,$p+8,2); // g = grayscale 
+            $transparency['type']='indexed';
+            $transparency['data'] = ord($data[$p+8+1]);
+          
+          } elseif($info['colorType'] == 2) { // truecolor 
+          /* corresponding to entries in the plte chunk 
+          Red: 2 bytes, range 0 .. (2^bitdepth)-1 
+          Green: 2 bytes, range 0 .. (2^bitdepth)-1 
+          Blue: 2 bytes, range 0 .. (2^bitdepth)-1 
+          */ 
+            $transparency['r']=$this->PRVT_getBytes($data,$p+8,2); // r from truecolor 
+            $transparency['g']=$this->PRVT_getBytes($data,$p+10,2); // g from truecolor 
+            $transparency['b']=$this->PRVT_getBytes($data,$p+12,2); // b from truecolor 
+          
+          } else { 
+          //unsupported transparency type 
+          } 
+          // KS End new code 
+          break; 
         default:
           break;
       }
@@ -2377,6 +2785,10 @@ function addPngFromFile($file,$x,$y,$w=0,$h=0){
       $error = 1;
       $errormsg = 'information header is missing';
     }
+    if (isset($info['interlaceMethod']) && $info['interlaceMethod']){
+      $error = 1;
+      $errormsg = 'There appears to be no support for interlaced images in pdf.';
+    }
   }
 
   if (!$error && $info['bitDepth'] > 8){
@@ -2387,7 +2799,7 @@ function addPngFromFile($file,$x,$y,$w=0,$h=0){
   if (!$error){
     if ($info['colorType']!=2 && $info['colorType']!=0 && $info['colorType']!=3){
       $error = 1;
-      $errormsg = 'transparancey not supported';
+      $errormsg = 'transparancey alpha channel not supported, transparency only supported for palette images.';
     } else {
       switch ($info['colorType']){
         case 3:
@@ -2406,7 +2818,7 @@ function addPngFromFile($file,$x,$y,$w=0,$h=0){
     }
   }
   if ($error){
-    $this->addMessage('PNG error - '.$errormsg);
+    $this->addMessage('PNG error - ('.$file.') '.$errormsg);
     return;
   }
   if ($w==0){
@@ -2415,23 +2827,29 @@ function addPngFromFile($file,$x,$y,$w=0,$h=0){
   if ($h==0){
     $h=$w*$info['height']/$info['width'];
   }
-
+//print_r($info);
   // so this image is ok... add it in.
   $this->numImages++;
   $im=$this->numImages;
   $label='I'.$im;
   $this->numObj++;
 //  $this->o_image($this->numObj,'new',array('label'=>$label,'data'=>$idata,'iw'=>$w,'ih'=>$h,'type'=>'png','ic'=>$info['width']));
-  $this->o_image($this->numObj,'new',array('label'=>$label,'data'=>$idata,'bitsPerComponent'=>$info['bitDepth'],'pdata'=>$pdata
-                                      ,'iw'=>$info['width'],'ih'=>$info['height'],'type'=>'png','color'=>$color,'ncolor'=>$ncolor));
+  $options = array('label'=>$label,'data'=>$idata,'bitsPerComponent'=>$info['bitDepth'],'pdata'=>$pdata
+                                      ,'iw'=>$info['width'],'ih'=>$info['height'],'type'=>'png','color'=>$color,'ncolor'=>$ncolor);
+  if (isset($transparency)){
+    $options['transparency']=$transparency;
+  }
+  $this->o_image($this->numObj,'new',$options);
 
   $this->objects[$this->currentContents]['c'].="\nq";
-  $this->objects[$this->currentContents]['c'].="\n".$w." 0 0 ".$h." ".$x." ".$y." cm";
+  $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$w)." 0 0 ".sprintf('%.3f',$h)." ".sprintf('%.3f',$x)." ".sprintf('%.3f',$y)." cm";
   $this->objects[$this->currentContents]['c'].="\n/".$label.' Do';
   $this->objects[$this->currentContents]['c'].="\nQ";
 }
-// ------------------------------------------------------------------------------
 
+/**
+* add a JPEG image into the document, from a file
+*/
 function addJpegFromFile($img,$x,$y,$w=0,$h=0){
   // attempt to add a jpeg image straight from a file, using no GD commands
   // note that this function is unable to operate on a remote file.
@@ -2443,9 +2861,15 @@ function addJpegFromFile($img,$x,$y,$w=0,$h=0){
   $tmp=getimagesize($img);
   $imageWidth=$tmp[0];
   $imageHeight=$tmp[1];
-    
+
+  if (isset($tmp['channels'])){
+    $channels = $tmp['channels'];
+  } else {
+    $channels = 3;
+  }
+
   if ($w<=0 && $h<=0){
-    return;
+    $w=$imageWidth;
   }
   if ($w==0){
     $w=$h/$imageHeight*$imageWidth;
@@ -2463,11 +2887,14 @@ function addJpegFromFile($img,$x,$y,$w=0,$h=0){
   
   fclose($fp);
 
-  $this->addJpegImage_common($data,$x,$y,$w,$h,$imageWidth,$imageHeight);
+  $this->addJpegImage_common($data,$x,$y,$w,$h,$imageWidth,$imageHeight,$channels);
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* add an image into the document, from a GD object
+* this function is not all that reliable, and I would probably encourage people to use 
+* the file based functions
+*/
 function addImage(&$img,$x,$y,$w=0,$h=0,$quality=75){
   // add a new image into the current location, as an external object
   // add the image at $x,$y, and with width and height as defined by $w & $h
@@ -2506,32 +2933,47 @@ function addImage(&$img,$x,$y,$w=0,$h=0,$quality=75){
 
   $tmp = get_magic_quotes_runtime();
   set_magic_quotes_runtime(0);
-  $data = fread($fp,filesize($tmpName));
+  $fp = @fopen($tmpName,'rb');
+  if ($fp){
+    $data='';
+    while(!feof($fp)){
+      $data .= fread($fp,1024);
+    }
+    fclose($fp);
+  } else {
+    $error = 1;
+    $errormsg = 'trouble opening file';
+  }
+//  $data = fread($fp,filesize($tmpName));
   set_magic_quotes_runtime($tmp);
-  fclose($fp);
+//  fclose($fp);
   unlink($tmpName);
   $this->addJpegImage_common($data,$x,$y,$w,$h,$imageWidth,$imageHeight);
 }
 
-// ------------------------------------------------------------------------------
-
-function addJpegImage_common(&$data,$x,$y,$w=0,$h=0,$imageWidth,$imageHeight){
+/**
+* common code used by the two JPEG adding functions
+*
+* @access private
+*/
+function addJpegImage_common(&$data,$x,$y,$w=0,$h=0,$imageWidth,$imageHeight,$channels=3){
   // note that this function is not to be called externally
   // it is just the common code between the GD and the file options
   $this->numImages++;
   $im=$this->numImages;
   $label='I'.$im;
   $this->numObj++;
-  $this->o_image($this->numObj,'new',array('label'=>$label,'data'=>$data,'iw'=>$imageWidth,'ih'=>$imageHeight));
+  $this->o_image($this->numObj,'new',array('label'=>$label,'data'=>$data,'iw'=>$imageWidth,'ih'=>$imageHeight,'channels'=>$channels));
 
   $this->objects[$this->currentContents]['c'].="\nq";
-  $this->objects[$this->currentContents]['c'].="\n".$w." 0 0 ".$h." ".$x." ".$y." cm";
+  $this->objects[$this->currentContents]['c'].="\n".sprintf('%.3f',$w)." 0 0 ".sprintf('%.3f',$h)." ".sprintf('%.3f',$x)." ".sprintf('%.3f',$y)." cm";
   $this->objects[$this->currentContents]['c'].="\n/".$label.' Do';
   $this->objects[$this->currentContents]['c'].="\nQ";
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* specify where the document should open when it first starts
+*/
 function openHere($style,$a=0,$b=0,$c=0){
   // this function will open the document at a specified page, in a specified style
   // the values for style, and the required paramters are:
@@ -2549,8 +2991,9 @@ function openHere($style,$a=0,$b=0,$c=0){
   $this->o_catalog($id,'openHere',$this->numObj);
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* create a labelled destination within the document
+*/
 function addDestination($label,$style,$a=0,$b=0,$c=0){
   // associates the given label with the destination, it is done this way so that a destination can be specified after
   // it has been linked to
@@ -2562,8 +3005,11 @@ function addDestination($label,$style,$a=0,$b=0,$c=0){
   $this->destinations["$label"]=$id;
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* define font families, this is used to initialize the font families for the default fonts
+* and for the user to add new ones for their fonts. The default bahavious can be overridden should
+* that be desired.
+*/
 function setFontFamily($family,$options=''){
   if (!is_array($options)){
     if ($family=='init'){
@@ -2598,13 +3044,65 @@ function setFontFamily($family,$options=''){
   }
 }
 
-// ------------------------------------------------------------------------------
-
+/**
+* used to add messages for use in debugging
+*/
 function addMessage($message){
+    /**
+     XARAYA modification
+    **/
+    if(function_exists('xarLogMessage')) {
+        xarLogMessage('PDF-BACKEND: ' . $message);
+    }
   $this->messages.=$message."\n";
 }
 
-// ------------------------------------------------------------------------------
+/**
+* a few functions which should allow the document to be treated transactionally.
+*/
+function transaction($action){
+  switch ($action){
+    case 'start':
+      // store all the data away into the checkpoint variable
+      $data = get_object_vars($this);
+      $this->checkpoint = $data;
+      unset($data);
+      break;
+    case 'commit':
+      if (is_array($this->checkpoint) && isset($this->checkpoint['checkpoint'])){
+        $tmp = $this->checkpoint['checkpoint'];
+        $this->checkpoint = $tmp;
+        unset($tmp);
+      } else {
+        $this->checkpoint='';
+      }
+      break;
+    case 'rewind':
+      // do not destroy the current checkpoint, but move us back to the state then, so that we can try again
+      if (is_array($this->checkpoint)){
+        // can only abort if were inside a checkpoint
+        $tmp = $this->checkpoint;
+        foreach ($tmp as $k=>$v){
+          if ($k != 'checkpoint'){
+            $this->$k=$v;
+          }
+        }
+        unset($tmp);
+      }
+      break;
+    case 'abort':
+      if (is_array($this->checkpoint)){
+        // can only abort if were inside a checkpoint
+        $tmp = $this->checkpoint;
+        foreach ($tmp as $k=>$v){
+          $this->$k=$v;
+        }
+        unset($tmp);
+      }
+      break;
+  }
+
+}
 
 } // end of class
 

@@ -104,7 +104,7 @@ class PDFWrapper_ezPDF extends PDFWrapper {
     // Font functions
     function SetFont($fontname, $size, $bold, $italic, $underline) {
 		$this->curFontSize=$size;
-        $this->p->SelectFont(dirname(__FILE__)."/fonts/".$fontname.".afm");
+        $this->p->SelectFont($fontname);
     }
     
     // Text functions

@@ -75,7 +75,9 @@ function reports_user_generate($args) {
 
     $content = ltrim($content);
     // copied from stream() function in class.pdf.php
+    // Poor man's debugger: comment first line, enable second
     header("Content-type: application/pdf");
+    // header("Content-type: text/plain");
     header("Content-Length: ".strlen($content));
     $fileName = (isset($options['Content-Disposition'])?$options['Content-Disposition']:'file.pdf');
     header("Content-Disposition: inline; filename=".$fileName);
