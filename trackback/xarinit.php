@@ -54,7 +54,7 @@ function trackback_init()
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['trackback'],
-                             array('name'   => 'xar_moduleid',
+                             array('name'   => 'i_'.xarDBGetSiteTablePrefix().'_trackback_moduleid',
                                    'fields' => array('xar_moduleid'),
                                    'unique' => false));
 
@@ -62,7 +62,7 @@ function trackback_init()
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['trackback'],
-                             array('name'   => 'xar_itemid',
+                             array('name'   => 'i_'.xarDBGetSiteTablePrefix().'_trackback_itemid',
                                    'fields' => array('xar_itemid'),
                                    'unique' => false));
 
@@ -70,7 +70,7 @@ function trackback_init()
     if (!$result) return;
 
     $query = xarDBCreateIndex($xartable['trackback'],
-                             array('name'   => 'xar_url',
+                             array('name'   => 'i_'.xarDBGetSiteTablePrefix().'_trackback_url',
                                    'fields' => array('xar_url'),
                                    'unique' => false));
 
