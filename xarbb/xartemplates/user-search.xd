@@ -1,0 +1,147 @@
+<xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
+</xar:if>
+
+<h2>
+    <xar:mlstring>
+        Search in xarBB
+    </xar:mlstring>
+</h2>
+
+<xar:if condition="empty($topics) AND empty($replies) AND !empty($hide)">
+    <h3>
+        <xar:mlstring>
+            No topics found matching your criteria.
+        </xar:mlstring>
+    </h3>
+</xar:if>
+
+<xar:if condition="!empty($topics)">
+    <br />
+    <h3>
+        <xar:mlstring>
+            Topics Found
+        </xar:mlstring>
+        :
+    </h3>
+	<div class="xarbb-tablewrapper">
+		<table>
+			<tr>
+				<th>
+					<xar:mlstring>
+						Topic 
+					</xar:mlstring>
+				</th>
+				<th>
+					<xar:mlstring>
+						Author 
+					</xar:mlstring>
+				</th>
+			</tr>
+			<xar:loop name="$topics">
+				<tr>
+					<td class="xar-norm forumname">
+						<xar:if condition="$loop:item['xar_tstatus'] eq 5">
+							<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_tpost']))#">
+								#$loop:item['xar_ttitle']# 
+							</a>
+							<xar:else />
+							<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_tid']))#">
+								#$loop:item['xar_ttitle']# 
+							</a>
+						</xar:if>
+					</td>
+					<td class="xar-accent authorname">
+						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_tposter']))#">
+							#$loop:item['xar_author']# 
+						</a>
+					</td>
+				</tr>
+			</xar:loop>
+		<xar:if condition="empty($replies)">
+			</table>
+		</div>
+		</xar:if>
+</xar:if>
+
+
+<xar:if condition="!empty($replies)">
+	<xar:if condition="empty($topics)">
+		<br />
+		<h3>
+			<xar:mlstring>
+				Topics Found
+			</xar:mlstring>
+			:
+		</h3>
+		<div class="xarbb-tablewrapper">
+			<table>
+				<tr>
+					<th>
+						<xar:mlstring>
+							Topic 
+						</xar:mlstring>
+					</th>
+					<th>
+						<xar:mlstring>
+							Author 
+						</xar:mlstring>
+					</th>
+				</tr>
+	</xar:if>
+			<xar:loop name="$replies">
+				<tr>
+					<td class="xar-norm forumname">
+						<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['xar_objectid']))#">
+							#$loop:item['xar_title']# 
+						</a>
+					</td>
+					<td class="xar-accent authorname">
+						<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['xar_author']))#">
+							#$loop:item['xar_name']# 
+						</a>
+					</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+
+</xar:if>
+
+<p>
+<xar:mlstring>
+    Search on
+</xar:mlstring>
+: 
+</p>
+<xar:if condition="$header['title'] eq '1'">
+    <input type="checkbox" name="header[title]" value="1" checked />
+    <xar:else />
+    <input type="checkbox" name="header[title]" value="1" />
+</xar:if>
+<label for="header[title]">
+    <xar:mlstring>
+        Title
+    </xar:mlstring>
+</label>
+<br />
+<xar:if condition="$header['text'] eq '1'">
+    <input type="checkbox" name="header[text]" value="1" checked />
+    <xar:else />
+    <input type="checkbox" name="header[text]" value="1" />
+</xar:if>
+<label for="header[text]">
+    <xar:mlstring>
+        Text
+    </xar:mlstring>
+</label>
+<br />
+<xar:if condition="$header['author'] eq '1'">
+    <input type="checkbox" name="header[author]" value="1" checked />
+    <xar:else />
+    <input type="checkbox" name="header[author]" value="1" />
+</xar:if>
+<xar:mlstring>
+    Author
+</xar:mlstring>
+<br />
+<br />
