@@ -37,6 +37,9 @@ function weather_userapi_encode_shorturl(&$params)
             $path = "/$module/search/";
             break;
             
+        case 'modifyconfig':
+            $path = "/$module/modify/";
+            break;
     }
     if(isset($params['xwloc'])) {
         $path .= $params['xwloc'].'/';

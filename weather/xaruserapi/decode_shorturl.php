@@ -20,9 +20,7 @@ function weather_userapi_decode_shorturl(&$params)
             // this should be a location
             $args['xwloc'] = $params[3];
         }   
-    }
-    
-    if($params[1] == 'extended') {
+    } elseif($params[1] == 'extended') {
         $func = 'extForecast';
         if(isset($params[2]) && $params[2] == 'details') {
            $func = 'extForecastDetails';
@@ -34,10 +32,18 @@ function weather_userapi_decode_shorturl(&$params)
             // this should be a location
             $args['xwloc'] = $params[3];
         } 
-    }
-    
-    if($params[1] == 'search') {
-        $func = 'search'; 
+    } elseif($params[1] == 'search') {
+        $func = 'search';
+        if(isset($params[2])) {
+            // this should be a location
+            $args['xwloc'] = $params[2];
+        } 
+    } elseif($params[1] == 'modify') {
+        $func = 'modifyconfig'; 
+        if(isset($params[2])) {
+            // this should be a location
+            $args['xwloc'] = $params[2];
+        } 
     }
     
     // return the decoded information
