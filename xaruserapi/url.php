@@ -18,7 +18,7 @@ function bbcode_userapi_url($args)
 
     // [url=www.phpbb.com]phpBB[/url] code.. (no xxxx:// prefix).
     $patterns[3] = "#\[url=(.*?)\](.*?)\[/url\]#si";
-    $replacements[3] = xarTplModule('bbcode','user', 'url', array('replace1' => '\\1', 'replace2' => '\\2'));
+    $replacements[3] = xarTplModule('bbcode','user', 'url', array('replace1' => '\\1', 'replace4' => '\\2'));
 
     $message = preg_replace($patterns, $replacements, $message);
 

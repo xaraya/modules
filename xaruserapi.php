@@ -176,15 +176,16 @@ function bbcode_encode($message, $is_html_disabled)
     if ($dotransform == 1){
         $transformtype = xarModGetVar('bbcode', 'transformtype');
         if ($transformtype == 1){
-            $message = preg_replace("/\n/si","<br />",$message);
+            $message = nl2br($message);
         } elseif ($transformtype == 2){
-            $message = preg_replace("/\n/si","</p><p>",$message);
+            $message = nl2p($message);
+            $message = br2p($message);
         }
-        $message = str_replace ("<p></p>", "", $message);
     }
 
     // Remove our padding from the string..
     $message = substr($message, 1);
+    //$test = var_export($message); return "<pre>$test</pre>";
     return $message;
 } 
 
@@ -552,4 +553,70 @@ function bbcode_br2nl($str)
 {
     return preg_replace("=<br( />|([\s/][^>]*)>)\r?\n?=i", "\n", $str);
 }
+   /**
+   * replacement for php's nl2br tag that produces more designer friendly html
+   *
+   * Modified from: http://www.php-editors.com/contest/1/51-read.html
+   *
+   * @param string $text
+   * @param string $cssClass
+   * @return string
+   */
+   function nl2p($text, $cssClass=''){
+
+     // Return if there are no line breaks.
+     if (!strstr($text, "\n")) {
+         return $text;
+     }
+
+     // Add Optional css class
+     if (!empty($cssClass)) {
+         $cssClass = ' class="' . $cssClass . '" ';
+     }
+
+     // put all text into <p> tags
+     $text = '<p' . $cssClass . '>' . $text . '</p>';
+
+     // replace all newline characters with paragraph
+     // ending and starting tags
+     $text = str_replace("\n", "</p>\n<p" . $cssClass . '>', $text);
+
+     // remove empty paragraph tags & any cariage return characters
+     $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "\r"), '', $text);
+
+     return $text;
+
+   } // end nl2p
+
+  /**
+   * expanding on the nl2p tag above to convert user contributed
+   * <br />'s to <p>'s so it displays more nicely.
+   *
+   * @param string $text
+   * @param string $cssClass
+   * @return string
+   */
+   function br2p($text, $cssClass=''){
+
+     if (!eregi('<br', $text)) {
+         return $text;
+     }
+
+     if (!empty($cssClass)) {
+         $cssClass = ' class="' . $cssClass . '" ';
+     }
+
+     // put all text into <p> tags
+     $text = '<p' . $cssClass . '>' . $text . '</p>';
+
+     // replace all break tags with paragraph
+     // ending and starting tags
+     $text = str_replace(array('<br>', '<br />', '<BR>', '<BR />'), "</p>\n<p" . $cssClass . '>', $text);
+
+     // remove empty paragraph tags
+     $text = str_replace(array('<p' . $cssClass . '></p>', '<p></p>', "<p>\n</p>"), '', $text);
+
+     return $text;
+}
+
 ?>
