@@ -28,18 +28,20 @@ function categories_userapi_decode_shorturl($params)
     } elseif (preg_match('/^(\d+)/',$params[1],$matches)) {
         // something that starts with a number must be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)
-        $cid = $matches[1];
-        $args['cid'] = $cid;
+        $catid = $matches[1];
+        $args['catid'] = $catid;
         return array('main', $args);
 
     } elseif (preg_match('/^(\w+)/',$params[1],$matches)) {
         $list = $params;
         array_shift($list);
         $name = join('/',$list);
-        $cid = xarModAPIFunc('categories','user','name2cid',
-                            array('name' => $name));
-        if (!empty($cid)) {
-            $args['cid'] = $cid;
+        $catid = xarModAPIFunc('categories','user','name2cid',
+                               array('name' => $name,
+                                     // for DMOZ-like URLs
+                                     'usedescr' => 1));
+        if (!empty($catid)) {
+            $args['catid'] = $catid;
         }
         return array('main', $args);
 
@@ -47,12 +49,12 @@ function categories_userapi_decode_shorturl($params)
         // the first part might be something variable like a category name
         // In order to match that, you'll have to retrieve all relevant
         // categories for this module, and compare against them...
-        // $cid = xarModGetVar('example','cids');
+        // $catid = xarModGetVar('example','cids');
         // if (xarModAPILoad('categories','user')) {
         //     $cats = xarModAPIFunc('categories',
         //                          'user',
         //                          'getcat',
-        //                          array('cid' => $cid,
+        //                          array('cid' => $catid,
         //                                'return_itself' => true,
         //                                'getchildren' => true));
         //     // lower-case for fanciful search engines/people
@@ -66,7 +68,7 @@ function categories_userapi_decode_shorturl($params)
         //     }
         //     // check if we found a matching category
         //     if (!empty($foundcid)) {
-        //         $args['cid'] = $foundcid;
+        //         $args['catid'] = $foundcid;
         //         // TODO: now analyse $params[2] for index, list, \d+ etc.
         //         // and return array('whatever', $args);
         //     }

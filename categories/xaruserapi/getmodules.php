@@ -1,10 +1,10 @@
 <?php
 
 /**
- * get the list of modules for which we're categorising items
+ * get the list of modules and itemtypes for which we're categorising items
  *
  * @returns array
- * @return $array[$modid] = $numitems
+ * @return $array[$modid][$itemtype] = $numitems
  */
 function categories_userapi_getmodules($args)
 {
@@ -24,20 +24,23 @@ function categories_userapi_getmodules($args)
     $categoriestable = $xartable['categories_linkage'];
 
     // Get items
-    $sql = "SELECT xar_modid, COUNT(*)
+    $sql = "SELECT xar_modid, xar_itemtype, COUNT(*)
             FROM $categoriestable";
     if (!empty($cid)) {
         $sql .= " WHERE xar_cid = " . xarVarPrepForStore($cid);
     }
-    $sql .= " GROUP BY xar_modid";
+    $sql .= " GROUP BY xar_modid, xar_itemtype";
 
     $result = $dbconn->Execute($sql);
     if (!$result) return;
 
     $modlist = array();
     while (!$result->EOF) {
-        list($modid,$numitems) = $result->fields;
-        $modlist[$modid] = $numitems;
+        list($modid,$itemtype,$numitems) = $result->fields;
+        if (!isset($modlist[$modid])) {
+            $modlist[$modid] = array();
+        }
+        $modlist[$modid][$itemtype] = $numitems;
         $result->MoveNext();
     }
     $result->close();

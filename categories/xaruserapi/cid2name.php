@@ -12,8 +12,14 @@ function categories_userapi_cid2name ($args)
     if (empty($cid) || !is_numeric($cid)) {
         $cid = 1;
     }
-    $query = "SELECT xar_parent, xar_description FROM $categoriestable WHERE xar_cid = '"
-             . xarVarPrepForStore($cid) . "'";
+    // for DMOZ-like URLs where the description contains the full path
+    if (!empty($usedescr)) {
+        $query = "SELECT xar_parent, xar_description FROM $categoriestable WHERE xar_cid = '"
+                 . xarVarPrepForStore($cid) . "'";
+    } else {
+        $query = "SELECT xar_parent, xar_name FROM $categoriestable WHERE xar_cid = '"
+                 . xarVarPrepForStore($cid) . "'";
+    }
     $result = $dbconn->Execute($query);
     if (!$result) return;
 

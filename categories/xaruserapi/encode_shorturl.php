@@ -31,14 +31,16 @@ function categories_userapi_encode_shorturl($args)
     // specify some short URLs relevant to your module
     if ($func == 'main') {
         // check for required parameters
-        if (isset($cid) && is_numeric($cid) && $cid > 0) {
+        if (isset($catid) && is_numeric($catid) && $catid > 0) {
 /* needs the full path to the Top here */
             $name = xarModAPIFunc('categories','user','cid2name',
-                                 array('cid' => $cid));
+                                 array('cid' => $catid,
+                                       // for DMOZ-like URLs
+                                       'usedescr' => 1));
             if (!empty($name)) {
                 $path = '/' . $module . '/' . $name;
             } else {
-                $path = '/' . $module . '/' . $cid;
+                $path = '/' . $module . '/' . $catid;
             }
         } else {
             $path = '/' . $module . '/';
@@ -46,17 +48,17 @@ function categories_userapi_encode_shorturl($args)
 
         // you might have some additional parameter that you want to use to
         // create different virtual paths here - for example a category name
-        // if (!empty($cid) && is_numeric($cid)) {
+        // if (!empty($catid) && is_numeric($catid)) {
         //     // use a cache to avoid re-querying for each URL in the same cat
         //     static $catcache = array();
         //     if (xarModAPILoad('categories','user')) {
-        //         if (isset($catcache[$cid])) {
-        //             $cat = $catcache[$cid];
+        //         if (isset($catcache[$catid])) {
+        //             $cat = $catcache[$catid];
         //         } else {
         //             $cat = xarModAPIFunc('categories','user','getcatinfo',
-        //                                 array('cid' => $cid));
+        //                                 array('cid' => $catid));
         //             // put the category in cache
-        //             $catcache[$cid] = $cat;
+        //             $catcache[$catid] = $cat;
         //         }
         //         if (!empty($cat) && !empty($cat['name'])) {
         //             // use the category name as part of the path here
