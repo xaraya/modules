@@ -67,10 +67,10 @@ function articles_user_archive($args)
     if (!empty($ptid) && !empty($pubtypes[$ptid]['config']['pubdate']['label'])) {
         $showdate = 1;
     } else {
-        $showdate = 1;
+        $showdate = 0;
         foreach (array_keys($pubtypes) as $pubid) {
-            if (empty($pubtypes[$pubid]['config']['pubdate']['label'])) {
-                $showdate = 0;
+            if (!empty($pubtypes[$pubid]['config']['pubdate']['label'])) {
+                $showdate = 1;
                 break;
             }
         }
@@ -307,6 +307,8 @@ function articles_user_archive($args)
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
     if (!empty($ptid) && !empty($pubtypes[$ptid]['descr'])) {
         xarVarSetCached('Blocks.categories','title',$pubtypes[$ptid]['descr']);
+        xarTplSetPageTitle(xarML('Archive'), $pubtypes[$ptid]['descr']);
+    } else {
         xarTplSetPageTitle(xarML('Archive'));
     }
 //}

@@ -177,12 +177,12 @@ function articles_user_view()
     if ($showmap) {
         $data['maplabel'] = xarML('View Article Map');
         $data['maplink'] = xarModURL('articles','user','viewmap',
-                                    array('ptid' => $ptid));
+                                    array('ptid' => !empty($ptid) ? $ptid : null));
     }
     if ($showarchives) {
         $data['archivelabel'] = xarML('View Archives');
         $data['archivelink'] = xarModURL('articles','user','archive',
-                                        array('ptid' => $ptid));
+                                        array('ptid' => !empty($ptid) ? $ptid : null));
     }
 
     $data['pager'] = '';

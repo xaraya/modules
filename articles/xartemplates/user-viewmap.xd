@@ -1,6 +1,11 @@
 <xar:if condition="count($cattree) gt 0">
     <h2><xar:mlstring>Article Map by Category</xar:mlstring></h2>
-    #$dump#
+    <br /><form method="post" action="#$maplink#"><div>
+    <xar:mlstring>Filter : </xar:mlstring>
+    <xar:foreach in="$catfilter" key="$cid">
+        &nbsp;&nbsp;&nbsp;#$catfilter[$cid]#
+    </xar:foreach>
+    &nbsp;&nbsp;&nbsp;<input type="submit" name="go" value="Go" /></div></form><br />
     <xar:foreach in="$cattree" value="$childcats">
         <xar:foreach in="$childcats" value="$cat">
             #$cat['beforetags']#
@@ -18,12 +23,55 @@
 
     <br />
     <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub'))#"><xar:mlstring>Article Map by Publication Type</xar:mlstring></a>
+    <xar:if condition="count($catfilter) eq 2">
+        - <a href="#xarModURL('articles','user','viewmap',array('by' => 'grid'))#"><xar:mlstring>Article Map by Grid</xar:mlstring></a>
+    </xar:if>
+    <br />
+
+<xar:elseif condition="count($catgrid) gt 0"/>
+    <xar:if condition="empty($descr)">
+        <h2><xar:mlstring>Article Map by Grid</xar:mlstring></h2>
+    <xar:else/>
+        <h2><xar:ml><xar:mlstring>Article Map by Grid for #(1)</xar:mlstring><xar:mlvar>#$descr#</xar:mlvar></xar:ml></h2>
+    </xar:if>
+
+    <table border="1" cellpadding="3" cellspacing="0">
+    <xar:foreach in="$catgrid" key="$row">
+    <tr>
+        <xar:foreach in="$catgrid[$row]" key="$col">
+            <xar:if condition="empty($col) or $row % 2 eq 0">
+                <td class="xar-accent" align="center">#$catgrid[$row][$col]#</td>
+            <xar:else/>
+                <td align="center">#$catgrid[$row][$col]#</td>
+            </xar:if>
+        </xar:foreach>
+    </tr>
+    </xar:foreach>
+    </table>
+
+    <br />
+    <a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#"><xar:mlstring>Article Map by Category</xar:mlstring></a>
+    - <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#"><xar:mlstring>Article Map by Publication Type</xar:mlstring></a>
     <br />
 
 <xar:else />
     <h2><xar:mlstring>Article Map by Publication Type</xar:mlstring></h2>
-    <br />
-    #$dump#
+    <br /><form method="post" action="#$maplink#"><div>
+    <xar:mlstring>Filter : </xar:mlstring>
+    <select name="ptid" onchange="submit()">
+        <option value=""><xar:mlstring>Publication</xar:mlstring></option>
+        <xar:foreach in="$publinks" value="$pubtype">
+            <xar:if condition="!empty($ptid) and $pubtype['pubid'] eq $ptid">
+                <option value="#$pubtype['pubid']#" selected="selected">- #$pubtype['pubtitle']#</option>
+            <xar:else/>
+                <option value="#$pubtype['pubid']#">- #$pubtype['pubtitle']#</option>
+            </xar:if>
+        </xar:foreach>
+    </select>
+    <xar:foreach in="$catfilter" key="$cid">
+        &nbsp;&nbsp;&nbsp;#$catfilter[$cid]#
+    </xar:foreach>
+    &nbsp;&nbsp;&nbsp;<input type="submit" name="go" value="Go" /></div></form><br />
     <br />
     <xar:foreach in="$publinks" value="$pubtype">
         <div class="xar-accent-outline">
@@ -58,6 +106,9 @@
 
     <br />
     <a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#"><xar:mlstring>Article Map by Category</xar:mlstring></a>
+    <xar:if condition="count($catfilter) eq 2">
+        - <a href="#xarModURL('articles','user','viewmap',array('by' => 'grid', 'ptid' => $ptid))#"><xar:mlstring>Article Map by Grid</xar:mlstring></a>
+    </xar:if>
     <br />
 
 </xar:if>
