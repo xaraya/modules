@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * File: $Id$
- * 
+ *
  * Xaraya Site Cloud
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -15,6 +15,7 @@
 $modversion['name'] = 'sitecloud';
 $modversion['id'] = '808';
 $modversion['version'] = '1.0.0';
+$modversion['displayname']    = xarML('SiteCloud');
 $modversion['description'] = 'Checks on the changing content of pages';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
