@@ -106,8 +106,9 @@ function sitetools_adminapi_findlinks($args)
                         }
                         $id = $dbconn->GenId($linkstable);
                         $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
-                                  VALUES ($id, '" . xarVarPrepForStore($item[$field]) . "', 0, $modid, $ptid, $item[aid], '" . xarVarPrepForStore($item['title']) . "', '" . xarVarPrepForStore($url) . "')";
-                        $result =& $dbconn->Execute($query);
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        $bindvars = array($id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url);
+                        $result =& $dbconn->Execute($query,$bindvars);
                         if (!$result) return;
                         $count[$descr]++;
                     }
@@ -150,8 +151,9 @@ function sitetools_adminapi_findlinks($args)
                         }
                         $id = $dbconn->GenId($linkstable);
                         $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
-                                  VALUES ($id, '" . xarVarPrepForStore($item[$field]) . "', 0, $modid, $ptid, $item[aid], '" . xarVarPrepForStore($item['title']) . "', '" . xarVarPrepForStore($url) . "')";
-                        $result =& $dbconn->Execute($query);
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        $bindvars = array($id, $item[$field], 0, $modid, $ptid, $item['aid'], $item['title'], $url);
+                        $result =& $dbconn->Execute($query,$bindvars);
                         if (!$result) return;
                         $count[$descr]++;
                     }
@@ -205,18 +207,16 @@ function sitetools_adminapi_findlinks($args)
                     }
                     $id = $dbconn->GenId($linkstable);
                     $query = "INSERT INTO $linkstable (xar_id, xar_link, xar_status, xar_moduleid, xar_itemtype, xar_itemid, xar_itemtitle, xar_itemlink)
-                              VALUES ($id, '" . xarVarPrepForStore($item[$field]) . "', 0, $modid, $itemtype, $itemid, '" . xarVarPrepForStore($item['name']) . "', '" . xarVarPrepForStore($url) . "')";
-                    $result =& $dbconn->Execute($query);
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    $bindvars = array($id, $item[$field], 0, $modid, $itemtype, $itemid, $item['name'], $url);
+                    $result =& $dbconn->Execute($query,$bindvars);
                     if (!$result) return;
                     $count[$descr[$itemtype]]++;
                 }
             }
         }
     }
-
     // TODO: find links for ...
-
     return $count;
 }
-
 ?>
