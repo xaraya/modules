@@ -21,20 +21,29 @@
                 </strong>
             </xar:if>
         </div>
-        <div>
-            <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid, 'read' => 1))#">
-                <xar:mlstring>
-                    Mark all topics as read 
-                </xar:mlstring>
-            </a>
-        </div>
-        <div>
-            <a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#">
-                <xar:mlstring>
-                    Syndicate This Forum 
-                </xar:mlstring>
-            </a>
-        </div>
+        <ul>
+            <li>
+                <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid, 'read' => 1))#">
+                    <xar:mlstring>
+                        Mark All Topics as Read 
+                    </xar:mlstring>
+                </a>
+            </li>
+            <li>
+                <a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#">
+                    <xar:mlstring>
+                        Syndicate This Forum 
+                    </xar:mlstring>
+                </a>
+            </li>
+            <li>
+                <a href="#xarModURL('xarbb', 'user', 'searchtopics', array('replies' => 1, 'fid' => $fid))#">
+                    <xar:mlstring>
+                        View Unanswered Topics in Forum
+                    </xar:mlstring>
+                </a>
+            </li>
+        </ul>
     </div>
     <h1>
         <a class=" xar-title" href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">

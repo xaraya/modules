@@ -75,7 +75,9 @@ function xarbb_userapi_getalltopics_byunanswered($args)
     // Get by UID
     $query .= "AND $xbbtopicstable.xar_treplies = 0";
         //bug # 2531 -  prevent duplicates now
-
+    if (isset($fid)){
+        $query .= " AND $xbbtopicstable.xar_fid = $fid";
+    }
 
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";

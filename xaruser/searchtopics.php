@@ -17,6 +17,7 @@ function xarbb_user_searchtopics()
     // Get parameters from whatever input we need
     if(!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('by', 'id', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('replies', 'id', $replies, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('from', 'int', $from, NULL, XARVAR_NOT_REQUIRED)) return;
     // Security Check PROLLY Not good enough as is.
@@ -41,11 +42,20 @@ function xarbb_user_searchtopics()
                                       'numitems' => $topicsperpage));
     } elseif (!empty($replies)){
         $data['message'] = xarML('Unanswered topics');
-        $topics = xarModAPIFunc('xarbb',
-                                'user',
-                                'getalltopics_byunanswered',
-                                array('startnum' => $startnumitem,
-                                      'numitems' => $topicsperpage));
+        if (!isset($fid)){
+            $topics = xarModAPIFunc('xarbb',
+                                    'user',
+                                    'getalltopics_byunanswered',
+                                    array('startnum' => $startnumitem,
+                                          'numitems' => $topicsperpage));
+        } else {
+            $topics = xarModAPIFunc('xarbb',
+                                    'user',
+                                    'getalltopics_byunanswered',
+                                    array('fid'      => $fid,
+                                          'startnum' => $startnumitem,
+                                          'numitems' => $topicsperpage));
+        }
     } elseif (!empty($from)){
         $data['message'] = xarML('Topics since your last visit');
         $topics = xarModAPIFunc('xarbb',
