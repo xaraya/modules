@@ -1,0 +1,23 @@
+
+
+    <xar:if condition="xarTplAddStyleLink('webdavserver ', 'navbar')">
+    <div xmlns="http://www.w3.org/TR/xhtml1/strict">
+        <div class="tabnav">
+            <div class="navhelp help" title="#xarML('Click on a tab to display that itemtype' )#">
+                <xar:mlstring  >Itemtype</xar:mlstring>:
+            </div>
+            <div class="tabnav-hairline"/>
+            <ul class="navlist">
+                <xar:foreach   in="$common_menu" value="$value">
+                    <xar:if condition="empty($value['url'])">
+                        <li class="active"><a href="#xarServerGetCurrentURL()#" title="#$value['title']#"> #$value['title']# </a></li>
+                        <xar:else/>
+                        <li><a href="#$value['url']#" title="#$value['title']#"> #$value['title']# </a></li>
+                    </xar:if>
+                </xar:foreach>
+            </ul>
+            <div class="tabnav-hairline"/>
+        </div>
+    </div>
+    </xar:if>
+

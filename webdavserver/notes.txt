@@ -1,0 +1,96 @@
+This module should expose a webdav server based on content in
+xaraya. The information in this file is a preparation for the webdav
+RFC. Once the RFC gets started, this document should be moved over
+there to prevent confusion on the contents.
+
+
+The rough idea for making xaraya a webdav server is as is as follows:
+
+Each module can expose items to the webdav server, the webdav server
+translates this into a directory structure like:
+
+/articles
+  /documents
+    /news
+    /otherpubtype
+/comments
+/categories
+  /firstcategory
+    <list of items exposed to webdav in this category>
+
+Or in a more generic notation:\
+
+/modulename1
+  /itemtype1
+    <items of itemtype 1>
+  /itemtype2
+    <items of itemtype 2>
+/modulename2
+  /itemtype3
+    <items of itemtype 3>
+
+...
+  /registered_path
+    items in that path
+
+So
+
+/                     -> exposes modulenames as directories
+/modulename/          -> exposes itemtypes as directories
+/modulename/itemtype/ -> exposes items as files
+
+
+The first part is a direct exposure of items to the webdav server.
+
+The second one (through categories) is an indirect one, showing the
+different items based on their categories. For this both the
+categories module and the module itself need to be exposed to the
+webdav server module.
+
+A third option would be thinkable, namely registering file paths in
+the webdav server module directly which should be exposed over webdav.
+
+Each item should expose a mime/type so the webserver knows what to do
+with the exposed item. To some degree, file based content doesnt have
+that requirement as the webdav server has some capability to discover
+the mimetype automatically (for xaraya, this should be replaced by
+the mimetype module)
+
+So, by hooking modules into the webdavserver a part of the exposed
+directory tree is filled. The webdav module is responsible for
+creating that part of the functionality by calling the getmodname,
+getitemtypes and possibly the get functions of the hooked in module.
+
+This creates a 'virtual filesystem' exposed over webdav. The GET part
+of webdav can be rather easy, for example implementing a rather
+simplistic download functionality (note: the authentication system of
+xaraya acts on that virtual filesystem which is kinda cool)
+
+The PUT part is the most challenging part of the setup. The heart of
+the problem comes down to a 'translators' type of
+functionality. Roughly, for each 'itemtype' one or more mimetypes
+need to be chosen and a translator to and from that mimetype to the
+content stored in the database must be written.
+
+For some itemtypes, this should not be too difficult, but for others
+it could be quite challenging (making an OpenOffice document back and
+forth out of and article of pubtype document is not a trivial task)
+
+The other components of the Webdav protocol (COPY, MOVE, DELETE,
+PROPFIND, PROPPATCH, LOCK, UNLOCK could probably be implemented in a
+generic way and be made inheritable so others can adjust the base
+methods.
+
+How to acces the webdav root?
+----------------------------
+If we would follow xaraya's other webservices it would be something like:
+
+http://xaraya.site.com/ws.php?type=webdav
+
+which is of course kinda ugly and certainly not something an end user is used to 
+(for example when using the web share option in ms operating systems)
+
+For the moment we could use this and let sensible admins use redirect option in web
+server to define a more friendly location.
+
+

@@ -1,0 +1,27 @@
+
+
+<xar:if   condition="!empty($common)">
+
+    <xar:if condition="isset( $common['type']) and $common['type'] = 'admin'">
+    <div xmlns="http://www.w3.org/TR/xhtml1/strict" class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - webdavserver</xar:mlstring></span></div>
+    </xar:if>
+
+    <div xmlns="http://www.w3.org/TR/xhtml1/strict" class="xar-mod-body">
+
+        <h2>#$common['pagetitle']#</h2>
+
+        <xar:if condition="count( $common['menu']) &gt; 0">
+            <xar:set name="$common_menu">#$common['menu']#</xar:set>
+            <xar:template file="navbar" type="module"/>
+        </xar:if>
+
+    </div>
+
+    <xar:if condition="!empty($common['statusmsg'])">
+    <div xmlns="http://www.w3.org/TR/xhtml1/strict" class="xar-mod-message" style="margin: 20px 10px 20px 20px; background-color: ##EEEEEE; text-align: center;">
+        #$common['statusmsg']#
+    </div>
+    </xar:if>
+
+</xar:if>
+
