@@ -170,6 +170,9 @@ function changelog_admin_showdiff($args)
             $old['fields'][$field] = $value;
         }
     }
+    if (!isset($old['fields'])) {
+        $old['fields'] = array();
+    }
 
     $new = xarModAPIFunc('changelog','admin','getversion',
                          array('modid' => $modid,
@@ -198,6 +201,9 @@ function changelog_admin_showdiff($args)
             }
             $new['fields'][$field] = $value;
         }
+    }
+    if (!isset($new['fields'])) {
+        $new['fields'] = array();
     }
 
     $fieldlist = array_unique(array_merge(array_keys($old['fields']),array_keys($new['fields'])));

@@ -31,7 +31,7 @@
     </xar:foreach>
     </table>
     <br /><br />
-    <input type="submit" value="Update Change Log Configuration" />
+    <input type="submit" value="#xarML('Update Change Log Configuration')#" />
 </form>
 </div>
 </div>

@@ -63,7 +63,7 @@
                 </xar:if>
             </xar:if>
         </p>
-        <input type="submit" value=" Diff " />
+        <input type="submit" value="#xarML('Diff')#" />
         </form>
     </div>
 </div>
