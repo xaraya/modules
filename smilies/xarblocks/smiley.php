@@ -29,12 +29,12 @@ function smilies_smileyblock_init()
 function smilies_smileyblock_info()
 {
     return array('text_type' => 'Smiley',
-		 'text_type_long' => 'Show a random smiley, with description',
-		 'module' => 'smilies',
-		 'allow_multiple' => true,
-		 'form_content' => false,
-		 'form_refresh' => false,
-		 'show_preview' => true);
+         'text_type_long' => 'Show a random smiley, with description',
+         'module' => 'smilies',
+         'allow_multiple' => true,
+         'form_content' => false,
+         'form_refresh' => false,
+         'show_preview' => true);
 
 }
 
@@ -42,7 +42,7 @@ function smilies_smileyblock_info()
 function smilies_smileyblock_display($blockinfo)
 {
     // Security Check
-	if(!xarSecurityCheck('EditSmilies', 0)) return;
+    if(!xarSecurityCheck('EditSmilies', 0)) return;
 
     if (empty($blockinfo['title'])){
         $blockinfor['title'] = xarML('I can not believe you use this block');

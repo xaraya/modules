@@ -26,7 +26,7 @@ function smilies_adminapi_delete($args)
         return; 
     }
     // Security Check
-	if(!xarSecurityCheck('DeleteSmilies')) return;
+    if(!xarSecurityCheck('DeleteSmilies')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

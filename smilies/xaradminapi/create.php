@@ -22,7 +22,7 @@ function smilies_adminapi_create($args)
         return;
     }
     // Security Check
-	if(!xarSecurityCheck('AddSmilies')) return;
+    if(!xarSecurityCheck('AddSmilies')) return;
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();

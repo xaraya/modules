@@ -7,7 +7,7 @@
 function smilies_admin_main()
 {
     // Security Check
-	if(!xarSecurityCheck('EditSmilies')) return;
+    if(!xarSecurityCheck('EditSmilies')) return;
 
     if (xarModGetVar('adminpanels', 'overview') == 0){
         // Return the output

@@ -1,7 +1,7 @@
 <?php
 function smilies_admin_new()
 {   
-	if(!xarSecurityCheck('AddSmilies')) return;
+    if(!xarSecurityCheck('AddSmilies')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     switch(strtolower($phase)) {
         case 'form':

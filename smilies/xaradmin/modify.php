@@ -46,6 +46,6 @@ function smilies_admin_modify()
             xarResponseRedirect(xarModURL('smilies', 'admin', 'view'));
             break;
     }
-	return $data;
+    return $data;
 }
 ?>

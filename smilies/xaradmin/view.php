@@ -2,7 +2,7 @@
 function smilies_admin_view()
 {
     // Security Check
-	if(!xarSecurityCheck('EditSmilies')) return;
+    if(!xarSecurityCheck('EditSmilies')) return;
     if(!xarVarFetch('startnum', 'isset',    $startnum, 1,     XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
     // Specify some labels for display

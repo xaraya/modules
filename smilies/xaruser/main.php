@@ -21,7 +21,7 @@
 function smilies_user_main()
 {
     // Security Check
-	if(!xarSecurityCheck('OverviewSmilies')) return;
+    if(!xarSecurityCheck('OverviewSmilies')) return;
     // Get parameters from whatever input we need
     if(!xarVarFetch('startnum', 'isset',    $startnum, 1,     XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();

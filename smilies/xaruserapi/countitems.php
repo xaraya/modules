@@ -11,7 +11,7 @@ function smilies_userapi_countitems()
     $xartable =& xarDBGetTables();
 
     // Security Check
-	if(!xarSecurityCheck('OverviewSmilies')) return;
+    if(!xarSecurityCheck('OverviewSmilies')) return;
 
     $smiliestable = $xartable['smilies'];
 

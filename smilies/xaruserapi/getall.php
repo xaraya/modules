@@ -19,7 +19,7 @@ function smilies_userapi_getall($args)
 
     $links = array();
     // Security Check
-	if(!xarSecurityCheck('OverviewSmilies')) {
+    if(!xarSecurityCheck('OverviewSmilies')) {
         return $links;
     }
 

@@ -2,7 +2,7 @@
 function smilies_admin_delete()
 {
     // Security Check
-	if(!xarSecurityCheck('DeleteSmilies')) return;
+    if(!xarSecurityCheck('DeleteSmilies')) return;
     if (!xarVarFetch('sid','int',$sid)) return;
     if (!xarVarFetch('confirmation','id',$confirmation, '',XARVAR_NOT_REQUIRED)) return;
 
@@ -24,8 +24,8 @@ function smilies_admin_delete()
     if (!xarSecConfirmAuthKey()) return;
     // Remove User From Group.
     if (!xarModAPIFunc('smilies',
-		               'admin',
-		               'delete', 
+                       'admin',
+                       'delete', 
                         array('sid' => $sid))) return;
     // Redirect
     xarResponseRedirect(xarModURL('smilies', 'admin', 'view'));

@@ -37,7 +37,7 @@ function smilies_userapi_get($args)
     $result->Close();
 
     // Security Check
-	if(!xarSecurityCheck('OverviewSmilies')) return;
+    if(!xarSecurityCheck('OverviewSmilies')) return;
 
     $link = array('sid'     => $sid,
                   'code'    => $code,

@@ -33,7 +33,7 @@ function smilies_adminapi_update($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('EditSmilies')) return;
+    if(!xarSecurityCheck('EditSmilies')) return;
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
