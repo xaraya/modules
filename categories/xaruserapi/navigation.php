@@ -659,7 +659,9 @@ function categories_userapi_navigation($args)
                     if (!empty($curcat['name'])) {
                         $title = xarVarPrepForDisplay($curcat['name']);
                     }
-                    xarTplSetPageTitle($title);
+                    if (!empty($title)) {
+                        xarTplSetPageTitle($title);
+                    }
                 }
 
                 // TODO: don't show icons when displaying items?
