@@ -25,22 +25,22 @@
             <xar:mlstring>Authentication by AuthURL is automatically set once the the AuthURL module has been initialized.  To remove AuthURL authentication, you must remove the module.</xar:mlstring>
             <br /><br />
             <xar:mlstring>
-						From the menu, you have one choice.  "Modify Config".  From here, you:
-						</xar:mlstring>
-					<ul>
-						<li><xar:mlstring>Set the URL to authenticate users against.</xar:mlstring></li>
-						<li><xar:mlstring>Allow a user that successfully authenticates to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
-						<li><xar:mlstring>Set the default group that users are added to if they are automatically created.</xar:mlstring></li>
-						<li><xar:mlstring>Set the level of output that this module logs (useful for seeing what is happening under the hood).</xar:mlstring></li>
-					</ul>
-				</div>
+                        From the menu, you have one choice.  "Modify Config".  From here, you:
+                        </xar:mlstring>
+                    <ul>
+                        <li><xar:mlstring>Set the URL to authenticate users against.</xar:mlstring></li>
+                        <li><xar:mlstring>Allow a user that successfully authenticates to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
+                        <li><xar:mlstring>Set the default group that users are added to if they are automatically created.</xar:mlstring></li>
+                        <li><xar:mlstring>Set the level of output that this module logs (useful for seeing what is happening under the hood).</xar:mlstring></li>
+                    </ul>
+                </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>There are no included blocks with the AuthURL Module</xar:mlstring>
+            <xar:mlstring>There are no included blocks with the AuthURL Module</xar:mlstring>
         </div>
         <br />
         <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
