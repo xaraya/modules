@@ -9,7 +9,7 @@ function sitecloud_adminapi_update($args)
     extract($args);
     // Argument check
     if (!isset($id)){
-        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'update', 'sitecloud');
+        $msg = xarML('Invalid Parameter Count');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -29,10 +29,11 @@ function sitecloud_adminapi_update($args)
 
     // Update the link
     $query = "UPDATE $sitecloudtable
-              SET xar_url   = '" . xarVarPrepForStore($url) . "',
-                  xar_title = '" . xarVarPrepForStore($title) . "'
-              WHERE xar_id  = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+              SET xar_url   = ?,
+                  xar_title = ?
+              WHERE xar_id  = ?";
+    $bindvars = array($url, $title, $id);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let the calling process know that we have finished successfully
     xarModCallHooks('item', 'update', $id, '');

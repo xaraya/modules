@@ -37,12 +37,13 @@ function sitecloud_adminapi_create($args)
               xar_string,
               xar_date)
             VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($url) . "',
-              '" . xarVarPrepForStore($title) . "',
-              '" . xarVarPrepForStore($string) . "',
-              '" . xarVarPrepForStore($date) . "')";
-    $result =& $dbconn->Execute($query);
+              ?,
+              ?,
+              ?,
+              ?,
+              ?)";
+    $bindvars = array($nextId, $url, $title, $string, $date);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get the ID of the item that we inserted

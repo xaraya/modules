@@ -30,8 +30,9 @@ function sitecloud_adminapi_delete($args)
     $sitecloudtable = $xartable['sitecloud'];
     // Delete the item
     $query = "DELETE FROM $sitecloudtable
-              WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+              WHERE xar_id = ?";
+    $bindvars = array($id);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let any hooks know that we have deleted a link
     xarModCallHooks('item', 'delete', $id, '');

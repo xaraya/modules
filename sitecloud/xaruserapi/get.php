@@ -25,8 +25,9 @@ function sitecloud_userapi_get($args)
                      xar_string,
                      xar_date
             FROM $sitecloudtable
-            WHERE xar_id = " . xarVarPrepForStore($id);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_id = ?";
+    $bindvars = array($id);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($id, $title, $url, $string, $date) = $result->fields;
     $result->Close();
