@@ -158,7 +158,7 @@ class phpOpenTracker_Container {
           $container['user_agent']
         );
       } else {
-        $container['last_document'] = $container['document'];
+        $container['last_document'] = !empty($container['document']) ? $container['document'] : '';
       }
         //modified for xaraya
       //$container['document_url'] = isset($parameters['document_url']) ? $parameters['document_url'] : urldecode($_SERVER[$config['document_env_var']]);
