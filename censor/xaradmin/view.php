@@ -8,10 +8,15 @@ function censor_admin_view()
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
 // -> janez $authid = xarSecGenAuthKey();
     $data['items'] = array(); 
+    
     // Specify some labels for display
     $data['keywordlabel'] = xarVarPrepForDisplay(xarML('Key Word'));
+    $data['caselabel'] = xarVarPrepForDisplay(xarML('Case Sensitive'));
+    $data['matchcaselabel'] = xarVarPrepForDisplay(xarML('Match case'));
+    $data['localelabel'] = xarVarPrepForDisplay(xarML('Locale'));
     $data['optionslabel'] = xarVarPrepForDisplay(xarML('Options'));
     $data['authid'] = xarSecGenAuthKey();
+    
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnum,
@@ -22,13 +27,14 @@ function censor_admin_view()
     if (!xarSecurityCheck('EditCensor')) return; 
     // The user API function is called
     $censors = xarModAPIFunc('censor',
-        'user',
-        'getall',
-        array('startnum' => $startnum,
-            'numitems' => xarModGetVar('censor', 'itemsperpage')));
+                             'user',
+                             'getall',
+                              array('startnum' => $startnum,
+                                    'numitems' => xarModGetVar('censor', 
+                                                               'itemsperpage')));
     if (empty($censors)) {
         $msg = xarML('No censor in database.',
-            'censor');
+                    'censor');
         xarExceptionSet(XAR_USER_EXCEPTION,
             'MISSING_DATA',
             new DefaultUserException($msg));
@@ -65,6 +71,7 @@ function censor_admin_view()
     // Add the array of items to the template variables
     $data['items'] = $censors; 
 
+// alberto -> where we can set this?
     $data['selstyle']  = xarModGetUserVar('censor', 'selstyle');
     if (empty($data['selstyle'])){
         $data['selstyle'] = 'plain';

@@ -44,21 +44,50 @@ function transform($text)
     static $alsearch = array();
     static $alreplace = array();
     static $gotcensor = 0;
-
+    
+    $local = xarConfigGetVar('Site.MLS.DefaultLocale');
+    
     if (empty($gotcensor)) {
         $gotcensor = 1;
-        $tmpcensors = xarModAPIFunc('censor', 'user', 'getall');
-
+        $tmpcensors = xarModAPIFunc('censor', 
+                                    'user', 
+                                    'getall1',
+                                    array('local' => $local));
+        
         // Create search/replace array from censor information
         foreach ($tmpcensors as $tmpcensor) {
+            
             // Note use of assertions here to only match specific words,
             // for instance ones that are not part of a hyphenated phrase
             // or (most) bits of an email address
-            $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpcensor['keyword'], '/'). ')(?![\w@:-])(?!\.\w)/i';
+           //var_dump($tmpcensor); 
+            if ($tmpcensor['case_sensitive'] == 0) {
+                      if ($tmpcensor['match_case'] == 0) { 
+                          $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpcensor['keyword'], '/'). ')(?![\w@:-])(?!\.\w)/i';
+                      } elseif ($tmpcensor['match_case'] == 1) {
+                            $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpcensor['keyword'], '/'). ')/i';
+                      } elseif ($tmpcensor['match_case'] == 2) {   
+                            $alsearch[] = '/(' . preg_quote($tmpcensor['keyword'], '/'). ')(?![\w@:-])(?!\.\w)/i';
+                      } elseif ($tmpcensor['match_case'] == 3) {      
+                            $alsearch[] = '/' . preg_quote($tmpcensor['keyword'], '/'). '/i';
+                          }
+			  } else {
+		      if ($tmpcensor['match_case'] == 0) { 
+                          $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpcensor['keyword'], '/'). ')(?![\w@:-])(?!\.\w)/';
+                      } elseif ($tmpcensor['match_case'] == 1) {
+                            $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpcensor['keyword'], '/'). ')/';
+                      } elseif ($tmpcensor['match_case'] == 2) {   
+                            $alsearch[] = '/(' . preg_quote($tmpcensor['keyword'], '/'). ')(?![\w@:-])(?!\.\w)/';
+                      } elseif ($tmpcensor['match_case'] == 3) {      
+                            $alsearch[] = '/' . preg_quote($tmpcensor['keyword'], '/'). '/';
+            }
+           
+            }
             $alreplace[] = xarModGetVar('censor', 'replace');
         }
     }
-
+     
+    // FIXME: <alberto>  why this ?
     // Step 1 - move all tags out of the text and replace them with placeholders
     preg_match_all('/(<a\s+.*?\/a>|<[^>]+>)/i', $text, $matches);
     $matchnum = count($matches[1]);

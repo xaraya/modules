@@ -1,6 +1,14 @@
 <xar:comment> Legend </xar:comment>
 <div class="xar-accent-outline xar-sub" style="margin-top:5px;margin-bottom:5px;padding:3px;text-align:center;">
     <xar:mlstring>
+        Legenda: Case Sensitive: [CS]
+    </xar:mlstring>
+	&nbsp&nbsp&nbsp
+	<xar:mlstring>
+	Match Case: [EX]act corrispondence [ST]art of string [EN]d of string [EV]erywhere
+    </xar:mlstring>
+	&nbsp&nbsp&nbsp
+	<xar:mlstring>
         Actions: [E]dit [R]emove
     </xar:mlstring>
 </div>
@@ -21,7 +29,25 @@
                         </a>
                     ] 
                 </div>
-				#$loop:item['keyword']#
+                <div class="xar-sub" style="float:right;width:auto;height:1.5em;text-align:right;">
+				        <xar:if condition="$loop:item['case_sensitive'] eq '1'">
+			                [ <xar:mlstring>CS</xar:mlstring> ]
+			            <xar:else/>
+					        [ <xar:mlstring>-</xar:mlstring> ]
+			            </xar:if>
+                        <xar:if condition="$loop:item['match_case'] eq '0'">
+			                [<xar:mlstring>EX</xar:mlstring>]
+			            <xar:elseif condition="$loop:item['match_case'] eq '1'" />
+			                [<xar:mlstring>ST</xar:mlstring>]
+			            <xar:elseif condition="$loop:item['match_case'] eq '2'" />
+			                [<xar:mlstring>EN</xar:mlstring>]
+			            <xar:else />
+							[<xar:mlstring>EV</xar:mlstring>]
+			           </xar:if>
+			[ #$loop:item['locale']# ]
+		        &nbsp&nbsp&nbsp
+		</div>	
+		#$loop:item['keyword']#
             </div>
             <xar:else />
             <div class="xar-accent-outline" style="position:relative;top:-1.5em;left:51%;width:49%;height:1.5em;margin-bottom:-1.3em;border-width:0px 0px 1px 0px;">
@@ -37,6 +63,25 @@
                         </a>
                     ] 
                 </div>
+                <div class="xar-sub" style="float:right;width:auto;height:1.5em;text-align:right;">
+				
+                        <xar:if condition="$loop:item['case_sensitive'] eq '1'">
+			[ <xar:mlstring>CS</xar:mlstring> ]
+			<xar:else/>
+			[ <xar:mlstring>-</xar:mlstring> ]
+			</xar:if>
+			<xar:if condition="$loop:item['match_case'] eq '0'">
+			                [<xar:mlstring>EX</xar:mlstring>]
+			            <xar:elseif condition="$loop:item['match_case'] eq '1'" />
+			                [<xar:mlstring>ST</xar:mlstring>]
+			            <xar:elseif condition="$loop:item['match_case'] eq '2'" />
+			                [<xar:mlstring>EN</xar:mlstring>]
+			            <xar:else />
+							[<xar:mlstring>EV</xar:mlstring>]
+			           </xar:if>
+			[ #$loop:item['locale']# ]
+			&nbsp&nbsp&nbsp
+		</div>	
 				#$loop:item['keyword']#
             </div>
 			</xar:if>

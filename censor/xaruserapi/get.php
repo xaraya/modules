@@ -27,16 +27,22 @@ function censor_userapi_get($args)
 
     // Get link
     $query = "SELECT xar_cid,
-                   xar_keyword
+                   xar_keyword,
+                   xar_case_sensitive,
+                   xar_match_case,
+                   xar_locale
             FROM $censortable
             WHERE xar_cid = " . xarVarPrepForStore($cid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    list($cid, $keyword) = $result->fields;
+    list($cid, $keyword,$case_sensitive,$match_case,$locale) = $result->fields;
    
     $censor = array('cid' => $cid,
-                    'keyword' => $keyword);
+                    'keyword' => $keyword,
+                    'case_sensitive' => $case_sensitive,
+                    'match_case' => $match_case,
+                    'locale' => $locale);
     $result->Close();
     return $censor;
 }

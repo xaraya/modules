@@ -5,14 +5,44 @@
 			<th style="text-align: left; padding-left: 10px;">
 				<xar:mlstring>Keyword</xar:mlstring>
 			</th>
+			<th style="text-align: center; padding-left: 10px;">
+				<xar:mlstring>Case Sensitive</xar:mlstring>
+			</th>
+			<th style="text-align: center; padding-left: 10px;">
+				<xar:mlstring>Match Case</xar:mlstring>
+			</th>
+			<th style="text-align: center; padding-left: 10px;">
+				<xar:mlstring>Locale</xar:mlstring>
+			</th>
 			<th style="text-align: center;padding-left: 10px;" nowrap="nowrap">
 				<xar:mlstring>Actions</xar:mlstring>
 			</th>
 		</tr>
 		<xar:loop name="$items">
-		<tr>
+		     <tr>
 			<td class="xar-norm-outline xar-mod-title" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
 				#$loop:item['keyword']#
+			</td>
+			<td class="xar-norm-outline" style="text-align: center; width: 90px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+			<xar:if condition="$loop:item['case_sensitive'] eq '1'">
+			<xar:mlstring>Yes</xar:mlstring>
+			<xar:else />
+			<xar:mlstring>No</xar:mlstring>
+			</xar:if>
+			</td>
+			<td class="xar-norm-outline" style="text-align: center; width: 80px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+			<xar:if condition="$loop:item['match_case'] eq '0'">
+			<xar:mlstring>Exact</xar:mlstring>
+			<xar:elseif condition="$loop:item['match_case'] eq '1'" />
+			<xar:mlstring>Start</xar:mlstring>
+			<xar:elseif condition="$loop:item['match_case'] eq '2'" />
+			<xar:mlstring>End</xar:mlstring>
+			<xar:else />
+			<xar:mlstring>Everywhere</xar:mlstring>
+			</xar:if>
+			</td>
+			<td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+			#$loop:item['locale']#
 			</td>
 			<td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
 				<a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>  |
@@ -20,6 +50,6 @@
 			</td>
 		</tr>
 		</xar:loop>
-		</tr>
+		
 	</table>
 </div>

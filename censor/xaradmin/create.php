@@ -12,17 +12,24 @@ function censor_admin_create($args)
 { 
     // Get parameters
     if (!xarVarFetch('keyword', 'str:1:', $keyword)) return;
+    if (!xarVarFetch('case', 'isset', $case, 0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('matchcase', 'isset', $matchcase, 0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('locale', 'str:1:', $locale, 'ALL',XARVAR_NOT_REQUIRED)) return;
 
-    extract($args); 
+extract($args); 
+
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return; 
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return; 
     // The API function is called
     $cid = xarModAPIFunc('censor',
-        'admin',
-        'create',
-        array('keyword' => $keyword));
+                         'admin',
+                         'create',
+                         array('keyword' => $keyword,
+                               'case' => $case,
+                               'matchcase' => $matchcase,
+                               'locale' => $locale));
 
     xarResponseRedirect(xarModURL('censor', 'admin', 'view')); 
     // Return

@@ -11,20 +11,23 @@ function censor_admin_delete($args)
     if (!xarVarFetch('cid', 'int:1:', $cid)) return;
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+    
     extract($args);
 
     if (!empty($obid)) {
         $cid = $obid;
-        //$tid = $obid;
     } 
+    
     // The user API function is called
     $censor = xarModAPIFunc('censor',
-        'user',
-        'get',
-        array('cid' => $cid));
+                            'user',
+                            'get',
+                             array('cid' => $cid));
     if ($censor == false) return; 
+    
     // Security Check
     if (!xarSecurityCheck('DeleteCensor')) return; 
+    
     // Check for confirmation.
     if (empty($confirm)) {
         $censor['submitlabel'] = xarML('Submit');
@@ -34,6 +37,7 @@ function censor_admin_delete($args)
     } 
     // If we get here it means that the user has confirmed the action
     // Confirm authorisation code
+    
     if (!xarSecConfirmAuthKey()) return; 
     // The API function is called
     if (!xarModAPIFunc('censor',

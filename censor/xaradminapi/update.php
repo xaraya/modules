@@ -10,9 +10,7 @@ function censor_adminapi_update($args)
     // Get arguments from argument array
     extract($args);
 
-    if (!isset($comment)) {
-        $comment = '';
-    } 
+     
     // Argument check
     if ((!isset($cid)) ||
             (!isset($keyword))) {
@@ -24,9 +22,9 @@ function censor_adminapi_update($args)
     }
     // The user API function is called
     $link = xarModAPIFunc('censor',
-        'user',
-        'get',
-        array('cid' => $cid));
+                          'user',
+                          'get',
+                          array('cid' => $cid));
 
     if ($link == false) {
         $msg = xarML('No Such Link Present', 'censor');
@@ -42,7 +40,10 @@ function censor_adminapi_update($args)
     $censortable = $xartable['censor']; 
     // Update the link
     $query = "UPDATE $censortable
-            SET xar_keyword = '" . xarVarPrepForStore($keyword) . "'
+            SET xar_keyword = '" . xarVarPrepForStore($keyword) . "',
+                xar_case_sensitive  = '" . xarVarPrepForStore($case) . "',
+                xar_match_case  = '" . xarVarPrepForStore($matchcase) . "',
+                xar_locale = '" . xarVarPrepForStore($locale) . "'
             WHERE xar_cid = " . xarVarPrepForStore($cid);
     $result = &$dbconn->Execute($query);
     if (!$result) return; 

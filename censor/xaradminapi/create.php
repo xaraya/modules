@@ -31,10 +31,16 @@ function censor_adminapi_create($args)
     // Add item
     $query = "INSERT INTO $censortable (
               xar_cid,
-              xar_keyword)
+              xar_keyword,
+              xar_case_sensitive,
+              xar_match_case,
+              xar_locale)
             VALUES (
               $nextId,
-              '" . xarVarPrepForStore($keyword) . "')";
+              '" . xarVarPrepForStore($keyword) . "',
+              '" . xarVarPrepForStore($case) . "',
+              '" . xarVarPrepForStore($matchcase) . "',
+              '" . xarVarPrepForStore($locale) . "')";
     $result = &$dbconn->Execute($query);
     if (!$result) return;
     // Get the ID of the item that we inserted

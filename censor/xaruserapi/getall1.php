@@ -4,39 +4,31 @@
  * @returns array
  * @return array of links, or false on failure
  */
-function censor_userapi_getall($args)
+function censor_userapi_getall1($args)
 {
     extract($args);
 
-    // Optional arguments
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-
     $censors = array();
-    // Security Check
 
     if(!xarSecurityCheck('ReadCensor')){
         return $censors;
     }
-
+    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
 
     $censortable = $xartable['censor'];
 
-    // Get links
     $query = "SELECT xar_cid,
                    xar_keyword,
                    xar_case_sensitive,
                    xar_match_case,
                    xar_locale
             FROM $censortable
-            ORDER BY xar_keyword";
-    $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+            WHERE xar_locale = 'ALL'  
+            OR xar_locale ='" . xarVarPrepForStore($local) . "'";
+            
+    $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
@@ -44,14 +36,12 @@ function censor_userapi_getall($args)
         if (xarSecurityCheck('ReadCensor',0,'All',"$keyword:$cid")) {
         $censors[] = array('cid' => $cid,
                            'keyword' => $keyword,
-                            'case_sensitive' => $case_sensitive,
-                            'match_case' => $match_case,
-                            'locale' => $locale);
+                           'case_sensitive' => $case_sensitive,
+                           'match_case' => $match_case,
+                           'locale' => $locale);
         }
     }
-
     $result->Close();
-
     return $censors;
 }
 

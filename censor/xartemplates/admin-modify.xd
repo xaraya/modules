@@ -11,6 +11,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Censored Word</xar:mlstring></h2>
 	<div style="margin: auto;">
 	<form action="#xarModURL('censor', 'admin', 'update')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
+		
 		<div style="clear: both; padding-top: 10px;">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<input type="hidden" name="cid" id="cid" value="#$cid#" />
@@ -21,6 +22,68 @@
 			<input type="text" name="keyword" id="keyword" value="#$keyword#" size="32" maxlength="255" />
 		</span>
 		</div>
+		
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Case Sensitive substitution.')#"><label for="case"><xar:mlstring>Case sensitive</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<xar:if condition="$case_sensitive eq 1">
+			<input type="checkbox" name="case" id="case" value="1" checked="checked" />
+			<xar:else />
+			<input type="checkbox" name="case" id="case" value="1" />
+		        </xar:if>
+		</span>
+		</div>
+		
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Match Case substitution.')#"><label for="matchcase"><xar:mlstring>Match Case</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<xar:if condition="$match_case eq 0">
+			<input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring><br />
+		        <xar:else />
+		        <input type="radio" name="matchcase" id="matchcase" value="0" /><xar:mlstring>Exact</xar:mlstring><br />
+		        </xar:if>
+		        <xar:if condition="$match_case eq 1">
+			<input type="radio" name="matchcase" id="matchcase" value="1" checked="checked" /><xar:mlstring>Start with</xar:mlstring> ...<br />
+		        <xar:else />
+		        <input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...<br />
+		        </xar:if>
+		        <xar:if condition="$match_case eq 2">
+			<input type="radio" name="matchcase" id="matchcase" value="2" checked="checked" /><xar:mlstring>End with</xar:mlstring> ...<br />
+		        <xar:else />
+		        <input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...<br />
+		        </xar:if>
+		        <xar:if condition="$match_case eq 3">
+			<input type="radio" name="matchcase" id="matchcase" value="3" checked="checked" /><xar:mlstring>Everywhere</xar:mlstring><br />
+		        <xar:else />
+		        <input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring><br />
+		        </xar:if>
+		</span>
+		</div>
+		
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Locale</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+		<select name="locale" id="locale">
+	        <xar:if condition="$locale eq 'ALL'">
+	        <option value="ALL" selected="selected"><xar:mlstring>ALL</xar:mlstring></option>
+		<xar:else />
+		<option value="ALL"><xar:mlstring>ALL</xar:mlstring></option>
+		</xar:if>
+		<xar:foreach in="$locales" value="$dlocale">
+		   <xar:if condition="$locale eq $dlocale['value']">
+		    <option value="#$dlocale['value']#" selected="selected">#$dlocale['name']#</option>
+	           <xar:else />
+	           <option value="#$dlocale['value']#">#$dlocale['name']#</option>
+	           </xar:if>
+	        </xar:foreach>
+                </select>
+                </span>
 		<br /><br />
 		<span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span>
 	</form>

@@ -28,8 +28,26 @@ function censor_init()
 
     $censortable = $xartable['censor'];
 
-    $fields = array('xar_cid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-        'xar_keyword' => array('type' => 'varchar', 'size' => 100, 'null' => false, 'default' => ''),
+    $fields = array('xar_cid' => array('type' => 'integer', 
+                                       'null' => false, 
+                                       'increment' => true, 
+                                       'primary_key' => true),
+        'xar_keyword' => array('type' => 'varchar', 
+                               'size' => 100, 
+                               'null' => false, 
+                               'default' => ''),
+        'xar_case_sensitive' => array('type' => 'char', 
+                               'size' => 1, 
+                               'null' => false, 
+                               'default' => '0'),
+        'xar_match_case' => array('type' => 'char', 
+                               'size' => 1, 
+                               'null' => false, 
+                               'default' => '0'),
+        'xar_locale' => array('type' => 'varchar', 
+                               'size' => 100, 
+                               'null' => false, 
+                               'default' => '')
         );
 
     $query = xarDBCreateTable($censortable, $fields);

@@ -5,6 +5,15 @@
 			<th style="text-align: left; padding-left: 10px;">
 				<xar:mlstring>Keyword</xar:mlstring>
 			</th>
+			<th style="text-align: center; padding-left: 10px;">
+				<xar:mlstring>Case Sensitive</xar:mlstring>
+			</th>
+			<th style="text-align: center; padding-left: 10px;">
+				<xar:mlstring>Match Case</xar:mlstring>
+			</th>
+			<th style="text-align: center; padding-left: 10px;">
+				<xar:mlstring>Locale</xar:mlstring>
+			</th>
 			<th style="text-align: center;padding-left: 10px;" nowrap="nowrap">
 				<xar:mlstring>Actions</xar:mlstring>
 			</th>
@@ -13,6 +22,27 @@
 		<tr>
 			<td class="xar-norm-outline xar-mod-title" style="vertical-align: middle; text-align: left; padding-left: 10px; margin:auto; height: 20px;border-width: 0px 0px 1px 0px;border-style: dotted;">
 				#$loop:item['keyword']#
+			</td>
+			<td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+			<xar:if condition="$loop:item['case_sensitive'] eq '1'">
+			<img src="modules/censor/xarimages/yes.gif" alt="#xarML('Yes')#" />
+			<xar:else/>
+			<img src="modules/censor/xarimages/no.gif" alt="#xarML('No')#" />
+			</xar:if>
+			</td>
+			<td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+			<xar:if condition="$loop:item['match_case'] eq '0'">
+			<img src="modules/censor/xarimages/no.gif" alt="#xarML('Exact')#" />
+			<xar:elseif condition="$loop:item['match_case'] eq '1'" />
+			<img src="modules/censor/xarimages/start.gif" alt="#xarML('Start with ...')#" />
+			<xar:elseif condition="$loop:item['match_case'] eq '2'" />
+			<img src="modules/censor/xarimages/end.gif" alt="#xarML('End with ...')#"  />
+			<xar:else />
+			<img src="modules/censor/xarimages/ever.gif" alt="#xarML('Everywhere')#"  />
+			</xar:if>
+			</td>
+			<td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+			#$loop:item['locale']#
 			</td>
 			<td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
 				<a href="#$loop:item['editurl']#"><img src="modules/censor/xarimages/edit.gif" alt="#$loop:item['edittitle']#" /></a>  
