@@ -44,6 +44,9 @@ function articles_userapi_getrandom($args)
     
     if (empty($args['unique'])) {
         $args['unique'] = false;
+    } else {
+        $args['unique'] = true;
+        $aidlist = array();
     }
     
     $articles = array();
@@ -63,23 +66,21 @@ function articles_userapi_getrandom($args)
     } else {
         // retrieve numitems x 1 random article
         $args['numitems'] = 1;
-        for ($i = 0; $i < $numitems; $i++) {
+        
+        for ($i = 0; $i < $numitems; $i++) { 
             $args['startnum'] = mt_rand(1, $count);
             
-            if ($args['unique']) {
-                if (in_array($args['startnum'], $articles)) {
-                    $i--;
-                    continue;
-                }
+            if (in_array($args['startnum'], $aidlist) && $args['unique']) {
+                $i--;
+            } else {           
+                $aidlist[] = $args['startnum'];
+                $items = xarModAPIFunc('articles','user','getall',$args);
+                if (empty($items)) break;
+                array_push($articles, array_pop($items)); 
             }
-            $items = xarModAPIFunc('articles','user','getall',$args);
-            if (empty($items)) break;
-            array_push($articles, array_pop($items));
         }
     }
-    
-    
-    
+    die('<pre>'.print_r($aidlist,true).'</pre>');
     return $articles;
 }
 
