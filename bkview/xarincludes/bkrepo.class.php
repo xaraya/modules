@@ -181,6 +181,7 @@ class bkRepo
             $changeset->age = $age;
             $changeset->author = $author;
             $changeset->rev = $rev;
+            $changeset->checkedout = file_exists($this->_root . '/' . $changeset->file);
             $changeset->comments = $comments;
             $csets[$rev] = $changeset;
         }

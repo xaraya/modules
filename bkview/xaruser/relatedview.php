@@ -29,27 +29,20 @@ function bkview_user_relatedview($args)
     $repo =& $item['repo'];
     $the_file = new bkFile($repo,$file);
 
-    if(xarModIsAvailable('mime') && file_exists($the_file->bkAbsoluteName())) {
-        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $the_file->bkAbsoluteName()));
-        $icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
-        $checkedout = true;
-    } else {
-        $icon = xarTplGetImage('file.gif','bkview');
-        $checkedout = false;
-    }
+    $icon = xarModAPIFunc('bkview','user','geticon',array('file' => $the_file->bkAbsoluteName()));
+    
     $changesets=$the_file->bkChangeSets();
     foreach($changesets as $revision => $changeset) {
         $changeset->repoid = $repoid;
         $changeset->icon = $icon;
-        $changeset->checkedout = $checkedout;
         $csets[$revision] = (array) $changeset;
     }
     
     // Return data to BL
-    $data['pageinfo']=xarML("Changesets that modify #(1)",$file);
-    $data['repoid']=$repoid;
-    $data['name_value']=$item['reponame'];
-    $data['csets']=$csets;
+    $data['pageinfo']   = xarML("Changesets that modify #(1)",$file);
+    $data['repoid']     = $repoid;
+    $data['name_value'] = $item['reponame'];
+    $data['csets']      = $csets;
     return $data;
 }
 

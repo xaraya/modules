@@ -36,6 +36,7 @@ class bkChangeSet extends bkDelta
    {
         $cmd="bk changes -vn -r".$this->rev." -d':GFILE:|:REV:'";
         $tmp = $this->repo->_run($cmd);
+        $deltas = array();
         while (list(,$did) = each($tmp)) {
             list($file,$rev) = explode('|',$did);
             if (strtolower($file)!="changeset") {

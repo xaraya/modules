@@ -34,21 +34,12 @@ function bkview_user_historyview($args)
 
     $the_file=new bkFile($repo,$file);
     
-    if(xarModIsAvailable('mime') && file_exists($the_file->bkAbsoluteName())) {
-        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $the_file->bkAbsoluteName()));
-        $icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
-        $checkedout = true;
-    } else {
-        $icon = xarTplGetImage('file.gif','bkview');
-        $checkedout = false;
-    }
-    
+    $icon = xarModAPIFunc('bkview','user','geticon', array('file' => $the_file->bkAbsoluteName()));
     // Get an array of delta's
     $history= $the_file->bkHistory($user);
     foreach($history as $rev => $delta) {
         $delta->repoid = $repoid;
         $delta->icon = $icon;
-        $delta->checkedout = $checkedout;
         $histlist[$rev] = (array) $delta;
     }
 
@@ -59,10 +50,10 @@ function bkview_user_historyview($args)
     } else {
         $data['pageinfo']=xarML("Revision history for #(1)",$file);
     }
-    $data['histlist']=$histlist;
-    $data['name_value']=$item['reponame'];
-    $data['repoid']=$repoid;
-    $data['file']=$file;
+    $data['histlist']   = $histlist;
+    $data['name_value'] = $item['reponame'];
+    $data['repoid']     = $repoid;
+    $data['file']       = $file;
     return $data;
 }
 ?>

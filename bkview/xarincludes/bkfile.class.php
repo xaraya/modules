@@ -59,6 +59,7 @@ class bkFile
             $delta->age = $age;
             $delta->author = $author;
             $delta->file = $this->_file;
+            $delta->checkedout = file_exists($this->_repo->_root . '/' . $this->_file);
             $delta->comments = $comments;
             $deltas[$filerev] = $delta;
         }
@@ -88,6 +89,7 @@ class bkFile
             $changeset->age = $age;
             $changeset->author = $author;
             $changeset->comments = $comments;
+            $changeset->checkedout = file_exists($this->_repo->_root . '/' . $this->_file);
             $csets[$rev] = $changeset;
         }
         return $csets;

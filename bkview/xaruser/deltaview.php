@@ -36,22 +36,15 @@ function bkview_user_deltaview($args)
     
     // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
+    $changeset->repoid = $repoid;
+    $changeset->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
     $dlist = $changeset->deltas;
     if(!empty($dlist)) {
         foreach($dlist as $delta_id => $delta) {
-            // Repo id is a xaraya thing, add it sneaky to the object because we dont
-            // want it in the class
-            
             // Make sure our delta object contains what we need
             $delta->repoid = $repoid;
-
-            $absfile = $repo->_root . '/' . $delta->file;
-            if(xarModIsAvailable('mime') && $delta->checkedout) {
-                $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $absfile));
-                $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
-            } else {
-                $delta->icon = xarTplGetImage('file.gif','bkview');
-            }
+            $delta->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/' . $delta->file));
+            
             // construct an array which has each part of the path to the file in an index
             $arrayindex = '$deltatree[\''. implode("']['",explode('/',$delta->file)) . "']";
             
@@ -79,24 +72,11 @@ function bkview_user_deltaview($args)
     //  $hooks = xarModCallHooks('item', 'display', $hookId, $extraInfo, 'bkview', 'changeset')
     
     // Pass data to BL compiler
-    // FIXME: this sucks
-    $data['pageinfo']=xarML("Changeset details for #(1)",$rev);
-    $data['rev']=$rev;
-    $data['author'] = $changeset->author;
-    $data['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
-    $data['key'] = $changeset->key;
-    $data['tag'] = $changeset->tag;
-    $data['repoid']=$repoid;
-    $data['name_value']=$item['reponame'];
-    $data['hooks'] = $hooks;
-    $data['cset']['file'] = 'ChangeSet';
-    $data['cset']['rev'] = $rev;
-    $data['cset']['repoid'] = $repoid;
-    $data['cset']['age'] = $changeset->age;
-    $data['cset']['range'] = bkAgeToRangeCode($changeset->age);
-    $data['cset']['author'] = $changeset->author;
-    $data['cset']['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
-    $data['cset']['tag'] = $changeset->tag;
+    $data['pageinfo']   = xarML("Changeset details for #(1)",$rev);
+    $data['repoid']     = $repoid;
+    $data['name_value'] = $item['reponame'];
+    $data['hooks']      = $hooks;
+    $data['cset']       = (array) $changeset;
     return $data;
 }
 

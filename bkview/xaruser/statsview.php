@@ -60,10 +60,10 @@ function bkview_user_statsview($args)
     }
 
     $results = array_csort($results,'allcsets',SORT_DESC);
-    $data['pageinfo']=xarML("User statistics");
-    $data['repoid']=$repoid;
-    $data['name_value']=$item['reponame'];
-    $data['users']=$results;
+    $data['pageinfo']   = xarML("User statistics");
+    $data['repoid']     = $repoid;
+    $data['name_value'] = $item['reponame'];
+    $data['users']      = $results;
     return $data;
 }
 

@@ -32,6 +32,8 @@ function bkview_user_patchview($args)
         $csetrev = $rev;
     }
     $changeset= new bkChangeSet($repo,$csetrev);
+    $changeset->repoid = $repoid;
+    $changeset->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
     
     $data=array();
     $deltalist=array();
@@ -48,13 +50,7 @@ function bkview_user_patchview($args)
     if(!is_null($dlist)) {
         foreach($dlist as $delta_id => $delta) {
             $delta->repoid = $repoid;
-            
-            if(xarModIsAvailable('mime') && $delta->checkedout) {
-                $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $repo->_root . '/' . $delta->file));
-                $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
-            } else {
-                $delta->icon = xarTplGetImage('file.gif','bkview');
-            }
+            $delta->icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/' . $delta->file));
             $deltalist[$counter] = (array) $delta;
             
             $diff=$delta->bkDiffs();
@@ -77,19 +73,12 @@ function bkview_user_patchview($args)
         }
     }
     // Return the data to BL compiler
-    $data['file'] = $file;
-    $data['pageinfo']=xarML("Diffs for #(1) revision #(2)",$file, $rev);
-    $data['repoid']=$repoid;
-    $data['name_value']=$item['reponame'];
-    $data['deltalist']=$deltalist;
-    $data['cset']['file'] = 'ChangeSet';
-    $data['cset']['repoid'] = $repoid;
-    $data['cset']['rev'] = $rev;
-    $data['cset']['age'] = $changeset->age;
-    $data['cset']['range'] = bkAgeToRangeCode($changeset->age);
-    $data['cset']['author'] = $changeset->author;
-    $data['cset']['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
-    $data['cset']['tag'] = $changeset->tag;
+    $data['file']       = $file;
+    $data['pageinfo']   = xarML("Diffs for #(1) revision #(2)",$file, $rev);
+    $data['repoid']     = $repoid;
+    $data['name_value'] = $item['reponame'];
+    $data['deltalist']  = $deltalist;
+    $data['cset']       = (array) $changeset;
     return $data;
 }
 

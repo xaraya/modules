@@ -3,6 +3,7 @@
     should be used. It expects the following variables: ([$vars] are optional)
     [$tag]  : the tag if the delta was in a cset which was tagged
     [$icon] : icon for the file (url to an image really)
+    [$checkedout] : boolean which specifies whether the file belonging to the delta is checked out.
     $repoid : id of the repo this delta was in
     $file   : file on which this delta applies
     $author : author of the file

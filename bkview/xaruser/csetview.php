@@ -31,20 +31,12 @@ function bkview_user_csetview($args)
     $flags = ($sort * BK_FLAG_FORWARD) + ($showmerge * BK_FLAG_SHOWMERGE) + ($taggedonly * BK_FLAG_TAGGEDONLY);
     $csetlist =& $repo->bkChangeSets($user, $range, $flags);
 
-    if(xarModIsAvailable('mime') && file_exists($repo->_root . '/ChangeSet')) {
-        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $repo->_root . '/ChangeSet'));
-        $icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
-        $checkedout = true;
-    } else {
-        $icon = xarTplGetImage('bkmissing.png','bkview');
-        $checkedout = false;
-    }
-
+    $icon = xarModAPIFunc('bkview','user','geticon', array('file' => $repo->_root . '/ChangeSet'));
+    
     $csets = array();
     foreach($csetlist as $rev => $changeset) {
         $changeset->repoid = $repoid;
         $changeset->icon = $icon;
-        $changeset->checkedout = $checkedout;
         $csets[$rev] = (array) $changeset;
     }
 
@@ -66,12 +58,12 @@ function bkview_user_csetview($args)
         }
     }
 
-    $data['showmerge'] = $showmerge;
+    $data['showmerge']  = $showmerge;
     $data['taggedonly'] = $taggedonly;
-    $data['range'] = $range;
-    $data['csets'] = $csets;
+    $data['range']      = $range;
+    $data['csets']      = $csets;
     $data['name_value'] = $item['reponame'];
-    $data['repoid']=$repoid;
+    $data['repoid']     = $repoid;
     return $data;
 }
 ?>
