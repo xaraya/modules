@@ -23,7 +23,7 @@
     </a>
   </span>
   <span class="xar-menu-item">
-    <a href="&xar-modurl-bkview-user-tagview;&amp;repoid=#$repoid#">
+    <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#">
       <xar:mlstring>Tags</xar:mlstring>
     </a>
   </span>
