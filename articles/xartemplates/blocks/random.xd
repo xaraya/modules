@@ -1,19 +1,20 @@
 <xar:if condition="!empty($showtitle)">
-  <a href="#xarModURL('articles', 'user', 'display', array('aid' => $aid))#">#$title#</a>
+    <a href="#xarModURL('articles', 'user', 'display', array('aid' => $aid))#">#$title#</a>
 </xar:if>
 <br/>
 
 <xar:if condition="!empty($showsummary)">#$summary#</xar:if><br/>
-<div style="text-align: right;">
-<xar:if condition="!empty($showauthor)">
-  By <a href="#xarModURL('roles', 'user', 'view', array('uid' => $authorid))#">#$authorname#</a>
-</xar:if>
-<xar:if condition="!empty($showpubdate)">(#$pubdate#)</xar:if>
+<div>
+    <xar:if condition="!empty($showauthor)">
+        <xar:mlstring>Author:</xar:mlstring>
+        <a href="#xarModURL('roles', 'user', 'view', array('uid' => $authorid))#">#$authorname#</a>
+    </xar:if>
+    <xar:if condition="!empty($showpubdate)">(#$pubdate#)</xar:if>
 </div>
 
 <xar:if condition="!empty($showsubmit)">
-<div style="text-align: center; font-size: xx-small;">
-<a href="#xarModURL('articles', 'admin', 'new', array('ptid' => $ptid))#"><xar:mlstring>submit new</xar:mlstring></a>
-</div>
+    <div>
+        <a href="#xarModURL('articles', 'admin', 'new', array('ptid' => $ptid))#"><xar:mlstring>Submit new</xar:mlstring></a>
+    </div>
 </xar:if>
- <!--- TODO: link to submit new article (and option to control this) --->
+<!--- TODO: link to submit new article (and option to control this) --->
