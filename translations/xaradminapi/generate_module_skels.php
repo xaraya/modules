@@ -8,7 +8,7 @@
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage translations
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
@@ -73,9 +73,10 @@ function translations_adminapi_generate_module_skels($args)
             $transKeyEntriesCollection[$subname] = $parser->getTransKeyEntries();
         }
 
+/*
         //$partnames = array();
         if (file_exists("modules/$moddir/xar$subname")) {
-            $dd = opendir("modules/$moddir/xar$subname");
+           $dd = opendir("modules/$moddir/xar$subname");
             while ($filename = readdir($dd)) {
                 if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
                 //$partnames[] = $matches[1];
@@ -88,6 +89,7 @@ function translations_adminapi_generate_module_skels($args)
             }
             closedir($dd);
         }
+*/
     }
 
     $tplnames = array();
@@ -154,6 +156,26 @@ function translations_adminapi_generate_module_skels($args)
         closedir($dd);
     }
 
+    $alloweddirs = array("admin", "adminapi", "user", "userapi");
+
+    foreach($alloweddirs as $alloweddir) {
+        ${$alloweddir . "names"} = array();
+        if (file_exists("modules/$moddir/xar$alloweddir")) {
+            $dd = opendir("modules/$moddir/xar$alloweddir");
+            while ($filename = readdir($dd)) {
+                if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
+                ${$alloweddir . "names"}[] = $matches[1];
+
+                $parser = new PHPParser();
+                $parser->parse("modules/$moddir/xar$alloweddir/$filename");
+
+                $transEntriesCollection[$alloweddir.'::'.$matches[1]] = $parser->getTransEntries();
+                $transKeyEntriesCollection[$alloweddir.'::'.$matches[1]] = $parser->getTransKeyEntries();
+            }
+            closedir($dd);
+        }
+    }
+
     $transEntriesCollection = translations_gather_common_entries($transEntriesCollection);
     $transKeyEntriesCollection = translations_gather_common_entries($transKeyEntriesCollection);
 
@@ -161,7 +183,8 @@ function translations_adminapi_generate_module_skels($args)
     // Load previously made translations
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($backend)) return;
-    if ($backend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
+// TODO: <marc> it seesm to me that if a file does not exist it should be created, rather than dies
+/*    if ($backend->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) {
         foreach ($subnames as $subname) {
             if (!$backend->loadContext(XARMLS_CTXTYPE_FILE, $subname)) return;
         }
@@ -177,8 +200,19 @@ function translations_adminapi_generate_module_skels($args)
         foreach ($blocknames as $blockname) {
             if (!$backend->loadContext(XARMLS_CTXTYPE_BLOCK, $blockname)) return;
         }
-    }
-
+        foreach ($adminnames as $adminname) {
+            if (!$backend->loadContext(XARMLS_CTXTYPE_ADMIN, $adminname)) return;
+        }
+        foreach ($adminapinames as $adminapiname) {
+            if (!$backend->loadContext(XARMLS_CTXTYPE_ADMINAPI, $adminapiname)) return;
+        }
+        foreach ($usernames as $username) {
+            if (!$backend->loadContext(XARMLS_CTXTYPE_USER, $username)) return;
+        }
+        foreach ($userapinames as $userapiname) {
+            if (!$backend->loadContext(XARMLS_CTXTYPE_USERAPI, $userapiname)) return;
+        }
+    }*/
     // Load KEYS
     $filename = "modules/$moddir/KEYS";
     $KEYS = array();
@@ -209,6 +243,14 @@ function translations_adminapi_generate_module_skels($args)
             if (!$gen->create(XARMLS_CTXTYPE_BLKTEMPL, $matches[1])) return;
         } elseif (preg_match('/^block::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_BLOCK, $matches[1])) return;
+        } elseif (preg_match('/^admin::(.*)/', $subname, $matches)) {
+            if (!$gen->create(XARMLS_CTXTYPE_ADMIN, $matches[1])) return;
+        } elseif (preg_match('/^adminapi::(.*)/', $subname, $matches)) {
+            if (!$gen->create(XARMLS_CTXTYPE_ADMINAPI, $matches[1])) return;
+        } elseif (preg_match('/^user::(.*)/', $subname, $matches)) {
+            if (!$gen->create(XARMLS_CTXTYPE_USER, $matches[1])) return;
+        } elseif (preg_match('/^userapi::(.*)/', $subname, $matches)) {
+            if (!$gen->create(XARMLS_CTXTYPE_USERAPI, $matches[1])) return;
         } else {
             if (!$gen->create(XARMLS_CTXTYPE_FILE, $subname)) return;
         }
@@ -247,7 +289,6 @@ function translations_adminapi_generate_module_skels($args)
 
         $gen->close();
     }
-
 
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];

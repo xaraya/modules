@@ -1,0 +1,21 @@
+<xar:template type="module" file="admin-menu"/>
+
+<xar:template type="module" file="trabar" />
+<xar:if condition="count($subnames) gt 0">
+  <p>
+    <xar:mlstring>Choose from the list below which file you want to translate.</xar:mlstring>
+  </p>
+  <ul>
+    <xar:for start="$i=0" test="$i lt count($subnames)" iter="$i++">
+      <li>
+        <a href="#xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>'user', 'subname'=>$subnames[$i]))#">#$subnames[$i]#</a>
+      </li>
+    </xar:for>
+  </ul>
+<xar:else />
+  <p>
+    <xar:mlstring>There's no file to translate.</xar:mlstring>
+  </p>
+</xar:if>
+<br />
+<xar:template type="module" file="opbar" />

@@ -321,7 +321,7 @@ define('RELEASE', 4);
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar('template', '');
-   
+
     $tplData = array_merge($tplData, $opbar, $trabar);
     $tplData['dnType'] = translations__dnType2Name($dnType);
 
@@ -406,6 +406,118 @@ define('RELEASE', 4);
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar('block', '');
+
+    $tplData = array_merge($tplData, $opbar, $trabar);
+
+    return $tplData;
+}
+
+/* FUNC */function translations_admin_translate_admin()
+{
+// Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    $dnType = xarSessionGetVar('translations_dnType');
+    $dnName = xarSessionGetVar('translations_dnName');
+
+    $locale = translations_working_locale();
+
+    $args['interface'] = 'ReferencesBackend';
+    $args['locale'] = $locale;
+    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    if (!isset($backend)) return;
+    if (!$backend->bindDomain($dnType, $dnName)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        return;
+    }
+    $tplData['subnames'] = $backend->getContextNames(XARMLS_CTXTYPE_ADMIN);
+
+    $opbar = translations_create_opbar(TRANSLATE);
+    $trabar = translations_create_trabar('admin', '');
+
+    $tplData = array_merge($tplData, $opbar, $trabar);
+
+    return $tplData;
+}
+
+/* FUNC */function translations_admin_translate_adminapi()
+{
+// Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    $dnType = xarSessionGetVar('translations_dnType');
+    $dnName = xarSessionGetVar('translations_dnName');
+
+    $locale = translations_working_locale();
+
+    $args['interface'] = 'ReferencesBackend';
+    $args['locale'] = $locale;
+    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    if (!isset($backend)) return;
+    if (!$backend->bindDomain($dnType, $dnName)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        return;
+    }
+    $tplData['subnames'] = $backend->getContextNames(XARMLS_CTXTYPE_ADMINAPI);
+
+    $opbar = translations_create_opbar(TRANSLATE);
+    $trabar = translations_create_trabar('adminapi', '');
+
+    $tplData = array_merge($tplData, $opbar, $trabar);
+
+    return $tplData;
+}
+
+/* FUNC */function translations_admin_translate_user()
+{
+// Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    $dnType = xarSessionGetVar('translations_dnType');
+    $dnName = xarSessionGetVar('translations_dnName');
+
+    $locale = translations_working_locale();
+
+    $args['interface'] = 'ReferencesBackend';
+    $args['locale'] = $locale;
+    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    if (!isset($backend)) return;
+    if (!$backend->bindDomain($dnType, $dnName)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        return;
+    }
+    $tplData['subnames'] = $backend->getContextNames(XARMLS_CTXTYPE_USER);
+
+    $opbar = translations_create_opbar(TRANSLATE);
+    $trabar = translations_create_trabar('user', '');
+
+    $tplData = array_merge($tplData, $opbar, $trabar);
+
+    return $tplData;
+}
+
+/* FUNC */function translations_admin_translate_userapi()
+{
+// Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    $dnType = xarSessionGetVar('translations_dnType');
+    $dnName = xarSessionGetVar('translations_dnName');
+
+    $locale = translations_working_locale();
+
+    $args['interface'] = 'ReferencesBackend';
+    $args['locale'] = $locale;
+    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    if (!isset($backend)) return;
+    if (!$backend->bindDomain($dnType, $dnName)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        return;
+    }
+    $tplData['subnames'] = $backend->getContextNames(XARMLS_CTXTYPE_USERAPI);
+
+    $opbar = translations_create_opbar(TRANSLATE);
+    $trabar = translations_create_trabar('userapi', '');
 
     $tplData = array_merge($tplData, $opbar, $trabar);
 
@@ -573,6 +685,18 @@ function translations_create_trabar($subtype, $subname)
         $traLabels[$j] = xarML('Blocks');
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_blocks');
         $enabledTras[$j++] = true;
+        $traLabels[$j] = xarML('Admin');
+        $traURLs[$j] = xarModURL('translations', 'admin', 'translate_admin');
+        $enabledTras[$j++] = true;
+        $traLabels[$j] = xarML('AdminAPI');
+        $traURLs[$j] = xarModURL('translations', 'admin', 'translate_adminapi');
+        $enabledTras[$j++] = true;
+        $traLabels[$j] = xarML('User');
+        $traURLs[$j] = xarModURL('translations', 'admin', 'translate_user');
+        $enabledTras[$j++] = true;
+        $traLabels[$j] = xarML('UserAPI');
+        $traURLs[$j] = xarModURL('translations', 'admin', 'translate_userapi');
+        $enabledTras[$j++] = true;
 
         // $enabledTras = array(true, true, true, true, true, true, true, true);
 
@@ -593,6 +717,26 @@ function translations_create_trabar($subtype, $subname)
             case 'block':
             if ($subname == '') {
                 $currentTra = array_search('blocks', $traLabels);
+            }
+            break;
+            case 'admin':
+            if ($subname == '') {
+                $currentTra = array_search('admin', $traLabels);
+            }
+            break;
+            case 'adminapi':
+            if ($subname == '') {
+                $currentTra = array_search('adminapi', $traLabels);
+            }
+            break;
+            case 'user':
+            if ($subname == '') {
+                $currentTra = array_search('user', $traLabels);
+            }
+            break;
+            case 'userapi':
+            if ($subname == '') {
+                $currentTra = array_search('userapi', $traLabels);
             }
             break;
         }

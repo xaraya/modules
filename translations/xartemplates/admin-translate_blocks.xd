@@ -14,7 +14,7 @@
   </ul>
 <xar:else />
   <p>
-    <xar:mlstring>There's no block to traduce.</xar:mlstring>
+    <xar:mlstring>There's no block to translate.</xar:mlstring>
   </p>
 </xar:if>
 <br />

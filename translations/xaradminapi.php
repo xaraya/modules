@@ -111,14 +111,14 @@
 {
     // Get arguments
     extract($args);
-    
+
     // Argument check
     assert('isset($locale)');
-    
+
     if (!$bt = xarModAPIFunc('translations','admin','release_backend_type')) return;;
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
-    
+
     if ($bt != 'php') {
         $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that such backend.', $bt);
         xarExceptionSet(XAR_USER_EXCEPTION, 'UnsupportedReleaseBackend', new DefaultUserException($msg));
@@ -235,6 +235,8 @@
     return $blocknames;
 }
 
+//  This function returns an array containing all the php files
+//  in a given directory that start with "xar"
 /* API */function translations_adminapi_get_module_phpfiles($args)
 {
     // Get arguments
@@ -247,6 +249,10 @@
     if (file_exists("modules/$moddir")) {
         $dd = opendir("modules/$moddir");
         while ($filename = readdir($dd)) {
+//            if (is_dir("modules/$moddir/$filename") && (substr($filename,0,3) == "xar")) {
+//                $names[] = ereg_replace("^xar","",$filename);
+//                continue;
+//            }
             if (!preg_match('/^([a-z\-_]+)\.php$/i', $filename, $matches)) continue;
             $phpname = $matches[1];
             if ($phpname == 'xarversion') continue;
@@ -255,6 +261,8 @@
         }
         closedir($dd);
     }
+//  no longer applicable
+/*
     $names2 = array('admin','user','adminapi','userapi');
     foreach ($names2 as $name2) {
         if (!file_exists("modules/$moddir/xar$name2.php")) {
@@ -263,6 +271,7 @@
             }
         }
     }
+*/
     return $names;
 }
 

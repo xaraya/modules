@@ -22,7 +22,7 @@
   </ul>
 <xar:else />
   <p>
-    <xar:mlstring>There's no template to traduce.</xar:mlstring>
+    <xar:mlstring>There's no template to translate.</xar:mlstring>
   </p>
 </xar:if>
 <br />

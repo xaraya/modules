@@ -8,7 +8,7 @@
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage translations
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
@@ -19,7 +19,7 @@ function translations_admin_translate_subtype()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!xarVarFetch('subtype', 'regexp:/^(file|template|incltempl|blktempl|block)$/', $subtype)) return;
+    if (!xarVarFetch('subtype', 'regexp:/^(file|template|incltempl|blktempl|block|admin|adminapi|user|userapi)$/', $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
 
     $dnType = xarSessionGetVar('translations_dnType');
@@ -28,7 +28,11 @@ function translations_admin_translate_subtype()
     if ($subtype == 'file') $ctxType = XARMLS_CTXTYPE_FILE;
     elseif ($subtype == 'template') $ctxType = XARMLS_CTXTYPE_TEMPLATE;
     elseif ($subtype == 'incltempl') $ctxType = XARMLS_CTXTYPE_INCLTEMPL;
-	elseif ($subtype == 'blktempl') $ctxType = XARMLS_CTXTYPE_BLKTEMPL;
+    elseif ($subtype == 'blktempl') $ctxType = XARMLS_CTXTYPE_BLKTEMPL;
+    elseif ($subtype == 'admin') $ctxType = XARMLS_CTXTYPE_ADMIN;
+    elseif ($subtype == 'adminapi') $ctxType = XARMLS_CTXTYPE_ADMINAPI;
+    elseif ($subtype == 'user') $ctxType = XARMLS_CTXTYPE_USER;
+    elseif ($subtype == 'userapi') $ctxType = XARMLS_CTXTYPE_USERAPI;
     else $ctxType = XARMLS_CTXTYPE_BLOCK;
     $ctxName = $subname;
 

@@ -1,6 +1,6 @@
 <div class="xar-mod-head">
   <span class="xar-mod-title">
-    <xar:mlstring>Translations administration</xar:mlstring>
+    <xar:mlstring>Translations Administration</xar:mlstring>
   </span>
 </div>
 
@@ -10,7 +10,7 @@
   The process roughly consists of two parts:
   <ol>
     <li><a href="&xar-modurl-translations-admin-start;"><xar:mlstring>Translating</xar:mlstring></a>
-    <li><a href="&xar-modurl-translations-admin-generate_trans_info;"><xar:mlstring>Generating &amp; Packaging</xar:mlstring></a>
+    <li><a href="&xar-modurl-translations-admin-generate_trans;"><xar:mlstring>Generating &amp; Packaging</xar:mlstring></a>
   </ol>
 </p>
 
