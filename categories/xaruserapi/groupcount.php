@@ -4,8 +4,9 @@
  * count number of items per category, or number of categories for each item
  * @param $args['groupby'] group entries by 'category' or by 'item'
  * @param $args['modid'] module´s ID
+ * @param $args['itemid'] optional item ID that we are selecting on
+ * @param $args['itemids'] optional array of item IDs that we are selecting on
  * @param $args['itemtype'] item type
- * @param $args['iids'] optional array of item IDs that we are selecting on
  * @param $args['cids'] optional array of cids we're counting for (OR/AND)
  * @param $args['andcids'] true means AND-ing categories listed in cids
  * @param $args['groupcids'] the number of categories you want items grouped by
@@ -33,18 +34,41 @@ function categories_userapi_groupcount($args)
     // the categories-specific columns too now
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',$args);
 
+    // Collection of where-clause expressions.
+    $where = array();
+
+    // Filter by itemids.
+    if (!empty($itemids) && is_array($itemids)) {
+        $itemids = array_filter($itemids, 'is_numeric');
+        if (!empty($itemids)) {
+            $where[] = $categoriesdef['iid'] . ' in (' . explode(', ', $itemids) . ')';
+        }
+    }
+    
+    // Filter by single itemid.
+    if (!empty($itemid) && is_numeric($itemid)) {
+        $where[] = $categoriesdef['iid'] . '=' . $itemid;
+    }
+
+    // Filter by category.
+    if (!empty($categoriesdef['where'])) {
+        $where[] = $categoriesdef['where'];
+    }
+
     if ($groupby == 'item') {
         $field = $categoriesdef['iid'];
     } else {
         $field = $categoriesdef['cid'];
     }
+
     $sql = 'SELECT ' . $field . ', COUNT(*)';
     $sql .= ' FROM ' . $categoriesdef['table'];
     $sql .= $categoriesdef['more'];
-    if (!empty($categoriesdef['where'])) {
-        $sql .= ' WHERE ' . $categoriesdef['where'];
+    if (!empty($where)) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
     }
     $sql .= ' GROUP BY ' . $field;
+
 
     $result = $dbconn->Execute($sql);
     if (!$result) return;

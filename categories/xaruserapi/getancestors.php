@@ -11,6 +11,7 @@
  * @param $args['self'] =Boolean= return the cid itself (default true)
  * @param $args['return_itself'] alias of 'self'
  * @param $args['order'] 'root' or 'self' first; default 'root' (i.e. oldest ancestor first)
+ * @param $args['descendants'] array to determine how descendants will be returned: 'tree', 'lists', 'list', ['none']
  * @returns array
  * @return array of category info arrays, false on failure
  */
@@ -32,6 +33,8 @@ function categories_userapi_getancestors($args) {
     // Put the single cid into the array of cids for convenience.
     if (!isset($cids) || !is_array($cids)) {$cids = array();}
     if (!empty($cid)) {array_push($cids, $cid);}
+
+    if (empty($descendants)) {$descendants = 'none';}
 
     // Filter out non-numeric array values.
     $cids = array_filter($cids, 'is_numeric');
@@ -120,7 +123,7 @@ function categories_userapi_getancestors($args) {
         // Keep a trace of descendants as we walk back up the tree.
         // The descendants are not cached as they will vary
         // depending upon where the ancestor walk starts from.
-        $descendants = "$cid";
+        $descendantsforcat = array($cid);
 
         // 'self' added only if required.
         if (!isset($info[$cid]) && $self) {
@@ -135,14 +138,27 @@ function categories_userapi_getancestors($args) {
                 $info[$nextcid] = $cached[$nextcid];
             }
 
-            // Store the descendant trail against this category.
-            $info[$nextcid]['descendants'][] = $descendants;
+            if ($descendants == 'lists') {
+                // Store the descendant trail against this category.
+                $info[$nextcid]['descendants'][] = $descendantsforcat;
+            }
+
+            if ($descendants == 'list') {
+                // Store the descendant trail against this category.
+                if (!isset($info[$nextcid]['descendants'])) {
+                    $info[$nextcid]['descendants'] = array();
+                }
+                $info[$nextcid]['descendants'] = array_unique(
+                    array_merge($descendantsforcat, $info[$nextcid]['descendants'])
+                );
+            }
 
             // Add this descendant onto the list for the next category up.
-            $descendants = $nextcid . ':' . $descendants;
+            array_unshift($descendantsforcat, $nextcid);
 
             $nextcid = $cached[$nextcid]['parent'];
         }
+
     }
     
     if ($order == 'root') {
