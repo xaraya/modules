@@ -101,7 +101,10 @@ function xarbb_user_viewtopic()
                                     'objectid'    => $header['objectid'],
                                     'startnum' => $startnum,
                                     'numitems' => $postperpage));
-
+/*
+    $todolist = array();
+    $todolist['transform'] = array();
+*/
     $totalcomments=count($comments);
     for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
@@ -113,6 +116,13 @@ function xarbb_user_viewtopic()
             $comments[$i]['xar_text']=xarVarPrepForDisplay($comments[$i]['xar_text']);
             $comments[$i]['xar_title']=xarVarPrepForDisplay($comments[$i]['xar_title']);
         }
+
+/*
+        $todolist['transform'][] = $i . 'xar_text';
+        $todolist[$i.'xar_text'] =& $comments[$i]['xar_text'];
+        $todolist['transform'][] = $i . 'xar_title';
+        $todolist[$i.'xar_title'] =& $comments[$i]['xar_title'];
+*/
         // This has to come after the html call.
         list($comments[$i]['xar_text'],
              $comments[$i]['xar_title']) = xarModCallHooks('item',
@@ -130,6 +140,7 @@ function xarbb_user_viewtopic()
                                                     'countposts',
                                                     array('uid' => $comment['xar_uid']));
 
+/*
 // TODO: retrieve all user info at once ?
         // The user API function is called
         $comments[$i]['userdata'] = xarModAPIFunc('roles',
@@ -137,12 +148,13 @@ function xarbb_user_viewtopic()
                                              'get',
                                               array('uid' => $comment['xar_uid']));
 
-        $isposter[$comment['xar_uid']] = 1;
-
         //format reply poster's registration date
         //$comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
         //Add datestamp so users can format in template, existing templates are still OK
         $comments[$i]['commenterdatestamp'] =$comments[$i]['userdata']['date_reg'];
+*/
+
+        $isposter[$comment['xar_uid']] = 1;
 
         //format the post reply date consistently with topic post date
         //$comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_datetime']);
@@ -150,9 +162,45 @@ function xarbb_user_viewtopic()
         $comments[$i]['xar_datestamp']=$comments[$i]['xar_datetime'];
     }
 
-    $data['items'] = $comments;
-
     $data['posterlist'] = array_keys($isposter);
+
+/*
+    $todolist = xarModCallHooks('item',
+                                'transform',
+                                $tid,
+                                $todolist,
+                                'xarbb',
+                                $data['fid']);
+*/
+
+    if (count($data['posterlist']) > 0) {
+/* the performance issue seems to be in comments author count, really, so this is not a solution
+        $data['usertopics'] = xarModAPIFunc('xarbb','user','countpostslist',
+                                            array('uidlist' => $data['posterlist']));
+        // TODO: support of legacy templates - get rid of this later on
+        for ($i = 0; $i < $totalcomments; $i++) {
+            $uid = $comments[$i]['xar_uid'];
+            if (isset($data['usertopics'][$uid])) {
+                $comments[$i]['usertopics'] = $data['usertopics'][$uid];
+            } else {
+                $comments[$i]['usertopics'] = 0;
+            }
+        }
+*/
+        $data['userdata'] = xarModAPIFunc('roles','user','getall',
+                                          array('order' => 'uid', 'uidlist' => $data['posterlist']));
+
+        for ($i = 0; $i < $totalcomments; $i++) {
+            $uid = $comments[$i]['xar_uid'];
+            if (isset($data['userdata'][$uid])) {
+                $comments[$i]['commenterdatestamp'] = $data['userdata'][$uid]['date_reg'];
+            } else {
+                $comments[$i]['commenterdatestamp'] = 0;
+            }
+        }
+    }
+
+    $data['items'] = $comments;
 
     // End individual Replies
 

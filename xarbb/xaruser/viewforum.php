@@ -102,16 +102,10 @@ function xarbb_user_viewforum()
     $userlist = array_keys($isuser);
     $users = array();
     if (count($userlist) > 0) {
-// TODO: find/make better roles API for this ?
-        $selection = ' AND xar_uid IN (' . join(', ',$userlist) . ') ';
-        $roles = xarModAPIFunc('roles',
+        $users = xarModAPIFunc('roles',
                                'user',
                                'getall',
-                               array('selection' => $selection));
-        foreach ($roles as $role) {
-            $users[$role['uid']] = $role;
-        }
-        unset($roles);
+                               array('uidlist' => $userlist));
     }
  
     for ($i = 0; $i < $totaltopics; $i++) {
