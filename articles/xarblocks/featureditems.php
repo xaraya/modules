@@ -56,19 +56,19 @@ function articles_featureditemsblock_display(& $blockinfo)
     // Defaults
     if (empty($vars['featuredaid'])) {$vars['featuredaid'] = 0;}
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
-    if (empty($vars['toptype'])) {$vars['toptype'] = 'hits';}
+    if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
+    if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
     if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
 
     if (!isset($vars['showvalue'])) {
-        if ($vars['toptype'] == 'hits') {
-            $vars['showvalue'] = true;
-        } else {
+        if ($vars['toptype'] == 'rating') {
             $vars['showvalue'] = false;
+        } else {
+            $vars['showvalue'] = true;
         }
     }
 
     $featuredaid = $vars['featuredaid'];
-    $alttitle = $vars['alttitle'];
 
     $fields = array('aid', 'title');
     if ($vars['toptype'] == 'rating') {
@@ -87,6 +87,11 @@ function articles_featureditemsblock_display(& $blockinfo)
         $fields[] = 'summary';
     }
 
+    // Initialize arrays
+    $data['feature'] = array();
+    $data['items'] = array();
+
+    // Setup featured item
     if ($featuredaid > 0) {
         $featuredart = xarModAPIFunc(
             'articles','user','get',
@@ -105,13 +110,16 @@ function articles_featureditemsblock_display(& $blockinfo)
         );
 
         $data['feature'][] = array(
-            'featuredlabel' => $featuredart['title'],
-            'featuredlink'  => $featuredlink,
-            'alttitle'      => $alttitle,
-            'featureddesc'  => !empty($vars['showfeaturedsum']) ? $featuredart['summary'] : ''
+            'featuredlabel'     => $featuredart['title'],
+            'featuredlink'      => $featuredlink,
+            'alttitle'          => $vars['alttitle'],
+            'altsummary'        => $vars['altsummary'],
+            'showfeaturedsum'   => $vars['showfeaturedsum'],
+            'featureddesc'      => $featuredart['summary'] 
         );
     }
 
+    // Setup additional items 
     if (!empty($vars['moreitems'])) {
         $articles = xarModAPIFunc(
             'articles', 'user', 'getall',
@@ -130,7 +138,6 @@ function articles_featureditemsblock_display(& $blockinfo)
             $curaid = -1;
         }
 
-        $data['items'] = array();
         foreach ($articles as $article) {
             if ($article['aid'] != $curaid) {
                 $link = xarModURL(
@@ -177,7 +184,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     }
 
     // Set the data to return.
-    $blockinfo['content'] =& $data;
+    $blockinfo['content'] = $data;
     return $blockinfo;
 }
 

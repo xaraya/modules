@@ -3,7 +3,7 @@
 			<span class="help" title="#xarML('Choose the publication type for the featured items.')#"><label for="pubtypeid#$blockid#"><xar:mlstring>Publication Type</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
-			<select name="pubtypeid" id="pubtypeid#$blockid#">
+			<select name="pubtypeid" id="pubtypeid#$blockid#" onChange="this.form.submit();">
 				<option value="0"><xar:mlstring>All</xar:mlstring></option>
 				<xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
 					<xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
@@ -21,7 +21,7 @@
 			<span class="help" title="#xarML('Choose the category for the featured items.')#"><label for="catfilter#$blockid#"><xar:mlstring>Category</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
-			<select name="catfilter" id="catfilter#$blockid#">
+			<select name="catfilter" id="catfilter#$blockid#" onChange="this.form.submit();">
 				<option value="0"><xar:mlstring>All</xar:mlstring></option>
 				<xar:foreach in="$categorylist" value="$catlistx">
 					<xar:if condition="!empty($catfilter) and $catfilter eq $catlistx['cid']">
@@ -39,7 +39,7 @@
 			<span class="help" title="#xarML('Choose the status (e.g. Approved, Front Page) for the featured items.')#"><label for="status#$blockid#"><xar:mlstring>Status</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
-			<select name="status" id="status#$blockid#" size="1">
+			<select name="status" id="status#$blockid#" size="1" onChange="this.form.submit();">
 				<xar:foreach in="$statusoptions" value="$statusoption">
 					<xar:if condition="!empty($status) and $status eq $statusoption['id']">
 						<option value="#$statusoption['id']#" selected="selected">#$statusoption['name']#</option>
@@ -56,7 +56,7 @@
 			<span class="help" title="#xarML('Enter the number of items to choose featured articles from.')#"><label for="itemlimit#$blockid#"><xar:mlstring>Limit</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="itemlimit" id="itemlimit#$blockid#" value="#$itemlimit#" size="3" maxlength="4" />
+			<input type="text" name="itemlimit" id="itemlimit#$blockid#" value="#$itemlimit#" size="3" maxlength="4" />&nbsp;&nbsp;<xar:mlstring>(0 for all articles)</xar:mlstring>
 		</span>
 		</div>
 		
@@ -104,10 +104,19 @@
 
 		<div style="clear: both; padding-top: 10px;">
 		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('If you wish to give the article an alternative summary to be displayed as a featured item, enter the summary here.')#"><label for="altsummary#$blockid#"><xar:mlstring>Alternate Summary:</xar:mlstring></label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<textarea name="altsummary" rows="5" cols="50" id="altsummary#$blockid#">#$altsummary#</textarea>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
 			<span class="help" title="#xarML('Choose additional headlines to display.')#"><label for="moreitems"><xar:mlstring>Additional Headlines</xar:mlstring>:</label></span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
-            <select name="moreitems[]" id="moreitems" multiple="mulitple" size="#$itemlimit#">
+            <select name="moreitems[]" id="moreitems" multiple="mulitple" size="10">
                 <xar:foreach in="$morearticles" value="$item">
                     <xar:if condition="!empty($item['selected'])">
                         <option name="aid" value="#$item['aid']#" selected="selected">#xarVarPrepForDisplay($item['title'])#</option>
@@ -124,7 +133,7 @@
 			<span class="help" title="#xarML('Choose the sort options.')#"><label for="toptype#$blockid#"><xar:mlstring>Sort by</xar:mlstring></label>:</span>
 		</span>
 		<span style="float: right; width: 78%; text-align: left;">
-			<select name="toptype" id="toptype#$blockid#" size="1">
+			<select name="toptype" id="toptype#$blockid#" size="1" onChange="this.form.submit();">
 			<xar:foreach in="$sortoptions" value="$sortoption">
 			<xar:if condition="$toptype eq $sortoption['id']">
 				<option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>

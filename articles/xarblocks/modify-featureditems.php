@@ -26,9 +26,10 @@ function articles_featureditemsblock_modify($blockinfo)
     if (empty($vars['pubtypeid'])) {$vars['pubtypeid'] = '';}
     if (empty($vars['catfilter'])) {$vars['catfilter'] = '';}
     if (empty($vars['status'])) {$vars['status'] = array(3, 2);}
-    if (empty($vars['itemlimit'])) {$vars['itemlimit'] = 10;}
+    if (empty($vars['itemlimit'])) {$vars['itemlimit'] = 0;}
     if (empty($vars['featuredaid'])) {$vars['featuredaid'] = 0;}
     if (empty($vars['alttitle'])) {$vars['alttitle'] = '';}
+    if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
     if (empty($vars['showfeaturedsum'])) {$vars['showfeaturedsum'] = false;}
     if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
@@ -57,18 +58,39 @@ function articles_featureditemsblock_modify($blockinfo)
         $cidsarray = array();
     }
 
+    // Create array based on modifications
+    $article_args = array();
+
+    // Only include pubtype if a specific pubtype is selected
+    if (!empty($vars['pubtypeid'])) {
+        $article_args['ptid'] = $vars['pubtypeid'];
+    }
+
+    // If itemlimit is set to 0, then don't pass to getall
+    if ($vars['itemlimit'] != 0 ) {
+        $article_args['numitems'] = $vars['itemlimit'];
+    }
+    
+    // Add the rest of the arguments
+    $article_args['cids'] = $cidsarray;
+    $article_args['enddate'] = time();
+    $article_args['status'] = $statusarray;
+    $article_args['fields'] = $vars['fields'];
+    $article_args['sort'] = $vars['toptype'];
+
     $vars['filtereditems'] = xarModAPIFunc(
-        'articles', 'user', 'getall',
-        array(
-            'ptid'      => $vars['pubtypeid'],
-            'cids'      => $cidsarray,
-            'enddate'   => time(),
-            'status'    => $statusarray,
-            'fields'    => $vars['fields'],
-            'sort'      => $vars['toptype'],
-            'numitems'  => $vars['itemlimit']
-        )
-    );
+        'articles', 'user', 'getall', $article_args );
+
+    // Check for exceptions
+    if (!isset($vars['filtereditems']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
+        return; // throw back
+
+    // Try to keep the additional headlines select list width less than 50 characters
+    for ($idx = 0; $idx < count($vars['filtereditems']); $idx++) {
+        if (strlen($vars['filtereditems'][$idx]['title']) > 50) {
+            $vars['filtereditems'][$idx]['title'] = substr($vars['filtereditems'][$idx]['title'], 0, 47) . '...';
+        }
+    }
 
     $vars['pubtypes'] = xarModAPIFunc('articles', 'user', 'getpubtypes');
     $vars['categorylist'] = xarModAPIFunc('categories', 'user', 'getcat');
@@ -79,9 +101,11 @@ function articles_featureditemsblock_modify($blockinfo)
     );
 
     $vars['sortoptions'] = array(
+        array('id' => 'author', 'name' => xarML('Author')),
+        array('id' => 'date', 'name' => xarML('Date')),
         array('id' => 'hits', 'name' => xarML('Hit Count')),
         array('id' => 'rating', 'name' => xarML('Rating')),
-        array('id' => 'date', 'name' => xarML('Date'))
+        array('id' => 'title', 'name' => xarML('Title')),
     );
 
     //Put together the additional featured articles list
@@ -111,10 +135,11 @@ function articles_featureditemsblock_update($blockinfo)
     xarVarFetch('pubtypeid', 'id', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('catfilter', 'id', $vars['catfilter'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('status', 'int:0:4', $vars['status'], NULL, XARVAR_NOT_REQUIRED);
-    xarVarFetch('itemlimit', 'int:1:50', $vars['itemlimit'], 10, XARVAR_NOT_REQUIRED);
-    xarVarFetch('toptype', 'enum:date:rating:hits', $vars['toptype'], 'date', XARVAR_NOT_REQUIRED);
+    xarVarFetch('itemlimit', 'int:1:', $vars['itemlimit'], 0, XARVAR_NOT_REQUIRED);
+    xarVarFetch('toptype', 'enum:author:date:hits:rating:title', $vars['toptype'], 'date', XARVAR_NOT_REQUIRED);
     xarVarFetch('featuredaid', 'id', $vars['featuredaid'], 0, XARVAR_NOT_REQUIRED);
     xarVarFetch('alttitle', 'str', $vars['alttitle'], '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('altsummary', 'str', $vars['altsummary'], '', XARVAR_NOT_REQUIRED);
     xarVarFetch('moreitems', 'list:id', $vars['moreitems'], NULL, XARVAR_NOT_REQUIRED);
 
     xarVarFetch('showfeaturedsum', 'checkbox', $vars['showfeaturedsum'], false, XARVAR_NOT_REQUIRED);
