@@ -20,7 +20,7 @@ function categories_userapi_getitemlinks($args)
     foreach ($args['itemids'] as $itemid) {
         if (!isset($catlist[$itemid])) continue;
         $itemlinks[$itemid] = array('url'   => xarModURL('categories', 'user', 'main',
-                                                         array('cid' => $itemid)),
+                                                         array('catid' => $itemid)),
                                             'title' => xarVarPrepForDisplay($catlist[$itemid]['name']),
                                             'label' => xarVarPrepForDisplay($catlist[$itemid]['description']));
     }
