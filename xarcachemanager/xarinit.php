@@ -560,7 +560,7 @@ function xarcachemanager_create_cache_data()
     xarDBLoadTableMaintenanceAPI();
 
     $query = xarDBCreateTable($cachedatatable,
-                              array('xar_id    => array('type'        => 'integer',
+                              array('xar_id'   => array('type'        => 'integer',
                                                         'null'        => false,
                                                         'default'     => '0',
                                                         'increment'   => true,
