@@ -73,10 +73,22 @@ function bbcode_transform($text)
 
 function bbcode_encode($message, $is_html_disabled) 
 {
-
+    
     // pad it with a space so we can distinguish between FALSE and matching the 1st char (index 0).
     // This is important; bbencode_quote(), bbencode_list(), and bbencode_code() all depend on it.
     $message = " " . $message;
+
+    // Change newlines to <br />'s
+    $dotransform = xarModGetVar('bbcode', 'dolinebreak');
+    if ($dotransform == 1){
+        $transformtype = xarModGetVar('bbcode', 'transformtype');
+        if ($transformtype == 1){
+            $message = str_replace("\n", "<br />", $message);
+        } elseif ($transformtype == 2){
+            $message = nl2p($message);
+            $message = br2p($message);
+        }
+    }
 
     // BBClick functionality
 
@@ -178,17 +190,19 @@ function bbcode_encode($message, $is_html_disabled)
 
     }
 
-    // Change newlines to <br />'s
-    $dotransform = xarModGetVar('bbcode', 'dolinebreak');
-    if ($dotransform == 1){
-        $transformtype = xarModGetVar('bbcode', 'transformtype');
-        if ($transformtype == 1){
-            $message = nl2br($message);
-        } elseif ($transformtype == 2){
-            $message = nl2p($message);
-            $message = br2p($message);
-        }
-    }
+    $message = preg_replace_callback(
+       '#\[notransform\](.*?)\[/notransform\]#si',
+       create_function(
+           // single quotes are essential here,
+           // or alternative escape all $ as \$
+           '$code',
+           'return $code[0] = str_replace(\'<br />\', \'\', $code[0]);'
+       ),
+       $message
+    );
+
+    $message = preg_replace("#\[notransform\](.*?)\[/notransform\]#si", '\\1', $message);
+
 
     // Remove our padding from the string..
     $message = substr($message, 1);

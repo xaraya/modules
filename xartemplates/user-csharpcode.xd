@@ -1,7 +1,9 @@
-<xar:if condition="xarTplAddStyleLink('bbcode', 'SyntaxHighlighter')"></xar:if>
-<script type="text/javascript" src="modules/bbcode/xartemplates/includes/shCore.js"></script>
-<script type="text/javascript" src="modules/bbcode/xartemplates/includes/shBrushCSharp.js"></script>
-<textarea name="code" language="csharp">#$replace#</textarea>
-<script language="javascript">
-    dp.SyntaxHighlighter.HighlightAll('code', true, true);
-</script>
+[notransform]
+    <xar:if condition="xarTplAddStyleLink('bbcode', 'SyntaxHighlighter')"></xar:if>
+    <script type="text/javascript" src="modules/bbcode/xartemplates/includes/shCore.js"></script>
+    <script type="text/javascript" src="modules/bbcode/xartemplates/includes/shBrushCSharp.js"></script>
+    <textarea name="code" language="csharp">#$replace#</textarea>
+    <script language="javascript">
+        dp.SyntaxHighlighter.HighlightAll('code', true, true);
+    </script>
+[/notransform]

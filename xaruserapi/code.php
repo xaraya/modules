@@ -2,7 +2,7 @@
 function bbcode_userapi_code($args)
 {
     extract($args);
-
+    // $message = str_replace('<br />', '', $message); 
     // [code] and [/code] for code stuff.
     $patterns[0] = "/\[code\](.*?)\[\/code\]/si";
     $replacements[0] = xarTplModule('bbcode','user', 'code', array('replace' => '\\1'));
@@ -32,7 +32,6 @@ function bbcode_userapi_code($args)
     $replacements[8] = xarTplModule('bbcode','user', 'vbcode', array('replace' => '\\1'));
 
     $message = preg_replace($patterns, $replacements, $message);
-
     return $message;
 }
 ?>
