@@ -25,7 +25,7 @@
 function tinymce_eventapi_OnServerRequest()
 {
 
-	if (xarModGetVar('base','editor') == 'tinymce' && xarModIsAvailable('tinymce') && xarModGetVar('tinymce','tinymode')<>'manual') {
+    if (xarModGetVar('base','editor') == 'tinymce' && xarModIsAvailable('tinymce') && xarModGetVar('tinymce','tinymode')<>'manual') {
         $data=array();
          xarTpl_includeModuleTemplate('tinymce','tinymce_insert',$data);
     }
