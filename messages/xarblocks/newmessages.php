@@ -39,13 +39,6 @@ function messages_newmessagesblock_display($blockinfo)
      // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
 
-    // Database information
-    xarModDBInfoLoad('messages');
-    list($dbconn) = xarDBGetConn();
-    $xartable =xarDBGetTables();
-    $messagestable = $xartable['messages'];
-    $prefix = xarConfigGetVar('prefix');
-
     $data = array();
     $itemtype=1;
 
@@ -56,7 +49,7 @@ function messages_newmessagesblock_display($blockinfo)
      $numitems =& xarModAPIFunc(
         'messages'
         ,'user'
-        ,'counttotal'
+        ,'count_total'
         ,array(
             'module'     => 'messages'
             ,'itemtype'  => $itemtype
@@ -67,7 +60,7 @@ function messages_newmessagesblock_display($blockinfo)
    $numitems =& xarModAPIFunc(
         'messages'
         ,'user'
-        ,'countunread'
+        ,'count_unread'
         ,array(
             'module'     => 'messages'
             ,'itemtype'  => $itemtype
@@ -86,47 +79,20 @@ function messages_newmessagesblock_display($blockinfo)
         return $blockinfo;
     }
 
-    $uid = xarUserGetVar('uid');
-    $messages = array();
-      if ($numitems <= 1){
-        $query = "SELECT ".$prefix."_msg_id,
-                         ".$prefix."_subject,
-                         ".$prefix."_from_userid,
-                         ".$prefix."_to_userid,
-                         ".$prefix."_read_msg
-                         FROM $messagestable
-                         WHERE ".$prefix."_to_userid = $uid AND ".$prefix."_read_msg = 0
-                         ORDER by ".$prefix."_msg_id";
-     }
-     else {
-     $query = "SELECT ".$prefix."_msg_id,
-                         ".$prefix."_subject,
-                         ".$prefix."_from_userid,
-                         ".$prefix."_to_userid,
-                          ".$prefix."_read_msg
-                         FROM $messagestable
-                          WHERE ".$prefix."_to_userid = $uid AND ".$prefix."_read_msg = 0
-                         ORDER by ".$prefix."_msg_id";
-      }
-   $result = $dbconn->Execute($query);
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($msg_id, $subject, $from_userid, $to_userid, $read_msg) = $result->fields;
-        $messages[] = array('msg_id' => $msg_id,
-                             'subject' => $subject,
-                             'from_userid' => $from_userid,
-                             'to_userid' => $to_userid,
-                             'read_msg' => $read_msg);
-        }
+
+//pulling unread messages will go here
+// $read_messages = unserialize(xarModGetUserVar('messages','read_messages'));
+//if (!in_array($data['message']['mid'], $read_messages)) {
+// add to unread list
+// }
 
    $data['emptymessage'] = '';
    $data['numitems'] = $numitems;
-   $data['messages'] = $messages;
    $blockinfo['content'] = $data ;
 
     if (empty($blockinfo['title'])){
         $blockinfo['title'] = xarML('My Messages');
     }
-
 
     return $blockinfo;
 }

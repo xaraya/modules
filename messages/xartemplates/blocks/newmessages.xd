@@ -1,15 +1,15 @@
 <div xmlns="http://www.w3.org/TR/xhtml1/strict" xmlns:xar="dd">
 
- <xar:if condition="empty($messages)">
+ <xar:if condition="empty($numitems)">
     #$emptymessage#
 <xar:else/>
 
-  <center><xar:mlstring>You have</xar:mlstring><a href='index.php?module=messages&type=user&func=view&itemtype=1'> #$totalin# </a><xar:mlstring>Total Messages</xar:mlstring></center><br />
-  <center><xar:mlstring>You have</xar:mlstring><a href='index.php?module=messages&type=user&func=view&itemtype=1'> #$unread# </a><xar:mlstring>Unread Messages</xar:mlstring><br />
-  <a href='index.php?module=messages&type=user&func=view&itemtype=1'><img src="/modules/messages/xarimages/unread.gif"></center><br />
+  <center><xar:mlstring>You have</xar:mlstring><a href='index.php?module=messages&func=display'> #$totalin# </a><xar:mlstring>Total Messages</xar:mlstring></center><br />
+  <center><xar:mlstring>You have</xar:mlstring><a href='index.php?module=messages&func=display'> #$unread# </a><xar:mlstring>Unread Messages</xar:mlstring><br />
+  <a href='index.php?module=messages&func=display'><img src="modules/messages/xarimages/unread.gif" border="0"></a></center><br />
 
-        <xar:loop name="$messages">
+<!--        <xar:loop name="$messages">
      <center><a href='index.php?module=messages&func=display&itemid=#$loop:item['msg_id']#&itemtype=1'>#$loop:item['subject']#</a></center><br />
-     </xar:loop>
+     </xar:loop> -->
     <br />
 </xar:if>
