@@ -10,7 +10,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Autolinks is Xaraya Utility Module.</xar:mlstring></em>
+            <em><xar:mlstring>Autolinks is a Xaraya Utility Module.</xar:mlstring></em>
             <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
             <ul>
                 <li><xar:mlstring>Automatically links text in articles or other content modules that you have configured.</xar:mlstring></li>

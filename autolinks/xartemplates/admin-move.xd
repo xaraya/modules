@@ -13,7 +13,7 @@
         <p><strong><xar:mlstring>Name:</xar:mlstring></strong> #xarVarPrepForDisplay($link['name'])#</p>
         <p><strong><xar:mlstring>Matching Key:</xar:mlstring></strong> #xarVarPrepForDisplay($link['keyword'])#</p>
         <p><strong><xar:mlstring>Type Name:</xar:mlstring></strong> #xarVarPrepForDisplay($link['type_name'])#</p>
-        <p><strong><xar:mlstring>Type Desc:</xar:mlstring></strong> #xarVarPrepForDisplay($link['type_desc'])#</p>
+        <p><strong><xar:mlstring>Type Description:</xar:mlstring></strong> #xarVarPrepForDisplay($link['type_desc'])#</p>
         <div><input type="hidden" name="lid" id="lid" value="#$link['lid']#"/></div>
     </xar:if>
 
