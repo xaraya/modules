@@ -72,8 +72,8 @@ function authurl_userapi_authenticate_user($args)
 
     # user has been verified, now we still have to fetch the $uid for return
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     # Get user information from roles
     $userRole = xarModAPIFunc('roles',
