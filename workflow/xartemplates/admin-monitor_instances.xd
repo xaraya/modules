@@ -1,7 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2>#xarML('Monitor instances')#</a>
 
-<!-- the help link info </xar:comment>
+<xar:comment> the help link info </xar:comment>
   
       <xar:if condition="$feature_help eq 'y'">
 <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaMonitorInstances" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia Monitor Instances')#">
