@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id$
- *
  * Main user function
  *
  * @package Xaraya eXtensible Management System

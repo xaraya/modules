@@ -1,8 +1,6 @@
 <?php
 /**
- * File: $Id
- *
- * Moidfy site configuration
+ * Modify site configuration
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -10,7 +8,6 @@
  * @link http://www.xaraya.com
  * @subpackage wizards
  * @author Marc Lutolf
- * @author Greg Allan
  */
 /**
  * Modify site configuration
