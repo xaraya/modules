@@ -1,0 +1,36 @@
+<?php
+/**
+ * Delete selected ephemerids
+ */
+function ephemerids_admin_delete($args)
+{
+    // Get parameters from whatever input we need
+    if (!xarVarFetch('eid','int:1:',$eid)) return;
+    if (!xarVarFetch('obid','str:1:',$obid,$eid,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
+
+    extract ($args);
+    // Security Check
+    if(!xarSecurityCheck('DeleteEphemerids')) return;
+
+    // Check for confirmation.
+    if (empty($confirmation)) {
+    $data['eid'] = $eid;
+    $data['authid'] = xarSecGenAuthKey();
+    return $data;
+    }
+    if (!xarSecConfirmAuthKey()) return;
+    // The API function is called
+    if (xarModAPIFunc('ephemerids',
+                      'admin',
+                      'delete',
+                      array('eid' => $eid))) {
+
+    }
+    xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
+    // Return
+    return true;
+}
+
+?>
