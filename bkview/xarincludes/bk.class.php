@@ -221,7 +221,7 @@ class bkRepo {
     }
 
     function bkSearch($term,$what_to_search = BK_SEARCH_CSET) {
-        $cmd = "bk prs -f -d'\$each(:C:){:I:|(:C:)}\n' | grep $term";
+        $cmd = "bk prs -h -d'\$each(:C:){:I:|(:C:)}\n' | grep $term";
         $result = $this->_run($cmd);
         return $result;
     }
