@@ -178,13 +178,20 @@ function xproject_user_display($args)
 		$data['taskroot_name'] = xarMLByKey('Project Top');
 	}
 
-    $data['hookoutput'] = xarModCallHooks('item',
-                                         'display',
-                                         $projectid,
-                                         xarModURL('xproject',
-                                                  'user',
-                                                  'display',
-                                                  array('projectid' => $projectid)));
+    $hooks = xarModCallHooks('item',
+                             'display',
+                             $projectid,
+                             xarModURL('xproject',
+                                       'user',
+                                       'display',
+                                       array('projectid' => $projectid)));
+    if (empty($hooks)) {
+        $data['hookoutput'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hookoutput'] = join('',$hooks);
+    } else {
+        $data['hookoutput'] = $hooks;
+    }
 
 	// BUILD TASK ADD FORM
     if (xarSecAuthAction(0, 'xproject::Projects', '$project[name]::$project[projectid]', ACCESS_MODERATE)) {
@@ -211,11 +218,13 @@ function xproject_user_display($args)
 		$item = array();
 		$item['module'] = 'xproject';
 		$hooks = xarModCallHooks('item','new','',$item);
-		if (empty($hooks) || !is_string($hooks)) {
-			$data['hooks'] = '';
-		} else {
-			$data['hooks'] = $hooks;
-		}
+                if (empty($hooks)) {
+                    $data['hooks'] = '';
+                } elseif (is_array($hooks)) {
+                    $data['hooks'] = join('',$hooks);
+                } else {
+                    $data['hooks'] = $hooks;
+                }
 	}
 	
 	$filteroptions = array(xarMLByKey('default'),

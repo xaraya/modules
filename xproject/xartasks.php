@@ -180,10 +180,13 @@ function xproject_tasks_modify($args)
     $item = array();
 	$item['module'] = 'xproject';
     $hooks = xarModCallHooks('item','modify',$taskid,$item);
-    if (empty($hooks) || !is_string($hooks)) {
-        $hooks = '';
+    if (empty($hooks)) {
+        $data['hookoutput'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hookoutput'] = join('',$hooks);
+    } else {
+        $data['hookoutput'] = $hooks;
     }
-    $data['hookoutput'] = $hooks;
 
 	$data['tasks'] = array();
 
