@@ -14,9 +14,11 @@
 */
 /**
  * update forum view
- * @param $args['fid'] the ID of the link
- * @param $args['fname'] the new keyword of the link
- * @param $args['fdesc'] the new title of the link
+ * @param $args['fid'] the forum id
+ * @param $args['move'] 'positive' or 'negative'
+ * @param $args['topics'] how many topics were added or removed
+ * @param $args['replies'] how many replies were added or removed
+ * @param $args['fposter'] userid of the last poster
  */
 function xarbb_userapi_updateforumview($args)
 {
@@ -24,62 +26,23 @@ function xarbb_userapi_updateforumview($args)
     extract($args);
 
     // Argument check
-    if (!isset($fid)) {
+    if (empty($fid)) {
         $msg = xarML('Invalid Parameter Count in #(1)api_#(2) in module #(3)', 'user', 'updateforumsview', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
-
-    if (isset($fid)){
-        // The user API function is called
-        $link = xarModAPIFunc('xarbb',
-                              'user',
-                              'getforum',
-                              array('fid' => $fid));
-
-        if ($link == false) {
-            $msg = xarML('No Such Forum Present', 'xarbb');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-            return;
-        }
+/*
+    $forum = xarModAPIFunc('xarbb',
+                           'user',
+                           'getforum',
+                           array('fid' => $fid));
+    if (empty($forum)) {
+        $msg = xarML('No Such Forum Present');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
     }
-
-    // Let's just tell ourselves what the number should be
-    // Little more sane than the other way.
-    if ((isset($replies)) && (!isset($topics))){
-        // First move positive or negative
-        if ($move == 'positive'){
-            $fposts = $link['fposts'] + $replies;
-            $ftopics = $link['ftopics'];
-        } else {
-            $fposts = $link['fposts'] - $replies;
-            $ftopics = $link['ftopics'];
-        }
-    }
-    // Let's just tell ourselves what the number should be
-    if ((isset($topics)) && (!isset($replies))){
-        // First move positive or negative
-        if ($move == 'positive'){
-            $ftopics = $link['ftopics'] + $topics;
-            $fposts = $link['fposts'];
-        } else {
-            $ftopics = $link['ftopics'] - $topics;
-            $fposts = $link['fposts'];
-        }
-    }
-
-    // Let's just tell ourselves what the number should be
-    if ((isset($topics)) && (isset($replies))){
-        // First move positive or negative
-        if ($move == 'positive'){
-            $ftopics = $link['ftopics'] + $topics;
-            $fposts = $link['fposts'] + $replies;
-        } else {
-            $ftopics = $link['ftopics'] - $topics;
-            $fposts = $link['fposts'] - $replies;
-        }
-    }
+*/
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
@@ -88,14 +51,28 @@ function xarbb_userapi_updateforumview($args)
     $xbbforumstable = $xartable['xbbforums'];
     $time = time();
 
+// TODO: shouldn't xar_fpostid contain the last post id someday ?
+
     // Update the forum
     $query = "UPDATE $xbbforumstable
-            SET xar_ftopics     = ?,
-                xar_fpostid     = ?,
-                xar_fposts      = ?,
-                xar_fposter     = ?
+            SET xar_fpostid     = ?,";
+    if (!empty($topics)) {
+        if ($move == 'positive') {
+            $query .= " xar_ftopics = (xar_ftopics + $topics),";
+        } else {
+            $query .= " xar_ftopics = (xar_ftopics - $topics),";
+        }
+    }
+    if (!empty($replies)) {
+        if ($move == 'positive') {
+            $query .= " xar_fposts = (xar_fposts + $replies),";
+        } else {
+            $query .= " xar_fposts = (xar_fposts - $replies),";
+        }
+    }
+    $query .= "   xar_fposter   = ?
             WHERE xar_fid       = ?";
-    $result =& $dbconn->Execute($query, array($ftopics, $time, $fposts, $fposter, $fid));
+    $result =& $dbconn->Execute($query, array($time, $fposter, $fid));
     if (!$result) return;
     // Let the calling process know that we have finished successfully
     return true;

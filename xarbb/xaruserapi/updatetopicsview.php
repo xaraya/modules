@@ -19,47 +19,43 @@ function xarbb_userapi_updatetopicsview($args)
 
     // Argument check
     if (!isset($tid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'admin', 'update', 'xarbb');
+        $msg = xarML('Invalid Parameter Count');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
-    // The user API function is called
-    $link = xarModAPIFunc('xarbb',
-                          'user',
-                          'gettopic',
-                          array('tid' => $tid));
+    if (!isset($treplies)) {
+        $topic = xarModAPIFunc('xarbb',
+                              'user',
+                              'gettopic',
+                              array('tid' => $tid));
 
-    if ($link == false) {
-        $msg = xarML('No Such Topic Present',
-                    'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
-        return;
+        if (empty($topic)) {
+            $msg = xarML('No Such Topic Present');
+            xarExceptionSet(XAR_USER_EXCEPTION,
+                            'MISSING_DATA',
+                             new DefaultUserException($msg));
+            return;
+        }
+
+        // Security Check: needed? only called through this module and data inconsistency if fails (wrong number of reply posts,..)
+        // if(!xarSecurityCheck('ReadxarBB')) return;
+
+        //---------------------------------------------------------------
+        // DO Update Stuff
+        $treplies = xarModAPIFunc('comments','user','get_count',
+                                  array('modid' => xarModGetIdFromName('xarbb'),
+                                        'itemtype' => $topic['fid'],
+                                        'objectid' => $tid));
     }
-
-    // Security Check: needed? only called through this module and data inconsistency if fails (wrong number of reply posts,..)
-    // if(!xarSecurityCheck('ReadxarBB')) return;
-
-    //---------------------------------------------------------------
-    // DO Update Stuff
-    $treplies = xarModAPIFunc('comments','user','get_count',array(
-        'modid' => xarModGetIdFromName('xarbb'),
-        'objectid' => $tid
-        ));
-
-    // FIXME 0 replies - it's ok
-    // if(!$treplies) return;
 
     $param = array(
         "tid" => $tid,
         "treplies" => $treplies,
         );
 
-    if(isset($treplier)) {
+    if (isset($treplier)) {
         $param["treplier"] = $treplier;
         $param["time"] = time();
     }

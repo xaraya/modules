@@ -124,6 +124,7 @@ function xarbb_user_viewtopic($args)
                               'user',
                               'get_multiple',
                               array('modid'       => $header['modid'],
+                                    'itemtype'    => $data['fid'],
                                     'objectid'    => $header['objectid'],
                                     'startnum' => $startnum,
                                     'numitems' => $postperpage));
@@ -305,6 +306,7 @@ function xarbb_user_viewtopic($args)
     $data['pager'] = xarTplGetPager($startnum,
                                     xarModAPIFunc('comments', 'user', 'get_count',
                                     array('modid'       => $header['modid'],
+                                          'itemtype'    => $data['fid'],
                                           'objectid'    => $header['objectid'])),
 
                                     xarModURL('xarbb', 'user', 'viewtopic', array('startnum' => '%%',

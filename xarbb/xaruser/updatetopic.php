@@ -33,34 +33,42 @@ function xarbb_user_updatetopic()
         return;
     }
 
-    // Start by updating the topic stats.
-    $modid        = xarModGetIDFromName('xarbb');
-    $comments = xarModAPIFunc('comments',
-                              'user',
-                              'get_multiple',
-                               array('modid'       => $modid,
-                                     'objectid'    => $tid));
-
-     $totalcomments=count($comments);
-     $isanon=$comments[$totalcomments-1]['xar_postanon'];
-     $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
-
-   // Start by updating the topic stats.
-    if ($isanon==1) {
-        $poster=$anonuid;
-    } else {
-        $poster = xarUserGetVar('uid');
-    }
     //Don't count up if the topic is being edited ? Need to add modify test here.
     if ($modify != 1){
-         if (!xarModAPIFunc('xarbb',
-                       'user',
-                       'updatetopicsview',
-                       array('tid'      => $tid,
-                             'treplier' => $poster))) return;
-    }
-    // Let's not count up if the reply is being edited.
-    if ($modify != 1){
+        // Start by updating the topic stats.
+        $modid = xarModGetIDFromName('xarbb');
+
+        // get the number of comments
+        $count = xarModAPIFunc('comments',
+                               'user',
+                               'get_count',
+                                array('modid'       => $modid,
+                                      'itemtype'    => $data['fid'],
+                                      'objectid'    => $tid));
+        // get the last comment
+        $comments = xarModAPIFunc('comments',
+                                  'user',
+                                  'get_multiple',
+                                   array('modid'       => $modid,
+                                         'itemtype'    => $data['fid'],
+                                         'objectid'    => $tid,
+                                         'startnum' => $count,
+                                         'numitems' => 1));
+        $totalcomments=count($comments);
+        $isanon=$comments[$totalcomments-1]['xar_postanon'];
+        $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
+
+        if ($isanon==1) {
+            $poster=$anonuid;
+        } else {
+            $poster = xarUserGetVar('uid');
+        }
+        if (!xarModAPIFunc('xarbb',
+                           'user',
+                           'updatetopicsview',
+                           array('tid'      => $tid,
+                                 'treplies' => $count,
+                                 'treplier' => $poster))) return;
         if (!xarModAPIFunc('xarbb',
                            'user',
                            'updateforumview',
