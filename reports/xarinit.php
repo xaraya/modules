@@ -103,12 +103,19 @@ function reports_init()
     return reports_upgrade('0.0.1');
 }
 
-function reports_upgrade() 
+function reports_upgrade($oldversion) 
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
     case '0.0.1':
-        // Code to upgrade from version 0.0.1 goes here
+        // Default output format introduced in 0.0.2
+        xarModSetVar('reports','default_output','html');
+        $flags = XAR_TPL_TAG_ISPHPCODE + XAR_TPL_TAG_ISASSIGNABLE;
+        xarTplRegisterTag('reports','reports-dataset',array(),'reports_userapi_datasettag',$flags);
+        //$flags = XAR_TPL_TAG_ISPHPCODE;
+        xarTplRegisterTag('reports','reports-dataitem',array(),'reports_userapi_dataitemtag',$flags);
+    case '0.0.2':
+        // Current version
         break;
     }
 	return true;

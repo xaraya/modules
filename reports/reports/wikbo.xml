@@ -1,0 +1,507 @@
+<xar:comment>
+  Report 'werkplekinstructiekaart beknopte opmaak'
+  Type  : 1 substance, report expects a substance id to run with
+  Source: prins-cs database
+  Search: on substance name, article no etc.
+</xar:comment>
+
+<!-- Include inline styling for the report here -->
+<style type="text/css">
+  .debug {
+  font-size: small;
+}
+
+  .reportheader {
+  color: black;
+  font-size: 14pt;
+  font-family: Arial, Helvetica;
+  margin: 0 0 1em 0;
+}
+
+  .label {
+  font-weight: bold;
+  color:black;
+  font-family: Arial, Helvetica;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+  .value {
+  color:black;
+  font-familiy: Arial, Helvetica;
+}
+
+  .small {
+  font-size: 6pt;
+}
+
+  .medium {
+  font-size: 10pt;
+}
+  
+  .large {
+  font-size: 14pt;
+}
+
+  .right {
+  text-align: right;
+}
+
+  .center {
+  text-align: center;
+}
+  .phraseheader {
+  color: white;
+  background-color:black;
+  width: 5cm;
+  margin-bottom: 5pt;
+  padding: 1pt;
+  padding-left: 2pt;
+  margin-top: 5pt;
+  }
+
+hr {
+  clear: both;
+  color: black;
+  margin-top: 5pt;
+  line-style: solid;
+}
+  .upcase {
+  
+</style>
+
+<xar:if condition="$action == 'search'">
+  <!-- Show the form -->
+  <h3>Zoekvelden Werkplekinstructiekaart beknopte opmaak</h3>
+  <div class="xar-norm-outline" style="padding: 0.5em;">
+    <form action="&xar-modurl-reports-user-html_report;" method="post">
+      <!-- After the search form we want the results screen -->
+      <input type="hidden" name="action" value="results"/>
+      <input type="hidden" name="connection" value="#$connection#"/>
+      <input type="hidden" name="xmlfile" value="#$xmlfile#"/>
+
+      <b><label for="id_afdeling">Afdeling</label></b><br/>
+      <input id="id_afdeling" type="text" name="afdeling"/><br/>
+      <b><label for="id_stofnaam">Stofnaam</label></b><br/>
+      <input id="id_stofnaam" type="text" name="stofnaam"/><br/>
+      <b><label for="id_kaartnummer">Kaartnummer</label></b><br/>
+      <input type="text" name="kaartnr" /><br/>
+      <input type="submit" value="zoeken"/><br/>
+    </form>		
+  </div>
+  <div class="debug">Using action: #$action#, connection: #$connection#, reportfile: #$xmlfile#</div>
+<xar:elseif condition="$action == 'results'"/>
+  <!-- Retrieve the variables from the search screen -->
+  <xar:set name="afdelingfetch">#xarVarFetch('afdeling','str::',$afdeling)#</xar:set>
+  <xar:set name="stofnaamfetch">#xarVarFetch('stofnaam','str::',$stofnaam)#</xar:set>
+  <xar:set name="kaarnrfetch">#xarVarFetch('kaartnr','str::',$kaartnummer)#</xar:set>
+
+  <!-- Build the sql based on those parameters -->
+  <xar:set name="sql">'
+    select Benamingen.naam as stofnaam, Afdelingen.naam as afdelingsnaam, kaartnummer, Benamingen.id as benamingid, Afdelingen.id as afdelingid
+    from Afdelingen, Benamingen, StofToepassingen 
+    where StofToepassingen.benamingid = Benamingen.id and
+          Afdelingen.id = StofToepassingen.afdelingid and
+          Benamingen.naam like ? and
+          Afdelingen.naam like ? and
+          StofToepassingen.kaartnummer like ?
+    order by Benamingen.Naam, Afdelingen.Naam'
+  </xar:set>
+
+  <!-- Build a result set for the search results -->
+  <xar:set name="result">
+    <xar:reports-dataset connection="$connection" sql="$sql" vars="array($stofnaam.'%',$afdeling.'%',$kaartnummer.'%')"/>
+  </xar:set>
+
+  <!-- Build the results screen -->
+  <h3>Zoekresultaten</h3>
+  <div class="xar-norm-outline" style="padding: 0.5em;">
+    <table style="border-collapse: separate; width: 99%;">
+      <tr>
+        <th>&nbsp;</th>
+        <th>StofNaam</th>
+        <th>Afdeling</th>
+        <th>Kaartnummer</th>
+      </tr>
+      <xar:if condition="!$result-&gt;EOF">
+        <xar:set name="counter">1</xar:set>
+        <xar:while condition="!$result-&gt;EOF">
+          <xar:set name="rowclass">'xar-norm'</xar:set>
+          <xar:if condition="$counter % 2">
+            <xar:set name="rowclass">'xar-alt'</xar:set>
+          </xar:if>
+          <tr class="#$rowclass#">
+            <xar:set name="benamingid"><xar:reports-dataitem dataset="$result" name="benamingid"/></xar:set>
+            <xar:set name="afdelingid"><xar:reports-dataitem dataset="$result" name="afdelingid"/></xar:set>
+            <td class="right">#$counter#</td>
+            <td>
+              <a href="&xar-modurl-reports-user-html_report;&amp;action=output&amp;connection=#$connection#&amp;xmlfile=#$xmlfile#&amp;benamingid=#$benamingid#&amp;afdelingid=#$afdelingid#">
+                <xar:reports-dataitem dataset="$result" name="stofnaam"/>
+              </a>
+            </td>
+            <td>
+              <a href="&xar-modurl-reports-user-html_report;&amp;action=output&amp;connection=#$connection#&amp;xmlfile=#$xmlfile#&amp;benamingid=#$benamingid#&amp;afdelingid=#$afdelingid#">
+                <xar:reports-dataitem dataset="$result" name="afdelingsnaam"/>
+              </a>
+            </td>
+            <td style="text-align: right;">
+              <xar:reports-dataitem dataset="$result" name="kaartnummer"/><br/>
+            </td>
+            <xar:set name="nextrow">$result->MoveNext()</xar:set>
+          </tr>
+          <xar:set name="counter">$counter+1</xar:set>
+        </xar:while>
+      <xar:else/>
+        <tr>Geen resultaten gevonden </th><th>&nbsp;</th></tr>
+      </xar:if>
+    </table>
+  </div>
+  
+  <!-- See if we still have the required stuff -->
+  <div class="debug">Using action: #$action#, connection: #$connection#, reportfile: #$xmlfile#</div>
+  
+<xar:elseif condition="$action == 'output'"/>
+  <!-- Generate and show the output of the report -->
+  <xar:set name="stofidfetch">#xarVarFetch('benamingid','int::',$benamingid)#</xar:set>
+  <xar:set name="afdelingidfetch">#xarVarFetch('afdelingid','int::',$afdelingid)#</xar:set>
+
+  <!-- At this point we can have only one connection active at a time, so we need to store one item here -->
+  <xar:set name="sql">'
+      select Benamingen.naam as stofnaam
+      from   Benamingen
+      where  Benamingen.id = ? AND
+             Benamingen.benamingtypeid = 0'
+  </xar:set>
+  <xar:set name="result">
+    <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid)"/>
+  </xar:set>
+  <xar:set name="offstofnaam"><xar:reports-dataitem dataset="$result" name="stofnaam" vars="array($benamingid)"/></xar:set>
+
+  <!-- Set the base sql to get the singular properties of the substance -->
+  <xar:set name="basesql">'
+    select Bedrijven.naam as bedrijfsnaam, Afdelingen.naam as afdelingsnaam, 
+           Benamingen.naam as stofnaam, 
+           Stoffen.artikelnummer, Stoffen.bedrijfscode as internecode, Stoffen.omschrijving, Stoffen.vlampunt,
+           Stoffen.zelfontbrandingstemp,
+           StofToepassingen.invoerdatum, StofToepassingen.wijzigingsdatum, StofToepassingen.omschrijvingtoepassing,
+           StofToepassingen.kaartnummer
+    from Bedrijven, Afdelingen,Benamingen, StofToepassingen, Stoffen
+    where Bedrijven.id = Afdelingen.bedrijfid AND
+          Afdelingen.id = StofToepassingen.afdelingid AND
+          Benamingen.id = StofToepassingen.benamingid AND
+          Benamingen.stofId = Stoffen.ID AND
+          Benamingen.id = ? AND
+          Afdelingen.id = ?'
+  </xar:set>
+
+  <!-- Run it, so we can place the data items -->
+  <xar:set name="baseresult">
+    <xar:reports-dataset sql="$basesql" connection="$connection" vars="array($benamingid,$afdelingid)"/>
+  </xar:set>
+  
+  <!-- This is where the actual report begins -->
+  <div class="reportcontainer">
+    <div class="reportheader"><xar:reports-dataitem dataset="$baseresult" name="stofnaam"/></div>
+
+    <div style="float: left'">
+      <table>
+        <tr>
+          <td class="label small">Artikelnummer:</td>
+          <td class="value small right"><xar:reports-dataitem dataset="$baseresult" name="artikelnummer"/></td>
+        </tr>
+        <tr>
+          <td class="label small">Interne code:</td>
+          <td class="value small right"><xar:reports-dataitem dataset="$baseresult" name="internecode"/></td>
+        </tr>
+        <tr>
+          <td class="label small">Kaartnummer:</td>
+          <td class ="value small right"><xar:reports-dataitem dataset="$baseresult" name="kaartnummer"/></td>
+        </tr>
+      </table>
+    </div>
+    <div style="float: right;">
+      <table>
+        <tr>
+          <td class="label small">Afdrukdatum:</td>
+          <td class="value small right">#xarLocaleGetFormattedDate('medium')#&nbsp;#xarLocaleGetFormattedTime('short')#</td>
+        </tr>
+        <tr>
+          <td class="label small">Invoerdatum:</td>
+          <td class ="value small right"><xar:reports-dataitem dataset="$baseresult" name="invoerdatum"/></td>
+        </tr>
+        <tr>
+          <td class="label small">Laatste wijziging:</td>
+          <td class ="value small right"><xar:reports-dataitem dataset="$baseresult" name="wijzigingsdatum"/></td>
+        </tr>
+      </table> 
+    </div>
+    <hr/>
+
+    <!-- Werkplekinstructie identificatie -->
+    <table style="margin-top: 10pt;">
+      <tr>
+        <td class="label medium">Werkplekinstructie:</td>
+        <td class="value medium"><xar:reports-dataitem dataset="$baseresult" name="bedrijfsnaam"/></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td class="value medium"><xar:reports-dataitem dataset="$baseresult" name="afdelingsnaam"/></td>
+      </tr>
+    </table>
+
+    <!-- Identificatie stof met wat gegevens -->
+    <table>
+      <tr>
+        <td class="label">Offici&euml;le stofnaam:</td>
+        <td class="value"><xar:var name="offstofnaam"/></td>
+      </tr>
+      <tr>
+        <td class="label">Omschrijving:</td>
+        <td class="value"><xar:reports-dataitem dataset="$baseresult" name="omschrijving"/></td>
+      </tr>
+      <tr>
+        <td class="label">Deze instructiekaart geldt voor:</td>
+        <td class="value"><xar:reports-dataitem dataset="$baseresult" name="omschrijvingtoepassing"/></td>
+      </tr>
+      <tr>
+        <td class="label">Deze stof ontbrandt spontaan bij:</td>
+        <td class="value"><xar:reports-dataitem dataset="$baseresult" name="zelfontbrandingstemp"/>&nbsp;&deg;C</td>
+      </tr>
+      <tr>
+        <td class="label">Deze stof is brandbaar vanaf (vlampunt):</td>
+        <td class="value"><xar:reports-dataitem dataset="$baseresult" name="vlampunt"/>&nbsp;&deg;C</td>
+      </tr>
+    </table>
+    <hr/>
+
+    <!-- Start of the header sections for the phrases -->
+    <div class="phraseheader">RISICO&apos;S / EFFECTEN</div>
+    <xar:set name="sql">'
+      select Categorien.Naam as categorie, Zinnen.Tekst as zin
+      from   Categorien, Zinnen, StofToepassingZinnen
+      where  StofToepassingZinnen.benamingid = ? AND
+             StofToepassingZinnen.afdelingid = ? AND
+             StofToepassingZinnen.zinid = Zinnen.id AND
+             StofToepassingZinnen.categorieid = Categorien.id AND
+             StofToepassingZinnen.groepid=1'
+    </xar:set>
+             
+    <xar:set name="zinset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+      
+    <xar:if condition="!$zinset-&gt;EOF">
+      <table>
+        <xar:while condition="!$zinset-&gt;EOF">
+          <tr>
+            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
+            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
+          </tr>
+          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+        </xar:while>
+      </table>
+    </xar:if>
+
+    <xar:set name="sql">'
+      select Symbolen.Omschrijving, Symbolen.Code, Symbolen.symbool
+      from Symbolen, StofToepassingSymbolen
+      where groepid=1 AND
+            StofToepassingSymbolen.Benamingid = ? AND
+            StofToepassingSymbolen.Afdelingid = ? AND
+            StofToepassingSymbolen.symboolid = Symbolen.id'
+    </xar:set>
+    
+    <xar:set name="symset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+    
+    <xar:if condition="!$symset-&gt;EOF">
+      <table>
+        <tr>
+          <xar:while condition="!$symset-&gt;EOF">
+            <td>
+              <span class="label center large"><xar:reports-dataitem dataset="$symset" name="Code"/></span><br/>
+              <span class="small"><xar:reports-dataitem dataset="$symset" name="Omschrijving"/></span>
+            </td>
+            <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+          </xar:while>
+        </tr>
+      </table>
+    </xar:if>
+    
+
+    <div class="phraseheader">PREVENTIE / BESCHERMING</div>
+    <xar:set name="sql">'
+      select Categorien.Naam as categorie, Zinnen.Tekst as zin
+      from   Categorien, Zinnen, StofToepassingZinnen
+      where  StofToepassingZinnen.benamingid = ? AND
+             StofToepassingZinnen.afdelingid = ? AND
+             StofToepassingZinnen.zinid = Zinnen.id AND
+             StofToepassingZinnen.categorieid = Categorien.id AND
+             StofToepassingZinnen.groepid=2'
+    </xar:set>
+             
+    <xar:set name="zinset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+      
+    <xar:if condition="!$zinset-&gt;EOF">
+      <table>
+        <xar:while condition="!$zinset-&gt;EOF">
+          <tr>
+            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
+            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
+          </tr>
+          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+        </xar:while>
+      </table>
+    </xar:if>
+
+    <xar:set name="sql">'
+      select Symbolen.Omschrijving, Symbolen.Code, Symbolen.symbool
+      from Symbolen, StofToepassingSymbolen
+      where groepid=2 AND
+            StofToepassingSymbolen.Benamingid = ? AND
+            StofToepassingSymbolen.Afdelingid = ? AND
+            StofToepassingSymbolen.symboolid = Symbolen.id'
+    </xar:set>
+    
+    <xar:set name="symset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+    
+    <xar:if condition="!$symset-&gt;EOF">
+      <table>
+        <tr>
+          <xar:while condition="!$symset-&gt;EOF">
+            <td>
+              <span class="label center large"><xar:reports-dataitem dataset="$symset" name="Code"/></span><br/>
+              <span class="small"><xar:reports-dataitem dataset="$symset" name="Omschrijving"/></span>
+            </td>
+            <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+          </xar:while>
+        </tr>
+      </table>
+    </xar:if>
+
+    <div class="phraseheader">EERSTE HULP BIJ ONGEVALLEN</div>
+    <xar:set name="sql">'
+      select Categorien.Naam as categorie, Zinnen.Tekst as zin
+      from   Categorien, Zinnen, StofToepassingZinnen
+      where  StofToepassingZinnen.benamingid = ? AND
+             StofToepassingZinnen.afdelingid = ? AND
+             StofToepassingZinnen.zinid = Zinnen.id AND
+             StofToepassingZinnen.categorieid = Categorien.id AND
+             StofToepassingZinnen.groepid=3'
+    </xar:set>
+             
+    <xar:set name="zinset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+      
+    <xar:if condition="!$zinset-&gt;EOF">
+      <table>
+        <xar:while condition="!$zinset-&gt;EOF">
+          <tr>
+            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
+            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
+          </tr>
+          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+        </xar:while>
+      </table>
+    </xar:if>
+
+    <xar:set name="sql">'
+      select Symbolen.Omschrijving, Symbolen.Code, Symbolen.symbool
+      from Symbolen, StofToepassingSymbolen
+      where groepid=3 AND
+            StofToepassingSymbolen.Benamingid = ? AND
+            StofToepassingSymbolen.Afdelingid = ? AND
+            StofToepassingSymbolen.symboolid = Symbolen.id'
+    </xar:set>
+    
+    <xar:set name="symset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+    
+    <xar:if condition="!$symset-&gt;EOF">
+      <table>
+        <tr>
+          <xar:while condition="!$symset-&gt;EOF">
+            <td>
+              <span class="label center large"><xar:reports-dataitem dataset="$symset" name="Code"/></span><br/>
+              <span class="small"><xar:reports-dataitem dataset="$symset" name="Omschrijving"/></span>
+            </td>
+            <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+          </xar:while>
+        </tr>
+      </table>
+    </xar:if>
+
+    <div class="phraseheader">OPRUIMING / OPSLAG</div>
+    <xar:set name="sql">'
+      select Categorien.Naam as categorie, Zinnen.Tekst as zin
+      from   Categorien, Zinnen, StofToepassingZinnen
+      where  StofToepassingZinnen.benamingid = ? AND
+             StofToepassingZinnen.afdelingid = ? AND
+             StofToepassingZinnen.zinid = Zinnen.id AND
+             StofToepassingZinnen.categorieid = Categorien.id AND
+             StofToepassingZinnen.groepid=4'
+    </xar:set>
+             
+    <xar:set name="zinset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+      
+    <xar:if condition="!$zinset-&gt;EOF">
+      <table>
+        <xar:while condition="!$zinset-&gt;EOF">
+          <tr>
+            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
+            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
+          </tr>
+          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+        </xar:while>
+      </table>
+    </xar:if>
+    <div class="phraseheader">R&amp;S-ZINNEN</div>
+    <xar:set name="sql">'
+      select RSZinnen.code, RSZinnen.zin as tekst, RSZinnen.type
+      from   RSZinnen, StofRSZinnen, Stoffen, Benamingen, StofToepassingen
+      where  StofToepassingen.benamingid = Benamingen.id AND
+             Benamingen.stofid = Stoffen.ID AND
+             StofRSZinnen.stofid = Stoffen.id AND
+             StofRSZinnen.RSZinid = RSZinnen.id AND
+             Benamingen.id = ?
+      order by RSZinnen.type'
+    </xar:set>
+    <xar:set name="zinset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid)"/>
+    </xar:set>
+
+    <xar:if condition="!$zinset-&gt;EOF">
+      <table>
+        <xar:while condition="!$zinset-&gt;EOF">
+          <tr>
+            <td class="label upcase">
+              <xar:set name="type"><xar:reports-dataitem dataset="$zinset" name="type"/></xar:set>
+              <xar:if condition="$type == 0">
+                R
+               <xar:else/>
+                S
+              </xar:if>
+              <xar:reports-dataitem dataset="$zinset" name="code"/></td>
+            <td class="value"><xar:reports-dataitem dataset="$zinset" name="tekst"/></td>
+          </tr>
+          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+        </xar:while>
+      </table>
+    </xar:if>    
+
+  </div>
+  
+<xar:else/>
+  <!-- Show some error -->
+  <xar:mlstring>There was no action specified for the report, should be either 'search' or 'output'</xar:mlstring>
+  <div class="debug">Using action: #$action#, connection: #$connection#, reportfile: #$reportfile#</div>
+</xar:if>

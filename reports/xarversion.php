@@ -14,7 +14,7 @@
 
 $modversion['name'] = 'reports';
 $modversion['id']='4704';
-$modversion['version'] = '0.0.1';
+$modversion['version'] = '0.0.2';
 $modversion['description'] = 'Web based reporting';
 $modversion['credits'] = 'xardocs/CREDITS';
 $modversion['help'] = 'xardocs/INSTALL';
