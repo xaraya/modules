@@ -83,7 +83,7 @@ if (!function_exists('galaxia_execute_activity')) {
                                       'auto' => $auto));
         if (empty($result)) {
         // TODO: clean this up
-            echo xarExceptionRender('html');
+            echo xarErrorRender('html');
             die;
         }
     }
