@@ -268,7 +268,7 @@ function comments_user_reply() {
             $comments[0]['xar_author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
             $comments[0]['xar_cid']      = 0;
             $comments[0]['xar_postanon'] = $package['postanon'];
-            $comments[0]['xar_date']     = strftime("%B %d, %Y %I:%M %p",time());
+            $comments[0]['xar_date']     = xarLocaleFormatDate("%d %b %Y %H:%M:%S %Z",time());
             $comments[0]['xar_hostname'] = 'somewhere';
 
             $package['comments']         = $comments;
@@ -382,7 +382,7 @@ function comments_user_modify() {
             $comments[0]['xar_author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
             $comments[0]['xar_cid']      = 0;
             $comments[0]['xar_postanon'] = $package['postanon'];
-            $comments[0]['xar_date']     = strftime("%B %d, %Y %I:%M %p",time());
+            $comments[0]['xar_date']     = xarLocaleFormatDate("%d %b %Y %H:%M:%S %Z",time());
 
             $forwarded = xarServerGetVar('HTTP_X_FORWARDED_FOR');
             if (!empty($forwarded)) {
