@@ -32,14 +32,14 @@ function xarbb_user_searchtopics()
                                 'getalltopics_byuid',
                                 array('uid' => $uid,
                                       'startnum' => $startnumitem,
-                                      'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
+                                      'numitems' => 20));
     } elseif (!empty($replies)){
         $data['message'] = xarML('Unanswered topics');
         $topics = xarModAPIFunc('xarbb',
                                 'user',
                                 'getalltopics_byunanswered',
                                 array('startnum' => $startnumitem,
-                                      'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
+                                      'numitems' => 20));
     } elseif (!empty($from)){
         $data['message'] = xarML('Topics since your last visit');
         $topics = xarModAPIFunc('xarbb',
@@ -47,7 +47,7 @@ function xarbb_user_searchtopics()
                                 'getalltopics_bytime',
                                 array('from' => $from,
                                       'startnum' => $startnumitem,
-                                      'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
+                                      'numitems' => 20));
     }
 
     $totaltopics=count($topics);
@@ -172,28 +172,28 @@ function xarbb_user_searchtopics()
 
     $data['items'] = $topics;
     $data['totalitems'] = $totaltopics;
-    if ($totaltopics == xarModGetVar('xarbb', 'topicsperpage')){
+    if ($totaltopics == 20){
         if (!empty($uid)){
 
             $data['pager'] = xarTplGetPager($startnumitem,
                                             xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
                                             xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
                                                                                              'by' => $uid)),
-                                            xarModGetVar('xarbb', 'topicsperpage'));
+                                            20);
         } elseif (!empty($replies)){
 
             $data['pager'] = xarTplGetPager($startnumitem,
                                             xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
                                             xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
                                                                                              'replies' => $replies)),
-                                            xarModGetVar('xarbb', 'topicsperpage'));
+                                            20);
         } elseif (!empty($from)){
 
             $data['pager'] = xarTplGetPager($startnumitem,
                                             xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
                                             xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
                                                                                              'from' => $from)),
-                                            xarModGetVar('xarbb', 'topicsperpage'));
+                                            20);
         }
     }
     
