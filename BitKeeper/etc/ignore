@@ -1,4 +1,10 @@
-BitKeeper/*/*
+BitKeeper/etc/*
+BitKeeper/log/*
+BitKeeper/tmp/*
+BitKeeper/reader/*
+BitKeeper/writer/*
+BitKeeper/deleted/*
+BitKeeper/triggers/*
 PENDING/*
 pubsub/pntemplates/pubsub/eng/web_link.txt
 ephemerids/xaradmin.php.bak
