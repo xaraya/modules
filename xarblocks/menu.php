@@ -147,7 +147,7 @@ function xarpages_menublock_display($blockinfo)
 
         // If $pagedata is empty, then we have an invalid ID or
         // no permissions. Return NULL if so, suppressing the block.
-        if (empty($pagedata)) {return;}
+        if (empty($pagedata['pages'])) {return;}
 
         // Cache the data now we have gone to the trouble of fetching the tree.
         // Only cache it if the cache is empty to start with. We only cache a complete
@@ -162,7 +162,7 @@ function xarpages_menublock_display($blockinfo)
     // function handles it for the current page, but there is no
     // point the block providing links to pages that cannot be
     // accessed.
-    
+
     // Here we add the various flags to the pagedata, based on
     // the current page.
     $pagedata = xarModAPIfunc(

@@ -137,7 +137,7 @@ function xarpages_userapi_getpages($args)
     }
 
     $query .= (!empty($where) ? ' WHERE ' . implode(' AND ', $where) : '')
-        . ' ORDER BY tpages.xar_left ASC';
+        . (empty($count) ? ' ORDER BY tpages.xar_left ASC' : '');
 
     $result = $dbconn->execute($query, $bind);
     if (!$result) return;
@@ -185,6 +185,7 @@ function xarpages_userapi_getpages($args)
                     // The current page is still a descendant of the unprivileged page.
                     continue;
                 } else {
+                    // We've reached a non-descendant - stop pruning now.
                     $prune_left = 0;
                 }
             }
@@ -239,7 +240,7 @@ function xarpages_userapi_getpages($args)
             $index += 1;
         }
 
-        if ($dd_flag) {
+        if ($dd_flag && !empty($pages)) {
             // Get the DD properties for the page tree.
             $dd_data = xarModAPIfunc('xarpages', 'user', 'getpagedd', array('pages' => $pages));
 

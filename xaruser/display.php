@@ -43,6 +43,9 @@ function xarpages_user_display($args)
     }
 
     // Security check on the page and page type.
+    // FIXME: this only checks the current page - the
+    // tree fetch lower down will determine whether the page
+    // has no privilege by virtue of an ancestor.
     $noprivspage = xarModGetVar('xarpages', 'noprivspage');
     if (!empty($current_page) && !xarSecurityCheck(
         'ReadXarpagesPage', (empty($noprivspage) ? 1 : 0), 'Page',
@@ -88,7 +91,9 @@ function xarpages_user_display($args)
         return array();
     }
 
-    // TODO: allow relevent privileges to over-ride the status.
+    // TODO: allow relevent privileges to over-ride the status,
+    // i.e. don't assume the site owner only wants to display ACTIVE
+    // and EMPTY pages to every level of user.
     // Get the complete tree for this section of pages.
     $data = xarModAPIfunc(
         'xarpages', 'user', 'getpagestree',
@@ -99,6 +104,20 @@ function xarpages_user_display($args)
             'status' => 'ACTIVE,EMPTY'
         )
     );
+
+    // If we don't have permission to display pages within this tree
+    // (even if we could fetch the specific page) then return.
+    if (empty($data['pages'][$pid])) {
+        // Return the dafault display template.
+        // TODO: attempt to load the 'noprivs' page then the error page.
+        // This is kind of okay to do, since the user should never see a
+        // link to this page if it does not appear in any menu.
+        // It's too late to think this through now ;-) This will basically
+        // involve some kind of loop, attempting to fetch the tree for
+        // the current page, then the privs page, falling back to the
+        // error page, and finally to array() i.e. no page.
+        return array();
+    }
 
     // If the selected page is EMPTY, scan its children to find
     // an ACTIVE child.
