@@ -20,7 +20,7 @@ function comments_userapi_remove_gap( $args )
     
     if (!isset($startpoint)) {
         $msg = xarML('Missing or Invalid parameter \'startpoint\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

@@ -25,7 +25,7 @@ function comments_userapi_add($args)
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                  'modid', 'userapi', 'add', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -36,7 +36,7 @@ function comments_userapi_add($args)
     if (!isset($objectid) || empty($objectid)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                  'objectid', 'userapi', 'add', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -47,14 +47,14 @@ function comments_userapi_add($args)
     if (!isset($title) || empty($title)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                  'title', 'userapi', 'add', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!isset($comment) || empty($comment)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                  'comment text', 'userapi', 'add', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -125,7 +125,7 @@ function comments_userapi_add($args)
             
             $msg  = xarML('Unable to create gap in tree for comment insertion! Comments table has possibly been corrupted.');
             $msg .= xarML('Please seek help on the public-developer list xaraya_public-dev@xaraya.com, or in the #support channel on Xaraya\'s IRC network.');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
             return;
     }
 

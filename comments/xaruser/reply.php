@@ -36,13 +36,13 @@ function comments_user_reply()
         case 'submit':
             if (empty($package['title'])) {
                 $msg = xarML('Missing [#(1)] field on new #(2)','title','comment');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
                 return;
             }
 
             if (empty($package['text'])) {
                 $msg = xarML('Missing [#(1)] field on new #(2)','body','comment');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_FIELD', new SystemException($msg));
                 return;
             }
             // call transform input hooks

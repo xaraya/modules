@@ -17,7 +17,7 @@ function comments_userapi_get_object_list( $args )
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing #(1) for #(2) function #(3)() in module #(4)',
                                 'modid', 'userapi', 'get_object_list', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

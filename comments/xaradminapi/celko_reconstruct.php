@@ -66,7 +66,7 @@ function comments_adminapi_celko_reconstruct()
     // run through each node and update it's entry in the db
     if (!xarModAPIFunc('comments','admin','celko_update', $newtree)) {
         $msg = xarML('Unable to reconstruct the comments table!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DB_ERROR', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DB_ERROR', new SystemException($msg));
         return FALSE;
     }
 

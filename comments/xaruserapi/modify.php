@@ -36,7 +36,7 @@ function comments_userapi_modify($args)
     }
 
     if ($error) {
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return false;
     }

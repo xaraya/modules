@@ -138,7 +138,7 @@ function comments_renderer_array_markdepths_bypid(&$comments_list)
 
     if (empty($comments_list) || !count($comments_list)) {
         $msg = xarML('Empty comments list');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
                        new DefaultUserException($msg));
         return;
     }
@@ -376,7 +376,7 @@ function comments_renderer_array_maptree(&$CommentList, $modName = NULL)
         if (!isset($CommentList[0]['children'])) {
             if (!isset($CommentList[0]['pid'])) {
                 $msg = xarML('Pid Field is missing');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
+                xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA',
                                 new DefaultUserException($msg));
                 return;
             } else {
@@ -681,7 +681,7 @@ function  comments_renderer_array_sort( &$comment_list, $sortby, $direction)
     if (!isset($comment_list) || !is_array($comment_list)) {
         $msg = xarML('Missing or invalid argument [#(1)] for #(2) function #(3) in module #(4)',
                                  'comment_list','renderer','array_sort',$modName);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
         return false;
     }
     

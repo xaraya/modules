@@ -108,7 +108,7 @@ function comments_user_display($args)
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD',
             new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return;
     }

@@ -15,7 +15,7 @@ function comments_userapi_activate( $args )
     
     if (empty($cid)) {
         $msg = xarML('Missing or Invalid parameter \'cid\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

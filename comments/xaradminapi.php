@@ -66,13 +66,13 @@ function comments_adminapi_delete_node( $args )
 
     if (empty($node)) {
         $msg = xarML('Missing or Invalid comment id!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (empty($pid)) {
         $msg = xarML('Missing or Invalid parent id!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -143,7 +143,7 @@ function comments_adminapi_delete_branch( $args )
 
     if (empty($node)) {
         $msg = xarML('Invalid or Missing Parameter \'node\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -208,13 +208,13 @@ function comments_adminapi_delete_object_nodes( $args )
 
     if (empty($objectid)) {
         $msg = xarML('Missing or Invalid parameter \'objectid\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (empty($modid)) {
         $msg = xarML('Missing or Invalid parameter \'modid\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -259,7 +259,7 @@ function comments_adminapi_delete_module_nodes( $args )
 
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing or Invalid parameter \'modid\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     if (!isset($itemtype)) {
@@ -314,7 +314,7 @@ function comments_adminapi_count_comments( $args )
 
     if (empty($type) || !eregi('^(all|module|object)$',$type)) {
         $msg = xarML('Invalid Parameter \'type\' to function count_comments(). \'type\' must be: all, module, or object.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } else {
 
@@ -322,7 +322,7 @@ function comments_adminapi_count_comments( $args )
             case 'object':
                 if (empty($objectid)) {
                     $msg = xarML('Missing or Invalid Parameter \'objectid\'');
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                     return;
                 }
 
@@ -335,7 +335,7 @@ function comments_adminapi_count_comments( $args )
             case 'module':
                 if (empty($modid)) {
                     $msg = xarML('Missing or Invalid Parameter \'modid\'');
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                     return;
                 }
 
@@ -354,7 +354,7 @@ function comments_adminapi_count_comments( $args )
 
     if (empty($status) || !eregi('^(all|inactive|active)$',$status)) {
         $msg = xarML('Invalid Parameter \'status\' to function count_module_comments(). \'status\' must be: all, active, or inactive.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } else {
         switch ($status) {
@@ -406,7 +406,7 @@ function comments_adminapi_remove_module( $args )
     if (!isset($objectid) || !is_string($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID (= module name)', 'admin', 'remove_module', 'Comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }
@@ -415,7 +415,7 @@ function comments_adminapi_remove_module( $args )
     if (empty($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module ID', 'admin', 'deleteall', 'Hitcount');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return false;
     }

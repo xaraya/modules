@@ -15,7 +15,7 @@ function comments_userapi_get_childcount($cid)
     if ( !isset($cid) || empty($cid) ) {
         $msg = xarML('Invalid #(1) [#(2)] for #(3) function #(4)() in module #(5)',
                                  'cid', $cid, 'userapi', 'get_childcount', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return false;
     }

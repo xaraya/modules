@@ -232,7 +232,7 @@ function comments_admin_module_stats( )
 
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Invalid or Missing Parameter \'modid\'');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -361,7 +361,7 @@ function comments_admin_delete( )
 
     if (!isset($dtype) || !eregi('^(all|module|object)$',$dtype)) {
         $msg = xarML('Invalid or Missing Parameter \'dtype\'');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     } else {
 
@@ -374,7 +374,7 @@ function comments_admin_delete( )
 
                 if (!isset($objectid) || empty($objectid)) {
                     $msg = xarML('Invalid or Missing Parameter \'objectid\'');
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                     return;
                 }
                 $output['objectid'] = $objectid;
@@ -388,7 +388,7 @@ function comments_admin_delete( )
 
                 if (!isset($modid) || empty($modid)) {
                     $msg = xarML('Invalid or Missing Parameter \'modid\'');
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                     return;
                 }
                 $itemtype = xarVarCleanFromInput('itemtype');
@@ -405,7 +405,7 @@ function comments_admin_delete( )
                 break;
             default:
                 $msg = xarML('Invalid or Missing Parameter \'dtype\'');
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
         }
     }
@@ -467,7 +467,7 @@ function comments_admin_delete( )
 
             if (!$retval) {
                 $msg = xarML('Unable to delete comments!');
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN', new SystemException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN', new SystemException($msg));
                 return;
             }
         } else {

@@ -38,7 +38,7 @@ function comments_user_usermenu($args)
 
             if (!isset($settings) || count($settings) <= 0) {
                 $msg = xarML('Settings passed from form are empty!');
-                xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
             }
 

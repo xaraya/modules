@@ -16,7 +16,7 @@ function comments_userapi_get_module_lrvalues( $args )
 
     if (!isset($modid) || empty($modid)) {
         $msg = xarML('Missing or Invalid parameter \'modid\'!!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

@@ -17,7 +17,7 @@ function comments_userapi_get_one( $args )
     if(!isset($cid) || empty($cid)) {
         $msg = xarML('Missing or Invalid argument [#(1)] for #(2) function #(3) in module #(4)',
                                  'cid','userapi','get_one','comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', 
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', 
                         new SystemException(__FILE__.' ('.__LINE__.'):  '.$msg));
         return false;
     }
@@ -62,7 +62,7 @@ function comments_userapi_get_one( $args )
 
     if (!xarModLoad('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2) - unable to trim excess depth','comments','renderer');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return;
     }
 
@@ -81,7 +81,7 @@ function comments_userapi_get_one( $args )
 
     if (!comments_renderer_array_markdepths_bypid($commentlist)) {
         $msg = xarML('Unable to add depth field to comments!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return;
         // FIXME: <rabbitt> this stuff should really be moved out of the comments
         //        module into a "rendering" module of some sort anyway -- or (god forbid) a widget.

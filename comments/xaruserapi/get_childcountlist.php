@@ -18,7 +18,7 @@ function comments_userapi_get_childcountlist($args)
          !isset($right) || !is_numeric($right)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'left/right', 'userapi', 'get_childcountlist', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         return false;
     }

@@ -21,7 +21,7 @@ function comments_userapi_get_countlist($args)
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'modid', 'userapi', 'get_countlist', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         $exception |= true;
     }
@@ -30,7 +30,7 @@ function comments_userapi_get_countlist($args)
     if ( !isset($objectids) || !is_array($objectids) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'objectids', 'userapi', 'get_countlist', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         $exception |= true;
     }

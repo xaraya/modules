@@ -21,7 +21,7 @@ function comments_userapi_get_author_count($args)
     if ( !isset($modid) || empty($modid) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'modid', 'userapi', 'get_count', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         $exception |= true;
             }
@@ -30,7 +30,7 @@ function comments_userapi_get_author_count($args)
     if ( !isset($author) || empty($author) ) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                                  'author', 'userapi', 'get_count', 'comments');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                         new SystemException($msg));
         $exception |= true;
     }
