@@ -107,7 +107,15 @@ function multisites_admin_updateconfig($args)
     xarModSetVar('multisites', 'masterfolder', $masterfolder);
     xarModSetVar('multisites', 'DNexts', $DNexts);
     xarConfigSetVar('System.DB.TablePrefix',xarDBGetSystemTablePrefix());
-    xarConfigSetVar('Site.DB.TablePrefix',xarDBGetSystemTablePrefix());
+    xarConfigSetVar('Site.DB.TablePrefix',xarDBGetSiteTablePrefix());
+
+   //Check the master site directory exists
+    $var = is_dir($masterfolder);
+    if ($var != true) {
+        $msg = xarML("You master site directory \"".$masterfolder."\" does not exist! Please create it first and make sure it is writeable chmod 777!.");
+            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DIRECTORY', new DefaultUserException($msg));
+            return $msg;
+    }
 
     $setconfig = xarModFunc('multisites',
                             'admin',
@@ -127,7 +135,10 @@ function multisites_admin_updateconfig($args)
     return true;
 }
 
-
+/**
+ * Function to set administrative options for multisites
+ * Currently only to set listing of sites per page in view mode
+ */
 function multisites_admin_adminconfig()
 {
       // Security check
@@ -161,7 +172,6 @@ function multisites_admin_updateadminconfig()
     }
 
     xarModSetVar('multisites', 'itemsperpage', $itemsperpage);
-
 
     xarResponseRedirect(xarModURL('multisites', 'admin', 'adminconfig'));
 
@@ -266,10 +276,10 @@ global $HTTP_SERVER_VARS;
 
     } else {  // The master site has not been configured, or this is not the master
       $data['mastersite']= false;
-      $data['infomsg']=xarML('The Master Multisite has not yet been configured! <br /><br />
-                              Please configure the Master Site from the menu option Multisites - Master Config.
-                              <br /><br />You can then add new sites through the menu option Multisites - Add Sites.
-                              <br /><br />Return here to View Sites once your have added sites to view!');
+      $data['infomsg']=xarML('The Master Multisite has not yet been configured!
+                              <p>Please configure the Master Site from the menu option Multisites - Master Config.</p>
+                              <p>You can then add new sites through the menu option Multisites - Add Sites.</p>
+                              <p>Return here to View Sites once your have added sites to view!</p>');
 
     }
 
@@ -295,7 +305,7 @@ function multisites_admin_addsite()
     $currenthost=$_SERVER[$servervar];
 
  	if (($lIsMultisites==1) and ($lIsMaster==1) and ($currenthost==$masterurl)){
-    
+
        // This is the master, and Master site has been set up
        $data['items'] = array();
        $data['authid']     = xarSecGenAuthKey();
@@ -319,7 +329,7 @@ function multisites_admin_addsite()
       $data['mastersite']= false;
       $data['infomsg']=xarML('Multisites must be configured first before you can Add a site! <br /><br />
                               Please configure the master site from the menu option Multisites - Master Config.
-                              <br /><br />The Master site can then return here to Add Sites.');
+                              <p>The Master site can then return here to Add Sites.</p>');
    }
     // Return the template variables defined in this function
     return $data;
@@ -539,7 +549,7 @@ global $HTTP_SERVER_VARS;
      }
      umask($oldumask);
 
-/*  Original write - using other 'just to be sure'.
+/*  Original write - using other 'just to be sure atm'.
     $newConfig = file($configfile);
     $fd = fopen($configfile, 'w');
     while (list ($line_num, $line) = each ($newConfig)) {
@@ -739,14 +749,11 @@ global $HTTP_SERVER_VARS;
    }
     //Check the site folder exists
     $var = is_dir($cWhereIsPerso);
-    if ($var == true) {
-          // echo "The Site Data directory exisits";
-    } else {
-            $msg = xarML("The Site Data Directory ".$cWhereIsPerso." does not exist!\n Please create it and chmod 777.");
+    if ($var != true) {
+        $msg = xarML("You master site directory ".$cWhereIsPerso." does not exist! Please create it first!.");
             xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DIRECTORY', new DefaultUserException($msg));
-    return false;
+            return $msg;
     }
-
     //Check the site data folder is writable
     $var = is_writeable($cWhereIsPerso);
     if ($var == true) {
@@ -755,7 +762,7 @@ global $HTTP_SERVER_VARS;
             $msg = xarML("The Site Data Directory ".$cWhereIsPerso." is not writeable!\n
                           Please chmod 777 and try again.");
             xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITEABLE', new DefaultUserException($msg));
-    return false;
+    return $msg;
     }
 
     //Check the master config data folder is writable

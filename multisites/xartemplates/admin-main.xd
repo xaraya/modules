@@ -16,7 +16,7 @@
       <p><xar:mlstring>The current Multisites Module assists with the creation of Xaraya
         multisites. A Site Administrator can create and run multiple Xaraya sites from a single
         installation of the Xaraya code base. There is currently a review of multisite logic 
-        in Xaraya code in order provide the functionality we ultimately are aiming for.</xar:mlstring></p>
+        in Xaraya code in order to provide the functionality we ultimately are aiming for.</xar:mlstring></p>
 
       <p><xar:mlstring>At this time, the Multisites Module creates the
         scripts and directories required to run your multisites.</xar:mlstring></p>
