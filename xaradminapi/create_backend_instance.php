@@ -35,6 +35,11 @@ function translations_adminapi_create_backend_instance($args)
         // FIXME: why does this come from core and php backend does not?
         include_once 'includes/xarMLSXMLBackend.php';
        return new xarMLS__XMLTranslationsBackend(array($locale));
+    case 'xml2php':
+        xarLogMessage("MLS: Creating XML2PHP backend");
+        // FIXME: why does this come from core and php backend does not?
+        include_once 'includes/xarMLSXMLBackend.php';
+       return new xarMLS__XML2PHPTranslationsBackend(array($locale));
     }
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
 }

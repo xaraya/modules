@@ -29,11 +29,14 @@ function translations_adminapi_create_generator_instance($args)
 
     switch ($bt) {
         case 'php':
-        include_once 'modules/translations/class/PHPTransGenerator.php';
-        return new PHPTranslationsGenerator($locale);
+            include_once 'modules/translations/class/PHPTransGenerator.php';
+            return new PHPTranslationsGenerator($locale);
         case 'xml':
-        include_once 'modules/translations/class/XMLTransSkelsGenerator.php';
-        return new XMLTranslationsSkelsGenerator($locale);
+            include_once 'modules/translations/class/XMLTransSkelsGenerator.php';
+            return new XMLTranslationsSkelsGenerator($locale);
+        case 'xml2php':
+            include_once 'modules/translations/class/PHPTransGenerator.php';
+            return new PHPTranslationsGenerator($locale);
     }
     xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
 }
