@@ -5,23 +5,23 @@
         <struct>
           <member>
             <name>nickname</name>
-            <value>#$nickname#</value>
+            <value><string>#$nickname#</string></value>
           </member>
           <member>
             <name>userid</name>
-            <value>#$userid#</value>
+            <value><string>#$userid#</string></value>
           </member>
           <member>
             <name>email</name>
-            <value>#$email#</value>
+            <value><string>#$email#</string></value>
           </member>
           <member>
             <name>lastname</name>
-            <value>#$lastname#</value>
+            <value><string>#$lastname#</string></value>
           </member>
           <member>
             <name>firstname</name>
-            <value>#$firstname#</value>
+            <value><string>#$firstname#</string></value>
           </member>
         </struct>
       </value>

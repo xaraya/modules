@@ -5,7 +5,7 @@
         <struct>
           <member>
             <name>userid</name>
-            <value>#$userid#</value>
+            <value><string>#$userid#</string></value>
           </member>
           <member>
             <name>dateCreated</name>
@@ -15,11 +15,11 @@
           </member>
           <member>
             <name>content</name>
-            <value>#$content#</value>
+            <value><string>#$content#</string></value>
           </member>
           <member>
             <name>postid</name>
-            <value>#$postid#</value>
+            <value><string>#$postid#</string></value>
           </member>
         </struct>
       </value>

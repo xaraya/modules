@@ -9,7 +9,7 @@
                 <struct>
                   <member>
                     <name>userid</name>
-                    <value>#$loop:item['authorid']#</value>
+                    <value><string>#$loop:item['authorid']#</string></value>
                   </member>
                   <member>
                     <name>dateCreated</name>
@@ -19,11 +19,11 @@
                   </member>
                   <member>
                     <name>content</name>
-                    <value>#$loop:item['content']#</value>
+                    <value><string>#$loop:item['content']#</string></value>
                   </member>
                   <member>
                     <name>postid</name>
-                    <value>#$loop:item['postid']#</value>
+                    <value><string>#$loop:item['postid']#</string></value>
                   </member>
                 </struct>
               </value>
