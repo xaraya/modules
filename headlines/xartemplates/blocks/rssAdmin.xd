@@ -1,0 +1,28 @@
+	<tr>
+		<td>
+			<xar:mlstring>RSS File URL:</xar:mlstring>
+		</td>
+		<td>
+			<select name="rssurl" id="rssurl#$blockid#">
+			<xar:loop name="$items">
+				<xar:if condition="$rssurl eq $url">
+					<option name="#$url#" id="#$url#" value="#$url#" selected="selected">#$url#</option>
+				<xar:else />
+					<option name="#$url#" id="#$url#" value="#$url#">#$url#</option>
+				</xar:if>
+			</xar:loop>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="showdescriptions#$blockid#"><xar:mlstring>Display article descriptions</xar:mlstring></label>:
+		</td>
+		<td>
+			<xar:if condition = "$showdescriptions eq 1">
+			<input type="checkbox" name="showdescriptions#$blockid#" value="1" checked>
+			<xar:else />
+			<input type="checkbox" name="showdescriptions#$blockid#" value="1">
+			</xar:if>
+		</td>
+	</tr>

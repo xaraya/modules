@@ -1,0 +1,44 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>View Headlines</xar:mlstring></h2>
+<div align="center">
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+    <tr>
+        <th>
+            #$urllabel#
+        </th>
+        <th>
+            #$orderlabel#
+        </th>
+        <th>
+            #$optionslabel#
+        </th>
+    </tr>
+    <xar:loop name="$items">
+    <tr>
+        <td>
+            #$loop:item['url']#
+		</td>
+        <td>
+            #$loop:item['order']#
+        </td>
+        <td align="center">[
+           <xar:if condition="empty($loop:item['editurl'])">
+               #$loop:item['edittitle']#
+               <xar:else />
+                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($deleteurl)">
+               #$loop:item['deletetitle']#
+               <xar:else />
+                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+           </xar:if> ]
+        </td>
+    </tr>
+    </xar:loop>
+</table>
+<p>#$pager#</p>
+</div>
+</div>

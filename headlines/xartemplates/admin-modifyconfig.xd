@@ -1,0 +1,29 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Headlines Configuration</xar:mlstring></h2>
+<div align="center">
+<form method="post" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+    <table border="0" width="100%">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr>
+                        <td align="left" valign="middle">
+                            <xar:mlstring>Items Per Page</xar:mlstring>
+                        </td>
+                        <td align="left" valign="middle">
+                            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'itemsperpage')#" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br /><br />
+    <input type="submit" value="Update Headlines Configuration" align="middle" tabindex="3" />
+</form>
+</div>
+</div>

@@ -1,0 +1,244 @@
+<?php
+/**
+ * File: $Id$
+ *
+ * Displays an RSS Display.  
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ * 
+ * @subpackage headlines Module
+ * @author RevJim (revjim.net), John Cox
+ * @todo Make the admin selectable number of headlines work.
+ * @todo show search and image of rss site
+*/
+
+/**
+ * Block init - holds security.
+ */
+function headlines_rssblock_init()
+{
+    return true;
+}
+
+/**
+ * Block info array
+ */
+function headlines_rssblock_info()
+{
+    return array('text_type' => 'RSS',
+		 'text_type_long' => 'RSS Newsfeed',
+		 'module' => 'headlines',
+		 'func_update' => 'headlines_rssblock_insert',
+		 'allow_multiple' => true,
+		 'form_content' => false,
+		 'form_refresh' => false,
+		 'show_preview' => true);
+}
+
+/**
+ * Display func.
+ * @param $blockinfo array containing title,content
+ */
+function headlines_rssblock_display($blockinfo)
+{
+
+    // Break out options from our content field
+    $vars = unserialize($blockinfo['content']);
+    $blockinfo['content'] = '';
+
+    // Check and see if a feed has been supplied to us.
+    if(empty($vars['rssurl'])) {
+        $blockinfo['title'] = xarML('Headlines');
+        $blockinfo['content'] = xarML('No Feed Url Specified');
+        return $blockinfo;
+    } else {
+        $feedfile = $vars['rssurl'];
+    }
+
+    // Sanitize the URL provided to us since
+    // some people can be very mean.
+    $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
+    $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
+
+    // Require the xmlParser class
+    require_once('modules/base/xarclass/xmlParser.php');
+
+    // Require the feedParser class
+    require_once('modules/base/xarclass/feedParser.php');
+
+    // Create Cache File
+    $refresh = (time() - 3600);
+    $varDir = xarCoreGetVarDirPath();
+    $cacheKey = md5($feedfile);
+    $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
+    if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
+        $fp = @fopen($cachedFileName, 'r');
+        // Create a need feedParser object
+        $p = new feedParser();
+        // Read From Our Cache
+        $data = fread($fp, filesize($cachedFileName));
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($data);
+    } else {
+        // Create a need feedParser object
+        $p = new feedParser();
+
+        // Read in our sample feed file
+        $data = @implode("",@file($feedfile));
+
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($data);
+        $fp = fopen("$cachedFileName", "wt");
+        fwrite($fp, $data);
+        fclose($fp);    
+    }
+
+    // DEBUG INFO  Shows array when uncommented.
+    // print_r($info);
+    // print_r($blockinfo['bid']);
+
+    if(isset($info['warning'])) {
+        $blockinfo['title'] = xarML('Headlines');
+        $blockinfo['content'] = xarML('Problem with supplied feed');
+        return $blockinfo;
+    } else {
+        foreach ($info as $content){
+             foreach ($content as $newline){
+                    if(is_array($newline)) {
+                        if ((isset($newline['description'])) && (!empty($vars['showdescriptions']))){
+                            $description = $newline['description'];
+                        } else {
+                            $description = '';
+                        }
+                        if (isset($newline['title'])){
+                            $title = $newline['title'];
+                        } else {
+                            $title = '';
+                        }
+                        if (isset($newline['link'])){
+                            $link = $newline['link'];
+                        } else {
+                            $link = '';
+                        }
+
+                        $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description);
+                }
+            }
+        }
+    }
+
+    if (empty($blockinfo['title'])){
+        $blockinfo['title'] = $info['channel']['title'];
+    }
+
+    $chantitle  =   $info['channel']['title'];
+    $chanlink   =   $info['channel']['link'];
+    $chandesc   =   $info['channel']['description'];
+
+    if (empty($blockinfo['template'])) {
+        $template = 'rss';
+    } else {
+        $template = $blockinfo['template'];
+    }
+    $feed = xarTplBlock('headlines',$template,  array('feedcontent'  => $feedcontent,
+                                                      'blockid'      => $blockinfo['bid'],
+                                                      'chantitle'    => $chantitle,
+                                                      'chanlink'     => $chanlink,
+                                                      'chandesc'     => $chandesc));
+
+    $blockinfo['content'] = $feed;
+    return $blockinfo;
+
+}
+
+/**
+ * Updates the Block config from the Blocks Admin
+ * @param $blockinfo array containing title,content
+ */
+function headlines_rssblock_insert($blockinfo) 
+{
+    list($vars['rssurl'],
+         $vars['maxitems'],
+         $vars['showimage'],
+         $vars['showsearch'],
+         $vars['showdescriptions'],
+         $vars['altstyle']) = xarVarCleanFromInput('rssurl',
+                                                  'maxitems',
+                                                  'showimage',
+                                                  'showsearch',
+                                                  'showdescriptions',
+                                                  'altstyle');
+    // Remove old URL if there
+    // unset($row['url']);
+
+    // Defaults
+    if (!isset($vars['rssurl'])) {
+        $vars['rssurl'] = '';
+    }
+
+    if (!isset($vars['showdescriptions'])) {
+        $vars['showdescriptions'] = 0;
+    }
+
+    //$args['content'] = implode("LINESPLIT", $content);
+
+    // Define a default block title
+    if (empty($blockinfo['title'])) {
+        $blockinfo['title'] = xarML('Headlines');
+    }
+
+    $blockinfo['content']= serialize($vars);
+
+    // Refresh data
+    // $vars = blocks_rss_refresh($vars, 1);
+
+    return $blockinfo;
+}
+
+/**
+ * Modify Function to the Blocks Admin
+ * @param $blockinfo array containing title,content
+ */
+function headlines_rssblock_modify($blockinfo)
+{
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+
+    // Break out options from our content field
+    $vars = unserialize($blockinfo['content']);
+
+    // Migrate $row['rssurl'] to content if present
+    if (!empty($vars['url'])) {
+        $vars['rssurl'] = $vars['url'];
+        unset($vars['url']);
+    }
+
+    // Get parameters from whatever input we need
+    $vars['items'] = array();
+    // The user API function is called
+    $links = xarModAPIFunc('headlines',
+                           'user',
+                           'getall');
+    $vars['items'] = $links;
+
+    // Defaults
+    if (!isset($vars['rssurl'])) {
+        $vars['rssurl'] = '';
+    }
+
+      if (!ereg("^http://|https://|ftp://", $vars['rssurl'])) {
+            $vars['rssurl'] = '';
+      }
+    if (!isset($vars['showdescriptions'])) {
+        $vars['showdescriptions'] = 0;
+    }
+
+    $vars['blockid'] = $blockinfo['bid'];
+    $content = xarTplBlock('headlines','rssAdmin', $vars);
+
+    return $content;
+}
+
+?>

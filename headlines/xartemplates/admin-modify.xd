@@ -1,0 +1,46 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Edit Headlines</xar:mlstring></h2>
+<div align="center">
+<form method="post" action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="hid" id="hid" value="#$hid#" />
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr align="left" valign="middle">
+            <td>
+                <label for="url"><xar:mlstring>URL</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
+            </td>
+            </tr>
+        <tr align="left" valign="middle">
+            <td>
+                <label for="title"><xar:mlstring>Alt Title</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="title" id="title" value="#$title#" size="40" maxlength="200" />
+            </td>
+        </tr>
+        <tr align="left" valign="middle">
+            <td>
+                <label for="desc"><xar:mlstring>Alt Description</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="200" />
+            </td>
+            </tr>
+            <tr align="left" valign="middle">
+                <td>
+                    <label for="order"><xar:mlstring>Order</xar:mlstring></label>
+                </td>
+                <td>
+                    <input type="text" name="order" id="order" value="#$order#" size="3" maxlength="3" />
+                </td>
+            </tr>
+        </table>
+    <p><input type="submit" value="Modify Headline" align="middle" /></p>
+</form>
+</div>
+</div>

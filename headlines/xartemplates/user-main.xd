@@ -1,0 +1,20 @@
+<h2><xar:mlstring>Syndicated Headlines</xar:mlstring></h2>
+<xar:mlstring>Below are predefined syndicated headlines for your browsing pleasure</xar:mlstring>
+<hr width="100%" />
+<xar:loop name="$indlinks">
+    <table width="100%" border="0" cellpadding="2" cellspacing="0">
+        <tr>
+            <td valign="top">
+                <!-- NOTE: target="_BLANK" is not valid XHTML -->
+                <a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a><br />
+                #$loop:item['chandesc']#
+            </td>
+            <td align="right">
+                <a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a><br />
+                #$loop:item['comments']#
+            </td>
+        </tr>
+    </table>
+    <hr width="100%" />
+</xar:loop>
+<p>#$pager#</p>

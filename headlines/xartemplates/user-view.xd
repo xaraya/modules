@@ -1,0 +1,29 @@
+<xar:if condition="empty($warning)">
+    <br />
+    <h2><xar:mlstring>Headlines from</xar:mlstring>: <a href = "#$chanlink#" target = "_BLANK"> #$chantitle# </a></h2>
+    <xar:if condition="!empty($chandesc)">
+         #$chandesc#<br/><br/>
+    </xar:if>
+    <h3><xar:mlstring>Recent Headlines</xar:mlstring></h3>
+    <xar:if condition="!empty($feedcontent)">
+        <xar:loop name="$feedcontent"><p>
+            <xar:if condition="!empty($link)">
+                <!-- NOTE: target="_blank" is not XHTML compliant -->
+                &bull;<a href = "#$link#" target = "_BLANK"> #$title# </a> <br />
+            <xar:else />
+                &bull; <b>#$title#</b> <br />
+            </xar:if>
+            <xar:if condition="!empty($description)">
+                #$description#
+            </xar:if></p>
+        </xar:loop>
+    </xar:if>
+<xar:else />
+    #$warning#
+</xar:if>
+<br /><br />
+<a href="#xarModURL('headlines', 'user', 'main')#"><xar:mlstring>Back to main headlines</xar:mlstring></a>
+<xar:if condition="!empty($hooks)">
+    <h2><xar:mlstring>Options</xar:mlstring>:</h2>
+    #$hooks#
+</xar:if>

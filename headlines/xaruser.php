@@ -1,0 +1,286 @@
+<?php 
+/**
+ * File: $Id$
+ * 
+ * Xaraya Headlines
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Headlines Module
+ * @author John Cox
+*/
+
+function headlines_user_main()
+{
+    $startnum = xarVarCleanFromInput('startnum');
+
+    // Security Check
+    if(!xarSecurityCheck('OverviewHeadlines')) return;
+
+    // Get parameters from whatever input we need
+    $startnum = xarVarCleanFromInput('startnum');
+
+    // Require the xmlParser class
+    require_once('modules/base/xarclass/xmlParser.php');
+
+    // Require the feedParser class
+    require_once('modules/base/xarclass/feedParser.php');
+
+    // The user API function is called
+    $links = xarModAPIFunc('headlines',
+                           'user',
+                           'getall',
+                            array('startnum' => $startnum,
+                                  'numitems' => xarModGetVar('headlines', 'itemsperpage')));
+
+    //if (empty($links)) return
+    // Check individual permissions for Edit / Delete
+    for ($i = 0; $i < count($links); $i++) {
+        $link = $links[$i];
+
+        // Check and see if a feed has been supplied to us.
+        if(isset($link['url'])) {
+            $feedfile = $link['url'];
+        } else {
+            $feedfile = "";
+        }
+        // Sanitize the URL provided to us since
+        // some people can be very mean.
+        $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
+        $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
+
+        // Grab Cache File
+        $refresh = (time() - 3600);
+        $varDir = xarCoreGetVarDirPath();
+        $cacheKey = md5($feedfile);
+
+        // We are just going to read from the cache, since the cache should have been updated
+        // when we choose the headlines to view.
+        $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
+ /**
+  * David Parvin - 06/25/03 - Removed this code and copied the if block from
+  *   below so that I would stop getting errors if I had to delete my cashe
+  *   files
+
+        $fp = @fopen($cachedFileName, 'r');
+        // Create a need feedParser object
+        $p = new feedParser();
+        // Read From Our Cache
+        $feeddata = fread($fp, filesize($cachedFileName));
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($feeddata);
+*/
+        if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
+            $fp = @fopen($cachedFileName, 'r');
+            // Create a need feedParser object
+            $p = new feedParser();
+            // Read From Our Cache
+            $feeddata = fread($fp, filesize($cachedFileName));
+            // Tell feedParser to parse the data
+            $info = $p->parseFeed($feeddata);
+        } else {
+            // Create a need feedParser object
+            $p = new feedParser();
+
+            // Read in our sample feed file
+            $feeddata = @implode("",@file($feedfile));
+
+            // Tell feedParser to parse the data
+            $info = $p->parseFeed($feeddata);
+            $fp = fopen("$cachedFileName", "wt");
+            fwrite($fp, $feeddata);
+            fclose($fp);    
+        }
+
+ // DP End of changes
+
+        if (empty($info['warning'])){
+            if (!empty($link['title'])){
+                $links[$i]['chantitle'] = $link['title'];
+            } else {
+                $links[$i]['chantitle']  =   $info['channel']['title'];
+            }
+            if (!empty($link['desc'])){
+                $links[$i]['chandesc'] = $link['desc'];
+            } else {
+                $links[$i]['chandesc']   =   $info['channel']['description'];
+            }
+            $links[$i]['chanlink']   =   $info['channel']['link'];
+            $links[$i]['viewlink'] = xarModURL('headlines',
+                                               'user',
+                                               'view',
+                                               array('hid' => $link['hid']));
+
+        // FIXME Reverse Logic here until I make a config setting.
+        if (!empty($settings['showcomments'])) {
+            $showcomments = 0;
+        } else {
+            $showcomments = 1;
+        }
+        
+        if ($showcomments) {
+            if (!xarModIsAvailable('comments')) {
+                $showcomments = 0;
+            }
+        }
+        
+        if ($showcomments) {
+            $links[$i]['comments'] = xarModAPIFunc('comments',
+                                                   'user',
+                                                   'get_count',
+                                                   array('modid' => xarModGetIDFromName('headlines'),
+                                                         'objectid' => $link['hid']));
+            
+            if (!$links[$i]['comments']) {
+                $links[$i]['comments'] = '';
+            } elseif ($links[$i]['comments'] == 1) {
+                $links[$i]['comments'] .= ' ' . xarML('comment');
+            } else {
+                $links[$i]['comments'] .= ' ' . xarML('comments');
+            }
+        } else {
+            $links[$i]['comments'] = '';
+        }
+        
+
+        } else {
+            $msg = xarML('There is a problem with a feed.');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            return;
+        }
+    }
+
+    $data['indlinks'] = $links;
+    $data['pager'] = xarTplGetPager($startnum,
+                                    xarModAPIFunc('headlines', 'user', 'countitems'),
+                                    xarModURL('headlines', 'user', 'main', array('startnum' => '%%')),
+                                    xarModGetVar('headlines', 'itemsperpage'));
+    return $data;
+}
+
+function headlines_user_view()
+{
+    // Security Check
+    if(!xarSecurityCheck('ReadHeadlines')) return;
+
+    // Get parameters from whatever input we need
+    $hid = xarVarCleanFromInput('hid');
+
+    $hooks = xarModCallHooks('item',
+                             'display',
+                             $hid,
+                             xarModURL('headlines',
+                                       'user',
+                                       'view',
+                                       array('hid' => $hid)));
+    if (empty($hooks)) {
+        $data['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hooks'] = join('',$hooks);
+    } else {
+        $data['hooks'] = $hooks;
+    }
+
+    // Require the xmlParser class
+    require_once('modules/base/xarclass/xmlParser.php');
+
+    // Require the feedParser class
+    require_once('modules/base/xarclass/feedParser.php');
+
+    // The user API function is called
+    $links = xarModAPIFunc('headlines',
+                          'user',
+                          'get',
+                          array('hid' => $hid));
+
+
+    // Check and see if a feed has been supplied to us.
+    if(isset($links['url'])) {
+        $feedfile = $links['url'];
+    } else {
+        $feedfile = "";
+    }
+    // Sanitize the URL provided to us since
+    // some people can be very mean.
+    $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
+    $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
+
+    // Create Cache File
+    $refresh = (time() - 3600);
+    $varDir = xarCoreGetVarDirPath();
+    $cacheKey = md5($feedfile);
+    $cachedFileName = $varDir . '/cache/rss/' . $cacheKey . '.xml';
+    if ((file_exists($cachedFileName)) && (filemtime($cachedFileName) > $refresh)) {
+        $fp = @fopen($cachedFileName, 'r');
+        // Create a need feedParser object
+        $p = new feedParser();
+        // Read From Our Cache
+        $feeddata = fread($fp, filesize($cachedFileName));
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($feeddata);
+    } else {
+        // Create a need feedParser object
+        $p = new feedParser();
+
+        // Read in our sample feed file
+        $feeddata = @implode("",@file($feedfile));
+
+        // Tell feedParser to parse the data
+        $info = $p->parseFeed($feeddata);
+        $fp = fopen("$cachedFileName", "wt");
+        fwrite($fp, $feeddata);
+        fclose($fp);    
+    }
+
+    if (empty($info['warning'])){
+        foreach ($info as $content){
+             foreach ($content as $newline){
+                    if(is_array($newline)) {
+                        if (isset($newline['description'])){
+                            $description = $newline['description'];
+                        } else {
+                            $description = '';
+                        }
+                        if (isset($newline['title'])){
+                            $title = $newline['title'];
+                        } else {
+                            $title = '';
+                        }
+                        if (isset($newline['link'])){
+                            $link = $newline['link'];
+                        } else {
+                            $link = '';
+                        }
+
+                        $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description);
+                }
+            }
+        }
+
+        if (!empty($links['title'])){
+            $data['chantitle'] = $links['title'];
+        } else {
+            $data['chantitle']  =   $info['channel']['title'];
+        }
+        if (!empty($links['desc'])){
+            $data['chandesc'] = $links['desc'];
+        } else {
+            $data['chandesc']   =   $info['channel']['description'];
+        }
+        $data['chanlink']   =   $info['channel']['link'];
+
+    } else {
+        $msg = xarML('There is a problem with a feed.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
+    
+    $data['feedcontent'] = $feedcontent;
+
+    return $data;
+}
+
+?>

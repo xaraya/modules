@@ -1,0 +1,24 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Add Headline</xar:mlstring></h2>
+<!-- NOTE: target="_blank" is not XHTML compliant -->
+<a href="http://www.syndic8.com/" target="_blank"><xar:mlstring>List of available feeds</xar:mlstring><a>
+<br /><br />
+<div align="center">
+<form method="post" action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="#$authid#" />
+    <table border="0" cellpadding="2" cellspacing="0">
+        <tr align="left" valign="middle">
+            <td>
+                <label for="url"><xar:mlstring>URL</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="url" id="url" value="" size="40" maxlength="200" tabindex="3" />
+            </td>
+        </tr>
+    </table><br/>
+    <input type="submit" value="Create Headline" align="middle" tabindex="5" />
+</form>
+</div>
+</div>
