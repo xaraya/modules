@@ -327,7 +327,7 @@ function polls_upgrade($oldversion)
                                    'polls', 'admin', 'removehook')) {
                 return false;
             }
-
+        case '1.3':
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;

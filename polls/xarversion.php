@@ -13,7 +13,7 @@
 
 $modversion['name'] = 'polls';
 $modversion['id'] = '23';
-$modversion['version'] = '1.3';
+$modversion['version'] = '1.3.0';
 $modversion['description'] = 'Conduct polls';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
