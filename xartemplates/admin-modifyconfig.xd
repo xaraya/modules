@@ -44,6 +44,20 @@
                         <input type="checkbox" name="shortestpath" id="shortestpath" value="1" />
                     </xar:if>        
                 </p>
+
+                <p class="param">
+                    <label for="transformref" title="#xarML('Enable transform hook for all page internal references')#"><xar:mlstring>Internal references hook</xar:mlstring></label>
+                    <xar:if condition="$transformref eq 1">
+                        <input type="checkbox" name="transformref" id="transformref" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="transformref" id="transformref" value="1" />
+                    </xar:if>        
+                </p>
+
+                <p class="param">
+                    <label for="transformfields" title="#xarML('Limit dynamic data fields presented for transform hooks to a list of names')#"><xar:mlstring>Transform hook fields</xar:mlstring></label>
+                    <input type="text" name="transformfields" id="transformfields" value="#xarVarPrepForDisplay($transformfields)#" maxlength="100" />
+                </p>
             </fieldset>
 
             <fieldset class="formelements xar-norm">

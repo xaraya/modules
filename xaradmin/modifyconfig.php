@@ -42,8 +42,13 @@ function xarpages_admin_modifyconfig()
         $data['notfoundpage'] = xarModGetVar('xarpages', 'notfoundpage');
         $data['noprivspage'] = xarModGetVar('xarpages', 'noprivspage');
 
+        // Boolean (1/0) flags.
+        $data['transformref'] = xarModGetVar('xarpages', 'transformref');
         $data['shortestpath'] = xarModGetVar('xarpages', 'shortestpath');
         $data['shorturl'] = xarModGetVar('xarpages', 'SupportShortURLs');
+
+        // Text fields
+        $data['transformfields'] = xarModGetVar('xarpages', 'transformfields');
     } else {
         // Form has been submitted.
 
@@ -69,6 +74,17 @@ function xarpages_admin_modifyconfig()
         xarVarFetch('shortestpath', 'int:0:1', $shortestpath, 0, XARVAR_NOT_REQUIRED);
         xarModSetVar('xarpages', 'shortestpath', $shortestpath);
         $data['shortestpath'] = $shortestpath;
+
+        // Enable internal references transform flag.
+        // This transforms "#" anchors in content to an absolute URI for the page.
+        xarVarFetch('transformref', 'int:0:1', $transformref, 0, XARVAR_NOT_REQUIRED);
+        xarModSetVar('xarpages', 'transformref', $transformref);
+        $data['transformref'] = $transformref;
+
+        // Limit the DD fields that will be transformed.
+        xarVarFetch('transformfields', 'strlist: ,;|:pre:trim:vtoken', $transformfields, '', XARVAR_NOT_REQUIRED);
+        xarModSetVar('xarpages', 'transformfields', $transformfields);
+        $data['transformfields'] = $transformfields;
     }
 
     $data['authid'] = xarSecGenAuthKey();

@@ -125,6 +125,9 @@ function xarpages_init()
     xarModSetVar('xarpages', 'errorpage', 0);
     xarModSetVar('xarpages', 'notfoundpage', 0);
     xarModSetVar('xarpages', 'noprivspage', 0);
+    xarModSetVar('xarpages', 'shortestpath', 1);
+    xarModSetVar('xarpages', 'transformref', 1);
+    xarModSetVar('xarpages', 'transformfields', 'body');
 
     // Switch short URL support on by default, as that is largely
     // the purpose of this module.
@@ -246,13 +249,21 @@ function xarpages_init()
     // type is created.
 
     // Register block types.
-    if (!xarModAPIFunc(
-        'blocks', 'admin', 'register_block_type',
-        array(
-            'modName' => 'xarpages',
-            'blockType'=> 'menu'
-        )
-    )) return;
+    foreach(array('menu', 'crumb') as $blocktype) {
+        if (!xarModAPIFunc(
+            'blocks', 'admin', 'register_block_type',
+            array(
+                'modName' => 'xarpages',
+                'blockType'=> $blocktype
+            )
+        )) return;
+    }
+
+    // Set up module hooks
+    if (!xarModRegisterHook(
+            'item', 'transform', 'API',
+            'xarpages', 'user', 'transformhook')
+    ) {return;}
 
     // Initialisation successful.
     return true;
@@ -377,8 +388,21 @@ function xarpages_upgrade($oldversion)
                 )
             )) return;
 
-                    break;
-            }
+        case '0.2.6':
+            // Upgrade to 0.2.7 - new transform hook.
+
+            // Set up module hooks
+            if (!xarModRegisterHook(
+                    'item', 'transform', 'API',
+                    'xarpages', 'user', 'transformhook')
+            ) {return;}
+
+            // New module variables.
+            xarModSetVar('xarpages', 'transformfields', 'body');
+            xarModSetVar('xarpages', 'transformref', 1);
+
+        break;
+    }
 
     // Update successful.
     return true;

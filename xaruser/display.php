@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Display a page.
+ */
+
 function xarpages_user_display($args)
 {
     extract($args);
@@ -137,6 +141,11 @@ function xarpages_user_display($args)
     // The blocks should have access to most of the same data as the page.
     xarVarSetCached('Blocks.xarpages', 'pagedata', $data);
 
+    // The 'serialize' hack ensures we have a proper copy of the
+    // paga data, which is a self-referencing array. If we don't
+    // do this, then any changes we make will affect the stored version.
+    $data = unserialize(serialize($data));
+
     // Save the current page ID. This is used by blocks in 'automatic' mode.
     xarVarSetCached('Blocks.xarpages', 'current_pid', $pid);
 
@@ -145,7 +154,25 @@ function xarpages_user_display($args)
     $data = xarModAPIfunc(
         'xarpages', 'user', 'addcurrentpageflags',
         array('pagedata' => $data, 'pid' => $pid)
-     );
+    );
+
+    // Do transforms on the DD data.
+    // TODO: make this optional, and then allow the field names
+    // to be specified. Field names to be transformed can be
+    // specified in the $data['current_page']['dd']['transform'] array.
+    // Ideally it should be settable by page type.
+    if (isset($data['current_page']['dd'])) {
+        // If the fields have been limited for transform, then pass those
+        // fields into the transform hook too.
+        $transformfields = xarModGetVar('xarpages', 'transformfields');
+        if (!empty($transformfields)) {
+            $data['current_page']['dd']['transform'] = explode(' ', $transformfields);
+        }
+
+        $data['current_page']['dd'] = xarModCallHooks(
+            'item', 'transform', $pid, $data['current_page']['dd'], 'xarpages'
+        );
+    }
 
     // Provide a 'rolled up' version of the current page (or page and
     // ancestors) that contain inherited values from the pages before it.
