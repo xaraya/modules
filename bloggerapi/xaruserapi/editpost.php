@@ -53,7 +53,7 @@ function bloggerapi_userapi_editpost($msg)
         // FIXME: test for exceptions
         $cids = xarModAPIFunc('categories','user','getlinks',array('iids'=>$iids,'modid'=>xarModGetIDFromName('articles'),'reverse'=>0));
         if (!xarModAPIFunc('articles','admin','update',array('aid'=>$article['aid'], 'title'=>$title,
-                                                            'summary'=>$content, 'cids' =>$cids,
+                                                            'summary'=>$content, 
                                                             'bodytype'=>'normal', 'bodytext'=>$article['body'],'language'=>' '))) {
                $err = "Failed to update post: $postid";
           }
