@@ -52,7 +52,13 @@ function xmlrpcsystemapi_userapi_methodsignature($args) {
         $err = xarML("The method #(1) is not know at this XML-RPC server",$methName);
         $out = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
 	}
-    // Let xmlrpcserver construct the response
+    /*
+     * The call below is an example which uses a template from *this* module to 
+     * construct an XML-RPC message, by supplying the server wiht the module, the 
+     * RPC command and the $data, the XML-RPC server uses this information to construct
+     * a valid XML-RPC message. See the xmlrpcsystemapi_userapi_listmethods API function
+     * in this module for an example on how to use the other method.
+     */
     $out = xarModAPIFunc('xmlrpcserver','user','createresponse',
                          array('module'  => 'xmlrpcsystemapi',
                                'command' => 'methodsignature',

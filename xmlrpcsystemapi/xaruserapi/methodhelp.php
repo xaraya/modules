@@ -24,18 +24,14 @@ function xmlrpcsystemapi_userapi_methodhelp($args)
 	} else {
 		$sysCall=0;
 	}
-	//	print "<!-- ${methName} -->\n";
-    $data = array();
-    $data['methodhelp'] = '';
+	// Create a string parameter for the xmlrpcserver
+    $responsedata = array();
 	if (isset($dmap[$methName])) {
 		if ($dmap[$methName]["docstring"]) {
-            $data['methodhelp'] = $dmap[$methName]['docstring'];
+            $responsedata[] = array('string', $dmap[$methName]['docstring']);
 		} 
-        $out = xarModAPIFunc('xmlrpcserver','user','createresponse',
-                             array('module'  => 'xmlrpcsystemapi',
-                                   'command' => 'methodhelp',
-                                   'params'  => $data)
-                             );
+        // Another example of method 1: using xmlrpc server generic protocol template
+        $out = xarModAPIFunc('xmlrpcserver','user','createresponse', array('params'  => $responsedata));
 	} else {
         $err = xarML("The method #(1) is not know at this XML-RPC server",$methName);
         $out = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));

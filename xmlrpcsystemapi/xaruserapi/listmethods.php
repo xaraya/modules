@@ -27,13 +27,23 @@ function xmlrpcsystemapi_userapi_listmethods($args) {
     extract($args);
     // listmethods has no parameters, so $msg can be ignored
 	$dmap=$server->dmap;
-	$data['methods'] = array();
-	for(reset($dmap); list($key, $val)=each($dmap); ) $data['methods'][]=$key;
-    $out = xarModAPIFunc('xmlrpcserver','user','createresponse',
-                         array('module'  => 'xmlrpcsystemapi',
-                               'command' => 'listmethods',
-                               'params'  => $data)
-                         );
+	$elements = array();
+    
+    // Construct an array of strings for the xmlrpcserver
+	for(reset($dmap); list($key, $val)=each($dmap); ) {
+        $elements[]=array('string',$key);
+    }
+    $params = array(array('array',$elements));
+    /* 
+     * The following call is an example to use the generic protocol template in the
+     * xmlrpc server to construct a response. It uses a generic template which, based
+     * on the contents of the $params is able to construct any XML-RPC response. 
+     * The xmlrpcsystemapi_userapi_methodsignature API function contains an example of
+     * using a second method to construct a response, using a template supplied by the API
+     * module itself. Both methods lead to the same result, but choice is always good ;-)
+     */
+    $out = xarModAPIFunc('xmlrpcserver','user','createresponse',array('params'  => $params));
+
 	return $out;
 }
 ?>
