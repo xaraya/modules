@@ -102,7 +102,8 @@ function window_init()
 function window_upgrade($oldversion)
 {
     switch($oldversion){
-        case '1.0':
+        case '1.0.0':
+            $modversion['user'] = 1;
             break;
     }
     return true;
