@@ -32,7 +32,7 @@
  * This function is called internally by the core whenever the module is
  * loaded.  It adds in the table information
  */
-function dynamic_planning_pntables()
+function dynamic_planning_xartables()
 {
     // Initialise table array
     $pntable = array();
