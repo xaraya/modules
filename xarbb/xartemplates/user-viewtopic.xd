@@ -12,6 +12,9 @@
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
           <td width="45%"><b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b></td>
+		  <td width="40%" align="right">
+			<a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid))#"><xar:mlstring>Back to Forum View</xar:mlstring></a>
+		  </td>
         </tr>
       </table>
     </td>
@@ -26,7 +29,7 @@
           <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#"><xar:mlstring>Post Reply</xar:mlstring></a></td>
         </tr>
       </table>
-    </td>
+	</td>
     <td width="40%" align="right" valign="bottom">
 <!-- Need the forum picker API.
       <form method="POST">

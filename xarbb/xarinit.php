@@ -124,6 +124,7 @@ function xarbb_activate()
     xarModSetVar('xarbb', 'hottopic', 10);
     xarModSetVar('xarbb', 'redhottopic', 20);
     xarModSetVar('xarbb', 'number_of_categories', 1);
+    xarModSetVar('xarbb', 'topicsperpage', 50);
 
     $xarbbcid = xarModAPIFunc('categories',
         'admin',
