@@ -11,47 +11,38 @@
 */
 
 /**
- * 
+ * Now using 'strlist' validation to do the hard work.
  */
 
  
 function keywords_adminapi_separekeywords($args)
 {
-extract($args);
+    extract($args);
  
- if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurityCheck('AdminKeywords')) return;
 
-$delimiters = xarModGetVar('keywords','delimiters');
- 
- //get first delimiter
- $first = substr("$delimiters", 0, 1);                
+    $delimiters = xarModGetVar('keywords', 'delimiters');
 
- //create an array whit all delimiters
- $arr_delimiters = preg_split('//', $delimiters, -1, PREG_SPLIT_NO_EMPTY);
+    // Colons are the only character we can't use (ATM).
+    // TODO: remove this then xarVarValidate() is able to handle escape
+    // sequences for colons as data in the validation rules.
+    str_replace(':', '', $delimiters);
 
- //replace all delimiters whit the first one 
- $keywords = clean_delimiters($arr_delimiters, $first, $keywords);
- 
- //new array with single keywords
- 
- $words = explode($first,$keywords);   
-   
-   //if nothing has been separated, just plop the whole string (possibly only one keyword) into words.
-    if (!isset($words)) {
-        $words = array();
-        $words[] = $keywords;
+    // Ensure we can fall back to a default.
+    if (empty($delimitors)) {
+        // Provide a default.
+        $delimiters = ';';
     }
-    
+ 
+    // Get first delimiter for creating the array.
+    $first = substr($delimiters, 0, 1);
+
+    // Normalise the delimiters and trim the strings.
+    xarVarValidate("strlist:$delimiters:pre:trim", $keywords);
+
+    // Explode into an array of words.
+    $words = explode($first, $keywords);
+
     return $words;
-    }
-
-
- function clean_delimiters($search_dels,$del,$string)
-{
-   foreach($search_dels as $search_del)
-   {            
-       $string = preg_replace("($search_del)",$del, $string);
-   }
-   return $string;
 }
 ?>

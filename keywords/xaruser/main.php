@@ -32,10 +32,13 @@ if (!xarSecurityCheck('ReadKeywords')) return;
         $items = array();
         foreach ($words as $word => $count) {
             if (empty($word)) continue;
-            $items[] = array('url' => xarModURL('keywords','user','main',
-                                                array('keyword' => urlencode($word))),
-                                                'label' => xarVarPrepForDisplay($word),
-                                                'count' => $count);
+            $items[] = array(
+                'url' => xarModURL(
+                    'keywords', 'user', 'main', array('keyword' => $word)
+                ),
+                'label' => xarVarPrepForDisplay($word),
+                'count' => $count
+            );
         }
       
         return array('status' => 0,
@@ -107,9 +110,11 @@ if (!xarSecurityCheck('ReadKeywords')) return;
                      'keyword' => xarVarPrepForDisplay($keyword),
                      'items' => $items);
     }
-    $items = xarModAPIFunc('keywords','user','getitems',
-                          array('keyword' => urlencode($keyword),
-                                 'id' => $id));
+    $items = xarModAPIFunc(
+        'keywords','user','getitems',
+        array('keyword' => $keyword,
+        'id' => $id)
+    );
     if (!isset($items)) return;
     if (!isset($items[$id])) {
         return array('status' => 2);

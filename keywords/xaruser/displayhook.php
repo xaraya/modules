@@ -84,13 +84,14 @@ function keywords_user_displayhook($args)
     foreach ($words as $id => $word) {
        $item = array();
        $item['id'] = $id;
-       $item['url'] = xarModURL('keywords','user','main',
-                                array('keyword' => urlencode($word)));
+       $item['url'] = xarModURL(
+           'keywords','user','main',
+           array('keyword' => $word)
+       );
        $item['keyword'] = xarVarPrepForDisplay($word);
        $data['words'][$id] = $item;
     }
-    return xarTplModule('keywords','user','displayhook',
-                        $data);
+    return xarTplModule('keywords', 'user', 'displayhook', $data);
 }
 
 ?>
