@@ -28,8 +28,7 @@ function bkview_user_statsview($args)
     $repo=& $item['repo'];
     
     // Get a sorted array of timestamp=>user combo's
-    //$stats = $repo->bkGetStats($user);
-    $stats = xarModAPIFunc('bkview','user','getstats',array('repo' => $repo));
+    $stats = $repo->bkGetStats($user);
    
     // :UTC: is like 20021003152103 
     //               yyyymmddhhmmss
