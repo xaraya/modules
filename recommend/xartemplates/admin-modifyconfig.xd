@@ -4,6 +4,16 @@
 <form action="#xarModURL('recommend', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="phase" id="phase" value="update" />
+   <p>
+       <label for="shorturls">
+           <xar:mlstring>Support Short URLs</xar:mlstring>
+       </label>:
+       <xar:if condition="xarModGetVar('recommend', 'SupportShortURLs')">
+           <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
+       <xar:else />
+            <input type="checkbox" name="shorturls" id="shorturls" value="1" />
+       </xar:if>
+    </p>
 <h4><xar:mlstring>Statistics</xar:mlstring></h4>
 <p>
         <xar:mlstring>Number of emails the Recommend module has sent:</xar:mlstring>&nbsp;&nbsp; #$numbersent# <br />

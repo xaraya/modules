@@ -48,8 +48,8 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There is a custom 'send to friend' tag included. The tag is placed in your article summary or 
-            display templates where you would like the 'send to a friend' icon or text to appear. The syntax is:</xar:mlstring>
+            <p><xar:mlstring>There is a custom 'send to friend' tag included. The tag is placed in your article summary or
+            display templates where you would like the 'send to a friend' icon or text to appear. The syntax is:</xar:mlstring></p>
             <ul>
             <li><code>&lt;xar:recommend-sendtofriend type="icon" /&gt;</code> <xar:mlstring>will add a small email icon in your template
             whereever the tag is placed. Clicking on the icon will display the Recommend email form with a link to the
@@ -58,7 +58,9 @@
             link in your template whereever the tag is placed. Clicking on the link will display the Recommend email form with a link to the
             specific article.</xar:mlstring></li>
             </ul>
-
+            <p>
+                <xar:mlstring>The email used in 'send to a friend' is customizable by overriding the user-usersendtofriend-text.xd and user-usersendtofriend-html.xd templates</xar:mlstring>
+            </p>
         </div>
         <br />
         <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">

@@ -28,7 +28,7 @@ function recommend_user_sendfriend()
     if (!xarVarFetch('usernote', 'str:1:', $usernote, '', XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return; 
+    if (!xarSecConfirmAuthKey()) return;
 
     // Security Check
     if(!xarSecurityCheck('OverviewRecommend')) return;
@@ -43,6 +43,9 @@ function recommend_user_sendfriend()
     xarModSetVar('recommend', 'date', $date);
     xarModSetVar('recommend', 'username', $username);
 
+    $sitename = xarModGetVar('themes','SiteName');
+    $siteurl = xarServerGetBaseURL();
+
     $articleinfo=xarModAPIFunc('articles','user','get',array('aid'=>$aid));
     $title=$articleinfo['title'];
     $ptid=$articleinfo['pubtypeid'];
@@ -50,46 +53,53 @@ function recommend_user_sendfriend()
     $textdisplaylink=$articledisplay;
     $htmldisplaylink='<a href="'.$articledisplay.'">'.$articledisplay.'</a>';
 
-
     $subject = xarML('Interesting Article at %%sitename%%');
-    $message = xarML('Hello %%toname%%, your friend %%name%% considered an article at our site interesting and wanted to send it to you.');
-    $message .="\n\n";
-    $message .=xarML('
-    Site Name: %%sitename%% :: %%siteslogan%%
-    Site URL: %%siteurl%%');
-    $message .="\n\n";
-    $message .=xarML('Article Title: ').$title."\n";
-    $message .=xarML('Link: ').$textdisplaylink;
 
     //Prepare to process entities in email message
     $trans = get_html_translation_table(HTML_ENTITIES);
     $trans = array_flip($trans);
 
     if (xarModGetVar('recommend', 'usernote')){
-        $message .= "\n\n";
-        $message .= strtr($usernote, $trans);
+         $usernote=strtr($usernote, $trans);
+    }else{
+         $usernote='';
     }
-    $htmlmessage = xarML('Hello %%toname%%, your friend %%name%% considered an article at our site interesting and wanted to send it to you.');
-    $htmlmessage .='<br /><br />';
-    $htmlmessage .=xarML('Site Name: %%sitename%% :: %%siteslogan%%');
-    $htmlmessage .='<br />'.xarML('Site URL: %%siteurl%%');
-    $htmlmessage .='<br /><br />';
-    $htmlmessage .=xarML('Article Title: ').$title.'<br />';
-    $htmlmessage .=xarML('Link: ').$htmldisplaylink;
+    $title=strtr($title, $trans);
+
 
     if (xarModGetVar('recommend', 'usernote')){
-        $htmlmessage .= "<br /><br />";
-        $htmlmessage .= strtr(xarVarPrepHTMLDisplay($usernote), $trans);
+        $htmlusernote = strtr(xarVarPrepHTMLDisplay($usernote), $trans);
     }
+    $htmltitle=strtr(xarVarPrepHTMLDisplay($title), $trans);
 
-    $message = preg_replace('/%%toname%%/',
-                            $fname,
-                            $message);
 
-    $htmlmessage = preg_replace('/%%toname%%/',
-                            $fname,
-                            $htmlmessage);
+// startnew
+    $textmessage= xarTplModule('recommend',
+                                   'user',
+                                   'usersendfriend',
+                                    array('username'   => $username,
+                                          'friendname' => $fname,
+                                          'useremail'  => $useremail,
+                                          'articletitle' => $title,
+                                          'articlelink' => $textdisplaylink,
+                                          'usermessage'=> $usernote,
+                                          'sitename'   => $sitename,
+                                          'siteurl'    => $siteurl),
+                                    'text');
 
+     $htmlmessage= xarTplModule('recommend',
+                                   'user',
+                                   'usersendfriend',
+                                    array('username'   => $username,
+                                          'friendname' => $fname,
+                                          'useremail'  => $useremail,
+                                          'articletitle' => $htmltitle,
+                                          'articlelink' => $htmldisplaylink,
+                                          'usermessage'=> $htmlusernote,
+                                          'sitename'   => $sitename,
+                                          'siteurl'    => $siteurl),
+                                    'html');
+    //let's send the email now
     if (!xarModAPIFunc('mail',
                        'admin',
                        'sendmail',
@@ -97,11 +107,14 @@ function recommend_user_sendfriend()
                              'name'         => $fname,
                              'subject'      => $subject,
                              'htmlmessage'  => $htmlmessage,
-                             'message'      => $message,
+                             'message'      => $textmessage,
                              'from'         => $useremail,
                              'fromname'     => $username))) return;
 
 
+
+
+//endnew
     // lets update status and display updated configuration
     xarResponseRedirect(xarModURL('recommend', 'user', 'sendtofriend', array('message' => '1', 'aid'=>$aid)));
 

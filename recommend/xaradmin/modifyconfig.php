@@ -32,6 +32,7 @@ function recommend_admin_modifyconfig()
             $data['username']       = xarModGetVar('recommend', 'username');
             $data['authid']         = xarSecGenAuthKey(); 
             $data['submitlabel']    = xarML('Submit');
+            $data['shorturlschecked'] = xarModGetVar('recommend', 'SupportShortURLs') ? 'checked' : '';
 
              // dynamic properties (if any)
 /*
@@ -51,14 +52,16 @@ function recommend_admin_modifyconfig()
         case 'update':
 
             if (!xarVarFetch('template', 'str:1:', $template)) return;
-            if (!xarVarFetch('title', 'str:1:', $title)) return; 
+            if (!xarVarFetch('title', 'str:1:', $title)) return;
             if (!xarVarFetch('usernote', 'checkbox', $usernote, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 
             xarModSetVar('recommend', 'template', $template);
             xarModSetVar('recommend', 'title', $title);
             xarModSetVar('recommend', 'usernote', $usernote);
+            xarModSetVar('recommend', 'SupportShortURLs', $shorturls);
 
             xarResponseRedirect(xarModURL('recommend', 'admin', 'modifyconfig'));
             return true;

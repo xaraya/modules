@@ -35,11 +35,13 @@ function recommend_userapi_rendersendtofriend($args)
     $linktext=xarML("Send to a friend");
     $alttext = xarML('Send this article to a friend');
 
+    $link=xarModURL('recommend','user','sendtofriend',array('aid'=>'$aid'));
+
     $sendimg = xarTplGetImage('sendtofriend.gif', 'recommend');
     if ($type=='text') {
-        $out= 'echo "<a href=\"'.xarModURL('recommend','user','sendtofriend',array('aid'=>'$aid')).'\">'.$linktext.'</a>"';
+        $out= 'echo "<a href=\"'.$link.'\">'.$linktext.'</a>"';
     } else {
-        $out= 'echo "<a href=\"'.xarModURL('recommend','user','sendtofriend',array('aid'=>'$aid')).'\"><img src=\"'.$sendimg.'\" style=\"border:0;\" alt=\"'.$alttext.'\" /></a>"';
+        $out= 'echo "<a href=\"'.$link.'\"><img src=\"'.$sendimg.'\" style=\"border:0;\" alt=\"'.$alttext.'\" /></a>"';
     }
 return $out;
 }

@@ -1,0 +1,24 @@
+<p>
+    <xar:mlstring>Hello</xar:mlstring> #$friendname#,
+</p>
+
+<p>
+    <xar:mlstring>Your friend </xar:mlstring> #$username# <xar:mlstring>considered an article at our site interesting and wanted to send it to you.</xar:mlstring>
+</p>
+
+<p>
+<xar:mlstring>Article Title:</xar:mlstring> #$articletitle#<br />
+<xar:mlstring>Article Link:</xar:mlstring> #$articlelink#
+</p>
+
+<p>
+<xar:mlstring>Site Name:</xar:mlstring> #$sitename#<br />
+<xar:mlstring>Site URL:</xar:mlstring> #$siteurl#
+</p>
+
+<xar:if condition="!empty($usermessage)">
+<p>
+<xar:mlstring>Your friend also wanted to say:</xar:mlstring><br />
+#$usermessage#
+</p>
+</xar:if>

@@ -1,11 +1,11 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recommend Us</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Please, recommend us to a friend</xar:mlstring>.</h2>
+<div class="xar-mod-body">
 <div style="margin: auto;">
 
 <xar:if id="title_condition" condition="!empty($message)">
     <p><b>#$message#</b></p>
-</xar:if>
-
+<xar:else />
+<h2><xar:mlstring>Please, recommend us to a friend</xar:mlstring>.</h2>
 <form action="#xarModUrl('recommend', 'user', 'send')#" method="post" enctype="application/x-www-form-urlencoded">
 <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
 <div class="xar-norm" style="padding: 3px;">
@@ -23,7 +23,9 @@
                 <xar:else />
                 <input type="text" name="username" id="username" value="" size="25" maxlength="25" />
                 </xar:if>
-        </span><br /><br /><span style="text-align: left;">
+        </span>
+        <br /><br />
+        <span style="text-align: left;">
                 <xar:if condition = "xarUserIsLoggedIn()">
                     <xar:mlstring>Your Email</xar:mlstring>:
                 <xar:else/>
@@ -36,25 +38,31 @@
                 <xar:else />
                 <input type="text" name="useremail" id="useremail" value="" size="25" maxlength="25" />
                 </xar:if>
-        </span><br /><br /><span style="text-align: left;">
+        </span>
+        <br /><br />
+        <span style="text-align: left;">
                 <label for="fname"><xar:mlstring>Your Friend's Name</xar:mlstring></label>:
         <br />
                 <input type="text" name="fname" id="fname" value="" size="25" maxlength="25" />
-        </span><br /><br /><span style="text-align: left;">
+        </span>
+        <br /><br />
+        <span style="text-align: left;">
                 <label for="info"><xar:mlstring>Your Friend's Email Address</xar:mlstring></label>:
         <br />
                 <input type="text" name="info" id="info" value="" size="35" maxlength="255" />
-        </span><br /><br />
+        </span>
+        <br /><br />
         <xar:if condition="xarModGetVar('recommend', 'usernote')">
         <span style="text-align: left;">
                 <label for="usernote"><xar:mlstring>Your Added Notes</xar:mlstring></label>:
         <br />
                 <textarea name="usernote" id="usernote" rows="10" cols="40"></textarea>
         </span><br /><br />
-        </xar:if>                 
+        </xar:if>
     <span style="text-align: left;"><input type="submit" value="#$submit#" /></span>
     </div>
     </div>
 </form>
+</xar:if>
 </div>
 </div>
