@@ -1,19 +1,20 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Xaraya Censor
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
  * @subpackage Censor Module
- * @author John Cox 
+ * @author John Cox
  */
 $modversion['name']           = 'Censor';
 $modversion['id']             = '776';
 $modversion['version']        = '1.1.0';
+$modversion['displayname']    = xarML('Censor');
 $modversion['description']    = 'Censor Bad Words';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
