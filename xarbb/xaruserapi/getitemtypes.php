@@ -22,10 +22,7 @@ function xarbb_userapi_getitemtypes($args)
 {
     $itemtypes = array();
 
-   //<jojodee> Took this out while debuggin the hooks probs
-   //Do we need this?
- 
-    $itemtypes[0] = array('label' => xarML('Main Forum Configuration'),
+    $itemtypes[1] = array('label' => xarML('Main Forum Configuration'),
     				      'title' => xarML('Main Forum Configuration'),
                           'url' => xarModURL('xarbb','user','main',array()));
 
