@@ -30,13 +30,13 @@ function authsso_admin_modifyconfig()
     $data['configadmin'] = xarVarPrepForDisplay(xarML('Configure AuthSSO'));
     $data['adduser'] = xarVarPrepForDisplay(xarML('Add SSO User to Xaraya Database on Login'));
     if (xarModGetVar('authsso', 'add_user') == 'true') {
-        $data['adduservalue'] = 'checked="checked"';
+        $data['adduservalue'] = 'checked';
     } else {
         $data['adduservalue'] = '';
     }
     $data['useldap'] = xarVarPrepForDisplay(xarML('Use LDAP to Retrieve User Information'));
     if (xarModGetVar('authsso','getfromldap') == 'true') {
-        $data['useldapvalue'] = 'checked="checked"';
+        $data['useldapvalue'] = 'checked';
     } else {
         $data['useldapvalue'] = '';
     }

@@ -1,91 +1,89 @@
 <!-- admin menu configuration template -->
-<!-- Formatting table to center the menu -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthSSO Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
 <h2>#$configadmin#</h2>
 
 <!-- BL style form for authsso configuration options -->
-<form method="post" action="&xar-modurl-authsso-admin-updateconfig;">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<table border="0" width="100%">
-    <tr>
-        <td>
-            <table border="0" width="100%" cellpadding="4">
-                <tr align="left" valign="top">
-                    <td colspan="2"><xar:mlstring>If a user has been authenticated by the web server but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below and entering the email domain, a user that has been authenticated by the web server  will be automatically added to the Xaraya database and allowed to login.</xar:mlstring></td>
-                </tr>
-                <tr align="left" valign="top">
-                    <td>
-                        #$adduser#
-                    </td>
-                    <td>
-                        <input type="checkbox" name="adduser" value="1" #$adduservalue# />
-                    </td>
-                </tr>
-                <xar:if condition="xarModIsAvailable('xarldap') eq 'true'">
-                <tr align="left" valign="top">
-                    <td>
-                        #$useldap#
-                    </td>
-                    <td>
-                        <input type="checkbox" name="useldap" value="1" #$useldapvalue# />
-                    </td>
-                </tr>
-                </xar:if>
-                <xar:if condition="$useldapvalue eq 'checked' ">
-                    <tr align="left" valign="top">
-                        <td>
-                            #$ldapnameattr#
-                        </td>
-                        <td>
-                            <input type="text" name="ldapnamevalue" value="#$ldapnamevalue#" />
-                        </td>
-                    </tr>
-                    <tr align="left" valign="top">
-                        <td>
-                            #$ldapmailattr#
-                        </td>
-                        <td>
-                            <input type="text" name="ldapmailvalue" value="#$ldapmailvalue#" />
-                        </td>
-                    </tr>
+<div style="marigin: auto;">
+    <form method="post" action="&xar-modurl-authsso-admin-updateconfig;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span class="help" title="#xarML('If a user has been authenticated by the web server but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below and entering the email domain, a user that has been authenticated by the web server  will be automatically added to the Xaraya database and allowed to login.')#"><label for="itemsperpage">#$adduser#:</label></span>
+            </span>
+            <span>
+                <xar:if condition="$adduservalue eq 'checked' ">
+                    <input type="checkbox" name="adduser" value="1" checked="checked" />
                 <xar:else />
-                    <tr align="left" valign="top">
-                        <td>
-                            #$addusermaildomain#
-                        </td>
-                        <td>
-                            <input type="text" name="addusermaildomain" value="#$addusermailvalue#" />
-                        </td>
-                    </tr>
+                    <input type="checkbox" name="adduser" value="1" />
                 </xar:if>
-                <tr align="left" valign="top">
-                    <td>
-                        #$defaultgrouplabel#
-                    </td>
-                    <td>
-                        <select name="defaultgroup" id="defaultgroup">
-                        <xar:loop name="$groups">
-                            <xar:if condition="$loop:item['name'] eq $defaultgroup">
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
-                            <xar:else />
-                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
-                            </xar:if>
-                        </xar:loop>
-                        </select>
-                    </td>
-                <tr align="left" valign="top">
-                    <td>
-                        #$submitlabel#
-                    </td>
-                    <td>
-                        <!-- submit button -->
-                        <input type="submit" value="#$submitbutton#" />
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+            </span>
+        </div>
+        <xar:if condition="xarModIsAvailable('xarldap') eq 'true'">
+            <div style="clear: both; padding: 5px;">
+                <span>
+                    #$useldap#
+                </span>
+                <span>
+                    <xar:if condition="$useldapvalue eq 'checked' ">
+                        <input type="checkbox" name="useldap" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="useldap" value="1" />
+                    </xar:if>
+                </span>
+            </div>
+        </xar:if>
+        <xar:if condition="$useldapvalue eq 'checked' ">
+            <div style="clear: both; padding: 5px;">
+                <span>
+                    #$ldapnameattr#
+                </span>
+                <span>
+                    <input type="text" name="ldapnamevalue" value="#$ldapnamevalue#" />
+                </span>
+            </div>
+            <div style="clear: both; padding: 5px;">
+                <span>
+                    #$ldapmailattr#
+                </span>
+                <span>
+                    <input type="text" name="ldapmailvalue" value="#$ldapmailvalue#" />
+                </span>
+            </div>
+        <xar:else />
+            <div style="clear: both; padding: 5px;">
+                <span>
+                    #$addusermaildomain#
+                </span>
+                <span>
+                    <input type="text" name="addusermaildomain" value="#$addusermailvalue#" />
+                </span>
+            </div>
+        </xar:if>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                #$defaultgrouplabel#
+            </span>
+            <span>
+                <select name="defaultgroup" id="defaultgroup">
+                <xar:loop name="$groups">
+                    <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                        <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+                    <xar:else />
+                        <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                    </xar:if>
+                </xar:loop>
+                </select>
+            </span>
+        </div>
+        <!-- submit button -->
+        <br /><br />
+        <span>
+            #$submitlabel#
+        </span>
+        <span>
+            <input type="submit" value="#$submitbutton#" />
+        </span>
 </form>
+</div>
 </div>
