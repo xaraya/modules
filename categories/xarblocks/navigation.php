@@ -180,7 +180,7 @@ function categories_navigationblock_display($blockinfo)
     }
     if (empty($showempty) || !empty($showcatcount)) {
         // A 'deep count' sums the totals at each node with the totals of all descendants.
-        if (xarVarIsCached('Blocks.categories', 'deepcount')) {
+        if (xarVarIsCached('Blocks.categories', 'deepcount') && empty($startmodule)) {
             $deepcount = xarVarGetCached('Blocks.categories', 'deepcount');
         } else {
             $deepcount = xarModAPIFunc(
@@ -192,7 +192,7 @@ function categories_navigationblock_display($blockinfo)
     }
 
     if (!empty($showcatcount)) {
-        if (xarVarIsCached('Blocks.categories', 'catcount')) {
+        if (xarVarIsCached('Blocks.categories', 'catcount') && empty($startmodule)) {
             $catcount = xarVarGetCached('Blocks.categories', 'catcount');
         } else {
             // Get number of items per category (for this module).
