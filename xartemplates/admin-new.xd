@@ -57,7 +57,7 @@
     </div>
 </xar:if>
 
-<xar:if condition="isset($name)">
+<xar:if condition="isset($number)">
 
     <div style="clear: both; padding-top: 10px;">
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
