@@ -46,6 +46,12 @@ function xarbb_user_newtopic()
 
     $data['allowhtml']      = $settings['allowhtml'];
     $data['allowbbcode']    = $settings['allowbbcode'];
+    if (isset($settings['editstamp'])) {
+        $data['editstamp']  = $settings['editstamp'];
+    } else {
+        $settings['editstamp']  = 1;
+        $data['editstamp'] =$settings['editstamp'];
+    }
     if (empty($data)) return;
 
     // Security Check
@@ -139,6 +145,9 @@ function xarbb_user_newtopic()
         case 'update':
 
             if(isset($tid))    {
+                $adminid = xarModGetVar('roles','admin');
+                if  (($data['editstamp'] ==1 ) ||
+                     (($data['editstamp'] == 2 ) && (xarUserGetVar('uid')<>$adminid))) {
                  $modified_date= xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z',time());
                  $tpost .= "\n\n";
                  $tpost .=xarML('[Modified by: #(1) on #(3)]',
@@ -146,7 +155,7 @@ function xarbb_user_newtopic()
                      xarUserGetVar('uname'),
                      $modified_date);
                      $tpost .= "\n"; //Have to take this out with xarbb and html now handling paras.
-
+                }
                 if (!xarModAPIFunc('xarbb',
                                    'user',
                                    'updatetopic',

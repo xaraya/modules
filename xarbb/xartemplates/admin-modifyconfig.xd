@@ -14,7 +14,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Modify xarBB Configuration</xar:mlstring></h2><br />
 <div style="margin: auto;">
 
-<form method="post" action="#xarModURL('xarbb', 'admin', 'modifyconfig', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('xarbb', 'admin', 'modifyconfig', array('phase' => 'update'))#" id="post" enctype="application/x-www-form-urlencoded" />
 
 	<div style="clear: both; padding-top: 10px;">
 	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
@@ -136,6 +136,34 @@
             </xar:if>
 		</span>
     </div>
+
+     <div style="clear: both; width: 98%; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+		<span class="help" title="#xarML('Default value for Topic Edit Stamp use')#">
+            <label for="editstamp"><xar:mlstring>Use Topic Edit Stamp?</xar:mlstring></label>
+        </span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+            <select name="editstamp" id="editstamp" size="1">
+            <xar:if condition="$editstamp eq '0'">
+               <option value="0" selected="selected"><xar:mlstring>None</xar:mlstring></option>
+               <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+            <xar:elseif condition="$editstamp eq '1'" />
+               <option value="0"><xar:mlstring>None</xar:mlstring></option>
+               <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+            <xar:elseif condition="$editstamp eq '2'"/>
+               <option value="0"><xar:mlstring>None</xar:mlstring></option>
+               <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+            </xar:if> </select>
+                </select>
+
+ 	   </span>
+    </div>
+
+
 
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 20%; text-align: right;">

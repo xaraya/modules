@@ -61,9 +61,7 @@
                 </span>
             </span>
             <span style="float: right; width: 78%; text-align: left;">
-                <textarea name="fdesc" rows="10" cols="50">
-                    #$fdesc#
-                </textarea>
+                <textarea name="fdesc" rows="10" cols="50">#$fdesc#</textarea>
             </span>
         </div>
         <div style="clear: both; padding-top: 10px; width:98%;">
@@ -90,7 +88,7 @@
                                 Locked
                             </xar:mlstring>
                         </option>
-                        <xar:else />
+                    <xar:else />
                         <option value="0">
                             <xar:mlstring>
                                 Ready
@@ -166,10 +164,10 @@
                 <xar:if condition="xarModIsAvailable('html')">
                     <xar:if condition="$allowhtml">
                         <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
-                        <xar:else />
+                     <xar:else />
                         <input type="checkbox" name="allowhtml" id="allowhtml" />
                     </xar:if>
-                    <xar:else />
+                <xar:else />
                     <span style="float: right; width: 78%; text-align: left;">
                         <em>
                             <xar:mlstring>
@@ -195,10 +193,10 @@
                 <xar:if condition="xarModIsAvailable('bbcode')">
                     <xar:if condition="$allowbbcode">
                         <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
-                        <xar:else />
+                    <xar:else />
                         <input type="checkbox" name="allowbbcode" id="allowbbcode" />
                     </xar:if>
-                    <xar:else />
+                <xar:else />
                     <span style="float: right; width: 78%; text-align: left;">
                         <em>
                             <xar:mlstring>
@@ -207,6 +205,30 @@
                         </em>
                     </span>
                 </xar:if>
+           </span>
+    </div>
+     <div style="clear: both; width: 98%; padding-top: 10px;">
+        <span style="float:left; width:20%;text-align:right;">
+		<span class="help" title="#xarML('Default value for Topic Edit Stamp use')#">
+            <label for="editstamp"><xar:mlstring>Use Topic Edit Stamp?</xar:mlstring></label>
+        </span>
+        </span>
+		<span style="float: right; width: 78%; text-align: left;">
+            <select name="editstamp" id="editstamp">
+            <xar:if condition="$editstamp eq '0'">
+               <option value="0" selected="selected"><xar:mlstring>None</xar:mlstring></option>
+               <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+            <xar:elseif condition="$editstamp eq '1'" />
+               <option value="0"><xar:mlstring>None</xar:mlstring></option>
+               <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value="2"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+            <xar:elseif condition="$editstamp eq '2'"/>
+               <option value="0"><xar:mlstring>None</xar:mlstring></option>
+               <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+               <option value="2" selected="selected"><xar:mlstring>Yes - exclude for Admin</xar:mlstring></option>
+                </xar:if>
+            </select>
             </span>
         </div>
         <div style="clear: both; padding-top: 10px; width:98%;">
@@ -303,3 +325,4 @@
         </div>
     </form>
 </div>
+

@@ -32,6 +32,7 @@ function xarbb_admin_new()
     if (!xarVarFetch('hottopic','int:1:',$hottopic, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('editstamp','int:1:',$editstamp, 0, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showcats','checkbox', $showcats, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('linknntp','checkbox', $linknntp, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
@@ -50,6 +51,7 @@ function xarbb_admin_new()
             $data['postsperpage']    = !isset($settings['postsperpage']) ? 20 :$settings['postsperpage'];
             $data['topicsperpage']   = !isset($settings['topicsperpage']) ? 20 :$settings['topicsperpage'];
             $data['hottopic']        = !isset($settings['hottopic']) ? 20 :$settings['hottopic'];
+            $data['editstamp']       = !isset($settings['editstamp']) ? 0 :$settings['editstamp'];
             $data['allowhtml']       = !isset($settings['allowhtml']) ? false :$settings['allowhtml'];
             $data['allowbbcode']     = !isset($settings['allowbbcode']) ? false :$settings['allowbbcode'];
             $data['showcats']        = !isset($settings['showcats']) ? false :$settings['showcats'];
@@ -164,6 +166,7 @@ function xarbb_admin_new()
             $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
             $settings['allowbbcode']        = $allowbbcode;
+            $settings['editstamp']          = $editstamp;            
             $settings['showcats']           = $showcats;
             $settings['linknntp']           = $linknntp;
             $settings['nntpport']           = $nntpport;

@@ -37,6 +37,7 @@ function xarbb_admin_modifyconfig()
             $data['hottopic']        = !isset($settings['hottopic']) ? 20 :$settings['hottopic'];
             $data['allowhtml']       = !isset($settings['allowhtml']) ? false :$settings['allowhtml'];
             $data['allowbbcode']     = !isset($settings['allowbbcode']) ? false :$settings['allowbbcode'];
+            $data['editstamp']       = !isset($settings['editstamp']) ? 1 :$settings['editstamp'];
             $data['showcats']        = !isset($settings['showcats']) ? false :$settings['showcats'];
             $data['linknntp']        = !isset($settings['linknntp']) ? false :$settings['linknntp'];
             $data['nntpport']        = !isset($settings['nntpport']) ? 119 :$settings['nntpport'];
@@ -52,7 +53,7 @@ function xarbb_admin_modifyconfig()
             } else {
                 $data['hooks'] = $hooks;
             }
-
+            $data['settings']=$settings;
             $data['authid'] = xarSecGenAuthKey();
         break;
 
@@ -65,6 +66,7 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('supportshorturls','checkbox', $supportshorturls,false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('showcats','checkbox', $showcats, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('linknntp','checkbox', $linknntp, false,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('nntpport','int:1:4',$nntpport, 119, XARVAR_NOT_REQUIRED)) return;
@@ -89,6 +91,7 @@ function xarbb_admin_modifyconfig()
             $settings['topicsperpage']      = $topicsperpage;
             $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
+            $settings['editstamp']          = $editstamp;            
             $settings['allowbbcode']        = $allowbbcode;
             $settings['showcats']           = $showcats;
             $settings['linknntp']           = $linknntp;
