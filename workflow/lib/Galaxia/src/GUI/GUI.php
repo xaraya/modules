@@ -32,6 +32,7 @@ class GUI extends Base {
     $query = "select distinct(gp.pId), 
     				 gp.isActive,                    
                      gp.name as procname, 
+                     gp.normalized_name as normalized_name, 
                      gp.version as version
               from
               	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId

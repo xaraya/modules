@@ -108,10 +108,10 @@
 <xar:else/>
 	<option value="*">*</option>
 </xar:if>
-<xar:if condition="$user eq $filter_user">
-	<option selected="selected" value="#$user#">#$user#</option>
+<xar:if condition="$userId eq $filter_user">
+	<option selected="selected" value="#$userId#">#$user#</option>
 <xar:else/>
-	<option value="#$user#">#$user#</option>
+	<option value="#$userId#">#$user#</option>
 </xar:if>
 	</select>
 </td>

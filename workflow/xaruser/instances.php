@@ -175,7 +175,8 @@ $tplData['filter_process'] = isset($_REQUEST['filter_process']) ? $_REQUEST['fil
 $tplData['filter_status'] = isset($_REQUEST['filter_status']) ? $_REQUEST['filter_status'] : '';
 $tplData['filter_act_status'] = isset($_REQUEST['filter_act_status']) ? $_REQUEST['filter_act_status'] : '';
 $tplData['filter_user'] = isset($_REQUEST['filter_user']) ? $_REQUEST['filter_user'] : '';
-$tplData['user'] = $user;
+$tplData['userId'] = $user;
+$tplData['user'] = xarUserGetVar('name', $user);
 
     if (count($smarty->tplData) > 0) {
        foreach (array_keys($smarty->tplData) as $key) {

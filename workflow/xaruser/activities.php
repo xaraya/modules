@@ -96,6 +96,49 @@ $tplData['items'] =&  $items["data"];
 
 $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');
 $tplData['all_procs'] =&  $processes['data'];
+if (count($tplData['all_procs']) == 1 && empty($_REQUEST['filter_process'])) {
+    $_REQUEST['filter_process'] = $tplData['all_procs'][0]['pId'];
+}
+
+if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
+    $actid2item = array();
+    foreach (array_keys($tplData['items']) as $index) {
+        $actid2item[$tplData['items'][$index]['activityId']] = $index;
+    }
+    foreach ($tplData['all_procs'] as $info) {
+        if ($info['pId'] == $_REQUEST['filter_process'] && !empty($info['normalized_name'])) {
+            $graph = GALAXIA_DIR."/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
+            $mapfile = GALAXIA_DIR."/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
+            if (file_exists($graph) && file_exists($mapfile)) {
+                $maplines = file($mapfile);
+                $map = '';
+                foreach ($maplines as $mapline) {
+                    if (!preg_match('/activityId=(\d+)/',$mapline,$matches)) continue;
+                    $actid = $matches[1];
+                    if (!isset($actid2item[$actid])) continue;
+                    $index = $actid2item[$actid];
+                    $item = $tplData['items'][$index];
+                    if ($item['instances'] > 0) {
+                        $url = xarModURL('workflow','user','instances',
+                                         array('filter_process' => $info['pId']));
+                        $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
+                        $map .= $mapline;
+                    } elseif ($item['isInteractive'] == 'y' && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
+                        $url = xarModURL('workflow','user','run_activity');
+                        $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $mapline);
+                        $map .= $mapline;
+                    }
+                }
+                $tplData['graph'] = $graph;
+                $tplData['map'] = $map;
+                $tplData['procname'] = $info['procname'];
+            } else {
+                $tplData['graph'] = '';
+            }
+            break;
+        }
+    }
+}
 
 //$section = 'workflow';
 //include_once ('tiki-section_options.php');
