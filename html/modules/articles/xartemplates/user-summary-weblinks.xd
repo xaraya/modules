@@ -1,0 +1,21 @@
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+    <tr>
+        <td align="left" valign="top" class="xar-normal">
+            <xar:if condition="!empty($categories) and count($categories) gt 0">
+                [ <xar:foreach in="$categories" value="$cat">
+                    #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+                </xar:foreach> ]
+            </xar:if>
+            <a class="xar-title" href="#$redirect#">#$title#</a><br />
+            <xar:mlstring>Description</xar:mlstring>: #$summary#<br />
+            <xar:mlstring>Added on</xar:mlstring>: #$date#
+            <xar:if condition="!empty($rating)">
+                - <xar:mlstring>Rating</xar:mlstring>: #$rating#
+            </xar:if>
+            <xar:if condition="!empty($counter)">
+                (#$counter# <xar:mlstring>Hits</xar:mlstring>)
+            </xar:if>
+            | <a href="#$link#"><xar:mlstring>Rate / Comment</xar:mlstring></a>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * get array of configurable fields for publication types
+// TODO: add dynamic fields here for .81+
+ * @returns array
+ * @return array('title'   => array('label'  => xarML('...'),
+                                    'format' => '...',
+                                    'input'  => 1),
+                 'summary' => array('label'  => xarML('...'),
+                                    'format' => '...',
+                                    'input'  => 1),
+                 ...);
+ */
+function articles_userapi_getpubfields($args)
+{
+    return array(
+        'title'    => array('label'  => xarML('Title'),
+                            'format' => 'textbox',
+                            'input'  => 1),
+        'summary'  => array('label'  => xarML('Summary'),
+                            'format' => 'textarea_medium',
+                            'input'  => 1),
+        'bodytext' => array('label'  => xarML('Body Text'),
+                            'format' => 'textarea_large',
+                            'input'  => 1),
+        'bodyfile' => array('label'  => xarML('Body File Upload'),
+                            'format' => 'fileupload',
+                            'input'  => 1),
+        'notes'    => array('label'  => xarML('Notes'),
+                            'format' => 'textarea_small',
+                            'input'  => 0),
+        'authorid' => array('label'  => xarML('Author'),
+                            'format' => 'username',
+                            'input'  => 0),
+        'pubdate'  => array('label'  => xarML('Publication Date'),
+                            'format' => 'calendar',
+                            'input'  => 0),
+        'status'   => array('label'  => xarML('Status'),
+                            'format' => 'status',
+                            'input'  => 0),
+    );
+}
+
+?>

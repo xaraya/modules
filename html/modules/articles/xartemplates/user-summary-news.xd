@@ -1,0 +1,42 @@
+<div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
+<div class="xar-norm" style="padding: 3px;">
+            <xar:if condition="!empty($categories) and count($categories) gt 0">
+                [ <xar:foreach in="$categories" value="$cat">
+                    #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+                </xar:foreach> ]
+            </xar:if>
+          <h1><a class="xar-title" href="#$link#">#$title#</a></h1>
+
+          <div class="xar-accent" style="padding: 2px;"><span class="xar-sub">
+            <xar:mlstring>Posted by</xar:mlstring>: 
+            #$author#
+            <xar:mlstring>on</xar:mlstring>
+            #$date#
+                    <xar:if condition="!empty($counter)">
+                       (#$counter# <xar:mlstring>Reads</xar:mlstring>)
+                    </xar:if>
+
+          </span></div>
+          <div style="text-align: right;">
+            <span class="xar-sub">
+              #$topic_icons#
+            </span>
+          </div>
+          #$summary#
+          <br />
+          <xar:if condition="!empty($notes)">
+              <br />
+            Note:<br /><i>#$notes#</i>
+          </xar:if>
+			<div style="text-align: right;">
+				<xar:if condition="!empty($words)">
+			<!-- Note : you can use $bytes here too if you prefer the geeky way of counting :) -->
+					<a href="#$link#"><xar:mlstring>Read More</xar:mlstring></a> 
+					(#$words# <xar:mlstring>words</xar:mlstring>)
+				</xar:if>
+				<xar:if condition="!empty($comments)">
+					#$comments#
+				</xar:if>
+          </div>
+</div>
+</div>

@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * get an array of child categories with links and optional counts
+ *
+ * @param $args['status'] array of requested status(es) for the articles
+ * @param $args['ptid'] publication type ID
+ * @param $args['cid'] parent category ID
+ * @param $args['showcid'] false (default) means skipping the parent cid
+ * @param $args['count'] true (default) means counting the number of articles
+ * @param $args['filter'] additional categories we're filtering on (= catid)
+ * @returns array
+// TODO: specify return format
+ */
+function articles_userapi_getchildcats($args)
+{
+    extract($args);
+
+    if (!isset($cid) || !is_numeric($cid)) {
+        return array();
+    }
+    if (empty($ptid)) {
+        $ptid = null;
+    }
+    if (!isset($status)) {
+        // frontpage or approved
+        $status = array(3,2);
+    }
+    if (!isset($showcid)) {
+        $showcid = false;
+    }
+    if (!isset($count)) {
+        $count = true;
+    }
+    if (!isset($filter)) {
+        $filter = '';
+    }
+
+    if (!xarModAPILoad('categories', 'visual')) return;
+
+// TODO: make sure permissions are taken into account here !
+    $list = xarModAPIFunc('categories',
+                         'visual',
+                         'listarray',
+                         array('cid' => $cid));
+    // get the counts for all child categories
+    if ($count) {
+        $seencid = array();
+        foreach ($list as $info) {
+            $seencid[$info['id']] = 1;
+        }
+        $childlist = array_keys($seencid);
+
+        $pubcatcount = xarModAPIFunc('articles',
+                                    'user',
+                                    'getpubcatcount',
+                                    // frontpage or approved
+                                    array('status' => array(3,2),
+                                          'cids' => $childlist,
+                                          'ptid' => $ptid,
+                                          'reverse' => 1));
+        if (!empty($ptid)) {
+            $curptid = $ptid;
+        } else {
+            $curptid = 'total';
+        }
+    }
+
+    $cats = array();
+    foreach ($list as $info) {
+        if ($info['id'] == $cid && !$showcid) {
+            continue;
+        }
+        if (!empty($filter)) {
+            $catid = $filter . '+' . $info['id'];
+        } else {
+            $catid = $info['id'];
+        }
+// TODO: show icons instead of (or in addition to) a link if available ?
+        $info['link'] = xarModURL('articles','user','view',
+                                 array('catid' => $catid,
+                                       'ptid' => $ptid));
+        $info['name'] = xarVarPrepForDisplay($info['name']);
+        if ($count && isset($pubcatcount[$info['id']][$curptid])) {
+            $info['count'] = $pubcatcount[$info['id']][$curptid];
+        } else {
+            $info['count'] = '';
+        }
+        $cats[] = $info;
+    }
+    return $cats;
+}
+
+?>

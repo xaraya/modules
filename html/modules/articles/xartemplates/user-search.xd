@@ -1,0 +1,50 @@
+<h2><xar:mlstring>Search in Articles</xar:mlstring></h2>
+
+<xar:foreach in="$results" value="$result">
+    <br />
+    <h3>#$result['description']#:</h3>
+    <ul>
+    <xar:foreach in="$result['items']" value="$item">
+        <li>
+            <xar:if condition="!empty($item['categories']) and count($item['categories']) gt 0">
+                [ <xar:foreach in="$item['categories']" value="$cat">
+                    #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+                </xar:foreach> ]
+            </xar:if>
+            <a href="#$item['link']#">#$item['title']#</a> #$item['date']#
+        </li>
+    </xar:foreach>
+    </ul>
+    #$result['pager']#
+    <br />
+</xar:foreach>
+
+<xar:if condition="!empty($status)">
+<br />#$status#<br />
+</xar:if>
+
+<xar:if condition="empty($results) or count($results) eq 0">
+    <br />
+    <table border="0" cellpadding="4" cellspacing="0">
+    <tr>
+        <td valign="top"><xar:mlstring>Publications</xar:mlstring></td>
+        <td valign="top">
+        <xar:foreach in="$publications" value="$pubtype">
+            <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
+        </xar:foreach>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><xar:mlstring>Categories</xar:mlstring></td>
+    </tr>
+    <xar:foreach in="$categories" value="$cat">
+    <tr>
+        <td valign="top" align="right">#$cat['cattitle']# : </td>
+        <td valign="top">#$cat['catselect']# </td>
+    </tr>
+    </xar:foreach>
+    </tr>
+    </table>
+</xar:if>
+
+<br />

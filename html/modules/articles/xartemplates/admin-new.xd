@@ -1,0 +1,73 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Add Article</xar:mlstring></h2>
+<div style="margin: auto;">
+<xar:if condition="!empty($preview)">
+<div style="width: 100%;padding: 3px;">
+#$preview#
+</div>
+<br />
+</xar:if>
+<h3><xar:mlstring>Publication Type</xar:mlstring>:</h3>
+<p><xar:foreach in="$pubfilters" value="$pubfilter">
+    <xar:if condition="empty($pubfilter['plink'])">
+        <span style="padding: 0px 3px 0px 3px;">#$pubfilter['ptitle']#</span>
+    <xar:else />
+        <span style="padding: 0px 3px 0px 3px;"><a href="#$pubfilter['plink']#">#$pubfilter['ptitle']#</a></span>
+    </xar:if>
+</xar:foreach></p>
+<xar:if condition="!empty($ptid)">
+
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<xar:if condition="!empty($withupload)">
+    <form method="post" action="&xar-modurl-articles-admin-create;" enctype="multipart/form-data" #$formhooks['formaction']#>
+<xar:else />
+    <form method="post" action="&xar-modurl-articles-admin-create;" #$formhooks['formaction']#>
+</xar:if>
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<xar:foreach in="$fields" value="$field">
+<tr>
+    <td style="vertical-align:top;"><label for="#$field['id']#">#$field['label']#</label></td>
+    <td><xar:articles-field definition="$field['definition']" /></td>
+</tr>
+</xar:foreach>
+<xar:if condition="!empty($formhooks['formdisplay'])">
+<tr>
+	<td style="vertical-align:top;"><xar:mlstring>Form Controls</xar:mlstring></td>
+	<td>
+		#$formhooks['formdisplay']#
+	</td>
+</tr>
+</xar:if>
+<xar:if condition="!empty($hooks)">
+	<xar:foreach in="$hooks" key="$hookmodule">
+	#$hooks[$hookmodule]#
+	</xar:foreach>
+</xar:if>
+<tr>
+    <td style="vertical-align:top;"><xar:mlstring>Allowed HTML tags</xar:mlstring></td>
+    <td>#$allowedhtml#</td>
+</tr>
+
+<tr><td colspan="2" style="text-align: center;"><br />
+    <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
+    &nbsp;&nbsp;&nbsp;
+    <input type="submit" value="#$addlabel#" /></td></tr>
+
+</form>
+</table>
+</xar:if>
+<br />
+</div>
+</div>

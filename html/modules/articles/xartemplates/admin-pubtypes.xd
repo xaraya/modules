@@ -1,0 +1,140 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Publication Types</xar:mlstring></h2>
+<div style="margin: auto;text-align: center;">
+<xar:if condition="isset($action) and $action eq 'new'">
+<h3 style="text-align: left;"><xar:mlstring>New Publication Type</xar:mlstring></h3>
+<form method="post" action="#$link#">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+    <tr>
+        <td style="text-align: left;"><label for="name"><xar:mlstring>Type</xar:mlstring></label></td>
+        <td style="text-align: left;"><input type="text" name="name" id="name" value="" size="20" maxlength="20" /></td>
+    </tr>
+    <tr>
+        <td style="text-align: left;"><label for="descr"><xar:mlstring>Description</xar:mlstring></label></td>
+        <td style="text-align: left;"><input type="text" name="descr" id="descr" value="" size="50" maxlength="250" /></td>
+    </tr>
+</table>
+<p style="text-align: left;"><xar:mlstring>Configuration</xar:mlstring>:<br />
+(<xar:mlstring>leave Label empty if you don't want to use a field</xar:mlstring>)</p>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+    <tr>
+        <th><xar:mlstring>Field</xar:mlstring></td>
+        <th><xar:mlstring>Label</xar:mlstring></td>
+        <th><xar:mlstring>Format</xar:mlstring></td>
+        <th><xar:mlstring>Input</xar:mlstring></td>
+        <th><xar:mlstring>Type</xar:mlstring></td>
+    </tr>
+    <xar:foreach in="$fields" value="$field">
+    <tr>
+        <td class="xar-norm" style="text-align: left;"><label for="label[#$field['name']#]">#$field['name']#</label></td>
+        <td class="xar-norm"><input type="text" name="label[#$field['name']#]" id="label[#$field['name']#]" value="#$field['label']#" /></td>
+        <td class="xar-norm"><xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" /></td>
+        <td class="xar-norm" style="text-align: center;"><input type="checkbox" name="input[#$field['name']#]" id="input[#$field['name']#]" #$field['input']# /></td>
+        <td class="xar-norm">#$field['type']#</td>
+    </tr>
+    </xar:foreach>
+</table>
+<p><xar:mlstring><b>Note:</b> articles of this publication type will use the templates <i>user-display-[publicationtype].xd</i> and <i>user-summary-[publicationtype].xd</i> by default.<br />Don't forget to provide those templates before trying to add new articles...</xar:mlstring></p>
+<br /><input type="submit" value="#$buttonlabel#" />
+</form>
+</xar:if>
+
+<xar:if condition="isset($action) and $action eq 'modify'">
+<h3 style="text-align: left;"><xar:mlstring>Edit Publication Type</xar:mlstring></h3>
+<form method="post" action="#$link#">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+<table width="100%" border="0" cellpadding="2" cellspacing="0">
+    <tr>
+        <td style="text-align: left;"><xar:mlstring>Type</xar:mlstring></td>
+        <td style="text-align: left;">#$item['name']#</td>
+    </tr>
+    <tr>
+        <td style="text-align: left;"><label for="descr"><xar:mlstring>Description</xar:mlstring></label></td>
+        <td style="text-align: left;"><input type="text" name="descr" id="descr" value="#$item['descr']#" size="50" maxlength="250" /></td>
+    </tr>
+</table>
+<p style="text-align: left;"><xar:mlstring>Configuration</xar:mlstring>:<br />
+(<xar:mlstring>leave Label empty if you don't want to use a field</xar:mlstring>)</p>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+    <tr>
+        <th><xar:mlstring>Field</xar:mlstring></td>
+        <th><xar:mlstring>Label</xar:mlstring></td>
+        <th><xar:mlstring>Format</xar:mlstring></td>
+        <th><xar:mlstring>Input</xar:mlstring></td>
+        <th><xar:mlstring>Type</xar:mlstring></td>
+    </tr>
+    <xar:foreach in="$fields" value="$field">
+    <tr>
+        <td class="xar-norm" style="text-align: left;"><label for="label[#$field['name']#]">#$field['name']#</label></td>
+        <td class="xar-norm"><input type="text" name="label[#$field['name']#]" id="label[#$field['name']#]" value="#$field['label']#" /></td>
+        <td class="xar-norm"><xar:articles-field type="fieldtype" name="format['.$field['name'].']" value="$field['format']" /></td>
+        <td class="xar-norm" style="text-align: center;"><input type="checkbox" name="input[#$field['name']#]" id="input[#$field['name']#]" #$field['input']# /></td>
+        <td class="xar-norm">#$field['type']#</td>
+    </tr>
+    </xar:foreach>
+</table>
+<br /><input type="submit" value="#$buttonlabel#" />
+</form>
+</xar:if>
+
+<xar:if condition="isset($action) and $action eq 'delete'">
+<h3><xar:mlstring>Delete this Publication Type?</xar:mlstring></h3>
+<form method="post" action="#$link#">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+<table border="0" cellpadding="2" cellspacing="0" style="margin: auto;">
+    <tr>
+        <td style="text-align: right;"><xar:mlstring>Type</xar:mlstring>:</td>
+        <td style="text-align: left;">#$item['name']#</td>
+    </tr>
+    <tr>
+        <td style="text-align: right;"><xar:mlstring>Description</xar:mlstring>:</td>
+        <td style="text-align: left;">#$item['descr']#</td>
+    </tr>
+</table>
+<br /><input type="submit" value="#$buttonlabel#" /><br /><br />
+<a href="&xar-modurl-articles-admin-pubtypes;"><xar:mlstring>Cancel Delete</xar:mlstring></a>
+</form>
+</xar:if>
+
+<xar:if condition="$action eq 'view'">
+<h3 style="text-align: left;"><a href="#$newurl#"><xar:mlstring>New</xar:mlstring></a></h3>
+<table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+    <tr>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:foreach in="$pubtypes" value="$pubtype">
+    <tr>
+        <td class="xar-norm">#$pubtype['name']#</td>
+        <td class="xar-norm">#$pubtype['descr']#</td>
+        <td style="text-align: center;" class="xar-norm">
+            <xar:if condition="!empty($pubtype['editurl'])">
+                <a href="#$pubtype['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Edit</xar:mlstring>
+            </xar:if>
+            |
+            <xar:if condition="!empty($pubtype['deleteurl'])">
+                <a href="#$pubtype['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Delete</xar:mlstring>
+            </xar:if>
+            |
+            <xar:if condition="!empty($pubtype['configurl'])">
+                <a href="#$pubtype['configurl']#"><xar:mlstring>Article Config</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Article Config</xar:mlstring>
+            </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+</xar:if>
+<br />
+</div>
+</div>

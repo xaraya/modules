@@ -1,0 +1,69 @@
+<xar:template file="publinks" type="module" />
+<xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" />
+
+<div class="xar-alt-outline" style="width: 95%;">
+    <div class="xar-accent-outline" style="width: 100%;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tr>
+        <td align="left" valign="top" class="xar-normal">
+          <span class="xar-title">
+            #$title#
+<xar:if condition="!empty($editurl)">
+    [<a href="#$editurl#">#$edittitle#</a>]
+</xar:if>
+          </span>
+          <br />
+
+          <div align="right">
+            <span class="xar-sub">
+              #$topic_icons#
+            </span>
+          </div>
+          <br />
+          <br />
+          #$body#
+          <br />
+          <span class="xar-quote">
+            #$notes#
+          </span>
+    </td>
+  </tr>
+</table>
+</div>
+</div>
+
+<xar:if condition="!empty($prevart) || !empty($nextart)">
+<br />
+<table border="0" width="95%">
+<tr>
+    <td align="left"><xar:if condition="!empty($prevart)"><a href="#$prevart#">&lt; <xar:mlstring>prev</xar:mlstring> </a></xar:if>&nbsp;</td>
+    <td align="right">&nbsp;<xar:if condition="!empty($nextart)"> <a href="#$nextart#"><xar:mlstring>next</xar:mlstring> &gt;</a></xar:if></td>
+</tr>
+</table>
+</xar:if>
+
+<xar:if condition="!empty($hooks)">
+<br />
+<xar:foreach in="$hooks" key="$hookmodule">
+#$hooks[$hookmodule]#
+</xar:foreach>
+</xar:if>
+
+<br />
+<xar:if condition="!empty($maplink) or !empty($archivelink)">
+<table border="0" width="95%">
+<tr>
+    <xar:if condition="!empty($maplink)">
+    <td align="left">
+        <a href="#$maplink#">#$maplabel#</a>
+    </td>
+    </xar:if>
+    <xar:if condition="!empty($archivelink)">
+    <td align="right">
+        <a href="#$archivelink#">#$archivelabel#</a>
+    </td>
+    </xar:if>
+</tr>
+</table>
+</xar:if>
+

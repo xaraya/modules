@@ -1,0 +1,58 @@
+<tr align="left" valign="middle">
+    <td><label for="numitems#$blockid#"><xar:mlstring>Number of items</xar:mlstring></label></td>
+    <td><input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" /></td>
+</tr>
+<tr align="left" valign="middle">
+    <td><xar:mlstring>Publication Type</xar:mlstring></td>
+    <td><select name="pubtypeid" id="pubtypeid#$blockid#">
+        <option value="0"><xar:mlstring>Default / Current</xar:mlstring></option>
+        <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
+            <xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
+                <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
+            <xar:else />
+                <option value="#$pubid#">#$pubtype['descr']#</option>
+            </xar:if>
+        </xar:foreach>
+    </select></td>
+</tr>
+<tr align="left" valign="middle">
+    <td><xar:mlstring>Sort by</xar:mlstring></td>
+    <td><select name="toptype" id="toptype#$blockid#" size="1">
+        <xar:foreach in="$sortoptions" value="$sortoption">
+        <xar:if condition="$toptype eq $sortoption['id']">
+            <option value="#$sortoption['id']#" selected="selected">#$sortoption['name']#</option>
+        <xar:else />
+            <option value="#$sortoption['id']#">#$sortoption['name']#</option>
+        </xar:if>
+        </xar:foreach>
+        </select></td>
+</tr>
+<tr align="left" valign="middle">
+    <td><label for="showvalue#$blockid#"><xar:mlstring>Show sort value</xar:mlstring></label></td>
+    <td><xar:if condition="empty($showvalue)">
+            <input type="checkbox" name="showvalue" id="showvalue#$blockid#" value="1" />
+        <xar:else />
+            <input type="checkbox" name="showvalue" id="showvalue#$blockid#" value="1" checked="checked" />
+        </xar:if>
+    </td>
+</tr>
+<tr align="left" valign="middle">
+    <td><label for="showsummary#$blockid#"><xar:mlstring>Show summary</xar:mlstring></label></td>
+    <td><xar:if condition="empty($showsummary)">
+            <input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" />
+        <xar:else />
+            <input type="checkbox" name="showsummary" id="showsummary#$blockid#" value="1" checked="checked" />
+        </xar:if>
+    </td>
+</tr>
+<xar:if condition="xarModIsHooked('dynamicdata','articles')">
+<tr align="left" valign="middle">
+    <td><label for="showdynamic#$blockid#"><xar:mlstring>Include dynamic data</xar:mlstring></label></td>
+    <td><xar:if condition="empty($showdynamic)">
+            <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" />
+        <xar:else />
+            <input type="checkbox" name="showdynamic" id="showdynamic#$blockid#" value="1" checked="checked" />
+        </xar:if>
+    </td>
+</tr>
+</xar:if>

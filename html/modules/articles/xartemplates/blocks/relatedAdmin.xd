@@ -1,0 +1,5 @@
+<tr align="left" valign="middle">
+    <td><label for="numitems#$blockid#"><xar:mlstring>Number of items</xar:mlstring></label></td>
+    <td><input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" /></td>
+</tr>
+

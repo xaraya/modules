@@ -1,0 +1,20 @@
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+    <tr>
+        <td align="center" valign="top" class="xar-normal">
+    <xar:if condition="!empty($categories) and count($categories) gt 0">
+        [ <xar:foreach in="$categories" value="$cat">
+            #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
+        </xar:foreach> ]<br />
+    </xar:if>
+<!-- a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br / -->
+<a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br />
+            <xar:if condition="!empty($title)">
+                <a class="xar-title" href="#$link#">#$title#</a><br />
+            </xar:if>
+            <xar:if condition="!empty($counter)">
+                (#$counter#
+                <xar:mlstring>Reads</xar:mlstring>)
+            </xar:if>
+        </td>
+    </tr>
+</table>

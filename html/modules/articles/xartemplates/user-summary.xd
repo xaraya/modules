@@ -1,0 +1,23 @@
+<br /><br /><b>
+<xar:mlstring>Note : when you create a new publication type, the articles module will automatically
+use the templates <i>user-display-[publicationtype].xd</i> and <i>user-summary-[publicationtype].xd</i>
+<br /><br />
+If those templates don't exist when you try to preview or display a new article, you'll get this warning :-)</xar:mlstring>
+</b><br /><br />
+
+<table border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <td colspan="2">#$title#</td>
+    </tr>
+    <tr>
+        <td>#$author#</td>
+        <td>#$date#</td>
+    </tr>
+    <tr>
+        <td colspan="2">#$summary#</td>
+    </tr>
+    <tr>
+        <td colspan="2">#$notes#</td>
+    </tr>
+</table>
+

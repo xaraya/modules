@@ -1,0 +1,57 @@
+<xar:template file="publinks" type="module" />
+<table border="0" cellpadding="3" width="100%">
+<tr><th><xar:mlstring>Monthly Archives</xar:mlstring></th></tr>
+<tr><td>
+<ul>
+<xar:foreach in="$months" value="$month">
+    <li>
+    <xar:if condition="empty($month['mlink'])">
+        #$month['month']# (#$month['mcount']#)</b>
+        <xar:else />
+            <a href="#$month['mlink']#">#$month['month']#</a> (#$month['mcount']#)
+    </xar:if>
+    </li>
+</xar:foreach>
+</ul>
+</td></tr>
+</table>
+<br />
+<xar:if condition="count($articles) gt 0">
+<table border="0" cellpadding="3" width="100%">
+<tr>
+    <xar:foreach in="$catlist" value="$cat">
+       <xar:if condition="empty($cat['link'])">
+       <td align="center">#$cat['name']#</b></td>
+       <xar:else />
+           <td align="center"><a href="#$cat['link']#">#$cat['name']#</a></b></td>
+       </xar:if>
+    </xar:foreach>
+</tr>
+<!-- TODO: make sure xar-alt is the right class to use here -->
+<xar:set name="$i">1</xar:set>
+<xar:foreach in="$articles" value="$article">
+<xar:if condition="$i++ and $i % 2 eq 0">
+    <tr class="xar-alt">
+<xar:else />
+    <tr>
+</xar:if>
+    <xar:foreach in="$article['cats']" value="$cat">
+       <td>#$cat['list']#</td>
+    </xar:foreach>
+    <td><a href="#$article['link']#">#$article['title']#</a></td>
+    <xar:if condition="!empty($showdate)">
+        <td>#$article['date']#</td>
+    </xar:if>
+</tr>
+</xar:foreach>
+</table>
+<br />
+</xar:if>
+<br />
+<table border="0" width="95%"><tr><td align="left">
+    <a href="#$maplink#">#$maplabel#</a>
+</td><td align="right">
+    <a href="#$viewlink#">#$viewlabel#</a>
+</td></tr></table>
+
+

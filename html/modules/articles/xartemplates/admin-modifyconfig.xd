@@ -1,0 +1,200 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Articles Configuration</xar:mlstring></h2>
+<div style="margin: auto;">
+<h3><xar:mlstring>Publication Type</xar:mlstring>:</h3>
+<p><xar:foreach in="$pubfilters" value="$pubfilter">
+    <xar:if condition="empty($pubfilter['plink'])">
+        <span style="padding: 0px 3px 0px 3px;">#$pubfilter['ptitle']#</span>
+    <xar:else />
+        <span style="padding: 0px 3px 0px 3px;"><a href="#$pubfilter['plink']#">#$pubfilter['ptitle']#</a></span>
+    </xar:if>
+</xar:foreach></p>
+
+<form method="post" action="&xar-modurl-articles-admin-updateconfig;">
+<input type="hidden" name="authid" id="authid"value="#$authid#" />
+<input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+
+<xar:if condition="empty($ptid)">
+    <tr>
+        <td colspan="2"><h3><xar:mlstring>Global Configuration</xar:mlstring></h3></td>
+    </tr>
+    <tr>
+        <td><label for="defaultpubtype"><xar:mlstring>Default Publication Type for the Articles "Front Page"</xar:mlstring></label></td>
+        <td><select name="defaultpubtype" id="defaultpubtype">
+            <xar:foreach in="$pubfilters" value="$pubfilter">
+                <xar:if condition="$pubfilter['pid'] eq $defaultpubtype">
+                    <option value="#$pubfilter['pid']#" selected="selected">#$pubfilter['ptitle']#</option>
+                <xar:else />
+                    <option value="#$pubfilter['pid']#">#$pubfilter['ptitle']#</option>
+                </xar:if>
+            </xar:foreach>
+            </select></td>
+    </tr>
+    <tr>
+        <td>
+			<label for="shorturls"><xar:mlstring>Support short URLs</xar:mlstring></label>
+		</td>
+        <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturls# /></td>
+    </tr>
+</xar:if>
+
+    <tr>
+        <td colspan="2"><h3><xar:mlstring>Website Configuration</xar:mlstring></h3></td>
+    </tr>
+    <tr>
+        <td>
+			<label for="usealias"><xar:ml><xar:mlstring>Use '#(1)' as alias in short URLs</xar:mlstring><xar:mlvar>#$alias#</xar:mlvar></xar:ml></label>
+		</td>
+        <td>
+            <xar:if condition="$usealias">
+               <input type="checkbox" name="usealias" id="usealias" checked="checked" />
+            <xar:else />
+               <input type="checkbox" name="usealias" id="usealias" />
+            </xar:if>
+         </td>
+    </tr>
+    <tr>
+        <td><label for="page_template"><xar:mlstring>Use different page template</xar:mlstring></label></td>
+        <td><input type="text" name="page_template" id="page_template" size="20" maxlength="60" value="#$page_template#" /></td>
+    </tr>
+    <tr>
+        <td colspan="2"><h3><xar:mlstring>Overview Configuration</xar:mlstring></h3></td>
+    </tr>
+    <tr>
+        <td><label for="defaultview"><xar:mlstring>Default start view</xar:mlstring></label></td>
+        <td><select name="defaultview" id="defaultview">
+            <xar:foreach in="$viewoptions" value="$viewoption">
+                <xar:if condition="$viewoption['value'] eq $defaultview">
+                    <option value="#$viewoption['value']#" selected="selected">#$viewoption['label']#</option>
+                <xar:else />
+                    <option value="#$viewoption['value']#">#$viewoption['label']#</option>
+                </xar:if>
+            </xar:foreach>
+            </select></td>
+    </tr>
+    <tr>
+        <td><label for="number_of_columns"><xar:mlstring>Number of columns</xar:mlstring> <i>($numcols)</i></label></td>
+        <td><input type="text" name="number_of_columns" id="number_of_columns" size="1" maxlength="2" value="#$numcols#" /></td>
+    </tr>
+    <tr>
+        <td><label for="itemsperpage"><xar:mlstring>Items per page</xar:mlstring> <i>($number)</i></label></td>
+        <td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /></td>
+    </tr>
+    <tr>
+        <td><label for="showcategories"><xar:mlstring>Show category links in article summaries</xar:mlstring> <i>($categories)</i></label>
+		</td>
+        <td><input type="checkbox" name="showcategories" id="showcategories" value="1" #$showcategories# /></td>
+    </tr>
+    <tr>
+        <td><label for="showprevnext"><xar:mlstring> Show previous/next category</xar:mlstring> <i>($showprevnext)</i></label>
+			</label>
+		</td>
+        <td><input type="checkbox" name="showprevnext" id="showprevnext" value="1" #$showprevnext# /></td>
+    </tr>
+
+<xar:if condition="$showcommentsoptions">
+    <tr>
+        <td>
+			<label for="showcomments"><xar:mlstring>Show number of comments</xar:mlstring> <i>($comments)</i></label>
+		</td>
+        <td><input type="checkbox" name="showcomments" id="showcomments" value="1" #$showcomments# /></td>
+    </tr>
+<xar:else />
+<input type="hidden" name="showcomments" id="showcomments" value="#$showcomments#" />
+</xar:if>
+
+<xar:if condition="$showhitcountsoptions">
+    <tr>
+        <td>
+			<label for="showhitcounts"><xar:mlstring>Show hit counts</xar:mlstring> <i>($counter)</i></label>		
+		</td>
+        <td><input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" #$showhitcounts# /></td>
+    </tr>
+<xar:else />
+<input type="hidden" name="showhitcounts" id="showhitcounts" value="#$showhitcounts#" />
+</xar:if>
+
+<xar:if condition="$showratingsoptions">
+    <tr>
+        <td>
+			<label for="showratings"><xar:mlstring>Show ratings</xar:mlstring> <i>($rating)</i></label>
+		</td>
+        <td><input type="checkbox" name="showratings" id="showratings" value="1" #$showratings# /></td>
+    </tr>
+<xar:else />
+<input type="hidden" name="showratings" id="showratings" value="#$showratings#" />
+</xar:if>
+
+    <tr>
+        <td>
+			<label for="showpublinks"><xar:mlstring>Show links to publication types</xar:mlstring> <i>($showpublinks + includes/publinks.xd)</i>
+			</label>
+		</td>
+        <td><input type="checkbox" name="showpublinks" id="showpublinks" value="1" #$showpublinks# /></td>
+    </tr>
+    <tr>
+        <td>
+			<label for="showarchives"><xar:mlstring>Show link to archives</xar:mlstring> <i>($archivelink + $archivelabel)</i></label>
+		</td>
+        <td><input type="checkbox" name="showarchives" id="showarchives" value="1" #$showarchives# /></td>
+    </tr>
+    <tr>
+        <td>
+			<label for="showmap"><xar:mlstring>Show link to article map</xar:mlstring> <i>($maplink + $maplabel)</i></label>
+		</td>
+        <td><input type="checkbox" name="showmap" id="showmap" value="1" #$showmap# /></td>
+    </tr>
+    <tr>
+        <td>
+			<label for="dotransform"><xar:mlstring>Call transform hooks in summaries</xar:mlstring> </label>
+		</td>
+        <td><input type="checkbox" name="dotransform" id="dotransform" value="1" #$dotransform# /></td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><h3><xar:mlstring>Article Display Configuration</xar:mlstring></h3></td>
+    </tr>
+    <tr>
+        <td>
+			<label for="prevnextart"><xar:mlstring>Show link to previous/next article in display</xar:mlstring> <i>($prevart + $nextart)</i></label>
+		</td>
+        <td><input type="checkbox" name="prevnextart" id="prevnextart" value="1" #$prevnextart# /></td>
+    </tr>
+
+    <tr>
+        <td colspan="2"><i><xar:mlstring>Note: the ($...) indicates the name of the variable used in the different templates</xar:mlstring></i></td>
+    </tr>
+
+<xar:if condition="!empty($hooks)">
+    <tr>
+        <td colspan="2"><h3><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h3></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+            </xar:foreach>
+        </td>
+    </tr>
+</xar:if>
+
+    <tr>
+        <td colspan="2" style="text-align: center;"><br />
+        <input type="submit" value="#$updatelabel#" /></td>
+    </tr>
+
+</table>
+</form>
+</div>
+</div>

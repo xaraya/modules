@@ -1,0 +1,43 @@
+<xar:template file="publinks" type="module" />
+<b>
+<xar:mlstring>Note : when you create a new publication type, the articles module will automatically
+use the templates <i>user-display-[publicationtype].xd</i> and <i>user-summary-[publicationtype].xd</i>
+<br /><br />
+If those templates don't exist when you try to preview or display a new article, you'll get this warning :-)</xar:mlstring>
+</b><br /><br />
+
+<table border="0" cellspacing="0" cellpadding="4">
+    <tr>
+        <td><xar:mlstring>Title</xar:mlstring></td>
+        <td>#$title#</td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Summary</xar:mlstring></td>
+        <td>#$summary#</td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Author</xar:mlstring></td>
+        <td>#$author#</td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Date</xar:mlstring></td>
+        <td>#$date#</td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Body</xar:mlstring></td>
+        <td>#$body#</td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Notes</xar:mlstring></td>
+        <td>#$notes#</td>
+    </tr>
+</table>
+
+<xar:mlstring>More fields may be available via dynamicdata...</xar:mlstring><br />
+
+<xar:if condition="!empty($hooks)">
+<br />
+<xar:foreach in="$hooks" key="$hookmodule">
+#$hooks[$hookmodule]#
+</xar:foreach>
+</xar:if>

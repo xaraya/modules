@@ -1,0 +1,178 @@
+<?php
+
+/**
+ * check security for a particular article
+ *
+ * @param $args['mask'] the requested security mask
+ *
+ * @param $args['article'] the article array (if already retrieved)
+ * @param $args['aid'] the article ID (if known, and article array not
+                       already retrieved)
+ * @param $args['authorid'] the user ID of the author (if not already included)
+ * @param $args['ptid'] the publication type ID (if not already included)
+ * @param $args['cids'] array of additional required category checks
+ *
+ * @returns bool
+ * @return true if OK, false if not OK
+ */
+function articles_userapi_checksecurity($args)
+{
+    // Get arguments from argument array
+    extract($args);
+
+    // Compatibility mode with old API params - remove later
+    if (isset($access) && !isset($mask)) {
+        switch ($access) {
+            case ACCESS_OVERVIEW:
+                $mask = 'ViewArticles';
+                break;
+            case ACCESS_READ:
+                $mask = 'ReadArticles';
+                break;
+            case ACCESS_COMMENT:
+                $mask = 'SubmitArticles';
+                break;
+            case ACCESS_EDIT:
+                $mask = 'EditArticles';
+                break;
+            case ACCESS_DELETE:
+                $mask = 'DeleteArticles';
+                break;
+            case ACCESS_ADMIN:
+                $mask = 'AdminArticles';
+                break;
+            default:
+                $mask = '';
+        }
+    }
+
+    if (empty($mask)) {
+        return false;
+    }
+
+    // Get article information
+    if (!isset($article) && !empty($aid) && $mask != 'SubmitArticles') {
+        $article = xarModAPIFunc('articles',
+                                'user',
+                                'get',
+                                array('aid' => $aid,
+                                      'withcids' => true));
+        if ($article == false) {
+            return false;
+        }
+    }
+    if (empty($aid) && isset($article['aid'])) {
+        $aid = $article['aid'];
+    }
+    if (!isset($aid)) {
+        $aid = '';
+    }
+
+    // Get author ID
+    if (isset($article['authorid']) && empty($authorid)) {
+        $authorid = $article['authorid'];
+    }
+
+    // Get status
+    if (isset($article['status']) && !isset($status)) {
+        $status = $article['status'];
+    }
+    if (empty($status)) {
+        $status = 0;
+    }
+    // reject reading access to unapproved articles
+    if ($status < 2 && ($mask == 'ViewArticles' || $mask == 'ReadArticles')) {
+        return false;
+    }
+
+    // Get publication type ID
+    if (isset($article['pubtypeid'])) {
+        if (!isset($ptid)) {
+            $ptid = $article['pubtypeid'];
+        } elseif ($ptid != $article['pubtypeid']) {
+// Note : but what about re-classifying articles ?
+            return false;
+        }
+    }
+
+    // Get root categories for this publication type
+    if (!empty($ptid)) {
+        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
+        if (!empty($cidstring)) {
+            $rootcids = explode (';', $cidstring);
+        }
+    }
+    if (!isset($rootcids)) {
+    // TODO: handle cross-pubtype views better
+        $cidstring = xarModGetVar('articles', 'mastercids');
+        $rootcids = explode (';', $cidstring);
+    }
+
+    // Get category information for this article
+    if (!isset($article['cids']) && !empty($aid)) {
+        if (!xarModAPILoad('categories', 'user')) return;
+        $articlecids = xarModAPIFunc('categories',
+                                    'user',
+                                    'getlinks',
+                                    array('iids' => Array($aid),
+                                          'modid' =>
+                                               xarModGetIDFromName('articles'),
+                                          'reverse' => 0
+                                         )
+                                   );
+        if (is_array($articlecids) && count($articlecids) > 0) {
+            $article['cids'] = array_keys($articlecids);
+        }
+    }
+    if (!isset($article['cids'])) {
+        $article['cids'] = array();
+    }
+
+    if (!isset($cids)) {
+        $cids = array();
+    }
+
+    $jointcids = array();
+/* TODO: forget about parent/root cids for now
+    foreach ($rootcids as $cid) {
+        $jointcids[$cid] = 1;
+    }
+*/
+    foreach ($article['cids'] as $cid) {
+        $jointcids[$cid] = 1;
+    }
+    foreach ($cids as $cid) {
+        $jointcids[$cid] = 1;
+    }
+
+// TODO 1: find a way to combine checking over several categories
+// TODO 2: find a way to check parent categories for privileges too
+
+// TODO 3: find a way to specify current user in privileges too
+// TODO 4: find a way to check parent groups of authors for privileges too ??
+
+    if (empty($ptid)) {
+        $ptid = 'All';
+    }
+    if (count($jointcids) == 0) {
+        $jointcids['All'] = 1;
+    }
+// TODO: check for anonymous articles
+    if (!isset($authorid)) {
+        $authorid = 'All';
+    }
+    if (empty($aid)) {
+        $aid = 'All';
+    }
+
+    // Loop over all categories and check the different combinations
+    foreach (array_keys($jointcids) as $cid) {
+// TODO: do we want all-or-nothing access here, or is one access enough ?
+        if (!xarSecurityCheck($mask,0,'Article',"$ptid:$cid:$authorid:$aid")) {
+            return false;
+        }
+    }
+    return true;
+}
+
+?>
