@@ -37,7 +37,7 @@
                 </ul>
               </li>
               <li> <xar:mlstring>The XarTinyMCE editor is not turned on by default.
-          Once the tinymce module is installed it needs to be turned on. You can now do this in the XarTinyMCE 
+          Once the tinymce module is installed it needs to be turned on. You can now do this in the XarTinyMCE
           Module Configuration area <strong>or</strong>:</xar:mlstring>
                 <ul>
                   <li><xar:mlstring>go to the Adminpanels menu -&gt; Base -&gt; Modify Config </xar:mlstring>         </li>
@@ -46,43 +46,44 @@
                   </li>
                 </ul>
               </li>
-            <li><xar:mlstring>You can use XarTinyMCE module to enable wysiwyg in two basic ways (there are variations on these):</xar:mlstring>
+            <li><xar:mlstring>Once installed and set as the default editor XarTinyMCE module is automatically enabled for WYSIWYG. However, you have three basic ways (with variations on these) to customize which templates are used:</xar:mlstring>
             <br />
-         <ol style="list-style-type:lower-alpha;">
-             <li><xar:mlstring>By adding the following template snippet at the
-                 top of any of your page templates and choosing the<strong><em> All Textareas</em></strong> mode in the Basic Configuration page. You can add this to your site wide page template (wysiwyg in all text areas on your site)
-                 or in specific templates (xarbb templates, or articles new and modify templates) to only provide wysiwyg in those modules or textareas. The snipped to add is:</xar:mlstring>
-            <blockquote>
-           <p>&lt;xar:if condition=&quot;xarModGetVar('base','editor') eq 'tinymce'&quot;&gt;<br />
-              &nbsp;&nbsp;&nbsp;&nbsp;&lt;xar:template file=&quot;tinymce_insert&quot; module=&quot;tinymce&quot; type=&quot;module&quot; /&gt;<br />
-              &lt;/xar:if&gt;</p>
-            </blockquote>
+             <ol style="list-style-type:lower-alpha; ">
+            <li style="margin-top:20px;">
+                <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and every textarea will be WYSIWYG enabled. Best used with a Prompt for WYSIWYG usage. You <em><strong>do not add </strong></em>any template snippet
+             to your templates - it is automatic.</xar:mlstring>
             </li>
-           <li><xar:mlstring>You can become more specific by choosing the Mode of <strong>Special Labelled
-                Only</strong> in the configuration options. xarTinymce will only display the WYSIWYG text area when a textarea or div is marked with the
-                attribute: <code>mce_editable=&quot;true&quot;</code>. The xarTinyMCE module allows you to do this manually yourself, or
-                easily by using the xarTinyMCE GUI Dynamic Data Property (see below).</xar:mlstring>
-               <br />
-               <br />
-               <xar:mlstring>You can choose it as one of the field types in the Articles module when
-               you define your Publication types (if you have current bitkeeper code or weekly
-               snapshots), or add a xarTinyMCE Dynamic Data GUI property to your
-               <strong>Articles module</strong> pubtypes or your <strong>xarPages page </strong>types or any other module where you need a WYSIWYG textarea.. This will give
-               you a WYSIWYG editor property where you want it <strong>without having to add
-               any tags to your templates</strong>.</xar:mlstring></li>
-               </ol>
+          <li style="margin-top:20px;"><xar:mlstring>Choose the Mode of <strong>Special Labelled Only</strong> in the configuration options.
+            Then add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
+            This DD Property automatically marks the div or textarea of the field with the attribute <code>mce_editable="true"</code> and this acts as a marker for the WYSIWYG conversion. You can also do this manually by adding the <code>mce_editable="true"</code> attribute to any textarea or div such as the textareas in xarbb templates.
+            You can set row height and column width in the DD validation field. eg 20:80 for 20 rows high, 80 columns wide.
+            If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
+          <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>. <xar:mlstring>You <em><strong>do not add </strong></em>any template snippet
+             to your templates - it is automatic.</xar:mlstring>
+        </li>
+       <li style="margin-top:20px;">
+           <xar:mlstring>Choose the <strong>Manual - auto disable</strong> and add the specific template tag code below to the head section (after the javascript tag) of your page templates (default.xt or any other page template). All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG. You can be more specific and only add to a module or other template where you want the wysiwyg. Alternatively, replace the variable "jstring" in an override for the <code>tinymce_insert.xd</code> template with your own tinymce variables.</xar:mlstring>
+            </li>
+            <pre>
+            &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
+                &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
+            &lt;/xar:if&gt;
+           </pre>
+        </ol>
+        <p style="margin-left:20px; margin-top:20px;"><xar:mlstring>See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring></p>
+
 </li>
 </ol>
     </div>
     <br />
     <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-     <xar:mlstring>Dynamic Data Property</xar:mlstring>
+     <xar:mlstring>About the Dynamic Data Property</xar:mlstring>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>A xarTinyMCE Dynamic Data WYSIWYG textarea is also available and works with All Textareas or
-            Special Labelled text area mode. To use this, add a XarTinyMCE GUI Dynamic Data field to your publication type (or other module) in the usual way. You <em><strong>do not add </strong></em>a xarTinyMCE tag
-             to your template when you use a xarTInyMCE DD field.</xar:mlstring>
+            <xar:mlstring>The xarTinyMCE Dynamic Data WYSIWYG textarea is available and works automatically with All Textareas or
+            Special Labelled text area mode. To use this, add a XarTinyMCE GUI Dynamic Data field to your publication type (or other module) in the usual way. You <em><strong>do not add </strong></em>a template snippet
+             to your template to activate it.</xar:mlstring>
             </p>
            <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
@@ -154,7 +155,7 @@
          </ul>
          </div>
         <div style="float:right;margin-left: 1em; margin-right: 1em; text-align:left;" class="xar-sub">
-         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.0.3&nbsp; 2005-02-16 jojodee
+         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.1&nbsp; 2005-03-09 jojodee
          </p>
          </div>
          <div style="clear:both;"><!-- --></div>

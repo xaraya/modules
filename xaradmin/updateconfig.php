@@ -38,6 +38,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinyheight','str:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinynowrap','str:1:',$tinynowrap,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinypara','str:1:',$tinypara,'false',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', $tinyask);
@@ -49,6 +50,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce', 'tinylang', $tinylang);
                xarModSetVar('tinymce', 'tinybr', $tinybr);
                xarModSetVar('tinymce', 'tinypara', $tinypara);
+               xarModSetVar('tinymce', 'tinynowrap', $tinynowrap);
 
             break;
         case 'cssplug':
@@ -61,8 +63,8 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('useibrowser','int:1:',$useibrowser,0,XARVAR_NOT_REQUIRED)) return;
-    
-                xarModSetVar('tinymce', 'tinyextended', $tinyextended);
+            if (!xarVarFetch('editorcss','str:1:',$editorcss,'',XARVAR_NOT_REQUIRED)) return;
+                 xarModSetVar('tinymce', 'tinyextended', $tinyextended);
                 xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
                 xarModSetVar('tinymce','tinyencode', $tinyencode); //not used at this stage
                 xarModSetVar('tinymce','tinyplugins', $tinyplugins);
@@ -71,6 +73,7 @@ function tinymce_admin_updateconfig()
                 xarModSetVar('tinymce','tinytime', $tinytime);
                 xarModSetVar('tinymce','tinyinvalid', $tinyinvalid);
                 xarModSetVar('tinymce', 'useibrowser', $useibrowser);
+               xarModSetVar('tinymce', 'tinyeditorcss', $editorcss);
 
             break;
         case 'customadvanced':
@@ -160,16 +163,23 @@ function tinymce_admin_updateconfig()
             xarModSetVar('tinymce','iusebrowse',0);
     }
 
-
+    $thismode=xarModGetVar('tinymce','tinymode');
     //Turn our settings into javascript for insert into template
     //Let's call the variable jstext
     $jstext='';
     //start the string
-    $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
+    if ($thismode <>'manual') {
+        $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
+    }else{
+       $jstext = 'mode : "textareas",';
+    }
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
     $jstext .='document_base_url : "'.xarServerGetBaseURL().'",';
     if (trim(xarModGetVar('tinymce','tinycsslist')) <> '') {
            $jstext .='content_css : "'.$xarbaseurl.xarModGetVar('tinymce','tinycsslist').'",';
+        }
+    if (trim(xarModGetVar('tinymce','tinyeditorcss')) <> '') {
+           $jstext .='editor_css : "'.$xarbaseurl.xarModGetVar('tinymce','tinyeditorcss').'",';
         }
 
     if (xarModGetVar('tinymce','tinywidth') > 0) {
@@ -194,6 +204,9 @@ function tinymce_admin_updateconfig()
     }
     if (xarModGetVar('tinymce','tinybr')=='true'){
         $jstext .='force_br_newlines: "true",';
+    }
+    if (xarModGetVar('tinymce','tinynowrap')=='true'){
+        $jstext .='nowrap: "true",';
     }
     if (xarModGetVar('tinymce','tinypara')=='true'){
         $jstext .='force_p_newlines: "true",';

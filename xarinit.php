@@ -53,6 +53,8 @@ function tinymce_init()
     xarModSetVar('tinymce', 'tinyinvalid', '');    
     xarModSetVar('tinymce', 'tinyadvformat', '');
     xarModSetVar('tinymce', 'useibrowser', 0);
+    xarModSetVar('tinymce', 'tinyeditorcss','');
+    xarModSetVar('tinymce', 'tinynowrap','false');
 //Set masks
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -157,10 +159,16 @@ function tinymce_upgrade($oldversion)
        $newbuttons3=xarModGetVar('tinymce','tinybuttons3').',tablecontrols';
        xarModSetVar('tinymce','tinybuttons3',$newbuttons3);
     }
-    return tinymce_upgrade('0.3.2');
+     return tinymce_upgrade('0.3.2');
     break;
     case '0.3.2':
+       return tinymce_upgrade('0.4.0');
+    break;
+
+    case '0.4.0':
     // Current version
+    xarModSetVar('tinymce', 'tinycontentcss','');
+    xarModSetVar('tinymce', 'tinynowrap','false');
     break;
     }
     return true;

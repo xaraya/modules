@@ -1,4 +1,7 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.3.2b
+INSTALLATION AND USE - XarTinyMCE Version 0.4.0
+
+UPGRADES to 0.4.0: 
+PLEASE SEE SPECIAL UPGRADE CONSIDERATIONS AT THE END OF THIS DOCUMENT
 
 XarTinyMCE is a configurable, lightweight WYSIWYG editor.
 In addition to being very configurable it has some nice features not
@@ -30,37 +33,41 @@ To INSTALL and get started:
    - choose the tab "Other"
    - on the wysiwyg editor dropdown choose "tinymce" as the default editor
 
-3. You can use XarTinyMCE module to enable wysiwyg in two basic ways
-   (there are variations on these):
+3. You can use XarTinyMCE module to enable wysiwyg in three basic ways
+   (there are variations on these) by setting the MODE:
 
-   a. By adding the following template snippet at the top of any of your
-      page templates and choosing the All Textareas mode in the Basic
-      Configuration page. You can add this to your site wide page template
-      (wysiwyg in all text areas on your site) or in specific templates
-      (xarbb templates, or articles new and modify templates) to only provide
-      wysiwyg in those modules or textareas. The snipped to add is:
+   a. Set the Mode to All Text areas. This will automatically enable WYSIWYG 
+      in ALL textareas. From Version 0.4.0 you *do not* need to
+     add anything to your templates.
+
+   b.You can become more specific by choosing the Mode of
+     "Special Labelled Only" in the configuration options. You *do not* need to
+     add anything to your templates.
+
+     xarTinymce will only display the WYSIWYG text area when a
+     textarea or div is marked with the attribute:
+          mce_editable="true".
+     The xarTinyMCE module allows you to do this manually yourself,
+     or easily by using the xarTinyMCE GUI Dynamic Data Property.
+
+     You can choose the xarTinyMCE GUI Dynamic Data Property as one of
+     the field types in the Articles module when you define your
+     Publication types (if you have current bitkeeper code or weekly snapshots),
+     or add a xarTinyMCE Dynamic Data GUI property to your Articles module pubtypes
+     or your xarPages page types or any other module where you need a WYSIWYG textarea.
+     This will give you a WYSIWYG editor property where you want it without
+     having to add any tags to your templates.
+
+  c. Choose the Mode of "Manual -auto disabled"
+     By adding the following template snippet at the top of any of your
+     page templates. You can add this to your site wide page template
+     (wysiwyg in all text areas on your site) or in specific templates
+     (xarbb templates, or articles new and modify templates) to only provide
+     wysiwyg in those modules or textareas. The snipped to add is:
 
       <xar:if condition="xarModGetVar('base','editor') eq 'tinymce'">
           <xar:template file="tinymce_insert" module="tinymce" type="module" />
       </xar:if>
-
-   b.You can become more specific by choosing the Mode of 
-     "Special Labelled Only in the configuration options. You *do not* need to 
-     add anything to your templates.
-
-     xarTinymce will only display the WYSIWYG text area when a 
-     textarea or div is marked with the attribute:
-          mce_editable="true".
-     The xarTinyMCE module allows you to do this manually yourself, 
-     or easily by using the xarTinyMCE GUI Dynamic Data Property.
-
-     You can choose the xarTinyMCE GUI Dynamic Data Property as one of 
-     the field types in the Articles module when you define your
-     Publication types (if you have current bitkeeper code or weekly snapshots), 
-     or add a xarTinyMCE Dynamic Data GUI property to your Articles module pubtypes 
-     or your xarPages page types or any other module where you need a WYSIWYG textarea.
-     This will give you a WYSIWYG editor property where you want it without 
-     having to add any tags to your templates.
 
 IMAGE BROWSER (IBROWSER), UPLOADS MODULE, SECURITY
 ******************************
@@ -84,7 +91,9 @@ An alternative to using the IBrowser is to install the Images and Uploads module
 You can attach an Upload DD field to your articles and upload images to an image
 or trusted directory. From there you can drag the link of the file to your wysiwyg editor.
 Alternatively - cut and paste the image to your WYSIWYG editor from word or a supported image editor.
+
 ******************************
+
 To UPGRADE:
 1. Remove all files in the tinymce module directory and all files in it and
    replace with the upgrade module and files
@@ -93,6 +102,10 @@ To UPGRADE:
    Click Activate
 3. Go to Administration -> XarTinyMCE -> Modify Config
    Check any new or upgraded options are filled in.
+   
+4. If you are upgrading to Version 0.4.0 please make sure you note the new
+   activation methods. If you have added the snippet at the top of your templates you
+   MUST set the Mode to Manual - the new 3rd option.
 
    That's it!
 ******************************

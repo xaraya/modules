@@ -56,7 +56,10 @@ function tinymce_admin_modifyconfig()
     $data['tinypara'] = xarModGetVar('tinymce','tinypara');
     $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');    
     $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');     
-    $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser');              
+    $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser'); 
+    $data['editorcss']=xarModGetVar('tinymce', 'tinyeditorcss');   
+    $data['tinynowrap']=xarModGetVar('tinymce', 'tinynowrap');   
+                         
     if (strpos($data['tinyplugins'], 'insertdatetime')) {
         $data['dateplug']=1;
     } else {

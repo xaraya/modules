@@ -1,8 +1,12 @@
-* Version 0.3.2c Mar 07
+* Version 0.4.0  9 Mar 05
 - Added 1.43 code bug fix release
 - Updated language packs
 - Fix major bugs with 'ask', tables, lost instances etc
 - tidy up start to configuration area
+- Added major change to initialization with automatic event loading
+  The template snippet is no longer required for activation.
+- Added the Manual mode for those that wish to override their templates.
+- You must have the Base module updated with current version for this 0.4.0 version.
 
 * Version 0.3.2 1 Feb 05
 - New simplified Chinese language pack
