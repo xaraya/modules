@@ -6,47 +6,12 @@
  */
 function comments_user_displayall($args) 
 {
-    $modarray = array();
-    if (empty($args['modid'])) {
-        $args['modid'] = xarVarCleanFromInput('modid');
-        if (!$args['modid']) {
-            $modarray[] = 'all';
-        }  else      {
-            $modarray = $args['modid'];
-        }
-    }   else {     
-        $modarray=$args['modid'];
-    }        
+    if (!xarVarFetch('modid','array',$args['modid'],array('all'),XARVAR_NOT_REQUIRED)) {return;};
+    if (!xarVarFetch('itemtype','int',$args['itemtype'],null,XARVAR_NOT_REQUIRED)) {return;};
+    if (!xarVarFetch('order','str',$args['order'],'DESC',XARVAR_GET_OR_POST)) {return;};
+    if (!xarVarFetch('howmany','id',$args['howmany'],20,XARVAR_GET_OR_POST)) {return;};
+    if (!xarVarFetch('first','id',$args['first'],1,XARVAR_GET_OR_POST)) {return;};
 
-    if (!isset($args['itemtype'])) {
-        $args['itemtype'] = xarVarCleanFromInput('itemtype');
-        if (!$args['itemtype']) {
-            $itemtype = null;
-        }  else      {
-            $itemtype = $args['itemtype'];
-        }
-    }   else {     
-        $itemtype=$args['itemtype'];
-    }        
-   
-    if (empty($args['order'])) {
-        $args['order'] = xarVarCleanFromInput('order');
-        if (!$args['order']) {
-            $args['order']='DESC';
-        }
-    }
-    if (empty($args['howmany'])) {
-        $args['howmany'] = xarVarCleanFromInput('howmany');
-        if (!$args['howmany']) {
-            $args['howmany']='20';
-        }
-    }
-    if (empty($args['first'])) {
-        $args['first'] = xarVarCleanFromInput('first');
-        if (!$args['first']) {
-            $args['first']='1';
-        }
-    }
     if (empty($args['block_is_calling'])) {
         $args['block_is_calling']=0;
     } 
@@ -76,7 +41,7 @@ function comments_user_displayall($args)
     }
 
     $args['returnurl'] = '';
-
+    $modarray = $args['modid'];
     // get the list of modules+itemtypes that comments is hooked to
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'comments'));
@@ -279,7 +244,7 @@ function comments_user_displayall($args)
                                             array(
                                                 'first'=>   $args['first']+$args['howmany'],
                                                 'howmany'=> $args['howmany'],
-                                                'modid'=>$args['modid'] 
+                                                'modid'=>$modarray 
                                                 )
                                             );
         $output=xarTplBlock('comments', 'latestcommentsblock', $templateargs );    

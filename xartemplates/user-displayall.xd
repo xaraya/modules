@@ -1,7 +1,7 @@
 <xar:comment> DISPLAY WHERE THE COMMENTS ARE COMING FROM </xar:comment>
   <span class="xar-title">  
     <xar:mlstring>Showing comments n. </xar:mlstring> #$first# - #$first+$howmany-1#                
-    <xar:if condition="$modarray[0]!='All'">                
+    <xar:if condition="$modarray[0]!='all'">                
       <xar:mlstring>from</xar:mlstring>  
       <xar:foreach in="$modarray" key="$i">
         #$modlist[$modarray[$i]]#
