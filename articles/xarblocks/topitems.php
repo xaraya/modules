@@ -132,6 +132,8 @@ function articles_topitemsblock_display($blockinfo)
             }
         }
         if(!empty($cid)) {
+            // if we're viewing all items below a certain category, i.e. catid = _NN
+            $cid = preg_replace('/_/','',$cid);
             $thiscategory = xarModAPIFunc('categories','user','getcat',
                                           array('cid' => $cid,
                                                 'return_itself' => 'return_itself'
