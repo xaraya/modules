@@ -208,7 +208,7 @@ function parseStartTime($in)
 
 function getoffset($in)
 {
-    if(!is_numeric($in))
+    if(!is_numeric($in)) {
         $offset = xarModAPIFunc('timezone','user','parseoffset',$in);
         return $offset['total'];
     } else {

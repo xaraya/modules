@@ -47,7 +47,8 @@ function timezone_user_parse_tzdata()
 //              GMTOFF  RULES   FORMAT  UNTILYEAR   UNTILMONTH  UNTILDAY    UNTILTIME  
 // Link NAME    OLD NAME
 // Leap	YEAR	MONTH	DAY	HH:MM:SS	CORR	R/S
-function parse_data(&$tzdata) {
+function parse_data(&$tzdata) 
+{
     $last = $zone_name = null;
     $rules = array();
     $links = array();
