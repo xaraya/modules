@@ -50,7 +50,7 @@ function figlet_user_main()
             $data['output'] = $phpFiglet->display("$text");
         } else {
             $msg = xarML('There is no font defined.');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'NoFont', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'NoFont', new DefaultUserException($msg));
             return;
         }
     }
