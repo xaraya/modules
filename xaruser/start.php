@@ -17,36 +17,8 @@
 
 //      include( 'includes/application_top.php');
       // the following cPath references come from application_top.php
-      $category_depth = 'top';
-    if (isset($cPath) && xarModAPIFunc('commerce','user','not_null',array('arg' => $cPath))) {
-//        $categories_products_query = new xenQuery("SELECT count(*) as total from " . TABLE_PRODUCTS_TO_CATEGORIES . " where categories_id = '" . $current_category_id . "'");
-        $q = new xenQuery('SELECT',$xartables['commerce_products_to_categories']);
-        $q->addfield('count(*) AS total');
-        $q->eq('categories_id',$current_category_id);
-        echo "SELECT count(*) as total from " . $xartables['commerce_products_to_categories'] . " where categories_id = '" . $current_category_id . "'<br>";
-        $q->qecho();exit;
-        if(!$q->run()) return;
-        $cateqories_products = $q->output();
-        if ($cateqories_products['total'] > 0) {
-            $category_depth = 'products'; // display products
-        }
-        else {
-            $category_parent_query = new xenQuery("select count(*) as total from " . TABLE_CATEGORIES . " where parent_id = '" . $current_category_id . "'");
-            $q = new xenQuery('SELECT',$xartables['commerce_categories']);
-            $q->addfield('count(*) AS total');
-            $q->eq('parent_id',$current_category_id);
-            if(!$q->run()) return;
-            $category_parent = $q->output();
-            if ($category_parent['total'] > 0) {
-                $category_depth = 'nested'; // navigate through the categories
-            }
-            else {
-                $category_depth = 'products'; // category has no products, but display the 'no products' message
-            }
-        }
-    }
 
-
+//    xarResponseRedirect(xarModURL('commerce','user','default'));
     include ('modules/commerce/xarincludes/modules/default.php');
 
 
