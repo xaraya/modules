@@ -20,6 +20,9 @@
     </div>
     </xar:if>
 </xar:loop>
+<xar:if condition="!empty($error_message)">
+    <xar:mlstring>News Server Error:</xar:mlstring> <strong>#$error_message#</strong>
+</xar:if>
 </div>
 
 </div>
