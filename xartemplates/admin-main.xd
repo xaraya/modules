@@ -102,6 +102,7 @@
                 <li><xar:mlstring>Save - allows insert of a Save button. Add <strong>save</strong> to Plugins, and <strong>save</strong> to Additional Tags configuration.</xar:mlstring></li>
                <li><xar:mlstring>Print - displays a Print function button. Add <strong>print</strong> to Plugins, and <strong>print</strong> to Additional Tags configuration.</xar:mlstring></li>
                <li><xar:mlstring>Search and Replace - Search, Search Next and Replace function. Add <strong>searchreplace</strong> to Plugins, and <strong>search</strong> and/or <strong>replace</strong> to Additional Tags configuration.</xar:mlstring></li>
+               <li><xar:mlstring>Table - plug in to add table controls. Add <strong>table</strong> to Plugins, and <strong>tablecontrols</strong> for all table controls, orspecific controls such as<strong>table, rowprops</strong> etc as per plug in documentation to Additional Tags configuration.</xar:mlstring></li>
                <li><xar:mlstring>Xaraya Page Break - icon click to add a Xaraya new page break to any of your publication type articles. Add <strong>xarpagebreak</strong> to Plugins, and <strong>xarpagebreak</strong> to Additional Tags configuration. Make sure you also allow images and appropriate attributes to view the pagebreak icon in your articles.</xar:mlstring></li>
             </ol>
 

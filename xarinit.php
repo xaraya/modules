@@ -23,12 +23,12 @@ function tinymce_init()
 {
 //Set default module vars
    xarModSetVar('tinymce', 'tinytheme', 'default');
-   xarModSetVar('tinymce', 'tinylang', 'uk');   
+   xarModSetVar('tinymce', 'tinylang', 'en');
    xarModSetVar('tinymce', 'tinymode', 'textareas');
    xarModSetVar('tinymce', 'tinyask', 'true');
    xarModSetVar('tinymce', 'tinybuttonsremove', '');
    xarModSetVar('tinymce', 'tinyexstyle', 'heading 1=head1,heading 2=head2,heading 3=head3,heading 4=head4');
-   xarModSetVar('tinymce', 'tinyextended', 'span[*],code,pre,blockquote/quote,a[style|id|name|href|target|rel:external|title|onclick],img[style|class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout]');
+   xarModSetVar('tinymce', 'tinyextended', 'span[*],p[style|id|name],code,pre,blockquote/quote,a[style|id|name|href|target|rel:external|title|onclick],img[style|class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout]');
    xarModSetVar('tinymce', 'tinyinstances','summary,body');
    xarModSetVar('tinymce', 'tinycsslist','modules/tinymce/xarstyles/editor.css');
    xarModSetVar('tinymce', 'tinytoolbar','bottom');
@@ -39,10 +39,10 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyencode','');
    xarModSetVar('tinymce', 'tinyinlinestyle','true');
    xarModSetVar('tinymce', 'tinyundolevel',10);
-   xarModSetVar('tinymce', 'tinyplugins', 'emotions,zoom,preview,searchreplace,print');
+   xarModSetVar('tinymce', 'tinyplugins', 'emotions,zoom,preview,searchreplace,print,table');
    xarModSetVar('tinymce', 'tinybuttons', 'search,replace');
    xarModSetVar('tinymce', 'tinybuttons2','preview,zoom,print');
-   xarModSetVar('tinymce', 'tinybuttons3','emotions');
+   xarModSetVar('tinymce', 'tinybuttons3','tablecontrols,emotions');
    xarModSetVar('tinymce', 'tinybuild1', '');
    xarModSetVar('tinymce', 'tinybuild2', '');
    xarModSetVar('tinymce', 'tinybuild3', '');
@@ -145,6 +145,21 @@ function tinymce_upgrade($oldversion)
     return tinymce_upgrade('0.3.1');
     break;
     case '0.3.1':
+    //database or var changes
+    //new charset and uk now changed to en
+    if (xarModGetVar('tinymce', 'tinylang') =='uk') {
+        xarModSetVar('tinymce', 'tinylang', 'en');
+    }
+    //all tablecontrols moved to a plug in
+    if (xarModGetVar('tinymce', 'tinytheme') =='advanced') {
+       $newplugs = xarModGetVar('tinymce', 'tinyplugins').',table'; //add table plugin
+       xarModSetVar('tinymce','tinyplugins',$newplugs);
+       $newbuttons3=xarModGetVar('tinymce','tinybuttons3').',tablecontrols';
+       xarModSetVar('tinymce','tinybuttons3',$newbuttons3);
+    }
+    return tinymce_upgrade('0.3.2');
+    break;
+    case '0.3.2':
     // Current version
     break;
     }

@@ -1,5 +1,5 @@
 /* Import theme specific language pack */
-tinyMCE.importPluginLanguagePack('xarpagebreak', 'uk,el');
+tinyMCE.importPluginLanguagePack('xarpagebreak', 'en,el');
 
 /**
  * Inserts xaraya page break tag.

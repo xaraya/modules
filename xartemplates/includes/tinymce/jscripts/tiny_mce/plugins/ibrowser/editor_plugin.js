@@ -1,5 +1,5 @@
 // Import theme specific language pack
-tinyMCE.importPluginLanguagePack('ibrowser', 'uk,de');
+tinyMCE.importPluginLanguagePack('ibrowser', 'en,de');
 
 // Returns the HTML contents of the ibrowser control.
 

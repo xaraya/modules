@@ -1,7 +1,22 @@
 #! /usr/bin/perl -w
 
 jsTrim("jscripts/tiny_mce/tiny_mce_src.js", "jscripts/tiny_mce/tiny_mce.js");
+jsTrim("jscripts/tiny_mce/themes/simple/editor_template_src.js", "jscripts/tiny_mce/themes/simple/editor_template.js");
+jsTrim("jscripts/tiny_mce/themes/default/editor_template_src.js", "jscripts/tiny_mce/themes/default/editor_template.js");
 jsTrim("jscripts/tiny_mce/themes/advanced/editor_template_src.js", "jscripts/tiny_mce/themes/advanced/editor_template.js");
+jsTrim("jscripts/tiny_mce/plugins/advhr/editor_plugin_src.js", "jscripts/tiny_mce/plugins/advhr/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/advimage/editor_plugin_src.js", "jscripts/tiny_mce/plugins/advimage/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/advlink/editor_plugin_src.js", "jscripts/tiny_mce/plugins/advlink/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/emotions/editor_plugin_src.js", "jscripts/tiny_mce/plugins/emotions/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/flash/editor_plugin_src.js", "jscripts/tiny_mce/plugins/flash/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/iespell/editor_plugin_src.js", "jscripts/tiny_mce/plugins/iespell/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/insertdatetime/editor_plugin_src.js", "jscripts/tiny_mce/plugins/insertdatetime/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/preview/editor_plugin_src.js", "jscripts/tiny_mce/plugins/preview/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/print/editor_plugin_src.js", "jscripts/tiny_mce/plugins/print/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/save/editor_plugin_src.js", "jscripts/tiny_mce/plugins/save/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/searchreplace/editor_plugin_src.js", "jscripts/tiny_mce/plugins/searchreplace/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/zoom/editor_plugin_src.js", "jscripts/tiny_mce/plugins/zoom/editor_plugin.js");
+jsTrim("jscripts/tiny_mce/plugins/table/editor_plugin_src.js", "jscripts/tiny_mce/plugins/table/editor_plugin.js");
 
 sub jsTrim {
 	my $inFile = $_[0];

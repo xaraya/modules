@@ -1,3 +1,11 @@
+* Version 0.3.2 1 Feb 05
+- New simplified Chinese language pack
+- Update of other language packs including Thai
+- Fix the Firefox double <p> bug in empty text areas
+- Move all table controls to new Table plugin
+- Change language charset - English now en rather than uk
+- Incorporating the tinymce version 1.XX
+
 * Version 0.3.1 10 Jan 05
 - Incorporating tinymce version 1.40
 - New Search and Replace plugin - search, search next, replace

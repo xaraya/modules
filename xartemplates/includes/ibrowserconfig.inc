@@ -29,14 +29,21 @@ $tinyMCE_upload_allowed = true;
 $tinyMCE_img_delete_allowed = true;
 
 // BASE URL FOR IMAGES
-//change if required
-// eg http://www.mysite.com/ Note the trailing slash
+//change as required
+/* eg http://www.mysite.com/ Note the trailing slash
+   If your site is installed in a subdirectory then the subdirectory name
+   should not be appended here, but to the image library path below
+*/
 $tinyMCE_base_url = 'http://www.mysite.com/';
 
-//Now setup your image libraries
-//Each library is defined by a path relative to your website document root
-// and a description of that library
-//Note the trailing slash
+/* Now setup your image libraries
+  Each library is defined by a path relative to your website document root
+  and a description of that library
+  Note the trailing slash
+*/
+/* If your site is installed in a subdirectory then the subdirectory name
+   should be appended to the path below eg 'value' => 'subdir/var/uploads/images/'
+*/
 // The more images in a library, the longer time for the image browser to load
 $tinyMCE_imglibs=array();
 
