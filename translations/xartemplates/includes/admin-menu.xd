@@ -11,19 +11,11 @@
 <xar:if condition="$menu_dntype == 3"><xar:set name="$menu_dntypetext">'module'</xar:set></xar:if>
 
 <div>
-  <span>
-    <xar:ml>
-      <xar:mlstring>Translating #(1) #(2) to #(3):</xar:mlstring>
-      <xar:mlvar>#$menu_dntypetext#</xar:mlvar>
-      <xar:mlvar>#xarSessionGetVar('translations_dnName')#</xar:mlvar>
-      <xar:mlvar>#xarSessionGetVar('translations_working_locale')#</xar:mlvar>
-    </xar:ml>
-  </span>
-  <span>
-    <xar:mlstring>Site display</xar:mlstring>:
-  </span>
-  <span class="xar-title">
-    #xarConfigGetVar('Site.MLS.DefaultLocale')#
-  </span>
+  <span><xar:mlstring>Translating</xar:mlstring></span>
+  <span class="xar-title">#$menu_dntypetext# #xarSessionGetVar('translations_dnName')#</span>
+  <span><xar:mlstring>to</xar:mlstring></span>
+  <span class="xar-title">#xarSessionGetVar('translations_working_locale')#</span>
+  <span><xar:mlstring>Site display</xar:mlstring>:</span>
+  <span class="xar-title">#xarConfigGetVar('Site.MLS.DefaultLocale')#</span>
 
 </div>
