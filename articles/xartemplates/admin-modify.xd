@@ -16,7 +16,7 @@
 <xar:else />
     <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" #$formhooks['formaction']#>
 </xar:if>
-    <div style="float:left;width:100%"> <!--- containing float - quick fix for JC's css layouts [andyv] --->
+    <div style="float:left;width:100%"> <xar:comment> containing float - quick fix for JC's css layouts [andyv] </xar:comment>
 		<div style="clear: both; padding-top: 10px;">
 		<span style="float: left; width: 20%; text-align: right;">
 			<span class="help" title="#xarML('This is the publication type that this article will appear in.')#"><xar:mlstring>Publication Type</xar:mlstring>:</span>
@@ -78,7 +78,7 @@
 				<input type="submit" value="#$updatelabel#" />
 			</span>
 		</div>
-    </div>&nbsp; <!--- end of containing float + some dummy content to make sure the outer container wraps up [andyv] --->
+    </div>&nbsp; <xar:comment> end of containing float + some dummy content to make sure the outer container wraps up [andyv] </xar:comment>
 </form>
 <br />
 </div>

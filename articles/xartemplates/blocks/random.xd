@@ -17,4 +17,4 @@
         <a href="#xarModURL('articles', 'admin', 'new', array('ptid' => $ptid))#"><xar:mlstring>Submit new</xar:mlstring></a>
     </div>
 </xar:if>
-<!--- TODO: link to submit new article (and option to control this) --->
+<xar:comment> TODO: link to submit new article (and option to control this) </xar:comment>

@@ -93,7 +93,7 @@
                 </xar:if>
             </xar:foreach>
         </table>
-<!--- new way --->
+<xar:comment> new way </xar:comment>
         <xar:if condition="!empty($maplink) or !empty($archivelink)">
             <ul style="margin:0;padding:0;">
                 <xar:if condition="!empty($maplink)">

@@ -153,7 +153,7 @@
                 <xar:else />
                     <option value="date ASC"><xar:mlstring>Date (oldest first)</xar:mlstring></option>
                 </xar:if>
-            <!--- adapt to your own preferred sort order(s) --->
+            <xar:comment> adapt to your own preferred sort order(s) </xar:comment>
                 <xar:if condition="$defaultsort eq 'pubtypeid,date'">
                     <option value="pubtypeid,date" selected="selected"><xar:mlstring>Customized</xar:mlstring></option>
                 <xar:else />
