@@ -1278,3 +1278,8 @@ calendar/xaruserapi/.svn/text-base/next.php.svn-base
 calendar/xaruserapi/.svn/text-base/prev.php.svn-base
 project.index
 .project
+calendar/xarimages/Thumbs.db
+converter/xarimages/Thumbs.db
+shopping/xarimages/Thumbs.db
+todolist/xarimages/Thumbs.db
+wiki/xarimages/Thumbs.db
