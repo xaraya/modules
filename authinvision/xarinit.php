@@ -27,12 +27,18 @@ function authinvision_init()
 	xarModSetVar('authinvision','defaultgroup','Users');
 	xarModSetVar('authinvision','forumroot','iboard');
   
-      // Register blocks
+    // Register blocks
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'authinvision',
                              'blockType'=> 'usercp'))) return;
+                             
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'authinvision',
+                             'blockType'=> 'whos_online'))) return;                             
                              
     /* as soon as I finish a lastxposts block I'll add that here */
     /*if (!xarModAPIFunc('blocks',
@@ -80,6 +86,20 @@ function authinvision_delete()
         if ($authType != 'authinvision')
             $authModulesUpdate[] = $authType;
     }
+    
+    // UnRegister blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'authinvision',
+                             'blockType'=> 'usercp'))) return;
+                             
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'authinvision',
+                             'blockType'=> 'whos_online'))) return;
+    
     xarConfigSetVar('Site.User.AuthenticationModules',$authModulesUpdate);
 
     // Deletion successful
