@@ -135,7 +135,7 @@
 			<td align="center" valign="middle" nowrap="nowrap">
 				<span class="gensmall">
 					<!-- #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])#<br />
-					<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a> -->
+					<strong><xar:mlstring>By: </xar:mlstring></strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a> -->
 				</span>
 			</td>
 		</tr>
@@ -172,7 +172,7 @@
 			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap" >
 				<span class="gensmall">
 					#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])#<br />
-					<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a>
+					<strong><xar:mlstring>By: </xar:mlstring></strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $forum['fposter']))#">#$forum['name']#</a>
 				</span>
 			</td>
 		</tr>

@@ -136,7 +136,7 @@
 		<td class="xar-norm" align="center" valign="middle" >
 			<span>
 				<xar:comment>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['tftime'])#<br />
-				<strong>By: </strong> </xar:comment>
+				<strong><xar:mlstring>By: </xar:mlstring></strong> </xar:comment>
                 <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['tposter']))#">#$loop:item['name']#</a>
 			</span>
 
