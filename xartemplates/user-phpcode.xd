@@ -1,0 +1,7 @@
+<xar:if condition="xarTplAddStyleLink('bbcode', 'SyntaxHighlighter')"></xar:if>
+<script type="text/javascript" src="modules/bbcode/xartemplates/includes/shCore.js"></script>
+<script type="text/javascript" src="modules/bbcode/xartemplates/includes/shBrushPhp.js"></script>
+<textarea name="code" language="php">#$replace#</textarea>
+<script language="javascript">
+    dp.SyntaxHighlighter.HighlightAll('code', true, true);
+</script>
