@@ -55,7 +55,7 @@ function mime_init() {
     $fields['mime_magic'] = array(
         'xar_mime_subtype_id'       => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_magic_id'         => array('type'=>'integer',  'null'=>FALSE, 'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_mime_magic_value'      => array('type'=>'varchar',  'null'=>FALSE, 'size'=>256),
+        'xar_mime_magic_value'      => array('type'=>'varchar',  'null'=>FALSE, 'size'=>255),
         'xar_mime_magic_length'     => array('type'=>'integer',  'null'=>FALSE),
         'xar_mime_magic_offset'     => array('type'=>'integer',  'null'=>FALSE)
     );
