@@ -22,6 +22,9 @@
 function AddressBook_init()
 {
 
+    //FIXME: until we figure out module globals
+    include_once ('modules/addressbook/xarglobal.php');
+
     list($dbconn) = xarDBGetConn();
     $xarTables = xarDBGetTables();
 
@@ -331,6 +334,9 @@ function AddressBook_init()
  */
 function AddressBook_upgrade($oldversion) {
 
+    //FIXME: until we figure out module globals
+    include_once ('modules/addressbook/xarglobal.php');
+
 	switch($oldversion) {
         case '0.0':
 			break;
@@ -345,6 +351,9 @@ function AddressBook_upgrade($oldversion) {
  * module instance
  */
 function AddressBook_delete() {
+
+    //FIXME: until we figure out module globals
+    include_once ('modules/addressbook/xarglobal.php');
 
     list($dbconn) = xarDBGetConn();
     $xarTables = xarDBGetTables();
