@@ -72,11 +72,11 @@ function mime_init() {
             $error |= true;
         } else {
             $tables[$table] = true;
-            $error |= false;              
+            $error |= false;
         }
-    } 
-    
-    // if there were any errors during the 
+    }
+
+    // if there were any errors during the
     // table creation, make sure to remove any tables
     // that might have been created
     if ($error) {
@@ -89,25 +89,25 @@ function mime_init() {
         }
         return false;
     }
-    
+
     // Initialisation successful
     return true;
 }
 
 /**
  *  Delete all tables, unregister hooks, remove
- *  priviledge instances, and anything else related to 
+ *  priviledge instances, and anything else related to
  *  this module
  */
-              
-              
-              
-    
+
+
+
+
 
 function mime_delete()
 {
     //Load Table Maintenance API
-    xarDBLoadTableMaintenanceAPI();    
+    xarDBLoadTableMaintenanceAPI();
 
     // Get database information
     list($dbconn) = xarDBGetConn();
@@ -118,7 +118,7 @@ function mime_delete()
     $queries[1] = xarDBDropTable($xartable['mime_subtype']);
     $queries[2] = xarDBDropTable($xartable['mime_extension']);
     $queries[3] = xarDBDropTable($xartable['mime_magic']);
-    
+
     foreach( $queries as $query) {
         $result =& $dbconn->Execute($query);
     }
@@ -127,9 +127,6 @@ function mime_delete()
     return true;
 
 }
-
-case 1.1:
-case '1.1':
 
 /**
 * upgrade the mime module from an old version
