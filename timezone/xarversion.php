@@ -3,7 +3,7 @@
 
 $modversion['name']           = 'timezone';
 $modversion['id']             = '5';
-$modversion['version']        = '0.1.0';
+$modversion['version']        = '0.2.0';
 $modversion['description']    = 'timezone module';
 $modversion['credits']        = 'credits.txt';
 $modversion['help']           = 'help.txt';
@@ -16,7 +16,7 @@ $modversion['admin']          = 0;
 $modversion['user']           = 0;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
-$modversion['dependency']     = array(8); // we need the icalendar module installed
+$modversion['dependency']     = array();
 $modversion['securityschema'] = array();
 
 ?>
