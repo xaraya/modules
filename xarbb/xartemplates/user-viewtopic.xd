@@ -426,7 +426,7 @@
                             </strong>
                         </div>
                     </div>
-                    <div>
+                    <div style="clear:left;">
                         #$item['xar_text']#
                         <xar:if condition="$item['xar_postanon'] eq 0">
                             <xar:if condition="isset($properties['signature']) and !empty($posterdata[$item['xar_uid']]['signature'])">
