@@ -125,7 +125,7 @@ class xoapWeather
             xarErrorSet(
                 XAR_USER_EXCEPTION,
                 xarML('Your Partner ID is Invalid!'),
-                xarML('Please enter a valid Partner ID or Visit http://www.weather.com/services/xmloap.html and sign-up for thier xoapXML Services.')
+                xarML('Please enter a valid Partner ID or Visit http://www.weather.com/services/xmloap.html and sign-up for their xoapXML Services.')
                 );
         }
         return true;
