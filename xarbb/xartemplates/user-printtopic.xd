@@ -1,0 +1,128 @@
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html 
+</xar:comment>
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
+<xar:comment>
+    using css-driven template, avoiding excess tables for layout, especially nested ones 
+</xar:comment>
+
+<xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
+</xar:if>
+<div id="top">
+    <strong>
+        #$ttitle#
+    </strong>
+</div>
+<div class="xarbb-tablewrapper">
+    <xar:data-getitems name="$properties" value="$posterdata" module="roles" itemids="$posterlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
+    <table>
+        <tr>
+            <th>
+                <xar:mlstring>
+                    Author 
+                </xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>
+                    Message 
+                </xar:mlstring>
+            </th>
+        </tr>
+        <xar:comment>
+            Display the Topic Post itself - unless it is not the first pager page 
+        </xar:comment>
+            <tr>
+                <td class="xar-norm author" valign="top">
+                    <div>
+                        <strong>
+                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
+                                #$postername# 
+                            </a>
+                        </strong>
+                    </div>
+                </td>
+                <td class="xar-norm message">
+                    <div class="xarbb-messagecontrols">
+                        <div class="leftnote">
+                            <xar:mlstring>
+                                Posted 
+                            </xar:mlstring>
+                            : #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $tftime)# 
+                            <br />
+                            <strong class="xar-sub">
+                                <xar:mlstring>
+                                    Subject 
+                                </xar:mlstring>
+                                : 
+                                #$transformedtitle# 
+                            </strong>
+                        </div>
+                    </div>
+                    <div>
+                        #$transformedtext# 
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="xar-norm author">
+                </td>
+            </tr>
+        <xar:foreach in="$items" value="$item" key="$key">
+            <xar:if condition="(($key+1) % 2)">
+                <xar:set name="myclass">
+                    'xar-norm' 
+                </xar:set>
+                <xar:else />
+                <xar:set name="myclass">
+                    'xar-norm' 
+                </xar:set>
+            </xar:if>
+            <tr>
+                <td class="xar-norm author"  valign="top">
+                    <strong>
+                        <xar:comment>
+                            Reply post could be anonymous - need to check 
+                        </xar:comment>
+                        <xar:if condition="$item['xar_postanon'] eq 0">
+                            <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['xar_uid']))#">
+                                #$item['xar_author']# 
+                            </a>
+                            <xar:else />
+                            <xar:sec catch="false" mask="modXarBB">
+                                <xar:mlstring>
+                                    Anonymous 
+                                </xar:mlstring>
+                                (#$item['xar_author']#) 
+                                <xar:else />
+                                <xar:mlstring>
+                                    Anonymous 
+                                </xar:mlstring>
+                            </xar:sec>
+                        </xar:if>
+                    </strong>
+                </td>
+                <td class="#$myclass# message">
+                    <div class="xarbb-messagecontrols">
+                        <div class="leftnote">
+                            <xar:mlstring>
+                                Posted 
+                            </xar:mlstring>
+                            : #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['xar_datetime'])#
+                            <br />
+                            <strong class="xar-sub">
+                                <xar:mlstring>
+                                    Subject 
+                                </xar:mlstring>
+                                : 
+                                #$item['xar_title']# 
+                            </strong>
+                        </div>
+                    </div>
+                    <div>
+                        #$item['xar_text']# 
+                    </div>
+                </td>
+            </tr>
+        </xar:foreach>
+    </table>
+</div>

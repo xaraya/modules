@@ -96,6 +96,15 @@
     </xar:if>
     </span>
 </div>
+<xar:if condition="xarThemeIsAvailable('print')">
+    <div class="xarbb-topiccontrols">
+        <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
+            <xar:mlstring>
+                Print this topic
+            </xar:mlstring>
+        </a>
+    </div>
+</xar:if>
 <div class="xarbb-tablewrapper">
     <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
         #$hooks['polls']# 
