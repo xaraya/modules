@@ -118,30 +118,35 @@ function translations_grab_source_code($references, $maxReferences = NULL)
 
     $files = array();
     $result = array();
+    $currentFileData = '';
+    $currentFileName = '';
+    $referencesCount = count($references);
     if ($maxReferences == NULL) {
-        $maxReferences = count($references);
+        $maxReferences = $referencesCount;
     }
-    for ($i = 0; $i < count($references) && $i < $maxReferences; $i++) {
+    for ($i = 0; $i < $referencesCount && $i < $maxReferences; $i++) {
         $ref = $references[$i];
-        if (!isset($files[$ref['file']])) {
+        if ($ref['file'] != $currentFileName) {
+            $currentFileName = $ref['file'];
             if (file_exists($ref['file']))  {
                 // FIXME: this is potentially very memory hungry, cant we do this more efficient?
-                $files[$ref['file']] = file($ref['file']);
+                $currentFileData = file($ref['file']);
             } else {
             	// FIXME need more information about outdated references
-                $files[$ref['file']] = array();
+                $currentFileData = array();
             }
         }
         $j = $ref['line'] - 3;
         if ($j < 0) $j = 0;
         $source = array('pre'=>'', 'code'=>'', 'post'=>'');
-        for ($c = 0; $c < 5 && $j < count($files[$ref['file']]); $c++, $j++) {
+        $linesCount = count($currentFileData);
+        for ($c = 0; $c < 5 && $j < $linesCount; $c++, $j++) {
             if ($j < $ref['line'] - 1) {
-                $source['pre'] .= htmlspecialchars($files[$ref['file']][$j]).'<br/>';
+                $source['pre'] .= htmlspecialchars($currentFileData[$j]).'<br/>';
             } elseif ($j == $ref['line'] - 1) {
-                $source['code'] = htmlspecialchars($files[$ref['file']][$j]).'<br/>';
+                $source['code'] = htmlspecialchars($currentFileData[$j]).'<br/>';
             } else {
-                $source['post'] .= htmlspecialchars($files[$ref['file']][$j]).'<br/>';
+                $source['post'] .= htmlspecialchars($currentFileData[$j]).'<br/>';
             }
         }
         $ref['source'] = $source;
