@@ -42,14 +42,14 @@ function authsql_admin_modifyconfig()
 
     // Add user to xar_roles
     if (xarModGetVar('authsql','add_user') == 'true') {    
-        $data['adduservalue'] = xarVarPrepForDisplay("checked");
+        $data['adduservalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['adduservalue'] = "";
     }
     
     // Store user's SQL password in Xaraya database?
     if (xarModGetVar('authsql','store_user_password') == 'true') {    
-        $data['storepasswordvalue'] = xarVarPrepForDisplay("checked");
+        $data['storepasswordvalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['storepasswordvalue'] = "";
     }
