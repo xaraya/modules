@@ -5,7 +5,7 @@
         <xar:mlstring>Add link to Subitems</xar:mlstring>
     </h2><br />
     <table width="100%" border="0" cellspacing="1" cellpadding="8">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="&xar-modurl-subitems-admin-ddobjectlink_new;" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
             <tr>
                 <td><xar:mlstring>Subitems Object:</xar:mlstring></td>
@@ -16,9 +16,9 @@
             </tr>
             <tr>
                 <td><xar:mlstring>Hooked Module Name:</xar:mlstring></td>
-                <td>
-                    <input type="text" name="modid" value="#$module['value']#" />
-                    <span style="color:red">#$module.error:msg#</span>
+                <td>    
+                    <xar:data-input name="modid" type="module" value="$module['value']" />
+                     <span style="color:red">#$module.error:msg#</span>
                 </td>
             </tr>
             <tr>

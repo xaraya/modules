@@ -36,7 +36,7 @@ function subitems_admin_ddobjectlink_edit($args)
         }
     }  else  {
         $result_array['no_errors'] = true;
-        $result_array['module'] = array('value' => $subobjectlink['module'],'error' => '');
+        $result_array['module'] = array('value' => xarModGetIDFromName($subobjectlink['module']),'error' => '');
         $result_array['itemtype'] = array('value' => $subobjectlink['itemtype'],'error' => '');
         $result_array['template'] = array('value' => $subobjectlink['template'],'error' => '');
         $result_array['sort'] = array('value' => $subobjectlink['sort'],'error' => '');
@@ -45,12 +45,13 @@ function subitems_admin_ddobjectlink_edit($args)
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
 
+        $modInfo = xarModGetInfo($result_array['module']['value']);
         if(!xarModAPIFunc('subitems','admin','ddobjectlink_update',array(
-            "objectid" => $subobjectid,
-            "module" => $result_array['module']['value'],
-            "itemtype" => $result_array['itemtype']['value'],
-            "template" => $result_array['template']['value'],
-            "sort" => $result_array['sort']['value']
+                "objectid" => $subobjectid,
+                "module" => $modInfo['name'],
+                "itemtype" => $result_array['itemtype']['value'],
+                "template" => $result_array['template']['value'],
+                "sort" => $result_array['sort']['value']
             ))) return;
 
         xarResponseRedirect(xarModURL('subitems','admin','ddobjectlink_view'));

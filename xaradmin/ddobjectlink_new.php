@@ -12,15 +12,15 @@ function subitems_admin_ddobjectlink_new($args)
 
     if($confirm)    {
         $result_array = xarVarBatchFetch(
-        array('objectid','int:1','objectid'),
-          array('modid','str:1:','module'),
-           array('itemtype','int:0:','itemtype'),
-        array('template','str:0:','template')
+            array('objectid','int:1','objectid'),
+            array('modid','str:1:','module'),
+            array('itemtype','int:0:','itemtype'),
+            array('template','str:0:','template')
         );
     }
     else    {
         $result_array['no_errors'] = true;
-        $result_array['module'] = array('value' => '','error' => '');
+        $result_array['module'] = array('value' => 182,'error' => '');
         $result_array['itemtype'] = array('value' => '','error' => '');
         $result_array['template'] = array('value' => '','error' => '');
         $result_array['objectid'] = array('value' => '','error' => '');
@@ -29,12 +29,14 @@ function subitems_admin_ddobjectlink_new($args)
     // if(!xarVarFetch('objectid','int:1:',$objectid)) return;
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
-
+        
+        $modInfo = xarModGetInfo($result_array['module']['value']);
+        
         if(!xarModAPIFunc('subitems','admin','ddobjectlink_create',array(
-            "objectid" => $result_array['objectid']['value'],
-            "module" => $result_array['module']['value'],
-            "itemtype" => $result_array['itemtype']['value'],
-            "template" => $result_array['template']['value']
+                "objectid" => $result_array['objectid']['value'],
+                "module" => $modInfo['name'],
+                "itemtype" => $result_array['itemtype']['value'],
+                "template" => $result_array['template']['value']
             ))) return;
 
         xarResponseRedirect(xarModURL('subitems','admin','ddobjectlink_view'));
