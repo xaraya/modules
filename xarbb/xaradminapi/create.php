@@ -47,6 +47,8 @@ function xarbb_adminapi_create($args)
         $cids = array();
         // for security check below
         $args['cids'] = $cids;
+    } else {
+        $data['cids'] = array_values(preg_grep('/\d+/',$cids));
     }
 
     // Get datbase setup

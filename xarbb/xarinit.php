@@ -36,13 +36,13 @@ function xarbb_init()
     // FPOSTID -- Time of the last reply
 
     $fields = array(
-    'xar_fid'          => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-    'xar_fname'        => array('type'=>'varchar','size'=>255,'null'=>false,'default'=>''),
+    'xar_fid'          => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>true,'primary_key'=>true),
+    'xar_fname'        => array('type'=>'varchar', 'null'=>false,'default'=>'','size'=>255),
     'xar_fdesc'        => array('type'=>'text'),
-    'xar_ftopics'      => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
-    'xar_fposts'       => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
-    'xar_fposter'      => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
-    'xar_fpostid'      => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00')
+    'xar_ftopics'      => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
+    'xar_fposts'       => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
+    'xar_fposter'      => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
+    'xar_fpostid'      => array('type'=>'datetime','null'=>false,'default'=>'1970-01-01 00:00')
     );
 
     // TODO NEED FORUM STATUS
@@ -65,21 +65,19 @@ function xarbb_init()
     // TSTATUS -- Special attributes of the topic (sticky, locked, etc)
     // TFTIME -- Time of the topic post itself
     $fields = array(
-    'xar_tid'          => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-    'xar_fid'          => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
-    'xar_ttitle'       => array('type'=>'varchar','size'=>255,'null'=>false,'default'=>''),
+    'xar_tid'          => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>true,'primary_key'=>true),
+    'xar_fid'          => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment'=>false,'primary_key'=>false),
+    'xar_ttitle'       => array('type'=>'varchar', 'null'=>false, 'default'=>'','size'=>255 ),
     'xar_tpost'        => array('type'=>'text'),
-    'xar_tposter'      => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
+    'xar_tposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_ttime'        => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
     'xar_tftime'       => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
-    'xar_treplies'     => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
-    'xar_treplier'     => array('type'=>'integer','null'=>false,'increment'=>false,'primary_key'=>false),
-    'xar_tstatus'      => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0')
+    'xar_treplies'     => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>false,'primary_key'=>false),
+    'xar_treplier'     => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment'=>false,'primary_key'=>false),
+    'xar_tstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny')
     );
 
-    //TODO ADD TREPLIES FOR NUMBER OF REPLIES
-
-    $query = xarDBCreateTable($xbbtopicstable,$fields);
+     $query = xarDBCreateTable($xbbtopicstable,$fields);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -161,6 +159,7 @@ function xarbb_init()
                                                              'hookModName'      => 'hitcount'));
 
     // Enable comment hooks for xarbb topics (= item type 2)
+    //<jojodee> not sure why this is here after being commented out above
     xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
                                                              'callerItemType'   => 2,
                                                              'hookModName'      => 'comments'));

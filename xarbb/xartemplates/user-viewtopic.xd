@@ -204,7 +204,7 @@
 </table>
 </xar:if>
 <!--- Display each post reply --->
-<xar:foreach in="$items" value="$item">
+<xar:foreach in="$items" value="$item" key="$key">
 <table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
   <tr>
     <td width="100" align="center" class="xar-accent">&nbsp;</td>
