@@ -32,11 +32,6 @@ function xarbb_user_main()
     // Security Check
     if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
 
-    // Lets deal with the cookie in a more sane manner
-    if (isset($read)){
-        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', time());
-    }
-
     // Variable Needed for output
     $args               = array();
     $args['modid']      = xarModGetIDfromName('xarbb');
@@ -81,12 +76,15 @@ function xarbb_user_main()
             // Security check: remove forums the user should not see
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
-            foreach($forums as $forum)
+            foreach($forums as $forum){
                 if(xarSecurityCheck('ViewxarBB',0,'Forum','All:'.$forum['fid']))
                 $items[$i]['forums'][] = $forum;
-
-            $args = $items[$i]['forums'];
-            $items[$i]['forums'] = xarbb_user__getforuminfo($args);
+                if (isset($read)){
+                    xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'], time());
+                }
+                $args = $items[$i]['forums'];
+                $items[$i]['forums'] = xarbb_user__getforuminfo($args);
+            }
         }
     } else {
         // Base Categories
@@ -121,6 +119,9 @@ function xarbb_user_main()
 
             $args = $items[$i]['forums'];
             $items[$i]['forums'] = xarbb_user__getforuminfo($args);
+            if (isset($read)){
+                xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'], time());
+            }
         }
     }
     // Debug
