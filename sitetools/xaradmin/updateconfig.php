@@ -1,6 +1,6 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id: updateconfig.php,v 1.1 2003/09/19 09:16:03 jojodee Exp $
  *
  * SiteTools Module
  *
@@ -22,6 +22,9 @@ function sitetools_admin_updateconfig()
    if (!xarVarFetch('adopath', 'str:4:128', $adopath, '')) return;
     if (!xarVarFetch('rsspath', 'str:4:128', $rsspath, '')) return;
     if (!xarVarFetch('templpath', 'str:4:128', $templpath,'')) return;
+    if (!xarVarFetch('backuppath', 'str:4:128', $backuppath,'')) return;
+    if (!xarVarFetch('lineterm', 'str:2:4', $lineterm,'')) return;
+    if (!xarVarFetch('usetimestamp', 'int:1:', $usetimestamp,'')) return;
     if (!xarVarFetch('confirm', 'str:4:128', $confirm, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
@@ -31,6 +34,9 @@ function sitetools_admin_updateconfig()
     xarModSetVar('sitetools','adocachepath',$adopath);
     xarModSetVar('sitetools','rsscachepath', $rsspath);
     xarModSetVar('sitetools','templcachepath', $templpath);
+    xarModSetVar('sitetools','backuppath', $backuppath);
+    xarModSetVar('sitetools','lineterm', $lineterm);
+    xarModSetVar('sitetools','timestamp', $usetimestamp);
 
     xarModCallHooks('module','updateconfig','sitetools',
                    array('module' => 'sitetools'));

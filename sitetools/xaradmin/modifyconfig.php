@@ -1,6 +1,6 @@
 <?php
 /*
- * File: $Id: $
+ * File: $Id: modifyconfig.php,v 1.1 2003/09/19 09:16:03 jojodee Exp $
  *
  * SiteTools Module
  *
@@ -26,16 +26,17 @@ function sitetools_admin_modifyconfig()
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey(); 
     // Specify some labels and values for display
-    $data['adopath']   = xarModGetVar('sitetools','adocachepath');
-    $data['rsspath']   = xarModGetVar('sitetools','rsscachepath');
-    $data['templpath'] = xarModGetVar('sitetools','templcachepath');
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
+    $data['adopath']     = xarModGetVar('sitetools','adocachepath');
+    $data['rsspath']     = xarModGetVar('sitetools','rsscachepath');
+    $data['templpath']   = xarModGetVar('sitetools','templcachepath');
+    $data['backuppath']  = xarModGetVar('sitetools','backuppath');
+    $data['usetimestamp']= xarModGetVar('sitetools','timestamp');
+    $data['lineterm']    = xarModGetVar('sitetools','lineterm');
+    $data['updatebutton']= xarVarPrepForDisplay(xarML('Update Configuration'));
 
-
-    $data['defadopath'] = xarCoreGetVarDirPath()."/cache/adodb";
-    $data['defrsspath'] = xarCoreGetVarDirPath()."/cache/rss";
+    $data['defadopath']   = xarCoreGetVarDirPath()."/cache/adodb";
+    $data['defrsspath']   = xarCoreGetVarDirPath()."/cache/rss";
     $data['deftemplpath'] = xarCoreGetVarDirPath()."/cache/templates";
-
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'sitetools',
         array('module' => 'sitetools'));

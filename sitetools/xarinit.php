@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
+ * File: $Id: xarinit.php,v 1.1 2003/09/19 09:15:24 jojodee Exp $
  *
  * sitetools initialization functions
  *
@@ -45,7 +45,9 @@ function sitetools_init()
     xarModSetVar('sitetools','adocachepath',xarCoreGetVarDirPath()."/cache/adodb");
     xarModSetVar('sitetools','rsscachepath', xarCoreGetVarDirPath()."/cache/rss");
     xarModSetVar('sitetools','templcachepath', xarCoreGetVarDirPath()."/cache/templates");
-
+    xarModSetVar('sitetools','backuppath', xarCoreGetVarDirPath()."/uploads/backup");
+    xarModSetVar('sitetools','lineterm','\n');
+    xarModSetVar('sitetools','timestamp',1);
     /**
      * Register the module components that are privileges objects
      * Format is
@@ -100,7 +102,7 @@ function sitetools_delete()
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['sitetools']);
     if (empty($query)) {
-    //return; // let's let delete go to completion. Show error message.
+    //return; // let's let delete go to completion.
     }
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
@@ -110,9 +112,11 @@ function sitetools_delete()
     xarModDelVar('sitetools','adocachepath');
     xarModDelVar('sitetools','rsscachepath');
     xarModDelVar('sitetools','templcachepath');
+    xarModDelVar('sitetools','backuppath');
+    xarModDelVar('sitetools','lineterm'); 
+    xarModDelVar('sitetools','timestamp');
 
     // Remove Masks and Instances
-
     xarRemoveMasks('sitetools');
 
     // Deletion successful
