@@ -88,7 +88,7 @@ function search_user_handlesearch() {
         // If module is not hooked how are we going to get results, not possible
         // set a user exception for this
         $msg = xarML('The module #(1) does not provide an API search function, or is not hooked into the search module', $search_in_module);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'NOT_HOOKED',$msg);
+        xarErrorSet(XAR_USER_EXCEPTION, 'NOT_HOOKED',$msg);
         return;
     }
 
