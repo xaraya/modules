@@ -1,28 +1,56 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Articles</xar:mlstring></h2>
 <div style="margin: auto;">
-<h3><xar:mlstring>Publication Type</xar:mlstring>:</h3>
-<p><xar:foreach in="$pubfilters" value="$pubfilter">
-    <xar:if condition="empty($pubfilter['plink'])">
-        <span style="padding: 0px 3px 0px 3px;">#$pubfilter['ptitle']#</span>
-    <xar:else />
-        <span style="padding: 0px 3px 0px 3px;"><a href="#$pubfilter['plink']#">#$pubfilter['ptitle']#</a></span>
-    </xar:if>
-</xar:foreach></p>
-
-<xar:if condition="!empty($labels['status'])">
-<h3><xar:mlstring>Status</xar:mlstring>:</h3>
-<p><xar:foreach in="$statusfilters" value="$statusfilter">
-    <xar:if condition="empty($statusfilter['slink'])">
-        <span style="padding: 0px 3px 0px 3px;">#$statusfilter['stitle']#</span>
-    <xar:else />
-        <span style="padding: 0px 3px 0px 3px;"><a href="#$statusfilter['slink']#">#$statusfilter['stitle']#</a></span>
-    </xar:if>
-</xar:foreach>
-</p>
-</xar:if>
-
-<xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" itemtype="$ptid" catid="$catid" />
+	<!-- Roles is a core module.  We should be able to count on that being there, although I believe that it should go in the base module -->
+	<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+	<p>
+		<div id="tabnav">
+			<div class="help" title="#xarML('Click on a tab to display articles from that publication type')#"><xar:mlstring>Publication Type</xar:mlstring> :</div>
+			<xar:foreach in="$pubfilters" value="$pubfilter">
+				<xar:if condition="empty($pubfilter['plink'])">
+					<div>
+						<a href="#xarServerGetCurrentURL()#" title="#$pubfilter['ptitle']#" class="active">
+							#$pubfilter['ptitle']#
+						</a>
+					</div>
+				<xar:else />
+					<div>
+						<a href="#$pubfilter['plink']#" title="#$pubfilter['ptitle']#">
+							#$pubfilter['ptitle']#
+						</a>
+					</div>
+				</xar:if>
+			</xar:foreach>
+		</div>
+	</p>
+	</xar:if>
+	<xar:if condition="!empty($labels['status'])">
+		<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+		<p>
+			<div id="tabnav">
+				<div class="help" title="#xarML('Click on the status to filter results by status only')#"><xar:mlstring>Status</xar:mlstring> :</div>
+				<xar:foreach in="$statusfilters" value="$statusfilter">
+					<xar:if condition="empty($statusfilter['slink'])">
+						<div>
+							<a href="#xarServerGetCurrentURL()#" title="#$statusfilter['stitle']#" class="active">
+								#$statusfilter['stitle']#
+							</a>
+						</div>
+					<xar:else />
+						<div>
+							<a href="#$statusfilter['slink']#" title="#$statusfilter['stitle']#">
+								#$statusfilter['stitle']#
+							</a>
+						</div>
+					</xar:if>
+				</xar:foreach>
+			</div>
+		</p>
+		</xar:if>
+	</xar:if>
+	<p>
+		<xar:categories-navigation layout="trails" showchildren="1" module="articles" type="admin" itemtype="$ptid" catid="$catid" />
+	</p>
 <xar:if condition="$showstatus">
 <form method="post" action="#xarModURL('articles','admin','updatestatus')#">
 <div>

@@ -61,32 +61,37 @@
 <xar:if condition="!empty($showprevnext)">
     <xar:categories-navigation layout="prevnext" />
 </xar:if>
-<xar:if condition="!empty($maplink) or !empty($archivelink)">
-    <ul style="margin:0;padding:0;">
-        <xar:if condition="!empty($maplink)">
-            <li style="display:inline;padding:0 .5em;">
-                <a href="#$maplink#">
-                    #$maplabel# 
-                </a>
-            </li>
-        </xar:if>
-        <xar:if condition="!empty($submitlink)">
-            <li style="display:inline;padding:0 .5em;">
-                <a href="#$submitlink#" title="Submit Article">
-                    <xar:mlstring>
-                        Contribute 
-                    </xar:mlstring>
-                </a>
-            </li>
-        </xar:if>
-        <xar:if condition="!empty($archivelink)">
-            <li style="display:inline;padding:0 .5em;">
-                <a href="#$archivelink#">
-                    #$archivelabel# 
-                </a>
-            </li>
-        </xar:if>
-    </ul>
+<xar:if condition="!empty($maplink) or !empty($archivelink) or !empty($submitlink)">
+	<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+	<p>
+		<div id="tabnav">
+			<div class="help" title="#xarML('Click on an option to explore furter')#"><xar:mlstring>Options</xar:mlstring> :</div>
+				<xar:if condition="!empty($maplink)">
+					<div>
+						<a href="#$maplink#">
+							#$maplabel# 
+						</a>
+					</div>
+				</xar:if>
+				<xar:if condition="!empty($submitlink)">
+					<div>
+						<a href="#$submitlink#" title="Submit Article">
+							<xar:mlstring>
+								Contribute 
+							</xar:mlstring>
+						</a>
+					</div>
+				</xar:if>
+				<xar:if condition="!empty($archivelink)">
+					<div>
+						<a href="#$archivelink#">
+							#$archivelabel# 
+						</a>
+					</div>
+				</xar:if>
+		</div>
+	</p>
+	</xar:if>
 </xar:if>
 <xar:comment>
     <!--    see new and more structurally correct alternative above - I left this (old) piece of template commented out for comparing

@@ -21,12 +21,35 @@
         </xar:foreach>
     </xar:foreach>
 
-    <br />
-    <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub'))#"><xar:mlstring>Article Map by Publication Type</xar:mlstring></a>
-    <xar:if condition="count($catfilter) eq 2">
-        - <a href="#xarModURL('articles','user','viewmap',array('by' => 'grid'))#"><xar:mlstring>Article Map by Grid</xar:mlstring></a>
-    </xar:if>
-    <br />
+	<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+	<p>
+		<div id="tabnav">
+			<div class="help" title="#xarML('Click on an option to explore furter')#"><xar:mlstring>Options</xar:mlstring> :</div>
+					<div>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'pub'))#"><xar:mlstring>Article Map by Publication Type</xar:mlstring></a>
+					</div>
+				<xar:if condition="count($catfilter) eq 2">
+					<div>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'grid'))#"><xar:mlstring>Article Map by Grid</xar:mlstring></a>
+					</div>
+				</xar:if>
+				<xar:if condition="!empty($viewlink)">
+					<div>
+						<a href="#$viewlink#">
+							#$viewlabel# 
+						</a>
+					</div>
+				</xar:if>
+				<xar:if condition="!empty($archivelink)">
+					<div>
+						<a href="#$archivelink#">
+							#$archivelabel# 
+						</a>
+					</div>
+				</xar:if>
+		</div>
+	</p>
+	</xar:if>
 
 <xar:elseif condition="count($catgrid) gt 0"/>
     <xar:if condition="empty($descr)">
@@ -49,10 +72,33 @@
     </xar:foreach>
     </table>
 
-    <br />
-    <a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#"><xar:mlstring>Article Map by Category</xar:mlstring></a>
-    - <a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#"><xar:mlstring>Article Map by Publication Type</xar:mlstring></a>
-    <br />
+	<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+	<p>
+		<div id="tabnav">
+			<div class="help" title="#xarML('Click on an option to explore furter')#"><xar:mlstring>Options</xar:mlstring> :</div>
+					<div>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#"><xar:mlstring>Article Map by Category</xar:mlstring></a>
+					</div>
+					<div>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'pub','ptid' => $ptid))#"><xar:mlstring>Article Map by Publication Type</xar:mlstring></a>
+					</div>
+				<xar:if condition="!empty($viewlink)">
+					<div>
+						<a href="#$viewlink#">
+							#$viewlabel# 
+						</a>
+					</div>
+				</xar:if>
+				<xar:if condition="!empty($archivelink)">
+					<div>
+						<a href="#$archivelink#">
+							#$archivelabel# 
+						</a>
+					</div>
+				</xar:if>
+		</div>
+	</p>
+	</xar:if>
 
 <xar:else />
     <h2><xar:mlstring>Article Map by Publication Type</xar:mlstring></h2>
@@ -104,20 +150,34 @@
         </div><br />
     </xar:foreach>
 
-    <br />
-    <a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#"><xar:mlstring>Article Map by Category</xar:mlstring></a>
-    <xar:if condition="count($catfilter) eq 2">
-        - <a href="#xarModURL('articles','user','viewmap',array('by' => 'grid', 'ptid' => $ptid))#"><xar:mlstring>Article Map by Grid</xar:mlstring></a>
-    </xar:if>
-    <br />
+	<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+	<p>
+		<div id="tabnav">
+			<div class="help" title="#xarML('Click on an option to explore furter')#"><xar:mlstring>Options</xar:mlstring> :</div>
+					<div>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'cat'))#"><xar:mlstring>Article Map by Category</xar:mlstring></a>
+					</div>
+				<xar:if condition="count($catfilter) eq 2">
+					<div>
+						<a href="#xarModURL('articles','user','viewmap',array('by' => 'grid', 'ptid' => $ptid))#"><xar:mlstring>Article Map by Grid</xar:mlstring></a>
+					</div>
+				</xar:if>
+				<xar:if condition="!empty($viewlink)">
+					<div>
+						<a href="#$viewlink#">
+							#$viewlabel# 
+						</a>
+					</div>
+				</xar:if>
+				<xar:if condition="!empty($archivelink)">
+					<div>
+						<a href="#$archivelink#">
+							#$archivelabel# 
+						</a>
+					</div>
+				</xar:if>
+		</div>
+	</p>
+	</xar:if>
 
 </xar:if>
-
-<br />
-<table border="0" width="95%"><tr><td align="left">
-    <a href="#$viewlink#">#$viewlabel#</a>
-</td><td align="right">
-    <a href="#$archivelink#">#$archivelabel#</a>
-</td></tr></table>
-    
-
