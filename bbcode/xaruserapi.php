@@ -382,7 +382,7 @@ function bbcode_encode_code($message, $is_html_disabled)
                 $str_to_match = $start_tag . $before_replace . $end_tag;
 
                 if (phpversion() > "4.2.0"){
-                    highlight_string($after_replace, 1);
+                    highlight_string($after_replace, TRUE);
                 }
                 
                 $message = preg_replace("/$str_to_match/si", xarML('Code') . ": <blockquote><pre> " . bbcode_br2nl($after_replace) . "</pre></blockquote>", $message);
