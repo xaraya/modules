@@ -1101,9 +1101,9 @@ global $xarconfig;
 print("<pre>");
 print_r($xarconfig);
 print("</pre>");
-print('<hr>');
+print('<hr/>');
 print(xarConfigGetVar('tipath'));
-print('<hr>');
+print('<hr/>');
 // print('tipath: '.$tipath);
 // die;
 */
