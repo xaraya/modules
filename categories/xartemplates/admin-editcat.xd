@@ -56,7 +56,7 @@
                 <input type="submit" value="#$modifylabel#" />
                 <input type="hidden" name="creating" id="creating" value="false">
             <xar:else />
-                <input type="submit" value="#$addlabel#" align="middle" />
+                <input type="submit" value="#$addlabel#"  />
                 <input type="hidden" name="creating" id="creating" value="true">
             </xar:if>
             <br />&nbsp;
