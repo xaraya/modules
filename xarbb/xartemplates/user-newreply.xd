@@ -127,11 +127,15 @@
 					</xar:mlstring>
 					<xar:if condition="xarModIsHooked('html', 'xarbb', $fid)">
 						<span style="color: green;">
-							On
+						    <xar:mlstring>
+							    On
+							</xar:mlstring>
 						</span>
 					<xar:else />
 						<span style="color: red;">
-							Off
+						    <xar:mlstring>
+							    Off
+							</xar:mlstring>
 						</span>
 					</xar:if><br />
 
@@ -140,11 +144,15 @@
 					</xar:mlstring>
 					<xar:if condition="xarModIsHooked('bbcode', 'xarbb', $fid)">
 						<span style="color: green;">
-							On
+						    <xar:mlstring>
+							    On
+							</xar:mlstring>
 						</span>
 					<xar:else />
 						<span style="color: red;">
-							Off
+						    <xar:mlstring>
+							    Off
+							</xar:mlstring>
 						</span>
 					</xar:if><br />
 
@@ -153,11 +161,15 @@
 					</xar:mlstring>
 					<xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
 						<span style="color: green;">
-							On
+						    <xar:mlstring>
+							    On
+							</xar:mlstring>
 						</span>
 					<xar:else />
 						<span style="color: red;">
-							Off
+						    <xar:mlstring>
+							    Off
+							</xar:mlstring>
 						</span>
 					</xar:if>
 				</div>
@@ -180,7 +192,7 @@
 				</xar:if>
 				<input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> 
 				<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> 
-				<input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" />&nbsp;&nbsp; <input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" />&nbsp;&nbsp;
+				<input type="submit" name="receipt[action]" id="receipt-action-preview" value="#xarML('preview')#" />&nbsp;&nbsp; <input type="submit" name="receipt[action]" id="receipt-action-submit" value="#xarML('submit')#" />&nbsp;&nbsp;
 			</td>
 		</tr>
 </table>
