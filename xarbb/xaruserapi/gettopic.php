@@ -61,11 +61,11 @@ function xarbb_userapi_gettopic($args)
                      xar_fpostid,
                      xar_fstatus,
                      {$categoriesdef['cid']}
-            FROM $xbbtopicstable LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = ? 
+            FROM $xbbtopicstable LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = $xbbforumstable.xar_fid 
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} AND xar_tid = ?";
-    $result =& $dbconn->Execute($query, array($xbbforumstable.'xar_fid', $tid));
+    $result =& $dbconn->Execute($query, array($tid));
     if (!$result) return;
 
     if($result->EOF) 	{
