@@ -2,9 +2,10 @@
 
 /**
  * find instances with a certain status, activityId and/or max. started date
- * 
+ *  - now accepts an activityName and processName if you don't have the ids
+ *
  * @author mikespub
- * @access public 
+ * @access public
  */
 function workflow_userapi_findinstances($args)
 {
@@ -35,6 +36,9 @@ function workflow_userapi_findinstances($args)
     if (!empty($max_started)) {
         $wheres[] = "gi.started <= " . $max_started;
     }
+		if (!empty($activityName) && !empty($processName)) {
+				$wheres[] = "ga.name = '" . $activityName . "' AND gp.name = '".$processName."'";
+		}
 
     $where = implode(' and ', $wheres);
 
