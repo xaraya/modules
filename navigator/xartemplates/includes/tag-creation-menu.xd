@@ -109,8 +109,9 @@
             </xar:if>
         </span>
     </span>
+    <br style="clear: both;" />
 </p>
-<br style="clear: both;" />
+
 <p>
     <span style="width: 100px;">
         <xar:mlstring><strong>Hide empty categories?</strong></xar:mlstring>
@@ -161,63 +162,80 @@
         </span>
     </span>
 </p>
-
-<xar:if condition="'secondary' eq $base">
+<xar:if condition="'secondary' eq $base AND is_array($primary_list)">
     <br style="clear: both;" />
     <p>
-        <span style="width: 100px;">
-            <xar:mlstring><strong>Select Primary Intersections:</strong></xar:mlstring>
-        </span>
-        <span style="width: 250px;">
-            <span style="width: 25px; display: block; float: left;">
-                &nbsp;
-            </span>
-            <span style="width: 75px; display: block; float: left;">
-                <select multiple="true" name="intersects[]">
-                    <xar:foreach in="$primary_list" key="$cid" value="$item">
-                        <xar:if condition="in_array($cid, $intersects)">
-                            <option value="#$cid#" selected="selected">#$item['name']#</option>
-                        <xar:else />
-                            <option value="#$cid#">#$item['name']#</option>
-                        </xar:if>
-                    </xar:foreach>
-                </select>
-            </span>
-        </span>
+        <xar:mlstring><strong>Select Primary Intersections:</strong></xar:mlstring>
+        <br />
+        <xar:mlstring>
+            Primary intersections allow you to specify which primary categories your secondary categories
+            should display on. If a user is browsing through a primary category not in this list, then
+            this particular menu will not be displayed.
+        </xar:mlstring>
+        <br /><br />
+        <select multiple="true" name="intersects[]">
+            <xar:foreach in="$primary_list" key="$cid" value="$item">
+                <xar:if condition="in_array($cid, $intersects)">
+                    <option value="#$cid#" selected="selected">#$item['name']#</option>
+                <xar:else />
+                    <option value="#$cid#">#$item['name']#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
     </p>
 </xar:if>
+
 <br style="clear: both;" />
 <br />
-<table width="100%">
-    <tr>
-        <td>Name</td>
-        <td>New Name</td>
-        <td>Exclude</td>
+
+<p>
+    <xar:mlstring><strong>Name changes and Exclusions:</strong></xar:mlstring>
+    <br />
+    <br />
+    <xar:mlstring>
+        Change the displayed named below or choose categories to be excluded from display. Using
+        '@' for the name of a category will make that category's name be that of the primary category
+        the user is currently viewing.
+    </xar:mlstring>
+</p>
+<table width="100%" style="border: 1px dotted purple;">
+    <tr class="xar-alt" style="border-bottom: 1px solid blue;">
+        <td style="border-right: 1px dotted blue;">&nbsp;Name</td>
+        <td style="border-right: 1px dotted blue;">&nbsp;New Name</td>
+        <td>&nbsp;Exclude</td>
     </tr>
+    <xar:set name="$row">1</xar:set>
     <xar:foreach in="$list" key="$cid" value="$item">
-        <tr>
+        <xar:if condition="$row % 2">
+        <tr class="xar-alt">
+        <xar:else />
+        <tr class="xar-norm">
+        </xar:if>
+
+        <xar:set name="$row">$row + 1</xar:set>
+
             <xar:if condition="in_array($cid, array_keys($rename)) OR in_array($cid, $exclude)">
-                <td style="color: blue;">#$item['name']#</td>
+                <td style="color: blue; border-right: 1px dotted blue;">&nbsp;#$item['name']#</td>
             <xar:else />
-                <td>#$item['name']#</td>
+                <td style="border-right: 1px dotted blue;">&nbsp;#$item['name']#</td>
             </xar:if>
             <xar:if condition="in_array($cid, array_keys($rename))">
-                <td>
-                    <input type="textbox"
+                <td style="border-right: 1px dotted blue;">&nbsp;
+                    <input type="text"
                            name="rename[#$cid#]"
                            value="#$rename[$cid]#"
                            onChange="javascript:this.form.submit();" />
                 </td>
             <xar:else />
-                <td>
-                    <input type="textbox"
+                <td style="border-right: 1px dotted blue;">&nbsp;
+                    <input type="text"
                            name="rename[#$cid#]"
                            value=""
                            onChange="javascript:this.form.submit();" />
                 </td>
             </xar:if>
             <xar:if condition="in_array($cid, $exclude)">
-                <td>
+                <td>&nbsp;
                     <input type="checkbox"
                            name="exclude[#$cid#]"
                            value="#$cid#"
@@ -225,7 +243,8 @@
                            onChange="javascript:this.form.submit();" />
                 </td>
             <xar:else />
-                <td><input type="checkbox"
+                <td>&nbsp;
+                    <input type="checkbox"
                            name="exclude[#$cid#]"
                            value="#$cid#"
                            onChange="javascript:this.form.submit();" />
