@@ -31,7 +31,7 @@ $tinyMCE_img_delete_allowed = true;
 // BASE URL FOR IMAGES
 //change if required
 // eg http://www.mysite.com/ Note the trailing slash
-$tinyMCE_base_url = 'http://btl.simiansynapse.com/';
+$tinyMCE_base_url = 'http://www.mysite.com/';
 
 //Now setup your image libraries
 //Each library is defined by a path relative to your website document root
