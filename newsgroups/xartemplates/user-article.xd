@@ -29,7 +29,11 @@
                     <xar:if condition="isset($headers['References']) && is_array($headers['References'])">
                         <xar:mlstring>References</xar:mlstring>:&nbsp;
                         <xar:foreach in="$headers['References']" key="$key" value="$ref">
-                            <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'messageid' => $ref))#">#$key + 1#</a>
+                            <xar:if condition="is_numeric($ref)">
+                                <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $ref))#">#$ref#</a>
+                            <xar:else/>
+                                <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'messageid' => $ref))#">#$key + 1#</a>
+                            </xar:if>
                         </xar:foreach><br />
                     </xar:if>
                     <br />

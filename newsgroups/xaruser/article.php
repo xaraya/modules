@@ -53,9 +53,23 @@ function newsgroups_user_article()
         return $data;
     }
 
-// TODO: translate References to article numbers
-    $data['headers']    = $headers;
     $data['article']    = $newsgroups->getBody($article);
+
+    // translate References to article numbers
+    if (isset($headers['References']) && is_array($headers['References'])) {
+        $numrefs = count($headers['References']);
+        for ($i = 0; $i < $numrefs; $i++) {
+            $ref = str_replace(array('&lt;','&gt;'),
+                               array('<','>'),
+                               $headers['References'][$i]);
+            // STAT doesn't seem to work with message id's, and XHDR may not be available
+            $stat = $newsgroups->splitHeaders($ref);
+            if (!empty($stat['Xref']) && preg_match("/ $group:(\d+)/",$stat['Xref'],$matches)) {
+                $headers['References'][$i] = $matches[1];
+            }
+        }
+    }
+    $data['headers']    = $headers;
     $newsgroups->quit();
 
     $data['article']        = nl2br(xarVarPrepForDisplay($data['article']));
