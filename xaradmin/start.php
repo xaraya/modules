@@ -53,7 +53,7 @@ foreach ($blocks as $block) {
 xarSessionSetVar('inactivated', serialize($blockarray));
 */
 
-    // Hide the configmenu block
+    // Show the configmenu block
     $blockinfo = xarModAPIFunc('blocks', 'user', 'get', array('name'=> 'commerceconfig'));
     if(!xarModAPIFunc('blocks', 'admin', 'activate', array('bid' => $blockinfo['bid']))) return;
 

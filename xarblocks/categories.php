@@ -53,6 +53,7 @@ function commerce_categoriesblock_info()
  */
 function commerce_categoriesblock_display($blockinfo)
 {
+    if (!xarModIsAvailable('categories')) return '';
     // Security Check
     if (!xarSecurityCheck('ViewCommerceBlocks', 0, 'Block', "content:$blockinfo[title]:All")) {return;}
 
