@@ -53,9 +53,9 @@ function hookbridge_admin_config( $args )
             
             $data['hookenabled_create']      = xarModGetVar('hookbridge', 'hookenabled_create' );
             $data['hookfunctions_create']    = unserialize(xarModGetVar('hookbridge', 'hookfunctions_create' ));
-			
-			$data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
-			
+            
+            $data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
+            
             break;
         case 2:
             $itemtype_name = 'updatehook';
@@ -64,11 +64,11 @@ function hookbridge_admin_config( $args )
             
             $data['hookenabled_update']      = xarModGetVar('hookbridge', 'hookenabled_update' );
             $data['hookfunctions_update']    = unserialize(xarModGetVar('hookbridge', 'hookfunctions_update' ));
-			
-			$data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
-			
+            
+            $data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
+            
             break;
-			
+            
         default:
             $itemtype_name = 'Hookbridge Configuration';
             xarModAPIFunc('hookbridge', 'admin', 'config_main', $args);
@@ -114,30 +114,30 @@ function hookbridge_adminpriv_commondata( $args )
 
 function hookbridge_adminpriv_get_available_hook_functions()
 {
-	$hookbridge_functionpath = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
+    $hookbridge_functionpath = xarModGetVar('hookbridge', 'HookBridge_FunctionPath' );
 
-	$available_hook_functions = array();
-	if( isset($hookbridge_functionpath) && !empty($hookbridge_functionpath) )
-	{
-		$dir = $hookbridge_functionpath;
-		
-		// Open a known directory, and proceed to read its contents
-		if (is_dir($dir)) 
-		{
-			if ($dh = opendir($dir)) 
-			{
-				while (($file = readdir($dh)) !== false) 
-				{
-					if( !is_dir($dir."/".$file) )
-					{
-						$available_hook_functions[$file] = $file;
-					}
-				}
-				closedir($dh);
-			}
-		}
-	}
-	return $available_hook_functions;
+    $available_hook_functions = array();
+    if( isset($hookbridge_functionpath) && !empty($hookbridge_functionpath) )
+    {
+        $dir = $hookbridge_functionpath;
+        
+        // Open a known directory, and proceed to read its contents
+        if (is_dir($dir)) 
+        {
+            if ($dh = opendir($dir)) 
+            {
+                while (($file = readdir($dh)) !== false) 
+                {
+                    if( !is_dir($dir."/".$file) )
+                    {
+                        $available_hook_functions[$file] = $file;
+                    }
+                }
+                closedir($dh);
+            }
+        }
+    }
+    return $available_hook_functions;
 }
 
 /*

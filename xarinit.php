@@ -26,13 +26,13 @@ function hookbridge_init()
      * Module Variable for ShortURLSupport!
      */
     xarModSetVar('hookbridge','SupportShortURLs',0 );
-	xarModSetVar('hookbridge', 'HookBridge_FunctionPath', 'var/hookbridge' );
+    xarModSetVar('hookbridge', 'HookBridge_FunctionPath', 'var/hookbridge' );
 
-	$emptyArray = array();
-	xarModSetVar('hookbridge', 'hookenabled_create', 0 );
-	xarModSetVar('hookbridge', 'hookfunctions_create', serialize($emptyArray) );
-	xarModSetVar('hookbridge', 'hookenabled_update', 0 );
-	xarModSetVar('hookbridge', 'hookfunctions_update', serialize($emptyArray) );
+    $emptyArray = array();
+    xarModSetVar('hookbridge', 'hookenabled_create', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_create', serialize($emptyArray) );
+    xarModSetVar('hookbridge', 'hookenabled_update', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_update', serialize($emptyArray) );
     
 
     if (!xarModRegisterHook('module','modifyconfig','GUI','hookbridge','hook','module_modifyconfig' )) { return false; }
