@@ -43,6 +43,12 @@ function articles_userapi_get($args)
 
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
+    // Fields requested by the calling function
+    $required = array();
+    foreach ($fields as $field) {
+        $required[$field] = 1;
+    }
+
     $bindvars = array();
     if (!empty($aid)) {
         $where = "WHERE xar_aid = ?";
@@ -139,8 +145,7 @@ function articles_userapi_get($args)
         if (!xarSecurityCheck('ReadArticles',0,'Article',"$pubtypeid:All:$authorid:$aid")) return;
     }
 
-/*
-    if (xarModIsHooked('dynamicdata','articles')) {
+    if (!empty($required['dynamicdata']) && xarModIsHooked('dynamicdata','articles')) {
         $values =& xarModAPIFunc('dynamicdata','user','getitem',
                                  array('module'   => 'articles',
                                        'itemtype' => $pubtypeid,
@@ -150,7 +155,6 @@ function articles_userapi_get($args)
             $article = array_merge($article,$values);
         }
     }
-*/
     return $article;
 }
 
