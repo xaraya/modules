@@ -1,0 +1,7 @@
+[Contact 0.2.5]
+         added xaruser.php xaruserapi.php 
+         ability to add Contact Us to user menu linked to index.php??module=contact&type=user
+         
+         bug fixes
+
+

@@ -1,0 +1,46 @@
+td { font-family: Verdana, Helvetica, sans-serif; font-size: 9px;}
+TD { font-family: Verdana, Helvetica, sans-serif; font-size: 9px;}
+.BusinessCardHeader {
+        font-family: "Georgia", "Times New Roman", "Times", "serif";
+        font-size: 12px;
+        font-weight: bold;
+         background-color: #CDD5F8;
+        color: #980000;
+        text-decoration: underline;
+}
+.BusinessCardContactHeader {
+        font-family: "Georgia", "Times New Roman", "Times", "serif";
+        font-size: 10px;
+        font-weight: bold;
+        color: #666666;
+}
+.BusinessCardText {
+        font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+        font-size: 10px;
+        color: #333333;
+}
+.BusinessCardBackground {
+        background-color: #CDD5F8;
+        filter:alpha(Opacity=75);
+
+
+}
+.BusinessCardFotoBackground {
+        background-color: #DDDDDD;
+}
+.BusinessCardContactWays {
+        font-size: 9px;
+        color: #333333;
+        font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+}
+.ContactInfoHeader {
+        font-family: "Georgia", "Times New Roman", "Times", "serif";
+        font-size: 11px;
+        font-weight: bold;
+        color: #666666;
+}
+.ContactInfoText {
+        font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+        font-size: 10px;
+        color: #333333;
+}
