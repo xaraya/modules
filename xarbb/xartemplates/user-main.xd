@@ -181,10 +181,10 @@
                         <span class="xar-sub">
                             #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $forum['fpostid'])# 
                             <br />
-							<xar:if condition="!empty($forum['foptions']['ttitle'])">
-								<a href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $forum['foptions']['tid']))#">#$forum['foptions']['ttitle']#</a>
-								<br />
-							</xar:if>
+                            <xar:if condition="!empty($forum['foptions']['ttitle'])">
+                                <a href="#xarModUrl('xarbb', 'user', 'viewtopic', array('tid' => $forum['foptions']['tid']))#">#$forum['foptions']['ttitle']#</a>
+                                <br />
+                            </xar:if>
                             <strong>
                                 By: 
                             </strong>
