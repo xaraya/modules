@@ -309,15 +309,18 @@ function articles_encodeUsingTitle( $aid )
 {
     $searchArgs['aid'] = $aid;
     $article = xarModAPIFunc('articles','user','get', $searchArgs);
-    // TODO: Check to see if there are more then one articles with this title
-    // if there are more then one article with the same title, fall back on something
-    // else -- like using $aid
 
+    // TODO: Make the dupe resolution method configurable
     $dupeResolutionMethod = 'Append Date';
 
     $searchArgs = array();
     $searchArgs['where'] = "title = '".str_replace("'","\\'",$article['title'])."'";
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+
+	if( strpos($article['title'],'_') === FALSE )
+	{
+		$article['title'] = str_replace(' ','_',$article['title']);
+	}
     
     if( count($articles) == 1 )
     {
