@@ -10,6 +10,10 @@
 function scheduler_userapi_intervals()
 {
     $intervals = array(
+                       '5n' => xarML('every #(1) minutes',5),
+                       '10n' => xarML('every #(1) minutes',10),
+                       '15n' => xarML('every #(1) minutes',15),
+                       '30n' => xarML('every #(1) minutes',30),
                        '1h' => xarML('every hour'),
                        '2h' => xarML('every #(1) hours',2),
                        '3h' => xarML('every #(1) hours',3),

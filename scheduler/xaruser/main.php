@@ -71,12 +71,14 @@ function scheduler_user_main()
 
     // check when we last ran the scheduler
     $lastrun = xarModGetVar('scheduler', 'lastrun');
-    $now = time() + 60; // add some margin here
-    if (!empty($lastrun) && $lastrun > $now - 60*60) {
+    $now = time();
+/*	
+    if (!empty($lastrun) && $lastrun > $now - ((60*5)-1) )  // Make sure it's been at least five minutes
+	{
         $diff = time() - $lastrun;
         return xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
     }
-
+*/
     // let's run without interruptions for a while :)
     @ignore_user_abort(true);
     @set_time_limit(15*60);
