@@ -13,11 +13,11 @@
     'text'   - alternative text for link when displaying types
                'readfirst'/'readnext'/'readlast'
 </xar:comment>
-<xar:if condition="empty($aid)">
+<xar:if condition="empty($aid) and 2 &gt; 1">
     #$match#
 <xar:else/>
     <xar:comment> Array used to fetch the article or create a URL. </xar:comment>
-    <xar:set name="$aidarray['aid']">#$aid#</xar:set>
+    <xar:comment><xar:set name="$aidarray['aid']">#$aid#</xar:set></xar:comment>
 
     <xar:comment> The trigger - the URL - can be used to select different portions of this template. </xar:comment>
     <xar:if condition="$url eq 'display'">
@@ -27,19 +27,18 @@
             <xar:set name="$title"><xar:mlstring>Click here to read the article</xar:mlstring></xar:set>
         </xar:if>
         <xar:comment> Fetch the article from its API. </xar:comment>
-        <xar:set name="$article">#xarModAPIfunc('articles','user','get',$aidarray)#</xar:set>
+        <xar:set name="$article">#xarModAPIfunc('articles','user','get',array('aid'=>$aid))#</xar:set>
         <xar:if condition="!empty($article['title'])">
-            <cite><a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
+            <cite><a href="#xarModURL('articles','user','display',array('aid' =&gt; $aid))#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepHTMLDisplay($article['title'])#</a></cite>
         <xar:else/>
             <xar:comment> Display error if the article could not be fetched (invalid number or no permission. </xar:comment>
             <span class="xar-error">[<xar:mlstring>Article not available:</xar:mlstring> ID #$aid#]</span>
         </xar:if>
     <xar:elseif condition="$url eq 'readfirst' or $url eq 'readnext' or $url eq 'readlast'"/>
         <xar:comment> If the ptid is passed in, then use that. </xar:comment>
-        <xar:if condition="!empty($ptid)">
-            <xar:set name="$aidarray['ptid']">#$ptid#</xar:set>
+        <xar:if condition="!isset($ptid)">
+            <xar:set name="$ptid">''</xar:set>
         </xar:if>
-
         <xar:if condition="empty($text) and $url eq 'readfirst'">
             <xar:set name="$text"><xar:mlstring>Click here to read the first article</xar:mlstring></xar:set>
         </xar:if>
@@ -51,9 +50,9 @@
         </xar:if>
 
         <xar:if condition="!empty($title)">
-            <a href="#xarModURL('articles','user','display',$aidarray)#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepForDisplay($text)#</a>
+            <a href="#xarModURL('articles','user','display',array('aid'=&gt;$aid))#" title="#xarVarPrepForDisplay(xarML($title))#">#xarVarPrepForDisplay($text)#</a>
         <xar:else/>
-            <a href="#xarModURL('articles','user','display',$aidarray)#" >#xarVarPrepForDisplay($text)#</a>
+            <a href="#xarModURL('articles','user','display',array('aid'=&gt;$aid, 'ptid'=&gt;$ptid))#" >#xarVarPrepForDisplay($text)#</a>
         </xar:if>
     <xar:else/>
         <xar:comment> No recognised trigger - just return what was matched. </xar:comment>
