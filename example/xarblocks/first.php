@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: s.first.php 1.8 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
+ * File: $Id: first.php 1.24 04/01/28 12:16:10+00:00 dudleyc@pint.(none) $
  * 
  * Example Block
  * 
@@ -18,7 +18,9 @@
  */
 function example_firstblock_init()
 {
-    return true;
+    return array(
+        'numitems' => 5
+    );
 } 
 
 /**
@@ -42,93 +44,72 @@ function example_firstblock_info()
 function example_firstblock_display($blockinfo)
 { 
     // Security check
-    if (!xarSecurityCheck('ReadExampleBlock', 1, 'Block', $blockinfo['title'])) return; 
-    // Get variables from content block
-    $vars = @unserialize($blockinfo['content']); 
+    if (!xarSecurityCheck('ReadExampleBlock', 1, 'Block', $blockinfo['title'])) {return;}
+
+    // Get variables from content block.
+    // Content is a serialized array for legacy support, but will be
+    // an array (not serialized) once all blocks have been converted.
+    if (!is_array($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
+
     // Defaults
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     } 
+
     // The API function is called.  The arguments to the function are passed in
     // as their own arguments array.
     // Security check 1 - the getall() function only returns items for which the
     // the user has at least OVERVIEW access.
-    $items = xarModAPIFunc('example',
-        'user',
-        'getall',
-        array('numitems' => $vars['numitems']));
-    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-     
+    $items = xarModAPIFunc(
+        'example', 'user', 'getall',
+        array('numitems' => $vars['numitems'])
+    );
+    if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {return;} // throw back
+ 
     // TODO: check for conflicts between transformation hook output and xarVarPrepForDisplay
     // Loop through each item and display it.
-    foreach ($items as $item) {
-        // Let any transformation hooks know that we want to transform some text
-        // You'll need to specify the item id, and an array containing all the
-        // pieces of text that you want to transform (e.g. for autolinks, wiki,
-        // smilies, bbcode, ...).
-        // Note : for your module, you might not want to call transformation
-        // hooks in this overview list, but only in the display of the details
-        // in the display() function.
-        // list($item['name']) = xarModCallHooks('item',
-        // 'transform',
-        // $item['exid'],
-        // array($item['name']));
-        // Security check 2 - if the user has read access to the item, show a
-        // link to display the details of the item
-        if (xarSecurityCheck('ReadExample', 0, 'Item', "$item[name]:All:$item[exid]")) {
-            $item['link'] = xarModURL('example',
-                'user',
-                'display',
-                array('exid' => $item['exid'])); 
-            // Security check 2 - else only display the item name (or whatever is
-            // appropriate for your module)
-        } else {
-            $item['link'] = '';
-        } 
-        // Clean up the item text before display
-        $item['name'] = xarVarPrepForDisplay($item['name']); 
-        // Add this item to the list of items to be displayed
-        $data['items'][] = $item;
-    } 
+    if (is_array($items)) {
+        foreach ($items as $item) {
+            // Let any transformation hooks know that we want to transform some text
+            // You'll need to specify the item id, and an array containing all the
+            // pieces of text that you want to transform (e.g. for autolinks, wiki,
+            // smilies, bbcode, ...).
+            // Note : for your module, you might not want to call transformation
+            // hooks in this overview list, but only in the display of the details
+            // in the display() function.
+            // list($item['name']) = xarModCallHooks('item',
+            // 'transform',
+            // $item['exid'],
+            // array($item['name']));
+            // Security check 2 - if the user has read access to the item, show a
+            // link to display the details of the item
+            if (xarSecurityCheck('ReadExample', 0, 'Item', "$item[name]:All:$item[exid]")) {
+                $item['link'] = xarModURL(
+                    'example', 'user', 'display',
+                    array('exid' => $item['exid'])
+                ); 
+                // Security check 2 - else only display the item name (or whatever is
+                // appropriate for your module)
+            } else {
+                $item['link'] = '';
+            } 
+
+            // Add this item to the list of items to be displayed
+            $data['items'][] = $item;
+        }
+    } else {
+        // No items.
+        $data['items'] = array();
+    }
     $data['blockid'] = $blockinfo['bid'];
 
-    // Lets find out the template that we are sending the data to.
-    if (empty($blockinfo['template'])) {
-        $template = 'first';
-    } else {
-        $template = $blockinfo['template'];
-    }
     // Now we need to send our output to the template.
-    $blockinfo['content'] = xarTplBlock('example', $template, $data);
-
-    return $blockinfo;
-} 
-
-/**
- * modify block settings
- */
-function example_firstblock_modify($blockinfo)
-{ 
-    // Get current content
-    $vars = @unserialize($blockinfo['content']); 
-    // Defaults
-    if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
-    } 
-    // Send content to template
-    $output = xarTplBlock('example', 'firstAdmin', array('numitems' => $vars['numitems'], 'blockid' => $blockinfo['bid'])); 
-    // Return output
-    return $output;
-} 
-
-/**
- * update block settings
- */
-function example_firstblock_update($blockinfo)
-{
-    if (!xarVarFetch('numitems', 'isset', $vars['numitems'], NULL, XARVAR_DONT_SET)) return;
-
-    $blockinfo['content'] = serialize($vars);
+    // Just return the template data.
+    $blockinfo['content'] = $data;
 
     return $blockinfo;
 } 
