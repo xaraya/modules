@@ -1,11 +1,14 @@
 <xar:comment>
-    License: GPL http://www.gnu.org/copyleft/gpl.html 
+    License: GPL http://www.gnu.org/copyleft/gpl.html
 </xar:comment>
-<xar:base-include-javascript module="base" filename="confirmlink.js" />
 <xar:comment>
-    using css-driven template, avoiding excess tables for layout, especially nested ones 
+    using css-driven template, avoiding excess tables for layout, especially nested ones
 </xar:comment>
 
+<xar:comment>
+Comment out all this javascript for now. Not required in this template.
+functions.js is deprecated and replicates confirmlink.js
+<xar:base-include-javascript module="base" filename="confirmlink.js" />
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
 <script type="text/javascript">
@@ -16,6 +19,7 @@
     var fieldDescription = Array("Reply Post body text");
 //-->
 </script>
+</xar:comment>
 
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
