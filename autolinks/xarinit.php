@@ -116,6 +116,7 @@ function autolinks_init()
     xarModSetVar('autolinks', 'maxlinkcount', '');
     xarModSetVar('autolinks', 'newwindow', 1);
     xarModSetVar('autolinks', 'punctuation', AUTOLINKS_PUNCTUATION);
+    xarModSetVar('autolinks', 'excludeelements', 'a');
     xarModSetVar('autolinks', 'nbspiswhite', '1');
     xarModSetVar('autolinks', 'templatebase', 'link');
     xarModSetVar('autolinks', 'showerrors', 0);
@@ -153,11 +154,10 @@ function autolinks_init()
     xarRegisterMask('DeleteAutolinks','All','autolinks','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminAutolinks','All','autolinks','All','All','ACCESS_ADMIN');
 
-    // Create or update sample data.
-    $result = xarModAPIfunc(
-        'autolinks', 'admin', 'samples',
-        array('action'=>'create')
-    );
+    // Create the first autolinks type data.
+    if (!autolinks_init_upgrade_data()) {
+        return;
+    }
     
     // Initialisation successful
     return true;
@@ -438,6 +438,8 @@ function autolinks_upgrade($oldversion)
                 array('action'=>'create')
             );
 
+            xarModSetVar('autolinks', 'excludeelements', 'a');
+
             return true;
     }
 
@@ -481,6 +483,7 @@ function autolinks_delete()
     xarModDelVar('autolinks', 'showerrors');
     xarModDelVar('autolinks', 'showsamples');
     xarModDelVar('autolinks', 'typeitemtype');
+    xarModDelVar('autolinks', 'excludeelements');
 
     // Remove Masks and Instances
     xarRemoveMasks('autolinks');

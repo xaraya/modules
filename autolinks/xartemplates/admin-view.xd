@@ -3,6 +3,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto; width: 100%;">
+
 <form method="post" action="#xarModURL('autolinks', 'admin', 'view')#" method="post" enctype="application/x-www-form-urlencoded"/>
 <div>
     <span class="xar-mod-title"><xar:mlstring>Autolink Type:</xar:mlstring></span>
@@ -21,8 +22,10 @@
     <input type="submit" name="update" id="update" value="#xarML('Reload')#"/>
 </div>
 </form>
+
 <xar:if condition="!empty($items)">
-<table width="100%" border="1" cellspacing="0" cellpadding="4">
+<!--- TODO: module classes? --->
+<table style="width: auto; border: 1px solid #666666; empty-cells: inherit; border-collapse: collapse;" cellspacing="0" cellpadding="4">
     <tr>
         <th><xar:mlstring>Type</xar:mlstring></th>
         <th><xar:mlstring>Name</xar:mlstring></th>
@@ -39,7 +42,7 @@
         </xar:if>
 
         <tr style="background-color: #$bgrow#;">
-            <td>
+            <td style="border: 1px solid #666666;">
                 <xar:if condition="empty($item['edittypeurl'])">
                     #xarVarPrepForDisplay($item['type_name'])#
                 <xar:else/>
@@ -47,7 +50,7 @@
                 </xar:if>
             </td>
 
-            <td>
+            <td style="border: 1px solid #666666;">
                 <xar:if condition="empty($item['editurl'])">
                     <xar:if condition="!empty($item['comment'])">
                         <span title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['name'])#</span>
@@ -63,7 +66,7 @@
                 </xar:if>
             </td>
 
-            <td>
+            <td style="border: 1px solid #666666;">
                 <xar:if condition="!empty($item['match_re'])">
                     <em>#xarVarPrepForDisplay($item['keyword'])#</em>
                 <xar:else/>
@@ -71,7 +74,7 @@
                 </xar:if>
             </td>
 
-            <td>
+            <td style="border: 1px solid #666666;">
                 <xar:if condition="!empty($item['title'])">
                     <span title="#xarVarPrepForDisplay($item['title'])#">#xarVarPrepForDisplay($item['url'])#</span>
                 <xar:else/>
@@ -79,7 +82,7 @@
                 </xar:if>
             </td>
 
-            <td align="center">
+            <td align="center" style="border: 1px solid #666666;">
                 <xar:if condition="!empty($item['enabled'])">
                     <xar:set name="$enablelabel"><xar:mlstring>Disable</xar:mlstring></xar:set>
                 <xar:else/>

@@ -28,11 +28,18 @@
 
 	<h3><xar:mlstring>Matching Rule Options</xar:mlstring></h3>
 
-	<p><label for="punctuation"><xar:mlstring>Punctuation characters</xar:mlstring></label>&nbsp;&nbsp;
-	<input type="text" name="punctuation" id="punctuation" size="20" maxlength="30" value="#xarModGetVar('autolinks', 'punctuation', 1)#" />
+	<p>
+        <label for="punctuation"><xar:mlstring>Punctuation characters</xar:mlstring></label>&nbsp;&nbsp;
+	    <input type="text" name="punctuation" id="punctuation" size="20" maxlength="30" value="#xarModGetVar('autolinks', 'punctuation', 1)#" />
 	</p>
 
-	<p>	<label for="nbspiswhite"><xar:mlstring>Match non-breaking space entity (&amp;nbsp;) as white space</xar:mlstring></label>
+	<p>
+        <label for="excludeelements"><xar:mlstring>Do not match in elements</xar:mlstring></label>&nbsp;&nbsp;
+	    <input type="text" name="excludeelements" id="excludeelements" size="20" maxlength="200" value="#xarModGetVar('autolinks', 'excludeelements', 1)#" />
+	</p>
+
+	<p>
+        <label for="nbspiswhite"><xar:mlstring>Match non-breaking space entity (&amp;nbsp;) as white space</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'nbspiswhite')">
 			<input type="checkbox" name="nbspiswhite" id="nbspiswhite" value="1" checked="checked" />
 		<xar:else />
@@ -42,22 +49,25 @@
 
     <h3><xar:mlstring>Action Options</xar:mlstring></h3>
 
-	<p><label for="maxlinkcount"><xar:mlstring>Limit on number of times each link is used in a piece of text</xar:mlstring></label>&nbsp;&nbsp;
+	<p>
+        <label for="maxlinkcount"><xar:mlstring>Limit on number of times each link is used in a piece of text</xar:mlstring></label>&nbsp;&nbsp;
 		<input type="text" name="maxlinkcount" id="maxlinkcount" size="3" maxlength="3" value="#xarModGetVar('autolinks', 'maxlinkcount', 1)#"/>
 	</p>
 
-	<p><label for="decoration"><xar:mlstring>Autolink decoration (style will over-ride class)</xar:mlstring></label>&nbsp;&nbsp;
-	<select name="decoration" id="decoration" size="1">
+	<p>
+        <label for="decoration"><xar:mlstring>Autolink decoration (style will over-ride class)</xar:mlstring></label>&nbsp;&nbsp;
+	    <select name="decoration" id="decoration" size="1">
 		<xar:foreach in="$decoration" value="$v" key="$k">
-		<xar:if condition="$k eq $decorationsel">
-			<option value="#$k#" selected="selected">#$v#</option>
-		<xar:else />
-			<option value="#$k#">#$v#</option>
-		</xar:if>
+            <xar:if condition="$k eq $decorationsel">
+                <option value="#$k#" selected="selected">#$v#</option>
+            <xar:else />
+                <option value="#$k#">#$v#</option>
+            </xar:if>
 		</xar:foreach>
 	</select><p>
 
-	<p><label for="newwindow"><xar:mlstring>Open links in new window</xar:mlstring></label>
+	<p>
+        <label for="newwindow"><xar:mlstring>Open links in new window</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'newwindow')">
 			<input type="checkbox" name="newwindow" id="newwindow" value="1" checked="checked" />
 		<xar:else />
@@ -65,7 +75,8 @@
 		</xar:if>
 	</p>
 
-	<p><label for="showerrors"><xar:mlstring>Show template errors inline (errors shown in content)</xar:mlstring></label>
+	<p>
+        <label for="showerrors"><xar:mlstring>Show template errors inline (errors shown in content)</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'showerrors')">
 			<input type="checkbox" name="showerrors" id="showerrors" value="1" checked="checked" />
 		<xar:else />
@@ -73,7 +84,8 @@
 		</xar:if>
 	</p>
 
-	<p><label for="templatebase"><xar:mlstring>Template base name (affects all templates used)</xar:mlstring></label>&nbsp;&nbsp;
+	<p>
+        <label for="templatebase"><xar:mlstring>Template base name (affects all templates used)</xar:mlstring></label>&nbsp;&nbsp;
 		<input type="text" name="templatebase" id="templatebase" size="20" maxlength="30" value="#xarModGetVar('autolinks', 'templatebase', 1)#"/>
 	</p>
 
@@ -83,7 +95,8 @@
 	<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('autolinks', 'itemsperpage', 1)#" />
 	</p>
 
-	<p><label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>
+	<p>
+        <label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'showsamples')">
 			<input type="checkbox" name="showsamples" id="showsamples" value="1" checked="checked" />
 		<xar:else />
@@ -91,8 +104,9 @@
 		</xar:if>
 	</p>
 
-	<p><label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>&nbsp;&nbsp;
-	<select name="showsamples" id="showsamples" size="1">
+	<p>
+        <label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>&nbsp;&nbsp;
+	    <select name="showsamples" id="showsamples" size="1">
 		<xar:foreach in="$samples" value="$v" key="$k">
 		<xar:if condition="$k eq $samplessel">
 			<option value="#$k#" selected="selected">#$v#</option>
@@ -103,13 +117,14 @@
 	</select>
     </p>
 
-    <p><xar:if condition="!empty($hooks)">
-        <h2><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h2>
-        <xar:foreach in="$hooks" key="$hookmodule">
-            #$hooks[$hookmodule]#
-        </xar:foreach>
-        <br style="clear: both;"/>
-    </xar:if>
+    <p>
+        <xar:if condition="!empty($hooks)">
+            <h2><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h2>
+            <xar:foreach in="$hooks" key="$hookmodule">
+                #$hooks[$hookmodule]#
+            </xar:foreach>
+            <br style="clear: both;"/>
+        </xar:if>
     </p>
 
     <p><input type="submit" name="submit" id="submit" value="#$submit#" align="middle"/></p>
@@ -130,13 +145,19 @@
         </xar:mlstring>
     </p>
 
-    <div style="float: left; width: 30%"><strong><xar:mlstring>Autolink Type Name</xar:mlstring></strong></div>
-    <div style="float: left; width: 70%"><strong><xar:mlstring>Template Name</xar:mlstring></strong></div>
-    <xar:foreach in="$sample_data" key="$samplekey">
-        <div style="float: left; width: 30%">#$sample_data[$samplekey]['type_name']#</div>
-        <div style="float: left; width: 70%">#$sample_data[$samplekey]['template_name']#</div>
-    </xar:foreach>
-    <br style="clear :both;"/><br/>
+    <table>
+        <tr>
+            <th><xar:mlstring>Autolink Type Name</xar:mlstring></th>
+            <th><xar:mlstring>Template Name</xar:mlstring></th>
+        </tr>
+        <tr>
+            <xar:foreach in="$sample_data" key="$samplekey">
+                <td>#$sample_data[$samplekey]['type_name']#</td>
+                <td>#$sample_data[$samplekey]['template_name']#</td>
+            </tr>
+        </xar:foreach>
+    </table>
+
 
     <xar:set name="$submitsamples"><xar:mlstring>Create sample data</xar:mlstring></xar:set>
     <p><input type="submit" name="createsamples" id="createsamples" value="#$submitsamples#" align="middle"/></p>

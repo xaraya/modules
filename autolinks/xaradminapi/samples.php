@@ -88,16 +88,6 @@ function autolinks_adminapi_samples($args)
             'type_desc' => xarML('Various links for fetching articles links. Don\'t forget to hook in DD to view these links correctly. Change these examples to fit the way you want to use them in the site.'),
             'dd_object' => array(
                 array(
-                    'name' => 'module',
-                    'label' => xarML('Module'),
-                    'type' => 2, // 'textbox'
-                    'default' => '' /*,
-                    'source' => '',
-                    'status' => '',
-                    'order' => '',
-                    'validation' => '' */
-                ),
-                array(
                     'name' => 'aid',
                     'label' => xarML('Article ID'),
                     'type' => 2, // 'textbox'

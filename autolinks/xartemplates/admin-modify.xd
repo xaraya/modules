@@ -6,7 +6,8 @@
 <form method="post" action="#$updateurl#" method="post" enctype="application/x-www-form-urlencoded" />
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="lid" id="lid" value="#$lid#" />
-    <table border="0">
+
+    <table style="width: auto;" border="0">
         <tr align="left" valign="top">
             <td>
                 <xar:if condition="!empty($edittypeurl)">

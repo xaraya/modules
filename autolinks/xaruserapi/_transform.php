@@ -202,10 +202,9 @@ function autolinks_userapi__transform($args)
         // include custom tags if the user wants to prevent Autolink matching
         // in any enclosed section of a document.
         // TODO: exclude_elements is a configuration item.
-        // TODO: ensure the excluded elements are cleaned when submitted.
 
-        //$exclude_elements = autolinks_userapi_cleantaglist(xarModGetVar('autolinks', 'excludeelements'), ' ');
-        $exclude_elements = 'a table';
+        $exclude_elements = xarModGetVar('autolinks', 'excludeelements');
+        if (empty($exclude_elements)) {$exclude_elements = 'a';}
 
         // The tag_preg will contain the preg matches to identify spans of
         // tags and elements that should not be matched by this module. Open with
@@ -257,16 +256,22 @@ function autolinks_userapi__transform($args)
     // matching valid content. Hopefully the first token will work (' #-+-# ')
     if (empty($joiner))
     {
-        // TODO: try starting with zero
-        for ($i=1; $i<=11; $i+=2)
+        for ($i=0; $i<=11; $i+=2)
         {
             $joiner = ' #' . str_pad('-', $i, '+', STR_PAD_BOTH) . '# ';
             if (strpos($text, $joiner) === false)
             {
                 // No match, so we can use this as a field separater.
                 break;
+            } else {
+                $joiner = '';
             }
         }
+    }
+
+    if ($joiner == '') {
+        // We can't do a transform due to matches in the content.
+        return $text;
     }
 
     $limit = xarModGetVar('autolinks', 'maxlinkcount');

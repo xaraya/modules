@@ -36,6 +36,7 @@ function autolinks_admin_updateconfig()
     if (!xarVarFetch('showsamples', 'int:0:3', $showsamples, 0, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('decoration', 'str::30', $decoration, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('punctuation', 'str::30', $punctuation, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('excludeelements', 'str:1:200', $excludeelements, 'a', XARVAR_NOT_REQUIRED)) {return;}
     // TODO: further validation to ensure the template base is a valid partial-filename.
     // TODO: if the template base has been changed, then recompile all the autolinks.
     if (!xarVarFetch('templatebase', 'str:1:30', $templatebase, 'link', XARVAR_NOT_REQUIRED)) {return;}
@@ -49,6 +50,18 @@ function autolinks_admin_updateconfig()
     xarModSetVar('autolinks', 'decoration', $decoration);
     xarModSetVar('autolinks', 'punctuation', $punctuation);
     xarModSetVar('autolinks', 'templatebase', $templatebase);
+
+    // Clean up the excluded elements list.
+
+    // Remove non-alpha chars and normalize letter-case:
+    $excludeelements = strtolower(
+        trim(preg_replace('/[^\w:]+/', ' ', $excludeelements))
+    );
+
+    // Compress runs of white space:
+    $excludeelements = preg_replace('/\s+/', ' ', $excludeelements);
+    
+    xarModSetVar('autolinks', 'excludeelements', $excludeelements);
 
     // If certain values have changed, then rebuild the replace caches (these values
     // will affect the cached template outputs).
