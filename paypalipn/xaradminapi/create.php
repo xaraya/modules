@@ -1,4 +1,4 @@
-<?php
+<?
 /**
  * create a new item
  * @param $args['args'] Paypal Transaction Post Vars
@@ -12,11 +12,10 @@ function paypalipn_adminapi_create($args)
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
     if (!isset($args)) {
-        $msg = xarML('Invalid Parameter Count in #(3)_#(1)api_#(2)', 'admin', 'create', '?modname');
+        $msg = xarML('Invalid Parameter Count);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
     $var_dump = $args['var_dump'];
     //unset($args['var_dump']);
 
@@ -31,13 +30,13 @@ function paypalipn_adminapi_create($args)
               xar_id,
               xar_log)
             VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($var_dump) . "')";
-    $result =& $dbconn->Execute($query);
+              ?,
+              ?)";
+    $bindvars = array($nextId, $var_dump);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Get the ID of the item that we inserted
     $id = $dbconn->PO_Insert_ID($table, 'xar_id');
-
     // Let any hooks know that we have created a new link
     // Call create hooks for categories, hitcount etc.
     $args['id'] = $id;
