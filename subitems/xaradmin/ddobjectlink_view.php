@@ -1,6 +1,7 @@
 <?php
 
-function subitems_admin_ddobjectlink_view($args)	{
+function subitems_admin_ddobjectlink_view($args)	
+{
 	$data = xarModAPIFunc('subitems','admin','menu');
 
     $items = xarModAPIFunc('subitems','user','ddobjectlink_getall');
