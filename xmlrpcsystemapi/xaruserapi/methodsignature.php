@@ -50,7 +50,7 @@ function xmlrpcsystemapi_userapi_methodsignature($args)
 		}
 	} else {
         // Method is not in the dispatch map.
-        $err = xarML("The method #(1) is not know at this XML-RPC server",$methName);
+        $err = xarML("The method #(1) is not known at this XML-RPC server",$methName);
         $out = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
 	}
     /*

@@ -33,7 +33,7 @@ function xmlrpcsystemapi_userapi_methodhelp($args)
         // Another example of method 1: using xmlrpc server generic protocol template
         $out = xarModAPIFunc('xmlrpcserver','user','createresponse', array('params'  => $responsedata));
 	} else {
-        $err = xarML("The method #(1) is not know at this XML-RPC server",$methName);
+        $err = xarML("The method #(1) is not known at this XML-RPC server",$methName);
         $out = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
 	}
 	return $out;
