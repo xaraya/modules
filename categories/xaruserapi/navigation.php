@@ -351,7 +351,7 @@ function categories_userapi_navigation($args)
 
                 if (empty($catlist) || !is_array($catlist)) {return '';}
 
-                // preserve order of root categories if possible
+                // preserve order of base categories if possible
                 foreach ($mastercids as $cid) {
                     if (!isset($catlist[$cid])) continue;
                     $cat = $catlist[$cid];
@@ -394,6 +394,8 @@ function categories_userapi_navigation($args)
                     // includes 'self'.
                     if (empty($parents)) {continue;}
 
+                    $catleft = 0;
+                    $baseorder = 0;
                     $catitems = array();
                     $curcount = 0;
 
@@ -455,6 +457,15 @@ function categories_userapi_navigation($args)
                             $baseflag = 2;
                             // Set the base cid for this trail (only set the first base we come across).
                             $trailbasecid = ($trailbasecid ? $trailbasecid : $cat['cid']);
+                            if (empty($baseorder)) {
+                                // return the index in the mastercids
+                                $baseorder = array_search($cat['cid'], $mastercids);
+                                if ($baseorder === false) {
+                                     $baseorder = 0;
+                                } else {
+                                     $baseorder++;
+                                }
+                            }
                         }
 
                         // TODO: move the prep to the template.
@@ -477,6 +488,7 @@ function categories_userapi_navigation($args)
                         }
 
                         if ($cat['cid'] == $cid) {
+                            $catleft = $cat['left'];
                             // show optional count
                             if (isset($catcount[$cat['cid']])) {
                                 $curcount = $catcount[$cat['cid']];
@@ -487,9 +499,9 @@ function categories_userapi_navigation($args)
                             // but not always. As it is, the HTML display prep is the wrong one
                             // to use for an attribute anyway.
                             if (!empty($cat['description'])) {
-                                $descriptions[] = xarVarPrepHTMLDisplay($cat['description']);
+                                $descriptions[$cid] = xarVarPrepHTMLDisplay($cat['description']);
                             } else {
-                                $descriptions[] = xarVarPrepForDisplay($cat['name']);
+                                $descriptions[$cid] = xarVarPrepForDisplay($cat['name']);
                             }
                             // Save current category info for icon etc.
                             if (count($cids) == 1) {
@@ -519,8 +531,22 @@ function categories_userapi_navigation($args)
                         'catitems' => $catitems,
                         'catcount' => $curcount,
                         'viewall' => $viewall,
+                        'catid' => $cid,
+                        'catleft' => $catleft,
+                        'baseorder' => $baseorder,
                         'basecatid' => $trailbasecid
                     );
+                }
+                // sort navigation trails by base category order, then by Celko tree
+                uasort($data['cattrails'], 'categories_navigation_sortbyorder');
+                // re-order the list of cids and descriptions accordingly
+                $sortcids = array();
+                $sortdescr = array();
+                foreach ($data['cattrails'] as $trail) {
+                    $sortcids[] = $trail['catid'];
+                    if (isset($descriptions[$trail['catid']])) {
+                        $sortdescr[] = $descriptions[$trail['catid']];
+                    }
                 }
 
                 // Add filters to select on 'all categories' or 'any categories'
@@ -530,12 +556,12 @@ function categories_userapi_navigation($args)
                         $label = xarML('Any of these categories');
                         $link = xarModURL(
                             $modname,$type,$func,
-                            array('itemtype' => $itemtype, 'catid' => join('-', $cids))
+                            array('itemtype' => $itemtype, 'catid' => join('-', $sortcids))
                         );
                         $join = '';
                         $catitems[] = array(
                             'catlabel' => $label,
-                            'catid' => join('-', $cids),
+                            'catid' => join('-', $sortcids),
                             'catlink' => $link,
                             'catjoin' => $join,
                             'baseflag' => 5
@@ -547,7 +573,7 @@ function categories_userapi_navigation($args)
                             $modname, $type, $func,
                             array(
                                 'itemtype' => $itemtype,
-                                'catid' => join('+',$cids)
+                                'catid' => join('+',$sortcids)
                             )
                         );
                         if (!empty($itemid)) {
@@ -557,7 +583,7 @@ function categories_userapi_navigation($args)
                         }
                         $catitems[] = array(
                             'catlabel' => $label,
-                            'catid' => join('+', $cids),
+                            'catid' => join('+', $sortcids),
                             'catlink' => $link,
                             'catjoin' => $join,
                             'baseflag' => 5
@@ -573,11 +599,11 @@ function categories_userapi_navigation($args)
                 // TODO: move off to nav-trails template ?
                 // Build category description
                 if (!empty($itemid)) {
-                    $data['catdescr'] = join(' + ', $descriptions);
+                    $data['catdescr'] = join(' + ', $sortdescr);
                 } elseif (!empty($andcids)) {
-                    $data['catdescr'] = join(' ' . xarML('and') . ' ', $descriptions);
+                    $data['catdescr'] = join(' ' . xarML('and') . ' ', $sortdescr);
                 } else {
-                    $data['catdescr'] = join(' ' . xarML('or') . ' ', $descriptions);
+                    $data['catdescr'] = join(' ' . xarML('or') . ' ', $sortdescr);
                 }
 
                 if (count($cids) != 1) {
@@ -963,6 +989,18 @@ function categories_userapi_navigation($args)
         $template = $template_override;
     }
     return xarTplModule('categories', 'user', 'navigation', $data, $template);
+}
+
+/**
+ * sort navigation trails by base category order, then by Celko tree
+ */
+function categories_navigation_sortbyorder ($a,$b)
+{
+    if ($a['baseorder'] == $b['baseorder']) {
+        if ($a['catleft'] == $b['catleft']) return 0;
+        return ($a['catleft'] > $b['catleft']) ? 1 : -1;
+    }
+    return ($a['baseorder'] > $b['baseorder']) ? 1 : -1;
 }
 
 ?>
