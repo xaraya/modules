@@ -1,5 +1,4 @@
 <?php
-
 // File: $Id$
 // ----------------------------------------------------------------------
 // Xaraya eXtensible Management System
@@ -9,7 +8,6 @@
 // Original Author of file: Frank Besler <besfred@xaraya.com>
 // Purpose of file: Show Image feeds
 // ----------------------------------------------------------------------
-
 
 
 /**
