@@ -110,7 +110,7 @@ function newsletter_adminapi_updatepublication($args)
                       (string)  $title,
                       (string)  $logo,
                       (int)     $linkExpiration,
-                      (sring)   $linkRegistration,
+                      (string)   $linkRegistration,
                       (string)  $description,
                       (int)     $disclaimerId,
                       (string)  $introduction,

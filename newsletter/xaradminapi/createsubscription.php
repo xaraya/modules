@@ -70,7 +70,7 @@ function newsletter_adminapi_createsubscription($args)
               xar_uid,
               xar_pid,
               xar_htmlmail)
-             VALUES (?, ?, ?)"
+             VALUES (?, ?, ?)";
 
     $bindvars = array((int) $uid, (int) $pid, (int) $htmlmail);
 

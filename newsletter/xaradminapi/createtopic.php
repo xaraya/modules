@@ -65,7 +65,7 @@ function newsletter_adminapi_createtopic($args)
               WHERE  xar_issueid = ?
               AND    xar_storyid = ?";
 
-    $result =& $dbconn->Execute($query, array((int) $issueId, (int) $storyId);
+    $result =& $dbconn->Execute($query, array((int) $issueId, (int) $storyId));
     if (!$result) return false;
 
     if ($result->RecordCount() > 0) {

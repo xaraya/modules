@@ -65,7 +65,7 @@ function newsletter_adminapi_unpublishstory($args)
                WHERE xar_id = ?";
 
     // Execute query
-    $result =& $dbconn->Execute($query, array(int) $id));
+    $result =& $dbconn->Execute($query, array((int) $id));
 
     // Check for an error
     if (!$result) return;
