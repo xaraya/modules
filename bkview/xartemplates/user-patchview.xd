@@ -8,7 +8,7 @@
             <xar:ml>
                 <xar:mlstring>Diffs for #(1) introduced in #(2)</xar:mlstring>
                 <xar:mlvar>#$loop:item['file']#</xar:mlvar>
-                <xar:mlvar>#$loop:item['revision']#</xar:mlvar>
+                <xar:mlvar>#$loop:item['rev']#</xar:mlvar>
             </xar:ml>
             </div>
     

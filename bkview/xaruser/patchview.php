@@ -35,8 +35,9 @@ function bkview_user_patchview($args)
         foreach($dlist as $delta_id => $delta) {
             //while (list($delta_id) = each($dlist)) {
             //$delta=$changeset->bkDelta($delta_id);
-            $deltalist[$counter]['file']=$delta->bkFile();
-            $deltalist[$counter]['revision']=$delta->bkRev();
+            $deltalist[$counter] = (array) $delta;
+            //$deltalist[$counter]['file']=$delta->bkFile();
+            //$deltalist[$counter]['revision']=$delta->bkRev();
             
             $diff=$delta->bkDiffs();
             $deltalist[$counter]['difflines']=array();
