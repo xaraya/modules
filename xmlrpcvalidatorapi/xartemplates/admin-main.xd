@@ -11,7 +11,7 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
 			<p>
-			  <xar:mlstring>The XML-RPC validator API is a XML-RPC API used for to validate a XML-RPC installation
+			  <xar:mlstring>The XML-RPC validator API is a XML-RPC API used to validate a XML-RPC installation
 			  on conformance to the specification. It implements the necessary methods on the server
 			  so test clients can validate whether the server conforms to the specification.</xar:mlstring>
 			</p>
