@@ -1,0 +1,66 @@
+<?php
+/**
+ * Delete a trackback item - hook for ('item','delete','API')
+ *
+ * @param int $args['objectid'] ID of the object
+ * @param array $args['extrainfo'] extra information
+ * @param string $args['modname'] name of the calling module (not used in hook calls)
+ * @return bool true on success, false on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ */
+function trackback_adminapi_delete($args)
+{
+    extract($args);
+
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'object ID', 'admin', 'delete', 'trackback');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
+    }
+
+    // When called via hooks, modname will be empty, but we get it from the
+    // current module
+    if (empty($modname)) {
+        $modname = xarModGetName();
+    }
+    $modId = xarModGetIDFromName($modname);
+    if (empty($modId)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module name', 'admin', 'delete', 'trackback');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
+    }
+
+    // TODO: re-evaluate this for hook calls !!
+
+    // Security check - important to do this as early on as possible to
+    // avoid potential security holes or just too much wasted processing
+    if (!xarSecurityCheck('DeleteTrackBack', 1, 'TrackBack', "$modname:$objectid:All")) {
+        return;
+    }
+
+    list($dbconn) = xarDBGetConn();
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
+
+    // Don't bother looking if the item exists here...
+
+    $query = "DELETE FROM $trackBackTable
+            WHERE moduleid = '" . xarVarPrepForStore($modId) . "'
+              AND itemid = '" . xarVarPrepForStore($objectid) . "'";
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // hmmm, I think we'll skip calling more hooks here... :-)
+    //xarModCallHooks('item', 'delete', $exid, '');
+
+    // Return the extra info
+    if (!isset($extraInfo)) {
+        $extraInfo = array();
+    }
+    return $extraInfo;
+}
+?>

@@ -1,0 +1,68 @@
+<?php
+/**
+ * Get a trackback for a list of items
+ *
+ * @param string $args['modname'] name of the module you want items from
+ * @param array $args['itemids'] array of item IDs
+ * @return array $array[$itemid] = $urls;
+ */
+function trackback_userapi_getitems($args)
+{
+    // Get arguments from argument array
+    extract($args);
+
+    // Argument check
+    if (!isset($modname)) {
+        xarSessionSetVar('errormsg', _MODARGSERROR);
+        return;
+    }
+    $modId = xarModGetIDFromName($modname);
+    if (empty($modId)) {
+        xarSessionSetVar('errormsg', _MODARGSERROR);
+        return;
+    }
+
+    if (!isset($itemids)) {
+        $itemids = array();
+    }
+
+    // Security check
+    if (count($itemids) > 0) {
+        foreach ($itemids as $itemid) {
+            if (!xarSecurityCheck('ViewTrackBack', 1, 'TrackBack', "$modname:All:$itemid")) {
+                return;
+            }
+        }
+    } else {
+            if (!xarSecurityCheck('ViewTrackBack', 1, 'TrackBack', "$modname:All:All")) {
+                return;
+            }
+    }
+
+    // Database information
+    list($dbconn) = xarDBGetConn();
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
+
+    // Get items
+    $query = "SELECT itemid, url, title, excerpt
+            FROM $trackBacktTable
+            WHERE moduleid = '" . xarVarPrepForStore($modId) . "'";
+    if (count($itemids) > 0) {
+        $allIds = join(', ',$itemids);
+        $query .= " AND itemid IN ('" . xarVarPrepForStore($allIds) . "')";
+    }
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $tblist = array();
+    while (!$result->EOF) {
+        list($id,$url, $title, $exerpt) = $result->fields;
+        $tbList[$id] = $url;
+        $result->MoveNext();
+    }
+    $result->close();
+
+    return $tbList;
+}
+?>

@@ -1,0 +1,113 @@
+<?php
+/**
+ * Create a new trackback item - hook for ('item','create','API')
+ *
+ * @param int    $args['objectid'] ID of the object
+ * @param array  $args['extrainfo'] extra information
+ * @param string $args['modname'] name of the calling module (not used in hook calls)
+ * @param string $args['url'] url where the item is tracked (not used in hook calls)
+ * @param string $args['blogname'] name of the site where the item is tracked (not used in hook calls)
+ * @param string $args['title'] title of the trackback post (not used in hook calls)
+ * @param string $args['excerpt'] exccerpt from the trackback post (not used in hook calls)
+ * @return int trackback item ID on success, void on failure
+ * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+ */
+function trackback_adminapi_create($args)
+{
+    extract($args);
+
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'object ID', 'admin', 'create', 'trackback');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
+
+    // When called via hooks, modname will be empty, but we get it from the
+    // current module
+    if (empty($modname)) {
+        $modname = xarModGetName();
+    }
+    $modId = xarModGetIDFromName($modname);
+    if (empty($modId)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module name', 'admin', 'create', 'trackback');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
+
+    // TODO: re-evaluate this for hook calls !!
+
+    // Security check - important to do this as early on as possible to
+    // avoid potential security holes or just too much wasted processing
+    if (!xarSecurityCheck('AddTrackBack', 1, 'TrackBack', "$modname:$objectid:All")) {
+        return;
+    }
+
+    // Create new trackback
+    if (!isset($url)) {
+         if (isset($extraInfo['url'])) {
+             $url = $extraInfo['url'];
+         }
+    }
+
+    if (!isset($title)) {
+         if (isset($extraInfo['title'])) {
+             $title = $extraInfo['title'];
+         }
+    }
+
+    if (!isset($blogname)) {
+         if (isset($extraInfo['blogname'])) {
+             $blogname = $extraInfo['blogname'];
+         }
+    }
+
+    if (!isset($excerpt)) {
+         if (isset($extraInfo['excerpt'])) {
+             $excerpt = $extraInfo['excerpt'];
+         }
+    }
+
+    list($dbconn) = xarDBGetConn();
+    $tables = xarDBGetTables();
+    $trackBackTable = $tables['trackback'];
+
+    // Get a new trackback ID
+    $nextId = $dbconn->GenId($trackbackTable);
+
+    $query = "INSERT INTO $trackBackTable(trackbackid,
+                                          moduleid,
+                                          itemid,
+                                          url,
+                                          blog_name,
+                                          title,
+                                          excerpt)
+            VALUES ($nextId,
+                    '" . xarVarPrepForStore($modId) . "',
+                    '" . xarVarPrepForStore($objectid) . "',
+                    '" . xarVarPrepForStore($url) . "',
+                    '" . xarVarPrepForStore($blogname) . "',
+                    '" . xarVarPrepForStore($title) . "',
+                    '" . xarVarPrepForStore($excerpt) . "')";
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $tbId = $dbconn->PO_Insert_ID($trackBackTable, 'trackbackid');
+
+    // hmmm, I think we'll skip calling more hooks here... :-)
+    //xarModCallHooks('item', 'create', $tbid, 'trackbackid');
+
+    // Return the extra info with the id of the newly created item
+    // (not that this will be of any used when called via hooks, but
+    // who knows where else this might be used)
+    if (!isset($extraInfo)) {
+        $extraInfo = array();
+    }
+    $extraInfo['tbid'] = $tbId;
+    return $extraInfo;
+}
+?>
