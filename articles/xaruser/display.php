@@ -121,7 +121,7 @@ function articles_user_display($args)
     }
 
     // multi-page output for 'body' field (mostly for sections at the moment)
-    $themeName = xarVarCleanFromInput('theme');
+    $themeName = xarVarGetCached('Themes.name','CurrentTheme');
         if ($themeName != 'print'){
         if (strstr($article['body'],'<!--pagebreak-->')) {
             if ($preview) {
@@ -224,6 +224,8 @@ function articles_user_display($args)
 
     if (!empty($article['title'])) {
         xarTplSetPageTitle(xarVarPrepForDisplay($article['title']), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
+        // Save some variables to (temporary) cache for use in blocks etc.
+        xarVarSetCached('Comments.title','title',$article['title']);
     }
 
     // Fill in the fields based on the pubtype configuration
