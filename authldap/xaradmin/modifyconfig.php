@@ -25,24 +25,69 @@ function authldap_admin_modifyconfig()
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
     
-    // prepare labels and values for display by the template
-    $data['title'] = xarVarPrepForDisplay(xarML('Administration'));
-    $data['configadmin'] = xarVarPrepForDisplay(xarML('Configure AuthLDAP'));
+    // Create LDAP object
+    include_once 'modules/xarldap/xarldap.php';
+    $ldap = new xarLDAP();
 
-    $data['adduser'] = xarVarPrepForDisplay(xarML('Add LDAP User to Xaraya Database on Login'));
+    // Set the LDAP object parameters from module variables
+    $ldap->get_parameters();
+
+    // Server (default is '127.0.0.1')
+    $data['ldapservervalue'] = xarVarPrepForDisplay($ldap->server);
+
+    // Port number
+    $data['portnumbervalue'] = xarVarPrepForDisplay($ldap->port_number);
+
+    // Allow anonymous bind to server (true/false)
+    if ($ldap->anonymous_bind == 'true') {    
+        $data['anonymousbindvalue'] = xarVarPrepForDisplay("checked");
+    } else {
+        $data['anonymousbindvalue'] = "";
+    }
+
+    // Bind DN (default is 'o=dept')
+    $data['binddnvalue'] = xarVarPrepForDisplay($ldap->bind_dn);
+
+    // UID Field (default is 'cn')
+    $data['uidfieldvalue'] = xarVarPrepForDisplay($ldap->uid_field);
+
+    // Search user dn (true/false)
+    if ($ldap->search_user_dn == 'true') {    
+        $data['searchuserdnvalue'] = xarVarPrepForDisplay("checked");
+    } else {
+        $data['searchuserdnvalue'] = "";
+    }
+
+    // Admin Login
+    $data['adminidvalue'] = xarVarPrepForDisplay($ldap->admin_login);
+
+    // Admin password
+
+    // Admin password is encrypted - so decrypt
+    $adminpasswd = $ldap->encrypt($ldap->admin_password, 0);
+    $data['adminpasswdvalue'] = xarVarPrepForDisplay($adminpasswd);
+
+    // Add user to xar_roles
     if (xarModGetVar('authldap','add_user') == 'true') {    
         $data['adduservalue'] = xarVarPrepForDisplay("checked");
     } else {
         $data['adduservalue'] = "";
     }
-    $data['adduseruname'] = xarVarPrepForDisplay(xarML('LDAP Username Attribute Name'));
+    
+    // Username
     $data['adduserunamevalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','add_user_uname'));
-    $data['adduseremail'] = xarVarPrepForDisplay(xarML('LDAP Email Attribute Name'));
+
+    // User email
     $data['adduseremailvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','add_user_email'));
         
-
+    // Store user's LDAP password in Xaraya database?
+    if (xarModGetVar('authldap','store_user_password') == 'true') {    
+        $data['storepasswordvalue'] = xarVarPrepForDisplay("checked");
+    } else {
+        $data['storepasswordvalue'] = "";
+    }
+    
     // Get groups
-    $data['defaultgrouplabel'] = xarVarPrepForDisplay(xarML('Default Group'));
     $data['defaultgroup'] = xarModGetVar('authldap', 'defaultgroup');
 
     // Get default users group
@@ -63,7 +108,6 @@ function authldap_admin_modifyconfig()
     $data['groups'] = $groups;
 
     // Submit button
-    $data['submitlabel'] = xarVarPrepForDisplay(xarML('Click "Submit" to change configuration:'));
     $data['submitbutton'] = xarVarPrepForDisplay(xarML('Submit'));
        
     // everything else happens in Template for now

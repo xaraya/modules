@@ -40,8 +40,5 @@
 			<xar:mlstring>There are no included blocks with the AuthLDAP Module</xar:mlstring>
         </div>
         <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-        </div>
     </div>
 </div>

@@ -20,25 +20,89 @@
 function authldap_admin_updateconfig()
 {
     // Get parameters
-    
-    list($adduser,
+    list($ldapserver,
+         $portnumber,
+         $anonymousbind,
+         $binddn,
+         $uidfield,
+         $searchuserdn,
+         $adminid,
+         $adminpasswd,
+         $adduser,
          $adduseruname,
          $adduseremail,
-         $defaultgroup ) = xarVarCleanFromInput('adduser', 
+         $storepassword,
+         $defaultgroup ) = xarVarCleanFromInput('ldapserver',
+                                                'portnumber',
+                                                'anonymousbind',
+                                                'binddn',
+                                                'uidfield',
+                                                'searchuserdn',
+                                                'adminid',
+                                                'adminpasswd',
+                                                'adduser', 
                                                 'adduseruname', 
                                                 'adduseremail', 
+                                                'storepassword', 
                                                 'defaultgroup');
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-    if(!$adduser){
+    // Create a new ldap object
+    include_once 'modules/xarldap/xarldap.php';
+    $ldap = new xarLDAP();
+
+    // Update the xarldap settings
+    // update the data
+    if(!$searchuserdn){
+        $ldap->set_variable('search_user_dn', 'false');
+    } else {
+        $ldap->set_variable('search_user_dn', 'true');
+    }
+
+    $ldap->set_variable('server', $ldapserver);
+    $ldap->set_variable('bind_dn', $binddn);
+    $ldap->set_variable('uid_field', $uidfield);
+    $ldap->set_variable('port_number', $portnumber);
+    $ldap->set_variable('admin_login', $adminid);
+
+    if (!empty($adminpasswd)) {
+        // Generate a key for password encrpytion
+        $key = $ldap->generate_key(time());
+
+        // Save the key
+        $ldap->set_variable('key', $key);
+
+        // Encrypt the admin password
+        $password = $ldap->encrypt($adminpasswd);
+
+        $ldap->set_variable('admin_password', $password);
+    } else {
+        $ldap->set_variable('admin_password', '');
+        $ldap->set_variable('key', '');
+    }
+
+    if(!$anonymousbind) {
+        $ldap->set_variable('anonymous_bind', 'false');
+    } else {
+        $ldap->set_variable('anonymous_bind', 'true');
+    }
+
+    // Update the authldap settings
+    if(!$adduser) {
         xarModSetVar('authldap', 'add_user', 'false');
     } else {
         xarModSetVar('authldap', 'add_user', 'true');
     }
     xarModSetVar('authldap', 'add_user_uname', $adduseruname);
     xarModSetVar('authldap', 'add_user_email', $adduseremail);
+
+    if(!$storepassword) {
+        xarModSetVar('authldap', 'store_user_password', 'false');
+    } else {
+        xarModSetVar('authldap', 'store_user_password', 'true');
+    }
 
     // Get default users group
     if (!isset($defaultgroup)) {

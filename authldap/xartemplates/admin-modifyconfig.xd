@@ -2,21 +2,101 @@
 <!-- Formatting table to center the menu -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthLDAP Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-<h2>#$configadmin#</h2>
-
-<!-- BL style form for authldap configuration options -->
-<form method="post" action="&xar-modurl-authldap-admin-updateconfig;">
-<input type="hidden" name="authid" id="authid" value="#$authid#" />
-<table border="0" width="100%">
-    <tr>
-        <td>
+    <div style="padding: 1px;" class="xar-norm-outline">
+    <form method="post" action="&xar-modurl-authldap-admin-updateconfig;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>LDAP Server Configuration</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
-                    <td colspan=2><xar:mlstring>If a user exists in LDAP but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below and entering the attribute values, a user that has account information in LDAP will be automatically added to the Xaraya database and allowed to login.</xar:mlstring></td>
+                    <td colspan=2>
+                        <xar:mlstring>The LDAP server settings are also configurable from within the</xar:mlstring>
+                        <a href="#xarModURL('xarldap', 'admin', 'modifyconfig')#">xarldap module</a>.
+                    </td>
                 </tr>
                 <tr align="left" valign="top">
                     <td>
-                        #$adduser#
+                        <xar:mlstring>LDAP Server Name or IP</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="ldapserver" value="#$ldapservervalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>LDAP Server Port Number</xar:mlstring> 
+                    </td>
+                    <td>
+                        <input type="text" name="portnumber" value="#$portnumbervalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Anonymously Bind to Server</xar:mlstring> 
+                    </td>
+                    <td>
+                        <input type="checkbox" name="anonymousbind" value="1" #$anonymousbindvalue# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>LDAP bind DN</xar:mlstring> 
+                    </td>
+                    <td>
+                        <input type="text" name="binddn" value="#$binddnvalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>LDAP UserID Field Name</xar:mlstring> 
+                    </td>
+                    <td>
+                        <input type="text" name="uidfield" value="#$uidfieldvalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Search User DN</xar:mlstring> 
+                    </td>
+                    <td>
+                        <input type="checkbox" name="searchuserdn" value="1" #$searchuserdnvalue# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>LDAP Admin ID</xar:mlstring> 
+                    </td>
+                    <td>
+                        <input type="text" name="adminid" value="#$adminidvalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>LDAP Admin Password</xar:mlstring> 
+                    </td>
+                    <td>
+                        <input type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>User Configuration</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td colspan=2>
+                        <xar:mlstring>If a user exists in LDAP but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below and entering the attribute values, a user that has account information in LDAP will be automatically added to the Xaraya database and allowed to login.</xar:mlstring>
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Add LDAP User to Xaraya Database on Login</xar:mlstring>
                     </td>
                     <td>
                         <input type="checkbox" name="adduser" value="1" #$adduservalue# />
@@ -24,7 +104,7 @@
                 </tr>
                 <tr align="left" valign="top">
                     <td>
-                        #$adduseruname#
+                        <xar:mlstring>LDAP Username Attribute Name</xar:mlstring>
                     </td>
                     <td>
                         <input type="text" name="adduseruname" value="#$adduserunamevalue#" />
@@ -32,7 +112,7 @@
                 </tr>
                 <tr align="left" valign="top">
                     <td>
-                        #$adduseremail#
+                        <xar:mlstring>LDAP Email Attribute Name</xar:mlstring>
                     </td>
                     <td>
                         <input type="text" name="adduseremail" value="#$adduseremailvalue#" />
@@ -40,7 +120,15 @@
                 </tr>
                 <tr align="left" valign="top">
                     <td>
-                        #$defaultgrouplabel#
+                        <xar:mlstring>Store user's LDAP password in Xaraya database?</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="storepassword" value="1" #$storepasswordvalue# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Default Group</xar:mlstring>
                     </td>
                     <td>
                         <select name="defaultgroup" id="defaultgroup">
@@ -55,7 +143,7 @@
                     </td>
                 <tr align="left" valign="top">
                     <td>
-                        #$submitlabel#
+                        <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
                     </td>
                     <td>
                         <!-- submit button -->
@@ -63,8 +151,7 @@
                     </td>
                 </tr>
             </table>
-        </td>
-    </tr>
-</table>
-</form>
+        </div>
+    </form>
+    </div>
 </div>

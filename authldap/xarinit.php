@@ -30,6 +30,7 @@ function authldap_init()
     xarModSetVar('authldap','add_user', 'true');
     xarModSetVar('authldap','add_user_uname', 'sn');
     xarModSetVar('authldap','add_user_email', 'mail');
+    xarModSetVar('authldap','store_user_password', 'true');
 
     // Define mask definitions for security checks
     xarRegisterMask('AdminAuthLDAP','All','authldap','All','All','ACCESS_ADMIN');
@@ -57,6 +58,7 @@ function authldap_delete()
     xarModDelVar('authldap','add_user');
     xarModDelVar('authldap','add_user_uname');
     xarModDelVar('authldap','add_user_email');
+    xarModDelVar('authldap','store_user_password');
 
     // Remove authldap to Site.User.AuthenticationModules in xar_config_vars
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');

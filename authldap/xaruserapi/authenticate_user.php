@@ -42,6 +42,7 @@ function authldap_userapi_authenticate_user($args)
     $ldapconfig['add_user'] = xarModGetVar('authldap','add_user');
     $ldapconfig['add_user_uname'] = xarModGetVar('authldap','add_user_uname');
     $ldapconfig['add_user_email'] = xarModGetVar('authldap','add_user_email');
+    $ldapconfig['store_user_password'] = xarModGetVar('authldap','store_user_password');
 
     // Create new LDAP object
     $ldap = new xarLDAP();
@@ -112,6 +113,14 @@ function authldap_userapi_authenticate_user($args)
                 // get email from LDAP
                 $email = $ldap->get_attribute_value($userInfo, $ldapconfig['add_user_email']);
             }
+            
+            // Check if we're going to store the user password
+            if ($ldapconfig['store_user_password'])
+                $password = $pass;
+            else {
+                // Create a dummy password
+                $password = xarModAPIFunc('roles', 'user', 'makepass');
+            }
 
             // call role module to create new user role
             $now = time();
@@ -121,7 +130,7 @@ function authldap_userapi_authenticate_user($args)
                                  array('uname' => $uname, 
                                        'realname' => $realname, 
                                        'email' => $email, 
-                                       'pass' => $pass,
+                                       'pass' => $password,
                                        'date'     => $now,
                                        'valcode'  => 'createdbyldap',
                                        'state'   => 3,
