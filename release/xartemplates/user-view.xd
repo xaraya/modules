@@ -39,13 +39,18 @@
         </xar:ml>
     </div>
 </xar:if>
-
+    <div style="margin-top:20px; margin-bottom:40px; clear:both;">
+       <span style="float:left; text-align:left; width:20%;">
+        <strong><xar:mlstring>Category Filter:</xar:mlstring></strong>
+       </span>
+       <span style="float:left; text-align:left; width:78%;">
 <xar:if condition="!empty($catid)">
     <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="0" showempty="1" />
 <xar:else />
    <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="0" showcatcount="0" showempty="1" />
 </xar:if>
-
+       </span>
+    </div>
 <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
     <div class="xar-accent">
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
