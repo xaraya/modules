@@ -1,3 +1,4 @@
+<xar:if condition="isset($pageShared)">
     <div style="clear: both; padding-top: 10px;">
         <p style="float: left; width: 100%;">
             <span style="float: left; width: 20%; text-align: right;">
@@ -69,4 +70,5 @@
                 <input type="text" name="cacheexpire" id="cacheexpire" value="#$cacheExpire#" size="9" maxlength="9" />
             </span>
         </p>
-        </div>
+    </div>
+</xar:if>
