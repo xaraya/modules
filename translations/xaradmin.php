@@ -490,39 +490,54 @@ function translations_create_trabar($subtype, $subname)
             case 'file':
             $currentTra = array_search($subname, $traLabels);
             break;
-            case 'template':
+            case 'init':
             if ($subname == '') {
-                $currentTra = array_search('templates', $traLabels);
+                $currentTra = array_search('init', $traLabels);
             }
             break;
-            case 'incltempl':
+            case 'core':
             if ($subname == '') {
-                $currentTra = array_search('incltempl', $traLabels);
+                $currentTra = array_search('Common', $traLabels);
             }
             break;
-            case 'block':
+            case 'templates':
             if ($subname == '') {
-                $currentTra = array_search('blocks', $traLabels);
+                $currentTra = array_search('Templates', $traLabels);
+            }
+            break;
+            case 'templateincludes':
+            if ($subname == '') {
+                $currentTra = array_search('Included Templates', $traLabels);
+            }
+            break;
+            case 'blocks':
+            if ($subname == '') {
+                $currentTra = array_search('Blocks', $traLabels);
+            }
+            break;
+            case 'templateblocks':
+            if ($subname == '') {
+                $currentTra = array_search('Block Templates', $traLabels);
             }
             break;
             case 'admin':
             if ($subname == '') {
-                $currentTra = array_search('admin', $traLabels);
+                $currentTra = array_search('Admin', $traLabels);
             }
             break;
             case 'adminapi':
             if ($subname == '') {
-                $currentTra = array_search('adminapi', $traLabels);
+                $currentTra = array_search('AdminAPI', $traLabels);
             }
             break;
             case 'user':
             if ($subname == '') {
-                $currentTra = array_search('user', $traLabels);
+                $currentTra = array_search('User', $traLabels);
             }
             break;
             case 'userapi':
             if ($subname == '') {
-                $currentTra = array_search('userapi', $traLabels);
+                $currentTra = array_search('UserAPI', $traLabels);
             }
             break;
         }
