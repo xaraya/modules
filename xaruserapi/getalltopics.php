@@ -59,6 +59,7 @@ function xarbb_userapi_getalltopics($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => $cids,
                                         'modid' => xarModGetIDFromName('xarbb')));
+    if (empty($categoriesdef)) return;
 
     // CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
     // Do we want to support that in the future ?

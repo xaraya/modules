@@ -36,6 +36,7 @@ function xarbb_userapi_getforum($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => array(),
                                         'modid' => xarModGetIDFromName('xarbb')));
+    if (empty($categoriesdef)) return;
 
     // Get links
     $bindvars = array();
