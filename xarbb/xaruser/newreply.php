@@ -53,15 +53,16 @@ function xarbb_user_newreply()
     $header['objectid']     = $tid;
     $header['cid'] 			= $cid;
 
-	if($phase == 'edit')
+	if ($phase == 'edit') {
     	$action = 'modify';
-    else
+        $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid, 'modify' => 1));
+    } else {
     	$action = 'reply';
-
+        $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid));
+    }
 
     $receipt['post_url']    = xarModUrl('comments', 'user', $action, array('tid' => $tid));
     $receipt['action']      = $action;
-    $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid));
     $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
 
     $package['name']        = xarUserGetVar('name');

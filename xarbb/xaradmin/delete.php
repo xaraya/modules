@@ -34,14 +34,15 @@ function xarbb_admin_delete()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
+    // need to delete the topics first then the forum.
     if (!xarModAPIFunc('xarbb',
 		               'admin',
-		               'delete',
+		               'deletealltopics',
                         array('fid' => $fid))) return;
 
     if (!xarModAPIFunc('xarbb',
 		               'admin',
-		               'deletealltopics',
+		               'delete',
                         array('fid' => $fid))) return;
 
     // Redirect

@@ -13,10 +13,8 @@ function xarbb_adminapi_deletealltopics($args)
 
     // Argument check
     if (!isset($fid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'admin', 'delete', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count', '', 'admin', 'delete', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -54,7 +52,7 @@ function xarbb_adminapi_deletealltopics($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-// Let any hooks know that we have deleted topics
+    // Let any hooks know that we have deleted topics
 	foreach($topics as $topic)	{
 	    $args['module'] = 'xarbb';
 	    $args['itemtype'] = 2; // topic

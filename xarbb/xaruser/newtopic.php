@@ -113,7 +113,7 @@ function xarbb_user_newtopic()
                                'user',
                                'updatetopic',
                                array('tid' => $tid,
-                                        'fid'      => $data['fid'],
+                                     'fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter))) return;
@@ -125,13 +125,13 @@ function xarbb_user_newtopic()
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter))) return;
+                // We don't want to update the forum counter on an updated reply.
+                if (!xarModAPIFunc('xarbb',
+                                   'user',
+                                   'updateforumview',
+                                   array('fid'      => $data['fid'],
+                                         'fposter'  => $tposter))) return;
              }
-
-            if (!xarModAPIFunc('xarbb',
-                               'user',
-                               'updateforumview',
-                               array('fid'      => $data['fid'],
-                                     'fposter'  => $tposter))) return;
 
             if($redirect == 'topic')
                 xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
@@ -141,7 +141,6 @@ function xarbb_user_newtopic()
             break;
 
     }
-
     // Return the output
     return $data;
 }

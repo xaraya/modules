@@ -26,6 +26,7 @@
     <td class="xar-accent">
       <b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b>
     </td>
+	<xar:sec mask="ModxarBB" catch="false">
     <td class="xar-accent" align="right">
       [ 
       <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
@@ -34,17 +35,20 @@
       <a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $tid))#" ><xar:mlstring>Delete</xar:mlstring></a> 
       ]</xar:if>
     </td>
+	</xar:sec>
   </tr>
 </table>
 <table border="0" cellpadding="0" cellspacing="5" width="100%">
   <tr>
     <td width="60%">
+	<xar:sec mask="PostxarBB" catch="false">
       <table cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
         <tr>
           <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>New Topic</xar:mlstring></a></td>
           <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#"><xar:mlstring>Post Reply</xar:mlstring></a></td>
         </tr>
       </table>
+	 </xar:sec>
 	</td>
     <td width="40%" align="right" valign="bottom">
 <!-- Need the forum picker API.
@@ -142,8 +146,10 @@
           <td width="50%" align="right">
 				<xar:if condition="xarModIsAvailable('bbcode')">
 					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
-					</xar:if>
+				</xar:if>
+				<xar:sec mask="ModxarBB" catch="false">
 					<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
+				</xar:sec>
         </tr>
       </table>
 
@@ -203,9 +209,11 @@
           <td width="50%" align="right">
 				<xar:if condition="xarModIsAvailable('bbcode')">
 					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
-					</xar:if>
+				</xar:if>
+				<xar:sec mask="ModxarBB" catch="false">
 					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a> |
 					<a href="#xarModUrl('xarbb','user','deletereply',array('cid' => $item['xar_cid']))#"><xar:mlstring>Delete</xar:mlstring></a>
+				</xar:sec>
 			</td>
         </tr>
       </table>
@@ -231,12 +239,14 @@
 <table border="0" cellpadding="0" cellspacing="5" width="100%">
   <tr>
     <td width="60%">
+	<xar:sec mask="PostxarBB" catch="false">
       <table cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
         <tr>
           <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>New Topic</xar:mlstring></a></td>
           <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#"><xar:mlstring>Post Reply</xar:mlstring></a></td>
         </tr>
       </table>
+	</xar:sec>
     </td>
     <td width="40%" align="right" valign="bottom">
 <!-- Need the forum picker API.

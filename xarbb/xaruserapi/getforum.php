@@ -24,8 +24,6 @@ function xarbb_userapi_getforum($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => array(),
                                         'modid' => xarModGetIDFromName('xarbb')));
-// CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
-//          Do we want to support that in the future ?
     // Get links
     $query = "SELECT xar_fid,
                    xar_fname,

@@ -13,10 +13,8 @@ function xarbb_userapi_updateforumview($args)
 
     // Argument check
     if (!isset($fid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'admin', 'update', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count', '', 'admin', 'update', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -27,11 +25,8 @@ function xarbb_userapi_updateforumview($args)
                           array('fid' => $fid));
 
     if ($link == false) {
-        $msg = xarML('No Such Forum Present',
-                    'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No Such Forum Present', 'xarbb');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -39,12 +34,16 @@ function xarbb_userapi_updateforumview($args)
     // Only called from other functions and when not called, data inconsistency (num replies,..)
 	//    if(!xarSecurityCheck('ReadxarBB')) return;
 
-    if (empty($reply)){
+    //oof, i needs to clean this up.  logic is getting murky around here.
+    if ((empty($reply)) AND (empty($deletetopic))){
         $ftopics = $link['ftopics'] + 1;
         $fposts = $link['fposts'] +1;
-    } else {
+    } elseif (!empty($reply)) {
         $ftopics = $link['ftopics'];
         $fposts = $link['fposts'] +1;
+    } elseif (!empty($deletetopic)){
+        $ftopics = $link['ftopics'] - 1;
+        $fposts = $link['fposts'] - 1;
     }
 
     // Get datbase setup

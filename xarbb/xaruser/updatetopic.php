@@ -8,7 +8,7 @@ function xarbb_user_updatetopic()
 // topic or go back to the forum of which he came.
 
     if (!xarVarFetch('tid','int:1:',$tid,10,XARVAR_NOT_REQUIRED)) return;
-
+    if (!xarVarFetch('modify','int:1:',$modify, 0,XARVAR_NOT_REQUIRED)) return;
     // Start by updating the topic stats.
     
     $uid = xarUserGetVar('uid');
@@ -24,13 +24,15 @@ function xarbb_user_updatetopic()
                            'user',
                            'gettopic',
                            array('tid' => $tid));
-
-    if (!xarModAPIFunc('xarbb',
-                       'user',
-                       'updateforumview',
-                       array('fid'      => $forum['fid'],
-                             'reply'    => 1,
-                             'fposter'  => $uid))) return;
+    // Let's not count up if the reply is being edited.
+    if ($modify != 1){
+        if (!xarModAPIFunc('xarbb',
+                           'user',
+                           'updateforumview',
+                           array('fid'      => $forum['fid'],
+                                 'reply'    => 1,
+                                 'fposter'  => $uid))) return;
+    }
 
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
 

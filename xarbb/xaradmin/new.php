@@ -5,20 +5,14 @@
  */
 function xarbb_admin_new()
 {
-    list($fname,
-         $fdesc,
-         $warning,
-         $phase) = xarVarCleanFromInput('fname',
-                                        'fdesc',
-                                        'warning',
-                                        'phase');
-
     // Security Check
     if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
 
-    if (empty($phase)){
-        $phase = 'form';
-    }
+    // Get parameters
+	if (!xarVarFetch('fname', 'str:1:', $data['fname'], '', XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('fdesc', 'str:1:', $data['fdesc'], '', XARVAR_NOT_REQUIRED)) return;
+	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cids',     'isset',    $cids,    NULL, XARVAR_DONT_SET)) return;
 
     switch(strtolower($phase)) {
 
@@ -37,56 +31,36 @@ function xarbb_admin_new()
                 $data['hooks'] = $hooks;
             }
 
-            if (empty($fname)){
-                $data['fname'] = '';
-            } else {
-                $data['fname'] = $fname;
-            }
-            if (empty($fdesc)){
-                $data['fdesc'] = '';
-            } else {
-                $data['fdesc'] = $fdesc;
-            }
-            if (empty($warning)){
-                $data['warning'] = '';
-            } else {
-                $data['warning'] = $warning;
-            }
-
             $data['createlabel'] = xarML('Submit');
             $data['authid'] = xarSecGenAuthKey();
             break;
 
         case 'update':
-
-            // Check arguments
-            if (empty($fname)) {
-                $warning = xarML('Forum Name is empty');
-                xarResponseRedirect(xarModURL('xarbb', 'admin', 'new', array('fdesc' => $fdesc, 'warning' => $warning)));
-            }
-            if (empty($fdesc)) {
-                $warning = xarML('Forum Description is empty');
-                xarResponseRedirect(xarModURL('xarbb', 'admin', 'new', array('fname' => $fname, 'warning' => $warning)));
-            }
-
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
 
+            if (!empty($cids) && count($cids) > 0) {
+                $data['cids'] = array_values(preg_grep('/\d+/',$cids));
+            } else {
+                $data['cids'] = array();
+            }
+            //var_dump($data['cids']); return;
             $tposter = xarUserGetVar('uid');
 
             // The API function is called
             if (!xarModAPIFunc('xarbb',
                                'admin',
                                'create',
-                               array('fname'    => $fname,
-                                     'fdesc'    => $fdesc,
+                               array('fname'    => $data['fname'],
+                                     'fdesc'    => $data['fdesc'],
+                                     'cids'     => $data['cids'],
                                      'fposter'  => $tposter))) return;
 
             // Get New Forum ID
             $forum = xarModAPIFunc('xarbb',
                                    'user',
                                    'getforum',
-                                   array('fname' => $fname));
+                                   array('fname' => $data['fname']));
 
             // Need to create a topic so we don't get the nasty empty error when viewing the forum.
             $ttitle = xarML('First Post');
@@ -100,16 +74,10 @@ function xarbb_admin_new()
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter))) return;
 
-
-
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
-
             break;
-
     }
-
     // Return the output
     return $data;
 }
-
 ?>

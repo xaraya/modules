@@ -10,10 +10,8 @@ function xarbb_userapi_counttopics($args)
     extract($args);
 
     if (!isset($fid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'userapi', 'get', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

@@ -28,6 +28,15 @@ function xarbb_adminapi_create($args)
     // Security Check
     if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
 
+    // Default categories is none
+    if (empty($cids) || !is_array($cids) ||
+        // catch common mistake of using array('') instead of array()
+        (count($cids) > 0 && empty($cids[0])) ) {
+        $cids = array();
+        // for security check below
+        $args['cids'] = $cids;
+    }
+
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -63,10 +72,15 @@ function xarbb_adminapi_create($args)
     // Get the ID of the item that we inserted
     $fid = $dbconn->PO_Insert_ID($xbbforumstable, 'xar_fid');
 
+    if (empty($cids)) {
+        $cids[] = xarModGetVar('xarbb', 'mastercids.1');
+    }
+
     // Let any hooks know that we have created a new forum
     $args['module'] = 'xarbb';
     $args['itemtype'] = 1; // forum
     $args['itemid'] = $fid;
+    $args['cids'] = $cids;
     xarModCallHooks('item', 'create', $fid, $args);
 
     // Return the id of the newly created link to the calling process

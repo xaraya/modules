@@ -8,9 +8,11 @@
     <td class="xar-accent">
       <b><xar:mlstring>Forum Title</xar:mlstring>: #$fname#</b>
     </td>
+	<xar:sec mask="PostxarBB" catch="false">
     <td class="xar-accent" align="right">
       <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>Post a New Topic</xar:mlstring></a>
     </td>
+	</xar:sec>
   </tr>
   <tr>
     <td colspan="2"><xar:mlstring>Logged in as</xar:mlstring>: #xarUserGetVar('name')# / 
@@ -75,10 +77,12 @@
     <td width="75" class="xar-accent" align="center">#$loop:item['comments']#</td>
     <td width="75" class="xar-accent" align="center">#$loop:item['hitcount']#</td>
     <td width="130" class="xar-accent" align="right" valign="top">#$loop:item['ttime']#</td>
+	<xar:sec mask="EditxarBB" catch="false">
     <td class="xar-accent" align="right" valign="top">
     	<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Edit</xar:mlstring></a> | 
     	<a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Delete</xar:mlstring></a>
     </td>
+	</xar:sec>
   </tr>
 </xar:if>
 </xar:loop>
@@ -86,7 +90,9 @@
 <br />
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr>
+	<xar:sec mask="PostxarBB" catch="false">
     <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>Post a New Topic</xar:mlstring></a></td>
+	</xar:sec>
 	<xar:if condition="xarThemeIsAvailable('rss')">
     <td width="50%"><a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#"><xar:mlstring>Syndicate This Forum</xar:mlstring></a></td>
 	</xar:if>

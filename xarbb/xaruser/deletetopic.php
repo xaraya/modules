@@ -3,9 +3,9 @@
 function xarbb_user_deletetopic()
 {
     // Get parameters
-    list($tid,
-         $confirmation) = xarVarCleanFromInput('tid',
-                                              'confirmation');
+    if (!xarVarFetch('tid','int:1:',$tid)) return;
+    if (!xarVarFetch('obid','str:1:',$obid,$tid,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
 
 	// for sec check
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
@@ -30,6 +30,15 @@ function xarbb_user_deletetopic()
 		               'admin',
 		               'deletetopics',
                         array('tid' => $tid))) return;
+
+    $tposter = xarUserGetVar('uid');
+
+    if (!xarModAPIFunc('xarbb',
+                       'user',
+                       'updateforumview',
+                       array('fid'      => $topic['fid'],
+                             'deletetopic'  => 1,
+                             'fposter'  => $tposter))) return;
 
     // Redirect
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewforum',array("fid" => $topic['fid'])));
