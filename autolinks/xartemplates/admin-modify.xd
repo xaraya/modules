@@ -4,74 +4,71 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Edit</xar:mlstring></h2><br />
 <div style="margin: auto;">
 <form method="post" action="#$updateurl#" method="post" enctype="application/x-www-form-urlencoded" />
+<div class="xar-norm-outline" style="padding-left: 150px; padding-right: 100px; padding-top: 20px; padding-bottom: 20px; text-align: left;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="lid" id="lid" value="#$lid#" />
-    <table border="0" width="100%">
-        <tr>
-            <td>
-                <table border="0" width="100%">
-                    <tr align="left" valign="middle">
-                        <td>
-                            <label for="keyword"><xar:mlstring>Matching Key</xar:mlstring></label>
-                        </td>
-                        <td>
-                            <input type="text" name="keyword" id="keyword" value="#$prepkeyword#" size="32" maxlength="100" tabindex="1" />
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <label for="match_re"><xar:mlstring>Match As Regular Expression</xar:mlstring></label>
-                        </td>
-                        <td>
-							<xar:if condition="$match_re">
-								<input type="checkbox" name="match_re" id="match_re" value="1" checked="checked" />
-							<xar:else />
-								<input type="checkbox" name="match_re" id="match_re" value="1" />
-							</xar:if>
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <label for="title"><xar:mlstring>Title</xar:mlstring></label>
-                        </td>
-                        <td>
-                            <input type="text" name="title" id="title" value="#$preptitle#" size="32" maxlength="100" tabindex="2" />
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <label for="url"><xar:mlstring>URL</xar:mlstring></label>
-                        </td>
-                        <td>
-                            <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" tabindex="3" />
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <label for="comment"><xar:mlstring>Comment</xar:mlstring></label>
-                        </td>
-                        <td>
-                            <input type="text" name="comment" id="comment" value="#$prepcomment#" size="40" maxlength="200" tabindex="4" />
-                        </td>
-                    </tr>
-                    <tr align="left" valign="middle">
-                        <td>
-                            <label for="enabled"><xar:mlstring>Enabled</xar:mlstring></label>
-                        </td>
-                        <td>
-							<xar:if condition="$enabled">
-								<input type="checkbox" name="enabled" id="enabled" value="1" checked="checked" />
-							<xar:else />
-								<input type="checkbox" name="enabled" id="enabled" value="1" />
-							</xar:if>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="#$modifybuttonlabel#" align="middle" tabindex="5" />
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('This is the word that will be linked when found in the text that is transformed by the hook')#"><label for="keyword"><xar:mlstring>Keyword</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="keyword" id="keyword" value="#$prepkeyword#" size="32" maxlength="100" />
+	</span>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('By checking this, this will match the keyword or phrase as a regular expression.')#"><label for="match_re"><xar:mlstring>Match As Regular Expression</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+	<xar:if condition="$match_re">
+		<input type="checkbox" name="match_re" id="match_re" value="1" checked="checked" />
+	<xar:else />
+		<input type="checkbox" name="match_re" id="match_re" value="1" />
+	</xar:if>
+	</span>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('This will be the title that is shown in the tool tip for the link that is transformed.')#"><label for="title"><xar:mlstring>Title</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="title" id="title" value="#$preptitle#" size="32" maxlength="100" />
+	</span>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('This is the URL that you will be pointing the text to link to when found.')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
+	</span>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('This is a comment for your reference when searching autolinks.')#"><label for="comment"><xar:mlstring>Comment</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="comment" id="comment" value="#$prepcomment#" size="40" maxlength="200" />
+	</span>
+	</div>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('By checking this, you are enabling this autolink at this time.  To disable the autolink, uncheck the box.')#"><label for="match_re"><label for="enabled"><xar:mlstring>Enabled</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+	<xar:if condition="$enabled">
+		<input type="checkbox" name="enabled" id="enabled" value="1" checked="checked" />
+	<xar:else />
+		<input type="checkbox" name="enabled" id="enabled" value="1" />
+	</xar:if>
+	</span>
+	</div>
+	<br /><br />
+	<div style="clear: both; text-align: center;">
+		<input type="submit" value="#xarML('Submit')#" />
+	</div>
+</div>
 </form>
-<a href="#$cancelurl#"><xar:mlstring>Cancel</xar:mlstring></a>
 </div>
 </div>
