@@ -4,26 +4,15 @@
   <version>1.0</version>
   <isActive>n</isActive>
    <description>If you enable the workflow hooks for articles and configure the workflow module to use this process for articles, it will be automatically started when an article is created</description>
-  <lastModif>28/09/2003 [07:01:27]</lastModif>
+  <lastModif>18/10/2003 [03:55:14]</lastModif>
   <sharedCode><![CDATA[<?php
 ?>  ]]></sharedCode>
   <activities>
     <activity>
-      <name>end</name>
-      <type>end</type>
-      <description>default end activity</description>
-      <lastModif>28/09/2003 [02:09:17]</lastModif>
-      <isInteractive>n</isInteractive>
-      <isAutoRouted>y</isAutoRouted>
-      <roles>
-      </roles>
-      <code><![CDATA[<?php
-?>      ]]></code>    </activity>
-    <activity>
       <name>start</name>
       <type>start</type>
       <description>default start activity</description>
-      <lastModif>28/09/2003 [07:02:30]</lastModif>
+      <lastModif>18/10/2003 [03:55:14]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -43,7 +32,7 @@
       <name>Review Article</name>
       <type>activity</type>
       <description>Review an article before approving or rejecting it</description>
-      <lastModif>28/09/2003 [03:03:55]</lastModif>
+      <lastModif>18/10/2003 [03:55:14]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -161,10 +150,21 @@ if (!empty($edit)) {
 </div>
 </div>      ]]></template>    </activity>
     <activity>
+      <name>end</name>
+      <type>end</type>
+      <description>default end activity</description>
+      <lastModif>18/10/2003 [03:55:14]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>y</isAutoRouted>
+      <roles>
+      </roles>
+      <code><![CDATA[<?php
+?>      ]]></code>    </activity>
+    <activity>
       <name>Change Status</name>
       <type>activity</type>
       <description>Change the status of the article</description>
-      <lastModif>28/09/2003 [03:03:26]</lastModif>
+      <lastModif>18/10/2003 [03:55:14]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -223,6 +223,121 @@ $user = $instance->get('user');
 // $instance->get('reviewed') and assigned the status $instance->get('status').
 // No reason was supplied / The reason was $instance->get('reason')
 // ...
+?>      ]]></code>    </activity>
+    <activity>
+      <name>Check Status</name>
+      <type>standalone</type>
+      <description>Automatically approve an article (or whatever) when a certain time has elapsed after the article was submitted.
+
+This activity must be scheduled, and it will be called by the scheduler module so we associate a specific scheduler role to it - you can e.g. map the anonymous user to that role.
+
+If you want to test this activity manually -without the scheduler- you can make it interactive and then run it like other stand-alone activities.
+</description>
+      <lastModif>27/10/2003 [04:14:39]</lastModif>
+      <isInteractive>n</isInteractive>
+      <isAutoRouted>n</isAutoRouted>
+      <roles>
+        <role>scheduler</role>
+      </roles>
+      <code><![CDATA[<?php
+
+// We cannot use the $ instance object here, because this is a stand-alone activity
+
+// Specify the deadline for automatic approval - adapt as you want
+$now = time();
+$deadline = 48*60*60; // 2 days here
+
+// Find the activity id for reviewing articles in this process
+$actinfo = $process->getActivityByName('Review Article');
+if (empty($actinfo) || empty($actinfo['activityId'])) {
+    return;
+}
+$checkId = $actinfo['activityId'];
+
+// Find all instances that have been waiting for a review for a certain time
+$findinstances = xarModAPIFunc('workflow','user','findinstances',
+                                    array('activityId' => $checkId,
+                                             'max_started' => $now - $deadline));
+if (empty($findinstances) || count($findinstances) < 1) {
+    return;
+}
+
+$curinstance = new Instance($activity->db);
+foreach ($findinstances as $info) {
+    // get this particular instance
+    $curinstance->getInstance($info['instanceId']);
+
+/* we're not doing any escalation here - cfr. Music CD Loan for an example
+    // see when we last escalated this instance
+    $lastescalated = $curinstance->get('escalated');
+    // if we stay in this activity to e.g. send a mail at escalation, skip any
+    // second escalation unless we hit the deadline again - adapt as needed
+    if (!empty($lastescalated) && $lastescalated > $now - $deadline) {
+        continue;
+    }
+     $curinstance->set('escalated',$now);
+*/
+
+    // Get the article id that we're currently checking
+    $itemid = $curinstance->get('itemid');
+    if (empty($itemid) || !is_numeric($itemid)) {
+        // something went wrong here - we're missing a valid itemid
+        $reason = xarML('Invalid item id');
+        $curinstance->set('reason',$reason);
+        // set the status of this instance to "exception"
+        $curinstance->setStatus('exception');
+        continue;
+    }
+
+    // Retrieve the article
+    $article = xarModAPIFunc('articles','user','get', array('aid' => $itemid));
+    if (empty($article)) {
+        // the article is already gone
+        $reason = xarML('Article cannot be found');
+        $curinstance->set('reason',$reason);
+        // abort this instance - we don't need it anymore
+        $curinstance->abort($checkId);
+        continue;
+    }
+
+    // Save the article title in the instance for later
+    $curinstance->set('title', $article['title']);
+
+    // See if this article has already been given some status other than 'submitted',
+    // e.g. via the admin interface of articles
+    if (!empty($article['status'])) {
+        $reason = xarML('Article already has status #(1)', $article['status']);
+        $curinstance->set('reason',$reason);
+        // abort this instance - we don't need it anymore
+        $curinstance->abort($checkId);
+        continue;
+    }
+
+    // Automatically approve the article with the reason "Out of Office" :-)
+    $reason = xarML('Out of Office');
+
+    // Save the reviewer information (= the scheduler here)
+    $curinstance->set('reviewer', _XAR_ID_UNREGISTERED);
+    $curinstance->set('reviewed', time());
+    // Save the new status
+    $curinstance->set('status', 'approved');
+    $curinstance->set('reason', $reason);
+    $curinstance->complete($checkId);
+
+    // or set the status of this instance to "exception"
+    // $curinstance->setStatus('exception');
+
+    // or abort the instance altogether
+    // $curinstance->abort($checkId);
+
+    // or send a mail to $article['authorid'] if there is one
+
+    // or send a mail to all users assigned to the role(s) for this activity
+    // $roles = $activity->getRoles();
+
+    // or ...
+}
+
 ?>      ]]></code>    </activity>
   </activities>
   <transitions>
