@@ -103,7 +103,7 @@ function uploads_adminapi_showinput($args)
             $data['Attachments'] = xarModAPIFunc('uploads', 'user', 'db_get_file',
                                                   array('fileId' => $aList));
             $list = xarModAPIFunc('uploads','user','showoutput',
-                                  array('value' => $value, 'style' => 'icon'));
+                                  array('value' => $value, 'style' => 'icon', 'multiple' => $multiple));
 
             foreach ($aList as $fileId) {
                 if (isset($data['storedList'][$fileId])) {
