@@ -53,7 +53,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[4]#
         </p>
         <p>
             <xar:set name="timestamp">$tzinfo[1]</xar:set>
@@ -61,7 +61,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[5]#
         </p>
     <xar:else/>
         None
@@ -75,7 +75,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[5]#
         </p>
         <p>
             <xar:set name="timestamp">$tzinfo[2]</xar:set>
@@ -83,7 +83,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[4]#
         </p>
     <xar:else/>
         None
@@ -98,7 +98,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[5]#
         </p>
         <p>
             <xar:set name="timestamp">$tzinfo[2]</xar:set>
@@ -106,7 +106,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[4]#
         </p>
     <xar:else/>
         None
@@ -120,7 +120,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[4]#
         </p>
         <p>
             <xar:set name="timestamp">$tzinfo[1]</xar:set>
@@ -128,7 +128,7 @@ LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
             UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp)#&nbsp;
             #xarLocaleGetFormattedUTCTime('long',$timestamp)#<br />
             LOCAL = #xarLocaleGetFormattedUTCDate('long',$localtime)#&nbsp;
-            #xarLocaleGetFormattedUTCTime('long',$localtime)#
+            #xarLocaleGetFormattedUTCTime('long',$localtime)# #$tzinfo[5]#
         </p>
     <xar:else/>
         None

@@ -35,6 +35,23 @@ function timezone_userapi_tzinfo($args=array())
     if (empty($info)) {
         return array($offset);
     }
+    if (strstr($format,'%s')) {
+        if (!empty($info[3]) && $info[3] != '-') {
+            $stdformat = strtr($format,array('%s' => $info[3]));
+        } else {
+            $stdformat = strtr($format,array('%s' => ''));
+        }
+        $info[3] = $stdformat;
+        if (!empty($info[4]) && $info[4] != '-') {
+            $dstformat = strtr($format,array('%s' => $info[4]));
+        } else {
+            $dstformat = strtr($format,array('%s' => ''));
+        }
+        $info[4] = $dstformat;
+    } else {
+        $info[3] = $format;
+        $info[4] = $format;
+    }
     array_unshift($info,$offset);
     return $info;
 }

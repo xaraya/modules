@@ -8,7 +8,7 @@
  * @param $args['timezone'] string the timezone we're looking for
  * @param $args['timestamp'] integer the time period we're interested in
  * @return array
- * @returns array(dst start time, dst end time, dst offset, dst start code, dst end code, dst start rule, dst end rule)
+ * @returns array(dst start time, dst end time, dst offset, std code, dst code, dst start rule, dst end rule)
  */
 function timezone_userapi_findrules($args=array())
 {
@@ -102,7 +102,7 @@ function timezone_userapi_findrules($args=array())
         $dst_end -= $dst_start_offset;
     }
     // Note: this function returns start and end dates in UTC
-    return array($dst_start,$dst_end,$dst_start_offset,$dst_start_rule->addrvar,$dst_end_rule->addrvar,$dst_start_rule,$dst_end_rule);
+    return array($dst_start,$dst_end,$dst_start_offset,$dst_end_rule->addrvar,$dst_start_rule->addrvar,$dst_start_rule,$dst_end_rule);
 }
 
 function timezone_findrules_dayValue($dayname)
