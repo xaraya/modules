@@ -28,7 +28,7 @@
                     <xar:mlstring>Organization</xar:mlstring>:&nbsp;&nbsp;<b><xar:if condition="!empty($headers['Organization'])">#xarVarPrepForDisplay($headers['Organization'])#<xar:else/>-</xar:if></b><br />
                     <xar:mlstring>Date</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Date'])#</b><br />
                     <xar:mlstring>Newsgroups</xar:mlstring>:&nbsp;&nbsp;<b>#xarVarPrepForDisplay($headers['Newsgroups'])#</b><br />
-                    <xar:if condition="isset($headers['References']) && is_array($headers['References'])">
+                    <xar:if condition="isset($headers['References']) and is_array($headers['References'])">
                         <xar:mlstring>References</xar:mlstring>:&nbsp;
                         <xar:foreach in="$headers['References']" key="$key" value="$ref">
                             <xar:if condition="is_numeric($ref)">
