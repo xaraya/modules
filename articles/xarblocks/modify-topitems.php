@@ -56,7 +56,7 @@ function articles_topitemsblock_update($blockinfo)
     if (!xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('status', 'strlist:,:int:1:4', $vars['status'])) {return;}
 
-    $blockinfo['content'] = serialize($vars);
+    $blockinfo['content'] = $vars;
 
     return $blockinfo;
 }

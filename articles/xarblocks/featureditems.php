@@ -19,8 +19,25 @@
 
 function articles_featureditemsblock_init()
 {
-    return true;
+    return array(
+        'featuredaid' => 0,
+        'alttitle' => '',
+        'altsummary' => '',
+        'toptype' => 'date',
+        'moreitems' => array(),
+        'showvalue' => true,
+        'toptype' => 'date',
+        'pubtypeid' => '',
+        'catfilter' => '',
+        'status' => array(3, 2),
+        'itemlimit' => 10,
+        'showfeaturedsum' => false,
+        'moreitems' => array(),
+        'showsummary' => false,
+        'linkpubtype' => false
+    );
 }
+
 
 /**
  * get information on block
@@ -48,10 +65,14 @@ function articles_featureditemsblock_display(& $blockinfo)
 {
     // Security check
     // TODO: can be removed when handled centrally.
-    if(!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
+    if (!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
+    if (is_string($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars =& $blockinfo['content'];
+    }
 
     // Defaults
     if (empty($vars['featuredaid'])) {$vars['featuredaid'] = 0;}

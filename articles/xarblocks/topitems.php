@@ -15,7 +15,7 @@
 function articles_topitemsblock_init()
 {
     // Initial values when the block is created.
-    return serialize(array(
+    return array(
         'numitems' => 5,
         'pubtypeid' => 0,
         'nopublimit' => false,
@@ -27,7 +27,7 @@ function articles_topitemsblock_init()
         'showsummary' => false,
         'showdynamic' => false,
         'status' => '2,3'
-    ));
+    );
 }
 
 /**
@@ -56,7 +56,11 @@ function articles_topitemsblock_display($blockinfo)
     if (!xarSecurityCheck('ReadArticlesBlock', 1, 'Block', $blockinfo['title'])) {return;}
 
     // Get variables from content block
-    $vars = @unserialize($blockinfo['content']);
+    if (is_string($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // see if we're currently displaying an article
     if (xarVarIsCached('Blocks.articles', 'aid')) {
