@@ -34,7 +34,6 @@ class Image_GD extends Image_Properties {
             imageJPEG($newImage, $this->_tmpFile);
             imageDestroy($newImage);
             imageDestroy($origImage);
-            echo "Image is: " . filesize($this->_tmpFile) . " bytes long.\n";
             $this->saveDerivative();
         }
         
