@@ -59,6 +59,10 @@
 <br />
 <xar:mlstring>If Yes, file names will be obfuscated.</xar:mlstring>
 </p>
+<p><b><xar:mlstring>NetPBM Path</xar:mlstring>:</b>&nbsp;&nbsp;<input type="text" name="netpbm_path" value="#$netpbm_path#" size="70">
+<br />
+<xar:mlstring>Path to NetPBM installation, including trailing slash (ie: /usr/local/bin/).  If specified Upload's will use NetPBM for thumbnails, otherwise it will use PHP's GD interface which requires PHP to be compiled against GD 1.8+.  Check phpinfo().</xar:mlstring>
+</p>
 
 
 
