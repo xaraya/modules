@@ -65,7 +65,7 @@
   <xar:loop name="$statisticitems">
 	<tr valign="baseline">
 	  <td align="left" class="xar-alt xar-mod-title" style="border-width: 0px 0px 1px 0px;">
-	    <xar:if condition="$href"><a href="#$href#" class="xar-mod-title"></xar:if>#$loop:item['displayname']#<xar:if condition="$loop:item['href']"></a></xar:if>
+	    <xar:if condition="$href"><a href="#$loop:item['href']#" class="xar-mod-title"></xar:if>#$loop:item['displayname']#<xar:if condition="$loop:item['href']"></a></xar:if>
 	  </td>
 	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 0px;">
 	    #$loop:item['pi_number']#
@@ -104,7 +104,7 @@
       #$loop:item['subtitle2']#
     </td>
   </tr>
-  <xar:if condition="is_array($top_items)">
+  <xar:if condition="is_array($loop:item['top_items'])">
     <xar:loop name="$top_items">
 		<tr valign="baseline">
 		  <td align="left" class="xar-alt">
