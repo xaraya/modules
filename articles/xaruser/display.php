@@ -275,31 +275,24 @@ function articles_user_display($args)
                 break;
         // TEST ONLY
             case 'webpage':
-                $basedir = '/home/mikespub/www/pictures';
-                $curfile = $basedir . '/' . $article[$field];
-                if (file_exists($curfile) && is_file($curfile)) {
-                   $data[$field] = join('', file($curfile));
-                   $data[$field] = preg_replace('/^.*<body[^>]*>/is','',$data[$field]);
-                   $data[$field] = preg_replace('/<\/body.*$/is','',$data[$field]);
-                   preg_match_all('#href="?([^"\' >]+)#is',$data[$field],$matches);
-                   foreach ($matches[1] as $url) {
-                       if (preg_match('#^/pictures/(.*?\.html?)$#',$url,$parts)) {
-                            $todo[$parts[0]] = $parts[1];
-                       } elseif (preg_match('#^http://mikespub.net/pictures/(.*?\.html?)$#',$url,$parts)) {
-                            $todo[$parts[0]] = $parts[1];
-                       }
-                   //    $data[$field] .= '<br />'.$url;
-                   }
-                   foreach ($todo as $from => $to) {
-                       $search[] = "'".$from."'";
-                       $to = preg_replace('#/#',',',$to);
-                       $replace[] = 'index.php/pages/'.$to;
-                   }
-                   $data[$field] = preg_replace($search,$replace,$data[$field]);
-                } else {
-                    $data[$field] = xarVarPrepHTMLDisplay($article[$field]);
-                    $data[$field] .= ' - ' . xarML('not found');
+                if (empty($value['validation'])) {
+                    $value['validation'] = 'modules/articles';
                 }
+                $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
+                                              array('name' => $field,
+                                                    'type' => 'webpage',
+                                                    'validation' => $value['validation'],
+                                                    'value' => $article[$field]));
+                break;
+            case 'imagelist':
+                if (empty($value['validation'])) {
+                    $value['validation'] = 'modules/articles/xarimages';
+                }
+                $data[$field] = xarModAPIFunc('dynamicdata','user','showoutput',
+                                              array('name' => $field,
+                                                    'type' => 'imagelist',
+                                                    'validation' => $value['validation'],
+                                                    'value' => $article[$field]));
                 break;
             default:
                 $data[$field] = xarVarPrepHTMLDisplay($article[$field]);

@@ -131,6 +131,9 @@ function articles_admin_new($args)
             } else {
                 $input['value'] = '';
             }
+            if (isset($value['validation'])) {
+                $input['validation'] = $value['validation'];
+            }
 
             if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
                 $data['withupload'] = 1;

@@ -48,6 +48,12 @@ function articles_admin_pubtypes()
             }
             foreach ($format as $field => $value) {
                 $config[$field]['format'] = $value;
+                // some default basedirs for now...
+                if ($value == 'imagelist') {
+                    $config[$field]['validation'] = 'modules/articles/xarimages';
+                } elseif ($value == 'webpage') {
+                    $config[$field]['validation'] = 'modules/articles';
+                }
             }
             foreach ($input as $field => $value) {
                 $config[$field]['input'] = 1;
@@ -94,6 +100,12 @@ function articles_admin_pubtypes()
             }
             foreach ($format as $field => $value) {
                 $config[$field]['format'] = $value;
+                // some default basedirs for now...
+                if ($value == 'imagelist') {
+                    $config[$field]['validation'] = 'modules/articles/xarimages';
+                } elseif ($value == 'webpage') {
+                    $config[$field]['validation'] = 'modules/articles';
+                }
             }
             foreach ($input as $field => $value) {
                 $config[$field]['input'] = 1;

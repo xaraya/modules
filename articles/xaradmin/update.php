@@ -98,6 +98,19 @@ function articles_admin_update()
         }
     }
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
+/*
+        if (!empty($value['label'])) {
+            if (!isset($value['validation'])) {
+                $value['validation'] = '';
+            }
+            $properties[$field] =& xarModAPIFunc('dynamicdata','user','getproperty',
+                                                 array('name' => $field,
+                                                       'type' => $value['format'],
+                                                       'validation' => $value['validation'],
+                                                       'value' => $article[$field]));
+            $properties[$field]->checkInput($field);
+        }
+*/
         if ($value['format'] == 'calendar' && isset($$field) && is_array($$field)) {
             $var = $$field;
             if (!isset($var['sec'])) {

@@ -21,6 +21,7 @@ function articles_userapi_getpubfieldformats($args)
         'textupload'      => xarML('Text Upload'),
         'url'             => xarML('URL'),
         'image'           => xarML('Image'),
+        'imagelist'       => xarML('Image List'),
 // TODO: define how to fill this in (cfr. status)
 //        'dropdown'        => xarML('Dropdown List'),
         'username'        => xarML('Username'),

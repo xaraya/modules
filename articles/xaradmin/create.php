@@ -86,7 +86,20 @@ function articles_admin_create()
 
 // TEST: grab the title from the webpage
 $isfile = '';
+    $properties = array();
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
+/*
+        if (!empty($value['label'])) {
+            if (!isset($value['validation'])) {
+                $value['validation'] = '';
+            }
+            $properties[$field] =& xarModAPIFunc('dynamicdata','user','getproperty',
+                                                 array('name' => $field,
+                                                       'type' => $value['format'],
+                                                       'validation' => $value['validation']));
+            $properties[$field]->checkInput($field);
+        }
+*/
 if ($value['format'] == 'webpage') {
 $isfile = $field;
 } elseif ($value['format'] == 'calendar' && isset($$field) && is_array($$field)) {
@@ -114,7 +127,7 @@ $isfile = $field;
 
 // TEST: grab the title from the webpage
 if (empty($title) && !empty($isfile)) {
-    $basedir = '/home/mikespub/www/pictures';
+    $basedir = 'modules/articles';
     $curfile = $basedir . '/' . $$isfile;
     if (file_exists($curfile) && is_file($curfile)) {
         $fd = fopen($curfile,'r');
