@@ -416,6 +416,7 @@ function timezone_init()
                                   '".xarVarPrepForStore($name)."')";
             $result =& $dbconn->Execute($sql_links);
             if(!$result) return false;
+            $result->Close();
         }
     }
     unset($Links);
@@ -445,6 +446,15 @@ function timezone_upgrade($oldversion)
         
         // Version 0.2.1 Upgrade    
         case '0.2.1':
+            // new tzdata was released on 20031215
+            // remove the old tables
+            timezone_delete();
+            // reinstall the tables
+            timezone_init();
+            break;
+        
+        // Version 0.2.2 Upgrade
+        case '0.2.2':
             break;
     }
     
