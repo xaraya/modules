@@ -79,7 +79,7 @@
 					<xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
 						<input type="hidden" name="header[cid]" id="header-cid" value="#$header['cid']#" /> 
 					</xar:if>
-					<input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> <input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" /> <input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" />
+					<input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> <input type="submit" name="receipt[action]" id="receipt-action-preview" value="#xarML('preview')#" /> <input type="submit" name="receipt[action]" id="receipt-action-submit" value="#xarML('submit')#" />
 				</div>
 			
 			<xar:else/>
@@ -147,7 +147,7 @@
 					<xar:if condition="isset($receipt['action']) and $receipt['action'] eq 'modify'">
 						<input type="hidden" name="header[cid]" id="header-cid" value="#$header['cid']#" /> 
 					</xar:if>
-					<input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> <input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" /> <input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" />
+					<input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" /> <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" /> <input type="submit" name="receipt[action]" id="receipt-action-preview" value="#xarML('preview')#" /> <input type="submit" name="receipt[action]" id="receipt-action-submit" value="#xarML('submit')#" />
 				</div>
 			</xar:if>
 		</div>
