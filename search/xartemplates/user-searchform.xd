@@ -5,7 +5,7 @@
 </div>
 
 <div class="xar-accent-outline xar-accent">
-<form  action="#$formaction#" method="post">
+<form  action="#$formaction#" method="get">
     <!-- However we do stuff, the search form needs an input field to enter the keywords to search on -->
     <label for="searchterms"><xar:mlstring>Search for</xar:mlstring>:</label>
 

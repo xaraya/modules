@@ -48,7 +48,10 @@
 <xar:else />
 
 
-	<form action="#xarModURL('search', 'user', 'main')#" method="post">
+	<form action="index.php" method="get">
+    <input type="hidden" name="module" value="search" />
+    <input type="hidden" name="type" value="user" />
+    <input type="hidden" name="func" value="main" />
 	<p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" />
         <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
 	&nbsp;&nbsp;&nbsp; <input type="submit" value="#$search#" />
