@@ -31,6 +31,7 @@ function categories_user_main()
                 $info['module'] = 'categories';
                 $info['itemtype'] = 0;
                 $info['itemid'] = $catid;
+                $info['returnurl'] = xarModUrl('categories', 'user', 'main', array('catid' => $catid));
                 $hooks = xarModCallHooks('item','display',$catid,$info);
                 if (!empty($hooks) && is_array($hooks)) {
                 // TODO: do something specific with pubsub, hitcount, comments etc.
