@@ -32,7 +32,7 @@ function xarbb_user_viewforum()
         return;
     }
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
+    if(!xarSecurityCheck('ViewxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
     xarTplSetPageTitle(xarVarPrepForDisplay($data['fname']));
 
 

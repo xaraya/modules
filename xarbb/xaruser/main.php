@@ -64,7 +64,7 @@ function xarbb_user_main()
         // Security check: remove categories the user should not see
         $catcount = count($cats);
         foreach($cats as $cat)
-            if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
+            if(xarSecurityCheck('ViewxarBB',0,'Forum','$cat[id]:All'))
                 $items[] = $cat;
 
         $totalitems = count($items);
@@ -81,7 +81,7 @@ function xarbb_user_main()
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
             foreach($forums as $forum)
-                if(xarSecurityCheck('ReadxarBB',0,'Forum','All:'.$forum['fid']))
+                if(xarSecurityCheck('ViewxarBB',0,'Forum','All:'.$forum['fid']))
                 $items[$i]['forums'][] = $forum;
 
             $args = $items[$i]['forums'];
@@ -95,7 +95,7 @@ function xarbb_user_main()
         // Security check: remove categories the user should not see
         $catcount = count($cats);
         foreach($cats as $cat)
-            if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
+            if(xarSecurityCheck('ViewxarBB',0,'Forum','$cat[id]:All'))
                 $items[] = $cat;
 
         $totalitems = count($items);
@@ -115,7 +115,7 @@ function xarbb_user_main()
             $forumcount = count($forums);
             $items[$i]['forums'] = array();
             foreach($forums as $forum)
-                if(xarSecurityCheck('ReadxarBB',0,'Forum','All:'.$forum['fid']))
+                if(xarSecurityCheck('ViewxarBB',0,'Forum','All:'.$forum['fid']))
                 $items[$i]['forums'][] = $forum;
 
             $args = $items[$i]['forums'];
