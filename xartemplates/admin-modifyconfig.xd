@@ -1,71 +1,94 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<script type="text/javascript">
-<!--
-    // Enter name of mandatory fields
-    var mail_fieldRequired = Array("adminname", "adminmail");
-    // Enter field description to appear in the dialog box
-    var mail_fieldDescription = Array("Admin Name", "Admin Email");
-//-->
-</script>
+<xar:if condition="xarTplAddStyleLink('headlines', 'forms')"></xar:if>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>Headlines Administration</xar:mlstring>
+        <xar:mlstring>
+            Headlines Administration
+        </xar:mlstring>
     </span>
 </div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2><br />
-    <div style="margin: auto;">
-        <form method="post" action="#xarModURL('headlines', 'admin', 'updateconfig')#" enctype="application/x-www-form-urlencoded" >
-
-        <div style="clear: both; padding-top: 10px;">
-        <input type="hidden" name="authid" id="authid" value="#$authid#" />
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('Number of items per page to show.')#"><label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'itemsperpage')#" />
-        </span>
-        </div>
-
-        <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('Show short urls for the headlines.')#"><label for="shorturls"><xar:mlstring>Support Short URLS</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <xar:if condition="$shorturlschecked">
-                <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
-            <xar:else/>
-                <input type="checkbox" name="shorturls" id="shorturls" value="1" />
-            </xar:if>
-        </span>
-        </div>
-
-        <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('Choose a publication type for import.')#"><label for="importpubtype"><xar:mlstring>Import to Publication Type</xar:mlstring></label>:</span>
-        </span>
-        <span style="float: right; width: 78%; text-align: left;">
-            <select name="importpubtype" id="importpubtype">
-                <option value="0"></option>
-            <xar:foreach in="$pubtypes" key="$ptid" value="$pubtype">
-                <xar:if condition="!empty($importpubtype) and $importpubtype eq $ptid">
-                    <option value="#$ptid#" selected="selected">#$pubtype['descr']#</option>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Modify Configuration
+        </xar:mlstring>
+    </h2>
+    <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Modify Configuration
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <p class="param">
+                <label for="itemsperpage">
+                    <span class="help" title="#xarML('Number of items per page to show')#">
+                        <xar:mlstring>
+                            Items Per Page
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('headlines', 'itemsperpage', 1)#" />
+            </p>
+            <p class="param">
+                <label for="shorturls">
+                    <span class="help" title="#xarML('Show short urls for the headlines')#">
+                        <xar:mlstring>
+                            Support Short URLS
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="$shorturlschecked">
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" checked="checked" />
                 <xar:else/>
-                    <option value="#$ptid#">#$pubtype['descr']#</option>
+                    <input type="checkbox" name="shorturls" id="shorturls" value="1" />
                 </xar:if>
-            </xar:foreach>
-            </select>
-        </span>
-        </div>
-
-        <div style="clear: both; padding-top: 10px;">
-        #$hooks#
-        </div>
-
-        <div style="clear: both; padding-top: 10px;">
-            <span style="float: left; width: 20%; text-align: right;">
-                <input type="submit" value="#$submitlabel#" />
-            </span>
-        </div>
-        </form>
-    </div>
+            </p>
+            <xar:if condition="xarModIsAvailable('articles')">
+            <p class="param">
+                <label for="importpubtype">
+                    <span class="help" title="#xarML('Choose a publication type for import.')#">
+                        <xar:mlstring>
+                            Import to Publication Type
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <select name="importpubtype" id="importpubtype">
+                    <option value="0"></option>
+                <xar:foreach in="$pubtypes" key="$ptid" value="$pubtype">
+                    <xar:if condition="!empty($importpubtype) and $importpubtype eq $ptid">
+                        <option value="#$ptid#" selected="selected">#$pubtype['descr']#</option>
+                    <xar:else/>
+                        <option value="#$ptid#">#$pubtype['descr']#</option>
+                    </xar:if>
+                </xar:foreach>
+                </select>
+            </p>
+            </xar:if>
+            <xar:if condition="xarModIsAvailable('magpie')">
+            <p class="param">
+                <label for="magpie">
+                    <span class="help" title="#xarML('Use Magpie Module for Process of Feeds')#">
+                        <xar:mlstring>
+                            Use Magpie Module for Feeds
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <xar:if condition="$magpiechecked">
+                    <input type="checkbox" name="magpie" id="magpie" value="1" checked="checked" />
+                <xar:else/>
+                    <input type="checkbox" name="magpie" id="magpie" value="1" />
+                </xar:if>
+            </p>
+            </xar:if>
+            #$hooks#
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
+    </form>
 </div>

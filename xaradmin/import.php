@@ -12,12 +12,6 @@ function headlines_admin_import()
         return true;
     }
 
-    // Require the xmlParser class
-    require_once('modules/base/xarclass/xmlParser.php');
-
-    // Require the feedParser class
-    require_once('modules/base/xarclass/feedParser.php');
-
     // The user API function is called
     $links = xarModAPIFunc('headlines',
                           'user',
@@ -32,81 +26,34 @@ function headlines_admin_import()
         $feedfile = "";
     }
 
-    // Sanitize the URL provided to us since
-    // some people can be very mean.
-    $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
-    $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
-
-    // Get the feed file (from cache or from the remote site)
-    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
-                              array('url' => $feedfile,
-                                    'cached' => true,
-                                    'cachedir' => 'cache/rss',
-                                    'refresh' => 3600,
-                                    'extension' => '.xml'));
-    if (!$feeddata) {
-        return; // throw back
+    if (xarModGetVar('headlines', 'magpie')){
+        $imports = xarModAPIFunc('magpie',
+                              'user',
+                              'process',
+                              array('feedfile' => $feedfile));
+    } else {
+        $imports = xarModAPIFunc('headlines',
+                              'user',
+                              'process',
+                              array('feedfile' => $feedfile));
     }
 
-    // Create a need feedParser object
-    $p = new feedParser();
-
-    // Tell feedParser to parse the data
-    $info = $p->parseFeed($feeddata);
-
-    if (empty($info['warning'])){
-        foreach ($info as $content){
-             foreach ($content as $newline){
-                    if(is_array($newline)) {
-                        if (isset($newline['description'])){
-                            $description = $newline['description'];
-                        } else {
-                            $description = '';
-                        }
-                        if (isset($newline['title'])){
-                            $title = $newline['title'];
-                        } else {
-                            $title = '';
-                        }
-                        if (isset($newline['link'])){
-                            $link = $newline['link'];
-                        } else {
-                            $link = '';
-                        }
-
-                        $imports[] = array('title' => $title, 'link' => $link, 'description' => $description);
-                }
-            }
-        }
-
-        if (!empty($links['title'])){
-            $data['chantitle'] = $links['title'];
-        } else {
-            $data['chantitle']  =   $info['channel']['title'];
-        }
-        if (!empty($links['desc'])){
-            $data['chandesc'] = $links['desc'];
-        } else {
-            $data['chandesc']   =   $info['channel']['description'];
-        }
-        $data['chanlink']   =   $info['channel']['link'];
-
-    } else {
+    if (!empty($imports['warning'])){
         $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
-    foreach ($imports as $import){
+    foreach ($imports['feedcontent'] as $import){
 
         $article['title'] = $import['title'];
         $article['summary'] = $import['description'];
         $article['summary'] .= '<br /><br />';
         $article['summary'] .= xarML('Source');
         $article['summary'] .= ': <a href="';
-        $article['summary'] .= $import['link'];
+        $article['summary'] .= $imports['chanlink'];
         $article['summary'] .= '">';
-        $article['summary'] .= $info['channel']['title'];
+        $article['summary'] .= $imports['chantitle'];
         $article['summary'] .= '</a>';
         $article['aid'] = 0;
         $article['ptid'] = $importpubtype;

@@ -18,11 +18,23 @@ function headlines_user_view()
     } else {
         $feedfile = "";
     }
-    // The user API function is called
-    $data = xarModAPIFunc('headlines',
-                          'user',
-                          'process',
-                          array('feedfile' => $feedfile));
+    if (xarModGetVar('headlines', 'magpie')){
+        $data = xarModAPIFunc('magpie',
+                              'user',
+                              'process',
+                              array('feedfile' => $feedfile));
+    } else {
+        $data = xarModAPIFunc('headlines',
+                              'user',
+                              'process',
+                              array('feedfile' => $feedfile));
+    }
+
+    if (!empty($data['warning'])){
+        $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['chantitle']));
 

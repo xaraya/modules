@@ -4,7 +4,6 @@
  */
 function headlines_admin_view()
 {
-
     // Get parameters from whatever input we need
     if (!xarVarFetch('startnum','str:1:',$startnum,'',XARVAR_NOT_REQUIRED)) return;
     $data['items'] = array();
@@ -19,20 +18,18 @@ function headlines_admin_view()
                                     xarModURL('headlines', 'admin', 'view', array('startnum' => '%%')),
                                     xarModGetVar('headlines', 'itemsperpage'));
 
-    
     // Security Check
     if(!xarSecurityCheck('EditHeadlines')) return;
-
     // The user API function is called
     $links = xarModAPIFunc('headlines',
                           'user',
                           'getall',
                           array('startnum' => $startnum,
                                 'numitems' => xarModGetVar('headlines',
-                                                          'itemsperpage')));
-
-    if (!isset($links)) return;
-
+                                                           'itemsperpage')));
+    if (empty($links)){
+        xarResponseRedirect(xarModURL('headlines', 'admin', 'new'));
+    }
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {
         $link = $links[$i];
@@ -57,10 +54,8 @@ function headlines_admin_view()
         }
         $links[$i]['deletetitle'] = xarML('Delete');
     }
-
     // Add the array of items to the template variables
     $data['items'] = $links;
-
     $data['selstyle']  = xarModGetUserVar('headlines', 'selstyle');
     if (empty($data['selstyle'])){
         $data['selstyle'] = 'plain';
@@ -68,7 +63,6 @@ function headlines_admin_view()
     // select vars for drop-down menus
     $data['style']['plain']   = xarML('Plain');
     $data['style']['compact'] = xarML('Compact');
-    // Return the template variables defined in this function
     return $data;
 }
 ?>

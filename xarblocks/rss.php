@@ -84,95 +84,41 @@ function headlines_rssblock_display($blockinfo)
     if (!isset($vars['show_chandesc'])) {
             $vars['show_chandesc'] = 1;
     }
-    // Sanitize the URL provided to us since
-    // some people can be very mean.
-    $feedfile = preg_replace("/\.\./", "donthackthis", $feedfile);
-    $feedfile = preg_replace("/^\//", "ummmmno", $feedfile);
-
-    // Require the xmlParser class
-    require_once('modules/base/xarclass/xmlParser.php');
-
-    // Require the feedParser class
-    require_once('modules/base/xarclass/feedParser.php');
 
     if (empty($vars['refresh'])) {
         $vars['refresh'] = 3600;
     }
 
-    // Get the feed file (from cache or from the remote site)
-    $feeddata = xarModAPIFunc(
-        'base', 'user', 'getfile',
-        array(
-            'url' => $feedfile,
-            'cached' => true,
-            'cachedir' => 'cache/rss',
-            'refresh' => $vars['refresh'],
-            'extension' => '.xml',
-            'superrors'=> TRUE
-        )
-    );
 
-    if (!$feeddata) {
-        $blockinfo['content'] = xarML('Problem with supplied feed');
-        return $blockinfo;
-    }
-
-    // Create a need feedParser object
-    $p = new feedParser();
-
-    // Tell feedParser to parse the data
-    $info = $p->parseFeed($feeddata);
-
-    // DEBUG INFO  Shows array when uncommented.
-    // print_r($info);
-    // print_r($blockinfo['bid']);
-
-    if (isset($info['warning'])) {
-        $blockinfo['title'] = xarML('Headlines');
-        $blockinfo['content'] = xarML('Problem with supplied feed');
-        return $blockinfo;
+    if (xarModGetVar('headlines', 'magpie')){
+        $data = xarModAPIFunc('magpie',
+                              'user',
+                              'process',
+                              array('feedfile' => $feedfile));
     } else {
-        foreach ($info as $content){
-             $content = array_slice($content, 0, $vars['maxitems']);
-             foreach ($content as $newline){
-                    if (is_array($newline)) {
-                        if ((isset($newline['description'])) && (!empty($vars['showdescriptions']))){
-                            $description = $newline['description'];
-                        } else {
-                            $description = '';
-                        }
-                        if (isset($newline['title'])){
-                            $title = $newline['title'];
-                        } else {
-                            $title = '';
-                        }
-                        if (isset($newline['link'])){
-                            $link = $newline['link'];
-                        } else {
-                            $link = '';
-                        }
-                    $feedcontent[] = array('title' => $title, 'link' => $link, 'description' => $description);
-                }
-            }
-        }
+        $data = xarModAPIFunc('headlines',
+                              'user',
+                              'process',
+                              array('feedfile' => $feedfile));
     }
 
-    if (empty($blockinfo['title'])){
-        $blockinfo['title'] = $info['channel']['title'];
+    if (!empty($data['warning'])){
+        $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
     }
 
-    $chantitle  =   $info['channel']['title'];
-    $chanlink   =   $info['channel']['link'];
-    $chandesc   =   $info['channel']['description'];
+    $data['feedcontent'] = array_slice($data['feedcontent'], 0, $vars['maxitems']);
 
     $blockinfo['content'] = array(
-        'feedcontent'  => $feedcontent,
+        'feedcontent'  => $data['feedcontent'],
         'blockid'      => $blockinfo['bid'],
-        'chantitle'    => $chantitle,
-        'chanlink'     => $chanlink,
-        'chandesc'     => $chandesc,
+        'chantitle'    => $data['chantitle'],
+        'chanlink'     => $data['chanlink'],
+        'chandesc'     => $data['chandesc'],
+        'show_desc'     => $vars['showdescriptions'],
         'show_chantitle' => $vars['show_chantitle'],
-        'show_chandesc' => $vars['show_chandesc']
+        'show_chandesc'  => $vars['show_chandesc']
     );
 
     return $blockinfo;

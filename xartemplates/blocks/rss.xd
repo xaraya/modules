@@ -19,8 +19,10 @@
           <xar:else />
               <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
           </xar:if>         
-          <xar:if condition="!empty($loop:item['description'])">
-            <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item['description'])#</div>
+          <xar:if condition="!empty($show_desc)">
+              <xar:if condition="!empty($loop:item['description'])">
+                <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item['description'])#</div>
+              </xar:if>
           </xar:if>
         </li>
       </xar:loop>

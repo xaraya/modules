@@ -1,50 +1,90 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines Administration</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:if condition="xarTplAddStyleLink('headlines', 'forms')"></xar:if>
+<xar:base-include-javascript module="base" filename="formcheck.js" />
+<script type="text/javascript">
+<!--
+    // Enter name of mandatory fields
+    var base_fieldRequired = Array("url");
+    // Enter field description to appear in the dialog box
+    var base_fieldDescription = Array("URL");
+//-->
+</script>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Headlines Administration
+        </xar:mlstring>
+    </span>
+</div>
 <div class="xar-mod-body">
-<h2><xar:mlstring>Edit Headlines</xar:mlstring></h2>
-<form method="post" action="#xarModURL('headlines', 'admin', 'update')#" enctype="application/x-www-form-urlencoded" >
-    <div style="clear: both; padding-top: 10px;">
-    <input type="hidden" name="authid" value="#$authid#" />
-    <input type="hidden" name="hid" id="hid" value="#$hid#" />
-    <span style="float: left; width: 100px; text-align: right;">
-        <span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 335px; text-align: left;">
-        <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
-    </span>
-    </div>
-    <div style="clear: both; padding-top: 10px;">
-        <span style="float: left; width: 100px; text-align: right;">
-        <span class="help" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#"><label for="title"><xar:mlstring>Alt Title</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 335px; text-align: left;">
-        <input type="text" name="title" id="title" value="#$title#" size="40" maxlength="200" />
-    </span>
-    </div>
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 100px; text-align: right;">
-        <span class="help" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#"><label for="desc"><xar:mlstring>Alt Description</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 335px; text-align: left;">
-        <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="200" />
-    </span>
-    </div>
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 100px; text-align: right;">
-        <span class="help" title="#xarML('You can change the order of the feeds to be displayed on individual category pages.')#"><label for="order"><xar:mlstring>Order</xar:mlstring></label></span>
-    </span>
-    <span style="float: right; width: 335px; text-align: left;">
-        <input type="text" name="order" id="order" value="#$order#" size="3" maxlength="3" />
-    </span>
-    </div>
-
-    #$hooks#
-
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: right; width: 78%; text-align: left;">
-        <input type="submit" value="#$submitlabel#"/>
-    </span>
-    </div>
-
-</form>
+    <h2>
+        <xar:mlstring>
+            Edit Headlines
+        </xar:mlstring>
+    </h2>
+    <p>
+        <a href="http://www.syndic8.com">
+            <xar:mlstring>
+                List of available feeds
+            </xar:mlstring>
+        </a>
+    </p>
+    <form class="xar-formwidget" action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <fieldset class="formelements xar-norm">
+            <legend>
+                <strong>
+                    <xar:mlstring>
+                        Edit Feed
+                    </xar:mlstring>
+                </strong>
+            </legend>
+            <input type="hidden" name="authid" value="#$authid#" />
+            <input type="hidden" name="hid" id="hid" value="#$hid#" />
+            <p class="param">
+                <label for="url" class="required">
+                    <span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#">
+                        <xar:mlstring>
+                            URL
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
+            </p>
+            <p class="param">
+                <label for="title">
+                    <span class="help" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#">
+                        <xar:mlstring>
+                            Alt Title
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="title" id="title" value="#$title#" size="40" maxlength="200" />
+            </p>
+            <p class="param">
+                <label for="desc">
+                    <span class="help" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#">
+                        <xar:mlstring>
+                            Alt Description
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="200" />
+            </p>
+            <p class="param">
+                <label for="order">
+                    <span class="help" title="#xarML('You can change the order of the feeds to be displayed on individual category pages')#">
+                        <xar:mlstring>
+                            Order
+                        </xar:mlstring>
+                    </span>
+                </label>
+                <input type="text" name="order" id="order" value="#$order#" size="3" maxlength="3" />
+            </p>
+            #$hooks#
+            <p class="param">
+                <input type="submit" value="#xarML('Submit')#" />
+                <input type="reset" value="#xarML('Reset')#" />
+            </p>
+        </fieldset>
+    </form>
 </div>

@@ -23,39 +23,25 @@ function headlines_admin_create($args)
 
     // Lets Create the Cache Right now to save processing later.
 
-    // Require the xmlParser class
-    require_once('modules/base/xarclass/xmlParser.php');
-
-    // Require the feedParser class
-    require_once('modules/base/xarclass/feedParser.php');
-
-    $feedfile = $url;
-
-    // Get the feed file (from cache or from the remote site)
-    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
-                              array('url' => $feedfile,
-                                    'cached' => true,
-                                    'cachedir' => 'cache/rss',
-                                    'refresh' => 3600,
-                                    'extension' => '.xml'));
-    if (!$feeddata) {
-        return; // throw back
+    if (xarModGetVar('headlines', 'magpie')){
+        $data = xarModAPIFunc('magpie',
+                              'user',
+                              'process',
+                              array('feedfile' => $url));
+    } else {
+        $data = xarModAPIFunc('headlines',
+                              'user',
+                              'process',
+                              array('feedfile' => $url));
     }
 
-    // Create a need feedParser object
-    $p = new feedParser();
-
-    // Tell feedParser to parse the data
-    $info = $p->parseFeed($feeddata);
-
-    if (!empty($info['warning'])){
+    if (!empty($data['warning'])){
         $msg = xarML('There is a problem with this feed : #(1)', $info['warning']);
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     xarResponseRedirect(xarModURL('headlines', 'admin', 'view'));
-
     // Return
     return true;
 }
