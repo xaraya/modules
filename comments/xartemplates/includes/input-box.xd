@@ -1,4 +1,4 @@
-<!--- for this module specific css rules look at comments/xarstyles/comments.css file [andyv] --->
+<xar:comment> for this module specific css rules look at comments/xarstyles/comments.css file [andyv] </xar:comment>
 <xar:sec mask="Comments-Reply" catch="false">
 	<h3>#$header['input-title']#</h3> 
 	<form action="#$receipt['post_url']#" method="post" name="post" id="post" #$hooks['formaction']# >

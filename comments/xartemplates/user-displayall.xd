@@ -1,7 +1,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
   <tr>
     <td width="100%" align="center">
-      <!--- DISPLAY WHERE THE COMMENTS ARE COMING FROM --->
+      <xar:comment> DISPLAY WHERE THE COMMENTS ARE COMING FROM </xar:comment>
       <span class="xar-title">  
         <xar:mlstring>Showing comments n. </xar:mlstring> #$first# - #$first+$howmany-1#                
         <xar:if condition="$modarray[0]!='All'">                
@@ -15,7 +15,7 @@
         <xar:else />
           <xar:mlstring>from all modules</xar:mlstring>
         </xar:if>
-        <!--- NEXT COMMENTS LINK --->
+        <xar:comment> NEXT COMMENTS LINK </xar:comment>
         (<a href=#$decoded_nexturl#><xar:mlstring>next</xar:mlstring></a>)              
       </span>
       <p />
@@ -34,18 +34,18 @@
   <tr>
     <td>
       <p />
-      <!--- DISPLAY COMMENTS --->
+      <xar:comment> DISPLAY COMMENTS </xar:comment>
       <xar:if condition="count($commentlist)"> 
         <xar:foreach in="$commentlist" value="$comment">
         <xar:if condition="$adddaysep=='on'">
           <xar:if condition="$comment['daychange']">
-            <!--- DAY SEPARATOR --->
+            <xar:comment> DAY SEPARATOR </xar:comment>
             </td></tr><td align=center>
               - <b>#$comment['daychange']#</b> -
             </td></tr><tr><td>
           </xar:if>
         </xar:if>
-          <!--- CHECK PERMISSION --->
+          <xar:comment> CHECK PERMISSION </xar:comment>
 
             <table cellspacing="0" cellpadding="1" width="100%" border="0">
               <tr>
@@ -57,7 +57,7 @@
                   </span>                              
         <xar:if condition="!empty($comment['xar_title'])">
           <xar:if condition="$addobject ge 20">  
-            <!--- OBJECT TITLE --->
+            <xar:comment> OBJECT TITLE </xar:comment>
             <xar:mlstring>in</xar:mlstring> 
             <span class="xar-title">
                                  <xar:if condition="$addobject ge 21">
@@ -75,7 +75,7 @@
         </xar:if> 
                   <span class="xar-normal">
           <xar:if condition="$addauthor ge 1">                          
-            <!--- AUTHOR NAME --->  
+            <xar:comment> AUTHOR NAME </xar:comment>  
             <br /><xar:mlstring>by</xar:mlstring> 
             <xar:if condition="$comment['xar_postanon'] eq 0 or xarModGetVar('comments','AllowPostAsAnon') eq 0">
               <xar:if condition="$addauthor ge 2">
@@ -90,7 +90,7 @@
             </xar:if>
           </xar:if> 
           <xar:if condition="$adddate=='on'">
-            <!--- DATE --->  
+            <xar:comment> DATE </xar:comment>  
             <xar:mlstring>on</xar:mlstring> #$comment['xar_date']#
           </xar:if>
                   </span>
@@ -106,18 +106,18 @@
       <p />
     </td>
   </tr>
-  <!--- FORM SELECTING DISPLAY OPTIONS (should add a module variable here) --->
+  <xar:comment> FORM SELECTING DISPLAY OPTIONS (should add a module variable here) </xar:comment>
   <tr>
     <td valign="middle" align=center width="100%">
       <br />
       <form action="#$decoded_returnurl#" method="POST">
-        <!--- CHOOSE HOW MANY TO DISPLAY --->                    
+        <xar:comment> CHOOSE HOW MANY TO DISPLAY </xar:comment>                    
         <span class="xar-normal">
           <xar:mlstring>Show</xar:mlstring>
         </span>
         <input type="text" size="2" maxlength="3" name="howmany" value="#$howmany#"> 
         <xar:mlstring>comments</xar:mlstring>
-        <!--- SELECT FROM WHICH MODULES --->
+        <xar:comment> SELECT FROM WHICH MODULES </xar:comment>
         <xar:if condition="sizeof($modlist) ge 2">
           <xar:mlstring>from</xar:mlstring>                              
     <select name="modid[]" tabindex="3" multiple size="3"/>
@@ -131,7 +131,7 @@
     </select>        
         </xar:if>
         <p />
-        <!--- CHOOSE SORTING ORDER --->
+        <xar:comment> CHOOSE SORTING ORDER </xar:comment>
         sorted by
         <select name="order">    
           <xar:if condition="$order eq 'ASC'">
@@ -151,5 +151,5 @@
       </form>
     </td>                          
   </tr>
-  <!--- END OF FORM SELECTING DISPLAY OPTIONS --->
+  <xar:comment> END OF FORM SELECTING DISPLAY OPTIONS </xar:comment>
 </table>        

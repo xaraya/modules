@@ -153,7 +153,7 @@
                             </xar:if>
                         </td>
                     </tr>
-                    <!--- DISABLED -- TODO: finish comments authorization scheme
+                    <xar:comment> DISABLED -- TODO: finish comments authorization scheme
                     <tr align="left" valign="middle">
                         <td>
                             <xar:mlstring>Authorize comments before they show up?</xar:mlstring>
@@ -166,7 +166,7 @@
                                 <input type="checkbox" name="xar_authorize" id="xar_authorize" />
                             </xar:if>
                         </td>
-                    </tr>  --->
+                    </tr>  </xar:comment>
                 </table>
             </td>
         </tr>

@@ -13,7 +13,7 @@
                     <img class="xar-tr-image" height="21" src="#$map#" width="9" alt="" />
                 </xar:foreach>
                 <xar:if condition="$loop:item['xar_branchout'] eq 0">
-<!--- CHECKME: no text or buttons in search results --->
+<xar:comment> CHECKME: no text or buttons in search results </xar:comment>
                   <xar:if condition="isset($loop:item['xar_text'])">
                     <a href="#" id="collapser" name="collapser" onclick="document.getElementById('#$loop:item['xar_cid']#').style.display = (document.getElementById('#$loop:item['xar_cid']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
                         #$loop:item['xar_title']#
@@ -43,7 +43,7 @@
             </span>
         </div>
         
-<!--- CHECKME: no text or buttons in search results --->
+<xar:comment> CHECKME: no text or buttons in search results </xar:comment>
       <xar:if condition="isset($loop:item['xar_text'])">
         <div class="xar-tr-collapsed" id="#$loop:item['xar_cid']#">
             <div class="xar-cm-comment xar-norm xar-accent-outline">
@@ -95,12 +95,12 @@
 						</form>
 					</xar:sec>
 				</xar:if>
-<!--- FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here --->
+<xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
                 <xar:if condition="isset($package['transformed-text'])">
                     #$package['transformed-text']# 
                     <xar:else />
                     #$loop:item['xar_text']# 
-<!--- FIXME: nested if's don't seem right here --->
+<xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />
                         <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp; 
@@ -118,7 +118,7 @@
                 </xar:foreach>
     
                 <xar:if condition="$loop:item['xar_branchout'] eq 0">
-<!--- CHECKME: no text or buttons in search results --->
+<xar:comment> CHECKME: no text or buttons in search results </xar:comment>
                   <xar:if condition="isset($loop:item['xar_text'])">
                     <a href="#" id="collapser" name="collapser" onclick="document.getElementById('#$loop:item['xar_cid']#').style.display = (document.getElementById('#$loop:item['xar_cid']#').style.display == 'block') ? 'none' : 'block'; return false;" title="#xarML('Toggle the full view of comment..')#">
                         #$loop:item['xar_title']#
@@ -149,7 +149,7 @@
             </span>
         </div>
 
-<!--- CHECKME: no text or buttons in search results --->
+<xar:comment> CHECKME: no text or buttons in search results </xar:comment>
       <xar:if condition="isset($loop:item['xar_text'])">
         <div class="xar-tr-collapsed" id="#$loop:item['xar_cid']#">
             <div class="xar-cm-comment xar-accent xar-accent-outline">
@@ -203,12 +203,12 @@
 					</xar:sec>
 				</xar:if>
                 
-<!--- FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here --->
+<xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
                 <xar:if condition="isset($package['transformed-text'])">
                     #$package['transformed-text']# 
                     <xar:else />
                     #$loop:item['xar_text']# 
-<!--- FIXME: nested if's don't seem right here --->
+<xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />
                         <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp; 
