@@ -15,7 +15,7 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <em><xar:mlstring>Images is a Xaraya Utility Module.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for basica image manipulation, including the following:</xar:mlstring>
+            <xar:mlstring>It is currently responsible for basic image manipulation, including the following:</xar:mlstring>
             <ul>
                 <li>
                     <span style="color: red;"><strong>*</strong></span>
@@ -44,7 +44,7 @@
             <p>
                 <pre><  xar:image src="FILEID" [width="([0-9]+)(px|%)" [height="([0-9]+)(px|%)"]] [constrain="0|1"] label="TEXT" /  ></pre>
                 <xar:mlstring>
-                    The IMAGE tag is useful for caching and display images at different proportions. Images are resized according,
+                    The IMAGE tag is useful for caching and display images at different proportions. Images are resized according 
                     to the height/width values you specify with the resulting image cached for faster displaying later on. 
                 </xar:mlstring>
             </p>
