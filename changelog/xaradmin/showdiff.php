@@ -109,7 +109,7 @@ function changelog_admin_showdiff($args)
         if (!empty($data['changes'][$logid]['remark'])) {
             $data['changes'][$logid]['remark'] = xarVarPrepForDisplay($data['changes'][$logid]['remark']);
         }
-        $data['changes'][$logid]['date'] = xarLocaleFormatDate($data['changes'][$logid]['date']);
+        // 2template $data['changes'][$logid]['date'] = xarLocaleFormatDate($data['changes'][$logid]['date']);
         $data['changes'][$logid]['version'] = $version[$logid];
     }
 

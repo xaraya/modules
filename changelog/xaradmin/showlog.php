@@ -43,7 +43,7 @@ function changelog_admin_showlog($args)
         if (!empty($data['changes'][$logid]['remark'])) {
             $data['changes'][$logid]['remark'] = xarVarPrepForDisplay($data['changes'][$logid]['remark']);
         }
-        $data['changes'][$logid]['date'] = xarLocaleFormatDate($data['changes'][$logid]['date']);
+        // 2template $data['changes'][$logid]['date'] = xarLocaleFormatDate($data['changes'][$logid]['date']);
         // descending order of changes here
         $data['changes'][$logid]['version'] = $numchanges;
         $numchanges--;

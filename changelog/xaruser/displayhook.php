@@ -82,8 +82,6 @@ function changelog_user_displayhook($args)
     if (!empty($data['remark'])) {
         $data['remark'] = xarVarPrepForDisplay($data['remark']);
     }
-    $data['date'] = xarLocaleFormatDate($data['date']);
-
     $data['link'] = xarModURL('changelog','admin','showlog',
                               array('modid' => $modid,
                                     'itemtype' => $itemtype,
