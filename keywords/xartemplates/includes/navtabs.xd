@@ -1,12 +1,12 @@
 <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
 </xar:if>
     <dl class="xar-tabs">
-        <div class="navhelp help" title="#xarML('Click on a tab to filter the keywords to be selected')#">
+        <dt class="help" title="#xarML('Click on a tab to filter the keywords to be selected')#">
             <xar:mlstring>
                 Filter
             </xar:mlstring>
             :
-        </div>
+        </dt>
         <xar:if condition="$tab eq 0">
         <dd class="active">
                 <a href="#xarModURL('keywords', 'user', 'main', array('tab' => '0'))#">
