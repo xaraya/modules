@@ -15,7 +15,7 @@
         </th>
     </tr>
     <xar:loop name="$items">
-    <xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+    <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td class="xar-norm">
             #$type#
