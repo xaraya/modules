@@ -10,7 +10,8 @@
  *  @returns TRUE on success, FALSE on error
  */
 
-function uploads_userapi_file_delete( $args ) { 
+function uploads_userapi_file_delete( $args ) 
+{ 
 
     extract ($args);
     

@@ -9,7 +9,8 @@
  *  @returns <type> 
  */
 
-function uploads_userapi_file_rename( $args ) { 
+function uploads_userapi_file_rename( $args ) 
+{ 
     return xarModAPIFunc('uploads','user','file_move', $args);
 }
 

@@ -10,7 +10,8 @@
  * @returns array   All of the metadata stored for the particular file
  */
  
-function uploads_userapi_db_getall_files( /* VOID */ ) {
+function uploads_userapi_db_getall_files( /* VOID */ ) 
+{
     
     // Get database setup
     $dbconn =& xarDBGetConn();

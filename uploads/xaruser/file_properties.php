@@ -5,7 +5,8 @@
  */
 xarModAPILoad('uploads','user');
 
-function uploads_user_file_properties( $args ) {
+function uploads_user_file_properties( $args ) 
+{
     
     extract($args);
 

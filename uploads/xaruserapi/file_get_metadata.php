@@ -11,7 +11,8 @@
  *
  */
  
-function uploads_userapi_file_get_metadata( $args ) {
+function uploads_userapi_file_get_metadata( $args ) 
+{
  
     extract($args);
 

@@ -1,6 +1,7 @@
 <?php
 
-function uploads_user_uploadform() {
+function uploads_user_uploadform() 
+{
     
     if (!xarSecurityCheck('AddUploads')) return;
     // Generate a one-time authorisation code for this operation

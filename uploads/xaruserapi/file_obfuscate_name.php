@@ -9,7 +9,8 @@
  *  @returns <type> 
  */
 
-function uploads_userapi_file_obfuscate_name( $args ) {
+function uploads_userapi_file_obfuscate_name( $args ) 
+{
 
     extract ($args);
     

@@ -1,6 +1,7 @@
 <?php
 
-function uploads_user_upload() {
+function uploads_user_upload() 
+{
     
     if (!xarSecurityCheck('AddUploads')) return;
     

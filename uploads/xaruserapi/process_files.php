@@ -17,7 +17,8 @@
  
 xarModAPILoad('uploads', 'user');
  
-function uploads_userapi_process_files( $args ) {
+function uploads_userapi_process_files( $args ) 
+{
 
     extract($args);
 

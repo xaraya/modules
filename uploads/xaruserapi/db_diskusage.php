@@ -16,7 +16,8 @@
  * @returns integer             The total amount of diskspace used by the current set of selected files
  */
  
-function uploads_userapi_db_diskusage( $args )  {
+function uploads_userapi_db_diskusage( $args )  
+{
     
     extract($args);
     

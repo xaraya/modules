@@ -16,7 +16,8 @@
  *  @returns integer The id of the fileEntry that was added, or FALSE on error
  */
 
-function uploads_userapi_db_add_file( $args ) {
+function uploads_userapi_db_add_file( $args ) 
+{
     
     extract($args);
 

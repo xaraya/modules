@@ -13,7 +13,8 @@
  * @returns array   A list of associations, including the fileId -> ModId -> ItemType -> objectId
  */
  
-function uploads_userapi_db_get_associations( $args )  {
+function uploads_userapi_db_get_associations( $args )  
+{
     
     extract($args);
     

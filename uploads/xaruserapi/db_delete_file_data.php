@@ -12,7 +12,8 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_delete_file_data( $args ) {
+function uploads_userapi_db_delete_file_data( $args ) 
+{
     extract($args);
     
     if (!isset($fileId)) {

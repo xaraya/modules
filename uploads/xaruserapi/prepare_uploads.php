@@ -20,7 +20,8 @@
  */
 
 
-function uploads_userapi_prepare_uploads( $args ) {
+function uploads_userapi_prepare_uploads( $args ) 
+{
 
     extract ( $args );
         

@@ -14,7 +14,8 @@
  *  @throws   UPLOADS_ERR_NO_READ       couldn't read from the specified file
  */
  
-function uploads_userapi_file_push( $args ) {
+function uploads_userapi_file_push( $args ) 
+{
     
     extract ( $args );
     
@@ -140,4 +141,4 @@ function uploads_userapi_file_push( $args ) {
 
 }
 
-?>   
+?>

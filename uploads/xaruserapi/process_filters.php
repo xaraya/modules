@@ -1,6 +1,7 @@
 <?php
 
-function uploads_userapi_process_filters( $args ) {
+function uploads_userapi_process_filters( $args ) 
+{
 
     extract ( $args );
     /**

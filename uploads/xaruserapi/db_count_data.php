@@ -10,7 +10,8 @@
  * @returns integer             The total number of DATA Blocks stored for a particular file
  */
  
-function uploads_userapi_db_count_data( $args )  {
+function uploads_userapi_db_count_data( $args )  
+{
     
     extract($args);
     

@@ -9,7 +9,8 @@
  *  @returns string           The complete path to the new Current Working Directory within the sandbox
  */
 
-function uploads_userapi_import_chdir( $args ) {
+function uploads_userapi_import_chdir( $args ) 
+{
     extract ( $args );
 
     if (!isset($dirName) || empty($dirName)) {
@@ -44,3 +45,4 @@ function uploads_userapi_import_chdir( $args ) {
     
     return $cwd;
 } 
+?>

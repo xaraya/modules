@@ -9,7 +9,8 @@
  *  @returns array          FALSE on error, otherwise an array containing the fileInformation
  */
  
- function uploads_userapi_import_external_ftp( $args ) {
+function uploads_userapi_import_external_ftp( $args ) 
+{
          
     extract($args);
     

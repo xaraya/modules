@@ -9,7 +9,8 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_change_status( $args ) {
+function uploads_userapi_db_change_status( $args ) 
+{
     extract($args);
     
     if (!isset($fileId) && !isset($fileType)) {

@@ -13,7 +13,8 @@
  * @returns integer           The total number of assocations for particular file/module/itemtype/item combination
  */
  
-function uploads_userapi_db_count_assocations( $args )  {
+function uploads_userapi_db_count_assocations( $args )  
+{
     
     extract($args);
     

@@ -9,7 +9,8 @@
  *  @returns array          FALSE on error, otherwise an array containing the fileInformation
  */
  
- function uploads_userapi_import_external_http( $args ) {
+function uploads_userapi_import_external_http( $args ) 
+{
          
     extract($args);
     

@@ -1,6 +1,7 @@
 <?php
 
-function uploads_userapi_normalize_filesize( $args ) {
+function uploads_userapi_normalize_filesize( $args ) 
+{
     
     if (is_array($args)) {
         extract($args);
@@ -22,3 +23,4 @@ function uploads_userapi_normalize_filesize( $args ) {
 
     return array('long' => number_format($fileSize), 'short' => $short);
 }
+?>

@@ -10,7 +10,8 @@
  *  returns  integer           The total bytes stored or boolean FALSE on error
  */
  
-function uploads_userapi_file_dump( $args ) {
+function uploads_userapi_file_dump( $args ) 
+{
 
     extract($args);
     

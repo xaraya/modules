@@ -13,7 +13,8 @@
  *  @returns integer The id of the file that was associated, FALSE with exception on error
  */
 
-function uploads_userapi_db_add_association( $args ) {
+function uploads_userapi_db_add_association( $args ) 
+{
     
     extract($args);
 

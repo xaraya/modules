@@ -17,7 +17,8 @@
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_delete_assocation( $args ) {
+function uploads_userapi_db_delete_assocation( $args ) 
+{
     
     extract($args);
 

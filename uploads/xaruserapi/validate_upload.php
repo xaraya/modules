@@ -15,7 +15,8 @@
  *  @returns boolean                      TRUE if checks pass, FALSE otherwise 
  */
 
-function uploads_userapi_validate_upload( $args ) {
+function uploads_userapi_validate_upload( $args ) 
+{
 
     extract ($args);
     

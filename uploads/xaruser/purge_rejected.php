@@ -13,7 +13,8 @@
 
 xarModAPILoad('uploads', 'user');
 
-function uploads_user_purge_rejected( $args ) {
+function uploads_user_purge_rejected( $args ) 
+{
     
     extract ($args);
     
