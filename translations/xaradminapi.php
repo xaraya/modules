@@ -815,8 +815,5 @@ function translations_gather_common_entries($transEntriesCollection)
     return $transEntriesCollection;
 }
 
-function translations_adminapi_getmenulinks() {
-    return array();
-}
 
 ?>

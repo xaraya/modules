@@ -1,0 +1,104 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Translations Administration</xar:mlstring>
+  </span>
+</div>
+
+<!-- Initialization of some information -->
+<xar:set name="$mlsmode">#xarConfigGetVar('Site.MLS.MLSMode')#</xar:set>
+<xar:set name="$single_checked">''</xar:set>
+<xar:if condition="$mlsmode == 'SINGLE'"><xar:set name="$single_checked">'CHECKED'</xar:set></xar:if>
+<xar:set name="$boxed_checked">''</xar:set>
+<xar:if condition="$mlsmode == 'BOXED'"><xar:set name="$boxed_checked">'CHECKED'</xar:set></xar:if>
+<xar:set name="$unboxed_checked">''</xar:set>
+<xar:if condition="$mlsmode == 'UNBOXED'"><xar:set name="$unboxed_checked">'CHECKED'</xar:set></xar:if>
+
+<div class="xar-mod-body">
+  <h2><xar:mlstring>Multi language configuration</xar:mlstring></h2>
+
+  <div style="margin: auto;">
+    <form method="post" action="&xar-modurl-translations-admin-updateconfig;" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="&xar-var-authid;" />
+
+    <h4><xar:mlstring>Mode of operation</xar:mlstring></h4>
+    <p>
+       The multilanguage system (MLS) can work in three different modes: 
+      <dl>
+        <dt><input type="radio" name="mlsmode" value="SINGLE" #$single_checked# />SINGLE
+        <dd>
+        MLS uses only one charset, typically single byte but potentially multi byte if mb_string is 
+        built in. Every information is stored coherently with the chosen charset (installation time), 
+        and also user data is meaningful in the chosen charset.
+        <dt><input type="radio" name="mlsmode" value="BOXED" #$boxed_checked#/> BOXED MULTI
+        <dd>
+        MLS uses more than one charset (same consideration for the single or multi byte matter as 
+        above can be applied here), but only one charset per page is used (this is an obvious concept maybe, 
+        but important to understand). Due to this fact the content is not sharable through different 
+        language areas (for example an Arabic comment won't be shown in the English area even if 
+        they are referring to the same object, say an article available in both English and Arabic). 
+        Another point is that every operation involves only a single language. This mode can produce 
+        unexpected results if mb_string is not installed.
+        <dt><input type="radio" name="mlsmode" value="UNBOXED" #$unboxed_checked# /> UNBOXED MULTI
+        <dd>
+        MLS uses an universal charset to represent everything (read: UTF-8). This guarantees that no 
+        conversion is needed for the content representation. Every page is always shown according to 
+        the user chosen language, but the page can contain texts in other languages 
+        (for example a French article and comments inside an English page).
+      </dl>
+    </p>
+
+    <h4><xar:mlstring>Translations storage</xar:mlstring></h4>
+    <p>
+      The translated information for xaraya and her modules can be stored in different back-ends.
+      The following back-ends are supported:
+  	</p>
+    <p>
+      <label for="translationsbackend"><xar:mlstring>Translations Backend</xar:mlstring></label>:
+	    <select name="translationsbackend" id="translationsbackend" size="1">
+		    <xar:if condition="xarConfigGetVar('Site.MLS.TranslationsBackend') eq 'xml'">
+			    <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
+			    <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
+		    <xar:elseif condition="xarConfigGetVar('Site.MLS.TranslationsBackend') eq 'php'" />
+			    <option value="xml">XML</option>
+			    <option value="php" selected="selected">PHP</option>
+		    </xar:if>
+	    </select>
+    </p>
+ 
+    <h4><xar:mlstring>Default locale</xar:mlstring></h4>
+    <p>
+      Which locale should be used by default. The global default of Xaraya is en_US.iso8859-1 (the "hard-coded" locale)
+      which means that if no translation is available and no specific locale is set, the US variant of the english
+      language will be used, encoded in iso8859-1 format.
+    </p>
+    <p>
+      <label for="defaultlocale"><xar:mlstring>Default Locale</xar:mlstring></label>:&nbsp;&nbsp;
+	    <select name="defaultlocale" id="defaultlocale" size="1">
+        <xar:foreach in="$locales" value="$locale">
+          <xar:if condition="xarMLSGetSiteLocale() eq $locale">
+            <option value="#$locale#" selected="selected">#$locale#</option>
+           <xar:else />
+            <option value="#$locale#">#$locale#</option>
+          </xar:if>
+        </xar:foreach>
+      </select>
+    </p>
+
+    <h4><xar:mlstring>Locale exposure</xar:mlstring></h4>
+    <p><xar:mlstring>
+      Which locales are available for use within the system. Whether the locale will actually be used is not determined
+      by this setting. It just makes it available.
+    </xar:mlstring></p>
+    <p>
+      <label for="localeslist">
+        <xar:mlstring>Available Locales (comma-delimited)</xar:mlstring>
+      </label>:&nbsp;&nbsp;
+      <input type="text" id="localeslist" name="localeslist" value="#$localeslist#" size="40" maxlength="100" />
+    </p>
+
+    <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
+	  <p><input type="submit" value="#$updatelabel#" align="middle" /></p>
+    </form>
+  </div>
+</div>
+
