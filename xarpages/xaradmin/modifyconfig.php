@@ -5,7 +5,8 @@
  * TODO: Configure default page, error page (no permission), error page (page not found), short URL support.
  */
 
-function xarpages_admin_modifyconfig() {
+function xarpages_admin_modifyconfig()
+{
     $data = array();
 
     // Get the tree of all pages.

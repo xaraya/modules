@@ -1,6 +1,7 @@
 <?php
 
-function xarpages_encodeapi_custom($args) {
+function xarpages_encodeapi_custom($args)
+{
     extract($args);
 
     $path = array();
