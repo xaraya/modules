@@ -1,0 +1,43 @@
+<xar:set name="dummy">xarTplAddStyleLink('xarpages', 'xarpages')</xar:set>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
+
+<div class="xar-mod-body"><h2><xar:mlstring>View Pages</xar:mlstring></h2>
+    <div style="margin: auto;">
+        <div><a href="#xarModURL('xarpages','admin','modifypage')#"><xar:mlstring>Add Page</xar:mlstring></a></div>
+
+        <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <th><xar:mlstring>Name</xar:mlstring></th>
+                <th><xar:mlstring>Description</xar:mlstring></th>
+                <th><xar:mlstring>Options</xar:mlstring></th>
+            </tr>
+            <xar:loop name="$pages">
+                <xar:if condition="$loop:index ge 0">
+                    <xar:if condition="(($loop:index + 1) % 2)">
+                        <xar:set name="$row_class">''</xar:set>
+                    <xar:else />
+                        <xar:set name="$row_class">'xar-accent'</xar:set>
+                    </xar:if>
+
+                    <tr>
+                        <td align="left" class="#$row_class#">
+                            #$loop:item.xar_map#
+                            #xarVarPrepForDisplay($loop:item.name)#
+                        </td>
+                        <td class="#$row_class#">#xarVarPrepForDisplay($loop:item.pagetype.name)#: #xarVarPrepForDisplay($loop:item.desc)#</td>
+                        <td class="#$row_class#" style="text-align: center;">
+                            <a href="#xarModURL('xarpages', 'admin', 'modifypage', array('pid' => $loop:item.pid))#">
+                                <xar:mlstring>Modify</xar:mlstring>
+                            </a>
+                            &nbsp;|&nbsp;
+                            <a href="#xarModURL('xarpages', 'admin', 'deletepage', array('pid' => $loop:item.pid))#">
+                                <xar:mlstring>Delete</xar:mlstring>
+                            </a>
+                        </td>
+                    </tr>
+                </xar:if>
+            </xar:loop>
+        </table>
+    </div>
+</div>

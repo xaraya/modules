@@ -1,0 +1,121 @@
+/*
+    Copied from the blocks stylesheet.
+    It would be nice if this kind of layout were available by default.
+	Note: tidy this up, as some pages contain far too many outlines and are confusing.
+*/
+
+form.xar-xarpages-admin,
+form.xar-xarpages-admin fieldset {
+    margin: .5em 0;
+    padding: 0;
+    border: 0 none;
+    line-height: 1.9em;
+}
+
+form.xar-xarpages-admin fieldset.formelements:after {
+    content: ".";
+    display: block;
+    height: 1px;
+    clear: both;
+    visibility: hidden;
+}
+
+form.xar-xarpages-admin fieldset.formelements {
+    display: inline-block;
+    border: 1px solid;
+    padding: 0 2px;
+}
+
+/* Hides from IE-mac \*/
+* html form.xar-xarpages-admin fieldset.formelements { height: 1%; }
+form.xar-xarpages-admin fieldset.formelements { display: block; }
+/* End hide from IE-mac */
+
+form.xar-xarpages-admin fieldset.formelements legend {
+    padding: 0 .5em;
+    background-color: #f9f9f9;
+    border: 1px solid;
+    width: 14em;
+    min-width: 14em;
+    display: block;
+}
+
+form.xar-xarpages-admin fieldset.formelements p {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin: 1px 0 0 0;
+    line-height: 1.8em;
+    background-color: #f7f7f7;
+}
+
+form.xar-xarpages-admin fieldset.formelements p.param label {
+    float: left;
+    width: 14em;
+    background-color: #ffffff;
+    padding: 0 .5em;
+    margin-right: .5em;
+    text-align: right;
+    border-color: #dddddd;
+    border-width: 1px;
+    border-style: solid;
+}
+
+form.xar-xarpages-admin fieldset.extra label,
+form.xar-xarpages-admin fieldset.formelements p.param label.xar-norm {
+    float: none;
+    width: auto;
+    background-color: transparent;
+    padding: 0 .5em;
+    border: 0 none;
+}
+
+form.xar-xarpages-admin fieldset.formelements label.required span:before {
+    content: " * ";
+    color: red;
+}
+
+form.xar-xarpages-admin fieldset.formelements label span {
+    line-height: 1.8em;
+    text-align: right;
+    background-color: white;
+}
+
+form.xar-xarpages-admin fieldset.formelements span.fullright {
+    display: block;
+    margin-left: 15.7em;
+}
+
+form.xar-xarpages-admin fieldset.formelements span.fullright input,
+form.xar-xarpages-admin fieldset.formelements input.fullright { width: 99%; }
+form.xar-xarpages-admin fieldset.extra { background-color: #f7f7f7; }
+
+form.xar-xarpages-admin fieldset.formelements table {
+    clear: left;
+    line-height: 1.4em;
+    margin-top: .5em;
+}
+
+form.xar-xarpages-admin fieldset.formelements table.fullwidth {
+    width: 100%;
+    background-color: white;
+    border-color: #dddddd;
+    border-width: 1px;
+    border-style: solid;
+}
+
+form.xar-xarpages-admin fieldset.formelements table caption {
+    text-align: left;
+    padding: 1px .5em;
+    width: auto;
+    margin: 0;
+    display: block;
+}
+
+/* Style for the tree-display images */
+img.xar-xarpages-tree {
+	vertical-align: top;
+	border: 0;
+	height: 21;
+	width: 12;
+}
