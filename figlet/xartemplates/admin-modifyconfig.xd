@@ -13,7 +13,7 @@
 		</xar:if>
 	</xar:loop>
 	</select></p>
-<input type="submit" value="#$submit#" align="middle" tabindex="3" />
+<input type="submit" value="#$submit#"  tabindex="3" />
 </form>
 </div>
 </div>
