@@ -20,28 +20,27 @@
  * it uses no database tables yet.
  *
  */
-function xmlrpcsystemapi_init() { 
-    // The xmlrpcsystemapii needs webservices
-    if(!xarModIsAvailable('xmlrpcserver')) {
-        $msg=xarML('The xmlrpcserver module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',$msg);
-        return;
-    }
-
-    return true; }
+function xmlrpcsystemapi_init() 
+{ 
+    return true; 
+}
 
 /**
  * upgrade the xmlrpcsystemapi module from an old version
  * This function can be called multiple times
  */
-function xmlrpcsystemapi_upgrade($oldversion) { return true; }
+function xmlrpcsystemapi_upgrade($oldversion) 
+{ 
+    return true; 
+}
 
 /**
  * delete the xmlrpcsystemapi module
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function xmlrpcsystemapi_delete() { 
+function xmlrpcsystemapi_delete() 
+{ 
     return true; 
 }
 
