@@ -74,8 +74,8 @@ function xarcachemanager_init()
     $cachingConfigFile = $varCacheDir .'/config.caching.php';
     if (!file_exists($defaultConfigFile)) {
         $msg=xarML('That is strange.  The default, distributed configuration 
-                   file, normally ' . $defaultConfigFile . ', seems to be 
-                   missing.');
+                   file, normally #(1), seems to be 
+                   missing.', $defaultConfigFile);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
                         new SystemException($msg));
         

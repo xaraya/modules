@@ -66,9 +66,9 @@ function xarcachemanager_admin_updateconfig()
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
     
     if (!is_writable($cachingConfigFile)) {
-        $msg=xarML('The caching configuration file is not writable by the web server.
-                    '. $cachingConfigFile .' must be writable by the web server for 
-                   the output caching to be managed by xarCacheManager.');
+        $msg=xarML('The caching configuration file is not writable by the web server.  
+                   #(1) must be writable by the web server for 
+                   the output caching to be managed by xarCacheManager.', $cachingConfigFile);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
                         new SystemException($msg));
         return false;

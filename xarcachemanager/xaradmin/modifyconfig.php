@@ -28,8 +28,8 @@ function xarcachemanager_admin_modifyconfig()
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
     if (!file_exists($cachingConfigFile)) {
-        $msg=xarML('That is strange.  The ' . $cachingConfigFile . ', seems to be 
-                    missing.');
+        $msg=xarML('That is strange.  The #(1) file seems to be 
+                    missing.', $cachingConfigFile);
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
                         new SystemException($msg));
             
