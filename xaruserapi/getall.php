@@ -6,11 +6,11 @@
 function tasks_userapi_getall($args)
 {
     extract($args);
-    
+
     if (!isset($modname) || (empty($modname))) {
         $modname = "tasks";
     }
-    
+
     if(!isset($parentid) || empty($parentid) || !is_numeric($parentid)) {
         $parentid = 0;
     }
@@ -20,7 +20,6 @@ function tasks_userapi_getall($args)
     if($displaydepth > $maxlevel) {
         return $tasks;
     }
-    
     //if (!xarSecAuthAction(0, 'tasks::', '::', ACCESS_OVERVIEW)) {
     //    xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_getall: ' . _TASKS_NOAUTH);
     //    return $tasks;
@@ -61,7 +60,7 @@ function tasks_userapi_getall($args)
 
     // IMPLEMENT FILTER CODE FOR WHERE CLAUSE
     // FORCING PARENT ID CHECK FOR USE IN DRILLDOWNS
-    // ENABLEING GLOBAL TASK STACK SEARCH BASED ON MODNAME/OBJECTID 
+    // ENABLEING GLOBAL TASK STACK SEARCH BASED ON MODNAME/OBJECTID
     $userId = xarSessionGetVar('uid');
     $filter = xarSessionGetVar('filter');
     switch($filter) {
@@ -100,6 +99,7 @@ function tasks_userapi_getall($args)
     $result =& $dbconn->Execute($sql, $bindvars);
     if (!$result) return;
 
+    $tasks = array();
     for (; !$result->EOF; $result->MoveNext()) {
         list($id,
              $parentid,
@@ -129,9 +129,9 @@ function tasks_userapi_getall($args)
         $closedsubtasks = xarModAPIFunc('tasks', 'user', 'countitems', array('parentid' => $id, 'statustype' => 'closed'));
         $opensubtasks = xarModAPIFunc('tasks', 'user', 'countitems', array('parentid' => $id, 'statustype' => 'open'));
         $subtasks = xarModAPIFunc('tasks',
-                                 'user', 
-                                 'getall', 
-                                 array('parentid' => $id, 
+                                 'user',
+                                 'getall',
+                                 array('parentid' => $id,
                                        'modname' => $modname,
                                        'objectid' => $objectid,
                                        'displaydepth' => $displaydepth + 1));
@@ -170,7 +170,6 @@ function tasks_userapi_getall($args)
             }
         }
     }
-    
 
     $result->Close();
     return $tasks;

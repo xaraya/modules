@@ -30,12 +30,15 @@ function tasks_user_view($args)
                                  'modname' => $module,
                                  // 'objectid' => $objectid,
                                  'displaydepth' => 1));
-    if ($tasks == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Getting tasks failed"));
+    if (!$tasks && $tasks != array()) {
+        $msg = xarML("Getting tasks failed");
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return false;
     }
-    
+
     $basetaskid = xarModAPIFunc('tasks', 'user', 'getroot', array('id' => $parentid));
-  
+
     $data['filterformtarget']=xarModURL('tasks','user',
                                         ($parentid ? 'display':'view'),
                                         array('' => '#tasklist'));
@@ -74,7 +77,7 @@ function tasks_user_view($args)
     if ($filter == 1 || $filter == 2 || $filter == 3) {
         // echo _TASKS_OPENTASKSONLY;
     }
-                            
+
     if (is_array($tasks) && count($tasks) > 0) {
         foreach($tasks as $key => $task) {
             $dateformat = xarModGetVar('tasks', 'dateformat');
@@ -86,7 +89,7 @@ function tasks_user_view($args)
             $tasks[$key]['closed'] = ($task['status'] == 1) ? "x" : "";
             $tasks[$key]['creator'] = xarUserGetVar('uname',$task['creator']);
             $tasks[$key]['owner'] = xarUserGetVar('uname',$task['owner']);
-            
+
             // TODO: Do this in the template
             $indent = "";
             for($x=2;$x<=$tasks[$key]['depth'];$x++) {
@@ -102,33 +105,33 @@ function tasks_user_view($args)
                 {
                     // Checkbox insertion (see template)
             }
-            
+
             if (/* xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE) || */
                 /* (xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE) && */
                      ($task['creator'] == $userID || $task['owner'] == $userID   || $task['assigner'] == $userID)
                    ) {
                 if(xarModGetVar('tasks', 'showoptions')) {
                     $options = array();
-                    
+
                     $options[] = xarModURL('tasks','admin','modify', array('id' => $task['id'])); // Edit
                     // Only allow accept if currently unassigned
                     // If assigned to current user, or after accepted, must be approved before re-assignment (see below)
                     $options[] = xarModURL('tasks', 'admin', 'accept', array('id' => $task['id'])); // Accept
-                                            
+
                     // This forces approval before re-assignment
                     // TODO: Implement user list for re-assignment
                     // Pull all member of groups *other* than primary user group *unless*:
                     // - current user is not a member of any other group
                     // TODO: Create new api function to hanle this: tasks_userapi_getpeers($args('uid' = xarSessionGetVar('uid')))
-                    
-                    $options[] = ($task['date_approved'] > 0) ? 
+
+                    $options[] = ($task['date_approved'] > 0) ?
                         xarmodurl('tasks', 'admin', 'assign', array('id' => $task['id'])): // Assign
                         xarmodurl('tasks', 'admin','approve', array('id' => $task['id'])); // Approve
-                   
+
                     $options[] = ($task['status'] == 1) ?
                         xarmodurl('tasks', 'admin', 'open', array('id' => $task['id'])): // Open
                         xarmodurl('tasks', 'admin','close', array('id' => $task['id'])); //Close
-                   
+
                     $options[] = (empty($task['private'])) ?
                         xarmodurl('tasks', 'admin', 'unpublish',array('id' => $task['id'])): // Unpublish
                         xarmodurl('tasks', 'admin', 'publish',array('id' => $task['id'])); // Publish
