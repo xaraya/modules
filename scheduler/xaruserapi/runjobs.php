@@ -15,9 +15,10 @@ function scheduler_userapi_runjobs($args = array())
     } else {
         $jobs = array();
     }
+    $hasrun = array();
     $now = time() + 60; // add some margin here
     foreach ($jobs as $id => $job) {
-        $log .= "<br/>\n" . $job['module'] . ' ' . $job['type'] . ' ' . $job['func'] . ' ';
+        $log .= "\n" . $job['module'] . ' ' . $job['type'] . ' ' . $job['func'] . ' ';
         $lastrun = $job['lastrun'];
         if (!empty($lastrun)) {
             if (!preg_match('/(\d+)(\w)/',$job['interval'],$matches)) {
@@ -66,17 +67,49 @@ function scheduler_userapi_runjobs($args = array())
             $log .= xarML('failed');
         } else {
             $jobs[$id]['result'] = xarML('OK');
-            $log .= xarML('succeeded') . " : <br/>\n";
+            $log .= xarML('succeeded') . " : \n";
             $log .= $output;
         }
         $jobs[$id]['lastrun'] = $now - 60; // remove the margin here
+        $hasrun[] = $id;
     }
-    $serialjobs = serialize($jobs);
-// FIXME: this may overwrite changes done via modifyconfig
+    $log .= "\n" . xarML('Done');
+
+    // we didn't run anything, so return now
+    if (count($hasrun) == 0) {
+        xarModDelVar('scheduler','running');
+        return $log;
+    }
+
+// Trick : make sure we're dealing with up-to-date information here,
+//         because running all those jobs may have taken a while...
+    xarVarDelCached('Mod.Variables.scheduler', 'jobs');
+
+    // get the current list of jobs
+    $serialjobs = xarModGetVar('scheduler','jobs');
+    if (!empty($serialjobs)) {
+        $newjobs = unserialize($serialjobs);
+    } else {
+        $newjobs = array();
+    }
+    // set the job information
+    foreach ($hasrun as $id) {
+        if (!isset($newjobs[$id])) continue;
+        // make sure we're dealing with the same job here :)
+        if ($newjobs[$id]['module'] == $jobs[$id]['module'] &&
+            $newjobs[$id]['type'] == $jobs[$id]['type'] &&
+            $newjobs[$id]['func'] == $jobs[$id]['func'] &&
+            $newjobs[$id]['lastrun'] < $jobs[$id]['lastrun']) {
+
+            $newjobs[$id]['result'] = $jobs[$id]['result'];
+            $newjobs[$id]['lastrun'] = $jobs[$id]['lastrun'];
+        }
+    }
+    // update the new jobs
+    $serialjobs = serialize($newjobs);
     xarModSetVar('scheduler','jobs',$serialjobs);
     xarModDelVar('scheduler','running');
 
-    $log .= "<br/>\n" . xarML('Done');
     return $log; 
 }
 
