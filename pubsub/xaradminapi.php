@@ -141,7 +141,7 @@ function pubsub_adminapi_deletehook($args)
 	          xar_cid '" . xarVarPrepForStore($cid) . "'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
-    $eventid = $result->fields;
+    $eventid = $result->fields[0];
     
     # call delete function
     pubsub_adminapi_delevent($eventid);
@@ -165,7 +165,7 @@ function pubsub_adminapi_delevent($args)
         $invalid[] = 'eventid';
     }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
+        $msg = xarML('Invalid #(1) in function #(3)() in module #(4)',
                     join(', ',$invalid), 'delevent', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));

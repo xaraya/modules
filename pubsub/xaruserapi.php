@@ -14,7 +14,7 @@
 */
 
 /**
- * Subscribe to an event
+ * Add a user's subscription to an event
  * @param $args['eventid'] Event to subscribe to
  * @param $args['actionid'] Requested action for this subscription
  * @param $args['userid'] UID of User to subscribe (optional)
@@ -22,7 +22,7 @@
  * @return pubsub ID on success, false if not
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_userapi_subscribe($args)
+function pubsub_userapi_adduser($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -77,10 +77,11 @@ function pubsub_userapi_subscribe($args)
     if (!$result) return;
 
     if (count($result) > 0) {
-        $msg = xarML('Item already exists in function #(1)() in module #(2)',
-                    'subscribe', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                      new SystemException($msg));
+        pubsub_user_subscribed();
+    #    $msg = xarML('Item already exists in function #(1)() in module #(2)',
+    #                'subscribe', 'Pubsub');
+    #    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+    #                  new SystemException($msg));
         return;
     }
 
@@ -107,13 +108,13 @@ function pubsub_userapi_subscribe($args)
 }
 
 /**
- * delete a pubsub subscription
+ * delete a user's pubsub subscription
  * @param $args['pubsubid'] ID of the subscription to delete
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_userapi_unsubscribe($args)
+function pubsub_userapi_deluser($args)
 {
     // Get arguments from argument array
     extract($args);
