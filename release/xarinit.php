@@ -56,7 +56,7 @@ function release_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name'      => 'i_xar_release_id_1',
+    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_release_id_1',
                    'fields'    => array('xar_name'),
                    'unique'    => TRUE);
     $query = xarDBCreateIndex($releasetable,$index);
