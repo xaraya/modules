@@ -20,7 +20,9 @@
 
 <div class="xar-norm-outline">
 	<div class="xar-norm">
-		<span style="text-align: left;"><xar:mlstring>Url</xar:mlstring></span><span style="text-align: right; float: right;"><xar:mlstring>Frequency</xar:mlstring></span>
+		<span style="text-align: left;"><xar:mlstring>Url</xar:mlstring>
+			<span style="text-align: right; float: right;"><xar:mlstring>Frequency</xar:mlstring></span>
+		</span>
 	</div>
 		<xar:loop name="$items">
 			<xar:if condition="(($loop:index + 1) % 2)">
