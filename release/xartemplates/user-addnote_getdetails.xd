@@ -1,0 +1,92 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Release Module :: Basic Details</xar:mlstring></h2>
+
+<center>
+	<br /><br />
+	<form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<input type="hidden" name="phase" id="phase" value="preview" />	
+		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
+		<input type="hidden" name="name" id="name" value="#$name#" />
+		<input type="hidden" name="version" id="version" value="#$version#" />	
+		<input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />	
+		<input type="hidden" name="democheck" id="democheck" value="#$democheck#" />	
+		<input type="hidden" name="supportcheck" id="supportcheck" value="#$supportcheck#" />
+		<table border="0" cellpadding="5">
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Module or Theme ID</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$rid#
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Module or Theme Name</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$name#
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Version Number</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$version#
+				</td>
+			</tr>
+			<xar:if condition="$pricecheck eq '1'">
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Price</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<input type="text" name="price" value="" size="10" maxlength="100" />
+				</td>
+			</tr>
+			</xar:if>
+			<xar:if condition="$democheck eq '1'">
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Demo Link</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<input type="text" name="demolink" value="" size="30" maxlength="100" />
+				</td>
+			</tr>
+			</xar:if>
+			<xar:if condition="$supportcheck eq '1'">
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Supported Link</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<input type="text" name="supportlink" value="" size="30" maxlength="100" />
+				</td>
+			</tr>
+			</xar:if>
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>ChangeLog</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<textarea name="changelog" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Additional Notes</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<textarea name="notes" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
+				</td>
+			</tr>
+		</table>			
+		<br /><br />
+		<input type="submit" value="<xar:mlstring>Continue</xar:mlstring>" align="middle" tabindex="6" />
+	</form>
+</center>

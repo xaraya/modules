@@ -294,43 +294,51 @@ function release_user_addnotes()
 
            if (!xarSecConfirmAuthKey()) return;
 
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Release'))
+                       .' :: '.xarVarPrepForDisplay($name));
+
            $authid = xarSecGenAuthKey();
            $data = xarTplModule('release','user', 'addnote_getbasics', array('rid'       => $rid,
                                                                              'name'     => $name,
                                                                              'authid'   => $authid));
             break;
         
-        case 'update':
+        case 'getdetails':
 
             list($rid,
-                 $uid,
                  $name,
-                 $desc,
-                 $idtype) = xarVarCleanFromInput('rid',
-                                                 'uid',
-                                                 'name',
-                                                 'desc',
-                                                 'idtype');
+                 $version,
+                 $pricecheck,
+                 $supportcheck,
+                 $democheck) = xarVarCleanFromInput('rid',
+                                                    'name',
+                                                    'version',
+                                                    'pricecheck',
+                                                    'supportcheck',
+                                                    'democheck');
             
-            // Get the UID of the person submitting the module
-            $uid = xarUserGetVar('uid');
+           //if (!xarSecConfirmAuthKey()) return;
 
-            // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Release'))
+                       .' :: '.xarVarPrepForDisplay($name));
 
-            // The user API function is called. 
-            if (!xarModAPIFunc('release',
-                               'user',
-                               'updateid',
-                                array('rid' => $rid,
-                                      'uid' => $uid,
-                                      'name' => $name,
-                                      'desc' => $desc,
-                                      'type' => $idtype))) return;
+           $authid = xarSecGenAuthKey();
+           $data = xarTplModule('release','user', 'addnote_getdetails', array('rid'         => $rid,
+                                                                              'name'        => $name,
+                                                                              'authid'      => $authid,
+                                                                              'version'     => $version,
+                                                                              'pricecheck'  => $pricecheck,
+                                                                              'supportcheck' => $supportcheck,
+                                                                              'democheck'    => $democheck));
 
-            xarResponseRedirect(xarModURL('release', 'user', 'viewids'));
+            break;
+        
+        case 'preview':
 
-            return true;
+
+
 
             break;
     }   
