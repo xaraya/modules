@@ -108,7 +108,7 @@
                 <xar:if condition="$allowhtml">
 		            <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
                 <xar:else />
-                    <input type="checkbox" name="allowhtml" id="aallowhtml" value="1" />
+                    <input type="checkbox" name="allowhtml" id="allowhtml" value="1" />
                 </xar:if>
             <xar:else />
  		        <span style="float: right; width: 78%; text-align: left;">
