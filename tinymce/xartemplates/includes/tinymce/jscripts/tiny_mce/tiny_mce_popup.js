@@ -5,8 +5,11 @@ var tinyMCELang = window.opener.tinyMCELang;
 // Setup title
 var re = new RegExp('{|\\\$|}', 'g');
 var title = document.title.replace(re, "");
-if (typeof tinyMCELang[title] != "undefined")
-	document.title = tinyMCELang[title];
+if (typeof tinyMCELang[title] != "undefined") {
+	var divElm = document.createElement("div");
+	divElm.innerHTML = tinyMCELang[title];
+	document.title = divElm.innerHTML;
+}
 
 function TinyMCEPlugin_onLoad() {
 	document.body.innerHTML = tinyMCE.applyTemplate(document.body.innerHTML, tinyMCE.windowArgs);

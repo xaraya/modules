@@ -14,6 +14,7 @@ function insertTable() {
 		args["width"] = document.forms[0].width.value;
 		args["height"] = document.forms[0].height.value;
 		args["align"] = document.forms[0].align.options[document.forms[0].align.selectedIndex].value;
+		args["className"] = document.forms[0].styleSelect.options[document.forms[0].styleSelect.selectedIndex].value;
 
 		window.opener.tinyMCE.execCommand("mceInsertTable", false, args);
 		top.close();
@@ -26,7 +27,32 @@ function init() {
 			document.forms[0].align.options.selectedIndex = i;
 	}
 
-	if ("{$action}" == "update") {
+	var className = tinyMCE.getWindowArg('className');
+	var styleSelectElm = document.forms[0].styleSelect;
+	var stylesAr = tinyMCE.getParam('theme_advanced_styles', false);
+	if (stylesAr) {
+		stylesAr = stylesAr.split(';');
+
+		for (var i=0; i<stylesAr.length; i++) {
+			var key, value;
+
+			key = stylesAr[i].split('=')[0];
+			value = stylesAr[i].split('=')[1];
+
+			styleSelectElm.options[styleSelectElm.length] = new Option(key, value);
+			if (value == className)
+				styleSelectElm.options.selectedIndex = styleSelectElm.options.length-1;
+		}
+	} else {
+		var csses = tinyMCE.getCSSClasses(tinyMCE.getWindowArg('editor_id'));
+		for (var i=0; i<csses.length; i++) {
+			styleSelectElm.options[styleSelectElm.length] = new Option(csses[i], csses[i]);
+			if (csses[i] == className)
+				styleSelectElm.options.selectedIndex = styleSelectElm.options.length-1;
+		}
+	}
+
+	if (tinyMCE.getWindowArg('action') == "update") {
 		document.forms[0].cols.disabled = true;
 		document.forms[0].rows.disabled = true;
 	}
@@ -85,6 +111,15 @@ function cancelAction() {
             <td><input name="width" type="text" id="width" value="" size="4" maxlength="4"></td>
             <td>{$lang_insert_table_height}: </td>
             <td><input name="height" type="text" id="height" value="" size="4" maxlength="4"></td>
+          </tr>
+          <tr>
+            <td>{$lang_insert_table_class}:</td>
+            <td>
+			 <select name="styleSelect">
+                <option value="" selected>-- {$lang_theme_style_select} --</option>
+             </select></td>
+            <td align="right">&nbsp;</td>
+            <td align="right">&nbsp;</td>
           </tr>
           <tr>
             <td><input type="button" name="insert" value="{$lang_insert}" onclick="insertTable();"></td>

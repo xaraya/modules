@@ -46,6 +46,7 @@ tinyMCELang['lang_insert_table_align_right'] = 'Rechts';
 tinyMCELang['lang_insert_table_align_middle'] = 'Midden';
 tinyMCELang['lang_insert_table_delta_width'] = 20;
 tinyMCELang['lang_insert_image_delta_height'] = 0;
+tinyMCELang['lang_insert_table_class'] = 'Class';
 tinyMCELang['lang_theme_fontdefault'] = 'Default';
 tinyMCELang['lang_theme_paragraph'] = 'Paragraph';
 tinyMCELang['lang_theme_div'] = 'Div';

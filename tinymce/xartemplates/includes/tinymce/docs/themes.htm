@@ -9,7 +9,7 @@
 
 <table width="100%" border="0" cellpadding="1" cellspacing="3" class="pageheader">
   <tr> 
-    <td><span class="title">Creating themes</span></td>
+    <td class="title">Creating themes</td>
     <td align="right"><a href="index.htm">TOC</a></td>
   </tr>
 </table>
@@ -18,7 +18,7 @@
 <span class="subtitle">Creating your own Themes</span><br>
 <br>
 Creating you own themes for the TinyMCE application is fairly easy if you know 
-the basics of HTML, CSS and Javascript. The most easy way is to copy the &quot;default&quot; or the &quot;advaned&quot; 
+the basics of HTML, CSS and Javascript. The most easy way is to copy the &quot;default&quot; or the &quot;advanced&quot; 
 template and rename it as your own name to for example &quot;mytheme&quot;. After 
 you copy the template you need to change the red sections marked below to &quot;mytheme&quot; 
 this is needed so that themes don't overlap in other words it gives the theme 
@@ -46,7 +46,7 @@ The example below has three functions, these are explained in greater detail bel
         {<br>
         &nbsp;&nbsp;&nbsp;var template = new Array();<br>
         <br>
-        &nbsp;&nbsp;&nbsp;template['html'] = '&lt;Some HTML&gt;';<br>
+        &nbsp;&nbsp;&nbsp;template['file'] = 'link.htm';<br>
         &nbsp;&nbsp;&nbsp;template['width'] = 320;<br>
         &nbsp;&nbsp;&nbsp;template['height'] = 130;<br>
         <br>
@@ -57,7 +57,7 @@ The example below has three functions, these are explained in greater detail bel
         {<br>
         &nbsp;&nbsp;&nbsp;var template = new Array();<br>
         <br>
-        &nbsp;&nbsp;&nbsp;template['html'] = '&lt;Some HTML&gt;';<br>
+        &nbsp;&nbsp;&nbsp;template['file'] = 'image.htm';<br>
         &nbsp;&nbsp;&nbsp;template['width'] = 320;<br>
         &nbsp;&nbsp;&nbsp;template['height'] = 130;<br>
         <br>
@@ -81,6 +81,29 @@ The example below has three functions, these are explained in greater detail bel
   </tr>
 </table>
 <br>
+<hr noshade>
+<p class="subtitle">Using external template files</p>
+<p>When using external template files, with the argument called &quot;file&quot; desribed below, you need to include the &quot;tiny_mce_popup.js&quot;. This file is needed inorder to communicate with TinyMCE, all variables and language definitions gets replaced as in the &quot;html&quot; attribute.
+</p>
+Example of external template file:
+<br>
+<br>
+<table border="0" cellspacing="3" cellpadding="2" class="sample">
+  <tr>
+    <td class="samplecontent">&lt;html&gt;<br>
+    &lt;head&gt;<br>
+    &lt;title&gt;<span class="failed">{$lang_theme_sample_title}</span>&lt;/title&gt;<br>
+    &lt;script language=&quot;javascript&quot; src=&quot;<span class="failed">../../tiny_mce_popup.js</span>&quot;&gt;&lt;/script&gt;<br>
+    &lt;script language=&quot;javascript&quot;&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="failed">tinyMCE.getWindowArg('some_arg')</span>);<br>
+    &lt;/script&gt;
+    <br>
+    &lt;body&gt;<br>
+    <span class="failed">{$lang_theme_sample_desc}</span><br>
+    &lt;/body&gt;
+    </td>
+  </tr>
+</table>
 <hr noshade>
 <br>
 <span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_getEditorTemplate(settings) 
@@ -199,8 +222,12 @@ function</span>
   <tr> 
     <td width="150"><strong>html</strong></td>
     <td>HTML template data, this value should contain all the HTML code needed 
-      to render the editor. Notice: {$&lt;variable&gt;} are replaces with values 
-      when used. More about these specific values later on.</td>
+      to render the link dialog. Notice: {$&lt;variable&gt;} are replaces with values 
+      when used. More about these specific values later on. This parameter is not needed if the &quot;file&quot; param is assigned. </td>
+  </tr>
+  <tr>
+    <td><strong>file</strong></td>
+    <td>Name of external template file to use, this may even be logic pages like .php,.asp,.jsp etc. </td>
   </tr>
   <tr> 
     <td width="150"><strong>[width]</strong></td>
@@ -220,7 +247,7 @@ function</span>
   used and these are listed below. Notice: Variables within [] characters are 
   optional. <br>
   <br>
-  <strong>Variables:</strong></p>
+  <strong>Variables/Window arguments:</strong></p>
 <table border="1" cellspacing="0">
   <tr> 
     <td width="150"><strong>[href]</strong></td>
@@ -250,11 +277,13 @@ function</span>
 <br>
 </strong> 
 <table border="1" cellspacing="0">
-  <tr> 
-    <td width="150"><strong>html</strong></td>
-    <td>HTML template data, this value should contain all the HTML code needed 
-      to render the editor. Notice: {$&lt;variable&gt;} are replaces with values 
-      when used. More about these specific values later on.</td>
+  <tr>
+    <td><strong>html</strong></td>
+    <td>HTML template data, this value should contain all the HTML code needed to render the image dialog. Notice: {$&lt;variable&gt;} are replaces with values when used. More about these specific values later on. This parameter is not needed if the &quot;file&quot; param is assigned. </td>
+  </tr>
+  <tr>
+    <td><strong>file</strong></td>
+    <td>Name of external template file to use, this may even be logic pages like .php,.asp,.jsp etc. </td>
   </tr>
   <tr> 
     <td width="150"><strong>[width]</strong></td>
@@ -274,7 +303,7 @@ function</span>
   used and these are listed below. Notice: Variables within [] characters are 
   optional. <br>
   <br>
-  <strong>Variables:</strong></p>
+  <strong>Variables/Window arguments:</strong></p>
 <table border="1" cellspacing="0">
   <tr> 
     <td width="150"><strong>[src]</strong></td>
@@ -334,8 +363,12 @@ function</span>
 </strong>
 <table border="1" cellspacing="0">
   <tr>
-    <td width="150"><strong>html</strong></td>
-    <td>HTML template data, this value should contain all the HTML code needed to render the editor. Notice: {$&lt;variable&gt;} are replaces with values when used. More about these specific values later on.</td>
+    <td><strong>html</strong></td>
+    <td>HTML template data, this value should contain all the HTML code needed to render the table dialog. Notice: {$&lt;variable&gt;} are replaces with values when used. More about these specific values later on. This parameter is not needed if the &quot;file&quot; param is assigned. </td>
+  </tr>
+  <tr>
+    <td><strong>file</strong></td>
+    <td>Name of external template file to use, this may even be logic pages like .php,.asp,.jsp etc. </td>
   </tr>
   <tr>
     <td width="150"><strong>[width]</strong></td>
@@ -348,7 +381,7 @@ function</span>
 </table>
 <p> Variables within the &quot;html&quot; value above are replaced with internal TinyMCE values. There are two types of variables one is the ones starting with the &quot;lang_&quot; prefix, these are replaced with the matchin names in the language packs. So for example &lt;b&gt;{$lang_test}&lt;/b&gt; gets replaces with the &quot;tinyMCELang['lang_test']&quot; variable and the output is then &lt;b&gt;Test&lt;/b&gt;. The other variables are passed expicilty for the template used and these are listed below. Notice: Variables within [] characters are optional. <br>
     <br>
-    <strong>Variables:</strong></p>
+    <strong>Variables/Window arguments:</strong></p>
 <table border="1" cellspacing="0">
   <tr>
     <td width="150"><strong>[cols]</strong></td>

@@ -260,7 +260,7 @@ function TinyMCE_advanced_getInsertTableTemplate(settings) {
 
 	template['file'] = 'table.htm';
 	template['width'] = 330;
-	template['height'] = 180;
+	template['height'] = 200;
 
 	// Language specific width addon
 	if (typeof tinyMCELang['lang_insert_table_delta_width'] != "undefined")
@@ -502,25 +502,13 @@ function TinyMCE_advanced_setupCSSClasses(editor_id) {
 	var selectElm = document.getElementById(editor_id + '_styleSelect');
 
 	if (selectElm && selectElm.getAttribute('cssImported') != 'true') {
-		var doc = tinyMCE.instances[editor_id].contentWindow.document;
-		var styles = tinyMCE.isMSIE ? doc.styleSheets : doc.styleSheets;
-		if (styles.length > 0) {
-			//alert(doc.styleSheets[0].ownerNode);
-			var csses = tinyMCE.isMSIE ? doc.styleSheets(0).rules : doc.styleSheets[0].cssRules;
-
-			if (csses && selectElm) {
-				for (var i=0; i<csses.length; i++) {
-					var className = csses[i].selectorText;
-					if (csses[i].selectorText.charAt(0) == '.' && csses[i].selectorText.indexOf(' ') == -1) {
-						className = className.substring(1);
-						selectElm.options[selectElm.length] = new Option(className, className);	 
-					}
-				}
-			}
-
-			// Only do this once
-			selectElm.setAttribute('cssImported', 'true');
+		var csses = tinyMCE.getCSSClasses(editor_id);
+		if (csses && selectElm) {
+			for (var i=0; i<csses.length; i++)
+				selectElm.options[selectElm.length] = new Option(csses[i], csses[i]);
 		}
 
+		// Only do this once
+		selectElm.setAttribute('cssImported', 'true');
 	}
 }

@@ -1,3 +1,18 @@
+Version 1.27 (2004-08-29)
+	Added new cleanup logic, with new options and smarter behavior.
+	Added new "trim_span_elements" option (removed unneeded span elements).
+	Added new "verify_css_classes" option (verifies so class attributes contain a valid class).
+	Added new "verify_html" option (enables/disabled verification of elements and attributes).
+	Added new value verification type to "valid_elements" option.
+	Added new simple wildcard support in "valid_elements" option.
+	Added class as a valid attribute to table elements by default.
+	Added so non existent classes gets removed HTML output.
+	Added fix for &nbsp; entities, so they get converted correctly.
+	Added new class select box in table dialog.
+	Added hr as a default valid element.
+	Fixed some issues with the language packs.
+	Fixed some weird bugs and issues with hr elements.
+	Fixed bug where Mozilla was casting exceptions on keypress.
 Version 1.26 (2004-08-25)
 	Added a better way to create theme popup windows (External files).
 	Added new getWindowArg function, returns window arguments in theme popups.
