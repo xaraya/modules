@@ -203,6 +203,10 @@ function articles_adminapi_importpubtype($args)
                                     $property['type'] = 'static';
                                 }
                             }
+                            // reset disabled field labels to empty
+                            if (empty($property['status'])) {
+                                $property['label'] = '';
+                            }
                             $fields[$field] = array('label' => $property['label'],
                                                     'format' => $property['type'],
                                                     'input' => $property['input'],
