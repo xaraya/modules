@@ -92,7 +92,7 @@ function xarcachemanager_adminapi_updatehook($args)
                 $pageshared = 0;
             }
             if (empty($cacheexpire)) {
-                $cachexpire = 0;
+                $cacheexpire = 0;
             }
 
             if ($cacheexpire > 0 ) {
