@@ -104,13 +104,16 @@ function uploads_userapi_file_store( $args ) {
         }
 
         if ($storeType & _UPLOADS_STORE_DB_DATA) {
-
-            if (!xarModAPIFunc('uploads', 'user', 'file_db_store_contents', $fileInfo)) {
+            if (!xarModAPIFunc('uploads', 'user', 'file_dump', $fileInfo)) {
                 // If we couldn't add the files contents to the database,
                 // then remove the file metadata as well
                 if (isset($fileId) && !empty($fileId))  {
                     xarModAPIFunc('uploads', 'user' ,'db_delete_file', array('fileId' => $fileId));
                 }
+            } else {
+                // if it was successfully added, then change the stored fileLocation 
+                // to DATABASE instead of uploads/blahblahblah
+                xarModAPIFunc('uploads', 'user', 'db_modify_file', array('fileId' => $fileId, 'fileLocation' => xarML('DATABASE')));
             }
         }
     }

@@ -127,6 +127,7 @@ function uploads_userapi_prepare_uploads( $args ) {
 
     if (isset($fileInfo['fileDest'])) {
         $fileInfo['fileLocation'] = $fileInfo['fileDest'];
+        $fileInfo['isUpload'] = TRUE;
     }
 
     return array("$fileInfo[fileName]" => $fileInfo);

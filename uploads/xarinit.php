@@ -370,7 +370,7 @@ function uploads_upgrade($oldversion)
             $file_maxsize             = xarModGetVar('uploads','maximum_upload_size');
             $file_censored_mimetypes  = serialize(array('application','video','audio', 'other', 'message'));
             $file_delete_confirmation = xarModGetVar('uploads','confirm_delete') ? 1 : 0;
-            $file_obfuscate_on_import = (int) xarModGetVar('uploads','obfuscate_imports') ? 1 : 0;
+            $file_obfuscate_on_import = xarModGetVar('uploads','obfuscate_imports') ? 1 : 0;
             $file_obfuscate_on_upload = TRUE;
             
             // Now remove the old module vars
@@ -389,12 +389,12 @@ function uploads_upgrade($oldversion)
             // Now set up the new ones :)
             xarModSetVar('uploads','path.uploads-directory', $path_uploads_directory);
             xarModSetVar('uploads','path.imports-directory', $path_imports_directory);
-            xarModSetVar('uploads','file.maxsize', $file_maxsize);
-            xarModSetVar('uploads','file.censored-mimetypes', $file_censored_mimetypes);
-            xarModSetVar('uploads','file.obfuscate-on-import', $file_obfuscate_on_import);
-            xarModSetVar('uploads','file.obfuscate-on-upload', $file_obfuscate_on_upload);
+            xarModSetVar('uploads','file.maxsize', ($file_maxsize >= 0) $file_maxsize : 1000000);
+            xarModSetVar('uploads','file.obfuscate-on-import', ($file_obfuscate_on_import) ? $file_obfuscate_on_import : FALSE);
+            xarModSetVar('uploads','file.obfuscate-on-upload', ($file_obfuscate_on_upload) ? $file_obfuscate_on_upload : FALSE);
+            xarModSetVar('uploads','file.delete-confirmation', ($file_delete_confirmation) ? $file_delete_confirmation : FALSE);
             xarModSetVar('uploads','file.auto-purge',          FALSE);
-            xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
+            xarModSetVar('uploads','path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
 
         
             $data['filters']['mimetypes'][0]['typeId']      = 0;

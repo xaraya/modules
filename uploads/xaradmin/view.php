@@ -76,10 +76,10 @@ function uploads_admin_view( ) {
                 xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'   => _UPLOADS_STATUS_REJECTED));
                 if (xarModGetVar('uploads', 'file.auto-purge')) {
                     if (xarModGetVar('uploads', 'file.delete-confirmation')) {
-                        return xarModFunc('uploads', 'user', 'purge_rejected');
+                        return xarModFunc('uploads', 'admin', 'purge_rejected');
                     } else {
                         $_GET['authid'] = xarSecGenAuthKey();
-                        return xarModFunc('uploads', 'user', 'purge_rejected', array('confirmation' => TRUE));
+                        return xarModFunc('uploads', 'admin', 'purge_rejected', array('confirmation' => TRUE));
                     }
                 }
                 break;

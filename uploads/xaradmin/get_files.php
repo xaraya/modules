@@ -36,7 +36,7 @@ function uploads_admin_get_files() {
             $args['upload'] = $upload;
         case _UPLOADS_GET_EXTERNAL:
             // minimum external import link must be: ftp://a.ws  <-- 10 characters total
-            if (!xarVarFetch('import', 'regexp:/^(ftp|http)(.{7,})/', $import, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('import', 'regexp:/^([a-z]*).\/\/(.{7,})/', $import, '', XARVAR_NOT_REQUIRED)) return;
             $args['import'] = $import;
             break;
         case _UPLOADS_GET_LOCAL:

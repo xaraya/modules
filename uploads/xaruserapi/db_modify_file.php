@@ -5,10 +5,10 @@
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   integer file_id    The id of the file we are modifying
- *  @param   integer user_id    (optional) The id of the user whom submitted the file
+ *  @param   integer fileId    The id of the file we are modifying
+ *  @param   integer userId    (optional) The id of the user whom submitted the file
  *  @param   string  filename   (optional) The name of the file (minus any path information)
- *  @param   string  location   (optional) The complete path to the file including the filename (obfuscated if so chosen)
+ *  @param   string  fileLocation   (optional) The complete path to the file including the filename (obfuscated if so chosen)
  *  @param   integer status     (optional) The status of the file (APPROVED, SUBMITTED, READABLE, REJECTED)
  *  @param   string  mime_type  (optional) The mime content-type of the file
  *  @param   integer store_type (optional) The manner in which the file is to be stored (filesystem, database)
@@ -22,8 +22,8 @@ function uploads_userapi_db_modify_file( $args ) {
     $update_fields = array();
     
     if (!isset($fileId)) {
-        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module (#3)]', 
-                     'file_id','db_modify_file','uploads');
+        $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module (#3)]', 
+                     'fileId','db_modify_file','uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }

@@ -30,13 +30,13 @@ function uploads_userapi_db_get_file_data( $args )  {
     $xartable     = xarDBGetTables();
         
         // table and column definitions
-    $fileData_table = $xartable['file_entry'];
+    $fileData_table = $xartable['file_data'];
     
     $sql = "SELECT xar_fileEntry_id,
                    xar_fileData_id, 
                    xar_fileData 
               FROM $fileData_table
-             WHERE xar_fileData_id = $fileId,
+             WHERE xar_fileEntry_id = $fileId
           ORDER BY xar_fileData_id ASC";
     
     $result = $dbconn->Execute($sql);
@@ -52,7 +52,7 @@ function uploads_userapi_db_get_file_data( $args )  {
     
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $fileData[$row['xar_filedata_id']]       = $row['xar_filedata'];
+        $fileData[$row['xar_filedata_id']]       = base64_decode($row['xar_filedata']);
         $result->MoveNext();
     }
     $result->Close();

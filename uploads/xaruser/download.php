@@ -24,18 +24,20 @@ function uploads_user_download()
     $instance = implode(':', $instance);
     
     if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
-
-        if (!file_exists($fileInfo['fileLocation'])) {
-            $msg = xarML('File [#(1)] does not exist!', $fileInfo['fileName']);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new SystemException($msg));
-            xarModAPIFunc('uploads','user','db_delete_file', array('fileId' => $fileId));
-            return;
+        if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM) {
+            if (!file_exists($fileInfo['fileLocation'])) {
+                $msg = xarML('File [#(1)] does not exist in FileSystem.', $fileInfo['fileName']);
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new SystemException($msg));
+                return;
+            }
+        } elseif ($fileInfo['storeType'] & _UPLOADS_STORE_DB_FULL) {
+            if (!xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileInfo['fileId']))) {
+                $msg = xarML('File [#(1)] does not exist in Database.', $fileInfo['fileName']);
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new SystemException($msg));
+                return;
+            }
         }
-
-        $result = xarModAPIFunc('uploads', 'user', 'file_push', array('fileSize'     => $fileInfo['fileSize'], 
-                                                                      'fileType'     => $fileInfo['fileType'], 
-                                                                      'fileName'     => $fileInfo['fileName'], 
-                                                                      'fileLocation' => $fileInfo['fileLocation']));
+        $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
         
         if (!$result || xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
             // now just return and let the error bubble up

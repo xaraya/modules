@@ -20,7 +20,7 @@
             <xar:else />
                 <tr>
                     <td colspan="2">
-                        <form action="#xarModUrl('uploads','user','purge_rejected')#" method="post">
+                        <form action="#xarModUrl('uploads','admin','purge_rejected')#" method="post">
                             <xar:mlstring>
                                 Are you sure you want to delete the following files?
                             </xar:mlstring>&nbsp;

@@ -31,8 +31,9 @@ function uploads_userapi_db_delete_file_data( $args ) {
     $fileData_table   = $xartable['file_data'];
     
     // insert value into table
-    $sql = "DELETE FROM $fileData_table
-                  WHERE xar_fileEntry_id = $fileId";
+    $sql = "DELETE 
+              FROM $fileData_table
+             WHERE xar_fileEntry_id = $fileId";
                   
                       
     $result = &$dbconn->Execute($sql);

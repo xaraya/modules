@@ -88,18 +88,29 @@ function uploads_userapi_process_files( $args ) {
                 return;
             }
             
+            // Setup the uri structure so we have defaults if parse_url() doesn't create them
             $uri = parse_url($import);
-
+            
             switch ($uri['scheme']) {
                 case 'ftp': 
                     $fileList = xarModAPIFunc('uploads', 'user', 'import_external_ftp', array('uri' => $uri));
                     break;
+                case 'https':
                 case 'http': 
                     $fileList = xarModAPIFunc('uploads', 'user', 'import_external_http', array('uri' => $uri));
                     break;
+                case 'file':
+                case 'gopher':
+                case 'wais':
+                case 'news':
+                case 'nntp':
+                case 'prospero':
+                case 'wais':
+                case 'gopher':
                 default:
                     // ERROR
-                    xarResponseRedirect(xarModURL('uploads', 'admin', 'get_files'));
+                    $msg = xarML('Import via scheme \'#(1)\' is not currently supported', $uri['scheme']);
+                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NOT_SUPPORTED', new SystemException($msg));
                     return;
             }
             break;

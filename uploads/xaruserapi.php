@@ -32,6 +32,7 @@ define('_UPLOADS_ERROR_UNKNOWN',     -1); // Unidentifiable error
 define('_UPLOADS_ERROR_NONE',         0); // No error
 define('_UPLOADS_ERROR_NO_OBFUSCATE', 1); // Unable to obfuscate the filename
 define('_UPLOADS_ERROR_BAD_FORMAT',   2); // Incorrect DATA structure
+define('_UPLOADS_ERROR_NOT_EXIST',    3); // non-existent file
 
 define('_UPLOADS_GET_UPLOAD',        1);
 define('_UPLOADS_GET_EXTERNAL',      2);

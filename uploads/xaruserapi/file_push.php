@@ -39,6 +39,20 @@ function uploads_userapi_file_push( $args ) {
         return FALSE;
     }
     
+    if (!isset($storeType)) {
+        $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
+                     'storeType','file_push','uploads');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return FALSE;
+    } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
+        if (!isset($fileId)) {
+            $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
+                        'fileId','file_push','uploads');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            return FALSE;
+        }
+    }
+    
     if (!isset($fileSize)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
                      'fileSize','file_push','uploads');
@@ -56,19 +70,22 @@ function uploads_userapi_file_push( $args ) {
     // Start buffering for the file
     ob_start();
     
-    $fp = @fopen($fileLocation, 'rb');
-    if(is_resource($fp))   {
+    if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
         
-        do {
-            $data = fread($fp, 65536);
-            if (strlen($data) == 0) {
-                break;
-            } else {
-                print("$data");
-            }
-        } while (TRUE);
-        
-        fclose($fp);
+        $fp = @fopen($fileLocation, 'rb');
+        if(is_resource($fp))   {
+
+            do {
+                $data = fread($fp, 65536);
+                if (strlen($data) == 0) {
+                    break;
+                } else {
+                    print("$data");
+                }
+            } while (TRUE);
+
+            fclose($fp);
+        } 
         
         // Headers -can- be sent after the actual data 
         // Why do it this way? So we can capture any errors and return if need be :)
@@ -83,9 +100,30 @@ function uploads_userapi_file_push( $args ) {
         // TODO: evaluate registering shutdown functions to take care of 
         //       ending Xaraya in a safe manner 
         exit();   
-        
-    } 
     
+    } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
+        
+        // FIXME: <rabbitt> if we happen to be pushing a really big file, this 
+        //        method of grabbing it from the database and pushing will consume
+        //        WAY too much memory. Think of an alternate method
+        $data = xarModAPIFunc('uploads', 'user', 'db_get_file_data', array('fileId' => $fileId));
+        echo implode('', $data);
+        
+        // Headers -can- be sent after the actual data 
+        // Why do it this way? So we can capture any errors and return if need be :)
+        // not that we would have any errors to catch at this point but, mine as well
+        // do it incase I think of some errors to catch 
+        header("Pragma: ");
+        header("Cache-Control: ");
+        header("Content-type: $fileType"); 
+        header("Content-disposition: attachment; filename=\"$fileName\"");
+        header("Content-length: $fileSize");
+        
+        // TODO: evaluate registering shutdown functions to take care of 
+        //       ending Xaraya in a safe manner 
+        exit();   
+    }
+        
     // make sure we're starting with a fresh and clean buffer space
     while(@ob_end_clean());
     

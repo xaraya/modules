@@ -27,7 +27,7 @@
     if (!isset($uri['user'])) {
         $uri['user'] = 'anonymous';
         $uri['pass'] = xarUserGetVar('email');
-        if (empty($password)) {
+        if (empty($uri['pass'])) {
             $uri['pass'] = xarModGetVar('mail', 'adminmail');
         }
     } else {
@@ -73,6 +73,10 @@
         $ftpLoaded = TRUE;
     }
     
+    // TODO: <rabbitt> Add fileSize checking for imported files. For those using the ftp extension
+    // this can be accomplished using ftp_size() - otherwise, it could be done by keeping track 
+    // of the amount of data that has been written to disk and comparing it to the max allowable size.
+    
     if ($ftpLoaded) {
         // Conect to the Server and Log in using the credentials we set up
         $ftpId = ftp_connect($uri['host'], $uri['port']); 
@@ -81,14 +85,11 @@
         if (!$ftpId || !$result) {
             // if the connection failed unlink 
             // the temporary file and log and return an exception
-            unlink($tmpName);
             $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]', 
                           $uri['host'], $uri['port'], basename($uri['path']));
             xarExceptionSet(XAR_SYSTEM_EXECEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
         } else {
             if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
-                unlink($tmpName);
-                ftp_close($ftpId);
                 $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]', 
                             $uri['host'], $uri['port'], basename($uri['path']));
                 xarExceptionSet(XAR_SYSTEM_EXECEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
@@ -98,13 +99,10 @@
                 // until the file transfer has finished - hence, the
                 // much needed 'ignore_user_abort()' up above
                 if (!ftp_fget($ftpId, $tmpId, $uri['path'], $ftpMode)) {
-                    unlink($tmpName);
-                    ftp_close($ftpId);
                     $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]', 
                                 $uri['host'], $uri['port'], basename($uri['path']));
                     xarExceptionSet(XAR_SYSTEM_EXECEPTION, '_UPLOADS_ERR_NO_READ', new SystemException($msg));
                 } else {
-                    ftp_close($ftpId);
                     $fileInfo['size'] = filesize($tmpName);
                 }
             }
@@ -112,65 +110,100 @@
     // Otherwise we have to do it the "hard" way ;-)
     } else {
         if (($ftpId = fopen($ftpURI, 'rb')) === FALSE) {
-            unlink($tmpName);
             $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]', 
                           $uri['host'], $uri['port'], basename($uri['path']));
             xarExceptionSet(XAR_SYSTEM_EXECEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
         } else {
             if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
-                unlink($tmpName);
-                fclose($ftpId);
                 $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]', 
                             $uri['host'], $uri['port'], basename($uri['path']));
                 xarExceptionSet(XAR_SYSTEM_EXECEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
             } else {
 
-                // Note: this is a -blocking- process - the connection will NOT resume
-                // until the file transfer has finished - hence, the
-                // much needed 'ignore_user_abort()' up above
-                // much needed 'ignore_user_abort()' up above
+                // Note that this is a -blocking- process - the connection will 
+                // NOT resume until the file transfer has finished - hence, the 
+                // much needed  'ignore_user_abort()' up above
                 do {
                     $data = fread($ftpId, 65536);
                     if (0 == strlen($data)) {
                         break;
                     } else {
-                        if (fwrite($tmpId, $data, strlen($data)) === FALSE) {
-                            fclose($ftpId);
-                            fclose($tmpId);
-                            unlink($tmpName);
+                        if (fwrite($tmpId, $data, strlen($data)) !== strlen($data)) {
                             $msg = xarML('Unable to write to temp file!');
                             xarExceptionSet(XAR_SYSTEM_EXECEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
                             break;
                         }
                     }
                 } while (TRUE);
+                
+                // if we haven't hit an exception, then go ahead and close everything up
                 if (xarCurrentErrorType() === XAR_NO_EXCEPTION) {
-                    fclose($ftpId);
-                    fclose($tmpId);
                     $fileInfo['fileSize'] = filesize($tmpName);
                 }
             }
         }
                     
     }
-    $fileInfo['fileSrc'] = $fileInfo['fileLocation'];
-        
-    $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
-    $savePath = xarModGetVar('uploads', 'path.uploads-directory');
     
-    // remoe any trailing slash from the Save Path
-    $savePath = preg_replace('/\/$/', '', $savePath);
-    
-    if ($obfuscate_fileName) {
-        $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name', 
-                                    array('fileName' => $fileInfo['fileName']));
-        $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
-    } else {
-        // if we're not obfuscating it, 
-        // just use the name of the uploaded file
-        $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+    if (is_resource($tmpId)) {
+        fclose($tmpId);
     }
     
+    if (is_resource($ftpId)) {
+        if ($ftpLoaded) {
+            ftp_close($ftpId);
+        } else {
+            fclose($ftpId);
+        }
+    }
+    
+    if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
+    
+        unlink($tmpName);
+        
+        while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
+
+            $errorObj = xarExceptionValue();
+
+            if (is_object($errorObj)) {
+                $fileError = array('errorMesg' => $errorObj->getShort(),
+                                   'errorId'   => $errorObj->getID());
+            } else {
+                $fileError = array('errorMesg' => 'Unknown Error!',
+                                   'errorId'   => _UPLOADS_ERROR_UNKNOWN);
+            }
+
+            if (!isset($fileInfo['errors'])) {
+                $fileInfo['errors'] = array();
+            }
+
+            $fileInfo['errors'][] = $fileError;
+
+            // Clear the exception because we've handled it already
+            xarExceptionHandled();
+
+        }    
+    } else {
+        $fileInfo['fileSrc'] = $fileInfo['fileLocation'];
+
+        $obfuscate_fileName = xarModGetVar('uploads','file.obfuscate-on-upload');
+        $savePath = xarModGetVar('uploads', 'path.uploads-directory');
+
+        // remoe any trailing slash from the Save Path
+        $savePath = preg_replace('/\/$/', '', $savePath);
+
+        if ($obfuscate_fileName) {
+            $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name', 
+                                        array('fileName' => $fileInfo['fileName']));
+            $fileInfo['fileDest'] = $savePath . '/' . $obf_fileName;
+        } else {
+            // if we're not obfuscating it, 
+            // just use the name of the uploaded file
+            $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
+        }
+        $fileInfo['fileLocation'] = $fileInfo['fileDest'];    
+
+    }
     return array($fileInfo['fileLocation'] => $fileInfo);
  }
  

@@ -30,8 +30,8 @@ function uploads_userapi_purge_files( $args ) {
         if ($fileInfo['storeType'] & _UPLOADS_STORE_DB_DATA) {
             xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileInfo['fileId']));            
         }
-        // go ahead and delete the file from the database.
         
+        // go ahead and delete the file from the database.
         xarModAPIFunc('uploads', 'user', 'db_delete_file', array('fileId' => $fileInfo['fileId']));
         
     }
