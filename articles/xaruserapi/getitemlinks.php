@@ -16,11 +16,16 @@ function articles_userapi_getitemlinks($args)
     if (empty($itemtype)) {
         $itemtype = null;
     }
-    $fields = array('aid','title','pubtypeid');
+    // get cids for security check in getall
+    $fields = array('aid','title','pubtypeid','cids');
+// CHECKME: make sure we don't need other statuses somewhere
+    // get approved and frontpage articles only
+    $status = array(2, 3);
     $articles = xarModAPIFunc('articles','user','getall',
                              array('aids' => $itemids,
                                    'ptid' => $itemtype,
                                    'fields' => $fields,
+                                   'status' => $status,
                                   )
                             );
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {

@@ -175,7 +175,8 @@ function articles_topitemsblock_display($blockinfo)
     // frontpage or approved status
     $status = array(3,2);
 
-    $fields = array('aid','title','pubtypeid');
+    // get cids for security check in getall
+    $fields = array('aid','title','pubtypeid','cids');
     if ($vars['toptype'] == 'rating') {
         array_push($fields,'rating');
         $sort = 'rating';
