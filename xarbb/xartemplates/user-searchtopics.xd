@@ -1,3 +1,4 @@
+<xar:set name="returnurl">xarModURL('xarbb','user','main')</xar:set>
 <h3>#$message#</h3>
 <xar:if condition="$totalitems gt 0">
 	<table width="98%" border="0" align="center">
@@ -134,3 +135,4 @@
 	  </tr>
 	</table>
 </xar:if>
+<h4 style="text-align:right;"><a href="#$returnurl#"><xar:mlstring>Return to Forum Index</xar:mlstring></a></h4>

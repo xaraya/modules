@@ -120,7 +120,7 @@
                                     Subject 
                                 </xar:mlstring>
                                 : 
-                                #$ttitle# 
+                                #$transformedtitle# 
                             </strong>
                         </div>
                         <div class="rightnote">
