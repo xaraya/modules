@@ -1,14 +1,8 @@
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">
-            <xar:mlstring>Censor Administration</xar:mlstring>            
-        </th>
-    </tr>
-</table>
-<div align="center"><h2><xar:mlstring>Modify Censor Configuration</xar:mlstring></h2><br />
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Censor Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 <form method="post" action="#xarModURL('censor', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
     <input type="hidden" name="authid" value="#$authid#" />
-
 	<table border="0" width="100%">
 		<tr>
 			<td>
@@ -28,4 +22,4 @@
 	<br /><br />
 	<input type="submit" value="<xar:mlstring>Update Censor Configuration</xar:mlstring>" align="middle" tabindex="3" />
 </form>
-</center>
+</div>

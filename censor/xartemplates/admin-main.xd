@@ -1,11 +1,6 @@
-<table border="1" width="100%" cellpadding="2" cellspacing="0">
-    <tr>
-        <th align="center">
-            <xar:mlstring>Censor Administration</xar:mlstring>            
-        </th>
-    </tr>
-</table>
-<div align="center"><h2><xar:mlstring>Censor Module Overview</xar:mlstring></h2><br />
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Censor Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Censor Module Overview</xar:mlstring></h2>
 <table border="0" width="100%">
     <tr>
         <td align="left" valign="top" width="100px">
@@ -31,3 +26,4 @@
 		</td>
 	</tr>
 </table>
+</div>
