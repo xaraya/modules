@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Xaraya NewsGroups
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -16,6 +16,7 @@
 $modversion['name'] = 'NewsGroups';
 $modversion['id'] = '802';
 $modversion['version'] = '1.0.0';
+$modversion['displayname']    = xarML('Newsgroups');
 $modversion['description'] = 'A newsgroup reader for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
