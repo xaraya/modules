@@ -13,11 +13,11 @@
 		<span style="float: right; width: 78%; text-align: left;">
 			<select name="transformtype" id="transformtype" size="1">
 				<xar:if condition="xarModGetVar('html', 'transformtype') eq '1'">
-					<option label="Linebreaks" value="1" selected="selected">Linebreaks</option>
-					<option label="Paragraphs" value="2">Paragraphs</option>
+					<option label="Linebreaks" value="1" selected="selected"><xar:mlstring>Linebreaks</xar:mlstring></option>
+					<option label="Paragraphs" value="2"><xar:mlstring>Paragraphs</xar:mlstring></option>
 				<xar:elseif condition="xarModGetVar('html', 'transformtype') eq '2'" />
-					<option label="Linebreaks" value="1">Linebreaks</option>
-					<option label="Paragraphs" value="2" selected="selected">Paragraphs</option>
+					<option label="Linebreaks" value="1"><xar:mlstring>Linebreaks</xar:mlstring></option>
+					<option label="Paragraphs" value="2" selected="selected"><xar:mlstring>Paragraphs</xar:mlstring></option>
 				</xar:if>									
 			</select>
 		</span>
