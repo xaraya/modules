@@ -4,6 +4,8 @@
 function &timezone_userapi_getTimezoneNames()
 {
     // set this up so we only process this once in case there are multiple calls to this function
+    // it might be best to even cache this across multiple page calls since the timezone list
+    // is not going to change frequently.
     static $timezones;
     if(isset($timezones) && is_array($timezones)) {
         return $timezones;

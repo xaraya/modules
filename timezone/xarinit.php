@@ -563,7 +563,15 @@ function timezone_upgrade($oldversion)
         
         // Upgrade from Version 0.3.2
         case '0.3.2':
-            break;   
+            // upgraded tzdata to tzdata2004b
+            timezone_delete();
+            timezone_init();
+            break;  
+            
+        // Upgrade from Version 0.3.2
+        case '0.3.3':
+            // upgraded tzdata to tzdata2004b
+            break; 
         
     }
     

@@ -5,7 +5,7 @@ function timezone_user_parse_tzdata()
 {
     $dir = 'modules/timezone/tzdata';
     // these are the timezone files we want to gather data from
-    // some of this are ommitted because they currently don't contain anything useful
+    // some of these are ommitted because they currently don't contain anything useful
     // we will not be using the leapseconds data, we'll leave that to the OS
     $files = array('africa',
                    'antarctica',

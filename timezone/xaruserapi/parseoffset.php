@@ -27,20 +27,22 @@ function timezone_userapi_parseOffset($args=array())
         if(!isset($matches[4])) $matches[4] = '00';
         $retarr = array('direction'=>$matches[1],
                         'hours'=>(int)$matches[2],
-                        'minutes'=>(int)($matches[3]/60),
+                        'minutes'=>(int)$matches[3],
                         'seconds'=>(int)$matches[4]);
         // small memory cleanup
         unset($matches);
     }
     
+    // add up the hours,minutes and seconds
+    $seconds = ($retarr['hours'] * 3600) + ($retarr['minutes']*60) + $retarr['seconds'];
     switch($retarr['direction']) {
         
         case '-':
-            $retarr['total'] = 0 - (int)((($retarr['hours']+$retarr['minutes'])*3600)+$retarr['seconds']);
+            $retarr['total'] = 0 - $seconds;
             break;
         
         default:
-            $retarr['total'] = (int)((($retarr['hours']+$retarr['minutes'])*3600)+$retarr['seconds']);
+            $retarr['total'] = $seconds;
             break;
     }
     

@@ -91,6 +91,7 @@ function &timezone_userapi_getTimezoneData($args=array())
             );
     }
     // if this timezone data has not been loaded, grab it from the db and store it
+    // can we implement a cross-page cache for this as well?
     if(!isset($timezoneData[$timezone])) {
         
         $dbconn =& xarDBGetConn();
