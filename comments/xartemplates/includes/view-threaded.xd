@@ -98,8 +98,18 @@
 <xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
                 <xar:if condition="isset($package['transformed-text'])">
                     #$package['transformed-text']# 
+					<p>
+						<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+							#
+						</a>
+					</p>
                     <xar:else />
                     #$loop:item['xar_text']# 
+					<p>
+						<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+							#
+						</a>
+					</p>
 <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />
@@ -205,9 +215,19 @@
                 
 <xar:comment> FIXME: $package['transformed-text'] vs. $loop:item['xar_text'] can't be right here </xar:comment>
                 <xar:if condition="isset($package['transformed-text'])">
-                    #$package['transformed-text']# 
+                    #$package['transformed-text']#
+					<p>
+						<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+							#
+						</a>
+					</p>
                     <xar:else />
                     #$loop:item['xar_text']# 
+					<p>
+						<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+							#
+						</a>
+					</p>
 <xar:comment> FIXME: nested if's don't seem right here </xar:comment>
                     <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                         <br />

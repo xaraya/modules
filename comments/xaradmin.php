@@ -40,18 +40,14 @@ function comments_admin_main()
  */
 function comments_admin_modifyconfig()
 {
-
     // Security Check
     if(!xarSecurityCheck('Comments-Admin'))
         return;
-
     $numstats = xarModGetVar('comments','numstats');
     if (empty($numstats)) {
         xarModSetVar('comments', 'numstats', 100);
     }
-
     $output['authid'] = xarSecGenAuthKey();
-
     return $output;
 }
 
@@ -129,9 +125,10 @@ function comments_admin_updateconfig()
 
     if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showoptions', 'checkbox', $showoptions, false, XARVAR_NOT_REQUIRED)) return;
     xarModSetVar('comments', 'numstats', $numstats);
     xarModSetVar('comments', 'showtitle', $showtitle);
-
+    xarModSetVar('comments', 'showoptions', $showoptions);
     // Call updateconfig hooks
     xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
 

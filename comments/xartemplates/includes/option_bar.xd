@@ -4,6 +4,19 @@
             Note: Comments are owned by the poster. We are not responsible for their content..
         </xar:mlstring>
     </p>
+	<xar:set name="$showoptions">#xarModGetVar('comments','showoptions')#</xar:set>
+	<xar:if condition="empty($showoptions)">
+	<p class="xar-cm-note xar-sub">
+		<xar:mlstring>
+			Change Your Comments Rendering Settings 
+		</xar:mlstring>
+		<a href="#xarModUrl('roles', 'user', 'account')#">
+			<xar:mlstring>
+				here
+			</xar:mlstring>
+		</a>.
+	</p>
+	<xar:else />
     <h4>
         <xar:mlstring>
             Comments Settings 
@@ -214,4 +227,5 @@
             </div>
         </form>
     </div>
+	</xar:if>
 </div>

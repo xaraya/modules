@@ -85,8 +85,18 @@
         <div class="xar-cm-comment xar-accent">
             <xar:if condition="isset($package['transformed-text'])">
                 #$package['transformed-text']# 
+				<p>
+					<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+						#
+					</a>
+				</p>
                 <xar:else />
                 #$loop:item['xar_text']# 
+				<p>
+					<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+						#
+					</a>
+				</p>
                 <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
                     <br />
                     <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>&nbsp; 
