@@ -13,7 +13,8 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcserver_userapi_successresponse() {
+function xmlrpcserver_userapi_successresponse() 
+{
     $tplData = array();
 
     // Disable inserting template comments if set

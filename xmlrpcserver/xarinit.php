@@ -31,7 +31,10 @@ function xmlrpcserver_init()
  * upgrade the xmlrpcserver module from an old version
  * This function can be called multiple times
  */
-function xmlrpcserver_upgrade($oldversion) { return true; }
+function xmlrpcserver_upgrade($oldversion) 
+{
+    return true; 
+}
 
 /**
  * delete the xmlrpcserver module

@@ -47,4 +47,3 @@ function xmlrpcserver_userapi__callXMLRPC($methodname, $params, $endpoint)
     
 }
 ?>
-

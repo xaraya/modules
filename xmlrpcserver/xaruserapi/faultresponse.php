@@ -17,7 +17,8 @@
 // User errors start at 800
 define('XMLRPC_USER_ERR',800);
 
-function xmlrpcserver_userapi_faultresponse($args) {
+function xmlrpcserver_userapi_faultresponse($args) 
+{
     $errno = 1; $errorstring =  xarML('No error');
     extract($args, EXTR_OVERWRITE);
 
