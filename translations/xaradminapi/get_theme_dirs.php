@@ -26,7 +26,12 @@ function searchDir($path, $prefix)
   $fileModules = array();
   $dh = opendir($path);
   $path2 = ereg_replace($prefix,"",$path);
-  $staticNames[] = $path2;
+  
+  $pattern = '/^([a-z\-_]+)\.xt$/i';
+  $subnames = xarModAPIFunc('translations','admin','get_theme_files',
+                             array('themedir'=>"$path",'pattern'=>$pattern));
+  if (count($subnames) > 0) $staticNames[] = $path2;
+  
   while ($entry = readdir($dh)) {
     if (is_dir("$path/$entry")) {
       if (($entry != '.') && ($entry != '..') && ($entry != 'SCCS')) {
