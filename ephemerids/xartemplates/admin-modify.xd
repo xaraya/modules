@@ -21,7 +21,7 @@
 		<br /><br />
 		<label for="content"><xar:mlstring>Description</xar:mlstring></label>:
 		<br />
-			<textarea name="content" id="content" wrap="soft" rows="10" cols="60" tabindex="5">#$content#</textarea>
+			<textarea name="content" id="content" rows="10" cols="60" tabindex="5">#$content#</textarea>
 		<br /><br />
 			<input type="submit" value="Submit" align="middle" tabindex="6" />
 		</form>
