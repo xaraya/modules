@@ -50,10 +50,19 @@ function articles_user_search($args)
     // boolean AND/OR for words (no longer used)
     //if(!xarVarFetch('bool',     'str',   $bool,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
+    // search in specific fields
+    if(!xarVarFetch('articles_fields', 'isset', $fields, NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    if(!xarVarFetch('searchtype', 'isset', $searchtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
+
     if (isset($args['objectid'])) {
         $ishooked = 1;
     } else {
         $ishooked = 0;
+        if (empty($fields)) {
+            // search in specific fields via URLs
+            if(!xarVarFetch('fields', 'isset', $fields, NULL, XARVAR_NOT_REQUIRED)) {return;}
+        }
     }
 
 // TODO: could we need this someday ?
@@ -200,6 +209,16 @@ function articles_user_search($args)
         $enddate = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$end);
     }
 
+    if (empty($fields)) {
+        $fieldlist = array('title', 'summary', 'body');
+    } else {
+        $fieldlist = array_keys($fields);
+        // don't pass fields via URLs if we stick to the default list
+        if (count($fields) == 3 && isset($fields['title']) && isset($fields['summary']) && isset($fields['body'])) {
+            $fields = null;
+        }
+    }
+
     $data = array();
     $data['results'] = array();
     $data['status'] = '';
@@ -207,6 +226,7 @@ function articles_user_search($args)
     if (empty($ishooked)) {
         $data['q'] = isset($q) ? xarVarPrepForDisplay($q) : null;
         $data['author'] = isset($author) ? xarVarPrepForDisplay($author) : null;
+        $data['searchtype'] = $searchtype;
     }
     if ($isadmin) {
         $data['statuslist'] = array(
@@ -214,6 +234,13 @@ function articles_user_search($args)
                                     array('id' => 1, 'name' => xarML('Rejected'), 'checked' => in_array(1,$status)),
                                     array('id' => 2, 'name' => xarML('Approved'), 'checked' => in_array(2,$status)),
                                     array('id' => 3, 'name' => xarML('Front Page'), 'checked' => in_array(3,$status)),
+                                   );
+    // TODO: show field labels when we're dealing with only 1 pubtype
+        $data['fieldlist'] = array(
+                                    array('id' => 'title', 'name' => xarML('title'), 'checked' => in_array('title',$fieldlist)),
+                                    array('id' => 'summary', 'name' => xarML('summary'), 'checked' => in_array('summary',$fieldlist)),
+                                    array('id' => 'body', 'name' => xarML('body'), 'checked' => in_array('body',$fieldlist)),
+                                    array('id' => 'notes', 'name' => xarML('notes'), 'checked' => in_array('notes',$fieldlist)),
                                    );
     }
 
@@ -310,6 +337,8 @@ function articles_user_search($args)
                                            'status' => $status,
                                            'startdate' => $startdate,
                                            'enddate' => $enddate,
+                                           'searchfields' => $fieldlist,
+                                           'searchtype' => $searchtype,
                                            'search' => $q,
                                            'fields' => array('aid','title',
                                                       'pubdate','pubtypeid','cids')
@@ -432,6 +461,8 @@ function articles_user_search($args)
                                                             'status' => $status,
                                                             'startdate' => $startdate,
                                                             'enddate' => $enddate,
+                                                            'searchfields' => $fieldlist,
+                                                            'searchtype' => $searchtype,
                                                             'search' => $q)),
 
 /* trick : use *this* articles search instead of global search for pager :-)
@@ -446,6 +477,8 @@ function articles_user_search($args)
                                                         'end' => ($enddate != $now) ? $enddate : null,
                                                         'status' => $statusline,
                                                         'sort' => $sort,
+                                                        'fields' => $fields,
+                                                        'searchtype' => !empty($searchtype) ? $searchtype : null,
                                                         'startnum' => '%%')),
                                         $numitems);
 
@@ -465,6 +498,8 @@ function articles_user_search($args)
                                                'start' => $startdate,
                                                'end' => ($enddate != $now) ? $enddate : null,
                                                'status' => $statusline,
+                                               'fields' => $fields,
+                                               'searchtype' => !empty($searchtype) ? $searchtype : null,
                                                'sort' => $othersort));
                     if (!isset($othersort)) {
                         $othersort = 'date';

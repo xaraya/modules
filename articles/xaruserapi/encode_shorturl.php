@@ -219,6 +219,18 @@ function articles_userapi_encode_shorturl($args)
             $path .= $join . 'status=' . $status;
             $join = '&';
         }
+        // field list
+        if (isset($fields)) {
+            foreach ($fields as $field => $val) {
+                $path .= $join . 'fields[' . $field . ']=' . $val;
+                $join = '&';
+            }
+        }
+        // search type
+        if (isset($searchtype)) {
+            $path .= $join . 'searchtype=' . $searchtype;
+            $join = '&';
+        }
         // sort
         if (isset($sort)) {
             $path .= $join . 'sort=' . $sort;

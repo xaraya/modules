@@ -23,6 +23,8 @@
  * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
  * @param $args['status'] array of requested status(es) for the articles
  * @param $args['search'] search text parameter(s)
+ * @param $args['searchfields'] array of fields to search in
+ * @param $args['searchtype'] start, end, like, eq, gt, ... (TODO)
  * @param $args['startdate'] articles published at startdate or later
  *                           (unix timestamp format)
  * @param $args['enddate'] articles published before enddate
@@ -173,15 +175,31 @@ function articles_userapi_leftjoin($args)
         // 4. find normal text
         $more = preg_split('/\s+/',$search,-1,PREG_SPLIT_NO_EMPTY);
         $normal = array_merge($normal,$more);
+
+        if (empty($searchfields)) {
+            $searchfields = array('title','summary','body');
+        }
         $find = array();
         foreach ($normal as $text) {
             $text = xarVarPrepForStore($text);
         // TODO: use XARADODB to escape wildcards (and use portable ones) ??
             $text = preg_replace('/%/','\%',$text);
             $text = preg_replace('/_/','\_',$text);
-            $find[] = $leftjoin['title'] . " LIKE '%" . $text . "%'";
-            $find[] = $leftjoin['summary'] . " LIKE '%" . $text . "%'";
-            $find[] = $leftjoin['body'] . " LIKE '%" . $text . "%'";
+            foreach ($searchfields as $field) {
+                if (empty($leftjoin[$field])) continue;
+                if (empty($searchtype) || $searchtype == 'like') {
+                    $find[] = $leftjoin[$field] . " LIKE '%" . $text . "%'";
+                } elseif ($searchtype == 'start') {
+                    $find[] = $leftjoin[$field] . " LIKE '" . $text . "%'";
+                } elseif ($searchtype == 'end') {
+                    $find[] = $leftjoin[$field] . " LIKE '%" . $text . "'";
+                } elseif ($searchtype == 'eq') {
+                    $find[] = $leftjoin[$field] . " = '" . $text . "'";
+                } else {
+                // TODO: other search types ?
+                    $find[] = $leftjoin[$field] . " LIKE '%" . $text . "%'";
+                }
+            }
         }
         $whereclauses[] = '(' . join(' OR ',$find) . ')';
     }

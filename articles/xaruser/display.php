@@ -12,6 +12,11 @@ function articles_user_display($args)
 // categories-based navigation
     if(!xarVarFetch('ptid', 'id',    $ptid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
+/*
+    // TEST - highlight search terms
+    if(!xarVarFetch('q',     'str',  $q,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+*/
+
     // Override if needed from argument array (e.g. preview)
     extract($args);
 
@@ -377,6 +382,7 @@ function articles_user_display($args)
     // <mrb> see above for a hack, needs to be a lot better.
 
     // Summary is always included, is that handled somewhere else? (article config says i can ex/include it)
+    // <mikespub> articles config allows you to call transforms for the articles summaries in the view function
     if (!isset($titletransform)) {
         if (empty($settings['titletransform'])) {
             $data['transform'][] = 'summary';
@@ -391,6 +397,15 @@ function articles_user_display($args)
         }
     }
     $data = xarModCallHooks('item', 'transform', $aid, $data, 'articles');
+
+/*
+    if (!empty($q)) {
+    // TODO: split $q into search terms + add style (cfr. handlesearch in search module)
+        foreach ($data['transform'] as $field) {
+            $data[$field] = preg_replace("/$q/","<span class=\"xar-search-match\">$q</span>",$data[$field]);
+        }
+    }
+*/
 
     // Navigation links
     $data['publabel'] = xarML('Publication');
