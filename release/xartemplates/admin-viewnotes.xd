@@ -1,0 +1,77 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>View Release Information</xar:mlstring></h2>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+    <tr>
+        <th>
+			<xar:mlstring>Type</xar:mlstring>
+		</th>
+        <th>
+			<xar:mlstring>Name</xar:mlstring>
+		</th>
+        <th>
+			<xar:mlstring>Description</xar:mlstring>
+		</th>
+        <th>
+			<xar:mlstring>Options</xar:mlstring>
+		</th>
+	</tr>
+    <xar:loop name="$items">
+	<xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+    <tr>
+        <td class="xar-norm">
+			#$type#
+		</td>
+        <td class="xar-norm">
+			#$name#
+		</td>
+        <td class="xar-norm">
+			#$desc#
+		</td>
+		<td align="center" class="xar-norm">
+           <xar:if condition="empty($editurl)">
+               #$edittitle#
+               <xar:else />
+                   <a href="#$editurl#">#$edittitle#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($deleteurl)">
+               #$deletetitle#
+               <xar:else />
+                   <a href="#$deleteurl#">#$deletetitle#</a>
+           </xar:if>
+        </td>
+    </tr>
+	<xar:else />
+    <tr>
+        <td class="xar-accent">
+			#$type#
+		</td>
+        <td class="xar-accent">
+			#$name#
+		</td>
+        <td class="xar-accent">
+			#$desc#
+		</td>
+		<td align="center" class="xar-accent">
+           <xar:if condition="empty($editurl)">
+               #$edittitle#
+               <xar:else />
+                   <a href="#$editurl#">#$edittitle#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($deleteurl)">
+               #$deletetitle#
+               <xar:else />
+                   <a href="#$deleteurl#">#$deletetitle#</a>
+           </xar:if>
+        </td>
+    </tr>
+	</xar:if>
+    </xar:loop>
+</table>
+</div>
+<br />
+<!-- add the pager here -->
+#$pager#

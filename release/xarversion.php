@@ -11,6 +11,7 @@ $modversion['official'] = 1;
 $modversion['author'] = 'John Cox';
 $modversion['contact'] = 'niceguyeddie@xaraya.com';
 $modversion['user'] = 1;
+$modversion['admin'] = 1;
 $modversion['securityschema'] = array('sendfriend::' => '::');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';

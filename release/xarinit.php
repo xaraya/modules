@@ -108,6 +108,8 @@ function release_init()
                                                                  'default'     => ''),
                                    'xar_notes'          => array('type'        => 'text',
                                                                  'default'     => ''),
+                                   'xar_enotes'          => array('type'        => 'text',
+                                                                 'default'     => ''),
                                    'xar_certified'      => array('type'        => 'integer',
                                                                  'null'        => false,
                                                                  'default'     => '0',
