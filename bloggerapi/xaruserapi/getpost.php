@@ -24,8 +24,9 @@
  *                     article on success or errormessage on failure
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  */
-function bloggerapi_userapi_getpost($msg) 
+function bloggerapi_userapi_getpost($args) 
 {
+    extract($args);
     xarLogMessage("blogger api: getPost");
 
     // get the params, we skip appkey for now..

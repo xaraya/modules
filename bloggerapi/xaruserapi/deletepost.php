@@ -23,8 +23,9 @@
  * @return xmlrpcresp  Returns an xmlrpc response message, which contains a true value on success or error on failure
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  */
-function bloggerapi_userapi_deletepost($msg) 
+function bloggerapi_userapi_deletepost($args) 
 {
+    extract($args);
     xarLogMessage("blogger api: deletePost");
     
     // get the params, we skip appkey and publish for now..

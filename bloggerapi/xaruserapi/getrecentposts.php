@@ -25,14 +25,16 @@
  *                     articles on success or errormessage on failure
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  */
-function bloggerapi_userapi_getrecentposts($msg) 
+function bloggerapi_userapi_getrecentposts($args)
 {
+   extract($args);
+   
     xarLogMessage("blogger api: getRecentPosts");
     // get the params, we skip appkey for now..
-    $sn1=$msg->getParam(1);  $blogid   = $sn1->scalarval();
-    $sn2=$msg->getParam(2);  $username   = $sn2->scalarval();
-    $sn3=$msg->getParam(3);  $password   = $sn3->scalarval();
-    $sn4=$msg->getParam(4);  $numberOfPosts   = $sn4->scalarval();
+    $sn1=$msg->getParam(1);  $blogid        = $sn1->scalarval();
+    $sn2=$msg->getParam(2);  $username      = $sn2->scalarval();
+    $sn3=$msg->getParam(3);  $password      = $sn3->scalarval();
+    $sn4=$msg->getParam(4);  $numberOfPosts = $sn4->scalarval();
     
     // Try to login 
     if (!xarUserLogin($username,$password)) {

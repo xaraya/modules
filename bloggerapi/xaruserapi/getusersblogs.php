@@ -25,8 +25,9 @@
  * @see    xmlrpc_userapi_call(), xmlrpcresp, xmlrpcmsg
  * @todo   should we only return categories to which user has access rights?
  */
-function bloggerapi_userapi_getusersblogs($msg) 
+function bloggerapi_userapi_getusersblogs($args) 
 {
+    extract($args);
     xarLogMessage("blogger api: getUsersBlogs");
     // get the params, we skip appkey for now..
     $sn1=$msg->getParam(1);  $username = $sn1->scalarval();
@@ -41,20 +42,29 @@ function bloggerapi_userapi_getusersblogs($msg)
             // Get the publication type configured for blogging
             $pubtype=xarModGetVar('bloggerapi','bloggerpubtype');
             if ($pubtype!=0) {
-                // Get the root categories for this publication type
+                // Get the categories for this publication type
                 $categories=array();
                 $rootcats = xarModAPIFunc('articles','user','getrootcats',array('ptid'=>$pubtype));
+                xarLogVariable('root categories',$rootcats);
                 if (!empty($rootcats)) {
-                    //$categories = $rootcats;
-                    foreach ($rootcats as $rootcat) {  
-                        // FIXME: who is responsible for security here?
-                        $childcats = xarModAPIFunc('categories','user','getcat',array('return_itself'=>true,'getchildren'=>true,'cid'=>$rootcat['catid']));
-                        $categories = array_merge($categories, $childcats);
+                    foreach ($rootcats as $rootcat) {
+                        // FIXME: is this assuming too much?
+                        // Now:
+                        // when bloggerapi is alone here: fetch subcats as extra blogs
+                        // when metaweblogapi is around: use subcats as categories in each blog
+                        $getChildren = true;
+                        if(xarModIsAvailable('metaweblogapi')) {
+                            $getChildren = false;
+                        }
+                       // FIXME: who is responsible for security here?
+                       $childcats = xarModAPIFunc('categories','user','getcat',
+                                                  array('return_itself'=>true,'getchildren'=>$getChildren,'cid'=>$rootcat['catid']));
+                       $categories = array_merge($categories, $childcats);
                     }
                 } else {
                     $err = xarML("The configured publication type has no root category!");
                 }
-                //xarLogVariable('categories',$categories);
+                
                 if (empty($categories)) {
                     $err = xarML("No categories available for blogging");
                 }
