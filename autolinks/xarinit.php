@@ -103,7 +103,7 @@ function autolinks_init()
     'xar_template_name' => array ('type'=>'varchar', 'size'=>60, 'null'=>false, 'default'=>''),
     'xar_dynamic_replace' => array ('type'=>'integer', 'size'=>'tiny', 'null'=>false, 'default'=>'0'),
     'xar_link_itemtype' => array ('type'=>'integer', 'null'=>false, 'default'=>'0'),
-    'xar_type_desc'     => array ('type'=>'text', 'null'=>true, 'default'=>'')
+    'xar_type_desc'     => array ('type'=>'text', 'null'=>true)
     );
 
     $query = xarDBCreateTable($autolinkstypestable, $fields);
