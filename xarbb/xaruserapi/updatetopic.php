@@ -90,6 +90,21 @@ function xarbb_userapi_updatetopic($args)
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
+    // check if the topic moved to another forum and if there are replies
+    if (!empty($fid) && $fid != $topic['fid'] && !empty($topic['treplies'])) {
+        // if so, adapt the itemtype for the comments too
+        $commentstable = $xartable['comments'];
+        $ctable = $xartable['comments_column'];
+        $query = "UPDATE $commentstable
+                  SET $ctable[itemtype] = ?
+                  WHERE $ctable[modid] = ? AND $ctable[itemtype] = ? AND $ctable[objectid] = ?";
+        $modid = xarModGetIDFromName('xarbb');
+        $bindvars = array((int) $fid, (int) $modid, (int) $topic['fid'], (int) $tid);
+
+        $result =& $dbconn->Execute($query, $bindvars);
+        if (!$result) return;
+    }
+
     $data = xarModAPIFunc('xarbb',
                           'user',
                           'gettopic',
