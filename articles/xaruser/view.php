@@ -68,7 +68,6 @@ function articles_user_view()
             $isdefault = 1;
         }
     } else {
-    // TODO: rethink this when we're dealing with multi-pubtype categories
         $string = xarModGetVar('articles', 'settings');
         if (!empty($string)) {
             $settings = unserialize($string);
@@ -127,8 +126,7 @@ function articles_user_view()
     } else {
         $dotransform = 1;
     }
-// TODO: see if we want to allow a separate page template for the frontpage too
-    // Page template depending on publication type (optional)
+    // Page template for frontpage or depending on publication type (optional)
     if (!empty($settings['page_template'])) {
         xarTplSetPageTemplateName($settings['page_template']);
     }
@@ -300,45 +298,41 @@ function articles_user_view()
 //        (e.g. News, Sections, ...), depending on what "view" the user
 //        selected (per category, per publication type, a combination, ...) ?
 
-// TODO: improve display for multiple category selections
-//    if (!empty($cids) && is_array($cids)) {
-//    } elseif (!empty($ptid)) {
-      if (!empty($ptid)) {
-    // TODO: figure out how to get this when we're browsing in categories,
-    //       by imprving the way category information is handled there
-        $catinfo = array();
-        if ($showcategories) {
-            // get root categories for this publication type
-            $catlinks = xarModAPIFunc('articles',
-                                      'user',
-                                      'getrootcats',
-                                      array('ptid' => $ptid));
-            // grab the name and link of all children too
-            foreach ($catlinks as $info) {
-                $cattree = xarModAPIFunc('articles',
-                                        'user',
-                                        'getchildcats',
-                                        array('cid' => $info['catid'],
-                                              'ptid' => $ptid,
-                                              // filter on the currently selected categories
-                                              'filter' => $andcids ? $catid : '',
-                                              // we don't want counts here
-                                              'count' => false));
-                foreach ($cattree as $catitem) {
-                    $catinfo[$catitem['id']] = array('name' => $catitem['name'],
-                                                     'link' => $catitem['link'],
-                                                     'image'=> $catitem['image'],
-                                                     'root' => $info['catid']);
-                }
+    $catinfo = array();
+    if ($showcategories) {
+        // get root categories for this publication type
+        $catlinks = xarModAPIFunc('articles',
+                                  'user',
+                                  'getrootcats',
+                                  array('ptid' => $ptid));
+        // grab the name and link of all children too
+        foreach ($catlinks as $info) {
+            $cattree = xarModAPIFunc('articles',
+                                     'user',
+                                     'getchildcats',
+                                     array('cid' => $info['catid'],
+                                           'ptid' => $ptid,
+                                           // filter on the currently selected categories
+                                           'filter' => $andcids ? $catid : '',
+                                           // we don't want counts here
+                                           'count' => false));
+            foreach ($cattree as $catitem) {
+                $catinfo[$catitem['id']] = array('name' => $catitem['name'],
+                                                 'link' => $catitem['link'],
+                                                 'image'=> $catitem['image'],
+                                                 'root' => $info['catid']);
             }
-            unset($cattree);
-            unset($catlinks);
         }
-    } elseif (!empty($authorid)) {
-// TODO: get this to work again :)
-        $data['catlabel'] = xarML('Browse by author');
+        unset($cattree);
+        unset($catlinks);
+    }
+
+    if (!empty($authorid)) {
         $data['author'] = xarUserGetVar('name', $authorid);
-    } else {
+        if (empty($data['author'])) {
+            xarExceptionHandled();
+            $data['author'] = xarML('Unknown');
+        }
     }
 
     // Save some variables to (temporary) cache for use in blocks etc.
@@ -463,10 +457,10 @@ function articles_user_view()
     // TODO: don't include ptid and catid if we don't use short URLs
         // link to article
         $article['link'] = xarModURL('articles', 'user', 'display',
-                                    array('aid' => $article['aid'],
-                                          // don't include pubtype id if we're navigating by category
+                                    array(// don't include pubtype id if we're navigating by category
                                           'ptid' => empty($ptid) ? null : $article['pubtypeid'],
-                                          'catid' => $catid));
+                                          'catid' => $catid,
+                                          'aid' => $article['aid']));
 
         // N words/bytes more in article
         if (!empty($article['body'])) {
@@ -513,8 +507,8 @@ function articles_user_view()
 
     // TODO: make configurable ?
         $article['redirect'] = xarModURL('articles','user','redirect',
-                                        array('aid' => $article['aid'],
-                                              'ptid' => $curptid));
+                                        array('ptid' => $curptid,
+                                              'aid' => $article['aid']));
 
     // TODO: put in getall() function to avoid a new query on each article ?
         // number of comments for this article
@@ -655,14 +649,14 @@ function articles_user_view()
                                                         'status' => $status,
                                                         'enddate' => time())),
                                     xarModURL('articles', 'user', 'view',
-                                              array('catid' => $catid,
-                                                    'ptid' => ($ishome ? null : $ptid),
+                                              array('ptid' => ($ishome ? null : $ptid),
+                                                    'catid' => $catid,
                                                     'authorid' => $authorid,
                                                     'sort' => $sort,
                                                     'startnum' => '%%')),
                                     $numitems);
 
-// TODO: more testing...
+// TODO: sorting on other fields ?
     if (strlen($data['pager']) > 5) {
         $data['pager'] .= '<br /><br />' . xarML('Sort by');
         $sortlist = array();
@@ -685,12 +679,12 @@ function articles_user_view()
             // Note: 'sort' is used to override the default start view too
             if ($sname == 'date' && !$isdefault) {
                 $sortlink = xarModURL('articles','user','view',
-                                     array('catid' => $catid,
-                                           'ptid' => ($ishome ? null : $ptid)));
+                                     array('ptid' => ($ishome ? null : $ptid),
+                                           'catid' => $catid));
             } else {
                 $sortlink = xarModURL('articles','user','view',
-                                     array('catid' => $catid,
-                                           'ptid' => ($ishome ? null : $ptid),
+                                     array('ptid' => ($ishome ? null : $ptid),
+                                           'catid' => $catid,
                                            'sort' => $sname));
             }
             $data['pager'] .= '&nbsp;<a href="' . $sortlink . '">' .

@@ -84,8 +84,8 @@ function articles_userapi_getparentcats($args)
             $item['plink'] = xarModURL('articles',
                                       'user',
                                       'view',
-                                       array('catid' => $info['cid'],
-                                             'ptid' => $ptid));
+                                       array('ptid' => $ptid,
+                                             'catid' => $info['cid']));
             $item['ptitle'] = xarVarPrepForDisplay($info['name']);
             if ($info['cid'] == $cid) {
 // TODO: test for neighbourhood
@@ -102,8 +102,8 @@ function articles_userapi_getparentcats($args)
                                                'text' => $item['ptitle'],
                                                'link' =>
                           xarModURL('articles','user','view',
-                                   array('catid' => $info['cid'],
-                                         'ptid' => $ptid)));
+                                   array('ptid' => $ptid,
+                                         'catid' => $info['cid'])));
                 }
             } else {
                 $item['pjoin'] = ' &gt; ';

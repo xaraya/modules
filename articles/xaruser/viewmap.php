@@ -279,7 +279,7 @@ function articles_user_viewmap()
              $typetwo['name'] . '<br />-<br />' . $typeone['name'] . '</td>';
     foreach ($matrix as $cid1 => $list) {
         foreach ($list as $cid2 => $val) {
-            $link = xarModURL('articles','user','view',array('catid' => $cid2,'ptid' => $testptid));
+            $link = xarModURL('articles','user','view',array('ptid' => $testptid, 'catid' => $cid2));
             $showname = wordwrap($name[$cid2],9,'<br />',1);
             $dump .= '<td valign="top" align="middle"><a href="' . $link . '">' . $showname . '</a></td>';
         }
@@ -287,14 +287,14 @@ function articles_user_viewmap()
     }
     $dump .= '</tr>';
     foreach ($matrix as $cid1 => $list) {
-        $link = xarModURL('articles','user','view',array('catid' => $cid1,'ptid' => $testptid));
+        $link = xarModURL('articles','user','view',array('ptid' => $testptid,'catid' => $cid1));
         $dump .= '<td><a href="' . $link . '">' . $name[$cid1] . '</a></td>';
         foreach ($list as $cid2 => $val) {
             if ($val > 0) {
                 $cids = array($cid1,$cid2);
                 sort($cids,SORT_NUMERIC);
                 $catid = join('+',$cids);
-                $link = xarModURL('articles','user','view',array('catid' => $catid,'ptid' => $testptid));
+                $link = xarModURL('articles','user','view',array('ptid' => $testptid, 'catid' => $catid));
                 $dump .= '<td align="center"><a href="' . $link . '">&nbsp;' .$val . '&nbsp;</a></td>';
             } else {
                 $dump .= '<td align="center">&nbsp;</td>';

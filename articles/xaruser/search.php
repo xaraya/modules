@@ -167,6 +167,7 @@ function articles_user_search($args)
         }
     } else {
         $authorid = null;
+        $author = null;
     }
 
     $data = array();
@@ -227,8 +228,8 @@ function articles_user_search($args)
                     $count++;
                     $curptid = $article['pubtypeid'];
                     $link = xarModURL('articles','user','display',
-                                     array('aid' => $article['aid'],
-                                           'ptid' => $article['pubtypeid']));
+                                     array('ptid' => $article['pubtypeid'],
+                                           'aid' => $article['aid']));
                     // publication date of article (if needed)
                     if (!empty($pubtypes[$curptid]['config']['pubdate']['label'])
                         && !empty($article['pubdate'])) {
@@ -288,11 +289,11 @@ function articles_user_search($args)
                                         xarModURL('search', 'user', 'main',
 */
                                         xarModURL('articles', 'user', 'search',
-                                                  array('catid' => $catid,
-                                                        'ptid' => $curptid,
+                                                  array('ptid' => $curptid,
+                                                        'catid' => $catid,
+                                                        'q' => $q,
                                                         'author' => $author,
                                                         'sort' => $sort,
-                                                        'q' => $q,
                                                         'startnum' => '%%')),
                                         $numitems);
 
@@ -305,11 +306,11 @@ function articles_user_search($args)
                     $sortlink = xarModURL('articles',
                                          'user',
                                          'search',
-                                         array('catid' => $catid,
-                                               'ptid' => $curptid,
+                                         array('ptid' => $curptid,
+                                               'catid' => $catid,
+                                               'q' => $q,
                                                'author' => $author,
-                                               'sort' => $othersort,
-                                               'q' => $q));
+                                               'sort' => $othersort));
                     if (!isset($othersort)) {
                         $othersort = 'date';
                     }

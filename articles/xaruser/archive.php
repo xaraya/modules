@@ -208,8 +208,8 @@ function articles_user_archive($args)
 // TODO: add view count to table/query/template someday ?
     foreach ($articles as $key => $article) {
         $articles[$key]['link'] = xarModURL('articles','user','display',
-                               array('aid' => $articles[$key]['aid'],
-                                     'ptid' => isset($ptid) ? $articles[$key]['pubtypeid'] : null));
+                               array('ptid' => isset($ptid) ? $articles[$key]['pubtypeid'] : null,
+                                     'aid' => $articles[$key]['aid']));
         if (empty($articles[$key]['title'])) {
             $articles[$key]['title'] = xarML('(none)');
         }

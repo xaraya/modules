@@ -30,7 +30,8 @@
         <td colspan="2"><h3><xar:mlstring>Global Configuration</xar:mlstring></h3></td>
     </tr>
     <tr>
-        <td><label for="defaultpubtype"><xar:mlstring>Default Publication Type for the Articles "Front Page"</xar:mlstring></label></td>
+        <td><label for="defaultpubtype"><xar:mlstring>Default Publication Type for the Articles "Front Page"<br />
+            <i>Note: selecting "Defaults" here implies navigating (by category) across all publication types</i></xar:mlstring></label></td>
         <td><select name="defaultpubtype" id="defaultpubtype">
             <xar:foreach in="$pubfilters" value="$pubfilter">
                 <xar:if condition="$pubfilter['pid'] eq $defaultpubtype">

@@ -40,8 +40,8 @@ function articles_userapi_getitemlinks($args)
         if (!isset($itemid2key[$itemid])) continue;
         $article = $articles[$itemid2key[$itemid]];
         $itemlinks[$itemid] = array('url'   => xarModURL('articles', 'user', 'display',
-                                                                 array('aid' => $article['aid'],
-                                                                       'ptid' => $article['pubtypeid'])),
+                                                                 array('ptid' => $article['pubtypeid'],
+                                                                       'aid' => $article['aid'])),
                                             'title' => xarML('Display Article'),
                                             'label' => xarVarPrepForDisplay($article['title']));
     }

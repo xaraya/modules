@@ -11,11 +11,15 @@ function articles_userapi_getrootcats($args)
 {
     extract($args);
 
-    if (!isset($ptid) || !is_numeric($ptid)) {
-        return array();
+    if (empty($ptid) || !is_numeric($ptid)) {
+        $ptid = null;
     }
 
-    $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
+    if (empty($ptid)) {
+        $cidstring = xarModGetVar('articles', 'mastercids');
+    } else {
+        $cidstring = xarModGetVar('articles', 'mastercids.'.$ptid);
+    }
     if (empty($cidstring)) {
         return array();
     } else {
@@ -38,8 +42,8 @@ function articles_userapi_getrootcats($args)
         $item['catid'] = $info['cid'];
         $item['cattitle'] = xarVarPrepForDisplay($info['name']);
         $item['catlink'] = xarModURL('articles','user','view',
-                                    array('catid' => $info['cid'],
-                                          'ptid' => $ptid));
+                                    array('ptid' => $ptid,
+                                          'catid' => $info['cid']));
         if ($isfirst) {
             $item['catjoin'] = '';
             $isfirst = 0;

@@ -108,8 +108,8 @@ function articles_user_display($args)
             if (!empty($cat['image'])) {
                 $link = xarModURL('articles','user','view',
                                  array(//'status' => array(3,2),
-                                       'catid' => $cat['cid'],
-                                       'ptid' => $ptid));
+                                       'ptid' => $ptid,
+                                       'catid' => $cat['cid']));
                 $image = xarTplGetImage($cat['image'],'categories');
                 $data['topic_icons'] .= '<a href="'. $link .'">'.
                                         '<img src="'. $image .
@@ -196,8 +196,8 @@ function articles_user_display($args)
                                        'enddate' => time()));
         if (!empty($prevart['aid'])) {
             $data['prevart'] = xarModURL('articles','user','display',
-                                         array('aid' => $prevart['aid'],
-                                               'ptid' => $prevart['pubtypeid']));
+                                         array('ptid' => $prevart['pubtypeid'],
+                                               'aid' => $prevart['aid']));
         } else {
             $data['prevart'] = '';
         }
@@ -210,8 +210,8 @@ function articles_user_display($args)
                                        'enddate' => time()));
         if (!empty($nextart['aid'])) {
             $data['nextart'] = xarModURL('articles','user','display',
-                                         array('aid' => $nextart['aid'],
-                                               'ptid' => $nextart['pubtypeid']));
+                                         array('ptid' => $nextart['pubtypeid'],
+                                               'aid' => $nextart['aid']));
         } else {
             $data['nextart'] = '';
         }
@@ -267,8 +267,8 @@ function articles_user_display($args)
                 $data[$field] = xarVarPrepHTMLDisplay($article[$field]);
                 if (!empty($article[$field]) && $article[$field] != 'http://') {
                     $data['redirect'] = xarModURL('articles','user','redirect',
-                                                  array('aid' => $aid,
-                                                        'ptid' => $ptid));
+                                                  array('ptid' => $ptid,
+                                                        'aid' => $aid));
                 } else {
                     $data['redirect'] = '';
                 }
@@ -373,8 +373,8 @@ function articles_user_display($args)
                                                'returnurl' => xarModURL('articles',
                                                                         'user',
                                                                         'display',
-                                                                        array('aid' => $aid,
-                                                                              'ptid' => $ptid))
+                                                                        array('ptid' => $ptid,
+                                                                              'aid' => $aid))
                                               ),
                                          'articles'
                                         );

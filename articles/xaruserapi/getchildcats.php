@@ -78,8 +78,8 @@ function articles_userapi_getchildcats($args)
         }
 // TODO: show icons instead of (or in addition to) a link if available ?
         $info['link'] = xarModURL('articles','user','view',
-                                 array('catid' => $catid,
-                                       'ptid' => $ptid));
+                                 array('ptid' => $ptid,
+                                       'catid' => $catid));
         $info['name'] = xarVarPrepForDisplay($info['name']);
         if ($count && isset($pubcatcount[$info['id']][$curptid])) {
             $info['count'] = $pubcatcount[$info['id']][$curptid];
