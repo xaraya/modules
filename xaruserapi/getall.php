@@ -181,7 +181,11 @@ function articles_userapi_getall($args)
     }
     // FIXME: <rabbitt> PostgreSQL requires that all fields in an 'Order By' be in the SELECT
     //        this has been added to remove the error that not having it creates
-    $select[] = $articlesdef['pubdate'];
+    // FIXME: <mikespub> Oracle doesn't allow having the same field in a query twice if you
+    //        don't specify an alias (at least in sub-queries, which is what SelectLimit uses)
+    if (!in_array($articlesdef['pubdate'], $select)) {
+        $select[] = $articlesdef['pubdate'];
+    }
 
     // we need distinct for multi-category OR selects where articles fit in more than 1 category
     if (count($cids) > 0) {
