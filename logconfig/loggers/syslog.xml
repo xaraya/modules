@@ -31,7 +31,7 @@
     <property name="description">
       <label>Logger Description</label>
       <type>static</type>
-      <default>This logger will sent all log messages to your own operational system logging system. Please look at http://br2.php.net/manual/en/function.openlog.php to figure out how to configure this logger.</default>
+      <default>This logger will sent all log messages to your own operational system logging system. Please look at php.net Manual for the function openlog to figure out how to properly configure this logger.</default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>3</order>
