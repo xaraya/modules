@@ -1,12 +1,12 @@
 <xar:template file="header" title="Test" />
 <script language="JavaScript">
-	function openHelp()
-	{
-		var templateName = document.getElementById("template").value;
-		var url = 'modules/photoshare/xardocs/viewtemplates/' + templateName + '/manual.html';
-		window.open(url, "", "height=500,width=600");
-		return false;
-	}
+    function openHelp()
+    {
+        var templateName = document.getElementById("template").value;
+        var url = 'modules/photoshare/xardocs/viewtemplates/' + templateName + '/manual.html';
+        window.open(url, "", "height=500,width=600");
+        return false;
+    }
 </script>
 <form action="#$actionUrl#" method="post">
 
@@ -19,70 +19,70 @@
 <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
 <table class="photoshare-editform">
 <tr>
-	<td align="left">
-		<xar:mlstring>Title</xar:mlstring>
-	</td>
-	<td align="left">
-	<input type="text" class="photoshare-edittitle" maxlength="255" name="title"
-		value="#xarVarPrepForDisplay($folder['title'])#" />
-	</td>
+    <td align="left">
+        <xar:mlstring>Title</xar:mlstring>
+    </td>
+    <td align="left">
+    <input type="text" class="photoshare-edittitle" maxlength="255" name="title"
+        value="#xarVarPrepForDisplay($folder['title'])#" />
+    </td>
 </tr>
 <tr>
-	<td align="left">
-		<xar:mlstring>Description</xar:mlstring>
-	</td>
-	<td align="left">
-	<textarea class="photoshare-editdescription" name="description" rows="4"
-	>#xarVarPrepForDisplay($folder['description'])#</textarea>
-	</td>
+    <td align="left">
+        <xar:mlstring>Description</xar:mlstring>
+    </td>
+    <td align="left">
+    <textarea class="photoshare-editdescription" name="description" rows="4"
+    >#xarVarPrepForDisplay($folder['description'])#</textarea>
+    </td>
 </tr>
 <tr>
-	<td align="left">
-		<xar:mlstring>Default template</xar:mlstring>
-	</td>
-	<td align="left">
-		<select name="viewTemplate">
-		<xar:foreach in="$viewTemplates" value="$viewTemplate">
-			<option value="#$viewTemplate['id']#" #$viewTemplate['selected']#>#$viewTemplate['name']#</option>
-		</xar:foreach>
-		</select>
-		[ <a href="javascript:void(0)" onclick="return openHelp();"><xar:mlstring>template description</xar:mlstring></a> ]
-	</td>
+    <td align="left">
+        <xar:mlstring>Default template</xar:mlstring>
+    </td>
+    <td align="left">
+        <select name="viewTemplate">
+        <xar:foreach in="$viewTemplates" value="$viewTemplate">
+            <option value="#$viewTemplate['id']#" #$viewTemplate['selected']#>#$viewTemplate['name']#</option>
+        </xar:foreach>
+        </select>
+        [ <a href="javascript:void(0)" onclick="return openHelp();"><xar:mlstring>template description</xar:mlstring></a> ]
+    </td>
 </tr>
 <xar:if condition="xarModGetVar('photoshare', 'allowframeremove')">
 <tr>
-	<td align="left">
-		<xar:mlstring>Show album as standalone (not as part of this website)</xar:mlstring>
-	</td>
-	<td align="left">
-	<xar:if condition="$folder['hideframe']">
-		<input type="checkbox" name="hideframe" checked="checked" />
-	<xar:else />
-		<input type="checkbox" name="hideframe" />
-	</xar:if>
-	</td>
+    <td align="left">
+        <xar:mlstring>Show album as standalone (not as part of this website)</xar:mlstring>
+    </td>
+    <td align="left">
+    <xar:if condition="$folder['hideframe']">
+        <input type="checkbox" name="hideframe" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="hideframe" />
+    </xar:if>
+    </td>
 </tr>
 </xar:if>
 <tr>
-	<td align="left">
-		<xar:mlstring>Do not show album in list of all albums</xar:mlstring>
-	</td>
-	<td align="left">
-	<xar:if condition="$folder['blockfromlist']">
-		<input type="checkbox" name="blockfromlist" checked="checked" />
-	<xar:else />
-		<input type="checkbox" name="blockfromlist" />
-	</xar:if>
-	</td>
+    <td align="left">
+        <xar:mlstring>Do not show album in list of all albums</xar:mlstring>
+    </td>
+    <td align="left">
+    <xar:if condition="$folder['blockfromlist']">
+        <input type="checkbox" name="blockfromlist" checked="checked" />
+    <xar:else />
+        <input type="checkbox" name="blockfromlist" />
+    </xar:if>
+    </td>
 </tr>
 </table>
 <xar:if condition="!isset($folderID)">
-	<input type="submit" name="submit" value="#xarMl('add')#" />
+    <input type="submit" name="submit" value="#xarMl('add')#" />
 <xar:else  />
-	<input type="submit" name="submit" value="#xarMl('update')#" />
+    <input type="submit" name="submit" value="#xarMl('update')#" />
 </xar:if>
 <input type="button" name="cancel"
-	value="#xarMl('cancel')#"
-	onclick="location.href= '#xarModURL('photoshare', 'user', 'view', isset($folderID) ? array('fid' => $folderID) : (isset($parentFolderID) ? array('fid' => $parentFolderID) : array()) )#'"
-	/>
+    value="#xarMl('cancel')#"
+    onclick="location.href= '#xarModURL('photoshare', 'user', 'view', isset($folderID) ? array('fid' => $folderID) : (isset($parentFolderID) ? array('fid' => $parentFolderID) : array()) )#'"
+    />
 <xar:template file="footer" />

@@ -1,10 +1,10 @@
 <table class="photoshare-folder-info">
-	<tr valign="top">
-		<td><img src="#xarTplGetImage('folder.gif')#" alt="" /></td>
-		<td><table>
-  				<tr><td><xar:mlstring>Album</xar:mlstring></td><td>: #$folder.title#</td></tr>
-  				<tr><td><xar:mlstring>Number of images</xar:mlstring></td><td>: #$folder.imageCount#</td></tr>
-  				<tr><td><xar:mlstring>Owner</xar:mlstring></td><td>: #$folder.ownername#</td></tr>
-		</table></td>
-	</tr>
+    <tr valign="top">
+        <td><img src="#xarTplGetImage('folder.gif')#" alt="" /></td>
+        <td><table>
+                  <tr><td><xar:mlstring>Album</xar:mlstring></td><td>: #$folder.title#</td></tr>
+                  <tr><td><xar:mlstring>Number of images</xar:mlstring></td><td>: #$folder.imageCount#</td></tr>
+                  <tr><td><xar:mlstring>Owner</xar:mlstring></td><td>: #$folder.ownername#</td></tr>
+        </table></td>
+    </tr>
 </table>

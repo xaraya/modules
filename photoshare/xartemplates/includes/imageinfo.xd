@@ -1,9 +1,9 @@
 <table class="photoshare-image-info">
-	<tr valign="top">
-		<td><img src="#$image.thumburl#" alt="#image.title#" title="#image.title#" /></td>
-		<td><table>
-  				<tr><td colspan="2">#$image.title#</td></tr>
-  				<tr><td><xar:mlstring>Owner</xar:mlstring></td><td>: #$image.ownername#</td></tr>
-		</table></td>
-	</tr>
+    <tr valign="top">
+        <td><img src="#$image.thumburl#" alt="#image.title#" title="#image.title#" /></td>
+        <td><table>
+                  <tr><td colspan="2">#$image.title#</td></tr>
+                  <tr><td><xar:mlstring>Owner</xar:mlstring></td><td>: #$image.ownername#</td></tr>
+        </table></td>
+    </tr>
 </table>

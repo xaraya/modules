@@ -1,14 +1,14 @@
 <xar:if condition="!isset($authid)">
-	<xar:set name="$authid">xarSecGenAuthKey()</xar:set>
+    <xar:set name="$authid">xarSecGenAuthKey()</xar:set>
 </xar:if>
 <xar:if condition="isset($addEditIcons) && $addEditIcons">
 <script language="javascript" src="#xarServerGetBaseURL()#modules/photoshare/xarjavascript/editimages.js"></script>
 <script language="javascript" src="#xarServerGetBaseURL()#modules/photoshare/xarjavascript/psmenu.js"></script>
 <script language="javascript">
 var translations = {
-	selectImage: "#xarMl('Please select image(s) first')#",
-	tooManyImages: "#xarMl('Only one image can be moved at a time')#",
-	confirmDelete: "#xarMl('Delete all selected images?')#"
+    selectImage: "#xarMl('Please select image(s) first')#",
+    tooManyImages: "#xarMl('Only one image can be moved at a time')#",
+    confirmDelete: "#xarMl('Delete all selected images?')#"
 };
 </script>
 </xar:if>
@@ -16,111 +16,111 @@ var translations = {
 <xar:set name="$dummy">xarTplAddStyleLink('photoshare', 'style')</xar:set>
 
 <table class="photoshare-header">
-	<tr class="photoshare-header-title">
-		<td>
-		  	<xar:if condition="isset($title)">
-		    	<div class="photoshare-title">#$title#</div>
-		    </xar:if>
-			<div class="photoshare-trail">
-				<xar:if condition="isset($top)">
-				<a href="#$top#">#xarMl('Top')#</a>
-				<xar:else/>
-				<a href="#xarModUrl('photoshare', 'user', 'view')#">#xarMl('Top')#</a>
-				</xar:if>
-				<xar:if condition="isset($trail)">
-						<xar:foreach in="$trail" value="$trailitem">
-							<img src="#xarTplGetImage('trail_arrow.gif')#" border="0" alt="" title="" />
-							<a href="#xarModUrl('photoshare', 'user', 'view', array('fid' => $trailitem['id']))#">#$trailitem['title']#</a>
-						</xar:foreach>
-				</xar:if>
-			</div>
-		</td></tr>
-			<tr class="photoshare-header-menu"><td>
-			<table><tr>
-				<xar:foreach in="$menuitems" value="$menuitem">
-		  			<td><a href="#$menuitem['link']#">#$menuitem['name']#</a></td>
-		  		</xar:foreach>
-		  		<td>&nbsp;</td>
-		  	</tr></table>
-		</td>
-	</tr>
+    <tr class="photoshare-header-title">
+        <td>
+              <xar:if condition="isset($title)">
+                <div class="photoshare-title">#$title#</div>
+            </xar:if>
+            <div class="photoshare-trail">
+                <xar:if condition="isset($top)">
+                <a href="#$top#">#xarMl('Top')#</a>
+                <xar:else/>
+                <a href="#xarModUrl('photoshare', 'user', 'view')#">#xarMl('Top')#</a>
+                </xar:if>
+                <xar:if condition="isset($trail)">
+                        <xar:foreach in="$trail" value="$trailitem">
+                            <img src="#xarTplGetImage('trail_arrow.gif')#" border="0" alt="" title="" />
+                            <a href="#xarModUrl('photoshare', 'user', 'view', array('fid' => $trailitem['id']))#">#$trailitem['title']#</a>
+                        </xar:foreach>
+                </xar:if>
+            </div>
+        </td></tr>
+            <tr class="photoshare-header-menu"><td>
+            <table><tr>
+                <xar:foreach in="$menuitems" value="$menuitem">
+                      <td><a href="#$menuitem['link']#">#$menuitem['name']#</a></td>
+                  </xar:foreach>
+                  <td>&nbsp;</td>
+              </tr></table>
+        </td>
+    </tr>
 <xar:if condition="isset($addEditIcons) && $addEditIcons">
-	<tr class="photoshare-header-icons">
-		<td>
+    <tr class="photoshare-header-icons">
+        <td>
 
-			<div class="psmenu" id="psmenu-image" onmouseout="psmenu.onMouseOutDiv(this)">
-            	<table>
-					<tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                		<td class="psmenu-icon"><img 
-                  			src="#xarServerGetBaseURL()#modules/photoshare/xarimages/magnify.gif"
-                  			alt="#xarMl('Show image')#" title="#xarMl('Show image')#"
-                  			></td>
-                 		<td class="psmenu-title"><nowrap><xar:mlstring>Show image</xar:mlstring></nowrap></td>
-                 	</tr>
-					<tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                		<td class="psmenu-icon"><img 
-                  			src="#xarServerGetBaseURL()#modules/photoshare/xarimages/setting.gif"
-                  			alt="#xarMl('Edit image')#" title="#xarMl('Edit image')#"
-                  			></td>
-                 		<td class="psmenu-title"><nowrap><xar:mlstring>Edit image</xar:mlstring></nowrap></td>
-                 	</tr>
-					<tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                		<td class="psmenu-icon"><img 
-                  			src="#xarServerGetBaseURL()#modules/photoshare/xarimages/delete.gif"
-                  			alt="#xarMl('Delete image')#" title="#xarMl('Delete image')#"
-                  			></td>
-                 		<td class="psmenu-title"><nowrap><nowrap><xar:mlstring>Delete image</xar:mlstring></nowrap><nowrap></td>
-                 	</tr>
-					<tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                		<td class="psmenu-icon"><img 
-                  			src="#xarServerGetBaseURL()#modules/photoshare/xarimages/rotatec.gif"
-                  			alt="#xarMl('Rotate clockwise')#" title="#xarMl('Rotate clockwise')#"
-                  			></td>
-                 		<td class="psmenu-title"><nowrap><xar:mlstring>Rotate clockwise</xar:mlstring></nowrap></td>
-                 	</tr>
-					<tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                		<td class="psmenu-icon"><img 
-                  			src="#xarServerGetBaseURL()#modules/photoshare/xarimages/rotatecc.gif"
-                  			alt="#xarMl('Rotate counter clockwise')#" title="#xarMl('Rotate counter clockwise')#"
-                  			></td>
-                 		<td class="psmenu-title"><nowrap><xar:mlstring>Rotate counter clockwise</xar:mlstring></nowrap></td>
-                 	</tr>
-					<tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
-                		<td class="psmenu-icon"><img 
-                  			src="#xarServerGetBaseURL()#modules/photoshare/xarimages/greendot.gif"
-                  			alt="#xarMl('Set image as main image')#" title="#xarMl('Set image as main image')#"
-                  			></td>
-                 		<td class="psmenu-title"><nowrap><xar:mlstring>Set image as main image</xar:mlstring></nowrap></td>
-                 	</tr>
-				</table>
-			</div>
+            <div class="psmenu" id="psmenu-image" onmouseout="psmenu.onMouseOutDiv(this)">
+                <table>
+                    <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
+                        <td class="psmenu-icon"><img 
+                              src="#xarServerGetBaseURL()#modules/photoshare/xarimages/magnify.gif"
+                              alt="#xarMl('Show image')#" title="#xarMl('Show image')#"
+                              ></td>
+                         <td class="psmenu-title"><nowrap><xar:mlstring>Show image</xar:mlstring></nowrap></td>
+                     </tr>
+                    <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
+                        <td class="psmenu-icon"><img 
+                              src="#xarServerGetBaseURL()#modules/photoshare/xarimages/setting.gif"
+                              alt="#xarMl('Edit image')#" title="#xarMl('Edit image')#"
+                              ></td>
+                         <td class="psmenu-title"><nowrap><xar:mlstring>Edit image</xar:mlstring></nowrap></td>
+                     </tr>
+                    <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
+                        <td class="psmenu-icon"><img 
+                              src="#xarServerGetBaseURL()#modules/photoshare/xarimages/delete.gif"
+                              alt="#xarMl('Delete image')#" title="#xarMl('Delete image')#"
+                              ></td>
+                         <td class="psmenu-title"><nowrap><nowrap><xar:mlstring>Delete image</xar:mlstring></nowrap><nowrap></td>
+                     </tr>
+                    <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
+                        <td class="psmenu-icon"><img 
+                              src="#xarServerGetBaseURL()#modules/photoshare/xarimages/rotatec.gif"
+                              alt="#xarMl('Rotate clockwise')#" title="#xarMl('Rotate clockwise')#"
+                              ></td>
+                         <td class="psmenu-title"><nowrap><xar:mlstring>Rotate clockwise</xar:mlstring></nowrap></td>
+                     </tr>
+                    <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
+                        <td class="psmenu-icon"><img 
+                              src="#xarServerGetBaseURL()#modules/photoshare/xarimages/rotatecc.gif"
+                              alt="#xarMl('Rotate counter clockwise')#" title="#xarMl('Rotate counter clockwise')#"
+                              ></td>
+                         <td class="psmenu-title"><nowrap><xar:mlstring>Rotate counter clockwise</xar:mlstring></nowrap></td>
+                     </tr>
+                    <tr class="psmenu-menuItem" onmouseover="psmenu.onMouseOver(this)" onmouseout="psmenu.onMouseOut(this)"" onmousedown="psmenu.onMouseDown(this)">
+                        <td class="psmenu-icon"><img 
+                              src="#xarServerGetBaseURL()#modules/photoshare/xarimages/greendot.gif"
+                              alt="#xarMl('Set image as main image')#" title="#xarMl('Set image as main image')#"
+                              ></td>
+                         <td class="psmenu-title"><nowrap><xar:mlstring>Set image as main image</xar:mlstring></nowrap></td>
+                     </tr>
+                </table>
+            </div>
 
   <script language="javascript">
-  	contextmenu.actionURLs = [
-  		"#xarModUrl('photoshare', 'user', 'showimages', isset($folderID) ? array('fid' => $folderID, 'template' => 'slideshow','authid'=>$authid) :array('authid'=>$authid))#",
-  		"#xarModUrl('photoshare', 'user', 'editimage', isset($folderID) ? array('fid' => $folderID,'authid'=>$authid) : array('authid'=>$authid))#",
-  		"#xarModUrl('photoshare', 'user', 'deleteimage', isset($folderID) ? array('fid' => $folderID,'authid'=>$authid) : array('authid'=>$authid))#",
-  		"#xarModUrl('photoshare', 'user', 'rotateimage', isset($folderID) ? array('fid' => $folderID, 'dir' => 'c','authid'=>$authid) : array('authid'=>$authid))#",
-  		"#xarModUrl('photoshare', 'user', 'rotateimage', isset($folderID) ? array('fid' => $folderID, 'dir' => 'cc','authid'=>$authid) : array('authid'=>$authid))#",
-  		"#xarModUrl('photoshare', 'user', 'setmainimage', isset($folderID) ? array('fid' => $folderID,'authid'=>$authid) : array('authid'=>$authid))#"
-  		];
-	contextmenu.confirmations = [
-		null,
-		null,
-		'#xarMl("Are you sure you wish to delete the selected image?")#',
-		null,
-		null,
-		null
-		];
+      contextmenu.actionURLs = [
+          "#xarModUrl('photoshare', 'user', 'showimages', isset($folderID) ? array('fid' => $folderID, 'template' => 'slideshow','authid'=>$authid) :array('authid'=>$authid))#",
+          "#xarModUrl('photoshare', 'user', 'editimage', isset($folderID) ? array('fid' => $folderID,'authid'=>$authid) : array('authid'=>$authid))#",
+          "#xarModUrl('photoshare', 'user', 'deleteimage', isset($folderID) ? array('fid' => $folderID,'authid'=>$authid) : array('authid'=>$authid))#",
+          "#xarModUrl('photoshare', 'user', 'rotateimage', isset($folderID) ? array('fid' => $folderID, 'dir' => 'c','authid'=>$authid) : array('authid'=>$authid))#",
+          "#xarModUrl('photoshare', 'user', 'rotateimage', isset($folderID) ? array('fid' => $folderID, 'dir' => 'cc','authid'=>$authid) : array('authid'=>$authid))#",
+          "#xarModUrl('photoshare', 'user', 'setmainimage', isset($folderID) ? array('fid' => $folderID,'authid'=>$authid) : array('authid'=>$authid))#"
+          ];
+    contextmenu.confirmations = [
+        null,
+        null,
+        '#xarMl("Are you sure you wish to delete the selected image?")#',
+        null,
+        null,
+        null
+        ];
   </script>
 
   <form action="#xarModURL('photoshare', 'user', 'modifyimages')#" name="commandForm" method="post" enctype="application/x-www-form-urlencoded">
-	<input type="hidden" name="authid" value="#xarSecGenAuthKey()#">
-	<xar:if condition="isset($folderID)">
-		<input type="hidden" name="fid" value="#$folderID#">
-	</xar:if>
-	<input type="hidden" name="command" value="">
-	<input type="hidden" name="imageids" value="">
+    <input type="hidden" name="authid" value="#xarSecGenAuthKey()#">
+    <xar:if condition="isset($folderID)">
+        <input type="hidden" name="fid" value="#$folderID#">
+    </xar:if>
+    <input type="hidden" name="command" value="">
+    <input type="hidden" name="imageids" value="">
   </form>
 
 <table class="photoshare-toolbar-main"><tr>
@@ -134,10 +134,10 @@ var translations = {
 <td><img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/copy.gif" class="photoshare-button" onclick="handleOnClickCommand('copy',true)" title="#xarMl('Copy selected images')#"></td>
 <td><img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/cut.gif" class="photoshare-button" onclick="handleOnClickCommand('cut',true)" title="#xarMl('Cut selected images')#"></td>
 <td><xar:if condition="!isset($folderID) || ($folderID < 0) || !isset($photoshareClipboard) || $photoshareClipboard">
-		<img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/paste_dimmed.gif">
-	<xar:else />
-		<img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/paste.gif" class="photoshare-button" onclick="handleOnClickCommand('paste',false)" title="#xarMl('Paste images')#">
-	</xar:if>
+        <img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/paste_dimmed.gif">
+    <xar:else />
+        <img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/paste.gif" class="photoshare-button" onclick="handleOnClickCommand('paste',false)" title="#xarMl('Paste images')#">
+    </xar:if>
 </td>
 </tr></table></td>
 

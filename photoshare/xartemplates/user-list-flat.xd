@@ -1,36 +1,36 @@
 <xar:template file="header" />
 <div align="right"><xar:mlstring>Order by</xar:mlstring>
 <select onChange="javascript:window.location='#xarModURL('photoshare', 'user', 'viewallfolders', array('order'=>''))#'+this.value">
-	<option value="title" #empty($title) || $order == 'title' ? "selected" : ""#><xar:mlstring>Title</xar:mlstring></option>
-	<option value="owner" #$order == 'owner' ? "selected" : ""#><xar:mlstring>Owner</xar:mlstring></option>
-	<option value="date" #$order == 'date' ? "selected" : ""#><xar:mlstring>Date</xar:mlstring></option>
-	<xar:comment> TODO: Topics <option value=\"topic\" $topicSelected>" . _PSORDERBYTOPIC . "</option> </xar:comment>
+    <option value="title" #empty($title) || $order == 'title' ? "selected" : ""#><xar:mlstring>Title</xar:mlstring></option>
+    <option value="owner" #$order == 'owner' ? "selected" : ""#><xar:mlstring>Owner</xar:mlstring></option>
+    <option value="date" #$order == 'date' ? "selected" : ""#><xar:mlstring>Date</xar:mlstring></option>
+    <xar:comment> TODO: Topics <option value=\"topic\" $topicSelected>" . _PSORDERBYTOPIC . "</option> </xar:comment>
 </select></div>
 <xar:if condition="count($folders)">
 <table class="photoshare-albumlist" style="border: none;">
-	<xar:foreach in="$folders" value="$folder">
-		<tr valign="top" class="upper">
-			<td>
-				<xar:if condition="isset($folder['mainImage'])  &&  $folder['mainImage'] != NULL">
-				    <a href="#$folder['folderURL']#"><img
-						src="#xarModUrl('photoshare', 'user', 'viewimage', array('iid' => $folder['mainImage'], 'thumbnail' => 1))#"
-						title="#xarMl('View folder')#" border="0" /></a>
-				<xar:else />
-					<a href="#$folder['folderURL']#"><img src="#xarTplGetImage('folder.gif')#" border="0" /></a>
-				</xar:if>
-			</td>
-			<td><a href="#$folder['folderURL']#" border="0"><b>#$folder['title']#</b></a><br />
-				<xar:if condition="(isset($folder['description']) and strlen($folder['description']))">
-					#$folder['description']#<br />
-				</xar:if>
-				<xar:mlstring>By</xar:mlstring> #$folder['ownername']#
-				<xar:mlstring>created</xar:mlstring> #$folder['createdDate']#
-				(#$folder['imageCount']# <xar:mlstring>images</xar:mlstring>)
-			</td>
-		</tr>
-	</xar:foreach>
+    <xar:foreach in="$folders" value="$folder">
+        <tr valign="top" class="upper">
+            <td>
+                <xar:if condition="isset($folder['mainImage'])  &&  $folder['mainImage'] != NULL">
+                    <a href="#$folder['folderURL']#"><img
+                        src="#xarModUrl('photoshare', 'user', 'viewimage', array('iid' => $folder['mainImage'], 'thumbnail' => 1))#"
+                        title="#xarMl('View folder')#" border="0" /></a>
+                <xar:else />
+                    <a href="#$folder['folderURL']#"><img src="#xarTplGetImage('folder.gif')#" border="0" /></a>
+                </xar:if>
+            </td>
+            <td><a href="#$folder['folderURL']#" border="0"><b>#$folder['title']#</b></a><br />
+                <xar:if condition="(isset($folder['description']) and strlen($folder['description']))">
+                    #$folder['description']#<br />
+                </xar:if>
+                <xar:mlstring>By</xar:mlstring> #$folder['ownername']#
+                <xar:mlstring>created</xar:mlstring> #$folder['createdDate']#
+                (#$folder['imageCount']# <xar:mlstring>images</xar:mlstring>)
+            </td>
+        </tr>
+    </xar:foreach>
 </table>
 <xar:else />
-	<xar:mlstring>Sorry, you are not allowed to view any folder</xar:mlstring>
+    <xar:mlstring>Sorry, you are not allowed to view any folder</xar:mlstring>
 </xar:if>
 <xar:template file="footer" />

@@ -1,30 +1,30 @@
 <xar:template file="header" />
 <xar:template file="folderinfo" />
 <form action="#xarModUrl('photoshare', 'user', 'uploadimages')#" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="fid" value="#$folder.id#" />
-	<input type="hidden" name="imagenum" value="#$imagenum#" />
-	<input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-	<input type="hidden" name="MAX_FILE_SIZE" value="#$maximum_file_size#">
-	<table class="photoshare-editform">
-		<xar:for start="$i=0" test="$i<$imagenum" iter="$i++">
-			<tr>
-				<td colspan="2" valign="top" align="left"><b><xar:mlstring>Image no.</xar:mlstring> #$i+1#</b></td>
-			</tr>
-			<tr>
-				<td valign="top" align="left"><xar:mlstring>Image file</xar:mlstring></td>
-				<td valign="top" align="left"><input type="file" class="photoshare-editfile" name="imagefile#$i#" /></td>
-			</tr>
-			<tr>
-				<td valign="top" align="left"><xar:mlstring>Title</xar:mlstring></td>
-				<td valign="top" align="left"><input type="text" class="photoshare-edittitle" name="imagetitle#$i#" /></td>
-			</tr>
-			<tr>
-				<td valign="top" align="left"><xar:mlstring>Description</xar:mlstring></td>
-				<td valign="top" align="left"><textarea class="photoshare-editdescription" name="imagedescription#$i#" rows="4"></textarea></td>
-			</tr>
-		</xar:for>
-	</table>
-	<input type="submit" value="#xarMl('Add')#" />
-	<input type="button" value="#xarMl('Cancel')#" onclick="history.go(-1)" />
+    <input type="hidden" name="fid" value="#$folder.id#" />
+    <input type="hidden" name="imagenum" value="#$imagenum#" />
+    <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+    <input type="hidden" name="MAX_FILE_SIZE" value="#$maximum_file_size#">
+    <table class="photoshare-editform">
+        <xar:for start="$i=0" test="$i<$imagenum" iter="$i++">
+            <tr>
+                <td colspan="2" valign="top" align="left"><b><xar:mlstring>Image no.</xar:mlstring> #$i+1#</b></td>
+            </tr>
+            <tr>
+                <td valign="top" align="left"><xar:mlstring>Image file</xar:mlstring></td>
+                <td valign="top" align="left"><input type="file" class="photoshare-editfile" name="imagefile#$i#" /></td>
+            </tr>
+            <tr>
+                <td valign="top" align="left"><xar:mlstring>Title</xar:mlstring></td>
+                <td valign="top" align="left"><input type="text" class="photoshare-edittitle" name="imagetitle#$i#" /></td>
+            </tr>
+            <tr>
+                <td valign="top" align="left"><xar:mlstring>Description</xar:mlstring></td>
+                <td valign="top" align="left"><textarea class="photoshare-editdescription" name="imagedescription#$i#" rows="4"></textarea></td>
+            </tr>
+        </xar:for>
+    </table>
+    <input type="submit" value="#xarMl('Add')#" />
+    <input type="button" value="#xarMl('Cancel')#" onclick="history.go(-1)" />
 </form>
 <xar:template file="footer" />

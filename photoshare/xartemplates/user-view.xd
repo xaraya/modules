@@ -5,101 +5,101 @@
 
 <table>
 <xar:if condition="isset($folder)">
-	<xar:set name="$position">1</xar:set>
-	<tr>
-		<td valign="top" align="left">
-			<table><tr><td width="100">
-				<a href="#xarModUrl('photoshare', 'user', 'view', array('fid' => $folder['parentFolder']))#"
-					><img src="#xarTplGetImage('folder_up.gif')#" title="#xarMl('Back')#" border="0"></a>
-			</td></tr></table>
-		</td>
+    <xar:set name="$position">1</xar:set>
+    <tr>
+        <td valign="top" align="left">
+            <table><tr><td width="100">
+                <a href="#xarModUrl('photoshare', 'user', 'view', array('fid' => $folder['parentFolder']))#"
+                    ><img src="#xarTplGetImage('folder_up.gif')#" title="#xarMl('Back')#" border="0"></a>
+            </td></tr></table>
+        </td>
 </xar:if>
 <xar:foreach in="$folders" value="$subfolder">
-	<xar:if condition="$position % 4 == 0">
-		<tr>
-	</xar:if>
-	<td valign="top" align="left">
-		<table class="photoshare-folder"><tr><td>
-			<a href="#xarModUrl('photoshare', 'user', 'view', array('fid' => $subfolder['id']))#"
-				><img src="#xarTplGetImage('folder.gif')#" title="#xarMl('Show album')#" border="0"></a>
-		</td></tr>
-		<tr><td><table><tr><td>
-			<a href="#xarModUrl('photoshare', 'user', 'editfolder', array('fid' => $subfolder['id'], 'pid' => $subfolder['parentFolder']))#"
-			><img src="#xarTplGetImage('setting.gif')#" title="#xarMl('Edit album')#" border="0"></a>
-		</td><td>
-			<a href="#xarModUrl('photoshare', 'user', 'deletefolder', array('fid' => $subfolder['id'], 'pid' => $subfolder['parentFolder']))#"
-			><img src="#xarTplGetImage('delete.gif')#" title="#xarMl('Delete album')#" border="0"></a>
-		</td></tr></table></td></tr>
-		<tr><td width="100">#$subfolder['title']#</td></tr>
-		</table>
-	</td>
-	<xar:if condition="$position % 4 == 3">
-		</tr>
-		<xar:set name="$hasEndTag">true</xar:set>
-	<xar:else />
-		<xar:set name="$hasEndTag">false</xar:set>
-	</xar:if>
-	<xar:set name="$position">$position+1</xar:set>
+    <xar:if condition="$position % 4 == 0">
+        <tr>
+    </xar:if>
+    <td valign="top" align="left">
+        <table class="photoshare-folder"><tr><td>
+            <a href="#xarModUrl('photoshare', 'user', 'view', array('fid' => $subfolder['id']))#"
+                ><img src="#xarTplGetImage('folder.gif')#" title="#xarMl('Show album')#" border="0"></a>
+        </td></tr>
+        <tr><td><table><tr><td>
+            <a href="#xarModUrl('photoshare', 'user', 'editfolder', array('fid' => $subfolder['id'], 'pid' => $subfolder['parentFolder']))#"
+            ><img src="#xarTplGetImage('setting.gif')#" title="#xarMl('Edit album')#" border="0"></a>
+        </td><td>
+            <a href="#xarModUrl('photoshare', 'user', 'deletefolder', array('fid' => $subfolder['id'], 'pid' => $subfolder['parentFolder']))#"
+            ><img src="#xarTplGetImage('delete.gif')#" title="#xarMl('Delete album')#" border="0"></a>
+        </td></tr></table></td></tr>
+        <tr><td width="100">#$subfolder['title']#</td></tr>
+        </table>
+    </td>
+    <xar:if condition="$position % 4 == 3">
+        </tr>
+        <xar:set name="$hasEndTag">true</xar:set>
+    <xar:else />
+        <xar:set name="$hasEndTag">false</xar:set>
+    </xar:if>
+    <xar:set name="$position">$position+1</xar:set>
 </xar:foreach>
 <xar:if condition="count($images) != 0">
-	<xar:set name="$imgTargetDimmed">#xarTplGetImage('target_dimmed.gif')#</xar:set>
-	<xar:set name="$imgTarget">#xarTplGetImage('target.gif')#</xar:set>
-	<xar:set name="$imagemenuicon">#xarTplGetImage('imagemenuicon.gif')#</xar:set>
-	<xar:set name="$imagemenuicon_hover">#xarTplGetImage('imagemenuicon_hover.gif')#</xar:set>
+    <xar:set name="$imgTargetDimmed">#xarTplGetImage('target_dimmed.gif')#</xar:set>
+    <xar:set name="$imgTarget">#xarTplGetImage('target.gif')#</xar:set>
+    <xar:set name="$imagemenuicon">#xarTplGetImage('imagemenuicon.gif')#</xar:set>
+    <xar:set name="$imagemenuicon_hover">#xarTplGetImage('imagemenuicon_hover.gif')#</xar:set>
 </xar:if>
 <xar:set name="$imgPosition">0</xar:set>
 <xar:foreach in="$images" value="$image">
-	<xar:if condition="$position % 4 == 0">
-		<tr>
-	</xar:if>
-	<td align="center">
-		<table class="photoshare-image">
-			<tr>
-				<td align="center" valign="middle"><img
-					src="#$imgTargetDimmed#" id="#$imgPosition#" title="#xarMl('Move selected image here')#"
-					onClick="handleOnClickTarget(this)" onMouseOver="this.src='#$imgTarget#'"
-					onMouseOut="this.src='#$imgTargetDimmed#'" /></td>
-				<td align="center" valign="top"><table>
-					<tr>
-						<td align="center" valign="middle"><img
-							src="#$image.thumburl#" id="#$image.id#" title="#xarMl('(shift/ctrl-)click to select')#"
-							class="photoshare-unselected" align="top"
-							onmousedown="handleOnMouseDownImage(this, event)" /></td>
-						<td valign="top" align="center"><img
-								src="#$imagemenuicon#" border="0" class="photoshare-clickable"
-								onmousedown="contextmenu.onMouseDown('#$image.id#', event, 'psmenu-image')"
-								onmouseover="this.src='#$imagemenuicon_hover#'"
-								onmouseout="this.src='#$imagemenuicon#'"
-							/><br /><br /><xar:if condition="$folder.mainImage == $image.id">
-								<img src="#xarTplGetImage('greendot.gif')#" alt="" title="#xarMl('This is the album representation image')#" border="0" />
-							</xar:if></td>
-					</tr>
-					</table>
-				</td>
-				<xar:if condition="$images[count($images)-1] == $image">
-					<td align="center" valign="middle"><img src="#$imgTargetDimmed#" id="#$imgPosition+1#" title="#xarMl('Move selected image here')#"
-						onClick="handleOnClickTarget(this)"
-						onMouseOver="this.src='#$imgTarget#'"
-						onMouseOut="this.src='#$imgTargetDimmed#'" /></td>
-				</xar:if>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td class="title" align="center">#$image.title#</td>
-			</tr>
-		</table>
-	</td>
-	<xar:if condition="$position % 4 == 3">
-		</tr>
-		<xar:set name="$hasEndTag">true</xar:set>
-	<xar:else />
-		<xar:set name="$hasEndTag">false</xar:set>
-	</xar:if>
-	<xar:set name="$position">$position+1</xar:set>
-	<xar:set name="$imgPosition">$imgPosition+1</xar:set>
+    <xar:if condition="$position % 4 == 0">
+        <tr>
+    </xar:if>
+    <td align="center">
+        <table class="photoshare-image">
+            <tr>
+                <td align="center" valign="middle"><img
+                    src="#$imgTargetDimmed#" id="#$imgPosition#" title="#xarMl('Move selected image here')#"
+                    onClick="handleOnClickTarget(this)" onMouseOver="this.src='#$imgTarget#'"
+                    onMouseOut="this.src='#$imgTargetDimmed#'" /></td>
+                <td align="center" valign="top"><table>
+                    <tr>
+                        <td align="center" valign="middle"><img
+                            src="#$image.thumburl#" id="#$image.id#" title="#xarMl('(shift/ctrl-)click to select')#"
+                            class="photoshare-unselected" align="top"
+                            onmousedown="handleOnMouseDownImage(this, event)" /></td>
+                        <td valign="top" align="center"><img
+                                src="#$imagemenuicon#" border="0" class="photoshare-clickable"
+                                onmousedown="contextmenu.onMouseDown('#$image.id#', event, 'psmenu-image')"
+                                onmouseover="this.src='#$imagemenuicon_hover#'"
+                                onmouseout="this.src='#$imagemenuicon#'"
+                            /><br /><br /><xar:if condition="$folder.mainImage == $image.id">
+                                <img src="#xarTplGetImage('greendot.gif')#" alt="" title="#xarMl('This is the album representation image')#" border="0" />
+                            </xar:if></td>
+                    </tr>
+                    </table>
+                </td>
+                <xar:if condition="$images[count($images)-1] == $image">
+                    <td align="center" valign="middle"><img src="#$imgTargetDimmed#" id="#$imgPosition+1#" title="#xarMl('Move selected image here')#"
+                        onClick="handleOnClickTarget(this)"
+                        onMouseOver="this.src='#$imgTarget#'"
+                        onMouseOut="this.src='#$imgTargetDimmed#'" /></td>
+                </xar:if>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="title" align="center">#$image.title#</td>
+            </tr>
+        </table>
+    </td>
+    <xar:if condition="$position % 4 == 3">
+        </tr>
+        <xar:set name="$hasEndTag">true</xar:set>
+    <xar:else />
+        <xar:set name="$hasEndTag">false</xar:set>
+    </xar:if>
+    <xar:set name="$position">$position+1</xar:set>
+    <xar:set name="$imgPosition">$imgPosition+1</xar:set>
 </xar:foreach>
 <xar:if condition="!$hasEndTag">
-	</tr>
+    </tr>
 </xar:if>
 </table>
 <xar:template file="footer" />

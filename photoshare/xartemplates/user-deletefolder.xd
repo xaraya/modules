@@ -11,9 +11,9 @@
 <br /><br />
 <input type="submit" name="submit" value="#xarMl('delete')#" />
 <input type="button" name="cancel"
-	value="#xarMl('cancel')#"
-	onclick="location.href= '#xarModURL('photoshare', 'user', 'view', isset($folderID) ? array('fid' => $folderID) : (isset($parentFolderID) ? array('fid' => $parentFolderID) : array()) )#'"
-	/>
+    value="#xarMl('cancel')#"
+    onclick="location.href= '#xarModURL('photoshare', 'user', 'view', isset($folderID) ? array('fid' => $folderID) : (isset($parentFolderID) ? array('fid' => $parentFolderID) : array()) )#'"
+    />
 
 </form>
 <xar:template file="footer" />

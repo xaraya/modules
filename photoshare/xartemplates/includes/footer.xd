@@ -8,6 +8,6 @@
 <xar:set name="$progress_text">xarMl('Storage').': '.$progress_leftSize.'%'.sprintf("(%.2f %s %.2f Mb)", $size/$scale, xarMl('of'), $maxSize/$scale)</xar:set>
 
 <img src="#xarServerGetBaseURL()#modules/photoshare/xarimages/bar_left.gif" height="5"
-	width="#$progress_leftSize#" /><img
-		src="#xarServerGetBaseURL()#modules/photoshare/xarimages/bar_right.gif" height="5" width="#$progress_rightSize#">
+    width="#$progress_leftSize#" /><img
+        src="#xarServerGetBaseURL()#modules/photoshare/xarimages/bar_right.gif" height="5" width="#$progress_rightSize#">
  #$progress_text#
