@@ -2,14 +2,16 @@
 <script type="text/javascript">
 <!--
     // Enter name of mandatory fields
-    var fieldRequired = Array("business", "return");
+    var fieldRequired = Array("business", "return", "cancel_return");
     // Enter field description to appear in the dialog box
-    var fieldDescription = Array("Business Name", "Return");
+    var fieldDescription = Array("Business Name", "Return", "Cancelled Return");
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>PayPal Set-Up</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify PayPal Configuration</xar:mlstring></h2><br />
 <div style="margin: auto;">
+<xar:mlstring>NOTE: according to PayPal's agreement, the return and cancelled return URLs must point to pages that tell the user
+              whether the payment was successful or cancelled.</xar:mlstring>
 <form method="post" action="#xarModUrl('paypalsetup', 'admin', 'updateconfig')#" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
 
         <div style="clear: both; padding-top: 10px;">
@@ -18,16 +20,25 @@
             <span class="help" title="#xarML('The Business Name is the email address that you use to recieve payments from PayPal.')#"><label for="business"><xar:mlstring>Business Name</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="business" id="business" value="#xarModGetVar('paypalsetup', 'business', 1)#" size="50" maxlength="100" />
+            <input type="text" id="business" name="business" value="#xarModGetVar('paypalsetup', 'business', 1)#" size="50" maxlength="100" />
         </span>
         </div>
 
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
-            <span class="help" title="#xarML('The return is where you want users to return to after paying.  The default is to your index page.')#"><label for="adminmail"><xar:mlstring>Return</xar:mlstring></label>:</span>
+            <span class="help" title="#xarML('The return is where you want users to return to after successful payment.  The default is to your index page.')#"><label for="return"><xar:mlstring>Return</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="return" id="return" value="#xarModGetVar('paypalsetup', 'return', 1)#" size="50" maxlength="100" />
+            <input type="text" id="return" name="return" value="#xarModGetVar('paypalsetup', 'return', 1)#" size="50" maxlength="100" />
+        </span>
+        </div>
+        
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The  cancel return is where you want users to return to if payment is cancelled.  The default is to your index page.')#"><label for="cancel_return"><xar:mlstring>Cancel Return</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" id="cancel_return" name="cancel_return" value="#xarModGetVar('paypalsetup', 'cancel_return', 1)#" size="50" maxlength="100" />
         </span>
         </div>
 
@@ -36,7 +47,7 @@
             <span class="help" title="#xarML('The default currency code for your business.')#"><label for="currency_code"><xar:mlstring>Default Currency Type</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-            <select name="currency_code" id="currency_code">
+            <select id="currency_code" name="currency_code">
                 <xar:if condition="xarModGetVar('paypalsetup', 'currency_code') eq 'CAD'">
                     <option label="CAD" value="CAD" selected="selected">Canadian Dollars</option>
                     <option label="EUR" value="EUR">Euros</option>

@@ -5,7 +5,7 @@
  * PayPal Set-up
  * 
  * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2005 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * @subpackage paypalsetup module
  * @author John Cox <niceguyeddie@xaraya.com> 
@@ -23,7 +23,7 @@ function paypalsetup_adminapi_getmenulinks()
 {
     // Security Check
     if (xarSecurityCheck('AdminPayPalSetUp', 0)) {
-        $menulinks[] = Array('url' => xarModURL('paypalsetup',
+        $menulinks[] = array('url' => xarModURL('paypalsetup',
                 'admin',
                 'modifyconfig'),
             'title' => xarML('Modify the configuration.'),
