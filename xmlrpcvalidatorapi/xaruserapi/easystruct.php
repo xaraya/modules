@@ -16,10 +16,10 @@
 function xmlrpcvalidatorapi_userapi_easystruct($msg) 
 {
     $sno=$msg->getParam(0);
-	$moe=$sno->structmem("moe");
-	$larry=$sno->structmem("larry");
-	$curly=$sno->structmem("curly");
-	$num=$moe->scalarval()+ $larry->scalarval()+ $curly->scalarval();
+    $moe=$sno->structmem("moe");
+    $larry=$sno->structmem("larry");
+    $curly=$sno->structmem("curly");
+    $num=$moe->scalarval()+ $larry->scalarval()+ $curly->scalarval();
     return new xmlrpcresp(new xmlrpcval($num,"int"));
 }
 ?>

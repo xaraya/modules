@@ -16,11 +16,11 @@
 
 function xmlrpcvalidatorapi_userapi_moderatesizearraycheck($msg) 
 {
-	$ar=$msg->getParam(0);
-	$sz=$ar->arraysize();
-	$first=$ar->arraymem(0);
-	$last=$ar->arraymem($sz-1);
-	return new xmlrpcresp(new xmlrpcval($first->scalarval() . 
+    $ar=$msg->getParam(0);
+    $sz=$ar->arraysize();
+    $first=$ar->arraymem(0);
+    $last=$ar->arraymem($sz-1);
+    return new xmlrpcresp(new xmlrpcval($first->scalarval() . 
                                         $last->scalarval(), "string"));
 }
 ?>

@@ -16,6 +16,6 @@
 function xmlrpcvalidatorapi_userapi_echostruct($msg) 
 {
     $sno=$msg->getParam(0);
-	return new xmlrpcresp($sno);
+    return new xmlrpcresp($sno);
 }
 ?>

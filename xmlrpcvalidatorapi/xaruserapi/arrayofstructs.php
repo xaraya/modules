@@ -16,14 +16,14 @@
 function xmlrpcvalidatorapi_userapi_arrayofstructs($msg) 
 {
     $sno=$msg->getParam(0);
-	$numcurly=0;
-	for($i=0; $i<$sno->arraysize(); $i++) {
-		$str=$sno->arraymem($i);
-		$str->structreset();
-		while(list($key,$val)=$str->structeach())
-			if ($key=="curly")
-				$numcurly+=$val->scalarval();
-	}
+    $numcurly=0;
+    for($i=0; $i<$sno->arraysize(); $i++) {
+        $str=$sno->arraymem($i);
+        $str->structreset();
+        while(list($key,$val)=$str->structeach())
+            if ($key=="curly")
+                $numcurly+=$val->scalarval();
+    }
     return new xmlrpcresp(new xmlrpcval($numcurly,"int"));
 }
 ?>

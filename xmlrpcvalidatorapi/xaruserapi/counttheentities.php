@@ -16,31 +16,31 @@
 function xmlrpcvalidatorapi_userapi_counttheentities($msg) 
 {
     $sno=$msg->getParam(0);
-	$str=$sno->scalarval();
-	$gt=0; $lt=0; $ap=0; $qu=0; $amp=0;
-	for($i=0; $i<strlen($str); $i++) {
-		$c=substr($str, $i, 1);
-		switch($c) {
-		case ">":
-			$gt++;
-			break;
-		case "<":
-			$lt++;
-			break;
-		case "\"":
-			$qu++;
-			break;
-		case "'":
-			$ap++;
-			break;
-		case "&":
-			$amp++;
-			break;
-		default:
-			break;
-		}
-	}
-	return new xmlrpcresp(new xmlrpcval(array("ctLeftAngleBrackets" =>
+    $str=$sno->scalarval();
+    $gt=0; $lt=0; $ap=0; $qu=0; $amp=0;
+    for($i=0; $i<strlen($str); $i++) {
+        $c=substr($str, $i, 1);
+        switch($c) {
+        case ">":
+            $gt++;
+            break;
+        case "<":
+            $lt++;
+            break;
+        case "\"":
+            $qu++;
+            break;
+        case "'":
+            $ap++;
+            break;
+        case "&":
+            $amp++;
+            break;
+        default:
+            break;
+        }
+    }
+    return new xmlrpcresp(new xmlrpcval(array("ctLeftAngleBrackets" =>
                                               new xmlrpcval($lt, "int"),
                                               "ctRightAngleBrackets" =>
                                               new xmlrpcval($gt, "int"),

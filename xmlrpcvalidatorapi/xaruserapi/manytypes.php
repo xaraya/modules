@@ -16,7 +16,7 @@
 
 function xmlrpcvalidatorapi_userapi_manytypes($msg) 
 {
-	return new xmlrpcresp(new xmlrpcval(array(
+    return new xmlrpcresp(new xmlrpcval(array(
                                               $msg->getParam(0),
                                               $msg->getParam(1),
                                               $msg->getParam(2),

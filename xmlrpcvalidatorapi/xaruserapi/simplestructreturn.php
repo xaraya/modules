@@ -17,8 +17,8 @@
 function xmlrpcvalidatorapi_userapi_simplestructreturn($msg) 
 {
     $sno=$msg->getParam(0);
-	$v=$sno->scalarval();
-	return new xmlrpcresp(new xmlrpcval(array(
+    $v=$sno->scalarval();
+    return new xmlrpcresp(new xmlrpcval(array(
                                               "times10" =>
                                               new xmlrpcval($v*10, "int"),
                                               "times100" =>
