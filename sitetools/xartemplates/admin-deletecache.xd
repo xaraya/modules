@@ -18,60 +18,60 @@
 
  <form action="#xarModURL('sitetools', 'admin', 'deletecache')#" method="post" enctype="application/x-www-form-urlencoded">
     <div style="clear: both; padding-top: 10px;">
-	    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="confirm" id="confirm" value="true" />
-		<span style="float: right; width: 98%; text-align: center;">
+        <span style="float: right; width: 98%; text-align: center;">
           #$confirmtxt#
         </span>
 
-	</div>
+    </div>
 
     <div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-		  <span class="help" title="#xarML('Check to delete your ADOdb cache files in path ')# #$adopathc#">
+        <span style="float: left; width: 20%; text-align: right;">
+          <span class="help" title="#xarML('Check to delete your ADOdb cache files in path ')# #$adopathc#">
            <label for="delado">#$adocache#</label></span>
-		  </span>
-		</span>  
-		  <span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="!empty($delado)">
-				<input type="checkbox" value="1" name="delado" checked="checked" />
-			<xar:else />
-				<input type="checkbox" value="1" name="delado" />
-			</xar:if>
-			#$allfiles# <span style="font:bold;">#$adopathc#</span>
-		  </span>
-	</div>
+          </span>
+        </span>  
+          <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="!empty($delado)">
+                <input type="checkbox" value="1" name="delado" checked="checked" />
+            <xar:else />
+                <input type="checkbox" value="1" name="delado" />
+            </xar:if>
+            #$allfiles# <span style="font:bold;">#$adopathc#</span>
+          </span>
+    </div>
     <div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Check to delete your RSS cache files in path ')# #$rsspathc#">
+        <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Check to delete your RSS cache files in path ')# #$rsspathc#">
            <label for="delrss">#$rsscache#</label></span>
-		</span>
-				</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="!empty($delrss)">
-				<input type="checkbox" value="1" name="delrss" checked="checked" />
-			<xar:else />
-				<input type="checkbox" value="1" name="delrss" />
-			</xar:if>
-			#$allfiles# <span style="font:bold;">#$rsspathc#</span>
-		</span>
-	</div>
+        </span>
+                </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="!empty($delrss)">
+                <input type="checkbox" value="1" name="delrss" checked="checked" />
+            <xar:else />
+                <input type="checkbox" value="1" name="delrss" />
+            </xar:if>
+            #$allfiles# <span style="font:bold;">#$rsspathc#</span>
+        </span>
+    </div>
 
     <div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Check to delete your Template cache files in path ')# #$templpathc#">
+        <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Check to delete your Template cache files in path ')# #$templpathc#">
            <label for="deltempl">#$templcache#</label></span>
-		</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="!empty($deltempl)">
-				<input type="checkbox" value="1" name="deltempl" checked="checked" />
-			<xar:else />
-				<input type="checkbox" value="1" name="deltempl" />
-			</xar:if>
-			#$allfiles# <span style="font:bold;">#$templpathc#</span>			
-		</span>
-	</div>
+        </span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="!empty($deltempl)">
+                <input type="checkbox" value="1" name="deltempl" checked="checked" />
+            <xar:else />
+                <input type="checkbox" value="1" name="deltempl" />
+            </xar:if>
+            #$allfiles# <span style="font:bold;">#$templpathc#</span>            
+        </span>
+    </div>
 
         <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
             <input type="submit" value="#$confirmbutton#"  />
@@ -94,5 +94,5 @@
 
      </div>
 </xar:if>
-	</div>
+    </div>
 </div>

@@ -51,32 +51,32 @@
         </span>
     </div>
     <div style="clear: both; width: 98%; padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$defado# #$defadopath#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$defado# #$defadopath#">
             <label for="adopath">#$adocachel#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <input type="text" name="adopath" id="adopath" size="40" maxlength="128" value="#$adopath#" />
         </span>
     </div>
     <div style="clear: both; width: 98%;padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$defrss# #$defrsspath#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$defrss# #$defrsspath#">
             <label for="rsspath">#$rsscachel#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <input type="text" name="rsspath" id="rsspath" size="40" maxlength="128" value="#$rsspath#" />
         </span>
     </div>
     <div style="clear: both; width: 98%;padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$deftem# #$deftemplpath#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$deftem# #$deftemplpath#">
             <label for="templpath">#$templcachel#</label>
         </span>
-		</span>          
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>          
+        <span style="float: right; width: 68%; text-align: left;">
             <input type="text" name="templpath" id="templpath" size="40" maxlength="128" value="#$templpath#" />
         </span>
     </div>
@@ -84,22 +84,22 @@
         <span class="xar-title" >#$backupoptions#</span>
      </div>
     <div style="clear: both; width: 98%;padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$bkup#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$bkup#">
             <label for="backuppath">#$backuppathl#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <input type="text" name="backuppath" id="backuppath" size="60" maxlength="128" value="#$backuppath#" />
         </span>
     </div>
     <div style="clear: both; width: 98%; padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$tshelp#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$tshelp#">
             <label for="timestampl">#$timestampl#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <xar:if condition="$usetimestamp eq 1">
                 <input type="checkbox" name="usetimestamp" id="usetimestamp" value="1" checked="checked" />
             <xar:else />
@@ -108,12 +108,12 @@
         </span>
     </div>
     <div style="clear: both; width: 98%; padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$dbprefixhelp#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$dbprefixhelp#">
             <label for="usedbprefix">#$dbprefixl#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <xar:if condition="$usedbprefix eq 1">
                 <input type="checkbox" name="usedbprefix" id="usedbprefix" value="1" checked="checked" />
             <xar:else />
@@ -123,24 +123,24 @@
     </div>
 
    <div style="clear: both; width: 98%; padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$colnumhelp#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$colnumhelp#">
             <label for="colnumber">#$colnumberlabel#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <input type="text" name="colnumber" id="colnumber" size="2" maxlength="3" value="#$colnumber#" />
         </span>
     </div>
 
 <!-- Later if required
    <div style="clear: both; width: 98%; padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$linehelp#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$linehelp#">
             <label for="lineoption">#$lineopl#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
         <select name="lineterm" id="lineterm" size="1" tabindex="1">
             <xar:if condition="xarModGetVar('sitetools', 'lineterm') eq '\n'">
                <option value="\n" selected="selected">#$lineoption1#</option>
@@ -159,12 +159,12 @@
      </div> 
 -->
      <div style="clear: both; width: 98%; padding-top: 5px;">
-		<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#$bkdefaulthelp#">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#$bkdefaulthelp#">
             <label for="defaultbktype">#$defaultbktypel#</label>
         </span>
-		</span>
-		<span style="float: right; width: 68%; text-align: left;">
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
             <select name="defaultbktype" id="defaultbktype">
             <xar:if condition="xarModGetVar('sitetools', 'defaultbktype') eq 'complete'">
                <option value="complete" selected="selected">#$bkoption1#</option>
@@ -181,7 +181,7 @@
             </xar:if> 
         </select>
 
- 	   </span>
+        </span>
     </div>
     <xar:if condition="xarModIsAvailable('scheduler')">
         <div style="clear:both; width: 98%; padding-top:20px; text-align:center">

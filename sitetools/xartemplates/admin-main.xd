@@ -39,9 +39,9 @@
         </div>
         <div style="margin-left: 1.5em; margin-right: 1em; text-align:left; padding-top:10px;">
             <xar:mlstring>There are no included hooks at this time.</xar:mlstring></div><div class="xar-mod-body" style="display:block;">
-		</div>
+        </div>
 
-		<div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; padding: 0.5em 1em 0.5em 1em; margin-top: 20px;">
+        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; padding: 0.5em 1em 0.5em 1em; margin-top: 20px;">
             <xar:mlstring>Extended information about this module can be found at&nbsp;</xar:mlstring><a href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a>
         </div>
     </div>

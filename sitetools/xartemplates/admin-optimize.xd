@@ -33,7 +33,7 @@
          </span>
     </div>
     <div style="clear: both; padding-top: 10px;">
-	    <table width="100%" border="0" cellspacing="1" cellpadding="1">
+        <table width="100%" border="0" cellspacing="1" cellpadding="1">
             <tr>
                 <th style="width:100px; text-align:left;">
                     <label class="xar-mod-title"><xar:mlstring>Table</xar:mlstring></label>
