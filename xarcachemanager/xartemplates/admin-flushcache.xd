@@ -1,0 +1,49 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Flush Output Cache Files</xar:mlstring></h2>
+<div style="margin: auto;">
+<xar:if condition="$message eq false">
+    <form action="#xarModURL('xarcachemanager', 'admin', 'flushcache')#" method="post" enctype="application/x-www-form-urlencoded">
+        <div style="clear: both; padding: 10px;">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+            <input type="hidden" name="confirm" id="confirm" value="true" />
+            <span style="align: center">
+                #$instructions#
+            </span>
+            <table border="0" cellpadding="8" cellspacing="0">
+                <tr>
+                    <td>
+                        <span class="help" title="#$instructionhelp#"><label for="flushkey"><xar:mlstring>Cache Key</xar:mlstring></label></span>:
+                    </td>
+                    <td>
+                        <select name="flushkey" id="flushkey" size="1">
+                            <option value="" selected="selected"> - - - </option>
+                            <xar:loop name="$cachekeys">
+                                <option value="#$loop:item['ckey']#">
+                                    #$loop:item['ckey']#
+                                </option>
+                            </xar:loop>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="submit" value="Flush" align="center" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+     </form>
+<xar:elseif condition="$message eq true" />
+
+    <div style="clear: both; padding: 10px;">
+        <span>
+            #$notice#
+        </span>
+    </div>
+    <div style="clear: both; padding: 10px;">
+        <span>
+            <a href="#$returnlink.url#" title="#$returnlink.title#">#$returnlink.label#</a>
+        </span>
+    </div>
+</xar:if>
+</div>
+</div>
+</div>

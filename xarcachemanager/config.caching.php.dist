@@ -1,0 +1,16 @@
+<?php
+// Barebones caching config variables - 
+// The idea is to keep the overhead low when doing page
+// level caching.
+
+// Cache expiration time in seconds
+$cachingConfiguration['Page.TimeExpiration'] = 1800;
+// Only cache this theme
+$cachingConfiguration['Page.DefaultTheme'] = 'Xaraya_Classic';
+// Should we cache display view, or not
+$cachingConfiguration['Page.DisplayView'] = 0;
+// Should we show when the cached page was created or not
+$cachingConfiguration['Page.ShowTime'] = 1;
+// Size in MB to limit the output cache to
+$cachingConfiguration['Output.SizeLimit'] = 2;
+?>
