@@ -1,0 +1,312 @@
+#!/bin/bash
+
+# Trigger which does sanity checking to the merged changes
+# this runs in the RESYNC tree.
+
+# Override switch
+if [ X$BK_RUNQA == Xno ]; then
+exit 0
+fi
+
+# Only run this script on the server
+if [ X$BK_SIDE != Xserver ]
+then exit 0
+fi
+
+# Only run this script on *this* server (the xaraya one)
+# or when it is explicitly requested
+THISHOST=`bk gethost`
+if [ $THISHOST != newton.xaraya.com -a X$BK_RUNQA != Xyes ]
+then exit 0
+fi
+
+SYSTEM=`uname`
+case $SYSTEM in
+    Darwin)
+        TAILOPTS=""
+        ;;
+    *)
+        TAILOPTS="-q"
+        ;;
+esac
+
+# Assume all is well
+cancommit=1
+
+function failed() {
+    # $1 test number
+    # $2 msg
+    # $3 result
+    # $4 optional prefix to use
+    echo
+    echo "FAILED QA test $1: $test $2"
+    if [ "X$4" != "X" ]; 
+    then
+        prefix=$4
+    else
+        prefix=" --> Line: "
+    fi
+    echo $prefix $3
+    failed=1
+    cancommit=0
+}
+
+function passed() {
+    # $1 test number
+    if [ $failed = 0 ] ; then
+        echo "PASSED QA test $1: $test"
+    fi
+}
+ 
+# Make sure all files are there
+echo "Getting all necessary files..."
+for i in `bk sfiles -Ug`; do
+    bk get -qS $i
+done
+
+echo "Running some quality assurance checks on the files..."
+echo
+
+#
+# GROUP 1: PHP Syntax related which will lead to errors
+#
+echo "--- Group 1: PHP syntax related checks ---"
+# test 1.10 : parse errors are not allowed.
+failed=0
+test="PHP syntax check"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    # Test #1.1 : Is it a syntactically valid PHP file
+    result=`php -q -l -f $i`
+    if [ $? -ne 0 ] ; then
+      failed 1.10 "on $i" "$result"
+    fi
+done
+passed 1.10
+
+# test 1.11 Dont use short php tag
+failed=0
+test="No use of php short open tag '<?'"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`grep -in '<?[ ]*[^[xmlphpxar]*$' $i`
+    if [ $? -ne 1 ] ; then
+        failed 1.11 "in $i" $result
+    fi
+done
+passed 1.11
+
+# Last two characters of a php file are always ?>
+failed=0
+test="No other characters than ?> at the end of php file"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    # skip empty files
+    len=`wc -c $i`
+    if [ "X$len" != "X0 $i" ] ; then
+        result=`tail $TAILOPTS -c2 $i`
+        result2=`tail $TAILOPTS -c3 $i`
+        if [ "X$result" != 'X?>' ] ; then
+            if [ "X$result2" != "X?>" ]; then
+                failed 1.12 "on $i" "last two characters are '$result'"
+            fi
+        fi
+    fi
+done
+passed 1.12
+
+#
+# GROUP 2: File conventions
+echo "--- Group 2: File conventions ---"
+# test 2.11 No tabs
+failed=0
+tab=`echo -en '\t'`
+test="No use of tab characters in files"
+for i in `bk sfiles -Ug`; do
+    # skip binary files
+    ascii=`bk isascii $i`
+    if [ $? -ne 1 ] ; then
+        result=`grep -ce "$tab" $i`
+        if [ $? -ne 1 ] ; then
+            failed 2.11 "in $i" " n/a ($result tabs in file)"
+        fi
+    fi
+done
+passed 2.11
+
+
+# test 2.13 : use unix line endings
+failed=0
+wincr=`echo -en '\r\n'`
+test="No use of windows/mac line endings"
+for i in `bk sfiles -Ug`; do
+    ascii=`bk isascii $i`
+    if [ $? -ne 1 ] ; then  
+        result=`grep -ce "$wincr" $i`
+        if [ $? -ne 1 ] ; then
+            failed 2.13 "on $i" " n/a (file has $result win/mac CRs)"
+        fi
+    fi    
+done
+passed 2.13
+
+# Function use the one true brace convention
+failed=0
+test="Function declarations use one true brace"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`grep -n '[[:space:]]*function .*[(].*[)].*{.*' $i`
+    if [ $? -ne 1 ] ; then
+        failed 2.18 "in $i" $result
+    fi
+done
+passed 2.18 
+
+# Class declations use the one true brace convention
+failed=0
+test="Class declarations use one true brace"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result=`grep -n '^[[:space:]]*class .*{.*' $i`
+    if [ $? -ne 1 ] ; then
+        failed 2.19 "in $i" $result
+    fi
+done
+passed 2.19
+
+
+# 
+# GROUP 3: Functional / Related to XARAYA
+#
+echo "--- Group 3: Deprecation ---"
+# xarExceptionMajor is deprecated
+failed=0
+test="No use of xarExceptionMajor"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarexceptionmajor[ ]*(' $i | grep -vi 'function[ ]*xarexceptionmajor[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.10 "in $i" $result
+    fi
+done
+passed 3.10
+
+# xarExceptionSet is deprecated
+failed=0
+test="No use of xarExceptionSet"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarexceptionset[ ]*(' $i | grep -vi 'function[ ]*xarexceptionset[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.11 "in $i" $result
+    fi
+done
+passed 3.11
+
+# xarVarCleanFromInput is deprecated
+failed=0
+test="No use of xarVarCleanFromInput (use xarVarFetch)"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarvarcleanfrominput[ ]*(' $i | grep -vi 'function[ ]*xarvarcleanfrominput[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.12 "in $i" $result
+    fi
+done
+passed 3.12
+
+# xarVarPrepForStore is deprecated
+failed=0
+test="No use of xarVarPrepForStore (use bindvars or qstr method)"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarvarprepforstore[ ]*(' $i | grep -vi 'function[ ]*xarvarprepforstore[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.10.4 "in $i" $result
+    fi
+done
+passed 3.13
+
+# xarExceptionId is deprecated
+failed=0
+test="No use of xarExceptionID (use xarCurrentErrorId)"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarexceptionid[ ]*(' $i | grep -vi 'function[ ]*xarexceptionid[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.14 "in $i" $result
+    fi
+done
+passed 3.14
+
+# xarExceptionValue is deprecated
+failed=0
+test="No use of xarExceptionValue (use xarCurrentError)"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarexceptionvalue[ ]*(' $i | grep -vi 'function[ ]*xarexceptionvalue[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.15 "in $i" $result
+    fi
+done
+passed 3.15
+
+# xarExceptionFree is deprecated
+failed=0
+test="No use of xarExceptionFree (use xarErrorFree)"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarexceptionfree[ ]*(' $i | grep -vi 'function[ ]*xarexceptionfree[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.16 "in $i" $result
+    fi
+done
+passed 3.16
+
+# xarExceptionHandled is deprecated
+failed=0
+test="No use of xarExceptionHandled (use xarErrorHandled)"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarexceptionhandled[ ]*(' $i | grep -vi 'function[ ]*xarexceptionhandled[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.17 "in $i" $result
+    fi
+done
+passed 3.17
+
+# xarExceptionRender is deprecated
+failed=0
+test="No use of xarExceptionRender (use xarErrorRender)"
+for i in `bk sfiles -Ug | grep ".php$"`; do
+    result="`grep -in '.*xarexceptionrender[ ]*(' $i | grep -vi 'function[ ]*xarexceptionrender[ ]*('`"
+    if [ $? -ne 1 ] ; then
+        failed 3.18 "in $i" $result
+    fi
+done
+passed 3.18
+
+# Use of ---> is not allowed
+echo "--- XML syntax ---"
+failed=0
+test="No use of ---> in templates"
+for i in `bk sfiles -Ug | grep "\.x[dt]$"`; do
+    result=`grep -n '\-\-\->' $i`
+    if [ $? -ne 1 ] ; then
+        failed 4.10 "in $i" $result
+    fi
+done
+passed 4.10
+
+# Check well formedness of templates
+failed=0
+bk get -Sq ../BitKeeper/custom/xmlparse
+test="Only well formed XML in templates"
+for i in `bk sfiles -Ug | grep "\.x[dt]$"`; do
+    result=`../BitKeeper/custom/xmlparse $i`
+    
+    if [ $? -ne 0 ] ; then
+        failed 4.11 "in $i" " " " --> Results:"
+        echo "$result"
+    fi
+done
+passed 4.11
+
+if [ $cancommit -eq 0 ] ; then
+    echo 
+    echo "PUSH ABORTED:"
+    echo "I'm sorry, some QA tests failed, i cannot commit these changes"
+    echo "Look at the failures above and fix those first, after that, try again"
+    # exit with code 1, dont even leave something behind
+    exit 1
+fi
+
+# echo "All seems well, continuing to apply the changes"
+exit 0

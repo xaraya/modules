@@ -1,0 +1,53 @@
+#!/bin/bash
+
+CMDDIR=`bk root`/BitKeeper/custom
+PARSERTYPE='noneyet'
+CR='\013'
+
+if type xmllint> /dev/null 2>&1
+then 
+  XMLPARSER='xmllint --loaddtd --noout'
+  PARSERTYPE='xmllint'
+else 
+  echo No valid XML parser was found on your system, can not complete this command.
+  exit 1
+fi
+
+# If no explicit file is given, use the current location to construct a list
+if [ $# -gt 0 ]; then
+  FILELIST=$1
+else
+  echo "Getting the list of files..."
+  FILELIST=`bk sfiles -Ug | grep -e '\.x[d|t]$'`
+fi
+
+FAILED=0
+for template in $FILELIST; do
+  TEMPFILE=`mktemp tmp.XXXXXXX` || exit 1
+  bk get -Sq $template
+  #echo '<!DOCTYPE blocklayout SYSTEM "'$CMDDIR'/xar.dtd">' >> $TEMPFILE
+  TPLDIR=$(basename $(dirname $template))
+  if [ $TPLDIR != 'pages' ]; then
+    # normal template, add a root tag
+    echo '<!DOCTYPE blocklayout PUBLIC "-//XAR//DTD BL 1.0 Strict//EN" "http://www.xaraya.com/bl1/DTD/bl1-strict.dtd">' >> $TEMPFILE
+    #echo '<!DOCTYPE blocklayout SYSTEM "'$CMDDIR'/xar.dtd">' >> $TEMPFILE
+    echo '<xar:blocklayout version="1.0" content="text/html" xmlns:xar="http://xaraya.com/2004/blocklayout">' >> $TEMPFILE
+    cat $template >> $TEMPFILE
+    echo '</xar:blocklayout>' >> $TEMPFILE
+  else 
+    cat $template >> $TEMPFILE
+  fi
+  RESULT=`$XMLPARSER $TEMPFILE 2>&1`
+  if [ X$? != X0 ] ; then
+    echo "FAILED : $template"
+    if [ $PARSERTYPE = 'xmllint' ]
+    then
+      echo $RESULT | awk 'BEGIN {RS="^"; FS=":"} {if(NF > 1) {printf("  Line"); printf(" %s",$2); for(i=4;i<=NF;i++) {printf(": %s",$i)}; print ""}}'
+      FAILED=1
+    else
+      echo $RESULT
+    fi
+  fi
+  rm $TEMPFILE >/dev/null 2>&1
+done
+exit $FAILED
