@@ -105,6 +105,7 @@ function articles_userapi_leftjoin($args)
         // like : title eq 'this and that' and body eq 'here or there'
         $idx = 0;
         $found = array();
+		
         if (preg_match_all("/'(.*?)(?<!\\\)'/",$where,$matches)) {
             foreach ($matches[1] as $match) {
                 $found[$idx] = $match;
