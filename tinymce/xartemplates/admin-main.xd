@@ -1,0 +1,86 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - TinyMCE </xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> 
+        <p><em><xar:mlstring>
+            TinyMCE is a platform independent web based Javascript
+            HTML WYSIWYG editor control released as Open Source under LGPL by
+            Moxiecode Systems AB.</xar:mlstring></em></p>
+        <p><xar:mlstring>It has a number of nice features over othe similar editors,
+            and has multiple browser support, currently Mozilla, MSIE and FireFox.
+            For futher details see </xar:mlstring> <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a>
+        </p>
+        <p><xar:mlstring>The Xaraya TinyMCE module is currenly not much more than a wrapper for TinyMCE.
+            This module brings the beginnings of configuration options via a user interface
+            in the Xaraya Administration area for TinyMCE, once it is installed.</xar:mlstring>
+        </p>
+        </div>
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ol>
+              <li><xar:mlstring>Install this module like you would any other Xaraya module. That is:</xar:mlstring>
+                <ul>
+                  <li><xar:mlstring>put the tinymce folder in your Xaraya modules directory</xar:mlstring>
+                   </li>
+                  <li><xar:mlstring> go to the Adminpanel menu -&gt; Modules -&gt; View All</xar:mlstring>
+                  </li>
+                  <li><xar:mlstring> Click on the &quot;install&quot; link of the tinymce module</xar:mlstring>
+                </ul>
+              </li>
+              <li> <xar:mlstring>The TinyMCE editor is not turned on by default.
+          Once the tinymce module is installed it needs to be turned on. To do this:</xar:mlstring>
+                <ul>
+                  <li><xar:mlstring>go to the Adminpanels menu -&gt; Base -&gt; Modify Config </xar:mlstring>         </li>
+                  <li><xar:mlstring>choose the tab &quot;Other&quot;</xar:mlstring></li>
+                  <li><xar:mlstring>on the wysiwyg editor dropdown choose &quot;tinymce&quot; as the default editor </xar:mlstring>
+                  </li>
+                </ul>
+              </li>
+              <li><xar:mlstring>In order to make modules in Xaraya use the tinymce module to display wysiwyg,
+              you need to add the following snippet at the top of any of your page templates. eg usually this is default.xt in themes/yourtheme/pages directory. You may have more than one page template and can choose to add it to one or more.</xar:mlstring>
+             </li>
+            </ol>
+            <pre>
+            &lt;xar:if condition=&quot;xarModGetVar('base','editor') eq 'tinymce'&quot;&gt;
+                &lt;xar:template file=&quot;tinymce_insert&quot; module=&quot;tinymce&quot; type=&quot;module&quot; /&gt;
+            &lt;/xar:if&gt;
+            </pre>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>There are no included blocks</xar:mlstring></p>
+      </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>There are no included hooks</xar:mlstring></p>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>And more.. [for module developers]</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">Keep in mind this is a work in progress. Any bugs reports and feature requests are most appreciated. </div>
+        <br />
+        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. </xar:mlstring>[<a href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a>]
+        </div>
+    </div>
+</div>

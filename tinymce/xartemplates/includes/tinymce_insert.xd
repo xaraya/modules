@@ -1,0 +1,45 @@
+<xar:comment>Template for tinycme wysiwyg editor - work in progress</xar:comment>
+<xar:set name="localeinfo">'uk'</xar:set>
+<xar:set name="currentmod">xarModGetName()</xar:set>
+<xar:set name="tinymodevalue">xarModGetVar('tinymce','tinymode')</xar:set>
+<xar:set name="tinybuttonvalue">xarModGetVar('tinymce','tinybuttons')</xar:set>
+<xar:set name="tinyextendvalue">xarModGetVar('tinymce','tinyextended')</xar:set>
+<xar:set name="tinythemevalue">xarModGetVar('tinymce','tinytheme')</xar:set>
+<xar:set name="tinyexstylevalue">trim(xarModGetVar('tinymce','tinyexstyle'))</xar:set>
+<xar:set name="tinycsslistvalue">trim(xarModGetVar('tinymce','tinycsslist'))</xar:set>
+<xar:set name="tinyinstancevalues">xarModGetVar('tinycme','tinyinstances')</xar:set>
+
+<xar:set name="tinyaskfirst">xarModGetVar('tinymce','tinyask')</xar:set>
+<xar:if condition="$tinyaskfirst eq 'true'">
+    <xar:set name="tinyaskit">'ask : "true",'</xar:set>
+<xar:else />
+    <xar:set name="tinyaskit">''</xar:set>
+</xar:if>
+
+<!-- tinyMCE -->
+<script language="javascript" type="text/javascript" src="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+
+<xar:if condition="$tinythemevalue eq 'advanced'">
+    <script language="javascript" type="text/javascript">
+        tinyMCE.init({
+         mode : "textareas",
+        theme : "#$tinythemevalue#",
+          #$tinyaskit#
+     language : "#$localeinfo#",
+   content_css: "#$tinycsslistvalue#",
+  extended_valid_elements : "#$tinyextendvalue#",
+ theme_simple_buttons2: "#$tinybuttonvalue#"
+
+    });
+    </script>
+<xar:else />
+    <script language="javascript" type="text/javascript">
+        tinyMCE.init({
+         mode : "#$tinymodevalue#",
+        theme : "#$tinythemevalue#",
+          #$tinyaskit#
+     language : "#$localeinfo#"
+       });
+    </script>
+</xar:if>
+<!-- /tinyMCE -->

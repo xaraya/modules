@@ -1,0 +1,161 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>TinyMCE Editor Administration</xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>#$menutitle#</h2>
+<div style="margin: auto;">
+
+<xar:mlstring>To use TinyMCE you must make sure that you:</xar:mlstring>
+<ul>
+    <li><xar:mlstring>Install, then set TinyMCE as default editor in the Base Module configuration (Other Tab) </xar:mlstring></li>
+    <li><xar:mlstring>Add the specific template tags to head section (after the javascript tag) of you page templates (default.xt or any others where you want the editor to have effect) as follows</xar:mlstring>
+    <pre>
+        &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
+            &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
+        &lt;/xar:if&gt;
+    </pre>
+    </li>
+    <li><xar:mlstring>Set any HTML tags you want to use (like image, h1, and so on) in the HTML module</xar:mlstring></li>
+</ul>
+<form method="post" action="&xar-modurl-tinymce-admin-updateconfig;">
+   <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+     <div style="clear: both; width: 98%; padding-top: 10px;">
+		<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('Select default Theme Edit Panel for TinyMCE')#">
+            <label for="tinytheme"><xar:mlstring>Default Theme Editor Panel</xar:mlstring></label>
+        </span>
+		</span>
+		<span style="float: right; width: 68%; text-align: left;">
+            <select name="tinytheme" id="tinytheme" size="1">
+            <xar:if condition="$tinytheme eq 'simple'">
+               <option value="simple" selected="selected"><xar:mlstring>Simple</xar:mlstring></option>
+               <option value="default"><xar:mlstring>Default</xar:mlstring></option>
+               <option value="advanced"><xar:mlstring>Advanced</xar:mlstring></option>
+            <xar:elseif condition="$tinytheme eq 'advanced'" />
+               <option value="simple"><xar:mlstring>Simple</xar:mlstring></option>
+               <option value="default"><xar:mlstring>Default</xar:mlstring></option>
+               <option value="advanced" selected="selected"><xar:mlstring>Advanced</xar:mlstring></option>
+            <xar:else />
+               <option value="simple"><xar:mlstring>Simple</xar:mlstring></option>
+               <option value="default" selected="selected"><xar:mlstring>Default</xar:mlstring></option>
+               <option value="advanced"><xar:mlstring>Advanced</xar:mlstring></option>
+            </xar:if> 
+        </select>
+
+ 	   </span>
+    </div>
+     <div style="clear: both; width: 98%; padding-top: 10px;">
+		<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('Select default replacement mode for TinyMCE')#">
+            <label for="tinymode"><xar:mlstring>Default action mode (only All supported atm)</xar:mlstring></label>
+        </span>
+		</span>
+		<span style="float: right; width: 68%; text-align: left;">
+         <select name="tinymode" id="tinymode" size="1">
+            <xar:if condition="$tinymode eq 'specific_textareas'">
+               <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
+               <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
+               <option value="textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+            <xar:elseif condition="$tinymode eq 'exact'" />
+               <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
+               <option value="textareas" selected="selected"><xar:mlstring>Specific named areas</xar:mlstring></option>
+               <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+            <xar:else />
+               <option value="textareas" selected="selected"><xar:mlstring>All Text areas</xar:mlstring></option>
+               <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
+               <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+            </xar:if>
+        </select>
+ 	   </span>
+    </div>
+     <div style="clear: both; width: 98%; padding-top: 10px;">
+		<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('Ask user if they wish to use WYSIWYG for each text area?')#">
+            <label for="tinyask"><xar:mlstring>Prompt to use WYSIWYG?</xar:mlstring></label>
+        </span>
+		</span>
+		<span style="float: right; width: 68%; text-align: left;">
+         <select name="tinyask" id="tinyask" size="1">
+            <xar:if condition="$tinyask eq 'false'">
+               <option value="false" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+               <option value="true"><xar:mlstring>Yes</xar:mlstring></option>
+            <xar:elseif condition="$tinyask eq 'true'" />
+               <option value="false"><xar:mlstring>No</xar:mlstring></option>
+               <option value="true" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+            </xar:if>
+        </select>
+ 	   </span>
+    </div>
+<div style="clear: both; width: 98%; padding-top: 10px;">
+<h3><xar:mlstring>Options for Advanced Theme Panel</xar:mlstring></h2>
+</div>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('Additional html tags you want to allow separated by commas')#">
+                <label for="tinyextended"><xar:mlstring>Additional tags:</xar:mlstring></label>
+        </span>
+	</span>
+	<span style="float: right; width: 68%; text-align: left;">
+		<input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="40" maxlength="240" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('List of instances, separated by commas, to replace if specific area mode selected')#">
+                <label for="tinyinstances"><xar:mlstring>List areas to replace (not supported yet)</xar:mlstring></label>
+        </span>
+	</span>
+	<span style="float: right; width: 68%; text-align: left;">
+		<input type="text" name="tinyinstances" id="tinyinstances" value="#$tinyinstances#" size="40" maxlength="240" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('CSS file name relative to index.php')#">
+            <label for="tinycsslist"><xar:mlstring>CSS file name</xar:mlstring></label>
+	    </span>
+	</span>
+	<span style="float: right; width: 68%; text-align: left;">
+		<input type="text" name="tinycsslist" id="tinycsslist" value="#$tinycsslist#" size="40" maxlength="120" />
+	</span>
+	</div>
+<xar:comment>jojodee - Fix this when i get time
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('List of other style elements to add - must be defined in your style sheet or page')#">
+            <label for="tinyexstyle"><xar:mlstring>Extended style list</xar:mlstring></label>
+	    </span>
+	</span>
+	<span style="float: right; width: 68%; text-align: left;">
+		<input type="text" name="tinyexstyle" id="tinyexstyle" value="#$tinyexstyle#" size="40" maxlength="120" />
+	</span>
+	</div>
+</xar:comment>
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 30%; text-align: right;">
+		<span class="help" title="#xarML('Additional buttons for this theme - see manual')#">
+            <label for="tinybuttons"><xar:mlstring>Additional buttons</xar:mlstring></label>
+	    </span>
+	</span>
+	<span style="float: right; width: 68%; text-align: left;">
+		<input type="text" name="tinybuttons" id="tinybuttons" value="#$tinybuttons#" size="40" maxlength="120" />
+	</span>
+	</div>
+
+	<div style="clear: both; padding-top: 10px;">
+         #$hooks#
+    </div>
+	<div style="clear: both; padding-top: 10px; width:98%;">
+		<span style="float: left; width: 30%; text-align: right;">
+            <input type="submit" value="#$updatebutton#" />
+        </span>
+    </div>
+	</form>
+</div>
+</div>
