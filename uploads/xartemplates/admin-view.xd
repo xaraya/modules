@@ -7,12 +7,38 @@
     <h2><xar:mlstring>View Files</xar:mlstring></h2>
     <br />
     <div style="margin: auto;">
+        <xar:if condition="isset($diskUsage)">
+            <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
+                <tr>
+                    <th><xar:mlstring>Physical Device Space</xar:mlstring></th>
+                    <th><xar:mlstring>Stored File Size Usage</xar:mlstring></th>
+                    <th><xar:mlstring>Number of Files</xar:mlstring></th>
+                </tr>
+                <tr>
+                    <td class="xar-norm" align="center"><xar:mlstring>Total / Used / Free</xar:mlstring></td>
+                    <td class="xar-norm" align="center"><xar:mlstring>current view / stored total</xar:mlstring></td>
+                    <td class="xar-norm" align="center"><xar:mlstring>current view / stored total</xar:mlstring></td>
+                </tr>  
+                <tr>
+                    <td class="xar-norm" align="center">
+                        #$diskUsage['device_total']['short']# / #$diskUsage['device_used']['short']# / #$diskUsage['device_free']['short']#
+                    </td>
+                    <td class="xar-norm" align="center">
+                        #$diskUsage['stored_size_filtered']['short']# / #$diskUsage['stored_size_total']['short']#
+                    </td>
+                    <td class="xar-norm" align="center">
+                        #$diskUsage['numfiles_filtered']# / #$diskUsage['numfiles_total']# 
+                    </td>
+                </td>
+            </table>
 
+            <br />                    
+        </xar:if>        
         <xar:template file="filter_bar" type="module" />
         
         <form action="#xarModUrl('uploads','admin','view')#" method="post">
         
-        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline"s>
             <tr>
                 <th><xar:mlstring>Select</xar:mlstring></th>
                 <th><xar:mlstring>File Name</xar:mlstring></th>
@@ -57,9 +83,9 @@
                 </xar:loop>
                 <tr>
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
-                    <td colspan="3" class="xar-accent">
+                        <td colspan="3" class="xar-accent xar-accent-outline">
                     <xar:else />
-                    <td colspan="4" class="xar-accent">
+                        <td colspan="4" class="xar-accent xar-accent-outline">
                     </xar:if>
                         <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
                             <tr>
@@ -83,20 +109,20 @@
                     </td>
                     </form>
                     <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
-                    <form action="#xarModUrl('uploads','user','purge_rejected')#" method="post">
-                        <td class="xar-accent">
-                            <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
-                                <tr>
-                                    <td width="100%" align="center">
-                                        <center>
-                                        <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-                                        <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
-                                        </center>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </form>
+                        <form action="#xarModUrl('uploads','user','purge_rejected')#" method="post">
+                            <td class="xar-accent">
+                                <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
+                                    <tr>
+                                        <td width="100%" align="center">
+                                            <center>
+                                            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+                                            <input type="submit" name="fileDo" id="fileDo_purge"  value="#xarML('Purge Rejected Files')#" />
+                                            </center>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </form>
                     </xar:if>
                 </tr>                                    
             <xar:else />

@@ -59,20 +59,28 @@ function uploads_admin_privileges($args)
     // and go with that :)
     
     if (!empty($userName)) {
-        $user = xarModAPIFunc('roles', 'user', 'get',
+		if (!strcasecmp('myself', $userName)) {
+			$userId = 'myself';
+		} else {
+            $user = xarModAPIFunc('roles', 'user', 'get',
                             array('uname' => $userName));
-        if (!empty($user)) {
-            $userNameList[$user['uid']]['userId'] = $user['uid'];
-            $userNameList[$user['uid']]['userName'] = $user['uname'];
-            $userId = $user['uid'];
-            $userName = '';
-        } else {
-            $userName = '';
-        }
+            if (!empty($user)) {
+                $userNameList[$user['uid']]['userId'] = $user['uid'];
+                $userNameList[$user['uid']]['userName'] = $user['uname'];
+                $userId = $user['uid'];
+                $userName = '';
+            } else {
+                $userName = '';
+            }
+		}
     } 
     
     if (empty($userId) || $userId == 'All' || !is_numeric($userId)) {
-        $userId = 0;
+		if (!strcasecmp('myself', $userName)) {
+			$userId = 'myself';
+		} else {
+	        $userId = 0;
+		}
     } else {
         $user = xarModAPIFunc('roles', 'user', 'get',
                             array('uid' => $userId));

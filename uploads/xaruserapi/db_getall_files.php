@@ -100,7 +100,7 @@ function uploads_userapi_db_getall_files( /* VOID */ ) {
                 break;
         }
         
-        $fileList[] = $fileInfo;
+        $fileList[$fileInfo['fileId']] = $fileInfo;
         $result->MoveNext();
     }
 

@@ -18,7 +18,7 @@ function uploads_user_file_properties( $args ) {
     
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file',
                                array('fileId' => $fileId));
-    if (empty($fileInfo)) {
+    if (empty($fileInfo) || !count($fileInfo)) {
         $data['fileInfo']   = array();
         $dtaa['error']      = xarML('File not found!');
     } else {
@@ -57,15 +57,7 @@ function uploads_user_file_properties( $args ) {
             $fileInfo['storeType'] = $storeType;
             unset($storeType);
 
-            $fileInfo['size']['long']  = number_format($fileInfo['fileSize']);
-
-            $size = $fileInfo['fileSize'];
-            $range = array('', 'Kb', 'Mb', 'Gb');
-            for ($i = 0; $size >= 1024 && $i < count($range); $i++) {
-                $size /= 1024;
-            }
-            $short = round($size, 2).' '.$range[$i];
-            $fileInfo['size']['short']  = $short;
+            $fileInfo['size'] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', array('fileSize' => $fileInfo['fileSize']));
 
             if (ereg('^image', $fileInfo['fileType'])) {
                 $imageInfo = getimagesize($fileInfo['fileLocation']);
@@ -95,10 +87,12 @@ function uploads_user_file_properties( $args ) {
             echo xarTplModule('uploads','user','file_properties', $data, NULL);
             exit();
         } else {
+            $data['fileInfo']   = array();
+            $dtaa['error']      = xarML('File not found!');
             return FALSE;
         }
     }
-         
+    
     return $data;
 
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Retrieve the total count of files in the database based on the filters passed in
+ *  Retrieve the total size of disk usage for selected files based on the filters passed in
  * 
  * @author Carl P. Corliss
  * @author Micheal Cortez
@@ -13,10 +13,10 @@
  * @param  integer  store_type  (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
  * @param  integer  mime_type   (Optional) grab files with the specified mime type 
  *
- * @returns array   All of the metadata stored for the particular file
+ * @returns integer             The total amount of diskspace used by the current set of selected files
  */
  
-function uploads_userapi_db_count( $args )  {
+function uploads_userapi_db_diskusage( $args )  {
     
     extract($args);
     
@@ -65,10 +65,10 @@ function uploads_userapi_db_count( $args )  {
         // table and column definitions
     $fileEntry_table = $xartable['file_entry'];
     
-    $sql = "SELECT COUNT(xar_fileEntry_id) AS total
+    $sql = "SELECT SUM(xar_filesize) AS disk_usage
               FROM $fileEntry_table
             $where";
-    
+
     $result = $dbconn->Execute($sql);
 
     if (!$result)  {
@@ -82,7 +82,7 @@ function uploads_userapi_db_count( $args )  {
     
     $row = $result->GetRowAssoc(false);
     
-    return $row['total'];
+    return $row['disk_usage'];
 }
 
 ?>

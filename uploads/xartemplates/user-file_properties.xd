@@ -5,7 +5,11 @@
         <xar:mlstring>
             File Properties
         </xar:mlstring>
-        :: #$fileInfo['fileName']#
+        <xar:if condition="!isset($error) AND isset($fileInfo['fileName'])">
+            :: #$fileInfo['fileName']#
+        <xar:else />
+            :: <xar:mlstring>Error encountered!</xar:mlstring>
+        </xar:if>
     </title> 
     <base href="&xar-baseurl;index.php" />
     <style type="text/css">
@@ -14,12 +18,12 @@
 </head>
 <body>
     <table width="100%" border="0" cellspacing="2" cellpadding="1" class="xar-accent"><tr><td>
-    <table width="100%" border="0" cellspacing="2" cellpadding="1" class="xar-norm">
+    <table width="100%" border="0" cellspacing="10" cellpadding="4" class="xar-norm">
         <xar:if condition="!isset($error) AND count($fileInfo)">
-            <form action="#xarModUrl('uploads','user','file_properties')#" method="post">
             <br />
             <tr>
-                <td width="80%" align="center">
+                <td align="center">
+                    <form action="#xarModUrl('uploads','user','file_properties')#" method="post">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                         <tr>
                             <td width="20%">
@@ -34,7 +38,7 @@
             </tr>
             <tr><td class="xar-accent"><p style="height: 12px;">&nbsp;</p></td></tr>
             <tr>
-                <td width="80%" align="center">
+                <td align="center">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                         <tr> 
                             <td class="xar-norm" width="20%">
@@ -111,8 +115,8 @@
             </tr>
             <tr><td class="xar-accent"><p style="height: 12px;">&nbsp;</p></td></tr>
             <tr>
-                <xar:if condition="isset($fileInfo['image'])">
-                    <td width="80%" align="center">
+                <td align="center">
+                    <xar:if condition="isset($fileInfo['image'])">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                             <tr>
                                 <td width="20%">
@@ -124,31 +128,34 @@
                             <tr>
                                 <td align="center">
                                     <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#"> 
-                                        <img src="#$fileInfo['fileURL']#" height="#$fileInfo['image']['height']#" width="#$fileInfo['image']['width']#" alt="#$fileInfo['fileName']#">
+                                        <img src="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
+                                             height="#$fileInfo['image']['height']#" 
+                                             width="#$fileInfo['image']['width']#" 
+                                             alt="#$fileInfo['fileName']#" />
                                     </a>
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                <xar:else />
-                    <td width="80%" align="center">
+                    <xar:else />
                         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="xar-norm">
                             <tr>
                                 <td width="100%">
                                     <xar:mlstring>
                                         Download File:
                                     </xar:mlstring>&nbsp;
-                                    <a href="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" alt="#xarMl('Download this file.')#">#$fileInfo['fileName']#</a>
+                                    <a href="#xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']))#" 
+                                       alt="#xarMl('Download this file.')#">#$fileInfo['fileName']#
+                                    </a>
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                </xar:if>
+                    </xar:if>
+                </td>
             </tr>
             </form>
         <xar:else />
             <tr>
-                <td width="100%">
+                <td colspan="3" width="100%">
                     <br />
                     <br />
                     <p style="color: red;">#$error#</p>

@@ -1,12 +1,8 @@
 <table width="100%" border="0" class="xar-norm xar-accent-outline">
     <tr>
-        <td colspan="5">
-            <h4>
-                <xar:mlstring>
-                    Filtering Options
-                </xar:mlstring>        
-            </h4>
-        </td>
+        <th colspan="5">
+            <h4><xar:mlstring>Filtering Options</xar:mlstring></h4>
+        </th>
     </tr>
     <tr>
         <form action="#xarModUrl('uploads','admin','view')#" method="post">

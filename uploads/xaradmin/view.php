@@ -4,7 +4,7 @@ xarModAPILoad('uploads','user');
 
 function uploads_admin_view( ) {
     //security check
-    if (!xarSecurityCheck('AdminUploads')) return;
+    if (!xarSecurityCheck('ViewUploads')) return;
     
     /**
      *  Validate variables passed back
@@ -93,6 +93,41 @@ function uploads_admin_view( ) {
         $items = xarModAPIFunc('uploads', 'user', 'db_get_file', $filter);
     }
     
+    if (xarSecurityCheck('EditUploads', 0)) {
+    
+        $data['diskUsage']['stored_size_filtered'] = xarModAPIFunc('uploads', 'user', 'db_diskusage', $filter);
+        $data['diskUsage']['stored_size_total']    = xarModAPIFunc('uploads', 'user', 'db_diskusage');
+
+        $data['diskUsage']['device_free']   = disk_free_space(xarModGetVar('uploads', 'path.uploads-directory'));
+        $data['diskUsage']['device_total']  = disk_total_space(xarModGetVar('uploads', 'path.uploads-directory'));
+        $data['diskUsage']['device_used']  = $data['diskUsage']['device_total'] - $data['diskUsage']['device_free'];
+
+        foreach ($data['diskUsage'] as $key => $value) {
+            $data['diskUsage'][$key] = xarModAPIFunc('uploads', 'user', 'normalize_filesize', $value);
+        }
+
+        $data['diskUsage']['numfiles_filtered']   = xarModAPIfunc('uploads', 'user', 'db_count', $filter);
+        $data['diskUsage']['numfiles_total']      = xarModAPIFunc('uploads', 'user', 'db_count');
+    }
+    // now we check to see if the user has enough access to view 
+    // each particular file - if not, we just silently remove it
+    // from the view
+    foreach ($items as $key => $fileInfo) {
+        unset($instance);
+        $instance[0] = $fileInfo['fileTypeInfo']['typeId'];
+        $instance[1] = $fileInfo['fileTypeInfo']['subtypeId'];
+        $instance[2] = xarSessionGetVar('uid');
+        $instance[3] = $fileInfo['fileId'];
+
+        if (is_array($instance)) {
+            $instance = implode(':', $instance);
+        } 
+        if (!xarSecurityCheck('EditUploads', 0, 'File', $instance)) {
+            unset($items[$key]);
+        }
+    }
+    
+        
     /**
      *  Check for exceptions
      */
