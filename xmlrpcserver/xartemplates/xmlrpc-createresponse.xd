@@ -6,5 +6,6 @@
         <xar:template file="xmlrpc-types" subdata="$param"/>
       </value>
     </param>
+  </xar:foreach>
   </params>
 </methodResponse>
