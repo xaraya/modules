@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 /**
  *
  * The "media-types" directory contains a subdirectory for each content
  * type and each of those directories contains a file for each content
  * subtype.
- * 
+ *
  *                                |-application-
  *                                |-audio-------
  *                                |-image-------
@@ -14,7 +14,7 @@
  *                                |-multipart---
  *                                |-text--------
  *                                |-video-------
- * 
+ *
  *    URL = ftp://ftp.isi.edu/in-notes/iana/assignments/media-types
  */
 
@@ -23,6 +23,7 @@
 $modversion['name'] = 'uploads';
 $modversion['id'] = '666';
 $modversion['version'] = '0.9.8';
+$modversion['displayname']    = xarML('Uploads');
 $modversion['description'] = 'Upload/Download File Handler';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
