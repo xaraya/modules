@@ -18,7 +18,7 @@
         <tr>
             <form action="#xarModURL('helpdesk', 'user', 'modify')#" method="post" name="modify">
             <xar:if condition="$enforceauthkey">
-                <input type="hidden" name="authid" value="#xarSecGenAuthKey()#">
+                <input type="hidden" name="authid" value="#xarSecGenAuthKey()#"/>
             </xar:if>
             <input type="hidden" name="userid" value="#$userid#" />
             <input type="hidden" name="tid"   value="#$tid#" />
@@ -34,21 +34,21 @@
                     </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Name</xar:mlstring>:</td>
-                        <td colspan="1"><input type="text" name="name" value="#$ticketdata['name']#" size="30" maxlength="255"></td>
+                        <td colspan="1"><input type="text" name="name" value="#$ticketdata['name']#" size="30" maxlength="255"/></td>
                         <td><xar:mlstring>Updated</xar:mlstring></td>
                         <td>#$ticketdata['updated']#</td>
                     </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Phone</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="phone" value="#$ticketdata['phone']#" size="30" maxlength="255"></td>
+                        <td colspan="3"><input type="text" name="phone" value="#$ticketdata['phone']#" size="30" maxlength="255"/></td>
                     </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Subject</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="subject" value="#$ticketdata['subject']#" size="45" maxlength="255"></td>
+                        <td colspan="3"><input type="text" name="subject" value="#$ticketdata['subject']#" size="45" maxlength="255"/></td>
                     </tr>
                     <tr>
                         <td colspan="1"><xar:mlstring>Domain</xar:mlstring>:</td>
-                        <td colspan="3"><input type="text" name="domain" value="#$ticketdata['domain']#" size="45" maxlength="255"></td>
+                        <td colspan="3"><input type="text" name="domain" value="#$ticketdata['domain']#" size="45" maxlength="255"/></td>
                     </tr>
                     <tr>
                         <td><xar:mlstring>Status</xar:mlstring></td>
@@ -141,7 +141,7 @@
                         <td colspan="4" align="center">
                         <xar:if condition="$enabledimages">
                             <a href="javascript:document.modify.submit();" title="Modify Ticket">
-                            <img src="#xarTplGetImage('modify.gif', 'helpdesk')#" border="0"></a>
+                            <img src="#xarTplGetImage('modify.gif', 'helpdesk')#" border="0"/></a>
                         <xar:else />
                             <input type="submit" name="Update" value="Update" />
                         </xar:if>

@@ -31,7 +31,7 @@
 
         <xar:if condition="$enabledimages">
             <a href="javascript:document.viewticket.submit();" title="View Ticket">
-                <img src="#xarTplGetImage('viewticket.gif', 'helpdesk')#" border="0"></a>
+                <img src="#xarTplGetImage('viewticket.gif', 'helpdesk')#" border="0"/></a>
         <xar:else />
             <a href="javascript:document.viewticket.submit();" title="View Ticket">
                 [<xar:mlstring>View Tickets</xar:mlstring>]</a>

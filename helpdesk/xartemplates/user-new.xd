@@ -66,7 +66,7 @@
             <xar:mlstring>Name</xar:mlstring>:
         </span>
         <span class="field">
-            <input name="name" size="30" maxlength="255" value="#$name#">(required)
+            <input name="name" size="30" maxlength="255" value="#$name#"/>(required)
         </span>
     </div>
     <div class="row">
@@ -74,7 +74,7 @@
             <xar:mlstring>Phone</xar:mlstring>:
         </span>
         <span class="field">
-            <input name="phone" size="30" maxlength="255" value="#$phone#">
+            <input name="phone" size="30" maxlength="255" value="#$phone#"/>
         </span>
     </div>
     <div class="row">
@@ -82,7 +82,7 @@
             <xar:mlstring>E-mail</xar:mlstring>:
         </span>
         <span class="field">
-            <input name="email" size="30" maxlength="255" value="#$email#">(required)
+            <input name="email" size="30" maxlength="255" value="#$email#"/>(required)
         </span>
     </div>
 </xar:if>
@@ -92,7 +92,7 @@
             <xar:mlstring>Domain</xar:mlstring>:
         </span>
         <span class="field">
-            <input name="domain" size="30" maxlength="255">(required)
+            <input name="domain" size="30" maxlength="255"/>(required)
         </span>
     </div>
     </xar:if>
@@ -101,7 +101,7 @@
             <xar:mlstring>Subject</xar:mlstring>:
         </span>
         <span class="field">
-            <input name="subject" size="30" maxlength="255">(required)
+            <input name="subject" size="30" maxlength="255"/>(required)
         </span>
     </div>
     <div class="row">
@@ -219,7 +219,7 @@
         </span>
         <span class="field">
         <xar:if condition="$enabledimages">
-            <a href="javascript:submitIt();"><img src="#xarTplGetImage('submit.gif', 'helpdesk')#" border="0"></a>
+            <a href="javascript:submitIt();"><img src="#xarTplGetImage('submit.gif', 'helpdesk')#" border="0"/></a>
         <xar:else />
             <input type="button" value="Submit" onclick="submitIt();" />
         </xar:if>

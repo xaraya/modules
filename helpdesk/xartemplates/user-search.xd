@@ -52,7 +52,7 @@
 
     <div style="clear: both; padding-top: 10px; text-align:center;">
         <xar:if condition="$enabledimages">
-            <a href="javascript:document.searchtickets.submit();"><img src="#xarTplGetImage('search.gif', 'helpdesk')#" border="0"></a>
+            <a href="javascript:document.searchtickets.submit();"><img src="#xarTplGetImage('search.gif', 'helpdesk')#" border="0"/></a>
         <xar:else />
             <input type="submit" name="submit" value="Search" />
         </xar:if>
