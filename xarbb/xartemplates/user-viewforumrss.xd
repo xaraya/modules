@@ -1,3 +1,4 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <xar:loop name="$items">
 <item>
 <title>#$loop:item['ttitle']#</title>

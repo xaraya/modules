@@ -1,4 +1,17 @@
 <?php
+/**
+ * File: $Id$
+ * 
+ * View a forum topic and replies
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 
 include 'includes/xarDate.php';
 
@@ -126,6 +139,7 @@ function xarbb_user_viewtopic()
     $data['delete']     = '<img src="' . xarTplGetImage('delete.gif') . '" alt="'.xarML('Delete').'" />';
     $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
     $data['pm']         = '<img src="' . xarTplGetImage('pm.gif') . '" alt="'.xarML('PM').'" />';
+    $data['rsstopic']   = '<img src="' . xarTplGetImage('topicsubscribe.gif') . '" alt="'.xarML('Subscribe to this topic').'" />';
 
     $item = array();
     $item['module'] = 'xarbb';

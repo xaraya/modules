@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id$
+ * 
+ * Delete a forum
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 /**
  * delete a forum
  * @param $args['fid'] ID of the forum
@@ -34,6 +46,8 @@ function xarbb_adminapi_delete($args)
 
 	// topics and comments are deleted in delete gui func so do not care
     // shouldn't this call be here?
+    // <jojodee> - probably need to delete topics and comments here too 
+    // else they may be left hanging in db
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();

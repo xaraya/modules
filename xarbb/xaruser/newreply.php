@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id$
+ * 
+ * Add a new topic reply
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 //TODO FInish this function.
 function xarbb_user_newreply()
 {
@@ -68,9 +80,11 @@ function xarbb_user_newreply()
     $package['name']        = xarUserGetVar('name');
     $package['uid']         = xarUserGetVar('uid');
 
+    //Add images
+    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
 
     // Form Hooks
-    $formhooks = xarbb_user_formhooks();
+    $formhooks = xarModAPIFunc('xarbb','user','formhooks');
     $data['hooks']      = $formhooks;
     $data['receipt']    = $receipt;
     $data['package']    = $package;

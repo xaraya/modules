@@ -1,9 +1,19 @@
 <?php
 /**
- * @ jojodee - moved this function to xarbb userapi
- * @ this function can be removed once we're sure nothing else is calling it
+ * File: $Id$
+ * 
+ * Handle form hooks
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
 */
-function xarbb_user_formhooks()
+
+function xarbb_userapi_formhooks()
 {
 
     $hooks = array();

@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id$
+ * 
+ * View a list of topics in a forum
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 function xarbb_user_viewforum()
 {
     // Get parameters from whatever input we need
@@ -98,6 +110,10 @@ function xarbb_user_viewforum()
 
     //images
     $data['newtopic'] = '<img src="' . xarTplGetImage('newpost.gif') . '" alt="'.xarML('New post').'" />';
+    $data['edit']       = '<img src="' . xarTplGetImage('edit.gif') . '" alt="'.xarML('Edit').'" />';
+    $data['delete']     = '<img src="' . xarTplGetImage('delete.gif') . '" alt="'.xarML('Delete').'" />';
+    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
+    $data['subscribe']  = '<img src="' . xarTplGetImage('forumsubscribe.gif') . '" alt="'.xarML('Subscribe to this forum').'" />';
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.

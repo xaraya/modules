@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id$
+ * 
+ * Delete all replies
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 /**
  * delete replies
  * @param $args['cids'] Array( IDs ) of the forum   or $args['cid'] ID

@@ -1,5 +1,22 @@
 <?php
+/**
+ * File: $Id$
+ * 
+ * Xaraya Delete a Forum
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 
+/**
+ * @author John Cox
+ * @function to delete a forum and related topics
+ */
 function xarbb_admin_delete()
 {
     // Get parameters

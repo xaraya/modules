@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id$
+ * 
+ * Update a forum topic
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 function xarbb_user_updatetopic()
 {
 
@@ -12,13 +24,14 @@ function xarbb_user_updatetopic()
     // Start by updating the topic stats.
     
     $uid = xarUserGetVar('uid');
-
-    if (!xarModAPIFunc('xarbb',
+    //Don't count up if the topic is being edited ? Need to add modify test here.
+    if ($modify != 1){
+         if (!xarModAPIFunc('xarbb',
                        'user',
                        'updatetopicsview',
                        array('tid'      => $tid,
                              'treplier' => $uid))) return;
-
+    }
     // The user API function is called
     $forum = xarModAPIFunc('xarbb',
                            'user',

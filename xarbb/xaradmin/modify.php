@@ -1,5 +1,22 @@
 <?php
+/**
+ * File: $Id$
+ * 
+ * Xaraya Modify an existing forum
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 
+/**
+ * @author John Cox
+ * @function to modify an existing forum
+*/
 function xarbb_admin_modify()
 {
     list($fid,

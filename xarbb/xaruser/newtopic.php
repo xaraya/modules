@@ -1,7 +1,19 @@
 <?php
-
 /**
- * add new forum
+ * File: $Id$
+ * 
+ * Add new or edit existing forum topic
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
+/**
+ * add new forum topic
  */
 function xarbb_user_newtopic()
 {
@@ -89,7 +101,7 @@ function xarbb_user_newtopic()
             else
                 $data['redirect'] = $redirect;
 
-            $formhooks = xarbb_user_formhooks();
+            $formhooks = xarModAPIFunc('xarbb','user','formhooks');
             $data['formhooks'] = $formhooks;
 
             break;
@@ -106,27 +118,35 @@ function xarbb_user_newtopic()
                 xarResponseRedirect(xarModURL('xarbb', 'user', 'newtopic', array('fid' => $data['fid'], 'ttitle' => $ttitle, 'warning' => $warning)));
             }
 
-            $tposter = xarUserGetVar('uid');
-
             if(isset($tid))    {
+                 $modified_date=date('F d, Y g:i A');
+                 $tpost .= "\n\r";
+                 $tpost .=xarML('[Modified by: #(1) (#(2)) on #(3)]',
+                     xarUserGetVar('name'),
+                     xarUserGetVar('uname'),
+                     $modified_date);
+                 $tpost .= "\n\r";
                 if (!xarModAPIFunc('xarbb',
                                'user',
                                'updatetopic',
                                array('tid' => $tid,
                                      'fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
-                                     'tpost'    => $tpost,
-                                     'tposter'  => $tposter))) return;
+                                     'tpost'    => $tpost))) return;
              } else    {
-                if (!xarModAPIFunc('xarbb',
+                 //Only update the user if new topic, not edited
+                 $tposter = xarUserGetVar('uid');
+
+                 if (!xarModAPIFunc('xarbb',
                                'user',
                                'createtopic',
                                array('fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter))) return;
-                // We don't want to update the forum counter on an updated reply.
-                if (!xarModAPIFunc('xarbb',
+
+                 // We don't want to update the forum counter on an updated reply.
+                 if (!xarModAPIFunc('xarbb',
                                    'user',
                                    'updateforumview',
                                    array('fid'      => $data['fid'],
@@ -141,6 +161,9 @@ function xarbb_user_newtopic()
             break;
 
     }
+    //Add images
+    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
+
     // Return the output
     return $data;
 }

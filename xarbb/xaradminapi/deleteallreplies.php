@@ -1,10 +1,23 @@
 <?php
-
+/**
+ * File: $Id$
+ * 
+ * Delete topic replies
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 /**
  * delete replies
  * @param $args['tid'] Topic id
  * @returns bool
  * @return true on success, false on failure
+ * <jojodee> - TODO check as this looks as though it might delete more than required??
  */
 function xarbb_adminapi_deleteallreplies($args)
 {

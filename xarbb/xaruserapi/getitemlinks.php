@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id$
+ *
+ * Standard function to pass individual links to menu or whatever
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.org
+ *
+ * @subpackage  xarbb Module
+ * @author John Cox
+*/
 /**
  * utility function to pass individual item links to whoever
  *
