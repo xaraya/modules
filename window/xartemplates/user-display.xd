@@ -1,0 +1,14 @@
+<xar:if condition="$auto_resize eq 1">
+	<script language="javascript" type="text/javascript" src="modules/window/xartemplates/appwindow.js">
+	</script>
+</xar:if>
+<div class="xar-mod-head">
+<span class="xar-mod-title">#$title#</span>
+</div>
+<xar:if condition="$open_direct ne 1">
+<iframe id="appwindow" src="#$page#" width="#$hsize#" height="#$vsize#" frameborder="0" marginheight="0" marginwidth="0">
+<!----
+."  <br />"._SORRYBROWSER."<a class=\"pn-pagetitle\" href=\"$page\" target=\"_blank\">"._LINKYOU."</a>"._SORRYBROWSER1."<br /><br />\n"
+---->
+</iframe>
+</xar:if>
