@@ -10,10 +10,10 @@
 <script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("ttitle", "tpost");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Topic Subject", "Topic body text");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("ttitle", "tpost");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Topic Subject", "Topic body text");
 //-->
 </script>
 <div class="xarbb-topiccontrols">
@@ -185,11 +185,11 @@
                             Smilies are 
                         </xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
-							<a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
-								<xar:mlstring>
-									On 
-								</xar:mlstring>
-							</a>
+                            <a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+                                <xar:mlstring>
+                                    On 
+                                </xar:mlstring>
+                            </a>
                         <xar:else />
                             <span style="color: red;">
                                 Off 

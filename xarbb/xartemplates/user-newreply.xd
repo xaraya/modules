@@ -172,11 +172,11 @@
                             Smilies are 
                         </xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
-							<a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
-								<xar:mlstring>
-									On 
-								</xar:mlstring>
-							</a>
+                            <a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+                                <xar:mlstring>
+                                    On 
+                                </xar:mlstring>
+                            </a>
                             <xar:else />
                             <span style="color: red;">
                                 <xar:mlstring>
