@@ -22,7 +22,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Authentication by AuthSQL is automatically set once the the AuthSQL module has been initialized.   To remove AuthSQL authentication, you must remove the module.</xar:mlstring>
+            <xar:mlstring>Authentication by AuthSQL is automatically set once the the AuthSQL module has been initialized.   To remove AuthSQL authentication, you must remove the module or disable it in the modify config screen.</xar:mlstring>
             <br /><br />
             <xar:mlstring>
             From the menu, you have one choice.  "Modify Config". 
