@@ -27,13 +27,19 @@
 function search_user_handlesearch() {
     // The module we want to search and the search terms are required.
     xarVarFetch('formodule','str:1:',$search_in_module);
+
+    // What did we search for, let the session remember it.
     xarVarFetch('searchterms','str:0:',$search_terms);
     xarSessionSetVar('searchterms', $search_terms);
+
+    // If startnum was passed in get it, if not set it to 1
     xarVarFetch('startnum','int::',$startnum,1,XARVAR_NOT_REQUIRED);
     
     // Some modules allow searching only specific itemtypes, the generic
     // searchform supports this.
     xarVarFetch('itemtypes','array:1:',$item_types,array(), XARVAR_NOT_REQUIRED);
+    xarSessionSetVar('checked_itemtypes',$item_types);
+    
     xarVarFetch('object_id','id',$object_id,0,XARVAR_NOT_REQUIRED);
     
     // This may seem strange, but it it intentional.
