@@ -14,19 +14,19 @@
                 <table border="0" width="100%">
                     <tr>
                         <td align="left" colspan="2">
-                            <xar:mlstring>You can import a list of contacts into your subscription using a CSV (comma separated values) export.</xar:mlstring>
+                            <xar:mlstring>You can import a list of contacts into your subscription using a CSV (comma separated values) or other delimited export.</xar:mlstring>
                             <br /><br />
-                            <xar:mlstring>The fields should be in the format:</xar:mlstring>
+                            <xar:mlstring>For a CSV export, the fields should be in the format:</xar:mlstring>
                             <br />
-                            <xar:mlstring>&nbsp;&nbsp;lastname,firstname,email</xar:mlstring>
+                            <xar:mlstring>&nbsp;&nbsp;firstname,lastname,email</xar:mlstring>
                             <br /><br />
                             <xar:mlstring>For example, the following CSV will be parsed correctly: </xar:mlstring>
                             <br />
-                            <xar:mlstring>&nbsp;&nbsp;baggins,frodo,fbaggins@bagend.com</xar:mlstring>
+                            <xar:mlstring>&nbsp;&nbsp;frodo,baggins,fbaggins@bagend.com</xar:mlstring>
                             <br />
-                            <xar:mlstring>&nbsp;&nbsp;"gamgee,samwise",sgamgee@bagend.com</xar:mlstring>
+                            <xar:mlstring>&nbsp;&nbsp;"samwise,gamgee",sgamgee@bagend.com</xar:mlstring>
                             <br />
-                            <xar:mlstring>&nbsp;&nbsp;"took,peregrin",ptook@bagend.com SMTP ptook@bagend.com</xar:mlstring>
+                            <xar:mlstring>&nbsp;&nbsp;"peregrin,took",ptook@bagend.com SMTP ptook@bagend.com</xar:mlstring>
                             <br /><br />
                         </td>
                     </tr>

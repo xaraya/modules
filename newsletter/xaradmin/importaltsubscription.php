@@ -80,14 +80,14 @@ function newsletter_admin_importaltsubscription()
         // Check if email set
         if (isset($subscription[2])) {
             // Set name
-            $name = $subscription[1] . ' ' . $subscription[0];
+            $name = $subscription[0] . ' ' . $subscription[1];
             // Set email
             $email = $subscription[2];
         } else {
             // Parse first field into name
             $tempname = preg_split("/[,]+/", $subscription[0]);
             if (!empty($tempname[1])) {
-                $name = $tempname[1] . ' ' . $tempname[0];
+                $name = $tempname[0] . ' ' . $tempname[1];
             } else {
                 $name = $tempname[0];
             }
