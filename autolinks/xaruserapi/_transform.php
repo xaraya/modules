@@ -64,8 +64,9 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
     }
 
     // Put a placeholder in the spaces so we don't match it again.
-    return preg_replace('/(\w)/', '$1ALSPACEHOLDER', $replace);
+    return $replace;
 }
+
 
 /**
  * $Id$
@@ -76,16 +77,17 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
  */
 function autolinks_userapi__transform($args)
 {
+    static $alsearch = array();
+    static $alreplace = array();
+    static $gotautolinks = 0;
+    static $tag_preg;
+
     // Extra the arguments, allowing positional parameters.
     extract($args, EXTR_PREFIX_INVALID, 'p');
 
     if (!isset($text)) {
         $text = (isset($p_0) ? $p_0 : '');
     }
-
-    static $alsearch = array();
-    static $alreplace = array();
-    static $gotautolinks = 0;
 
     $nbsp_as_whitespace = xarModGetVar('autolinks', 'nbspiswhite');
 
@@ -163,9 +165,9 @@ function autolinks_userapi__transform($args)
             }
 
             // Note use of assertions here to only match specific words.
-            $alsearch[] = '/' . '(?<=[\s' . $punctuation . ']|^|ALPLACEHOLDER\dPH)('
+            $alsearch[] = '/' . '(?<=[\s' . $punctuation . ']|^)('
                 . $keywordre
-                . ')(?=[\s' . $punctuation . ']|$|ALPLACEHOLDER)' . '/is'
+                . ')(?=[\s' . $punctuation . ']|$)' . '/is'
                 . ($tmpautolink['dynamic_replace'] ? 'e' : '');
 
             // The replace will be either a straight string or a function to execute.
@@ -188,44 +190,105 @@ function autolinks_userapi__transform($args)
                     . $replace . ')';
             } else {
                 // Replacement string.
-                // Munge word boundaries of replace string to stop autolinks from linking to
-                // themselves or other autolinks in step 2
-                $alreplace[] = preg_replace('/(\w)/', '$1ALSPACEHOLDER', $replace);
+                $alreplace[] = $replace;
             }
         }
     }
 
-    // TODO: replace all this (steps 1 to 4) with the following:
+    if ($tag_preg === NULL)
+    {
+        // List of elements we do not want to match inside.
+        // The user can enter a list in any format they wish. It can also
+        // include custom tags if the user wants to prevent Autolink matching
+        // in any enclosed section of a document.
+        // TODO: exclude_elements is a configuration item.
+        // TODO: ensure the excluded elements are cleaned when submitted.
+
+        //$exclude_elements = autolinks_userapi_cleantaglist(xarModGetVar('autolinks', 'excludeelements'), ' ');
+        $exclude_elements = 'a table';
+
+        // The tag_preg will contain the preg matches to identify spans of
+        // tags and elements that should not be matched by this module. Open with
+        // a HTML comment. The comments should also protect inline Javascript.
+        $tag_preg = '/(?:' . "<!--.*?-->$wspreg*";
+
+        // Build REs for list of elements we won't be matching in.
+        // These are non-empty elements, e.g. <a [anything]>[anything]</a>
+        if (!empty($exclude_elements)) {
+            foreach (explode(' ', $exclude_elements) as $exclude_element)
+            {
+                // Use back-assertion "(?<!\/)>" (closing brace '>' not preceded by '/')
+                // to ensure the first tag is not closed.
+                $tag_preg .= '|' . "<" . $exclude_element . "[^>]*(?<!\/)>"
+                   . ".*?" . "<\/" . $exclude_element . ">$wspreg*";
+            }
+        }
+
+        // Expression for matching any remaining tags.
+        // These are <tag ...>, </tag> and <tag .../>
+        $tag_preg .= "|<\/?\w+[^>]*>$wspreg*";
+
+        // Close the tag preg.
+        $tag_preg .= ')+/is';
+
+        // Now we have a static string containing a preg pattern for splitting
+        // up HTML or XHTML content into areas that can be Autolinked and areas
+        // that should not, i.e. into tags and disallowed-tag contents, and into
+        // content between those tags.
+    }
+
+    // This is what happens in summary:
     // 1. Split the text into two arrays: one with the tags and one with the content (preg_split).
     // 2. Join the content array into a string (implode).
     // 3. Do the link replacement on the string (preg_replace).
     // 4. Explode the content string back to an array (explode).
     // 5. Zip the two arrays back together into a string (array_join with a call-back to concatenate elements).
-    // This has advantages in that each string at any point of the process is smaller than the current string;
-    // we can exclude any arbitrary list of tags from having their content matched; we don't need to
-    // loop for all tags, replacing them with placeholders, since they are simply moved aside into a separate
-    // array. The technique works very well, but I need to do some performance tests first to ensure it
-    // really is faster. Although 4 steps are replaced by 5, there are no loops whatsoever in the 5 steps.
+    
+    // Get array of content.
+    $content_array = preg_split($tag_preg, $text);
 
+    // Get array of tags. The array we need will be put into
+    // $tag_array[0]. There will be no higher-level elements
+    // to the array as there are no sub-patterns in tag_preg.
+    preg_match_all($tag_preg, $text, $tag_array);
 
-    // Step 1 - move all tags out of the text and replace them with placeholders
-    preg_match_all('/(<a\s+.*?\/a>|<[^>]+>)/i', $text, $matches);
-    $matchnum = count($matches[1]);
-    for ($i = 0; $i <$matchnum; $i++) {
-        $text = preg_replace('/' . preg_quote($matches[1][$i], '/') . '/', "ALPLACEHOLDER{$i}PH", $text, 1);
+    // Get a token that does not appear in the original text.
+    // Try a few tokens so we can be sure it will work without inadvertantly
+    // matching valid content. Hopefully the first token will work (' #-+-# ')
+    if (empty($joiner))
+    {
+        // TODO: try starting with zero
+        for ($i=1; $i<=11; $i+=2)
+        {
+            $joiner = ' #' . str_pad('-', $i, '+', STR_PAD_BOTH) . '# ';
+            if (strpos($text, $joiner) === false)
+            {
+                // No match, so we can use this as a field separater.
+                break;
+            }
+        }
     }
 
-    // Step 2 - s/r of the remaining text
-    $maxlinkcount = xarModGetVar('autolinks', 'maxlinkcount');
-    $text = preg_replace($alsearch, $alreplace, $text, ($maxlinkcount >= 1 ? $maxlinkcount : (-1)));
-
-    // Step 3 - replace the spaces we munged in step 2
-    $text = preg_replace('/ALSPACEHOLDER/', '', $text);
-
-    // Step 4 - replace the HTML tags that we removed in step 1
-    for ($i = 0; $i <$matchnum; $i++) {
-        $text = preg_replace("/ALPLACEHOLDER{$i}PH/", $matches[1][$i], $text, 1);
+    $limit = xarModGetVar('autolinks', 'maxlinkcount');
+    if (empty($limit))
+    {
+        $limit = -1;
     }
+
+    // Do the content replacement (create the links).
+    // The array is flattened to a string, the replace is done, then exploded
+    // back into an array. It seems to be faster than doing the substitution
+    // directly on the content array (probably cartesian product), and also
+    // allows a limit to the number of matches to be set.
+    $content_array = explode(
+        $joiner,
+        preg_replace($alsearch, $alreplace, implode($joiner, $content_array), $limit)
+    );
+
+    // Zip the two arrays back together.
+    // Looping for each element and building a string is slow; array_map seems to be fast enough.
+    $func_join_strings = create_function('$m,$n', 'return (!empty($m)?$m:"") . (!empty($n)?$n:"");');
+    $text = implode('', array_map($func_join_strings, $content_array, $tag_array[0]));
 
     return $text;
 }
