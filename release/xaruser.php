@@ -25,12 +25,42 @@ function release_user_viewids()
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
+    $phase = xarVarCleanFromInput('phase');
+
+    if (empty($phase)){
+        $phase = 'all';
+    }
+
     $data = array();
 
-    // The user API function is called. 
-    $items = xarModAPIFunc('release',
-                           'user',
-                           'getallids');
+    switch(strtolower($phase)) {
+
+        case 'all':
+        default:
+
+            // The user API function is called. 
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getallids');
+            break;
+
+        case 'themes':
+
+            // The user API function is called. 
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getthemeids');
+            break;
+
+        case 'modules':
+
+            // The user API function is called. 
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getmoduleids');
+            break;
+    }
+
 
     if (empty($items)) {
         $msg = xarML('There are no items to display in the release module');
