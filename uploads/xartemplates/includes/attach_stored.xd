@@ -1,7 +1,15 @@
-<div id="#$id#_attach_stored" style="display: none;">
 <xar:if condition="isset($storedList) AND count($storedList)">
         <xar:mlstring>Attach previously stored file:</xar:mlstring><br />
-        <select name="#$id#_attach_stored[]" multiple="multiple">
+
+        <xar:set name="$multiple"> 
+            "multiple_{$id}"
+        </xar:set>
+        
+        <xar:if condition="isset($$multiple) AND $$multiple eq TRUE">
+            <select name="#$id#_attach_stored[]" multiple="multiple" size="5">
+        <xar:else />
+            <select name="#$id#_attach_stored[]" size="5">
+        </xar:if>
             <xar:loop name="$storedList">
                 <xar:if condition="isset($loop:item['selected'])">
                     <option value="#$loop:item['fileId']#" selected="selected">#$loop:item['fileHashRealName']#</option>
@@ -11,6 +19,6 @@
             </xar:loop>
         </select>
 <xar:else />
-    <input type="hidden" name="#$id#_attach_stored[]" value="" />
+    <xar:mlstring>No files to display</xar:mlstring><br />
+    <input type="hidden" name="#$id#_attach_stored[]" value="" style="display: none;" />
 </xar:if>
-</div>
