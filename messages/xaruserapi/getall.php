@@ -48,7 +48,7 @@ function messages_userapi_getall( $args )
                                                array('mid'    => $node['xar_cid'],
                                                      'action' => 'check'));
 
-        $messages[$node['xar_datetime']] = $message;
+        $messages[$node['xar_cid']] = $message;
     }
 
 
