@@ -82,13 +82,10 @@ function reports_init()
     $conn_type =strtolower($deftype);
     $conn_desc = 'Xaraya connection itself';
         
-    $sql = "INSERT INTO $tab ($cols[id],$cols[name],$cols[type],$cols[description]) VALUES ('"
-        .xarVarPrepForStore($conn_id)."','"
-        .xarVarPrepForStore($conn_name)."','"
-        .xarVarPrepForStore($conn_type)."','"
-        .xarVarPrepForStore($conn_desc)."')";
+    $sql = "INSERT INTO $tab ($cols[id],$cols[name],$cols[type],$cols[description]) VALUES (?,?,?,?)";
+    $bindvars = array($conn_id, $conn_name, $conn_type, $conn_desc);    
     
-    $res =& $dbconn->Execute($sql);
+    $res =& $dbconn->Execute($sql,$bindvars);
     if(!$res) return;
 
     // Set up module variables with default values
@@ -135,13 +132,6 @@ function reports_delete()
     $res =& $dbconn->Execute($sql);
     if(!$res) return;
 
-    // Delete all instances for users of module variables
-	//  $allusers = xarUserGetAll();
-	//   foreach( $allusers as $the_user) {
-	//     if (xarModAPILoad("ModExt","user")) {
-	// 			xarModDelUserVar('reports', 'varname',$the_user['uid']);
-	// 		}
-	// 	}
     
 	// Delete module variables
 	// Template: xarModDelVar('reports', 'varname');
