@@ -93,7 +93,7 @@ function articles_featureditemsblock_display(& $blockinfo)
 
     $featuredaid = $vars['featuredaid'];
 
-    $fields = array('aid', 'title');
+    $fields = array('aid', 'title', 'cids');
     if ($vars['toptype'] == 'rating') {
         $fields[] = 'rating';
         $sort = 'rating';
@@ -126,12 +126,12 @@ function articles_featureditemsblock_display(& $blockinfo)
             'articles','user','getall',
             array(
                 'aids' => array($featuredaid),
-                'extra' => array('dynamicdata')
+                'extra' => array('cids','dynamicdata')
             )
         ));
        
         $fieldlist = array('aid', 'title', 'summary', 'authorid', 'pubdate', 
-                           'pubtypeid', 'notes', 'status', 'body');
+                           'pubtypeid', 'notes', 'status', 'body', 'cids');
         
         $featuredlink = xarModURL(
             'articles', 'user', 'display',
@@ -151,9 +151,10 @@ function articles_featureditemsblock_display(& $blockinfo)
             'showfeaturedsum'   => $vars['showfeaturedsum'],
             'showfeaturedbod'   => $vars['showfeaturedbod'],
             'featureddesc'      => $featuredart['summary'],
-            'featuredbody'      => $featuredart['body']
+            'featuredbody'      => $featuredart['body'],
+            'featuredcids'      => $featuredart['cids']
         );
-        
+
         // Get rid of the default fields so all we have left are the DD ones
         foreach ($fieldlist as $field) {
             if (isset($featuredart[$field])) {
@@ -165,7 +166,7 @@ function articles_featureditemsblock_display(& $blockinfo)
         $feature = array_merge($featuredart, $feature);
         $data['feature'][] = $feature;
     }
-    
+
     // Setup additional items
    $fields = array('aid', 'title', 'pubtypeid', 'cids');
     if (!empty($vars['moreitems'])) {
