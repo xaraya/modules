@@ -31,7 +31,7 @@ Errors:<br/>
   <td class="formcolor">#xarML('description')#</td>
   <td class="formcolor"><textarea name="description" rows="4" cols="60">#$info['description']#</textarea></td>
 </tr>
-<tr>  
+<tr>
   <td class="formcolor">#xarML('type')#</td>
   <td class="formcolor">
   <select name="act_type">
@@ -41,34 +41,34 @@ Errors:<br/>
   <option value="start">#xarML('start')#</option>
 </xar:if>
 <xar:if condition="$info['type'] eq 'end'">
-  <option value="end" selected="selected">#xarML('end')#</option>		  
+  <option value="end" selected="selected">#xarML('end')#</option>
 <xar:else/>
-  <option value="end">#xarML('end')#</option>		  
+  <option value="end">#xarML('end')#</option>
 </xar:if>
 <xar:if condition="$info['type'] eq 'activity'">
-  <option value="activity" selected="selected">#xarML('activity')#</option>		  
+  <option value="activity" selected="selected">#xarML('activity')#</option>
 <xar:else/>
-  <option value="activity">#xarML('activity')#</option>		  
+  <option value="activity">#xarML('activity')#</option>
 </xar:if>
 <xar:if condition="$info['type'] eq 'switch'">
-  <option value="switch" selected="selected">#xarML('switch')#</option>		  
+  <option value="switch" selected="selected">#xarML('switch')#</option>
 <xar:else/>
-  <option value="switch">#xarML('switch')#</option>		  
+  <option value="switch">#xarML('switch')#</option>
 </xar:if>
 <xar:if condition="$info['type'] eq 'split'">
-  <option value="split" selected="selected">#xarML('split')#</option>		  
+  <option value="split" selected="selected">#xarML('split')#</option>
 <xar:else/>
-  <option value="split">#xarML('split')#</option>		  
+  <option value="split">#xarML('split')#</option>
 </xar:if>
 <xar:if condition="$info['type'] eq 'join'">
-  <option value="join" selected="selected">#xarML('join')#</option>		  
+  <option value="join" selected="selected">#xarML('join')#</option>
 <xar:else/>
-  <option value="join">#xarML('join')#</option>		  
+  <option value="join">#xarML('join')#</option>
 </xar:if>
 <xar:if condition="$info['type'] eq 'standalone'">
-  <option value="standalone" selected="selected">#xarML('standalone')#</option>		  
+  <option value="standalone" selected="selected">#xarML('standalone')#</option>
 <xar:else/>
-  <option value="standalone">#xarML('standalone')#</option>		  
+  <option value="standalone">#xarML('standalone')#</option>
 </xar:if>
   </select>
 <xar:if condition="$info['isInteractive'] eq 'y'">
@@ -98,7 +98,7 @@ Errors:<br/>
 <xar:else/>
 				<option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
 </xar:if>
-				</xar:foreach>			
+				</xar:foreach>
 				</select>
 			</td>
 			<td class="formcolor">
@@ -110,10 +110,10 @@ Errors:<br/>
 <xar:else/>
 				<option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
 </xar:if>
-				</xar:foreach>			
+				</xar:foreach>
 				</select>
 			</td>
-		</tr>    
+		</tr>
     </table>
   </td>
 </tr>
@@ -153,7 +153,7 @@ Errors:<br/>
 </form>
 
 <h3>#xarML('Process activities')#</h3>
-	
+
 <form action="&xar-modurl-workflow-admin-activities;" method="post">
 <input type="hidden" name="sort_mode" value="#$sort_mode#" />
 <input type="hidden" name="pid" value="#$pid#" />
@@ -164,7 +164,7 @@ Errors:<br/>
 <tr>
 	<td>
 		#xarML('Find')#
-	</td>	
+	</td>
 	<td>
 		#xarML('Type')#
 	</td>
@@ -177,21 +177,21 @@ Errors:<br/>
 	<td>
 		&nbsp;
 	</td>
-</tr>			
+</tr>
 <tr>
-	<td>	
+	<td>
 		<input size="8" type="text" name="find" value="#$find#" />
 	</td>
 	<td>
 		<select name="filter_type">
 		  <option value="">#xarML('all')#</option>
 		  <option value="start">#xarML('start')#</option>
-		  <option value="end" >#xarML('end')#</option>		  
-		  <option value="activity" >#xarML('activity')#</option>		  
-		  <option value="switch" >#xarML('switch')#</option>		  
-		  <option value="split" >#xarML('split')#</option>		  
-		  <option value="join" >#xarML('join')#</option>		  
-		  <option value="standalone" >#xarML('standalone')#</option>		  
+		  <option value="end" >#xarML('end')#</option>
+		  <option value="activity" >#xarML('activity')#</option>
+		  <option value="switch" >#xarML('switch')#</option>
+		  <option value="split" >#xarML('split')#</option>
+		  <option value="join" >#xarML('join')#</option>
+		  <option value="standalone" >#xarML('standalone')#</option>
 		</select>
 	</td>
 	<td>
@@ -212,7 +212,7 @@ Errors:<br/>
 		<input type="submit" name="filter" value="#xarML('filter')#" />
 	</td>
 </tr>
-</table>	
+</table>
 </form>
 <form action="&xar-modurl-workflow-admin-activities;" method="post">
 <input type="hidden" name="find" value="#$find#" />
@@ -262,7 +262,7 @@ Errors:<br/>
 	  #$items[$ix]['flowNum']#
 	</td>
 
-	<td">
+	<td>
 	  <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;pid=#$pid#&amp;find=#$find#&amp;where=#$where#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
 	  <xar:if condition="$items[$ix]['roles'] < 1">
 		<small>#xarML('(no roles)')#</small>
@@ -284,7 +284,7 @@ Errors:<br/>
 	<xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
 		<img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
 	<xar:else/>
-		#$items[$ix]['type']# 
+		#$items[$ix]['type']#
 	</xar:if>
 	</td>
 	<td style="text-align:center;"">
@@ -315,7 +315,7 @@ Errors:<br/>
 	<td colspan="6">
 	#xarML('No activities defined yet')#
 	</td>
-</tr>	
+</tr>
 </xar:if>
 <tr>
 <td class="heading" colspan="7" style="text-align:center;">
@@ -323,7 +323,7 @@ Errors:<br/>
 </td>
 </tr>
 </table>
-</form>	
+</form>
 
 <h3>#xarML('Process Transitions')#</h3>
 <table class="normal">
@@ -352,7 +352,7 @@ Errors:<br/>
 			</select>
 <!--			<input type="submit" name="filter_tran" value="#xarML('filter')#" /> -->
 			</form>
-			
+
 			<form action="&xar-modurl-workflow-admin-activities;" method="post">
 			<input type="hidden" name="pid" value="#$pid#" />
 			<input type="hidden" name="activityId" value="#$info['activityId']#" />
@@ -401,7 +401,7 @@ Errors:<br/>
 			</tr>
 </xar:if>
 			</table>
-			</form>		
+			</form>
 	</td>
 	<td class="formcolor" >
 		<h3>#xarML('Add a transition')#</h3>
@@ -428,7 +428,7 @@ Errors:<br/>
 		</tr>
 		<tr>
 		  <td class="formcolor">
-		  To: 
+		  To:
 		  </td>
 		  <td>
 		   <select name="actToId">
@@ -444,11 +444,11 @@ Errors:<br/>
 		    <input type="submit" name="add_trans" value="#xarML('add')#" />
 		  </td>
 		</tr>
-		</table>	
+		</table>
 		</form>
 	</td>
 </tr>
 </table>
 <p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
 </div>
-</div>	
+</div>
