@@ -77,6 +77,8 @@ function keywords_keywordscategoriesblock_display(& $blockinfo)
 
             $keywords = array();
             foreach ($data['cids'] as $id => $cid) {
+                // if we're viewing all items below a certain category, i.e. catid = _NN
+                $cid = str_replace('_', '', $cid);
                 $keywords = xarModAPIFunc('keywords','user','getwords',
                                    array('itemid' => $cid,
                                             'modid' => $data['modid']));
