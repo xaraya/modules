@@ -32,7 +32,7 @@ function bkview_user_csetview($args)
     $repo =& $item['repo'];
     $formatstring = "'";
     if($taggedonly) $formatstring .= "\$if(:TAG:){";
-    $formatstring .= ":TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
+    $formatstring .= ":TAG:|:AGE:|:P:|:REV:|:UTC:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
     if($taggedonly) $formatstring .= "}";
     $formatstring .= "'";
     $list = $repo->bkChangeSets($revs,$range,$formatstring,$showmerge,$sort,$user);
@@ -41,12 +41,13 @@ function bkview_user_csetview($args)
     $data['csets']=array();
     $csets=array();
     while (list($key,$val) = each($list)) {
-        list($tag,$age, $author, $rev, $comments) = explode('|',$val);
+        list($tag,$age, $author, $rev, $utc, $comments) = explode('|',$val);
         $csets[$counter]['tag']=$tag;
         $csets[$counter]['age']=$age;
         $csets[$counter]['age_code'] =  bkAgeToRangeCode($age);
         $csets[$counter]['author']=$author;
         $csets[$counter]['rev']=$rev;
+        $csets[$counter]['utc']=$utc;
         $comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
         $comments=nl2br(xarVarPrepForDisplay($comments));
         $csets[$counter]['comments']=$comments;
