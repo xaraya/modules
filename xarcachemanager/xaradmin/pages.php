@@ -64,6 +64,14 @@ function xarcachemanager_admin_pages($args)
                 $sessionlesslist[] = $url;
             }
         }
+        
+        // set option for auto regeneration of session-less url list cache on event invalidation
+        xarVarFetch('autoregenerate', 'isset', $autoregenerate, '', XARVAR_NOT_REQUIRED);
+        if ($autoregenerate) {
+            xarModSetVar('xarcachemanager','AutoRegenSessionless', 1);
+        } else {
+            xarModSetVar('xarcachemanager','AutoRegenSessionless', 0);
+        }
 
         xarVarFetch('autocache','isset',$autocache,'',XARVAR_NOT_REQUIRED);
         if (empty($autocache['period'])) {

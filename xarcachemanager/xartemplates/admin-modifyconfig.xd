@@ -150,6 +150,18 @@
             </td>
         </tr>
         <tr>
+            <td><span class="help" title="#xarML('If enabled, the cache of the session-less URLs will be regenerated upon event-based invalidation, triggered by creage/update/delete hooks')#"><label for="autoregenerate">
+                <xar:mlstring>Auto-regenerate cache of session-less URL list:</xar:mlstring>
+            </label></span></td>
+            <td>
+                <xar:if condition="xarModGetVar('xarcachemanager','AutoRegenSessionless')">
+                    <input type="checkbox" name="autoregenerate" id="autoregenerate" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="autoregenerate" id="autoregenerate" value="1" />
+                </xar:if>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2"><h3><xar:mlstring>Block Output Cache Settings</xar:mlstring></h3></td>
         </tr>
         <tr>
@@ -165,7 +177,7 @@
             </td>
         </tr>
         <tr>
-            <td><span class="help" title="#xarML('The maximum lifetime of a cached block. Set to zero for no time based expiration.')#"><label for="blockexpiretime">
+            <td><span class="help" title="#xarML('The default maximum lifetime of a cached block. Set to zero for no time based expiration.')#"><label for="blockexpiretime">
                 <xar:mlstring>Block Cache Expiration Time (in hh:mm:ss):</xar:mlstring>
             </label></span></td>
             <td>

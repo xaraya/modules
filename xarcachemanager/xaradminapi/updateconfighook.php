@@ -95,6 +95,17 @@ function xarcachemanager_adminapi_updateconfighook($args)
             break;
     }
 
+    if (xarModGetVar('xarcachemanager','AutoRegenSessionless')) {
+        xarOutputFlushCached('static');
+        $configKeys = array('Page.SessionLess');
+        $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
+                                         array('keys' => $configKeys, 'from' => 'file'));
+        
+        foreach ($sessionlessurls['Page.SessionLess'] as $url) {
+            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
+        }
+    }
+
     // Return the extra info
     return $extrainfo;
 }

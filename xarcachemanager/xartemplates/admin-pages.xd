@@ -87,6 +87,18 @@
   </td>
 </tr>
 <tr>
+  <td colspan="2">
+    <label for="autoregenerate"><xar:mlstring>Auto-regenerate session-less URL cache</xar:mlstring></label>
+  </td>
+  <td>
+    <xar:if condition="xarModGetVar('xarcachemanager','AutoRegenSessionless')">
+      <input type="checkbox" name="autoregenerate" id="autoregenerate" value="1" checked="checked" />
+    <xar:else/>
+      <input type="checkbox" name="autoregenerate" id="autoregenerate" value="1" />
+    </xar:if>
+  </td>
+</tr>
+<tr>
   <th colspan="3">
     <xar:mlstring>Auto-cache configuration</xar:mlstring>
   </th>

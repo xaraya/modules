@@ -13,7 +13,8 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVarFetch('pageexpiretime',   'str:1:9', $pageexpiretime,  '0',  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachedisplayview', 'isset', $cachedisplayview, 0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachetimestamp',   'isset', $cachetimestamp,   0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('expireheader',      'isset', $expireheader,   0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('expireheader',     'isset', $expireheader,   0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('autoregenerate',   'isset', $autoregenerate,   0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cacheblocks',      'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockexpiretime',  'str:1:9', $blockexpiretime, '0',  XARVAR_NOT_REQUIRED)) { return; }
 
@@ -134,6 +135,13 @@ function xarcachemanager_admin_updateconfig()
         xarModSetVar('xarcachemanager','FlushOnNewPollvote', 1);
     } else {
         xarModSetVar('xarcachemanager','FlushOnNewPollvote', 0);
+    }
+    
+    // set option for auto regeneration of session-less url list cache on event invalidation
+    if ($autoregenerate) {
+        xarModSetVar('xarcachemanager','AutoRegenSessionless', 1);
+    } else {
+        xarModSetVar('xarcachemanager','AutoRegenSessionless', 0);
     }
 
     xarResponseRedirect(xarModURL('xarcachemanager', 'admin', 'modifyconfig'));
