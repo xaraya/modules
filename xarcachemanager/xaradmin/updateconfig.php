@@ -77,7 +77,7 @@ function xarcachemanager_admin_updateconfig()
 
     // see if we need to flush the cache when a new comment is added for some item
     xarVarFetch('cacheflushcomment','isset',$cacheflushcomment,0,XARVAR_NOT_REQUIRED);
-    if ($cacheflushcomment) {
+    if ($cacheflushcomment && $cachedisplayview) {
         xarModSetVar('xarcachemanager','FlushOnNewComment', 1);
     } else {
         xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
@@ -85,15 +85,15 @@ function xarcachemanager_admin_updateconfig()
 
     // see if we need to flush the cache when a new rating is added for some item
     xarVarFetch('cacheflushrating','isset',$cacheflushrating,0,XARVAR_NOT_REQUIRED);
-    if ($cacheflushcomment) {
+    if ($cacheflushrating  && $cachedisplayview) {
         xarModSetVar('xarcachemanager','FlushOnNewRating', 1);
     } else {
         xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
     }
 
     // see if we need to flush the cache when a new vote is cast on poll hooked to some item
-    xarVarFetch('cacheflushpullvote','isset',$cacheflushpollvote,0,XARVAR_NOT_REQUIRED);
-    if ($cacheflushcomment) {
+    xarVarFetch('cacheflushpollvote','isset',$cacheflushpollvote,0,XARVAR_NOT_REQUIRED);
+    if ($cacheflushpollvote && $cachedisplayview) {
         xarModSetVar('xarcachemanager','FlushOnNewPollvote', 1);
     } else {
         xarModSetVar('xarcachemanager','FlushOnNewPollvote', 0);
