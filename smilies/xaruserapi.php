@@ -67,8 +67,8 @@ function smilies_userapi_getall($args)
 }
 
 /**
- * get a specific smily
- * @poaram $args['sid'] id of smily to get
+ * get a specific smiley
+ * @poaram $args['sid'] id of smiley to get
  * @returns array
  * @return link array, or false on failure
  */
@@ -191,21 +191,21 @@ function smilies_userapitransform($text)
         $tmpsmilies = xarModAPIFunc('smilies', 'user', 'getall');
 
         // Create search/replace array from autolinks information
-        foreach ($tmpsmilies as $tmpsmily) {
+        foreach ($tmpsmilies as $tmpsmiley) {
             // Munge word boundaries to stop autolinks from linking to
             // themselves or other autolinks in step 2
-            $tmpsmily['icon'] = preg_replace('/(\b)/', '\\1ALSPACEHOLDER', $tmpsmily['icon']);
+            $tmpsmiley['icon'] = preg_replace('/(\b)/', '\\1ALSPACEHOLDER', $tmpsmiley['icon']);
 
             // Allow matches for smiles with < and > entities.
-            $tmpsmily['code'] = preg_quote($tmpsmily['code'], '/');
-            $tmpsmily['code'] = str_replace(array('\>', '\<'), array('(?:&gt;|>)', '(?:&lt;|<)'), $tmpsmily['code']);
+            $tmpsmiley['code'] = preg_quote($tmpsmiley['code'], '/');
+            $tmpsmiley['code'] = str_replace(array('\>', '\<'), array('(?:&gt;|>)', '(?:&lt;|<)'), $tmpsmiley['code']);
 
             // Note use of assertions here to only match specific words,
             // for instance ones that are not part of a hyphenated phrase
             // or (most) bits of an email address
-            $alsearch[] = '/(?<![\w@\.:-])(' . $tmpsmily['code'] . ')(?![\w@:-])(?!\.\w)/i';
-            $alreplace[] = '<img src="' . htmlspecialchars($tmpsmily['icon']) .
-                           '" alt="' . htmlspecialchars($tmpsmily['emotion']) .
+            $alsearch[] = '/(?<![\w@\.:-])(' . $tmpsmiley['code'] . ')(?![\w@:-])(?!\.\w)/i';
+            $alreplace[] = '<img src="' . htmlspecialchars($tmpsmiley['icon']) .
+                           '" alt="' . htmlspecialchars(xarML($tmpsmiley['emotion'])) .
                            '" />';
         }
     }

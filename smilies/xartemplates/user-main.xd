@@ -6,13 +6,13 @@
 <table width="40%" border="0" cellspacing="0" cellpadding="4">
     <tr>
         <th>
-			<xar:mlstring>Smily Code</xar:mlstring>
+			<xar:mlstring>Smiley Code</xar:mlstring>
 		</th>
         <th>
-			<xar:mlstring>Smily Icon</xar:mlstring>
+			<xar:mlstring>Smiley Icon</xar:mlstring>
 		</th>
         <th>
-			<xar:mlstring>Smily Emotion</xar:mlstring>
+			<xar:mlstring>Smiley Emotion</xar:mlstring>
 		</th>
 	</tr>
     <xar:loop name="$items">

@@ -96,13 +96,13 @@ function smilies_adminapi_delete($args)
     }
 
     // The user API function is called
-    $link = xarModAPIFunc('smilies',
+    $smiley = xarModAPIFunc('smilies',
                           'user',
                           'get',
                           array('sid' => $sid));
 
-    if ($link == false) {
-        $msg = xarML('No Such Smily Present', 'smilies');
+    if (empty($smiley)) {
+        $msg = xarML('No Such Smiley Present', 'smilies');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }

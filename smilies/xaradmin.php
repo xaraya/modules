@@ -65,7 +65,7 @@ function smilies_admin_new()
 
             // Check arguments
             if (empty($code)) {
-                $msg = xarML('No Smily Code Entered');
+                $msg = xarML('No Smiley Code Entered');
                 xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
                 return;
             }

@@ -6,16 +6,16 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <tr>
         <th>
-			<xar:mlstring>Smily Code</xar:mlstring>
+			<xar:mlstring>Smiley Code</xar:mlstring>
 		</th>
         <th>
-			<xar:mlstring>Smily Icon</xar:mlstring>
+			<xar:mlstring>Smiley Icon</xar:mlstring>
 		</th>
         <th>
-			<xar:mlstring>Smily Icon Path</xar:mlstring>
+			<xar:mlstring>Smiley Icon Path</xar:mlstring>
 		</th>
         <th>
-			<xar:mlstring>Smily Emotion</xar:mlstring>
+			<xar:mlstring>Smiley Emotion</xar:mlstring>
 		</th>
         <th>
 			<xar:mlstring>Options</xar:mlstring>
