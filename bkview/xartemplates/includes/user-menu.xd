@@ -116,6 +116,7 @@
         </ul>
         <div class="bktabnav-hairline" />
     </div>
+  </div>
 </xar:if>
 <div class="xar-mod-title">
     #$pageinfo# 
