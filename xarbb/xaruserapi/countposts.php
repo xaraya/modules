@@ -40,7 +40,7 @@ function xarbb_userapi_countposts($args)
     $query = "SELECT COUNT(1)
               FROM $xbbtopicstable
               WHERE xar_tposter = ?";
-    $result =& $dbconn->Execute($query,array($uid));
+    $result =& $dbconn->Execute($query,array((int)$uid));
     if (!$result) return;
     list($numitems) = $result->fields;
     $result->Close();
