@@ -41,6 +41,10 @@
   var i = 0;
   var theHeight = 0;
 
+  if ( theIframe == null ) {
+    theIframe = document.getElementById('iframe');
+  }
+
   while(i != docTD.length)
   {
     theTD = docTD[i];
@@ -55,7 +59,7 @@
   }
 
 // Size the IFRAME
-  if(theHeight != 0)
+  if( (theHeight != 0) && (theIframe != null) )
   {
     theIframe.height = theHeight;
   }
