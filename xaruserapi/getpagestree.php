@@ -11,7 +11,7 @@ function xarpages_userapi_getpagestree($args)
 
     // Return if no pages found.
     if (empty($pages)) {
-        return;
+        return array('pages' => array(), 'children' => array());
     }
 
     // Inititalise the return value.

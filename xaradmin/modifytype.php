@@ -76,14 +76,16 @@ function xarpages_admin_modifytype()
     $data['modifyhooks'] =& $modifyhooks;
 
     // Clear out any empty hooks, trim the remainder.
-    foreach($confighooks as $key => $confighook) {
-        if (trim($confighook) == '') {
-            unset($confighooks[$key]);
-        } else {
-            $confighooks[$key] = trim($confighook);
+    if (isset($confighooks)) {
+        foreach($confighooks as $key => $confighook) {
+            if (trim($confighook) == '') {
+                unset($confighooks[$key]);
+            } else {
+                $confighooks[$key] = trim($confighook);
+            }
         }
+        $data['confighooks'] =& $confighooks;
     }
-    $data['confighooks'] =& $confighooks;
 
     // Pass the page type to the template.
     $data['type'] = $type;
