@@ -14,19 +14,19 @@ function images_user_display( $args )
 {
 
     extract ($args);
-
+    
     if (!xarVarFetch('fileId', 'int:1:', $fileId)) return;
     if (!xarVarFetch('width',  'str:1:', $width,  '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('height', 'str:1:', $height, '', XARVAR_NOT_REQUIRED)) return;
 
     $image = xarModAPIFunc('images', 'user', 'load_image', array('fileId' => $fileId));
-
+    
     if (!is_object($image)) {
         return FALSE;
     }
 
-    $fileType = $image->mime;
-    $fileName = $image->fileName;
+    $fileType =& $image->mime;
+    $fileName =& $image->fileName;
 
     if (isset($width) && !empty($width)) {
         $width = urldecode($width);
@@ -73,27 +73,24 @@ function images_user_display( $args )
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
         return FALSE;
     }
+
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    $pageBuffer[] = ob_get_contents();
-
-    while (@ob_end_clean()) {
+    do {
         $pageBuffer[] = ob_get_contents();
-    }
-
+    } while (@ob_end_clean());
     $buffer = array_reverse($pageBuffer);
     $pageBuffer = $buffer;
     unset($buffer);
-
+    
     // Start buffering for the file
     ob_start();
-
+    
     $fileSize = @filesize($fileLocation);
-
     if (empty($fileSize)) {
         $fileSize = 0;
     }
-
+    
     $fp = @fopen($fileLocation, 'rb');
     if(is_resource($fp))   {
 
@@ -102,13 +99,13 @@ function images_user_display( $args )
             if (strlen($data) == 0) {
                 break;
             } else {
-                print("$data");
+                echo "$data";
             }
         } while (TRUE);
 
         fclose($fp);
     }
-
+    
     // Headers -can- be sent after the actual data
     // Why do it this way? So we can capture any errors and return if need be :)
     // not that we would have any errors to catch at this point but, mine as well
@@ -118,18 +115,17 @@ function images_user_display( $args )
     // not like headers being sent for iamges - so leave them out for those particular cases
     $osName      = xarSessionGetVar('osname');
     $browserName = xarSessionGetVar('browsername');
-
+    
     if ($osName != 'mac' || ($osName == 'mac' && !stristr($browserName, 'internet explorer'))) {
         header("Pragma: ");
         header("Cache-Control: ");
-        header("Content-type: $fileType");
+        header("Content-type: $fileType[text]");
         header("Content-disposition: inline; filename=\"$fileName\"");
 
         if ($fileSize) {
             header("Content-length: $fileSize");
         }
     }
-
     // TODO: evaluate registering shutdown functions to take care of
     //       ending Xaraya in a safe manner
     exit();
