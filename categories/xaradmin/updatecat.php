@@ -52,6 +52,9 @@ function categories_admin_updatecat()
         }
     }
     foreach ($cids as $cid) {
+        if (empty($name[$cid])) {
+            continue;
+        }
         switch (intval($position[$cid])) {
             case 1: // above - same level
             default:
