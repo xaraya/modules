@@ -13,15 +13,15 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-define('BK_ITEMTYPE_REPO',  1);
-define('BK_ITEMTYPE_FILE',  2);
-define('BK_ITEMTYPE_CSET',  3);
-define('BK_ITEMTYPE_DELTA', 4);
+define('BK_ITEMTYPE_REPO',  8);
+define('BK_ITEMTYPE_FILE',  4);
+define('BK_ITEMTYPE_CSET',  1);
+define('BK_ITEMTYPE_DELTA', 2);
 
-define('BK_SEARCH_REPO',   1);
-define('BK_SEARCH_FILE',   2);
-define('BK_SEARCH_CSET',   4);
-define('BK_SEARCH_DELTAS', 8);
+define('BK_SEARCH_REPO',   8);
+define('BK_SEARCH_FILE',   4);
+define('BK_SEARCH_CSET',   1);
+define('BK_SEARCH_DELTAS', 2);
 
 /**
  *  Class to model a repository

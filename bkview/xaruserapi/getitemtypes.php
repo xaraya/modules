@@ -34,7 +34,9 @@ function bkview_userapi_getitemtypes()
                           'title' => xarVarPrepForDisplay('Delta comments'),
                           'url'   => xarModUrl('bkview','user','view')
                           );
-
+    
+    ksort($itemtypes);
+    
     return $itemtypes;
 }
 ?>
