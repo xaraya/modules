@@ -19,8 +19,11 @@ function articles_topitemsblock_init()
         'numitems' => 5,
         'pubtypeid' => 0,
         'nopublimit' => false,
+        'linkpubtype' => true,
         'catfilter' => 0,
+        'includechildren' => false,
         'nocatlimit' => true,
+        'linkcat' => false,
         'dynamictitle' => true,
         'toptype' => 'hits',
         'showvalue' => true,
@@ -62,6 +65,11 @@ function articles_topitemsblock_display($blockinfo)
         $vars = $blockinfo['content'];
     }
 
+    // This is to maintain legacy consistancy
+    if (!isset($vars['linkpubtype'])) {
+        $vars['linkpubtype'] = true;
+    }
+
     // see if we're currently displaying an article
     if (xarVarIsCached('Blocks.articles', 'aid')) {
         $curaid = xarVarGetCached('Blocks.articles', 'aid');
@@ -98,7 +106,7 @@ function articles_topitemsblock_display($blockinfo)
                     if ($curaid == -1) {
                         //$cid = $curcids[0]['name'];
                         $cid = $curcids[0];
-                        $cidsarray = $curcids;
+                        $cidsarray = array($curcids[0]);
                     } else {
                         $cid = $curcids[0];
                         $cidsarray = array($curcids[0]);
@@ -114,9 +122,14 @@ function articles_topitemsblock_display($blockinfo)
             }
         }
 
+        //echo $includechildren;
+        if (!empty($vars['includechildren']) && !empty($cidsarray[0])) {
+            $cidsarray[0] = '_' . $cidsarray[0];
+        }
+
         if (!empty($cid)) {
             // if we're viewing all items below a certain category, i.e. catid = _NN
-            $cid = preg_replace('/_/','',$cid);
+            $cid = str_replace('_', '', $cid);
             $thiscategory = xarModAPIFunc(
                 'categories','user','getcat',
                 array('cid' => $cid, 'return_itself' => 'return_itself')
@@ -215,11 +228,13 @@ function articles_topitemsblock_display($blockinfo)
     foreach ($articles as $article) {
         $article['title'] = xarVarPrepHTMLDisplay($article['title']);
         if ($article['aid'] != $curaid) {
+            // Use the filtered category if set, and not including children
             $article['link'] = xarModURL(
                 'articles', 'user', 'display',
                 array(
                     'aid' => $article['aid'],
-                    'ptid' => $article['pubtypeid']
+                    'ptid' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL),
+                    'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                 )
             );
         } else {

@@ -34,7 +34,8 @@ function articles_featureditemsblock_init()
         'showfeaturedsum' => false,
         'moreitems' => array(),
         'showsummary' => false,
-        'linkpubtype' => false
+        'linkpubtype' => false,
+        'linkcat' => false
     );
 }
 
@@ -80,6 +81,7 @@ function articles_featureditemsblock_display(& $blockinfo)
     if (empty($vars['altsummary'])) {$vars['altsummary'] = '';}
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
     if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
+    if (empty($vars['linkcat'])) {$vars['linkcat'] = false;}
 
     if (!isset($vars['showvalue'])) {
         if ($vars['toptype'] == 'rating') {
@@ -126,7 +128,8 @@ function articles_featureditemsblock_display(& $blockinfo)
             'articles', 'user', 'display',
             array(
                 'aid' => $featuredart['aid'],
-                'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtypeid'] : NULL)
+                'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtypeid'] : NULL),
+                'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
             )
         );
 
@@ -165,7 +168,8 @@ function articles_featureditemsblock_display(& $blockinfo)
                     'articles', 'user', 'display',
                     array (
                         'aid' => $article['aid'],
-                        'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL)
+                        'itemtype' => (!empty($vars['linkpubtype']) ? $article['pubtypeid'] : NULL),
+                        'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
                     )
                 );
             } else {

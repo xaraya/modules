@@ -40,6 +40,7 @@ function articles_featureditemsblock_modify($blockinfo)
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
     if (empty($vars['showsummary'])) {$vars['showsummary'] = false;}
     if (empty($vars['linkpubtype'])) {$vars['linkpubtype'] = false;}
+    if (!isset($vars['linkcat'])) {$vars['linkcat'] = false;}
 
     if (!isset($vars['showvalue'])) {
         if ($vars['toptype'] == 'rating') {
@@ -152,6 +153,7 @@ function articles_featureditemsblock_update($blockinfo)
     xarVarFetch('showsummary', 'checkbox', $vars['showsummary'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('showvalue', 'checkbox', $vars['showvalue'], false, XARVAR_NOT_REQUIRED);
     xarVarFetch('linkpubtype', 'checkbox', $vars['linkpubtype'], false, XARVAR_NOT_REQUIRED);
+    xarVarFetch('linkcat', 'checkbox', $vars['linkcat'], false, XARVAR_NOT_REQUIRED);
 
     $blockinfo['content'] = $vars;
     return $blockinfo;
