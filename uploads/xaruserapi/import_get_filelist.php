@@ -46,13 +46,13 @@ function uploads_userapi_import_get_filelist( $args )
     if (!isset($fileLocation)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].',
                      'fileLocation', 'import_get_filelist', 'uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     if (!file_exists($fileLocation)) {
         $msg = xarML("Unable to acquire list of files to import - Location '#(1)' does not exist!",$fileLocation);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
         return;
     }
 

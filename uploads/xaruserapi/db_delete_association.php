@@ -25,7 +25,7 @@ function uploads_userapi_db_delete_assocation( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
                      'fileId','db_delete_assocation','uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     } elseif (is_array($fileId)) {
         $where = 'WHERE (xar_fileEntry_id IN (' . implode(',', $fileId) . ')';

@@ -19,7 +19,7 @@ function uploads_init()
     //Not needed anymore with the dependency checks.
     if (!xarModIsAvailable('mime')) {
         $msg = xarML('The mime module should be activated first');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
         return;
     }
 
@@ -136,7 +136,7 @@ function uploads_init()
      */
     if (!xarModRegisterHook('item', 'transform', 'API', 'uploads', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook');
-         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
     }
 
@@ -232,7 +232,7 @@ function uploads_upgrade($oldversion)
             //Not needed anymore with the dependency checks.
             if (!xarModIsAvailable('mime')) {
                 $msg = xarML('The mime module should be activated first');
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY', new SystemException($msg));
                 return;
             }
 
@@ -558,7 +558,7 @@ function uploads_delete()
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
     // handle any exception
-    xarExceptionHandled();
+    xarErrorHandled();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartables['file_data']);
@@ -567,7 +567,7 @@ function uploads_delete()
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
-    xarExceptionHandled();
+    xarErrorHandled();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartables['file_associations']);
@@ -576,7 +576,7 @@ function uploads_delete()
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
-    xarExceptionHandled();
+    xarErrorHandled();
 
     return true;
 }

@@ -33,7 +33,7 @@ function uploads_userapi_decode_shorturl($params)
 
         if (!isset($fileInfo[$fileId]) || !count($fileInfo[$fileId])) {
             $msg = xarML('Unable to display - file \'#(1)\' does not exist!', $params[1] );
-            xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
             return;
         } else {
             $fileInfo = $fileInfo[$fileId];

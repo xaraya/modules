@@ -17,7 +17,7 @@ function uploads_user_file_properties( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing paramater [#(1)] for GUI function [#(2)] in module [#(3)].',
                      'fileId', 'file_properties', 'uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     
@@ -45,15 +45,15 @@ function uploads_user_file_properties( $args )
                 if (!xarModAPIFunc('uploads', 'user', 'db_modify_file', $args)) {
                     $msg = xarML('Unable to change filename for file: #(1) with file Id #(2)', 
                                   $fileInfo['fileName'], $fileInfo['fileId']);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN_ERROR', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN_ERROR', new SystemException($msg));
                     return;
                 }
                 xarResponseRedirect(xarModURL('uploads', 'user', 'file_properties', array('fileId' => $fileId)));
                 return;
             } else {
-                xarExceptionHandled();
+                xarErrorHandled();
                 $msg = xarML('You do not have the necessary permissions for this object.');
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
                 // No access - so return the exception
                 return;
             }
@@ -118,9 +118,9 @@ function uploads_user_file_properties( $args )
             echo xarTplModule('uploads','user','file_properties', $data, NULL);
             exit();
         } else {
-            xarExceptionHandled();
+            xarErrorHandled();
             $msg = xarML('You do not have the necessary permissions for this object.');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new SystemException($msg));
             // No access - so return the exception
             return;
         }

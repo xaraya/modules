@@ -18,7 +18,7 @@ function uploads_userapi_file_delete( $args )
     if (!isset($fileName)) {
         $msg = xarML('Missing parameter [#(1)] for function [(#(2)] in module [#(3)]',
                      'fileName','file_move','uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
     
@@ -30,7 +30,7 @@ function uploads_userapi_file_delete( $args )
     
     if (!unlink($fileName)) {
         $msg = xarML('Unable to remove file: [#(1)].', $fileName);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_DELETE', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_DELETE', new SystemException($msg));
         return FALSE;
     }
     

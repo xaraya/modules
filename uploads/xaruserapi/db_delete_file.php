@@ -20,7 +20,7 @@ function uploads_userapi_db_delete_file( $args )
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
                      'file_id','db_delete_file','uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
     

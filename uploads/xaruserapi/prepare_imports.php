@@ -8,7 +8,7 @@ function uploads_userapi_prepare_imports( $args )
     if (!isset($importFrom)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
                      'importFrom','prepare_imports','uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
@@ -53,7 +53,7 @@ function uploads_userapi_prepare_imports( $args )
 
             while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
-                $errorObj = xarExceptionValue();
+                $errorObj = xarErrorValue();
 
                 if (is_object($errorObj)) {
                     $fileError = array('errorMesg'   => $errorObj->getShort(),
@@ -68,7 +68,7 @@ function uploads_userapi_prepare_imports( $args )
                 }
                 $fileInfo['errors'][] = $fileError;
                 // Clear the exception because we've handled it already
-                xarExceptionHandled();
+                xarErrorHandled();
             }
         } else {
             $fileInfo['errors'][]['errorMsg'] = xarML('Unknown');

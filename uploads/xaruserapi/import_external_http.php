@@ -64,12 +64,12 @@ function uploads_userapi_import_external_http( $args )
     if (($httpId = fopen($httpURI, 'rb')) === FALSE) {
         $msg = xarML('Unable to connect to host [#(1):#(2)] to retrieve file [#(3)]', 
                     $uri['host'], $uri['port'], basename($uri['path']));
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_CONNECT', new SystemException($msg));
     } else {
         if (($tmpId = fopen($tmpName, 'wb')) === FALSE) {
             $msg = xarML('Unable to open temp file to store remote host [#(1):#(2)] file [#(3)]', 
                         $uri['host'], $uri['port'], basename($uri['path']));
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_OPEN', new SystemException($msg));
         } else {
 
             // Note that this is a -blocking- process - the connection will 
@@ -83,11 +83,11 @@ function uploads_userapi_import_external_http( $args )
                     $total += strlen($data);
                     if ($total > $maxSize) {
                         $msg = xarML('File size is greater than the maximum allowable.');
-                        xarExceptionSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
+                        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
                         break;
                     } elseif (fwrite($tmpId, $data, strlen($data)) !== strlen($data)) {
                         $msg = xarML('Unable to write to temp file!');
-                        xarExceptionSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
+                        xarErrorSet(XAR_SYSTEM_EXCEPTION, '_UPLOADS_ERR_NO_WRITE', new SystemException($msg));
                         break;
                     }
                 }
@@ -120,7 +120,7 @@ function uploads_userapi_import_external_http( $args )
         
         while (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
 
-            $errorObj = xarExceptionValue();
+            $errorObj = xarErrorValue();
 
             if (is_object($errorObj)) {
                 $fileError = array('errorMesg' => $errorObj->getShort(),
@@ -137,7 +137,7 @@ function uploads_userapi_import_external_http( $args )
             $fileInfo['errors'][] = $fileError;
 
             // Clear the exception because we've handled it already
-            xarExceptionHandled();
+            xarErrorHandled();
 
         }    
     } else {

@@ -21,26 +21,26 @@ function uploads_userapi_file_dump( $args )
     if (!isset($fileSrc)) {
         $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
                       'fileSrc', 'file_dump', 'uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!isset($fileId)) {
         $msg = xarML('Missing parameter [#(1)] for API function [#(2)] in module [#(3)].',
                       'fileId', 'file_dump', 'uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
     if (!file_exists($fileSrc)) {
         $msg = xarML('Unable to locate file [#(1)]. Are you sure it\'s there??', $fileSrc);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NOT_EXIST', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NOT_EXIST', new SystemException($msg));
         return FALSE;
     }
 
     if (!is_readable($fileSrc) || !is_writable($fileSrc)) {
         $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $fileSrc);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
         return FALSE;
     }
 
@@ -50,7 +50,7 @@ function uploads_userapi_file_dump( $args )
     if (!count($fileInfo) || empty($fileInfo)) {
         $msg = xarML('FileId [#(1)] does not exist. File [#(2)] does not have a corresponding metadata entry in the databsae.',
                      $fileId, $fileSrc);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_ENTRY', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_ENTRY', new SystemException($msg));
         return FALSE;
     } else {
         $dataBlocks = xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileId));
@@ -60,7 +60,7 @@ function uploads_userapi_file_dump( $args )
             // so truncate the file and then save it
             if (!xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId))) {
                 $msg = xarML('Unable to truncate file [#(1)] in database.', $fileInfo['fileName']);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_ENTRY', new SystemException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_ENTRY', new SystemException($msg));
                 return FALSE;
             }
         }
@@ -84,13 +84,13 @@ function uploads_userapi_file_dump( $args )
                     }
                     xarModAPIFunc('uploads', 'user', 'db_delete_file_data', array('fileId' => $fileId));
                     $msg = xarML('Unable to save file contents to database.');
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_WRITE', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_DB_WRITE', new SystemException($msg));
                     return FALSE;
                 }
             } while (TRUE);
        } else {
             $msg = xarML('Cannot read and/or write to file [#(1)]. File will be read from and deleted afterwards. Please ensure that this application has sufficient access to do so.', $fileSrc);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'UPLOADS_ERR_NO_READWRITE', new SystemException($msg));
             return FALSE;
        }
     }

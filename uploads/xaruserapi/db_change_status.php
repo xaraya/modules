@@ -20,14 +20,14 @@ function uploads_userapi_db_change_status( $args )
     if (!isset($fileId) && !isset($fileType)) {
         $msg = xarML('Missing identifying parameter function [#(1)] in module [#(2)]', 
                      'db_change_status','uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
     
     if (!isset($newStatus)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]', 
                      'newStatus','db_change_status','uploads');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
     

@@ -43,7 +43,7 @@ function uploads_adminapi_dd_convert_value($args)
                 $storeList[] = $fileInfo['fileId'];
             } else {
                 $msg = xarML('Error Found: #(1)', $fileInfo['errors'][0]['errorMesg']);
-                xarExceptionSet(XAR_USER_EXCEPTION, 'UNKNOWN_ERROR', new DefaultUserException($msg));
+                xarErrorSet(XAR_USER_EXCEPTION, 'UNKNOWN_ERROR', new DefaultUserException($msg));
 
                 return $value;
             }

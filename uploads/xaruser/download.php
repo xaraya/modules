@@ -12,7 +12,7 @@ function uploads_user_download()
     
     if (empty($fileInfo) || !count($fileInfo)) {
         $msg = xarML('Unable to retrieve information on file [#(1)]', $fileId);
-        xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOADS_ERR_NO_FILE', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'UPLOADS_ERR_NO_FILE', new SystemException($msg));
         return;
     }
     
@@ -28,9 +28,9 @@ function uploads_user_download()
 
     // If you are an administrator OR the file is approved, continue
     if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('AdminUploads', false, 'File' . $instance)) {
-        xarExceptionHandled();
+        xarErrorHandled();
         $msg = xarML('You do not have the necessary permissions for this object.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new DefaultUserException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new DefaultUserException($msg));
         // No access - so return the exception
         return;
     }
@@ -39,13 +39,13 @@ function uploads_user_download()
         if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM || ($fileInfo['storeType'] == _UPLOADS_STORE_DB_ENTRY)) {
             if (!file_exists($fileInfo['fileLocation'])) {
                 $msg = xarML('File [#(1)] does not exist in FileSystem.', $fileInfo['fileName']);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new DefaultUserException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new DefaultUserException($msg));
                 return;
             }
         } elseif ($fileInfo['storeType'] & _UPLOADS_STORE_DB_FULL) {
             if (!xarModAPIFunc('uploads', 'user', 'db_count_data', array('fileId' => $fileInfo['fileId']))) {
                 $msg = xarML('File [#(1)] does not exist in Database.', $fileInfo['fileName']);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new DefaultUserException($msg));
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new DefaultUserException($msg));
                 return;
             }
         }        
