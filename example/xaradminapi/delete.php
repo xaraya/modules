@@ -72,9 +72,9 @@ function example_adminapi_delete($args)
     // make the SQL statement relatively easy to read.  Also, separating
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
-    $query = "DELETE FROM $exampletable
-            WHERE xar_exid = " . xarVarPrepForStore($exid);
-    $result = &$dbconn->Execute($query); 
+    $query = "DELETE FROM $exampletable WHERE xar_exid = ?";
+    // The bind variable $exid is directly put in as a parameter.
+    $result = &$dbconn->Execute($query,array($exid)); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

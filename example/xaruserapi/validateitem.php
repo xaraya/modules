@@ -38,9 +38,9 @@ function example_userapi_validateitem($args)
     // if it is ever needed
     $query = "SELECT xar_name
             FROM $exampletable
-            WHERE xar_name = '" . xarVarPrepForStore($name) . "'";
+            WHERE xar_name = ?";
 
-    $result = &$dbconn->Execute($query); 
+    $result = &$dbconn->Execute($query,array($name)); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

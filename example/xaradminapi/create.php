@@ -76,11 +76,17 @@ function example_adminapi_create($args)
               xar_exid,
               xar_name,
               xar_number)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              " . xarvarPrepForStore($number) . ")";
-    $result = &$dbconn->Execute($query); 
+            VALUES (?,?,?)";
+    // Create an array of values which correspond to the order of the 
+    // Question marks  in the statement above. The database layer will then
+    // figure out what to do with these variables before actually sending them
+    // to the database. (such as quoting, escaping or other operations specific to 
+    // the backend) 
+    // In some cases you need to explicitly state the type of the variable like 
+    // in the $name variable below (not needed here, just for educational purposes)
+    $bindvars = array($nextId, (string) $name, $number);
+    $result = &$dbconn->Execute($query,$bindvars);
+    
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

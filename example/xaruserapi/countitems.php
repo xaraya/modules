@@ -38,7 +38,9 @@ function example_userapi_countitems()
     // if it is ever needed
     $query = "SELECT COUNT(1)
             FROM $exampletable";
-    $result = &$dbconn->Execute($query); 
+    // If there are no variables you can pass in an empty array for bind variables
+    // or no parameter.
+    $result = &$dbconn->Execute($query,array()); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

@@ -83,6 +83,10 @@ function example_userapi_getall($args)
                    xar_number
             FROM $exampletable
             ORDER BY xar_name";
+    // SelectLimit also supports bind variable, they get to be put in
+    // as the last parameter in the function below. In this case we have no
+    // bind variables, so we left the parameter out. We could have passed in an
+    // empty array though.
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

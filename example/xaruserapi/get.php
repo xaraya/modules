@@ -55,8 +55,8 @@ function example_userapi_get($args)
     $query = "SELECT xar_name,
                    xar_number
             FROM $exampletable
-            WHERE xar_exid = " . xarVarPrepForStore($exid);
-    $result = &$dbconn->Execute($query); 
+            WHERE xar_exid = ?";
+    $result = &$dbconn->Execute($query,array($exid)); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

@@ -93,10 +93,10 @@ function example_adminapi_update($args)
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "UPDATE $exampletable
-            SET xar_name = '" . xarVarPrepForStore($name) . "',
-                xar_number = " . xarVarPrepForStore($number) . "
-            WHERE xar_exid = " . xarVarPrepForStore($exid);
-    $result = &$dbconn->Execute($query); 
+            SET xar_name =?, xar_number = ?
+            WHERE xar_exid = ?":
+    $bindvars = array($name, $number, $exid);
+    $result = &$dbconn->Execute($query,$bindvars); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 
