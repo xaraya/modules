@@ -1,0 +1,44 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - CacheSecurity</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/xarcachemanager/xarimages/admin.gif')" >
+                <img src="modules/xarcachemanager/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/xarcachemanager/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The CacheSecurity module provides an admin user interface to control the settings of the Security Caching system of Xaraya.</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The security cache system is designed to reduce the amount of work a server system has to do under heavy load conditions. It saves parts of the security checks calls in a way to minimize the necessary work and database calls to return the security check.</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>Please do not confuse security caching with Xaraya's variable, template or output caching systems. Each are different. In time, they will likely use the same caching infrastructure, but will still provide different caching for different purposes.  General data caching is also planned for xarCache. </xar:mlstring></p>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>
+                The Cache Security module has several tools for managing the Cache Security system.  The tools are organized under the following menu links: 
+            </xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Synchronize All - synchronizes all of the security caches at once.</xar:mlstring></li>
+                <li><xar:mlstring>Synchronize Masks - synchronizes just the security masks cache.</xar:mlstring></li>
+                <li><xar:mlstring>Synchronize Masks Structure - synchronizes just the security masks structure cache.</xar:mlstring></li>
+                <li><xar:mlstring>Synchornize Privileges - synchronizes just the security privileges cache.</xar:mlstring></li>
+                <li><xar:mlstring>Synchornize Privileges Structure - synchronizes just the security privileges structure cache.</xar:mlstring></li>
+                <li><xar:mlstring>Turns On/Off - Turn the security caching on and off.</xar:mlstring></li>
+            </ul>
+        </div>
+    </div>
+</div>
