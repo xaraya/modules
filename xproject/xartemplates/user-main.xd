@@ -29,6 +29,6 @@
 
 <!-- some variable filled in by the function using this template -->
 
-<center><strong> #$welcome# </strong></center>
+<div align="center"><strong> #$welcome# </strong></div>
 
 
