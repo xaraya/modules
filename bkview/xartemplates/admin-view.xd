@@ -3,7 +3,7 @@
 <xar:if condition="count($items) != 0">
 <table class="csets">
   <tr>
-  	<th><xar:mlstring>Name</xar:mlstring></th>
+      <th><xar:mlstring>Name</xar:mlstring></th>
     <th><xar:mlstring>Path</xar:mlstring></th>
     <th><xar:mlstring>Identification</xar:mlstring></th>
     <th><xar:mlstring>Options</xar:mlstring></th>
@@ -24,7 +24,7 @@
         <xar:if condition="empty($loop:item['deleteurl'])">
           #$loop:item['deletetitle']#
         <xar:else />
-      	  <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+            <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
         </xar:if>
       </td>
     </tr>

@@ -2,15 +2,15 @@
 
 <div style="float: left; margin-top: 1em;">
 <table class="csets">
-	<tr>
-  	<th><xar:mlstring>Age</xar:mlstring></th>
+    <tr>
+      <th><xar:mlstring>Age</xar:mlstring></th>
     <th><xar:mlstring>Author</xar:mlstring></th>
     <th><xar:mlstring>Annotate</xar:mlstring></th>
     <th align="left" width="100%"><xar:mlstring>Comments</xar:mlstring></th>
   </tr>
-	<xar:loop name="$histlist">
-		<tr class="csets">
-			<td class="csets" nowrap>#$loop:item['age']#</td>
+    <xar:loop name="$histlist">
+        <tr class="csets">
+            <td class="csets" nowrap>#$loop:item['age']#</td>
       <td class="csets">
         <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$loop:item['author']#">
           #$loop:item['author']#
@@ -25,7 +25,7 @@
       </td>
       <td class="comments">#$loop:item['comments']#</td>
     </tr>
-	</xar:loop>
+    </xar:loop>
 </table>
 </div>
 

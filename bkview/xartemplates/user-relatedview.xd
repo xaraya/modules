@@ -9,20 +9,20 @@
     <th align="left" width="100%"><xar:mlstring>Comments</xar:mlstring></th>
   </tr>
 
-	<xar:loop name="$csets">
+    <xar:loop name="$csets">
     <tr class="csets">
       <td class="csets"nowrap>#$loop:item['age']#</td>
       <td class="csets">#$loop:item['author']#</td>
       <td class="csets">
-				<a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">
-				#$loop:item['rev']#
-				</a>
-			</td>
+                <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">
+                #$loop:item['rev']#
+                </a>
+            </td>
       <td class="comments">
-				#$loop:item['comments']#
-			</td>
-		</tr>
-	</xar:loop>
+                #$loop:item['comments']#
+            </td>
+        </tr>
+    </xar:loop>
 </table>
 </div>
 

@@ -3,7 +3,7 @@
 <xar:if condition="count($repositories) != 0">
 <table class="csets">
   <tr>
-  	<th><xar:mlstring>Name</xar:mlstring></th>
+      <th><xar:mlstring>Name</xar:mlstring></th>
     <th><xar:mlstring>Path</xar:mlstring></th>
   </tr>
   
