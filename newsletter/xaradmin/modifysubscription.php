@@ -28,7 +28,7 @@ function newsletter_admin_modifysubscription()
 
     // Get parameters from the input
     $data = array();
-    if (!xarVarFetch('uid', 'int:1:', $data['uid'])) return;
+    if (!xarVarFetch('uid', 'int:1:', $uid)) return;
 
     // Get all the publications available
     $publications = xarModAPIFunc('newsletter',
@@ -43,6 +43,8 @@ function newsletter_admin_modifysubscription()
 
     $data['publications'] = $publications;
     $data['htmlmail'] = false;
+    $data['name'] = '';
+    $data['uid'] = $uid;
 
     // See if the user is already subscribed
     for ($idx = 0; $idx < count($publications); $idx++) {
@@ -52,18 +54,48 @@ function newsletter_admin_modifysubscription()
                                        'user',
                                        'get',
                                         array('id' => 0, // doesn't matter
-                                              'uid' => $data['uid'],
+                                              'uid' => $uid,
                                               'pid' => $publications[$idx]['id'],
                                               'phase' => 'subscription'));
 
-        if (count($subscriptions) == 0) {
-            $data['publications'][$idx]['checked'] = false;
-        } else {
+        if (!empty($subscriptions)) {
             $data['publications'][$idx]['checked'] = true;
             // Doesn't matter which subscription we grab - they
             // should all be either html or text mail
             $data['htmlmail'] = $subscriptions[0]['htmlmail'];
             $data['name'] = $subscriptions[0]['name'];
+        } else {
+    // Get the subscription information
+    $subscription = xarModAPIFunc('newsletter',
+                                  'user',
+                                  'getaltsubscription',
+                                  array('id' => $uid));
+
+    // Check for exceptions
+    if (!isset($subscription) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        return; // throw back
+
+    // Add publications
+    $subscription['publications'] = $publications;
+
+    // See if the user is already subscribed
+    for ($idx = 0; $idx < count($publications); $idx++) {
+        
+        // The user API function is called
+        $subscriptions = xarModAPIFunc('newsletter',
+                                       'user',
+                                       'getaltsubscriptionbyemail',
+                                        array('id' => 0, // doesn't matter
+                                              'email' => $subscription['email'],
+                                              'pid' => $publications[$idx]['id'],
+                                              'phase' => 'altsubscription'));
+
+        if (!$subscriptions) {
+            $subscription['publications'][$idx]['checked'] = '';
+        } else {
+            $subscription['publications'][$idx]['checked'] = 'checked';
+        }
+    }
         }
     }
 

@@ -9,31 +9,39 @@
     <div class="contentBorder">
         <div style="text-align: left;margin: auto;">
             <table border="0" width="100%">
-                <xar:if condition="!empty($subscriptions)">
+                <xar:if condition="empty($subscriptions)">
                     <tr>
-                        <th>&nbsp;</th>
+                        <td>
+                            No subscriptions found!
+                        </td>
+                    </tr>
+                <xar:else />
+                    <tr>
+                    <xar:if condition="$publicationurl != ''">
+                        <th><a href="#$publicationurl#"><xar:mlstring>Publication</xar:mlstring></a></th>
+                    <xar:else />
                         <th><xar:mlstring>Publication</xar:mlstring></th>
+                    </xar:if>
+                    <xar:if condition="$nameurl != ''">
+                        <th><a href="#$nameurl#"><xar:mlstring>Name</xar:mlstring></a></th>
+                    <xar:else />
                         <th><xar:mlstring>Name</xar:mlstring></th>
-                        <th><xar:mlstring>User Name</xar:mlstring></th>
+                    </xar:if>
+                    <xar:if condition="$emailurl != ''">
+                        <th><a href="#$emailurl#"><xar:mlstring>Email Address</xar:mlstring></a></th>
+                    <xar:else />
                         <th><xar:mlstring>Email Address</xar:mlstring></th>
-                        <th><xar:mlstring>Options</xar:mlstring></th>
+                    </xar:if>
+                    <th><xar:mlstring>Options</xar:mlstring></th>
                     </tr>
                     <xar:loop name="$subscriptions">
                         <tr>
-                            <td>
-                                #xarVarPrepForDisplay($loop:index+1)#.
-                            </td>
                             <td>
                                 #$loop:item['title']#
                             </td>
                             <td>
                                 <xar:if condition="isset($loop:item['name'])">
                                     #$loop:item['name']#
-                                </xar:if>
-                            </td>
-                            <td>
-                                <xar:if condition="isset($loop:item['uname'])">
-                                    #$loop:item['uname']#
                                 </xar:if>
                             </td>
                             <td>
@@ -54,14 +62,10 @@
                             </td>
                         </tr>
                     </xar:loop>
-                <xar:else />
-                    <tr>
-                        <td>
-                            No subscriptions found!
-                        </td>
-                    </tr>
                 </xar:if>
             </table>
+            <!-- add the pager here -->
+            #$pager#
         </div>
     </div>
 </div>

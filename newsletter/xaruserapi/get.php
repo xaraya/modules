@@ -568,11 +568,13 @@ function newsletter_userapi_get($args)
         case 'subscription':
             // Name the table and column definitions
             $subscriptionsTable = $xartable['nwsltrSubscriptions'];
+            $deleteitems = array();
 
             // Get items
             $query = "SELECT $subscriptionsTable.xar_uid,
                              $subscriptionsTable.xar_pid,
                              $rolesTable.xar_name,
+                             $rolesTable.xar_state,
                              $subscriptionsTable.xar_htmlmail
                       FROM $subscriptionsTable, $rolesTable
                       WHERE $subscriptionsTable.xar_pid = ?
@@ -596,16 +598,35 @@ function newsletter_userapi_get($args)
                 list($uid, 
                      $pid, 
                      $ownerName,
+                     $state,
                      $htmlmail) = $result->fields;
 
-                 $items[] = array('uid' => $uid,
-                                  'pid' => $pid,
-                                  'name' => $ownerName,
-                                  'htmlmail' => $htmlmail);
+                // Determine if a user state has been set to ROLES_STATE_DELETED (0)
+                if ($state == 0) {
+                    $deleteitems[] = $uid;
+                } else {
+                    $items[] = array('uid' => $uid,
+                                      'pid' => $pid,
+                                      'name' => $ownerName,
+                                      'state' => $state,
+                                      'htmlmail' => $htmlmail,
+                                      'type' => 0); // xaraya subscription
+                }
             }
 
             // Close result set
             $result->Close();
+
+            // Delete any users that have been set to ROLES_STATE_DELETED (0)
+            if (!empty($deleteitems)) {
+                foreach ($deleteitems as $item) {
+                    // Remove this subscription
+                    $result = xarModAPIFunc('newsletter',
+                                            'admin',
+                                            'deletesubscription',
+                                            array('uid' => $item));
+                }
+            }
 
             break;
 
@@ -638,11 +659,15 @@ function newsletter_userapi_get($args)
                                   'name' => $name,
                                   'email' => $email,
                                   'pid' => $pid,
-                                  'htmlmail' => $htmlmail);
+                                  'htmlmail' => $htmlmail,
+                                  'state' => 3, // ROLES_STATE_ACTIVE
+                                  'type' => 1); // alternative subscription
             }
 
             // Close result set
             $result->Close();
+            
+            break;
 
         default:
             break;

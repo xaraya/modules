@@ -54,12 +54,18 @@ function newsletter_adminapi_countsubscriptions($args)
     $nwsltrSubTable = $xartable['nwsltrSubscriptions'];
     $nwsltrAltSubTable = $xartable['nwsltrAltSubscriptions'];
 
+    // Initialize bindvars
+    $bindvars = array();
+
     // Get subscriptions count
     $query = "SELECT COUNT(*) 
-              FROM $nwsltrSubTable
-              WHERE xar_pid = ?";
+              FROM $nwsltrSubTable";
 
-    $bindvars[] = (int) $id;
+    if ($id != 0) {
+        $query .= " WHERE xar_pid = ?";
+        $bindvars[] = (int) $id;
+    }
+
     $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error
@@ -73,12 +79,18 @@ function newsletter_adminapi_countsubscriptions($args)
     // Close result set
     $result->Close();
 
+    // Initialize bindvars
+    $bindvars = array();
+
     // Get subscriptions count
     $query = "SELECT COUNT(*) 
-              FROM $nwsltrAltSubTable
-              WHERE xar_pid = ?";
+              FROM $nwsltrAltSubTable";
 
-    $bindvars[] = (int) $id;
+    if ($id != 0) {
+        $query .= " WHERE xar_pid = ?";
+        $bindvars[] = (int) $id;
+    }
+
     $result =& $dbconn->Execute($query, $bindvars);
 
     // Check for an error

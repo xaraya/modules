@@ -296,6 +296,7 @@ function newsletter_init()
     xarModSetVar('newsletter', 'information', '');
     xarModSetVar('newsletter', 'privacypolicy', '');
     xarModSetVar('newsletter', 'itemsperpage', '10');
+    xarModSetVar('newsletter', 'subscriptionsperpage', '25');
     xarModSetVar('newsletter', 'categorysort', '0');
     xarModSetVar('newsletter', 'linkexpiration', '60');
     xarModSetVar('newsletter', 'linkregistration', 'You must register on the website before you can view this story');
@@ -303,6 +304,7 @@ function newsletter_init()
     xarModSetVar('newsletter', 'commentarysource', '');
     xarModSetVar('newsletter', 'SupportShortURLs', 0);
     xarModSetVar('newsletter', 'bulkemail', 1);
+    xarModSetVar('newsletter', 'activeusers', 1);
 
     // Set default roles and privileges
     xarModSetVar('newsletter', 'publisher', 'NewsletterPublisher');
@@ -539,6 +541,7 @@ function newsletter_delete()
     xarModDelVar('newsletter', 'information');
     xarModDelVar('newsletter', 'privacypolicy');
     xarModDelVar('newsletter', 'itemsperpage');
+    xarModDelVar('newsletter', 'subscriptionsperpage');
     xarModDelVar('newsletter', 'categorysort');
     xarModDelVar('newsletter', 'linkexpiration');
     xarModDelVar('newsletter', 'linkregistration');
@@ -555,6 +558,7 @@ function newsletter_delete()
     xarModDelVar('newsletter', 'commentarysource');
     xarModDelVar('newsletter', 'SupportShortURLs');
     xarModDelVar('newsletter', 'bulkemail');
+    xarModDelVar('newsletter', 'activeusers');
 
     // Deletion successful
     return true;

@@ -14,7 +14,7 @@
 
 
 /**
- * delete a subscription
+ * delete an alternative subscription
  *
  * @author Richard Cave
  * @param $args an array of arguments

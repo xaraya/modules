@@ -82,7 +82,7 @@ function newsletter_adminapi_searchaltsubscription($args)
                 $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
             }
    
-            $query .= " ORDER by $nwsltrAltSubTable.xar_name";
+            $query .= " ORDER by xar_name";
 
             break;
 
@@ -95,9 +95,9 @@ function newsletter_adminapi_searchaltsubscription($args)
                              $nwsltrAltSubTable.xar_email
                       FROM   $nwsltrAltSubTable, $nwsltrPubTable
                       WHERE  $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id
-                      AND    $nwsltrAltSubTable.xar_email LIKE '%" . $searchname . "%'
-                      ORDER by $nwsltrAltSubTable.xar_name";
+                      AND    $nwsltrAltSubTable.xar_email LIKE '%" . $searchname . "%'";
 
+            $query .= " ORDER by xar_name";
             break;
 
         case 'name':
@@ -137,6 +137,7 @@ function newsletter_adminapi_searchaltsubscription($args)
                           'pid' => $pid,
                           'title' => $title,
                           'name' => $name,
+                          'uname' => '', // blank for alt subscriptions
                           'email' => $email);
     }
 

@@ -20,6 +20,7 @@
  * @author Richard Cave
  * @param 'bulkemail' send a single email to every newsletter subscriber 
  * @param 'shorturls' short URL support
+ * @param 'activeusers' send email only to roles that are active
  * @returns bool
  * @return true on success, false on failure
  */
@@ -35,10 +36,12 @@ function newsletter_admin_updateconfig()
     // Get parameters from input
     if (!xarVarFetch('bulkemail', 'checkbox', $bulkemail, true, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('activeusers', 'checkbox', $activeusers, true, XARVAR_NOT_REQUIRED)) return;
 
     // Update module variables
     xarModSetVar('newsletter', 'bulkemail', $bulkemail);
     xarModSetVar('newsletter', 'SupportShortURLs', $shorturls);
+    xarModSetVar('newsletter', 'activeusers', $activeusers);
 
     // Redirect
     xarResponseRedirect(xarModURL('newsletter', 'admin', 'modifyconfig'));

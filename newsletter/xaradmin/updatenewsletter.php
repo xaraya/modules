@@ -21,6 +21,7 @@
  * @param 'publishername' the name of the company or user that is the publisher
  * @param 'information' the text provided in the information block
  * @param 'itemsperpage' the number of items to display per page 
+ * @param 'subscriptionsperpage' the number of subscriptions to display per page 
  * @returns bool
  * @return true on success, false on failure
  */
@@ -39,25 +40,35 @@ function newsletter_admin_updatenewsletter()
     if (!xarVarFetch('templateHTML', 'str:1:', $templateHTML, '')) return;
     if (!xarVarFetch('templateText', 'str:1:', $templateText, '')) return;
     if (!xarVarFetch('categorysort', 'int:0:1:', $categorysort, 0)) return;
-    if (!xarVarFetch('itemsperpage', 'int:0:', $itemsperpage, 0)) return;
+    if (!xarVarFetch('itemsperpage', 'int:0:', $itemsperpage, 10)) return;
+    if (!xarVarFetch('subscriptionsperpage', 'int:0:', $subscriptionsperpage, 25)) return;
     if (!xarVarFetch('previewbrowser', 'int:0:1:', $previewbrowser, 0)) return;
 
-    if (!empty($publishername))
+    if (!empty($publishername)) {
         xarModSetVar('newsletter', 'publishername', $publishername);
+    }
 
-    if (!empty($information))
+    if (!empty($information)) {
         xarModSetVar('newsletter', 'information', $information);
+    }
 
-    if (!empty($templateHTML))
+    if (!empty($templateHTML)) {
         xarModSetVar('newsletter', 'templateHTML', $templateHTML);
+    }
 
-    if (!empty($templateText))
+    if (!empty($templateText)) {
         xarModSetVar('newsletter', 'templateText', $templateText);
+    }
 
     xarModSetVar('newsletter', 'categorysort', $categorysort);
 
-    if (!empty($itemsperpage))
-        xarModSetVar('newsletter', 'itemsperpage', $itemsperpage);
+    if (!empty($itemsperpage)) {
+        xarModSetVar('newsletter', 'itemsperpage', $itemsperpage); 
+    }
+
+    if (!empty($subscriptionsperpage)) {
+        xarModSetVar('newsletter', 'subscriptionsperpage', $subscriptionsperpage); 
+    }
 
     xarModSetVar('newsletter', 'previewbrowser', $previewbrowser);
 

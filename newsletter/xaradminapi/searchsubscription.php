@@ -18,9 +18,10 @@
  *
  * @author Richard Cave
  * @param $args an array of arguments
- * @param $args['numitems'] the number of items to retrieve (default -1 = all)
- * @param $args['startnum'] start with this item number (default 1)
  * @param $args['search'] the type of search to perform ('publication', 'email', 'name')
+ * @param $args['searchname'] the name publication, email, name to search for
+ * @param $args['startnum'] start with this item number (default 1)
+ * @param $args['numitems'] the number of items to retrieve (default -1 = all)
  * @returns array
  * @return array of items, or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -31,6 +32,9 @@ function newsletter_adminapi_searchsubscription($args)
     extract($args);
 
     // Optional arguments.
+    if (!isset($searchname)) {
+        $searchname = '';
+    }
     if(!isset($startnum)) {
         $startnum = 1;
     }
@@ -52,7 +56,9 @@ function newsletter_adminapi_searchsubscription($args)
         return;
     }
 
+    // Initialize arrays
     $items = array();
+    $deleteitems = array();
 
     // Get database setup
     $dbconn =& xarDBGetConn();
@@ -60,6 +66,7 @@ function newsletter_adminapi_searchsubscription($args)
 
     // Name the table and column definitions
     $nwsltrSubTable = $xartable['nwsltrSubscriptions'];
+    $nwsltrAltSubTable = $xartable['nwsltrAltSubscriptions'];
     $nwsltrPubTable = $xartable['nwsltrPublications'];
     $rolesTable = $xartable['roles'];
 
@@ -67,13 +74,16 @@ function newsletter_adminapi_searchsubscription($args)
     switch(strtolower($search)) {
 
         case 'publication':
-            // Get subscriptions
+            // Get subscriptions by publication
             $query = "SELECT $rolesTable.xar_uid,
                              $nwsltrSubTable.xar_pid,
                              $nwsltrPubTable.xar_title,
                              $rolesTable.xar_name,
                              $rolesTable.xar_uname,
-                             $rolesTable.xar_email
+                             $rolesTable.xar_email,
+                             $rolesTable.xar_state,
+                             0 as xar_type,
+                             $nwsltrSubTable.xar_htmlmail
                       FROM   $nwsltrSubTable, $nwsltrPubTable, $rolesTable
                       WHERE  $nwsltrSubTable.xar_uid =  $rolesTable.xar_uid
                       AND    $nwsltrPubTable.xar_id = ?
@@ -84,42 +94,119 @@ function newsletter_adminapi_searchsubscription($args)
             if (!empty($searchname)) {
                 $query .= " AND ($rolesTable.xar_name LIKE '%" . $searchname . "%' OR $rolesTable.xar_email LIKE  '%" . $searchname . "%')";
             }
+
+            // Union
+            $query .= " UNION ";
+
+            // Get alt subscriptions by publication
+            $query .= "SELECT $nwsltrAltSubTable.xar_id,
+                              $nwsltrAltSubTable.xar_pid,
+                              $nwsltrPubTable.xar_title,
+                              $nwsltrAltSubTable.xar_name,
+                              $nwsltrAltSubTable.xar_name as uname,
+                              $nwsltrAltSubTable.xar_email,
+                              3 as xar_state,
+                              1 as xar_type,
+                              $nwsltrAltSubTable.xar_htmlmail
+                       FROM   $nwsltrAltSubTable, $nwsltrPubTable
+                       WHERE  $nwsltrPubTable.xar_id = ? 
+                       AND    $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+            $bindvars[] = (int) $pid;
+
+            if (!empty($searchname)) {
+                $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
+            }
    
-            $query .= " ORDER by $rolesTable.xar_name";
+            $query .= " ORDER by xar_name";
 
             break;
 
         case 'email':
-            // Get items
+            // Get subscriptions by email
             $query = "SELECT $rolesTable.xar_uid,
                              $nwsltrSubTable.xar_pid,
                              $nwsltrPubTable.xar_title,
                              $rolesTable.xar_name,
                              $rolesTable.xar_uname,
-                             $rolesTable.xar_email
+                             $rolesTable.xar_email,
+                             $rolesTable.xar_state,
+                             0 as xar_type,
+                             $nwsltrSubTable.xar_htmlmail
                       FROM   $nwsltrSubTable, $nwsltrPubTable, $rolesTable
                       WHERE  $nwsltrSubTable.xar_uid =  $rolesTable.xar_uid
-                      AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id
-                      AND    $rolesTable.xar_email LIKE '%" . $searchname . "%'
-                      ORDER by $rolesTable.xar_name";
+                      AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+            if (!empty($searchname)) {
+                $query .= " AND $nwsltrSubTable.xar_email LIKE  '%" . $searchname . "%'";
+            }
+
+            // Union
+            $query .= " UNION ";
+
+            // Get alt subscriptions by email
+            $query .= "SELECT $nwsltrAltSubTable.xar_id,
+                              $nwsltrAltSubTable.xar_pid,
+                              $nwsltrPubTable.xar_title,
+                              $nwsltrAltSubTable.xar_name,
+                              $nwsltrAltSubTable.xar_name as uname,
+                              $nwsltrAltSubTable.xar_email,
+                              3 as xar_state,
+                              1 as xar_type,
+                              $nwsltrAltSubTable.xar_htmlmail
+                       FROM   $nwsltrAltSubTable, $nwsltrPubTable
+                       WHERE  $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+            if (!empty($searchname)) {
+                $query .= " AND $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%'";
+            }
+
+            $query .= " ORDER by xar_name";
 
             break;
 
         case 'name':
         default:
-            // Get items
+            // Get subscriptions by name
             $query = "SELECT $rolesTable.xar_uid,
                              $nwsltrSubTable.xar_pid,
                              $nwsltrPubTable.xar_title,
                              $rolesTable.xar_name,
                              $rolesTable.xar_uname,
-                             $rolesTable.xar_email
+                             $rolesTable.xar_email,
+                             $rolesTable.xar_state,
+                             0 as xar_type,
+                             $nwsltrSubTable.xar_htmlmail
                       FROM   $nwsltrSubTable, $nwsltrPubTable, $rolesTable
                       WHERE  $nwsltrSubTable.xar_uid =  $rolesTable.xar_uid
-                      AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id
-                      AND   ($rolesTable.xar_uname LIKE '%" . $searchname . "%' OR
-                             $rolesTable.xar_name LIKE  '%" . $searchname . "%')
-                      ORDER by $rolesTable.xar_name";
+                      AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+            if (!empty($searchname)) {
+                $query .= " AND ($rolesTable.xar_uname LIKE '%" . $searchname . "%' OR
+                                 $rolesTable.xar_name LIKE  '%" . $searchname . "%')";
+            }
+
+            // Union
+            $query .= " UNION ";
+
+            // Get alt subscriptions by name
+            $query .= "SELECT $nwsltrAltSubTable.xar_id,
+                              $nwsltrAltSubTable.xar_pid,
+                              $nwsltrPubTable.xar_title,
+                              $nwsltrAltSubTable.xar_name,
+                              $nwsltrAltSubTable.xar_name as uname,
+                              $nwsltrAltSubTable.xar_email,
+                              3 as xar_state,
+                              1 as xar_type,
+                              $nwsltrAltSubTable.xar_htmlmail
+                       FROM   $nwsltrAltSubTable, $nwsltrPubTable
+                       WHERE  $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+            if (!empty($searchname)) {
+                $query .= " AND $nwsltrAltSubTable.xar_name LIKE  '%" . $searchname . "%'";
+            }
+
+            $query .= " ORDER by xar_name";
 
             break;
     }
@@ -135,18 +222,45 @@ function newsletter_adminapi_searchsubscription($args)
 
     // Put items into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($uid, $pid, $title, $name, $uname, $email) = $result->fields;
+        list($uid, $pid, $title, $name, $uname, $email, $state, $type, $htmlmail) = $result->fields;
 
-         $items[] = array('uid' => $uid,
-                          'pid' => $pid,
-                          'title' => $title,
-                          'name' => $name,
-                          'uname' => $uname,
-                          'email' => $email);
+        // Determine if a user state has been set to ROLES_STATE_DELETED (0)
+        if ($state == 0) {
+            $deleteitems[] = array('uid' => $uid,
+                                   'type' => $type);
+        } else {
+            $items[] = array('uid' => $uid,
+                             'pid' => $pid,
+                             'title' => $title,
+                             'name' => $name,
+                             'uname' => $uname,
+                             'email' => $email,
+                             'state' => $state,
+                             'type' => $type,
+                             'htmlmail' => $htmlmail);
+        }
     }
 
     // Close result set
     $result->Close();
+
+    // Delete any users that have been set to ROLES_STATE_DELETED (0)
+    if (!empty($deleteitems)) {
+        foreach ($deleteitems as $subscription) {
+            // Remove this subscription
+            if ($subscription['type'] == 0) {
+                $result = xarModAPIFunc('newsletter',
+                                        'admin',
+                                        'deletesubscription',
+                                        array('uid' => $subscription['uid']));
+            } else {
+                $result = xarModAPIFunc('newsletter',
+                                        'admin',
+                                        'deletealtsubscription',
+                                        array('id' => $subscription['uid']));
+            }
+        }
+    }
 
     // Return the items
     return $items;

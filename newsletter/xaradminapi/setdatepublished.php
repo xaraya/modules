@@ -53,7 +53,7 @@ function newsletter_adminapi_setdatepublished($args)
                  SET xar_datepublished = ?
                WHERE xar_id = ?";
 
-    $bindvars = array((int) $date, (int) $id);
+    $bindvars = array((int) $date, (int) $issue['id']);
 
     // Execute query
     $result =& $dbconn->Execute($query, $bindvars);

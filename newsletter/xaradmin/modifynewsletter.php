@@ -41,6 +41,13 @@ function newsletter_admin_modifynewsletter()
     $data['templateHTML']     = xarModGetVar('newsletter', 'templateHTML');
     $data['templateText']     = xarModGetVar('newsletter', 'templateText');
     $data['itemsperpage']     = xarModGetVar('newsletter', 'itemsperpage');
+    if (!$data['itemsperpage']) {
+        $data['itemsperpage'] = 10;
+    }
+    $data['subscriptionsperpage'] = xarModGetVar('newsletter', 'subscriptionsperpage');
+    if (!$data['subscriptionsperpage']) {
+        $data['subscriptionsperpage'] = 25;
+    }
     $data['categorysort']     = xarModGetVar('newsletter', 'categorysort');
     $data['previewbrowser']   = xarModGetVar('newsletter', 'previewbrowser');
 

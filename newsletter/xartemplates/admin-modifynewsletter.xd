@@ -78,10 +78,18 @@
                 </tr>
                 <tr>
                     <td>
-                        <b><xar:mlstring>Default number of stories/issues per page</xar:mlstring></b>
+                        <b><xar:mlstring>Number of stories/issues per page</xar:mlstring></b>
                     </td>
                     <td>
                         <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#" size="7" tabindex="7" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><xar:mlstring>Number of subscriptions per page</xar:mlstring></b>
+                    </td>
+                    <td>
+                        <input type="text" name="subscriptionsperpage" id="subscriptionsperpage" value="#$subscriptionsperpage#" size="7" tabindex="8" />
                     </td>
                 </tr>
                 <tr>
@@ -92,7 +100,7 @@
                 <tr>
                     <td colspan="2" align="center">
                         <br /><br />
-                        <input type="submit" value="#$modifybutton#"  tabindex="8" />
+                        <input type="submit" value="#$modifybutton#"  tabindex="9" />
                     </td>
                 </tr>
             </table>

@@ -38,7 +38,17 @@ function newsletter_userapi_gettemplatefile($args)
     // Get the template source
     if (!($modBaseInfo = xarMod_getBaseInfo("newsletter"))) return;
     $modOsDir = $modBaseInfo['osdirectory'];        
-    $sourceFile = "modules/$modOsDir/templates/$filename";
+
+    // Patch from Roger Keays - see Bug #3419
+    // First try the theme directory
+    $themedir = xarTplGetThemeDir();
+    $themefilename = preg_replace('/\.xd$/', '.xt', $filename);
+    $sourceFile = "$themedir/modules/$modOsDir/templates/$themefilename";
+
+    // Check if the template file exists in theme directory
+    if (!file_exists($sourceFile)) {
+        $sourceFile = "modules/$modOsDir/templates/$filename";
+    }
 
     // Check if the template file exists
     if (!file_exists($sourceFile)) {

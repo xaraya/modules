@@ -119,55 +119,58 @@ function newsletter_userapi_getissuefordisplay($args)
         if (!isset($stories[$idx]) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
             return; // throw back
         
-        // Check to see if link has expired
-        $linkExpiration = $stories[$idx]['linkExpiration']; 
-        $storyDate = $stories[$idx]['storyDate'];
-        $stories[$idx]['linkExpired'] = false;
-        if ($storyDate['timestamp'] != 0 && $linkExpiration != 0) {
-            if ($now - ($linkExpiration * 86400) > $storyDate['timestamp']) {
-                // Link expired - so don't display the link
-                $stories[$idx]['linkExpired'] = true;
-            }
-        }
-
-        // Check that we have a real category id
-        if ($stories[$idx]['cid'] != 0) {
-
-            // Get category
-            $category = xarModAPIFunc('categories',
-                                      'user',
-                                      'getcatinfo', // may need to change to getcat
-                                      Array('cid' => $stories[$idx]['cid']));
-
-            // Check for exceptions
-            if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
-                return; // throw back
-
-            // Set headlines
-            $found = false;
-            for ($cdx=0; $cdx < count($headlines); $cdx++) {
-                if ($headlines[$cdx]['category'] == $category['name']) {
-                    // Add story to array
-                    $headlines[$cdx]['stories'][] = $stories[$idx];
-                    $found = true;
-                    break;
+        // Make sure a story was returned
+        if (!empty($stories[$idx])) {
+            // Check to see if link has expired
+            $linkExpiration = $stories[$idx]['linkExpiration']; 
+            $storyDate = $stories[$idx]['storyDate'];
+            $stories[$idx]['linkExpired'] = false;
+            if ($storyDate['timestamp'] != 0 && $linkExpiration != 0) {
+                if ($now - ($linkExpiration * 86400) > $storyDate['timestamp']) {
+                    // Link expired - so don't display the link
+                    $stories[$idx]['linkExpired'] = true;
                 }
             }
 
-            // New headline so insert into array
-            if (!$found) {
+            // Check that we have a real category id
+            if ($stories[$idx]['cid'] != 0) {
+
+                // Get category
+                $category = xarModAPIFunc('categories',
+                                          'user',
+                                          'getcatinfo', // may need to change to getcat
+                                          Array('cid' => $stories[$idx]['cid']));
+
+                // Check for exceptions
+                if (!isset($category) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+                    return; // throw back
+
+                // Set headlines
+                $found = false;
+                for ($cdx=0; $cdx < count($headlines); $cdx++) {
+                    if ($headlines[$cdx]['category'] == $category['name']) {
+                        // Add story to array
+                        $headlines[$cdx]['stories'][] = $stories[$idx];
+                        $found = true;
+                        break;
+                    }
+                }
+
+                // New headline so insert into array
+                if (!$found) {
+                    $storiesArray = array();
+                    $storiesArray[] = $stories[$idx];
+                    $headlines[] = array('category' => $category['name'],
+                                         'stories' => $storiesArray);
+                }
+            } else {
+                // Since there is no category, just add the story
+                // the array
                 $storiesArray = array();
                 $storiesArray[] = $stories[$idx];
-                $headlines[] = array('category' => $category['name'],
+                $headlines[] = array('category' => '',
                                      'stories' => $storiesArray);
             }
-        } else {
-            // Since there is no category, just add the story
-            // the array
-            $storiesArray = array();
-            $storiesArray[] = $stories[$idx];
-            $headlines[] = array('category' => '',
-                                 'stories' => $storiesArray);
         }
     }
 

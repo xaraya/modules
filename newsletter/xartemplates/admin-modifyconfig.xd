@@ -32,6 +32,21 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="left">
+                            <b><xar:mlstring>Active Users</xar:mlstring></b>
+                            <br />
+                            <xar:mlstring>Send newsletter only to active users.  This does not include alternative subscriptions.</xar:mlstring>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="20%">
+                            <xar:mlstring>Send to active users:</xar:mlstring>
+                        </td>
+                        <td align="left">
+                            <input type="checkbox" name="activeusers" id="activeusers" value="1" #$activeuserschecked# tabindex="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left">
                             <b><xar:mlstring>Short URL Support</xar:mlstring></b>
                             <br />
                         </td>
@@ -41,7 +56,7 @@
                             <xar:mlstring>Enable Short URL Support:</xar:mlstring>
                         </td>
                         <td align="left">
-                            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# tabindex="2"/>
+                            <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# tabindex="3"/>
                         </td>
                     </tr>
                 </table>
