@@ -1,0 +1,18 @@
+
+* Version 0.0.3
+- Upgrade to TinyMCE 1.30
+- Added additional configuration options for advanced theme including location of editor toolbar
+- Additional general options including configuration of language, removal of hardcoded themes, optional width 
+of WYSIWYG editor.
+- Moved all configuration to the Modify Config function. This passes the final javascript to the template for use
+eliminating processing of config vars in the template.
+
+* Version 0.0.2
+- Upgarde to TinyMCD 1.26
+Configuration options added in the module's Modify Config option in the Admin Panels.
+This included theme choice, and specific options for Advanced theme use such as addition or removal of buttons,
+use of a specific CSS style sheet.
+
+* Version 0.0.1
+Basic wrapper allowing installation as a module through Xaraya's module view listing (install, activate,
+deactivate)

@@ -1,6 +1,7 @@
 <html>
 <head>
 <link href="../docs/style.css" rel="stylesheet" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!-- tinyMCE -->
 <script language="javascript" type="text/javascript" src="../jscripts/tiny_mce/tiny_mce_src.js"></script>
@@ -14,10 +15,16 @@
 		//insertimage_callback : "customInsertImage",
 		save_callback : "customSave",
 		content_css : "example_advanced.css",
-		extended_valid_elements : "a[href|target|name]",
+		extended_vali2d_elements : "a[href|target|name]",
 		//invalid_elements : "a",
-		theme_advanced_styles : "Header 1=header1;Header 2=header2;Header 3=header3", // Theme specific setting CSS classes
-		debug : false
+		theme_adva2nced_styles : "Header 1=header1;Header 2=header2;Header 3=header3", // Theme specific setting CSS classes
+		debug : false,
+		direction2ality : "rtl",
+		fix_content_dupl2ication : false,
+		verify_2html : false,
+		inline_st2yles : true,
+		custom_undo_redo_levels : 4,
+		cleanup_o2n_startup : true
 	});
 
 	// Custom insert link callback, extends the link function
@@ -68,6 +75,7 @@
 
 </head>
 <body>
+<a href="example_simple.htm">[Simple example]</a> [Advanced example] <a href="example_mail.htm">[Mail example]</a>
 
 <h3>Advanced example</h3>
 This page shows a more complex usage of TinyMCE. On this page the mode is set to convert specific elements in this case a DIV element and a TEXTAREA into editor instances. The example below uses a custom CSS, thats why the text is red and it allso uses the &quot;advanced&quot; theme that includes more options than the default one. The code allso includes examples of custom call back functions and much more. Notice the submit button at the end of the page, this button triggers a save action. Read more about the features and possible settings of TinyMCE in the <a href="../docs/index.htm">manual</a>.<br>
@@ -75,13 +83,11 @@ This page shows a more complex usage of TinyMCE. On this page the mode is set to
 
 <!-- Form with textare element with width: 100% -->
 <form method="post" action="post.php">
-<textarea i2d="elm1" name="elm1" style="width:100%" rows="15">
-	<span class="header1">Test header 1</span><br />
-	<span class="header2">Test header 2</span><br />
-	<span class="header3">Test header 3</span><br />
-	Some <b>element</b>, this is to be editor 1. <br /> This editor instance has a 100% width to it.
-	<p>Some paragraph. <a href="http://www.sourceforge.net">Some link</a></p>
-	<img src="logo.jpg">
+<textarea id="elm1" name="elm2" style="width:100%" rows="15">
+
+<table border="0"><tr><td>fdsf</td></tr></table>
+<span class="header1">Test header 1</span><br /><span class="header2">Test header 2</span><br /><span class="header3">Test header 3</span><br />Some <b>element</b>, this is to be editor 1. <br />This editor instance has a 100% width to it. <p>Some paragraph. <a href="example_mail.htm">Some link</a></p><div style="float: left"><img src="logo.jpg" />hghgh</div>
+
 </textarea>
 <br>
 <input type="button" name="save" value="save" onclick="tinyMCE.triggerSave();">
@@ -100,10 +106,9 @@ Some custom actions:
 <a href="javascript:tinyMCE.execCommand('Bold');">[Bold]</a> | 
 <a href="javascript:tinyMCE.execCommand('Italic');">[Italic]</a>
 <a href="javascript:tinyMCE.execCommand('mceInsertContent',false,'<b>Hello world!!</b>');">[Insert some HTML]</a>
-<a href="javascript:tinyMCE.execCommand('mceFocus',false,'mce_editor_0');">[Insert some HTML]</a>
 <a href="javascript:tinyMCE.execCommand('mceReplaceContent',false,'<b>{$selection}</b>');">[Replace selection]</a>
-<a href="javascript:tinyMCE.insertImage('/images/unknown-1.gif','image','0','0','0','48','100','center');">[Replace selection]</a>
-
+<a href="javascript:tinyMCE.insertImage('http://grisdale.com/copy/images/2004montecarlo.jpg','image')">[Replace selection]</a>
+<a href="javascript:alert(tinyMCE.getEditorId('elm1'))">[Replace selection]</a>
 <br>
 
 </body>

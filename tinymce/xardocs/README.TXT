@@ -1,4 +1,4 @@
-INSTALLATION AND USE - TinyMCE Version 0.0.2
+INSTALLATION AND USE - TinyMCE Version 0.0.3
 
 TinyMCE is a very configurable, lightweight WYSIWYG editor. 
 It has limited options compared to HTMLArea, but is earlier in it's 
@@ -28,7 +28,9 @@ To INSTALL and get started:
 3. In order to make modules in Xaraya use the tinymce module to display wysiwyg,
     you need to add the following snippet at the top of any of your page templates.
     eg usually this is default.xt in themes/yourtheme/pages directory.
-    You may have more than one page template and can choose to add it to one or more.
+    You may have more than one page template and can choose to add it to one or more. 
+    You may wish to add it to one specific module or other template where you wish
+    to convert the textarea to WYSIWYG (eg Xarbb newreply.xt or newtopic.xt):
 
     <xar:if condition="xarModGetVar('base','editor') eq 'tinymce'">
         <xar:template file="tinymce_insert" module="tinymce" type="module" />
@@ -46,6 +48,7 @@ To UPGRADE:
    
    That's it!
 ******************************
+
 Feature requests and bug reports to:
 http://bugs.xaraya.com
 

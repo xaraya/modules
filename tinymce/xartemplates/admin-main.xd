@@ -48,7 +48,10 @@
                 </ul>
               </li>
               <li><xar:mlstring>In order to make modules in Xaraya use the tinymce module to display wysiwyg,
-              you need to add the following snippet at the top of any of your page templates. eg usually this is default.xt in themes/yourtheme/pages directory. You may have more than one page template and can choose to add it to one or more.</xar:mlstring>
+              you need to add the following snippet at the top of any of your page templates. eg usually this is default.xt in themes/yourtheme/pages directory. You may have more than one page template and can choose to add it to one or more. 
+              If you wish to be more specific, you can just add it at the top of a specific template that 
+              contains a textarea field that you wish to convert to WYSIWYG (eg a module template like xarbb 
+              newreply.xt or newtopic.xt)</xar:mlstring>
              </li>
             </ol>
             <pre>

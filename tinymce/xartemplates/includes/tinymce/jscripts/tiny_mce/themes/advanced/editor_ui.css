@@ -105,7 +105,14 @@
 	background: #FFFFFF;
 }
 
-.mceToolbar {
+.mceToolbarTop, .mceToolbarBottom {
 	background: #F0F0EE;
+}
+
+.mceToolbarTop {
+	border-bottom: 1px solid #cccccc;
+}
+
+.mceToolbarBottom {
 	border-top: 1px solid #cccccc;
 }

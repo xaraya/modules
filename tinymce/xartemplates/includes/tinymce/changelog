@@ -1,3 +1,37 @@
+Version 1.30 (2004-09-10)
+	Fixed bug issue where the editor was stealing focus from location bar.
+	Fixed bug issue with absolute aligned images lost focus when using tools.
+	Fixed bug #1025483, Url converting broken.
+	Added ability to send command values in advanced theme button list, contributed by someone helpfull.
+	Added new cleanup_on_startup option, to increase startup speed.
+	Added new inline_styles partly based on a contribution by Victor Nilsson.
+	Added new named anchor support.
+	Added custom_undo_redo_levels option.
+Version 1.29 (2004-09-08)
+	Added new getEditorId function, to retrive the editor id of a form element.
+	Readded so cleanup is automaticly executed on editor startup in MSIE.
+	Added some various cleanup fixes for MS Word HTML.
+	Added new auto_cleanup_word option, enabled auto MS Word HTML cleanup on paste events.
+	Fixed parameter issue with insertImage function. Bug #1022863.
+	Fixed bug #1022874, Where the small theme had underline command on strikethrough button.
+	Fixed some bugs with table commands.
+	Fixed bug #1023204, mceRemoveControl brings back the old HTML.
+	Fixed bug issue with tinyMCE.selectedInstance in Mozilla.
+	Fixed bug issue with Mozilla not saving content.
+Version 1.28 (2004-09-04)
+	Added new Finnish language pack thanks to Urho Konttori.
+	Added new rowseparator as a possible value of the theme_advanced_buttons<n> options.
+	Added new theme_advanced_toolbar_location option.
+	Added new uid variable option to valid_elements. (Generates unique IDs)
+	Added new "directionality" option to support languages like Arabic.
+	Added new character map button/window.
+	Added new guidelines/visual aid toggle button.
+	Reduced the source of the advanced theme some, and added some better comments.
+	Separated the default theme in to files aswell.
+	Removed source area size options and made source editor resizable instead.
+	Increased the default width and height of the source editor.
+	Fixed bug where image width/height default to 0x0 if these attributes wasn't defined.
+	Fixed some bug issues with MSIE 5.5.
 Version 1.27 (2004-08-29)
 	Added new cleanup logic, with new options and smarter behavior.
 	Added new "trim_span_elements" option (removed unneeded span elements).

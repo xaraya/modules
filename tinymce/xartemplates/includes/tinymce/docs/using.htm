@@ -154,6 +154,9 @@ optional and is not a requierd setting.<br>
         </tr>
       </table>
       <br>
+      <strong>Special variables:</strong><br>
+      {$uid} - Results in a unique ID. For example &quot;p[id:{$uid}]&quot;.<br>
+      <br>
       This option defaults to the following pattern:<br> &quot;a[href|target],strong/b[class],em/i[class],strike[class],u[class],p[class|align],ol,ul,li,br,<br>
       img[class|src|border=0|alt|hspace|vspace|width|height|align],sub,sup,blockquote[dir|style],<br>
       table[border=0|cellspacing|cellpadding|width|height|class|align],tr[rowspan],<br>
@@ -318,12 +321,36 @@ optional and is not a requierd setting.<br>
     <td><strong>[custom_undo_redo]</strong></td>
     <td>This option enables the custom undo/redo logic that makes undo/redo work better. This is a True/False option and it's enabled by default.</td>
   </tr>
-  <tr> 
+  <tr>
+    <td><strong>[custom_undo_redo_levels]</strong></td>
+    <td>This option sets the maximum number of undo levels, there is no limit by default.</td>
+  </tr>
+  <tr>
     <td><strong>[fix_content_duplication]</strong></td>
     <td>This option enables a fix for the content duplication bug that appears in MSIE. This fix is enabled by default but can be disabled for compatiblity reasons. True/False option. </td>
   </tr>
+  <tr>
+    <td><strong>[directionality]</strong></td>
+    <td>This option enables the possibility to change the text directionality to for example Arabic languages. Possible values: ltr, rtl. Default to: ltr. </td>
+  </tr>
+  <tr>
+    <td><strong>[auto_cleanup_word]</strong></td>
+    <td>If enabled cleanup of MS office/Word HTML will be executed automaticly on paste operations. The default value of this option is true. Note: This option is currently only available for MSIE. </td>
+  </tr>
+  <tr>
+    <td><strong>[cleanup_on_startup]</strong></td>
+    <td>If enabled contents of textareas and elements will be cleaned upon editor initialization. The default value for this option is false.</td>
+  </tr>
+  <tr> 
+    <td><strong>[inline_styles]</strong></td>
+    <td>If enabled attributes like width, height, vspace, hspace and align gets placed within the style attribute instead. The default value for this option is false.</td>
+  </tr>
   <tr bgcolor="#CCCCCC"> 
     <td colspan="2"><strong>Advanced theme specific settings </strong></td>
+  </tr>
+  <tr>
+    <td><strong>[theme_advanced_toolbar_location]</strong></td>
+    <td>This option enabled you to change the location of the toolbar. Possible values are &quot;top&quot; and &quot;bottom&quot;. The default value is &quot;bottom&quot;. </td>
   </tr>
   <tr> 
     <td><strong>[theme_advanced_styles]</strong></td>
@@ -340,8 +367,8 @@ optional and is not a requierd setting.<br>
       bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, 
       justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, 
       link, unlink, image, cleanup, help, code, table, row_before, row_after, 
-      delete_row, separator, col_before, col_after, delete_col, hr, removeformat, 
-      sub, sup, formatselect, fontselect, fontsizeselect, forecolor </td>
+      delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, 
+      sub, sup, formatselect, fontselect, fontsizeselect, forecolor,charmap,visualaid</td>
   </tr>
   <tr> 
     <td><strong>[theme_advanced_buttons2]</strong></td>
@@ -362,14 +389,6 @@ optional and is not a requierd setting.<br>
   <tr> 
     <td><strong>[theme_advanced_source_editor_height]</strong></td>
     <td>Source editor window height.</td>
-  </tr>
-  <tr> 
-    <td><strong>[theme_advanced_source_editor_area_width]</strong></td>
-    <td>Source editor textarea width.</td>
-  </tr>
-  <tr> 
-    <td><strong>[theme_advanced_source_editor_area_height]</strong></td>
-    <td>Source editor textarea height.</td>
   </tr>
 </table>
 <br>
@@ -428,7 +447,7 @@ command - Command to execute check the execCommand function for details.<br>
 <br>
 <strong>Returns:</strong> Nothing
 <hr noshade>
-<strong>Syntax:</strong> tinyMCE.execCommand(command, [user_interface], [value]);<br>
+<strong><a name="execcommand"></a>Syntax:</strong> tinyMCE.execCommand(command, [user_interface], [value]);<br>
 <br>
 <strong>Description: </strong>This method executes a command by name on the selected 
 editor instance.<br>
@@ -507,16 +526,24 @@ Mozilla Midas spec.</a> But there are a some tinyMCE specific commands. <br>
     <td><strong>mceReplaceContent</strong></td>
     <td>Replaces the current selection with the HTML code in value. The {$selection} variable gets replaced with the currently selected text contents. </td>
   </tr>
-  <tr> 
+  <tr>
     <td><strong>mceSetAttribute</strong></td>
     <td><p>Sets a attribute of the currenly selected element. The value of this command should be a name/value array with the following parameters.<br>
-        <br>
-        <strong>name</strong> - Attribute name to set.<br>
-        <strong>value</strong> - Attrbute value to set.<br>
-        <strong>[targets]</strong>  - Target elements to add attribute on. Default: p,img,span,div,td,h1,h2,h3,h4,h5,h6,pre,address.<br>
-      <br>
+            <br>
+            <strong>name</strong> - Attribute name to set.<br>
+            <strong>value</strong> - Attrbute value to set.<br>
+            <strong>[targets]</strong> - Target elements to add attribute on. Default: p,img,span,div,td,h1,h2,h3,h4,h5,h6,pre,address.<br>
+            <br>
       Example of usage:<br>
-      tinyMCE.execCommand('mceSetAttribute',false,{name:'align',value:'right'});</p>
+      tinyMCE.execCommand('mceSetAttribute',false,{name:'align',value:'right'});</p></td>
+  </tr>
+  <tr>
+    <td><strong>mceToggleVisualAid</strong></td>
+    <td><p>Toggles visual aid/guidelines mode on/off.</p></td>
+  </tr>
+  <tr> 
+    <td><strong>mceAnchor</strong></td>
+    <td><p>Inserts a named anchor element, the value is the name of the anchor. </p>
     </td>
   </tr>
 </table>

@@ -40,102 +40,36 @@ function TinyMCE_default_getEditorTemplate() {
 	return template;
 }
 
+/**
+ * Insert link template function.
+ */
 function TinyMCE_default_getInsertLinkTemplate() {
 	var template = new Array();
 
-	template['html'] = '\
-<html><head><title>{$lang_insert_link_title}</title>\
-<link href="{$css}" rel="stylesheet" type="text/css">\
-<script language="javascript">\
-function init() {\
-	for (var i=0; i<document.forms[0].target.options.length; i++) {\
-		var option = document.forms[0].target.options[i];\
-\
-		if (option.value == \'{$target}\')\
-			option.selected = true;\
-	}\
-\
-	window.focus();\
-}\
-\
-function insertLink() {\
-	if (window.opener) {\
-		var href = document.forms[0].href.value;\
-		var target = document.forms[0].target.options[document.forms[0].target.selectedIndex].value;\
-\
-		window.opener.tinyMCE.insertLink(href, target);\
-		top.close();\
-	}\
-}\
-\
-function cancelAction() {\
-	top.close();\
-}\
-</script>\
-</head><body onload="init();">\
-\
-<form onsubmit="insertLink();return false;">\
-<table border="0" cellpadding="0" cellspacing="0" width="100%">\
-<tr><td align="center" valign="middle">\
-<table border="0" cellpadding="4" cellspacing="0">\
-<tr><td colspan="2" class="title">{$lang_insert_link_title}</td></tr>\
-<tr><td>{$lang_insert_link_url}:</td><td><input name="href" type="text" id="href" value="{$href}" style="width: 200px"></td></tr>\
-<tr><td>{$lang_insert_link_target}:</td>\
-<td><select name="target" style="width: 200px">\
-<option value="_self">{$lang_insert_link_target_same}</option>\
-<option value="_blank">{$lang_insert_link_target_blank}</option>\
-</select></td></tr>\
-<tr><td><input type="button" name="insert" value="{$lang_insert}" onclick="insertLink();">\
-</td><td align="right"><input type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();"></td></tr>\
-</table>\
-</td></tr></table>\
-</form></body></html>';
-
+	template['file'] = 'link.htm';
 	template['width'] = 320;
 	template['height'] = 130;
+
+	// Language specific width and height addons
+	template['width'] += tinyMCE.getLang('lang_insert_link_delta_width', 0);
+	template['height'] += tinyMCE.getLang('lang_insert_link_delta_height', 0);
 
 	return template;
 }
 
+/**
+ * Insert image template function.
+ */
 function TinyMCE_default_getInsertImageTemplate() {
 	var template = new Array();
 
-	template['html'] = '\
-<html><head><title>{$lang_insert_image_title}</title>\
-<link href="{$css}" rel="stylesheet" type="text/css">\
-\
-<script language="javascript">\
-function insertImage() {\
-	if (window.opener) {\
-		var src = document.forms[0].src.value;\
-		var alt = document.forms[0].alt.value;\
-\
-		window.opener.tinyMCE.insertImage(src, alt, "0");\
-		top.close();\
-	}\
-}\
-\
-function cancelAction() {\
-	top.close();\
-}\
-</script>\
-</head><body onload="window.focus();">\
-<form onsubmit="insertImage();return false;">\
-<table border="0" cellpadding="0" cellspacing="0" width="100%">\
-<tr><td align="center" valign="middle">\
-<table border="0" cellpadding="4" cellspacing="0">\
-<tr><td colspan="2" class="title">{$lang_insert_image_title}</td></tr>\
-<tr><td>{$lang_insert_image_src}:</td><td><input name="src" type="text" id="src" value="{$src}" style="width: 200px"></td></tr>\
-<tr><td>{$lang_insert_image_alt}:</td>\
-<td><input name="alt" type="text" id="alt" value="{$alt}" style="width: 200px"></td></tr>\
-<tr><td><input type="button" name="insert" value="{$lang_insert}" onclick="insertImage();">\
-</td><td align="right"><input type="button" name="cancel" value="{$lang_cancel}" onclick="cancelAction();"></td></tr>\
-</table>\
-</td></tr></table>\
-</form></body></html>';
-
-	template['width'] = 340;
+	template['file'] = 'image.htm';
+	template['width'] = 360;
 	template['height'] = 130;
+
+	// Language specific width and height addons
+	template['width'] += tinyMCE.getLang('lang_insert_image_delta_width', 0);
+	template['height'] += tinyMCE.getLang('lang_insert_image_delta_height', 0);
 
 	return template;
 }

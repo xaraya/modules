@@ -180,34 +180,8 @@ function</span></p>
 <p>Notice: There are two javascript function that can be called from this template 
   these are tinyMCE.execCommand that executes commans on the currenly selected 
   editor area and the tinyMCE.switchClass that switches the CSS class of the element 
-  specified. The execCommand has 4 special command values that needs deeper explaination 
-  the other ones follow the MSIE and Mozilla command lists check their docs on 
-  the execCommand method.<br>
-  <br>
-  <strong>Special TinyMCE commans:</strong> </p>
-<table border="1" cellspacing="0">
-  <tr> 
-    <td width="150"><strong>mceLink</strong></td>
-    <td>Opens the insert link dialog and inserts a link.</td>
-  </tr>
-  <tr> 
-    <td width="150"><strong>mceImage</strong></td>
-    <td>Opens the insert image dialog and inserts a image.</td>
-  </tr>
-  <tr> 
-    <td><strong>mceCleanup</strong></td>
-    <td>Removed unwanted elements and attributes from the HTML code.</td>
-  </tr>
-  <tr>
-    <td><strong>mceHelp</strong></td>
-    <td>Opens the manual pages.</td>
-  </tr>
-  <tr> 
-    <td><strong>mceSetCSSClass</strong></td>
-    <td>Changes the CSS class of the selection. </td>
-  </tr>
-</table>
-<br>
+  specified. For more details of commands available by execCommand check the Mozilla <a href="http://www.mozilla.org/editor/midas-spec.html" target="_blank">midas specification</a> and the <a href="using.htm#execcommand">TinyMCE specific commands</a>. <br>
+</p>
 <hr noshade>
 <br>
 <span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_getInsertLinkTemplate(settings) 
@@ -443,9 +417,13 @@ function (Optional)</span>
     <td><strong>undo_index</strong></td>
     <td>Current undo index, this value is -1 if the custom undo/redo support is disabled.</td>
   </tr>
-  <tr> 
-    <td width="150"><strong>undo_levels</strong></td>
+  <tr>
+    <td><strong>undo_levels</strong></td>
     <td>Current number of undo levels, this value is -1 if the custom undo/redo support is disabled.</td>
+  </tr>
+  <tr> 
+    <td width="150"><strong>visual_aid</strong></td>
+    <td>True/false state of visual aid/guidelines mode.</td>
   </tr>
 </table>
 <br>

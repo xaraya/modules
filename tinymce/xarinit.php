@@ -23,6 +23,7 @@ function tinymce_init()
 {
 //Set default module vars
    xarModSetVar('tinymce', 'tinytheme', 'default');
+   xarModSetVar('tinymce', 'tinylang', 'uk');   
    xarModSetVar('tinymce', 'tinymode', 'textareas');
    xarModSetVar('tinymce', 'tinyask', 'true');
    xarModSetVar('tinymce', 'tinybuttons', 'removeformat');
@@ -31,8 +32,8 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinyextended', 'code,pre,blockquote/quote,a[href|rel:external]');
    xarModSetVar('tinymce', 'tinyinstances','summary,body');
    xarModSetVar('tinymce', 'tinycsslist','./themes/Xaraya_Classic/style/style.css');
-
-
+   xarModSetVar('tinymce', 'tinytoolbar','bottom');
+   xarModSetVar('tinymce', 'tinywidth','');
 //Set masks
     xarRegisterMask('ViewTinyMCE','All','tinymce','All','All:All','ACCESS_OVERVIEW');
     xarRegisterMask('ReadTinyMCE','All','tinymce','All','All:All','ACCESS_READ');
@@ -71,8 +72,16 @@ function tinymce_upgrade($oldversion)
     case '0.0.1':
         // Set up new module vars
         xarModSetVar('tinymce', 'tinybuttonsremove', '');
-        break;
-    case '0.0.2':
+        return tinymce_upgrade('0.0.2');
+        continue;
+   case '0.0.2':
+    // Set up new module vars
+         xarModSetVar('tinymce', 'tinytoolbar', 'bottom');
+         xarModSetVar('tinymce', 'tinylang', 'uk'); 
+         xarModSetVar('tinymce', 'tinywidth','');
+        return tinymce_upgrade('0.0.3');         
+    break;
+    case '0.0.3':
     // Current version
     break;
     }

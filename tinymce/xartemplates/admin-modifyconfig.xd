@@ -11,7 +11,8 @@
 <xar:mlstring>To use TinyMCE you must make sure that you:</xar:mlstring>
 <ul>
     <li><xar:mlstring>Install, then set TinyMCE as default editor in the Base Module configuration (Other Tab) </xar:mlstring></li>
-    <li><xar:mlstring>Add the specific template tags to head section (after the javascript tag) of your page templates (default.xt or any others where you want the editor to have effect) as follows</xar:mlstring>
+    <li><xar:mlstring>Add the specific template tags to head section (after the javascript tag) of your page templates (default.xt or any other 
+    page, module or other specific template where you want the editor to have effect) as follows:</xar:mlstring>
     <pre>
         &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
             &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
@@ -25,26 +26,40 @@
 
      <div style="clear: both; width: 98%; padding-top: 10px;">
         <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Select default language for TinyMCE')#">
+            <label for="tinylang"><xar:mlstring>Default language</xar:mlstring></label>
+        </span>
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
+            <select name="tinylang" id="tinylang" size="1">
+                <xar:foreach in="$langlist" value="$v" key="$k">
+                    <xar:if condition="$v eq $tinylang">
+                        <option value="#$v#" selected="selected">#$v#</option>
+                    <xar:else />
+                        <option name="langlist.#$k#" value="#$v#">#$v#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </span>
+    </div>
+
+     <div style="clear: both; width: 98%; padding-top: 10px;">
+        <span style="float: left; width: 30%; text-align: right;">
         <span class="help" title="#xarML('Select default Theme Edit Panel for TinyMCE')#">
             <label for="tinytheme"><xar:mlstring>Default Theme Editor Panel</xar:mlstring></label>
         </span>
         </span>
         <span style="float: right; width: 68%; text-align: left;">
             <select name="tinytheme" id="tinytheme" size="1">
-            <xar:if condition="$tinytheme eq 'simple'">
-               <option value="simple" selected="selected"><xar:mlstring>Simple</xar:mlstring></option>
-               <option value="default"><xar:mlstring>Default</xar:mlstring></option>
-               <option value="advanced"><xar:mlstring>Advanced</xar:mlstring></option>
-            <xar:elseif condition="$tinytheme eq 'advanced'" />
-               <option value="simple"><xar:mlstring>Simple</xar:mlstring></option>
-               <option value="default"><xar:mlstring>Default</xar:mlstring></option>
-               <option value="advanced" selected="selected"><xar:mlstring>Advanced</xar:mlstring></option>
-            <xar:else />
-               <option value="simple"><xar:mlstring>Simple</xar:mlstring></option>
-               <option value="default" selected="selected"><xar:mlstring>Default</xar:mlstring></option>
-               <option value="advanced"><xar:mlstring>Advanced</xar:mlstring></option>
-            </xar:if> 
-        </select>
+                <xar:foreach in="$themelist" value="$v" key="$k">
+                  <xar:if condition="$v eq $tinytheme">
+                        <option value="#$v#" selected="selected">#$v#</option>
+                    <xar:else />
+                        <option name="themelist.#$k#" value="#$v#">#$v#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
+        </span>
 
         </span>
     </div>
@@ -59,10 +74,10 @@
             <xar:if condition="$tinymode eq 'specific_textareas'">
                <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
                <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
-               <option value="textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+               <option value="specific_textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
             <xar:elseif condition="$tinymode eq 'exact'" />
                <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
-               <option value="textareas" selected="selected"><xar:mlstring>Specific named areas</xar:mlstring></option>
+               <option value="exact" selected="selected"><xar:mlstring>Specific named areas</xar:mlstring></option>
                <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
             <xar:else />
                <option value="textareas" selected="selected"><xar:mlstring>All Text areas</xar:mlstring></option>
@@ -90,6 +105,17 @@
         </select>
         </span>
     </div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Defaults to width of individual textareas if left blank')#">
+                <label for="tinywidth"><xar:mlstring>Override width for textareas:</xar:mlstring></label>
+        </span>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+        <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="3" maxlength="3" /> px
+    </span>
+    </div>
+
 <div style="clear: both; width: 98%; padding-top: 10px;">
 <h3><xar:mlstring>Options for Advanced Theme Panel</xar:mlstring></h2>
 </div>
@@ -149,7 +175,7 @@
     </div>
     <div style="float: right; width: 68%; text-align: left; ">
         <p><xar:mlstring>The following are valid button names (separate names by comma):</xar:mlstring></p>
-        <p><strong>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor</strong></p>
+        <p><strong> bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor,charmap,visualaid</strong></p>
     </div>
 
     <div style="clear: both; padding-top: 10px;">
@@ -160,6 +186,25 @@
     </span>
     <span style="float: right; width: 68%; text-align: left;">
         <input type="text" name="tinybuttonsremove" id="tinybuttons" value="#$tinybuttonsremove#" size="60" maxlength="120" />
+    </span>
+    </div>
+
+   <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;">
+       <span class="help" title="#xarML('Position of the editor toolbar at top or bottom of text input area')#">
+            <label for="tinytoolbar"><xar:mlstring>Toolbar position:</xar:mlstring></label>
+       </span>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+        <select name="tinytoolbar" id="tinytoolbar" size="1">
+            <xar:if condition="$tinytoolbar eq 'top'">
+               <option value="top" selected="selected"><xar:mlstring>Top</xar:mlstring></option>
+               <option value="bottom"><xar:mlstring>Bottom</xar:mlstring></option>
+            <xar:else />
+               <option value="top"><xar:mlstring>Top</xar:mlstring></option>
+               <option value="bottom" selected="selected"><xar:mlstring>Bottom</xar:mlstring></option>
+            </xar:if>
+        </select>
     </span>
     </div>
     

@@ -22,13 +22,33 @@
 	window.focus();
 </script>
 </head>
-<body>
-<div class="title">{$lang_theme_code_title}</div>
-<br>
-<script language="JavaScript">
-	document.write('<textarea id="htmlSource" name="htmlSource" cols="60" rows="15" style="width: ' + tinyMCE.getParam("theme_advanced_source_editor_area_width", 320) + 'px; height: ' + tinyMCE.getParam("theme_advanced_source_editor_area_height", 190) + 'px">' + fixContent(tinyMCE.getContent(tinyMCE.getWindowArg('editor_id'))) + '</textarea>');
-</script>
-<br>
+<body scroll="auto">
+
+<div style="height: 90%">
+	<div class="title">{$lang_theme_code_title}</div>
+	<br>
+	<script language="JavaScript">
+		document.write('<textarea id="htmlSource" name="htmlSource" style="width: 100%; height: 90%">' + fixContent(tinyMCE.getContent(tinyMCE.getWindowArg('editor_id'))) + '</textarea>');
+	</script>
+	<input type="button" name="Button" value="{$lang_theme_code_save}" onclick="saveContent();">
+</div>
+
+<!--
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+<tr><td height="1%">
+	<div class="title">{$lang_theme_code_title}</div>
+	<br>
+</td></tr><tr><td height="98%">
+<div style="height: 99%">
+	<script language="JavaScript">
+		document.write('<textarea id="htmlSource" name="htmlSource" style="width: 100%; height: 99%">' + fixContent(tinyMCE.getContent(tinyMCE.getWindowArg('editor_id'))) + '</textarea>');
+	</script>
+</div>
+</td></tr>
+<tr><td height="1%">
 <input type="button" name="Button" value="{$lang_theme_code_save}" onclick="saveContent();">
+</td></tr>
+</table>-->
+
 </body>
 </html>
