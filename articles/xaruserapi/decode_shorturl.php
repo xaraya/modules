@@ -15,7 +15,7 @@ function articles_userapi_decode_shorturl($params)
     $module = 'articles';
 
     // check if we want to try decoding URLs using titles rather then ID
-	// TODO: get this from a modvar or something
+    // TODO: get this from a modvar or something
     $decodeUsingTitle = false;
 
     // Check if we're dealing with an alias here
@@ -154,6 +154,8 @@ function articles_userapi_decode_shorturl($params)
 
 function decodeUsingTitle( $params, $ptid = '' )
 {
+    $dupeResolutionMethod = 'Append AID';
+
     // The $params passed in does not match on all legal URL characters and
     // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"
     // So lets parse the path info manually here.
@@ -166,18 +168,65 @@ function decodeUsingTitle( $params, $ptid = '' )
     preg_match_all('|/([^/]+)|i', $pathInfo, $matches);
     $params = $matches[1];                        
 
-    if( isset($ptid) and !empty($ptid) )
+    if( isset($ptid) and !empty($ptid) ) 
     {
         $searchArgs['pubtypeid'] = $ptid;
-        $searchArgs['title']     = urldecode($params[2]);
+        $searchArgs['where']     = "title = '".urldecode($params[2])."'";
     } else {
-        $searchArgs['title']     = urldecode($params[1]);
+        $searchArgs['where']     = "title = '".urldecode($params[1])."'";
     }
     
-    $article = xarModAPIFunc('articles','user','get', $searchArgs);
-    if( !empty($article) )
+    $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
+
+    if( count($articles) == 1 )
     {
-        $aid = $article['aid'];
+        $theArticle = $articles[0];
+    } else {
+        // NOTE: We could probably just loop through the various dupe detection methods rather then 
+        // pulling from a config variable.  This would allow old URLs encoded using one system
+        // to keep working even if the configuration changes.
+        switch( $dupeResolutionMethod )
+        {
+            case 'Append AID':
+                // Look for AID appended after title
+                if( !empty($params[3]) )
+                {
+                    foreach ($articles as $article)
+                    {
+                        if( $article['aid'] == $params[3] )
+                        {
+                            $theArticle = $article;
+                            break;
+                        }
+                    }
+                }
+                break;
+                
+            case 'Append Date':
+                // Look for date appended after title
+                if( !empty($params[3]) )
+                {
+                    foreach ($articles as $article)
+                    {
+                        if( date('Y-m-d H:i',$article['pubdate']) == $params[3] )
+                        {
+                            $theArticle = $article;
+                            break;
+                        }
+                    }
+                }
+                break;
+                
+            default:
+                // Just use the first one that came back
+                $path = $aid;
+                $theArticle = $articles[0];
+        }
+    }
+
+    if( !empty($theArticle) )
+    {
+        $aid = $theArticle['aid'];
         $args['aid'] = $aid;
         return array('display', $args);
     }

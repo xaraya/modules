@@ -17,7 +17,7 @@ function articles_userapi_encode_shorturl($args)
     }
 
     // check if we want to encode URLs using their titles rather then their ID
-	// TODO: get this from a modvar or something
+    // TODO: get this from a modvar or something
     $encodeUsingTitle = false;
 
 
@@ -292,9 +292,36 @@ function encodeUsingTitle( $aid )
     // TODO: Check to see if there are more then one articles with this title
     // if there are more then one article with the same title, fall back on something
     // else -- like using $aid
+
+    $dupeResolutionMethod = 'Append AID';
+
+    $searchArgs = array();
+    $searchArgs['where'] = "title = '".$article['title']."'";
+    $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
     
-    $path = rawurlencode($article['title']);
-    
+    if( count($articles) == 1 )
+    {
+        $path = rawurlencode($article['title']);
+    } else {    
+        switch( $dupeResolutionMethod )
+        {
+            case 'Append AID':
+                // User Title and AID
+                $path = rawurlencode($article['title']).'/'.$aid;
+                break;
+                
+            case 'Append Date':
+                // User Title and Date
+                
+                $path = urlencode( $article['title'] ) .'/'.date('Y-m-d H:i',$article['pubdate']) ;
+                break;
+                
+            default:
+                // Just use ID instead of title
+                $path = $aid;
+        }
+    }
+        
     return $path;
 }
 ?>
