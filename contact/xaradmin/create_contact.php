@@ -3,10 +3,7 @@
 function contact_admin_create_contact($args)
 {
 
-    // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarCleanFromInput(), getting them
-    // from other places such as the environment is not allowed, as that makes
-    // assumptions that will not hold in future versions of Xaraya
+    // Get parameters from whatever input we need.  
      if (!xarVarFetch('id', 'isset', $id, '', XARVAR_NOT_REQUIRED)) return;
      if (!xarVarFetch('department', 'str:1:', $department, '', XARVAR_NOT_REQUIRED)) return;
      if (!xarVarFetch('title', 'str:1:', $title, '', XARVAR_NOT_REQUIRED)) return;
