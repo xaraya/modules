@@ -1,54 +1,53 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
+  <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
 
-<b><xar:mlstring>Sort By</xar:mlstring>:</b>
-<br /><br />
-<form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
-	<input type="radio" name="phase" id="phase" value="certified"  />
-	<xar:mlstring>Certified</xar:mlstring>
-	&nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="price"  />
-	<xar:mlstring>Commercial</xar:mlstring>
-	&nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="free"  />
-	<xar:mlstring>Free</xar:mlstring>
-	&nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="supported"  />
-	<xar:mlstring>Supported</xar:mlstring>
+  <b><xar:mlstring>Sort By</xar:mlstring>:</b>
+  <br /><br />
+  <form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+	  <input type="radio" name="phase" id="phase" value="certified"  />
+	  <xar:mlstring>Certified</xar:mlstring>
+	  &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="price"  />
+	  <xar:mlstring>Commercial</xar:mlstring>
+	  &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="free"  />
+	  <xar:mlstring>Free</xar:mlstring>
+	  &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="supported"  />
+	  <xar:mlstring>Supported</xar:mlstring>
+    &nbsp;&nbsp;<input type="submit" value="Refresh" align="middle" tabindex="6" />
+  </form>
+  <br /><br />
 
-&nbsp;&nbsp;<input type="submit" value="Refresh" align="middle" tabindex="6" />
-</form>
-<br /><br />
-
-<xar:if condition="!empty($message)">
-	<b>#$message#</b>
-<xar:else />
-          
-<xar:loop name="$items">
-<div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
-<div class="xar-norm" style="padding: 3px;">
-[ #$type# ]
-<h1><a class="xar-title" href="#$displaylink#">#$name#</a></h1>
-<div class="xar-accent" style="padding: 2px;"><span class="xar-sub">
-<xar:mlstring>Author</xar:mlstring>: 
-<a href="#$contacturl#">#$realname#</a>
-<xar:mlstring>on</xar:mlstring>
-#$time#
-		<xar:if condition="!empty($counter)">
-		   (#$hitcount# <xar:mlstring>Reads</xar:mlstring>)
-		</xar:if>
-
-</span></div>
-<b>Version:</b>&nbsp;&nbsp; #$version#<br /><br />
-#$desc#<br /><br />
-<div align="right">
-<a href="#$displaylink#"><xar:mlstring>Read More</xar:mlstring></a>
-    <xar:if condition="!empty($comments)">
-             -- #$comments# <xar:mlstring>Comments</xar:mlstring>
-    </xar:if>
+  <xar:if condition="!empty($message)">
+	  <b>#$message#</b>
+  <xar:else />        
+    <xar:loop name="$items">
+      <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
+        <div class="xar-norm" style="padding: 3px;">
+          [ #$loop:item['type']# ]
+          <h1><a class="xar-title" href="#$loop:item['displaylink']#">#$loop:item['name']#</a></h1>
+          <div class="xar-accent" style="padding: 2px;">
+            <span class="xar-sub">
+              <xar:mlstring>Author</xar:mlstring>: 
+              <a href="#$loop:item['contacturl']#">#$loop:item['realname']#</a>
+              <xar:mlstring>on</xar:mlstring>
+              #$loop:item['time']#
+		          <xar:if condition="!empty($loop:item['counter'])">
+		            (#$loop:item['hitcount']# <xar:mlstring>Reads</xar:mlstring>)
+		          </xar:if>
+            </span>
+          </div>
+          <b>Version:</b>&nbsp;&nbsp; #$loop:item['version']#<br /><br />
+          #$loop:item['desc']#<br /><br />
+          <div align="right">
+            <a href="#$loop:item['displaylink']#"><xar:mlstring>Read More</xar:mlstring></a>
+            <xar:if condition="!empty($loop:item['comments'])">
+              -- #$loop:item['comments']# <xar:mlstring>Comments</xar:mlstring>
+            </xar:if>
             <br />
           </div>
+        </div>
+      </div>
+    </xar:loop>
+  </xar:if>
 </div>
-</div>
-</xar:loop>
-
-</xar:if>

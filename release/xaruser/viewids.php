@@ -115,6 +115,7 @@ function release_user_viewids()
             $items[$i]['adddocstitle'] = '';
         }
 
+        $items[$i]['comments'] = '0';
         if (xarModIsAvailable('comments')){
             // Get Comments
             $items[$i]['comments'] = xarModAPIFunc('comments',
@@ -123,15 +124,12 @@ function release_user_viewids()
                                                    array('modid' => xarModGetIDFromName('release'),
                                                          'objectid' => $item['rid']));
             
-            if (!$items[$i]['comments']) {
-                $items[$i]['comments'] = '0';
-            } elseif ($items[$i]['comments'] == 1) {
-                $items[$i]['comments'] .= ' ';
-            } else {
+            if ($items[$i]['comments'] != '0') {
                 $items[$i]['comments'] .= ' ';
             }
         }
 
+        $items[$i]['hitcount'] = '0';
         if (xarModIsAvailable('hitcount')){
             // Get Hits
             $items[$i]['hitcount'] = xarModAPIFunc('hitcount',
@@ -141,11 +139,7 @@ function release_user_viewids()
                                                          'itemtype' => '1',
                                                          'objectid' => $item['rid']));
             
-            if (!$items[$i]['hitcount']) {
-                $items[$i]['hitcount'] = '0';
-            } elseif ($items[$i]['hitcount'] == 1) {
-                $items[$i]['hitcount'] .= ' ';
-            } else {
+            if ($items[$i]['hitcount'] != '0') {
                 $items[$i]['hitcount'] .= ' ';
             }
         }
