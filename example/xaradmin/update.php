@@ -102,7 +102,7 @@ function example_admin_update($args)
                              'number' => $number))) {
         return; // throw back
     } 
-    xarSessionSetVar('statusmsg', xarML('Example Item Was Successfully Updated!')); 
+    xarSessionSetVar('statusmsg', xarML('Example Item was successfully updated!')); 
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('example', 'admin', 'view')); 

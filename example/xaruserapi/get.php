@@ -63,7 +63,7 @@ function example_userapi_get($args)
     // Check for no rows found, and if so, close the result set and return an exception
     if ($result->EOF) {
         $result->Close();
-        $msg = xarML('This item does not exists');
+        $msg = xarML('This item does not exist');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
