@@ -49,6 +49,7 @@ class XMLTranslationsSkelsGenerator {
             if (!file_exists($this->baseDir.'blocks')) mkdir($this->baseDir.'blocks', 0777);
             if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
             if (!file_exists($this->baseDir.'templates/includes')) mkdir($this->baseDir.'templates/includes', 0777);
+			if (!file_exists($this->baseDir.'templates/blocks')) mkdir($this->baseDir.'templates/blocks', 0777);            
             break;
             case XARMLS_DNTYPE_THEME:
             $this->baseDir = "$themes_dir/$dnName/";
@@ -75,6 +76,9 @@ class XMLTranslationsSkelsGenerator {
             break;
             case XARMLS_CTXTYPE_INCLTEMPL:
                 $this->fileName .= "templates/includes/$ctxName";
+            break;
+            case XARMLS_CTXTYPE_BLKTEMPL:
+                $this->fileName .= "templates/blocks/$ctxName";
             break;
             case XARMLS_CTXTYPE_BLOCK:
                 $this->fileName .= "blocks/$ctxName";

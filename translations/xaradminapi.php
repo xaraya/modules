@@ -374,6 +374,22 @@
         closedir($dd);
     }
 
+    $blktplnames = array();
+    if (file_exists("modules/$moddir/xartemplates/blocks")) {
+        $dd = opendir("modules/$moddir/xartemplates/blocks");
+        while ($filename = readdir($dd)) {
+            if (!preg_match('/^([a-z\-_]+)\.xd$/i', $filename, $matches)) continue;
+            $blktplnames[] = $matches[1];
+
+            $parser = new TPLParser();
+            $parser->parse("modules/$moddir/xartemplates/blocks/$filename");
+
+            $transEntriesCollection['blktempl::'.$matches[1]] = $parser->getTransEntries();
+            $transKeyEntriesCollection['blktempl::'.$matches[1]] = $parser->getTransKeyEntries();
+        }
+        closedir($dd);
+    }
+
     $blocknames = array();
     if (file_exists("modules/$moddir/xarblocks")) {
         $dd = opendir("modules/$moddir/xarblocks");
@@ -407,6 +423,9 @@
         foreach ($incltplnames as $incltplname) {
             if (!$backend->loadContext(XARMLS_CTXTYPE_INCLTEMPL, $incltplname)) return;
         }
+        foreach ($blktplnames as $blktplname) {
+            if (!$backend->loadContext(XARMLS_CTXTYPE_BLKTEMPL, $blktplname)) return;
+        }
         foreach ($blocknames as $blockname) {
             if (!$backend->loadContext(XARMLS_CTXTYPE_BLOCK, $blockname)) return;
         }
@@ -438,6 +457,8 @@
             if (!$gen->create(XARMLS_CTXTYPE_TEMPLATE, $matches[1])) return;
         } elseif (preg_match('/^incltempl::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_INCLTEMPL, $matches[1])) return;
+        } elseif (preg_match('/^blktempl::(.*)/', $subname, $matches)) {
+            if (!$gen->create(XARMLS_CTXTYPE_BLKTEMPL, $matches[1])) return;
         } elseif (preg_match('/^block::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_BLOCK, $matches[1])) return;
         } else {
@@ -479,9 +500,9 @@
         $gen->close();
     }
 
+
     $time = explode(' ', microtime());
     $endTime = $time[1] + $time[0];
-
     return array('time' => $endTime - $startTime, 'statistics' => $statistics);
 }
 
@@ -530,6 +551,7 @@
     $allCtxNames[XARMLS_CTXTYPE_FILE] = $backend->getContextNames(XARMLS_CTXTYPE_FILE);
     $allCtxNames[XARMLS_CTXTYPE_TEMPLATE] = $backend->getContextNames(XARMLS_CTXTYPE_TEMPLATE);
     $allCtxNames[XARMLS_CTXTYPE_INCLTEMPL] = $backend->getContextNames(XARMLS_CTXTYPE_INCLTEMPL);
+    $allCtxNames[XARMLS_CTXTYPE_BLKTEMPL] = $backend->getContextNames(XARMLS_CTXTYPE_BLKTEMPL);
     $allCtxNames[XARMLS_CTXTYPE_BLOCK] = $backend->getContextNames(XARMLS_CTXTYPE_BLOCK);
 
     $gen = translations_adminapi_create_generator_instance(array('interface' => 'TranslationsGenerator', 'locale' => $locale));
@@ -544,6 +566,7 @@
 
             if ($ctxType == XARMLS_CTXTYPE_TEMPLATE) $sName = 'template::'.$ctxName;
             elseif ($ctxType == XARMLS_CTXTYPE_INCLTEMPL) $sName = 'incltempl::'.$ctxName;
+            elseif ($ctxType == XARMLS_CTXTYPE_BLKTEMPL) $sName = 'blktempl::'.$ctxName;
             elseif ($ctxType == XARMLS_CTXTYPE_BLOCK) $sName = 'block::'.$ctxName;
             else $sName = $ctxName;
 
@@ -636,6 +659,20 @@
         closedir($dd);
     }
     return $tplnames;
+}
+
+/* API */function translations_adminapi_get_module_blktempl($moddir)
+{
+    $blktplnames = array();
+    if (file_exists("modules/$moddir/xartemplates/blocks")) {
+        $dd = opendir("modules/$moddir/xartemplates/blocks");
+        while ($filename = readdir($dd)) {
+            if (!preg_match('/^([a-zA-Z\-_]+)\.xd$/i', $filename, $matches)) continue;
+            $blktplnames[] = $matches[1];
+        }
+        closedir($dd);
+    }
+    return $blktplnames;
 }
 
 /* API */function translations_adminapi_get_module_blocks($moddir)

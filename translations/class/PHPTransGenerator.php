@@ -52,6 +52,7 @@ class PHPTranslationsGenerator {
             if (!file_exists($this->baseDir.'blocks')) mkdir($this->baseDir.'blocks', 0777);
             if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
             if (!file_exists($this->baseDir.'templates/includes')) mkdir($this->baseDir.'templates/includes', 0777);
+            if (!file_exists($this->baseDir.'templates/blocks')) mkdir($this->baseDir.'templates/blocks', 0777);            
             break;
             case XARMLS_DNTYPE_THEME:
             $this->baseDir = "$themes_dir/$dnName/";
@@ -102,7 +103,7 @@ class PHPTranslationsGenerator {
         chmod($this->fileName, 0666);
         return true;
     }
-    
+
     function addEntry($string, $translation)
     {
         // NOTE: $string is not converted since its charset is US-ASCII which is a subset of utf-8

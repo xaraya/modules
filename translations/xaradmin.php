@@ -147,6 +147,7 @@ define('RELEASE', 4);
 
 /* FUNC */function translations_admin_generate_skels()
 {
+
     $dnType = xarSessionGetVar('translations_dnType');
     $locale = translations_working_locale();
     $args = array('locale'=>$locale);
@@ -297,7 +298,7 @@ define('RELEASE', 4);
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!xarVarFetch('subtype', 'regexp:/^(file|template|incltempl|block)$/', $subtype)) return;
+    if (!xarVarFetch('subtype', 'regexp:/^(file|template|incltempl|blktempl|block)$/', $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
 
     $dnType = xarSessionGetVar('translations_dnType');
@@ -306,6 +307,7 @@ define('RELEASE', 4);
     if ($subtype == 'file') $ctxType = XARMLS_CTXTYPE_FILE;
     elseif ($subtype == 'template') $ctxType = XARMLS_CTXTYPE_TEMPLATE;
     elseif ($subtype == 'incltempl') $ctxType = XARMLS_CTXTYPE_INCLTEMPL;
+	elseif ($subtype == 'blktempl') $ctxType = XARMLS_CTXTYPE_BLKTEMPL;
     else $ctxType = XARMLS_CTXTYPE_BLOCK;
     $ctxName = $subname;
 
@@ -399,7 +401,7 @@ function translations_admin_translate_update()
 // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    if (!xarVarFetch('subtype', 'regexp:/^(file|template|incltempl|block)$/', $subtype)) return;
+    if (!xarVarFetch('subtype', 'regexp:/^(file|template|incltempl|blktempl|block)$/', $subtype)) return;
     if (!xarVarFetch('subname', 'str:1:', $subname)) return;
     if (!xarVarFetch('numEntries', 'int:0:', $numEntries)) return;
     if (!xarVarFetch('numKeyEntries', 'int:0:', $numKeyEntries)) return;
@@ -410,6 +412,7 @@ function translations_admin_translate_update()
     if ($subtype == 'file') $ctxType = XARMLS_CTXTYPE_FILE;
     elseif ($subtype == 'template') $ctxType = XARMLS_CTXTYPE_TEMPLATE;
     elseif ($subtype == 'incltempl') $ctxType = XARMLS_CTXTYPE_INCLTEMPL;
+    elseif ($subtype == 'blktempl') $ctxType = XARMLS_CTXTYPE_BLKTEMPL;
     else $ctxType = XARMLS_CTXTYPE_BLOCK;
     $ctxName = $subname;
 
@@ -505,6 +508,34 @@ function translations_admin_translate_update()
 
     $opbar = translations_create_opbar(TRANSLATE);
     $trabar = translations_create_trabar('incltempl', '');
+
+    $tplData = array_merge($tplData, $opbar, $trabar);
+
+    return $tplData;
+}
+
+/* FUNC */function translations_admin_translate_blktempl()
+{
+// Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    $dnType = xarSessionGetVar('translations_dnType');
+    $dnName = xarSessionGetVar('translations_dnName');
+
+    $locale = translations_working_locale();
+
+    $args['interface'] = 'ReferencesBackend';
+    $args['locale'] = $locale;
+    $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+    if (!isset($backend)) return;
+    if (!$backend->bindDomain($dnType, $dnName)) {
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+        return;
+    }
+    $tplData['subnames'] = $backend->getContextNames(XARMLS_CTXTYPE_BLKTEMPL);
+
+    $opbar = translations_create_opbar(TRANSLATE);
+    $trabar = translations_create_trabar('blktempl', '');
 
     $tplData = array_merge($tplData, $opbar, $trabar);
 
@@ -701,6 +732,9 @@ function translations_create_trabar($subtype, $subname)
         $enabledTras[$j++] = true;
         $traLabels[$j] = 'incltempl';
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_incltempl');
+        $enabledTras[$j++] = true;
+        $traLabels[$j] = 'blktempl';
+        $traURLs[$j] = xarModURL('translations', 'admin', 'translate_blktempl');
         $enabledTras[$j++] = true;
         $traLabels[$j] = 'blocks';
         $traURLs[$j] = xarModURL('translations', 'admin', 'translate_blocks');
