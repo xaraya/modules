@@ -366,7 +366,7 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-	
+    
             // Check for no rows found, and if so, add file to pruned list
             if ($result->EOF) 
             {

@@ -1,14 +1,14 @@
 <?php
 function uploads_admin_importpictures( $args )
 {
-//    global $dd_26;
+    //global $dd_26;
     //$dd_26 = 'http://epicsaga.com/what_do_you_know?';
 
     // Can use this or the dd_26 one
     global $uploads_var_overide;
 
     //Config
-    $image_import_dir              = '/home/epicsaga/public_html/var/uploads/images';
+    $image_import_dir = '/home/epicsaga/public_html/var/uploads/images';
     $Picture_Publication_Type_ID = 5;
 
     xarModSetVar('uploads', 'obfuscate_imports', 0);
@@ -19,8 +19,7 @@ function uploads_admin_importpictures( $args )
     // Kick mod available
     echo "Checking mod avaliable (dynamicdata): ";
     $avail = xarModIsAvailable("dynamicdata");
-    if( $avail )
-    {
+    if ( $avail ) {
         echo "yes<br/>";
     } else {
         echo "no<br/>";
