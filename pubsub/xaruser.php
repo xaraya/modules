@@ -89,8 +89,8 @@ function pubsub_user_displayicon($args)
     $pubsubeventcidstable = $xartable['pubsub_eventcids'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
-    $query = "SELECT $xar_pubsubid
-                FROM $pubsubeventstable, $pubsubeventcidstable
+    $query = "SELECT xar_pubsubid
+                FROM $pubsubeventstable, $pubsubeventcidstable, $pubsubregtable
                WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
                  AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
                  AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
@@ -99,7 +99,7 @@ function pubsub_user_displayicon($args)
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
-    if (!$result->EOF) {
+    if ($result->EOF) {
         /**
          * If we get a hit on pubsub_reg, that mean we are already subscribed
          */

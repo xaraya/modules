@@ -101,7 +101,7 @@ function pubsub_adminapi_createhook($args)
 	          xar_itemtype,
 	          xar_groupdescr)
             VALUES (
-              $eventId,
+              $eventid,
               " . xarVarPrepForStore($modid) . ",
               " . xarVarPrepForStore($itemtype) . ",
               '" . xarvarPrepForStore($groupdescr) . "')";
