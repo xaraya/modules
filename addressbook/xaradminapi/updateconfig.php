@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateconfig.php,v 1.1 2003/07/02 02:13:49 garrett Exp $
+ * File: $Id: updateconfig.php,v 1.2 2003/07/05 04:56:27 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -17,12 +17,17 @@
 /**
  * update the primary module configuration settings
  *
- * @param passed in from modifyconfig form
+ * @param passed in from modifyconfig api
  * @return redirects back to modifyconfig page
  * @raise _AB_GLOBALPROTECTERROR, _AB_GRANTERROR, _AB_SORTERROR_1, 
  *        _AB_SORTERROR_2, _AB_SPECIAL_CHARS_ERROR 
  */
 function AddressBook_adminapi_updateconfig($args) {
+
+	/**
+	 * Security check 
+	 */
+    if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
 	extract($args);
 	
@@ -208,7 +213,7 @@ function AddressBook_adminapi_updateconfig($args) {
 // END FIXME
 
     // Return
-    return true;
+    return TRUE;
 
 } // END updateconfig
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifycustomfields.php,v 1.3 2003/07/05 23:08:55 garrett Exp $
+ * File: $Id: modifycustomfields.php,v 1.4 2003/07/06 03:01:31 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -42,10 +42,10 @@ function AddressBook_admin_modifycustomfields() {
 			if (!xarVarFetch ('del', 'array::',$formData['del'], FALSE))  {
 				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 			}
-			if (!xarVarFetch ('name', 'array::',$formData['name'], FALSE))  {
+			if (!xarVarFetch ('custLabel', 'array::',$formData['custLabel'], FALSE))  {
 				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 			}
-		    if (!xarVarFetch ('cust_type','array::',$formData['cust_type'],FALSE))  {
+		    if (!xarVarFetch ('custType','array::',$formData['custType'],FALSE)) {
 				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 			}
 		    if (!xarVarFetch ('incID','int::',$formData['incID'],FALSE))  {
@@ -68,6 +68,7 @@ function AddressBook_admin_modifycustomfields() {
 				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 			}
 		}
+//FIXME:<garrett> would rather use a userapi here
 	    $output['custfields'] = xarModAPIFunc(__ADDRESSBOOK__,'admin','getCustomfields');
 	    if(!is_array($output['custfields'])) {
 	        return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));

@@ -5,6 +5,7 @@
 <!--- -------------------------------------------------------------- --->
 <xar:if condition="!empty($abExceptions['abErrMsg']) and xarSecurityCheck('AdminAddressBook',0)">
     <div style="border-width: 1px; background-color:#FFFFCC; border-style: solid; border-color: #999900; padding: 2px; text-align:left;">
+    **APPLICATION ERROR MESSEAGES**<br /><br />
         <xar:loop name="$abExceptions['abErrMsg']">
             #$type# = #$text#<br />
         </xar:loop>
@@ -12,6 +13,7 @@
 </xar:if>
 <xar:if condition="!empty($abExceptions['abDebugMsg']) and xarSecurityCheck('AdminAddressBook',0)">
     <div style="border-width: 1px; background-color:#CCFFCC; border-style: solid; border-color: #009900; padding: 2px; text-align:left;">
+    **DEBUG MESSEAGES**<br /><br />
         <xar:loop name="$abExceptions['abDebugMsg']">
             #$type# = #$text#<br />
         </xar:loop>

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: xarglobal.php,v 1.2 2003/07/02 08:07:14 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -15,7 +15,6 @@
  */
 
 
-define('__ADDRESSBOOK__', 'addressbook');
 /**
  * Developer control stuff. Production values as follows:
  *
@@ -25,8 +24,11 @@ define('__ADDRESSBOOK__', 'addressbook');
 define('_AB_DEBUG',             1);
 
 
-//gehDEBUG - used to be in NS-Languages/api.php
-// Timezone Function by Fred B (fredb86)
+// Gives a common control across the module in the strange event our external mod name needs to change
+define('__ADDRESSBOOK__', 'addressbook');
+
+// FIXME: <garrett> Waiting for xarLocale* funcs to be completed
+// borrowed from PostNuke NS-Languages/api.php / Timezone Function by Fred B (fredb86)
 define('_DAY_OF_WEEK_LONG','Sunday Monday Tuesday Wednesday Thursday Friday Saturday');
 define('_DAY_OF_WEEK_SHORT','Sun Mon Tue Wed Thu Fri Sat');
 define('_MONTH_LONG','January February March April May June July August September October November December');
@@ -35,7 +37,7 @@ define('_DATETIMEBRIEF','%b %d, %Y - %I:%M %p');
 define('_DATETIMELONG','%A, %B %d, %Y - %I:%M %p');
 define('_TIMEZONES','IDLW NT HST YST PST MST CST EST AST GMT-3:30 GMT-3 AT WAT GMT CET EET BT GMT+3:30 GMT+4 GMT+4:30 GMT+5 GMT+5:30 GMT+6 WAST CCT JST ACS GST GMT+11 NZST');
 define('_TZOFFSETS','0 1 2 3 4 5 6 7 8 8.5 9 10 11 12 13 14 15 15.5 16 16.5 17 17.5 18 19 20 21 21.5 22 23 24');
-//gehDEBUG - END
+// END FIXME
 
 /**
  * Used in xarinit
@@ -43,6 +45,31 @@ define('_TZOFFSETS','0 1 2 3 4 5 6 7 8 8.5 9 10 11 12 13 14 15 15.5 16 16.5 17 1
 define('_AB_INIT_CREATETABLEFAILED', 'Table creation failed');
 define('_AB_INIT_UPDATETABLEFAILED', 'Table update failed');
 define('_AB_INIT_DELETETABLEFAILED', 'Table deletion failed.');
+
+// Module Variables: key = modvar name / value = modvar value
+// must be set but xarModVarSet
+$abModVars = array ('abtitle'           => 'Xaraya Address Book'
+                   ,'guestmode'         => 4
+                   ,'usermode'          => 7
+                   ,'itemsperpage'      => 30
+                   ,'globalprotect'     => 0
+                   ,'menu_off'          => 0
+                   ,'custom_tab'        => ''
+                   ,'zipbeforecity'     => 0
+                   ,'hidecopyright'     => 0
+                   ,'use_prefix'        => 0
+                   ,'use_img'           => 0
+                   ,'textareawidth'     => 60
+                   ,'dateformat'        => 0
+                   ,'numformat'         => '9,999.99'
+                   ,'sortorder_1'       => 'sortname,sortcompany'
+                   ,'sortorder_2'       => 'sortcompany,sortname'
+                   ,'menu_semi'         => 0
+                   ,'name_order'        => 0
+                   ,'special_chars_1'   => 'ÄÖÜäöüß'
+                   ,'special_chars_2'   => 'AOUaous'
+                   ,'SupportShortURLs'  => 0
+                   );
 
 /**
  * Custom Field Defines
@@ -91,10 +118,12 @@ define('_AB_ERR_DEBUG_STYLE',    '');
 /**
  * User Messages
  */
+define('_AB_NOAUTH_FUNCTION',       'You are not authorized to perform this function');
+
 //from admin.php
 //////////////////////////////
 define('_AB_NORECORDS',             'There are no records to show in this view');
-define('_ADDRESSBOOK_NOAUTH',       'Not authorised to access the pnAddressBook module.');
+define('_ADDRESSBOOK_NOAUTH',       'Not authorised to access the AddressBook module.');
 define('_ADDRESSBOOK_TITLE',        'Title of this Address Book');
 define('_AB_INSERT_AB_SUCCESS',     'Address Book Entry saved!');
 define('_AB_INSERT_CHKMSG',         'An Address Book Entry must contain data in at least one field of the Name tab!');

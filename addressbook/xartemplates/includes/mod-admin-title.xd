@@ -5,7 +5,8 @@
 <!--- -------------------------------------------------------------- --->
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        #xarModGetVar(__ADDRESSBOOK__,'abtitle')#</span>
+        <xar:mlstring>Administration - Address Book</xar:mlstring>
+    </span>
 </div>
 <!--- START DEBUG DISPLAY -----------------------------------------------------------  --->
 <xar:template compile="false" file="mod-debug" type="module" />

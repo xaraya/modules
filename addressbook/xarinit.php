@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: xarinit.php,v 1.1 2003/06/30 01:46:00 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -104,13 +104,6 @@ function AddressBook_init()
                    ,"INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_OTHER)."')"
                    );
 
-//    $sql = $dbconn->Execute("INSERT INTO $abLablesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_WORK)."')");
-//    $sql = $dbconn->Execute("INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_FAX)."')");
-//    $sql = $dbconn->Execute("INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_MOBILE)."')");
-//    $sql = $dbconn->Execute("INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_HOME)."')");
-//    $sql = $dbconn->Execute("INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_EMAIL)."')");
-//    $sql = $dbconn->Execute("INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_URL)."')");
-//    $sql = $dbconn->Execute("INSERT INTO $abLabelsTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_OTHER)."')");
     foreach ($insertRows as $row) {
         $result =& $dbconn->Execute($row);
         if (!$result) return;
@@ -133,9 +126,6 @@ function AddressBook_init()
 	/**
      * insert default values
      */
-//	$sql = $dbconn->Execute("INSERT INTO $abCategoriesTable ($nr,$name) VALUES ('','".xarVarPrepForStore(_pnAB_BUSINESS)."')");
-//	$sql = $dbconn->Execute("INSERT INTO $abCategoriesTable ($nr,$name) VALUES ('','".xarVarPrepForStore(_pnAB_PERSONAL)."')");
-//	$sql = $dbconn->Execute("INSERT INTO $abCategoriesTable ($nr,$name) VALUES ('','".xarVarPrepForStore(_pnAB_QUICKLIST)."')");
     $insertRows = array(
                     "INSERT INTO $abCategoriesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_BUSINESS)."')"
                    ,"INSERT INTO $abCategoriesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_PERSONAL)."')"
@@ -171,10 +161,6 @@ function AddressBook_init()
 	/**
      * insert default values
      */
-//	$sql = $dbconn->Execute("INSERT INTO $abCustomfieldsTable (nr,name,type,position) VALUES ('1','$tempcus_1','varchar(60)','1')");
-//	$sql = $dbconn->Execute("INSERT INTO $abCustomfieldsTable (nr,name,type,position) VALUES ('2','$tempcus_2','varchar(60)','2')");
-//	$sql = $dbconn->Execute("INSERT INTO $abCustomfieldsTable (nr,name,type,position) VALUES ('3','$tempcus_3','varchar(60)','3')");
-//	$sql = $dbconn->Execute("INSERT INTO $abCustomfieldsTable (nr,name,type,position) VALUES ('4','$tempcus_4','varchar(60)','4')");
     $insertRows = array(
                     "INSERT INTO $abCustomfieldsTable (nr,label,type,position) VALUES ('1','$tempcus_1','varchar(60) default NULL','1')"
                    ,"INSERT INTO $abCustomfieldsTable (nr,label,type,position) VALUES ('2','$tempcus_2','varchar(60) default NULL','2')"
@@ -204,8 +190,6 @@ function AddressBook_init()
 	/**
      * insert default values
      */
-//	$sql = $dbconn->Execute("INSERT INTO $abPrefixesTable (nr,name) VALUES ('','".xarVarPrepForStore(_pnAB_MR)."')");
-//	$sql = $dbconn->Execute("INSERT INTO $abPrefixesTable (nr,name) VALUES ('','".xarVarPrepForStore(_pnAB_MRS)."')");
     $insertRows = array(
                     "INSERT INTO $abPrefixesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_MR)."')"
                    ,"INSERT INTO $abPrefixesTable (nr,name) VALUES ('','".xarVarPrepForStore(_AB_MRS)."')"
@@ -215,66 +199,16 @@ function AddressBook_init()
         if (!$result) return;
     }
 
-	// Set up an initial value for a module variable.
-    xarModSetVar(__ADDRESSBOOK__, 'abtitle',         'Xaraya Address Book');
-    xarModSetVar(__ADDRESSBOOK__, 'guestmode',       4);
-	xarModSetVar(__ADDRESSBOOK__, 'usermode',        7);
-	xarModSetVar(__ADDRESSBOOK__, 'itemsperpage',    30);
-	xarModSetVar(__ADDRESSBOOK__, 'globalprotect',   0);
-	xarModSetVar(__ADDRESSBOOK__, 'menu_off',        0);
-	xarModSetVar(__ADDRESSBOOK__, 'custom_tab',      '');
-	xarModSetVar(__ADDRESSBOOK__, 'zipbeforecity',   0);
-	xarModSetVar(__ADDRESSBOOK__, 'hidecopyright',   0);
-	// since version 2.0
-	xarModSetVar(__ADDRESSBOOK__, 'use_prefix',      0);
-	xarModSetVar(__ADDRESSBOOK__, 'use_img',         0);
-	xarModSetVar(__ADDRESSBOOK__, 'textareawidth',   60);
-	xarModSetVar(__ADDRESSBOOK__, 'dateformat',      0);
-	xarModSetVar(__ADDRESSBOOK__, 'numformat',       '9,999.99');
-	xarModSetVar(__ADDRESSBOOK__, 'sortorder_1',     'sortname,sortcompany');
-	xarModSetVar(__ADDRESSBOOK__, 'sortorder_2',     'sortcompany,sortname');
-	xarModSetVar(__ADDRESSBOOK__, 'menu_semi',       0);
-	xarModSetVar(__ADDRESSBOOK__, 'name_order',      0);
-	xarModSetVar(__ADDRESSBOOK__, 'special_chars_1', 'ÄÖÜäöüß');
-    xarModSetVar(__ADDRESSBOOK__, 'special_chars_2', 'AOUaous');
-
-    // If your module supports short URLs, the website administrator should
-    // be able to turn it on or off in your module administration
-    xarModSetVar(__ADDRESSBOOK__, 'SupportShortURLs', 0);
-
-//// crazy stuff
-    // Register Block types (this *should* happen at activation/deactivation)
-//    if (!xarModAPIFunc('blocks',
-//                       'admin',
-//                       'register_block_type',
-//                       array('modName'  => __ADDRESSBOOK__,
-//                       'blockType'=> 'namecompany'))) return;
-
-    // Register our hooks that we are providing to other modules.  The example
-    // module shows an example hook in the form of the user menu.
-//    if (!xarModRegisterHook('item', 'usermenu', 'GUI',
-//                            'example', 'user', 'usermenu')) {
-//        return false;
-//    }
+	// $abModVars set in xarglobal.php and is used to ease maintenance
+    foreach ($abModVars as $modvar=>$value) {
+        xarModSetVar(__ADDRESSBOOK__, $modvar, $value);
+    }
 
     /*********************************************************************
     * Define instances for this module
     * Format is
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
-
-    // Instance definitions serve two purposes:
-    // 1. The define "filters" that are added to masks at runtime, allowing us to set
-    //    security checks over single objects or groups of objects
-    // 2. They generate dropdowns the UI uses to present the user with choices when
-    //    definng or modifying privileges.
-
-    // For each component we need to tell the system how to generate
-    // a list (dropdown) of all the component's instances.
-    // In addition, we add a header which will be displayed for greater clarity, and a number
-    // (limit) which defines the maximum number of rows a dropdown can have. If the number of
-    // instances is greater than the limit (e.g. registered users), the UI instead presents an
-    // input field for manual input, which is then checked for validity.
 
     $query1 = "SELECT DISTINCT nr FROM ".$abAddressTable;
     $instances = array(
@@ -285,44 +219,26 @@ function AddressBook_init()
                     );
     xarDefineInstance(__ADDRESSBOOK__, 'Item', $instances);
 
-// You can also use some external "wizard" function to specify instances :
-//
-//    $instances = array(
-//                        array('header' => 'external', // this keyword indicates an external "wizard"
-//                              'query'  => xarModURL('example','admin','privileges',array('foo' =>'bar')),
-//                              'limit'  => 0
-//                            )
-//                    );
-//    xarDefineInstance('example', 'Item', $instances);
-
-//    $instancestable = $xarTables['block_instances'];
-//    $typestable = $xarTables['block_types'];
-//    $query = "SELECT DISTINCT i.xar_title FROM $instancestable i, $typestable t WHERE t.xar_id = i.xar_type_id AND t.xar_module = 'example'";
-//    $instances = array(
-//                        array('header' => 'Example Block Title:',
-//                                'query' => $query,
-//                                'limit' => 20
-//                            )
-//                    );
-//    xarDefineInstance('example','Block',$instances);
-
-//// crazy stuff
 
     /*********************************************************************
     * Register the module components that are privileges objects
     * Format is
     * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
-    xarRegisterMask('AdminAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_ADMIN);
-    xarRegisterMask('ModifyLabels',       'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_ADMIN);
-    xarRegisterMask('ModifyCategories',   'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_ADMIN);
-    xarRegisterMask('ModifyPrefixes',     'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_ADMIN);
-    xarRegisterMask('ModifyCustomFields', 'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_ADMIN);
+    xarRegisterMask('AdminAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
 
-    xarRegisterMask('EditAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_EDIT);
-    xarRegisterMask('ModerateAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_EDIT);
+    /**
+     * These are redundant since you need admin access just to get here. However, I've left then
+     * in to suggest that in the future, some role could be delegated to non-admins
+     */
+    xarRegisterMask('ModifyLabels',       'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ModifyCategories',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ModifyPrefixes',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
+    xarRegisterMask('ModifyCustomFields', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
 
-    xarRegisterMask('ViewAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All',ACCESS_READ);
+    xarRegisterMask('EditAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_EDIT');
+
+    xarRegisterMask('ViewAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');
 
     // Initialisation successful
     return true;
@@ -338,7 +254,7 @@ function AddressBook_upgrade($oldversion) {
     include_once ('modules/addressbook/xarglobal.php');
 
 	switch($oldversion) {
-        case '0.0':
+        case '1.0':
 			break;
 	}
 
@@ -374,52 +290,18 @@ function AddressBook_delete() {
     foreach ($abTables as $abTable) {
         $query = xarDBDropTable($xarTables[$abTable]);
         $result =& $dbconn->Execute($query);
-        if (!$result) return;
+
+        //FIXME: <garrett> It would *nice* to return an error here ONLY if there
+        // was some sort of catastrophic error and the tables were NOT deleted
+        // could care less if the tables did not exist in the first place
     }
 
     /**
      * Delete any module variables
      */
-    $abModVars = array (
-                         'guestmode'
-                        ,'usermode'
-                        ,'itemsperpage'
-                        ,'globalprotect'
-                        ,'menu_off'
-                        ,'custom_tab'
-                        ,'zipbeforecity'
-                        ,'abtitle'
-                        ,'hidecopyright'
-                        ,'use_img'
-                        ,'use_prefix'
-                        ,'textareawidth'
-                        ,'dateformat'
-                        ,'numformat'
-                        ,'sortorder_1'
-                        ,'sortorder_2'
-                        ,'menu_semi'
-                        ,'name_order'
-                        ,'special_chars_1'
-                        ,'special_chars_2'
-                        ,'SupportShortURLs'
-                        );
-
-    foreach ($abModVars as $abModVar) {
-        xarModDelVar(__ADDRESSBOOK__, $abModVar);
+    foreach ($abModVars as $modvar=>$value) {
+        xarModDelVar(__ADDRESSBOOK__, $modvar);
     }
-
-    // UnRegister blocks
-//    if (!xarModAPIFunc('blocks',
-//                       'admin',
-//                       'unregister_block_type',
-//                       array('modName'  => __ADDRESSBOOK__,
-//                       'blockType'=> 'namecompany'))) return;
-
-    // Remove module hooks
-//    if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
-//                              'example', 'user', 'usermenu')) {
-//        return false;
-//    }
 
     // Remove Masks and Instances
     xarRemoveMasks(__ADDRESSBOOK__);
