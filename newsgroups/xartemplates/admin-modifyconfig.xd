@@ -1,0 +1,17 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>NewsGroups Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify NewsGroups Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<form method="post" action="#xarModURL('newsgroups', 'admin', 'modifyconfig', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" />
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<p><xar:mlstring>News Server</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="server" id="server" value="#xarModGetVar('newsgroups', 'server', 1)#" size="25" maxlength="255" /></p>
+<p><xar:mlstring>Port</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="port" id="port" value="#xarModGetVar('newsgroups', 'port', 1)#" size="2" maxlength="4" /></p>
+<p><xar:mlstring>Topics Per Page</xar:mlstring>:&nbsp;&nbsp;<input type="text" name="numitems" id="numitems" value="#xarModGetVar('newsgroups', 'numitems')#" size="2" maxlength="4" /></p>
+
+#$hooks#
+
+<p><input type="submit" value="Update Configuration" /></p>
+</form>
+</div>
+</div>

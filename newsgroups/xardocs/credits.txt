@@ -1,0 +1,9 @@
+Credit goes to:
+
+http://pear.php.net/package-info.php?package=Net_NNTP
+
+ 	
+Thomas V.V.Cox <cox@idecnet.com> 
+Morgan Christiansson <mog@linux.nu> 
+Martin Kaltroft <martin@nitro.dk> 
+Heino H. Gehlsen <heino@gehlsen.dk> 

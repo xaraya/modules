@@ -1,0 +1,32 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Newsgroups Module</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>Messages on newsgroup #$group#</h2>
+<div style="margin: auto;">
+<p><a href="#xarModUrl('newsgroups', 'user', 'main')#"><xar:mlstring>Back to main listings</xar:mlstring></a></p>
+<p><a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'phase' => 'new'))#"><xar:mlstring>Post to this group</xar:mlstring></a></p>
+<div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
+<table>
+	<tr>
+		<th><xar:mlstring>Subject</xar:mlstring></th>
+		<th><xar:mlstring>From</xar:mlstring></th>
+		<th><xar:mlstring>Date</xar:mlstring></th>
+	</tr>
+	<xar:loop name="$items">
+	<xar:if condition="(($loop:index + 1) % 2)">
+	<tr>
+		<td><a href="#xarModUrl('newsgroups', 'user', 'article', array('articleid' => $loop:item['Message-ID'], 'group' => $group))#">#$loop:item['Subject']#</a></td>
+		<td>#$loop:item['From']#</td>
+		<td>#$loop:item['Date']#</td>
+	</tr>
+	<xar:else />
+	<tr>
+		<td class="xar-accent"><a href="#xarModUrl('newsgroups', 'user', 'article', array('articleid' => $loop:item['Message-ID'], 'group' => $group))#">#$loop:item['Subject']#</a></td>
+		<td class="xar-accent">#$loop:item['From']#</td>
+		<td class="xar-accent">#$loop:item['Date']#</td>
+	</tr>
+	</xar:if>
+	</xar:loop>
+</table>
+</div>
+#$pager#
+</div>
+</div>
