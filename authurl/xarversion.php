@@ -2,6 +2,7 @@
 $modversion['name'] = 'AuthURL';
 $modversion['id'] = '42241';
 $modversion['version'] = '1.0.0';
+$modversion['displayname'] = xarML('AuthURL');
 $modversion['description'] = 'Xaraya external URL authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
