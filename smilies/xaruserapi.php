@@ -206,6 +206,7 @@ function smilies_userapitransform($text)
             $alsearch[] = '/(?<![\w@\.:-])(' . $tmpsmiley['code'] . ')(?![\w@:-])(?!\.\w)/i';
             $alreplace[] = '<img src="' . htmlspecialchars($tmpsmiley['icon']) .
                            '" alt="' . htmlspecialchars(xarML($tmpsmiley['emotion'])) .
+                           '" title="' . htmlspecialchars(xarML($tmpsmiley['emotion'])) .
                            '" />';
         }
     }
