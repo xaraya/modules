@@ -48,9 +48,9 @@ function release_user_addid()
                 if (!xarVarFetch('regname', 'str:1:', $regname, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('displname', 'str:1:', $displname, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('desc', 'str:1:', $desc, NULL, XARVAR_NOT_REQUIRED)) {return;};
-                if (!xarVarFetch('idtype', 'int:1:', $idtype, NULL, XARVAR_NOT_REQUIRED)) {return;};
-                if (!xarVarFetch('class', 'int:1:', $class, NULL, XARVAR_NOT_REQUIRED)) {return;};
-                if (!xarVarFetch('rstate', 'int:1:', $rstate, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('idtype', 'int:0:', $idtype, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('class', 'int:0:', $class, NULL, XARVAR_NOT_REQUIRED)) {return;};
+                if (!xarVarFetch('rstate', 'int:0:', $rstate, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 if (!xarVarFetch('modify_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED)) {return;};
                 
                 // Get the UID of the person submitting the module
