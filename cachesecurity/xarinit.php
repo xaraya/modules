@@ -356,11 +356,39 @@ CREATE TABLE xar_seccache_rolesgraph (
     $query = xarDBCreateIndex($tables['security_masks'],$index);
     if (!$dbconn->Execute($query)) return;
 
-
     // set up permissions masks.
     xarRegisterMask('AdminCacheSecurity', 'All', 'cachesecurity', 'Item', 'All', 'ACCESS_ADMIN');
 
+    // Register search hook
+    xarModRegisterHook('item','delete','API','cachesecurity','admin','hook');
+    xarModRegisterHook('item','create','API','cachesecurity','admin','hook');
+    xarModRegisterHook('item','new','API','cachesecurity','admin','hook');
+    xarModRegisterHook('item','update','API','cachesecurity','admin','hook');
+    xarModRegisterHook('item','link','API','cachesecurity','admin','hook');
+    xarModRegisterHook('item','unlink','API','cachesecurity','admin','hook');
+
+    //Link the hooks to the privileges/roles module
+    xarModAPIFunc('modules','admin','enablehooks',
+        array('callerModName' => 'roles', 'hookModName' => 'cachesecurity'));
+    xarModAPIFunc('modules','admin','enablehooks',
+        array('callerModName' => 'privileges', 'hookModName' => 'cachesecurity'));
+
     // Initialisation successful
+    return true;
+}
+
+/**
+ * activates the cache security module
+ * Synchronizes the cache and turns on the module
+ */
+function cachesecurity_activate()
+{
+/*
+    //Using APIFunc during activate causes recursive errors
+    if (!xarModAPIFunc('cachesecurity','admin','syncall')) return;
+    if (!xarModAPIFunc('cachesecurity','admin','turnon')) return;
+   */
+    
     return true;
 }
 
@@ -372,8 +400,21 @@ function cachesecurity_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 0.1:
+        case '0.1.0':
             // Code to upgrade from the 0.1 version (base block level caching)
+            // Register search hook
+            xarModRegisterHook('item','delete','API','cachesecurity','admin','hook');
+            xarModRegisterHook('item','create','API','cachesecurity','admin','hook');
+            xarModRegisterHook('item','new','API','cachesecurity','admin','hook');
+            xarModRegisterHook('item','update','API','cachesecurity','admin','hook');
+            xarModRegisterHook('item','link','API','cachesecurity','admin','hook');
+            xarModRegisterHook('item','unlink','API','cachesecurity','admin','hook');
+
+            //Link the hooks to the privileges/roles module
+            xarModAPIFunc('modules','admin','enablehooks',
+                array('callerModName' => 'roles', 'hookModName' => 'cachesecurity'));
+            xarModAPIFunc('modules','admin','enablehooks',
+                array('callerModName' => 'privileges', 'hookModName' => 'cachesecurity'));
             break;
         case '0.3.0':
             // Code to upgrade from the 0.3 version (base block level caching)
@@ -454,6 +495,14 @@ function cachesecurity_delete()
 
     // Remove Masks and Instances
     xarRemoveMasks('AdminCacheSecurity');
+
+    //Unregister the hooks
+    xarModUnRegisterHook('item','delete','API','cachesecurity','admin','hook');
+    xarModUnRegisterHook('item','create','API','cachesecurity','admin','hook');
+    xarModUnRegisterHook('item','new','API','cachesecurity','admin','hook');
+    xarModUnRegisterHook('item','update','API','cachesecurity','admin','hook');
+    xarModUnRegisterHook('item','link','API','cachesecurity','admin','hook');
+    xarModUnRegisterHook('item','unlink','API','cachesecurity','admin','hook');
 
     // Deletion successful
     return true;
