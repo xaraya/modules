@@ -6,13 +6,9 @@
 function xslt_admin_updateconfig()
 { 
     // Get parameters
-    $xsl = xarVarCleanFromInput('xsl');
-
-    // Confirm authorisation code
+    if (!xarVarFetch('xsl','isset',$xsl,array(),XARVAR_NOT_REQUIRED)) return;
     if (!xarSecConfirmAuthKey()) return; 
-    // Security Check
     if (!xarSecurityCheck('AdminXSLT')) return; 
-
     if (isset($xsl) && is_array($xsl)) {
         foreach ($xsl as $modname => $value) {
             if ($modname == 'default') {
@@ -22,10 +18,7 @@ function xslt_admin_updateconfig()
             } 
         } 
     } 
-
     xarResponseRedirect(xarModURL('xslt', 'admin', 'modifyconfig'));
-
     return true;
 }
-
 ?>
