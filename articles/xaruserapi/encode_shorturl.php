@@ -197,52 +197,52 @@ function articles_userapi_encode_shorturl($args)
         // search
         if (isset($q)) {
             $path .= $join . 'q=' . $q;
-            $join = '&amp;';
+            $join = '&';
         }
         // by author
         if (isset($author)) {
             $path .= $join . 'author=' . $author;
-            $join = '&amp;';
+            $join = '&';
         }
         // by startdate
         if (isset($start)) {
             $path .= $join . 'start=' . $start;
-            $join = '&amp;';
+            $join = '&';
         }
         // by enddate
         if (isset($end)) {
             $path .= $join . 'end=' . $end;
-            $join = '&amp;';
+            $join = '&';
         }
         // by status
         if (isset($status)) {
             $path .= $join . 'status=' . $status;
-            $join = '&amp;';
+            $join = '&';
         }
         // sort
         if (isset($sort)) {
             $path .= $join . 'sort=' . $sort;
-            $join = '&amp;';
+            $join = '&';
         }
         // pager
         if (isset($startnum) && $startnum != 1) {
             $path .= $join . 'startnum=' . $startnum;
-            $join = '&amp;';
+            $join = '&';
         }
         // multi-page articles
         if (isset($page)) {
             $path .= $join . 'page=' . $page;
-            $join = '&amp;';
+            $join = '&';
         }
         // number of columns
         if (isset($numcols)) {
             $path .= $join . 'numcols=' . $numcols;
-            $join = '&amp;';
+            $join = '&';
         }
         // view map by ...
         if (isset($by)) {
             $path .= $join . 'by=' . $by;
-            $join = '&amp;';
+            $join = '&';
         }
     }
 
