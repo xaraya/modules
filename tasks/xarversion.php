@@ -7,7 +7,7 @@
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
- * 
+ *
  * @subpackage tasks
  * @author Chad Kraeft
 */
@@ -15,6 +15,7 @@
 $modversion['name'] = 'tasks';
 $modversion['id'] = '667';
 $modversion['version'] = '0.2.0';
+$modversion['displayname']    = xarML('Tasks');
 $modversion['description'] = 'Basic Task/ Manager';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
