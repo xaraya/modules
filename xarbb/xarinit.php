@@ -87,6 +87,27 @@ function xarbb_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    $index = array('name'      => 'i_' . $xbbtopicstable . '_fid',
+                   'fields'    => array('xar_fid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xbbtopicstable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . $xbbtopicstable . '_tstatus',
+                   'fields'    => array('xar_tstatus'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xbbtopicstable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . $xbbtopicstable . '_tposter',
+                   'fields'    => array('xar_tposter'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($xbbtopicstable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     //-----------------------------------------------------------------------------------
     // Forum
   /* $instances = array(
