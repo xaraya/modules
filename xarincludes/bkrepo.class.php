@@ -338,84 +338,20 @@ class bkRepo
             $endRev = $revs[0];
         }
                 
-        // First, lets determine continuous lines in the range, this always
-        // produces the lines to the latest revision
-        // FIXME: how can we decrease the amount of data this returns
-        // so we can do something like 1.1..1.10 to get real old stuff
-        $cmd = "bk _lines -R$startRev $file";
+        $edges = array(); $nodes = array(); $lateMergeNodes = array();
+        $cmd = "bk prs -hr$start..$end -nd':REV:|:KIDS:' $file";
         $rawdata = $this->_run($cmd);
-        $newData = array(); 
-        $newData['nodes'] = array(); $newData['edges'] = array();
-        $inEdges = array(); $outEdges = array();
-        $nodes = array(); $edges = array();
-        foreach($rawdata as $primeLine) 
-        {
-            $lineElements = explode('|', $primeLine);
-
-            foreach($lineElements as $nodesInLine) {
-                $newnodes = explode(' ',$nodesInLine);
-                for($nodeIndex=1; $nodeIndex < count($newnodes); $nodeIndex++)
-                {
-                    // Produce a direct representation of the edges, but only if they
-                    // fall within the range
-                    $inRange =  $newnodes[$nodeIndex] <= $endRev && 
-                                $newnodes[$nodeIndex] >= $startRev &&
-                                $newnodes[$nodeIndex-1] <= $endRev &&
-                                $newnodes[$nodeIndex-1] >= $startRev;
-                    if($inRange) {
-                        $edges[] = array($newnodes[$nodeIndex-1] => $newnodes[$nodeIndex]);
-                        // And two which index them by incoming and outgoing
-                        $outEdges[$newnodes[$nodeIndex-1]][] = $newnodes[$nodeIndex];
-                        $inEdges[$newnodes[$nodeIndex]][] = $newnodes[$nodeIndex-1];
-                    }
-                }
-                $newData['nodes'] = array_merge($newData['nodes'],$newnodes);
+        foreach($rawdata as $primeLine) {
+            list($rev, $kids) = explode('|',$primeLine);
+            if(!empty($kids)) $kids = explode(' ',$kids); else $kids = array();
+            $nodes[] = $rev;
+            foreach($kids as $next) {
+                $edges[] = array($rev => $next);
             }
         }
-        // Construct the nodes we ultimately need within the range
-        $nodes = array_unique($newData['nodes']);
-        // Drop everything before the startrev
-        $nodes = array_slice($nodes, array_search($startRev, $nodes));
-        // Drop everything after the endrev
-        $nodes = array_slice($nodes, 0, array_search($endRev, $nodes)+1);
-        
-        // At this point we have all the nodes and edges for the continuous lines, 
-        // there will be 'dangling' nodes now, i.e. nodes for which there were no edges
-        // created, presumably because the merge cset is empty???
-        $dangling = array_diff($nodes, array_keys($outEdges));
-        foreach($dangling as $dnode)
-        {
-            $cmd ="bk prs -hr$dnode -nd':KIDS:' $file";
-            $kids = $this->_run($cmd);
-            
-            if(!empty($kids))
-            {
-                $kids = explode(' ', $kids[0]);
-                foreach($kids as $kid) 
-                {
-                    // Add the edges for the dangling node, but only if they are in the range
-                    $inRange =  $kid <= $endRev && 
-                                $kid >= $startRev &&
-                                $dnode <= $endRev &&
-                                $dnode >= $startRev;
-                    if($inRange) {
-                        $edges[] = array($dnode => $kid);
-                        $outEdges[$dnode][] = $kid;
-                        $inEdges[$kid][] = $dnode;  
-                    }
-                    
-                }
-            }
-        }
-        
-        // Almost done, there will be nodes, other than the beginning node of the
-        // range, which will have no edges coming in (because the nodes from which
-        // they come fall outside the range), remove those from the graph.
-        $lateMergeNodes = array_diff($nodes, array_keys($inEdges));
-        array_shift($lateMergeNodes);
-    
         $graph = array('nodes' => $nodes, 'edges' => $edges,'pastconnectors' => $lateMergeNodes);
         return $graph;
+    
     }
 }
 
