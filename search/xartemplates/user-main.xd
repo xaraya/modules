@@ -2,15 +2,15 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Search</xar:mlstring></h2>
 <div style="margin: auto;">
 <h4><xar:mlstring>Last 10 Searches Made</xar:mlstring></h4>
-<table width="100%">
+<table>
 	<tr>
-		<th width="20%">
+		<th style="width: 20%;">
 			<xar:mlstring>Name</xar:mlstring>
 		</th>
-		<th width="60%">
+		<th style="width: 60%;">
 			<xar:mlstring>Keywords</xar:mlstring>
 		</th>
-		<th width="20%">
+		<th style="width: 20%;">
 			<xar:mlstring>Date and Time</xar:mlstring>
 		</th>
 	</tr>
@@ -49,26 +49,22 @@
 
 
 	<form action="&xar-modurl-search-user-main;" method="post">
-	<label for="q"><xar:mlstring>Search for</xar:mlstring></label>: <input type="text" name="q" id="q" size="20" />
+	<p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" />
 	&nbsp;&nbsp;&nbsp; <input type="submit" value="Search" />
-	&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset Form" />
-	<br /><br />
-	<label for="author"><xar:mlstring>By author</xar:mlstring></label>: <input type="text" name="author" id="author" size="20" />
-	<br /><br />
+	&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset Form" /></p>
+	<p><label for="author"><xar:mlstring>By author</xar:mlstring>:</label> <input type="text" name="author" id="author" size="20" /></p>
+	</form>
 
 	<xar:if condition="!empty($query)">
-	<xar:mlstring>Search term</xar:mlstring> : #$query#</b>
-	<br /><br />
+	<p><xar:mlstring>Search term</xar:mlstring> : <b>#$query#</b></p>
 	</xar:if>
 	<xar:if condition="!empty($name)">
-	<xar:mlstring>Published by</xar:mlstring> : #$name#</b>
-	<br /><br />
+	<p><xar:mlstring>Published by</xar:mlstring> : <b>#$name#</b></p>
 	</xar:if>
 
 	<hr />
 	#$output#
 	<br /><br />
-	</form>
 </xar:if>
 </div>
 </div>
