@@ -40,7 +40,8 @@ function keywords_userapi_encode_shorturl($args)
         if (!empty($tab)) {
             $path .= 'tab' . $tab . '/';
             } elseif (!empty($keyword)) {
-                  $path .= rawurlencode($keyword) . '/';
+                  //$path .= rawurlencode($keyword) . '/';
+                  $path .= $keyword . '/';
                   if (!empty($id)) {
                    $path .= $id;
             }
