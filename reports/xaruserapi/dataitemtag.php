@@ -4,9 +4,26 @@
 function reports_userapi_dataitemtag($args)
 {
     extract($args);
-    xarLogVariable('args in handler',$args);
-
-    $code = $dataset."->fields['$name']";
+    
+    // Get some info on the datatype of the fieldname, most notably for blobs
+    // those have to be cached and referred to. 
+    if(!isset($type)) {
+        $code = $dataset."->fields['$name']";
+    } else {
+        // Type denotes a mime formatted type, generate a cache representation of
+        // TODO: test for value of id
+        $code = ';
+        $cachekey = md5("'.$name.'".'.$dataset.'->fields[\''.$unique_id.'\']);
+        $cacheFile = "var/cache/reports/$cachekey.bin";
+        $fp = @fopen($cacheFile,"w");
+        if (!empty($fp)) {
+            @fwrite($fp,'.$dataset.'->fields[\''.$name.'\']);
+            @fclose($fp);
+        }
+        $'.$name.'="/$cacheFile"';
+        // Deliver the code back, having set the name to the link to the cached file
+        return $code;
+    }
     return $code;    
 }
 

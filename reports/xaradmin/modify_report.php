@@ -4,7 +4,7 @@
  */
 function reports_admin_modify_report($args) 
 {
-	list($rep_id) = xarVarCleanFromInput('rep_id');
+    xarVarFetch('rep_id','int::',$rep_id);
 	extract($args);
     
 	$rep = xarModAPIFunc('reports','user','report_get',array('rep_id'=>$rep_id));

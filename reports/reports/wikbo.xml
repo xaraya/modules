@@ -9,7 +9,14 @@
 <style type="text/css">
   .debug {
   font-size: small;
+  display: none;
 }
+
+/*
+.reportcontainer {
+  width: 297mm;
+}
+*/
 
   .reportheader {
   color: black;
@@ -50,24 +57,15 @@
   .center {
   text-align: center;
 }
-  .phraseheader {
-  color: white;
-  background-color:black;
-  width: 5cm;
-  margin-bottom: 5pt;
-  padding: 1pt;
-  padding-left: 2pt;
-  margin-top: 5pt;
-  }
+
 
 hr {
   clear: both;
   color: black;
   margin-top: 5pt;
   line-style: solid;
-}
-  .upcase {
-  
+}  
+
 </style>
 
 <xar:if condition="$action == 'search'">
@@ -201,7 +199,7 @@ hr {
   
   <!-- This is where the actual report begins -->
   <div class="reportcontainer">
-    <div class="reportheader"><xar:reports-dataitem dataset="$baseresult" name="stofnaam"/></div>
+    <div class="reportheader"><xar:reports-dataitem dataset="$baseresult" name="stofnaam"/><div class="noprint medium right" style="float:right;"><a href="#xarServerGetCurrentUrl(array("theme" => 'print'))#">print</a></div></div>
 
     <div style="float: left'">
       <table>
@@ -274,196 +272,34 @@ hr {
     </table>
     <hr/>
 
-    <!-- Start of the header sections for the phrases -->
-    <div class="phraseheader">RISICO&apos;S / EFFECTEN</div>
-    <xar:set name="sql">'
-      select Categorien.Naam as categorie, Zinnen.Tekst as zin
-      from   Categorien, Zinnen, StofToepassingZinnen
-      where  StofToepassingZinnen.benamingid = ? AND
-             StofToepassingZinnen.afdelingid = ? AND
-             StofToepassingZinnen.zinid = Zinnen.id AND
-             StofToepassingZinnen.categorieid = Categorien.id AND
-             StofToepassingZinnen.groepid=1'
-    </xar:set>
-             
-    <xar:set name="zinset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
-    </xar:set>
-      
-    <xar:if condition="!$zinset-&gt;EOF">
-      <table>
-        <xar:while condition="!$zinset-&gt;EOF">
-          <tr>
-            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
-            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
-          </tr>
-          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
-        </xar:while>
-      </table>
-    </xar:if>
+    <!-- Risico zinnen -->
+    <xar:set name="zinparams">array('connection'=>$connection,'groupid'=>1,'benamingid'=>$benamingid,'afdelingid'=>$afdelingid,'phraseheader'=>'RISICO\'S / EFFECTEN')</xar:set>
+    <xar:template type="system" file="subzinnen.xml" subdata="$zinparams"/>
+    
+    <!-- Risico symbolen -->
+    <xar:set name="symboolparams">array('connection'=>$connection,'groupid'=>1,'benamingid'=>$benamingid,'afdelingid'=>$afdelingid)</xar:set>
+    <xar:template type="system" file="subsymbolen.xml" subdata="$symboolparams"/>
+    
+    <!-- Preventie zinnen -->    
+    <xar:set name="zinparams">array('connection'=>$connection,'groupid'=>2,'benamingid'=>$benamingid,'afdelingid'=>$afdelingid,'phraseheader'=>'PREVENTIE / BESCHERMING')</xar:set>
+    <xar:template type="system" file="subzinnen.xml" subdata="$zinparams"/>
 
-    <xar:set name="sql">'
-      select Symbolen.Omschrijving, Symbolen.Code, Symbolen.symbool
-      from Symbolen, StofToepassingSymbolen
-      where groepid=1 AND
-            StofToepassingSymbolen.Benamingid = ? AND
-            StofToepassingSymbolen.Afdelingid = ? AND
-            StofToepassingSymbolen.symboolid = Symbolen.id'
-    </xar:set>
+    <!-- Preventie symbolen -->
+    <xar:set name="symboolparams">array('connection'=>$connection,'groupid'=>2,'benamingid'=>$benamingid,'afdelingid'=>$afdelingid)</xar:set>
+    <xar:template type="system" file="subsymbolen.xml" subdata="$symboolparams"/>
     
-    <xar:set name="symset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
-    </xar:set>
+    <!-- EHBO zinnen -->    
+    <xar:set name="zinparams">array('connection'=>$connection,'groupid'=>3,'benamingid'=>$benamingid,'afdelingid'=>$afdelingid,'phraseheader'=>'EERSTE HULP BIJ ONGEVALLEN')</xar:set>
+    <xar:template type="system" file="subzinnen.xml" subdata="$zinparams"/>
     
-    <xar:if condition="!$symset-&gt;EOF">
-      <table>
-        <tr>
-          <xar:while condition="!$symset-&gt;EOF">
-            <td>
-              <span class="label center large"><xar:reports-dataitem dataset="$symset" name="Code"/></span><br/>
-              <span class="small"><xar:reports-dataitem dataset="$symset" name="Omschrijving"/></span>
-            </td>
-            <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
-          </xar:while>
-        </tr>
-      </table>
-    </xar:if>
+    <!-- Brand symbolen -->
+    <xar:set name="symboolparams">array('connection'=>$connection,'groupid'=>3,'benamingid'=>$benamingid,'afdelingid'=>$afdelingid)</xar:set>
+    <xar:template type="system" file="subsymbolen.xml" subdata="$symboolparams"/>
     
-
-    <div class="phraseheader">PREVENTIE / BESCHERMING</div>
-    <xar:set name="sql">'
-      select Categorien.Naam as categorie, Zinnen.Tekst as zin
-      from   Categorien, Zinnen, StofToepassingZinnen
-      where  StofToepassingZinnen.benamingid = ? AND
-             StofToepassingZinnen.afdelingid = ? AND
-             StofToepassingZinnen.zinid = Zinnen.id AND
-             StofToepassingZinnen.categorieid = Categorien.id AND
-             StofToepassingZinnen.groepid=2'
-    </xar:set>
-             
-    <xar:set name="zinset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
-    </xar:set>
-      
-    <xar:if condition="!$zinset-&gt;EOF">
-      <table>
-        <xar:while condition="!$zinset-&gt;EOF">
-          <tr>
-            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
-            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
-          </tr>
-          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
-        </xar:while>
-      </table>
-    </xar:if>
-
-    <xar:set name="sql">'
-      select Symbolen.Omschrijving, Symbolen.Code, Symbolen.symbool
-      from Symbolen, StofToepassingSymbolen
-      where groepid=2 AND
-            StofToepassingSymbolen.Benamingid = ? AND
-            StofToepassingSymbolen.Afdelingid = ? AND
-            StofToepassingSymbolen.symboolid = Symbolen.id'
-    </xar:set>
+    <!-- Milieu zinnen -->    
+    <xar:set name="zinparams">array('connection'=>$connection,'groupid'=>4,'benamingid'=>$benamingid,'afdelingid'=>$afdelingid,'phraseheader'=>'OPRUIMING / OPSLAG')</xar:set>
+    <xar:template type="system" file="subzinnen.xml" subdata="$zinparams"/>
     
-    <xar:set name="symset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
-    </xar:set>
-    
-    <xar:if condition="!$symset-&gt;EOF">
-      <table>
-        <tr>
-          <xar:while condition="!$symset-&gt;EOF">
-            <td>
-              <span class="label center large"><xar:reports-dataitem dataset="$symset" name="Code"/></span><br/>
-              <span class="small"><xar:reports-dataitem dataset="$symset" name="Omschrijving"/></span>
-            </td>
-            <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
-          </xar:while>
-        </tr>
-      </table>
-    </xar:if>
-
-    <div class="phraseheader">EERSTE HULP BIJ ONGEVALLEN</div>
-    <xar:set name="sql">'
-      select Categorien.Naam as categorie, Zinnen.Tekst as zin
-      from   Categorien, Zinnen, StofToepassingZinnen
-      where  StofToepassingZinnen.benamingid = ? AND
-             StofToepassingZinnen.afdelingid = ? AND
-             StofToepassingZinnen.zinid = Zinnen.id AND
-             StofToepassingZinnen.categorieid = Categorien.id AND
-             StofToepassingZinnen.groepid=3'
-    </xar:set>
-             
-    <xar:set name="zinset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
-    </xar:set>
-      
-    <xar:if condition="!$zinset-&gt;EOF">
-      <table>
-        <xar:while condition="!$zinset-&gt;EOF">
-          <tr>
-            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
-            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
-          </tr>
-          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
-        </xar:while>
-      </table>
-    </xar:if>
-
-    <xar:set name="sql">'
-      select Symbolen.Omschrijving, Symbolen.Code, Symbolen.symbool
-      from Symbolen, StofToepassingSymbolen
-      where groepid=3 AND
-            StofToepassingSymbolen.Benamingid = ? AND
-            StofToepassingSymbolen.Afdelingid = ? AND
-            StofToepassingSymbolen.symboolid = Symbolen.id'
-    </xar:set>
-    
-    <xar:set name="symset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
-    </xar:set>
-    
-    <xar:if condition="!$symset-&gt;EOF">
-      <table>
-        <tr>
-          <xar:while condition="!$symset-&gt;EOF">
-            <td>
-              <span class="label center large"><xar:reports-dataitem dataset="$symset" name="Code"/></span><br/>
-              <span class="small"><xar:reports-dataitem dataset="$symset" name="Omschrijving"/></span>
-            </td>
-            <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
-          </xar:while>
-        </tr>
-      </table>
-    </xar:if>
-
-    <div class="phraseheader">OPRUIMING / OPSLAG</div>
-    <xar:set name="sql">'
-      select Categorien.Naam as categorie, Zinnen.Tekst as zin
-      from   Categorien, Zinnen, StofToepassingZinnen
-      where  StofToepassingZinnen.benamingid = ? AND
-             StofToepassingZinnen.afdelingid = ? AND
-             StofToepassingZinnen.zinid = Zinnen.id AND
-             StofToepassingZinnen.categorieid = Categorien.id AND
-             StofToepassingZinnen.groepid=4'
-    </xar:set>
-             
-    <xar:set name="zinset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
-    </xar:set>
-      
-    <xar:if condition="!$zinset-&gt;EOF">
-      <table>
-        <xar:while condition="!$zinset-&gt;EOF">
-          <tr>
-            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
-            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
-          </tr>
-          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
-        </xar:while>
-      </table>
-    </xar:if>
     <div class="phraseheader">R&amp;S-ZINNEN</div>
     <xar:set name="sql">'
       select RSZinnen.code, RSZinnen.zin as tekst, RSZinnen.type
@@ -472,11 +308,12 @@ hr {
              Benamingen.stofid = Stoffen.ID AND
              StofRSZinnen.stofid = Stoffen.id AND
              StofRSZinnen.RSZinid = RSZinnen.id AND
-             Benamingen.id = ?
+             Benamingen.id = ? AND
+             StofToepassingen.afdelingid = ?
       order by RSZinnen.type'
     </xar:set>
     <xar:set name="zinset">
-      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid)"/>
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
     </xar:set>
 
     <xar:if condition="!$zinset-&gt;EOF">

@@ -1,0 +1,39 @@
+<!-- Subtemplate voor de zinnen -->
+<style type="text/css">
+  .phraseheader {
+  color: white;
+  background-color:black;
+  width: 5cm;
+  margin-bottom: 5pt;
+  padding: 1pt;
+  padding-left: 2pt;
+  margin-top: 5pt;
+  }
+</style>
+
+<div class="phraseheader">#$phraseheader#</div>
+    <xar:set name="sql">'
+      select Categorien.Naam as categorie, Zinnen.Tekst as zin
+      from   Categorien, Zinnen, StofToepassingZinnen
+      where  StofToepassingZinnen.benamingid = ? AND
+             StofToepassingZinnen.afdelingid = ? AND
+             StofToepassingZinnen.zinid = Zinnen.id AND
+             StofToepassingZinnen.categorieid = Categorien.id AND
+             StofToepassingZinnen.groepid='.$groupid
+    </xar:set>
+             
+    <xar:set name="zinset">
+      <xar:reports-dataset connection="$connection" sql="$sql" vars="array($benamingid,$afdelingid)"/>
+    </xar:set>
+      
+    <xar:if condition="!$zinset-&gt;EOF">
+      <table>
+        <xar:while condition="!$zinset-&gt;EOF">
+          <tr>
+            <td class="label upcase"><xar:reports-dataitem dataset="$zinset" name="categorie"/></td>
+            <td class="value"><xar:reports-dataitem dataset="$zinset" name="zin"/></td>
+          </tr>
+          <xar:set name="nextrow">$zinset->MoveNext()</xar:set>
+        </xar:while>
+      </table>
+    </xar:if>
