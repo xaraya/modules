@@ -79,9 +79,9 @@ function example_othersblock_display($blockinfo)
     $sql = "SELECT xar_exid,
                    xar_name
             FROM $exampletable
-            WHERE xar_exid != '" . xarVarPrepForStore($current_exid) . "'
+            WHERE xar_exid != ?
             ORDER by xar_exid DESC";
-    $result = $dbconn->SelectLimit($sql, $vars['numitems']);
+    $result =& $dbconn->SelectLimit($sql, $vars['numitems'], -1, array($current_exid));
 
     if ($dbconn->ErrorNo() != 0) {
         return;
