@@ -69,7 +69,7 @@
               <td ><xar:mlstring>Send all to</xar:mlstring></td>
               <td >
                 <select name="sendto">
-                  <option value=""><xar:mlstring>Don\'t move</xar:mlstring></option>
+                  <option value=""><xar:mlstring>Don't move</xar:mlstring></option>
                   <xar:foreach in="$activities" key="$ix">
                     <option value="#$activities[$ix]['activityId']#">#$activities[$ix]['name']#</option>
                   </xar:foreach>
@@ -197,6 +197,7 @@
           </table>
         </form>
       </div>
-        
+</div>
+</div>
         <!-- xar:template file="instance_comments" type="module"/-->
         
