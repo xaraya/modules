@@ -79,7 +79,7 @@ class ProcessMonitor extends Base {
     $sort_mode = $this->convert_sortmode($sort_mode);
     if($find) {
       $findesc = '%'.$find.'%';
-      $mid=" where ((ga.name like ?) or (ga.description like ?))";
+      $mid=" where ((name like ?) or (description like ?))";
       $bindvars = array($findesc,$findesc);
     } else {
       $mid="";
@@ -229,7 +229,7 @@ class ProcessMonitor extends Base {
     return $retval;
   }
 
-  function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars) {
+  function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars=array()) {
     if($find) {
       $findesc = $this->qstr('%'.$find.'%');
       $mid=" where (`properties` like $findesc)";

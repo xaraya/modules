@@ -48,11 +48,14 @@ if (!function_exists('xarTimeToDHMS')) {
 /**
  * Common Galaxia database connection handler
  */
-$dbconn =& xarDBGetConn();
 global $dbGalaxia;
-$dbGalaxia =& $dbconn;
-// Set the fetch mode to assoc by default
-$oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
+if (!isset($dbGalaxia)) {
+    // Note that we do NOT assign by reference here, because we do want a copy
+    $dbGalaxia = xarDBGetConn();
+
+    // Set the fetch mode to assoc by default (needed by lib/Galaxia)
+    $oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
+}
 
 // Retrieve the current user
 global $user;

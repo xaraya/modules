@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.5 2003/10/13 21:20:42 awcolley Exp $
+// $Id: GraphViz.php,v 1.7 2004/01/25 02:12:37 halon Exp $
 //
 
 /**
@@ -172,17 +172,16 @@ class Process_GraphViz {
     
     function map() {
         if ($file = $this->saveParsedGraph()) {
-            
             $outputfile2 = $file . '.' . 'map';
-            
+
             $command = $this->dotCommand;
             $command.= " -Tcmap -o$outputfile2 $file";
             @`$command`;
             $fr = fopen($outputfile2,"r");
             $map = fread($fr,filesize($outputfile2));
             fclose($fr);
-            
-            @unlink($outputfile2);
+
+            //@unlink($outputfile2);
             @unlink($file);
             return $map;
         }
@@ -449,10 +448,10 @@ class Process_GraphViz {
     function saveParsedGraph($file = '') {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
+            $file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
 
-                $file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
             if ($fp = @fopen($file, 'w')) {
-                @fputs($fp, $parsedGraph);
+                @fputs($fp, $parsedGraph, strlen($parsedGraph));
                 @fclose($fp);
 
                 return $file;
