@@ -23,8 +23,8 @@
 function addressbook_userapi_deleterecord($args) {
     extract($args);
 
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $address_table = $xarTables['addressbook_address'];
 
     $sql = "DELETE FROM $address_table WHERE nr=$id";

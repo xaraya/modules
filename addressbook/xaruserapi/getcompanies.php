@@ -21,8 +21,8 @@
  * @return array of companies
  */
 function addressbook_userapi_getCompanies() {
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $adr_table = $xarTables['addressbook_address'];
 
     $sql = "SELECT DISTINCT company

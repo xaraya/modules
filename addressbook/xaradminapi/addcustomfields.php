@@ -45,7 +45,7 @@ function addressbook_adminapi_addCustomfields($args)
                     new SystemException($msg));
         $returnCode = FALSE;
     } else {
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
         foreach($inserts as $insert) {
             $result =& $dbconn->Execute($insert);
             if (!$result) $returnCode = FALSE;

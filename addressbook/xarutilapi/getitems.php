@@ -44,8 +44,8 @@ function addressbook_utilapi_getitems($args)
     } else {
 
         if (isset($tablename)) {
-            list($dbconn) = xarDBGetConn();
-            $xarTables = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xarTables =& xarDBGetTables();
 
             $tablename = 'addressbook_'.$tablename;
             $table = $xarTables[$tablename];

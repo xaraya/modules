@@ -68,7 +68,7 @@ function addressbook_adminapi_updateprefixes($args) {
         }
     }
 
-    $xarTables = xarDBGetTables();
+    $xarTables =& xarDBGetTables();
     $preTable = $xarTables['addressbook_prefixes'];
 
     $updates = array();

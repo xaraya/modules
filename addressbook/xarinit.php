@@ -26,8 +26,8 @@ function addressbook_init()
     // if this does get changed, $abModVars will no longer be scoped here..
     include_once ('modules/addressbook/xarglobal.php');
 
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 
@@ -294,8 +294,8 @@ function addressbook_upgrade($oldversion) {
 
         case '1.1':
             // Alter the table to for cross DB compatibility and rename a column
-            list($dbconn) = xarDBGetConn();
-            $xarTables = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xarTables =& xarDBGetTables();
 
             $abAddressTable = $xarTables['addressbook_address'];
 
@@ -308,8 +308,8 @@ function addressbook_upgrade($oldversion) {
 
         case '1.2':
             // Fix the
-            list($dbconn) = xarDBGetConn();
-            $xarTables = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xarTables =& xarDBGetTables();
 
             $abAddressTable = $xarTables['addressbook_address'];
 
@@ -341,8 +341,8 @@ function addressbook_delete() {
     //FIXME: until we figure out module globals
     include_once ('modules/addressbook/xarglobal.php');
 
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 

@@ -22,8 +22,8 @@
  */
 function addressbook_userapi_getCompanyAddress($args) {
     extract($args);
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $adr_table = $xarTables['addressbook_address'];
 
     $sql = "SELECT company,address_1,address_2,zip,city,state,country

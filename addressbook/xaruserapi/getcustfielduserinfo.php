@@ -26,8 +26,8 @@ function addressbook_userapi_getCustFieldUserInfo($args) {
 
         $custData = array (); // will hold the address table data
 
-        list($dbconn) = xarDBGetConn();
-        $xarTables = xarDBGetTables();
+        $dbconn =& xarDBGetConn();
+        $xarTables =& xarDBGetTables();
         $adr_table = $xarTables['addressbook_address'];
 
         // build a sql statement

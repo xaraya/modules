@@ -75,8 +75,8 @@ function addressbook_userapi_updaterecord($args) {
         $sortvalue2 = $company;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $address_table = $xarTables['addressbook_address'];
 
     $sql = "UPDATE $address_table

@@ -15,8 +15,8 @@
  */
 
 function addressbook_adminapi_getCustomfields() {
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $cus_table = $xarTables['addressbook_customfields'];
     $sql = "SELECT nr, label, type, position
             FROM $cus_table WHERE nr > 0

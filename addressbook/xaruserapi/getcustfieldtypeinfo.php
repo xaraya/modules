@@ -21,8 +21,8 @@ function addressbook_userapi_getCustFieldTypeInfo() {
 
     $custFieldTypeInfo = array();
 
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $tableCustomField = $xarTables['addressbook_customfields'];
 
     $sql = "SELECT nr, label, type, position ".

@@ -50,7 +50,7 @@
                     new SystemException($msg));
         $returnCode = FALSE;
     } else {
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
         foreach($updates as $update) {
 
             $result =& $dbconn->Execute($update);

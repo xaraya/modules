@@ -45,7 +45,7 @@ function addressbook_adminapi_deleteItems($args)
                     new SystemException($msg));
         $returnCode = FALSE;
     } else {
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
         $result =& $dbconn->Execute($delete);
         if(!$result) $returnCode = FALSE;
     }

@@ -51,8 +51,8 @@
         $returnCode = FALSE;
     } else {
 
-        list($dbconn) = xarDBGetConn();
-        $xarTables = xarDBGetTables();
+        $dbconn =& xarDBGetConn();
+        $xarTables =& xarDBGetTables();
         $tablename = 'addressbook_'.$tablename;
         $table = $xarTables[$tablename];
 

@@ -49,7 +49,7 @@ function addressbook_adminapi_deleteCustomfields($args)
         $returnCode = FALSE;
     } else {
 
-        $xarTables = xarDBGetTables();
+        $xarTables =& xarDBGetTables();
         $cus_table = $xarTables['addressbook_customfields'];
         $adr_table = $xarTables['addressbook_address'];
 
@@ -61,7 +61,7 @@ function addressbook_adminapi_deleteCustomfields($args)
                 }
         }
 
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
         foreach($deletes as $delete) {
             $result =& $dbconn->Execute($delete);
             if (!$result) $returnCode = FALSE;

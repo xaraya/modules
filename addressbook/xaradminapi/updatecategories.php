@@ -69,7 +69,7 @@ function addressbook_adminapi_updatecategories($args) {
         }
     }
 
-    $xarTables = xarDBGetTables();
+    $xarTables =& xarDBGetTables();
     $cat_table = $xarTables['addressbook_categories'];
 
     $updates = array();

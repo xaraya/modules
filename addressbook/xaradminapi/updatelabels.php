@@ -68,7 +68,7 @@ function addressbook_adminapi_updatelabels($args) {
         }
     }
 
-    $xarTables = xarDBGetTables();
+    $xarTables =& xarDBGetTables();
     $labelTable = $xarTables['addressbook_labels'];
 
     $updates = array();

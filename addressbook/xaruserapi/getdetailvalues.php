@@ -42,8 +42,8 @@ function addressbook_userapi_getDetailValues($args) {
         return FALSE;
     } else {
 
-        list($dbconn) = xarDBGetConn();
-        $xarTables = xarDBGetTables();
+        $dbconn =& xarDBGetConn();
+        $xarTables =& xarDBGetTables();
         $address_table = $xarTables['addressbook_address'];
 
         $sql = "SELECT * FROM $address_table WHERE (nr=".$id.")";

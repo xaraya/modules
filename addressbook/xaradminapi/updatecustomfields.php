@@ -87,7 +87,7 @@ function addressbook_adminapi_updatecustomfields($args) {
                 }
             }
         }
-        $xarTables = xarDBGetTables();
+        $xarTables =& xarDBGetTables();
         $cus_table = $xarTables['addressbook_customfields'];
         $adr_table = $xarTables['addressbook_address'];
 
@@ -130,7 +130,7 @@ function addressbook_adminapi_updatecustomfields($args) {
             $newname = '[------]';
         }
         if( (isset($newname)) && ($newname != '') ) {
-            list($dbconn) = xarDBGetConn();
+            $dbconn =& xarDBGetConn();
             $result = $dbconn->Execute("SELECT MAX(nr) FROM $cus_table");
             list($nextID) = $result->fields;
             $nextID++;

@@ -30,8 +30,8 @@ function addressbook_userapi_getAddressList($args) {
     }
 
     // SQL Query
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $address_table = $xarTables['addressbook_address'];
 
     // Note Searchorder

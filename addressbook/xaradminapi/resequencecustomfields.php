@@ -27,8 +27,8 @@ function addressbook_adminapi_resequenceCustomfields() {
      */
     if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
 
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $cus_table = $xarTables['addressbook_customfields'];
 
     // Get the information

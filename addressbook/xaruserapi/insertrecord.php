@@ -74,8 +74,8 @@ function addressbook_userapi_insertrecord($args) {
         $sortvalue2 = $company;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xarTables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xarTables =& xarDBGetTables();
     $address_table = $xarTables['addressbook_address'];
 
     $nextID = $dbconn->GenID($address_table);
