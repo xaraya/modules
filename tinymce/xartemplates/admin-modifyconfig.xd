@@ -394,7 +394,7 @@
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 <input type="text" name="tinytime" id="tinytime" value="#$tinytime#" size="15" maxlength="25" />
-                <p><xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, 	%% - a literal `%' character</xar:mlstring></p>
+                <p><xar:mlstring>%H hour using a 24-hour clock, %M minute as 00-59, %S second as 00-59, %% - a literal `%' character</xar:mlstring></p>
             </span>
         </div>
         </xar:if>
