@@ -117,13 +117,11 @@ function mime_delete()
     // Delete tables
     $queries[0] = xarDBDropTable($xartable['mime_type']);
     $queries[1] = xarDBDropTable($xartable['mime_subtype']);
-    $queries[2] = xarDBDropTable($xartable['mime_ext']);
+    $queries[2] = xarDBDropTable($xartable['mime_extension']);
     $queries[3] = xarDBDropTable($xartable['mime_magic']);
     
     foreach( $queries as $query) {
         $result =& $dbconn->Execute($query);
-        if(!$result)
-            return;
     }
 
     // Deletion successful
