@@ -12,7 +12,7 @@
         <td>
             <table border="0" width="100%" cellpadding="4">
                 <tr align="left" valign="top">
-                    <td colspan=2><xar:mlstring>If a user successfully authenticates but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below, the user will be automatically added to the Xaraya database and allowed to login.</xar:mlstring></td>
+                    <td colspan="2"><xar:mlstring>If a user successfully authenticates but does not have a login account to Xaraya, the user will not be able to login.  By selecting the option below, the user will be automatically added to the Xaraya database and allowed to login.</xar:mlstring></td>
                 </tr>
                 <tr align="left" valign="top">
                     <td>

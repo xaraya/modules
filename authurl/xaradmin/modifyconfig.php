@@ -43,7 +43,7 @@ function authurl_admin_modifyconfig()
     # var - add_user
     $data['adduser'] = xarVarPrepForDisplay(xarML('Add AuthURL User to Xaraya Database on Login'));
     if (xarModGetVar('authurl','add_user') == 'true') {
-        $data['adduservalue'] = xarVarPrepForDisplay("checked");
+        $data['adduservalue'] = xarVarPrepForDisplay('checked="checked"');
     } else {
         $data['adduservalue'] = "";
     }
