@@ -1,4 +1,4 @@
-<!--- Struct xmlrpc type handling (type 3) --->
+<xar:comment> Struct xmlrpc type handling (type 3) </xar:comment>
 <xar:if condition="$type == 'struct'">
   <struct>
     <xar:foreach in="$members" value="$member">
@@ -11,7 +11,7 @@
     </xar:foreach>
   </struct>
 <xar:elseif condition="$type == 'array'"/>
-  <!--- Array xmlrpc type handling (type 2) --->
+  <xar:comment> Array xmlrpc type handling (type 2) </xar:comment>
   <array>
     <data>
       <xar:foreach in="$members" value="$member">
@@ -22,6 +22,6 @@
     </data>
   </array>
 <xar:else/>
-  <!--- Scalar types (type 1) --->
+  <xar:comment> Scalar types (type 1) </xar:comment>
   <#$type#>#$value#</#$type#>
 </xar:if>
