@@ -140,13 +140,13 @@ function categories_userapi_leftjoin($args)
 
     // Specify LEFT JOIN ... ON ... [WHERE ...] parts
     if (count($cids) > 0 && $andcids) {
-        $leftjoin['table'] = $categorieslinkagetable . ' as ' . $catlinks[0];
+        $leftjoin['table'] = $categorieslinkagetable . ' ' . $catlinks[0];
         $leftjoin['more'] = ' ';
         $leftjoin['cids'] = array();
         $leftjoin['cids'][] = $catlinks[0] . '.xar_cid';
         for ($i = 1; $i < count($catlinks); $i++) {
             $leftjoin['more'] .= ' LEFT JOIN ' . $categorieslinkagetable .
-                                     ' as ' . $catlinks[$i] .
+                                     ' ' . $catlinks[$i] .
                                  ' ON ' . $leftjoin['iid'] . ' = ' .
                                      $catlinks[$i] . '.xar_iid' .
                                  ' AND ' . $leftjoin['modid'] . ' = ' .

@@ -71,8 +71,8 @@ function categories_userapi_getcat($args)
                         P1.xar_parent,
                         P1.xar_left,
                         P1.xar_right
-                   FROM $categoriestable AS P1,
-                        $categoriestable AS P2
+                   FROM $categoriestable P1,
+                        $categoriestable P2
                   WHERE P1.xar_left
                      >= P2.xar_left
                     AND P1.xar_left
