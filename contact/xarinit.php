@@ -25,7 +25,8 @@
 // ----------------------------------------------------------------------
 
 
-function contact_init(){
+function contact_init()
+{
     // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
     // return arrays but we handle them differently.  For xarDBGetConn()
     // we currently just want the first item, which is the official
