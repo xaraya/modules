@@ -10,27 +10,57 @@ function autolinks_admin_updateconfig()
 
     if (!xarSecConfirmAuthKey()) return;
 
+    $old_newwindow = xarModGetVar('autolinks', 'newwindow');
+    $old_showerrors = xarModGetVar('autolinks', 'showerrors');
+
     // The flags that are accepted (values: 0 or 1; 'name'=>default-value)
-    // TODO: this list will expand with advanced options.
-    $flags = array('newwindow'=>0, 'nbspiswhite'=>0);
+    $flags = array('newwindow'=>0, 'nbspiswhite'=>0, 'showerrors'=>0, 'showsamples'=>0);
 
     // Deal with flags.
     foreach ($flags as $flag => $default)
     {
-        unset($flagvalue);
-        xarVarFetch($flag, 'int:0:1', $flagvalue, $default, XARVAR_NOT_REQUIRED);
+        xarVarFetch($flag, 'int:0:1', $flagvalue, $default, XARVAR_NOT_REQUIRED+XARVAR_DONT_REUSE);
         xarModSetVar('autolinks', $flag, $flagvalue);
     }
 
+    $newwindow = xarModGetVar('autolinks', 'newwindow');
+    $showerrors = xarModGetVar('autolinks', 'showerrors');
+
+    // TODO: do these returns make any sense here? Do we not just fallback to the default value?
     if (!xarVarFetch('maxlinkcount', 'int:1:', $maxlinkcount, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemsperpage', 'int:1:', $itemsperpage, 10, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemsperpage', 'int:1:', $itemsperpage, 20, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('decoration', 'str::30', $decoration, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('punctuation', 'str::30', $punctuation, '', XARVAR_NOT_REQUIRED)) {return;}
+    // TODO: further validation to ensure the template base is a valid partial-filename.
+    // TODO: if the template base has been changed, then recompile all the autolinks.
+    if (!xarVarFetch('templatebase', 'str:1:30', $templatebase, 'link', XARVAR_NOT_REQUIRED)) {return;}
+
+    $old_decoration = xarModGetVar('autolinks', 'decoration');
+    $old_templatebase = xarModGetVar('autolinks', 'templatebase');
 
     xarModSetVar('autolinks', 'itemsperpage', $itemsperpage);
     xarModSetVar('autolinks', 'maxlinkcount', $maxlinkcount);
     xarModSetVar('autolinks', 'decoration', $decoration);
     xarModSetVar('autolinks', 'punctuation', $punctuation);
+    xarModSetVar('autolinks', 'templatebase', $templatebase);
+
+    // If certain values have changed, then rebuild the static replace caches.
+    // These are the values that affect the static replace templates.
+    if ($old_decoration !== $decoration || $old_templatebase !== $templatebase
+        || $old_newwindow !== $newwindow || $old_showerrors !== $showerrors) {
+        // Get the static autolink types.
+        $types = xarModAPIfunc('autolinks', 'user', 'getalltypes', array());
+
+        if (is_array($types)) {
+            foreach ($types as $tid => $type) {
+                if (!$type['dynamic_replace']) {
+                    // Rebuild replace cache.
+                    $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('tid' => $tid));
+                    if (!$result) {return;}
+                }
+            }
+        }
+    }
 
     xarResponseRedirect(xarModURL('autolinks', 'admin', 'modifyconfig'));
 

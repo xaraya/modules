@@ -22,39 +22,58 @@ function autolinks_userapi_get($args)
     $xartable = xarDBGetTables();
 
     $autolinkstable = $xartable['autolinks'];
+    $autolinkstypestable = $xartable['autolinks_types'];
 
     // Get link
-    $query = "SELECT xar_lid,
-                   xar_keyword,
-                   xar_title,
-                   xar_url,
-                   xar_comment,
-                   xar_enabled,
-                   xar_valid,
-                   xar_match_re,
-                   xar_cache_replace,
-                   xar_sample
-            FROM $autolinkstable
-            WHERE xar_lid = " . xarVarPrepForStore($lid);
+    $query = 'SELECT xar_lid,
+                    xar_keyword,
+                    xar_title,
+                    xar_url,
+                    xar_comment,
+                    xar_enabled,
+                    xar_match_re,
+                    xar_cache_replace,
+                    xar_sample,
+                    xar_name,
+                    xar_tid,
+                    xar_dynamic_replace,
+                    xar_template_name,
+                    xar_type_name,
+                    xar_type_desc
+            FROM    ' . $autolinkstable
+        . ' LEFT JOIN ' . $autolinkstypestable 
+        . ' ON xar_tid = xar_type_tid
+            WHERE xar_lid = ' . xarVarPrepForStore($lid);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
 
-    list($lid, $keyword, $title, $url, $comment, $enabled, $valid, $match_re, $cache_replace, $sample) = $result->fields;
+    if (!$result || $result->EOF) {return;}
+
+    list(
+        $lid, $keyword, $title, $url, $comment, $enabled, $match_re, $cache_replace, $sample, $name,
+        $tid, $dynamic_replace, $template_name, $type_name, $type_desc
+    ) = $result->fields;
     $result->Close();
 
     // Security Check
-    if(!xarSecurityCheck('ReadAutolinks')) return;
+    if(!xarSecurityCheck('ReadAutolinks')) {return;}
 
-    $link = array('lid' => $lid,
-                  'keyword' => $keyword,
-                  'title' => $title,
-                  'url' => $url,
-                  'comment' => $comment,
-                  'enabled' => $enabled,
-                  'valid' => $valid,
-                  'match_re' => $match_re,
-                  'cache_replace' => $cache_replace,
-                  'sample' => $sample);
+    $link = array(
+        'lid' => $lid,
+        'keyword' => $keyword,
+        'title' => $title,
+        'url' => $url,
+        'comment' => $comment,
+        'enabled' => $enabled,
+        'match_re' => $match_re,
+        'cache_replace' => $cache_replace,
+        'sample' => $sample,
+        'name' => $name,
+        'tid' => $tid,
+        'dynamic_replace' => $dynamic_replace,
+        'template_name' => $template_name,
+        'type_name' => $type_name,
+        'type_desc' => $type_desc
+    );
 
     return $link;
 }

@@ -4,7 +4,7 @@
  * expand an array into a string of tag attributes
  * @parame $args[] array of name/value strings
  * @returns string
- * @return string tag attributes
+ * @return string html tag attributes
  */
 function autolinks_userapi_htmlattributes($args)
 {

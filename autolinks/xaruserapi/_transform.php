@@ -2,14 +2,65 @@
 
 /**
  * $Id$
+ * callback function to transform text dynamically (private)
+ * @param $template_name name of template to execute
+ * @param $matched_text the text that matched the autolink
+ * @param $template_vars 
+ * @returns string unparsed array of values to pass into the template
+ * @return string of transformed matched text
+ */
+function autolinks_userapi__transform_preg($template_name, $matched_text, $template_vars)
+{
+    // This is the callback function for the dynamic template links.
+    // This function is called for each dynamic link found, and the results
+    // are passed to the relevant template. Errors are handled here.
+
+    // Execute the template.
+    $replace = xarTplModule(
+        'Autolinks',
+        xarModGetVar('autolinks', 'templatebase'),
+        $template_name,
+        $template_vars
+     );
+
+    // Catch any exceptions.
+    if (xarExceptionValue()) {
+        // The template errored.
+        if (xarModGetVar('autolinks', 'showerrors') || xarVarIsCached('autolinks', 'showerrors')) {
+            // Pass the error through the error template if required.
+            // This mode of operation is used during setup.
+            $replace = xarTplModule('Autolinks', 'error', 'match',
+                array(
+                    'match' => $matched_text,
+                    'template_base' => xarModGetVar('autolinks', 'templatebase'),
+                    'template_name' => $template_name,
+                    'error_text' => xarVarPrepHTMLdisplay(xarExceptionRender('text'))
+                )
+            );
+        } else {
+            // Don't highlight the error - just return the matched text.
+            // This is the normal mode of operation.
+            $replace = $matched_text;
+        }
+ 
+        // Free up the error since we have handled it here.
+        xarExceptionHandled();
+    }
+
+    // Put a placeholder in the spaces so we don't match it again.
+    return preg_replace('/(\w)/', '$1ALSPACEHOLDER', $replace);
+}
+
+/**
+ * $Id$
  * transform text (private)
  * @param $args['text'] or $args[0] string text
  * @returns string
  * @return string of transformed text
  */
-
 function autolinks_userapi__transform($args)
 {
+    // Extra the arguments, allowing positional parameters.
     extract($args, EXTR_PREFIX_INVALID, 'p');
 
     if (!isset($text)) {
@@ -42,11 +93,18 @@ function autolinks_userapi__transform($args)
     $punctuation = preg_replace('/([-^\]])/', '\\\$1', $punctuation);
 
     if (empty($gotautolinks)) {
-        $gotautolinks = 1;
-
         // Only get enabled and valid autolinks.
         // A valid autolink is one in which the replace template successfully parsed.
-        $tmpautolinks = xarModAPIFunc('autolinks', 'user', 'getall', array('enabled'=>true, 'valid'=>true));
+        if (!isset($lid)) {
+            // Normal mode: go through all enabled autolinks.
+            $tmpautolinks = xarModAPIFunc('autolinks', 'user', 'getall', array('enabled'=>true));
+            $gotautolinks = 1;
+        } else {
+            // Test mode: just select one specific link.
+            $tmpautolinks = array(xarModAPIFunc('autolinks', 'user', 'get', array('lid'=>$lid)));
+            $alsearch = array();
+            $alreplace = array();
+        }
 
         // No Autolinks set up.
         if (empty($tmpautolinks)) {
@@ -55,35 +113,72 @@ function autolinks_userapi__transform($args)
 
         // Create search/replace array from autolinks information
         foreach ($tmpautolinks as $tmpautolink) {
-            // TODO: this will be cached in the autolinks table.
-            $replace = xarModAPIfunc('autolinks', 'user', 'getreplace', array('link'=> &$tmpautolink));
+            // The replace text (whether a function or a straight string) is cached.
+            $replace = $tmpautolink['cache_replace'];
 
-            if ($replace['status']) {
-                if ($tmpautolink['match_re'])
-                {
-                    // The keyword has been entered as an RE, so use it as it comes.
-                    // Strip off /slashes/ and options/ims that may have been entered by the user.
-                    $keywordre = preg_replace(array('/^\//', '/\/[\w]*$/'), '', $tmpautolink['keyword']);
-                } else {
-                    // The keyword has not been entered as an RE, so make it into one.
-                    // Quote special characters.
-                    $keywordre = preg_quote($tmpautolink['keyword'], '/');
+            // Sanity check.
+            if (empty($replace)) {
+                continue;
+            }
 
-                    // Allow whitespace matching to be a bit looser.
-                    $keywordre = preg_replace('/\s+/', $wspreg . '+', $keywordre);
+            if ($tmpautolink['match_re'])
+            {
+                // The keyword has been entered as an RE, so use it as it comes.
+                // Strip off /slashes/ and options/ims that may have been entered by the user.
+                $keywordre = preg_replace(array('/^\//', '/\/[\w]*$/'), '', $tmpautolink['keyword']);
+            } else {
+                // The keyword has not been entered as an RE, so make it into one.
+                // Quote special characters.
+                $keywordre = preg_quote($tmpautolink['keyword'], '/');
+
+                // Allow whitespace matching to be a bit looser.
+                $keywordre = preg_replace('/\s+/', $wspreg . '+', $keywordre);
+            }
+
+            // Note use of assertions here to only match specific words.
+            $alsearch[] = '/' . '(?<=[\s' . $punctuation . ']|^|ALPLACEHOLDER\dPH)('
+                . $keywordre
+                . ')(?=[\s' . $punctuation . ']|$|ALPLACEHOLDER)' . '/is'
+                . ($tmpautolink['dynamic_replace'] ? 'e' : '');
+
+            // The replace will be either a straight string or a function to execute.
+            if ($tmpautolink['dynamic_replace']) {
+                // Dynamically execute the template when a match is found using a call-back.
+                // TODO: check this: if the matched $1 contains single quotes, then according to the
+                // PHP documentation, this should fail as '$1' matching "a'b" would evaluate as 'a'b'
+                // which is invalid PHP. However, it seems to work. Does PHP escape out the single-
+                // quotes for us?
+
+                // If $replace cannot be evaluated as an expression, then we will get a pretty fatal error.
+                // Test out the ability to evaluate the expression. This is just a final safety measure.
+                if (!@eval('return ' . $replace . ';')) {
+                    $replace = 'array()';
                 }
 
-                // Note use of assertions here to only match specific words.
-                $alsearch[] = '/' . '(?<=[\s' . $punctuation . ']|^|ALPLACEHOLDER\dPH)('
-                    . $keywordre
-                    . ')(?=[\s' . $punctuation . ']|$|ALPLACEHOLDER)' . '/is';
-
+                $alreplace[] = 'autolinks_userapi__transform_preg(\''
+                    . $tmpautolink['template_name'] . '\', \'$1\', '
+                    . $replace . ')';
+            } else {
+                // Replacement string.
                 // Munge word boundaries of replace string to stop autolinks from linking to
                 // themselves or other autolinks in step 2
-                $alreplace[] = preg_replace('/(\w)/', '$1ALSPACEHOLDER', $replace['replace']);
+                $alreplace[] = preg_replace('/(\w)/', '$1ALSPACEHOLDER', $replace);
             }
         }
     }
+
+    // TODO: replace all this (steps 1 to 4) with the following:
+    // 1. Split the text into two arrays: one with the tags and one with the content (preg_split).
+    // 2. Join the content array into a string (implode).
+    // 3. Do the link replacement on the string (preg_replace).
+    // 4. Explode the content string back to an array (explode).
+    // 5. Zip the two arrays back together into a string (array_join with a call-back to concatenate elements).
+    // This has advantages in that each string at any point of the process is smaller than the current string;
+    // we can exclude any arbitrary list of tags from having their content matched; we don't need to
+    // loop for all tags, replacing them with placeholders, since they are simply moved aside into a separate
+    // array. The technique works very well, but I need to do some performance tests first to ensure it
+    // really is faster. Although 4 steps are replaced by 5, there are no loops whatsoever in the 5 steps.
+
 
     // Step 1 - move all tags out of the text and replace them with placeholders
     preg_match_all('/(<a\s+.*?\/a>|<[^>]+>)/i', $text, $matches);

@@ -24,29 +24,32 @@ function autolinks_admin_update($args)
     if (!xarVarFetch('match_re', 'int:0:1', $match_re, 0, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('comment', 'isset', $comment,  '',   XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('sample', 'isset', $sample,  '',   XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('name', 'isset', $name,  '',   XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($obid)) {
         $lid = $obid;
     }
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecConfirmAuthKey()) {return;}
 
-    if(xarModAPIFunc('autolinks',
-                    'admin',
-                    'update',
-                    array('lid' => $lid,
-                          'keyword' => $keyword,
-                          'title' => $title,
-                          'url' => $url,
-                          'comment' => $comment,
-                          'enabled' => $enabled,
-                          'match_re' => $match_re))) {
-        // Success
-        // TODO: remove this, or make it work.
-        xarSessionSetVar('autolinks_statusmsg', xarML('Autolink Updated',
-                    'autolinks'));
-    }
+    $result = xarModAPIFunc(
+        'autolinks', 'admin', 'update',
+        array(
+            'lid' => $lid,
+            'keyword' => $keyword,
+            'title' => $title,
+            'url' => $url,
+            'comment' => $comment,
+            'enabled' => $enabled,
+            'match_re' => $match_re,
+            'sample' => $sample,
+            'name' => $name
+        )
+    );
+
+    if (!$result) {return;}
 
     if (!empty($startnumitem)) {
         xarResponseRedirect(xarModURL('autolinks', 'admin', 'view', array('startnumitem' => $startnumitem)));

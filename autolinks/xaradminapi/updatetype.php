@@ -1,17 +1,13 @@
 <?php
 
 /**
- * update an autolink
- * @param $args['lid'] the ID of the link
- * @param $args['keyword'] the new keyword of the link (optional)
- * @param $args['title'] the new title of the link (optional)
- * @param $args['url'] the new url of the link (optional)
- * @param $args['comment'] the new comment of the link (optional)
- * @param $args['sample'] sample link string (optional)
- * @param $args['name'] name of the link (optional)
- * @param $args['tid'] link type ID (optional)
+ * update an autolink type
+ * @param $args['tid'] link type ID
+ * @param $args['type_name'] the name of the link type (optional)
+ * @param $args['template_name'] name of the link type template (optional)
+ * @param $args['type_desc'] description of the link type (optional)
  */
-function autolinks_adminapi_update($args)
+function autolinks_adminapi_updatetype($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -21,13 +17,8 @@ function autolinks_adminapi_update($args)
 
     // TODO: use xarVarFetch to validate the parameters.
 
-    if (isset($tid)) {
-        // Map tid (for the API) to type_tid (for the table).
-        $type_tid = $tid;
-    }
-
     // String parameters.
-    foreach(array('keyword', 'title', 'url', 'comment', 'sample', 'name', 'type_tid') as $parameter)
+    foreach(array('type_name', 'template_name', 'type_desc') as $parameter)
     {
         if (isset($$parameter))
         {
@@ -36,7 +27,7 @@ function autolinks_adminapi_update($args)
     }
     
     // Numeric parameters.
-    foreach(array('enabled'=>0, 'match_re'=>0) as $parameter => $default)
+    foreach(array('dynamic_replace'=>0) as $parameter => $default)
     {
         if (isset($$parameter))
         {
@@ -50,7 +41,7 @@ function autolinks_adminapi_update($args)
     }
     
     // Argument check
-    if (!isset($lid) || empty($set)) {
+    if (!isset($tid) || empty($set)) {
         $msg = xarML('Invalid Parameter Count',
                     join(', ', $args), 'admin', 'update', 'Autolinks');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -62,13 +53,13 @@ function autolinks_adminapi_update($args)
     $set = implode(', ', $set);
 
     // The user API function is called
-    $link = xarModAPIFunc(
-        'autolinks', 'user', 'get',
-        array('lid' => $lid)
+    $type = xarModAPIFunc(
+        'autolinks', 'user', 'gettype',
+        array('tid' => $tid)
     );
 
-    if ($link == false) {
-        $msg = xarML('No Such Link Present',
+    if (!$type) {
+        $msg = xarML('No Such Link Type Present',
                     'autolinks');
         xarExceptionSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
@@ -76,23 +67,30 @@ function autolinks_adminapi_update($args)
         return;
     }
 
-    if (!xarSecurityCheck('EditAutolinks')) return;
+    if (!xarSecurityCheck('EditAutolinks')) {return;}
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $autolinkstable = $xartable['autolinks'];
+    $autolinkstypestable = $xartable['autolinks_types'];
 
     // Update the link
-    $query = 'UPDATE ' . $autolinkstable . ' SET ' . $set
-            . ' WHERE xar_lid = ' . xarVarPrepForStore($lid);
+    $query = 'UPDATE ' . $autolinkstypestable . ' SET ' . $set
+          . ' WHERE xar_tid = ' . xarVarPrepForStore($tid);
     $result =& $dbconn->Execute($query);
     if (!$result) {return;}
 
-    // Now recompile the cache for autolink.
-    $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('lid' => $lid));
-    if (!$result) {return;}
+    // Now recompile the cache for autolinks of this type.
+    // Only do this if the template name has changed or
+    // dynamic_replace has been switched.
+    if (
+        isset($template_name) && $template_name !== $type['template_name']
+        || isset($dynamic_replace) && $dynamic_replace !== $type['dynamic_replace']
+    ) {
+        $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('tid' => $tid));
+        if (!$result) {return;}
+    }
 
     // Let the calling process know that we have finished successfully
     return true;

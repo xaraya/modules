@@ -1,52 +1,70 @@
 <!--- $Id --->
+
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto;">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
-        <th><xar:mlstring>Status</xar:mlstring></th>
-        <th><xar:mlstring>Keyword</xar:mlstring></th>
-        <th><xar:mlstring>Title</xar:mlstring></th>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Matching Key</xar:mlstring></th>
         <th><xar:mlstring>URL</xar:mlstring></th>
-        <th><xar:mlstring>Comment</xar:mlstring></th>
         <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
     <xar:foreach in="$items" value="$item">
-    <tr>
-        <td>
-            <xar:if condition="empty($item['enabled'])">
-                <xar:mlstring>Disabled</xar:mlstring> /
-            <xar:else />
-                <xar:mlstring>Enabled</xar:mlstring> /
-            </xar:if>
-            <xar:if condition="empty($item['valid'])">
-                <xar:mlstring>Invalid</xar:mlstring>
-            <xar:else />
-                <xar:mlstring>Valid</xar:mlstring>
-            </xar:if>
-        </td>
-        <td>#xarVarPrepForDisplay($item['keyword'])#</td>
-        <td>#xarVarPrepForDisplay($item['title'])#</td>
-        <td>#xarVarPrepForDisplay($item['url'])#</td>
-        <td>#xarVarPrepForDisplay($item['comment'])# &nbsp;</td>
-        <td align="center">
-            <xar:if condition="empty($item['enableurl'])">
-                #$item['enablelabel']# |
-            <xar:else />
-                <a href="#$item['enableurl']#">#$item['enablelabel']#</a> |
-            </xar:if>
-            <xar:if condition="empty($item['editurl'])">
-                <xar:mlstring>Edit</xar:mlstring> |
-            <xar:else />
-                <a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a> |
-            </xar:if>
-            <xar:if condition="empty($item['deleteurl'])">
-                <xar:mlstring>Delete</xar:mlstring>
-            <xar:else />
-                <a href="#$item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
-            </xar:if>
-        </td>
-    </tr>
+        <!--- TODO: set classes rather than style colours --->
+        <xar:if condition="!empty($item['enabled'])">
+            <xar:set name="$bgrow">'#DDFFDD'</xar:set>
+        <xar:else/>
+            <xar:set name="$bgrow">'#FFDDDD'</xar:set>
+        </xar:if>
+
+        <tr style="background-color: #$bgrow#;">
+            <td>#xarVarPrepForDisplay($item['name'])# &nbsp;</td>
+            <td>
+                <xar:if condition="!empty($item['comment'])">
+                    <span title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['keyword'])#</span>
+                <xar:else/>
+                    #xarVarPrepForDisplay($item['keyword'])#
+                </xar:if>
+            </td>
+            <td>
+                <xar:if condition="!empty($item['title'])">
+                    <span title="#xarVarPrepForDisplay($item['title'])#">#xarVarPrepForDisplay($item['url'])#</span>
+                <xar:else/>
+                    #xarVarPrepForDisplay($item['url'])#
+                </xar:if>
+            </td>
+            <td align="center">
+                <xar:if condition="empty($item['enableurl'])">
+                    #$item['enablelabel']# |
+                <xar:else />
+                    <a href="#$item['enableurl']#">#$item['enablelabel']#</a> |
+                </xar:if>
+                <xar:if condition="empty($item['editurl'])">
+                    <xar:mlstring>Edit</xar:mlstring> |
+                <xar:else />
+                    <a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a> |
+                </xar:if>
+                <xar:if condition="empty($item['edittypeurl'])">
+                    <xar:mlstring>Edit</xar:mlstring> |
+                <xar:else />
+                    <a href="#$item['edittypeurl']#"><xar:mlstring>Type</xar:mlstring></a> |
+                </xar:if>
+                <xar:if condition="empty($item['deleteurl'])">
+                    <xar:mlstring>Delete</xar:mlstring>
+                <xar:else />
+                    <a href="#$item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+                </xar:if>
+            </td>
+        </tr>
+        <xar:if condition="xarModGetVar('autolinks', 'showsamples') and !empty($item['sample'])">
+            <tr>
+                <td colspan="2" width="40%"><strong><xar:mlstring>Sample</xar:mlstring>:</strong><br/>
+                #xarVarPrepForDisplay($item['sample'])#</td>
+                <td colspan="2" width="60%"><strong><xar:mlstring>Result</xar:mlstring>:</strong><br/>
+                #$item['sampleresult']#</td>
+            </tr>
+        </xar:if>
     </xar:foreach>
 </table>
 <br />

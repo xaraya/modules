@@ -11,7 +11,7 @@
 	<input type="text" name="punctuation" id="punctuation" size="20" maxlength="30" value="#xarModGetVar('autolinks', 'punctuation', 1)#" />
 	</p>
 
-	<p>	<label for="nbspiswhite"><xar:mlstring>Match non-breaking space entity as white space</xar:mlstring></label>
+	<p>	<label for="nbspiswhite"><xar:mlstring>Match non-breaking space entity (&amp;nbsp;) as white space</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'nbspiswhite')">
 			<input type="checkbox" name="nbspiswhite" id="nbspiswhite" value="1" checked="checked" />
 		<xar:else />
@@ -35,7 +35,7 @@
 		</xar:if>
 		</xar:foreach>
 	</select>
-	
+
 	<p>	<label for="newwindow"><xar:mlstring>Open links in new window</xar:mlstring></label>
 		<xar:if condition="xarModGetVar('autolinks', 'newwindow')">
 			<input type="checkbox" name="newwindow" id="newwindow" value="1" checked="checked" />
@@ -44,10 +44,30 @@
 		</xar:if>
 	</p>
 
+	<p>	<label for="showerrors"><xar:mlstring>Show template errors inline (errors shown in content)</xar:mlstring></label>
+		<xar:if condition="xarModGetVar('autolinks', 'showerrors')">
+			<input type="checkbox" name="showerrors" id="showerrors" value="1" checked="checked" />
+		<xar:else />
+			<input type="checkbox" name="showerrors" id="showerrors" value="1" />
+		</xar:if>
+	</p>
+
+	<p><label for="templatebase"><xar:mlstring>Template base name (affects all templates used)</xar:mlstring></label>&nbsp;&nbsp;
+		<input type="text" name="templatebase" id="templatebase" size="20" maxlength="30" value="#xarModGetVar('autolinks', 'templatebase', 1)#"/>
+	</p>
+
 	<h3><xar:mlstring>Admin Options</xar:mlstring></h3>
 
 	<p><label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label>&nbsp;&nbsp;
 	<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('autolinks', 'itemsperpage', 1)#" />
+	</p>
+
+	<p>	<label for="showsamples"><xar:mlstring>Show sample links in list</xar:mlstring></label>
+		<xar:if condition="xarModGetVar('autolinks', 'showsamples')">
+			<input type="checkbox" name="showsamples" id="showsamples" value="1" checked="checked" />
+		<xar:else />
+			<input type="checkbox" name="showsamples" id="showsamples" value="1" />
+		</xar:if>
 	</p>
 
     <input type="submit" value="#$submit#" align="middle" />

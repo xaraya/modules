@@ -1,6 +1,6 @@
 <?php 
 /**
- * File: $Id$
+ * File: $Id: s.xartables.php 1.11 03/07/13 11:22:48+02:00 marcel@hsdev.com $
  * 
  * Xaraya Autolinks
  * 
@@ -18,11 +18,9 @@ function autolinks_xartables()
     // Initialise table array
     $xartable = array();
 
-    // Get the name for the autolinks item table
-    $autolinks = xarDBGetSiteTablePrefix() . '_autolinks';
-
-    // Set the table name
-    $xartable['autolinks'] = $autolinks;
+    // Set the table names
+    $xartable['autolinks'] = xarDBGetSiteTablePrefix() . '_autolinks';
+    $xartable['autolinks_types'] = xarDBGetSiteTablePrefix() . '_autolinks_types';
 
     // Return the table information
     return $xartable;

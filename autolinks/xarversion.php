@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: s.xarversion.php 1.15 03/07/13 11:22:48+02:00 marcel@hsdev.com $
  * 
  * Xaraya Autolinks
  * 
@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'Autolinks';
 $modversion['id'] = '11';
-$modversion['version'] = '1.3';
+$modversion['version'] = '1.4';
 $modversion['description'] = 'Automatically link key words';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

@@ -1,46 +1,99 @@
+<xar:set name="$addbuttonlabel"><xar:mlstring>Create</xar:mlstring></xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Add</xar:mlstring></h2><br />
 <div style="margin: auto;">
+
+<xar:if condition="isset($global_error)">
+   <div class="xar-error">#$global_error#</div>
+</xar:if>
+
 <form method="post" action="#xarModURL('autolinks', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" />
-<div class="xar-norm-outline" style="padding-left: 150px; padding-right: 100px; padding-top: 20px; padding-bottom: 20px; text-align: left;">
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('This is the word that will be linked when found in the text that is transformed by the hook')#"><label for="keyword"><xar:mlstring>Keyword</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="keyword" id="keyword" value="" size="32" maxlength="100" />
-	</span>
-	</div>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('This will be the title that is shown in the tool tip for the link that is transformed.')#"><label for="title"><xar:mlstring>Title</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="title" id="title" value="" size="32" maxlength="100" />
-	</span>
-	</div>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('This is the URL that you will be pointing the text to link to when found.')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="url" id="url" value="" size="40" maxlength="200" />
-	</span>
-	</div>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('This is a comment for your reference when searching autolinks.')#"><label for="comment"><xar:mlstring>Comment</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="comment" id="comment" value="" size="40" maxlength="200" />
-	</span>
-	</div>
-	<br /><br />
-	<div style="clear: both; text-align: center;">
-		<input type="submit" value="#xarML('Submit')#" />
-	</div>
-</div>
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <table border="0" width="100%">
+
+        <!--- TODO: wrap this condition around the whole form? --->
+        <xar:if condition="isset($types)">
+            <tr align="left" valign="middle">
+                <td>
+                    <label for="tid"><xar:mlstring>Autolink Type</xar:mlstring></label>&nbsp;&nbsp;
+                </td>
+                <td>
+                    <select name="tid" id="tid" size="1">
+                        <xar:foreach in="$types" value="$v" key="$k">
+                            <xar:if condition="$v['tid'] eq (isset($tid) ? $tid : 0)">
+                                <option value="#$k#" selected="selected">#$v['type_name']#</option>
+                            <xar:else/>
+                                <option value="#$k#">#$v['type_name']#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <xar:if condition="!empty($tid_error)">
+                    <div class="xar-error">#$tid_error#</div>
+                    </xar:if>
+                </td>
+            </tr>
+        </xar:if>
+
+        <tr align="left" valign="middle">
+            <td>
+                <label for="name"><xar:mlstring>Name</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name" value="#$name#" size="32" maxlength="100" />
+                <xar:if condition="!empty($name_error)">
+                <div class="xar-error">#$name_error#</div>
+                </xar:if>
+            </td>
+        </tr>
+
+        <tr align="left" valign="middle">
+            <td>
+                <label for="keyword"><xar:mlstring>Matching Key</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="keyword" id="keyword" value="#$keyword#" size="32" maxlength="100" />
+                <xar:if condition="!empty($keyword_error)">
+                <div class="xar-error">#$keyword_error#</div>
+                </xar:if>
+            </td>
+        </tr>
+
+        <tr align="left" valign="middle">
+            <td>
+                <label for="title"><xar:mlstring>Title</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="title" id="title" value="#$title#" size="32" maxlength="100" />
+                <xar:if condition="!empty($title_error)">
+                <div class="xar-error">#$title_error#</div>
+                </xar:if>
+            </td>
+        </tr>
+        <tr align="left" valign="middle">
+            <td>
+                <label for="url"><xar:mlstring>URL</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
+                <xar:if condition="!empty($url_error)">
+                <div class="xar-error">#$url_error#</div>
+                </xar:if>
+            </td>
+        </tr>
+        <tr align="left" valign="middle">
+            <td>
+                <label for="comment"><xar:mlstring>Comment</xar:mlstring></label>
+            </td>
+            <td>
+                <input type="text" name="comment" id="comment" value="#$comment#" size="40" maxlength="200" />
+                <xar:if condition="!empty($comment_error)">
+                <div class="xar-error">#$comment_error#</div>
+                </xar:if>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="#$addbuttonlabel#" align="middle" />
 </form>
+
 </div>
 </div>

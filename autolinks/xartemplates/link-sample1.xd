@@ -1,2 +1,2 @@
 <!--- Displays the URL in square brackets after the keyword --->
-#$match# [<a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $attributes)#>#$url#</a>]
+#$match# [<a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $stdattributes)#>#$url#</a>]
