@@ -52,7 +52,7 @@ function recommend_admin_modifyconfig()
 
             if (!xarVarFetch('template', 'str:1:', $template)) return;
             if (!xarVarFetch('title', 'str:1:', $title)) return; 
-	        if (!xarVarFetch('usernote', 'checkbox', $usernote, false, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('usernote', 'checkbox', $usernote, false, XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
 
