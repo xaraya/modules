@@ -123,7 +123,7 @@ function articles_topitemsblock_display($blockinfo)
         }
 
         //echo $includechildren;
-        if (!empty($vars['includechildren']) && !empty($cidsarray[0])) {
+        if (!empty($vars['includechildren']) && !empty($cidsarray[0]) && !strstr($cidsarray[0],'_')) {
             $cidsarray[0] = '_' . $cidsarray[0];
         }
 
@@ -219,7 +219,6 @@ function articles_topitemsblock_display($blockinfo)
             'numitems' => $vars['numitems']
         )
     );
-
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
        return;
     }

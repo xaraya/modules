@@ -332,6 +332,8 @@ function articles_user_view($args)
             if (empty($cid)) {
                 continue;
             }
+            // if we're viewing all items below a certain category, i.e. catid = _NN
+            $cid = str_replace('_', '', $cid);
             // FIXME: if this fails, an exception will be set, so it needs to be cleared?
             xarModAPIFunc('hitcount','admin','update',
                          array('modname' => 'categories',
