@@ -759,7 +759,8 @@ function articles_user_view($args)
  * sorting function for article categories
  */
 
-function articles_user_sortbyroot ($a,$b) {
+function articles_user_sortbyroot ($a,$b) 
+{
     global $catinfo;
     if ($catinfo[$a]['root'] == $catinfo[$b]['root']) return 0;
     return ($catinfo[$a]['root'] > $catinfo[$b]['root']) ? -1 : 1;
