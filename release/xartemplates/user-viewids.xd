@@ -2,7 +2,6 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
-
 <b><xar:mlstring>Sort By</xar:mlstring>:</b>
 <br /><br />
 <form action="#xarModURL('release', 'user', 'viewids')#" method="post" enctype="application/x-www-form-urlencoded">
@@ -147,3 +146,9 @@
 </table>
 </div>
 </div>
+<h3><xar:mlstring>Syndicate this list</xar:mlstring></h3>
+<ol>
+	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#"><xar:mlstring>Entire List</xar:mlstring></a></li>
+	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'modules', 'theme' => 'rss'))#"><xar:mlstring>Modules</xar:mlstring></a></li>
+	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#"><xar:mlstring>Themes</xar:mlstring></a></li>
+</ol>

@@ -1,16 +1,9 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
-<!-- common admin menu for this module - remove link to the current function -->
-<div class="xar-mod-body">
-<h2><xar:mlstring>Releases Overview</xar:mlstring></h2>
-<xar:if condition="!empty($theme)">
-	<xar:if condition="$theme eq 'rss'">
-		put something here
-	</xar:if>
-<xar:else />
-<xar:mlstring>The release module is a work in progress.  The eventual hope is that this module will give backend support to all</xar:mlstring> <a href="http://www.xaraya.com" target="_BLANK"><xar:mlstring> Xaraya </xar:mlstring> </a><xar:mlstring>  modules and themes.  Currently the only option available is to create and maintain the modules and theme ids for reference.  More options will be available as I have a chance to complete them. </xar:mlstring>
-
-<br /><br />
-
-<a href="modules/release/xartemplates/user-main.xd"><xar:mlstring>Template for this module page</xar:mlstring></a> -- You can view the page source of this module to see an example of a BlockLayout template.
-</xar:if>
-</div>
+<div class="xar-mod-body" style="display:block;">
+<h2><xar:mlstring>Release Overview</xar:mlstring></h2>
+<xar:mlstring>The release module is Xaraya.com's tool of tracking module and theme information.  It does this in three distinct ways.</xar:mlstring>
+<ol>
+<li>Tracking Module and Theme ID's</li>
+<li>Tracking Version History of Modules and Themes</li>
+<li>Providing Documentation for Modules and Themes</li>
+</ol>

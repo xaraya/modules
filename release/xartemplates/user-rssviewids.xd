@@ -1,0 +1,8 @@
+<xar:loop name="$items">
+<item>
+	<title>#$name# - ID #$rid#</title>
+	<link>#$infourl#</link>
+	<description>#$desc#</description>
+	<guid isPermaLink="false">http://www.xaraya.com</guid> 
+</item>
+</xar:loop>
