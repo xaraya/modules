@@ -20,18 +20,18 @@
 
 <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
 <div class="xar-norm" style="padding: 3px;">
-	<xar:mlstring>Url</xar:mlstring><span style="float: right;"><xar:mlstring>Frequency</xar:mlstring></span>
+	<xar:mlstring>Url</xar:mlstring><span style="position: relative; right: 10px;"><xar:mlstring>Frequency</xar:mlstring></span>
 </div>
 <xar:loop name="$items">
 	<xar:if condition="(($loop:index + 1) % 2)">
 	<div class="xar-norm" style="padding: 3px;">
 		<a href="#$loop:item['url']#">#$loop:item['urldisplay']#</a>
-		<span style="float: right;">#$loop:item['frequency']#</span>
+		<span style="position: relative; right: 10px;">#$loop:item['frequency']#</span>
 	</div>
 	<xar:else />
 	<div class="xar-accent" style="padding: 3px;">
 		<a href="#$loop:item['url']#" target="_BLANK">#$loop:item['urldisplay']#</a>
-		<span style="text-align: right; float: right;">#$loop:item['frequency']#</span>
+		<span style="position: relative; right: 10px;">#$loop:item['frequency']#</span>
 	</div>
 	</xar:if>
 </xar:loop>
