@@ -139,7 +139,7 @@ function changelog_adminapi_updatehook($args)
                       (int) $itemtype,
                       (int) $objectid,
                       (int) $editor,
-                      (string) $hostname.
+                      (string) $hostname,
                       (int) $date,
                       (string) $status,
                       (string) $remark,
