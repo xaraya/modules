@@ -58,8 +58,8 @@ function hookbridge_hookapi_item_transforminput ( $args )
 
 function hookbridge_transforminput( $text ) 
 {
-    return '[ Input Hook: ] ' . $text;
-
+//    return '[ Input Hook: ] ' . $text;
+	return $text;
 }
 
 
