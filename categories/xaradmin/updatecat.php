@@ -73,6 +73,7 @@ function categories_admin_updatecat()
             case 3: // below - child category
                 $rightorleft = 'right';
                 $inorout = 'in';
+                break;
             case 4: // above - child category
                 $rightorleft = 'left';
                 $inorout = 'in';
