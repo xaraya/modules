@@ -92,7 +92,6 @@ function xmlrpcsystemapi_admin_introspect()
             $sigs['params'] = $sigparams;
             $data['sigs'][] = $sigs;
         }
-        xarLogMessage(print_r($data,true));
     }
 
 
