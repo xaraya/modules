@@ -36,6 +36,14 @@
             <value><string>#$title#</string></value>
           </member>
           <member>
+            <name>link</name>
+            <value><string>#$link#</string></value>
+          </member
+          <member>
+            <name>permaLink</name>
+            <value><string>#$link#</string></value>
+          </member
+          <member>
             <name>userid</name>
             <value>
               <string>#$userid#</string>

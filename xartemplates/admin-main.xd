@@ -28,8 +28,25 @@
             </p>
         
             <p>
-            <xar:mlstring>You can find the specification of the MetaWebloag API at </xar:mlstring>
-            <a href="http://http//www.xmlrpc.com/metaWeblogApi">http://http//www.xmlrpc.com/metaWeblogApi</a>
+            <xar:mlstring>You can find the specification of the MetaWeblog API at </xar:mlstring>
+            <a href="http://www.xmlrpc.com/metaWeblogApi">http://www.xmlrpc.com/metaWeblogApi</a>
+            </p>
+            
+            <h3><xar:mlstring>How does it work?</xar:mlstring></h3>
+            <p>
+                Blogging through this API basically works the same as with the bloggerapi module,
+                except for the way data is transferred (transparent to the user) and the way in which
+                the hooked categories are interpreted. A summary of that difference is:
+                <ul>
+                    <li><strong>bloggerapi</strong>: a hooked category (for the designated publication type) is 
+                        interpreted as a <em>blog</em>. The blogger api itself has no category support inside one blog</li>
+                    <li><strong>metaweblogapi</strong>: a hooked category is interpreted as a <em>blog</em> <strong>and</strong> its
+                        subcategories are the categories which can be used within that blog</li>
+                </ul>
+            </p>
+            <p>
+                If your site wants to support both blogger clients and metaweblog client, you will have to take the above into 
+                account when designing your category hierarchy.
             </p>
         </div>
     </div>

@@ -59,6 +59,7 @@ function metaweblogapi_userapi_getrecentposts($args)
             $article_list[$i]['dateCreated'] = iso8601_encode($article['pubdate']);
             $article_list[$i]['content'] = xarVarPrepForDisplay($article['summary']);
             $article_list[$i]['postid'] = $article['aid'];
+            $article_list[$i]['link'] = xarModUrl('articles','user','display',array('aid' => $article['aid']));
             $catnames = array();
             
             if(!empty($article['cids'])) {

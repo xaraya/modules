@@ -11,8 +11,8 @@ function metaweblogapi_userapi_getpost($args)
     
     // get the params, we skip appkey for now..
     $sn1=$msg->getParam(0);  $postid   = $sn1->scalarval();
-    $sn2=$msg->getParam(1);  $username   = $sn2->scalarval();
-    $sn3=$msg->getParam(2);  $password   = $sn3->scalarval();
+    $sn2=$msg->getParam(1);  $username = $sn2->scalarval();
+    $sn3=$msg->getParam(2);  $password = $sn3->scalarval();
     
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) or wrong password while getting post",$username);
@@ -26,12 +26,12 @@ function metaweblogapi_userapi_getpost($args)
     
     if (!empty($err)) {
         $output = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));
-    }    else {
+    } else {
+        $data['title']       = $article['title'];
+        $data['userid']      = $article['authorid'];
+        $data['dateCreated'] = iso8601_encode($article['pubdate']);
+        $data['link']        = xarModUrl('articles','user','display',array('aid' => $postid));
         // Get the categories for this article.
-        
-        $data['title'] = $article['title'];
-        $data['userid']=$article['authorid'];
-        $data['dateCreated']=iso8601_encode($article['pubdate']);
         $data['categories'] = array();
         if(!empty($article['cids'])) {
             foreach($article['cids'] as $catid) {

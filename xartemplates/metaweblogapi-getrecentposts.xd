@@ -48,6 +48,18 @@
                       <string>#$loop:item['authorid']#</string>
                     </value>
                   </member>
+                  <member>
+                    <name>link</name>
+                    <value>
+                      <string>#$loop:item['link']#</string>
+                    </value>
+                  </member>
+                  <member>
+                    <name>permaLink</name>
+                    <value>
+                      <string>#$loop:item['link']#</string>
+                    </value>
+                  </member>
                 </struct>
               </value>
             </xar:loop>  
