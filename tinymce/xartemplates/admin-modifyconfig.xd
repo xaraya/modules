@@ -125,7 +125,8 @@
         <p style="clear:both;"><span style="float:left; width: 30%; text-align: right;"><xar:mlstring><strong>Special Labelled only</strong> :  </xar:mlstring>
           </span>
           <span style="float: right; width: 68%; text-align: left;">
-              <xar:mlstring>will convert all text areas in the template where you have the tinymce tags that are <strong>specifically marked</strong> with the attribute in the textarea or div tag of <code>mce_editable="true"</code></xar:mlstring>
+              <xar:mlstring>will convert all specifically marked textareas and divs in the template where you have added the tinymce 
+              template tags above and and where you have <strong>specifically marked</strong> the div or textareas with the attribute <code>mce_editable="true"</code></xar:mlstring>
           </span>
         </p>
    </div>
