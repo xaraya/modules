@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'MIME API';
 $modversion['id']             = '999';
-$modversion['version']        = '.2';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'Hook based module that returns the content-type of a given file.';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
@@ -22,7 +22,7 @@ $modversion['official']       = 1;
 $modversion['author']         = 'Carl P. Corliss <carl.corliss@xaraya.com>';
 $modversion['contact']        = 'http://www.xaraya.com/';
 $modversion['admin']          = 0;
-$modversion['user']           = 1;
+$modversion['user']           = 0;
 $modversion['securityschema'] = array();
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
