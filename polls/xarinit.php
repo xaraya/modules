@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: xarinit.php 1.27 05/02/04 12:42:43+01:00 alberto@ftb. $
  *
  * Polls initialization functions
  *
@@ -327,13 +327,13 @@ function polls_upgrade($oldversion)
             xarModDelVar('polls', 'comments');
             xarModDelVar('polls', 'itemsperpage');
 
+           $dbconn =& xarDBGetConn();
+           $xartable =& xarDBGetTables();
+           xarDBLoadTableMaintenanceAPI();
            $pref = xarDBGetSiteTablePrefix();
 
            if ($pref !== 'xar') {
 
-               $dbconn =& xarDBGetConn();
-               $xartable =& xarDBGetTables();
-               xarDBLoadTableMaintenanceAPI();
 
                $pollstable = $pref . '_temp_polls';
                $oldpollstable = $xartable['polls'];
