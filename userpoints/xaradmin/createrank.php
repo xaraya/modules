@@ -55,11 +55,11 @@ function userpoints_admin_createrank($args)
     $invalid = array();
     if (empty($rankminscore) || !is_numeric($rankminscore)) {
         $invalid['rankminscore'] = 1;
-		$rankminscore = '';
+        $rankminscore = '';
     } 
     if (empty($rankname) || !is_string($rankname)) {
         $invalid['rankname'] = 1;
-		$rankname = '';
+        $rankname = '';
     } 
 
     if (!empty($rankname) && $item['rankname'] == $rankname) {

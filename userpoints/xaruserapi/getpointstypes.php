@@ -13,7 +13,7 @@ static $pointstypes = array();
                    xar_module,
                    xar_itemtype,
                    xar_action,
-		   xar_tpoints
+           xar_tpoints
             FROM $pointstypestable
             ORDER BY xar_module, xar_itemtype, xar_action ASC";
      $result =& $dbconn->Execute($query);
@@ -28,7 +28,7 @@ static $pointstypes = array();
                                'module' => $module,
                                'itemtype' => $itemtype,
                                'action' => $action,
-			       'tpoints' => $tpoints);
+                   'tpoints' => $tpoints);
         $result->MoveNext();
     }
 

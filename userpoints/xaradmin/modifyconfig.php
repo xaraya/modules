@@ -29,18 +29,18 @@ function userpoints_admin_modifyconfig()
     $data['showanonlabel'] = xarML('Show Anonymous Score?');
     $data['showanonchecked'] = xarModGetVar('userpoints', 'showanonscore') ?
     'checked' : '';
-	$data['shorturlslabel'] = xarML('Enable short URLs?');
+    $data['shorturlslabel'] = xarML('Enable short URLs?');
     $data['shorturlschecked'] = xarModGetVar('userpoints', 'SupportShortURLs') ?
     'checked' : '';
 
 
     $data['settings'] = array();
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
-		                                 'create_score'    => $defaultcreate,
-		                                 'delete_score'    => $defaultdelete,
-		                                 'display_score'   => $defaultdisplay,
-		                                 'update_score'    => $defaultupdate,
-		                                 'frontpage_score' => $defaultfrontpage);
+                                         'create_score'    => $defaultcreate,
+                                         'delete_score'    => $defaultdelete,
+                                         'display_score'   => $defaultdisplay,
+                                         'update_score'    => $defaultupdate,
+                                         'frontpage_score' => $defaultfrontpage);
 
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
                                    array('hookModName' => 'userpoints'));
@@ -58,19 +58,19 @@ function userpoints_admin_modifyconfig()
                     if (empty($create_score)) {
                         $create_score = $defaultcreate;
                     }
-					$delete_score = xarModGetVar('userpoints', "deletepoints.$modname.$itemtype");
+                    $delete_score = xarModGetVar('userpoints', "deletepoints.$modname.$itemtype");
                     if (empty($delete_score)) {
                         $delete_score = $defaultdelete;
                     }
-					$display_score = xarModGetVar('userpoints', "displaypoints.$modname.$itemtype");
+                    $display_score = xarModGetVar('userpoints', "displaypoints.$modname.$itemtype");
                     if (empty($display_score)) {
                         $display_score = $defaultdisplay;
                     }
-					$update_score = xarModGetVar('userpoints', "updatepoints.$modname.$itemtype");
+                    $update_score = xarModGetVar('userpoints', "updatepoints.$modname.$itemtype");
                     if (empty($update_score)) {
                         $update_score = $defaultupdate;
                     }
-					$frontpage_score = xarModGetVar('userpoints', "frontpagepoints.$modname.$itemtype");
+                    $frontpage_score = xarModGetVar('userpoints', "frontpagepoints.$modname.$itemtype");
                     if (empty($frontpage_score)) {
                         $frontpage_score = $defaultfrontpage;
                     }
@@ -83,39 +83,39 @@ function userpoints_admin_modifyconfig()
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
                                                                     'create_score'    => $create_score,
-						                                            'delete_score'    => $delete_score,
-						                                            'display_score'   => $display_score,
-						                                            'update_score'    => $update_score,
-						                                            'frontpage_score' => $frontpage_score);
+                                                                    'delete_score'    => $delete_score,
+                                                                    'display_score'   => $display_score,
+                                                                    'update_score'    => $update_score,
+                                                                    'frontpage_score' => $frontpage_score);
                 }
             } else {
                     $create_score = xarModGetVar('userpoints', "createpoints.$modname");
                     if (empty($create_score)) {
                         $create_score = $defaultcreate;
                     }
-					$delete_score = xarModGetVar('userpoints', "deletepoints.$modname");
+                    $delete_score = xarModGetVar('userpoints', "deletepoints.$modname");
                     if (empty($delete_score)) {
                         $delete_score = $defaultdelete;
                     }
-					$display_score = xarModGetVar('userpoints', "displaypoints.$modname");
+                    $display_score = xarModGetVar('userpoints', "displaypoints.$modname");
                     if (empty($display_score)) {
                         $display_score = $defaultdisplay;
                     }
-					$update_score = xarModGetVar('userpoints', "updatepoints.$modname");
+                    $update_score = xarModGetVar('userpoints', "updatepoints.$modname");
                     if (empty($update_score)) {
                         $update_score = $defaultupdate;
                     }
-					$frontpage_score = xarModGetVar('userpoints', "frontpagepoints.$modname");
+                    $frontpage_score = xarModGetVar('userpoints', "frontpagepoints.$modname");
                     if (empty($frontpage_score)) {
                         $frontpage_score = $defaultfrontpage;
                     }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
                                                     'create_score'    => $create_score,
-						                            'delete_score'    => $delete_score,
-						                            'display_score'   => $display_score,
-						                            'update_score'    => $update_score,
-						                            'frontpage_score' => $frontpage_score);
+                                                    'delete_score'    => $delete_score,
+                                                    'display_score'   => $display_score,
+                                                    'update_score'    => $update_score,
+                                                    'frontpage_score' => $frontpage_score);
             }
         }
     }

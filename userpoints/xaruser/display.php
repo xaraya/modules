@@ -39,7 +39,7 @@ function userpoints_user_display($args)
       if(!xarUserIsLoggedIn()) {return $extrainfo;}
       $pointsvalues = xarModAPIFunc('userpoints','user','getpoints',array('pmodule'=>$modname,'itemtype'=>$itemtype,'paction'=>'D'));
       if(!$pointsvalues) {return $extrainfo;}
-	    $points = $pointsvalues['tpoints']; 
+        $points = $pointsvalues['tpoints']; 
       
       $uptid = $pointsvalues['uptid'];
       
@@ -49,8 +49,8 @@ function userpoints_user_display($args)
       
       $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
     
-	// Return the extra info
-	return $extrainfo;
+    // Return the extra info
+    return $extrainfo;
 }
 
 ?>

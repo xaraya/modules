@@ -53,7 +53,7 @@ function userpoints_adminapi_removehook($args)
       if(!xarUserIsLoggedIn()) {return $extrainfo;}
       $pointsvalues = xarModAPIFunc('userpoints','user','getpoints',array('pmodule'=>$modname,'itemtype'=>$itemtype,'paction'=>'C'));
       if(!$pointsvalues) {return $extrainfo;}
-	    $points = $pointsvalues['tpoints'];      
+        $points = $pointsvalues['tpoints'];      
       $uptid = $pointsvalues['uptid'];
       
       $args['uptid'] = $uptid;
@@ -62,7 +62,7 @@ function userpoints_adminapi_removehook($args)
       $args['itemtype'] = $itemtype;
       $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
  
-	// Return the extra info
-	return $extrainfo;
+    // Return the extra info
+    return $extrainfo;
 }
 ?>

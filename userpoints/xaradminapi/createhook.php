@@ -73,12 +73,12 @@ function userpoints_adminapi_createhook($args)
 
     $points = xarModGetVar('userpoints', "createpoints.$modname");
 
-	}
-	else{
+    }
+    else{
 
     $points = xarModGetVar('userpoints', "createpoints.$modname.$itemtype");
 
-	}
+    }
 
 
     if (!xarModAPIFunc('userpoints', 'admin', 'addpoints',

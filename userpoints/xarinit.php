@@ -24,7 +24,7 @@ function userpoints_init()
 
     // Create table to store the user's score per item and stats
 
-	$fields = array(
+    $fields = array(
         'xar_upid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_moduleid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
         'xar_itemtype'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
@@ -49,7 +49,7 @@ function userpoints_init()
 
     // Create table to store the user's score per item and stats
 
-	$fields = array(
+    $fields = array(
         'xar_upid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_moduleid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
         'xar_itemtype'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
@@ -70,7 +70,7 @@ function userpoints_init()
 
     // Create table to hold rank information
 
-	$fields = array('xar_id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+    $fields = array('xar_id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
                     'xar_rankname' => array('type' => 'varchar', 'size' => 32, 'null' => false),
                     'xar_rankminscore' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0')
         );
@@ -85,7 +85,7 @@ function userpoints_init()
 
     // Create table to hold the user's score
 
-	$fields = array('xar_id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+    $fields = array('xar_id' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
                     'xar_authorid'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0'),
                     'xar_totalscore'=>array('null'=>FALSE, 'type'=>'integer','size'=>'big', 'default'=>'0')
         );
@@ -104,7 +104,7 @@ function userpoints_init()
     xarModSetVar('userpoints', 'scowanonscore', 0);
     xarModSetVar('userpoints', 'SupportShortURLs', 0);
     xarModSetVar('userpoints', 'defaultcreate', 10);
-	xarModSetVar('userpoints', 'defaultdelete', 10);
+    xarModSetVar('userpoints', 'defaultdelete', 10);
     xarModSetVar('userpoints', 'defaultdisplay', 0.01);
     xarModSetVar('userpoints', 'defaultupdate', 0.05);
     xarModSetVar('userpoints', 'defaultfrontpage', 0);

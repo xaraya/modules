@@ -86,10 +86,10 @@ function userpoints_admin_modifyrank($args)
     // Return the template variables defined in this function
     return array('authid'       => xarSecGenAuthKey(),
                  'ranknamelabel'    => xarVarPrepForDisplay(xarML('Rank Name')),
-	             'rankname'         => $rankname,
+                 'rankname'         => $rankname,
                  'rankminscorelabel'  => xarVarPrepForDisplay(xarML('Rank Minimum Score')),
-	             'rankminscore'       => $rankminscore,
-		         'invalid'      => $invalid,
+                 'rankminscore'       => $rankminscore,
+                 'invalid'      => $invalid,
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update')),
                  'hooks'        => $hooks,
                  'item'         => $item);
