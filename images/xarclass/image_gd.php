@@ -39,7 +39,11 @@ class Image_GD extends Image_Properties
         $origImage = $this->_open();
         
         if (is_resource($origImage)) {
-            $this->_tmpFile = tempnam(NULL, 'xarimage-');
+            if (is_dir($this->_thumbsdir) && is_writable($this->_thumbsdir)) {
+                $this->_tmpFile = tempnam($this->_thumbsdir, 'xarimage-');
+            } else {
+                $this->_tmpFile = tempnam(NULL, 'xarimage-');
+            }
             $newImage = imageCreateTrueColor($this->width, $this->height);
             imageCopyResampled($newImage, $origImage, 0, 0, 0, 0, $this->width, $this->height, $this->_owidth, $this->_oheight);
             imageJPEG($newImage, $this->_tmpFile);

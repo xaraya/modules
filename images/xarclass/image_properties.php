@@ -11,7 +11,7 @@ class Image_Properties
     var $_oheight;
     var $_owidth;
     var $_percent;
-    var $mime;
+    var $mime = null;
     var $_tmpFile;
     
     function __constructor($fileLocation, $thumbsdir = NULL) 
