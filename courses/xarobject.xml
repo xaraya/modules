@@ -1,0 +1,23 @@
+  <object name="courses">
+  <objectid>14</objectid>
+  <label>Courses</label>
+  <moduleid>179</moduleid>
+  <itemtype>0</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>0</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="paypal">
+      <id>76</id>
+      <label>PayPal</label>
+      <type>paypalnow</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>
+ 

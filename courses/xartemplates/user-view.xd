@@ -1,0 +1,69 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<!-- common user menu for this module - remove link to the current function -->
+
+<table border="0" width="100%">
+
+    <!-- the variables used in this menu come from example_user_menu() -->
+
+    <tr><th align="center">#$menutitle#</th></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <!-- since this is the menu item we're on, we only show the label -->
+
+        <td> #$menulabel_view# </td>
+
+        <!-- more menu items come here... -->
+
+        <!-- Note : you can also specify simple links directly with blocklayout
+             template tags : e.g. &xar-modurl-example-user-view; -->
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<!-- the specific template for the current function comes here -->
+
+<xar:blockgroup name="topnav" id="topnav" />
+
+<!-- some status given by the function using this template -->
+
+<xar:if condition="!empty($status)">
+    #$status#</b>
+</xar:if>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th> #$name_label# </th>
+
+		<th> #$shortdesc_label# </th>
+
+		<th> #$hours_label# </th>
+	</tr>
+
+    <!-- Loop over all the items given by the function. Since $data['items']
+         is preset to an empty array, we don't need to use an if/else
+         structure like we do in user-display.xd -->
+
+    <xar:foreach in="$items" value="$item">
+    <tr align="center"><td>
+
+        <!-- we only show a link if the item link variable is not empty -->
+
+        <xar:if condition="empty($item['link'])">
+            #$item['name']#
+        <xar:else />
+            <a href="#$item['link']#">#$item['name']#</a>
+        </xar:if>
+		 </td>
+		 <td>#$item['shortdesc']#</td>
+		  <td>#$item['hours']#</td>
+   </tr>
+    </xar:foreach>
+
+</table>
+<br />
+
+<!-- add the pager here -->
+#$pager#
+

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions
+    name="example"
+    targetNamespace="http://www.xaraya.com/2002/example.wsdl"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="http://www.xaraya.com/2002/example.wsdl"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd1="http://www.xaraya.com/2002/example.xsd1">
+    <types>
+        <xsd:schema
+            targetNamespace="http://www.xaraya.com/2002/example.xsd1"
+            xmlns="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsd1="http://www.xaraya.com/2002/example.xsd1">
+            <xsd:complexType name="item">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:sequence>
+                            <xsd:element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+                        </xsd:sequence>
+                        <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="NewMessageResponse">   </message>
+    <message name="NewMessageRequest">
+        <part name="numitems" type="xsd:integer"/>
+        <part name="startnum" type="xsd:integer"/>
+    </message>
+    <message name="getRequest">
+        <part name="exid" type="xsd:integer"/>
+    </message>
+    <message name="countitemsRequest">   </message>
+    <message name="countitemsResponse">
+        <part name="numitems" type="xsd:integer"/>
+    </message>
+    <message name="getResponse">
+        <part name="arg1" type="xsd:string"/>
+    </message>
+    <portType name="Example">
+        <operation name="getAll">
+            <input message="tns:NewMessageRequest"/>
+            <output message="tns:NewMessageResponse"/>
+        </operation>
+        <operation name="get">
+            <input message="tns:getRequest"/>
+            <output message="tns:getResponse"/>
+        </operation>
+        <operation name="countitems">
+            <input message="tns:countitemsRequest"/>
+            <output message="tns:countitemsResponse"/>
+        </operation>
+    </portType>
+    <binding name="exampleBinding" type="tns:Example">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getAll">
+            <soap:operation soapAction="capeconnect:example:Example#getAll"/>
+            <input>
+                <soap:body
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="http://www.xaraya.com/2002/example/binding"
+                    use="encoded"/>
+            </input>
+            <output>
+                <soap:body
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="http://www.xaraya.com/2002/example/binding"
+                    use="encoded"/>
+            </output>
+        </operation>
+        <operation name="get">
+            <soap:operation soapAction="capeconnect:example:Example#get"/>
+            <input>
+                <soap:body
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="http://www.xaraya.com/2002/example/binding"
+                    use="encoded"/>
+            </input>
+            <output>
+                <soap:body
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="http://www.xaraya.com/2002/example/binding"
+                    use="encoded"/>
+            </output>
+        </operation>
+        <operation name="countitems">
+            <soap:operation soapAction="capeconnect:example:Example#countitems"/>
+            <input>
+                <soap:body
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="http://www.xaraya.com/2002/example/binding"
+                    use="encoded"/>
+            </input>
+            <output>
+                <soap:body
+                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+                    namespace="http://www.xaraya.com/2002/example/binding"
+                    use="encoded"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="example">
+        <port binding="tns:exampleBinding" name="examplePort">
+            <soap:address location="http://@HOST_NAME@:@XME_HTTP_PORT@/ws.php?type=SOAP"/>
+        </port>
+    </service>
+</definitions>

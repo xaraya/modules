@@ -1,0 +1,47 @@
+<?php
+/**
+ * File: $Id: s.xartables.php 1.7 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
+ * 
+ * Example table definitions function
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage example
+ * @author Example module development team 
+ */
+
+/**
+ * Upgraded to the new security schema by Vassilis Stratigakis
+ * http://www.tequilastarrise.net
+ */
+
+/**
+ * Return example table names to xaraya
+ * 
+ * This function is called internally by the core whenever the module is
+ * loaded.  It is loaded by xarMod__loadDbInfo().
+ * 
+ * @access private
+ * @return array
+ */
+function courses_xartables()
+{ 
+    // Initialise table array
+    $xarTables = array();
+    // Get the name for the example item table.  This is not necessary
+    // but helps in the following statements and keeps them readable
+    $coursesTable = xarDBGetSiteTablePrefix() . '_courses';
+    // Set the table name
+    $xarTables['courses'] = $coursesTable;
+
+	$courses_studentsTable = xarDBGetSiteTablePrefix() . '_courses_students';
+    // Set the second table name
+    $xarTables['courses_students'] = $courses_studentsTable;
+    // Return the table information
+    return $xarTables;
+} 
+
+?>

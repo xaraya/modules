@@ -1,0 +1,130 @@
+<?php
+/**
+ * File: $Id:
+ * 
+ * Standard function to delete an item
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage example
+ * @author Example module development team 
+ */
+/**
+ * delete item
+ * This is a standard function that is called whenever an administrator
+ * wishes to delete a current module item.  Note that this function is
+ * the equivalent of both of the modify() and update() functions above as
+ * it both creates a form and processes its output.  This is fine for
+ * simpler functions, but for more complex operations such as creation and
+ * modification it is generally easier to separate them into separate
+ * functions.  There is no requirement in the Xaraya MDG to do one or the
+ * other, so either or both can be used as seen appropriate by the module
+ * developer
+ * 
+ * @param  $ 'exid' the id of the item to be deleted
+ * @param  $ 'confirm' confirm that this item can be deleted
+ */
+function courses_admin_delete($args)
+{
+    // Admin functions of this type can be called by other modules.  If this
+    // happens then the calling module will be able to pass in arguments to
+    // this function through the $args parameter.  Hence we extract these
+    // arguments *before* we have obtained any form-based input through
+    // xarVarFetch(), so that parameters passed by the modules can also be
+    // checked by a certain validation.
+    extract($args);
+
+    // Get parameters from whatever input we need.  All arguments to this
+    // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
+    // is a degraded function.  xarVarFetch allows the checking of the input
+    // variables as well as setting default values if needed.  Getting vars
+    // from other places such as the environment is not allowed, as that makes
+    // assumptions that will not hold in future versions of Xaraya
+    if (!xarVarFetch('courseid', 'int:1:', $courseid)) return;
+    if (!xarVarFetch('objectid', 'str:1:', $objectid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    // At this stage we check to see if we have been passed $objectid, the
+    // generic item identifier.  This could have been passed in by a hook or
+    // through some other function calling this as part of a larger module, but
+    // if it exists it overrides $exid
+
+    // Note that this module could just use $objectid everywhere to avoid all
+    // of this munging of variables, but then the resultant code is less
+    // descriptive, especially where multiple objects are being used.  The
+    // decision of which of these ways to go is up to the module developer
+    if (!empty($objectid)) {
+        $courseid = $objectid;
+    }
+    // The user API function is called.  This takes the item ID which we
+    // obtained from the input and gets us the information on the appropriate
+    // item.  If the item does not exist we post an appropriate message and
+    // return
+    $item = xarModAPIFunc('courses',
+        'user',
+        'get',
+        array('courseid' => $courseid));
+    // Check for exceptions
+    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
+
+    // Security check - important to do this as early as possible to avoid
+    // potential security holes or just too much wasted processing.  However,
+    // in this case we had to wait until we could obtain the item name to
+    // complete the instance information so this is the first chance we get to
+    // do the check
+    if (!xarSecurityCheck('DeleteCourses', 1, 'Item', "$item[name]:All:$courseid")) {
+        return;
+    }
+    // Check for confirmation.
+    if (empty($confirm)) {
+        // No confirmation yet - display a suitable form to obtain confirmation
+        // of this action from the user
+        // Initialise the $data variable that will hold the data to be used in
+        // the blocklayout template, and get the common menu configuration - it
+        // helps if all of the module pages have a standard menu at the top to
+        // support easy navigation
+        $data = xarModAPIFunc('courses', 'admin', 'menu');
+        // Specify for which item you want confirmation
+        $data['courseid'] = $courseid;
+        // Add some other data you'll want to display in the template
+        $data['confirmtext'] = xarML('Confirm deleting this item ?');
+        $data['itemid'] = xarML('Item ID');
+        $data['namelabel'] = xarML('Course Name');
+        $data['namevalue'] = xarVarPrepForDisplay($item['name']);
+        $data['confirmbutton'] = xarML('Confirm');
+        // Generate a one-time authorisation code for this operation
+        $data['authid'] = xarSecGenAuthKey();
+        // Return the template variables defined in this function
+        return $data;
+    }
+    // If we get here it means that the user has confirmed the action
+    // Confirm authorisation code.  This checks that the form had a valid
+    // authorisation code attached to it.  If it did not then the function will
+    // proceed no further as it is possible that this is an attempt at sending
+    // in false data to the system
+    if (!xarSecConfirmAuthKey()) return;
+    // The API function is called.  Note that the name of the API function and
+    // the name of this function are identical, this helps a lot when
+    // programming more complex modules.  The arguments to the function are
+    // passed in as their own arguments array.
+
+    // The return value of the function is checked here, and if the function
+    // suceeded then an appropriate message is posted.  Note that if the
+    // function did not succeed then the API function should have already
+    // posted a failure message so no action is required
+    if (!xarModAPIFunc('courses',
+            'admin',
+            'delete',
+            array('courseid' => $courseid))) {
+        return; // throw back
+    }
+    // This function generated no output, and so now it is complete we redirect
+    // the user to an appropriate page for them to carry on their work
+    xarResponseRedirect(xarModURL('courses', 'admin', 'view'));
+    // Return
+    return true;
+}
+
+?>

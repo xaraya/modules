@@ -1,0 +1,9 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<tr align="left" valign="middle">
+	<td>
+		<label for="numitems#$blockid#"><xar:mlstring>Number of courses to display</xar:mlstring></label>
+	</td>
+	<td>
+		<input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" tabindex="1" />
+	</td>
+</tr>

@@ -1,0 +1,104 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<!-- common user menu for this module - remove link to the current function -->
+
+<table border="0" width="100%">
+
+    <!-- the variables used in this menu come from example_user_menu() -->
+
+    <tr><th align="center">#$menutitle#</th></tr>
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+        <!-- a link to a particular menu item -->
+
+        <td><a href="#$menulink_view#">#$menulabel_view#</a></td>
+
+        <!-- more menu items come here... -->
+
+        <!-- Note : you can also specify simple links directly with blocklayout
+             template tags : e.g. &xar-modurl-example-user-view; -->
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<!-- the specific template for the current function comes here -->
+
+<!-- some status given by the function using this template -->
+
+<!-- Note : we use an if/else structure here, either to show a status *or*
+     to show the details of a particular item -->
+
+<xar:if condition="!empty($status)">
+    #$status#</b>
+<xar:else />
+<!-- some item variables given by the function using this template -->
+
+<xar:blockgroup name="topnav" id="topnav" />
+<table border="0" width="100%"><tr align="center" valign="middle">
+<tr>
+	<span class="xar-mod-tittle">
+    <xar:if condition="!empty($enrolled)">
+        <th>#$enrolled#</th>
+    <xar:else />
+		<th><a href="#xarModURL('courses', 'user', 'enroll', array('courseid' => $courseid))#"><xar:mlstring>Enroll in</xar:mlstring> #$name_value#</a></th>
+    </xar:if>
+</span>
+		</tr>
+		</table>
+<table border="0" cellspacing="0" cellpadding="5">
+
+		<tr>
+        <td align="right">#$name_label# : </td>
+
+        <!-- display depends on another variable specified by the function -->
+
+        <xar:if condition="!empty($is_bold)">
+            <td><b>#$name_value#</b> </td>
+            <xar:else />
+                <td>#$name_value# </td>
+        </xar:if>
+
+    </tr>
+    <tr>
+        <td align="right">#$number_label# : </td>
+        <td>#$number_value#</td>
+    </tr>
+	<tr>
+        <td align="right">#$hours_label# : </td>
+        <td>#$hours_value#</td>
+    </tr>
+	<tr>
+        <td align="right">#$ceu_label# : </td>
+        <td>#$ceu_value#</td>
+    </tr>
+	<tr>
+        <td align="right">#$startdate_label# : </td>
+        <td>#$startdate_value#</td>
+    </tr>
+    <tr>
+        <td align="right">#$enddate_label# : </td>
+        <td>#$enddate_value#</td>
+    </tr>
+	<tr>
+        <td align="right">#$shortdesc_label# : </td>
+        <td>#$shortdesc_value#</td>
+    </tr>
+	<tr>
+        <td align="right">#$longdesc_label# : </td>
+        <td>#$longdesc_value#</td>
+    </tr>
+
+</table>
+<br />
+
+<!-- add the output from the different display hooks here -->
+<xar:if condition="!empty($hookoutput)">
+<br />
+<xar:foreach in="$hookoutput" key="$hookmodule">
+    #$hookoutput[$hookmodule]#
+</xar:foreach>
+</xar:if>
+
+</xar:if>
+

@@ -1,0 +1,44 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<!-- common admin menu for this module - remove link to the current function -->
+<!-- the variables used in this menu come from example_admin_menu() -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Courses Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2>#$menutitle#</h2><br />
+<div style="margin: auto;">
+
+<!-- the specific template for the current admin function comes here -->
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form method="post" action="&xar-modurl-courses-admin-updateconfig;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<tr><td><label for="bold">#$boldlabel#</label></td>
+<td><input type="checkbox" name="bold" id="bold" value="1" #$boldchecked# /></td></tr>
+
+<tr><td><label for="itemsperpage">#$itemslabel#</label></td>
+<td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsvalue#" /></td></tr>
+
+<tr><td><label for="shorturls">#$shorturlslabel#</label></td>
+<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#" /></td></tr>
+</form>
+
+</table>
+<br />
+</div>
+</div>

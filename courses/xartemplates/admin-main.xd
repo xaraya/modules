@@ -1,0 +1,68 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<!-- This is a standard template for the module overview  -->
+<!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Courses</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <em><xar:mlstring>Courses is the documented Xaraya Courses Module.</xar:mlstring></em>
+            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Gives examples of code commented in plain terms.</xar:mlstring></li>
+                <li><xar:mlstring>Gives examples of templates.</xar:mlstring></li>
+                <li><xar:mlstring>Gives examples of hooks.</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>This module is intended as a reference for other modules to use.  Its output is just a basic non-usable output in many cases.</xar:mlstring>
+
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>new</xar:mlstring></li>
+                <li><xar:mlstring>others</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <ul>
+                <li><xar:mlstring>usermenu -- Allows interface with the "My Account Page"</xar:mlstring></li>
+                <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>And more.. [for module developers]</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Please use this consistent template for your module overview.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>

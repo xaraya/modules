@@ -1,0 +1,66 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<h2>#$uname# <xar:mlstring> Course Information</xar:mlstring></h2>
+<table border="0" width="100%">
+
+    <!-- the variables used in this menu come from example_user_menu() -->
+
+
+    <tr><td>
+        <table border="0" width="100%"><tr align="center" valign="middle">
+
+
+        </tr></table>
+    </td></tr>
+</table>
+<br />
+
+<!-- the specific template for the current function comes here -->
+
+<xar:blockgroup name="topnav" id="topnav" />
+
+<!-- some status given by the function using this template -->
+
+<xar:if condition="!empty($status)">
+    #$status#</b>
+</xar:if>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th><xar:mlstring>Enrolled Courses</xar:mlstring></th>
+	</tr>
+
+    <!-- Loop over all the items given by the function. Since $data['items']
+         is preset to an empty array, we don't need to use an if/else
+         structure like we do in user-display.xd -->
+<xar:if condition="!empty($data1['items'])">
+    <xar:foreach in="$data1['items']" value="$item">
+    <tr align="center"><td>
+
+        <!-- we only show a link if the item link variable is not empty -->
+
+        <xar:if condition="empty($item['link'])">
+            #$item['name']#
+        <xar:else />
+            <a href="#$item['link']#">#$item['name']#</a>
+        </xar:if>
+		 </td>
+
+   </tr>
+    </xar:foreach>
+</xar:if>
+</table>
+<br />
+<hr />
+<form action="#xarModURL('courses', 'user', 'usermenu')#" method="post" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<input type="hidden" name="uid" id="uid" value="#$uid#" />
+<input type="hidden" name="phase" id="phase" value="update" />
+<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$value#" /> -- <label for="itemsperpage"><xar:mlstring>Items Per Page</xar:mlstring></label><br /><br />
+
+<xar:mlstring>Use this to limit the number of items that appear on a page.</xar:mlstring>
+
+<br /><br />
+
+
+<input type="submit" value="Modify Course Information"  tabindex="2" />
+</form>

@@ -1,0 +1,11 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+
+<xar:mlstring>Click on Icon to View your registered courses</xar:mlstring>:<br /><br />
+
+<!-- 
+Here we are just setting up the icon, and the link.  
+Notice the phase variable being set in order to know where to process in our loop.
+-->
+
+<a href="#xarModURL('courses', 'user', 'usermenu', array('phase' => 'form'))#"><img src="#$iconbasic#" alt="" /></a>
+<br /><br />
