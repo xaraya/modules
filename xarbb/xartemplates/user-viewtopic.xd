@@ -578,6 +578,7 @@
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
             <input type="hidden" name="header[modid]" id="header-modid" value="#xarModGetIDFromName('xarbb')#" />
             <input type="hidden" name="header[objectid]" id="header-objectid" value="#$tid#" />
+            <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$fid#" />
             <input type="hidden" name="header[pid]" id="header-pid" value="0" />
             <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid))#" />
             <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#rawurlencode(xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid)))#" />
