@@ -31,8 +31,8 @@ function trackback_userapi_get($args)
     }
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     $trackBackTable = $tables['trackback'];
 
     // TODO: add item type

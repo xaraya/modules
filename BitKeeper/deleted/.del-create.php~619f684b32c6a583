@@ -71,8 +71,8 @@ function trackback_adminapi_create($args)
          }
     }
 
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     $trackBackTable = $tables['trackback'];
 
     // Get a new trackback ID

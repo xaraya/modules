@@ -40,8 +40,8 @@ function trackback_userapi_getitems($args)
     }
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     $trackBackTable = $tables['trackback'];
 
     // Get items

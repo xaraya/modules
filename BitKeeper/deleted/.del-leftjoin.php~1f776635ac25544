@@ -54,7 +54,7 @@ function trackback_userapi_leftjoin($args)
     }
 
     // Table definition
-    $tables = xarDBGetTables();
+    $tables =& xarDBGetTables();
     $trackBackTable = $tables['trackback'];
 
     $leftJoin = array();

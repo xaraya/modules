@@ -10,8 +10,8 @@ function trackback_userapi_getmodules()
     if (!xarSecurityCheck('ViewTrackBack')) return;
 
     // Database information
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     $trackBackTable = $tables['trackback'];
 
     // Get items

@@ -42,8 +42,8 @@ function trackback_adminapi_delete($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $tables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $tables =& xarDBGetTables();
     $trackBackTable = $tables['trackback'];
 
     // Don't bother looking if the item exists here...
