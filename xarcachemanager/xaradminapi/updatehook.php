@@ -88,7 +88,7 @@ function xarcachemanager_adminapi_updatehook($args)
             if (!isset($cacheexpire)) {
                 $cacheexpire = NULL;
             }
-            if ($cacheexpire > 0 ) {
+            if (!empty($cacheexpire)) {
                 $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                               array('starttime' => $cacheexpire,
                                                     'direction' => 'to'));

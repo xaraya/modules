@@ -46,6 +46,8 @@ function xarcachemanager_adminapi_convertseconds($args)
             $allelements = array_pad($elements, -3, 0);
             // calculate the total seconds
             $convertedtime = (($allelements[0] * 3600) + ($allelements[1] * 60) + $allelements[2]);
+            // make sure we're sending back an integer
+            settype($convertedtime, 'integer');
             break;
     }
 

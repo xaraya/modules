@@ -75,7 +75,7 @@ function xarcachemanager_admin_modifyhook($args)
     if ($result) {
         list ($noCache, $pageShared, $userShared, $blockCacheExpireTime) = $result->fields;
     }
-    if ($blockCacheExpireTime > 0 ) {
+    if (!empty($blockCacheExpireTime)) {
         $blockCacheExpireTime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                                array('starttime' => $blockCacheExpireTime,
                                                      'direction' => 'from'));
