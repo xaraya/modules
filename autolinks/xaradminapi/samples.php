@@ -266,6 +266,24 @@ function autolinks_adminapi_samples($args)
                         )
                     )
                 )
+            ),
+            'autolink-type:tid:6' => array(
+                'type_name' => xarML('Glossary Item'),
+                'template_name' => 'glossary',
+                'dynamic_replace' => '1',
+                'type_desc' => xarML('Provides glossary links. The links will refresh the page with the glossary word passed in as an extra GET parameter. The URL is not used - set it to "blank" or "none".'),
+                'links' => array(
+                    'link:lid:10' => array(
+                        'name' => xarML('glossary'),
+                        'keyword' => 'glossary',
+                        'match_re' => '0',
+                        'title' => '',
+                        'url' => 'none',
+                        'comment' => '',
+                        'sample' => 'Link glossary item',
+                        'enabled' => '0'
+                    )
+                )
             )
         )
     );
