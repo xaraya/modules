@@ -353,8 +353,8 @@ function pubsub_adminapi_runjob($args)
     if (!$result) return;
 
     $actionid = $result->fields[0];
-    $userid   = $result->fields[1]);
-    $eventid  = $result->fields[2]);
+    $userid   = $result->fields[1];
+    $eventid  = $result->fields[2];
     $info = xarUserGetVar('email',$userid);
     $name = xarUserGetVar('uname',$userid);
 
