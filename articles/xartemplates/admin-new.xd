@@ -7,15 +7,27 @@
         </div>
         <br />
     </xar:if>
-    <h3><xar:mlstring>Publication Type</xar:mlstring>:</h3>
-    <p>
-    <xar:foreach in="$pubfilters" value="$pubfilter">
-        <xar:if condition="empty($pubfilter['plink'])">
-            <span style="padding: 0px 3px 0px 3px;">#$pubfilter['ptitle']#</span>
-        <xar:else />
-            <span style="padding: 0px 3px 0px 3px;"><a href="#$pubfilter['plink']#">#$pubfilter['ptitle']#</a></span>
-        </xar:if>
-    </xar:foreach></p>
+	<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+		<div id="tabnav">
+			<div class="help" title="#xarML('Click on a tab to display articles from that publication type')#"><xar:mlstring>Publication Type</xar:mlstring> :</div>
+			<xar:foreach in="$pubfilters" value="$pubfilter">
+				<xar:if condition="empty($pubfilter['plink'])">
+					<div>
+						<a href="#xarServerGetCurrentURL()#" title="#$pubfilter['ptitle']#" class="active">
+							#$pubfilter['ptitle']#
+						</a>
+					</div>
+				<xar:else />
+					<div>
+						<a href="#$pubfilter['plink']#" title="#$pubfilter['ptitle']#">
+							#$pubfilter['ptitle']#
+						</a>
+					</div>
+				</xar:if>
+			</xar:foreach>
+		</div>
+	</xar:if>
+	<br />
     <xar:if condition="!empty($ptid)">
 
     <!--
