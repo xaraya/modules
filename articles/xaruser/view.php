@@ -18,7 +18,11 @@ function articles_user_view($args)
     if(!xarVarFetch('ptid',     'id',    $ptid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('itemtype', 'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     // can't use list enum here, because we don't know which sorts might be used
-    if(!xarVarFetch('sort', 'regexp:/^[\w,]*$/', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    // True - but we can provide some form of validation and normalisation.
+    // The original 'regexp:/^[\w,]*$/' lets through *any* non-space character.
+    // This validation will accept a list of comma-separated words, and will lower-case, trim
+    // and strip out non-alphanumeric characters from each word.
+    if(!xarVarFetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('numcols',  'int:0', $numcols,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('authorid', 'id',    $authorid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 // This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
