@@ -1,32 +1,13 @@
 <?php
-#######################################################################################
-#xoapWeather - Process XML feeds from weather.com for display on a website            #
-#			   keeping with in weather.com's standards for cacheing requests and links#
-#Copyright (C) 2003  Brian Paulson <spectre013@spectre013.com>						  #
-#																					  #
-#This program is free software; you can redistribute it and/or 						  #
-#modify it under the terms of the GNU General Public License                          #
-#as published by the Free Software Foundation; either version 2                       #
-#of the License, or (at your option) any later version.                               #
-#																					  #
-#This program is distributed in the hope that it will be useful,                      #
-#but WITHOUT ANY WARRANTY; without even the implied warranty of                       #
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                        #
-#GNU General Public License for more details.                                         # 
-# 																					  #
-#You should have received a copy of the GNU General Public License                    #
-#along with this program; if not, write to the Free Software                          #
-#Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.          #
-#######################################################################################
-
 /**
- *  This file was modified by Roger Raymond for use in Xaraya
+ * Class to grab XML weather feeds from weather.com
+ *
+ * Implements the weather.com SDK and is derived from :
+ * xoapWeather - Copyright (C) 2003 Brian Paulson <spectre013@spectre013.com>						 
+ *
+ * @package weather
+ * @author Roger Raymond <roger@xaraya.com>
  */
-
-
-########################################################
-# VERSION 1.1										   #
-########################################################
 class xoapWeather
 {
     var $xoapKey;
@@ -37,27 +18,19 @@ class xoapWeather
     var $defaultLocation;
     var $defaultUnits;
     var $sitePath;
-    var $ccFile = 'cc.xml';
-    var $forecastFile = 'forecast.xml';
-    var $cacheDir;
     var $forecastDays;
     var $error;
     var $units;
     var $location;
-    //var $Administrator = 'webmaster@chieftain.com';
-    
-    // file name holders
-    var $ccs;
-    var $forecasts;
-    var $ccm;
-    var $forecastm; 
     
     /**
-    *	Perform Setup Actions for class
-    *	@access	Private
-    *	@param	None
-    *	@return	None
-    */
+     * xoapWeather constructor
+     *
+     * Setup up the class with default values
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     */
     function xoapWeather()
 	{
 	    $this->xoapKey = xarModGetVar('weather','license_key');
@@ -66,7 +39,6 @@ class xoapWeather
         $this->defaultUnits = xarModGetVar('weather','units');
         $this->currentCondCache = xarModGetVar('weather','cc_cache_time');
         $this->multiDayforecastCache = xarModGetVar('weather','ext_cache_time');
-        $this->cacheDir = xarModGetVar('weather','cache_dir');
         $this->forecastDays = xarModGetVar('weather','extdays');
         $this->statusCheck();
         $this->setUnits();
@@ -74,11 +46,12 @@ class xoapWeather
     }
 
     /**
-    *   Sets the Zip code that the program should use	
-    *	@access Private
-    *	@param	None
-    *	@return None
-    */
+     * Sets the location to be used for this instance
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     * @param   string $loc The location we're looking for (US Zip or City Name)
+     */
     function setLocation($loc=null)
 	{
 		if(isset($loc)) {
@@ -96,15 +69,19 @@ class xoapWeather
                 $this->location =& $loc;
             }
         }
-        
-        // we need to trigger these after the location is set
-        $this->reinit();
     }
-
+    
+    /**
+     * Sets the units to be used for this instance
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     * @param   string $units (S)tandard or (M)etric
+     */
     function setUnits($units=null) 
     {
         if(isset($units)) {
-            $this->units =& $units;
+            $this->units = strtolower($units);
         } else {
             if(xarUserIsLoggedIn()) {
                 // grab the user's location setting if available
@@ -112,28 +89,21 @@ class xoapWeather
             }
             if(!isset($units) || empty($units)) {
                 // use the admin drefault location
-                $this->units =& $this->defaultUnits;
+                $this->units = $this->defaultUnits;
             } else {
                 // use the user setting
-                $this->units =& $units;
+                $this->units = strtolower($units);
             }
         }
-        $this->reinit();
-    }
-
-
-    function reinit()
-    {
-        $this->setFiles();
-        $this->cacheControl();
     }
 
     /**
-    *   Checks the status of certain Variables that are needed to execute	
-    *	@access Private
-    *	@param	None
-    *	@return None
-    */
+     * Checks to make sure everything needed to run has been set
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  private
+     * @throws  XAR_USER_EXCEPTION
+     */
     function statusCheck()
 	{
 	    if($this->defaultLocation == "") {
@@ -157,194 +127,45 @@ class xoapWeather
                 xarML('Please enter a valid Partner ID or Visit http://www.weather.com/services/xmloap.html and sign-up for thier xoapXML Services.')
                 );
 		}
-	    if($this->cacheDir == "") {
-		    xarErrorSet(
-                XAR_USER_EXCEPTION,
-                xarML('Your Cache Directory is not defined.'),
-                xarML('Please enter a valid Cache Directory and make sure it is writeable by your webserver.')
-                );
-        }
-	    
-        return true;
+	    return true;
     }
 
     /**
-    *	Sets the paths and filenames of for Proper cacheing.	
-    *	@access Private
-    *	@param	None
-    *	@return	None
-    */
-    function setFiles()
+     * Checks for errors in the xml returned from the feed
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  private
+     * @throws  XAR_USER_EXCEPTION
+     * @returns bool false if no errors set
+     */
+    function errorCheck(&$data)
 	{
-	    $sep = DIRECTORY_SEPARATOR;
-        $this->sitePath = $_SERVER['DOCUMENT_ROOT'];
-	    $this->ccs = $this->sitePath.$sep.$this->cacheDir.$sep.$this->location.'s'.$this->ccFile;
-	    $this->forecasts = $this->sitePath.$sep.$this->cacheDir.$sep.$this->location.'s'.$this->forecastFile;
-        $this->ccm = $this->sitePath.$sep.$this->cacheDir.$sep.$this->location.'m'.$this->ccFile;
-	    $this->forecastm = $this->sitePath.$sep.$this->cacheDir.$sep.$this->location.'m'.$this->forecastFile;
-	}
-
-    /**
-    *	Performs all cacheing for the application and file creation	
-    *	@access	Private
-    *	@param	None
-    *	@return None
-    */
-    function cacheControl()
-	{
-	    $this->error = false;
-        // check metric files
-        if(!is_file($this->ccm)) {
-			if($this->error != 1) {
-			    $this->getXMLdata($this->location,'ccm'); 
-			}
-			if($this->error != 1) {
-			    $this->getXMLdata($this->location,'forecastm');
-			}
-		} else {
-		    $ccFiletime = filemtime($this->ccm);
-		    $forecastFiletime = filemtime($this->forecastm);
-		    $cccache = time() - ($this->currentCondCache);
-		    $forecastCache = time() - ($this->multiDayforecastCache);
-	
-		    if($ccFiletime <= $cccache or $this->error == true) {
-			    $this->getXMLdata($this->location,'ccm'); 
-			}
-		
-		    if($forecastFiletime <= $forecastCache or $this->error == True) {
-			    $this->getXMLdata($this->location,'forecastm');
-			}
-		}
-        
-        // get standard files
-        if(!is_file($this->ccs)) {
-			if($this->error != 1) {
-			    $this->getXMLdata($this->location,'ccs'); 
-			}
-			if($this->error != 1) {
-			    $this->getXMLdata($this->location,'forecasts');
-			}
-		} else {
-		    $ccFiletime = filemtime($this->ccs);
-		    $forecastFiletime = filemtime($this->forecasts);
-		    $cccache = time() - ($this->currentCondCache);
-		    $forecastCache = time() - ($this->multiDayforecastCache);
-	
-		    if($ccFiletime <= $cccache or $this->error == true) {
-			    $this->getXMLdata($this->location,'ccs'); 
-			}
-		
-		    if($forecastFiletime <= $forecastCache or $this->error == true) {
-			    $this->getXMLdata($this->location,'forecasts');
-			}
-		}
-        
-	    $this->cleanCache();
-	}	
-
-    /**
-    *   Checks for cache Files that are older then 24 Hours old and removes them	
-    *	@access	Private
-    *	@param None
-    *	@return None
-    */
-    function cleanCache()
-	{
-	    $sep = DIRECTORY_SEPARATOR;
-        $dir = $this->sitePath.$sep.$this->cacheDir;
-	    $open = opendir($dir);
-	    while($file = readdir($open)) {
-		    if($file == "." or $file == "..") {
-			
-			} else {
-			    $Filetime = filemtime($dir.$sep.$file);
-			    $Purge = mktime(date("H")-24,date("i"),0,date("m"),date("d"),date("Y"));
-			    if($Purge > $Filetime) {
-				    unlink($dir.$sep.$file);
-				} 
-			}
-	 	}
-	}
-
-    /**
-    *	Retrives XML data from weather.com's website 	
-    *	@access Public
-    *	@param	$location string Current Zipcode
-    *	@param	$type string Either 'cc' or 'forecast' 
-    *	@return None
-    */
-    function getXMLdata($location,$type)
-    {
-        //print_r($location); die();
-        if($type == "ccs") {
-            $setup = "cc=*";
-            $file = $this->ccs;
-            $units = 's';
-        } elseif($type == 'forecasts') {
-            $setup = "dayf=$this->forecastDays";
-            $file = $this->forecasts;
-            $units = 's';
-        } elseif($type == "ccm") {
-            $setup = "cc=*";
-            $file = $this->ccm;
-            $units = 'm';
-        } elseif($type == "forecastm") {
-            $setup = "dayf=$this->forecastDays";
-            $file = $this->forecastm;
-            $units = 'm';   
-        }
-        
-		$location = urlencode($location);
-        $stream = "http://xoap.weather.com/weather/local/$location?$setup&link=xoap&unit=$units&prod=$this->product&par=$this->xoapPar&key=$this->xoapKey";	
-		$data = file($stream);
-		$this->errorCheck($data);
-		if($this->error['number'] == 2) {
-	        $location = $this->locData($location);
-		} else {
-		    $xmi=join('',$data);
-		    if($xmi != "") {
-			    $open = fopen($file,"w");
-				fputs($open,$xmi,strlen($xmi));
-				fclose($open);
-			}	
-		}
-        
-    }
-
-    /**
-    *	Checks for errors in the XML file and handles them accordingly	
-    *	@access	Public
-    *	@param	$file string filename of the xml file that we are currenly loading 
-    *	@return	$error string True or NULL for detecting errors in the XML Feed
-    */
-    function errorCheck($file)
-	{
-	    /*
-	    if there is as problem with the XML file you request The weather channel returns an errror XML File
-	    here we take the errors and Display.
-	    */
-	    $tree = $this->GetXMLTree($file);
+	    $tree =& $this->GetXMLTree($data);
 	    if(isset($tree['ERROR'])) {
-            $this->error['number'] = $tree['ERROR'][0]['ERR'][0]['ATTRIBUTES']['TYPE'];
-	        $this->error['type'] = $tree['ERROR'][0]['ERR'][0]['VALUE'];
+            $this->error['number'] =& $tree['ERROR'][0]['ERR'][0]['ATTRIBUTES']['TYPE'];
+	        $this->error['type'] =& $tree['ERROR'][0]['ERR'][0]['VALUE'];
 
 	        if($this->error['type'] != "" or $this->error['number'] != ""){			
 		        $this->error['exists'] = true;
+                xarErrorSet(
+                    XAR_USER_EXCEPTION,
+                    $this->error['number'], 
+                    $this->error['type']
+                );
 		    }
-            return true;
-        } else {
-            return false;
         }
+        return false; 
 	}
 
     /**
-    *	Get the Children data from and XML file
-    *	@access	Public
-    *	@param	$vals Array current Nodes in the XML File 
-    *	@param	$i Integer current Increment in the process
-    *	@return	Return Array Children for Node
-    */
-
+     * Get the Children data from and XML file
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  protected
+     * @param   string $vals Array current Nodes in the XML File 
+     * @param   integer $i Integer current Increment in the process
+     * @return  Return Array Children for Node
+     */
     function GetChildren($vals, &$i)
 	{
  	    $children = array();     // Contains node data
@@ -401,21 +222,16 @@ class xoapWeather
     }
 
     /**
-    *	Function will attempt to open the xmlloc as a local file, on fail it will attempt to open it as a web link	
-    *	@access	Public
-    *	@param	string XML File to load
-    *	@return	$tree array of data in the XML file
-    */
-    function GetXMLTree($xmlloc)
+     * Method parses the xml data feed
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  protected
+     * @param   string $data xml data feed
+     * @return  array xml data tree
+     */
+    function &GetXMLTree(&$data)
 	{
-	    if(is_array($xmlloc)) {
-		    $data = implode('', $xmlloc);
-        } else {
-		    if(file_exists($xmlloc)) {
-			    $data = implode('', file($xmlloc));
-            }
-		}
-        if(!isset($data)) { 
+	    if(!isset($data)) { 
             // chances are we have a non-existent location or an error
             xarErrorSet(
                     XAR_USER_EXCEPTION,
@@ -440,20 +256,57 @@ class xoapWeather
 		}
         return $tree;
     }
+    
+    /**
+     * Method grabs the xml feed
+     *
+     * Attempts to grab a local cached weather xml feed from /var/cache/rss
+     * otherwise it grabs it from the weather.com site and caches it 
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  protected
+     * @param   string $type what we're looking for (current condition [cc] or extended forecast [forecast])
+     * @param   string $units (S)tandard or (M)etric
+     * @return  string xml data to parse
+     */
+    function &getFile($type='cc',$units='s') 
+    {
+        $location = urlencode($this->location);
+        if($type == "cc") {
+            $setup = "cc=*";
+            $refresh = $this->currentCondCache;
+        } elseif($type == 'forecast') {
+            $setup = "dayf=$this->forecastDays";
+            $refresh = $this->multiDayforecastCache;
+        }
+        $stream = "http://xoap.weather.com/weather/local/$location?$setup&link=xoap&unit=$units&prod=$this->product&par=$this->xoapPar&key=$this->xoapKey";	
+        $data = xarModAPIFunc('base','user','getfile',
+            array(
+                'url'=>$stream,
+                'cached'=>true,
+                'cachedir'=>'cache/rss',
+                'refresh'=>$refresh,
+                'extension'=>'xml',
+                'archive'=>false  
+            ));
+        $this->errorCheck($data);
+        return $data;
+    }
 
     /**
-    *	Parses forecast XML file 		
-    *	@access Public
-    *	@param	None
-    *	@return	$forecast Array Contains and array with of the data in the forecast XML file
-    */
+     * Get the extended forecast data
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     * @return  array forecast data for the location
+     */
     function &forecastData()
 	{
 	    /*
 	    Here we are taking the Array from the XML file and putting it into an manageble array
 	    */
-	    $xmi = $this->getFile('forecast',$this->units);
-	    $tree = $this->GetXMLTree($xmi);
+	    $xmi =& $this->getFile('forecast',$this->units);
+	    $tree =& $this->GetXMLTree($xmi);
 	    $days = $tree['WEATHER'][0]['DAYF'][0]['DAY'];
 	    $error = $this->errorCheck($xmi);
 
@@ -503,41 +356,19 @@ class xoapWeather
     }
 
     /**
-    *	Gets the Current Conditions data from the XML file and puts it into and aarry	
-    *	@access	Public
-    *	@param	None
-    *	@return	$cc Array Current Conditions Data
-    */
-    function getFile($type='cc',$units='s') 
-    {
-        if($type=='cc') {
-            switch($units) {
-                case 's':
-                    return $this->ccs;
-                    break;
-                case 'm':
-                    return $this->ccm;
-                    break;
-            }
-        } elseif($type=='forecast') {
-            switch($units) {
-                case 's':
-                    return $this->forecasts;
-                    break;
-                case 'm':
-                    return $this->forecastm;
-                    break;
-            }
-        }
-    }
-
+     * Get the current conditions forecast data
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     * @return  array forecast data for the location
+     */
     function &ccData()
 	{
 		/*
 		Grabbing the Current XML data for the Current Condition and the Current Conditions details
 		*/ 
-		$xmi = $this->getFile('cc',$this->units);
-		$tree = $this->GetXMLTree($xmi);
+		$xmi =& $this->getFile('cc',$this->units);
+		$tree =& $this->GetXMLTree($xmi);
 		$error = $this->errorCheck($xmi);
 		$cc['linkOne'] = $this->formatLink($tree['WEATHER'][0]['LNKS'][0]['LINK'][0]['L'][0]['VALUE']);
 		$cc['titleOne'] = $tree['WEATHER'][0]['LNKS'][0]['LINK'][0]['T'][0]['VALUE'];
@@ -573,21 +404,33 @@ class xoapWeather
 		$cc['uvDesc'] = $tree['WEATHER'][0]['CC'][0]['UV'][0]['T'][0]['VALUE'];
 		$cc['dewPoint'] = $tree['WEATHER'][0]['CC'][0]['DEWP'][0]['VALUE'];
 		$cc['error'] = $error;
-		
-	    return $cc;
+		return $cc;
 	}	
     
     /**
-     *  Searches for a location and returns the possible matches
+     * Search for the specified location
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     * @param   string $loc the location to search (US Zip or City)
+     * @return  array location data
      */
     function &locData($loc)
 	{
 	    $stream = "http://xoap.weather.com/search/search?where=".urlencode($loc);
-	    $data = file($stream);
+        $data = xarModAPIFunc('base','user','getfile',
+            array(
+                'url'=>$stream,
+                'cached'=>false,
+                'extension'=>'xml',
+                'archive'=>false  
+            ));
+        $this->errorCheck($data);
         if(!empty($data)) {
-		    $tree = $this->GetXMLTree($data);
+		    $tree =& $this->GetXMLTree($data);
 		}
-	    if(isset($tree['SEARCH'][0]['LOC'])) {
+        
+        if(isset($tree['SEARCH'][0]['LOC'])) {
             $max = count($tree['SEARCH'][0]['LOC']);
             for($i=0; $i<$max; $i++) {
 			    $info[$i]['zip'] = $tree['SEARCH'][0]['LOC'][$i]['ATTRIBUTES']['ID'];
@@ -602,7 +445,11 @@ class xoapWeather
 	}
     
     /**
-     *  This lets us read from the $_GET or $_POST vars and set some stuff
+     * Allows the user to override the location and units variables in the url
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     * @return  bool true
      */
     function setExtraParams()
     {
@@ -618,6 +465,16 @@ class xoapWeather
         return true;
     }
     
+    /**
+     * Fixes for the links provided in the weather.com xml feed
+     *
+     * This makes the links correctly formatted according to the weather.com SDK
+     *
+     * @author  Roger Raymond <roger@xaraya.com>
+     * @access  public
+     * @param   string $link the link to format
+     * @return  string the correctly formatted link
+     */
     function formatLink($link) 
     {
         if(stristr($link,'par=xoap')) {
@@ -630,6 +487,5 @@ class xoapWeather
         }
         return $link;
     }
-    
 }
 ?>

@@ -6,7 +6,6 @@ function weather_admin_updateconfig()
     xarVarFetch('partner_id','str::',$partner_id,null,XARVAR_NOT_REQUIRED);
     xarVarFetch('license_key','str::',$license_key,null,XARVAR_NOT_REQUIRED);
     xarVarFetch('default_location','str::',$default_location,null,XARVAR_NOT_REQUIRED);
-    xarVarFetch('cache_dir','str::',$cache_dir,null,XARVAR_NOT_REQUIRED);
     xarVarFetch('cc_cache_time','int::',$cc_cache_time,null,XARVAR_NOT_REQUIRED);
     xarVarFetch('ext_cache_time','int::',$ext_cache_time,null,XARVAR_NOT_REQUIRED);
     xarVarFetch('units','str::',$units,null,XARVAR_NOT_REQUIRED);
@@ -31,10 +30,6 @@ function weather_admin_updateconfig()
     
     if(isset($extdays)) {
         xarModSetVar('weather','extdays',$extdays);
-    }
-    
-    if(isset($cache_dir)) {
-        xarModSetVar('weather','cache_dir',$cache_dir);
     }
     
     if(isset($cc_cache_time)) {

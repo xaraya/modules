@@ -34,7 +34,7 @@
     </tr>
     <tr>
         <td colspan="2" align="center">
-            <p style="font-size:50%;">As reported at #$wData.observStation#<br />
+            <p style="font-size:90%;">As reported at #$wData.observStation#<br />
             #$wData.lastUpdate#</p>
         </td>
     </tr>

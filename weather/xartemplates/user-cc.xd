@@ -4,10 +4,10 @@
 
 <div id="weather">
 <h1>Current Conditions</h1>
-<table border="1" cellpadding="2" cellspacing="2">
+<table border="0" cellpadding="2" cellspacing="2">
     <tr>
         <td valign"top" align="center">
-            <img src="modules/weather/xarimages/icons/default/64/#$wData.icon#.png" /><br />
+            <img src="modules/weather/xarimages/icons/default/128/#$wData.icon#.png" /><br />
             <strong>#$wData.conditions#</strong>
         </td>
         <td valign"top" align="right">
@@ -18,7 +18,7 @@
     </tr>
     <tr>
         <td colspan="2" align="center">
-            <p style="font-size:50%;">As reported at #$wData.observStation#<br />
+            <p style="font-size:90%;">As reported at #$wData.observStation#<br />
             #$wData.lastUpdate#</p>
         </td>
     </tr>

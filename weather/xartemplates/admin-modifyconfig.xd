@@ -56,17 +56,11 @@
                     </select>
                 </td>
             </tr><tr>
-                <td><xar:mlstring>Cache Directory</xar:mlstring> : </td>
-                <td><input size="50" type="text" name="cache_dir" value="#$cache_dir#" /></td>
-            </tr><tr>
-            </tr><tr>
                 <td><xar:mlstring>Current Conditions Cache Time</xar:mlstring> : </td>
                 <td><input type="text" name="cc_cache_time" value="#$cc_cache_time#" /> in minutes (minimum = 30)</td>
             </tr><tr>
-            </tr><tr>
                 <td><xar:mlstring>Extended Forecast Cache Time</xar:mlstring> : </td>
                 <td><input type="text" name="ext_cache_time" value="#$ext_cache_time#" /> in hours (minimum = 2)</td>
-            </tr>
             </tr><tr>
                 <td><label for="shorturls"><xar:mlstring>Enable Short URLs</xar:mlstring> : </label></td>
                 <td>
