@@ -1,6 +1,3 @@
-<h2>iCal_Parser's benchmarks</h2>
-#$profile#
-
 <h2>TimeZone Data</h2>
 UTC=#$utc# #xarLocaleFormatUTCDate('%Y-%m-%d %I:%M:%S',$utc)#<br />
 ST Offset=#$st_offset# Name=#$st_name# UTC=#$st_utc# #xarLocaleFormatUTCDate('%Y-%m-%d %I:%M:%S',$st_utc)#<br />

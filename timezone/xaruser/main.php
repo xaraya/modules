@@ -5,19 +5,19 @@ function timezone_user_main()
 {
 // some timing for now to see how fast|slow the parser is
 include_once('Benchmark/Timer.php');
-$t =& new Benchmark_Timer;
-$t->start();
+//$t =& new Benchmark_Timer;
+//$t->start();
     $ical =& xarModAPIFunc('icalendar','user','factory','ical_parser');
-$t->setMarker('Class Instantiated');    
+//$t->setMarker('Class Instantiated');    
     xarVarFetch('tz','str::',$tz);
-$t->setMarker('File Var Fetched');    
+//$t->setMarker('File Var Fetched');    
     //$ical->setFile('modules/timezone/zoneinfo/America/Phoenix.ics');
-    $ical->setFile("modules/timezone/zoneinfo/$tz");
-$t->setMarker('File Set');
+    $ical->setFile("modules/timezone/zoneinfo/$tz.ics");
+//$t->setMarker('File Set');
     $ical->parse();
-$t->setMarker('Parsing Complete');
+//$t->setMarker('Parsing Complete');
 
-$t->stop(); 
+//$t->stop(); 
     
     ob_start();
         print_r($ical);
@@ -80,8 +80,8 @@ $t->stop();
         'dt_name'=>$dt_name,
         'st_utc'=>$st_utc,
         'dt_utc'=>$dt_utc,
-        'utc'=>$utc,
-        'profile'=>$t->getOutput()
+        'utc'=>$utc
+  //      'profile'=>$t->getOutput()
     );
     
     return $bl_data;
