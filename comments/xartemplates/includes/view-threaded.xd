@@ -12,7 +12,7 @@
     </tr>
     <xar:loop name="$package['comments']">
         <xar:if condition="(($loop:index + 1) % 2)">
-            <tr valign="center">
+            <tr valign="middle">
                 <td class="xar-norm" style="word-wrap: nowrap;">
                     <table cellspacing="0" cellpadding="0" border="0">
                         <tr>
@@ -52,7 +52,7 @@
                 </td>
             </tr>
         <xar:else />
-            <tr valign="center">
+            <tr valign="middle">
                 <td class="xar-accent">
                     <table cellspacing="0" cellpadding="0" border="0">
                         <tr>
@@ -93,3 +93,4 @@
             </tr>
         </xar:if>
     </xar:loop>
+</table>

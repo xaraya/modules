@@ -7,7 +7,7 @@
             <form action="#$receipt['post_url']#" method="post" style="display: inline;" #$hooks['formaction']# >
                 <table width="100%" border="0" cellspacing="0" cellpadding="2">
                     <tr>
-                        <td width="70">
+                        <td style="width: 70;">
                             <xar:mlstring>
                                 Name
                             </xar:mlstring>
@@ -78,9 +78,9 @@
                         </td>
                         <td>
                             <xar:if condition="isset($package['text'])">
-                                <textarea wrap="virtual" cols="57" rows="10" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
+                                <textarea style="word-wrap: virtual;" cols="57" rows="10" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
                                 <xar:else />
-                                <textarea wrap="virtual" cols="57" rows="10" name="package[text]" id="package-text" tabindex="2"></textarea>
+                                <textarea style="word-wrap: virtual;" cols="57" rows="10" name="package[text]" id="package-text" tabindex="2"></textarea>
                             </xar:if>
                         </td>
                     </tr>
