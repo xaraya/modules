@@ -68,6 +68,7 @@ function xarbb_user_main()
                 $items[] = $cat;
 
         $totalitems = count($items);
+
         for ($i = 0; $i < $totalitems; $i++) {
             $item = $items[$i];
                     // The user API function is called
@@ -154,15 +155,17 @@ function xarbb_user__getforuminfo($args)
 
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
-        // Get the name of the poster.  Does it make sense to split this
-        // to the API, since it is called so often?
-        $getname = xarModAPIFunc('roles',
+        //bug #4070 - all posts, topics deleted by last poster still there
+        if ($forum['ftopics']>0) {
+            // Get the name of the poster.  Does it make sense to split this
+            // to the API, since it is called so often?
+            $getname = xarModAPIFunc('roles',
                                  'user',
                                  'get',
                                  array('uid' => $forum['fposter']));
 
-        $forums[$i]['name'] = $getname['name'];
-
+            $forums[$i]['name'] = $getname['name'];
+        }
         if (!empty($forum['foptions'])){
             $forums[$i]['foptions'] = unserialize($forum['foptions']);
         }
@@ -170,7 +173,7 @@ function xarbb_user__getforuminfo($args)
         // Forum Options
         // Check to see if forum is locked
         if ($forum['fstatus'] == 1){
-            $forums[$i]['timeimage'] = 1;
+        $forums[$i]['timeimage'] = 1;
 
         } else {
             if (xarUserIsLoggedIn()){
