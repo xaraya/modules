@@ -26,6 +26,7 @@ form.xar-xarpages-admin fieldset.formelements {
     padding: 0 2px;
 }
 
+/* FIXME: we don't want hacks here - load an additional stylesheet if necessary */
 /* Hides from IE-mac \*/
 * html form.xar-xarpages-admin fieldset.formelements { height: 1%; }
 form.xar-xarpages-admin fieldset.formelements { display: block; }
