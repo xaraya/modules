@@ -27,7 +27,7 @@
         <td nowrap="nowrap"><xar:mlstring>Pressure: </xar:mlstring></td>
         <td nowrap="nowrap">
             #$wData.barometer##$wData.tempPressure# 
-            <!--- doing it like this appears to solve spacing issues - weird --->
+            <xar:comment> doing it like this appears to solve spacing issues - weird </xar:comment>
             <xar:mlstring>
                 and
             </xar:mlstring> 
