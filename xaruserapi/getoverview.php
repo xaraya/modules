@@ -24,8 +24,35 @@
  * @returns misc
  * @return array of counts and items, or void on failure
  */
-function newsgroups_userapi_getoverview($args)
+function newsgroups_userapi_getoverview($args = array())
 {
+    if (empty($args['group'])) {
+        $message = xarML('Invalid newsgroup');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                    new SystemException($message));
+        return;
+    }
+
+    if (!isset($args['startnum'])) {
+        $args['startnum'] = 0;
+    }
+    if (!isset($args['numitems'])) {
+        $args['numitems'] = xarModGetVar('newsgroups', 'numitems');
+    }
+
+    if (!isset($args['server'])) {
+        $args['server'] = xarModGetVar('newsgroups', 'server');
+    }
+    if (!isset($args['port'])) {
+        $args['port'] = xarModGetVar('newsgroups', 'port');
+    }
+    if (!isset($args['user'])) {
+        $args['user'] = xarModGetVar('newsgroups', 'user');
+    }
+    if (!empty($args['user']) && !isset($args['pass'])) {
+        $args['pass'] = xarModGetVar('newsgroups', 'pass');
+    }
+
     extract($args);
 
 /* if we store server + newsgroups in a table someday
@@ -34,30 +61,35 @@ function newsgroups_userapi_getoverview($args)
     }
 */
 
-    if (empty($group)) {
-        $message = xarML('Invalid newsgroup');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                    new SystemException($message));
-        return;
-    }
-    if (!isset($startnum)) {
-        $startnum = 0;
-    }
-    if (!isset($numitems)) {
-        $numitems = xarModGetVar('newsgroups', 'numitems');
-    }
+// TODO: replace with mod or data cache ?
 
-    if (!isset($server)) {
-        $server = xarModGetVar('newsgroups', 'server');
-    }
-    if (!isset($port)) {
-        $port = xarModGetVar('newsgroups', 'port');
-    }
-    if (!isset($user)) {
-        $user = xarModGetVar('newsgroups', 'user');
-    }
-    if (!empty($user) && !isset($pass)) {
-        $pass = xarModGetVar('newsgroups', 'pass');
+    $groupexpire = xarModGetVar('newsgroups','groupexpire');
+    $varpath = xarCoreGetVarDirPath();
+    $cachedir = realpath($varpath . '/cache');
+    $cachesize = xarModGetVar('newsgroups','cachesize');
+    if (!empty($cachesize) && !empty($groupexpire) &&
+        !empty($cachedir) && is_dir($cachedir . '/newsgroups')) {
+        if (!function_exists('xarCache_getStorage')) {
+            include_once('includes/xarCache.php');
+        }
+        $cachestore = xarCache_getStorage(array('storage'   => 'filesystem',
+                                                'type'      => 'newsgroups',
+                                                'cachedir'  => $cachedir,
+                                                'expire'    => $groupexpire,
+                                                'sizelimit' => $cachesize,
+                                                'logfile'   => ''));
+        if (!empty($cachestore)) {
+            // use serialized arguments as cache code
+            $cachecode = md5(serialize($args));
+            $cachestore->setCode($cachecode);
+            $cachekey = $group;
+            if ($cachestore->isCached($cachekey)) {
+                $data = $cachestore->getCached($cachekey);
+                if (!empty($data)) {
+                    return unserialize($data);
+                }
+            }
+        }
     }
 
     include_once 'modules/newsgroups/xarclass/NNTP.php';
@@ -130,6 +162,10 @@ function newsgroups_userapi_getoverview($args)
     }
 
     $data['items'] = $messages;
+
+    if (!empty($cachestore) && !empty($cachekey)) {
+        $cachestore->setCached($cachekey,serialize($data));
+    }
 
     return $data;
 }

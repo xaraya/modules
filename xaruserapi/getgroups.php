@@ -15,17 +15,41 @@
 /**
  * Get available newsgroups from a news server
  * 
- * @param $args['sid'] server id (future), or
- * @param $args['server'] news server name
- * @param $args['port'] news server port
- * @param $args['wildmat'] wildcard match for newsgroups
- * @param $args['user'] optional username for authentication
- * @param $args['pass'] optional password for authentication
+ * @param $args['sid'] int server id (future), or
+ * @param $args['server'] string news server name
+ * @param $args['port'] int news server port
+ * @param $args['wildmat'] string wildcard match for newsgroups
+ * @param $args['user'] string optional username for authentication
+ * @param $args['pass'] string optional password for authentication
+ * @param $args['nocache'] bool optional flag to skip cached info
  * @returns misc
  * @return array of newsgroups, or void on failure
  */
-function newsgroups_userapi_getgroups($args)
+function newsgroups_userapi_getgroups($args = array())
 {
+    if (empty($args['nocache'])) {
+        $grouplist = xarModGetVar('newsgroups','grouplist');
+        if (!empty($grouplist)) {
+            return unserialize($grouplist);
+        }
+    }
+
+    if (!isset($args['server'])) {
+        $args['server'] = xarModGetVar('newsgroups', 'server');
+    }
+    if (!isset($args['port'])) {
+        $args['port'] = xarModGetVar('newsgroups', 'port');
+    }
+    if (!isset($args['wildmat'])) {
+        $args['wildmat'] = xarModGetVar('newsgroups', 'wildmat');
+    }
+    if (!isset($args['user'])) {
+        $args['user'] = xarModGetVar('newsgroups', 'user');
+    }
+    if (!empty($args['user']) && !isset($args['pass'])) {
+        $args['pass'] = xarModGetVar('newsgroups', 'pass');
+    }
+
     extract($args);
 
 /* if we store server + newsgroups in a table someday
@@ -39,23 +63,35 @@ function newsgroups_userapi_getgroups($args)
     }
 */
 
-// TODO: pre-load complete list of newsgroups and let admin select
-//       instead of retrieving the list each time here
+// TODO: replace with mod or data cache ?
 
-    if (!isset($server)) {
-        $server = xarModGetVar('newsgroups', 'server');
-    }
-    if (!isset($port)) {
-        $port = xarModGetVar('newsgroups', 'port');
-    }
-    if (!isset($wildmat)) {
-        $wildmat = xarModGetVar('newsgroups', 'wildmat');
-    }
-    if (!isset($user)) {
-        $user = xarModGetVar('newsgroups', 'user');
-    }
-    if (!empty($user) && !isset($pass)) {
-        $pass = xarModGetVar('newsgroups', 'pass');
+    $listexpire = xarModGetVar('newsgroups','listexpire');
+    $varpath = xarCoreGetVarDirPath();
+    $cachedir = realpath($varpath . '/cache');
+    $cachesize = xarModGetVar('newsgroups','cachesize');
+    if (!empty($cachesize) && !empty($listexpire) &&
+        !empty($cachedir) && is_dir($cachedir . '/newsgroups')) {
+        if (!function_exists('xarCache_getStorage')) {
+            include_once('includes/xarCache.php');
+        }
+        $cachestore = xarCache_getStorage(array('storage'   => 'filesystem',
+                                                'type'      => 'newsgroups',
+                                                'cachedir'  => $cachedir,
+                                                'expire'    => $listexpire,
+                                                'sizelimit' => $cachesize,
+                                                'logfile'   => ''));
+        if (!empty($cachestore)) {
+            // use serialized arguments as cache code
+            $cachecode = md5(serialize($args));
+            $cachestore->setCode($cachecode);
+            $cachekey = 'grouplist';
+            if ($cachestore->isCached($cachekey)) {
+                $data = $cachestore->getCached($cachekey);
+                if (!empty($data)) {
+                    return unserialize($data);
+                }
+            }
+        }
     }
 
     include_once 'modules/newsgroups/xarclass/NNTP.php';
@@ -108,6 +144,10 @@ function newsgroups_userapi_getgroups($args)
     $newsgroups->quit();
 
     ksort($grouplist);
+
+    if (!empty($cachestore) && !empty($cachekey)) {
+        $cachestore->setCached($cachekey,serialize($grouplist));
+    }
 
     // Return the grouplist
     return $grouplist;

@@ -72,6 +72,43 @@
                     </select>
                 </span>
             </div>
+<xar:comment> replace with xarCacheManager modifyconfig hook for mod / data caching ? </xar:comment>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 30%; text-align: right;">
+                    <label for="listexpire"><xar:mlstring>Refresh List of Newsgroups</xar:mlstring></label>
+                </span>
+                <span style="float: right; width: 68%; text-align: left;">
+                    <input type="text" name="listexpire" id="listexpire" value="#xarModGetVar('newsgroups', 'listexpire')#" size="5" maxlength="10" />
+                    <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 30%; text-align: right;">
+                    <label for="groupexpire"><xar:mlstring>Refresh Newsgroup Messages</xar:mlstring></label>
+                </span>
+                <span style="float: right; width: 68%; text-align: left;">
+                    <input type="text" name="groupexpire" id="groupexpire" value="#xarModGetVar('newsgroups', 'groupexpire')#" size="5" maxlength="10" />
+                    <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 30%; text-align: right;">
+                    <label for="messageexpire"><xar:mlstring>Cache Individual Messages</xar:mlstring></label>
+                </span>
+                <span style="float: right; width: 68%; text-align: left;">
+                    <input type="text" name="messageexpire" id="messageexpire" value="#xarModGetVar('newsgroups', 'messageexpire')#" size="5" maxlength="10" />
+                    <xar:mlstring>seconds (leave empty to disable caching)</xar:mlstring>
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 30%; text-align: right;">
+                    <label for="cachesize"><xar:mlstring>Cache Size</xar:mlstring></label>
+                </span>
+                <span style="float: right; width: 68%; text-align: left;">
+                    <input type="text" name="cachesize" id="cachesize" value="#xarModGetVar('newsgroups', 'cachesize')#" size="8" maxlength="10" />
+                    <xar:mlstring>bytes (leave empty to disable caching)</xar:mlstring>
+                </span>
+            </div>
             <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 30%; text-align: right;">
                     <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>

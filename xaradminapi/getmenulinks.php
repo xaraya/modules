@@ -9,17 +9,19 @@
  */
 function newsgroups_adminapi_getmenulinks()
 {
+    $menulinks = array();
 
     if (xarSecurityCheck('AdminNewsGroups', 0)) {
+        $menulinks[] = Array('url'   => xarModURL('newsgroups',
+                                                  'admin',
+                                                  'selectgroups'),
+                              'title' => xarML('Select the newsgroups you want to display'),
+                              'label' => xarML('Select Newsgroups'));
         $menulinks[] = Array('url'   => xarModURL('newsgroups',
                                                   'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the configuration for the newsgroups'),
                               'label' => xarML('Modify Config'));
-    }
-
-    if (empty($menulinks)){
-        $menulinks = '';
     }
 
     return $menulinks;

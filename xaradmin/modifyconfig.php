@@ -47,6 +47,10 @@ function newsgroups_admin_modifyconfig()
             if (!xarVarFetch('user','isset',$user,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pass','isset',$pass,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('sortby','enum:thread:article', $sortby, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('listexpire','int',$listexpire,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('groupexpire','int',$groupexpire,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('messageexpire','int',$messageexpire,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('cachesize','int',$cachesize,'',XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -77,6 +81,19 @@ function newsgroups_admin_modifyconfig()
                 xarModSetVar('newsgroups','SupportShortURLs',0);
             } else {
                 xarModSetVar('newsgroups','SupportShortURLs',1);
+            }
+
+        // TODO: replace with xarCacheManager updateconfig hook for mod / data caching ?
+            xarModSetVar('newsgroups', 'cachesize', $cachesize);
+            xarModSetVar('newsgroups', 'listexpire', $listexpire);
+            xarModSetVar('newsgroups', 'groupexpire', $groupexpire);
+            xarModSetVar('newsgroups', 'messageexpire', $messageexpire);
+            if (!empty($listexpire) || !empty($groupexpire) || !empty($messageexpire)) {
+                $varpath = xarCoreGetVarDirPath();
+                $cachedir = realpath($varpath . '/cache');
+                if (!empty($cachedir) && !is_dir($cachedir . '/newsgroups')) {
+                    @mkdir($cachedir . '/newsgroups');
+                }
             }
 
             xarModCallHooks('module','updateconfig','newsgroups',

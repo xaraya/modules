@@ -26,8 +26,11 @@ function newsgroups_init()
     xarModSetVar('newsgroups', 'numitems', 50);
     xarModSetVar('newsgroups', 'sortby', '');
     xarModSetVar('newsgroups', 'grouplist', '');
+
     xarModSetVar('newsgroups', 'listexpire', 3600);
     xarModSetVar('newsgroups', 'groupexpire', 900);
+    xarModSetVar('newsgroups', 'messageexpire', '');
+    xarModSetVar('newsgroups', 'cachesize', 500000);
 
     xarModSetVar('newsgroups', 'wildmat', 'xaraya.*,ddf.*');
     xarModSetVar('newsgroups', 'SupportShortURLs', 0);
@@ -64,6 +67,10 @@ function newsgroups_upgrade($oldversion)
 
         case '1.0.1':
             // Code to upgrade from version 1.0.1 goes here
+            xarModSetVar('newsgroups', 'listexpire', 3600);
+            xarModSetVar('newsgroups', 'groupexpire', 900);
+            xarModSetVar('newsgroups', 'messageexpire', '');
+            xarModSetVar('newsgroups', 'cachesize', 500000);
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                                array('modName'   => 'newsgroups',
                                      'blockType' => 'latest'))) return;
