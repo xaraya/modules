@@ -25,6 +25,7 @@ function articles_user_search($args)
      // (to be) replaced by "this text" and +text kind of queries
          $bool,
          $sort,
+         $by,
          $author) = xarVarCleanFromInput('startnum',
                                         'cids',
                                         'andcids',
@@ -34,6 +35,7 @@ function articles_user_search($args)
                                         'q',
                                         'bool',
                                         'sort',
+                                        'by',
                                         'author');
 
 // TODO: could we need this someday ?
@@ -73,7 +75,6 @@ function articles_user_search($args)
             $ptids[] = $pubid;
         }
     }
-
     $isdefault = 0;
     if (!empty($ptid)) {
         $ptids = array($ptid);
@@ -330,24 +331,8 @@ function articles_user_search($args)
             return xarTplModule('articles','user','search',$data);
         }
 
-        $data['status'] = 'Same player shoot again... ;-)';
+        $data['status'] = xarML('No articles found matching this search');
     }
-
-    if (!xarModAPILoad('categories', 'user')) return;
-    if (!xarModAPILoad('categories', 'visual')) return;
-
-/*
-    $dump = '';
-    $dump .= xarML('Filter') . ' : <select name="ptids[]" multiple><option value=""> ' . xarML('Publication');
-    foreach ($pubtypes as $pubid => $pubtype) {
-        if ($pubid == $ptid) {
-            $dump .= '<option value="' . $pubid . '" selected="selected"> - ' . xarVarPrepForDisplay($pubtype['descr']) . '</option>';
-        } else {
-            $dump .= '<option value="' . $pubid . '"> - ' . xarVarPrepForDisplay($pubtype['descr']) . '</option>';
-        }
-    }
-    $dump .= '</select>';
-*/
 
     $data['publications'] = array();
     foreach ($pubtypes as $pubid => $pubtype) {
@@ -361,29 +346,36 @@ function articles_user_search($args)
                                         'pubchecked' => $checked);
     }
 
-    $catarray = array();
-    foreach ($ptids as $curptid) {
-        // get root categories for this publication type
-        $catlinks = xarModAPIFunc('articles',
-                                 'user',
-                                 'getrootcats',
-                                 array('ptid' => $curptid));
-        foreach ($catlinks as $cat) {
-            $catarray[$cat['catid']] = $cat['cattitle'];
-        }
-    }
-
     $data['categories'] = array();
-    foreach ($catarray as $cid => $title) {
-        $select = xarModAPIFunc('categories',
-                                'visual',
-                                'makeselect',
-                                Array('cid' => $cid,
-                                      'return_itself' => false,
-                                      'values' => &$seencid,
-                                      'multiple' => 1));
-        $data['categories'][] = array('cattitle' => $title,
+    if (!empty($by) && $by == 'cat') {
+        $catarray = array();
+        foreach ($ptids as $curptid) {
+            // get root categories for this publication type
+            $catlinks = xarModAPIFunc('articles',
+                                     'user',
+                                     'getrootcats',
+                                     array('ptid' => $curptid));
+            foreach ($catlinks as $cat) {
+                $catarray[$cat['catid']] = $cat['cattitle'];
+            }
+        }
+
+        foreach ($catarray as $cid => $title) {
+            $select = xarModAPIFunc('categories',
+                                    'visual',
+                                    'makeselect',
+                                    Array('cid' => $cid,
+                                          'return_itself' => true,
+                                          'select_itself' => true,
+                                          'values' => &$seencid,
+                                          'multiple' => 1));
+            $data['categories'][] = array('cattitle' => $title,
                                       'catselect' => $select);
+        }
+        $data['searchurl'] = xarModURL('search','user','main');
+    } else {
+        $data['searchurl'] = xarModURL('search','user','main',
+                                       array('by' => 'cat'));
     }
 
     return xarTplModule('articles','user','search',$data);
