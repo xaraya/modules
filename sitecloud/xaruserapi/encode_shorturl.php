@@ -29,6 +29,7 @@ function sitecloud_userapi_encode_shorturl($args)
         // Note : if your main function calls some other function by default,
         // you should set the path to directly to that other function
     // add some other module arguments as standard URL parameters
+    }    
     if (!empty($path)) {
         if (isset($startnum)) {
             $path .= $join . 'startnum=' . $startnum;
@@ -45,10 +46,12 @@ function sitecloud_userapi_encode_shorturl($args)
             } 
             $path .= $join . 'catid=' . $catid;
             $join = '&amp;';
-        } 
+        }
+         
     } 
-
+    
     return $path;
+    
 } 
 
 ?>

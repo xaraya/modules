@@ -21,7 +21,7 @@ function sitecloud_userapi_getitemlinks($args)
         if (!isset($item)) return;
         $itemlinks[$itemid] = array('url' => xarModURL('sitecloud', 'user', 'view',
                 array('id' => $itemid)),
-            'title' => xarML('Display Link),
+            'title' => xarML('Display Link'),
             'label' => xarVarPrepForDisplay($item['title']));
     } 
     return $itemlinks;
