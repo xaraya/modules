@@ -351,35 +351,17 @@ function xproject_admin_modifyconfig()
 	
 	
 	$data['dateoptions'] = $dateoptions;
-	$data['dateoptions'][xarModGetVar('xproject', 'dateformat')]['selected'] = "selected=selected";
-    $data['dateformat'] = xarVarPrepForDisplay(xarMLByKey('Date Format'));
-    $data['dateformatvalue'] = xarModGetVar('xproject', 'dateformat');
-	$data['maxdonedropdown'] = array();
-	for($x=1;$x<=9;$x++) {
-		if($x == xarModGetVar('xproject', 'maxdone')) $selected = "selected=true";
-		else $selected = "";
-		$data['maxdonedropdown'][] = array('id' => $x, 'name' => $x, 'selected' => $selected);
-	}
-    $data['maxdone'] = xarVarPrepForDisplay(xarMLByKey('Max Completed Shown'));
-    $data['refreshmain'] = xarVarPrepForDisplay(xarMLByKey('Refresh view (in seconds)'));
-    $data['refreshmainvalue'] = xarModGetVar('xproject', 'refreshmain');
+    $data['dateformat'] = xarModGetVar('xproject', 'dateformat');
 
-    $data['showextraasterisk'] = xarVarPrepForDisplay(xarMLByKey('Show extra asterisk'));
-    $data['showextraasteriskcheck'] = xarModGetVar('xproject','showextraasterisk') ? 'checked' : '';
-    $data['showlinenumbers'] = xarVarPrepForDisplay(xarMLByKey('Show line numbers'));
-    $data['showlinenumberscheck'] = xarModGetVar('xproject','showlinenumbers') ? 'checked' : '';
-    $data['showpercent'] = xarVarPrepForDisplay(xarMLByKey('Show percentage in table'));
-    $data['showpercentcheck'] = xarModGetVar('xproject','showpercent') ? 'checked' : '';
-    $data['showpriority'] = xarVarPrepForDisplay(xarMLByKey('Show priority in table'));
-    $data['showprioritycheck'] = xarModGetVar('xproject','showpriority') ? 'checked' : '';
-    $data['todoheading'] = xarVarPrepForDisplay(xarMLByKey('Displayed header text'));
-    $data['todoheadingvalue'] = xarModGetVar('xproject', 'todoheading');
-	for($x=1;$x<=9;$x++) {
-		if($x == xarModGetVar('xproject', 'itemsperpage')) $selected = "selected=true";
-		else $selected = "";
-		$data['itemsperpagedropdown'][] = array('id' => $x, 'name' => $x, 'selected' => $selected);
-	}
-    $data['itemsperpage'] = xarVarPrepForDisplay(xarMLByKey('Tasks per page'));
+    $data['maxdone'] = xarModGetVar('xproject', 'maxdone');
+    $data['refreshmain'] = xarModGetVar('xproject', 'refreshmain');
+
+    $data['showextraasterisk'] = xarModGetVar('xproject','showextraasterisk');
+    $data['showlinenumbers'] = xarModGetVar('xproject','showlinenumbers');
+    $data['showpercent'] = xarModGetVar('xproject','showpercent');
+    $data['showpriority'] = xarModGetVar('xproject','showpriority');
+    $data['todoheading'] = xarModGetVar('xproject', 'todoheading');
+    $data['itemsperpage'] = xarModGetVar('xproject', 'itemsperpage');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'example',

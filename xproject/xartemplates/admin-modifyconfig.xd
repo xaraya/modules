@@ -2,7 +2,7 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 <div align="center">
-<table border="1" cellspacing="0" cellpadding="2">
+<table border="0" cellspacing="0" cellpadding="2">
 <!--
     // Start form - note the use of xarModURL() to create the recipient URL of
     // this form.  All URLs should be generated through xarModURL() to ensure
@@ -16,56 +16,93 @@
 -->
     <input type="hidden" name="authid" value="#$authid#" />
 
-<tr><td>#$dateformat#</td>
-<td><select name="dateformat">
+<tr><td><label for="dateformat"><xar:mlstring>Date Format</xar:mlstring></label></td>
+<td><select name="dateformat" id="dateformat">
 	<xar:loop name="$dateoptions">
-      	<option name="dateformat" value="#$id#" #$selected#>#$name#</option>
+		<xar:if condition="$id eq $dateformat">
+      	<option value="#$id#" selected="selected">#$name#</option>
+		<xar:else/>
+      	<option value="#$id#">#$name#</option>
+		</xar:if>
 	</xar:loop>
 	</select>
 </td></tr>
 
-<tr><td>#$maxdone#</td>
-<td><select name="maxdone">
-	<xar:loop name="$maxdonedropdown">
-      	<option name="maxdone" value="#$id#" #$selected#>#$name#</option>
-	</xar:loop>
+<tr><td><label for="maxdone"><xar:mlstring>Max Completed Shown</xar:mlstring></label></td>
+<td><select name="maxdone" id="maxdone">
+	<xar:for start="$i = 1" test="$i <= 9" iter="$i++">
+		<xar:if condition="$i eq $maxdone">
+      	<option value="#$i#" selected="selected">#$i#</option>
+		<xar:else/>
+      	<option value="#$i#">#$i#</option>
+		</xar:if>
+	</xar:for>
 	</select>
 </td></tr>
 
-<tr><td>#$refreshmain#</td>
-<td><input type="text" name="refreshmain" size=3 maxlength=3 value="#$refreshmainvalue#"></td></tr>
+<tr><td><label for="refreshmain"><xar:mlstring>Refresh view (in seconds)</xar:mlstring></label></td>
+<td><input type="text" name="refreshmain" id="refreshmain" size="3" maxlength="3" value="#$refreshmain#"></td></tr>
 
-<tr><td>#$showextraasterisk#</td>
-<td><input type="checkbox" name="showextraasterisk" value="1" #$showextraasteriskcheck#></td></tr>
+<tr><td><label for="showextraasterisk"><xar:mlstring>Show extra asterisk</xar:mlstring></label></td>
+<td>
+<xar:if condition="$showextraasterisk eq 1">
+<input type="checkbox" name="showextraasterisk" id="showextraasterisk" value="1" checked="checked"></td></tr>
+<xar:else/>
+<input type="checkbox" name="showextraasterisk" id="showextraasterisk" value="1">
+</xar:if>
+</td>
+</tr>
+<tr><td><label for="showlinenumbers"><xar:mlstring>Show line numbers</xar:mlstring></label></td>
+<td>
+<xar:if condition="$showlinenumbers eq 1">
+<input type="checkbox" name="showlinenumbers" id="showlinenumbers" value="1" checked="checked"></td></tr>
+<xar:else/>
+<input type="checkbox" name="showlinenumbers" id="showlinenumbers" value="1">
+</xar:if>
+</td>
+</tr>
 
-<tr><td>#$showlinenumbers#</td>
-<td><input type="checkbox" name="showlinenumbers" value="1" #$showlinenumberscheck#></td></tr>
+<tr>
+<td><label for="showpercent"><xar:mlstring>Show percentage in table</xar:mlstring></label></td>
+<td>
+<xar:if condition="$showpercent eq 1">
+<input type="checkbox" name="showpercent" id="showpercent" value="1" checked="checked"></td></tr>
+<xar:else/>
+<input type="checkbox" name="showpercent" id="showpercent" value="1">
+</xar:if>
+</td>
+</tr>
 
-<tr><td>#$showpercent#</td>
-<td><input type="checkbox" name="showpercent" value="1" #$showpercentcheck#></td></tr>
+<tr>
+<td><label for="showpriority"><xar:mlstring>Show priority in table</xar:mlstring></label></td>
+<td>
+<xar:if condition="$showpriority eq 1">
+<input type="checkbox" name="showpriority" id="showpriority" value="1" checked="checked"></td></tr>
+<xar:else/>
+<input type="checkbox" name="showpriority" id="showpriority" value="1">
+</xar:if>
+</td>
+</tr>
 
-<tr><td>#$showpriority#</td>
-<td><input type="checkbox" name="showpriority" value="1" #$showprioritycheck#></td></tr>
+<tr><td><label for="todoheading"><xar:mlstring>Displayed header text</xar:mlstring></label></td>
+<td><input type="text" name="todoheading" id="todoheading" size="50" maxlength="255" value="#$todoheading#"></td></tr>
 
-<tr><td>#$todoheading#</td>
-<td><input type="text" name="todoheading" size=50 maxlength=255 value="#$todoheadingvalue#"></td></tr>
-
-<tr><td>#$itemsperpage#</td>
-<td><select name="itemsperpage">
-	<xar:loop name="$itemsperpagedropdown">
-      	<option name="itemsperpage" value="#$id#" #$selected#>#$name#</option>
-	</xar:loop>
+<tr><td><label for="itemsperpage"><xar:mlstring>Tasks per page</xar:mlstring></label></td>
+<td><select name="itemsperpage" id="itemsperpage">
+	<xar:for start="$i = 1" test="$i <= 9" iter="$i++">
+		<xar:if condition="$i eq $itemsperpage">
+      	<option value="#$i#" selected="selected">#$i#</option>
+		<xar:else/>
+      	<option value="#$i#">#$i#</option>
+		</xar:if>
+	</xar:for>
 	</select>
 </td></tr>
-
-<tr><td colspan="2">
-#$hooks#
-</td></tr>
-
-<tr><td colspan="2" align="center">
+<tr><td colspan="2" align="center"><br />
     <input type="submit" value="#$updatebutton#"></td></tr>
 </form>
 
 </table>
 </div>
 </div>
+<div class="xar-mod-foot">#$hooks#</div>

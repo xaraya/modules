@@ -27,19 +27,7 @@
     </td>
     <td class="xar-norm" align="center">#$project_numtasks#
     </td>
-        <td class="xar-norm" align="center">[ 
-           <xar:if condition="empty($project_editurl)">
-               #$project_edittitle#
-           <xar:else />
-                   <a href="#$project_editurl#">#$project_edittitle#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($project_deleteurl)">
-               #$project_deletetitle#
-           <xar:else />
-                   <a href="#$project_deleteurl#">#$project_deletetitle#</a>
-           </xar:if> ]
-        </td>
+        <td class="xar-norm" align="center">[&nbsp;<xar:if condition="empty($project_editurl)">#$project_edittitle#<xar:else /><a href="#$project_editurl#">#$project_edittitle#</a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($project_deleteurl)">#$project_deletetitle#<xar:else /><a href="#$project_deleteurl#">#$project_deletetitle#</a></xar:if>&nbsp;]</td>
   </tr>
     </xar:loop>
 
