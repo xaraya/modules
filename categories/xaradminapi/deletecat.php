@@ -10,16 +10,13 @@ function categories_adminapi_deletecat($args)
 {
     // Get arguments from argument array
     extract($args);
-
     // Argument check
     if (!isset($cid)) {
-        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'create', 'categories');
+        $msg = xarML('Invalid Parameter Count', join(', ', $invalid), 'admin', 'deletecat', 'categories');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
     // Obtain current information on the reference category
-    if (!xarModAPILoad('categories', 'user')) return;
     $args = Array(
                   'cid' => $cid,
                   'getparents' => false,
@@ -27,29 +24,24 @@ function categories_adminapi_deletecat($args)
                   'return_itself' => true
                  );
     $cat = xarModAPIFunc('categories', 'user', 'getcatinfo', $args);
-
     if ($cat == false) {
-        $msg = xarML('Category does not exist', join(', ', $invalid), 'admin', 'create', 'categories');
+        $msg = xarML('Category does not exist', join(', ', $invalid), 'admin', 'deletecat', 'categories');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
     // These are set to be used later on
     $right = $cat['right'];
     $left = $cat['left'];
     $deslocation_inside = $right - $left + 1;
-
     $categories = xarModAPIFunc('categories',
-                               'user',
-                               'getcat',
-                               $args);
-
+                                'user',
+                                'getcat',
+                                $args);
     if ($categories == false || count($categories) == 0) {
-        $msg = xarML('Category does not exist', join(', ', $invalid), 'admin', 'create', 'categories');
+        $msg = xarML('Category does not exist', join(', ', $invalid), 'admin', 'deletecat', 'categories');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
     // Useful Variables set...
 
     // Security check
@@ -113,16 +105,11 @@ function categories_adminapi_deletecat($args)
                  ";
     $result = $dbconn->Execute($SQLquery);
     if (!$result) return;
-
-
     // Call delete hooks
     $args['module'] = 'categories';
     $args['itemtype'] = 0;
     $args['itemid'] = $cid;
     xarModCallHooks('item', 'delete', $cid, $args);
-
-
     return true;
 }
-
 ?>

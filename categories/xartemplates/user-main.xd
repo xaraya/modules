@@ -1,4 +1,8 @@
-<h2><xar:mlstring>Categories test in progress</xar:mlstring></h2>
+<h2>
+	<xar:mlstring>
+		Browse Categories
+	</xar:mlstring>
+</h2>
 
 <xar:if condition="!empty($parents) and count($parents) gt 0">
   <a href="&xar-modurl-categories-user-main;"><xar:mlstring>Browse</xar:mlstring></a>
@@ -58,4 +62,3 @@
     </ul>
   </xar:foreach>
 </xar:if>
-
