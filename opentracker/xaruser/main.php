@@ -39,8 +39,8 @@ function opentracker_user_main($args)
 	$limit = 10;
 	$clientID = 1;
     
-	list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+	$dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
 	
 	// Prevent caching
 	header('Expires: Sat, 22 Apr 1978 02:19:00 GMT');

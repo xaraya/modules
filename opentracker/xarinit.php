@@ -20,8 +20,8 @@
     }
 
 	@set_time_limit(0);
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
     xarDBLoadTableMaintenanceAPI();
 	$databaseType = xarDBGetType();
     
@@ -286,8 +286,8 @@ function opentracker_upgrade($oldversion)
 function opentracker_delete()
 { 
 	session_unregister('_phpOpenTracker_Container');
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Load the Table Maintainance API
     xarDBLoadTableMaintenanceAPI();

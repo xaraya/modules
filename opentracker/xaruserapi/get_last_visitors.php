@@ -29,8 +29,8 @@ function opentracker_userapi_get_last_visitors($args) {
     if (!isset($num_users) || !is_numeric($num_users))
     	$num_users = 10;
     
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
     
     $query = 	'SELECT DISTINCT(AL.xar_uid) FROM '.$xartable['accesslog'].
     			' AL, '.$xartable['roles'].' R'.
