@@ -26,10 +26,14 @@ function bkview_user_browseview($args)
     $repo= new bkRepo($item['repopath']);
     
     $dirlist=$repo->bkDirList($dir);
+    asort($dirlist);
+   
     $data['dirlist']=array();
     $dirs=array();
     $counter=1;
+    $maxlen = 1;
     while (list(,$name) = each($dirlist)) {
+        if(strlen($name) > $maxlen) $maxlen = strlen($name);
         if ($name!="..") {
             $dirs[$counter]['dirname']=$name;
             $dirs[$counter]['newpath']=$dir.$name;
@@ -40,6 +44,7 @@ function bkview_user_browseview($args)
         }
         $counter++;
     }
+    $data['maxlen'] = $maxlen;
     $filelist=$repo->bkFileList($dir);
     $data['files']=array();
     $files=array();

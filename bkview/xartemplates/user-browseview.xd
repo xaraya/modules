@@ -1,5 +1,21 @@
 <xar:template file="user-menu" type="module"/>
 
+<div class="xar-mod-head">
+    <span><xar:mlstring>Folders</xar:mlstring></span>
+</div>
+
+<div id="bkdirlist">
+  <xar:loop name="$dirlist">
+	<div style="float:left; min-width: #$maxlen#em;">
+      <img src="#$imgloc#/dir.gif" alt="directory"/>
+      <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">#$loop:item['dirname']#</a>
+    </div>
+  </xar:loop>
+</div>
+
+<br style="clear:both;" />
+<br />
+
 <table class="csets">
   <tr>
   	<th>&nbsp;</th>
@@ -10,20 +26,6 @@
   	<th><xar:mlstring>Author</xar:mlstring></th>
   	<th align="left" width="100%"><xar:mlstring>Comments</xar:mlstring></th>
   </tr>
-
-  <xar:loop name="$dirlist">
-	<tr class="dirline">
-        <td><img src="#$imgloc#/dir.gif" alt="diectory" /></td>
-        <td >
-            <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">#$loop:item['dirname']#</a>
-        </td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-    </tr>
-  </xar:loop>
 
   <xar:loop name="$files">
     <tr class="csets">
