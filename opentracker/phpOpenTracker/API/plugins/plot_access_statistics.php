@@ -115,7 +115,7 @@ class phpOpenTracker_API_plot_access_statistics extends phpOpenTracker_API_Plugi
 
     for ($start = $parameters['start']; $start < $parameters['end']; $start += $steps[$parameters['interval']]) {
       if ($parameters['interval'] == 'month') {
-        $steps['month'] = $steps['day'] * date('t', $_start);
+        $steps['month'] = $steps['day'] * date('t', $start);
       }
 
       $end = $start + $steps[$parameters['interval']] - 1;
