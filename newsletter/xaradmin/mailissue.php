@@ -61,7 +61,8 @@ function newsletter_admin_mailissue()
     $templateVarArray = array(
         'menu' => $menu,
         'publication' => $publication,
-        'issue' => $issue);
+        'issue' => $issue,
+        'bulkemail' => xarModGetVar('newsletter', 'bulkemail'));
 
     // Set issue and story date published fields
     $result = xarModAPIFunc('newsletter',
@@ -197,8 +198,7 @@ function newsletter__single_email($args)
                 $userData['mailerror'] = true;
                 $userData['nameurl'] = '';
                 $userData['emailurl'] = '';
-                $issueCounts['errors']++;
-                // show error for this user
+                $issueCounts['errors']++; // show error for this user
             } else {
                 $userData['mailerror'] = false;
 
@@ -368,6 +368,7 @@ function newsletter__bulk_email($args)
 
     // Initialize arrays
     $userData = array();
+    $recipients = array();
     $htmlrecipients = array();
     $textrecipients = array();
 
@@ -486,17 +487,21 @@ function newsletter__bulk_email($args)
         }
     }
 
+    // Set recipient to owner email and publication name
+    $recipients[$publication['ownerEmail']] = $publication['title'] . ' Newsletter';
+
     // Mail the html issue to the subscription base
     if (!empty($htmlrecipients)) {
         $result = xarModAPIFunc('newsletter',
                                 'admin',
                                 'mailissue',
-                                array('publication'  => $publication,
-                                      'issue'        => $issue,
-                                      'recipients'   => $htmlrecipients,
-                                      'issueText'    => $issueText,
-                                      'issueHTML'    => $issueHTML,
-                                      'type'         => 'html'));
+                                array('publication'   => $publication,
+                                      'issue'         => $issue,
+                                      'recipients'    => $recipients,
+                                      'bccrecipients' => $htmlrecipients,
+                                      'issueText'     => $issueText,
+                                      'issueHTML'     => $issueHTML,
+                                      'type'          => 'html'));
     }
 
     // Mail the text issue to the subscription base
@@ -504,12 +509,13 @@ function newsletter__bulk_email($args)
         $result = xarModAPIFunc('newsletter',
                                 'admin',
                                 'mailissue',
-                                array('publication'  => $publication,
-                                      'issue'        => $issue,
-                                      'recipients'   => $textrecipients,
-                                      'issueText'    => $issueText,
-                                      'issueHTML'    => $issueHTML,
-                                      'type'         => 'text'));
+                                array('publication'   => $publication,
+                                      'issue'         => $issue,
+                                      'recipients'    => $recipients,
+                                      'bccrecipients' => $textrecipients,
+                                      'issueText'     => $issueText,
+                                      'issueHTML'     => $issueHTML,
+                                      'type'          => 'text'));
     }
 
     // Set issue counts

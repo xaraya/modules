@@ -21,6 +21,7 @@
  * @param $args['publication'] publication of the issue to mail
  * @param $args['issue'] issue to mail 
  * @param $args['recipients'] recipients that are getting issue 
+ * @param $args['bccrecipients'] bccrecipients that are getting issue 
  * @param $args['issueText'] text version of the issue 
  * @param $args['issueHTML'] HTML version of the issue 
  * @param $args['type'] version of the issue to send ('html' or 'text')
@@ -42,7 +43,7 @@ function newsletter_adminapi_mailissue($args)
     if (!isset($issue)) {
         $invalid[] = 'issue';
     }
-    if (!isset($recipients)) {
+    if (!isset($recipients) && !isset($bccrecipients)) {
         $invalid[] = 'recipients';
     }
     if (!isset($issueText)) {
@@ -58,6 +59,16 @@ function newsletter_adminapi_mailissue($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
+
+    // Check arguments
+    if (!isset($recipients)) {
+        $recipients = array();
+    }
+
+    if (!isset($bccrecipients)) {
+        $bccrecipients = array();
+    }
+    
 
     // Set the subject/title of the email
     switch($publication['subject']) {
@@ -78,14 +89,15 @@ function newsletter_adminapi_mailissue($args)
     }
 
     // Set args for sendmail
-    $mailargs =  array('recipients'   => $recipients,
-                       'name'         => $publication['title'],
-                       'subject'      => $subject,
-                       'message'      => $issueText,
-                       'htmlmessage'  => $issueHTML,
-                       'from'         => $publication['ownerEmail'],
-                       'fromname'     => $publication['ownerName'],
-                       'usetemplates' => false);
+    $mailargs =  array('recipients'    => $recipients,
+                       'bccrecipients' => $bccrecipients,
+                       'name'          => $publication['title'],
+                       'subject'       => $subject,
+                       'message'       => $issueText,
+                       'htmlmessage'   => $issueHTML,
+                       'from'          => $publication['ownerEmail'],
+                       'fromname'      => $publication['ownerName'],
+                       'usetemplates'  => false);
 
     // Check type of email to send
     if ($type == 'html') {

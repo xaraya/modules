@@ -8,24 +8,39 @@
 <div class="xar-mod-body">
     <div class="contentBorder">
         <div style="text-align: left;margin: auto;">        
-            <b><xar:mlstring>Module Configuration</xar:mlstring></b>
             <br />
             <form action="#xarModURL('newsletter', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" >
                 <input type="hidden" name="authid" id="authid" value="#$authid#" />
                 <table border="0" cellpadding="2">
                     <tr>
-                        <td>
-                            <xar:mlstring>Enable Bulk Email:</xar:mlstring>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="bulkemail" id="bulkemail" value="1" #$bulkemail# tabindex="1"/>
+                        <td colspan="2" align="left">
+                            <b><xar:mlstring>Bulk Email</xar:mlstring></b>
+                            <br />
+                            <xar:mlstring>Bulk email will send one email and bcc (blind carbon copy) all subscribers.</xar:mlstring>
+                            <br />
+                            <xar:mlstring>The email From address will be the publisher's email address.</xar:mlstring>
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td width="20%">
+                            <xar:mlstring>Enable Bulk Email:</xar:mlstring>
+                        </td>
+                        <td align="left">
+                            <input type="checkbox" name="bulkemail" id="bulkemail" value="1" #$bulkemail# tabindex="1"/>
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left">
+                            <b><xar:mlstring>Short URL Support</xar:mlstring></b>
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="20%">
                             <xar:mlstring>Enable Short URL Support:</xar:mlstring>
                         </td>
-                        <td>
+                        <td align="left">
                             <input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# tabindex="2"/>
                         </td>
                     </tr>

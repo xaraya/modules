@@ -22,60 +22,66 @@
                     <b>#$issueCounts['total']#</b>
                 </td>
             </tr>
-            <tr>
-                <td width="20%">
-                    <xar:mlstring>Total Errors:</xar:mlstring>
-                </td>
-                <td>
-                    <b>#$issueCounts['errors']#</b>
-                </td>
-            </tr>
+            <xar:if condition="!$bulkemail">
+                <tr>
+                    <td width="20%">
+                        <xar:mlstring>Total Errors:</xar:mlstring>
+                    </td>
+                    <td>
+                        <b>#$issueCounts['errors']#</b>
+                    </td>
+                </tr>
+            </xar:if>
         </table>
         <br />
         <xar:if condition="!empty($subscriptions)">
-        <table width="100%" border="0" cellspacing="0" cellpadding="4">
-            <tr>
-                <td align="left" valign="top" colspan="4">
-                    <xar:mlstring>Sent to:</xar:mlstring>
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td><b><xar:mlstring>User Name</xar:mlstring></b></td>
-                <td><b><xar:mlstring>Email</xar:mlstring></b></td>
-                <td><b><xar:mlstring>HTML/Text</xar:mlstring></b></td>
-                <td><b><xar:mlstring>Error</xar:mlstring></b></td>
-            </tr>
-            <xar:loop name="$subscriptions">
+            <table width="100%" border="0" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td>
-                        <xar:if condition="empty($loop:item['nameurl'])">
-                            #$loop:item['name']#
-                        <xar:else />
-                            <a href="#$loop:item['nameurl']#">#$loop:item['name']#</a>
-                        </xar:if>
+                    <td align="left" valign="top" colspan="4">
+                        <xar:mlstring>Sent to:</xar:mlstring>
+                        <br />
                     </td>
-                    <td>
-                        <xar:if condition="empty($loop:item['emailurl'])">
-                            #$loop:item['email']#
-                        <xar:else />
-                            <a href="#$loop:item['emailurl']#">#$loop:item['email']#</a>
-                        </xar:if>
-                    </td>
-                    </td>
-                    <xar:if condition="$loop:item['htmlmail'] eq true">
-                        <td>HTML</td>
-                    <xar:else />
-                        <td>Text</td>
-                    </xar:if>
-                    <xar:if condition="$loop:item['mailerror'] eq true">
-                        <td><b>ERROR</b></td>
-                    <xar:else />
-                        <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><b><xar:mlstring>User Name</xar:mlstring></b></td>
+                    <td><b><xar:mlstring>Email</xar:mlstring></b></td>
+                    <td><b><xar:mlstring>HTML/Text</xar:mlstring></b></td>
+                    <xar:if condition="!$bulkemail">
+                        <td><b><xar:mlstring>Error</xar:mlstring></b></td>
                     </xar:if>
                 </tr>
-            </xar:loop>
-        </table>
+                <xar:loop name="$subscriptions">
+                    <tr>
+                        <td>
+                            <xar:if condition="empty($loop:item['nameurl'])">
+                                #$loop:item['name']#
+                            <xar:else />
+                                <a href="#$loop:item['nameurl']#">#$loop:item['name']#</a>
+                            </xar:if>
+                        </td>
+                        <td>
+                            <xar:if condition="empty($loop:item['emailurl'])">
+                                #$loop:item['email']#
+                            <xar:else />
+                                <a href="#$loop:item['emailurl']#">#$loop:item['email']#</a>
+                            </xar:if>
+                        </td>
+                        </td>
+                        <xar:if condition="$loop:item['htmlmail'] eq true">
+                            <td>HTML</td>
+                        <xar:else />
+                            <td>Text</td>
+                        </xar:if>
+                        <xar:if condition="!$bulkemail">
+                            <xar:if condition="$loop:item['mailerror'] eq true">
+                                <td><b>ERROR</b></td>
+                            <xar:else />
+                                <td>&nbsp;</td>
+                            </xar:if>
+                        </xar:if>
+                    </tr>
+                </xar:loop>
+            </table>
         <xar:else />
             <table width="100%" border="0" cellspacing="0" cellpadding="4">
                 <tr>
