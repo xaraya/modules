@@ -1,20 +1,29 @@
 <?php
-
 /**
- * get random article(s)
+ * @package modules
+ * @license GPL { @link http://www.gnu.org/licenses/gpl.html }
+ * @link http://www.xaraya.com
+ * @subpackage articles
+ * @author Michel Dalle <mikespub@xaraya.com>
+ 
+ */
+/**
+ * Get Random Article(s)
+ *
  * Note : the following parameters are all optional
  *
- * @param $args['numitems'] number of articles to get
- * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
- * @param $args['status'] array of requested status(es) for the articles
- * @param $args['cids'] array of category IDs for which to get articles (OR/AND)
+ * @param int    $args['numitems'] number of articles to get
+ * @param int    $args['ptid'] publication type ID (for news, sections, reviews, ...)
+ * @param array  $args['status'] array of requested status(es) for the articles
+ * @param array  $args['cids'] array of category IDs for which to get articles (OR/AND)
  *                      (for all categories don´t set it)
- * @param $args['andcids'] true means AND-ing categories listed in cids
- * @param $args['fields'] array with all the fields to return per article
+ * @param bool   $args['andcids'] true means AND-ing categories listed in cids
+ * @param array  $args['fields'] array with all the fields to return per article
  *                        Default list is : 'aid','title','summary','authorid',
  *                        'pubdate','pubtypeid','notes','status','body'
  *                        Optional fields : 'cids','author','counter','rating','dynamicdata'
- * @param $args['language'] language/locale (if not using multi-sites, categories etc.)
+ * @param string $args['language'] language/locale (if not using multi-sites, categories etc.)
+ * @param bool   $args['unique'] return unique results
  * @returns array
  * @return array of articles, or false on failure
  */
