@@ -8,7 +8,7 @@
 <xar:foreach in="$months" value="$month">
     <li>
     <xar:if condition="empty($month['mlink'])">
-        #$month['month']# (#$month['mcount']#)</b>
+        <b>#$month['month']# (#$month['mcount']#)</b>
         <xar:else />
             <a href="#$month['mlink']#">#$month['month']#</a> (#$month['mcount']#)
     </xar:if>
@@ -16,32 +16,36 @@
 </xar:foreach>
 </ul>
 
+<br />
 <xar:if condition="count($articles) gt 0">
-<div class="xar-norm-outline">
+<table border="0" cellpadding="3" width="100%">
+<tr>
     <xar:foreach in="$catlist" value="$cat">
        <xar:if condition="empty($cat['link'])">
-			<span style="align: center; font-weight: strong;">#$cat['name']#</span>
+       <td align="center">#$cat['name']#</td>
        <xar:else />
-			<span style="align: center; font-weight: strong;"><a href="#$cat['link']#">#$cat['name']#</a></span>
+           <td align="center"><a href="#$cat['link']#">#$cat['name']#</a></td>
        </xar:if>
     </xar:foreach>
-</div>
+</tr>
 <!-- TODO: make sure xar-alt is the right class to use here -->
 <xar:set name="$i">1</xar:set>
 <xar:foreach in="$articles" value="$article">
 <xar:if condition="$i++ and $i % 2 eq 0">
-    <div class="xar-accent">
+    <tr class="xar-accent">
 <xar:else />
-    <div class="xar-normal">
+    <tr>
 </xar:if>
     <xar:foreach in="$article['cats']" value="$cat">
-		<span style="align: center;">#$cat['list']#</span>
+       <td>#$cat['list']#</td>
     </xar:foreach>
-		<span style="align: center;"><a href="#$article['link']#">#$article['title']#</a></span>
+    <td><a href="#$article['link']#">#$article['title']#</a></td>
     <xar:if condition="!empty($showdate)">
-        <span style="align: center;">#$article['date']#</span>
+        <td>#$article['date']#</td>
     </xar:if>
+</tr>
 </xar:foreach>
+</table>
 </xar:if>
 
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
@@ -58,5 +62,5 @@
     </xar:if>
 </div>
 </xar:if>
-</div>
-</div>
+
+
