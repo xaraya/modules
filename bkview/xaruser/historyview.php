@@ -44,6 +44,9 @@ function bkview_user_historyview($args)
         $histlist[$counter]['author']=$author;
         $histlist[$counter]['rev']=$filerev;
         $histlist[$counter]['comments']=$comments;
+        $histlist[$counter]['repoid'] = $repoid;
+        $histlist[$counter]['file'] = $file;
+        $histlist[$counter]['csetrev'] = $the_file->bkChangeSet($filerev);
         // This gets the tag for this revision if any
         //bk changes -t -r`bk r2c -r1.2 rfc0028.xml` -d':TAG:'
         $histlist[$counter]['tag']=$the_file->bkTag($filerev);

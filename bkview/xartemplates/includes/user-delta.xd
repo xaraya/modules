@@ -1,0 +1,43 @@
+<xar:comment>
+    Anywhere where we need to display a delta on a file, this template
+    should be used. It expects the following variables:
+    $tag    : the tag if the delta was in a cset which was tagged
+    $repoid : id of the repo this delta was in
+    $file   : file on which this delta applies
+    $author : author of the file
+    $rev    : delta revision number
+    $age    : age of the delta
+    $csetrev: corresponding changeset for the delta
+</xar:comment>
+
+<div class="xar-norm-outline" style="margin-bottom: 5pt; padding-left: 2pt;">
+    <xar:set name="csetclass">'xar-norm'</xar:set>
+    <xar:set name="csettag">''</xar:set>
+    <xar:if condition="!empty($tag)">
+        <xar:set name="csetclass">'xar-accent'</xar:set>
+        <xar:set name="csettag">#$tag#</xar:set>
+    </xar:if>
+    <div class="#$csetclass#">
+        <span><xar:mlstring>Delta</xar:mlstring></span>
+        <span>
+          <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;rev=#$rev#">
+            #$rev#
+          </a> #$csettag#
+        </span>
+        <span><xar:mlstring>created by</xar:mlstring></span>
+        <span>
+          <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$author#">
+            #$author#
+          </a>
+        </span>
+        <span>#$age#</span>
+        <span><xar:mlstring>ago</xar:mlstring></span>
+      </div>
+      
+      <div class="comments">#$comments#</div>
+      
+      <div style="text-align: right; padding-right: 5pt; font-size: smaller">
+        <a href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$csetrev#" onclick="return loadContent(this.href);">
+        <xar:mlstring>Corresponding cset</xar:mlstring></a>
+     </div>
+</div>
