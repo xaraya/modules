@@ -15,6 +15,11 @@ function xarcachemanager_adminapi_updatehook($args)
 {
     extract($args);
     
+    if (!file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.touch')) {
+        // caching is not enabled and xarCache will not be available
+        return;
+    }
+    
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'object ID', 'admin', 'updatehook', 'xarcachemanager');

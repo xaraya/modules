@@ -19,7 +19,7 @@ function xarcachemanager_admin_modifyconfig()
     
     $systemVarDir = xarCoreGetVarDirPath();
     
-    if(file_exists($systemVarDir. '/cache/output/cache.touch')) {
+    if (file_exists($systemVarDir . '/cache/output/cache.touch')) {
         $data['CachingEnabled'] = 1;
     } else {
         $data['CachingEnabled'] = 0;
