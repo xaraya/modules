@@ -32,9 +32,11 @@ function xarcachemanager_admin_flushcache($args)
 
         $handle = opendir($outputcachedir);
         while ($file = readdir($handle)) {
-            if ($file != '.' && $file != '..' && $file !='cache.touch') {
+            if ($file[0] != '.' && (strstr($file, '.php') !== false)) {
                 $ckey = substr($file, 0, (strrpos($file, '-')));
-                $data['cachekeys'][$ckey] = array('ckey' => $ckey);
+                if (!empty($ckey)) {
+                    $data['cachekeys'][$ckey] = array('ckey' => $ckey);
+                }
             }
         }
         closedir($handle);
