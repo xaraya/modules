@@ -62,20 +62,15 @@ function uploads_userapi_file_push( $args )
     }
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    do {
-        $pageBuffer[] = ob_get_contents();
-    } while (@ob_end_clean())
+    $list = '';
 
-    $buffer = array_reverse($pageBuffer);
-    $pageBuffer = $buffer;
-    unset($buffer);
+    $pageBuffer = xarModAPIFunc('uploads', 'user', 'flush_page_buffer');
 
-    // Start buffering for the file
-    ob_start();
-
-    $finished = FALSE;
 
     if ($storeType & _UPLOADS_STORE_FILESYSTEM || ($storeType == _UPLOADS_STORE_DB_ENTRY)) {
+
+        // Start buffering for the file
+        ob_start();
 
         $fp = @fopen($fileLocation, 'rb');
         if(is_resource($fp))   {
@@ -105,9 +100,12 @@ function uploads_userapi_file_push( $args )
 
         // TODO: evaluate registering shutdown functions to take care of
         //       ending Xaraya in a safe manner
-        $finished = TRUE;
+        exit();
 
     } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
+
+        // Start buffering for the file
+        ob_start();
 
         // FIXME: <rabbitt> if we happen to be pushing a really big file, this
         //        method of grabbing it from the database and pushing will consume
@@ -129,29 +127,8 @@ function uploads_userapi_file_push( $args )
 
         // TODO: evaluate registering shutdown functions to take care of
         //       ending Xaraya in a safe manner
-        $finished = TRUE;
+        exit();
     }
-
-    send out an
-    if ($finished) {
-        // Let any hooked modules know that we've just pushed a file
-        // the hitcount module in particular needs to know to save the fact
-        // that we just pushed a file and not display the count
-        xarVarSetCached('Hooks.hitcount','save', 1)
-
-        xarModCallHooks('item', 'display', $fileId,
-                         array('module'    => 'uploads', 'itemtype'  => 0,
-                               'returnurl' => xarModURL('uploads', 'user', 'download', array('fileId' => $fileId))),
-                         'uploads');
-        // File has been pushed to the client, now shut down.
-        exit()
-    }
-
-    // Otherwise, there was some error - so let's bring the state
-    // back to where it was and display any 'trapped' error
-
-    // make sure we're starting with a fresh and clean buffer space
-    while(@ob_end_clean());
 
     // rebuffer the old page data
     for ($i = 0, $total = count($pageBuffer); $i < $total; $i++) {
