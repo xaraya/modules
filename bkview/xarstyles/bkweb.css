@@ -29,37 +29,34 @@
 }
 
 .bkdiffsep { 
- font-family: monospace;
+  font-family: monospace;
   padding: 3pt;
 }
 
-.diffadded {
+.precontainer {
+    border: thin solid gray;
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+    padding: 4pt;
+    overflow: auto;
+}
+
+.diffs {
   font-family: monospace;
-  color: blue;
   background-color: inherit;
   white-space: pre;
+  line-height: 2ex;
 }
 
-.diffremoved {
-	font-family: monospace;
-	color: gray;
-    background-color: inherit;
-	white-space: pre;
-}
-
-.diffnochange {
-	font-family: monospace;
-	color: black;
-    background-color: inherit;
-	white-space: pre;
-}
-
+.added { color: blue;}
+.removed { color: gray;}
+.nochange { color: black;}
 
 /* Annotated view of a file */
 .bkannotate {
   font-family: monospace;
   white-space: pre;
-  font-size: smaller;
+  line-height: 2ex;
 }
 
 

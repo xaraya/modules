@@ -44,11 +44,11 @@ function bkview_user_diffview($args)
     while (list($nr,$line) = each($diffs)) {
         if (strlen($line) >0) {
             if ($line[0]=='+') 
-                $difflines[$counter]['difflineclass']='diffadded';
+                $difflines[$counter]['difflineclass']='diffs added';
             elseif ($line[0]=='-') 
-                $difflines[$counter]['difflineclass']='diffremoved';
+                $difflines[$counter]['difflineclass']='diffs removed';
             else 
-                $difflines[$counter]['difflineclass']='diffnochange';
+                $difflines[$counter]['difflineclass']='diffs nochange';
             $difflines[$counter]['diffline']= htmlspecialchars("$line\n");
         }
         $counter++;
