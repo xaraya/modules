@@ -255,8 +255,9 @@ function mailbag_adminapi_mailbag()
                     $table = $xartable['mailbag_errors'];
                     $nextid = $dbconn->GenId($xartable['mailbag_errors']);
                     $sql = "INSERT INTO $table (xar_msgid, xar_subject, xar_from, xar_from_uid, xar_to, xar_to_uid, xar_msg_time, xar_msg_text, xar_header, xar_errorcode, xar_error)
-                                        VALUES ($nextid, '" . xarVarPrepForStore($subject) . "', '".xarVarPrepForStore($emailfrom)."', '$from_userid', '".xarVarPrepForStore($to)."', '$to_userid', '$time', '".xarVarPrepForStore($msg['Text'])."', '".xarVarPrepForStore($msg['Header'])."', $mailbagerrorcode, '".xarVarPrepForStore($mailerror)."')";
-                    $res = $dbconn->Execute($sql);
+                            VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    $bindvars = array($nextid, $subject, $emailfrom, $from_userid, $to, $to_userid, $time, $msg['Text'],$msg['Header'].$mailbagerrorcode,$mailerror);
+                    $res = $dbconn->Execute($sql,$bindvars);
                   */  
                 }
                 
