@@ -56,7 +56,13 @@ function hookbridge_admin_config( $args )
         $tplNameExtension = $itvar.'hook';
         
         $data['hookenabled']      = xarModGetVar('hookbridge', 'hookenabled_'.$itvar );
-        $data['hookfunctions']    = unserialize(xarModGetVar('hookbridge', 'hookfunctions_'.$itvar ));
+        $hookfunctionsStr         = xarModGetVar('hookbridge', 'hookfunctions_'.$itvar );
+        if( isset($hookfunctionStr) && !empty($hookfunctionStr) )
+        {
+            $data['hookfunctions']    = xarModGetVar('hookbridge', 'hookfunctions_'.$itvar );
+        } else {
+            $data['hookfunctions']    = array();
+        }
 
         $data['available_hook_functions'] = hookbridge_adminpriv_get_available_hook_functions();
 
