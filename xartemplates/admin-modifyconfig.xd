@@ -80,26 +80,12 @@
         <form action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="tab" id="tab" value="#$tab#" />
-        <h4>1. Add XarTinyMCE to your Templates</h4>
-        <p style="margin-left:20px;">
-            <xar:mlstring>Add the specific template tag code below to the head section (after the javascript tag) of your page templates (default.xt or any other page template). You can be more specific and only add to a module or other template where you want the wysiwyg:</xar:mlstring>
-        </p>
-        <pre>
-            &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
-                &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
-            &lt;/xar:if&gt;
-        </pre>
-        <p style="margin-left:20px;">
-            <xar:mlstring><strong>NOTE:</strong> You can override the insert template by copying <code>modules/tinymce/xartemplates/
-            includes/tinymce_insert.xd</code> and putting it in <code>themes/yourtheme/modules/tinymce/includes/tinymce_insert.xt</code> with the new .xt extension.
-            You can then override or add additional settings. See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring>
-        </p>
 
-        <h4><xar:mlstring>2. Set HTML tags in HTML Module</xar:mlstring></h4>
+        <h4><xar:mlstring>1. Set HTML tags in HTML Module</xar:mlstring></h4>
         <p style="margin-left:20px;">
             <xar:mlstring>Go to the HTML module and <a href="index.php?module=html&amp;type=admin&amp;func=set" rel="ext">set HTML tags allowed</a> like like code, pre, span, image, h1, and so on so they will be rendered in your WYSIWYG editing.</xar:mlstring>
         </p>
-        <h4><xar:mlstring>3. Set XarTinyMCE as default editor</xar:mlstring></h4>
+        <h4><xar:mlstring>2. Set XarTinyMCE as default editor</xar:mlstring></h4>
         <p style="margin-left:20px;"><xar:mlstring>Set XarTinyMCE as default WYSIWYG editor: </xar:mlstring>
             <select name="defaulteditor" id="defaulteditor" size="1">
             <xar:if condition="$defaulteditor eq 'tinymce'">
@@ -114,12 +100,71 @@
         <p style="margin-left:20px;">
             <xar:mlstring>(You can also set installed editors in <a href="index.php?module=base&amp;type=admin&amp;func=modifyconfig&amp;tab=other" rel="ext">Base Module - Modify Config - Other Tab</a>)</xar:mlstring>
          </p>
+       <h4>3. Set the Mode of Operation: All or Specific</h4>
+        <p style="margin-left:20px;">
+            <xar:mlstring>You can choose either of the following ways to add a WYSIWYG editor:</xar:mlstring>
+        <ol style="list-style-type:lower-alpha; ">
+            <li>
+                <xar:mlstring>Choose the <strong>All Text Areas Mode</strong> and add the specific template tag code below to the head section (after the javascript tag) of your page templates (default.xt or any other page template). All textareas contained or included in the template where you have the XarTinymce tags are converted to WYSIWYG. You can be more specific and only add to a module or other template where you want the wysiwyg:</xar:mlstring>
+            </li>
+            <pre>
+            &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
+                &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
+            &lt;/xar:if&gt;
+           </pre>
+        <li><xar:mlstring>Choose the Mode of <strong>Special Labelled Only</strong> in the configuration options. 
+            Then add a  <strong>xarTinyMCE GUI Dynamic Data Property field</strong> to your Article pubtypes or xarPages Page Type, or anywhere else you need a WYSIWYG input area.
+            You <strong>do not</strong> need to add any other tags  to your templates.<br /><br />
+            This DD Property automatically marks the div or textarea of the field with the attribute mce_editable="true" and this acts as a marker for the WYSIWYG conversion. You can also do this manually by adding the attribute to any textarea of div.
+            Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
+            If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
+          <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>
+        </li>
+        </ol>
+       <div style="clear: both; width: 98%; padding-top: 10px; padding-bottom:10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#xarML('Select default replacement mode for TinyMCE')#">
+                    <label for="tinymode"><xar:mlstring>Choose your Default Action Mode</xar:mlstring></label>
+                </span>
+            </span>
+            <span style="float:right; width: 68%; text-align: left;">
+                <select name="tinymode" id="tinymode" size="1">
+                <xar:if condition="$tinymode eq 'specific_textareas'">
+                    <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
+                    <option value="specific_textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+                <xar:else />
+                   <option value="textareas" selected="selected"><xar:mlstring>All Text areas</xar:mlstring></option>
+                   <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+                </xar:if>
+                <xar:comment> Use the following instead of above when all 3 modes are supported
+                <xar:if condition="$tinymode eq 'specific_textareas'">
+                    <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
+                    <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
+                    <option value="specific_textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+                <xar:elseif condition="$tinymode eq 'exact'" />
+                    <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
+                    <option value="exact" selected="selected"><xar:mlstring>Specific named areas</xar:mlstring></option>
+                    <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+                <xar:else />
+                    <option value="textareas" selected="selected"><xar:mlstring>All Text areas</xar:mlstring></option>
+                    <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
+                    <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
+                </xar:if>
+                </xar:comment>
+                </select>
+            </span>
+        </div>
 
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
             <input type="submit" value="#$updatebutton#" />
         </div>
     </form>
-
+    <p style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
+            <xar:mlstring>
+            <strong>NOTE:</strong> You can override the insert template used by xarTinyMCE by copying <code>modules/tinymce/xartemplates/
+            includes/tinymce_insert.xd</code> and putting it in <code>themes/yourtheme/modules/tinymce/includes/tinymce_insert.xt</code> with the new .xt extension.
+            For the Dynamic Data Property, overide the Dynamic Data module template <code>admin-showinput-tinymce.xd</code>. You can then add your own or additional options in the template. See the detailed </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/using.htm">usage instructions</a><xar:mlstring> for more detail on options.</xar:mlstring>
+       </p>
 <xar:comment> ************************ Begin Basic Config Options ************************</xar:comment>
     <xar:elseif condition="$tab eq 'general'" />
         <form action="#xarModUrl('tinymce', 'admin', 'updateconfig')#" method="post" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);" enctype="application/x-www-form-urlencoded" >
@@ -181,66 +226,7 @@
                <xar:mlstring>See </xar:mlstring><a href ="modules/tinymce/xartemplates/includes/tinymce/docs/themes.htm">theme instructions</a><xar:mlstring> to code your own.</xar:mlstring>
             </span>
         </div>
-        <div style="clear: both; width: 98%; padding-top: 10px;">
-            <span style="float: left; width: 30%; text-align: right;">
-                <span class="help" title="#xarML('Select default replacement mode for TinyMCE')#">
-                    <label for="tinymode"><xar:mlstring>Default action mode</xar:mlstring></label>
-                </span>
-            </span>
-            <span style="float:right; width: 68%; text-align: left;">
-                <select name="tinymode" id="tinymode" size="1">
-                <xar:if condition="$tinymode eq 'specific_textareas'">
-                    <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
-                    <option value="specific_textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
-                <xar:else />
-                   <option value="textareas" selected="selected"><xar:mlstring>All Text areas</xar:mlstring></option>
-                   <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
-                </xar:if>
-                <xar:comment> Use the following instead of above when all 3 modes are supported
-                <xar:if condition="$tinymode eq 'specific_textareas'">
-                    <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
-                    <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
-                    <option value="specific_textareas" selected="selected"><xar:mlstring>Special Labelled only</xar:mlstring></option>
-                <xar:elseif condition="$tinymode eq 'exact'" />
-                    <option value="textareas"><xar:mlstring>All Text areas</xar:mlstring></option>
-                    <option value="exact" selected="selected"><xar:mlstring>Specific named areas</xar:mlstring></option>
-                    <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
-                <xar:else />
-                    <option value="textareas" selected="selected"><xar:mlstring>All Text areas</xar:mlstring></option>
-                    <option value="exact"><xar:mlstring>Specific named areas</xar:mlstring></option>
-                    <option value="specific_textareas"><xar:mlstring>Special Labelled only</xar:mlstring></option>
-                </xar:if>
-                </xar:comment>
-                </select>
-            </span>
-        </div>
-        <div style="clear: both; width: 98%; padding-top: 10px;">
-            <span style="float:left; width: 30%; text-align: right;">
-                <xar:mlstring><strong>All text areas</strong> :</xar:mlstring>
-            </span>
-            <span style="float: right; width: 68%; text-align: left;">
-                <xar:mlstring>will convert all textareas contained or included in the template where you have the XarTinymce tags (default value)</xar:mlstring>
-            </span>
-             <p style="clear:both;">
-            <span style="float:left; width: 30%; text-align: right;">
-                <xar:mlstring><strong>Special Labelled only</strong> :  </xar:mlstring>
-            </span>
-            <span style="float: right; width: 68%; text-align: left;">
-                  <xar:mlstring>will convert all specifically marked textareas and divs in the template where you have added the tinymce template tags above and and where you have <strong>specifically marked</strong> the div or textareas with the attribute <code>mce_editable="true"</code></xar:mlstring>
-            </span>
-            </p>
-             <p style="clear:both;">
-            <span style="float:left; width: 30%; text-align: right;">
-                <xar:mlstring><strong>Dynamic Data Property</strong> :  </xar:mlstring>
-            </span>
-            <span style="float: right; width: 68%; text-align: left;">
-                  <xar:mlstring>Add a XarTinyMCE GUI Dynamic Data property to your
-                  publication type (or other module) in the usual way. No xarTinyMCE tag need be added to your template. Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
-                  If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
-                  <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.
-            </span>
-             </p>
-        </div>
+
         
         <xar:comment> Remove until supported
         <div style="clear: both; padding-top: 10px;">

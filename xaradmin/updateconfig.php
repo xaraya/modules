@@ -23,10 +23,12 @@ function tinymce_admin_updateconfig()
     switch ($data['tab']) {
         case 'basic':
             if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinymode','str:1:',$tinymode,'textareas',XARVAR_NOT_REQUIRED)) return;
                 xarModSetVar('base','editor', $defaulteditor);
+                xarModSetVar('tinymce', 'tinymode', $tinymode);
+
             break;
         case 'general':
-            if (!xarVarFetch('tinymode','str:1:',$tinymode,'textareas',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytheme','str:1:',$tinytheme,'default',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyask','str:1:',$tinyask,'true',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'',XARVAR_NOT_REQUIRED)) return;
@@ -37,7 +39,6 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinypara','str:1:',$tinypara,'false',XARVAR_NOT_REQUIRED)) return;
-               xarModSetVar('tinymce', 'tinymode', $tinymode);
                xarModSetVar('tinymce', 'tinytheme', $tinytheme);
                xarModSetVar('tinymce', 'tinyask', $tinyask);
                xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
@@ -238,9 +239,7 @@ function tinymce_admin_updateconfig()
         if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
           $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'", ';
         }
-
-
-    }
+   }
 
     //Setup for 'exact' mode - we only want to replace areas that match for id or name
     if ((xarModGetVar('tinymce','tinymode') =='exact') and (trim(xarModGetVar('tinymce','tinyinstances')) <> '')){
