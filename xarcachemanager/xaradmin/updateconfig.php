@@ -41,8 +41,11 @@ function xarcachemanager_admin_updateconfig()
         }
     }
     
-    //turn minutes back into seconds
-    $expiretime = $expiretime * 60;
+    //turn hh:mm:ss back into seconds
+    //$expiretime = $expiretime * 60;
+    $expiretime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                                             array('starttime' => $expiretime,
+                                                                   'direction' => 'to'));
 
     if(!empty($cachedisplayview)) {
         $cachedisplayview = 1;

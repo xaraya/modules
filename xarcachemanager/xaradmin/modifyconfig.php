@@ -61,7 +61,11 @@ function xarcachemanager_admin_modifyconfig()
         $data['settings']['OutputSizeLimit'] = 0.2;
     }
     
-    $data['settings']['PageMinuteExpiration'] = $data['settings']['PageTimeExpiration']/60;
+    // reformat seconds as hh:mm:ss
+    //$data['settings']['PageMinuteExpiration'] = $data['settings']['PageTimeExpiration']/60;
+    $data['settings']['PageTimeExpiration'] = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
+                                                             array('starttime' => $data['settings']['PageTimeExpiration'],
+                                                                   'direction' => 'from'));
 
     $filter['Class'] = 2;
     $data['themes'] = xarModAPIFunc('themes',
