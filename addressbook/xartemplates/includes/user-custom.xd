@@ -1,0 +1,180 @@
+<!--- $Id: user-custom.xd,v 1.3 2003/06/24 05:56:17 garrett Exp $      --->
+<!--- -------------------------------------------------------------- --->
+<!--- Original Author of file: Garrett Hunter                        --->
+<!--- Purpose of file:  Template to modify admin settings            --->
+<!--- -------------------------------------------------------------- --->
+<script language="JavaScript">
+<!--
+function TrackCount(fieldObj,maxChars) {
+    var diff = maxChars - fieldObj.value.length;
+    if (diff < 0) {
+        fieldObj.value = fieldObj.value.substring(0,maxChars);
+        diff = maxChars - fieldObj.value.length;
+    }
+}
+function LimitText(fieldObj,maxChars) {
+    var result = true;
+    if (fieldObj.value.length >= maxChars) {
+        result = false;
+    }
+    if (window.event) {
+        window.event.returnValue = result;
+    }
+    return result;
+}
+//-->
+</script>
+<table border="1" cellpadding="0" cellspacing="0">
+    <tr>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=1;"><xar:mlstring>Address</xar:mlstring></a></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
+        <th>#$custom_tab#</a></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=4;"><xar:mlstring>Note</xar:mlstring></a></th>
+    </tr>
+    <tr>
+        <td colspan="#$numcols#">
+      <table width="100%" border="0" cellspacing="0" cellpadding="5">
+            <xar:for start="$i=0" test="$i lt count($custUserData)" iter="$i++">
+                <tr>
+                    <xar:if condition="$custUserData[$i]['type'] eq 'varchar(60) default NULL'">
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="60" maxlength="60" />
+                    <xar:else />
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="60" maxlength="60" />
+                    </xar:if>
+                        <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    <xar:elseif condition="$custUserData[$i]['type'] eq 'varchar(120) default NULL'" />
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                        <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="2" onkeyup="TrackCount(this,120)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;">#$custUserData[$i]['userData']#</textarea>
+                    <xar:else />
+                        <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="2" onkeyup="TrackCount(this,120)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;"></textarea>
+                    </xar:if>
+                        <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    <xar:elseif condition="$custUserData[$i]['type'] eq 'varchar(240) default NULL'" />
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                        <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="4" onkeyup="TrackCount(this,240)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;">#$custUserData[$i]['userData']#</textarea>
+                    <xar:else />
+                        <textarea name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" cols="#$textareawidth#" rows="4" onkeyup="TrackCount(this,240)" onkeypress="LimitText(this,120)" STYLE="overflow:hidden;"></textarea>
+                    </xar:if>
+                        <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    <xar:elseif condition="$custUserData[$i]['type'] eq 'decimal(10,2) default NULL'" />
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="12" maxlength="12" />
+                    <xar:else />
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="12" maxlength="12" />
+                    </xar:if>
+                        <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    <xar:elseif condition="$custUserData[$i]['type'] eq 'int default NULL'" />
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="9" maxlength="9" />
+                    <xar:else />
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="9" maxlength="9" />
+                    </xar:if>
+                        <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    <xar:elseif condition="$custUserData[$i]['type'] eq 'int(1) default NULL'" />
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                    <xar:if condition="!empty($custUserData[$i]['userData'])">
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" checked value="1" />
+                    <xar:else />
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" type="checkbox" value="1"/>
+                    </xar:if>
+                        <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    <xar:elseif condition="$custUserData[$i]['type'] eq 'date default NULL'" />
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                <xar:if condition="isset($custUserData[$i]['userData'])">
+                                    <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="10" maxlength="10" />
+                                <xar:else />
+                                    <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="10" maxlength="10" />
+                                </xar:if>
+                                    <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                                    <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                                <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                                </td>
+                                <td>
+                                <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'dateformat') eq 0">
+                                    &nbsp;&nbsp;#$dateformat_1#
+                                <xar:else />
+                                    &nbsp;&nbsp;#$dateformat_2#
+                                </xar:if>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <xar:elseif condition="strstr($custUserData[$i]['type'],_AB_CUST_TEST_LB) or strstr($custUserData[$i]['type'],_AB_CUST_TEST_HR)" />
+                    <td colspan="2" align="left" valign="middle">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                        #$custUserData[$i]['userData']#
+                    </xar:if>
+                    <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    <xar:else />
+                    <td align="left" valign="middle">
+                        #$custUserData[$i]['label']#:
+                    </td>
+                    <td align="left" valign="middle">
+                    <xar:if condition="isset($custUserData[$i]['userData'])">
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="#$custUserData[$i]['userData']#" size="60" maxlength="60" />
+                    <xar:else />
+                        <input name="custUserData[#$i#][userData]" id="custUserData[#$i#][userData]" value="" size="60" maxlength="60" />
+                    </xar:if>
+                        <input type="hidden" name="custUserData[#$i#][type]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['type']#" />
+                        <input type="hidden" name="custUserData[#$i#][colName]" id="custUserData[#$i#][colName]" value="#$custUserData[$i]['colName']#" />
+                    <input name="custUserData[#$i#][label]" id="custUserData[#$i#][type]" value="#$custUserData[$i]['label']#" type="hidden">
+                    </td>
+                    </xar:if>
+                </tr>
+            </xar:for>
+</table>
+</td>
+</tr>
+</table>

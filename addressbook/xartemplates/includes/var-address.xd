@@ -1,0 +1,6 @@
+<input name="address_1" id="address_1" type="hidden" value="#$address_1#">
+<input name="address_2" type="hidden" id="address_2" value="#$address_2#">
+<input name="city" type="hidden" id="city" value="#$city#">
+<input name="state" type="hidden" id="state" value="#$state#">
+<input name="zip" type="hidden" id="zip" value="#$zip#">
+<input name="country" type="hidden" id="country" value="#$country#">

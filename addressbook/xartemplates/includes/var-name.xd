@@ -1,0 +1,6 @@
+<input name="prfx" id="prfx" type="hidden" value="#$prfx#">
+<input name="lname" id="lname" type="hidden" value="#$lname#">
+<input name="fname" id="fname" type="hidden" value="#$fname#">
+<input name="title" id="title" type="hidden" value="#$title#">
+<input name="company" id="company" type="hidden" value="#$company#">
+<input name="img" id="img" type="hidden" value="#$img#">

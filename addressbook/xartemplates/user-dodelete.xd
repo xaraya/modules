@@ -1,0 +1,18 @@
+<!--- $Id: user-dodelete.xd,v 1.2 2003/06/19 20:21:20 garrett Exp $      --->
+<!--- -------------------------------------------------------------- --->
+<!--- Original Author of file: Garrett Hunter                        --->
+<!--- Purpose of file:  Template to modify admin settings            --->
+<!--- -------------------------------------------------------------- --->
+<xar:template compile="false" file="mod-title" type="module" />
+<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center; ">
+<br />
+<br />
+<div align="center">
+<strong>#$infoMsg#</strong>
+<br />
+<br />
+<a href="#xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$menuValues)#">[#$backToListTEXT#]</a>
+<br />
+<br />
+</div>
+</div>

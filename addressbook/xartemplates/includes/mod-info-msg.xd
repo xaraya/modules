@@ -1,0 +1,19 @@
+<!--- $Id: mod-info-msg.xd,v 1.1 2003/06/21 05:51:24 garrett Exp $      --->
+<!--- -------------------------------------------------------------- --->
+<!--- Original Author of file: Garrett Hunter                        --->
+<!--- Purpose of file:  Template to display module title             --->
+<!--- -------------------------------------------------------------- --->
+<xar:if condition="!empty($abExceptions['abInfoMsg'])">
+<div style="width:80%; text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+<xar:loop name="$abExceptions['abInfoMsg']">
+  <strong>#$text#</strong>
+</xar:loop>
+</div>
+</xar:if>
+<xar:if condition="!empty($abExceptions['abWarnMsg'])">
+<div style="width:80%; text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+<xar:loop name="$abExceptions['abWarnMsg']">
+  <span class="xar-error"><strong>#$text#</strong>
+  </span></xar:loop><span class="xar-error">
+  </span></div>
+</xar:if>

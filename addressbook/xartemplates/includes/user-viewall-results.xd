@@ -1,0 +1,31 @@
+<!--- $Id: user-viewall-results.xd,v 1.1 2003/06/19 17:06:46 garrett Exp $      --->
+<!--- -------------------------------------------------------------- --->
+<!--- Original Author of file: Garrett Hunter                        --->
+<!--- Purpose of file:  Template to display address book result list --->
+<!--- -------------------------------------------------------------- --->
+
+    <table border="1" cellpadding="2" cellspacing="0" bgcolor="#E6E6E6">
+<!--- Header row --->
+        <tr>
+<xar:loop name="$headers">
+                <th>#$header#</th>
+</xar:loop>
+                <th><xar:mlstring>CONTACT</xar:mlstring></th>
+                <th><xar:mlstring>ACTION</xar:mlstring></th>
+        </tr>
+<!--- Results --->
+<xar:loop name="$displayRows">
+        <tr>
+        <xar:foreach in="$displayRow" value="$rowData">
+                <td bgcolor="#FFFFFF">#$rowData#</td>
+        </xar:foreach>
+                <td bgcolor="#FFFFFF"><a href="#$detailURL#">Details</a>
+                  <xar:if condition="xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',$accessLevel)">
+                    <xar:if condition="xarSecurityCheck('EditAddressBook',0) or ($user_id eq $user)">
+                        | <a href="#$editURL#">Edit</a> | <a href="#$deleteURL#">Delete</a>
+                    </xar:if>
+                    </xar:if>
+                    </td>
+        </tr>
+</xar:loop>
+</table>

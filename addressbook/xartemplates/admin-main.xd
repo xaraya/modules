@@ -1,0 +1,65 @@
+<!--- $Id: admin-main.xd,v 1.1 2003/06/19 16:56:30 garrett Exp $      --->
+<!--- -------------------------------------------------------------- --->
+<!--- Original Author of file: Garrett Hunter                        --->
+<!--- Purpose of file:  Template to display admin main data          --->
+<!--- -------------------------------------------------------------- --->
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Address Book</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+				<xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
+            <img src="modules/#$modInfo['directory']#/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+
+    <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Address
+      Book gives your site to ability to have a single, shared contact list of
+      multiple private address lists for each registered user.</xar:mlstring>
+      <ul>
+        <li><xar:mlstring>Fully Xaraya compliant.</xar:mlstring></li>
+        <li><xar:mlstring>Flexible categories &amp; contact labels</xar:mlstring></li>
+        <li><xar:mlstring>Add custom fields for each entry</xar:mlstring></li>
+        <li><xar:mlstring>Full text search</xar:mlstring></li>
+        <li><xar:mlstring>Image support for each contact</xar:mlstring></li>
+      </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+
+    <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>Initialize,
+      activate, and have at it!</xar:mlstring></div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+
+    <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+      <ul>
+        <li><xar:mlstring>none right now</xar:mlstring></li>
+      </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+
+      <ul>
+        <li><xar:mlstring>Not sure about this either...check with &quot;examples&quot;
+          or other modules</xar:mlstring></li>
+      </ul>
+        </div>
+
+    <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>

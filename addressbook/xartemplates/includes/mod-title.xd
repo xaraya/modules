@@ -1,0 +1,31 @@
+<!--- $Id: mod-title.xd,v 1.3 2003/06/21 05:50:27 garrett Exp $      --->
+<!--- -------------------------------------------------------------- --->
+<!--- Original Author of file: Garrett Hunter                        --->
+<!--- Purpose of file:  Template to display module title             --->
+<!--- -------------------------------------------------------------- --->
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        #xarModGetVar(__ADDRESSBOOK__,'abtitle')#</span>
+</div>
+<xar:if condition="!empty($abExceptions['xarSysException'])">
+    <xar:if condition="_AB_DEBUG">
+    <div style="border-width: 1px; background-color:#FFCCFF; border-style: solid; border-color: #990000; padding: 2px; text-align:center;">
+        <xar:loop name="$abExceptions['xarSysException']">
+            #$type# = #$text#<br />
+        </xar:loop>
+    </div>
+    <xar:else />
+        <div style="text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+            <br />
+            <span class="xar-error"><strong>@%#CRASH!!&nbsp;&nbsp;#%@POW%&amp;&nbsp;&nbsp;#@KERPLOP#*@</strong></span><br />
+            <br />
+            <strong>Houston, we have a problem... A message has been sent to the website administrator.</strong><br />
+            <br />
+            <strong>Please click <a href="#xarModURL(__ADDRESSBOOK__,'user','viewall')#">here</a> to return to the Address Book</strong><br />
+            <br />
+        </div>
+    </xar:if>
+</xar:if>
+<!--- START DEBUG DISPLAY -----------------------------------------------------------  --->
+<xar:template compile="false" file="mod-debug" type="module" />
+<!--- END DEBUG DISPLAY -------------------------------------------------------------  --->

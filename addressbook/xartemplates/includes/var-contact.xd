@@ -1,0 +1,11 @@
+<input name="contact_1" type="hidden" id="contact_1" value="#$contact_1#">
+<input name="contact_2" type="hidden" id="contact_2" value="#$contact_2#">
+<input name="contact_3" type="hidden" id="contact_3" value="#$contact_3#">
+<input name="contact_4" type="hidden" id="contact_4" value="#$contact_4#">
+<input name="contact_5" type="hidden" id="contact_5" value="#$contact_5#">
+<input name="c_label_1" type="hidden" id="c_label_1" value="#$c_label_1#">
+<input name="c_label_2" type="hidden" id="c_label_2" value="#$c_label_2#">
+<input name="c_label_3" type="hidden" id="c_label_3" value="#$c_label_3#">
+<input name="c_label_4" type="hidden" id="c_label_4" value="#$c_label_4#">
+<input name="c_label_5" type="hidden" id="c_label_5" value="#$c_label_5#">
+<input name="c_main" type="hidden" id="c_main" value="#$c_main#">

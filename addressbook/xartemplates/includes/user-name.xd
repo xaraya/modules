@@ -1,0 +1,82 @@
+<!--- $Id: user-name.xd,v 1.2 2003/06/24 05:56:18 garrett Exp $      --->
+<!--- -------------------------------------------------------------- --->
+<!--- Original Author of file: Garrett Hunter                        --->
+<!--- Purpose of file:  Template to modify contact name              --->
+<!--- -------------------------------------------------------------- --->
+<table border="1" cellpadding="0" cellspacing="0">
+    <tr>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=1;"><xar:mlstring>Address</xar:mlstring></a></th>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=2;"><xar:mlstring>Contact</xar:mlstring></a></th>
+<xar:if condition="$addrow gt 0">
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=3;">#$custom_tab#</a></th>
+</xar:if>
+        <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=4;"><xar:mlstring>Note</xar:mlstring></a></th>
+    </tr>
+    <tr>
+        <td colspan="#$numcols#">
+<!--        <td colspan="11">  -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="5">
+        <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'use_prefix')">
+          <tr>
+            <td align="right" valign="middle"><xar:mlstring>Prefix/Title</xar:mlstring>:</td>
+            <td align="left" valign="middle">
+                <select name="prfx" id="prfx">
+                    <xar:loop name="$prfxs">
+                        <xar:if condition="$id ne $prfx">
+                  <option value="#$id#">#$name#</option>
+                        <xar:else />
+                  <option selected value="#$id#">#$name#</option>
+                        </xar:if>
+                    </xar:loop>
+        </select>
+            </td>
+        </tr>
+            <xar:else />
+                <input type="hidden" name="prfx" id="prfx" value="#$prfx#" />
+            </xar:if>
+          <tr>
+            <td align="right" valign="middle">#xarML(_AB_LABEL_LASTNAME)#:</td>
+            <td align="left" valign="middle">
+              <input name="lname" type="text" id="lname" value="#$lname#" size="60" maxlength="100">
+            </td>
+            </tr>
+          <tr>
+            <td align="right" valign="middle">#xarML(_AB_LABEL_FIRSTNAME)#:</td>
+            <td align="left" valign="middle"><input name="fname" type="text" id="fname" value="#$fname#" size="60" maxlength="100"></td>
+            </tr>
+          <tr>
+            <td align="right" valign="middle">Title:</td>
+            <td align="left" valign="middle"><input name="title" type="text" id="title" value="#$title#" size="60" maxlength="100"></td>
+            </tr>
+          <tr>
+            <td align="right" valign="middle">Company:</td>
+            <td align="left" valign="middle"><input name="company" type="text" id="company" value="#$company#" size="60" maxlength="100"></td>
+            </tr>
+          <tr>
+            <td align="right" valign="middle">&nbsp;</td>
+            <td align="left" valign="middle">
+                    <input name="autoCompanyFill" id="autoCompanyFill" type="hidden" value="0" />
+                    <select name="comp_lookup" id="comp_lookup" onchange="this.form.action.value=1;this.form.autoCompanyFill.value=1;this.form.submit();">
+                    <xar:loop name="$companies">
+                      <option value="#$id#">#$name#</option>
+                    </xar:loop>
+                    </select>
+
+            </td>
+            </tr>
+            <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'use_img') and xarSecurityCheck('AdminAddressBook',0)">
+          <tr>
+            <td align="right" valign="middle"><xar:mlstring>Image</xar:mlstring>:</td>
+            <td align="left" valign="middle">               <select name="img" id="img" disabled>
+              <option value="1" selected>feature not implemented</option>
+        </select>
+                </td>
+            </tr>
+            <xar:else />
+                <input type="hidden" name="img" id="img" value="" />
+            </xar:if>
+      </table>
+        </td>
+    </tr>
+</table>
