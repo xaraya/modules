@@ -9,12 +9,15 @@
 function timezone_userapi_parseOffset($offset)
 {
     preg_match('/([-+])?    # -+ directional signs (optional)
-                ([\d]{1,2})   # hours 0-9
+                ([\d]{1,2}) # hours 0-9
                 :?          # optional split
                 ([\d]{2})   # minutes 0-9
                 :?          # optional split
                 ([\d]{2})?  # seconds 0-9 (optional)
-                /x', $offset, $matches);
+                /x', 
+                $offset, 
+                $matches);
+                
     // check for the existence of the seconds offset (usually not there)
     if(!isset($matches[4])) $matches[4] = '00';
     $return = array('direction'=>$matches[1],
