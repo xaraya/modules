@@ -238,19 +238,19 @@
                           'children' => array('Generic2 Sub1',
                                               'Generic2 Sub2'));
     $categories[] = array('name' => 'Topics',
-                          'description' => 'News Topics (.7x style)',
+                          'description' => 'News Topics',
                           'children' => array('Topic 1',
                                               'Topic 2'));
     $categories[] = array('name' => 'Categories',
-                          'description' => 'News Categories (.7x style)',
+                          'description' => 'News Categories',
                           'children' => array('Category 1',
                                               'Category 2'));
     $categories[] = array('name' => 'Sections',
-                          'description' => 'Document Sections (.7x style)',
+                          'description' => 'Document Sections',
                           'children' => array('Section 1',
                                               'Section 2'));
     $categories[] = array('name' => 'FAQ',
-                          'description' => 'Frequently Asked Questions (.7x style)',
+                          'description' => 'Frequently Asked Questions',
                           'children' => array('FAQ Type 1',
                                               'FAQ Type 2'));
     $categories[] = array('name' => 'Gallery',
@@ -258,7 +258,7 @@
                           'children' => array('Album 1',
                                               'Album 2'));
     $categories[] = array('name' => 'Web Links',
-                          'description' => 'Web Link Categories (.7x style)',
+                          'description' => 'Web Link Categories',
                           'children' => array('Link Category 1',
                                               'Link Category 2'));
 
