@@ -317,10 +317,10 @@ function articles_encodeUsingTitle( $aid )
     $searchArgs['where'] = "title = '".str_replace("'","\\'",$article['title'])."'";
     $articles = xarModAPIFunc('articles', 'user', 'getall', $searchArgs);
 
-	if( strpos($article['title'],'_') === FALSE )
-	{
-		$article['title'] = str_replace(' ','_',$article['title']);
-	}
+    if( strpos($article['title'],'_') === FALSE )
+    {
+        $article['title'] = str_replace(' ','_',$article['title']);
+    }
     
     if( count($articles) == 1 )
     {
