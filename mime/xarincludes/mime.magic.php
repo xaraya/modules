@@ -125,6 +125,7 @@ $mime_list['application/octet-stream']['extensions'][5] = 'lha';
 $mime_list['application/octet-stream']['extensions'][6] = 'lzh';
 $mime_list['application/octet-stream']['extensions'][7] = 'so';
 $mime_list['application/oda']['extensions'][0] = 'oda';
+$mime_list['application/ogg']['extensions'][0] = 'ogg';
 $mime_list['application/pdf']['extensions'][0] = 'pdf';
 $mime_list['application/pdf']['needles']['H1w4MAY4OA==']['length'] = 4;
 $mime_list['application/pdf']['needles']['H1w4MAY4OA==']['offset'] = 0;
