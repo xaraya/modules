@@ -6,8 +6,10 @@
           <label for="key#$key#">#$en_translation#</label>
         </span>
       </td>
+    </tr>
+    <tr>
       <td>
-        <xar:if condition="strlen($string) gt 80">
+        <xar:if condition="strlen($en_translation) gt 80">
         <textarea name="key#$key#" id="key#$key#" rows="4" cols="80">#$translation#</textarea>
         <xar:else />
         <input type="text" name="key#$key#" id="key#$key#" value="#$translation#" size="80" />
@@ -15,7 +17,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2">
+      <td>
         <table>
           <xar:loop name="$references">
             <tr>
@@ -34,7 +36,7 @@
               <td colspan="2" class="xar-norm-outline">
                 <xar:ml>
                   <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
-                  <xar:mlvar>#$loop:keyEntries:item['numOtherReferences']#</xar:mlvar>
+                  <xar:mlvar>#$numOtherReferences#</xar:mlvar>
                 </xar:ml>
               </td>
             </tr>
