@@ -66,8 +66,7 @@
 					<xar:if condition="isset($package['text'])">
 						<textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
 						<xar:else />
-						<textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">
-						</textarea>
+						<textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
 					</xar:if>
 					<input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
 					<input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 
@@ -135,8 +134,7 @@
 					<xar:if condition="isset($package['text'])">
 						<textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">#$package['text']#</textarea>
 						<xar:else />
-						<textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2">
-						</textarea>
+						<textarea class="xar-ib-fieldtext" name="package[text]" id="package-text" tabindex="2"></textarea>
 					</xar:if>
 					<input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" /> 
 					<input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" /> 
