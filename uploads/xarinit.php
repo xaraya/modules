@@ -7,6 +7,7 @@
 // http://www.xaraya.org
 // ----------------------------------------------------------------------
 // Original Author of file: Marie Altobelli (Ladyofdragons)
+// Current Maintainer: Michael Cortez (mcortez)
 // Purpose of file:  Initialisation functions for uploads
 // ----------------------------------------------------------------------
 
@@ -103,30 +104,6 @@ function uploads_init()
     /**
      * Register hooks
      */
-    // when a new module item is being specified
-    if (!xarModRegisterHook('item', 'new', 'GUI'
-	                       ,'uploads', 'admin', 'newhook')) {
-         $msg = xarML('Could not register hook');
-         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
-    }
-	
-    // when a module item is created
-    if (!xarModRegisterHook('item', 'create', 'API'
-	                      , 'uploads', 'admin', 'createhook')) {
-         $msg = xarML('Could not register hook');
-         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
-    }
-
-	if (!xarModRegisterHook('item', 'display', 'GUI',
-                            'uploads', 'user', 'formdisplay')) {
-         $msg = xarML('Could not register hook');
-         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-         return;
-	}
-
-
     // Set up module hooks
     if (!xarModRegisterHook('item', 'transform', 'API',
                            'uploads', 'user', 'transformhook')) {
@@ -161,7 +138,11 @@ function articles_upgrade($oldversion)
 
             $result =& $dbconn->Execute($query);
             if (!$result) return;
-
+		case .03:
+			// Remove unused hooks
+			xarModUnregisterHook('item', 'new', 'GUI','uploads', 'admin', 'newhook'));
+			xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook'));
+			xarModUnregisterHook('item', 'display', 'GUI', 'uploads', 'user', 'formdisplay'));
             break;
     }
     return true;

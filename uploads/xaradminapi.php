@@ -79,10 +79,16 @@ function uploads_adminapi_download( $args )
 				{
 					// echo "Need to convert<br>";
 					// echo "Loaded image, converting<br>";
-					createthumb($file,$thumbwidth,$thumbheight,$newfile);
+					$args = array( 'file' => $file
+					              ,'thumbwidth' => $thumbwidth
+								  ,'thumbheight' => $thumbheight
+								  ,'newfile' => $newfile );
+								  
+				    xarModAPIFunc('uploads','user','createthumbimg',$args);
     }
 				// Thumbnail already exists, or has just been created.  Set $file to thumbnail
 				$file = $newfile;
+				
 			}
 		}
     }
