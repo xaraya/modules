@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Netquery Administration</title>
+<title>Netquery Manual</title>
 <style>
     body,td,div {
         font-family : Verdana,Arial,Helvetica,sans-serif;
@@ -34,16 +34,61 @@
 </style>
 </head>
 <body>
-<h1 align="center"><a name="top">Netquery 1.1 Manual</a></h1>
+<h1 align="center"><a name="top">Netquery Manual</a></h1>
 
 <h2><a name="summary">Summary</a></h2>
 
-<p>Netquery provides you and, at your discretion, users of your site with a range of common network tools,
-including Whois lookups, DNS queries, ICMP pings, traceroutes and server port checking. Each feature can
-be enabled or disabled individually by the administrator. Local execution and/or a remote server script
-can be used for the ping and traceroute features and are fully configurable. The administrator can also
-configure all entries in the whois and looking glass data tables to add, edit and delete Whois server/TLD
-associations and to specify both default and router-specific settings for looking glass feature execution.</p>
+<p>The Netquery toolkit of network information utilities includes Whois lookups, DNS queries, server
+port checking, HTTP requests, ICMP pings, traceroutes and Looking Glass router interrogation. Each
+feature can be enabled or disabled individually by the administrator. Local execution and/or a
+remote server script can be used for the ping and traceroute features and are fully configurable.
+The administrator can also configure all entries in the whois and looking glass data tables to add,
+edit and delete Whois server/TLD associations and to specify both default and router-specific settings
+for looking glass feature execution.</p>
+
+<div align="center"><center><h3>Project Sites &amp; Downloads</h3>
+<table border="2" cellspacing="0" cellpadding="4">
+<tr><th>Project Site</th><th>ZIP Download</th><th>TAR.GZ Download</th></tr>
+<tr><td>
+<a href="http://noc.postnuke.com/projects/netquery/" target="_top">Postnuke Edition</a><br />
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/pn_netquery.zip">pn_netquery.zip</a>
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/pn_netquery.tar.gz">pn_netquery.tar.gz</a>
+</td></tr>
+<tr><td>
+<a href="http://www.xaraya.com/index.php/release/91.html" target="_top">Xaraya Edition</a><br />
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/xar_netquery.zip">xar_netquery.zip</a>
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/xar_netquery.tar.gz">xar_netquery.tar.gz</a>
+</td></tr>
+<tr><td>
+<a href="http://dev.xoops.org/modules/xfmod/project/?mwr-netquery" target="_top">Xoops Edition</a>
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/xoops_netquery.zip">xoops_netquery.zip</a>
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/xoops_netquery.tar.gz">xoops_netquery.tar.gz</a>
+<tr><td>
+<a href="http://users.vianet.ca/rvirtue/tools/" target="_top">Standalone Edition</a>
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/sa_netquery.zip">sa_netquery.zip</a>
+</td><td>
+<a href="http://users.vianet.ca/rvirtue/tools/sa_netquery.tar.gz">sa_netquery.tar.gz</a>
+</td></tr>
+</table></center></div>
+
+<blockquote>DOWNLOAD NOTES:<br />
+(1) Windows downloads of .tar.gz files may get renamed with .tar.tar extensions. The downloaded file
+itself will be okay; it just needs to be renamed back to tar.gz at your end. (This happens because
+Apache servers flag ALL files ending in .tar, .tgz and .tar.gz as mime type "application/x-tar" and
+Windows thinks they should be renamed accordingly. One of those cases where two wrongs definitely
+do not make a right.)<br />
+(2) Only the Netquery standalone download contains basic administrator login authentication of its
+own. (The CMS editions rely upon module security provided by the CMS.) If you want to control user
+access for the standalone edition, PHP open source authentication add-ons are readily available,
+including <a href="http://www.beanbug.net/">vAuthenticate</a> and
+<a href="http://www.xaviermedia.com/">CookieProtection</a>.</blockquote>
 
 <h2><a name="whatfor">What Can Netquery Do For Me?</a></h2>
 
@@ -81,7 +126,27 @@ reconfigured to suit your needs and preferences.</p>
     <tr class="help-topic">
         <td class="help-topic" colspan=2><a name="admin">Netquery Administration</a></td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Installation As Content Management System (CMS) Module</td></tr>
+    <tr><td class="item-heading" colspan=2>Installation of the Standalone Edition</td></tr>
+    <tr>
+        <td class="item">1. Unzip and Edit</td>
+        <td class="item-desc">From the unzipped download, edit nqconfig.php to
+                              specify parameters for your SQL database.</td>
+    </tr>
+    <tr>
+        <td class="item">2. Upload and Start</td>
+        <td class="item-desc">Upload all Netquery files and subfolders to your web site and
+                              browse to netquery/index.php.</td>
+    </tr>
+        <td class="item">3. Remove Set-Up File</td>
+        <td class="item-desc">Run the automatic setup process, remove the nqsetup.php
+                              file and go to the main nquser.php page.</td>
+    </tr>
+    <tr>
+        <td class="item">4. Choose Your Options</td>
+        <td class="item-desc">From Netquery's admin menu, select and configure options you want
+                              to make available.</td>
+    </tr>
+    <tr><td class="item-heading" colspan=2>Installation of Content Management System (CMS) Editions</td></tr>
     <tr>
         <td class="item">1. Unzip and Copy</td>
         <td class="item-desc">Copy the unzipped download into your CMS modules folder as Netquery sub-folder.</td>
@@ -119,6 +184,10 @@ reconfigured to suit your needs and preferences.</p>
     <tr>
         <td class="item">Enable Port Check</td>
         <td class="item-desc">Checks specified server for availability of specified port.</td>
+    </tr>
+    <tr>
+        <td class="item">Enable HTTP Request</td>
+        <td class="item-desc">Shows server response to HTTP requests for specified object URL.</td>
     </tr>
     <tr>
         <td class="item">Enable Local ICMP Ping</td>
@@ -168,14 +237,14 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="help-desc" colspan=2>
-        <p><b>Important Notes</b>:<br>
+        <p><b>Important Notes</b>:<br />
         - Netquery's local ping and traceroute options require read/execute permission for your
-        server OS executables.<br>
-        - The Netquery Log option requires write permission for the specified path/filename.<br>
+        server OS executables.<br />
+        - The Netquery Log option requires write permission for the specified path/filename.<br />
         - Deleting all whois pairs from the database table will produce an error. Disable the
-        whois feature option instead.<br>
+        whois feature option instead.<br />
         - Looking glass default settings, except disabled items, may be overridden by individual
-        router settings.<br>
+        router settings.<br />
         - Individual looking glass daemon port passwords take precedence over the default user password.
         </p></td>
     </tr>
@@ -275,7 +344,7 @@ as the DNS lookup feature, but uses the UNIX/Linux command set to execute the ac
 <p>Port checks can be an important part of securing your computing system, especially for those who
 operate with "always connected" (cable, ADSL, etc) Internet services. To use this Netquery feature,
 simply enter the host address and port number you wish to check and the results will tell you whether
-it is open and accepting connections.
+it is open and accepting connections.</p>
 <p>More info:
 <a href="http://www.iana.org/assignments/port-numbers" target="_blank">IANA</a>
 <a href="http://advice.networkice.com/advice/Exploits/Ports/default.htm" target="_blank">UDP</a>
@@ -284,6 +353,14 @@ it is open and accepting connections.
 <a href="http://www.sans.org/newsletters/" target="_blank">SANS</a>
 <a href="http://www.grc.com/su-reading.htm" target="_blank">Shields Up</a>
 <a href="http://www.auditmypc.com/" target="_blank">PC Audit</a></p>
+
+<h3><a name="port">HTTP Requests</a></h3>
+<p>Hypertext transport protocol (HTTP) is the languange used by web browsers and web servers to
+communicate with and respond to each other across the internet.  Using this function, you can
+send an HTTP request (HEAD or GET) directly to a server specifying a particular object with a
+complete URL and examine the server's response "in the raw".</p>
+<p>More info:
+<a href="http://www.faqs.org/rfcs/rfc2068.html" target="_blank">RFC2068</a></p>
 
 <h3><a name="ping">ICMP Pings</a></h3>
 <p>As its name suggests, the ping feature can be compared to a submariner's sonar. It is a utility
@@ -321,7 +398,7 @@ between when the probe was sent from traceroute and the time the response arrive
 <p>Looking glass extends Netquery's scope by providing capabilities for interrogating routers (Cisco,
 Zebra, Juniper) used in wide area networks that comprise the Internet. It is intended for advanced
 users who have an in-depth understanding of network topology and router functions. The looking glass
-feature in Netquery 1.1 contains the following commands for both IPv4 and IPv6: OSPF neighborship,
+feature in Netquery contains the following commands for both IPv4 and IPv6: OSPF neighborship,
 BGP neighborship, OSPF RT, BGP RR, Zebra Any RR, and Zebra Interface Info.</p>
 
 <p>More info:

@@ -7,7 +7,7 @@ function netquery_adminapi_getrouter($args)
     extract($args);
     if (!isset($router_id)) {
         $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
@@ -38,8 +38,8 @@ function netquery_adminapi_getrouter($args)
                      ospf6d_password,
                      use_argc
               FROM $LGRouterTable
-              WHERE router_id =  ?";
-    $result =& $dbconn->Execute($query, array((int) $router_id));
+              WHERE router_id =  " . xarVarPrepForStore($router_id);
+    $result =& $dbconn->Execute($query);
     if (!$result) return;
     list($router_id,
          $router,

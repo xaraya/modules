@@ -1,9 +1,6 @@
 <?php
-/**
- * File: $Id:
- */
 function netquery_user_main()
-{ 
+{
     $data = xarModAPIFunc('netquery', 'user', 'mainapi');
     $clrlink = $data['clrlink'];
     if ($data['querytype'] == 'none')
@@ -12,52 +9,54 @@ function netquery_user_main()
     }
     else if ($data['querytype'] == 'whois')
     {
-        $buffer = '';
+        $readbuf = '';
         $nextServer = '';
         $target = $data['domain'].$data['whois_ext'];
         $link = xarModAPIFunc('netquery', 'user', 'getlink', array('whois_ext' => $data['whois_ext']));
         $whois_server = $link['whois_server'];
         $msg = ('<p><b>Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if (! $sock = fsockopen($whois_server, 43, $num, $error, 10)){
+        if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)){
             unset($sock);
             $msg .= "Timed-out connecting to $whois_server (port 43)";
         } else {
             fputs($sock, "$target\n");
-            while (!feof($sock))
-                $buffer .= fgets($sock, 10240); 
+            while (!feof($sock)) {
+                $readbuf .= fgets($sock, 10240);
+            }
         }
-        fclose($sock);
-        if (! eregi("Whois Server:", $buffer)) {
-            if(eregi("no match", $buffer))
-                $msg .= "NOT FOUND: No match for $target<br>";
-            else
-                $msg .= "Ambiguous query, multiple matches for $target:<br>";
+        @fclose($sock);
+        if (! eregi("Whois Server:", $readbuf)) {
+            if (eregi("No match", $readbuf) || eregi("No entries", $readbuf) || eregi("Not found", $readbuf) || eregi("AVAIL", $readbuf))
+                $msg .= "NOT FOUND: No match for $target<br />";
+            else if (! eregi("Timed-out", $msg))
+                $msg .= "Ambiguous query, multiple matches for $target:<br />";
         } else {
-            $buffer = split("\n", $buffer);
-            for ($i=0; $i<sizeof($buffer); $i++) {
-                if (eregi("Whois Server:", $buffer[$i]))
-                    $buffer = $buffer[$i];
+            $readbuf = split("\n", $readbuf);
+            for ($i=0; $i<sizeof($readbuf); $i++) {
+                if (eregi("Whois Server:", $readbuf[$i]))
+                    $readbuf = $readbuf[$i];
                 }
-            $nextServer = substr($buffer, 17, (strlen($buffer)-17));
+            $nextServer = substr($readbuf, 17, (strlen($readbuf)-17));
             $nextServer = str_replace("1:Whois Server:", "", trim(rtrim($nextServer)));
-            $buffer = "";
-            if(! $sock = fsockopen($nextServer, 43, $num, $error, 10)){
+            $readbuf = "";
+            if (! $sock = @fsockopen($nextServer, 43, $errnum, $error, 10)) {
                 unset($sock);
                 $msg .= "Timed-out connecting to $nextServer (port 43)";
             } else {
                 fputs($sock, "$target\n");
-                while (!feof($sock))
-                    $buffer .= fgets($sock, 10240);
-                fclose($sock);
+                while (!feof($sock)) {
+                    $readbuf .= fgets($sock, 10240);
+                }
+                @fclose($sock);
             }
         }
-        $msg .= nl2br($buffer);
+        $msg .= nl2br($readbuf);
         $msg .= "</blockquote></p>";
         $data['results'] .= $msg . '<hr>';
     }
     else if ($data['querytype'] == 'whoisip')
     {
-        $buffer = '';
+        $readbuf = '';
         $nextServer = '';
         $target = $data['addr'];
         $whois_server = "whois.arin.net";
@@ -65,40 +64,42 @@ function netquery_user_main()
         if (!$target = gethostbyname($target)) {
             $msg .= "IP Whois requires an IP address.";
         } else {
-            if (! $sock = fsockopen($whois_server, 43, $num, $error, 20)) {
+            if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)) {
                 unset($sock);
                 $msg .= "Timed-out connecting to $whois_server (port 43)";
             } else {
                 fputs($sock, "$target\n");
-                while (!feof($sock))
-                    $buffer .= fgets($sock, 10240);
-                fclose($sock);
+                while (!feof($sock)) {
+                    $readbuf .= fgets($sock, 10240);
+                }
+                @fclose($sock);
             }
-            if (eregi("RIPE.NET", $buffer))
+            if (eregi("RIPE.NET", $readbuf))
                 $nextServer = "whois.ripe.net";
-            else if (eregi("whois.apnic.net", $buffer))
+            else if (eregi("whois.apnic.net", $readbuf))
                 $nextServer = "whois.apnic.net";
-            else if (eregi("nic.ad.jp", $buffer)) {
+            else if (eregi("nic.ad.jp", $readbuf)) {
                 $nextServer = "whois.nic.ad.jp";
                 #/e suppresses Japanese character output from JPNIC
                 $extra = "/e";
             }
-            else if (eregi("whois.registro.br", $buffer))
+            else if (eregi("whois.registro.br", $readbuf))
                 $nextServer = "whois.registro.br";
             if ($nextServer) {
-                $buffer = "";
-                if (! $sock = fsockopen($nextServer, 43, $num, $error, 10)) {
+                $readbuf = "";
+                if (! $sock = @fsockopen($nextServer, 43, $errnum, $error, 10)) {
                     unset($sock);
                     $msg .= "Timed-out connecting to $nextServer (port 43)";
                 } else {
                     fputs($sock, "$target$extra\n");
-                    while (!feof($sock))
-                        $buffer .= fgets($sock, 10240);
-                    fclose($sock);
+                    while (!feof($sock)) {
+                        $readbuf .= fgets($sock, 10240);
+                    }
+                    @fclose($sock);
                 }
             }
-            $buffer = str_replace(" ", "&nbsp;", $buffer);
-            $msg .= nl2br($buffer);
+            $readbuf = str_replace(" ", "&nbsp;", $readbuf);
+            $msg .= nl2br($readbuf);
         }
         $msg .= "</blockquote></p>";
         $data['results'] .= $msg . '<hr>';
@@ -138,13 +139,46 @@ function netquery_user_main()
         $target = $data['server'];
         $tport = $data['portnum'];
         $msg = ('<p><b>Port '.$tport.' Check Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if (! $sock = fsockopen($target, $tport, $num, $error, 5))
+        if (! $sock = @fsockopen($target, $tport, $errnum, $error, 10)) {
             $msg .= 'Port '.$tport.' does not appear to be open.';
-        else{
+        } else {
             $msg .= 'Port '.$tport.' is open and accepting connections.';
-            fclose($sock);
+            @fclose($sock);
         }
         $msg .= '</blockquote></p>';
+        $data['results'] .= $msg . '<hr>';
+    }
+    else if ($data['querytype'] == 'http')
+    {
+        $readbuf = '';
+        $url_Complete = parse_url($data['httpurl']);
+        $url_Scheme   = (!empty ($url_Complete["scheme"])) ? $url_Complete["scheme"] : "http";
+        $url_Host     = (!empty ($url_Complete["host"])) ? $url_Complete["host"] : "localhost";
+        $url_Port     = (!empty ($url_Complete["port"])) ? $url_Complete["port"] : "80";
+        $url_User     = (!empty ($url_Complete["user"])) ? $url_Complete["user"] : "";
+        $url_Pass     = (!empty ($url_Complete["pass"])) ? $url_Complete["pass"] : "";
+        $url_Path     = (!empty ($url_Complete["path"])) ? $url_Complete["path"] : "/";
+        $url_Query    = (!empty ($url_Complete["query"])) ? ":".$url_Complete["query"] : "";
+        $url_Fragment = (!empty ($url_Complete["fragment"])) ? $url_Complete["fragment"] : "";
+        $url_HostPort = ($url_Port != 80) ? $url_Host.":".$url_Port : $url_Host;
+        $url_Long     = $url_Scheme . "://" . $url_Host;
+        $url_Req      = $url_Path . $url_Query;
+        $fp_Send      = $data['httpreq'] . " $url_Req HTTP/1.0\n";
+        $fp_Send     .= "Host: $url_Host\n";
+        $fp_Send     .= "User-Agent: Netquery/1.2 PHP/" . phpversion() . "\n";
+        $msg = ('<p><b>HTTP Request Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote><pre>');
+        if (! $sock = @fsockopen($url_Host, $url_Port, $errnum, $error, 10)) {
+            unset($sock);
+            $msg .= 'Unable to connect to host: '.$url_Host.' port: '.$url_Port.'.';
+        } else {
+            fputs($sock, "$fp_Send\n");
+            while (!feof($sock)) {
+                $readbuf .= fgets($sock, 10240);
+            }
+            @fclose($sock);
+            $msg .= htmlspecialchars($readbuf);
+        }
+        $msg .= '</pre></blockquote></p>';
         $data['results'] .= $msg . '<hr>';
     }
     else if ($data['querytype'] == 'ping')
@@ -154,11 +188,11 @@ function netquery_user_main()
         $tpoints = $data['maxp'];
         $pexec = $data['pingexec'];
         $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if ($pexec['winsys']) {$PN=$pexec['local'].' -n '.$tpoints.' '.$target;}
-        else {$PN=$pexec['local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
+        if ($pexec['exec_winsys']) {$PN=$pexec['exec_local'].' -n '.$tpoints.' '.$target;}
+        else {$PN=$pexec['exec_local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
         exec($PN, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
-            $png .= $response[$i].'<br>';
+            $png .= $response[$i].'<br />';
         }
         if (! $msg .= trim(nl2br($png))) {
             $msg .= 'Ping failed. You may need to configure your server permissions.';
@@ -175,11 +209,11 @@ function netquery_user_main()
         $target = $data['host'];
         $texec = $data['traceexec'];
         $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if ($texec['winsys']) {$TR=$texec['local'].' '.$target;}
-        else {$TR=$texec['local'].' '.$target;}
+        if ($texec['exec_winsys']) {$TR=$texec['exec_local'].' '.$target;}
+        else {$TR=$texec['exec_local'].' '.$target;}
         exec($TR, $response, $rval);
         for ($i = 0; $i < count($response); $i++) {
-            $rt .= $response[$i].'<br>';
+            $rt .= $response[$i].'<br />';
         }
         if (! $msg .= trim(nl2br($rt))) {
             $msg .= 'Traceroute failed. You may need to configure your server permissions.';
@@ -195,6 +229,7 @@ function netquery_user_main()
         $lgrequest  = xarModAPIFunc('netquery', 'user', 'getlgrequest', array('request' => $data['request']));
         $lgrouter   = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => $data['router']));
         $lgdefault  = xarModAPIFunc('netquery', 'user', 'getlgrouter', array('router' => 'default'));
+        $readbuf = '';
         $lgaddress  = $lgrouter['address'];
         $lgport     = ($lgrouter[$lgrequest['handler'] . '_port'] > 0) ? $lgrouter[$lgrequest['handler'] . '_port'] : $lgdefault[$lgrequest['handler'] . '_port'];
         $lgcommand  = $lgrequest['command'] . (!empty ($lgparam) ? (" " . htmlentities(substr($lgparam,0,50))) : "");
@@ -226,40 +261,44 @@ function netquery_user_main()
         {
             $msg .= 'Full table view is not permitted on this router.';
         }
-        else if (!$lglink = fsockopen ($lgaddress, $lgport, $errno, $errstr, 5))
+        else if (!$sock = @fsockopen($lgaddress, $lgport, $errnum, $error, 10))
         {
+            unset($sock);
             $msg .= 'Error connecting to router. ' .$lgaddress . ':' . $lgport;
         }
         else
         {
-            $readbuf = '';
-            socket_set_timeout ($lglink, 5);
-            if (!empty ($lgusername)) fputs ($lglink, "{$lgusername}\n");
+            socket_set_timeout ($sock, 5);
+            if (!empty ($lgusername)) fputs ($sock, "{$lgusername}\n");
             if (!empty ($lgpassword))
-                fputs ($lglink, "{$lgpassword}\nterminal length 0\n{$lgcommand}\n");
+                fputs ($sock, "{$lgpassword}\nterminal length 0\n{$lgcommand}\n");
             else
-                fputs ($lglink, "terminal length 0\n{$lgcommand}\n");
+                fputs ($sock, "terminal length 0\n{$lgcommand}\n");
             if (empty ($lgparam) && $lgargc > 0) sleep (2);
-            fputs ($lglink, "quit\n");
-            while (!feof ($lglink)) $readbuf = $readbuf . fgets ($lglink, 256);
+            fputs ($sock, "quit\n");
+            while (!feof ($sock)) {
+                $readbuf .= fgets ($sock, 256);
+            }
             $start = strpos ($readbuf, $lgcommand);
             $len = strpos ($readbuf, "quit") - $start;
-            while ($readbuf[$start + $len] != "\n") $len--;
+            while ($readbuf[$start + $len] != "\n") {
+                $len--;
+            }
             $msg .= nl2br(substr($readbuf, $start, $len));
-            fclose ($lglink);
+            @fclose ($sock);
         }
         $msg .= '</blockquote></p>';
         $data['results'] .= $msg . '<hr>';
     }
     $logfp = $data['logfile'];
-    if ($data['capture_log_enabled'] && $logfp['local'])
+    if ($data['capture_log_enabled'] && $logfp['exec_local'])
     {
-        $datetime = date($logfp['remote']);
-        $fp = fopen($logfp['local'], 'a');
+        $datetime = date($logfp['exec_remote']);
+        $fp = @fopen($logfp['exec_local'], 'a');
         if ($fp) {
             $string = $datetime." - User IP: ".$_SERVER[REMOTE_ADDR]." - Target: ".$target." \n";
             $write = fputs($fp, $string);
-            fclose($fp);
+            @fclose($fp);
         }
     }
     return $data;

@@ -1,6 +1,10 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
+<div class="xar-mod-head">
+<span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+</div>
 <div class="xar-mod-body">
-    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+<h2><xar:mlstring>Overview</xar:mlstring></h2>
+
     <div style="padding: 1px;" class="xar-norm-outline">
         <div style="float:right;padding:10px;">
             <xar:if condition="file_exists('modules/netquery/xarimages/admin.gif')" >
@@ -14,9 +18,9 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The Netquery module includes whois, DNS, ping, traceroute and port check
-            query functions. Availability of each query type, local and remote execution, and all
-            entries in the whois and looking glass data tables are configurable by the administrator.</xar:mlstring>
+            <xar:mlstring>The Netquery module includes whois, DNS, port check, HTTP request, ping, traceroute
+            and Looking Glass router interrogation functions. Availability of each query type, local and remote
+            execution, and all entries in the whois and looking glass data tables are configurable.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -24,8 +28,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a><xar:mlstring>
-            - From the menu, you have three choices: </xar:mlstring>
+            <xar:mlstring>From the administration menu, you have three choices:</xar:mlstring>
             <ul>
             <li><a href="#$cfglink['url']#">#$cfglink['label']#</a><xar:mlstring>: From this
             menu option, you can select which Netquery functions will be available to users of
@@ -57,13 +60,15 @@
         </div>
         <br />
         <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+            <xar:mlstring>Extended information about this module can be found in the</xar:mlstring>
+            <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a>
         </div>
     </div>
-</div>
-<script type="text/javascript">
+
+<script language="javascript" type="text/javascript">
     function openwindow(hlpfile)
     {
         window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
     }
 </script>
+</div>

@@ -1,13 +1,15 @@
-<div class="xar-mod-head"><span class="xar-mod-title">#$maintitle#</span></div>
-<table width="100%" border="0" cellspacing="1" cellpadding="2">
+<div class="xar-mod-head">
+<span class="xar-mod-title">#$maintitle#</span></div>
 <div class="xar-mod-body">
+<div style="margin: auto;">
 
 <xar:if condition="'' ne $results">
 #$results#
 </xar:if>
 
 <h4>#$subtitle# <br><a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></h4>
-<div style="margin: auto;">
+
+<table>
 
 <xar:if condition="$whois_enabled">
 <form method="post" action="&xar-modurl-netquery-user-main;">
@@ -15,12 +17,14 @@
     <input type="hidden" name="querytype" id="querytype" value="whois">
     <tr>
     <td colspan="2"><label for="domain">#$domainlabel#</label>
-    <br><input type="text" name="domain" id="domain" value="#$domain#" size="30" maxlength="100"></td>
+    <br><input type="text" name="domain" id="domain" value="#$domain#" size="32" maxlength="100"></td>
     <td><label for="ext">#$extlabel#</label>
     <br><select name="whois_ext" id="whois_ext">
                 <option selected>#$whois_ext#</option>
                 <xar:foreach in="$links" value="$link">
+                    <xar:if condition="!empty($link['whois_ext'])">
                         <option value="#$link['whois_ext']#">#$link['whois_ext']#</option>
+                    </xar:if>
                 </xar:foreach>
     </select></td>
     <td><br>
@@ -36,7 +40,7 @@
     <input type="hidden" name="querytype" id="querytype" value="whoisip">
     <tr>
     <td colspan="3"><label for="addr">#$whoisiplabel#</label>
-    <br><input type="text" name="addr" id="addr" value="#$addr#" size="30" maxlength="100"></td>
+    <br><input type="text" name="addr" id="addr" value="#$addr#" size="32" maxlength="100"></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>
@@ -50,7 +54,7 @@
     <input type="hidden" name="querytype" id="querytype" value="lookup">
     <tr>
     <td colspan="3"><label for="host">#$lookuplabel#</label>
-    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <br><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>
@@ -58,13 +62,13 @@
 </form>
 </xar:if>
 
-<xar:if condition="$dns_dig_enabled && !$pingexec['winsys']">
+<xar:if condition="$dns_dig_enabled && !$pingexec['exec_winsys']">
 <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="dig">
     <tr>
     <td colspan="3"><label for="host">#$diglabel#</label>
-    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <br><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>
@@ -78,9 +82,28 @@
     <input type="hidden" name="querytype" id="querytype" value="port">
     <tr>
     <td colspan="2"><label for="server">#$serverlabel#</label>
-    <br><input type="text" name="server" id="server" value="#$server#" size="30" maxlength="100"></td>
+    <br><input type="text" name="server" id="server" value="#$server#" size="32" maxlength="100"></td>
     <td><label for="portnum">#$portnumlabel#</label>
     <br><input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10"></td>
+    <td><br>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$http_req_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="http">
+    <tr>
+    <td colspan="2"><label for="httpurl">#$httpurllabel#</label>
+    <br><input type="text" name="httpurl" id="httpurl" value="#$httpurl#" size="32" maxlength="100"></td>
+    <td><label for="httpreq">#$httpreqlabel#</label>
+    <br><select name="httpreq" id="httpreq">
+        <option selected>#$httpreq#</option>
+        <option value="HEAD">HEAD</option>
+        <option value="GET">GET</option></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>
@@ -94,17 +117,17 @@
     <input type="hidden" name="querytype" id="querytype" value="ping">
     <tr>
     <td colspan="2"><label for="host">#$pinglabel#</label>
-    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
-    <td><label for="count">#$countlabel#</label>
-    <br><select size="1" name="maxp" id="count">
+    <br><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
+    <td><label for="maxp">#$maxplabel#</label>
+    <br><select name="maxp" id="maxp">
         <option selected>#$maxp#</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
-        <option>9</option>
-        <option>10</option></td>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>
@@ -118,7 +141,7 @@
     <input type="hidden" name="querytype" id="querytype" value="pingrem">
     <tr>
     <td colspan="3"><label for="host">#$pingremotelabel#</label>
-    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <br><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="pingwindow(host.value);">
     </td>
@@ -132,7 +155,7 @@
     <input type="hidden" name="querytype" id="querytype" value="trace">
     <tr>
     <td colspan="3"><label for="host">#$tracelabel#</label>
-    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <br><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>
@@ -146,7 +169,7 @@
     <input type="hidden" name="querytype" id="querytype" value="tracerem">
     <tr>
     <td colspan="3"><label for="host">#$traceremotelabel#</label>
-    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <br><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="tracewindow(host.value);">
     </td>
@@ -163,18 +186,22 @@
     <br><select name="request" id="request">
                 <option selected>#$request#</option>
                 <xar:foreach in="$lgrequests" value="$req">
-                    <xar:if condition="$lgdefault[$req['handler']] && (! ( ($req['argc']) && (!$lgdefault['use_argc']) ) )">
-                        <option value="#$req['request']#">#$req['request']#</option>
+                    <xar:if condition="!empty($req['request'])">
+                        <xar:if condition="$lgdefault[$req['handler']] && (! ( ($req['argc']) && (!$lgdefault['use_argc']) ) )">
+                            <option value="#$req['request']#">#$req['request']#</option>
+                        </xar:if>
                     </xar:if>
                 </xar:foreach>
     </select></td>
     <td><label for="lgparam">#$lgparamlabel#</label>
-    <br><input type="text" name="lgparam" id="portnum" value="#$lgparam#" size="20" maxlength="100"></td>
+    <br><input type="text" name="lgparam" id="lgparam" value="#$lgparam#" size="20" maxlength="100"></td>
     <td><label for="router">#$lgrouterlabel#</label>
     <br><select name="router" id="router">
                 <option selected>#$router#</option>
                 <xar:foreach in="$lgrouters" value="$rtr">
+                    <xar:if condition="!empty($rtr['router'])">
                         <option value="#$rtr['router']#">#$rtr['router']#</option>
+                    </xar:if>
                 </xar:foreach>
     </select></td>
     <td><br>
@@ -184,19 +211,19 @@
 </form>
 </xar:if>
 
-</div>
-</div>
 </table>
+</div>
+</div>
 
-<script type="text/javascript">
+<script language="javascript" type="text/javascript">
 function pingwindow(target)
 {
-        var pingsite = "#$pingexec['remote']#?#$pingexec['remote_t']#=" + target;
+        var pingsite = "#$pingexec['exec_remote']#?#$pingexec['exec_remote_t']#=" + target;
         window.open (pingsite,"Ping","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
 }
 function tracewindow(target)
 {
-        var tracesite = "#$traceexec['remote']#?#$traceexec['remote_t']#=" + target;
+        var tracesite = "#$traceexec['exec_remote']#?#$traceexec['exec_remote_t']#=" + target;
         window.open (tracesite,"Trace","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
 }
 function openwindow(hlpfile)

@@ -7,18 +7,14 @@ function netquery_adminapi_getlink($args)
     extract($args);
     if (!isset($whois_id)) {
         $msg = xarML('Invalid Parameter Count');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
-    $query = "SELECT whois_id,
-                     whois_ext,
-                     whois_server
-            FROM $WhoisTable
-            WHERE whois_id = ?";
-    $result =& $dbconn->Execute($query, array((int) $whois_id));
+    $query = "SELECT * FROM $WhoisTable WHERE whois_id = " . xarVarPrepForStore($whois_id);
+    $result =& $dbconn->Execute($query);
     if (!$result) return;
     list($whois_id, $whois_ext, $whois_server) = $result->fields;
     if(!xarSecurityCheck('OverviewNetquery')) return;

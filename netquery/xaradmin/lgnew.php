@@ -1,6 +1,6 @@
 <?php
 function netquery_admin_lgnew()
-{   
+{
     if (!xarSecurityCheck('AddNetquery')) return;
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'form', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
     if (!xarVarFetch('Submit', 'str:1:100', $Submit, 'Cancel', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;

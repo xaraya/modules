@@ -23,7 +23,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -36,7 +36,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -51,7 +51,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -85,7 +85,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -199,21 +199,22 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
+    xarModSetVar('netquery', 'capture_log_enabled', 0);
     xarModSetVar('netquery', 'whois_enabled', 1);
     xarModSetVar('netquery', 'whoisip_enabled', 1);
     xarModSetVar('netquery', 'dns_lookup_enabled', 1);
     xarModSetVar('netquery', 'dns_dig_enabled', 1);
+    xarModSetVar('netquery', 'port_check_enabled', 1);
+    xarModSetVar('netquery', 'http_req_enabled', 1);
     xarModSetVar('netquery', 'ping_enabled', 1);
     xarModSetVar('netquery', 'ping_remote_enabled', 1);
     xarModSetVar('netquery', 'trace_enabled', 1);
     xarModSetVar('netquery', 'trace_remote_enabled', 1);
-    xarModSetVar('netquery', 'port_check_enabled', 1);
     xarModSetVar('netquery', 'looking_glass_enabled', 1);
-    xarModSetVar('netquery', 'capture_log_enabled', 0);
     xarRegisterMask('OverviewNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('ReadNetquery','All','netquery','All','All','ACCESS_READ');
     xarRegisterMask('EditNetquery','All','netquery','All','All','ACCESS_EDIT');
@@ -226,6 +227,7 @@ function netquery_upgrade($oldversion)
 {
     switch ($oldversion) {
         case '1.0.0':
+            xarModSetVar('netquery', 'http_req_enabled', 1);
             xarModSetVar('netquery', 'looking_glass_enabled', 1);
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
@@ -246,7 +248,7 @@ function netquery_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }
@@ -280,7 +282,7 @@ function netquery_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }
@@ -325,11 +327,13 @@ function netquery_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }
         case '1.1.0':
+            xarModSetVar('netquery', 'http_req_enabled', 1);
+        case '1.2.0':
         default:
             break;
     }
@@ -337,17 +341,18 @@ function netquery_upgrade($oldversion)
 }
 function netquery_delete()
 {
-    xarModDelVar('netquery', 'capture_log_enabled');
     xarModDelVar('netquery', 'looking_glass_enabled');
-    xarModDelVar('netquery', 'port_check_enabled');
     xarModDelVar('netquery', 'trace_remote_enabled');
     xarModDelVar('netquery', 'trace_enabled');
     xarModDelVar('netquery', 'ping_remote_enabled');
     xarModDelVar('netquery', 'ping_enabled');
+    xarModDelVar('netquery', 'http_req_enabled');
+    xarModDelVar('netquery', 'port_check_enabled');
     xarModDelVar('netquery', 'dns_dig_enabled');
     xarModDelVar('netquery', 'dns_lookup_enabled');
     xarModDelVar('netquery', 'whoisip_enabled');
     xarModDelVar('netquery', 'whois_enabled');
+    xarModDelVar('netquery', 'capture_log_enabled');
     xarRemoveMasks('netquery');
     xarRemoveInstances('netquery');
     $dbconn =& xarDBGetConn();

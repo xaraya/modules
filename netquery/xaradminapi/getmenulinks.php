@@ -7,14 +7,14 @@ function netquery_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminNetquery', 0)) {
         $menulinks[] = Array('url'   => xarModURL('netquery',
                                                   'admin',
-                                                  'modifyconfig'),
+                                                  'config'),
                               'title' => xarML('Modify main configuration settings'),
                               'label' => xarML('Modify Configuration'));
     }
     if (xarSecurityCheck('EditNetquery', 0)) {
         $menulinks[] = Array('url'   => xarModURL('netquery',
                                                   'admin',
-                                                  'view'),
+                                                  'wiview'),
                               'title' => xarML('View-edit-add whois lookup links'),
                               'label' => xarML('Edit Whois Links'));
     }

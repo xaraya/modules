@@ -1,10 +1,10 @@
 <?php
 function netquery_admin_main()
 {
-    $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'modifyconfig'),
+    $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));
-    $data['wivlink'] = Array('url'   => xarModURL('netquery', 'admin', 'view'),
+    $data['wivlink'] = Array('url'   => xarModURL('netquery', 'admin', 'wiview'),
                              'title' => xarML('View-edit-add whois lookup links'),
                              'label' => xarML('Edit Whois Links'));
     $data['lgvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
@@ -17,7 +17,7 @@ function netquery_admin_main()
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         return $data;
     } else {
-        xarResponseRedirect(xarModURL('netquery', 'admin', 'modifyconfig'));
+        xarResponseRedirect(xarModURL('netquery', 'admin', 'config'));
     }
     return $data;
 }

@@ -8,16 +8,13 @@ Version 0.3 2004-09-20
 Version 0.3.1 2004-09-26
    - minor bug fixes
    - completed PHP4 and PHP5 (E_STRICT) testing
-   - beta release uploaded to Xaraya (courtesy of jojodee)
 Version 1.0 2004-10-06
    - added config options for local/remote ping and TR
-   - added config option for Netquery log filepath
+   - added config option for log filepath and datetime
    - log filepath defaults to var/logs/netquery.log
-   - updated admin manual and other refs to reflect changes
-   - release candidate uploaded to Xaraya (courtesy of jojodee)
-Version 1.1 2004-10-10
+Version 1.1 2004-10-16
    - added Looking Glass router IPv4 and IPv6 interrogation
-   - added config options for log datetime record format
    - added Cancel buttons to configuration templates
    - added user help sections and section links to manual
-   - "gold" release uploaded to Xaraya (courtesy of jojodee)
+Version 1.2 2004-10-22
+   - added HTTP request object HEAD and GET
