@@ -79,13 +79,38 @@
         <a href="#$listview#">#$goback#</a>
         </span>
         <span style="float: right; width: 78%; text-align: left;padding-top:10px;">
+        <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+            <div class="tabnav">
+                <div class="navhelp help" title="#xarML('Click on a tab to explore further')#">
+                    <xar:mlstring>
+                        Options 
+                    </xar:mlstring>
+                    : 
+                </div>
+                <div class="tabnav-hairline"><!-- &nbsp; --></div>
+                <ul class="navlist">
+                    <li>
+                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'view'))#">
+                            <xar:mlstring>Basic Information</xar:mlstring>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#xarModUrl('release', 'user', 'display', array('rid' => $rid, 'phase' => 'version'))#">
+                            <xar:mlstring>Version History</xar:mlstring>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tabnav-hairline"><!-- &nbsp; --></div>
+            </div>
+        </xar:if>
+<xar:comment>bug 3435
         <form action="#xarModURL('release', 'user', 'display')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="rid" id="rid" value="#$rid#" />
         <input type="radio" name="phase" id="phase" value="view"  />
         <xar:mlstring>Basic Information</xar:mlstring>
         <input type="radio" name="phase" id="phase" value="version"  />
         <xar:mlstring>Version History</xar:mlstring>
-<xar:comment>jojodee - let's get rid of the documentation stuff till it's fixed.
     <xar:if condition="$type eq 'Module'">
         <input type="radio" name="phase" id="phase" value="docsmodule"  />
         <xar:mlstring>General Use</xar:mlstring>
@@ -99,9 +124,9 @@
         <input type="radio" name="phase" id="phase" value="docsblockgroups"  />
         <xar:mlstring>Defined Block Groups</xar:mlstring>
     </xar:if>
-</xar:comment>
         <input type="submit" value="Refresh"  tabindex="6" />
         </form>
+</xar:comment>
         </span>
     </div>
 
