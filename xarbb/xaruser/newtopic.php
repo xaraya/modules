@@ -120,12 +120,12 @@ function xarbb_user_newtopic()
 
             if(isset($tid))    {
                  $modified_date=date('F d, Y g:i A');
-                 $tpost .= "\n\r";
+                 $tpost .= "<p>\n\r";
                  $tpost .=xarML('[Modified by: #(1) (#(2)) on #(3)]',
                      xarUserGetVar('name'),
                      xarUserGetVar('uname'),
                      $modified_date);
-                 $tpost .= "\n\r";
+                 $tpost .= "</p>\n\r";
                 if (!xarModAPIFunc('xarbb',
                                'user',
                                'updatetopic',

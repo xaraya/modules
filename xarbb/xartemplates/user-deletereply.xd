@@ -12,7 +12,7 @@
 	<span class="xar-title"><xar:mlstring>Confirm deletion of reply</xar:mlstring></span><br /><br />
 
     <xar:set name="$mlconfirm"><xar:mlstring>Confirm</xar:mlstring></xar:set>
-	<input type="submit" value="#mlconfirm#"  tabindex="1" /><br /><br />
+	<input type="submit" value="#$mlconfirm#"  tabindex="1" /><br /><br />
 	
 	<a href="#xarModURL('xarbb', 'user', 'viewtopic')#"><xar:mlstring>Cancel deletion of reply</xar:mlstring></a>
 </form>        
