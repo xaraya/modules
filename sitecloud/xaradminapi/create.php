@@ -11,7 +11,7 @@ function sitecloud_adminapi_create($args)
     extract($args);
 
     // Security Check
-	if(!xarSecurityCheck('Addsitecloud')) return;
+    if(!xarSecurityCheck('Addsitecloud')) return;
 
     // We need to grab the current url right now for the string and the date
     $filedata = xarModAPIFunc('base', 'user', 'getfile',

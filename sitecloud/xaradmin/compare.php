@@ -1,7 +1,7 @@
 <?php
 function sitecloud_admin_compare()
 {
-	if(!xarSecurityCheck('Adminsitecloud')) return;
+    if(!xarSecurityCheck('Adminsitecloud')) return;
     // The API function is called
     if (!xarModAPIFunc('sitecloud',
                        'scheduler',

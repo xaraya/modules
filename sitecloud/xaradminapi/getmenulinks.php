@@ -2,7 +2,7 @@
 function sitecloud_adminapi_getmenulinks()
 {
     // Security Check
-	if(xarSecurityCheck('AddSitecloud')) {
+    if(xarSecurityCheck('AddSitecloud')) {
         $menulinks[] = Array('url'   => xarModURL('sitecloud',
                                                   'admin',
                                                   'new'),

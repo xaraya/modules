@@ -23,7 +23,7 @@ function sitecloud_adminapi_delete($args)
 
     if ($link == false) return;
     // Security Check
-	if(!xarSecurityCheck('Deletesitecloud')) return;
+    if(!xarSecurityCheck('Deletesitecloud')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

@@ -11,7 +11,7 @@ function sitecloud_userapi_countitems()
     $xartable =& xarDBGetTables();
 
     // Security Check
-	if(!xarSecurityCheck('Overviewsitecloud')) return;
+    if(!xarSecurityCheck('Overviewsitecloud')) return;
     $sitecloudtable = $xartable['sitecloud'];
     $query = "SELECT COUNT(1)
             FROM $sitecloudtable";

@@ -16,7 +16,7 @@ function sitecloud_userapi_getall($args)
     }
     $links = array();
     // Security Check
-	if(!xarSecurityCheck('Overviewsitecloud')) return;
+    if(!xarSecurityCheck('Overviewsitecloud')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $sitecloudtable = $xartable['sitecloud'];

@@ -2,7 +2,7 @@
 function sitecloud_admin_main()
 {
     // Security Check
-	if(!xarSecurityCheck('Editsitecloud')) return;
+    if(!xarSecurityCheck('Editsitecloud')) return;
 
     if (xarModGetVar('adminpanels', 'overview') == 0){
         // Return the output

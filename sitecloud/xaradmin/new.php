@@ -2,7 +2,7 @@
 function sitecloud_admin_new()
 {
     // Security Check
-	if(!xarSecurityCheck('Addsitecloud')) return;
+    if(!xarSecurityCheck('Addsitecloud')) return;
     $item = array();
     $item['module'] = 'sitecloud';
     $item['itemtype'] = NULL; // forum

@@ -11,7 +11,7 @@ function sitecloud_admin_delete()
     if (!xarVarFetch('obid','str:1:',$obid,$id,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
     // Security Check
-	if(!xarSecurityCheck('Deletesitecloud')) return;
+    if(!xarSecurityCheck('Deletesitecloud')) return;
     // The user API function is called
     $link = xarModAPIFunc('sitecloud',
                           'user',

@@ -10,7 +10,7 @@ function sitecloud_admin_modify($args)
     if (!xarVarFetch('obid','str:1:',$obid,$id,XARVAR_NOT_REQUIRED)) return;
 
     // Security Check
-	if(!xarSecurityCheck('Editsitecloud')) return;
+    if(!xarSecurityCheck('Editsitecloud')) return;
     $data = array();
     $data = xarModAPIFunc('sitecloud',
                           'user',

@@ -17,7 +17,7 @@ function sitecloud_admin_view()
                                     xarModGetVar('sitecloud', 'itemsperpage'));
 
     // Security Check
-	if(!xarSecurityCheck('Editsitecloud')) return;
+    if(!xarSecurityCheck('Editsitecloud')) return;
     // The user API function is called
     $links = xarModAPIFunc('sitecloud',
                            'user',

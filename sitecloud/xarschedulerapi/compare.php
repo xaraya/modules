@@ -9,7 +9,7 @@
 function sitecloud_schedulerapi_compare()
 {
     // Security Check
-	if(!xarSecurityCheck('Overviewsitecloud')) return;
+    if(!xarSecurityCheck('Overviewsitecloud')) return;
 
     $links  = xarModAPIFunc('sitecloud', 'user', 'getall');
     foreach ($links as $link){

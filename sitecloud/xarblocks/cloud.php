@@ -27,13 +27,13 @@ function sitecloud_cloudblock_init()
 function sitecloud_cloudblock_info()
 {
     return array('text_type' => 'cloud',
-		 'text_type_long' => 'Site Cloud',
-		 'module' => 'sitecloud',
-		 'func_update' => 'sitecloud_cloudblock_insert',
-		 'allow_multiple' => true,
-		 'form_content' => false,
-		 'form_refresh' => false,
-		 'show_preview' => true);
+         'text_type_long' => 'Site Cloud',
+         'module' => 'sitecloud',
+         'func_update' => 'sitecloud_cloudblock_insert',
+         'allow_multiple' => true,
+         'form_content' => false,
+         'form_refresh' => false,
+         'show_preview' => true);
 }
 
 /**

@@ -5,7 +5,7 @@
 function sitecloud_admin_modifyconfig()
 {
     // Security Check
-	if(!xarSecurityCheck('Adminsitecloud')) return;
+    if(!xarSecurityCheck('Adminsitecloud')) return;
     $hooks = xarModCallHooks('module', 'modifyconfig', 'sitecloud', array('module' => 'sitecloud'));
     if (empty($hooks)) {
         $data['hooks'] = '';

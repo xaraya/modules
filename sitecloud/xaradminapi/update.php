@@ -21,7 +21,7 @@ function sitecloud_adminapi_update($args)
     if ($link == false) return;
 
     // Security Check
-	if(!xarSecurityCheck('Editsitecloud')) return;
+    if(!xarSecurityCheck('Editsitecloud')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
