@@ -28,7 +28,7 @@
                         </select>
                     </td>
                     <td>
-                        <input type="submit" value="Flush" align="center" />
+                        <input type="submit" value="Flush"  />
                     </td>
                 </tr>
             </table>
