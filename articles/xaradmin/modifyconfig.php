@@ -51,6 +51,7 @@ function articles_admin_modifyconfig()
         $data['page_template']          = isset($settings['page_template']) ? $settings['page_template'] : '';
         $data['defaultstatus']          = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
         $data['defaultsort']            = !empty($settings['defaultsort']) ? $settings['defaultsort'] : 'date';
+        $data['usetitleforurl']         = (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? '' : 'checked="checked"';
     }
     if (!isset($data['itemsperpage'])) {
         $data['itemsperpage'] = 20;
@@ -218,6 +219,7 @@ function articles_admin_modifyconfig()
 
     if (empty($ptid)) {
         $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? 'checked="checked"' : '';
+
         $data['defaultpubtype'] = xarModGetVar('articles', 'defaultpubtype');
         if (empty($data['defaultpubtype'])) {
             $data['defaultpubtype'] = '';

@@ -81,6 +81,13 @@
         <td><input type="text" name="page_template" id="page_template" size="20" maxlength="60" value="#$page_template#" /></td>
     </tr>
     <tr>
+        <td><label for="usetitleforurl"><xar:mlstring>Use Title in short URLs<br />
+        <i>Note: if a title contains characters that are illegal in a URL, the title will not be used.</i>
+        </xar:mlstring></label></td>
+        <td><input type="checkbox" name="usetitleforurl" id="usetitleforurl" value="1" #$usetitleforurl# /></td>
+    </tr>
+    
+    <tr>
         <td colspan="2"><h3><xar:mlstring>Overview Configuration</xar:mlstring></h3></td>
     </tr>
     <tr>

@@ -15,11 +15,20 @@ function articles_userapi_encode_shorturl($args)
     if (!isset($func)) {
         return;
     }
-
+    
+    // Get the article settings for this publication type
+    if (!empty($ptid)) {
+        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+    } else {
+        $string = xarModGetVar('articles', 'settings');
+        if (!empty($string)) {
+            $settings = unserialize($string);
+        }
+    }
+    
     // check if we want to encode URLs using their titles rather then their ID
-    // TODO: get this from a modvar or something
-    $encodeUsingTitle = false;
-
+    $encodeUsingTitle= (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
+    
 
     // Coming from categories etc.
     if (!empty($objectid)) {
@@ -293,7 +302,7 @@ function encodeUsingTitle( $aid )
     // if there are more then one article with the same title, fall back on something
     // else -- like using $aid
 
-    $dupeResolutionMethod = 'Append AID';
+    $dupeResolutionMethod = 'Append Date';
 
     $searchArgs = array();
     $searchArgs['where'] = "title = '".$article['title']."'";
@@ -313,7 +322,7 @@ function encodeUsingTitle( $aid )
             case 'Append Date':
                 // User Title and Date
                 
-                $path = urlencode( $article['title'] ) .'/'.date('Y-m-d H:i',$article['pubdate']) ;
+                $path = rawurlencode( $article['title'] ) .'/'.date('Y-m-d H:i',$article['pubdate']) ;
                 break;
                 
             default:

@@ -14,10 +14,6 @@ function articles_userapi_decode_shorturl($params)
 
     $module = 'articles';
 
-    // check if we want to try decoding URLs using titles rather then ID
-    // TODO: get this from a modvar or something
-    $decodeUsingTitle = false;
-
     // Check if we're dealing with an alias here
     if ($params[0] != $module) {
         $alias = xarModGetAlias($params[0]);
@@ -32,6 +28,20 @@ function articles_userapi_decode_shorturl($params)
             }
         }
     }
+
+    // Get the article settings for this publication type
+    if (!empty($args['ptid'])) {
+        $settings = unserialize(xarModGetVar('articles', 'settings.'.$args['ptid']));
+    } else {
+        $string = xarModGetVar('articles', 'settings');
+        if (!empty($string)) {
+            $settings = unserialize($string);
+        }
+    }
+    
+    // check if we want to encode URLs using their titles rather then their ID
+    $decodeUsingTitle = (!isset($settings['usetitleforurl']) || empty($settings['usetitleforurl'])) ? false : true;
+
 
     if (empty($params[1])) {
         return array('view', $args);
@@ -154,7 +164,7 @@ function articles_userapi_decode_shorturl($params)
 
 function decodeUsingTitle( $params, $ptid = '' )
 {
-    $dupeResolutionMethod = 'Append AID';
+    $dupeResolutionMethod = 'ALL';
 
     // The $params passed in does not match on all legal URL characters and
     // so some urls get cut off -- my test cases included parens and commans "this(here)" and "that,+there"
@@ -209,6 +219,24 @@ function decodeUsingTitle( $params, $ptid = '' )
                     foreach ($articles as $article)
                     {
                         if( date('Y-m-d H:i',$article['pubdate']) == $params[3] )
+                        {
+                            $theArticle = $article;
+                            break;
+                        }
+                    }
+                }
+                break;
+
+            case 'ALL':
+                if( !empty($params[3]) )
+                {
+                    foreach ($articles as $article)
+                    {
+                        if( date('Y-m-d H:i',$article['pubdate']) == $params[3] )
+                        {
+                            $theArticle = $article;
+                            break;
+                        } else if( $article['aid'] == $params[3] )
                         {
                             $theArticle = $article;
                             break;

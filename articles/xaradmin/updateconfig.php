@@ -15,6 +15,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('adminitemsperpage', 'int',   $adminitemsperpage, 20, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('number_of_columns', 'int',   $number_of_columns, 0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('shorturls',         'isset', $shorturls,         0,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('usetitleforurl',    'isset', $usetitleforurl,    0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultview',       'isset', $defaultview,       1,  XARVAR_NOT_REQUIRED)) {return;}
@@ -65,6 +66,8 @@ function articles_admin_updateconfig()
     $settings['page_template']      = $page_template;
     $settings['defaultstatus']      = $defaultstatus;
     $settings['defaultsort']        = $defaultsort;
+    $settings['usetitleforurl']     = $usetitleforurl;
+    
 
     if (!empty($ptid)) {
         xarModSetVar('articles', 'settings.'.$ptid, serialize($settings));
