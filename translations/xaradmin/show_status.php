@@ -37,9 +37,9 @@ function translations_admin_show_status()
     // core
     xarSessionSetVar('translations_dnName','core');
     xarSessionSetVar('translations_dnType',XARMLS_DNTYPE_CORE);
-    $tmp = translations_create_trabar('core','core');
-    $tmp = $tmp['entrydata'];
-    $coreentries =& count_entries(&$tmp);
+    $tmp =& translations_create_trabar('core','core');
+    $coreentries =& count_entries(&$tmp['entrydata']);
+    unset($tmp);
 
     // modules
     if(!($mods = xarModAPIFunc('modules','admin','GetList')))  return;
@@ -51,9 +51,9 @@ function translations_admin_show_status()
         xarSessionSetVar('translations_dnName',$modname);
         xarSessionSetVar('translations_modid',$mod['id']);
         
-        $tmp =  translations_create_trabar('modules',$modname);
-        $tmp = $tmp['entrydata'];
-        $modentries[$modname] =& count_entries(&$tmp);
+        $tmp =&  translations_create_trabar('modules',$modname);
+        $modentries[$modname] =& count_entries(&$tmp['entrydata']);
+        unset($tmp);
         $mod_totalentries += $modentries[$modname]['numEntries'];
         $mod_untranslated += $modentries[$modname]['numEmptyEntries'];
         $mod_keytotalentries += $modentries[$modname]['numKeyEntries'];
@@ -70,9 +70,9 @@ function translations_admin_show_status()
          xarSessionSetVar('translations_dnName',$themename);
          xarSessionSetVar('translations_themeid',$theme['id']);
 
-         $tmp =  translations_create_trabar('themes',$themename);
-         $tmp = $tmp['entrydata'];
-         $themeentries[$themename] =& count_entries($tmp);
+         $tmp =&  translations_create_trabar('themes',$themename);
+         $themeentries[$themename] =& count_entries(&$tmp['entrydata']);
+         unset($tmp);
          $theme_totalentries += $themeentries[$themename]['numEntries'];
          $theme_untranslated += $themeentries[$themename]['numEmptyEntries'];
          $theme_keytotalentries += $themeentries[$themename]['numKeyEntries'];
