@@ -57,14 +57,14 @@ function sitetools_admin_downloadbkup ($args)
 //  $mimetp=mime_content_type ($filetodownload);
 
     ob_end_clean();
-	// Setup headers for browser
+    // Setup headers for browser
 
     header("Cache-Control: no-cache, must-revalidate");
     header("Pragma: no-cache");
     header("Pragma: ");
     header("Cache-Control: ");
     header("Content-type: application/octetstream");
-//	header("Content-type: ".$mimetp );
+//    header("Content-type: ".$mimetp );
 
     header("Content-disposition: attachment; filename=\"".basename($filetodownload)."\"");
 //    header("Content-length: $size");

@@ -59,7 +59,7 @@ function sitetools_admin_downloaddel ($args)
         $info['outcome']=true;
 
     } else {
-       	$info['outcome']=false;
+           $info['outcome']=false;
     }
 
  $info['filedeleted']=$filetodelete;

@@ -32,7 +32,7 @@ function sitetools_admin_backup($args)
     //setup variables
     $data['usegz']=$usegz;
     $data['screen']=$screen;
-  	$data['startbackup']=$startbackup;
+      $data['startbackup']=$startbackup;
 
     $data['number_of_cols'] = xarModGetVar('sitetools','colnumber');
     $number_of_cols=$data['number_of_cols'];
@@ -54,9 +54,9 @@ function sitetools_admin_backup($args)
             $dbtype= xarDBGetType();
     }
 
-	$data['confirm']=$confirm;
-	$data['dbname']=$dbname;
-	$data['dbtype']=$dbtype;
+    $data['confirm']=$confirm;
+    $data['dbname']=$dbname;
+    $data['dbtype']=$dbtype;
 
 
     if (empty($startbackup)) {

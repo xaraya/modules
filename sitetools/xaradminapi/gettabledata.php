@@ -40,11 +40,11 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
             $tables = mysql_list_tables($dbname);
             $i=0;
             if ($tables) {
- 	            while (list($tablename) = mysql_fetch_array($tables)) {
- 	               $i++;
-            	   $SQLquery = 'SELECT COUNT(*) AS num FROM '.$tablename;
-				   $result = mysql_query($SQLquery);
-				   $row = mysql_fetch_array($result);
+                 while (list($tablename) = mysql_fetch_array($tables)) {
+                    $i++;
+                   $SQLquery = 'SELECT COUNT(*) AS num FROM '.$tablename;
+                   $result = mysql_query($SQLquery);
+                   $row = mysql_fetch_array($result);
                    $dbtables[] = array('tablenum'=>$i, 'tablename'=>$tablename, 'tablerecs'=>$row['num']);
                 }
             }else {

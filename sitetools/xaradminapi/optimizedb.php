@@ -24,7 +24,7 @@
  */
 function sitetools_adminapi_optimizedb($dbname,$dbtype='')
 {
-	//To do: setup for db type
+    //To do: setup for db type
     if ($dbtype=='' || !isset($dbtype)){
     $dbtype='mysql';
     }
