@@ -65,7 +65,7 @@ function tinymce_activate()
  * @returns bool
  * @raise DATABASE_ERROR
  */
-function tinymce_upgrade($oldVersion)
+function tinymce_upgrade($oldversion)
 {
     switch ($oldversion) {
     case '0.0.1':
