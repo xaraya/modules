@@ -207,7 +207,7 @@ function smilies_userapitransform($text)
             $alreplace[] = '<img src="' . htmlspecialchars($tmpsmily['icon']) .
                            '" alt="' . htmlspecialchars($tmpsmily['emotion']) .
                            '" />';
-        } var_dump($alsearch);
+        }
     }
 
     // Step 1 - move all tags out of the text and replace them with placeholders
