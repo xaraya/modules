@@ -22,7 +22,7 @@ function netquery_adminapi_lgremove($args)
     $LGRouterTable = $xartable['netquery_lgrouter'];
     $query = "DELETE FROM $LGRouterTable
             WHERE router_id = ?";
-    $result =& $dbconn->Execute($query, (array)$router_id);
+    $result =& $dbconn->Execute($query, array((int)$router_id));
     if (!$result) return;
     return true;
 }
