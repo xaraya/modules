@@ -189,7 +189,8 @@ function xarbb_latestpostsblock_display($blockinfo)
     return $blockinfo;
 }
 
-function xarbb_datesort($a, $b) {
+function xarbb_datesort($a, $b) 
+{
 
     return ($a['ptime'] < $b['ptime']);
 
