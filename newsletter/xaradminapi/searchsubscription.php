@@ -20,6 +20,7 @@
  * @param $args an array of arguments
  * @param $args['search'] the type of search to perform ('publication', 'email', 'name')
  * @param $args['searchname'] the name publication, email, name to search for
+ * @param $args['pid'] the publication id to search for - optional
  * @param $args['startnum'] start with this item number (default 1)
  * @param $args['numitems'] the number of items to retrieve (default -1 = all)
  * @returns array
@@ -34,6 +35,9 @@ function newsletter_adminapi_searchsubscription($args)
     // Optional arguments.
     if (!isset($searchname)) {
         $searchname = '';
+    }
+    if (!isset($pid)) {
+        $pid = 0;
     }
     if(!isset($startnum)) {
         $startnum = 1;
@@ -74,51 +78,95 @@ function newsletter_adminapi_searchsubscription($args)
     switch(strtolower($search)) {
 
         case 'publication':
-            // Get subscriptions by publication
-            $query = "SELECT $rolesTable.xar_uid,
-                             $nwsltrSubTable.xar_pid,
-                             $nwsltrPubTable.xar_title,
-                             $rolesTable.xar_name,
-                             $rolesTable.xar_uname,
-                             $rolesTable.xar_email,
-                             $rolesTable.xar_state,
-                             0 as xar_type,
-                             $nwsltrSubTable.xar_htmlmail
-                      FROM   $nwsltrSubTable, $nwsltrPubTable, $rolesTable
-                      WHERE  $nwsltrSubTable.xar_uid =  $rolesTable.xar_uid
-                      AND    $nwsltrPubTable.xar_id = ?
-                      AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
+            if (!$pid) {
+                // Get subscriptions for all publications
+                $query = "SELECT $rolesTable.xar_uid,
+                                 $nwsltrSubTable.xar_pid,
+                                 $nwsltrPubTable.xar_title,
+                                 $rolesTable.xar_name,
+                                 $rolesTable.xar_uname,
+                                 $rolesTable.xar_email,
+                                 $rolesTable.xar_state,
+                                 0 as xar_type,
+                                 $nwsltrSubTable.xar_htmlmail
+                          FROM   $nwsltrSubTable, $nwsltrPubTable, $rolesTable
+                          WHERE  $nwsltrSubTable.xar_uid =  $rolesTable.xar_uid
+                          AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
 
-            $bindvars[] = (int) $pid;
+                if (!empty($searchname)) {
+                    $query .= " AND ($rolesTable.xar_name LIKE '%" . $searchname . "%' OR $rolesTable.xar_email LIKE  '%" . $searchname . "%')";
+                }
 
-            if (!empty($searchname)) {
-                $query .= " AND ($rolesTable.xar_name LIKE '%" . $searchname . "%' OR $rolesTable.xar_email LIKE  '%" . $searchname . "%')";
-            }
+                // Union
+                $query .= " UNION ";
 
-            // Union
-            $query .= " UNION ";
+                // Get alt subscriptions by publication
+                $query .= "SELECT $nwsltrAltSubTable.xar_id,
+                                  $nwsltrAltSubTable.xar_pid,
+                                  $nwsltrPubTable.xar_title,
+                                  $nwsltrAltSubTable.xar_name,
+                                  $nwsltrAltSubTable.xar_name as uname,
+                                  $nwsltrAltSubTable.xar_email,
+                                  3 as xar_state,
+                                  1 as xar_type,
+                                  $nwsltrAltSubTable.xar_htmlmail
+                           FROM   $nwsltrAltSubTable, $nwsltrPubTable
+                           WHERE  $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
 
-            // Get alt subscriptions by publication
-            $query .= "SELECT $nwsltrAltSubTable.xar_id,
-                              $nwsltrAltSubTable.xar_pid,
-                              $nwsltrPubTable.xar_title,
-                              $nwsltrAltSubTable.xar_name,
-                              $nwsltrAltSubTable.xar_name as uname,
-                              $nwsltrAltSubTable.xar_email,
-                              3 as xar_state,
-                              1 as xar_type,
-                              $nwsltrAltSubTable.xar_htmlmail
-                       FROM   $nwsltrAltSubTable, $nwsltrPubTable
-                       WHERE  $nwsltrPubTable.xar_id = ? 
-                       AND    $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
+                if (!empty($searchname)) {
+                    $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
+                }
 
-            $bindvars[] = (int) $pid;
-
-            if (!empty($searchname)) {
-                $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
-            }
+                $query .= " ORDER BY xar_pid";
    
-            $query .= " ORDER BY xar_pid";
+            } else {
+            
+                // Get subscriptions by publication
+                $query = "SELECT $rolesTable.xar_uid,
+                                 $nwsltrSubTable.xar_pid,
+                                 $nwsltrPubTable.xar_title,
+                                 $rolesTable.xar_name,
+                                 $rolesTable.xar_uname,
+                                 $rolesTable.xar_email,
+                                 $rolesTable.xar_state,
+                                 0 as xar_type,
+                                 $nwsltrSubTable.xar_htmlmail
+                          FROM   $nwsltrSubTable, $nwsltrPubTable, $rolesTable
+                          WHERE  $nwsltrSubTable.xar_uid =  $rolesTable.xar_uid
+                          AND    $nwsltrPubTable.xar_id = ?
+                          AND    $nwsltrSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+                $bindvars[] = (int) $pid;
+
+                if (!empty($searchname)) {
+                    $query .= " AND ($rolesTable.xar_name LIKE '%" . $searchname . "%' OR $rolesTable.xar_email LIKE  '%" . $searchname . "%')";
+                }
+
+                // Union
+                $query .= " UNION ";
+
+                // Get alt subscriptions by publication
+                $query .= "SELECT $nwsltrAltSubTable.xar_id,
+                                  $nwsltrAltSubTable.xar_pid,
+                                  $nwsltrPubTable.xar_title,
+                                  $nwsltrAltSubTable.xar_name,
+                                  $nwsltrAltSubTable.xar_name as uname,
+                                  $nwsltrAltSubTable.xar_email,
+                                  3 as xar_state,
+                                  1 as xar_type,
+                                  $nwsltrAltSubTable.xar_htmlmail
+                           FROM   $nwsltrAltSubTable, $nwsltrPubTable
+                           WHERE  $nwsltrPubTable.xar_id = ? 
+                           AND    $nwsltrAltSubTable.xar_pid = $nwsltrPubTable.xar_id";
+
+                $bindvars[] = (int) $pid;
+
+                if (!empty($searchname)) {
+                    $query .= " AND ($nwsltrAltSubTable.xar_name LIKE '%" . $searchname . "%' OR $nwsltrAltSubTable.xar_email LIKE  '%" . $searchname . "%')";
+                }
+   
+                $query .= " ORDER BY xar_pid";
+            }
 
             break;
 

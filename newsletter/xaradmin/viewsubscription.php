@@ -39,13 +39,6 @@ function newsletter_admin_viewsubscription($args)
     if (!xarVarFetch('publicationId', 'id', $publicationId, 0)) return;
     if (!xarVarFetch('searchname', 'str:1:', $searchname, '')) return;
 
-    // If searching by publication, make sure something was selected
-    if ($search == 'publication' && $publicationId == 0) {
-        $msg = xarML('You must choose a publication to search.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
-
     // Get the admin edit menu
     $data['menu'] = xarModFunc('newsletter', 'admin', 'subscriptionmenu');
 
@@ -59,14 +52,12 @@ function newsletter_admin_viewsubscription($args)
     switch(strtolower($search)) {
         case 'publication':
             // Search by the publication ID
-            if ($publicationId != 0) {
-                $searchargs =  array('search' => 'publication',
-                                     'searchname' => $searchname,
-                                     'pid' => $publicationId,
-                                     'startnum' => $startnum,
-                                     'numitems' => xarModGetVar('newsletter',
-                                                                'subscriptionsperpage'));
-            }
+            $searchargs =  array('search' => 'publication',
+                                 'searchname' => $searchname,
+                                 'pid' => $publicationId,
+                                 'startnum' => $startnum,
+                                 'numitems' => xarModGetVar('newsletter',
+                                                            'subscriptionsperpage'));
             break;
 
         case 'email':
