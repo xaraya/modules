@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id:
+ * 
+ * Create a new example item
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage example
+ * @author Example module development team 
+ */
 /**
  * create a new example item
  * 
@@ -55,7 +67,7 @@ function example_adminapi_create($args)
     // Get next ID in table - this is required prior to any insert that
     // uses a unique ID, and ensures that the ID generation is carried
     // out in a database-portable fashion
-    $nextId = $dbconn->GenId($exampletable); 
+    $nextId = $dbconn->GenId($exampletable);
     // Add item - the formatting here is not mandatory, but it does make
     // the SQL statement relatively easy to read.  Also, separating out
     // the sql statement from the Execute() command allows for simpler

@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id:
+ * 
+ * View a list of items
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage example
+ * @author Example module development team 
+ */
 /**
  * view a list of items
  * This is a standard function to provide an overview of all of the items

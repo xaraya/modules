@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * File: $Id:
+ * 
+ * Utility function counts number of items held by this module
+ * 
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
+ * @link http://www.xaraya.com
+ *
+ * @subpackage example
+ * @author Example module development team 
+ */
 /**
  * utility function to count the number of items held by this module
  * 

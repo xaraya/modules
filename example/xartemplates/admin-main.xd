@@ -1,3 +1,4 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <!-- This is a standard template for the module overview  -->
 <!-- Each Module Should have an overview explaining exactly what it does, and giving an overview of the blocks and hooks that it includes or accepts. -->
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - Example</xar:mlstring></span></div>

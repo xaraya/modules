@@ -1,3 +1,5 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+
 <!-- This Javascript will check for required fields before the form is submitted. -->
 
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
