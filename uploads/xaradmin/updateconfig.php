@@ -12,6 +12,7 @@ function uploads_admin_updateconfig()
     if (!xarVarFetch('max_image_width', 'int:1:', $max_image_width, 600, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('max_image_height', 'int:1:', $max_image_height, 800, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('thumbnail_setting', 'str:1:', $thumbnail_setting, '0', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('thumbnail_path',    'str:1:', $thumbnail_path, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('netpbm_path', 'str:1:', $netpbm_path, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!xarVarFetch('import_directory', 'str:1:', $import_directory, '', XARVAR_NOT_REQUIRED)) return;
@@ -30,6 +31,7 @@ function uploads_admin_updateconfig()
     xarModSetVar('uploads', 'max_image_height', $max_image_height);
     xarModSetVar('uploads', 'max_image_width', $max_image_width);
 	xarModSetVar('uploads', 'thumbnail_setting', $thumbnail_setting);
+	xarModSetVar('uploads', 'thumbnail_path', $thumbnail_path);
 	xarModSetVar('uploads', 'netpbm_path', $netpbm_path);
 
     xarModSetVar('uploads', 'import_directory',  $import_directory);

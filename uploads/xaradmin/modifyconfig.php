@@ -26,6 +26,8 @@ function uploads_admin_modifyconfig()
     $data['max_image_height']       = xarModGetVar('uploads', 'max_image_height');
 	$data['thumbnail_setting']      = xarModGetVar('uploads', 'thumbnail_setting');
 	$data['netpbm_path']      		= xarModGetVar('uploads', 'netpbm_path');
+	$data['thumbnail_path']      	= xarModGetVar('uploads', 'thumbnail_path');
+
 
 	// Setup Defaults
 	// **************

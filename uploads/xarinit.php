@@ -33,6 +33,7 @@ function uploads_init()
     xarModSetVar('uploads', 'max_image_width', '600');
     xarModSetVar('uploads', 'max_image_height', '800');
 	xarModSetVar('uploads', 'thumbnail_setting', '0');
+	xarModSetVar('uploads', 'thumbnail_path', '');
 	xarModSetVar('uploads', 'netpbm_path', '');
 
     xarModSetVar('uploads', 'import_directory',  '');
