@@ -1,0 +1,40 @@
+<table width="100%">
+ <tr>
+  <td class="xar-alt">
+    <label for="tid#$tid#">#$string#</label>
+  </td>
+ </tr>
+ <tr>
+   <td>
+    <input type="text" name="tid#$tid#" id="tid#$tid#" value="#$translation#" size="80" />
+   </td>
+ </tr>
+ <tr>
+  <td colspan="2">
+    <table>
+      <xar:loop name="$references">
+        <tr>
+          <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'# xar-sub">
+            #$loop:item['file']#:#$loop:item['line']# --&gt;
+          </td>
+          <td class="#$loop:index % 2 ? 'xar-norm-outline':'xar-alt-outline'# xar-sub">
+            #$loop:item['source']['pre']#
+            <span class="xar-accent">#$loop:item['source']['code']#</span>
+            #$loop:item['source']['post']#
+          </td>
+        </tr>
+      </xar:loop>
+      <xar:if condition="$otherReferences">
+        <tr>
+          <td colspan="2" class="xar-norm-outline'">
+            <xar:ml>
+              <xar:mlstring>Other #(1) references are not shown.</xar:mlstring>
+              <xar:mlvar>#$numOtherReferences#</xar:mlvar>
+            </xar:ml>
+          </td>
+        </tr>
+      </xar:if>
+    </table>
+  </td>
+ </tr>
+</table>
