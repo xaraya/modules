@@ -52,7 +52,11 @@ function keywords_adminapi_createhook($args)
     }
 
     // check if we need to save some keywords here
-    $keywords = xarVarCleanFromInput('keywords');
+    if (isset($extrainfo['keywords']) && is_string($extrainfo['keywords'])) {
+        $keywords = $extrainfo['keywords'];
+    } else {
+        $keywords = xarVarCleanFromInput('keywords');
+    }
     if (empty($keywords)) {
         return $extrainfo;
     }
