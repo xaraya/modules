@@ -18,8 +18,8 @@
  */
 function workflow_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 
@@ -560,8 +560,8 @@ function workflow_upgrade($oldversion)
 
         case 1.1:
             // Code to upgrade from version 1.1 goes here
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
 
             xarDBLoadTableMaintenanceAPI();
 
@@ -642,8 +642,8 @@ function workflow_upgrade($oldversion)
  */
 function workflow_delete()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 

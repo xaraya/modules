@@ -48,7 +48,7 @@ if (!function_exists('xarTimeToDHMS')) {
 /**
  * Common Galaxia database connection handler
  */
-list($dbconn) = xarDBGetConn();
+$dbconn =& xarDBGetConn();
 global $dbGalaxia;
 $dbGalaxia =& $dbconn;
 // Set the fetch mode to assoc by default
