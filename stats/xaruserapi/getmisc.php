@@ -8,20 +8,20 @@
  */
 function stats_userapi_getmisc()
 {
-	// core
-	$countArgs = array('include_anonymous' => false,
-					   'include_myself'    => false);
-	$data['users'] = xarModAPIFunc('roles','user','countall',$countArgs);
+    // core
+    $countArgs = array('include_anonymous' => false,
+                       'include_myself'    => false);
+    $data['users'] = xarModAPIFunc('roles','user','countall',$countArgs);
     $data['sysversion'] = xarConfigGetVar('System.Core.VersionNum');
 
-	//TODO:
-	// articles
-	// comments
-	// waiting content
-	// categories
-	unset($countArgs);
-	
-	return $data;
+    //TODO:
+    // articles
+    // comments
+    // waiting content
+    // categories
+    unset($countArgs);
+    
+    return $data;
 }
 
 ?>

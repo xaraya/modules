@@ -21,7 +21,7 @@ function stats_userapi_gettotalhits()
     $result =& $dbconn->Execute($query);
 
     // check for an error with the database code
-	if (!$result) return;
+    if (!$result) return;
 
     // generate the result array
     $data = $result->fields[0];

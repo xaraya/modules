@@ -26,7 +26,7 @@
 function stats_eventapi_OnServerRequest($arg)
 {
     /* Uncomment the following to fix bug 178 */
-	if ((xarSecurityCheck('AdminPanel', 0)) AND (xarModGetVar('stats', 'countadmin') == FALSE)) {
+    if ((xarSecurityCheck('AdminPanel', 0)) AND (xarModGetVar('stats', 'countadmin') == FALSE)) {
         return true;
     }
     

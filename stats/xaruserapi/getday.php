@@ -20,16 +20,16 @@ function stats_userapi_getday($args)
 
     // create query
     $query = "SELECT SUM(xar_sta_hits), xar_sta_year, xar_sta_month, xar_sta_day
-	          FROM $statstable
+              FROM $statstable
               GROUP BY xar_sta_year, xar_sta_month, xar_sta_day
               HAVING xar_sta_year = $year
-	          AND xar_sta_month = $month
-	          AND xar_sta_day = $day";
+              AND xar_sta_month = $month
+              AND xar_sta_day = $day";
     $result =& $dbconn->Execute($query);
 
     // check for an error with the database code
-	if (!$result) return;
-	
+    if (!$result) return;
+    
     // generate the result array
     $data = $result->fields[0];
     if (empty($data)) {

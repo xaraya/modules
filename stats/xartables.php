@@ -11,7 +11,7 @@
  * 
  * @subpackage stats
  * @author Frank Besler <frank@besler.net>
- */				
+ */                
 
 /**
  * This function is called internally by the core whenever the module is loaded
