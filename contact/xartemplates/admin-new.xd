@@ -52,7 +52,7 @@
 </select>
 </td></tr>
 
-<input type="hidden" name="number" value="#$number#">
+<input type="hidden" name="number" value="">
 <td>Add New City:</td>
     <td><input type="text" name="AddNewCity" maxlength="90"></td>
     </tr>
