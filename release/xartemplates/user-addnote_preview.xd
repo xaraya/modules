@@ -47,7 +47,7 @@
 					#$dllink#
 				</td>
 			</tr>
-			<xar:if condition="$pricecheck eq '1'">
+			<xar:if condition="$pricecheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Price</xar:mlstring>
@@ -57,7 +57,7 @@
 				</td>
 			</tr>
 			</xar:if>
-			<xar:if condition="$democheck eq '1'">
+			<xar:if condition="$democheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Demo Link</xar:mlstring>
@@ -67,7 +67,7 @@
 				</td>
 			</tr>
 			</xar:if>
-			<xar:if condition="$supportcheck eq '1'">
+			<xar:if condition="$supportcheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Support Link</xar:mlstring>
@@ -109,7 +109,7 @@
 					<input type="text" name="dllink" value="#$dllink#" size="30" maxlength="100" />
 				</td>
 			</tr>
-			<xar:if condition="$pricecheck eq '1'">
+			<xar:if condition="$pricecheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Price</xar:mlstring>
@@ -119,7 +119,7 @@
 				</td>
 			</tr>
 			</xar:if>
-			<xar:if condition="$democheck eq '1'">
+			<xar:if condition="$democheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Demo Link</xar:mlstring>
@@ -129,7 +129,7 @@
 				</td>
 			</tr>
 			</xar:if>
-			<xar:if condition="$supportcheck eq '1'">
+			<xar:if condition="$supportcheck eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<xar:mlstring>Supported Link</xar:mlstring>

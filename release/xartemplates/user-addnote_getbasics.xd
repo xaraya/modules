@@ -40,7 +40,7 @@
 					<xar:mlstring>Commercial or Free?</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					Commercial <input type="radio" name="pricecheck" value="1" /> Free <input type="radio" name="pricecheck" value="0" />
+					Commercial <input type="radio" name="pricecheck" value="2" /> Free <input type="radio" name="pricecheck" value="1" />
 				</td>
 			</tr>
 			<tr>
@@ -48,7 +48,7 @@
 					<xar:mlstring>Have Demo?</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					Yes&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="democheck" value="1" />&nbsp;&nbsp; No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="democheck" value="0" />
+					Yes&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="democheck" value="2" />&nbsp;&nbsp; No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="democheck" value="1" />
 				</td>
 			</tr>
 			<tr>
@@ -56,7 +56,7 @@
 					<xar:mlstring>Module or Theme Supported?</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					Yes&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="supportcheck" value="1" />&nbsp;&nbsp; No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="supportcheck" value="0" />
+					Yes&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="supportcheck" value="2" />&nbsp;&nbsp; No&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="supportcheck" value="1" />
 				</td>
 			</tr>
 		</table>			

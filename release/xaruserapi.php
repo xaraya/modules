@@ -251,7 +251,9 @@ function release_userapi_getallnotes($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
-
+    if (!isset($userapproved)) {
+        $userapproved = 1;
+    }
     $releaseinfo = array();
 
     // Security check
@@ -280,14 +282,28 @@ function release_userapi_getallnotes($args)
                      xar_notes,
                      xar_certified,
                      xar_approved
-            FROM $releasenotes
-            ORDER BY xar_rnid";
+            FROM $releasenotes";
+    if (!empty($approved)) {
+        $query .= " WHERE xar_approved = '" . xarVarPrepForStore($approved). "'";
+    } elseif (!empty($certified)) {
+        $query .= " WHERE xar_certified = '" . xarVarPrepForStore($certified) . "'
+                    AND xar_approved = 2";
+    } elseif (!empty($supported)) {
+        $query .= " WHERE xar_supported = '" . xarVarPrepForStore($supported) . "'
+                    AND xar_approved = 2";
+    } elseif (!empty($price)) {
+        $query .= " WHERE xar_price = '" . xarVarPrepForStore($price) . "'
+                    AND xar_approved = 2";
+    }
+
+
+            //ORDER BY xar_rnid";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $certified, $approved,                  $changelog, $notes) = $result->fields;
+        list($rnid, $rid, $version, $price, $priceterms, $demo, $demolink, $dllink, $supported, $supportlink, $changelog, $notes, $certified, $approved) = $result->fields;
         if (xarSecAuthAction(0, 'release::', "::", ACCESS_OVERVIEW)) {
             $releaseinfo[] = array('rnid'       => $rnid,
                                    'rid'        => $rid,
@@ -397,11 +413,11 @@ function release_userapi_createnote($args)
     $releasetable = $xartable['release_notes'];
 
     if (empty($approved)){
-        $approved = 0;
+        $approved = 1;
     }
 
     if (empty($certified)){
-        $certified = 0;
+        $certified = 1;
     }
 
     // Get next ID in table
