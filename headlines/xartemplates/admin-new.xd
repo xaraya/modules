@@ -6,23 +6,23 @@
 
 
 <form method="post" action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" >
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" value="#$authid#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="url" id="url" value="" size="40" maxlength="200" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="url" id="url" value="" size="40" maxlength="200" />
+    </span>
+    </div>
 
-	#$hooks#
+    #$hooks#
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="submit" value="#$submitlabel#"/>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="submit" value="#$submitlabel#"/>
+    </span>
+    </div>
 
     
 </form>

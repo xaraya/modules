@@ -1,19 +1,19 @@
 <xar:if condition="!empty($feedcontent)">
-	<xar:loop name="$feedcontent">
-		<div style="padding-top: 1em;">
-			<xar:if condition="!empty($loop:item['url'])">
-				&bull; <a href="#xarVarPrepForDisplay($loop:item['url'])#">#$loop:item['title']#</a>
-			<xar:else />
-				&bull; <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
-			</xar:if>
-		</div>
-		<xar:if condition="!empty($loop:item['channel'])">
-			<div class="xar-sub">
-			<xar:mlstring>
-				From
-			</xar:mlstring>:
-			#xarVarPrepHTMLDisplay($loop:item['channel'])#
-			</div>
-		</xar:if>
-	</xar:loop>
+    <xar:loop name="$feedcontent">
+        <div style="padding-top: 1em;">
+            <xar:if condition="!empty($loop:item['url'])">
+                &bull; <a href="#xarVarPrepForDisplay($loop:item['url'])#">#$loop:item['title']#</a>
+            <xar:else />
+                &bull; <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
+            </xar:if>
+        </div>
+        <xar:if condition="!empty($loop:item['channel'])">
+            <div class="xar-sub">
+            <xar:mlstring>
+                From
+            </xar:mlstring>:
+            #xarVarPrepHTMLDisplay($loop:item['channel'])#
+            </div>
+        </xar:if>
+    </xar:loop>
 </xar:if>

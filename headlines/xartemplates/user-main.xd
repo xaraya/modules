@@ -9,23 +9,23 @@
 <xar:loop name="$indlinks">
 <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
 <div class="xar-norm" style="padding: 3px;">
-	<xar:if condition="!empty($loop:item['chanlink'])">
-	<span style="float: left; text-align: left; width: 79%;"><a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a> -- #$loop:item['chandesc']#</span>
-	<xar:else/>
-	<span style="float: left; text-align: left; width: 79%;">#$loop:item['chantitle']# -- #$loop:item['chandesc']#</span>
-	</xar:if>
-	<xar:if condition="!empty($loop:item['viewlink'])">
-	<span style="float: right; text-align: right; width: 19%;"><a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a></span>
-	</xar:if>
-	<br />
-	<xar:if condition="!empty($loop:item['comments'])"> 
-		<span style="float: right; text-align: right; width: 19%;">#$loop:item['comments']#</span>
-		<br />
-	</xar:if>
-	<xar:if condition="xarSecurityCheck('EditHeadlines', 0) and !empty($loop:item['importlink'])">
-		<span style="text-align: right; float: right;"><a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a></span>
-		<br />
-	</xar:if>
+    <xar:if condition="!empty($loop:item['chanlink'])">
+    <span style="float: left; text-align: left; width: 79%;"><a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a> -- #$loop:item['chandesc']#</span>
+    <xar:else/>
+    <span style="float: left; text-align: left; width: 79%;">#$loop:item['chantitle']# -- #$loop:item['chandesc']#</span>
+    </xar:if>
+    <xar:if condition="!empty($loop:item['viewlink'])">
+    <span style="float: right; text-align: right; width: 19%;"><a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a></span>
+    </xar:if>
+    <br />
+    <xar:if condition="!empty($loop:item['comments'])"> 
+        <span style="float: right; text-align: right; width: 19%;">#$loop:item['comments']#</span>
+        <br />
+    </xar:if>
+    <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and !empty($loop:item['importlink'])">
+        <span style="text-align: right; float: right;"><a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a></span>
+        <br />
+    </xar:if>
 </div>
 </div>
 </xar:loop>

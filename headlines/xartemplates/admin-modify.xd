@@ -3,48 +3,48 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Edit Headlines</xar:mlstring></h2>
 <form method="post" action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" >
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" value="#$authid#" />
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="hid" id="hid" value="#$hid#" />
-	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
-	</span>
-	</div>
-	<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#"><label for="title"><xar:mlstring>Alt Title</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="title" id="title" value="#$title#" size="40" maxlength="200" />
-	</span>
-	</div>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#"><label for="desc"><xar:mlstring>Alt Description</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="200" />
-	</span>
-	</div>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 100px; text-align: right;">
-		<span class="help" title="#xarML('You can change the order of the feeds to be displayed on individual category pages.')#"><label for="order"><xar:mlstring>Order</xar:mlstring></label></span>
-	</span>
-	<span style="float: right; width: 335px; text-align: left;">
-		<input type="text" name="order" id="order" value="#$order#" size="3" maxlength="3" />
-	</span>
-	</div>
+    <span style="float: left; width: 100px; text-align: right;">
+        <span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 335px; text-align: left;">
+        <input type="text" name="url" id="url" value="#$url#" size="40" maxlength="200" />
+    </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 100px; text-align: right;">
+        <span class="help" title="#xarML('This is an alternate title for the feed to be displayed on the user display')#"><label for="title"><xar:mlstring>Alt Title</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 335px; text-align: left;">
+        <input type="text" name="title" id="title" value="#$title#" size="40" maxlength="200" />
+    </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 100px; text-align: right;">
+        <span class="help" title="#xarML('This is an alternate description for the feed to be displayed on the user display')#"><label for="desc"><xar:mlstring>Alt Description</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 335px; text-align: left;">
+        <input type="text" name="desc" id="desc" value="#$desc#" size="40" maxlength="200" />
+    </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 100px; text-align: right;">
+        <span class="help" title="#xarML('You can change the order of the feeds to be displayed on individual category pages.')#"><label for="order"><xar:mlstring>Order</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 335px; text-align: left;">
+        <input type="text" name="order" id="order" value="#$order#" size="3" maxlength="3" />
+    </span>
+    </div>
 
-	#$hooks#
+    #$hooks#
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="submit" value="#$submitlabel#"/>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="submit" value="#$submitlabel#"/>
+    </span>
+    </div>
 
 </form>
 </div>

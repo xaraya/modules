@@ -1,12 +1,12 @@
 <xar:if condition="empty($warning)">
-	<div><xar:mlstring>Headlines from:</xar:mlstring>
+    <div><xar:mlstring>Headlines from:</xar:mlstring>
         <div><a href="#$chanlink#">#xarVarPrepForDisplay($chantitle)#</a></div>
         <xar:if condition="!empty($chandesc)">
              <div class="xar-sub">#xarVarPrepForDisplay($chandesc)#</div>
         </xar:if>
     </div>
-	<xar:if condition="!empty($feedcontent)">
-		<xar:loop name="$feedcontent">
+    <xar:if condition="!empty($feedcontent)">
+        <xar:loop name="$feedcontent">
             <div style="padding-top: 1em;">
                 <xar:if condition="!empty($loop:item['link'])">
                     &bull; <a href="#xarVarPrepForDisplay($loop:item['link'])#">#$loop:item['title']#</a>
@@ -14,11 +14,11 @@
                     &bull; <strong>#xarVarPrepHTMLDisplay($loop:item['title'])#</strong>
                 </xar:if>
             </div>
-			<xar:if condition="!empty($loop:item['description'])">
-				<div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item['description'])#</div>
-			</xar:if>
-		</xar:loop>
-	</xar:if>
+            <xar:if condition="!empty($loop:item['description'])">
+                <div class="xar-sub">#xarVarPrepHTMLDisplay($loop:item['description'])#</div>
+            </xar:if>
+        </xar:loop>
+    </xar:if>
 <xar:else />
-	<div>#xarVarPrepForDisplay($warning)#</div>
+    <div>#xarVarPrepForDisplay($warning)#</div>
 </xar:if>

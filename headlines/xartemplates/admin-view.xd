@@ -1,7 +1,7 @@
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headline Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-	<h2><xar:mlstring>View Headlines</xar:mlstring></h2>
+    <h2><xar:mlstring>View Headlines</xar:mlstring></h2>
     <form method="post" action="#xarModUrl('headlines', 'admin', 'settings')#">
         <div>
         <div class="xar-norm-outline" style="padding: 0px;">
@@ -30,11 +30,11 @@
         <xar:if condition="$selstyle eq 'compact'">
             <xar:template file="compact" type="module"/>
        <xar:elseif condition="$selstyle eq 'plain'"/>
-	    <xar:template file="plain" type="module"/>
-	<xar:else/>
-	    <xar:template file="icons" type="module"/>	
-	</xar:if>
+        <xar:template file="plain" type="module"/>
+    <xar:else/>
+        <xar:template file="icons" type="module"/>    
+    </xar:if>
         </div>
     </form>
-	#$pager#
+    #$pager#
 </div>
