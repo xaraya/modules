@@ -78,6 +78,9 @@ function articles_topitemsblock_display($blockinfo)
     if (empty($vars['showdynamic'])) {
         $vars['showdynamic'] = 0;
     }
+	if (empty($vars['status'])) {
+        $vars['status'] = '3,2';
+    }
     
     // see if we're currently displaying an article
     if (xarVarIsCached('Blocks.articles','aid')) {
@@ -177,8 +180,9 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     // frontpage or approved status
-    $status = array(3,2);
-
+    //$status = array(3,2');
+	$statusarray = array($vars['status']);
+	
     // get cids for security check in getall
     $fields = array('aid','title','pubtypeid','cids');
     if ($vars['toptype'] == 'rating') {
@@ -203,7 +207,7 @@ function articles_topitemsblock_display($blockinfo)
                               array('ptid' => $ptid,
                                     'cids' => $cidsarray,
                                     'andcids' => 'false',
-                                    'status' => $status,
+                                    'status' => $statusarray,
                                     'enddate' => time(),
                                     'fields' => $fields,
                                     'sort' => $sort,
@@ -265,7 +269,6 @@ function articles_topitemsblock_display($blockinfo)
         }
         $blockinfo['content'] = xarTplBlock('articles',$template,
                                             array('items' => $items));
-
         return $blockinfo;
     }
 }
@@ -315,6 +318,11 @@ function articles_topitemsblock_modify($blockinfo)
     if (empty($vars['showdynamic'])) {
         $vars['showdynamic'] = 0;
     }
+	if (empty($vars['status'])) {
+        $vars['status'] = '2,3';
+    }
+	
+	$statusarray = array($vars['status']);
 
     $vars['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
     
@@ -326,6 +334,14 @@ function articles_topitemsblock_modify($blockinfo)
                                        'name' => xarML('Rating')),
                                  array('id' => 'date',
                                        'name' => xarML('Date')));
+
+	$vars['statusoptions'] = array(array('id' => '3,2',
+                                         'name' => xarML('All Published')),
+                                   array('id' => '3',
+                                         'name' => xarML('Frontpage')),
+                                   array('id' => '2',
+                                         'name' => xarML('Approved'))
+                                  );									   
 
     $vars['blockid'] = $blockinfo['bid'];
 
@@ -349,6 +365,7 @@ function articles_topitemsblock_update($blockinfo)
     if(!xarVarFetch('showsummary',  'isset', $vars['showsummary'],  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showdynamic',  'isset', $vars['showdynamic'],  NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('showvalue',    'isset', $vars['showvalue'],    NULL, XARVAR_DONT_SET)) {return;}
+	if(!xarVarFetch('status',    'isset', $vars['status'],    NULL, XARVAR_DONT_SET)) {return;}
 
     if (empty($vars['nocatlimit'])) {
         $vars['nocatlimit'] = 0;
