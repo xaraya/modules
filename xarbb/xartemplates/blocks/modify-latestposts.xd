@@ -1,0 +1,191 @@
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 100%; text-align: left;">
+		<b>
+		<xar:mlstring>Special Options</xar:mlstring>
+		</b>
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Show latest topics</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="hidden" name="addtopics" value="off">
+		<xar:if condition="$addtopics eq 'on'">
+			<input type="checkbox" name="addtopics" value="on" checked="checked" tabindex="1" />
+		<xar:else/>
+			<input type="checkbox" name="addtopics" value="on" tabindex="1" />
+		</xar:if>
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Show latest replies</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="hidden" name="addposts" value="off">
+		<xar:if condition="$addposts eq 'on'">
+			<input type="checkbox" name="addposts" value="on" checked="checked" tabindex="2" />
+		<xar:else/>
+			<input type="checkbox" name="addposts" value="on" tabindex="2" />
+		</xar:if>
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Total topics and replies to display</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="howmany" value="#$howmany#" size="3" maxlength="3" tabindex="3" />
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Truncate long titles to no more than </xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="text" name="truncate" value="#$truncate#" size="3" maxlength="3" tabindex="4" />
+		characters
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Include topics and posts from the following forums</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<select name="forumid[]" tabindex="5" multiple size="3"/>
+		<xar:foreach in="$forumlist" key="$key" value="$value">
+		<xar:if condition="in_array($key,$forumid)">
+			<option value="#$key#" selected="selected">#$value#</option>
+		<xar:else/>
+			<option value="#$key#">#$value#</option>
+		</xar:if>
+		</xar:foreach>
+		</select>		
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Topic title</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<select tabindex="5" name="addlink">
+			<xar:if condition="$addlink eq '0'">
+				<option value="0" selected="selected">
+			<xar:else/>
+				<option value="0">
+			</xar:if>
+			<xar:mlstring>Don't show</xar:mlstring>
+			</option>
+			<xar:if condition="$addlink eq '1'">
+				<option value="1" selected="selected">
+			<xar:else/>
+				<option value="1">
+			</xar:if>
+			<xar:mlstring>Show without a link</xar:mlstring>
+			</option>
+			<xar:if condition="$addlink eq '2'">
+				<option value="2" selected="selected">
+			<xar:else/>
+				<option value="2">
+			</xar:if>
+			<xar:mlstring>Show with link to topic</xar:mlstring>
+			</option>
+
+		</select>
+
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Author name</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<select name="addauthor" tabindex="6" >
+			<xar:if condition="$addauthor eq '0'">
+				<option value="0" selected="selected">
+			<xar:else/>
+				<option value="0">
+			</xar:if>
+			<xar:mlstring>Don't show</xar:mlstring>
+			</option>
+			<xar:if condition="$addauthor eq '1'">
+				<option value="1" selected="selected">
+			<xar:else/>
+				<option value="1">
+			</xar:if>
+			<xar:mlstring>Show without link</xar:mlstring>
+			</option>
+			<xar:if condition="$addauthor eq '2'">
+				<option value="2" selected="selected" disabled="disabled">
+			<xar:else/>
+				<option value="2" disabled="disabled">
+			</xar:if>
+			<xar:mlstring>Show with link to author info</xar:mlstring>
+			</option>
+		</select>
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Show forum title</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<select tabindex="7" name="forumlink">
+			<xar:if condition="$forumlink eq '0'">
+				<option value="0" selected="selected">
+			<xar:else/>
+				<option value="0">
+			</xar:if>
+			<xar:mlstring>Don't show</xar:mlstring>
+			</option>
+			<xar:if condition="$forumlink eq '1'">
+				<option value="1" selected="selected">
+			<xar:else/>
+				<option value="1">
+			</xar:if>
+			<xar:mlstring>Show without a link</xar:mlstring>
+			</option>
+			<xar:if condition="$forumlink eq '2'">
+				<option value="2" selected="selected">
+			<xar:else/>
+				<option value="2">
+			</xar:if>
+			<xar:mlstring>Show with link to forum</xar:mlstring>
+			</option>
+
+		</select>
+
+	</span>
+</div>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Add date</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="hidden" name="adddate" value="off">
+		<xar:if condition="$adddate eq 'on'">
+			<input type="checkbox" name="adddate" value="on" checked="checked" tabindex="9" />
+		<xar:else/>
+			<input type="checkbox" name="adddate" value="on" tabindex="9" />
+		</xar:if>
+	</span>	
+</div>
+<xar:comment>
+<div style="clear: both; padding-top: 10px;">
+	<span style="float: left; width: 20%; text-align: right;">
+		<xar:mlstring>Show post text instead of title?</xar:mlstring>
+	</span>
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="hidden" name="titleortext" value="off">
+		<xar:if condition="$titleortext eq 'on'">
+			<input type="checkbox" name="titleortext" value="on" checked="checked" tabindex="10" />
+		<xar:else/>
+			<input type="checkbox" name="titleortext" value="on" tabindex="10" />
+		</xar:if>
+		
+	</span>	
+</div>
+</xar:comment>
+
+

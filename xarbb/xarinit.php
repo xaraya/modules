@@ -106,6 +106,14 @@ function xarbb_init()
                    )
            );
     xarDefineInstance('xarbb', 'Forum', $instances);
+    
+    // Register Block types
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName' => 'xarbb',
+                             'blockType' => 'latestposts'))) return;
+
     // Register Masks
     // Mask = Categorie : Id : Name
     xarRegisterMask('ReadxarBB','All','xarbb','Forum','All:All','ACCESS_READ');     // Allows reading Topics and Postings
