@@ -20,7 +20,9 @@ function cachesecurity_adminapi_hook($args)
     //For now we just synchronize all
     //For add/delete hooks we can usually be a lot more selective
     //Just adding the new relatioships or deleting the old ones...
-    //Whoever wants to finish this will be more than welcome. 
+    //Whoever wants to finish this will be more than welcome.
+    //Nice help for that: 
+    //http://fungus.teststation.com/~jon/treehandling/TreeHandling.htm
     if (!xarModAPIFunc('cachesecurity','admin','syncall')) return;
 
     if (!xarModAPIFunc('cachesecurity','admin','turnon')) return;
