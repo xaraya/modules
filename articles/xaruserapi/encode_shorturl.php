@@ -196,7 +196,22 @@ function articles_userapi_encode_shorturl($args)
     if (!empty($path)) {
         // search
         if (isset($q)) {
-            $path .= $join . 'q=' . urlencode($q);
+            $path .= $join . 'q=' . $q;
+            $join = '&amp;';
+        }
+        // by author
+        if (isset($author)) {
+            $path .= $join . 'author=' . $author;
+            $join = '&amp;';
+        }
+        // by startdate
+        if (isset($start)) {
+            $path .= $join . 'start=' . $start;
+            $join = '&amp;';
+        }
+        // by enddate
+        if (isset($end)) {
+            $path .= $join . 'end=' . $end;
             $join = '&amp;';
         }
         // sort

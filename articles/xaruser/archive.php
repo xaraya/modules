@@ -219,7 +219,7 @@ function articles_user_archive($args)
             $articles[$key]['title'] = xarML('(none)');
         }
         if ($showdate && !empty($articles[$key]['pubdate'])) {
-            $articles[$key]['date'] = strftime("%Y-%m-%d %H:%M:%S",
+            $articles[$key]['date'] = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",
                                                $articles[$key]['pubdate']);
         } else {
             $articles[$key]['date'] = '';

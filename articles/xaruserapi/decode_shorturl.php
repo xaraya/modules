@@ -105,6 +105,8 @@ function articles_userapi_decode_shorturl($params)
                         return array('view', $args);
                     } elseif (preg_match('/^map/i',$params[2])) {
                         return array('viewmap', $args);
+                    } elseif (preg_match('/^search/i',$params[2])) {
+                        return array('search', $args);
                     } elseif ($params[2] == 'archive') {
                         if (!empty($params[3]) && preg_match('/^(\d{4}|all)/',$params[3],$matches)) {
                             $args['month'] = $matches[1];

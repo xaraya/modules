@@ -1,7 +1,59 @@
 <h2><xar:mlstring>Search in Articles</xar:mlstring></h2>
 
+    <table border="0" cellpadding="4" cellspacing="0">
+<xar:if condition="empty($ishooked)">
+<form method="post" action="&xar-modurl-articles-user-search;">
+    <tr>
+        <td><label for="q"><xar:mlstring>Search for</xar:mlstring></label></td>
+        <td><input type="text" name="q" id="q" value="#$q#" size="20" />
+        <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
+	&nbsp;&nbsp;&nbsp; <input type="submit" name="search" value="#$search#" /></td>
+    </tr>
+    <tr>
+        <td><label for="author"><xar:mlstring>By author</xar:mlstring></label></td>
+        <td><input type="text" name="author" id="author" value="#$author#" size="20" /></td>
+    </tr>
+</xar:if>
+    <tr>
+        <td><xar:mlstring>Publications</xar:mlstring></td>
+        <td><table border="0" cellpadding="0" cellspacing="3"><tr><td valign="top"><xar:set name="$i">0</xar:set>
+        <input type="hidden" name="ptids[]" value="0"/>
+        <xar:foreach in="$publications" value="$pubtype">
+            <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
+            <xar:if condition="$i++ and $i % 2 eq 0"></td><td valign="top"></xar:if>
+        </xar:foreach></td></tr></table>
+        </td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Published</xar:mlstring></td>
+        <td><label for="articles_startdate"><xar:mlstring>between</xar:mlstring></label> <xar:data-input name="articles_startdate" value="$startdate" type="calendar" /> &nbsp;<label for="articles_enddate"><xar:mlstring>and</xar:mlstring></label>  <xar:data-input name="articles_enddate" value="$enddate" type="calendar" /></td>
+    </tr>
+    <tr>
+        <td><xar:mlstring>Categories</xar:mlstring></td>
+<xar:if condition="count($categories) eq 0">
+        <td><input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:submit();" /><label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label></td>
+    </tr>
+    </table>
+<xar:else />
+        <td><input type="checkbox" name="by" id="filterbycat" value="cat" onChange="javascript:submit();" checked="checked" /><label for="filterbycat"><xar:mlstring>Filter by category</xar:mlstring></label></td>
+    </tr>
+    </table>
+    <table border="0" cellpadding="4" cellspacing="0">
+    <xar:set name="$i">0</xar:set>
+    <tr>
+    <xar:foreach in="$categories" value="$cat">
+        <td valign="top" align="right">#$cat['cattitle']# : </td>
+        <td valign="top">#$cat['catselect']# </td>
+        <xar:if condition="$i++ and $i % 2 eq 0"></tr><tr></xar:if>
+    </xar:foreach>
+    </tr>
+    </table>
+</xar:if>
+<xar:if condition="empty($ishooked)">
+  </form>
+</xar:if>
+
 <xar:foreach in="$results" value="$result">
-    <br />
     <h3>#$result['description']#:</h3>
     <ul>
     <xar:foreach in="$result['items']" value="$item">
@@ -16,39 +68,10 @@
     </xar:foreach>
     </ul>
     #$result['pager']#
-    <br />
 </xar:foreach>
 
 <xar:if condition="!empty($status)">
 <br />#$status#<br />
-</xar:if>
-
-<xar:if condition="empty($results) or count($results) eq 0">
-    <br />
-    <table border="0" cellpadding="4" cellspacing="0">
-    <tr>
-        <td valign="top"><xar:mlstring>Publications</xar:mlstring></td>
-        <td valign="top">
-        <xar:foreach in="$publications" value="$pubtype">
-            <input type="checkbox" name="ptids[]" id="#$pubtype['pubdescr']#" value="#$pubtype['pubid']#"#$pubtype['pubchecked']# /> <label for="#$pubtype['pubdescr']#">#$pubtype['pubdescr']#</label> <br />
-        </xar:foreach>
-        </td>
-    </tr>
-    <tr>
-        <td><xar:mlstring>Categories</xar:mlstring></td>
-<xar:if condition="count($categories) eq 0">
-        <td><a href="#$searchurl#"><xar:mlstring>Filter by Category</xar:mlstring></a></td>
-<xar:else />
-        <td><a href="#$searchurl#"><xar:mlstring>Hide Categories</xar:mlstring></a></td>
-</xar:if>
-    </tr>
-    <xar:foreach in="$categories" value="$cat">
-    <tr>
-        <td valign="top" align="right">#$cat['cattitle']# : </td>
-        <td valign="top">#$cat['catselect']# </td>
-    </tr>
-    </xar:foreach>
-    </table>
 </xar:if>
 
 <br />
