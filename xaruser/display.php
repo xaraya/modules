@@ -16,7 +16,7 @@ function tasks_user_display($args)
 
     // how to get module id of calling module?
     // check if output has already been displayed
-    // if not, use xarvarcleanfrominput('module') to get mod id
+    // if not, use xarVarFetch('module') to get mod id
     // then set output as displayed
     // where to unset?
     // set session var for displayed and for module name
