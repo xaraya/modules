@@ -70,7 +70,7 @@ function articles_userapi_leftjoin($args)
 
     // Specify the WHERE part
     // FIXME: <mrb> someone better informed about this should replace
-    // the xarvarprepforstore with qstr() method where appropriate
+    // the xar-varprepforstore with qstr() method where appropriate
     $whereclauses = array();
     if (!empty($authorid) && is_numeric($authorid)) {
         $whereclauses[] = $leftjoin['authorid'] . ' = ' . $authorid;
