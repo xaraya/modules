@@ -7,7 +7,7 @@ function netquery_admin_lgview()
     $routers = xarModAPIFunc('netquery', 'admin', 'getrouters', array('startnum' => '1'));
     if (empty($routers)) {
         $msg = xarML('There are no looking glass routers registered');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     for ($i = 0; $i < count($routers); $i++) {

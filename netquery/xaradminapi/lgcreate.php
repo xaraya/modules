@@ -8,7 +8,7 @@ function netquery_adminapi_lgcreate($args)
     if ((!isset($router_router)) ||
         (!isset($router_address))) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     if(!xarSecurityCheck('AddNetquery')) return;

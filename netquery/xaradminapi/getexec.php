@@ -7,7 +7,7 @@ function netquery_adminapi_getexec($args)
     extract($args);
     if (!isset($exec_type)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();

@@ -10,7 +10,7 @@ function netquery_adminapi_get($args)
     if (!isset($whois_id)) {
         $msg = xarML('Invalid Parameter Count',
                     join(', ',$invalid), 'userapi', 'get', 'netquery');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

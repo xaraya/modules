@@ -23,7 +23,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -36,7 +36,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -51,7 +51,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -85,7 +85,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -199,7 +199,7 @@ function netquery_init()
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarML('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -246,7 +246,7 @@ function netquery_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }
@@ -280,7 +280,7 @@ function netquery_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }
@@ -325,7 +325,7 @@ function netquery_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarML('DATABASE_ERROR', $sql);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                 return;
             }

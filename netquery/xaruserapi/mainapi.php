@@ -65,7 +65,7 @@ function netquery_userapi_getexec($args)
     extract($args);
     if (!isset($exec_type)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
@@ -127,7 +127,7 @@ function netquery_userapi_getlink($args)
     extract($args);
     if (!isset($whois_ext)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
@@ -185,7 +185,7 @@ function Netquery_userapi_getlgrequest($args)
     extract($args);
     if (!isset($request)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
@@ -309,7 +309,7 @@ function Netquery_userapi_getlgrouter($args)
     extract($args);
     if (!isset($router)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();

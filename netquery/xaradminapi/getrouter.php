@@ -7,7 +7,7 @@ function netquery_adminapi_getrouter($args)
     extract($args);
     if (!isset($router_id)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();

@@ -11,7 +11,7 @@ function netquery_admin_view()
                            array('startnum' => $startnum));
     if (empty($links)) {
         $msg = xarML('There are no whois links registered');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     for ($i = 0; $i < count($links); $i++) {

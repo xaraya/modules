@@ -8,7 +8,7 @@ function netquery_adminapi_delete($args)
     extract($args);
     if (!isset($whois_id)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -18,7 +18,7 @@ function netquery_adminapi_delete($args)
                           array('whois_id' => $whois_id));
     if (empty($whoislink)) {
         $msg = xarML('No Such Whois Lookup Link Present', 'netquery');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
 
