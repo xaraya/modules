@@ -316,7 +316,10 @@ function xarbb_user_viewtopic($args)
     // Return the template variables defined in this function
     $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
     $data['catname'] = $categories['name'];
-
+   // Forum Jump
+    $data['forums'] = xarModAPIFunc('xarbb',
+                                    'user',
+                                    'getallforums');
     return $data;
 }
 ?>

@@ -7,51 +7,11 @@
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
 <xar:if condition="$post ne '1'">
-    <div class="xarbb-noteswrapper">
-        <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
-    </div>
-    <div id="top">
-        <strong>
-            #$ttitle#
-        </strong>
-    </div>
-    <xar:if condition="!empty($pager)">
-        <div class="xar-sub">
-            <strong>
-                #$pager# 
-            </strong>
-        </div>
-    </xar:if>
-    <div class="xarbb-topiccontrols">
-        <span class="xar-sub">
-            <xar:if condition="$tstatus ne 3">
-                <xar:sec mask="PostxarBB" catch="false">
-                    <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-                        #$newtopic# 
-                    </a>
-                    <a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
-                        #$newreply# 
-                    </a>
-                </xar:sec>
-                <xar:else />
-                <xar:sec mask="PostxarBB" catch="false">
-                    #$closed# 
-                </xar:sec>
-            </xar:if>
-            <a href="#xarModUrl('xarbb', 'user', 'main')#">
-                <xar:mlstring>
-                    Forum Index 
-                </xar:mlstring>
-            </a>
-            -&gt; 
-            <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
-                #$catname# 
-            </a>
-            -&gt; 
-            <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
-                #$fname# 
-            </a>
-        </span>
+<div class="xarbb-noteswrapper">
+    <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+</div>
+<div class="xarbb-noteswrapper">
+    <div class="xar-sub rightnote">
     <xar:comment>
       Approach 1 : via redirect in viewtopic
         FIXME: insert link to previous/next topic here with the right CSS stuff ?
@@ -67,9 +27,7 @@
     <xar:comment>
       Approach 3 : retrieve the previous/next topic id here
     </xar:comment>
-    </div>
-    <div class="xarbb-topiccontrols">
-        <span class="xar-sub">
+     <div>
         <xar:set name="previd">#xarModAPIFunc('xarbb','user','getprevioustopicid',array('fid' => $fid, 'ttime' => $ttime))#</xar:set>
         <xar:if condition="!empty($previd)">
             <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $previd))#"><xar:mlstring>Previous Topic</xar:mlstring></a>
@@ -83,10 +41,9 @@
         <xar:else/>
             <xar:mlstring>Next Topic</xar:mlstring>
         </xar:if>
-        </span>
     </div>
     <xar:if condition="xarThemeIsAvailable('print')">
-        <div class="xarbb-topiccontrols">
+    <div >
             <a href="#xarModUrl('xarbb', 'user', 'printtopic', array('tid' => $tid, 'theme' => 'print'))#">
                 <xar:mlstring>
                     Print this topic
@@ -95,6 +52,69 @@
         </div>
     </xar:if>
 </xar:if>
+</div>
+    <div id="top">
+        <strong>
+            #$ttitle#
+        </strong>
+    </div>
+    <xar:if condition="!empty($pager)">
+        <div class="xar-sub">
+            <strong>
+                #$pager#
+            </strong>
+        </div>
+    </xar:if>
+  <form action="#xarModUrl('xarbb', 'user', 'jump')#" method="post">
+        <div class="xarbb-noteswrapper">
+            <strong><xar:mlstring>Forum Jump</xar:mlstring></strong><br />
+            <select name="f" onchange="this.form.submit();">
+                <optgroup label="#xarML('Options')#">
+                    <option value="#$fid#" selected="selected"><xar:mlstring>Please select forum</xar:mlstring></option>
+                    <option value="#$fid#"> -------------------- </option>
+                </optgroup>
+                <optgroup label="#xarML('Forums')#">
+                <xar:loop name="$forums">
+                    <option value="#$loop:item['fid']#">#$loop:item['fname']#</option>
+                </xar:loop>
+                </optgroup>
+            </select>
+            <input type="submit" class="button" value="#xarML('Jump')#"  />
+        </div>
+    </form>    
+    <div class="xarbb-topiccontrols">
+        <span class="xar-sub">
+            <xar:if condition="$tstatus ne 3">
+                <xar:sec mask="PostxarBB" catch="false">
+                    <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+                        #$newtopic#
+                    </a>
+                    <a href="#xarModURL('xarbb', 'user', 'newreply', array('tid' => $tid))#">
+                        #$newreply#
+                    </a>
+                </xar:sec>
+                <xar:else />
+                <xar:sec mask="PostxarBB" catch="false">
+                    #$closed#
+                </xar:sec>
+            </xar:if>
+            <a href="#xarModUrl('xarbb', 'user', 'main')#">
+                <xar:mlstring>
+                    Forum Index
+                </xar:mlstring>
+            </a>
+            -&gt;
+            <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
+                #$catname#
+            </a>
+            -&gt;
+            <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+                #$fname#
+            </a>
+        </span>
+    </div>
+
+</div>
 <div class="xarbb-tablewrapper">
     <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
         #$hooks['polls']# 
@@ -559,7 +579,7 @@
         </xar:if>
     </div>
     <xar:sec mask="ModxarBB" catch="false">
-        <div>
+        <div style="clear:left;">
             <xar:if condition="$tstatus ne 3">
                 <a href="#xarModUrl('xarbb', 'user', 'locktopic', array('tstatus' => 3, 'tid' => $tid))#">
                     <img src="#xarTplGetImage('new/topic_lock.gif')#" alt="#xarML('Lock Topic')#" />
