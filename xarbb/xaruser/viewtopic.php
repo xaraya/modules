@@ -58,11 +58,8 @@ function xarbb_user_viewtopic($args)
 
     // Lets deal with the cookie in a more sane manner
     if (xarUserIsLoggedIn()){
-        $time    = serialize(time());
-        setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_' . $topic['fid'], $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
-        // Easier to set a cookie for the last visit than it is
-        // roll through all the forums to check the time set.
-        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $topic['fid'], time());
+        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', time());
     }
 
     $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));

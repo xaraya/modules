@@ -38,11 +38,8 @@ function xarbb_user_viewforum()
 
     // Lets deal with the cookie in a more sane manner
     if (xarUserIsLoggedIn()){
-        $time    = serialize(time());
-        setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
-        // Easier to set a cookie for the last visit than it is
-        // roll through all the forums to check the time set.
-        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, time());
+        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', time());
     }
 
     // Settings and disply
@@ -107,9 +104,9 @@ function xarbb_user_viewforum()
         if (isset($read_topic)){
             $cookie_time_compare = $read_topic;
         } else {
-            $cookie_name_last_visit = xarModGetVar('xarbb', 'cookiename') . 'lastvisit';
-            if (isset($_COOKIE["$cookie_name_last_visit"])){
-                $data['lastvisitdate'] = unserialize($_COOKIE["$cookie_name_last_visit"]);
+            $lastvisitsession = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
+            if (isset($lastvisitsession)){
+                $data['lastvisitdate'] = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
             } else {
                 $data['lastvisitdate'] = time() - 60*60*24;
             }

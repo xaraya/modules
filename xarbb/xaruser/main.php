@@ -34,10 +34,7 @@ function xarbb_user_main()
 
     // Lets deal with the cookie in a more sane manner
     if (isset($read)){
-        $time    = serialize(time());
-        // Easier to set a cookie for the last visit than it is
-        // roll through all the forums to check the time set.
-        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+        xarSessionSetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', time());
     }
 
     // Variable Needed for output
@@ -48,9 +45,8 @@ function xarbb_user_main()
     $data['pager']      = '';
     $data['uid']        = xarUserGetVar('uid');
     $data['catid']      = $catid;
-    $data['items']      = array();
-    // Cookie
     $data['now']        = time();
+    $data['items']      = array();
     $sitename           = xarModGetVar('themes', 'SiteName', 0);
     // Login
     $data['return_url'] = xarModURL('xarbb', 'user', 'main');
@@ -142,21 +138,17 @@ function xarbb_user_main()
 
     // Don't really need to do this for visitors, just users.
     if (xarUserIsLoggedIn()){
-        // Cookie Name for Last Visit
-        $cookie_name_last_visit = xarModGetVar('xarbb', 'cookiename') . 'lastvisit';
         // Check the cookie for the date to display
-        if (isset($_COOKIE["$cookie_name_last_visit"])){
-            $data['lastvisitdate'] = unserialize($_COOKIE["$cookie_name_last_visit"]);
+        $lastvisitsession = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
+        if (isset($lastvisitsession)){
+            $data['lastvisitdate'] = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . 'lastvisit');
         } else {
             $data['lastvisitdate'] = time();
         }
     }
-
     xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Forum Index')));
-
     return $data;
 }
-
 /**
  * Configure forums and categories for display
  *
@@ -168,9 +160,6 @@ function xarbb_user__getforuminfo($args)
 {
     $forums = $args;
     $totalforums = count($forums);
-
-    // Cookie Name for Mark All Read
-    $cookie_name_all_read = xarModGetVar('xarbb', 'cookiename') . 'lastvisit';
 
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
@@ -195,9 +184,9 @@ function xarbb_user__getforuminfo($args)
         } else {
             if (xarUserIsLoggedIn()){
                 // Here we can check the updated images or standard ones.
-                $cookie_name_this_forum_read = xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'];
-                if (isset($_COOKIE[$cookie_name_this_forum_read])){
-                    $forumtimecompare = unserialize($_COOKIE[$cookie_name_this_forum_read]);
+                $lastvisitforumsession = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid']);
+                if (isset($lastvisitforumsession)){
+                    $forumtimecompare = xarSessionGetVar(xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid']);
                 } else {
                     $forumtimecompare = '';
                 }
