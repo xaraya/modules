@@ -35,18 +35,32 @@ function xarbb_user_main()
                                    'startnum' => $startnum,
                                     'numitems' => xarModGetVar('xarbb',
                                                             'forumsperpage')));
-/*
-    $categories = xarModAPIFunc('categories',
-                                'user',
-                                'getitemcats',
-                             array('module' => 'xarbb'));
 
+    // List the categories available as well
+    $args['modid'] = xarModGetIDfromName('xarbb');
+    $args['itemtype'] = 1;
+    // Get an array of assigned category details for a specific item
+    $catbases = xarModAPIfunc('categories', 'user', 'getallcatbases', $args);
 
-    var_dump($categories); return;
-*/
+    $catchildren = xarModAPIfunc('categories', 'user', 'getchildren', $args);
+    
     $totalforums = count($forums);
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
+
+        // Get the category information (Thanks to Mike and Voll:)
+        $args['modid'] = xarModGetIDfromName('xarbb');
+        $args['itemid'] = $forum['fid'];
+        // Get an array of assigned category details for a specific item
+        $forums[$i]['categories'] = xarModAPIfunc('categories', 'user', 'getitemcats', $args);
+        // Let's break the array down to work with it a little better
+        foreach ($forums[$i]['categories'] as $category){
+            $forums[$i]['forumcatname'] = $category['name'];
+            $forums[$i]['forumcatid'] = $category['cid'];
+        }
+        // And then let's null out the original array.
+        $forums[$i]['categories'] = NULL;
+
 
         $getname = xarModAPIFunc('roles',
                                  'user',
@@ -81,6 +95,7 @@ function xarbb_user_main()
             }
         }
     }
+
 
     // TODO, need to check if new topics have been updated since last visit.
     $data['folder']       = '<img src="' . xarTplGetImage('folder.gif') . '" alt="'.xarML('Folder').'"/>';
