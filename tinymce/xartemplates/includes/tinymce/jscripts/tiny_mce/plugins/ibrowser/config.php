@@ -11,15 +11,17 @@ if(isset($_SERVER['DOCUMENT_ROOT'])) {
     $root_path = getenv('DOCUMENT_ROOT');
 }
 // Now for same hacking ;)
-if(isset($_SERVER['REQUEST_URI'])) {
-    $scriptpath= dirname($_SERVER['REQUEST_URI']);
-} elseif(isset($HTTP_SERVER_VARS['REQUEST_URI'])) {
-    $scriptpath = dirname($HTTP_SERVER_VARS['REQUEST_URI']);
+if(isset($_SERVER['PHP_SELF'])) {
+    $scriptpath= dirname($_SERVER['PHP_SELF']);
+} elseif(isset($HTTP_SERVER_VARS['PHP_SELF'])) {
+    $scriptpath = dirname($HTTP_SERVER_VARS['PHP_SELF']);
 } else {
-    $scriptpath= dirname(getenv('SCRIPT_NAME'));
+    $scriptpath= dirname(getenv('PHP_SELF'));
 }
+
 //ew .. but it should work ;)
-$scriptbase=str_replace('/modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/plugins/ibrowser','',$scriptpath);
+$scriptpath=parse_url($scriptpath);
+$scriptbase=preg_replace("/index\.php.*|\/modules.*|/is",'',$scriptpath['path']);
 $realpath=$root_path.$scriptbase;
 $realpath=str_replace('//','/',$realpath); //get rid of any double slashes
 
