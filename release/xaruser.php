@@ -54,12 +54,28 @@ function release_user_viewids()
         $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
         $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($item['desc']));
         $items[$i]['type'] = xarVarPrepForDisplay($item['type']);
+
         $items[$i]['edittitle'] = xarML('Edit');
-        $items[$i]['addtitle'] = xarML('Add Release Note');
+        $items[$i]['addtitle'] = xarML('Add');
+        $items[$i]['adddocstitle'] = xarML('Add');
+        $items[$i]['infotitle'] = xarML('View');
+
+        $getuser = xarModAPIFunc('users',
+                                 'user',
+                                 'get',
+                                  array('uid' => $item['uid']));
+
+        $items[$i]['author'] = $getuser['name'];
+
         $items[$i]['contacturl'] = xarModURL('users',
                                              'user',
                                              'display',
                                               array('uid' => $item['uid']));
+
+        $items[$i]['infourl'] = xarModURL('release',
+                                          'user',
+                                          'display',
+                                          array('rid' => $item['rid']));
 
 
         if (($uid == $item['uid']) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
@@ -79,6 +95,16 @@ function release_user_viewids()
                                                      'phase' => 'start'));
         } else {
             $items[$i]['addurl'] = '';
+        }
+
+        if (($uid == $item['uid']) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
+            $items[$i]['adddocs'] = xarModURL('release',
+                                              'user',
+                                              'adddocs',
+                                               array('rid' => $item['rid'],
+                                                     'phase' => 'start'));
+        } else {
+            $items[$i]['adddocs'] = '';
         }
     }
 
@@ -604,7 +630,14 @@ function release_user_adddocs()
         return;
     }
 
-    $phase = xarVarCleanFromInput('phase');
+    list ($phase,
+          $rid,
+          $type)= xarVarCleanFromInput('phase',
+                                       'rid',
+                                       'type');
+
+    $data['items'] = array();
+    $data['rid'] = $rid;
 
     if (empty($phase)){
         $phase = 'getmodule';
@@ -666,21 +699,222 @@ function release_user_adddocs()
 
         case 'module':
 
+            $data['mtype'] = 'mgeneral';
+            $data['return'] = 'module';
+            // The user API function is called. 
+
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getdocs',
+                                    array('rid' => $rid,
+                                          'type'=> $data['mtype']));
+
+            if (empty($items)){
+                $data['message'] = xarML('There is no general module documentation defined');
+            }
+
+            
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Documentation'))
+                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+
+
+            // Check individual permissions for Edit / Delete
+            for ($i = 0; $i < count($items); $i++) {
+                $item = $items[$i];
+
+                $uid = xarUserGetVar('uid');
+                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+            }
+
+
+            $data['items'] = $items;
+            $data['authid'] = xarSecGenAuthKey();
+        
             break;
         
         case 'theme':
+
+            $data['mtype'] = 'tgeneral';
+            $data['return'] = 'theme';
+            // The user API function is called. 
+
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getdocs',
+                                    array('rid' => $rid,
+                                          'type'=> $data['mtype']));
+
+            if (empty($items)){
+                $data['message'] = xarML('There is no general theme documentation defined');
+            }
+
+            
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Documentation'))
+                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+
+
+            // Check individual permissions for Edit / Delete
+            for ($i = 0; $i < count($items); $i++) {
+                $item = $items[$i];
+
+                $uid = xarUserGetVar('uid');
+                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+            }
+
+
+            $data['items'] = $items;
+            $data['authid'] = xarSecGenAuthKey();
+
+            break;
+
+        case 'blockgroups':
+
+            $data['mtype'] = 'bgroups';
+            $data['return'] = 'blockgroups';
+            // The user API function is called. 
+
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getdocs',
+                                    array('rid' => $rid,
+                                          'type'=> $data['mtype']));
+
+            if (empty($items)){
+                $data['message'] = xarML('There is no block groups documentation defined');
+            }
+
+            
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Documentation'))
+                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+
+
+            // Check individual permissions for Edit / Delete
+            for ($i = 0; $i < count($items); $i++) {
+                $item = $items[$i];
+
+                $uid = xarUserGetVar('uid');
+                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+            }
+
+
+            $data['items'] = $items;
+            $data['authid'] = xarSecGenAuthKey();
 
             break;
         
         case 'blocks':
 
+            $data['mtype'] = 'mblocks';
+            $data['return'] = 'blocks';
+            // The user API function is called. 
+
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getdocs',
+                                    array('rid' => $rid,
+                                          'type'=> $data['mtype']));
+
+            if (empty($items)){
+                $data['message'] = xarML('There is no blocks documentation defined');
+            }
+
+            
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Documentation'))
+                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+
+
+            // Check individual permissions for Edit / Delete
+            for ($i = 0; $i < count($items); $i++) {
+                $item = $items[$i];
+
+                $uid = xarUserGetVar('uid');
+                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+            }
+
+
+            $data['items'] = $items;
+            $data['authid'] = xarSecGenAuthKey();
+
+
             break;
 
         case 'hooks':
 
+            $data['mtype'] = 'mhooks';
+            $data['return'] = 'hooks';
+            // The user API function is called. 
+
+            $items = xarModAPIFunc('release',
+                                   'user',
+                                   'getdocs',
+                                    array('rid' => $rid,
+                                          'type'=> $data['mtype']));
+
+            if (empty($items)){
+                $data['message'] = xarML('There is no hook documentation defined');
+            }
+
+            
+            xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
+                               xarVarPrepForDisplay(xarML('Documentation'))
+                       .' :: '. xarVarPrepForDisplay(xarML('General Information')));
+
+
+            // Check individual permissions for Edit / Delete
+            for ($i = 0; $i < count($items); $i++) {
+                $item = $items[$i];
+
+                $uid = xarUserGetVar('uid');
+                $items[$i]['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+            }
+
+
+            $data['items'] = $items;
+            $data['authid'] = xarSecGenAuthKey();
+
+            break;
+
+        case 'update':
+            list($rid,
+                 $mtype,
+                 $title,
+                 $return,
+                 $doc) = xarVarCleanFromInput('rid',
+                                              'mtype',
+                                              'title',
+                                              'return',
+                                              'doc');
+            
+           if (!xarSecConfirmAuthKey()) return;
+
+           if (!xarSecAuthAction(0, 'release::', '::', ACCESS_EDIT)) {
+               $approved = 1;
+           } else {
+               $approved = 2;
+           }
+
+            // The user API function is called. 
+            if (!xarModAPIFunc('release',
+                               'user',
+                               'createdoc',
+                                array('rid'         => $rid,
+                                      'type'        => $mtype,
+                                      'title'       => $title,
+                                      'doc'         => $doc,
+                                      'approved'    => $approved))) return;
+
+            xarResponseRedirect(xarModURL('release', 'user', 'adddocs', array('phase' => $return, 
+                                                                              'rid' => $rid)));
+
+           $data = '';
             break;
     }   
     
     return $data;
 }
+
 ?>

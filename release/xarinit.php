@@ -108,7 +108,10 @@ function release_init()
                                                                  'default'     => ''),
                                    'xar_notes'          => array('type'        => 'text',
                                                                  'default'     => ''),
-                                   'xar_enotes'          => array('type'        => 'text',
+                                   'xar_time'           => array('type'        => 'datetime',
+                                                                 'null'        => false, 
+                                                                 'default'     => '0000-00-00 00:00:00'),
+                                   'xar_enotes'         => array('type'        => 'text',
                                                                  'default'     => ''),
                                    'xar_certified'      => array('type'        => 'integer',
                                                                  'null'        => false,
@@ -121,37 +124,39 @@ function release_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-/*
     $releasedocs = $xartable['release_docs'];
 
     // *_user_data
     $query = xarDBCreateTable($releasedocs,
-                             array('xar_rid'         => array('type'        => 'integer',
-                                                              'null'        => false,
-                                                              'default'     => '0',
-                                                              'increment'   => true,
-                                                              'primary_key' => true),
-                                   'xar_uid'         => array('type'        => 'integer',
-                                                              'null'        => false,
-                                                              'default'     => '0',
-                                                              'increment'   => false),
-                                   'xar_name'        => array('type'        => 'varchar',
-                                                              'size'        => 100,
-                                                              'null'        => false,
-                                                              'default'     => ''),
-                                   'xar_desc'        => array('type'        => 'text',
-                                                              'default'     => ''),
-                                   'xar_type'        => array('type'        => 'varchar',
-                                                              'size'        => 100,
-                                                              'null'        => false,
-                                                              'default'     => ''),
-                                   'xar_approved'    => array('type'        => 'integer',
-                                                              'null'        => false,
-                                                              'default'     => '0',
-                                                              'increment'   => false)));
+                             array('xar_rdid'           => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => true,
+                                                                 'primary_key' => true),
+                                   'xar_rid'            => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false),
+                                   'xar_title'          => array('type'        => 'varchar',
+                                                                 'size'        => 100,
+                                                                 'null'        => false,
+                                                                 'default'     => ''),
+                                   'xar_docs'           => array('type'        => 'text',
+                                                                 'default'     => ''),
+                                   'xar_type'           => array('type'        => 'varchar',
+                                                                 'size'        => 100,
+                                                                 'null'        => false,
+                                                                 'default'     => ''),
+                                   'xar_time'           => array('type'        => 'datetime',
+                                                                 'null'        => false, 
+                                                                 'default'     => '0000-00-00 00:00:00'),
+                                   'xar_approved'       => array('type'        => 'integer',
+                                                                 'null'        => false,
+                                                                 'default'     => '0',
+                                                                 'increment'   => false)));
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-*/
+
     return true;
 }
 
@@ -208,6 +213,12 @@ function release_delete()
 
     // Drop the table
     $query = "DROP TABLE $xartable[release_notes]";
+
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // Drop the table
+    $query = "DROP TABLE $xartable[release_docs]";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

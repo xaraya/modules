@@ -2,67 +2,108 @@
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
 <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
-<xar:mlstring>Click module name for contact information</xar:mlstring>
+
 <br /><br />
 <div align="center">
 <div class="xar-accent">
-<table width="100%" border="0" cellspacing="0" cellpadding="1">
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
     <tr>    
-		<td>
-			<table width="100%" border="0" cellspacing="1" cellpadding="0">
-				<tr>    
-					<th width="20%">
-						<xar:mlstring>Action</xar:mlstring>
-					</th>
-					<th width="5%">
-						<xar:mlstring>ID</xar:mlstring>
-					</th>
-					<th width="15%">
-						<xar:mlstring>Name</xar:mlstring>
-					</th>
-					<th width="10%">
-						<xar:mlstring>Type</xar:mlstring>
-					</th>
-				</tr>
-			</table>
+		<th width="5%">
+			<xar:mlstring>ID</xar:mlstring>
+		</th>
+		<th width="5%">
+			<xar:mlstring>Info</xar:mlstring>
+		</th>
+		<th width="5%">
+			<xar:mlstring>Edit</xar:mlstring>
+		</th>
+		<th width="5%">
+			<xar:mlstring>Release</xar:mlstring>
+		</th>
+		<th width="5%">
+			<xar:mlstring>Docs</xar:mlstring>
+		</th>
+		<th width="25%">
+			<xar:mlstring>Author</xar:mlstring>
+		</th>
+		<th width="25%">
+			<xar:mlstring>Name</xar:mlstring>
+		</th>
+	</tr>
+	<xar:loop name="$items">
+	<xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+	<tr>
+		<td width="5%" class="xar-norm">
+			#$rid#
+		</td>
+		<td width="5%" class="xar-norm">
+			<a href="#$infourl#">#$infotitle#</a>
+		</td>
+		<td width="5%" class="xar-norm">
+		   <xar:if condition="empty($editurl)">
+			   #$edittitle#
+		   <xar:else />
+			  <a href="#$editurl#">#$edittitle#</a>
+		   </xar:if>
+		</td>
+		<td width="5%" class="xar-norm">
+			<xar:if condition="empty($addurl)">
+			   #$addtitle#
+		   <xar:else />
+			  <a href="#$addurl#">#$addtitle#</a>
+		   </xar:if>
+		</td>
+		<td width="5%" class="xar-norm">
+		   <xar:if condition="empty($adddocs)">
+			   #$adddocstitle#
+		   <xar:else />
+			  <a href="#$adddocs#">#$adddocstitle#</a>
+		   </xar:if>
+		</td>
+		<td align="center" valign="top" width="25%" class="xar-norm">
+			<a href="#$contacturl#">#$author#</a>
+		</td>
+		<td align="center" valign="top" width="25%" class="xar-norm">
+			#$name#
 		</td>
 	</tr>
-		<xar:loop name="$items">
+	<xar:else />
 	<tr>
-		<td>
-		<table width="100%" border="0" cellspacing="1">
-			<tr>
-				<td align="left" valign="top" width="20%" class="xar-norm">
-				   <xar:if condition="empty($editurl)">
-					   #$edittitle#
-				   <xar:else />
-					  <a href="#$editurl#">#$edittitle#</a>
-				   </xar:if> | 
-				   <xar:if condition="empty($addurl)">
-					   #$addtitle#
-				   <xar:else />
-					  <a href="#$addurl#">#$addtitle#</a>
-				   </xar:if>
-				</td>
-				<td align="center" valign="top" width="5%" class="xar-norm">
-					#$rid#
-				</td>
-				<td align="center" valign="top" width="15%" class="xar-norm">
-					<a href="#$contacturl#">#$name#</a>
-				</td>
-				<td align="center" valign="top" width="10%" class="xar-norm">
-					#$type#
-				</td>
-			</tr>
-		</table>
+		<td width="5%" class="xar-accent">
+			#$rid#
 		</td>
-	<tr>
-	<tr>
-		<td align="left" valign="top" class="xar-norm">
-			&nbsp;&nbsp;#$desc#
-			<br /><br />
+		<td width="5%" class="xar-accent">
+			<a href="#$infourl#">#$infotitle#</a>
 		</td>
-    </tr>
+		<td width="5%" class="xar-accent">
+		   <xar:if condition="empty($editurl)">
+			   #$edittitle#
+		   <xar:else />
+			  <a href="#$editurl#">#$edittitle#</a>
+		   </xar:if>
+		</td>
+		<td width="5%" class="xar-accent">
+			<xar:if condition="empty($addurl)">
+			   #$addtitle#
+		   <xar:else />
+			  <a href="#$addurl#">#$addtitle#</a>
+		   </xar:if>
+		</td>
+		<td width="5%" class="xar-accent">
+		   <xar:if condition="empty($adddocs)">
+			   #$adddocstitle#
+		   <xar:else />
+			  <a href="#$adddocs#">#$adddocstitle#</a>
+		   </xar:if>
+		</td>
+		<td align="center" valign="top" width="25%" class="xar-accent">
+			<a href="#$contacturl#">#$author#</a>
+		</td>
+		<td align="center" valign="top" width="25%" class="xar-accent">
+			#$name#
+		</td>
+	</tr>
+	</xar:if>
     </xar:loop>
 </table>
 </div>

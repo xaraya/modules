@@ -8,7 +8,7 @@
 	<br /><br />
 	<form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
 		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="phase" id="phase" value="basic" />
+		<input type="hidden" name="phase" id="phase" value="start" />
 		<table border="0" cellpadding="5">
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
