@@ -150,12 +150,12 @@ function comments_user_reply() {
     }
 
     $hooks = xarModAPIFunc('comments','user','formhooks');
-
+    $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
     $output['hooks']              = $hooks;
     $output['header']             = $header;
     $output['package']            = $package;
     $output['package']['date']    = time();
-    $output['package']['uid']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uid') : 2);
+    $output['package']['uid']     = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uid') : $anonuid);
     $output['package']['uname']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('uname') : 'anonymous');
     $output['package']['name']    = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
     $output['receipt']            = $receipt;
