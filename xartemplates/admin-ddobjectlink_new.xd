@@ -8,28 +8,29 @@
         <form action="&xar-modurl-subitems-admin-ddobjectlink_new;" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
             <tr>
-                <td><xar:mlstring>Subitems Object:</xar:mlstring></td>
+                <td><xar:mlstring>Which object contains the subitems?</xar:mlstring></td>
                 <td>
                     <xar:data-input name="objectid" value="$objectid['value']" type="object" />
                     <span style="color:red">#$objectid.error:msg#</span>    
                 </td>
             </tr>
             <tr>
-                <td><xar:mlstring>Hooked Module Name:</xar:mlstring></td>
+                <td><xar:mlstring>Which module contains the parent items?</xar:mlstring></td>
                 <td>    
                     <xar:data-input name="modid" type="module" value="$module['value']" />
+                    <input type="submit" name="reload" value="#xarML('Reload itemtypes')#"/>
                      <span style="color:red">#$module.error:msg#</span>
                 </td>
             </tr>
             <tr>
-                <td><xar:mlstring>Hooked Item Type:</xar:mlstring></td>
+                <td><xar:mlstring>Which itemtype from that module?</xar:mlstring></td>
                 <td>
-                    <input type="text" name="itemtype" value="#$itemtype['value']#" />
+                    <xar:data-input name="itemtype" type="itemtype" module="$module_name" value="$itemtype['value']" />
                     <span style="color:red">#$itemtype.error:msg#</span>
                 </td>
             </tr>
             <tr>
-                <td><xar:mlstring>Template to use:</xar:mlstring></td>
+                <td><xar:mlstring>Template to use</xar:mlstring></td>
                 <td>
                     <input type="text" name="template" value="#$template['value']#" />
                     <span style="color:red">#$template.error:msg#</span>

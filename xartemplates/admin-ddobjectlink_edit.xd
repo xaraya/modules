@@ -12,16 +12,17 @@
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
             <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />    
             <tr>
-                <td><xar:mlstring>Hooked Module Name:</xar:mlstring></td>
+                <td><xar:mlstring>Which module contains the parent item?</xar:mlstring></td>
                 <td>
                     <xar:data-input name="modid" type="module" value="$module['value']" />
+                    <input type="submit" name="reload" value="#xarML('Reload itemtypes')#"/>
                     <span style="color:red">#$module.error:msg#</span>
                 </td>
             </tr>
             <tr>
-                <td><xar:mlstring>Hooked Item Type:</xar:mlstring></td>
+                <td><xar:mlstring>Which itemtype from that module?</xar:mlstring></td>
                 <td>
-                    <input type="text" name="itemtype" value="#$itemtype['value']#" />
+                    <xar:data-input name="itemtype" type="itemtype" module="$module_name" value="$itemtype['value']" />
                     <span style="color:red">#$itemtype.error:msg#</span>
                 </td>
             </tr>

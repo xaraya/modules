@@ -8,6 +8,7 @@ function subitems_admin_ddobjectlink_edit($args)
     if(!xarVarFetch('objectid','int:1:',$subobjectid)) return;
     
     if(!xarVarFetch('confirm','str:0',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('reload','str:0',$reloaded,'',XARVAR_NOT_REQUIRED)) return;
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -18,7 +19,7 @@ function subitems_admin_ddobjectlink_edit($args)
     if (empty($ddobjectlink)) return xarML('This item does not exist');
 
     $subobjectlink = $ddobjectlink[0];
-    if($confirm)    {
+    if($confirm or $reloaded)    {
         $result_array = xarVarBatchFetch(
                                          array('modid','str:1:','module'),
                                          array('itemtype','int:0:','itemtype'),
@@ -41,11 +42,14 @@ function subitems_admin_ddobjectlink_edit($args)
         $result_array['template'] = array('value' => $subobjectlink['template'],'error' => '');
         $result_array['sort'] = array('value' => $subobjectlink['sort'],'error' => '');
     }    
-
+    
+    $modInfo = xarModGetInfo($result_array['module']['value']);
+    $result_array['module_name'] = $modInfo['name'];
+    
     if(($result_array['no_errors'] == true) && !empty($confirm))    {
         if (!xarSecConfirmAuthKey()) return;
 
-        $modInfo = xarModGetInfo($result_array['module']['value']);
+        
         if(!xarModAPIFunc('subitems','admin','ddobjectlink_update',array(
                 "objectid" => $subobjectid,
                 "module" => $modInfo['name'],
