@@ -66,7 +66,7 @@ function html_userapitransformoutput($text)
 {
     $transformtype = xarModGetVar('html', 'transformtype');
     if ($transformtype == 1){
-        $text = preg_replace("/\n/si","<br /><br />",$text);
+        $text = preg_replace("/\n/si","<br />",$text);
     } elseif ($transformtype == 2){
         $text = preg_replace("/\n/si","</p><p>",$text);
     }
