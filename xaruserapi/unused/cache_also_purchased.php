@@ -10,19 +10,18 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-    function commerce_userapi_get_products_stock($args) {
-        include_once 'modules/xen/xarclasses/xenquery.php';
-        $xartables = xarDBGetTables();
-        extract($args);
-        if (!isset($products_quantity)) $products_quantity = 0;
-        $q = new xenQuery('SELECT',
-                  $xartables['commerce_products'],
-                  'products_quantity'
-                 );
-        $q->eq('products_id', $products_id);
-        if(!$q->run()) return;
-        $stock_values = $q->row();
-        return $stock_values['products_quantity'];
+//! Cache the also purchased module
+// Cache the also purchased module
+  function commerce_userapi_cache_also_purchased($auto_expire = false, $refresh = false) {
+
+    if (($refresh == true) || !read_cache($cache_output, 'also_purchased-' . $_SESSION['language'] . '.cache' . $_GET['products_id'], $auto_expire)) {
+      ob_start();
+      include(DIR_WS_MODULES . FILENAME_ALSO_PURCHASED_PRODUCTS);
+      $cache_output = ob_get_contents();
+      ob_end_clean();
+      write_cache($cache_output, 'also_purchased-' . $_SESSION['language'] . '.cache' . $_GET['products_id']);
     }
 
+    return $cache_output;
+  }
  ?>

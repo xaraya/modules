@@ -10,17 +10,28 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_has_category_subcategories($args)
+function commerce_userapi_check_stock_attributes($args)
 {
-    xarModAPILoad('categories');
+    extract($args);
+    if (!isset($categories_id) || $categories_id ==0) return 0;
+
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
-    extract($args);
-    $q = new xenQuery('SELECT', $xartables['categories'], 'count(*) as count');
-    $q->eq('xar_parent',$cid);
+    $q = new xenQuery('SELECT');
+    $q->addtable(xartables['categories'],'xc')
+    $q->addtable(xartables['commerce_categories'],'c')
+    $q->addfields('xc.xar_parent AS parent_id,
+                  'c.categories_status AS categories_status);
+    $q->eq('categories_id', $categories_id);
     if(!$q->run()) return;
-    $child_category = $q->row();
-    return $child_category['count'] > 0;
+    $categorie_data = $q->row();
+    if ($categorie_data['categories_status'] == 0) {
+        return 1;
+    } else {
+        if ($categorie_data['parent_id'] != 0) {
+            if (xtc_check_categories_status($categorie_data['parent_id']) >= 1) return 1;
+        }
+        return 0;
+    }
 }
-
-?>
+ ?>

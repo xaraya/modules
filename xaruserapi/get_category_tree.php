@@ -33,27 +33,31 @@ function commerce_userapi_get_category_tree($args)
 
     if ($include_itself) {
         $q = new xenQuery('SELECT',
-                          $xartables['commerce_categories_description'],
-                          array('categories_name'));
+                          $xartables['commerce_categories_description'],'categories_name');
         $q->eq('language_id',$currentlang['id']);
         $q->eq('categories_id',$parent_id);
         if(!$q->run()) return;
-        $category = $q->output();
+        $category = $q->row();
         $category_tree_array[] = array('id' => $parent_id, 'text' => $category['categories_name']);
     }
 
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['categories'],'c');
     $q->addtable($xartables['commerce_categories_description'],'cd');
-    $q->addfields(array('c.xar_cid', 'cd.categories_name', 'c.xar_parent'));
+    $q->addfields(array('c.xar_cid', 'cd.categories_name', 'c.xar_parent', 'cd.categories_id'));
     $q->join('c.xar_cid','cd.categories_id');
+    $q->eq('language_id',$currentlang['id']);
     $q->eq('c.xar_parent',$parent_id);
 //    $q->addorder('c.sort_order');
     $q->addorder('cd.categories_name');
     if(!$q->run()) return;
     foreach ($q->output() as $categories) {
         if ($exclude != $categories['categories_id']) $category_tree_array[] = array('id' => $categories['categories_id'], 'text' => $spacing . $categories['categories_name']);
-        $category_tree_array = xtc_get_category_tree($categories['categories_id'], $spacing . '&nbsp;&nbsp;&nbsp;', $exclude, $category_tree_array);
+        $category_tree_array = xarModAPIFunc('commerce','user','get_category_tree', array(
+                                    'parent_id' => $categories['categories_id'],
+                                    'spacing' => $spacing . '&nbsp;&nbsp;&nbsp;',
+                                    'exclude' => $exclude,
+                                    'category_tree_array' => $category_tree_array));
     }
     return $category_tree_array;
 }

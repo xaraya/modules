@@ -10,19 +10,18 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-    function commerce_userapi_get_products_stock($args) {
-        include_once 'modules/xen/xarclasses/xenquery.php';
-        $xartables = xarDBGetTables();
-        extract($args);
-        if (!isset($products_quantity)) $products_quantity = 0;
-        $q = new xenQuery('SELECT',
-                  $xartables['commerce_products'],
-                  'products_quantity'
-                 );
-        $q->eq('products_id', $products_id);
-        if(!$q->run()) return;
-        $stock_values = $q->row();
-        return $stock_values['products_quantity'];
+//! Cache the manufacturers box
+// Cache the manufacturers box
+  function commerce_userapi_cache_manufacturers_box($auto_expire = false, $refresh = false) {
+
+    if (($refresh == true) || !read_cache($cache_output, 'manufacturers_box-' . $_SESSION['language'] . '.cache' . $_GET['manufacturers_id'], $auto_expire)) {
+      ob_start();
+      include(DIR_WS_BOXES . 'manufacturers.php');
+      $cache_output = ob_get_contents();
+      ob_end_clean();
+      write_cache($cache_output, 'manufacturers_box-' . $_SESSION['language'] . '.cache' . $_GET['manufacturers_id']);
     }
 
+    return $cache_output;
+  }
  ?>

@@ -10,33 +10,34 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_count_products_in_category($args)
+function commerce_userapi_products_in_category_count($args)
 {
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
-
     extract($args);
-    if (!isset($include_inactive)) $include_inactive = false;
-    $products_count = 0;
+    if (!isset($include_deactivated)) $include_deactivated = false;
+
     $q = new xenQuery('SELECT');
     $q->addtable($xartables['commerce_products'], 'p');
     $q->addtable($xartables['commerce_products_to_categories'], 'p2c');
-    $q->addfield('count(*) as count');
-    $q->join('p.products_id','p2c.products_id');
-    $q->eq('p2c.categories_id',$cid);
-    if ($include_inactive == false) {
-        $q->eq('p.products_status',1);
-    }
-    if(!$q->run()) return;
-    $products = $q->row();
-    $products_count += $products['count'];
+    $q->addfield('count(*) as total');
+    $q->eq('p2c.categories_id', $categories_id);
+    $q->join('p.products_id', 'p2c.products_id');
+    if (isset($include_deactivated) && !$include_deactivated) $q->eq('p.products_status', 1);
 
-    $q = new xenQuery('SELECT', $xartables['categories'], 'xar_cid as cid');
-    $q->eq('xar_parent',$cid);
     if(!$q->run()) return;
-    foreach ($q->output() as $child_categories) {
-        $products_count += xarModAPIFunc('commerce','user','count_products_in_category', array('cid' => $child_categories['cid'], 'include_active' => $include_inactive));
+    $products_count = 0;
+    foreach ($q->output() as $products) {
+        $products_count += $products['total'];
+        $q1 = new xenQuery('SELECT', $xartables['commerce_categories'], 'categories_id');
+        $q1->eq('parent_id', $categories_id);
+        if(!$q1->run()) return;
+
+        foreach ($q1->output() as $children) {
+            $products_count += xarModAPIFunc('commerce', 'user', 'products_in_category_count', array('categories_id' => $children['categories_id'],
+                  'include_deactivated' => $include_deactivated));
+        }
     }
     return $products_count;
 }
- ?>
+?>

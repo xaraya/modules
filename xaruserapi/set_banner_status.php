@@ -11,13 +11,24 @@
 // ----------------------------------------------------------------------
 
 // Sets the status of a banner
-  function commerce_userapi_set_banner_status($banners_id, $status) {
+function commerce_userapi_set_banner_status($args) {
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    $xartables = xarDBGetTables();
+
+    extract($args);
+    if (!isset($status)) $status = 0;
+    $q = new xenQuery('UPDATE',$xartables['commerce_banners']);
+    $q->addfield('date_status_change',mktime());
+    $q->eq('banners_id',$banners_id);
     if ($status == '1') {
-      return new xenQuery("update " . TABLE_BANNERS . " set status = '1', date_status_change = now(), date_scheduled = NULL where banners_id = '" . $banners_id . "'");
+        $q->eq('status',1);
+        $q->addfield('date_scheduled',NULL);
+        if(!$q->run()) return;
     } elseif ($status == '0') {
-      return new xenQuery("update " . TABLE_BANNERS . " set status = '0', date_status_change = now() where banners_id = '" . $banners_id . "'");
+        $q->eq('status',0);
+        if(!$q->run()) return;
     } else {
       return -1;
     }
-  }
- ?>
+}
+?>

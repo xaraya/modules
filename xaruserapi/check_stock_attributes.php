@@ -10,22 +10,22 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_check_stock_attributes($attribute_id, $products_quantity) {
+    function commerce_userapi_check_stock_attributes($attribute_id, $products_quantity) {
 
-       $stock_query=new xenQuery("SELECT
-                                  attributes_stock
-                                  FROM ".TABLE_PRODUCTS_ATTRIBUTES."
-                                  WHERE products_attributes_id='".$attribute_id."'");
-      $q = new xenQuery();
-      if(!$q->run()) return;
-       $stock_data=$q->output();
-    $stock_left = $stock_data['attributes_stock'] - $products_quantity;
-    $out_of_stock = '';
+        $stock_query = new xenQuery("SELECT
+            attributes_stock
+            FROM ".TABLE_PRODUCTS_ATTRIBUTES."
+            WHERE products_attributes_id='".$attribute_id."'");
+        $q = new xenQuery();
+        if(!$q->run()) return;
+        $stock_data=$q->output();
+        $stock_left = $stock_data['attributes_stock'] - $products_quantity;
+        $out_of_stock = '';
 
-    if ($stock_left < 0) {
-      $out_of_stock = '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
+        if ($stock_left < 0) {
+            $out_of_stock = '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
+        }
+
+        return $out_of_stock;
     }
-
-    return $out_of_stock;
-  }
  ?>

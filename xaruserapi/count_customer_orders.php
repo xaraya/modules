@@ -10,26 +10,16 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_count_customer_orders($id = '', $check_session = true) {
+function commerce_userapi_count_customer_orders($args)
+{
+    include_once 'modules/xen/xarclasses/xenquery.php';
+    $xartables = xarDBGetTables();
+    extract($args);
 
-    if (is_numeric($id) == false) {
-      if (isset($_SESSION['customer_id'])) {
-        $id = $_SESSION['customer_id'];
-      } else {
-        return 0;
-      }
-    }
-
-    if ($check_session == true) {
-      if ( (isset($_SESSION['customer_id']) == false) || ($id != $_SESSION['customer_id']) ) {
-        return 0;
-      }
-    }
-
-    $orders_check_query = new xenQuery("select count(*) as total from " . TABLE_ORDERS . " where customers_id = '" . (int)$id . "'");
-      $q = new xenQuery();
-      if(!$q->run()) return;
-    $orders_check = $q->output();
+    $q = new xenQuery('SELECT',$xartables['commerce_orders'],'count(*) as total');
+    $q->eq('customers_id', xarSessionGetVar('uid'));
+    if(!$q->run()) return;
+    $orders_check = $q->row();
     return $orders_check['total'];
-  }
+}
  ?>

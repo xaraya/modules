@@ -19,12 +19,11 @@ function commerce_userapi_get_path($args)
     $xartables = xarDBGetTables();
 
     extract($args);
-    if ($nodeid != '')) {
+    if ($nodeid != '') {
         $cp_size = sizeof($cPath_array);
         if ($cp_size == 0) {
-            $cPath_new = $current_category_id;
-        }
-        else {
+            $cPath_new = $nodeid;
+        } else {
             $cPath_new = '';
             $q = new xenQuery('SELECT',$xartables['categories'],'parent_id');
             $q->eq('catid', $cPath_array[($cp_size-1)]);
@@ -57,5 +56,6 @@ function commerce_userapi_get_path($args)
       $cPath_new = implode('_', $cPath_array);
     }
     return 'cPath=' . $cPath_new;
-  }
+
+}
  ?>

@@ -5,27 +5,24 @@
 // ----------------------------------------------------------------------
 //  based on:
 //  (c) 2003 XT-Commerce
-//   Third Party contributions:
-//   New Attribute Manager v4b                Autor: Mike G | mp3man@internetwork.net | http://downloads.ephing.com
 //  (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
 //  (c) 2002-2003 osCommerce (oscommerce.sql,v 1.83); www.oscommerce.com
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_findtitle($args) {
+function commerce_userapi_childs_in_category_count($args)
+{
     include_once 'modules/xen/xarclasses/xenquery.php';
-    xarModAPILoad('categories');
     $xartables = xarDBGetTables();
-
     extract($args);
-
-    $q = new xenQuery('SELECT', $xartables['commerce_products_description'], 'products_name');
-    $q->eq('language_id',$language_id);
-    $q->eq('products_id',$pID);
+    $q = new xenQuery('SELECT', $xartables['commerce_categories'], 'categories_id');
+    $q->eq('parent_id', $categories_id);
     if(!$q->run()) return;
-
-    $matches = $q->row();
-    if ($matches != array()) return $matches['products_name'];
-    return "Something isn't right....";
+    $categories_count = 0;
+    foreach ($q->output() as $categories) {
+        $categories_count++;
+        $categories_count += xarModAPIFunc('commerce', 'user', 'childs_in_category_count', array('categories_id' => $categories['categories_id']));
+    }
+    return $categories_count;
 }
-?>
+ ?>

@@ -12,26 +12,31 @@
 
 function commerce_userapi_show_category($args)
 {
-    global $foo, $categories_string, $id;
+    extract($args);
+//    global $foo, $categories_string, $cid;
 
-    // image for first level
+    $configuration = xarModAPIFunc('commerce','admin','load_configuration');
     $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
     $data['language'] = $localeinfo['lang'] . "_" . $localeinfo['country'];
-    $img_1='<img src="' . xarTplGetImage($data['language'] . 'icon_arrow.jpg', 'commerce') . '">&nbsp;';
+    if (!isset($categories_string)) $categories_string = '';
 
-    for ($a=0; $a<$foo[$counter]['level']; $a++) {
-        if ($foo[$counter]['level']=='1') {
-            $categories_string .= "&nbsp;-&nbsp;";
+    // image for first level
+    $img_1='<img src="' . xarTplGetImage('icon_arrow.jpg', 'commerce') . '">&nbsp;';
+
+    if (isset($foo[$counter]['level'])) {
+        for ($a=0; $a<$foo[$counter]['level']; $a++) {
+            if ($foo[$counter]['level'] == 1) {
+                $categories_string .= "&nbsp;-&nbsp;";
+            }
+            $categories_string .= "&nbsp;&nbsp;";
         }
-        $categories_string .= "&nbsp;&nbsp;";
     }
-
-    if ($foo[$counter]['level']=='') {
+    if ($foo[$counter]['level'] == '') {
         if (strlen($categories_string)=='0') {
-            $categories_string .='<table width="100%"><tr><td class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)">';
+            $categories_string .='<div width="100%"><span class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)">';
         }
         else {
-            $categories_string .='</td></tr></table><table width="100%"><tr><td class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)">';
+            $categories_string .='<div width="100%"><span class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)">';
         }
 
     // image for first level
@@ -43,27 +48,27 @@ function commerce_userapi_show_category($args)
         $categories_string .= '<a href="';
     }
     if ($foo[$counter]['parent'] == 0) {
-        $cPath_new = 'cPath=' . $counter;
+        $cPath_new = $counter;
     }
     else {
-        $cPath_new = 'cPath=' . $foo[$counter]['path'];
+        $cPath_new = $foo[$counter]['path'];
     }
 
-    $categories_string .= xtc_href_link(FILENAME_DEFAULT, $cPath_new);
+    $categories_string .= xarModURL('commerce','user','default', array('cPath' => $cPath_new));
     $categories_string .= '">';
 
-    if ( ($id) && (in_array($counter, $id)) ) {
+    if ( ($cid) && (in_array($counter, $cid)) ) {
         $categories_string .= '<b>';
     }
 
     // display category name
     $categories_string .= $foo[$counter]['name'];
 
-    if ( ($id) && (in_array($counter, $id)) ) {
+    if ( ($cid) && (in_array($counter, $cid)) ) {
         $categories_string .= '</b>';
     }
 
-    if (xtc_has_category_subcategories($counter)) {
+    if (xarModAPIFunc('commerce','user','has_category_subcategories', array('cid' => $counter))) {
         $categories_string .= '';
     }
     if ($foo[$counter]['level']=='') {
@@ -72,18 +77,19 @@ function commerce_userapi_show_category($args)
         $categories_string .= '</a>';
     }
 
-    if (SHOW_COUNTS == 'true') {
-        $products_in_category = xtc_count_products_in_category($counter);
+    if ($configuration['show_counts'] == 'true') {
+        $products_in_category = xarModAPIFunc('commerce','user','count_products_in_category', array('cid' => $counter));
         if ($products_in_category > 0) {
             $categories_string .= '&nbsp;(' . $products_in_category . ')';
         }
     }
 
-    $categories_string .= '<br>';
+    $categories_string .= '</span></div><br>';
 
-    if ($foo[$counter]['next_id']) {
-        xarModAPIFunc('commerce','user','show_category', array('node' => $foo[$counter]['next_id']));
+    if (isset($foo[$counter]['next_cid'])) {
+        $categories_string .= xarModAPIFunc('commerce','user','show_category', array('cid' => $foo[$counter]['next_cid'], 'foo' => $foo, 'counter' => $counter));
     }
+    return $categories_string;
 }
 
 ?>
