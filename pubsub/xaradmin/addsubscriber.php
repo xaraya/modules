@@ -21,8 +21,20 @@ function pubsub_admin_addsubscriber()
     $sub_args['modid']    = $sub_module;
     $sub_args['cid']      = $sub_category;
     $sub_args['itemtype'] = $sub_itemtype;
-    $sub_args['email']    = $sub_email;
-    xarModAPIFunc('pubsub','user','subscribe', $sub_args);
+	
+	if( strstr($sub_email,"\n") )
+	{
+		$emails = explode("\n",$sub_email);
+		foreach( $emails as $email )
+		{
+			$sub_args['email']    = $email;
+			xarModAPIFunc('pubsub','user','subscribe', $sub_args);
+		}
+	} else {
+	    $sub_args['email']    = $sub_email;
+	    xarModAPIFunc('pubsub','user','subscribe', $sub_args);
+	}
+	
 
     xarResponseRedirect(xarModURL('pubsub', 'admin', 'viewall'));
 
