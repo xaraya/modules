@@ -1,20 +1,21 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Example initialization functions
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage example
- * @author Example module development team 
+ * @author Example module development team
  */
 $modversion['name']           = 'Courses';
 $modversion['id']             = '179';
 $modversion['version']        = '1.0.0';
+$modversion['displayname']    = xarML('Courses');
 $modversion['description']    = 'Course Offerings and Registration';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
