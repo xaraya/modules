@@ -1108,7 +1108,7 @@ function comments_userapi_add($args) {
         .xarVarPrepForStore($right)."','"
         .xarVarPrepForStore($pid)."','"
         .xarVarPrepforStore($status)."','"
-        .xarVarPrepForStore($postanon)."')";
+        . (empty($postanon) ? 0 : 1) ."')";
 
     $result = &$dbconn->Execute($sql);
 
@@ -1220,7 +1220,7 @@ function comments_userapi_modify($args) {
     $sql =  "UPDATE $xartable[comments]
                 SET xar_title    = '". xarVarPrepForStore($title) ."',
                     xar_text  = '". xarVarPrepForStore($text) ."',
-                    xar_anonpost = '". xarVarPrepForStore($postanon) ."'
+                    xar_anonpost = '". (empty($postanon) ? 0 : 1) ."'
               WHERE xar_cid='$cid'";
 
     $result = &$dbconn->Execute($sql);
@@ -1261,6 +1261,8 @@ function comments_userapi_search($args) {
                     $ctable[author] AS xar_author,
                     $ctable[cid] AS xar_cid,
                     $ctable[pid] AS xar_pid,
+                    $ctable[left] AS xar_left,
+                    $ctable[right] AS xar_right,
                     $ctable[postanon] AS xar_postanon,
                     $ctable[modid]  AS xar_modid,
                     $ctable[objectid] as xar_objectid
