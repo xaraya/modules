@@ -1,3 +1,15 @@
+Version 1.25 (2004-08-22)
+	Added new format select box in advanced theme (Can be disabled).
+	Added new "theme_advanced_disable" option to advanced theme.
+	Added some new elements to default list of valid elements (Format select box elements).
+	Added new font face, forecolor and font size support, these are not enabled by default.
+	Added new "mceAddControl" command, enables users to dynamicly add editors.
+	Added new execInstanceCommand function, check the documentation for details.
+	Added new "mceSetAttribute" command.
+	Modified the themes so that the focus alert doesn't popup as often as before.
+	Modified the "mceRemoveControl" command so it can handle element id aswell as editor ids.
+	Fixed some bugs and issues with the new custom undo/redo logic.
+	Fixed weird Mozilla bug #997860.
 Version 1.24 (2004-08-17)
 	Modified so that span with CSS classes that don't exists get removed.
 	Added new "custom_undo_redo" option, this option is enabled by default.

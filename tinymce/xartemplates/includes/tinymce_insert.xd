@@ -28,7 +28,7 @@
      language : "#$localeinfo#",
    content_css: "#$tinycsslistvalue#",
   extended_valid_elements : "#$tinyextendvalue#",
- theme_simple_buttons2: "#$tinybuttonvalue#"
+ theme_advanced_buttons2: "#$tinybuttonvalue#"
 
     });
     </script>

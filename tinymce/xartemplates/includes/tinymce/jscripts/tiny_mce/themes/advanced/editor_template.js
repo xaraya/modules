@@ -2,107 +2,147 @@
 tinyMCE.importThemeLanguagePack();
 
 var TinyMCE_advanced_autoImportCSSClasses = true;
+var TinyMCE_advanced_foreColor = "#000000";
 
 function TinyMCE_advanced_getButtonHTML(button_name) {
 	switch (button_name) {
 		case "bold":
-			return '<img id="{$editor_id}_bold" src="{$themeurl}/images/{$lang_bold_img}" title="{$lang_bold_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Bold\')">';
+			return '<img id="{$editor_id}_bold" src="{$themeurl}/images/{$lang_bold_img}" title="{$lang_bold_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Bold\')">';
 
 		case "italic":
-			return '<img id="{$editor_id}_italic" src="{$themeurl}/images/{$lang_italic_img}" title="{$lang_italic_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Italic\')">';
+			return '<img id="{$editor_id}_italic" src="{$themeurl}/images/{$lang_italic_img}" title="{$lang_italic_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Italic\')">';
 
 		case "underline":
-			return '<img id="{$editor_id}_underline" src="{$themeurl}/images/underline.gif" title="{$lang_underline_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Underline\')">';
+			return '<img id="{$editor_id}_underline" src="{$themeurl}/images/underline.gif" title="{$lang_underline_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Underline\')">';
 
 		case "strikethrough":
-			return '<img id="{$editor_id}_strikethrough" src="{$themeurl}/images/strikethrough.gif" title="{$lang_striketrough_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Strikethrough\')">';
+			return '<img id="{$editor_id}_strikethrough" src="{$themeurl}/images/strikethrough.gif" title="{$lang_striketrough_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Strikethrough\')">';
 
 		case "justifyleft":
-			return '<img id="{$editor_id}_left" src="{$themeurl}/images/left.gif" title="{$lang_justifyleft_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'JustifyLeft\')">';
+			return '<img id="{$editor_id}_left" src="{$themeurl}/images/left.gif" title="{$lang_justifyleft_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'JustifyLeft\')">';
 
 		case "justifycenter":
-			return '<img id="{$editor_id}_center" src="{$themeurl}/images/center.gif" title="{$lang_justifycenter_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'JustifyCenter\')">';
+			return '<img id="{$editor_id}_center" src="{$themeurl}/images/center.gif" title="{$lang_justifycenter_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'JustifyCenter\')">';
 
 		case "justifyright":
-			return '<img id="{$editor_id}_right" src="{$themeurl}/images/right.gif" title="{$lang_justifyright_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'JustifyRight\')">';
+			return '<img id="{$editor_id}_right" src="{$themeurl}/images/right.gif" title="{$lang_justifyright_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'JustifyRight\')">';
 
 		case "justifyfull":
-			return '<img id="{$editor_id}_full" src="{$themeurl}/images/full.gif" title="{$lang_justifyfull_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'JustifyFull\')">';
+			return '<img id="{$editor_id}_full" src="{$themeurl}/images/full.gif" title="{$lang_justifyfull_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'JustifyFull\')">';
 
 		case "styleselect":
-			return '<select id="{$editor_id}_styleSelect" name="{$editor_id}_styleSelect" onchange="tinyMCE.execCommand(\'mceSetCSSClass\',false,this.options[this.selectedIndex].value);" class="mceSelectList">{$style_select_options}</select>';
+			return '<select id="{$editor_id}_styleSelect" name="{$editor_id}_styleSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceSetCSSClass\',false,this.options[this.selectedIndex].value);" class="mceSelectList">{$style_select_options}</select>';
 
 		case "bullist":
-			return '<img id="{$editor_id}_bullist" src="{$themeurl}/images/bullist.gif" title="{$lang_bullist_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'InsertUnorderedList\')">';
+			return '<img id="{$editor_id}_bullist" src="{$themeurl}/images/bullist.gif" title="{$lang_bullist_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'InsertUnorderedList\')">';
 
 		case "numlist":
-			return '<img id="{$editor_id}_numlist" src="{$themeurl}/images/numlist.gif" title="{$lang_numlist_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'InsertOrderedList\')">';
+			return '<img id="{$editor_id}_numlist" src="{$themeurl}/images/numlist.gif" title="{$lang_numlist_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'InsertOrderedList\')">';
 
 		case "outdent":
-			return '<img id="{$editor_id}_outdent" src="{$themeurl}/images/outdent.gif" title="{$lang_outdent_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Outdent\')">';
+			return '<img id="{$editor_id}_outdent" src="{$themeurl}/images/outdent.gif" title="{$lang_outdent_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Outdent\')">';
 
 		case "indent":
-			return '<img src="{$themeurl}/images/indent.gif" title="{$lang_indent_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Indent\')">';
+			return '<img src="{$themeurl}/images/indent.gif" title="{$lang_indent_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Indent\')">';
 
 		case "undo":
-			return '<img id="{$editor_id}_undo" src="{$themeurl}/images/undo.gif" title="{$lang_undo_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Undo\')">';
+			return '<img id="{$editor_id}_undo" src="{$themeurl}/images/undo.gif" title="{$lang_undo_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Undo\')">';
 
 		case "redo":
-			return '<img id="{$editor_id}_redo" src="{$themeurl}/images/redo.gif" title="{$lang_redo_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'Redo\')">';
+			return '<img id="{$editor_id}_redo" src="{$themeurl}/images/redo.gif" title="{$lang_redo_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'Redo\')">';
 
 		case "link":
-			return '<img id="{$editor_id}_link" src="{$themeurl}/images/link.gif" title="{$lang_link_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceLink\', true)">';
+			return '<img id="{$editor_id}_link" src="{$themeurl}/images/link.gif" title="{$lang_link_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceLink\', true)">';
 
 		case "unlink":
-			return '<img src="{$themeurl}/images/unlink.gif" title="{$lang_unlink_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'unlink\')">';
+			return '<img src="{$themeurl}/images/unlink.gif" title="{$lang_unlink_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'unlink\')">';
 
 		case "image":
-			return '<img id="{$editor_id}_image" src="{$themeurl}/images/image.gif" title="{$lang_image_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceImage\', true)">';
+			return '<img id="{$editor_id}_image" src="{$themeurl}/images/image.gif" title="{$lang_image_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceImage\', true)">';
 
 		case "cleanup":
-			return '<img src="{$themeurl}/images/cleanup.gif" title="{$lang_cleanup_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceCleanup\')">';
+			return '<img src="{$themeurl}/images/cleanup.gif" title="{$lang_cleanup_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceCleanup\')">';
 
 		case "help":
-			return '<img src="{$themeurl}/images/help.gif" title="{$lang_help_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceHelp\')">';
+			return '<img src="{$themeurl}/images/help.gif" title="{$lang_help_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceHelp\')">';
 
 		case "code":
 			return '<img id="{$editor_id}_code" src="{$themeurl}/images/code.gif" title="{$lang_theme_code_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="TinyMCE_advanced_openHTMLSourceEditor();">';
 
 		case "table":
-			return '<img id="{$editor_id}_table" src="{$themeurl}/images/table.gif" title="{$lang_theme_table_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceInsertTable\',true);">';
+			return '<img id="{$editor_id}_table" src="{$themeurl}/images/table.gif" title="{$lang_theme_table_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceInsertTable\',true);">';
 
 		case "row_before":
-			return '<img id="{$editor_id}_table_insert_row_before" src="{$themeurl}/images/table_insert_row_before.gif" title="{$lang_theme_table_insert_row_before_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceTableInsertRowBefore\');">';
+			return '<img id="{$editor_id}_table_insert_row_before" src="{$themeurl}/images/table_insert_row_before.gif" title="{$lang_theme_table_insert_row_before_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTableInsertRowBefore\');">';
 
 		case "row_after":
-			return '<img id="{$editor_id}_table_insert_row_after" src="{$themeurl}/images/table_insert_row_after.gif" title="{$lang_theme_table_insert_row_after_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceTableInsertRowAfter\');">';
+			return '<img id="{$editor_id}_table_insert_row_after" src="{$themeurl}/images/table_insert_row_after.gif" title="{$lang_theme_table_insert_row_after_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTableInsertRowAfter\');">';
 
 		case "delete_row":
-			return '<img id="{$editor_id}_table_delete_row" src="{$themeurl}/images/table_delete_row.gif" title="{$lang_theme_table_delete_row_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceTableDeleteRow\');">';
+			return '<img id="{$editor_id}_table_delete_row" src="{$themeurl}/images/table_delete_row.gif" title="{$lang_theme_table_delete_row_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTableDeleteRow\');">';
 
 		case "col_before":
-			return '<img id="{$editor_id}_table_insert_col_before" src="{$themeurl}/images/table_insert_col_before.gif" title="{$lang_theme_table_insert_col_before_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceTableInsertColBefore\');">';
+			return '<img id="{$editor_id}_table_insert_col_before" src="{$themeurl}/images/table_insert_col_before.gif" title="{$lang_theme_table_insert_col_before_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTableInsertColBefore\');">';
 
 		case "col_after":
-			return '<img id="{$editor_id}_table_insert_col_after" src="{$themeurl}/images/table_insert_col_after.gif" title="{$lang_theme_table_insert_col_after_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceTableInsertColAfter\');">';
+			return '<img id="{$editor_id}_table_insert_col_after" src="{$themeurl}/images/table_insert_col_after.gif" title="{$lang_theme_table_insert_col_after_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTableInsertColAfter\');">';
 
 		case "delete_col":
-			return '<img id="{$editor_id}_table_delete_col" src="{$themeurl}/images/table_delete_col.gif" title="{$lang_theme_table_delete_col_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceTableDeleteCol\');">';
+			return '<img id="{$editor_id}_table_delete_col" src="{$themeurl}/images/table_delete_col.gif" title="{$lang_theme_table_delete_col_desc}" width="20" height="20" class="mceButtonDisabled" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceTableDeleteCol\');">';
 
 		case "hr":
-			return '<img id="{$editor_id}_hr" src="{$themeurl}/images/hr.gif" title="{$lang_theme_hr_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'inserthorizontalrule\');">';
+			return '<img id="{$editor_id}_hr" src="{$themeurl}/images/hr.gif" title="{$lang_theme_hr_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'inserthorizontalrule\');">';
 
 		case "removeformat":
-			return '<img id="{$editor_id}_removeformat" src="{$themeurl}/images/removeformat.gif" title="{$lang_theme_removeformat_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'removeformat\');">';
+			return '<img id="{$editor_id}_removeformat" src="{$themeurl}/images/removeformat.gif" title="{$lang_theme_removeformat_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'removeformat\');">';
 
 		case "sub":
-			return '<img id="{$editor_id}_sub" src="{$themeurl}/images/sub.gif" title="{$lang_theme_sub_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'subscript\');">';
+			return '<img id="{$editor_id}_sub" src="{$themeurl}/images/sub.gif" title="{$lang_theme_sub_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'subscript\');">';
 
 		case "sup":
-			return '<img id="{$editor_id}_sup" src="{$themeurl}/images/sup.gif" title="{$lang_theme_sup_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'superscript\');">';
+			return '<img id="{$editor_id}_sup" src="{$themeurl}/images/sup.gif" title="{$lang_theme_sup_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'superscript\');">';
+
+		case "formatselect":
+			return '<select id="{$editor_id}_formatSelect" name="{$editor_id}_formatSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FormatBlock\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
+					<option value="<p>">{$lang_theme_paragraph}</option>\
+					<!-- <option value="<div>">{$lang_theme_div}</option> -->\
+					<option value="<address>">{$lang_theme_address}</option>\
+					<option value="<pre>">{$lang_theme_pre}</option>\
+					<option value="<h1>">{$lang_theme_h1}</option>\
+					<option value="<h2>">{$lang_theme_h2}</option>\
+					<option value="<h3>">{$lang_theme_h3}</option>\
+					<option value="<h4>">{$lang_theme_h4}</option>\
+					<option value="<h5>">{$lang_theme_h5}</option>\
+					<option value="<h6>">{$lang_theme_h6}</option>\
+					</select>';
+
+		case "fontselect":
+			return '<select id="{$editor_id}_fontNameSelect" name="{$editor_id}_fontNameSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontName\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
+					<option value="">{$lang_theme_fontdefault}</option>\
+					<option value="arial,helvetica,sans-serif">Arial</option>\
+					<option value="times new roman,times,serif">Times New Roman</option>\
+					<option value="verdana,arial,helvetica,sans-serif">Verdana</option>\
+					<option value="courier new,courier,monospace">Courier</option>\
+					<option value="georgia,times new roman,times,serif">Georgia</option>\
+					<option value="tahoma,arial,helvetica,sans-serif">Tahoma</option>\
+					</select>';
+
+		case "fontsizeselect":
+			return '<select id="{$editor_id}_fontSizeSelect" name="{$editor_id}_fontSizeSelect" onchange="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'FontSize\',false,this.options[this.selectedIndex].value);" class="mceSelectList">\
+					<option value="1">1 (8 pt)</option>\
+					<option value="2">2 (10 pt)</option>\
+					<option value="3">3 (12 pt)</option>\
+					<option value="4">4 (14 pt)</option>\
+					<option value="5">5 (18 pt)</option>\
+					<option value="6">6 (24 pt)</option>\
+					<option value="7">7 (36 pt)</option>\
+					</select>';
+
+		case "forecolor":
+			return '<img id="{$editor_id}_custom1" src="{$themeurl}/images/forecolor.gif" title="{$lang_theme_forecolor_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="TinyMCE_advanced_openColorPicker(\'{$editor_id}\',\'forecolor\',TinyMCE_advanced_foreColor);">';
 
 		case "custom1":
-			return '<img id="{$editor_id}_custom1" src="{$themeurl}/images/custom_1.gif" title="{$lang_theme_custom1_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execCommand(\'mceRemoveEditor\',false,\'{$editor_id}\');">';
+			return '<img id="{$editor_id}_custom1" src="{$themeurl}/images/custom_1.gif" title="{$lang_theme_custom1_desc}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceRemoveEditor\',false,\'{$editor_id}\');">';
 
 		case "separator":
 			return '<img src="{$themeurl}/images/spacer.gif" width="1" height="15" class="mceSeparatorLine">';
@@ -112,6 +152,23 @@ function TinyMCE_advanced_getButtonHTML(button_name) {
 }
 
 function TinyMCE_advanced_getEditorTemplate(settings) {
+	function removeFromArray(in_array, remove_array) {
+		var outArray = new Array();
+		for (var i=0; i<in_array.length; i++) {
+			skip = false;
+
+			for (var j=0; j<remove_array.length; j++) {
+				if (in_array[i] == remove_array[j])
+					skip = true;
+			}
+
+			if (!skip)
+				outArray.push(in_array[i]);
+		}
+
+		return outArray; 
+	}
+
 	var template = new Array();
 
 	template['html'] = '\
@@ -122,7 +179,8 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	<tr><td class="mceToolbar" align="center" height="1">';
 
 	// Render row 1
-	var buttonNamesRow1 = tinyMCE.getParam("theme_advanced_buttons1", "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,styleselect").split(',');
+	var buttonNamesRow1 = tinyMCE.getParam("theme_advanced_buttons1", "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,styleselect,formatselect").split(',');
+	buttonNamesRow1 = removeFromArray(buttonNamesRow1, tinyMCE.getParam("theme_advanced_disable", "").split(','));
 	for (var i=0; i<buttonNamesRow1.length; i++)
 		template['html'] += TinyMCE_advanced_getButtonHTML(buttonNamesRow1[i]);
 
@@ -131,6 +189,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 
 	// Render row 2
 	var buttonNamesRow2 = tinyMCE.getParam("theme_advanced_buttons2", "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,link,unlink,image,cleanup,help,code").split(',');
+	buttonNamesRow2 = removeFromArray(buttonNamesRow2, tinyMCE.getParam("theme_advanced_disable", "").split(','));
 	for (var i=0; i<buttonNamesRow2.length; i++)
 		template['html'] += TinyMCE_advanced_getButtonHTML(buttonNamesRow2[i]);
 
@@ -139,6 +198,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 
 	// Render row 3
 	var buttonNamesRow3 = tinyMCE.getParam("theme_advanced_buttons3", "table,separator,row_before,row_after,delete_row,separator,col_before,col_after,delete_col,separator,hr,removeformat,separator,sub,sup").split(',');
+	buttonNamesRow3 = removeFromArray(buttonNamesRow3, tinyMCE.getParam("theme_advanced_disable", "").split(','));
 	for (var i=0; i<buttonNamesRow3.length; i++)
 		template['html'] += TinyMCE_advanced_getButtonHTML(buttonNamesRow3[i]);
 
@@ -400,6 +460,24 @@ function cancelAction() {\
 }
 
 function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_levels) {
+	function selectByValue(select_elm, value) {
+		if (select_elm) {
+			for (var i=0; i<select_elm.options.length; i++) {
+				if (select_elm.options[i].value == value) {
+					select_elm.selectedIndex = i;
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	// Get element color
+	var colorElm = tinyMCE.getParentElement(node, "font", "color")
+	if (colorElm)
+		TinyMCE_advanced_foreColor = "" + colorElm.color.toUpperCase();
+
 	TinyMCE_advanced_setupCSSClasses(editor_id);
 
 	// Reset old states
@@ -476,6 +554,36 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 		} while (!breakOut && (classNode = classNode.parentNode));
 
 		selectElm.selectedIndex = index;
+	}
+
+	// Select formatblock
+	var selectElm = document.getElementById(editor_id + "_formatSelect");
+	if (selectElm) {
+		var elm = tinyMCE.getParentElement(node, "p,div,h1,h2,h3,h4,h5,h6,pre,address");
+		if (elm) {
+			selectByValue(selectElm, "<" + elm.nodeName.toLowerCase() + ">");
+		} else
+			selectByValue(selectElm, "<p>");
+	}
+
+	// Select fontselect
+	var selectElm = document.getElementById(editor_id + "_fontNameSelect");
+	if (selectElm) {
+		var elm = tinyMCE.getParentElement(node, "font", "face");
+		if (elm)
+			selectByValue(selectElm, elm.getAttribute("face"));
+		else
+			selectByValue(selectElm, "");
+	}
+
+	// Select fontsize
+	var selectElm = document.getElementById(editor_id + "_fontSizeSelect");
+	if (selectElm) {
+		var elm = tinyMCE.getParentElement(node, "font", "size");
+		if (elm)
+			selectByValue(selectElm, elm.getAttribute("size"));
+		else
+			selectByValue(selectElm, "1");
 	}
 
 	// Handle align attributes
@@ -578,8 +686,79 @@ function TinyMCE_advanced_openHTMLSourceEditor() {
 		<input type="button" name="Button" value="{$lang_theme_code_save}" onclick="saveContent();">\
 		</body></html>';
 
-	template['width'] = tinyMCE.getParam("theme_advanced_source_editor_width", 360);
+	template['width'] = tinyMCE.getParam("theme_advanced_source_editor_width", 340);
 	template['height'] = tinyMCE.getParam("theme_advanced_source_editor_height", 270);
+
+	tinyMCE.openWindow(template);
+}
+
+// Custom HTML editor function
+function TinyMCE_advanced_openColorPicker(editor_id, command, input_color) {
+	var template = new Array();
+	var colorPicker = "";
+
+	if (!input_color)
+		input_color = "#000000";
+
+	var colors = new Array(
+	"#000000","#000033","#000066","#000099","#0000CC","#0000FF","#330000","#330033","#330066","#330099","#3300CC",
+	"#3300FF","#660000","#660033","#660066","#660099","#6600CC","#6600FF","#990000","#990033","#990066","#990099",
+	"#9900CC","#9900FF","#CC0000","#CC0033","#CC0066","#CC0099","#CC00CC","#CC00FF","#FF0000","#FF0033","#FF0066",
+	"#FF0099","#FF00CC","#FF00FF","#003300","#003333","#003366","#003399","#0033CC","#0033FF","#333300","#333333",
+	"#333366","#333399","#3333CC","#3333FF","#663300","#663333","#663366","#663399","#6633CC","#6633FF","#993300",
+	"#993333","#993366","#993399","#9933CC","#9933FF","#CC3300","#CC3333","#CC3366","#CC3399","#CC33CC","#CC33FF",
+	"#FF3300","#FF3333","#FF3366","#FF3399","#FF33CC","#FF33FF","#006600","#006633","#006666","#006699","#0066CC",
+	"#0066FF","#336600","#336633","#336666","#336699","#3366CC","#3366FF","#666600","#666633","#666666","#666699",
+	"#6666CC","#6666FF","#996600","#996633","#996666","#996699","#9966CC","#9966FF","#CC6600","#CC6633","#CC6666",
+	"#CC6699","#CC66CC","#CC66FF","#FF6600","#FF6633","#FF6666","#FF6699","#FF66CC","#FF66FF","#009900","#009933",
+	"#009966","#009999","#0099CC","#0099FF","#339900","#339933","#339966","#339999","#3399CC","#3399FF","#669900",
+	"#669933","#669966","#669999","#6699CC","#6699FF","#999900","#999933","#999966","#999999","#9999CC","#9999FF",
+	"#CC9900","#CC9933","#CC9966","#CC9999","#CC99CC","#CC99FF","#FF9900","#FF9933","#FF9966","#FF9999","#FF99CC",
+	"#FF99FF","#00CC00","#00CC33","#00CC66","#00CC99","#00CCCC","#00CCFF","#33CC00","#33CC33","#33CC66","#33CC99",
+	"#33CCCC","#33CCFF","#66CC00","#66CC33","#66CC66","#66CC99","#66CCCC","#66CCFF","#99CC00","#99CC33","#99CC66",
+	"#99CC99","#99CCCC","#99CCFF","#CCCC00","#CCCC33","#CCCC66","#CCCC99","#CCCCCC","#CCCCFF","#FFCC00","#FFCC33",
+	"#FFCC66","#FFCC99","#FFCCCC","#FFCCFF","#00FF00","#00FF33","#00FF66","#00FF99","#00FFCC","#00FFFF","#33FF00",
+	"#33FF33","#33FF66","#33FF99","#33FFCC","#33FFFF","#66FF00","#66FF33","#66FF66","#66FF99","#66FFCC","#66FFFF",
+	"#99FF00","#99FF33","#99FF66","#99FF99","#99FFCC","#99FFFF","#CCFF00","#CCFF33","#CCFF66","#CCFF99","#CCFFCC",
+	"#CCFFFF","#FFFF00","#FFFF33","#FFFF66","#FFFF99","#FFFFCC","#FFFFFF");
+
+	colorPicker += '<table border="0" cellspacing="1" cellpadding="0">';
+	colorPicker += '<tr>';
+	for (var i=0; i<colors.length; i++) {
+		colorPicker += '<td bgcolor="' + colors[i] + '"><a href="javascript:void(0);" onclick="selectColor();" onmouseover="showColor(\'' + colors[i] +  '\');"><img border="0" src="{$themeurl}/images/spacer.gif" width="8" height="12"></a></td>';
+
+		if ((i+1) % 18 == 0)
+			colorPicker += '</tr><tr>';
+	}
+	colorPicker += '<tr><td colspan="18">';
+	colorPicker += '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
+	colorPicker += '<tr><td><img id="selectedColor" style="background-color:' + input_color + '" border="0" src="{$themeurl}/images/spacer.gif" width="80" height="16"></td><td align="right"><input id="selectedColorBox" name="selectedColorBox" type="text" size="7" maxlength="7" style="width:65px" value="' + input_color + '"></td><tr>';
+	colorPicker += '</table></td></tr>';
+	colorPicker += '</table>';
+	colorPicker += '<input type="button" name="" value="{$lang_theme_colorpicker_apply}" style="margin-top:3px" onclick="selectColor();">';
+
+	template['html'] = '<html><head><title>{$lang_theme_colorpicker_title}</title>\
+		<link href="{$css}" rel="stylesheet" type="text/css">\
+		<script language="javascript">\
+		function selectColor() {\
+			var color = document.getElementById("selectedColorBox").value;\
+			if (window.opener)\
+				window.opener.tinyMCE.execInstanceCommand("' + editor_id + '","' + command + '",false,color);\
+			window.close();\
+		}\
+\
+		function showColor(color) {\
+			document.getElementById("selectedColor").style.backgroundColor = color;\
+			document.getElementById("selectedColorBox").value = color;\
+		}\
+		window.focus();\
+		</script></head>\
+		<body marginheight="3" topmargin="3" leftmargin="3" marginwidth="3">\
+		' + colorPicker + '\
+		</body></html>';
+
+	template['width'] = 170;
+	template['height'] = 205;
 
 	tinyMCE.openWindow(template);
 }
