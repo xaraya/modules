@@ -202,6 +202,10 @@ function comments_user_displayall($args)
                 $comments[$i]['xar_title']=substr($comments[$i]['xar_title'],0,$args['truncate']).'...';
             }
         }
+        $comments[$i]['xar_subject'] = xarVarPrepForDisplay($comments[$i]['xar_subject']);
+        if (!empty($comments[$i]['xar_text'])) {
+            $comments[$i]['xar_text'] = xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
+        }
         if ($args['adddaysep']=='on') {
         // find out whether to change day separator        
             $msgunixtime=$comments[$i]['xar_datetime'];
