@@ -70,7 +70,7 @@ function mybookmarks_bookmarksblock_display($blockinfo)
 
     // Database information
     xarModDBInfoLoad('mybookmarks');
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     $xartable =xarDBGetTables();
     $mybookmarkstable = $xartable['mybookmarks'];
     $prefix = xarDBGetSiteTablePrefix();

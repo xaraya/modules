@@ -19,8 +19,8 @@ function mybookmarks_init()
 {
 
 
-    list($dbconn) = xarDBGetConn();
-    $xartables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
 
 
@@ -235,8 +235,8 @@ function mybookmarks_delete()
     /*
      * REMOVE THE DATABASE TABLES AND DD OBJECTS
      */
-    list($dbconn) = xarDBGetConn();
-    $xartables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
 
     // adodb does not provide the functionality to abstract table creates
     // across multiple databases.  Xaraya offers the xarDropeTable function
