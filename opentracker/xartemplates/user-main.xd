@@ -22,7 +22,7 @@
     </th>
   </tr>
   <tr valign="baseline">
-    <td align="left"width="75%" class="xar-norm-outline xar-mod-title" style="border-width: 0px 0px 1px 1px;">
+    <td align="left" width="75%" class="xar-norm-outline xar-mod-title" style="border-width: 0px 0px 1px 1px;">
       <xar:mlstring>Total Page Impressions</xar:mlstring>
     </td>
     <td align="right" width="25%" class="xar-norm-outline" style="border-width: 0px 1px 1px 1px;">
@@ -65,7 +65,11 @@
   <xar:loop name="$statisticitems">
     <tr valign="baseline">
       <td align="left" class="xar-alt xar-mod-title" style="border-width: 0px 0px 1px 0px;">
-        <xar:if condition="isset($loop:item['href'])"><a href="#$loop:item['href']#" class="xar-mod-title"></xar:if>#$loop:item['displayname']#<xar:if condition="$loop:item['href']"></a></xar:if>
+        <xar:if condition="isset($loop:item['href'])">
+            <a href="#$loop:item['href']#" class="xar-mod-title">#$loop:item['displayname']#</a>
+        <xar:else/>
+            #$loop:item['displayname']#
+        </xar:if>
       </td>
       <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 0px;">
         #$loop:item['pi_number']#
