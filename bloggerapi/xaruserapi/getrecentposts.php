@@ -51,7 +51,7 @@ function bloggerapi_userapi_getrecentposts($msg)
         // Retrieve articles from selected category
         // FIXME: test for exceptions 
         $articles = xarModAPIFunc('articles','user','getall', 
-            array('startnum' => 1, 'ptid' => null, 'numitems' => $numberOfPosts));
+            array('startnum' => 1, 'ptid' => null, 'numitems' => $numberOfPosts, 'cids' => $cids));
         
         if (count($articles)==0) {
 					$cat = xarModAPIFunc('categories','user','getcat',array('return_itself'=>true,'cid'=>$blogid));
