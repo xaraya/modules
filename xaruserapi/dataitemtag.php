@@ -8,7 +8,7 @@ function reports_userapi_dataitemtag($args)
     // Get some info on the datatype of the fieldname, most notably for blobs
     // those have to be cached and referred to. 
     if(!isset($type)) {
-        $code = $dataset."->fields['$name']";
+        $code = "htmlspecialchars(".$dataset."->fields['$name'])";
     } else {
         // Type denotes a mime formatted type, generate a cache representation of
         // TODO: test for value of id

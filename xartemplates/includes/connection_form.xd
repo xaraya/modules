@@ -5,11 +5,11 @@
 <table>
   <tr>
     <td><label for="conn_name"><xar:mlstring>Connection name</xar:mlstring></label></td>
-    <td><input type="text" name="conn_name" id="conn_name" value="#$name#"></td>
+    <td><input type="text" name="conn_name" id="conn_name" value="#$name#"/></td>
   </tr>
   <tr>
     <td><label for="conn_desc"><xar:mlstring>Description</xar:mlstring></label></td>
-    <td><input type="textarea" name="conn_desc" id="conn_desc" value="#$description#"></td>
+    <td><input type="textarea" name="conn_desc" id="conn_desc" value="#$description#"/></td>
   </tr>
   <tr>
     <td><label for="conn_type"><xar:mlstring>Type</xar:mlstring></label></td>
@@ -30,19 +30,19 @@
   </tr>
   <tr>
     <td><label for="conn_server"><xar:mlstring>Server</xar:mlstring></label></td>
-    <td><input type="text" name="conn_server" id="conn_server" value="#$server#"></td>
+    <td><input type="text" name="conn_server" id="conn_server" value="#$server#"/></td>
   </tr>
   <tr>
     <td><label for="conn_database"><xar:mlstring>Database name</xar:mlstring></label></td>
-    <td><input type="text" name="conn_database" id="conn_database" value="#$database#"></td>
+    <td><input type="text" name="conn_database" id="conn_database" value="#$database#"/></td>
   </tr>
   <tr>
     <td><label for="conn_user"><xar:mlstring>User</xar:mlstring></label></td>
-    <td><input type="text" name="conn_user" id="conn_user" value="#$user#"></td>
+    <td><input type="text" name="conn_user" id="conn_user" value="#$user#"/></td>
   </tr>
   <tr>
     <td><label for="conn_password"><xar:mlstring>Password</xar:mlstring></label></td>
-    <td><input type="password" name="conn_password" id="conn_password" value="#$password#"></td>
+    <td><input type="password" name="conn_password" id="conn_password" value="#$password#"/></td>
   </tr>
 </table>
 

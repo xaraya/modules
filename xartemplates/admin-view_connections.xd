@@ -9,7 +9,7 @@
     <th><xar:mlstring>Server</xar:mlstring></th>
     <th><xar:mlstring>Database</xar:mlstring></th>
     <th><xar:mlstring>User</xar:mlstring></th>
-    <th><xar:mlstring>Actions</xar:mlstring>
+    <th><xar:mlstring>Actions</xar:mlstring></th>
   </tr>
   <xar:loop name="$connections">
     <tr>

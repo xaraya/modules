@@ -32,6 +32,9 @@ function reports_userapi_produce_output($args)
                 case 'text':
                     $func = 'text_output';
                     break;
+                case 'svg':
+                    $func = 'svg_output';
+                    break;
                 default:
                     $msg = "Unknown report format ($format) specified";
                     xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', $msg);

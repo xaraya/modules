@@ -2,30 +2,30 @@
 
 <h3><xar:mlstring>Define reports</xar:mlstring></h3>
 <table>
-  <tr>
-    <th><xar:mlstring>Report name</xar:mlstring></th>
-    <th><xar:mlstring>Description</xar:mlstring></th>
-    <th><xar:mlstring>Definition file</xar:mlstring></th>
-    <th><xar:mlstring>Connection</xar:mlstring></th>
-    <th><xar:mlstring>Actions</xar:mlstring>
-  </tr>
-  <xar:loop name="$reports">
     <tr>
-      <td><a href="&xar-modurl-reports-admin-modify_report;&amp;rep_id=#$loop:item['id']#">#$loop:item['name']#</a></td>
-      <td>#$loop:item['description']#</td>
-      <td>#$loop:item['xmlfile']#</td>
-      <td><a href="&xar-modurl-reports-admin-modify_connection;&amp;conn_id=#$loop:item['connection']['id']#">#$loop:item['connection']['name']#</a></td>
-      <td>
-        <a href="&xar-modurl-reports-admin-delete_report;&amp;rep_id=#$loop:item['id']#">
-          <xar:mlstring>Delete</xar:mlstring>
-        </a>
-      </td>
+        <th><xar:mlstring>Report name</xar:mlstring></th>
+        <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Definition file</xar:mlstring></th>
+        <th><xar:mlstring>Connection</xar:mlstring></th>
+        <th><xar:mlstring>Actions</xar:mlstring></th>
     </tr>
-  </xar:loop>
+    <xar:loop name="$reports">
+        <tr>
+            <td><a href="&xar-modurl-reports-admin-modify_report;&amp;rep_id=#$loop:item['id']#">#$loop:item['name']#</a></td>
+            <td>#$loop:item['description']#</td>
+            <td>#$loop:item['xmlfile']#</td>
+            <td><a href="&xar-modurl-reports-admin-modify_connection;&amp;conn_id=#$loop:item['connection']['id']#">#$loop:item['connection']['name']#</a></td>
+            <td>
+                <a href="&xar-modurl-reports-admin-delete_report;&amp;rep_id=#$loop:item['id']#">
+                    <xar:mlstring>Delete</xar:mlstring>
+                </a>
+            </td>
+        </tr>
+    </xar:loop>
 </table>
 
 <a href="&xar-modurl-reports-admin-new_report;">
-<xar:mlstring>Create new report</xar:mlstring>
+    <xar:mlstring>Create new report</xar:mlstring>
 </a>
 
 

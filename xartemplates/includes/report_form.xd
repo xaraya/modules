@@ -4,15 +4,15 @@
 <table>
   <tr>
     <td><label for="rep_name"><xar:mlstring>Report name</xar:mlstring></label></td>
-    <td><input type="text" name="rep_name" id="rep_name" value="#$name#"></td>
+    <td><input type="text" name="rep_name" id="rep_name" value="#$name#"/></td>
   </tr>
   <tr>
     <td><label for="rep_desc"><xar:mlstring>Description</xar:mlstring></label></td>
-    <td><input type="textarea" name="rep_desc" id="rep_desc" value="#$description#"></td>
+    <td><input type="textarea" name="rep_desc" id="rep_desc" value="#$description#"/></td>
   </tr>
   <tr>
     <td><label for="rep_xmlfile"><xar:mlstring>Definition file</xar:mlstring></label></td>
-    <td><input type="text" name="rep_xmlfile" id="rep_xmlfile" value="#$xmlfile#"></td>
+    <td><input type="text" name="rep_xmlfile" id="rep_xmlfile" value="#$xmlfile#"/></td>
   </tr>
   <tr>
     <td><label for="rep_conn_id"><xar:mlstring>Connection</xar:mlstring></label></td>

@@ -7,28 +7,15 @@ function reports_userapi_pdf_output($args)
 {
     extract($args);
     
-    // Command line would be fop -q input.xml output.pdf
-    // so we have to make temporary files to hold the stuff
-     
-    // Write the xml data into the inputfile
-    $input = tempnam('var/cache/reports','REPORT');
-    $hIn = fopen($input, 'w');
-    fwrite($hIn, $xmldata);
-    fclose($hIn);
+    // Prepare arguments to push a pdf to the client
+    $arguments = array (
+                        'format'       => "pdf",
+                        'filename'     => $report['name'].".pdf",
+                        'disposition'  => "attachment",
+                        'xmldata'      => $xmldata);
     
-    $output = tempnam('var/cache/reports','REPORT');
-    $lastline = exec("fop -q -fo $input -pdf $output", $outlines, $returnvalue);
- 
-    // Return the contents of the output to the user
-    $fp = fopen($output, 'rb');
-    header("Pragma: ");
-    header("Cache-Control: ");
-    header("Content-Type: application/pdf");
-    header("Content-disposition: attachment; filename=\"".$report['name'].".pdf\"");
-    header("Content-Length: " . filesize($output));
-    fpassthru($fp);
-    fclose($fp);
-    unlink($input); unlink($output);
+    // Push output to client
+    xarModApiFunc('reports','user','push_output',$arguments);
     exit;
 }
 ?>
