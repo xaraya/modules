@@ -1,7 +1,7 @@
 <xar:mlstring>Random Smiley!</xar:mlstring>
-<br /><br />
-<b>#$code#</b> = <img src="#xarTplGetImage($icon)#" alt="#$emotion#" />
-<br /><br />
-<xar:mlstring>Brought to you by the emotion</xar:mlstring>:
-<br /><br />
-<b>#$emotion#</b>
+<p>
+   <strong>#$code#</strong> = <img src="#xarTplGetImage($icon,'smilies')#" alt="#$emotion#" />
+</p>
+<p style="margin-bottom:10px;">
+    <xar:mlstring>Brought to you by the emotion</xar:mlstring>: <strong>#$emotion#</strong>
+</p>
