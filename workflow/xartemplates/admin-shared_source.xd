@@ -3,90 +3,81 @@ function setSomeElement(fooel, foo1) {
 	document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
 }
 </script>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#xarML('Admin process sources')#</h2><br />
-<div style="margin: auto;">
-<xar:template file="proc_bar" type="module"/>
-<xar:if condition="count($errors) gt 0">
-<div class="wikitext">
-Errors:<br/>
-<xar:foreach in="$errors" key="$ix">
-<small>#$errors[$ix]#</small><br/>
-</xar:foreach>
-</div>
-</xar:if>
 
-<form id='editsource' action="&xar-modurl-workflow-admin-shared_source;" method="post">
-<input type="hidden" name="pid" value="#$pid#" />
-<input type="hidden" name="source_name" value="#$source_name#" />
-<table class="normal">
-<tr>
-  <td class="formcolor">#xarML('select source')#</td>
-  <td class="formcolor">
-		<select name="activityId" onChange="document.getElementById('editsource').submit();">
-<xar:if condition="$activityId eq 0">
-		<option value="" selected="selected">#xarML('Shared code')#</option>
-<xar:else/>
-		<option value="">#xarML('Shared code')#</option>
-</xar:if>
-		<xar:foreach in="$items" key="$ix">
-<xar:if condition="$activityId eq $items[$ix]['activityId']">
-		<option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
-<xar:else/>
-		<option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
-</xar:if>
-		</xar:foreach>
-		</select>
-  </td>
+<!-- Process navigation bar -->
+<xar:template file="proc_bar"/>
 
-  <td class="formcolor">
-    <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'n'">
-    <input type="submit" name='template' value="#xarML('template')#" />
-    </xar:if>
-    <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'y'">
-	<input type="submit" name='save' value="#xarML('code')#" />
-    </xar:if>
-  </td>
+<div class="xar-mod-body">
+  <h2><xar:mlstring>Admin process sources</xar:mlstring></h2>
 
+  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; margin: auto;">
+    <form id='editsource' action="&xar-modurl-workflow-admin-shared_source;" method="post">
+      <input type="hidden" name="pid" value="#$pid#" />
+      <input type="hidden" name="source_name" value="#$source_name#" />
+      <table style="width: 99%">
+        <tr>
+          <td><xar:mlstring>Activity: </xar:mlstring>
+            <select name="activityId" onChange="document.getElementById('editsource').submit();">
+              <xar:if condition="$activityId eq 0">
+                <option value="" selected="selected"><xar:mlstring>Shared code</xar:mlstring></option>
+              <xar:else/>
+                <option value=""><xar:mlstring>Shared code</xar:mlstring></option>
+              </xar:if>
+              <xar:foreach in="$items" key="$ix">
+                <xar:if condition="$activityId eq $items[$ix]['activityId']">
+                  <option value="#$items[$ix]['activityId']#" selected="selected">#$items[$ix]['name']#</option>
+                  <xar:else/>
+                  <option value="#$items[$ix]['activityId']#">#$items[$ix]['name']#</option>
+                </xar:if>
+              </xar:foreach>
+            </select>
+          </td>
+          <td>
+            <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'n'">
+              <input type="submit" name='template' value="#xarML('Switch to template')#" />
+            </xar:if>
+            <xar:if condition="$activityId gt 0 and $act_info['isInteractive'] eq 'y' and $template eq 'y'">
+              <input type="submit" name='save' value="#xarML('Switch to code')#" />
+            </xar:if>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <table border="1">
+              <tr>
+                <td style="width: 100%;">
+                  <textarea style="width: 100%" id='src' name="source" rows="20" cols="80">#$data#</textarea>
+                </td>
+                <td>
+                  <xar:if condition="$template != 'y'">
+                    <a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');"><xar:mlstring>Set next user</xar:mlstring></a><hr/>
+                    <a href="javascript:setSomeElement('src','$instance->get(\'\');');"><xar:mlstring>Get property</xar:mlstring></a><hr/>
+                    <a href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');"><xar:mlstring>Set property</xar:mlstring></a><hr />
+                    <xar:if condition="$act_info['isInteractive'] eq 'y'">
+                      <a href="javascript:setSomeElement('src','$instance->complete();');"><xar:mlstring>Complete</xar:mlstring></a><hr/>
+                      <a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a><hr/>
+                    </xar:if>
+                    <xar:if condition="$act_info['type'] eq 'switch'">
+                      <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a><hr />  		    
+                      <a href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a><hr />  		    
+                      <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a><hr />
+                    </xar:if>
+                  </xar:if>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" name='save' value="#xarML('Save')#" />
+            <input type="submit" name='cancel' value="#xarML('Cancel')#" />
+          </td>
+        </tr>
+      </table>  
+    </form>
+  </div>
 
-  <td class='formcolor'>
-  	<input type="submit" name='save' value="#xarML('save')#" />
-  	<input type="submit" name='cancel' value="#xarML('cancel')#" />
-  </td>
-</tr>
-<tr>
-  <td class="formcolor" colspan="4">
-    <table>
-    <tr>
-    <td>
-  	<textarea id='src' name="source" rows="20" cols="80">#$data#</textarea>
-  	</td>
-  	<td>
-  	<xar:if condition="$template eq 'y'">
-  		templ
-  	<xar:else/>
-  		<a class="link" href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');">#xarML('Set next user')#</a><hr/>
-		<a class="link" href="javascript:setSomeElement('src','$instance->get(\'\');');">#xarML('Get property')#</a><hr/>
-		<a class="link" href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');">#xarML('Set property')#</a><hr />
-  		<xar:if condition="$act_info['isInteractive'] eq 'y'">
-  			<a class="link" href="javascript:setSomeElement('src','$instance->complete();');">#xarML('Complete')#</a><hr/>
-  			<a class="link" href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');">#xarML('Process form')#</a><hr/>
-  		</xar:if>
-  		<xar:if condition="$act_info['type'] eq 'switch'">
-			<a class="link" href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');">#xarML('Set Next act')#</a><hr />  		    
-			<a class="link" href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');">#xarML('If:SetNextact')#</a><hr />  		    
-			<a class="link" href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');">#xarML('Switch construct')#</a><hr />
-  		</xar:if>
-  	</xar:if>
-  	
-    
-  	</td>
-  	</tr>
-  	</table>
-  </td>
-</tr>
-</table>  
-</form>
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
+  <!-- Show a courtesy footer -->
+  <xar:template file="galaxfooter"/>
 </div>

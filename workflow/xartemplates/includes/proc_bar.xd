@@ -1,46 +1,83 @@
-<table cellpadding='0' cellspacing='0'><tr><td>
-<div style="height:20px; padding-top:2px; padding-bottom:2px;border:1px solid black; background-color:white; color:black; font-size:10px;">
-<table  cellpadding='0' cellspacing='0'>
-<tr>
-	<td><b>#$proc_info['name']#:#$proc_info['version']#</b>
-	<xar:if condition="$proc_info['isValid'] eq 'y'">
-		<img border='0' src='modules/workflow/lib/Galaxia/img/icons/green_dot.gif' alt='#xarML('valid')#' title='#xarML('valid')#' />	
-	<xar:else/>
-		<img border='0' src='modules/workflow/lib/Galaxia/img/icons/red_dot.gif' alt='#xarML('invalid')#' title='#xarML('invalid')#' />
-	</xar:if>
-	</td>
-	<td align='right'>
-		<table cellpadding='0' cellspacing='2'>
-		<tr>
-			<xar:if condition="$proc_info['isActive'] eq 'y'">
-			<td><a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;deactivate_proc=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/stop.gif' alt='#xarML('stop')#' title='#xarML('stop')#' /></a></td>						
-			<xar:else/>
-			<xar:if condition="$proc_info['isValid'] eq 'y'">
-			<td><a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;activate_proc=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/refresh2.gif' alt='#xarML('activate')#' title='#xarML('activate')#' /></a></td>									
-			</xar:if>
-			</xar:if>
-		    <td><a class="link" href="&xar-modurl-workflow-admin-processes;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/change.gif' alt='#xarML('edit')#' title='#xarML('edit')#' /></a></td>				
-			<td><a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Activity.gif' alt='#xarML('activities')#' title='#xarML('activities')#' /></a></td>						
-		    <td><a class="link" href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/book.gif' alt='#xarML('code')#' title='#xarML('code')#' /></a></td>		
-		    <td><a class="link" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/myinfo.gif' alt='#xarML('roles')#' title='#xarML('roles')#' /></a></td>		
-			<td><a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#"><img src='modules/workflow/lib/Galaxia/img/icons/mode_tree.gif' border='0' title='#xarML('graph')#' alt='#xarML('graph')#' /></a></td>		
-			<td><a class="link" href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/export.gif' alt='#xarML('export')#' title='#xarML('export')#' /></a></td>
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>Workflow Administration</xar:mlstring>
+  </span>
+</div>
 
-		</tr>
-		</table>
-	</td>	
-</tr>
-</table>
+<div>
+  <span>
+    <b><xar:mlstring>Process:</xar:mlstring></b>
+  </span>
 </div>
-</td><td >
-<div style="height:20px; padding-top:2px; padding-bottom:2px; border:1px solid black; background-color:white; color:black; font-size:10px;">
-<table  cellpadding='0' cellspacing='0'>
-<tr>
-	<td><a class="link" href="&xar-modurl-workflow-admin-monitor_processes;&amp;filter_process=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Process.gif' alt='#xarML('monitor')#' title='#xarML('monitor processes')#' /></td>	
-	<td><a class="link" href="&xar-modurl-workflow-admin-monitor_activities;&amp;filter_process=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Activity.gif' alt='#xarML('monitor')#' title='#xarML('monitor activities')#' /></td>	
-	<td><a class="link" href="&xar-modurl-workflow-admin-monitor_instances;&amp;filter_process=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Instance.gif' alt='#xarML('monitor')#' title='#xarML('monitor instances')#' /></td>	
-	<td><a class="link" href="&xar-modurl-workflow-admin-monitor_workitems;&amp;filter_process=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/memo.gif' alt='#xarML('monitor')#' title='#xarML('monitor workitems')#' /></td>	
-</tr>
-</table>
+
+<!-- Show the process bar -->
+<div style="padding: 5pt; margin: 0.3em 1em 1em 0.7em; border:thin solid black;">
+
+<!-- Show the link to list and new always -->
+<a class="link" href="&xar-modurl-workflow-admin-processes;">
+  <img border="0" src="#xarTplGetImage('index.gif')#" alt="#xarML('processlist')#" title="#xarML('processlist')#" />
+  <xar:mlstring>List </xar:mlstring>
+</a>
+
+<!-- Only if we are in a process the next makes sense -->
+<xar:if condition="$pid gt 0">
+  <!-- Show the deactivate and activate if the process is valid -->
+  <xar:if condition="$proc_info['isActive'] eq 'y'">
+    <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;deactivate_proc=#$pid#">
+      <img border="0" src="modules/workflow/lib/Galaxia/img/icons/stop.gif" alt="#xarML('stop')#" title="#xarML('stop')#" />
+      <xar:mlstring>Deactivate </xar:mlstring>
+     </a>
+   <xar:else/>
+      <xar:if condition="$proc_info['isValid'] eq 'y'">
+        <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;activate_proc=#$pid#">
+          <img border="0" src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt="#xarML('activate')#" title="#xarML('activate')#" />
+          <xar:mlstring>Activate </xar:mlstring>
+        </a>
+      </xar:if>
+    </xar:if>
+
+    <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;pid=#$pid#">
+      <img border="0" src="modules/workflow/lib/Galaxia/img/icons/change.gif" alt="#xarML('edit')#" title="#xarML('edit')#" />
+      <xar:mlstring>Process Details</xar:mlstring>
+    </a>
+				
+    <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#">
+      <img border="0" src="modules/workflow/lib/Galaxia/img/icons/Activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" />
+      <xar:mlstring>Activities</xar:mlstring>
+    </a>
+        
+    <a class="link" href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#">
+      <img border="0" src="modules/workflow/lib/Galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('code')#" />
+      <xar:mlstring>Code</xar:mlstring>
+    </a>
+        
+    <a class="link" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#">
+      <img border="0" src="modules/workflow/lib/Galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" />
+      <xar:mlstring>Roles</xar:mlstring>
+    </a>		
+        
+    <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#">
+      <img src="modules/workflow/lib/Galaxia/img/icons/mode_tree.gif" border="0" title="#xarML('graph')#" alt="#xarML('graph')#" />
+      <xar:mlstring>Graph</xar:mlstring>
+    </a>
+        
+    <a class="link" href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$pid#">
+      <img border="0" src="modules/workflow/lib/Galaxia/img/icons/export.gif" alt="#xarML('export')#" title="#xarML('export')#" />
+      <xar:mlstring>Export</xar:mlstring>
+    </a>
+  </xar:if>
 </div>
-</td></tr></table>
+
+  <!-- We can only show the process if we have one -->
+  <xar:if condition="$pid gt 0">
+    <h2>#$proc_info['name']#: version #$proc_info['version']#</h2>
+  
+    <!-- Show a one line saying whether the process is valid or not -->
+    <xar:template file="isprocessvalid"/>
+
+    <!-- Show a list of errors, if any, to complete this process -->
+    <xar:template file="processerrors"/>
+</xar:if>
+
+
+

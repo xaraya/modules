@@ -1,26 +1,85 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2><br />
-<div style="margin: auto;">
+<!-- Show the monitoring bar -->
+<xar:template file="monitor_bar"/>
 
-<xar:template file="monitor_bar" type="module"/>
+<div class="xar-mod-body">
+  <div style="margin: auto;">
+
+<!-- Introduction -->
+<h3><xar:mlstring>Overview</xar:mlstring></h3>
+<xar:mlstring>
+  <p>
+    See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction
+    and user manual of Galaxia</a> for more details on what this
+    module is all about, and how to use it.
+  </p>
+  <p>
+    However, we clarify their definitions here a bit. In the workflow
+    module a distinction could be made between:
+    <ol>
+      <li>The definition part: processes and activities</li>
+      <li>The running part: instances and workitems</li>
+    </ol>
+  </p>
+  <p>
+    So, you <em>define</em> processes with activities and you
+    <em>run</em> instances to complete workitems. During the use of
+    the module you <em>Manage</em> processes and activities. There is
+    functionality available to <em>monitor</em> all of processes, activities,
+    instances and workitems. Each workitem can be completed by one or more process roles.
+    In Xaraya, you map the users or groups in the roles module to these process roles.
+    The description given here will be reflected in the Xaraya interface for the workflow module.
+  </p>
+</xar:mlstring>
+
+<!-- Getting started -->
+<h3><xar:mlstring>Getting started</xar:mlstring></h3>
+<p>
+<xar:mlstring>
+<ol>
+  <li>
+    make sure that the webserver can write to the directory
+    <code>var/processes</code> (chmod 777 or equivalent)
+  </li>
+  <li>
+    install <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a>
+    if you want to generate some nice process graphs, and adapt
+    GRAPHVIZ_DIR in <code>modules/workflow/tiki-setup.php</code> if necessary;
+  </li>
+  <li>
+    go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import
+    Object Definition</a> page and paste the content of the file 
+    <a  href="modules/workflow/cdcollection3_dd.xml">cdcollection3_dd.xml</a>
+    in the text area to create the sample database table;
+  </li>
+  <li>
+    go to <a href="index.php?module=workflow&amp;type=admin&amp;func=processes">Admin Processes</a>
+    and upload the file <a href="modules/workflow/cdcollection3.xml">cdcollection3.xml</a> to
+    create a sample process;
+  </li>
+  <li>
+    map some Xaraya users to the 'admin' and 'user' workflow roles for
+    that process, or add all current users from a Xaraya group to one
+    of the workflow roles [TODO: Galaxia does not support a permanent
+    mapping between Xaraya groups and workflow roles at the moment]
+  </li>
+  <li>
+    mark the process as <i>active</i> once you no longer have the
+    errors "Role: ... is not mapped"
+  </li>
+  <li>
+    go to the <a href="index.php?module=workflow">Workflow User Interface</a> and play around :-)
+  </li>
+  <li>
+    come back here and try some of the monitoring and administration options
+  </li>
+  <li>
+    create your own fancy processes and submit them back to the open source community
+  </li>
+</ol>
+</xar:mlstring>
+</p>
 
 <xar:mlstring>
-<p>See the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">introduction and user manual of Galaxia</a> for more details on what this module is all about, and how to use it.</p>
-<p>Then you should :
-<ol>
-<li>make sure that the webserver can write to the directory var/processes (chmod 777 or equivalent)</li>
-<li>install <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> if you want to generate some nice process graphs, and adapt GRAPHVIZ_DIR in modules/workflow/tiki-setup.php if necessary</li>
-<li>go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import Object Definition</a> page and paste the content of the file <a href="modules/workflow/cdcollection3_dd.xml">cdcollection3_dd.xml</a> in the text area
-to create the sample database table</li>
-<li>go to <a href="index.php?module=workflow&amp;type=admin&amp;func=processes">Admin Processes</a> and upload the file <a href="modules/workflow/cdcollection3.xml">cdcollection3.xml</a> to create a sample process</li>
-<li>map some Xaraya users to the 'admin' and 'user' workflow roles for that process, or add all current users from a Xaraya group to one of the workflow roles 
-[TODO: Galaxia does not support a permanent mapping between Xaraya groups and workflow roles at the moment]</li>
-<li>mark the process as <i>active</i> once you no longer have the errors "Role: ... is not mapped"
-<li>go to the <a href="index.php?module=workflow">Workflow User Interface</a> and play around :-)</li>
-<li>come back here and try some of the monitoring and administration options</li>
-<li>create your own fancy processes and submit them back to the open source community</li>
-</ol>
-</p>
 <p>Note: this is mostly a 1-to-1 conversion of the current Galaxia interface scripts from TikiWiki, and a quick &amp; dirty conversion of the templates that go with them. 
 The sample CD Loan process has been modified a bit to be more representative of actual processes, but is otherwise unchanged.</p>
 

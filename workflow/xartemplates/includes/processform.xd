@@ -1,0 +1,70 @@
+  <div>
+    <!-- Determine whether we are adding a new process -->
+    <xar:if condition="$pid gt 0">
+      <xar:set name="formtitle"><xar:mlstring>Process details</xar:mlstring></xar:set>
+    <xar:else/>
+      <xar:set name="formtitle"><xar:mlstring>Add process</xar:mlstring></xar:set>
+    </xar:if>
+    <h3><xar:var name="formtitle"/></h3>
+    
+    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+      <!-- Show an edit form for the process -->
+      <form action="&xar-modurl-workflow-admin-processes;" method="post">
+        <input type="hidden" name="version" value="#$info['version']#" />
+        <input type="hidden" name="pid" value="#$info['pId']#" />
+        <input type="hidden" name="offset" value="#$offset#" />
+        <input type="hidden" name="where" value="#$where#" />
+        <input type="hidden" name="find" value="#$find#" />
+        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <table class="normal">
+          <tr>
+            <td><xar:mlstring>Version:</xar:mlstring></td>
+            <td valign="top">#$info['version']#</td>
+          </tr>
+          <tr>
+            <td valign="top" class="formcolor"><xar:mlstring>Process Name</xar:mlstring></td>
+            <td class="formcolor"><input type="text" maxlength="80" name="name" value="#$info['name']#" size="60" /></td>
+          </tr>
+          <tr>
+            <td valign="top" class="formcolor"><xar:mlstring>Description</xar:mlstring></td>
+            <td class="formcolor"><textarea rows="5" cols="60" name="description">#$info['description']#</textarea></td>
+          </tr>
+          <tr>
+            <td class="formcolor"><xar:mlstring>Active</xar:mlstring></a></td>
+            <xar:if condition="$info['isActive'] eq 'y'">
+              <td class="formcolor"><input type="checkbox" name="isActive" checked="checked" /></td>
+              <xar:else/>
+              <td class="formcolor"><input type="checkbox" name="isActive" /></td>
+            </xar:if>
+          </tr>
+          <tr>
+            <xar:if condition="$pid gt 0">
+              <xar:set name="save"><xar:mlstring>Update</xar:mlstring></xar:set>
+              <xar:else/>
+              <xar:set name="save"><xar:mlstring>Create</xar:mlstring></xar:set>
+            </xar:if>
+            <td class="formcolor"><input type="submit" name="save" value="#$save#" /></td>
+            <td class="formcolor">&nbsp;</td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  
+    <!-- Or an upload form -->
+    <h3><xar:mlstring>Or upload a process using this form</xar:mlstring></h3>
+    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+      <form enctype="multipart/form-data" action="&xar-modurl-workflow-admin-processes;" method="post">
+        <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
+        <table class="normal">
+          <tr>
+            <td valign="top" class="formcolor"><xar:mlstring>Upload file:</xar:mlstring></td>
+            <td class="formcolor"><input size="40" name="userfile1" type="file" /></td>
+          </tr>
+          <tr>
+            <td><input type="submit" name="upload" value="#xarML('Upload')#" /></td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>

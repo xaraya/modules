@@ -1,283 +1,37 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#xarML('Admin process roles')#</h2><br />
-<div style="margin: auto;">
+<!-- Show the navigation bar -->
+<xar:template file="proc_bar"/>
 
-<xar:template file="proc_bar" type="module"/>
-<xar:if condition="count($errors) gt 0">
-<div class="wikitext">
-Errors:<br />
-<xar:foreach in="$errors" key="$ix">
-<small>#$errors[$ix]#</small><br />
-</xar:foreach>
-</div>
-</xar:if>
+<div class="xar-mod-body">
 
-<h3>#xarML('Add or edit a role')# <a class="link" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;offset=#$offset#&amp;sort_mode=#$sort_mode#&amp;sort_mode2=#$sort_mode2#&amp;find=#$find#&amp;roleId=0">#xarML('new')#</a></h3>
-<form action="&xar-modurl-workflow-admin-roles;" method="post">
-<input type="hidden" name="pid" value="#$pid#" />
-<input type="hidden" name="roleId" value="#$info['roleId']#" />
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-<input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-<input type="hidden" name="find" value="#$find#" />
-<input type="hidden" name="offset" value="#$offset#" />
-<table class="normal">
-<tr>
-  <td class="formcolor">#xarML('name')#</td>
-  <td class="formcolor"><input type="text" name="name" value="#$info['name']#" /></td>
-</tr>
-<tr>
-  <td class="formcolor">#xarML('description')#</td>
-  <td class="formcolor"><textarea name="description" rows="4" cols="60">#$info['description']#</textarea></td>
-</tr>
-<tr>
-  <td class="formcolor">&nbsp;</td>
-  <td class="formcolor"><input type="submit" name="save" value="#xarML('save')#" /> </td>
-</tr>
-</table>
-</form>
+  <!-- Show some help if we enabled that feature -->
+  <xar:template file="help"/>
 
-<h3>#xarML('Process roles')#</h3>
-	
+  <div style="margin: auto;">
+ 
+    <xar:if condition="$roleId eq 0">
+      <!-- Show the list of roles -->
+      <xar:template file="roleslist"/>
+    </xar:if>
 
-<form action="&xar-modurl-workflow-admin-roles;" method="post">
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-<input type="hidden" name="pid" value="#$pid#" />
-<input type="hidden" name="roleId" value="#$info['roleId']#" />
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-<input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-<input type="hidden" name="find" value="#$find#" />
-<input type="hidden" name="offset" value="#$offset#" />
-<table class="normal">
-<tr>
-<td  class="heading"><input type="submit" name="delete" value="#xarML('x')# " /></td>
-<xar:if condition="$sort_mode2 eq 'name_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=name_asc">#xarML('Name')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=name_desc">#xarML('Name')#</a></td>
-</xar:if>
-<xar:if condition="$sort_mode2 eq 'description_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=description_asc">#xarML('Description')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=description_desc">#xarML('Description')#</a></td>
-</xar:if>
-</tr>
-<xar:if condition="!empty($items) and count($items) gt 0">
-<xar:foreach in="$items" key="$ix">
-<tr>
-	<td>
-		<input type="checkbox" name="role[#$items[$ix]['roleId']#]" />
-	</td>
-	<td>
-	  <a class="link" href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;offset=#$offset#&amp;find=#$find#&amp;pid=#$pid#&amp;sort_mode2=#$sort_mode2#&amp;roleId=#$items[$ix]['roleId']#">#$items[$ix]['name']#</a>
-	</td>
-	<td>
-	  #$items[$ix]['description']#
-	</td>
-</tr>
-</xar:foreach>
-<xar:else/>
-<tr>
-	<td colspan="3">
-	#xarML('No roles defined yet')#
-	</td>
-</tr>	
-</xar:if>
-</table>
-</form>	
+    <!-- Show the role form -->
+    <xar:template file="roleform"/>
+  
+    <xar:if condition="count($roles) gt 0">
+      <!-- Map users to roles -->
+      <xar:template file="mapusers"/>
 
+      <!-- Map groups to roles -->
+      <xar:template file="mapgroups"/>
+    <xar:else/>
+      <h3><xar:mlstring>Warning</xar:mlstring></h3>
+      <xar:mlstring>No roles are defined yet so no roles can be mapped</xar:mlstring><br />
+    </xar:if>
+    
+    <!-- Show a list of mappings -->
+    <xar:template file="maplist"/> 
 
-<xar:if condition="count($roles) gt 0">
-	<h3>#xarML('Map users to roles')#</h3>
-	<form method="post" action="&xar-modurl-workflow-admin-roles;">
-	<input type="hidden" name="pid" value="#$pid#" />
-	<input type="hidden" name="offset" value="#$offset#" />
-	<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-	<input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-	<input type="hidden" name="find" value="#$find#" />
-	<table class="normal">
-	<tr>
-		<td class="formcolor">#xarML('Map')#</td>
-		<td class="formcolor">
-		  <table border="1" >
-		  	<tr>
-		  		<td class="formcolor" >
-		  		#xarML('Users')#:
-				<input type="text" size="10" name="find_users" value="#$find_users#" />
-				<input type="submit" name="findusers" value="#xarML('filter')#" />	  
-		  		</td>
-		  		<td class="formcolor" >
-	  			#xarML('Roles')#:<br />		  		
-		  		</td>
-		  	</tr>
-		  	<tr>
-		  		<td class="formcolor" >
-					<select name="user[]" multiple="multiple" size="10">
-					<option value="">"#xarML('Anonymous')#"</option>
-					<xar:foreach in="$users" key="$ix">
-					<xar:if condition="$users[$ix]['uname'] eq $users[$ix]['name']">
-						<option value="#$users[$ix]['uid']#">#$users[$ix]['name']#</option>
-					<xar:else/>
-						<option value="#$users[$ix]['uid']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
-					</xar:if>
-					</xar:foreach>
-					</select>
-		  		</td>
-		  		<td class="formcolor" >
-
-					<select name="role[]" multiple="multiple" size="10">
-					<xar:foreach in="$roles" key="$ix">
-					<option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
-					</xar:foreach>
-					</select>	  		
-		  		</td>
-		  	</tr>
-		  </table>
-		</td>
-	</tr>
-	
-	<tr>
-		<td class="formcolor">&nbsp;</td>
-		<td style="text-align:center;" class="formcolor">
-			<input type="submit" name="save_map" value="#xarML('map')#" />
-		</td>
-	</tr>
-	</table>
-	</form>
-	
-	<h3>#xarML('Map groups to roles')#</h3>
-	<form method="post" action="&xar-modurl-workflow-admin-roles;">
-	<input type="hidden" name="pid" value="#$pid#" />
-	<input type="hidden" name="offset" value="#$offset#" />
-	<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-	<input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-	<input type="hidden" name="find" value="#$find#" />
-	<table class="normal">
-	<tr>
-		<td class="formcolor">
-		#xarML('Operation')#
-		</td>
-		<td class="formcolor">
-		#xarML('Group')#
-		</td>
-		<td class="formcolor">
-		#xarML('Role')#
-		</td>
-		<td class="formcolor">
-		&nbsp;
-		</td>
-	</tr>
-	<tr>
-		<td class="formcolor">
-			<select name="op">
-			<option value="add">#xarML('add')#</option>
-			<option value="remove">#xarML('remove')#</option>
-			</select>
-		</td>
-		
-		<td class="formcolor">
-			<select name="group">
-			<xar:foreach in="$groups" key="$ix">
-			<option value="#$groups[$ix]['uid']#">#$groups[$ix]['name']#</option>
-			</xar:foreach>
-			</select>
-		</td>
-		
-		<td class="formcolor">
-			<select name="role">
-			<xar:foreach in="$roles" key="$ix">
-			<option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
-			</xar:foreach>
-			</select>	  		
-		</td>
-		<td class="formcolor">
-			<input type="submit" name="mapg" value="#xarML('go')#" />
-		</td>
-		
-	</tr>
-	</table>
-	</form>
-
-	
-	
-<xar:else/>
-	<h3>#xarML('Warning')#</h3>
-	#xarML('No roles are defined yet so no roles can be mapped')#<br />
-</xar:if>
-
-<h3>#xarML('List of mappings')#</h3>
-<form action="&xar-modurl-workflow-admin-roles;" method="post">
-<input type="hidden" name="pid" value="#$pid#" />
-<input type="hidden" name="offset" value="#$offset#" />
-<input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-#xarML('Find')#:<input size="8" type="text" name="find" value="#$find#" />
-<input type="submit" name="filter" value="#xarML('find')#" />
-</form>
-<form action="&xar-modurl-workflow-admin-roles;" method="post">
-<input type="hidden" name="pid" value="#$pid#" />
-<input type="hidden" name="offset" value="#$offset#" />
-<input type="hidden" name="find" value="#$find#" />
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-<input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
-<table class="normal">
-<tr>
-<td  class="heading"><input type="submit" name="delete_map" value="#xarML('x')# " /></td>
-<xar:if condition="$sort_mode eq 'name_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=name_asc">#xarML('Role')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=name_desc">#xarML('Role')#</a></td>
-</xar:if>
-<xar:if condition="$sort_mode eq 'user_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=user_asc">#xarML('User')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=user_desc">#xarML('User')#</a></td>
-</xar:if>
-</tr>
-<xar:if condition="!empty($mapitems) and count($mapitems) gt 0">
-<xar:foreach in="$mapitems" key="$ix">
-<tr>
-	<td>
-		<input type="checkbox" name="map[#$mapitems[$ix]['userId']#:::#$mapitems[$ix]['roleId']#]" />
-	</td>
-	<td>
-	  #$mapitems[$ix]['name']#
-	</td>
-	<td>
-	  <xar:if condition="$mapitems[$ix]['user'] eq ''">
-	  "#xarML('Anonymous')#"
-	  <xar:elseif condition="$mapitems[$ix]['login'] eq $mapitems[$ix]['user']"/>
-	  #$mapitems[$ix]['user']#
-	  <xar:else/>
-	  [#$mapitems[$ix]['login']#] #$mapitems[$ix]['user']#
-	  </xar:if>
-	</td>
-</tr>
-</xar:foreach>
-<xar:else/>
-<tr>
-	<td colspan="3">
-	#xarML('No mappings defined yet')#
-	</td>
-</tr>	
-</xar:if>
-</table>
-</form>
-
-<div class="mini">
-<div align="center">
-<xar:if condition="$prev_offset ge 0">
-[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $prev_offset))#">#xarML('prev')#</a>]&nbsp;
-</xar:if>
-#xarML('Page')#: #$actual_page#/#$cant_pages#
-<xar:if condition="$next_offset ge 0">
-&nbsp;[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $next_offset))#">#xarML('next')#</a>]
-</xar:if>
-<xar:if condition="$direct_pagination eq 'y'">
-<br />
-#$pager#
-</xar:if>
-</div>
-</div> 
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
+    <!-- Show a courtesy footer -->
+    <xar:template file="galaxfooter"/>
+    
+  </div>
 </div>

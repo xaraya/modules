@@ -1,0 +1,8 @@
+  <div>
+    <i>
+      <xar:mlstring>Based on the </xar:mlstring>
+      <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">
+        <xar:mlstring>Galaxia Workflow Engine</xar:mlstring>
+      </a>
+    </i>
+  </div>

@@ -1,0 +1,80 @@
+<div>
+  <h3><xar:mlstring>List of mappings</xar:mlstring></h3>
+  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+    <form action="&xar-modurl-workflow-admin-roles;" method="post">
+      <input type="hidden" name="pid" value="#$pid#" />
+      <input type="hidden" name="offset" value="#$offset#" />
+      <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+      <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+      <xar:mlstring>Find</xar:mlstring>:<input size="8" type="text" name="find" value="#$find#" />
+      <input type="submit" name="filter" value="#xarML('find')#" />
+    </form>
+    <form action="&xar-modurl-workflow-admin-roles;" method="post">
+      <input type="hidden" name="pid" value="#$pid#" />
+      <input type="hidden" name="offset" value="#$offset#" />
+      <input type="hidden" name="find" value="#$find#" />
+      <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+      <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+      <table style="border-collapse: separate;">
+        <tr>
+          <xar:if condition="$sort_mode eq 'name_desc'">
+            <th>
+              <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=name_asc">
+                <xar:mlstring>Role</xar:mlstring>
+              </a>
+            </th>
+          <xar:else/>
+            <th>
+              <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=name_desc">
+                <xar:mlstring>Role</xar:mlstring>
+              </a>
+            </th>
+          </xar:if>
+          <xar:if condition="$sort_mode eq 'user_desc'">
+            <th>
+              <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=user_asc">
+                <xar:mlstring>User</xar:mlstring>
+              </a>
+            </th>
+          <xar:else/>
+            <th>
+              <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=user_desc">
+                <xar:mlstring>User</xar:mlstring>
+              </a>
+            </th>
+          </xar:if>
+        </tr>
+        <xar:if condition="!empty($mapitems) and count($mapitems) gt 0">
+          <xar:foreach in="$mapitems" key="$ix">
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:if condition="$ix % 2">
+              <xar:set name="rowclass">'xar-alt'</xar:set>
+            </xar:if>
+            <tr class="#$rowclass#">
+              <td>
+                <input type="checkbox" name="map[#$mapitems[$ix]['userId']#:::#$mapitems[$ix]['roleId']#]" />&nbsp;
+                #$mapitems[$ix]['name']#
+              </td>
+              <td>
+                <xar:if condition="$mapitems[$ix]['user'] eq ''">
+                  "<xar:mlstring>Anonymous</xar:mlstring>"
+                <xar:elseif condition="$mapitems[$ix]['login'] eq $mapitems[$ix]['user']"/>
+                  #$mapitems[$ix]['user']#
+                <xar:else/>
+                  [#$mapitems[$ix]['login']#] #$mapitems[$ix]['user']#
+                </xar:if>
+              </td>
+            </tr>
+          </xar:foreach>
+          <tr><td><input type="submit" name="delete_map" value="#xarML('Delete selected')# " /></td></tr>
+        <xar:else/>
+          <tr><td colspan="3"><xar:mlstring>No mappings defined yet</xar:mlstring></td>
+          </tr>	
+        </xar:if>
+      </table>
+    </form>
+
+    <!-- Show the pager -->
+    <xar:template file="pager"/>
+  </div>
+</div>

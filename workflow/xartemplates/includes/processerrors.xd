@@ -1,0 +1,14 @@
+<xar:if condition="$pid gt 0">    
+  <!-- If this process is incomplete show a list of things which need fixing befor the process is valid -->
+  <xar:if condition="count($errors) gt 0">
+    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+      <xar:loop name="$errors" key="$ix">
+        <xar:set name="rowclass">'xar-norm'</xar:set>
+        <xar:if condition="$loop:index % 2">
+          <xar:set name="rowclass">'xar-alt'</xar:set>
+        </xar:if>
+        <small class="#$rowclass#">#$loop:item#</small><br/>
+      </xar:loop>
+    </div>
+  </xar:if>
+</xar:if>

@@ -1,189 +1,27 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#xarML('Admin processes')#
-<xar:if condition="$feature_help eq 'y'">
-<xar:comment> the help link info </xar:comment>
-<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia Admin Processes')#">
-<img border='0' src='modules/workflow/lib/Galaxia/img/icons/help.gif' alt='help' />
-</a></xar:if>
+<!-- Show the navigation bar -->
+<xar:template file="proc_bar"/>
 
-</h2><br />
-<div style="margin: auto;">
-<xar:comment> beginning of next bit </xar:comment>
+<div class="xar-mod-body">
 
-<xar:if condition="$pid gt 0">
-<xar:template file="proc_bar" type="module"/>
-</xar:if>
-<h3>#xarML('Add or edit a process')# <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=#$sort_mode#&amp;pid=0">#xarML('new')#</a>
-</h3>
-<xar:if condition="$pid gt 0 and count($errors) gt 0">
-<div class="wikitext">
-#xarML('This process is invalid')#:<br/>
-<xar:foreach in="$errors" key="$ix">
-<small>#$errors[$ix]#</small><br/>
-</xar:foreach>
-</div>
-</xar:if>
-<form action="&xar-modurl-workflow-admin-processes;" method="post">
-<input type="hidden" name="version" value="#$info['version']#" />
-<input type="hidden" name="pid" value="#$info['pId']#" />
-<input type="hidden" name="offset" value="#$offset#" />
-<input type="hidden" name="where" value="#$where#" />
-<input type="hidden" name="find" value="#$find#" />
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-<table class="normal">
-	<tr>
-		<td class="formcolor">#xarML('Process Name')#</td>
-		<td class="formcolor"><input type="text" maxlength="80" name="name" value="#$info['name']#" /> #xarML('ver:')##$info['version']#</td>
-	</tr>
-	<tr>
-	 	<td class="formcolor">#xarML('Description')#</td>
-	 	<td class="formcolor"><textarea rows="5" cols="60" name="description">#$info['description']#</textarea></td>
-	</tr>
-	<tr>
-		<td class="formcolor"><a {popup text="$is_active_help"}>#xarML('is active?')#</a></td>
-<xar:if condition="$info['isActive'] eq 'y'">
-		<td class="formcolor"><input type="checkbox" name="isActive" checked="checked" /></td>
-<xar:else/>
-		<td class="formcolor"><input type="checkbox" name="isActive" /></td>
-</xar:if>
-	</tr>
-	<tr>
-		<td class="formcolor">&nbsp;</td>
-<xar:if condition="$pid gt 0">
-   <xar:set name="$save">#xarML('update')#</xar:set>
-<xar:else/>
-   <xar:set name="$save">#xarML('create')#</xar:set>
-</xar:if>
-		<td class="formcolor"><input type="submit" name="save" value="#$save#" /></td>
-	</tr>
-</table>
-</form>
+  <!-- Show some help if we enabled that feature -->
+  <xar:template file="help"/>
 
-<h3>#xarML('Or upload a process using this form')#</h3>
-<form enctype="multipart/form-data" action="&xar-modurl-workflow-admin-processes;" method="post">
-<table class="normal">
-<tr>
-  <td class="formcolor">#xarML('Upload file')#:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="#xarML('upload')#" /></td>
-</tr>
-</table>
-</form>
+  <div style="margin: auto;">
+    
+    <xar:if condition="$pid eq 0">
+      <!-- Show the list of processes -->
+      <xar:template file="processlist"/>
 
+      <!-- Show the pager -->
+      <xar:template file="pager"/>
+    </xar:if>
 
-<h3>#xarML('List of processes')# (#$cant#)</h3>
-<form action="&xar-modurl-workflow-admin-processes;" method="post">
-<input type="hidden" name="offset" value="#$offset#" />
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-#xarML('Find')#:<input size="8" type="text" name="find" value="#$find#" />
-#xarML('Process')#:
-<select name="filter_name">
-<option value="">#xarML('All')#</option>
-<xar:foreach in="$all_procs" key="$ix">
-<option  value="#$all_procs[$ix]['name']#">#$all_procs[$ix]['name']#</option>
-</xar:foreach>
-</select>
+    <!-- Show the form for a process -->
+    <xar:template file="processform"/>
+    
 
-#xarML('Status')#:
-<select name="filter_active">
-<option value="">#xarML('All')#</option>
-<option value="y">#xarML('Active')#</option>
-<option value="n">#xarML('Inactive')#</option>
-</select>
-
-<input type="submit" name="filter" value="#xarML('filter')#" />
-</form>
-<form action="&xar-modurl-workflow-admin-processes;" method="post">
-<input type="hidden" name="offset" value="#$offset#" />
-<input type="hidden" name="find" value="#$find#" />
-<input type="hidden" name="where" value="#$where#" />
-<input type="hidden" name="sort_mode" value="#$sort_mode#" />
-<table class="normal">
-<tr>
-<td style="text-align:center;"  class="heading"><input type="submit" name="delete" value="x " /></td>
-<xar:if condition="$sort_mode eq 'name_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=name_asc">#xarML('Name')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=name_desc">#xarML('Name')#</a></td>
-</xar:if>
-<xar:if condition="$sort_mode eq 'version_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=version_asc">#xarML('version')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=version_desc">#xarML('version')#</a></td>
-</xar:if>
-<xar:if condition="$sort_mode eq 'isActive_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=isActive_asc">#xarML('act')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=isActive_desc">#xarML('act')#</a></td>
-</xar:if>
-<xar:if condition="$sort_mode eq 'isValid_desc'">
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=isValid_asc">#xarML('val')#</a></td>
-<xar:else/>
-<td  class="heading" ><a class="tableheading" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=isValid_desc">#xarML('val')#</a></td>
-</xar:if>
-<td  class="heading" >#xarML('Action')#</td>
-</tr>
-<xar:if condition="!empty($items) and count($items) gt 0">
-<xar:foreach in="$items" key="$ix">
-<tr>
-	<td style="text-align:center;">
-		<input type="checkbox" name="process[#$items[$ix]['pId']#]" />
-	</td>
-	<td>
-	  <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=#$sort_mode#&amp;pid=#$items[$ix]['pId']#">#$items[$ix]['name']#</a>
-	</td>
-	<td style="text-align:right;">
-	  #$items[$ix]['version']#
-	</td>
-		<td style="text-align:center;">
-	  <xar:if condition="$items[$ix]['isActive'] eq 'y'">
-	  <img src='modules/workflow/lib/Galaxia/img/icons/refresh2.gif' alt=' (#xarML('active')#) ' title='#xarML('active process')#' />
-	  <xar:else/>
-	  &nbsp;
-	  </xar:if>
-	</td>
-	<td style="text-align:center;">
-	  <xar:if condition="$items[$ix]['isValid'] eq 'n'">
-	  <img src='modules/workflow/lib/Galaxia/img/icons/red_dot.gif' alt=' (#xarML('invalid')#) ' title='#xarML('invalid process')#' />
-	  <xar:else/>
-	  <img src='modules/workflow/lib/Galaxia/img/icons/green_dot.gif' alt=' (#xarML('valid')#) ' title='#xarML('valid process')#' />
-	  </xar:if>
-
-	</td>
-
-	<td>
-	  <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=#$sort_mode#&amp;newminor=#$items[$ix]['pId']#">#xarML('new minor')#</a><br/>
-	  <a class="link" href="&xar-modurl-workflow-admin-processes;&amp;find=#$find#&amp;where=#$where#&amp;offset=#$offset#&amp;sort_mode=#$sort_mode#&amp;newmajor=#$items[$ix]['pId']#">#xarML('new major')#</a><br/>
-	  <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$items[$ix]['pId']#">#xarML('activities')#</a><br/>
-	  <a class="link" href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$items[$ix]['pId']#">#xarML('code')#</a><br/>
-	  <a class="link" href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$items[$ix]['pId']#">#xarML('save')#</a><br/>
-	  <a class="link" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$items[$ix]['pId']#">#xarML('roles')#</a><br/>
-	</td>
-</tr>
-</xar:foreach>
-<xar:else/>
-<tr>
-	<td colspan="15">
-	#xarML('No processes defined yet')#
-	</td>
-</tr>	
-</xar:if>
-</table>
-</form>
-
-<div class="mini">
-<div align="center">
-<xar:if condition="$prev_offset ge 0">
-[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $prev_offset))#">#xarML('prev')#</a>]&nbsp;
-</xar:if>
-#xarML('Page')#: #$actual_page#/#$cant_pages#
-<xar:if condition="$next_offset ge 0">
-&nbsp;[<a class="prevnext" href="#xarServerGetCurrentURL(array("offset" => $next_offset))#">#xarML('next')#</a>]
-</xar:if>
-<xar:if condition="$direct_pagination eq 'y'">
-<br/>
-#$pager#
-</xar:if>
-</div>
-</div>
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
+   
+    <!-- Show a courtesy footer -->
+    <xar:template file="galaxfooter"/>
+  </div>
 </div>

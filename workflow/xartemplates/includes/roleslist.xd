@@ -1,0 +1,65 @@
+  <div>
+    <h3><xar:mlstring>Process roles</xar:mlstring></h3>
+    <div class="xar-norm-outline" style="padding-left: 1em;">
+      <form action="&xar-modurl-workflow-admin-roles;" method="post">
+        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <input type="hidden" name="pid" value="#$pid#" />
+        <input type="hidden" name="roleId" value="#$info['roleId']#" />
+        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+        <input type="hidden" name="find" value="#$find#" />
+        <input type="hidden" name="offset" value="#$offset#" />
+        <table style="border-collapse: separate;">
+          <tr>
+            <xar:if condition="$sort_mode2 eq 'name_desc'">
+              <th>
+                <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=name_asc">
+                  <xar:mlstring>Name</xar:mlstring>
+                </a>
+              </th>
+            <xar:else/>
+              <th>
+                <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=name_desc">
+                  <xar:mlstring>Name</xar:mlstring>
+                </a>
+              </th>
+            </xar:if>
+            <xar:if condition="$sort_mode2 eq 'description_desc'">
+              <th>
+                <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=description_asc">
+                  <xar:mlstring>Description</xar:mlstring>
+                </a>
+              </th>
+            <xar:else/>
+              <th>
+                <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=description_desc">
+                  <xar:mlstring>Description</xar:mlstring>
+                </a>
+              </td>
+            </xar:if>
+          </tr>
+          <xar:if condition="!empty($items) and count($items) gt 0">
+            <xar:foreach in="$items" key="$ix">
+              <xar:set name="rowclass">'xar-norm'</xar:set>
+              <xar:if condition="$ix % 2">
+                <xar:set name="rowclass">'xar-alt'</xar:set>
+              </xar:if>
+                
+              <tr class="#$rowclass#">
+                <td>
+                  <input type="checkbox" name="role[#$items[$ix]['roleId']#]" />&nbsp;
+                  <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;offset=#$offset#&amp;find=#$find#&amp;pid=#$pid#&amp;sort_mode2=#$sort_mode2#&amp;roleId=#$items[$ix]['roleId']#">#$items[$ix]['name']#</a>
+                </td>
+                <td>
+                  #$items[$ix]['description']#
+                </td>
+              </tr>
+            </xar:foreach>
+          <tr><td><input type="submit" name="delete" value="#xarML('Delete selected')# " /></td></tr>
+          <xar:else/>
+            <tr><td colspan="3"><xar:mlstring>No roles defined yet</xar:mlstring></td>
+          </tr>	
+        </xar:if>
+      </table>
+    </form>	
+  </div>

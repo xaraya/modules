@@ -1,71 +1,48 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#xarML('Browsing Workitem')#
-
-<xar:comment> the help link info </xar:comment>
+  <xar:template file="monitor_bar" type="module"/>
   
-      <xar:if condition="$feature_help eq 'y'">
-<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaViewWorkitem" target="tikihelp" class="tikihelp" title="#xarML('Tikiwiki.org help')#: #xarML('Galaxia Monitor Activities')#">
-<img border='0' src='modules/workflow/lib/Galaxia/img/icons/help.gif' alt='help' /></xar:if>
-                        <xar:if condition="$feature_help eq 'y'"></a></xar:if>
-</h2><br />
-<div style="margin: auto;">
-<xar:comment> beginning of next bit </xar:comment>
+  <div class="xar-mod-body">
+      
+    <xar:template file="help"/>
 
+    <div style="margin: auto;">
 
-<xar:template file="monitor_bar" type="module"/>
-<h3>#xarML('Workitem information')#</h3>
-<table class="normal">
-<tr>
-	<td  class="odd"><b>id</b></td>
-	<td  class="odd">#$wi['itemId']#</td>
-</tr>
-<tr>
-	<td  class="odd"><b>#</b></td>
-	<td  class="odd">#$wi['orderId']#</td>
-</tr>
-<tr>
-	<td class="odd"><b>Process</b></td>
-	<td class="odd">#$wi['procname']# #$wi['version']#</td>
-</tr>
-<tr>
-	<td class="odd"><b>Activity</b></td>
-	<td class="odd">#$wi['type']# #$wi['name']#</td>
-</tr>
-<tr>
-	<td class="odd"><b>User</b></td>
-	<td class="odd">#$wi['user']#</td>
-</tr>
-<tr>
-	<td class="odd"><b>Started</b></td>
-	<td class="odd">#$wi['started']#</td>
-</tr>
-<tr>
-	<td class="odd"><b>Duration</b></td>
-	<td class="odd">#$wi['duration']#</td>
-</tr>
+      <h3><xar:mlstring>Workitem information</xar:mlstring></h3>
+      <div class="xar-norm-outline" style="padding-left: 1em;">
+        <table style="border-collapse:separate; width: 99%">
+          <tr>
+            <th>Id</th><th>Number</th><th>Process</th><th>Activity</th><th>User</th><th>Started</th><th>Duration</th>
+          </tr>
+          <tr>
+            <td>#$wi['itemId']#</td>
+            <td>#$wi['orderId']#</td>
+            <td>#$wi['procname']#&nbsp;#$wi['version']#</td>
+            <td>#$wi['type']#&nbsp;#$wi['name']#</td>
+            <td>#$wi['user']#</td>
+            <td>#xarLocaleGetFormattedDate('long',$wi['started'])#&nbsp;#xarLocaleGetFormattedTime('long',$wi['started'])#</td>
+            <td>#$wi['duration']#</td>
+          </tr>
+        </table>
+      </div>
 
-
-</table>
-<h3>#xarML('Properties')#</h3>
-<table class="normal">
-<tr>
-	<td  class="heading">#xarML('Property')#</td>
-	<td  class="heading">#xarML('Value')#</td>
-</tr>
-<xar:foreach in="$wi['properties']" key="$key" value="$item">
-<tr>
-	<td class="odd">
-	 <b>#$key#</b>
-	 </td>
-	<td class="odd">
-	#$item#
-	</td>
-</tr>
-</xar:foreach>
-</table>
-
-<xar:template file="monitor_stats" type="module"/>
-
-<p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
-</div>
-</div>
+      <h3><xar:mlstring>Properties</xar:mlstring></h3>
+      <div class="xar-norm-outline" style="padding-left: 1em;">
+        <table style="border-collapse: separate;">
+          <tr>
+            <th><xar:mlstring>Property</xar:mlstring></th>
+            <th><xar:mlstring>Value</xar:mlstring></th>
+          </tr>
+          <xar:loop name="$wi['properties']">
+            <xar:set name="rowclass">'xar-norm'</xar:set>
+            <xar:if condition="$loop:index % 2">
+              <xar:set name="rowclass">'xar-alt'</xar:set>
+            </xar:if>
+            <tr class="#$rowclass#"><td>#$loop:key#</td><td>#$loop:item#</td></tr>
+          </xar:loop>
+        </table>
+      </div>
+      
+      <xar:template file="monitor_stats"/>
+      <xar:template file="galaxfooter"/>
+    </div>
+  </div>
+  

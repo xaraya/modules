@@ -1,0 +1,51 @@
+  <div>
+    <h3><xar:mlstring>Map users to roles</xar:mlstring></h3>
+    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+      <form method="post" action="&xar-modurl-workflow-admin-roles;">
+        <input type="hidden" name="pid" value="#$pid#" />
+        <input type="hidden" name="offset" value="#$offset#" />
+        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+        <input type="hidden" name="find" value="#$find#" />
+        <table style="border-collapse: separate;">
+          <tr>
+            <td>
+              <xar:mlstring>Users</xar:mlstring>:
+              <input type="text" size="10" name="find_users" value="#$find_users#" />
+              <input type="submit" name="findusers" value="#xarML('filter')#" />	  
+            </td>
+            <td class="formcolor" >
+              <xar:mlstring>Roles</xar:mlstring>:<br />		  		
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select name="user[]" multiple="multiple" size="10">
+                <option value="">"<xar:mlstring>Anonymous</xar:mlstring>"</option>
+                <xar:foreach in="$users" key="$ix">
+                  <xar:if condition="$users[$ix]['uname'] eq $users[$ix]['name']">
+                    <option value="#$users[$ix]['uid']#">#$users[$ix]['name']#</option>
+                    <xar:else/>
+                    <option value="#$users[$ix]['uid']#">[#$users[$ix]['uname']#] #$users[$ix]['name']#</option>
+                  </xar:if>
+                </xar:foreach>
+              </select>
+            </td>
+            <td>
+              <select name="role[]" multiple="multiple" size="10">
+                <xar:foreach in="$roles" key="$ix">
+                  <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
+                </xar:foreach>
+              </select>	  		
+            </td>
+          </tr>          
+          <tr>
+            <td>
+              <input type="submit" name="save_map" value="#xarML('Map')#" />
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>

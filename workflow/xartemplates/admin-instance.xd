@@ -1,179 +1,202 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Workflow Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2>#xarML('Admin instance')#</h2><br />
-<div style="margin: auto;">
+  <xar:template file="monitor_bar" type="module"/>
+  <div class="xar-mod-body">
+    <div style="margin: auto;">
+      <h3><xar:mlstring>Instance</xar:mlstring>: #$ins_info['instanceId']# (Process: #$proc_info['name']# #$proc_info['version']#)</h3>
+      <div class="xar-norm-outline">
+        <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-instance;" method="post">
+          <input type="hidden" name="iid" value="#$iid#" />
+          <table style="border-collapse: separate;"> 
+            <tr>
+              <th><xar:mlstring>Field</xar:mlstring></th>
+              <th><xar:mlstring>Value</xar:mlstring></th>
+            </tr>
+            <tr>
+              <td ><xar:mlstring>Created</xar:mlstring></td>
+              <td >#$ins_info['started']#</td>
+            </tr>
+            <tr>
+              <td ><xar:mlstring>Workitems</xar:mlstring></td>
+              <td >
+                <a href="&xar-modurl-workflow-admin-monitor_workitems;&amp;filter_instance=#$ins_info['instanceId']#">#$ins_info['workitems']#</a></td>
+            </tr>
+            <tr>
+              <td ><xar:mlstring>Status</xar:mlstring></td>
+              <td >
+                <select name="status">
+                  <xar:if condition="$ins_info['status'] eq 'active'">
+                    <option value="active" selected="selected"><xar:mlstring>active</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="active"><xar:mlstring>active</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="$ins_info['status'] eq 'exception'">
+                    <option value="exception" selected="selected"><xar:mlstring>exception</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="exception"><xar:mlstring>exception</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="$ins_info['status'] eq 'completed'">
+                    <option value="completed" selected="selected"><xar:mlstring>completed</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="completed"><xar:mlstring>completed</xar:mlstring></option>
+                  </xar:if>
+                  <xar:if condition="$ins_info['status'] eq 'aborted'">
+                    <option value="aborted" selected="selected"><xar:mlstring>aborted</xar:mlstring></option>
+                    <xar:else/>
+                    <option value="aborted"><xar:mlstring>aborted</xar:mlstring></option>
+                  </xar:if>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td ><xar:mlstring>Owner</xar:mlstring></td>
+              <td >
+                <select name="owner">
+                  <xar:if condition="$ins_info['owner'] eq '*'">
+                    <option value="*" value="*" selected="selected">*</option>
+                    <xar:else/>
+                    <option value="*" value="*">*</option>
+                  </xar:if>
+                  <xar:foreach in="$users" key="$ix">
+                    <xar:if condition="$users[$ix]['userId'] eq $ins_info['owner']">
+                      <option value="#$users[$ix]['userId']#" selected="selected">#$users[$ix]['user']#</option>
+                      <xar:else/>
+                      <option value="#$users[$ix]['userId']#">#$users[$ix]['user']#</option>
+                    </xar:if>
+                  </xar:foreach>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td ><xar:mlstring>Send all to</xar:mlstring></td>
+              <td >
+                <select name="sendto">
+                  <option value=""><xar:mlstring>Don\'t move</xar:mlstring></option>
+                  <xar:foreach in="$activities" key="$ix">
+                    <option value="#$activities[$ix]['activityId']#">#$activities[$ix]['name']#</option>
+                  </xar:foreach>
+                </select>
+              </td>
+            </tr>
+            
+            <tr>
+              <td ><xar:mlstring>Activities</xar:mlstring></td>
+              <td >
+                <xar:if condition="count($acts)">
+                  <table class="normal">
+                    <tr>
+                      <td class="heading"><xar:mlstring>Activity</xar:mlstring></td>
+                      <td class="heading"><xar:mlstring>Act status</xar:mlstring></td>
+                      <td class="heading"><xar:mlstring>User</xar:mlstring></td>
+                    </tr>
+                    
+                    <xar:foreach in="$acts" key="$ix">
+                      <tr>
+                        <td class="odd">#$acts[$ix]['name']#
+                          <xar:if condition="$acts[$ix]['isInteractive'] eq 'y'">
+                            <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$acts[$ix]['activityId']#&amp;iid=#$iid#">
+                              <img src='modules/workflow/lib/Galaxia/img/icons/next.gif' alt='#xarML('run')#' title='#xarML('run')#' /></a>
+                          </xar:if>
+                        </td>
+                        <td class="odd">#$acts[$ix]['actstatus']#</td>
+                        <td class="odd">
+                          <select name="acts[#$acts[$ix]['activityId']#]">
+                            <xar:if condition="$acts[$ix]['user'] eq '*'">
+                              <option value="*" value="*" selected="selected">*</option>
+                              <xar:else/>
+                              <option value="*" value="*">*</option>
+                            </xar:if>
+                            <xar:foreach in="$users" key="$ix2">
+                              <xar:if condition="$users[$ix2]['userId'] eq $acts[$ix]['user']">
+                                <option value="#$users[$ix2]['userId']#" selected="selected">#$users[$ix2]['user']#</option>
+                                <xar:else/>
+                                <option value="#$users[$ix2]['userId']#">#$users[$ix2]['user']#</option>
+                              </xar:if>
+                            </xar:foreach>
+                          </select>
+                        </td>
+                      </tr>
+                    </xar:foreach>
+                  </table>
+                  <xar:else/>
+                  &nbsp;
+                </xar:if>
+              </td>
+            </tr>	
+            <tr>
+              <td ><input type="submit" name="save" value="#xarML('update')#" /></td>
+              <td >&nbsp;</td>
+            </tr>
+          </table>
+        </form>
+      </div>
 
-<xar:template file="monitor_bar" type="module"/>
-<h3>#xarML('Instance')#: #$ins_info['instanceId']# (Process: #$proc_info['name']# #$proc_info['version']#)</h3>
-<form action="&xar-modurl-workflow-admin-instance;" method="post">
-<input type="hidden" name="iid" value="#$iid#" />
-<table class="normal">
-<tr>
-	<td class="formcolor">#xarML('Created')#</td>
-	<td class="formcolor">#$ins_info['started']#</td>
-</tr>
-<tr>
-	<td class="formcolor">#xarML('Workitems')#</td>
-	<td class="formcolor"><a class="link" href="&xar-modurl-workflow-admin-monitor_workitems;&amp;filter_instance=#$ins_info['instanceId']#">#$ins_info['workitems']#</a></td>
-</tr>
-<tr>
-	<td class="formcolor">#xarML('Status')#</td>
-	<td class="formcolor">
-	<select name="status">
-<xar:if condition="$ins_info['status'] eq 'active'">
-		<option value="active" selected="selected">#xarML('active')#</option>
-<xar:else/>
-		<option value="active">#xarML('active')#</option>
-</xar:if>
-<xar:if condition="$ins_info['status'] eq 'exception'">
-		<option value="exception" selected="selected">#xarML('exception')#</option>
-<xar:else/>
-		<option value="exception">#xarML('exception')#</option>
-</xar:if>
-<xar:if condition="$ins_info['status'] eq 'completed'">
-		<option value="completed" selected="selected">#xarML('completed')#</option>
-<xar:else/>
-		<option value="completed">#xarML('completed')#</option>
-</xar:if>
-<xar:if condition="$ins_info['status'] eq 'aborted'">
-    	<option value="aborted" selected="selected">#xarML('aborted')#</option>
-<xar:else/>
-    	<option value="aborted">#xarML('aborted')#</option>
-</xar:if>
-	</select>
-	</td>
-</tr>
-<tr>
-	<td class="formcolor">#xarML('Owner')#</td>
-	<td class="formcolor">
-	<select name="owner">
-<xar:if condition="$ins_info['owner'] eq '*'">
-	<option value="*" value="*" selected="selected">*</option>
-<xar:else/>
-	<option value="*" value="*">*</option>
-</xar:if>
-	<xar:foreach in="$users" key="$ix">
-<xar:if condition="$users[$ix]['userId'] eq $ins_info['owner']">
-	<option value="#$users[$ix]['userId']#" selected="selected">#$users[$ix]['user']#</option>
-<xar:else/>
-	<option value="#$users[$ix]['userId']#">#$users[$ix]['user']#</option>
-</xar:if>
-	</xar:foreach>
-	</select>
-	</td>
-</tr>
-<tr>
-	<td class="formcolor">#xarML('Send all to')#</td>
-	<td class="formcolor">
-	<select name="sendto">
-	  <option value="">#xarML('Don\'t move')#</option>
-	  <xar:foreach in="$activities" key="$ix">
-	  <option value="#$activities[$ix]['activityId']#">#$activities[$ix]['name']#</option>
-	  </xar:foreach>
-	</select>
-	</td>
-</tr>
+      <h3><xar:mlstring>Properties</xar:mlstring></h3>
+      <div class="xar-norm-outline">
+        <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-instance;" method="post">
+          <input type="hidden" name="iid" value="#$iid#" />
+          <table style="border-collapse: separate;">
+            <tr>
+              <th><xar:mlstring>Property</xar:mlstring></th>
+              <th><xar:mlstring>Value</xar:mlstring></th>
+            </tr>
+            <xar:foreach in="$props" key="$key" value="$item">
+              <xar:set name="rowclass">'xar-norm'</xar:set>
+              <xar:if condition="$key %2">
+                <xar:set name="rowclass">'xar-alt'</xar:set>
+              </xar:if>
+              <tr class="#$rowclass#">
+                <td valign="top">
+                  <a href="&xar-modurl-workflow-admin-instance;&amp;iid=#$iid#&amp;unsetprop=#$key#">
+                    <img src='modules/workflow/lib/Galaxia/img/icons/trash.gif' alt='#xarML('del')#' title='#xarML('del')#' /></a>
+                  <b>#$key#</b>
+                </td>
+                <td>
+                  <xar:if condition="strlen($item) gt 80">
+                    <textarea name="props[#$key#]" cols="80" rows="10">#$item#</textarea>
+                    <xar:else/>
+                    <input type="text" name="props[#$key#]" value="#$item#" />
+                  </xar:if>
+                </td>
+              </tr>
+            </xar:foreach>
+            <tr>
+              <td><input type="submit" name="saveprops" value="#xarML('update')#" /></td>
+              <td>&nbsp;</td>
+            </tr>
+            
+          </table>
+        </form>
+      </div>
 
-<tr>
-	<td class="formcolor">#xarML('Activities')#</td>
-	<td class="formcolor">
-		<xar:if condition="count($acts)">
-		<table class="normal">
-		<tr>
-			<td class="heading">#xarML('Activity')#</td>
-			<td class="heading">#xarML('Act status')#</td>
-			<td class="heading">#xarML('User')#</td>
-		</tr>
-		
-		<xar:foreach in="$acts" key="$ix">
-		<tr>
-			<td class="odd">#$acts[$ix]['name']#
-			<xar:if condition="$acts[$ix]['isInteractive'] eq 'y'">
-			<a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$acts[$ix]['activityId']#&amp;iid=#$iid#"><img src='modules/workflow/lib/Galaxia/img/icons/next.gif' border='0' alt='#xarML('run')#' title='#xarML('run')#' /></a>
-			
-			
-			</xar:if>
-
-			</td>
-			<td class="odd">#$acts[$ix]['actstatus']#</td>
-			<td class="odd">
-			<select name="acts[#$acts[$ix]['activityId']#]">
-<xar:if condition="$acts[$ix]['user'] eq '*'">
-			<option value="*" value="*" selected="selected">*</option>
-<xar:else/>
-			<option value="*" value="*">*</option>
-</xar:if>
-			<xar:foreach in="$users" key="$ix2">
-<xar:if condition="$users[$ix2]['userId'] eq $acts[$ix]['user']">
-			<option value="#$users[$ix2]['userId']#" selected="selected">#$users[$ix2]['user']#</option>
-<xar:else/>
-			<option value="#$users[$ix2]['userId']#">#$users[$ix2]['user']#</option>
-</xar:if>
-			</xar:foreach>
-			</select>
-			</td>
-		</tr>
-		</xar:foreach>
-		</table>
-		<xar:else/>
-		&nbsp;
-		</xar:if>
-	</td>
-</tr>	
-<tr>
-	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor"><input type="submit" name="save" value="#xarML('update')#" /></td>
-</tr>
-</table>
-</form>
-<h3>#xarML('Properties')#</h3>
-<form action="&xar-modurl-workflow-admin-instance;" method="post">
-<input type="hidden" name="iid" value="#$iid#" />
-<table class="normal">
-<tr>
-	<td class="heading">#xarML('Property')#</td>
-	<td class="heading">#xarML('Value')#</td>
-</tr>
-<xar:foreach in="$props" key="$key" value="$item">
-<tr>
-	<td class="odd">
-
-	 <a href="&xar-modurl-workflow-admin-instance;&amp;iid=#$iid#&amp;unsetprop=#$key#"><img border="0" src='modules/workflow/lib/Galaxia/img/icons/trash.gif' alt='#xarML('del')#' title='#xarML('del')#' /></a>
-	 <b>#$key#</b>
-	 </td>
-	<td class="odd">
-	<xar:if condition="strlen($item) gt 80">
-	<textarea name="props[#$key#]" cols="80" rows="10">#$item#</textarea>
-	<xar:else/>
-	<input type="text" name="props[#$key#]" value="#$item#" />
-	</xar:if>
-	</td>
-</tr>
-</xar:foreach>
-<tr>
-	<td class="odd">&nbsp;</td>
-	<td class="odd"><input type="submit" name="saveprops" value="#xarML('update')#" /></td>
-</tr>
-
-</table>
-</form>
-<h3>#xarML('Add property')#</h3>
-<form action="&xar-modurl-workflow-admin-instance;" method="post">
-<input type="hidden" name="iid" value="#$iid#" />
-<table class="normal">
-<tr>
-	<td class="formcolor">#xarML('name')#</td>
-	<td class="formcolor"><input type="text" name="name" /></td>
-</tr>
-<tr>
-	<td class="formcolor">#xarML('value')#</td>
-	<td class="formcolor"><textarea name="value" rows="4" cols="80"></textarea></td>
-</tr>
-<tr>
-	<td class="formcolor">&nbsp;</td>
-	<td class="formcolor"><input type="submit" name="addprop" value="#xarML('add')#" /></td>
-</tr>
-
-</table>
-</form>
-
-<!-- xar:template file="instance_comments" type="module"/-->
+      <h3><xar:mlstring>Add property</xar:mlstring></h3>
+      <div class="xar-norm-outline">
+        <form style="margin-left:1em;" action="&xar-modurl-workflow-admin-instance;" method="post">
+          <input type="hidden" name="iid" value="#$iid#" />
+          <table>
+            <tr>
+              <td valign="top">
+                <label for="propname"><xar:mlstring>Name</xar:mlstring></label>
+              </td>
+              <td>
+                <input id="propname" type="text" name="name" />
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">
+                <label for="propvalue"><xar:mlstring>Value</xar:mlstring></label>
+              </td>
+              <td>
+                <textarea id="propvalue" name="value" rows="4" cols="80"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="submit" name="addprop" value="#xarML('add')#" />
+              </td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+        </form>
+      </div>
+        
+        <!-- xar:template file="instance_comments" type="module"/-->
+        

@@ -1,0 +1,40 @@
+  <div>
+    <h3>
+      <xar:if condition="$roleId gt 0">
+        <xar:mlstring>Role details</xar:mlstring> 
+      <xar:else/>
+        <xar:mlstring>Add new role</xar:mlstring>
+      </xar:if>
+    </h3>
+
+    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+      <form action="&xar-modurl-workflow-admin-roles;" method="post">
+        <input type="hidden" name="pid" value="#$pid#" />
+        <input type="hidden" name="roleId" value="#$info['roleId']#" />
+        <input type="hidden" name="sort_mode" value="#$sort_mode#" />
+        <input type="hidden" name="sort_mode2" value="#$sort_mode2#" />
+        <input type="hidden" name="find" value="#$find#" />
+        <input type="hidden" name="offset" value="#$offset#" />
+        <table>
+          <tr>
+            <td valign="top"><xar:mlstring>Name</xar:mlstring></td>
+            <td><input type="text" name="name" value="#$info['name']#" /></td>
+          </tr>
+          <tr>
+            <td valign="top"><xar:mlstring>Description</xar:mlstring></td>
+            <td><textarea name="description" rows="4" cols="60">#$info['description']#</textarea></td>
+          </tr>
+          <tr>
+            <td>
+              <xar:if condition="$roleId gt 0">
+                <input type="submit" name="save" value="#xarML('Update')#" />
+              <xar:else/>
+                <input type="submit" name="save" value="#xarML('Save')#" />
+              </xar:if>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
