@@ -669,7 +669,7 @@ class rectangle
         }
         PDF_in("[DOCUMENT]::[IMAGE][[POSITION]",$this->position,array("ABSOLUTE","RELATIVE"));
 
-        $this->x = (array_key_exist('X',$node->attrs))?$node->attrs["X"]:0;
+        $this->x = (array_key_exists('X',$node->attrs))?$node->attrs["X"]:0;
 		$this->x = PDF_unit("[DOCUMENT]::[RECTANGLE][X]",$this->x);
         $this->y = (array_key_exists('Y',$node->attrs))?$node->attrs["Y"]:0;
 		$this->y = PDF_unit("[DOCUMENT]::[RECTANGLE][Y]",$this->y);
