@@ -12,10 +12,10 @@
             <td>
               <xar:mlstring>Users</xar:mlstring>:
               <input type="text" size="10" name="find_users" value="#$find_users#" />
-              <input type="submit" name="findusers" value="#xarML('filter')#" />	  
+              <input type="submit" name="findusers" value="#xarML('filter')#" />      
             </td>
             <td class="formcolor" >
-              <xar:mlstring>Roles</xar:mlstring>:<br />		  		
+              <xar:mlstring>Roles</xar:mlstring>:<br />                  
             </td>
           </tr>
           <tr>
@@ -36,7 +36,7 @@
                 <xar:foreach in="$roles" key="$ix">
                   <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
                 </xar:foreach>
-              </select>	  		
+              </select>              
             </td>
           </tr>          
           <tr>

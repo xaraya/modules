@@ -135,7 +135,7 @@
             <xar:else/>
             <tr>
               <td colspan="15"><xar:mlstring>No processes defined yet</xar:mlstring></td>
-            </tr>	
+            </tr>    
           </xar:if>
         </table>
       </form>

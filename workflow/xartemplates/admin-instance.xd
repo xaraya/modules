@@ -120,7 +120,7 @@
                   &nbsp;
                 </xar:if>
               </td>
-            </tr>	
+            </tr>    
             <tr>
               <td ><input type="submit" name="save" value="#xarML('update')#" /></td>
               <td >&nbsp;</td>

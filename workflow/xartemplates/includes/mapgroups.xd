@@ -33,7 +33,7 @@
                 <xar:foreach in="$roles" key="$ix">
                   <option value="#$roles[$ix]['roleId']#">#$roles[$ix]['name']#</option>
                 </xar:foreach>
-              </select>	  		
+              </select>              
             </td>
           </tr>
           <tr>

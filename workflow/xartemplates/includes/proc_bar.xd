@@ -40,7 +40,7 @@
       <img border="0" src="modules/workflow/lib/Galaxia/img/icons/change.gif" alt="#xarML('edit')#" title="#xarML('edit')#" />
       <xar:mlstring>Process Details</xar:mlstring>
     </a>
-				
+                
     <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#">
       <img border="0" src="modules/workflow/lib/Galaxia/img/icons/Activity.gif" alt="#xarML('activities')#" title="#xarML('activities')#" />
       <xar:mlstring>Activities</xar:mlstring>
@@ -54,7 +54,7 @@
     <a class="link" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#">
       <img border="0" src="modules/workflow/lib/Galaxia/img/icons/myinfo.gif" alt="#xarML('roles')#" title="#xarML('roles')#" />
       <xar:mlstring>Roles</xar:mlstring>
-    </a>		
+    </a>        
         
     <a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#">
       <img src="modules/workflow/lib/Galaxia/img/icons/mode_tree.gif" border="0" title="#xarML('graph')#" alt="#xarML('graph')#" />

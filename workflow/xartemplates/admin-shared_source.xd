@@ -1,6 +1,6 @@
 <script language="javascript" type="text/javascript">
 function setSomeElement(fooel, foo1) {
-	document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
+    document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
 }
 </script>
 
@@ -58,8 +58,8 @@ function setSomeElement(fooel, foo1) {
                       <a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');"><xar:mlstring>Process form</xar:mlstring></a><hr/>
                     </xar:if>
                     <xar:if condition="$act_info['type'] eq 'switch'">
-                      <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a><hr />  		    
-                      <a href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a><hr />  		    
+                      <a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');"><xar:mlstring>Set Next act</xar:mlstring></a><hr />              
+                      <a href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');"><xar:mlstring>If:SetNextact</xar:mlstring></a><hr />              
                       <a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');"><xar:mlstring>Switch construct</xar:mlstring></a><hr />
                     </xar:if>
                   </xar:if>

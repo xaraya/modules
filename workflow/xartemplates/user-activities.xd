@@ -12,7 +12,7 @@
             <tr>
               <td><small><xar:mlstring>process</xar:mlstring></small></td>
               <td><small><xar:mlstring>description</xar:mlstring></small></td>
-              <td>&nbsp;</td>	
+              <td>&nbsp;</td>    
             </tr>
             
             <tr>
@@ -35,7 +35,7 @@
               <td ><input size="8" type="text" name="find" value="#$find#" /></td>
               <td ><input type="submit" name="filter" value="#xarML('filter')#" /></td>
             </tr>
-          </table>	
+          </table>    
         </form>
         
         <form action="&xar-modurl-workflow-user-activities;" method="post">
@@ -97,7 +97,7 @@
                     <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and ($items[$ix]['type'] eq 'start' or $items[$ix]['type'] eq 'standalone')">
                       <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#">
                         <img src='modules/workflow/lib/Galaxia/img/icons/next.gif' alt='#xarML('run')#' title='#xarML('run activity')#' />
-                      </a>		  
+                      </a>          
                     </xar:if>
                   </td>
                   <td style="text-align:right;">
@@ -110,7 +110,7 @@
                 <td colspan="3">
                   <xar:mlstring>No activities found</xar:mlstring>
                 </td>
-              </tr>	
+              </tr>    
             </xar:if>
           </table>
         </form>

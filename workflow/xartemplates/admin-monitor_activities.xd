@@ -18,7 +18,7 @@
               <td><small><xar:mlstring>interact</xar:mlstring></small></td>
               <td><small><xar:mlstring>route</xar:mlstring></small></td>
               <td><small><xar:mlstring>description</xar:mlstring></small></td>
-              <td>&nbsp;</td>	
+              <td>&nbsp;</td>    
             </tr>
             <tr>
               <td>
@@ -111,11 +111,11 @@
                 <input size="8" type="text" name="find" value="#$find#" />
               </td>
               
-              <td>	
+              <td>    
                 <input type="submit" name="filter" value="#xarML('filter')#" />
               </td>
             </tr>
-          </table>	
+          </table>    
         </form>
         
         <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-monitor_activities;" method="post">
@@ -197,7 +197,7 @@
                 </tr>
               </xar:foreach>
             <xar:else/>
-              <tr><td colspan="7"><xar:mlstring>No activities found</xar:mlstring></td></tr>	
+              <tr><td colspan="7"><xar:mlstring>No activities found</xar:mlstring></td></tr>    
             </xar:if>
           </table>
         </form>

@@ -19,55 +19,55 @@
 <h3><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h3>
     <p><xar:mlstring><b>Description:</b> first enable workflow hooks for a particular module+itemtype,
 then specify here which workflow process should be started when a particular hook is called by that module+itemtype. Only non-interactive start activities can be used here...</xar:mlstring></p>
-	<table border="0" cellpadding="8" cellspacing="0">
-	<xar:foreach in="$settings" key="$modname" value="$config">
-		<tr>
-			<td colspan="2"><b>#$config['label']#</b></td>
-		</tr>
-		<tr>
-			<td><label for="settings[#$modname#.create]"><xar:mlstring>Start Activity for Create Hook Calls</xar:mlstring></label></td>
-			<td>
-			<select name="settings[#$modname#.create]" id="settings[#$modname#.create]">
-			<xar:foreach in="$activities" key="$id" value="$name">
-				<xar:if condition="$config['create'] eq $id">
-					<option value="#$id#" selected="selected">#$name#</option>
-				<xar:else/>
-					<option value="#$id#">#$name#</option>
-				</xar:if>
-			</xar:foreach>
-			</select>
-			</td>
-		</tr>
-		<tr>
-			<td><label for="settings[#$modname#.update]"><xar:mlstring>Start Activity for Update Hook Calls</xar:mlstring></label></td>
-			<td>
-			<select name="settings[#$modname#.update]" id="settings[#$modname#.update]">
-			<xar:foreach in="$activities" key="$id" value="$name">
-				<xar:if condition="$config['update'] eq $id">
-					<option value="#$id#" selected="selected">#$name#</option>
-				<xar:else/>
-					<option value="#$id#">#$name#</option>
-				</xar:if>
-			</xar:foreach>
-			</select>
-			</td>
-		</tr>
-		<tr>
-			<td><label for="settings[#$modname#.delete]"><xar:mlstring>Start Activity for Delete Hook Calls</xar:mlstring></label></td>
-			<td>
-			<select name="settings[#$modname#.delete]" id="settings[#$modname#.delete]">
-			<xar:foreach in="$activities" key="$id" value="$name">
-				<xar:if condition="$config['delete'] eq $id">
-					<option value="#$id#" selected="selected">#$name#</option>
-				<xar:else/>
-					<option value="#$id#">#$name#</option>
-				</xar:if>
-			</xar:foreach>
-			</select>
-			</td>
-		</tr>
-	</xar:foreach>
-	</table>
+    <table border="0" cellpadding="8" cellspacing="0">
+    <xar:foreach in="$settings" key="$modname" value="$config">
+        <tr>
+            <td colspan="2"><b>#$config['label']#</b></td>
+        </tr>
+        <tr>
+            <td><label for="settings[#$modname#.create]"><xar:mlstring>Start Activity for Create Hook Calls</xar:mlstring></label></td>
+            <td>
+            <select name="settings[#$modname#.create]" id="settings[#$modname#.create]">
+            <xar:foreach in="$activities" key="$id" value="$name">
+                <xar:if condition="$config['create'] eq $id">
+                    <option value="#$id#" selected="selected">#$name#</option>
+                <xar:else/>
+                    <option value="#$id#">#$name#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="settings[#$modname#.update]"><xar:mlstring>Start Activity for Update Hook Calls</xar:mlstring></label></td>
+            <td>
+            <select name="settings[#$modname#.update]" id="settings[#$modname#.update]">
+            <xar:foreach in="$activities" key="$id" value="$name">
+                <xar:if condition="$config['update'] eq $id">
+                    <option value="#$id#" selected="selected">#$name#</option>
+                <xar:else/>
+                    <option value="#$id#">#$name#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="settings[#$modname#.delete]"><xar:mlstring>Start Activity for Delete Hook Calls</xar:mlstring></label></td>
+            <td>
+            <select name="settings[#$modname#.delete]" id="settings[#$modname#.delete]">
+            <xar:foreach in="$activities" key="$id" value="$name">
+                <xar:if condition="$config['delete'] eq $id">
+                    <option value="#$id#" selected="selected">#$name#</option>
+                <xar:else/>
+                    <option value="#$id#">#$name#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
 <p><xar:mlstring>Note: at the moment, only one activity can be started in each hook call from each module+itemtype.
 If necessary, this can be modified but perhaps you might rethink your processes instead :-)</xar:mlstring></p>
 <br/>

@@ -58,8 +58,8 @@
           <tr><td><input type="submit" name="delete" value="#xarML('Delete selected')# " /></td></tr>
           <xar:else/>
             <tr><td colspan="3"><xar:mlstring>No roles defined yet</xar:mlstring></td>
-          </tr>	
+          </tr>    
         </xar:if>
       </table>
-    </form>	
+    </form>    
   </div>
