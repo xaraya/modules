@@ -163,6 +163,7 @@ class Net_NNTP extends Net_NNTP_Protocol
     	    }
 	}
 
+        $r = $this->_sendCommand('MODE READER');
         return true;
     }
 
@@ -323,7 +324,7 @@ class Net_NNTP extends Net_NNTP_Protocol
      * @return mixed (array) nested array with informations about existing newsgroups on success or (object) pear_error on failure
      * @access public
      */
-    function getGroups()
+    function getGroups($dunno=TRUE, $wildmat='')
     {
 	// Get groups
 	$groups = $this->cmdList();
@@ -337,7 +338,7 @@ class Net_NNTP extends Net_NNTP_Protocol
 	}
 
 	// Get group descriptions
-	$descriptions = $this->cmdListNewsgroups();
+	$descriptions = $this->cmdListNewsgroups($wildmat);
 	if (PEAR::isError($descriptions)) {
 	    return $descriptions;
 	}

@@ -610,7 +610,14 @@ class Net_NNTP_Protocol extends PEAR
      */
     function cmdListNewsgroups($wildmat = '')
     {
-        $response = $this->_sendCommand('LIST NEWSGROUPS '.$wildmat);
+        if (!empty($wildmat)) {
+            $cmd = 'LIST NEWSGROUPS ' . $wildmat;
+        } else {
+            $cmd = 'LIST NEWSGROUPS';
+        }
+
+        $response = $this->_sendCommand($cmd);
+
         if (PEAR::isError($response)){
             return $response;
         }
@@ -968,7 +975,7 @@ class Net_NNTP_Protocol extends PEAR
      */
     function isConnected()
     {
-	return (is_resource($this->_socket->fp) && !feof($this->_socket->fp));
+	return (is_resource($this->_socket->fp));
     }
 
     // }}}
@@ -1007,7 +1014,7 @@ class Net_NNTP_Protocol extends PEAR
         }
 
         if ($this->_debug) {
-            echo "S: $response\r\n";
+            echo "<br />S: $response\r\n";
         }
 
 	// Trim the start of the response in case of misplased whitespace (should not be needen!!!)
@@ -1127,7 +1134,7 @@ class Net_NNTP_Protocol extends PEAR
         }
 	
         if ($this->_debug) {
-            echo "C: $cmd\r\n";
+            echo "<br />C: $cmd\r\n";
         }
 
 	return $this->_getStatusResponse();
