@@ -40,9 +40,10 @@ function hitcount_userapi_topitems($args)
     // Get items
     $query = "SELECT xar_itemid, xar_hits
             FROM $hitcounttable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
+            WHERE xar_moduleid = ?
+              AND xar_itemtype = ?
             ORDER BY xar_hits DESC";
+    $bindvars = array($modid, $itemtype);
 
     if (!isset($numitems) || !is_numeric($numitems)) {
         $numitems = 10;

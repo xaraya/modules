@@ -60,10 +60,11 @@ function hitcount_userapi_get($args)
     // Get items
     $query = "SELECT xar_hits
             FROM $hitcounttable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-              AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'";
-    $result =& $dbconn->Execute($query);
+            WHERE xar_moduleid = ?
+              AND xar_itemtype = ?
+              AND xar_itemid = ?";
+    $bindvars = array($modid, $itemtype, $objectid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     $hits = $result->fields[0];

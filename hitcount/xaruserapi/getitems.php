@@ -61,13 +61,16 @@ function hitcount_userapi_getitems($args)
     $hitcounttable = $xartable['hitcount'];
 
     // Get items
+    $bindvars = array();
     $query = "SELECT xar_itemid, xar_hits
             FROM $hitcounttable
-            WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-              AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'";
+            WHERE xar_moduleid = ?
+              AND xar_itemtype = ?";
+    $bindvars[] = $modid; $bindvars[] = $itemtype;
     if (count($itemids) > 0) {
-        $allids = join(', ',$itemids);
-        $query .= " AND xar_itemid IN (" . xarVarPrepForStore($allids) . ")";
+        $bindmarkers = '?' . str_repeat(',?',count($itemids)-1);
+        $bindvars = array_merge($bindvars,$itemids);
+        $query .= " AND xar_itemid IN ($bindmarkers)";
     }
     if ($sort == 'numhits') {
         $query .= " ORDER BY xar_hits DESC, xar_itemid ASC";
@@ -76,9 +79,9 @@ function hitcount_userapi_getitems($args)
     }
 
     if (!empty($numitems) && !empty($startnum)) {
-        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1);
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1,$bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
     if (!$result) return;
 

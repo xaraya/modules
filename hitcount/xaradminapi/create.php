@@ -70,13 +70,10 @@ function hitcount_adminapi_create($args)
                                        xar_itemtype,
                                        xar_itemid,
                                        xar_hits)
-            VALUES ($nextId,
-                    '" . xarVarPrepForStore($modid) . "',
-                    '" . xarVarPrepForStore($itemtype) . "',
-                    '" . xarVarPrepForStore($objectid) . "',
-                    '" . xarVarPrepForStore($hits) . "')";
+            VALUES (?,?,?,?,?)";
+    $bindvars = array($nextId, $modid, $itemtype, $objectid, $hits);
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     $hcid = $dbconn->PO_Insert_ID($hitcounttable, 'xar_hitcountid');

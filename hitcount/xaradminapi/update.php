@@ -82,21 +82,20 @@ function hitcount_adminapi_update($args)
     $hitcounttable = $xartable['hitcount'];
 
     // set to the new hit count
+    $bindvars = array();
     if (!empty($hits) && is_numeric($hits)) {
-        $query = "UPDATE $hitcounttable
-                SET xar_hits = '" . xarVarPrepForStore($hits) . "'
-                WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-                  AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-                  AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'";
+        $bhits = $hits;
     } else {
-        $query = "UPDATE $hitcounttable
-                SET xar_hits = xar_hits + 1
-                WHERE xar_moduleid = '" . xarVarPrepForStore($modid) . "'
-                  AND xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-                  AND xar_itemid = '" . xarVarPrepForStore($objectid) . "'";
+        $bhits = 'xar_hits + 1';
         $hits = $oldhits + 1;
     }
-    $result =& $dbconn->Execute($query);
+    $query = "UPDATE $hitcounttable
+              SET xar_hits = $bhits
+              WHERE xar_moduleid = ?
+              AND xar_itemtype = ?
+              AND xar_itemid = ?";
+    $bindvars = array($modid, $itemtype,$objectid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Return the new hitcount (give or take a few other hits in the meantime)
