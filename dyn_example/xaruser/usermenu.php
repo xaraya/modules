@@ -56,9 +56,8 @@ function dyn_example_user_usermenu($args)
             // First we need to get the data back from the template in order to process it.
             // The example module is not setting any user vars at this time, but an example
             // might be the number of items to be displayed per page.
-            list($uid,
-                 $name) = xarVarCleanFromInput('uid',
-                                               'name');
+            if(!xarVarFetch('uid','int', $uid, 0, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVarFetch('name','str', $name, '', XARVAR_NOT_REQUIRED)) {return;}
 
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
