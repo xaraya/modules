@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: is_url.php,v 1.1 2003/07/08 22:57:19 garrett Exp $
+ * File: $Id: is_url.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook utilapi is_url
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getaddresslist.php,v 1.7 2003/07/19 06:18:28 garrett Exp $
+ * File: $Id: getaddresslist.php,v 1.10 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook user getAddressList
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertedit.php,v 1.6 2003/07/14 02:32:24 garrett Exp $
+ * File: $Id: insertedit.php,v 1.8 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook user insertEdit
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: deleterecord.php,v 1.1 2003/07/08 23:03:47 garrett Exp $
+ * File: $Id: deleterecord.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook userapi deleteRecord
  *

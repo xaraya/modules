@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.9 2004/01/10 22:52:37 garrett Exp $
+ * File: $Id: xarinit.php,v 1.10 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook utility functions
  *

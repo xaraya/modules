@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaruser.php,v 1.3 2003/07/09 00:12:23 garrett Exp $
+ * File: $Id: xaruser.php,v 1.5 2003/12/22 07:06:34 garrett Exp $
  *
  * AddressBook user functions
  *

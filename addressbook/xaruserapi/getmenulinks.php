@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getmenulinks.php,v 1.1 2003/07/02 07:08:39 garrett Exp $
+ * File: $Id: getmenulinks.php,v 1.3 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook user getMenuLinks
  *

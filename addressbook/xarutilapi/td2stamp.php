@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: td2stamp.php,v 1.1 2003/07/08 22:42:30 garrett Exp $
+ * File: $Id: td2stamp.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook utilapi td2stamp
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: viewdetail.php,v 1.5 2003/07/19 06:18:29 garrett Exp $
+ * File: $Id: viewdetail.php,v 1.8 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook user viewDetail
  *

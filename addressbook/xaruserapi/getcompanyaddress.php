@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcompanyaddress.php,v 1.1 2003/07/08 23:09:09 garrett Exp $
+ * File: $Id: getcompanyaddress.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook userapi getCompanyAddress
  *

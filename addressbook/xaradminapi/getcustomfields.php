@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcustomfields.php,v 1.2 2003/12/22 07:12:49 garrett Exp $
+ * File: $Id: getcustomfields.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook admin getCustomFields
  *

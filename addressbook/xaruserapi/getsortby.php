@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getsortby.php,v 1.1 2003/07/08 23:55:15 garrett Exp $
+ * File: $Id: getsortby.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook userapi getSortBy
  *

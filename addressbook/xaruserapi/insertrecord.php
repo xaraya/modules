@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertrecord.php,v 1.3 2003/07/18 19:40:41 garrett Exp $
+ * File: $Id: insertrecord.php,v 1.6 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook user insertRecord
  *

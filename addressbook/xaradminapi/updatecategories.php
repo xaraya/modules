@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updatecategories.php,v 1.5 2003/07/21 21:13:03 garrett Exp $
+ * File: $Id: updatecategories.php,v 1.8 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook admin functions
  *

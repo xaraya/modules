@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.12 2003/09/15 00:29:58 garrett Exp $
+ * File: $Id: handleexception.php,v 1.14 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook utilapi handleException
  *

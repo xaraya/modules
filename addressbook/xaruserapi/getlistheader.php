@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getlistheader.php,v 1.1 2003/07/08 23:56:05 garrett Exp $
+ * File: $Id: getlistheader.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook userapi getListHeader
  *

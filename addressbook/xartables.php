@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xartables.php,v 1.1 2003/06/30 01:46:00 garrett Exp $
+ * File: $Id: xartables.php,v 1.2 2003/12/22 07:06:34 garrett Exp $
  *
  * AddressBook utility functions
  *

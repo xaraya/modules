@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradmin.php,v 1.4 2003/07/16 01:06:10 garrett Exp $
+ * File: $Id: displaydocs.php,v 1.1 2003/12/22 07:26:55 garrett Exp $
  *
  * AddressBook admin functions
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getitems.php,v 1.1 2003/07/08 23:56:13 garrett Exp $
+ * File: $Id: getitems.php,v 1.4 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook utilapi getitems()
  *

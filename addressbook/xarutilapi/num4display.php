@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: num4display.php,v 1.1 2003/07/08 22:58:18 garrett Exp $
+ * File: $Id: num4display.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook utilapi num4display
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcustfieldtypeinfo.php,v 1.1 2003/07/07 04:11:58 garrett Exp $
+ * File: $Id: getcustfieldtypeinfo.php,v 1.3 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook utility functions
  *

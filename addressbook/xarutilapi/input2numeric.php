@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: input2numeric.php,v 1.1 2003/07/08 22:46:23 garrett Exp $
+ * File: $Id: input2numeric.php,v 1.2 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook utility functions
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getsubmitvalues.php,v 1.2 2003/07/18 19:14:05 garrett Exp $
+ * File: $Id: getsubmitvalues.php,v 1.5 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook utility functions
  *

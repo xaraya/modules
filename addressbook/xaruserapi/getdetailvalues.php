@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getdetailvalues.php,v 1.4 2003/07/19 06:18:28 garrett Exp $
+ * File: $Id: getdetailvalues.php,v 1.7 2004/01/24 18:36:22 garrett Exp $
  *
  * AddressBook user getDetailValues
  *

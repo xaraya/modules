@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifylabels.php,v 1.6 2003/07/05 23:08:55 garrett Exp $
+ * File: $Id: modifylabels.php,v 1.8 2003/12/22 07:11:41 garrett Exp $
  *
  * AddressBook admin modifylabels
  *

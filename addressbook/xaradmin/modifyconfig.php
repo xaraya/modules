@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.6 2003/07/09 11:19:41 garrett Exp $
+ * File: $Id: modifyconfig.php,v 1.8 2003/12/22 07:11:41 garrett Exp $
  *
  * AddressBook admin functions
  *

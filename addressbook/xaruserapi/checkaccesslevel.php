@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: checkaccesslevel.php,v 1.2 2003/07/09 00:09:26 garrett Exp $
+ * File: $Id: checkaccesslevel.php,v 1.4 2003/12/22 07:12:50 garrett Exp $
  *
  * AddressBook user checkAccessLevel
  *
