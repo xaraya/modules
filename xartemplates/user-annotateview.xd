@@ -1,12 +1,12 @@
-<xar:template file="user-menu" />
+<div id="bkview-modbody-id" class="xar-mod-body" >
+    <xar:template file="user-menu" />
 
-<div style="float:left; margin-top: 1em; width: 100%">
-  <xar:template file="user-delta" subdata="$delta" />
-  <div class="precontainer">
-    <div class="precontent">
-      <xar:loop name="$annolines">#$loop:item['annoline']#</xar:loop>
+    <div style="float:left; margin-top: 1em; width: 100%">
+      <xar:template file="user-delta" subdata="$delta" />
+      <div class="precontainer">
+        <div class="precontent">
+          <xar:loop name="$annolines">#$loop:item['annoline']#</xar:loop>
+        </div>
+      </div>
     </div>
-  </div>
 </div>
-
-<xar:template file="user-trailer" />

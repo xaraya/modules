@@ -1,10 +1,9 @@
-<xar:template file="user-menu" />
+<div id="bkview-modbody-id" class="xar-mod-body" >
+    <xar:template file="user-menu" />
 
-<div style="float: left; margin-top:1em; width: 100%">
-    <xar:loop name="$csets">
-      <xar:template file="user-delta" subdata="$loop:item"/>
-    </xar:loop>
-  </div>
+    <div style="float: left; margin-top:1em; width: 100%">
+        <xar:loop name="$csets">
+          <xar:template file="user-delta" subdata="$loop:item"/>
+        </xar:loop>
+    </div>
 </div>
-
-<xar:template file="user-trailer" />

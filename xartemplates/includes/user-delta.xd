@@ -29,7 +29,7 @@
                 <xar:if condition="!isset($icon)">
                     <xar:set name="icon">xarTplGetImage('file.gif','bkview')</xar:set>
                 </xar:if>
-                <xar:if condition="isset($checkedout) && $checkedout">
+                <xar:if condition="isset($checkedout) and $checkedout">
                     <xar:set name="titlestring">
                         <xar:ml>
                             <xar:mlstring>Download revision #(1) of #(2)</xar:mlstring>

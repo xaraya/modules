@@ -10,8 +10,8 @@
 
   <table>
     <tr>
-      <th><xar:mlstring>Repository-ID</xar:mlstring>:</td>
-      <th><xar:mlstring>Repository name</xar:mlstring>:</td>
+      <th><xar:mlstring>Repository-ID</xar:mlstring>:</th>
+      <th><xar:mlstring>Repository name</xar:mlstring>:</th>
     </tr>
     <tr>
         <td>#$repoidvalue#</td>

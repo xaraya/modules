@@ -1,19 +1,20 @@
-<xar:template file="user-menu" />
+<div id="bkview-modbody-id" class="xar-mod-body" >
+    <xar:template file="user-menu" />
 
-<div style="float: left; margin-top: 1em; width: 100%;">
-    <xar:if condition="$file =='ChangeSet'">
-        <xar:template file="user-delta" subdata="$cset"/>
-    </xar:if>
-  
-    <xar:loop name="$deltalist">
-        <xar:template file="user-delta" subdata="$loop:item"/>
- 
-        <div class="precontainer">
-            <xar:loop name="$loop:item['difflines']">
-                <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
-            </xar:loop>
-        </div>
-    </xar:loop>
+    <div style="float: left; margin-top: 1em; width: 100%;">
+        <xar:if condition="$file =='ChangeSet'">
+            <xar:template file="user-delta" subdata="$cset"/>
+        </xar:if>
+      
+        <xar:loop name="$deltalist">
+            <xar:template file="user-delta" subdata="$loop:item"/>
+     
+            <div class="precontainer">
+                <xar:loop name="$loop:item['difflines']">
+                    <div class="#$loop:item['difflineclass']#">#$loop:item['diffline']#</div>
+                </xar:loop>
+            </div>
+        </xar:loop>
+    </div>
 </div>
 
-<xar:template file="user-trailer" />

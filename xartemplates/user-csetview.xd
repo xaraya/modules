@@ -1,26 +1,26 @@
-<xar:template file="user-menu" />
+<div id="bkview-modbody-id" class="xar-mod-body" >
+    <xar:template file="user-menu" />
 
-<div style="float:left; margin-top: 1em; width: 100%;">
-    <xar:if condition="count($csets) gt 0">
-      <xar:loop name="$csets">
-        <xar:template file="user-delta" subdata="$loop:item"/>
-      </xar:loop>
-    <xar:else/>
-        <div>
-          <xar:mlstring>I didn't find any changesets matching the criteria.</xar:mlstring>
-        </div>
-        <xar:if condition="!$showmerge">
-          <xar:if condition="!isset($user)">
-            <xar:set name="user">''</xar:set>
-          </xar:if>
-          <div>
-            <xar:mlstring>Merge changesets were not included in this view.</xar:mlstring><br/>
-            <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$user#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">        
-              <xar:mlstring>Retry with them turned on?</xar:mlstring>
-            </a>
-          </div>
+    <div style="float:left; margin-top: 1em; width: 100%;">
+        <xar:if condition="count($csets) gt 0">
+          <xar:loop name="$csets">
+            <xar:template file="user-delta" subdata="$loop:item"/>
+          </xar:loop>
+        <xar:else/>
+            <div>
+              <xar:mlstring>I didn't find any changesets matching the criteria.</xar:mlstring>
+            </div>
+            <xar:if condition="!$showmerge">
+              <xar:if condition="!isset($user)">
+                <xar:set name="user">''</xar:set>
+              </xar:if>
+              <div>
+                <xar:mlstring>Merge changesets were not included in this view.</xar:mlstring><br/>
+                <a  onclick="return loadContent(this.href);" href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$user#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">        
+                  <xar:mlstring>Retry with them turned on?</xar:mlstring>
+                </a>
+              </div>
+            </xar:if>
         </xar:if>
-    </xar:if>
+    </div>
 </div>
-
-<xar:template file="user-trailer"/>

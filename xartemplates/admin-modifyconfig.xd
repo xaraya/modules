@@ -14,7 +14,7 @@
         <xar:else/>
             <input id="bkenablesearch" type="checkbox" name="enablesearch" />
         </xar:if>
-        <label for="bkenablesearch"><xar:mlstring>Enable searching</xar:mlstring>
+        <label for="bkenablesearch"><xar:mlstring>Enable searching</xar:mlstring></label>
         <p>
             <xar:mlstring>
                 By hooking search into bkview we enable the search results screen provide by the search
@@ -37,7 +37,7 @@
         <xar:else/>
             <input id="bkenablexmlhttp" type="checkbox" name="enablexmlhttp" />
         </xar:if>
-        <label for="bkenablexmlhttp"><xar:mlstring>Use an XMLHTTP request method</xar:mlstring>
+        <label for="bkenablexmlhttp"><xar:mlstring>Use an XMLHTTP request method</xar:mlstring></label>
         <p>
             <xar:mlstring>
                 BK-view can use an XML http request for all links in the module. This means that only the

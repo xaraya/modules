@@ -11,20 +11,20 @@
   
   <xar:loop name="$items">
     <tr class="csets">
-      <td class="csets">#$loop:item['reponame']#</td>
-      <td class="csets">#$loop:item['repopath']#</td>
-      <td class="csets">#$loop:item['repoid']#</td>
-      <td class="csets"align="center">
-        <xar:if condition="empty($loop:item['editurl'])">
-          #$loop:item['edittitle']#
+      <td class="csets">#$loop:item.reponame#</td>
+      <td class="csets">#$loop:item.repopath#</td>
+      <td class="csets">#$loop:item.repoid#</td>
+      <td class="csets" align="center">
+        <xar:if condition="empty($loop:item.editurl)">
+          #$loop:item.edittitle#
         <xar:else />
-          <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+          <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
         </xar:if>
         |
-        <xar:if condition="empty($loop:item['deleteurl'])">
-          #$loop:item['deletetitle']#
+        <xar:if condition="empty($loop:item.deleteurl)">
+          #$loop:item.deletetitle#
         <xar:else />
-            <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+            <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
         </xar:if>
       </td>
     </tr>

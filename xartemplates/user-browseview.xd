@@ -1,44 +1,44 @@
-<xar:template file="user-menu"/>
+<div id="bkview-modbody-id" class="xar-mod-body" >
+    <xar:template file="user-menu"/>
 
-<a href="&xar-modurl-bkview-user-browserview;&amp;repoid=#$repoid#&amp;dir=/">
-[<xar:mlstring>root</xar:mlstring>]</a>/
-<xar:foreach in="$dirtrace" value="$crumb">
-    <xar:set name="sofar">$sofar . $crumb . '/'</xar:set>
-    <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$sofar#">#$crumb#</a>/
-</xar:foreach>
+    <a href="&xar-modurl-bkview-user-browserview;&amp;repoid=#$repoid#&amp;dir=/">
+    [<xar:mlstring>root</xar:mlstring>]</a>/
+    <xar:foreach in="$dirtrace" value="$crumb">
+        <xar:set name="sofar">$sofar . $crumb . '/'</xar:set>
+        <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$sofar#">#$crumb#</a>/
+    </xar:foreach>
 
-<div style="float:left; margin-top: 1em;width: 100%;">
+    <div style="float:left; margin-top: 1em;width: 100%;">
 
-  <!-- Header for the folder list -->
-  <div class="xar-mod-head">
-    <span><xar:mlstring>Folders</xar:mlstring></span>
-  </div>
-    
-  <!-- Block with the folders -->
-  <div id="bkdirlist" style="margin-bottom: 50px;">
-    <xar:loop name="$dirlist">
-      <div style="float:left; min-width: #$maxlen#em;">
-        <xar:if condition="trim($loop:item['dirname']) == '..'">
-          <img src="#xarTplGetImage('back.gif','bkview')#" alt="parent directory"/>
-          <xar:set name="$dirtext"><xar:mlstring>Up</xar:mlstring></xar:set> 
-        <xar:else/>
-          <img src="#xarTplGetImage('dir.gif','bkview')#" alt="go into directory #$loop:item['dirname']#"/>
-          <xar:set name="$dirtext">#$loop:item['dirname']#</xar:set>
-        </xar:if>
-        <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/" onclick="return loadContent(this.href);">
-          #$dirtext#
-        </a>
+      <!-- Header for the folder list -->
+      <div class="xar-mod-head">
+        <span><xar:mlstring>Folders</xar:mlstring></span>
       </div>
-    </xar:loop>
-  </div>
-    
-  <br style="clear:both;" />
-    
-  <div class="csets">
-    <xar:loop name="$files">
-      <xar:template file="user-delta" subdata="$loop:item"/>
-   </xar:loop>
-  </div>
+        
+      <!-- Block with the folders -->
+      <div id="bkdirlist" style="margin-bottom: 50px;">
+        <xar:loop name="$dirlist">
+          <div style="float:left; min-width: #$maxlen#em;">
+            <xar:if condition="trim($loop:item['dirname']) == '..'">
+              <img src="#xarTplGetImage('back.gif','bkview')#" alt="parent directory"/>
+              <xar:set name="$dirtext"><xar:mlstring>Up</xar:mlstring></xar:set> 
+            <xar:else/>
+              <img src="#xarTplGetImage('dir.gif','bkview')#" alt="go into directory #$loop:item['dirname']#"/>
+              <xar:set name="$dirtext">#$loop:item['dirname']#</xar:set>
+            </xar:if>
+            <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/" onclick="return loadContent(this.href);">
+              #$dirtext#
+            </a>
+          </div>
+        </xar:loop>
+      </div>
+        
+      <br style="clear:both;" />
+        
+      <div class="csets">
+        <xar:loop name="$files">
+          <xar:template file="user-delta" subdata="$loop:item"/>
+       </xar:loop>
+      </div>
+    </div>
 </div>
-
-<xar:template file="user-trailer"/>

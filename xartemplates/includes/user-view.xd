@@ -1,25 +1,26 @@
-<xar:template file="user-menu" type="module" />
-<div style="float:left; margin-top: 1em;">
-    <xar:if condition="count($items) != 0">
-        <table width="100%">
-            <xar:loop name="$items">
-                <tr>
-                    <td>
-                        <xar:if condition="empty($loop:item['link'])">
-                            #$loop:item['reponame']# 
-                        <xar:else />
-                            <a href="#$loop:item['link']#" onclick="return loadContent(this.href);">
-                                #$loop:item['reponame']#
-                            </a>
-                        </xar:if>
-                    </td>
-                </tr>
-            </xar:loop>
-        </table>
-    <xar:else />
-        <xar:mlstring>
-            No repositories available
-        </xar:mlstring>
-    </xar:if>
+<div id="bkview-modbody-id" class="xar-mod-body" >
+    <xar:template file="user-menu" type="module" />
+    <div style="float:left; margin-top: 1em;">
+        <xar:if condition="count($items) != 0">
+            <table width="100%">
+                <xar:loop name="$items">
+                    <tr>
+                        <td>
+                            <xar:if condition="empty($loop:item['link'])">
+                                #$loop:item['reponame']# 
+                            <xar:else />
+                                <a href="#$loop:item['link']#" onclick="return loadContent(this.href);">
+                                    #$loop:item['reponame']#
+                                </a>
+                            </xar:if>
+                        </td>
+                    </tr>
+                </xar:loop>
+            </table>
+        <xar:else />
+            <xar:mlstring>
+                No repositories available
+            </xar:mlstring>
+        </xar:if>
+    </div>
 </div>
-<xar:template file="user-trailer" type="module"/>

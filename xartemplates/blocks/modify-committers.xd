@@ -9,7 +9,7 @@
     <xar:mlstring>Show information in this block for the following repositories:</xar:mlstring>
   </div>
   <xar:foreach in="$repositories" value="$repository">
-    <xar:if condition="array_key_exists($repository['repoid'], $selectedrepositories) && $selectedrepositories[$repository['repoid']] =='on'">
+    <xar:if condition="array_key_exists($repository['repoid'], $selectedrepositories) and $selectedrepositories[$repository['repoid']] =='on'">
       <input type="checkbox" name="repositories[#$repository['repoid']#]" id="repository_#$repository['repoid']#" value="on" checked="checked"/>
     <xar:else/> 
       <input type="checkbox" name="repositories[#$repository['repoid']#]" id="repository_#$repository['repoid']#" value="on"/>

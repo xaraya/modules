@@ -10,7 +10,7 @@
       </label>
     </td>
     <td>
-      <input type="text" name="reponame" id="reponame" value="#$reponame#" size="32" maxlength=32 />
+      <input type="text" name="reponame" id="reponame" value="#$reponame#" size="32" maxlength="32" />
     </td>
   </tr>
   <tr>
@@ -30,5 +30,5 @@
 </div>
 
 <div>
-  <input type="submit" value="#$submitbutton#">
+  <input type="submit" value="#$submitbutton#" />
 </div>

@@ -8,7 +8,7 @@
     <ul class="subtree">
       <xar:foreach in="$deltatree" key="$nodename" value="$delta">
         <xar:if condition="$nodename != 'ChangeSet'">
-          <xar:if condition="array_key_exists('type',$deltatree[$nodename]) && $deltatree[$nodename]['type']=='file'">
+          <xar:if condition="array_key_exists('type',$deltatree[$nodename]) and $deltatree[$nodename]['type']=='file'">
             <li class="node">
               <xar:foreach in="$deltatree[$nodename]" key="$field" value="$value">
                 <xar:if condition="$field == 'type'"><xar:continue/></xar:if>
