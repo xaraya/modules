@@ -91,7 +91,8 @@ function xarbb_user_newreply()
     $header['input-title']  = xarML('Post a Reply');
     $header['modid']        = xarModGetIDFromName('xarbb');
     $header['objectid']     = $tid;
-    $header['cid']             = $cid;
+    $header['itemtype']     = $data['fid'];
+    $header['cid']          = $cid;
 
     if ($phase == 'edit') {
         $action = 'modify';

@@ -194,6 +194,7 @@
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" />
                     <input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" />
+                    <input type="hidden" name="header[itemtype]" id="header-itemtype" value="#$header['itemtype']#" /> 
                     <xar:if condition="!isset($header['pid']) or empty($header['pid'])">
                         <input type="hidden" name="header[pid]" id="header-pid" value="0" />
                         <xar:else />
