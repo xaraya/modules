@@ -1,25 +1,32 @@
 <?php 
+// File: $Id$
 // ----------------------------------------------------------------------
-// Xaraya Content Management System
+// Xaraya eXtensible Management System
 // Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.com/
+// http://www.xaraya.org
 // ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Chris Dudley
-// Purpose of file:  Pubsub administration display functions
-// ----------------------------------------------------------------------
+
+/**
+ * the main administration function
+ */
+function pubsub_admin_main()
+{
+    // Security check
+    if (!pnSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
+        $msg = pnML('Not authorized to access to #(1)',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
+    }
+
+    $data = pubsub_admin_menu();
+    
+    // Specify some other variables used in the blocklayout template
+    $data['welcome'] = pnML('Welcome to the administration part of this Pubsub module.');
+
+    // Return the template variables defined in this function
+    return $data;
+}
 
 ?>
