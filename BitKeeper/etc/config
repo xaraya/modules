@@ -1,5 +1,5 @@
-repository: xaraya-modules
-description: Xaraya modules repository
+repository: xaraya-icalendar
+description: Xaraya icalendar module
 category: applications/publishing
 logging: logging@openlogging.org
 license: 
