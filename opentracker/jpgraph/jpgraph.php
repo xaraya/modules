@@ -1212,11 +1212,11 @@ class Graph {
 	return $csim;
     }
 	
-    // Get a complete <MAP>..</MAP> tag for the final image map
+    // Get a complete <map>..</map> tag for the final image map
     function GetHTMLImageMap($aMapName) {
-	$im = "<MAP NAME=\"$aMapName\">\n";
+	$im = "<map name=\"$aMapName\">\n";
 	$im .= $this->GetCSIMareas();
-	$im .= "</MAP>"; 
+	$im .= "</map>"; 
 	return $im;
     }
 
@@ -5072,13 +5072,13 @@ class Image {
 	if( @$GLOBALS['gd2']==true && USE_TRUECOLOR ) {
 	    $this->img = @imagecreatetruecolor($aWidth, $aHeight);
 	    if( $this->img < 1 ) {
-		die("<font color=red><b>JpGraph Error:</b></font> Can't create truecolor image. Check that you really have GD2 library installed.");
+		die("<font color=\"red\"><b>JpGraph Error:</b></font> Can't create truecolor image. Check that you really have GD2 library installed.");
 	    }
 	    $this->SetAlphaBlending();
 	} else {
 	    $this->img = @imagecreate($aWidth, $aHeight);	
 	    if( $this->img < 1 ) {
-		die("<font color=red><b>JpGraph Error:</b></font> Can't create image. Check that you really have the GD library installed.");
+		die("<font color=\"red\"><b>JpGraph Error:</b></font> Can't create image. Check that you really have the GD library installed.");
 	    }
 	}
 	if( $this->rgb != null ) 
@@ -5672,26 +5672,26 @@ class Image {
 	$this->current_color=$this->rgb->allocate($color,$aAlpha);
 	if( $this->current_color == -1 ) {
 	    $tc=imagecolorstotal($this->img);
-	    JpGraphError::Raise("Can't allocate any more colors.
+	    JpGraphError::Raise("<p>Can't allocate any more colors.
 				Image has already allocated maximum of <b>$tc colors</b>. 
 				This might happen if you have anti-aliasing turned on
 				together with a background image or perhaps gradient fill 
 				since this requires many, many colors. Try to turn off
-				anti-aliasing.<p>
+				anti-aliasing.</p><p>
 				If there is still a problem try downgrading the quality of
 				the background image to use a smaller pallete to leave some 
 				entries for your graphs. You should try to limit the number
-				of colors in your background image to 64.<p>
+				of colors in your background image to 64.</p><p>
 				If there is still problem set the constant 
 <pre>
 DEFINE(\"USE_APPROX_COLORS\",true);
 </pre>
 				in jpgraph.php This will use approximative colors
-				when the palette is full.
+				when the palette is full.</p>
 				<p>
 				Unfortunately there is not much JpGraph can do about this
 				since the palette size is a limitation of current graphic format and
-				what the underlying GD library suppports."); 
+				what the underlying GD library suppports.</p>"); 
 	}
 	return $this->current_color;
     }
