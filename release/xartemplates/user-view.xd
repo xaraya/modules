@@ -9,7 +9,7 @@
 <div class="xar-mod-body">
 <div style="width:98%;">
             <xar:if condition="xarUserIsLoggedIn()">
-                 <h2 style="width:48%;float:left; text-align:left;>
+                 <h2 style="width:48%;float:left; text-align:left;">
                      [<a href="#$addextension#"><xar:mlstring>Register an Extension</xar:mlstring></a>]</h2>
                  </h2>
             <xar:else />
@@ -155,6 +155,6 @@
     	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#"><xar:mlstring>Themes</xar:mlstring></a></li>
         </ol>
         </span>
- 
+
     </div>
 </div>
