@@ -1,10 +1,16 @@
 <?php 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
+/**
+ * File: $Id$
+ * 
+ * Pubsub Admin API
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Pubsub Module
+ * @author Chris Dudley
+*/
 
 /**
  * create a new pubsub event
@@ -50,17 +56,13 @@ function pubsub_adminapi_addevent($args)
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // check this event isn't already in the DB
-    $sql = "SELECT xar_eventid
+    $query = "SELECT xar_eventid
  	    FROM $pubsubeventstable
 	    WHERE xar_module '" . xarVarPrepForStore($module) . "',
 	          xar_eventtype '" . xarVarPrepForStore($eventtype) . "'";
-    $result = $dbconn->Execute($sql);
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    } elseif (count($result) > 0) {
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+    if (count($result) > 0) {
         $msg = xarML('Item already exists in function #(1)() in module #(2)',
                     'addevent', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -72,7 +74,7 @@ function pubsub_adminapi_addevent($args)
     $nextId = $dbconn->GenId($pubsubeventstable);
 
     // Add item
-    $sql = "INSERT INTO $pubsubeventstable (
+    $query = "INSERT INTO $pubsubeventstable (
               xar_eventid,
               xar_module,
               xar_eventtype)
@@ -80,14 +82,8 @@ function pubsub_adminapi_addevent($args)
               $nextId,
               '" . xarVarPrepForStore($module) . "',
               '" . xarvarPrepForStore($eventtype) . "')";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-	xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     // return eventID
     return $nextId;
@@ -133,16 +129,10 @@ function pubsub_adminapi_delevent($args)
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // Delete item
-    $sql = "DELETE FROM $pubsubeventstable
+    $query = "DELETE FROM $pubsubeventstable
             WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     return true;
 }
@@ -203,20 +193,14 @@ function pubsub_adminapi_updateevent($args)
     $pubsubeventstable = $xartable['pubsub_events'];
 
     // Update the item
-    $sql = "UPDATE $pubsubeventstable
+    $query = "UPDATE $pubsubeventstable
             SET xar_module = '" . xarVarPrepForStore($module) . "',
                 xar_eventtype = '" . xarVarPrepForStore($eventtype) . "',
                 xar_groupdescr = '" . xarVarPrepForStore($groupdescr) . "',
                 xar_actionid = '" . xarVarPrepForStore($actionid) . "'
             WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     return true;
 }
@@ -268,7 +252,7 @@ function pubsub_adminapi_processevent($args)
     $nextId = $dbconn->GenId($pubsubprocesstable);
 
     // Add item
-    $sql = "INSERT INTO $pubsubprocesstable (
+    $query = "INSERT INTO $pubsubprocesstable (
               xar_handlingid,
               xar_pubsubid,
               xar_objectid,
@@ -278,14 +262,9 @@ function pubsub_adminapi_processevent($args)
               '" . xarVarPrepForStore($pubsubid) . "',
               '" . xarvarPrepForStore($objectid) . "',
               '" . xarvarPrepForStore('pending') . "')";
-    $dbconn->Execute($sql);
+    $dbconn->Execute($query);
+    if (!$result) return;
 
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
     // TODO implement queuing properly
     // for now we'll just go parse the queue immediately
     pubsub_adminapi_processq();
@@ -311,26 +290,20 @@ function pubsub_adminapi_processq($args)
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Get all jobs in pending state
-    $sql = "SELECT xar_pubsubid,
+    $query = "SELECT xar_pubsubid,
     		   xar_objectid
             FROM $pubsubprocesstable
             WHERE xar_status = '" . xarVarPrepForStore('pending') . "'";
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
     // set count to 0
     $count = 0;
 
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    } else {
-        while (!$result->EOF) {
-            // run the job passing it the pubsub and object ids.
-	    pubsub_adminapi_runjob($result->fields[0], $result->fields[1]);
-	    $count++;
-	    $result->MoveNext();
-        }
+    while (!$result->EOF) {
+        // run the job passing it the pubsub and object ids.
+        pubsub_adminapi_runjob($result->fields[0], $result->fields[1]);
+        $count++;
+        $result->MoveNext();
     }
     return $count;
 }
@@ -370,17 +343,13 @@ function pubsub_adminapi_runjob($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // Get info on job to run
-    $sql = "SELECT xar_actionid,
+    $query = "SELECT xar_actionid,
     		   xar_eventid
             FROM $pubsubregtable
             WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
-    $result   = $dbconn->Execute($sql);
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $result   = $dbconn->Execute($query);
+    if (!$result) return;
+
     $actionid = $result->fields[0];
     $eventid  = $result->fields[1]);
     list($action,$info)   =  explode(':', $actionid);
@@ -397,16 +366,12 @@ function pubsub_adminapi_runjob($args)
        	    // Database information
     	    $pubsubtemplatetable = $xartable['pubsub_template'];
     	    // Get info on job to run
-    	    $sql = "SELECT xar_template
+    	    $query = "SELECT xar_template
             	    FROM $pubsubtemplatetable
             	    WHERE xar_eventid = '" . xarVarPrepForStore($eventid) . "'";
-    	    $result   = $dbconn->Execute($sql);
-            if ($dbconn->ErrorNo() != 0) {
- 	         $msg = xarMLByKey('DATABASE_ERROR', $sql);
-                 xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                 return;
-            }
+    	    $result   = $dbconn->Execute($query);
+	    if (!$result) return;
+
     	    $template = $result->fields[0];
 	    // *** TODO  ***
 	    // need to define some variables for user firstname and surname,etc.
@@ -502,16 +467,10 @@ function pubsub_adminapi_deljob($args)
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Delete item
-    $sql = "DELETE FROM $pubsubprocesstable
+    $query = "DELETE FROM $pubsubprocesstable
             WHERE xar_handlingid = '" . xarVarPrepForStore($handlingid) . "'";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     return true;
 }
@@ -568,19 +527,14 @@ function pubsub_adminapi_updatejob($args)
     $pubsubprocesstable = $xartable['pubsub_process'];
 
     // Update the item
-    $sql = "UPDATE $pubsubprocesstable
+    $query = "UPDATE $pubsubprocesstable
             SET xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "',
                 xar_objectid = '" . xarVarPrepForStore($objectid) . "',
                 xar_status = '" . xarVarPrepForStore($status) . "'
             WHERE xar_handlingid = '" . xarVarPrepForStore($handlingid) . "'";
-    $dbconn->Execute($sql);
+    $dbconn->Execute($query);
+    if (!$result) return;
 
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }    
     return true;
 }
 
@@ -628,16 +582,13 @@ function pubsub_adminapi_addtemplate($args)
     $pubsubtemplatetable = $xartable['pubsub_template'];
 
     // check this event isn't already in the DB
-    $sql = "SELECT xar_templateid
+    $query = "SELECT xar_templateid
             FROM $pubsubtemplatetable
             WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "'";
-    $result = $dbconn->Execute($sql);
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    } elseif (count($result) > 0) {
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+
+    if (count($result) > 0) {
         $msg = xarML('Item already exists in function #(1)() in module #(2)',
                     'addtemplate', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -649,7 +600,7 @@ function pubsub_adminapi_addtemplate($args)
     $nextId = $dbconn->GenId($pubsubtemplatetable);
 
     // Add item
-    $sql = "INSERT INTO $pubsubtemplatetable (
+    $query = "INSERT INTO $pubsubtemplatetable (
               xar_templateid,
               xar_eventid,
               xar_template)
@@ -657,14 +608,8 @@ function pubsub_adminapi_addtemplate($args)
               $nextId,
               '" . xarVarPrepForStore($eventid) . "',
               '" . xarvarPrepForStore($template) . "')";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     // return eventID
     return $nextId;
@@ -710,16 +655,10 @@ function pubsub_adminapi_deltemplate($args)
     $pubsubtemplatetable = $xartable['pubsub_template'];
 
     // Delete item
-    $sql = "DELETE FROM $pubsubtemplatetable
+    $query = "DELETE FROM $pubsubtemplatetable
             WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     return true;
 }
@@ -772,18 +711,12 @@ function pubsub_adminapi_updatetemplate($args)
     $pubsubtemplatetable = $xartable['pubsub_template'];
 
     // Update the item
-    $sql = "UPDATE $pubsubtemplatetable
+    $query = "UPDATE $pubsubtemplatetable
             SET xar_template = '" . xarVarPrepForStore($template) . "',
                 xar_eventid = '" . xarVarPrepForStore($eventid) . "'
             WHERE xar_templateid = '" . xarVarPrepForStore($templateid) . "'";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
- 	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     return true;
 }

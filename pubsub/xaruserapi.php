@@ -1,10 +1,16 @@
 <?php 
-// File: $Id$
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
+/**
+ * File: $Id$
+ *
+ * Pubsub User API
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.org
+ *
+ * @subpackage Pubsub Module
+ * @author Chris Dudley
+*/
 
 /**
  * Subscribe to an event
@@ -62,17 +68,14 @@ function pubsub_userapi_subscribe($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // check not already subscribed
-    $sql = "SELECT xar_pubsubid
+    $query = "SELECT xar_pubsubid
  	    FROM $pubsubregtable
 	    WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "',
 	          xar_userid '" . xarVarPrepForStore($userid) . "'";
-    $result = $dbconn->Execute($sql);
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    } elseif (count($result) > 0) {
+    $result = $dbconn->Execute($query);
+    if (!$result) return;
+
+    if (count($result) > 0) {
         $msg = xarML('Item already exists in function #(1)() in module #(2)',
                     'subscribe', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
@@ -85,7 +88,7 @@ function pubsub_userapi_subscribe($args)
     $nextId = $dbconn->GenId($pubsubregtable);
 
     // Add item
-    $sql = "INSERT INTO $pubsubregtable (
+    $query = "INSERT INTO $pubsubregtable (
               xar_pubsubid,
               xar_eventid,
               xar_userid,
@@ -95,14 +98,8 @@ function pubsub_userapi_subscribe($args)
               '" . xarVarPrepForStore($eventid) . "',
               '" . xarVarPrepForStore($userid) . "',
               '" . xarvarPrepForStore($actionid) . "')";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-    	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-	xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     // return pubsub ID 
     return $nextId;
@@ -148,16 +145,10 @@ function pubsub_userapi_unsubscribe($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // Delete item
-    $sql = "DELETE FROM $pubsubregtable
+    $query = "DELETE FROM $pubsubregtable
             WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-     	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     return true;
 }
@@ -206,17 +197,11 @@ function pubsub_userapi_updatesubscription($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // Update the item
-    $sql = "UPDATE $pubsubregtable
+    $query = "UPDATE $pubsubregtable
             SET xar_actionid = '" . xarVarPrepForStore($actionid) . "'
             WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-     	$msg = xarMLByKey('DATABASE_ERROR', $sql);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    $dbconn->Execute($query);
+    if (!$result) return;
 
     return true;
 }
