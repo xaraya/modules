@@ -446,16 +446,16 @@ class bkFile
         $this->_file = (substr($file,0,1) =='/')?substr($file,1):$file;
         // Store the csets this file is in
         $this->_csets=$this->bkChangeSets($this->_file);
-        $tagcsets = array_intersect($this->_repo->_tagcsets,$this->_csets);
+        //$tagcsets = array_intersect($this->_repo->_tagcsets,$this->_csets);
         $this->_tagrevs=array();
         
-        foreach($tagcsets as $index => $cset) {
-            $cmd = "bk c2r -r$cset $this->_file";
-            $rev = $this->_repo->_run($cmd);
-            if(count($rev)) {
-                $this->_tagrevs[$rev[0]] = $cset;
-            }
-        }
+   //     foreach($tagcsets as $index => $cset) {
+//            $cmd = "bk c2r -r$cset $this->_file";
+//            $rev = $this->_repo->_run($cmd);
+//            if(count($rev)) {
+//                $this->_tagrevs[$rev[0]] = $cset;
+//            }
+//        }
         return $this;
     }
     

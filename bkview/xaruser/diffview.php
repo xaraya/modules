@@ -36,6 +36,7 @@ function bkview_user_diffview($args)
     $data['delta']['age'] = $delta->_age;
     $data['delta']['comments'] = $delta->_comments;
     $data['delta']['csetrev'] = $delta->_cset->_rev;
+    $data['delta']['tag'] = $changeset->_tag;
     
     // Show differences for this file and revision
     $diffs=$delta->bkDiffs();
