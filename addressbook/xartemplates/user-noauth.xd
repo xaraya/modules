@@ -22,4 +22,4 @@
 			<br />
 			<br />
 	</div>
-</div>	
+<xar:template compile="false" file="mod-footer" type="module" />

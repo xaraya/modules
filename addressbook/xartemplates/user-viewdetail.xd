@@ -3,173 +3,163 @@
 <!--- Original Author of file: Garrett Hunter                        --->
 <!--- Purpose of file:  Template to modify admin settings            --->
 <!--- -------------------------------------------------------------- --->
-<xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
 <xar:template compile="false" file="mod-title" type="module" />
-<xar:if condition="empty($abExceptions['abErrMsg']) and empty($abExceptions['xarSysException'])">
-<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center; ">
-<table width="100%" border="1" cellpadding="0" cellspacing="0" bgcolor="#B3B3B3">
-<tr>
-    <td>
-        <table width="100%" border="0" align="center" cellpadding="5" cellspacing="1">
-            <tr>
-                <td bgcolor="#FFFFFF" align="left">#$info#</td>
-            </tr>
-            <tr>
-                <td bgcolor="#FFFFFF" align="left"><table width="100%" align="center" cellpadding="5" cellspacing="1" bgcolor="#E6E6E6">
-                  <tr align="center" valign="middle">
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><table border="0" cellpadding="0" cellspacing="0" align="left">
-                        <tr align="center" valign="middle">
-                          <td colspan="1" rowspan="1" align="left" valign="top">
-                                            <xar:if condition="!empty($lname)">
-                                                <xar:if condition="!empty($fname)">
-                                                    <strong>#$fname# #$lname#</strong><br /><br />
-                                                    <xar:if condition="!empty($company)">
-                                                        #$company#<br />
-                                                    </xar:if>
-                                                    <xar:if condition="!empty($title)">
-                                                        #$title#<br />
-                                                    </xar:if>
-                                                </xar:if>
-                                            <xar:else />
-                                                <strong>#$company#</strong><br /><br />
-                                                <xar:if condition="!empty($title)">
-                                                    #$title#<br />
-                                                </xar:if>
-                                            </xar:if>
-                                            <br />
-                                            <xar:if condition="!empty($address_1)">
-                                                #$address_1#<br />
-                                            </xar:if>
-                                            <xar:if condition="!empty($address_1)">
-                                                #$address_2#<br />
-                                            </xar:if>
-                                            <xar:if condition="xarModGetVar(__ADDRESSBOOK__,'zipbeforecity')">
-                                                <xar:if condition="!empty($zip)">
-                                    #$zip#&nbsp;
-                                                </xar:if>
-                                                <xar:if condition="!empty($city)">
-                                    #$city#<br />
-                                                </xar:if>
-                                                <xar:if condition="!empty($state)">
-                                    #$state#<br />
-                                                </xar:if>
-                                                <xar:if condition="!empty($country)">
-                                    #$country#<br />
-                                                </xar:if>
-                                            <xar:else />
-                                                <xar:if condition="!empty($city)">
-                                    #$city#<br />
-                                                </xar:if>
-                                                <xar:if condition="!empty($state)">
-                                    #$state#
-                                                </xar:if>
-                                                <xar:if condition="!empty($zip)">
-                                    &nbsp;#$zip#<br />
-                                                </xar:if>
-                                                <xar:if condition="!empty($country)">
-                                    #$country#<br />
-                                                </xar:if>
-                                            </xar:if>
-                            </td>
-                          <td width="24"></td>
-                          <td width="1" bgcolor="#E6E6E6"><img width="1" height="1" src="modules/#$modInfo['directory']#/xarimages/pix.gif" alt=""></td>
-                          <td width="24"></td>
-                          <td align="left" valign="top"><b><xar:mlstring>Contact</xar:mlstring>:</b><br />
-                              <br />
-                                            <xar:if condition="!empty($contacts)">
-                              <table border="0" cellpadding="0" cellspacing="0" align="left">
-                                <xar:foreach in="$contacts" value="$contact">
-                                <tr align="center" valign="middle">
-                                  <td colspan="1" rowspan="1" align="left" valign="top">#$contact['label']#: </td>
-                                  <td width="10"></td>
-                                  <td colspan="1" rowspan="1" align="left" valign="middle">#$contact['contact']#</td>
-                                </tr>
-                                </xar:foreach>
-                                </table>
-                                                </xar:if>
-                            </td>
-                                    <xar:if condition="$img">
-                                        <td width="24" align="left" valign="top">&nbsp;</td>
-                                        <td width="1" bgcolor="#E6E6E6"><img width="1" height="1" src="modules/#$modInfo['directory']#/xarimages/pix.gif" alt=""></td>
-                                        <td width="24" align="left" valign="top">&nbsp;</td>
-                                        <td align="center" valign="middle"><img src="modules/#$modInfo['directory']#/xarimages/#$img#" border="0" alt=""></td>
-                                </xar:if>
-                        </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                    <xar:if condition="!empty($custom_tab)">
-                        <table width="100%" border="0" align="center" cellpadding="5" cellspacing="1">
-                            <tr>
-                                <td align="left"><strong>#$custom_tab#</strong></td>
-                            </tr>
-                        </table>
-                        <table width="100%" align="center" cellpadding="5" cellspacing="1" bgcolor="#E6E6E6">
-                            <tr align="center" valign="middle">
-                                <td align="center" valign="middle" bgcolor="#FFFFFF">
-                                    <table border="0" cellpadding="0" cellspacing="0" align="left">
-                                        <tr align="center" valign="middle">
-                                            <td align="left" valign="top">
-                                                <table border="0" cellpadding="0" cellspacing="0" align="left">
-                                                <xar:foreach in="$custUserData" value="$cud">
-                                                  <xar:if condition="strstr($cud['type'],_AB_CUST_TEST_LB) or strstr($cud['type'],_AB_CUST_TEST_HR)">
-                                                    <tr align="center" valign="middle">
-                                                        <td colspan="3" rowspan="1" align="left" valign="top">#$cud['userData']#</td>
-                                                    </tr>
-                                                  <xar:else />
-                                                    <tr align="center" valign="middle">
-                                                        <td colspan="1" rowspan="1" align="left" valign="top">#$cud['label']#:</td>
-                                                        <td width="10"></td>
-                                                        <td colspan="1" rowspan="1" align="left" valign="top">
-                                                        <xar:if condition="isset($cud['userData'])">
-                                                          #$cud['userData']#
-                                                        <xar:else />
-                                                          &nbsp;
-                                                        </xar:if>
-                                                        </td>
-                                                    </tr>
-                                                  </xar:if>
-                                                </xar:foreach>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </xar:if>
-                    <xar:if condition="!empty($note)">
-                        <table width="100%" border="0" align="center" cellpadding="5" cellspacing="1">
-                            <tr>
-                                <td align="left"><strong>#$noteHeading#</strong></td>
-                            </tr>
-                        </table>
-                        <table width="100%" align="center" cellpadding="5" cellspacing="1" bgcolor="#E6E6E6">
-                            <tr align="center" valign="middle">
-                                <td align="center" valign="middle" bgcolor="#FFFFFF">
-                                    <table border="0" cellpadding="0" cellspacing="0" align="left">
-                                        <tr align="center" valign="middle">
-                                            <td align="left" valign="top">
-                                                <table border="0" cellpadding="0" cellspacing="0" align="left">
-                                                    <tr align="center" valign="middle">
-                                                        <td align="left" valign="top">#$note#:</td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </xar:if>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
-</table>
+<div class="xar-alt-outline" style="padding:1em">
+<div style="text-align:center;">
+  <div style="text-align:left; padding:.5em 0em .5em .25em; margin-bottom:.25em;">
+  <span class="xar-title">#$info#</span>
+	</div>
+	<table width="100%" align="center" cellpadding="5" cellspacing="1">
+		<tr align="center" valign="middle">
+			<td class="xar-alt-outline" align="center" valign="middle">
+				<table border="0" cellpadding="0" cellspacing="0" align="left">
+					<tr align="center" valign="middle">
+						<td colspan="1" rowspan="1" align="left" valign="top">
+						<xar:if condition="!empty($lname)">
+								<xar:if condition="!empty($fname)">
+										<strong>#$fname# #$lname#</strong><br /><br />
+										<xar:if condition="!empty($company)">
+												#$company#<br />
+										</xar:if>
+										<xar:if condition="!empty($title)">
+												#$title#<br />
+										</xar:if>
+								</xar:if>
+						<xar:else />
+								<strong>#$company#</strong><br /><br />
+								<xar:if condition="!empty($title)">
+										#$title#<br />
+								</xar:if>
+						</xar:if>
+						<br />
+						<xar:if condition="!empty($address_1)">
+								#$address_1#<br />
+						</xar:if>
+						<xar:if condition="!empty($address_1)">
+								#$address_2#<br />
+						</xar:if>
+						<xar:if condition="xarModGetVar(__ADDRESSBOOK__,'zipbeforecity')">
+								<xar:if condition="!empty($zip)">
+									#$zip#&nbsp;
+								</xar:if>
+								<xar:if condition="!empty($city)">
+									#$city#<br />
+								</xar:if>
+								<xar:if condition="!empty($state)">
+									#$state#<br />
+								</xar:if>
+								<xar:if condition="!empty($country)">
+									#$country#<br />
+								</xar:if>
+							<xar:else />
+								<xar:if condition="!empty($city)">
+									#$city#<br />
+								</xar:if>
+								<xar:if condition="!empty($state)">
+									#$state#
+								</xar:if>
+								<xar:if condition="!empty($zip)">
+									&nbsp;#$zip#<br />
+								</xar:if>
+								<xar:if condition="!empty($country)">
+									#$country#<br />
+								</xar:if>
+							</xar:if>
+							</td>
+						<td width="24"></td>
+						<td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
+						<td width="24"></td>
+						<td align="left" valign="top">
+						  <strong><xar:mlstring>Contact</xar:mlstring>:</strong><br />
+							<br />
+							<xar:if condition="!empty($contacts)">
+							<table border="0" cellpadding="0" cellspacing="0" align="left">
+								<xar:foreach in="$contacts" value="$contact">
+									<tr align="center" valign="middle">
+										<td colspan="1" rowspan="1" align="left" valign="top">#$contact['label']#: </td>
+										<td width="10"></td>
+										<td colspan="1" rowspan="1" align="left" valign="middle">#$contact['contact']#</td>
+									</tr>
+								</xar:foreach>
+							</table>
+						</xar:if>
+						</td>
+						<xar:if condition="$img">
+								<td width="24" align="left" valign="top">&nbsp;</td>
+								<td class="xar-alt" width="1"><img width="1" height="1" src="modules/#$abModInfo['directory']#/xarimages/pix.gif" alt=""></td>
+								<td width="24" align="left" valign="top">&nbsp;</td>
+								<td align="center" valign="middle"><img src="modules/#$abModInfo['directory']#/xarimages/#$img#" border="0" alt=""></td>
+							</xar:if>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+</div>				
+					<xar:if condition="!empty($custom_tab)">
+							<div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
+							  <span class="xar-title">#$custom_tab#</span>
+							</div>
+							<table width="100%" align="center" cellpadding="5" cellspacing="1">
+									<tr align="center" valign="middle">
+											<td class="xar-alt-outline" align="center" valign="middle">
+													<table border="0" cellpadding="0" cellspacing="0" align="left">
+															<tr align="center" valign="middle">
+																	<td align="left" valign="top">
+																			<table border="0" cellpadding="0" cellspacing="0" align="left">
+																			<xar:foreach in="$custUserData" value="$cud">
+																				<xar:if condition="strstr($cud['type'],_AB_CUST_TEST_LB) or strstr($cud['type'],_AB_CUST_TEST_HR)">
+																					<tr align="center" valign="middle">
+																							<td colspan="3" rowspan="1" align="left" valign="top">#$cud['userData']#</td>
+																					</tr>
+																				<xar:else />
+																					<tr align="center" valign="middle">
+																							<td colspan="1" rowspan="1" align="left" valign="top">#$cud['label']#:</td>
+																							<td width="10"></td>
+																							<td colspan="1" rowspan="1" align="left" valign="top">
+																							<xar:if condition="isset($cud['userData'])">
+																								#$cud['userData']#
+																							<xar:else />
+																								&nbsp;
+																							</xar:if>
+																							</td>
+																					</tr>
+																				</xar:if>
+																			</xar:foreach>
+																			</table>
+																	</td>
+															</tr>
+													</table>
+											</td>
+									</tr>
+					</table>					
+					</xar:if>
+					<xar:if condition="!empty($note)">
+							<div style="padding:.25em 0em .25em .5em; margin:.25em 0em .25em 0em;">
+							<span class="xar-title">
+						  #$note#</span>
+							</div>
+							<table width="100%" align="center" cellpadding="5" cellspacing="1">
+									<tr align="center" valign="middle">
+											<td class="xar-alt-outline" align="center" valign="middle">
+													<table border="0" cellpadding="0" cellspacing="0" align="left">
+															<tr align="center" valign="middle">
+																	<td align="left" valign="top">
+																			<table border="0" cellpadding="0" cellspacing="0" align="left">
+																					<tr align="center" valign="middle">
+																							<td align="left" valign="top">#$note#:</td>
+																					</tr>
+																			</table>
+																	</td>
+															</tr>
+													</table>
+											</td>
+									</tr>
+							</table>
+							
+					</xar:if>
     <div style="text-align:center;">
+		<br />
     <form name="navForm" method="post" action="">
         <xar:if condition="isset($clip)">
             <input type="button" value="#$copy2clipboard#" onclick="javascript:window.clipboardData.setData('Text','#$clip#');" />&nbsp;&nbsp;
@@ -178,4 +168,4 @@
     </form>
     </div>
 </div>
-</xar:if>
+<xar:template compile="false" file="mod-footer" type="module" />

@@ -7,32 +7,31 @@
 <xar:template compile="false" file="mod-admin-title" type="module" />
 <!--- END TITLE BAR -------------------------------------------------------------  --->
 <div class="xar-mod-body" style="display:block;">
+  <div class="xar-alt-outline" style="padding:0em 2em 2em 2em;">
   <h2><xar:mlstring>Overview</xar:mlstring></h2>
-  <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-    <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+    <div class="xar-norm" style="float:right;padding:.25em;">
 	    <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
           <img src="modules/#$modInfo['directory']#/xarimages/admin.gif" alt="official icon" width="96" height="96" />
     </div>
-		<div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-			 <xar:mlstring>What is it?</xar:mlstring>
+		<div style="margin:0em 1em;">
+			 <h4><xar:mlstring>What is it?</xar:mlstring></h4>
 		</div>
-    <br />
-
-		<div style="margin-left: 1em; margin-right: 1em; text-align:left;"> <xar:mlstring>The AddressBook was inspired by the Palm V PDA and gives your site to ability to have a single, shared contact list of
+		<div style="margin: 0em 1em;">
+		<xar:mlstring>The AddressBook was inspired by the Palm V PDA and gives your site to ability to have a single, shared contact list of
       multiple private address lists for each registered user.</xar:mlstring>
       <ul>
-        <li><xar:mlstring>Fully Xaraya compliant.</xar:mlstring></li>
+        <li><xar:mlstring>Xaraya API / BL compliant.</xar:mlstring></li>
         <li><xar:mlstring>Flexible categories &amp; contact labels</xar:mlstring></li>
         <li><xar:mlstring>Add custom fields for each entry</xar:mlstring></li>
         <li><xar:mlstring>Full text search</xar:mlstring></li>
         <li><xar:mlstring>Image support for each contact</xar:mlstring></li>
+        <li><xar:mlstring>Quality Control Reporting</xar:mlstring></li>
       </ul>
 		</div>
-		<br />
-		<div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-		<xar:mlstring>User Features</xar:mlstring>		</div>
-		<br />
-		<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+		<div style="margin: 0em 1em;">
+		  <h4><xar:mlstring>User Features</xar:mlstring></h4>
+		</div>
+		<div style="margin: 0em 1em;">
 		<table width="80%" border="0" cellspacing="0" cellpadding="0">
 		  <tr align="left" valign="top">
 		    <td><ul>
@@ -42,58 +41,51 @@
 		      <li><xar:mlstring>The list of addresses can be narrowed by selecting an individual category</xar:mlstring></li>
 		      <li><xar:mlstring>Address record sorting can be configured multiple ways</xar:mlstring></li>
 		      <li><xar:mlstring>Unlimited optional fields</xar:mlstring></li>
-		      <li><xar:mlstring>Custom textarea field width is configurable</xar:mlstring></li>
+		      <li><xar:mlstring>Custom TEXTAREA field width is configurable</xar:mlstring></li>
 		      <li><xar:mlstring>Configurable main menu</xar:mlstring></li>
 		      </ul></td>
 		    <td><ul>
 		      <li><xar:mlstring>Free format note field for each contact</xar:mlstring></li>
-		      <li><xar:mlstring>Autofill company address by lookup feature</xar:mlstring></li>
+		      <li><xar:mlstring>Auto-fill company address by lookup feature</xar:mlstring></li>
 		      <li><xar:mlstring>Copy to clipboard feature (Internet Explorer only)</xar:mlstring></li>
-		      <li><xar:mlstring>Autodetect mail and url contact labels</xar:mlstring></li>
+		      <li><xar:mlstring>Auto-detect mail and url contact labels</xar:mlstring></li>
 		      <li><xar:mlstring>Global and/or private contacts</xar:mlstring></li>
-		      <li><xar:mlstring>Show zip before city (Europe) option</xar:mlstring></li>
+		      <li><xar:mlstring>Show postal code before city (International) option</xar:mlstring></li>
 		      </ul></td>
 		    </tr>
 		  </table>
 		</div>
-		<br />
-		<div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-					<xar:mlstring>Admin Notes</xar:mlstring>
+		<div style="margin: 0em 1em;">
+		  <h4><xar:mlstring>Administrator Notes</xar:mlstring></h4>
 		</div>
-		<br />
-		<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-		<p><xar:mlstring>As an admin you should have access to all records of all users in the Address Book. 
-		Therefore the &quot;Show private contacts&quot; switch works different for the admin than for other 
+		<div style="margin: 0em 1em;">
+		<p><xar:mlstring>As an administrator you have access to all records of all users in the Address Book. 
+		Therefore the &quot;Show private contacts&quot; switch works different for the administrator than for other 
 		users. If it set to &quot;on&quot;, all records you have entered are shown, if it is set to &quot;off&quot; 
-		all records aof all users are shown. A registered user will see only his own records marked as private.
-		So if you test the Address Book, create a user account and log in	as a normal user.</xar:mlstring></p><xar:mlstring>
-		<p>As an Admin you will see the always the full main menu with all options, regardless of any setting that 
-		was made in the Administration.</xar:mlstring><p></p>
-		<p><xar:mlstring>For additional information consult the admin</xar:mlstring> <a href="#xarModURL(__ADDRESSBOOK__,'admin','displaydocs')#"><xar:mlstring>documentation</xar:mlstring></a></p>
+		all records of all users are shown. A registered user will see only his own records marked as private.
+		So if you want to test the Address Book, create a user account and log in	as a normal user.</xar:mlstring></p>
+		<p><xar:mlstring>As an administrator you will always see the full main menu with all options, regardless of any setting that 
+		are made in</xar:mlstring> <a href="#xarModURL(__ADDRESSBOOK__,'admin','modifyconfig')#">Modify Configuration</a>.</p>
+		<p><xar:mlstring>For additional information consult the</xar:mlstring> <a href="#xarModURL(__ADDRESSBOOK__,'admin','displaydocs')#"><xar:mlstring>Administrator Documentation</xar:mlstring></a>.</p>
 		</div>
-		<br />
-		<div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-			<xar:mlstring>Included Blocks</xar:mlstring>
+		<div style="margin: 0em 1em;">
+		  <h4><xar:mlstring>Included Blocks</xar:mlstring></h4>
   	</div>
-		<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+		<div style="margin: 0em 1em;">
 			<ul>
-				<li><xar:mlstring>none right now</xar:mlstring><br />
+				<li><xar:mlstring>none right now</xar:mlstring>
 		</li>
 			</ul>
 		</div>
-		<div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-		 <xar:mlstring>Included Hooks</xar:mlstring>
+		<div style="margin: 0em 1em;">
+		  <h4><xar:mlstring>Included Hooks</xar:mlstring></h4>
 		</div>
-		<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-
+		<div style="margin: 0em 1em;">
 			<ul>
 			<li><xar:mlstring>none right now</xar:mlstring>
 			</li>
 			</ul>
 		</div>
-
-		<div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-				<xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
-		</div>
 	</div>
 </div>
+<xar:template compile="false" file="mod-footer" type="module" />

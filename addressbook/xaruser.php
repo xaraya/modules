@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaruser.php,v 1.2 2003/07/02 08:07:14 garrett Exp $
+ * File: $Id: xaruser.php,v 1.3 2003/07/09 00:12:23 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -22,8 +22,9 @@ include_once ('modules/addressbook/xarglobal.php');
 //=========================================================================
 function AddressBook_user_main() {
 
-    return xarModFunc(__ADDRESSBOOK__,'user','viewall');
+    $output = xarModFunc(__ADDRESSBOOK__,'user','viewall');
 
+    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 } // END main
 
 ?>

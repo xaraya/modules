@@ -123,7 +123,7 @@ function AddressBook_userapi_getMenu($args) {
                                 ,'catview'=>$output['catview']
                                 ,'menuprivate'=>$output['menuprivate']
                                 ,'all'=>1
-                                /*,'total'=>$output['total']*/
+                                ,'total'=>$output['total']
                                 ,'page'=>$output['page']
                                 ,'char'=>$output['char']);
 

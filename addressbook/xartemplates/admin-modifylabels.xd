@@ -7,14 +7,17 @@
 <xar:template compile="false" file="mod-admin-title" type="module" />
 <!--- END TITLE BAR -------------------------------------------------------------  --->
 <div class="xar-mod-body" style="display:block;">
+  <div class="xar-alt-outline" style="padding:0em 2em 2em 2em;">
   <h2><xar:mlstring>Configure Labels</xar:mlstring></h2>
 <!--- START WARN DISPLAY -----------------------------------------------------------  --->
   <div style="text-align:center;">
   <xar:template compile="false" file="mod-warn-msg" type="module" />
   </div>
 <!--- END WARN DISPLAY -------------------------------------------------------------  --->
-	<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-  	<div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+  	<div style="margin:0em 1em; text-align:center;">
+  	<table width="100%">
+  	<tr>
+  	<td align="center">
     <table width="60%"  border="0" cellspacing="1" cellpadding="5">
       <form name="form1" method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifylabels')#">
       <tr>
@@ -54,7 +57,10 @@
       </tr>
         </form>
     </table>
+    </td>
+    </tr>
+    </table>
 	</div>
   </div>
 </div>
-
+<xar:template compile="false" file="mod-footer" type="module" />

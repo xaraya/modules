@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarglobal.php,v 1.3 2003/07/09 00:12:23 garrett Exp $
+ * File: $Id: xarglobal.php,v 1.7 2003/07/18 19:41:29 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -40,7 +40,7 @@ define('_AB_INIT_DELETETABLEFAILED', 'Table deletion failed.');
 // Module Variables: key = modvar name / value = modvar value
 // must be set but xarModVarSet
 $abModVars = array ('abtitle'           => 'Xaraya Address Book'
-                   ,'guestmode'         => 4
+                   ,'guestmode'         => 1
                    ,'usermode'          => 7
                    ,'itemsperpage'      => 30
                    ,'globalprotect'     => 0
@@ -70,6 +70,7 @@ $abModVars = array ('abtitle'           => 'Xaraya Address Book'
  */
 define('_AB_HTML_LINEBREAK',         '<br />');
 define('_AB_HTML_HORIZRULE',         '<hr />');
+
 
 /**
  * which part of the Field Type should be retrieved
@@ -296,9 +297,9 @@ define('_AB_MRS',               'Mrs.');
 /**
  * Developer QA Contact information
  */
-define('_AB_DEVQA_NAME',	__ADDRESSBOOK__);
+define('_AB_DEVQA_NAME',	__ADDRESSBOOK__."QualityControl");
 define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
-
+define('_AB_BUILD_VER',	  '1.2.1'); // lets me keep track of individual builds
 
 ////////////////
 //

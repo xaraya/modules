@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertrecord.php,v 1.2 2003/07/09 00:09:44 garrett Exp $
+ * File: $Id: insertrecord.php,v 1.3 2003/07/18 19:40:41 garrett Exp $
  *
  * AddressBook user insertRecord
  *
@@ -40,7 +40,7 @@ function AddressBook_userapi_insertrecord($args) {
     $note = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$note);
     if (!isset($private)) { $private=0; }
     if (!xarUserIsLoggedIn()) { $user_id=0; }
-    $date = xarModAPIFunc(__ADDRESSBOOK__,'util','getUserTime');
+    $last_updt = xarModAPIFunc(__ADDRESSBOOK__,'util','getUserTime');
 
     /**
      * custom field values
@@ -77,6 +77,8 @@ function AddressBook_userapi_insertrecord($args) {
     list($dbconn) = xarDBGetConn();
     $xarTables = xarDBGetTables();
     $address_table = $xarTables['addressbook_address'];
+    
+    $nextID = $dbconn->GenID($address_table);
 
     $sql = "INSERT INTO $address_table (
             nr,
@@ -120,9 +122,9 @@ function AddressBook_userapi_insertrecord($args) {
             $sql.="note,
             user_id,
             private,
-            date)
+            last_updt)
             VALUES (
-            '',
+            $nextID,
             ".xarVarPrepForStore($cat_id).",
             ".xarVarPrepForStore($prfx).",
             '".xarVarPrepForStore($lname)."',
@@ -182,7 +184,7 @@ function AddressBook_userapi_insertrecord($args) {
     $sql.="'".xarVarPrepForStore($note)."',
             ".xarVarPrepForStore($user_id).",
             ".xarVarPrepForStore($private).",
-            ".xarVarPrepForStore($date).")";
+            ".xarVarPrepForStore($last_updt).")";
 
 
     $result =& $dbconn->Execute($sql);

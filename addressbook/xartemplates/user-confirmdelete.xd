@@ -12,11 +12,9 @@ function MM_callJS(jsStr) { //v2.0
 </script>
 
 <xar:template compile="false" file="mod-title" type="module" />
-<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center; ">
+<div class="xar-alt-outline" style="padding: 4em; text-align:center; ">
+<strong>#$confirmDeleteTEXT#</strong>
 <br />
-<br />
-<div align="center">
-<strong>#$confirmDeleteTEXT#</strong><br />
 <br />
 <xar:if condition="!empty($lname)">
     <xar:if condition="!empty($fname)">
@@ -35,11 +33,10 @@ function MM_callJS(jsStr) { //v2.0
 </xar:if>
 
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'dodelete',$menuValues)#" method="post" enctype="application/x-www-form-urlencoded" name="deleteContact" id="deleteContact">
-    <input type="hidden" id="authid" name="authid" value="#$authid#" />
+  <input type="hidden" id="authid" name="authid" value="#$authid#" />
   <input type="hidden" id="id" name="id" value="#$id#" /><br />
   <input name="#$buttonDelete#" type="submit" id="#$buttonDelete#" value="#$buttonDelete#">&nbsp;&nbsp;&nbsp;
   <input name="#$buttonCancel#" type="button" id="#$buttonCancel#" onClick="MM_callJS('javascript:history.go(-1)')" value="#$buttonCancel#">
 </form>
 </div>
-<br />
-</div>
+<xar:template compile="false" file="mod-footer" type="module" />

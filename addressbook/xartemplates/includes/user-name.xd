@@ -3,7 +3,7 @@
 <!--- Original Author of file: Garrett Hunter                        --->
 <!--- Purpose of file:  Template to modify contact name              --->
 <!--- -------------------------------------------------------------- --->
-<table border="1" cellpadding="0" cellspacing="0">
+<table class="xar-alt-outline" cellpadding="1" cellspacing="0">
     <tr>
         <th><xar:mlstring>Name</xar:mlstring></th>
         <th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=1;"><xar:mlstring>Address</xar:mlstring></a></th>
@@ -22,13 +22,14 @@
             <td align="right" valign="middle"><xar:mlstring>Prefix/Title</xar:mlstring>:</td>
             <td align="left" valign="middle">
                 <select name="prfx" id="prfx">
-                    <xar:foreach in="$prfxs" value="$prefix">
-                        <xar:if condition="$prefix['id'] ne $prfx">
+                  <option value="0">#xarML(_AB_NOPREFIX)#</option>
+                <xar:foreach in="$prfxs" value="$prefix">
+                    <xar:if condition="$prefix['id'] ne $prfx">
                   <option value="#$prefix['id']#">#$prefix['name']#</option>
-                        <xar:else />
+                    <xar:else />
                   <option selected value="#$prefix['id']#">#$prefix['name']#</option>
-                        </xar:if>
-                    </xar:foreach>
+                    </xar:if>
+                </xar:foreach>
         </select>
             </td>
         </tr>

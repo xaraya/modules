@@ -34,6 +34,60 @@ function AddressBook_userapi_checkAccessLevel($args) {
                     break;
                 }
                 else {
+                    if (($usermode == 1) || ($usermode == 3) || ($usermode == 5) || ($usermode == 7)) {
+                        $access = true;
+                        break;
+                    }
+                    else {
+                        $access = false;
+                        break;
+                    }
+                }
+            }
+            else {
+                if (($guestmode == 1) || ($guestmode == 3) || ($guestmode == 5) || ($guestmode == 7)) {
+                    $access = true;
+                    break;
+                }
+                else {
+                    $access = false;
+                    break;
+                }
+            }
+        case 'create':
+            if (xarUserIsLoggedIn()) {
+                if ((xarSecurityCheck('EditAddressBook',0)) || (xarSecurityCheck('ModerateAddressBook',0))) {
+                    $access = true;
+                    break;
+                }
+                else {
+                    if (($usermode == 2) || ($usermode == 3) || ($usermode == 6) || ($usermode == 7)) {
+                        $access = true;
+                        break;
+                    }
+                    else {
+                        $access = false;
+                        break;
+                    }
+                }
+            }
+            else {
+                if (($guestmode == 2) || ($guestmode == 3) || ($guestmode == 6) || ($guestmode == 7)) {
+                    $access = true;
+                    break;
+                }
+                else {
+                    $access = false;
+                    break;
+                }
+            }
+        case 'edit':
+            if (xarUserIsLoggedIn()) {
+                if ((xarSecurityCheck('EditAddressBook',0)) || (xarSecurityCheck('ModerateAddressBook',0))) {
+                    $access = true;
+                    break;
+                }
+                else {
                     if ($usermode >= 4) {
                         $access = true;
                         break;
@@ -54,61 +108,7 @@ function AddressBook_userapi_checkAccessLevel($args) {
                     break;
                 }
             }
-        case 'create':
-            if (xarUserIsLoggedIn()) {
-                if ((xarSecurityCheck('EditAddressBook',0)) || (xarSecurityCheck('ModerateAddressBook',0))) {
-                    $access = true;
-                    break;
-                }
-                else {
-                    if (($usermode == 6) || ($usermode == 7) || ($usermode == 2) || ($usermode == 3)) {
-                        $access = true;
-                        break;
-                    }
-                    else {
-                        $access = false;
-                        break;
-                    }
-                }
-            }
-            else {
-                if (($guestmode == 6) || ($guestmode == 7) || ($guestmode == 2) || ($guestmode == 3)) {
-                    $access = true;
-                    break;
-                }
-                else {
-                    $access = false;
-                    break;
-                }
-            }
-        case 'edit':
-            if (xarUserIsLoggedIn()) {
-                if ((xarSecurityCheck('EditAddressBook',0)) || (xarSecurityCheck('ModerateAddressBook',0))) {
-                    $access = true;
-                    break;
-                }
-                else {
-                    if (($usermode == 5) || ($usermode == 7) || ($usermode == 1) || ($usermode == 3)) {
-                        $access = true;
-                        break;
-                    }
-                    else {
-                        $access = false;
-                        break;
-                    }
-                }
-            }
-            else {
-                if (($guestmode == 5) || ($guestmode == 7) || ($guestmode == 1) || ($guestmode == 3)) {
-                    $access = true;
-                    break;
-                }
-                else {
-                    $access = false;
-                    break;
-                }
-            }
-    }
+    } // END switch
 
     return $access;
 } // END checkAccessLevel

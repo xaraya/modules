@@ -12,17 +12,11 @@
   <xar:template compile="false" file="mod-warn-msg" type="module" />
   </div>
 <!--- END WARN DISPLAY -------------------------------------------------------------  --->
-	<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center; ">
 	<xar:if condition="!isset($insertStatus)">
-	<br />
-	<br />
-	<div>
-	    <xar:if condition="$formcall eq 'edit'">
-	        <h3>#$fname# #$lname#</h3>
-	    <xar:else />
-	        <h3><xar:mlstring>Insert new record</xar:mlstring></h3>
-	    </xar:if>
-	</div>
+	<div class="xar-alt-outline" style="padding: 1px; text-align:center;">
+        <table width="100%">
+          <tr>
+            <td align="center">
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
 <!--- START MENUVALUES --->
 <input name="id" type="hidden" value="#$id#" id="id">
@@ -42,6 +36,17 @@
 <input name="user_id" type="hidden" value="#$user_id#" id="user_id">
 <input name="formSubmitted" type="hidden" value="true" id="formSubmitted">
 <table>
+<tr>
+  <td>
+	<div class="xar-alt-outline" style="padding:.5em; text-align:center">
+	    <xar:if condition="$formcall eq 'edit'">
+	        <span class="xar-title">#$fname# #$lname#</span>
+	    <xar:else />
+	        <span class="xar-title">Insert new record</span>
+	    </xar:if>
+	</div>
+	</td>
+</tr>
 <tr>
 <td>
 <xar:if condition="$action eq _AB_TEMPLATE_NAME">
@@ -89,13 +94,14 @@
         <td align="right" valign="middle"><xar:mlstring>Category</xar:mlstring>:</td>
         <td align="left" valign="middle">
                 <select name="cat_id" id="cat_id">
-                    <xar:foreach in="$cats" value="$cat">
-                        <xar:if condition="$cat['id'] ne $cat_id">
-                            <option value="#$cat['id']#">#$cat['name']#</option>
-                        <xar:else />
-                            <option selected value="#$cat['id']#">#$cat['name']#</option>
-                        </xar:if>
-                    </xar:foreach>
+                    <option value="0">Unfiled</option>
+                <xar:foreach in="$cats" value="$cat">
+	              <xar:if condition="$cat['id'] ne $cat_id">
+                    <option value="#$cat['id']#">#$cat['name']#</option>
+	              <xar:else />
+                    <option selected value="#$cat['id']#">#$cat['name']#</option>
+	              </xar:if>
+                </xar:foreach>
         </select>
         </td>
         <td width="100%" align="right" valign="middle">&nbsp;</td>
@@ -135,19 +141,16 @@
   <td>&nbsp;</td>
 </tr>
 </table>
-</form>
-<xar:else />
-<br />
-<br />
-	<div align="center">
-	<strong>#$insertSuccess#</strong><br /><br />
-	<a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
-	<br />
-	<br />
-	</div>
-</xar:if>
-	<div style="text-align:center;">
-		<xar:template compile="false" file="mod-footer" type="module" />
-	</div>
+</form>     </td>
+          </tr>
+        </table>
 </div>
+  <xar:else />
+  <div class="xar-alt-outline" style="padding: 4em; text-align:center;">
+	  <h3>#xarModGetVar(__ADDRESSBOOK__,'abtitle')# Entry Saved!</h3>
+		<br />
+	  <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>&nbsp;&nbsp;<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$menuValues)#">[#$backToListTEXT#]</a>
+  </div>
+  </xar:if>
 </div>
+<xar:template compile="false" file="mod-footer" type="module" />

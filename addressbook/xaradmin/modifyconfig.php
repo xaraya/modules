@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: modifyconfig.php,v 1.5 2003/07/05 05:05:35 garrett Exp $
+ * File: $Id: modifyconfig.php,v 1.6 2003/07/09 11:19:41 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -84,93 +84,19 @@ function AddressBook_admin_modifyconfig() {
 				return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
 			}
 		} 
+		// Thanks to Jason Judge <admin@academe.co.uk> for suggesting the
+		// use of floor() & mod!!	
 	    // Set values that will be displayed in the template
-	    switch (xarModGetVar(__ADDRESSBOOK__, 'guestmode')) {
-	        case '0':
-	            $output['guestmode_1'] = 0;
-	            $output['guestmode_2'] = 0;
-	            $output['guestmode_3'] = 0;
-	            break;
-	        case '1':
-	            $output['guestmode_1'] = 0;
-	            $output['guestmode_2'] = 0;
-	            $output['guestmode_3'] = 1;
-	            break;
-	        case '2':
-	            $output['guestmode_1'] = 0;
-	            $output['guestmode_2'] = 1;
-	            $output['guestmode_3'] = 0;
-	            break;
-	        case '3':
-	            $output['guestmode_1'] = 0;
-	            $output['guestmode_2'] = 1;
-	            $output['guestmode_3'] = 1;
-	            break;
-	        case '4':
-	            $output['guestmode_1'] = 1;
-	            $output['guestmode_2'] = 0;
-	            $output['guestmode_3'] = 0;
-	            break;
-	        case '5':
-	            $output['guestmode_1'] = 1;
-	            $output['guestmode_2'] = 0;
-	            $output['guestmode_3'] = 1;
-	            break;
-	        case '6':
-	            $output['guestmode_1'] = 1;
-	            $output['guestmode_2'] = 1;
-	            $output['guestmode_3'] = 0;
-	            break;
-	        case '7':
-	            $output['guestmode_1'] = 1;
-	            $output['guestmode_2'] = 1;
-	            $output['guestmode_3'] = 1;
-	            break;
-	    }
-	
-	    switch (xarModGetVar(__ADDRESSBOOK__, 'usermode')) {
-	        case '0':
-	            $output['usermode_1'] = 0;
-	            $output['usermode_2'] = 0;
-	            $output['usermode_3'] = 0;
-	            break;
-	        case '1':
-	            $output['usermode_1'] = 0;
-	            $output['usermode_2'] = 0;
-	            $output['usermode_3'] = 1;
-	            break;
-	        case '2':
-	            $output['usermode_1'] = 0;
-	            $output['usermode_2'] = 1;
-	            $output['usermode_3'] = 0;
-	            break;
-	        case '3':
-	            $output['usermode_1'] = 0;
-	            $output['usermode_2'] = 1;
-	            $output['usermode_3'] = 1;
-	            break;
-	        case '4':
-	            $output['usermode_1'] = 1;
-	            $output['usermode_2'] = 0;
-	            $output['usermode_3'] = 0;
-	            break;
-	        case '5':
-	            $output['usermode_1'] = 1;
-	            $output['usermode_2'] = 0;
-	            $output['usermode_3'] = 1;
-	            break;
-	        case '6':
-	            $output['usermode_1'] = 1;
-	            $output['usermode_2'] = 1;
-	            $output['usermode_3'] = 0;
-	            break;
-	        case '7':
-	            $output['usermode_1'] = 1;
-	            $output['usermode_2'] = 1;
-	            $output['usermode_3'] = 1;
-	            break;
-	    }
-	
+		$guestMode = xarModGetVar(__ADDRESSBOOK__, 'guestmode');
+		$output['guestmode_1'] = $guestMode % 2;
+		$output['guestmode_2'] = floor($guestMode / 2) % 2;
+		$output['guestmode_3'] = floor($guestMode / 4) % 2;	
+
+		$userMode = xarModGetVar(__ADDRESSBOOK__, 'usermode');
+		$output['usermode_1'] = $userMode % 2;
+		$output['usermode_2'] = floor($userMode / 2) % 2;
+		$output['usermode_3'] = floor($userMode / 4) % 2;	
+
 	    // User Title for Address Book
 	    $output['abtitle'] = xarModGetVar(__ADDRESSBOOK__, 'abtitle');
 	

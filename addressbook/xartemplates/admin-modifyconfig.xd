@@ -7,19 +7,22 @@
 <xar:template compile="false" file="mod-admin-title" type="module" />
 <!--- END TITLE BAR -------------------------------------------------------------  --->
 <div class="xar-mod-body" style="display:block;">
+  <div class="xar-alt-outline" style="padding:0em 2em 2em 2em;">
   <h2><xar:mlstring>Configuration Settings</xar:mlstring></h2>
 <!--- START WARN DISPLAY -----------------------------------------------------------  --->
   <div style="text-align:center;">
-  <xar:template compile="false" file="mod-warn-msg" type="module" />
+    <xar:template compile="false" file="mod-warn-msg" type="module" />
   </div>
 <!--- END WARN DISPLAY -------------------------------------------------------------  --->
-  <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-    <div style="margin-left: 1em; margin-right: 1em; text-align:center;">
+    <div style="margin:0em 1em; text-align:center;">
       <table width="95%" cellpadding="5" cellspacing="1">
             <form method="post" action="#xarModURL(__ADDRESSBOOK__,'admin','modifyconfig')#">
               <tr>
-                <td align="left" colspan="6"> <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-                    <xar:mlstring>Security Settings</xar:mlstring> </div></td>
+                <td align="left" colspan="6">
+								<div style="margin: 0em 1em;">
+                    <h4><xar:mlstring>Security Settings</xar:mlstring></h4>
+								</div>
+								</td>
               </tr>
               <tr>
                 <td width="0">&nbsp;</td>
@@ -77,8 +80,11 @@
                 <td width="0">&nbsp;</td>
               </tr>
               <tr>
-                <td align="left" colspan="6"><div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-                    <xar:mlstring>Other Settings</xar:mlstring> </div></td>
+                <td align="left" colspan="6">
+								<div style="margin:0em 1em;">
+                    <h4><xar:mlstring>Other Settings</xar:mlstring></h4>
+								</div>
+								</td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -232,8 +238,11 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="left" colspan="6"><div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-                    <xar:mlstring>Custom Labels</xar:mlstring> </div></td>
+                <td align="left" colspan="6">
+								<div style="margin:0em 1em;">
+                    <h4><xar:mlstring>Custom Labels</xar:mlstring></h4>
+								</div>
+								</td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -246,7 +255,8 @@
                 <td>&nbsp;</td>
                 <td align="left" valign="middle"><xar:mlstring>Width of TEXTAREA
                   fields</xar:mlstring></td>
-                <td colspan="3" align="left" valign="middle"> <input type="text" name="textareawidth" id="textareawidth" value="#$textareawidth#" size="4" maxlength="4" tabindex="24" /></td>
+                <td colspan="3" align="left" valign="middle"> <input type="text" name="textareawidth" id="textareawidth" value="#$textareawidth#" size="4" maxlength="4" tabindex="24" /> 
+                (min = 4, max = 100)</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
@@ -274,23 +284,26 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td>&nbsp;</td>
-                <td align="left" valign="middle">&nbsp;</td>
-                <td colspan="3">&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td align="left" colspan="6"><div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;"> <xar:mlstring>Administrative Messages</xar:mlstring></div>
+                <td align="left" colspan="6">
+								  <div style="margin:0em 1em;"> 
+								    <h4><xar:mlstring>Quality Control Reporting</xar:mlstring></h4>
+								  </div>
                 </td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td colspan="4" align="left" valign="middle"><xar:mlstring>Administrative messages are sent whenever AddressBook catches an error that forces the user to start over. </xar:mlstring></td>
+                <td colspan="4" align="left" valign="middle">
+								  <xar:mlstring>Quality Control Reports are sent whenever AddressBook catches an error 
+									that halts user processing. These are typically errors in the module software which should 
+									be corrected by the development team.</xar:mlstring>
+  							</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td align="left" valign="middle"><xar:mlstring>Send messages to Site Admin if error encountered?</xar:mlstring></td>
+                <td align="left" valign="middle">
+								  <xar:mlstring>Send error reports to Site Admin?</xar:mlstring>
+								</td>
                 <td colspan="3" align="left" valign="middle"> <xar:if condition="$rptErrAdminFlag">
                   <input name="rptErrAdminFlag" type="checkbox" id="rptErrAdminFlag" tabindex="27" value="1" checked />
                   <xar:else />
@@ -300,13 +313,17 @@
               </tr>
               <tr>
                 <td align="center" valign="middle">&nbsp;</td>
-                <td align="left" valign="middle">Different email address if not the default Site Admin</td>
+                <td align="left" valign="middle">
+								  <xar:mlstring>Alternate Site Admin email address</xar:mlstring>
+								</td>
                 <td colspan="3" align="left" valign="middle"><input name="rptErrAdminEmail" type="text" id="rptErrAdminEmail" value="#$rptErrAdminEmail#" size="30" maxlength="128" tabindex="28" /></td>
                 <td align="center" valign="middle">&nbsp;</td>
               </tr>
               <tr>
                 <td align="center" valign="middle">&nbsp;</td>
-                <td align="left" valign="middle"><xar:mlstring>Send error reports to AddressBook developer?*</xar:mlstring></td>
+                <td align="left" valign="middle">
+								  <xar:mlstring>Send error reports to AddressBook Quality Control?</xar:mlstring>*
+									</td>
                 <td colspan="3" align="left" valign="middle"> <xar:if condition="$rptErrDevFlag">
                   <input name="rptErrDevFlag" type="checkbox" id="rptErrDevFlag" tabindex="29" value="1" checked />
                   <xar:else />
@@ -316,7 +333,10 @@
               </tr>
               <tr>
                 <td align="center" valign="middle">&nbsp;</td>
-                <td colspan="4" align="left" valign="middle">*Recommended for quality assurance purposes. Only the contents of the error message are sent.</td>
+                <td colspan="4" align="left" valign="middle">
+								*<xar:mlstring>Recommended for quality assurance purposes. Only the contents of 
+								the error message are sent.</xar:mlstring>
+								</td>
                 <td align="center" valign="middle">&nbsp;</td>
               </tr>
               <tr>
@@ -334,4 +354,4 @@
 	</div>
   </div>
 </div>
-
+<xar:template compile="false" file="mod-footer" type="module" />

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.2 2003/07/09 11:20:20 garrett Exp $
+ * File: $Id: xarinit.php,v 1.4 2003/07/18 19:41:39 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -23,6 +23,7 @@ function AddressBook_init()
 {
 
     //FIXME: until we figure out module globals
+    // if this does get changed, $abModVars will no longer be scoped here.. 
     include_once ('modules/addressbook/xarglobal.php');
 
     list($dbconn) = xarDBGetConn();
@@ -35,9 +36,9 @@ function AddressBook_init()
      */
     $abAddressTable = $xarTables['addressbook_address'];
     $fields = array(
-         'nr'       =>  array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
-        ,'cat_id'   =>  array('type'=>'integer','null'=>TRUE,'default'=>'NULL')
-        ,'prefix'   =>  array('type'=>'integer','null'=>TRUE,'default'=>'NULL')
+         'nr'       =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+        ,'cat_id'   =>  array('type'=>'integer','size'=>'medium','null'=>TRUE,'default'=>'NULL')
+        ,'prefix'   =>  array('type'=>'integer','size'=>'medium','null'=>TRUE,'default'=>'NULL')
         ,'lname'    =>  array('type'=>'varchar','size'=>100,'null'=>TRUE,'default'=>'NULL')
         ,'fname'    =>  array('type'=>'varchar','size'=>60,'null'=>TRUE,'default'=>'NULL')
         ,'sortname' =>  array('type'=>'varchar','size'=>180,'null'=>TRUE,'default'=>'NULL')
@@ -67,9 +68,9 @@ function AddressBook_init()
         ,'custom_3' =>  array('type'=>'varchar','size'=>60,'null'=>TRUE,'default'=>'NULL')
         ,'custom_4' =>  array('type'=>'varchar','size'=>60,'null'=>TRUE,'default'=>'NULL')
         ,'note'     =>  array('type'=>'blob','null'=>TRUE,'default'=>'NULL')
-        ,'user_id'  =>  array('type'=>'integer','unsigned'=>TRUE,'null'=>TRUE,'default'=>'NULL')
-        ,'private'  =>  array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0')
-        ,'date'     =>  array('type'=>'integer','null'=>FALSE,'default'=>'0')
+        ,'user_id'  =>  array('type'=>'integer','size'=>'medium','null'=>TRUE,'default'=>'NULL')
+        ,'private'  =>  array('type'=>'integer','size'=>'tiny','null'=>FALSE)
+        ,'last_updt'=>  array('type'=>'integer','size'=>'medium','null'=>FALSE)
     );
     $query = xarDBCreateTable($abAddressTable,$fields);
     if (empty($query)) return; // throw back
@@ -82,7 +83,7 @@ function AddressBook_init()
      */
     $abLabelsTable = $xarTables['addressbook_labels'];
     $fields = array(
-         'nr'   =>  array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+         'nr'   =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
         ,'name' =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
         );
     $query = xarDBCreateTable($abLabelsTable,$fields);
@@ -114,7 +115,7 @@ function AddressBook_init()
      */
     $abCategoriesTable = $xarTables['addressbook_categories'];
     $fields = array(
-         'nr'   =>  array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+         'nr'   =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
         ,'name' =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
         );
     $query = xarDBCreateTable($abCategoriesTable,$fields);
@@ -142,10 +143,10 @@ function AddressBook_init()
      */
     $abCustomfieldsTable = $xarTables['addressbook_customfields'];
     $fields = array(
-         'nr'       =>  array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+         'nr'       =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
         ,'label'    =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
         ,'type'     =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
-        ,'position' =>  array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE)
+        ,'position' =>  array('type'=>'integer','size'=>'small','null'=>FALSE)
         );
     $query = xarDBCreateTable($abCustomfieldsTable,$fields);
     if (empty($query)) return; // throw back
@@ -178,7 +179,7 @@ function AddressBook_init()
      */
     $abPrefixesTable = $xarTables['addressbook_prefixes'];
     $fields = array(
-         'nr'   =>  array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
+         'nr'   =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
         ,'name' =>  array('type'=>'varchar','size'=>30,'null'=>TRUE,'default'=>'NULL')
         );
     $query = xarDBCreateTable($abPrefixesTable,$fields);
@@ -251,6 +252,25 @@ function AddressBook_upgrade($oldversion) {
             xarModSetVar (__ADDRESSBOOK__,'rptErrAdminFlag', 1);
             xarModSetVar (__ADDRESSBOOK__,'rptErrAdminEmail', xarModGetVar('mail','adminmail'));
             xarModSetVar (__ADDRESSBOOK__,'rptErrDevFlag', 1);
+            
+        case '1.1':
+			// Alter the table to for cross DB compatibility and rename a column
+		    list($dbconn) = xarDBGetConn();
+		    $xarTables = xarDBGetTables();
+
+		    $abAddressTable = $xarTables['addressbook_address'];
+
+			// FIXME: <garrett> non-portable SQL
+			$sql = "ALTER TABLE $abAddressTable
+			             CHANGE date last_updt MEDIUMINT NOT NULL";
+			             
+			$result =& $dbconn->Execute($sql);
+            if (!$result) return;
+			
+		case '1.2':
+		case '1.3':
+		case '1.4':
+                    
 			break;
 	}
 

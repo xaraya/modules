@@ -23,6 +23,9 @@
  */
 function AddressBook_adminapi_updatecategories($args) {
 
+    // var defines
+    $dels = '';
+    
 	/**
 	 * Security check 
 	 */
@@ -51,7 +54,7 @@ function AddressBook_adminapi_updatecategories($args) {
     if(isset($id) && is_array($id)) {
         foreach($id as $k=>$i) {
             $found = false;
-            if(isset($dels) && count($del)) {
+            if(!empty($dels) && count($del)) {
                 foreach($del as $d) {
                     if($i == $d) {
                         $found = true;
@@ -82,7 +85,7 @@ function AddressBook_adminapi_updatecategories($args) {
 						new abUserException('UPDATE - '._AB_SUCCESS));
     }
 
-    if(isset($dels)) {
+    if(!empty($dels)) {
         $delete = "DELETE FROM $cat_table WHERE nr IN ($dels)";
         if(xarModAPIFunc(__ADDRESSBOOK__,'admin','deleteItems',array('tablename'=>'categories','delete'=>$delete))) {
 			xarExceptionSet(XAR_USER_EXCEPTION, 

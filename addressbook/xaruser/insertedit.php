@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: insertedit.php,v 1.4 2003/07/09 02:50:51 garrett Exp $
+ * File: $Id: insertedit.php,v 1.5 2003/07/09 11:20:20 garrett Exp $
  *
  * AddressBook user insertEdit
  *
@@ -154,14 +154,14 @@ function AddressBook_user_insertedit() {
 /**
  * Format data that is displayed across all sub-templates
  */
-    $output['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormCategories');
+    $output['cats'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'categories'));
 
 /**
  * Perform custom processing per sub-template
  */
     switch ($output['action']) {
         case _AB_TEMPLATE_NAME:
-            $output['prfxs'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormPrefixes');
+            $output['prfxs'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'prefixes'));
 
 			/**
 			 * Handle images
@@ -204,7 +204,7 @@ function AddressBook_user_insertedit() {
             break;
 
         case _AB_TEMPLATE_CONTACT:
-            $output['labels'] = xarModAPIFunc(__ADDRESSBOOK__,'user','getFormLabels');
+            $output['labels'] = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'labels'));
             break;
 
         case _AB_TEMPLATE_CUST:

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradmin.php,v 1.2 2003/07/02 08:07:14 garrett Exp $
+ * File: $Id: xaradmin.php,v 1.3 2003/07/09 11:20:20 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -28,7 +28,7 @@ function AddressBook_admin_main() {
     if (xarModGetVar('adminpanels', 'overview') == 0){
         return array();
     } else {
-    	xarRepsonseRedirect(xarModURL(__ADDRESSBOOK__,'admin','modifyconfig'));
+    	xarResponseRedirect(xarModURL(__ADDRESSBOOK__,'admin','modifyconfig'));
     }
 
 } // END main

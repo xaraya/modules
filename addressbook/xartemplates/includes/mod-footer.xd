@@ -4,10 +4,8 @@
 <!--- Purpose of file:  display footer info                          --->
 <!--- -------------------------------------------------------------- --->
 <xar:if condition="!xarModGetVar(__ADDRESSBOOK__, 'hidecopyright')">
-<br />
-<div style="text-align:center;">
-	<xar:mlstring>Powered by</xar:mlstring> <a href="http://xaraya.blacktower.com">AddressBook</a> &copy; 2003
-	<xar:mlstring>based on</xar:mlstring> <a href="http://www.smiatek.com">pnAddressBook</a> v2.0 &copy;  smiatek.com
+<div style="text-align:center; padding:.5em;">
+	<span class="xar-sub"><xar:mlstring>Powered by</xar:mlstring> <a href="http://xaraya.blacktower.com">AddressBook</a> &copy; 2003
+	<xar:mlstring>based on</xar:mlstring> <a href="http://www.smiatek.com">pnAddressBook</a> v2.0 &copy;  smiatek.com</span>
 </div>
-<br />
 </xar:if>

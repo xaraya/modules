@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarversion.php,v 1.1 2003/06/30 01:46:00 garrett Exp $
+ * File: $Id: xarversion.php,v 1.2 2003/07/09 11:20:20 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -16,7 +16,7 @@
 
 $modversion['name'] = 'AddressBook';
 $modversion['id'] = '66417';
-$modversion['version'] = '1.1';
+$modversion['version'] = '1.2';
 $modversion['description'] = 'Xaraya Address Book';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

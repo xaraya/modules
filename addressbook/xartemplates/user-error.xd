@@ -8,32 +8,33 @@
         #xarModGetVar(__ADDRESSBOOK__,'abtitle')#
     </span>
 </div>
+<div class="xar-alt-outline" style="padding:1em;">
 <xar:if condition="!empty($abExceptions['xarSysException'])">
-	<div style="border-width: 1px; background-color:#FFCCFF; border-style: solid; border-color: #990000; padding: 2px; text-align:center;">
-	<span class="xar-error">
-	<strong>*CRASH!!*&nbsp;&nbsp;#%@BANG%.......#@KERPLOP#*<br />
+	<div class="xar-error" style="border-width: 1px; background-color:#FFCCFF; border-style: solid; padding: .5em; text-align:center;">
+	<strong>**Houston, we have a problem...**<br />
 		<br />
 		The page / action you requested is unavailable.
-	</strong></span>
+	</strong>
 	</div>
-	<div style="text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
-			<br />
-			<br />
+	<div style="text-align:center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: .5em; margin:.5em 0em">
 			<h3>We apologize for the inconvenience.</h3>
-			<h3>A message has been sent to the website administrator.</h3>
-			<strong>Please click <a href="#xarModURL(__ADDRESSBOOK__,'user','viewall')#">here</a> to return to the start</strong><br />
+			<xar:if condition="xarModGetVar(__ADDRESSBOOK__,'rptErrAdminFlag')">
+			  <h3>A message has been sent to the Site Admin.</h3>
+			</xar:if>
+			<strong><a href="#xarModURL(__ADDRESSBOOK__,'user','viewall')#">Return to the List</a></strong><br />
 			<br />
 			<br />
-			<br />
-			The exact error message is listed below<br />
-			<br />
+			The exact error message is listed below
 	</div>
-	<div style="border-width: 1px; background-color:#EFEFEF; border-style: solid; border-color: #666666; padding: 2px; text-align:center;">
+	<div style="border-width: 1px; background-color:#EFEFEF; border-style: solid; border-color: #666666; padding: 1em; text-align:center;">
 			<xar:foreach in="$abExceptions['xarSysException']" value="$sysExc">
-					#$sysExc['type']# = #$sysExc['text']#<br />
+					#$sysExc['type']# = #$sysExc['text']#
+					<br />
 			</xar:foreach>
 	</div>
 </xar:if>
 <!--- START DEBUG DISPLAY -----------------------------------------------------------  --->
 <xar:template compile="false" file="mod-debug" type="module" />
 <!--- END DEBUG DISPLAY -------------------------------------------------------------  --->
+</div>
+<xar:template compile="false" file="mod-footer" type="module" />

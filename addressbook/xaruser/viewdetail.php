@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: viewdetail.php,v 1.2 2003/07/09 00:08:40 garrett Exp $
+ * File: $Id: viewdetail.php,v 1.4 2003/07/09 17:52:58 garrett Exp $
  *
  * AddressBook user viewDetail
  *
@@ -20,11 +20,12 @@
 function AddressBook_user_viewdetail() {
 
     $output = array();
+    $output['abModInfo'] = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
 
     /**
      * Retrieve data from submitted input / URL
      */
-    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array('data' => $output));
+    $output = xarModAPIFunc(__ADDRESSBOOK__,'user','getsubmitvalues', array('output' => $output));
 
     /**
      * Retrieve any config values needed to configure the page
@@ -33,9 +34,13 @@ function AddressBook_user_viewdetail() {
 
     // Get detailed values from database
     $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$output['id']));
-    foreach ($details as $key=>$value) {
-        $output[$key] = $value;
-    }
+    if ($details && is_array($details)) {
+    	foreach ($details as $key=>$value) {
+        	$output[$key] = $value;
+    	}
+    } else { // did not get details for some reason
+    	return xarModAPIFunc(__ADDRESSBOOK__,'util','handleException',array('output'=>$output));
+    }    	
 
     // Get the labels
     $labels = xarModAPIFunc(__ADDRESSBOOK__,'util','getItems',array('tablename'=>'labels'));
@@ -52,11 +57,11 @@ function AddressBook_user_viewdetail() {
         }
     }
 
-    if ($output['date'] > 0) {
+    if ($output['last_updt'] > 0) {
         $output['info'] .= ' | '.xarVarPrepHTMLDisplay(_AB_LASTCHANGED)
                                .xarModAPIFunc(__ADDRESSBOOK__,'util','ml_ftime',
                                                             array ('datefmt' =>_DATETIMEBRIEF
-                                                                  ,'timestamp'=>$output['date']));
+                                                                  ,'timestamp'=>$output['last_updt']));
     }
 
     // Format the Contat info for display

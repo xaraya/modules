@@ -40,7 +40,7 @@ function AddressBook_userapi_updaterecord($args) {
     $contact_5 = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$contact_5);
     $note = xarModAPIFunc(__ADDRESSBOOK__,'user','SecurityCheck',$note);
     if (!isset($private)) { $private=0; }
-    $date = xarModAPIFunc(__ADDRESSBOOK__,'util','getUserTime');
+    $last_updt = xarModAPIFunc(__ADDRESSBOOK__,'util','getUserTime');
     // custom field values
 
     /**
@@ -116,10 +116,10 @@ function AddressBook_userapi_updaterecord($args) {
                 $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'util','td2stamp',array('idate'=>$userData['userData']))."',";
 
             } elseif ($userData['type']=='int default NULL') {
-                $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+                $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
 
             } elseif ($userData['type']=='int(1) default NULL') {
-                $sql .= $userData['colName']."='".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
+                $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
 
             } elseif ($userData['type']=='decimal(10,2) default NULL') {
                 $sql .= $userData['colName']."=".xarModAPIFunc(__ADDRESSBOOK__,'util','input2numeric',array('inum'=>$userData['userData'])).",";
@@ -134,7 +134,7 @@ function AddressBook_userapi_updaterecord($args) {
 
     $sql .= "note='".xarVarPrepForStore($note)."',
             private=".xarVarPrepForStore($private).",
-            date=".xarVarPrepForStore($date)."
+            last_updt=".xarVarPrepForStore($last_updt)."
             WHERE nr=$id";
 
     $result =& $dbconn->Execute($sql);

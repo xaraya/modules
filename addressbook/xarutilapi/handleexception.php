@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.3 2003/07/09 00:09:56 garrett Exp $
+ * File: $Id: handleexception.php,v 1.7 2003/07/18 19:41:17 garrett Exp $
  *
  * AddressBook utilapi handleException
  *
@@ -62,42 +62,56 @@ function AddressBook_utilapi_handleException ($args) {
 
 				    /**
 				     * if configured, kick out an email to the admin & developer
-			             */		
-		                    $rptErrAdminFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrAdminFlag');
+		             */		
+		            $rptErrAdminFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrAdminFlag');
 				    $rptErrDevFlag = xarModGetVar(__ADDRESSBOOK__,'rptErrDevFlag');
-		                    if ($rptErrAdminFlag || $rptErrDevFlag) {
+		            if ($rptErrAdminFlag || $rptErrDevFlag) {
 								
-					$to = array();
-					if ($rptErrAdminFlag) {
-						$adminEmail= xarModGetVar(__ADDRESSBOOK__,'adminemail');
-						if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email',$adminEmail))) {
-							$adminEmail = "unknown@".$_SERVER['SERVER_NAME'];
-						}
+		  			    $to = array();
+					    if ($rptErrAdminFlag) {
+						    $adminEmail= xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail');
+							if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$adminEmail))) {
+								$adminEmail = "unknown@".$_SERVER['SERVER_NAME'];
+							}
 		
-						$to[] = array ('name'=>__ADDRESSBOOK__
-						              ,'email'=>$adminEmail);
+							$to[] = array ('name'=>"Site Admin"
+							              ,'email'=>$adminEmail);
 						}
 						if ($rptErrDevFlag) {
 							$to[] = array ('name'=>_AB_DEVQA_NAME
 							               ,'email'=>_AB_DEVQA_EMAIL);
 						}
 			
+					    $abModInfo = xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__));
 						$sendTo = '';
+						$i=0;
 						foreach ($to as $addr) {
-							$sendTo .= $addr['name']." <".$addr['email'].">,";
+							if ($i++ == 1) $sendTo .=",";
+							$sendTo .= $addr['name']." <".$addr['email'].">";
 						}						
-	                	$from = __ADDRESSBOOK__."@".$_SERVER['SERVER_NAME'];
+	                	$from = __ADDRESSBOOK__." Module <".__ADDRESSBOOK__."@".$_SERVER['SERVER_NAME'].">";
 	                	
 	                	$subject = __ADDRESSBOOK__." Exception Raised";
-	                	$message  = "On ".date()."\r\n";
-	                	$message .= "The following error(s) occurred.\r\n";
+
+						$message  = '';
+						$message .= "You are receiving this email because your AddressBook ";
+						$message .= "module is set to email error messages to your Site Admin account. ";
+						$message .= "You can stop this behaviour by editing the Admin Messages ";
+						$message .= "settings under Admin->AddressBook->ModifyConfig->AdminMessages.<br /><br />";
+	                	$message .= "On ".strftime("%A, %D, at %H:%M", time())."<br />";
+	                	$message .= "AddressBook ".$abModInfo['version']." Build "._AB_BUILD_VER."<br /><br />";
+	                	$message .= "The following error(s) occurred.<br /><br />";
 	                    $message .= $xarException['text'];
+	                    $message .=
+
+						$headers  = '';	
+	                    $headers .= "From: ".$from."\n";
+	                    $headers .= "Sender: ".$from."\n";
+	                    $headers .= "MIME-Version: 1.0\n";
+	                    $headers .= "Content-type: text/html; charset=iso-8859-1\n";
 	
-	                    $headers  = "MIME-Version: 1.0\r\n";
-	                    $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-	                    $headers .= "From: ".$from;
-	
-	                    mail ($sendTo,$subject,$message,$headers,"-f".$from);
+//	                    mail ($sendTo,$subject,$message,$headers,"-f".$from);
+	                    mail ($sendTo,$subject,$message,$headers);
 	                }	
 
                     break;

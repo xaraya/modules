@@ -56,11 +56,13 @@
         $tablename = 'addressbook_'.$tablename;
         $table = $xarTables[$tablename];
 
+    	$nextID = $dbconn->GenID($table);
+
         $name = xarVarPrepForStore($name);
 
         $sql = "INSERT INTO $table
                             (nr,name)
-                     VALUES ('','$name')";
+                     VALUES ($nextID,'$name')";
 
         $result =& $dbconn->Execute($sql);
         if (!$result) $returncode = FALSE;

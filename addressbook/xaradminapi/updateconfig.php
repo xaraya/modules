@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: updateconfig.php,v 1.3 2003/07/06 04:42:25 garrett Exp $
+ * File: $Id: updateconfig.php,v 1.6 2003/07/14 02:56:07 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -27,7 +27,7 @@ function AddressBook_adminapi_updateconfig($args) {
 	/**
 	 * Security check 
 	 */
-    if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE;
+    if (!xarSecurityCheck('AdminAddressBook',0)) return FALSE; 
 
 	extract($args);
 	
@@ -126,14 +126,14 @@ function AddressBook_adminapi_updateconfig($args) {
 	
 	// Configure default values
     $guestmode = 0;
-	if ($guestmode_1 == 1) ($guestmode += 4);
+	if ($guestmode_1 == 1) ($guestmode += 1);
 	if ($guestmode_2 == 1) ($guestmode += 2);
-	if ($guestmode_3 == 1) ($guestmode += 1);
+	if ($guestmode_3 == 1) ($guestmode += 4);
 	
     $usermode = 0;
-    if ($usermode_1 == 1) ($usermode += 4);
+    if ($usermode_1 == 1) ($usermode += 1);
     if ($usermode_2 == 1) ($usermode += 2);
-    if ($usermode_3 == 1) ($usermode += 1);
+    if ($usermode_3 == 1) ($usermode += 4);
 	
     // Custom formating
     if ($globalprotect == 1) {
@@ -188,6 +188,17 @@ function AddressBook_adminapi_updateconfig($args) {
         xarModSetVar(__ADDRESSBOOK__, 'special_chars_2', $special_chars_2);
     }
 
+	// Admin Message
+	if (!empty($rptErrAdminEmail)) {
+		if (!xarModAPIFunc(__ADDRESSBOOK__,'util','is_email',array('email'=>$rptErrAdminEmail))) {
+			xarExceptionSet(XAR_USER_EXCEPTION, 
+							_AB_ERR_WARN, 
+							new abUserException(_AB_BAD_ADMIN_EMAIL));
+		} else {
+		    xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminEmail',   $rptErrAdminEmail);
+		}
+	}
+
     xarModSetVar(__ADDRESSBOOK__, 'globalprotect',   $globalprotect);
     xarModSetVar(__ADDRESSBOOK__, 'use_prefix',      $use_prefix);
     xarModSetVar(__ADDRESSBOOK__, 'use_img',         $use_img);
@@ -201,6 +212,10 @@ function AddressBook_adminapi_updateconfig($args) {
     xarModSetVar(__ADDRESSBOOK__, 'textareawidth',   $textareawidth);
     xarModSetVar(__ADDRESSBOOK__, 'dateformat',      $dateformat);
     xarModSetVar(__ADDRESSBOOK__, 'numformat',       $numformat);
+
+    xarModSetVar(__ADDRESSBOOK__, 'rptErrAdminFlag', $rptErrAdminFlag);
+    xarModSetVar(__ADDRESSBOOK__, 'rptErrDevFlag',   $rptErrDevFlag);
+
 
 //FIXME: <garrett> we want to say SUCCESS while at the same time
 //		printing additional informational messages. how can we

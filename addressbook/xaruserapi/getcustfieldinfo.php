@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: getcustomfieldinfo.php,v 1.1 2003/07/02 07:08:39 garrett Exp $
+ * File: $Id: getcustfieldinfo.php,v 1.1 2003/07/09 00:36:43 garrett Exp $
  *
  * AddressBook user getCustomFieldInfo
  *
@@ -39,8 +39,9 @@ function AddressBook_userapi_getCustFieldInfo($args) {
     } else {
         if (empty($id) && ($flag ==_AB_CUST_ALLINFO)) {
             $flag = _AB_CUST_ALLFIELDINFO;
-            xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR,
-                            new abUserException("Invalid Flag: userapi - getCustFieldInfo")); //gehDEBUG
+            xarExceptionSet(XAR_USER_EXCEPTION
+                          ,_AB_ERR_ERROR
+                          ,new abUserException("Invalid Flag: userapi - getCustFieldInfo"));
         }
     }
 
@@ -116,8 +117,9 @@ function AddressBook_userapi_getCustFieldInfo($args) {
              */
             $custFieldInfo = $custFieldTypeInfo;
 
-            $custFieldUserInfo = xarModAPIFunc(__ADDRESSBOOK__,'user',
-                     'getCustFieldUserInfo',array('custFieldTypeInfo'=>$custFieldTypeInfo,'id'=>$id));
+            $custFieldUserInfo = xarModAPIFunc(__ADDRESSBOOK__,'user'
+                                              ,'getCustFieldUserInfo'
+                                              ,array('custFieldTypeInfo'=>$custFieldTypeInfo,'id'=>$id));
 
             /**
              * Build a single object with custom type & data info
@@ -130,15 +132,18 @@ function AddressBook_userapi_getCustFieldInfo($args) {
 				// shorthand use of $colName
                 $colName = $custFieldInfoRow['colName'];
 
-                    if (isset($custFieldUserInfo[$colName])) { // leave off the trailing ) and the Xaraya exception handler does not report syntax error //gehDEBUG
-                        $custFieldInfo[$rowIdx]['userData'] = $custFieldUserInfo[$colName];
-                    } elseif (strstr($custFieldInfo[$rowIdx]['type'],_AB_CUST_TEST_LB)) {
-                        $custFieldInfo[$rowIdx]['userData'] = _AB_HTML_LINEBREAK;
-                        $custFieldInfo[$rowIdx]['colName'] = '';
-                    } elseif (strstr($custFieldInfo[$rowIdx]['type'],_AB_CUST_TEST_HR)) {
-                        $custFieldInfo[$rowIdx]['userData'] = _AB_HTML_HORIZRULE;
-                        $custFieldInfo[$rowIdx]['colName'] = '';
-                    }
+ 				/**
+				 * Determine each data type & format accordingly
+				 */
+                if (isset($custFieldUserInfo[$colName])) { // leave off the trailing ')' in IF and the Xaraya exception handler does not report syntax error //gehDEBUG
+                    $custFieldInfo[$rowIdx]['userData'] = $custFieldUserInfo[$colName];
+                } elseif (strstr($custFieldInfo[$rowIdx]['type'],_AB_CUST_TEST_LB)) {
+                    $custFieldInfo[$rowIdx]['userData'] = _AB_HTML_LINEBREAK;
+                    $custFieldInfo[$rowIdx]['colName'] = '';
+                } elseif (strstr($custFieldInfo[$rowIdx]['type'],_AB_CUST_TEST_HR)) {
+                    $custFieldInfo[$rowIdx]['userData'] = _AB_HTML_HORIZRULE;
+                    $custFieldInfo[$rowIdx]['colName'] = '';
+                }
 
             } // END foreach
 

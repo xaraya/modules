@@ -3,7 +3,7 @@
 <!--- Original Author of file: Garrett Hunter                        --->
 <!--- Purpose of file:  Template to modify contact name              --->
 <!--- -------------------------------------------------------------- --->
-<table border="1" cellpadding="0" cellspacing="0">
+<table class="xar-alt-outline" cellpadding="1" cellspacing="0">
 	<tr>
 		<th><a href="javascript:document.addcontact.submit();" onclick="javascript:document.addcontact.action.value=0;"><xar:mlstring>Name</xar:mlstring></a></th>
 		<th><xar:mlstring>Address</xar:mlstring></th>

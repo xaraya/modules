@@ -4,28 +4,36 @@
 <!--- Purpose of file:  Template to display address book result list --->
 <!--- -------------------------------------------------------------- --->
 
-    <table border="1" cellpadding="2" cellspacing="0" bgcolor="#E6E6E6">
-<!--- Header row --->
-        <tr>
-<xar:foreach in="$headers" value="$header">
-                <th>#$header['header']#</th>
-</xar:foreach>
-                <th><xar:mlstring>CONTACT</xar:mlstring></th>
-                <th><xar:mlstring>ACTION</xar:mlstring></th>
-        </tr>
+<table class="xar-alt-outline" cellpadding="2" cellspacing="0">
+<!--- END Header row --->
+  <tr>
+    <xar:foreach in="$headers" value="$header">
+    <th>#$header['header']#</th>
+    </xar:foreach>
+    <th><xar:mlstring>CONTACT</xar:mlstring></th>
+    <th><xar:mlstring>ACTION</xar:mlstring></th>
+  </tr>
+<!--- END Header row --->
 <!--- Results --->
-<xar:foreach in="$displayRows" value="$row">
-        <tr>
-        <xar:foreach in="$row['displayRow']" value="$rowData">
-                <td bgcolor="#FFFFFF">#$rowData#</td>
-        </xar:foreach>
-                <td bgcolor="#FFFFFF"><a href="#$row['detailURL']#">Details</a>
-                  <xar:if condition="xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',$row['accessLevel'])">
-                    <xar:if condition="xarSecurityCheck('EditAddressBook',0) or ($user_id eq $user)">
-                        | <a href="#$row['editURL']#">Edit</a> | <a href="#$row['deleteURL']#">Delete</a>
-                    </xar:if>
-                    </xar:if>
-                    </td>
-        </tr>
+  <xar:set name="$i">1</xar:set>
+  <xar:foreach in="$displayRows" value="$row">
+	<xar:if condition="($i % 2) eq 0">
+	  <xar:set name="$rowClass">"td.xar-norm"</xar:set>
+	<xar:else />
+	  <xar:set name="$rowClass">"td.xar-accent"</xar:set>
+	</xar:if>
+  <tr>
+    <xar:foreach in="$row['displayRow']" value="$rowData">
+    <td class="#$rowClass#">#$rowData#</td>
+    </xar:foreach>
+    <td class="#$rowClass#"><a href="#$row['detailURL']#">Details</a>
+    <xar:if condition="xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',$row['accessLevel'])">
+      <xar:if condition="xarSecurityCheck('EditAddressBook',0) or ($user_id eq $row['user'])">
+         | <a href="#$row['editURL']#">Edit</a> | <a href="#$row['deleteURL']#">Delete</a>
+      </xar:if>
+    </xar:if>
+    </td>
+  </tr>
+	<xar:set name="$i">$i+=1</xar:set>
 </xar:foreach>
 </table>

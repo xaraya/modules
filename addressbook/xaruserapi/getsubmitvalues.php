@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradminapi.php,v 1.3 2003/06/30 04:37:08 garrett Exp $
+ * File: $Id: getsubmitvalues.php,v 1.2 2003/07/18 19:14:05 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -24,59 +24,55 @@ function AddressBook_userapi_getsubmitvalues($args) {
 
     extract($args);
 
-    if (!xarVarFetch ('id','int::',         $data['id'], FALSE)) return;
-    if (!xarVarFetch ('cat_id','int::',     $data['cat_id'], FALSE)) return;
+    if (!xarVarFetch ('id','int::',         $output['id'], FALSE)) return;
+    if (!xarVarFetch ('cat_id','int::',     $output['cat_id'], FALSE)) return;
 
-    if (!xarVarFetch ('prfx','int::',       $data['prfx'], 0)) return;
-    if (!xarVarFetch ('lname','str::',      $data['lname'], FALSE)) return;
-    if (!xarVarFetch ('fname','str::',      $data['fname'], FALSE)) return;
-    if (!xarVarFetch ('title','str::',      $data['title'], FALSE)) return;
-    if (!xarVarFetch ('company','str::',    $data['company'], FALSE)) return;
-    if (!xarVarFetch ('img','str::',        $data['img'], FALSE)) return;
+    if (!xarVarFetch ('prfx','int::',       $output['prfx'], 0)) return;
+    if (!xarVarFetch ('lname','str::',      $output['lname'], FALSE)) return;
+    if (!xarVarFetch ('fname','str::',      $output['fname'], FALSE)) return;
+    if (!xarVarFetch ('title','str::',      $output['title'], FALSE)) return;
+    if (!xarVarFetch ('company','str::',    $output['company'], FALSE)) return;
+    if (!xarVarFetch ('img','str::',        $output['img'], FALSE)) return;
 
-    if (!xarVarFetch ('address_1','str::',  $data['address_1'], FALSE)) return;
-    if (!xarVarFetch ('address_2','str::',  $data['address_2'], FALSE)) return;
-    if (!xarVarFetch ('city','str::',       $data['city'], FALSE)) return;
-    if (!xarVarFetch ('state','str::',      $data['state'], FALSE)) return;
-    if (!xarVarFetch ('zip','str::',        $data['zip'], FALSE)) return;
-    if (!xarVarFetch ('country','str::',    $data['country'], FALSE)) return;
+    if (!xarVarFetch ('address_1','str::',  $output['address_1'], FALSE)) return;
+    if (!xarVarFetch ('address_2','str::',  $output['address_2'], FALSE)) return;
+    if (!xarVarFetch ('city','str::',       $output['city'], FALSE)) return;
+    if (!xarVarFetch ('state','str::',      $output['state'], FALSE)) return;
+    if (!xarVarFetch ('zip','str::',        $output['zip'], FALSE)) return;
+    if (!xarVarFetch ('country','str::',    $output['country'], FALSE)) return;
 
-    if (!xarVarFetch ('contact_1','str::',  $data['contact_1'], FALSE)) return;
-    if (!xarVarFetch ('contact_2','str::',  $data['contact_2'], FALSE)) return;
-    if (!xarVarFetch ('contact_3','str::',  $data['contact_3'], FALSE)) return;
-    if (!xarVarFetch ('contact_4','str::',  $data['contact_4'], FALSE)) return;
-    if (!xarVarFetch ('contact_5','str::',  $data['contact_5'], FALSE)) return;
-    if (!xarVarFetch ('c_label_1','int::',  $data['c_label_1'], '1')) return;
-    if (!xarVarFetch ('c_label_2','int::',  $data['c_label_2'], '2')) return;
-    if (!xarVarFetch ('c_label_3','int::',  $data['c_label_3'], '3')) return;
-    if (!xarVarFetch ('c_label_4','int::',  $data['c_label_4'], '4')) return;
-    if (!xarVarFetch ('c_label_5','int::',  $data['c_label_5'], '5')) return;
-    if (!xarVarFetch ('c_main','str::',     $data['c_main'], '0')) return;
+    if (!xarVarFetch ('contact_1','str::',  $output['contact_1'], FALSE)) return;
+    if (!xarVarFetch ('contact_2','str::',  $output['contact_2'], FALSE)) return;
+    if (!xarVarFetch ('contact_3','str::',  $output['contact_3'], FALSE)) return;
+    if (!xarVarFetch ('contact_4','str::',  $output['contact_4'], FALSE)) return;
+    if (!xarVarFetch ('contact_5','str::',  $output['contact_5'], FALSE)) return;
+    if (!xarVarFetch ('c_label_1','int::',  $output['c_label_1'], '1')) return;
+    if (!xarVarFetch ('c_label_2','int::',  $output['c_label_2'], '2')) return;
+    if (!xarVarFetch ('c_label_3','int::',  $output['c_label_3'], '3')) return;
+    if (!xarVarFetch ('c_label_4','int::',  $output['c_label_4'], '4')) return;
+    if (!xarVarFetch ('c_label_5','int::',  $output['c_label_5'], '5')) return;
+    if (!xarVarFetch ('c_main','str::',     $output['c_main'], '0')) return;
 
-    if (!xarVarFetch ('note','str::',       $data['note'], FALSE)) return;
+    if (!xarVarFetch ('note','str::',       $output['note'], FALSE)) return;
 
-    if (!xarVarFetch ('private','str::',     $data['private'], 0)) return;
-    if (!xarVarFetch ('date','str::',     $data['date'], FALSE)) return;
-    if (!xarVarFetch ('formcall','str::',     $data['formcall'], FALSE)) return;
-    if (!xarVarFetch ('formSubmitted','bool::',     $data['formSubmitted'], FALSE)) return;
-    if (!xarVarFetch ('action','int::',       $data['action'], _AB_TEMPLATE_NAME)) return;
+    if (!xarVarFetch ('private','str::',      $output['private'], 0)) return;
+// gehDEBUG who uses this? remove if no error
+//    if (!xarVarFetch ('date','str::',         $output['date'], FALSE)) return;
+    if (!xarVarFetch ('formcall','str::',     $output['formcall'], FALSE)) return;
+    if (!xarVarFetch ('formSubmitted','bool::',     $output['formSubmitted'], FALSE)) return;
+    if (!xarVarFetch ('action','int::',       $output['action'], _AB_TEMPLATE_NAME)) return;
 
-    if (!xarVarFetch ('user_id','int::',     $data['user_id'], FALSE)) return;
+    if (!xarVarFetch ('user_id','int::',      $output['user_id'], FALSE)) return;
 
     /**
      * Retrieve custom field values
      */
     $custom_tab = xarModGetVar(__ADDRESSBOOK__,'custom_tab');
     if (!empty($custom_tab)) {
-        if (!xarVarFetch ("custUserData",'array::',$data['custUserData'], FALSE)) {
-            xarExceptionSet(XAR_USER_EXCEPTION, _AB_ERR_ERROR,
-                            new abUserException(array('file' => __FILE__
-                                                      ,'line' => __LINE__
-                                                      ,'data' => $custUserData))); //gehDEBUG
-        }
+        if (!xarVarFetch ('custUserData','array::',$output['custUserData'], array())) return;
     } // END if
 
-    return $data;
+    return $output;
 
 } // END getsubmitvalues
 

@@ -4,15 +4,10 @@
 <!--- Purpose of file:  Template to modify admin settings            --->
 <!--- -------------------------------------------------------------- --->
 <xar:template compile="false" file="mod-title" type="module" />
-<div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px; text-align:center; ">
-<br />
-<br />
-<div align="center">
+<div class="xar-alt-outline" style="padding: 4em; text-align:center; ">
 <strong>#$infoMsg#</strong>
 <br />
 <br />
 <a href="#xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$menuValues)#">[#$backToListTEXT#]</a>
-<br />
-<br />
 </div>
-</div>
+<xar:template compile="false" file="mod-footer" type="module" />
