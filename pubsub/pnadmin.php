@@ -28,5 +28,21 @@ function pubsub_admin_main()
     // Return the template variables defined in this function
     return $data;
 }
+function pubsub_admin_view()
+{
+    $data = pubsub_admin_menu();
+    $data['items'] = array();
+    $data['namelabel'] = pnVarPrepForDisplay(pnMLByKey('PUBSUBNAME'));
+    $data['pager'] = '';
+
+    if (!pnSecAuthAction(0, 'Pubsub::', '::', ACCESS_EDIT)) {
+        $msg = pnML('Not authorized to access to #(1)',
+                    'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'NO_PERMISSION',
+                       new SystemException($msg));
+        return;
+    }
+    
+}
 
 ?>

@@ -28,8 +28,8 @@ function pubsub_adminapi_addevent($args)
         $invalid[] = 'eventtype';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'addevent', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'addevent', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -49,6 +49,25 @@ function pubsub_adminapi_addevent($args)
     $pntable = pnDBGetTables();
     $pubsubeventstable = $pntable['pubsub_events'];
 
+    // check this event isn't already in the DB
+    $sql = "SELECT pn_eventid
+ 	    FROM $pubsubeventstable
+	    WHERE pn_module '" . pnVarPrepForStore($module) . "',
+	          pn_eventtype '" . pnVarPrepForStore($eventtype) . "'";
+    $result = $dbconn->Execute($sql);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    } elseif (count($result) > 0) {
+        $msg = pnML('Item already exists in function #(1)() in module #(2)',
+                    'addevent', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                      new SystemException($msg));
+        return;
+    }
+    
     // Get next ID in table
     $nextId = $dbconn->GenId($pubsubeventstable);
 
@@ -92,8 +111,8 @@ function pubsub_adminapi_delevent($args)
         $invalid[] = 'eventid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'delevent', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid) 'delevent', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -162,8 +181,8 @@ function pubsub_adminapi_updateevent($args)
         $invalid[] = 'actionid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'updateevent', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'updateevent', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -224,8 +243,8 @@ function pubsub_adminapi_processevent($args)
         $invalid[] = 'objectid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'processevent', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'processevent', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM', 
                        new SystemException($msg));
         return;
@@ -338,8 +357,8 @@ function pubsub_adminapi_runjob($args)
         $invalid[] = 'objectid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'runjob', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'runjob', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -461,8 +480,8 @@ function pubsub_adminapi_deljob($args)
         $invalid[] = 'handlingid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'deljob', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'deljob', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -527,8 +546,8 @@ function pubsub_adminapi_updatejob($args)
         $invalid[] = 'status';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'updatejob', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'updatejob', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -587,8 +606,8 @@ function pubsub_adminapi_addtemplate($args)
         $invalid[] = 'eventid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'addtemplate', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'addtemplate', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -607,6 +626,24 @@ function pubsub_adminapi_addtemplate($args)
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
     $pubsubtemplatetable = $pntable['pubsub_template'];
+
+    // check this event isn't already in the DB
+    $sql = "SELECT pn_templateid
+            FROM $pubsubtemplatetable
+            WHERE pn_eventid '" . pnVarPrepForStore($eventid) . "'";
+    $result = $dbconn->Execute($sql);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    } elseif (count($result) > 0) {
+        $msg = pnML('Item already exists in function #(1)() in module #(2)',
+                    'addtemplate', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                      new SystemException($msg));
+        return;
+    }
 
     // Get next ID in table
     $nextId = $dbconn->GenId($pubsubtemplatetable);
@@ -651,8 +688,8 @@ function pubsub_adminapi_deltemplate($args)
         $invalid[] = 'templateid';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'deltemplate', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'deltemplate', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -713,8 +750,8 @@ function pubsub_adminapi_updatetemplate($args)
         $invalid[] = 'template';
     }
     if (count($invalid) > 0) {
-        $msg = pnML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'admin', 'updatetemplate', 'Pubsub');
+        $msg = pnML('Invalid #(1) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'updatetemplate', 'Pubsub');
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -750,5 +787,4 @@ function pubsub_adminapi_updatetemplate($args)
 
     return true;
 }
-
 ?>

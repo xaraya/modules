@@ -61,6 +61,26 @@ function pubsub_userapi_subscribe($args)
     $pntable = pnDBGetTables();
     $pubsubregtable = $pntable['pubsub_reg'];
 
+    // check not already subscribed
+    $sql = "SELECT pn_pubsubid
+ 	    FROM $pubsubregtable
+	    WHERE pn_eventid '" . pnVarPrepForStore($eventid) . "',
+	          pn_userid '" . pnVarPrepForStore($userid) . "'";
+    $result = $dbconn->Execute($sql);
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = pnMLByKey('DATABASE_ERROR', $sql);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    } elseif (count($result) > 0) {
+        $msg = pnML('Item already exists in function #(1)() in module #(2)',
+                    'subscribe', 'Pubsub');
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                      new SystemException($msg));
+        return;
+    }
+
+    
     // Get next ID in table
     $nextId = $dbconn->GenId($pubsubregtable);
 

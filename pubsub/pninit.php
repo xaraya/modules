@@ -14,7 +14,8 @@ function pubsub_init()
     // Get database information
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
-    include ('includes/pnTableDDL.php');
+
+    pnDBLoadTableMaintenanceAPI();
     
     // Create tables
     $pubsubeventstable = $pntable['pubsub_events'];
@@ -35,12 +36,12 @@ function pubsub_init()
         pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
-    }
+   }
 
     $pubsubregtable = $pntable['pubsub_reg'];
     $regfields = array(
         'pn_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pn_eventid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
+        'pn_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'pn_users'=>array('type'=>'text','size'=>'medium','null'=>FALSE),
         'pn_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
     );
@@ -59,8 +60,8 @@ function pubsub_init()
     $pubsubprocesstable = $pntable['pubsub_process'];
     $processfields = array(
         'pn_handlingid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pn_pubsubid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
-        'pn_objectid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
+        'pn_pubsubid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'pn_objectid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'pn_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
     );
     $sql = pnDBCreateTable($pubsubprocesstable,$processfields);
@@ -78,7 +79,7 @@ function pubsub_init()
     $pubsubtemplatetable = $pntable['pubsub_template'];
     $templatefields = array(
         'pn_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'pn_eventid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
+        'pn_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'pn_template'=>array('type'=>'text','size'=>'long','null'=>FALSE)
     );
     $sql = pnDBCreateTable($pubsubtemplatetable,$templatefields);
@@ -128,7 +129,7 @@ function pubsub_init()
     }
     if (!pnModRegisterHook('category',
                            'display',
-                           'GUI',
+                          'GUI',
                            'pubsub',
                            'user',
                            'display')) {
@@ -146,7 +147,6 @@ function pubsub_upgrade($oldversion)
 {
     return true;
 }
-
 /**
  * delete the pubsub module
  */
