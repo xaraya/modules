@@ -195,24 +195,29 @@ function smilies_userapitransform($text)
             // Munge word boundaries to stop autolinks from linking to
             // themselves or other autolinks in step 2
             $tmpsmily['icon'] = preg_replace('/(\b)/', '\\1ALSPACEHOLDER', $tmpsmily['icon']);
-            $tmpsmily['code'] = preg_replace('/(\b)/', '\\1ALSPACEHOLDER', $tmpsmily['code']);
+
+            // Allow matches for smiles with < and > entities.
+            $tmpsmily['code'] = preg_quote($tmpsmily['code'], '/');
+            $tmpsmily['code'] = str_replace(array('\>', '\<'), array('(?:&gt;|>)', '(?:&lt;|<)'), $tmpsmily['code']);
+
             // Note use of assertions here to only match specific words,
             // for instance ones that are not part of a hyphenated phrase
             // or (most) bits of an email address
-            $alsearch[] = '/(?<![\w@\.:-])(' . preg_quote($tmpsmily['code'], '/'). ')(?![\w@:-])(?!\.\w)/i';
+            $alsearch[] = '/(?<![\w@\.:-])(' . $tmpsmily['code'] . ')(?![\w@:-])(?!\.\w)/i';
             $alreplace[] = '<img src="' . htmlspecialchars($tmpsmily['icon']) .
                            '" alt="' . htmlspecialchars($tmpsmily['emotion']) .
                            '" />';
-        }
+        } var_dump($alsearch);
     }
 
     // Step 1 - move all tags out of the text and replace them with placeholders
-    preg_match_all('/(<a\s+.*?\/a>|<[^>]+>)/i', $text, $matches);
+    preg_match_all('/(<\w[^>]+>)/i', $text, $matches);
     $matchnum = count($matches[1]);
     for ($i = 0; $i <$matchnum; $i++) {
         $text = preg_replace('/' . preg_quote($matches[1][$i], '/') . '/', "ALPLACEHOLDER{$i}PH", $text, 1);
     }
 
+    // Step 2 - put the smilies in.
     $text = preg_replace($alsearch, $alreplace, $text);
 
     // Step 3 - replace the spaces we munged in step 2
@@ -222,7 +227,6 @@ function smilies_userapitransform($text)
     for ($i = 0; $i <$matchnum; $i++) {
         $text = preg_replace("/ALPLACEHOLDER{$i}PH/", $matches[1][$i], $text, 1);
     }
-
 
     return $text;
 }
