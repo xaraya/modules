@@ -42,6 +42,7 @@ class PHPParser
         $this->endtokenarray = array(array("')","',"), array("')","',"), array('")','",'), array('")','",'), array('}'), array('}'), array('}'), array('}'), array("';"), array("';"), array("';"), array("';"), array('";'), array('";'), array('";'), array('";'), array(');'), array(');'), array(');'), array(');'));
         $this->tokenarraytype = array('function', 'function', 'function', 'function', 'ML_dont_parse', 'ML_include', 'ML_add_string', 'ML_add_key', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include');
         $this->iskeytokenarray = array(0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        $this->strslasharray = array(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         $this->strlentokenarray = array(7, 12, 7, 12, 14, 11, 14, 11, 14, 9, 14, 9, 14, 9, 14, 9, 13, 8, 13, 8);
         $this->strlenendtokenarray = array(2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
     }
@@ -60,7 +61,7 @@ class PHPParser
     {
         $found = false;
         // if (defined('PHPPARSERDEBUG'))
-           // printf("Getting line %d\n"."for %s token %d<br />\n", $this->_line, $this->_right?'end':'begin', $this->_token);
+        // printf("Getting line %d\n"."for %s token %d<br />\n", $this->_line, $this->_right?'end':'begin', $this->_token);
         $this->_pos = -1;
         foreach( $this->lasttokenarray as $n => $v )
         {
@@ -98,6 +99,9 @@ class PHPParser
                         $this->_string = trim($this->_string);
                         $this->_string = preg_replace('/[\t ]+/',' ',$this->_string);
                         $this->_string = preg_replace('/\s*\n\s*/',"\n",$this->_string);
+                        if ($this->strslasharray[$token]) {
+                            $this->_string = str_replace('\\\'','\'',$this->_string);
+                        }
                         if ($this->iskeytokenarray[$token]) {
                             if (!isset($this->transKeyEntries[$this->_string])) {
                                 $this->transKeyEntries[$this->_string] = array();
