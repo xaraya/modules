@@ -1,6 +1,6 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Articles Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Articles for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarBB Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Select Forums for Privilege '#(1)'</xar:mlstring><xar:mlvar>#$extname#</xar:mlvar></xar:ml></h2>
 <div style="margin: auto;">
 
 <form method="post" action="#xarModURL('xarbb','admin','privileges')#">
