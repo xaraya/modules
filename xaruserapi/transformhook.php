@@ -1,6 +1,7 @@
 <?php
 
-function xarpages_userapi_transformhook($args) {
+function xarpages_userapi_transformhook($args)
+{
     extract($args);
 
     if (!isset($extrainfo)) {
