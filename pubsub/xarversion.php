@@ -14,6 +14,6 @@ $modversion['contact'] = 'miko@xaraya.com';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
 $modversion['securityschema'] = array('Pubsub::' => 'PubsubID:EventID:HandlingID');
-$modversion['class'] = 'Core Utility';
+$modversion['class'] = 'Utility';
 $modversion['category'] = 'Content';
 ?>
