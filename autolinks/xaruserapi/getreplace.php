@@ -6,7 +6,7 @@ function autolinks_userapi__getreplace_errhandler($errorType, $errorString, $err
 {
     if (!error_reporting()) {return;}
     $msg = "File: " . $errorFile. "; Line: " . $errorLine . "; ". $errorString;
-    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     return;
 }
 
@@ -29,7 +29,7 @@ function autolinks_userapi_getreplace($args)
     if (!isset($lid) && !isset($link)) {
         $msg = xarML('Invalid parameter count for #(1) function #(2)() in module #(3)',
                     'userapi', 'getreplace', 'autolinks');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }

@@ -56,7 +56,7 @@ function autolinks_adminapi_update($args)
     // Argument check
     if (!isset($lid) || empty($set)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(
+        xarErrorSet(
             XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg)
         );
@@ -74,7 +74,7 @@ function autolinks_adminapi_update($args)
 
     if ($link == false) {
         $msg = xarML('No such link present: #(1)', $lid);
-        xarExceptionSet(
+        xarErrorSet(
             XAR_USER_EXCEPTION, 'MISSING_DATA',
             new DefaultUserException($msg)
         );

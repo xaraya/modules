@@ -20,7 +20,7 @@ function autolinks_adminapi_delete($args)
             'Invalid Parameter Count',
             'admin', 'delete', 'Autolinks'
         );
-        xarExceptionSet(
+        xarErrorSet(
             XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg)
         );
@@ -35,7 +35,7 @@ function autolinks_adminapi_delete($args)
 
     if ($link == false) {
         $msg = xarML('No such link present');
-        xarExceptionSet(
+        xarErrorSet(
             XAR_USER_EXCEPTION, 
             'MISSING_DATA',
             new DefaultUserException($msg)

@@ -15,7 +15,7 @@ function autolinks_userapi_gettype($args)
             'Invalid Parameter Count',
             'userapi', 'gettype', 'autolinks'
         );
-        xarExceptionSet(
+        xarErrorSet(
             XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg)
         );

@@ -52,7 +52,7 @@ function autolinks_adminapi_updatetype($args)
     // Argument check
     if (!isset($tid) || empty($set)) {
         $msg = xarML('Invalid parameter count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -67,7 +67,7 @@ function autolinks_adminapi_updatetype($args)
 
     if (!$type) {
         $msg = xarML('No such link type present: #(1)', $tid);
-        xarExceptionSet(
+        xarErrorSet(
             XAR_USER_EXCEPTION, 'MISSING_DATA',
             new DefaultUserException($msg)
         );
@@ -93,7 +93,7 @@ function autolinks_adminapi_updatetype($args)
 
         if ($result->RecordCount() > 0) {
             $msg = xarML('The autolink type name (#(1)) already exists', $type_name);
-            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
             return;
         }
     }

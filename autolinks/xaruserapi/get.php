@@ -15,7 +15,7 @@ function autolinks_userapi_get($args)
     if (count($links) > 1) {
         // Too many matches.
         $msg = xarML('Too many links match criteria');
-        xarExceptionSet(
+        xarErrorSet(
             XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg)
         );

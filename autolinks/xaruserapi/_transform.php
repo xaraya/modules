@@ -5,7 +5,7 @@ function autolinks_userapi__transform_errhandler($errorType, $errorString, $erro
 {
     if (!error_reporting()) {return;}
     $msg = "File: " . $errorFile. "; Line: " . $errorLine . "; ". $errorString;
-    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     return;
 }
 

@@ -30,7 +30,7 @@ function autolinks_adminapi_create($args)
         || !is_numeric($tid)
         || !isset($url)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -77,7 +77,7 @@ function autolinks_adminapi_create($args)
             'The link matching keyword "#(1)" or name "#(2)" already exists.',
             $keyword, $name
         );
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -85,7 +85,7 @@ function autolinks_adminapi_create($args)
     $type = xarModAPIfunc('autolinks', 'user', 'gettype', array('tid'=>$tid));
     if (!$type) {
         $msg = xarML('Autolink Type does not exist') . ' ('.$tid.')';
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 

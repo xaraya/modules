@@ -35,7 +35,7 @@ function autolinks_adminapi_createtype($args)
     // if not then set an appropriate error message and return
     if (!isset($type_name) || !isset($template_name)) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -56,7 +56,7 @@ function autolinks_adminapi_createtype($args)
 
     if ($result->RecordCount() > 0) {
         $msg = xarML('The given name already exists.');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
