@@ -31,7 +31,7 @@ function scheduler_adminapi_create($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      join(', ', $invalid), 'admin', 'create', 'scheduler');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     } 
@@ -48,7 +48,7 @@ function scheduler_adminapi_create($args)
         if ($job['module'] == $module && $job['type'] == $type && $job['func'] == $func) {
             $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                          'job', 'admin', 'create', 'scheduler');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                 new SystemException($msg));
             return;
         }
