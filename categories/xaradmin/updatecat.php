@@ -10,12 +10,10 @@ function categories_admin_updatecat()
     //Checkbox work for submit buttons too
     if (!xarVarFetch('reassign', 'checkbox',  $reassign, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('repeat',   'int:1:100', $repeat,   1,     XARVAR_NOT_REQUIRED)) return;
-
     if ($reassign) {
         xarResponseRedirect(xarModUrl('categories','admin','modifycat',array('repeat' => $repeat)));
         return true;
     }
-
     if (!xarVarFetch('creating', 'bool', $creating)) return;
 
     if ($creating) {
@@ -23,12 +21,9 @@ function categories_admin_updatecat()
     } else {
         if (!xarVarFetch('cids', 'array', $cids)) return;
     }
-
     if (!xarVarFetch('name', 'list:str:0:255', $name)) return;
     if (!xarVarFetch('description', 'list:str:0:255', $description)) return;
     if (!xarVarFetch('image', 'array', $image)) return;
-
-
     if (!xarVarFetch('moving', 'list:bool', $moving)) return;
     if (!xarVarFetch('catexists', 'list:bool', $catexists)) return;
     if (!xarVarFetch('refcid', 'list:int:0', $refcid)) return;
@@ -42,7 +37,6 @@ function categories_admin_updatecat()
 
     $old_cids = $cids;
     $cids = array();
-
     foreach ($old_cids as $key => $cid) {
         //Empty -> Creating Cats (ALL OF THEM should have empty cids!)
         if (empty($cid)) {
@@ -57,9 +51,7 @@ function categories_admin_updatecat()
             array_push ($cids, $cid);
         }
     }
-
     foreach ($cids as $cid) {
-
         switch (intval($position[$cid])) {
             case 1: // above - same level
             default:
@@ -79,6 +71,10 @@ function categories_admin_updatecat()
                 $inorout = 'in';
                 break;
         }
+
+        // call transform input hooks
+        $description[$cid] = xarModCallHooks('item', 'transform-input', 0, $description[$cid], 
+                                             'categories', 0); 
 
         // Pass to API
         if (!$creating) {
@@ -110,14 +106,11 @@ function categories_admin_updatecat()
                                    ))) return;
         }
     }
-
     if ($creating) {
         xarResponseRedirect(xarModUrl('categories','admin','modifycat',array()));
     } else {
         xarResponseRedirect(xarModUrl('categories','admin','viewcats',array()));
     }
-
     return true;
 }
-
 ?>
