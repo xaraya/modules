@@ -49,43 +49,43 @@ function newsletter_adminapi_modifyprivilege($args)
     // Create privileges
     switch($mask){
         case 'ReadNewsletter':
-            $privilege = "NewsletterlicationRead";
+            $privilege = "NewsletterRead";
             $comment = "The publication privilege granting read access";
             $access = 'ACCESS_READ';
             break;
         case 'CommentNewsletter':
-            $privilege = "NewsletterlicationComment";
+            $privilege = "NewsletterComment";
             $comment = "The publication privilege granting comment access";
             $access = 'ACCESS_COMMENT';
             break;
         case 'ModerateNewsletter':
-            $privilege = "NewsletterlicationModerate";
+            $privilege = "NewsletterModerate";
             $comment = "The publication privilege granting moderate access";
             $access = 'ACCESS_MODERATE';
             break;
         case 'EditNewsletter':
-            $privilege = "NewsletterlicationEdit";
+            $privilege = "NewsletterEdit";
             $comment = "The publication privilege granting edit access";
             $access = 'ACCESS_EDIT';
             break;
         case 'AddNewsletter':
-            $privilege = "NewsletterlicationAdd";
+            $privilege = "NewsletterAdd";
             $comment = "The publication privilege granting add access";
             $access = 'ACCESS_ADD';
             break;
         case 'DeleteNewsletter':
-            $privilege = "NewsletterlicationDelete";
+            $privilege = "NewsletterDelete";
             $comment = "The publication privilege granting delete access";
             $access = 'ACCESS_DELETE';
             break;
         case 'AdminNewsletter':
-            $privilege = 'NewsletterlicationAdmin';
+            $privilege = 'NewsletterAdmin';
             $comment = "The publication privilege granting admin access";
             $access = 'ACCESS_ADMIN';
             break;
         case 'OverviewNewsletter':
         default:
-            $privilege = 'NewsletterlicationOverview';
+            $privilege = 'NewsletterOverview';
             $comment = "The publication privilege granting overview access";
             $access = 'ACCESS_OVERVIEW';
             break;
