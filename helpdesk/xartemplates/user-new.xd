@@ -4,8 +4,8 @@
     </span>
 </div>
 <br />
-#$menu#
 <div class="xar-mod-body">
+#$menu#
 <div class="tborder">
 
 <xar:set name="$width">'100%'</xar:set>
