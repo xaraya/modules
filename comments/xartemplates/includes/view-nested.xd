@@ -49,11 +49,12 @@
                     <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;">
 			<div style="display: inline;">
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" /> 
-						<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
-						<input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
-						<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
-						<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
-						<input type="submit" name="submit" id="submit-reply#$loop:item['xar_cid']#" value="reply" />
+			<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
+			<input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
+			<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
+			<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
+			<input type="hidden" name="receipt[action]" value="reply" />
+			<input type="submit" name="submit" id="submit-reply#$loop:item['xar_cid']#" value="reply" />
 			</div>
                     </form>
                 </xar:sec>
