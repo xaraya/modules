@@ -11,7 +11,7 @@
 </xar:if>
 
 <div class="xar-mod-body">
-#$menu#   
+<xar:if condition="isset($menu)">#$menu#</xar:if>
 <div class="contentBorder"> 
 <xar:if condition="xarUserIsLoggedIn()">
 
@@ -21,7 +21,9 @@ Filter by Status:
 <form action="#xarModURL('helpdesk', 'user', 'view')#" name="options" method="post">   
 <input type="hidden" name="selection" value="#$selection#" />
 <input type="hidden" name="sortorder" value="#$sortorder#" />
+<xar:if condition="!empty($catid)">
 <input type="hidden" name="catid" value="#$catid#" />
+</xar:if>
 <!--<input type="hidden" name="order" value="#$order#" />-->
 <select name="statusfilter" onChange="javascript:document.options.submit();">
 <option value=""></option>

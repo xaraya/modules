@@ -30,7 +30,7 @@ function helpdesk_user_view($args)
                        new SystemException($msg));
         return false;
     }
-    
+    $data = array();
     $data['menu']    = xarModFunc('helpdesk', 'user', 'menu');
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');
     

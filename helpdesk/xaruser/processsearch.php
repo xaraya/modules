@@ -83,6 +83,10 @@ function helpdesk_user_processsearch($args)
                                     xarModGetVar('helpdesk', 'Default rows per page'));    
     
     // Sending state vars back into the form                                                                                                                                                         
+    $data['selections'] = array('MYALL'         => 'My Tickets',
+                                'ALL'           => 'All Tickets',
+                                'MYASSIGNEDALL' => 'My Assigned Tickets',
+                                'UNASSIGNED'    => 'Unassigned Tickets');    
     $data['selection'] = $selection;
     $data['sortorder'] = $sortorder;
     $data['order'] = $order;
