@@ -16,6 +16,54 @@
     </select></td>
 </tr>
 <tr align="left" valign="middle">
+    <td><label for="nopublimit#$blockid#"><xar:mlstring>All Publication Types</xar:mlstring></label></td>
+    <td><xar:if condition="empty($nopublimit)">
+            <input type="checkbox" name="nopublimit" id="nopublimit#$blockid#" value="1" />
+        <xar:else />
+            <input type="checkbox" name="nopublimit" id="nopublimit#$blockid#" value="1" checked="checked" />
+        </xar:if>
+        <span class="xar-sub">
+            <xar:mlstring>Check this if you want the block to display content from all publication types all the time</xar:mlstring>
+        </span>
+    </td>
+</tr>
+<tr align="left" valign="middle">
+    <td><xar:mlstring>Category</xar:mlstring></td>
+    <td><select name="catfilter" id="catfilter#$blockid#">
+        <option value="0"><xar:mlstring>All / Current</xar:mlstring></option>
+            <xar:foreach in="$categorylist" value="$catlistx">
+                <xar:if condition="!empty($catfilter) and $catfilter eq $catlistx['cid']">
+                    <option value="#$catlistx['cid']#" selected="selected">#$catlistx['name']#</option>
+                <xar:else />
+                    <option value="#$catlistx['cid']#">#$catlistx['name']#</option>
+                </xar:if>
+            </xar:foreach>
+    </select></td>
+</tr>
+<tr align="left" valign="middle">
+    <td><label for="nocatlimit#$blockid#"><xar:mlstring>All Categories</xar:mlstring></label></td>
+    <td><xar:if condition="empty($nocatlimit)">
+            <input type="checkbox" name="nocatlimit" id="nocatlimit#$blockid#" value="1" />
+        <xar:else />
+            <input type="checkbox" name="nocatlimit" id="nocatlimit#$blockid#" value="1" checked="checked" />
+        </xar:if>
+        <span class="xar-sub">
+            <xar:mlstring>Check this if you want the block to display content from all categories all the time</xar:mlstring>
+        </span>
+    </td>
+</tr>
+<tr align="left" valign="middle">
+    <td><label for="dynamictitle#$blockid#"><xar:mlstring>Dynamic Block Title</xar:mlstring></label></td>
+    <td><xar:if condition="empty($dynamictitle)">
+            <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" />
+        <xar:else />
+            <input type="checkbox" name="dynamictitle" id="dynamictitle#$blockid#" value="1" checked="checked" />
+        </xar:if>
+        <span class="xar-sub">
+            <xar:mlstring>Check this to have the block title dynamically generated off of the current content</xar:mlstring>
+        </span>
+    </td>
+<tr align="left" valign="middle">
     <td><xar:mlstring>Sort by</xar:mlstring></td>
     <td><select name="toptype" id="toptype#$blockid#" size="1">
         <xar:foreach in="$sortoptions" value="$sortoption">

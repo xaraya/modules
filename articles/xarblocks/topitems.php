@@ -50,6 +50,18 @@ function articles_topitemsblock_display($blockinfo)
     if (empty($vars['pubtypeid'])) {
         $vars['pubtypeid'] = 0;
     }
+    if (empty($vars['nopublimit'])) {
+        $vars['nopublimit'] = 0;
+    }
+    if (empty($vars['catfilter'])) {
+        $vars['catfilter'] = '';
+    }
+    if (!isset($vars['nocatlimit'])) {
+        $vars['nocatlimit'] = 1;
+    }
+    if (!isset($vars['dynamictitle'])) {
+        $vars['dynamictitle'] = 1;
+    }
     if (empty($vars['toptype'])) {
         $vars['toptype'] = 'hits';
     }
@@ -66,35 +78,100 @@ function articles_topitemsblock_display($blockinfo)
     if (empty($vars['showdynamic'])) {
         $vars['showdynamic'] = 0;
     }
-
-    // MikeC: Check to see if admin has specified that only a specific 
-    // Publication Type should be displayed.  If not, then default to original TopItems configuration.
-    if( $vars['pubtypeid'] == 0 )
-    {
-        if (xarVarIsCached('Blocks.articles','ptid')) {
-            $ptid = xarVarGetCached('Blocks.articles','ptid');
+    
+    // see if we're currently displaying an article
+    if (xarVarIsCached('Blocks.articles','aid')) {
+        $curaid = xarVarGetCached('Blocks.articles','aid');
+    } else {
+        $curaid = -1;
+    }
+    
+    //if (empty($vars['nopublimit']) || empty($vars['nocatlimit']) && ($vars['dynamictitle'] == 1)) {
+    if ($vars['dynamictitle'] == 1) {
+        if ($vars['toptype'] == 'rating') {
+                $blockinfo['title'] = xarML('Top Rated');
+            } elseif ($vars['toptype'] == 'hits') {
+                $blockinfo['title'] = xarML('Top');
+            } else {
+                $blockinfo['title'] = xarML('Latest');
+            }
         }
-        if (empty($ptid)) {
-            // default publication type
-            $ptid = xarModGetVar('articles','defaultpubtype');
+
+    if ($vars['nocatlimit'] == 1) {
+        // don't limit by category
+        $cid = 0;
+        $cidsarray = array();
+    } else {
+        if(!empty($vars['catfilter'])) {
+            // use admin defined category 
+            $cidsarray = array($vars['catfilter']);
+            $cid = $vars['catfilter'];
+        } else {
+            // use the current category
+            // Jonn: this currently only works with one category at a time
+            // it could be reworked to support multiple cids
+            if(xarVarIsCached('Blocks.articles','cids')) {
+                $curcids = xarVarGetCached('Blocks.articles','cids');
+                if(!empty($curcids)) {
+                    if($curaid == -1) {
+                        //$cid = $curcids[0]['name'];
+                        $cid = $curcids[0];
+                        $cidsarray = $curcids;
+                    } else {
+                        $cid = $curcids[0];
+                        $cidsarray = array($curcids[0]);
+                    }
+                } else {
+                    $cid = 0;
+                    $cidsarray = array();
+                }
+            } else {
+                // pull from all categories
+                $cid = 0;
+                $cidsarray = array();
+            }
+        }
+        if(!empty($cid)) {
+            $thiscategory = xarModAPIFunc('categories','user','getcat',
+                                          array('cid' => $cid,
+                                                'return_itself' => 'return_itself'
+                                               )
+                                         );
+        }
+        if ((!empty($cidsarray)) && (isset($thiscategory[0]['name'])) && ($vars['dynamictitle'] == 1)) {
+            $blockinfo['title'] .= ' ' . $thiscategory[0]['name'];
+        }
+    }
+
+    if ($vars['nopublimit'] == 1) {
+        //don't limit by pubtype
+        $ptid = 0;
+        if(empty($vars['nocatlimit']) || empty($vars['nopublimit']) || ($vars['dynamictitle'] == 1)) {
+            $blockinfo['title'] .= ' ' . xarML('Content');
         }
     } else {
-        // MikeC: Admin Specified a publication type, use it.
-        $ptid = $vars['pubtypeid'];
+        // MikeC: Check to see if admin has specified that only a specific 
+        // Publication Type should be displayed.  If not, then default to original TopItems configuration.
+        if( $vars['pubtypeid'] == 0 )
+        {
+            if (xarVarIsCached('Blocks.articles','ptid')) {
+                $ptid = xarVarGetCached('Blocks.articles','ptid');
+            }
+            if (empty($ptid)) {
+                // default publication type
+                $ptid = xarModGetVar('articles','defaultpubtype');
+            }
+        } else {
+            // MikeC: Admin Specified a publication type, use it.
+            $ptid = $vars['pubtypeid'];
+        }
+        // Get publication types
+        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+        if (!empty($ptid) && isset($pubtypes[$ptid]['descr']) && ($vars['dynamictitle'] == 1)) {
+            $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
+        }
     }
 
-    // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
-    if (!empty($ptid) && isset($pubtypes[$ptid]['descr'])) {
-        if ($vars['toptype'] == 'rating') {
-            $blockinfo['title'] = xarML('Top Rated');
-        } elseif ($vars['toptype'] == 'hits') {
-            $blockinfo['title'] = xarML('Top');
-        } else {
-            $blockinfo['title'] = xarML('Latest');
-        }
-        $blockinfo['title'] .= ' ' . xarVarPrepForDisplay($pubtypes[$ptid]['descr']);
-    }
     // frontpage or approved status
     $status = array(3,2);
 
@@ -118,23 +195,18 @@ function articles_topitemsblock_display($blockinfo)
     }
 
     $articles = xarModAPIFunc('articles','user','getall',
-                             array('ptid' => $ptid,
-                                   'status' => $status,
-                                   'enddate' => time(),
-                                   'fields' => $fields,
-                                   'sort' => $sort,
-                                   'numitems' => $vars['numitems']
-                                  )
-                            );
+                              array('ptid' => $ptid,
+                                    'cids' => $cidsarray,
+                                    'andcids' => 'false',
+                                    'status' => $status,
+                                    'enddate' => time(),
+                                    'fields' => $fields,
+                                    'sort' => $sort,
+                                    'numitems' => $vars['numitems']
+                                   )
+                             );
     if (!isset($articles) || !is_array($articles) || count($articles) == 0) {
        return;
-    }
-
-    // see if we're currently displaying an article
-    if (xarVarIsCached('Blocks.articles','aid')) {
-        $curaid = xarVarGetCached('Blocks.articles','aid');
-    } else {
-        $curaid = -1;
     }
 
     $items = array();
@@ -207,6 +279,18 @@ function articles_topitemsblock_modify($blockinfo)
     if (empty($vars['pubtypeid'])) {
         $vars['pubtypeid'] = 0;
     }
+    if (empty($vars['nopublimit'])) {
+        $vars['nopublimit'] = 0;
+    }
+    if (empty($vars['catfilter'])) {
+        $vars['catfilter'] = '';
+    }
+    if (!isset($vars['nocatlimit'])) {
+        $vars['nocatlimit'] = 1;
+    }
+    if (!isset($vars['dynamictitle'])) {
+        $vars['dynamictitle'] = 1;
+    }
     if (empty($vars['toptype'])) {
         $vars['toptype'] = 'hits';
     }
@@ -225,6 +309,8 @@ function articles_topitemsblock_modify($blockinfo)
     }
 
     $vars['pubtypes'] = xarModAPIFunc('articles','user','getpubtypes');
+    
+    $vars['categorylist'] = xarModAPIFunc('categories','user','getcat');
 
     $vars['sortoptions'] = array(array('id' => 'hits',
                                        'name' => xarML('Hit Count')),
@@ -245,13 +331,23 @@ function articles_topitemsblock_modify($blockinfo)
 function articles_topitemsblock_update($blockinfo)
 {
 	//MikeC: Make sure we retrieve the new pubtype from the configuration form.
-    if(!xarVarFetch('numitems',    'isset', $vars['numitems'],     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('pubtypeid',   'isset', $vars['pubtypeid'],    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('toptype',     'isset', $vars['toptype'],      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('showsummary', 'isset', $vars['showsummary'],  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('showdynamic', 'isset', $vars['showdynamic'],  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('showvalue',   'isset', $vars['showvalue'],    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('numitems',     'isset', $vars['numitems'],     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('pubtypeid',    'isset', $vars['pubtypeid'],    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('nopublimit',   'isset', $vars['nopublimit'],   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('catfilter',    'isset', $vars['catfilter'],    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('nocatlimit',   'isset', $vars['nocatlimit'],   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('dynamictitle', 'isset', $vars['dynamictitle'], NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('toptype',      'isset', $vars['toptype'],      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('showsummary',  'isset', $vars['showsummary'],  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('showdynamic',  'isset', $vars['showdynamic'],  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('showvalue',    'isset', $vars['showvalue'],    NULL, XARVAR_DONT_SET)) {return;}
 
+    if (empty($vars['nocatlimit'])) {
+        $vars['nocatlimit'] = 0;
+    }
+    if (empty($vars['dynamictitle'])) {
+        $vars['dynamictitle'] = 0;
+    }
     if (empty($vars['showvalue'])) {
         $vars['showvalue'] = 0;
     }
