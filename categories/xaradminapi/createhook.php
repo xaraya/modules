@@ -24,7 +24,7 @@ function categories_adminapi_createhook($args)
             $extrainfo['cids'] =& $extrainfo['new_cids'];
         } else {
             // try to get cids from input
-            $cids = xarVarCleanFromInput('new_cids');
+            xarVarFetch('new_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED);
             if (empty($cids) || !is_array($cids)) {
                 $extrainfo['cids'] = array();
                 // no categories to link here

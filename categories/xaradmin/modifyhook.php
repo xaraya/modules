@@ -84,7 +84,7 @@ function categories_admin_modifyhook($args)
             $cids = $extrainfo['modify_cids'];
         } else {
             // try to get cids from input
-            $cids = xarVarCleanFromInput('modify_cids');
+            xarVarFetch('modify_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED);
             if (empty($cids) || !is_array($cids)) {
                 $links = xarModAPIFunc('categories', 'user', 'getlinks',
                                        array('iids' => array($objectid),

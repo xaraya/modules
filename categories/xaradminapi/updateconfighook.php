@@ -36,7 +36,7 @@ function categories_adminapi_updateconfighook($args)
     // see what we have to do here (might be empty => we need to delete)
     if (empty($extrainfo['number_of_categories'])) {
         // try to get number of categories from input
-        $numcats = (int) xarVarCleanFromInput('number_of_categories');
+        xarVarFetch('number_of_categories', 'int:0:', $numcats, 0, XARVAR_NOT_REQUIRED);
     } else {
         $numcats = $extrainfo['number_of_categories'];
     }
@@ -54,7 +54,7 @@ function categories_adminapi_updateconfighook($args)
             $cids =& $extrainfo['config_cids'];
         } else {
             // try to get cids from input
-            $cids = xarVarCleanFromInput('config_cids');
+            xarVarFetch('config_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED);
             if (empty($cids) || !is_array($cids)) {
                 $cids = array();
             }

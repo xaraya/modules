@@ -51,7 +51,7 @@ function categories_adminapi_updatehook($args)
             $extrainfo['cids'] =& $extrainfo['modify_cids'];
         } else {
             // try to get cids from input
-            $cids = xarVarCleanFromInput('modify_cids');
+            xarVarFetch('modify_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED);
             if (empty($cids) || !is_array($cids)) {
                 $extrainfo['cids'] = array();
             } else {

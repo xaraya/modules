@@ -74,7 +74,7 @@ function categories_admin_newhook($args)
             $cids = $extrainfo['new_cids'];
         } else {
             // try to get cids from input
-            $cids = xarVarCleanFromInput('new_cids');
+			xarVarFetch('new_cids', 'list:int:1:', $cids, NULL, XARVAR_NOT_REQUIRED);
             if (empty($cids) || !is_array($cids)) {
                 $cids = array();
             }
