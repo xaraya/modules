@@ -50,8 +50,8 @@ function authsql_init()
 /**
  * upgrade module
  */
-function upgrade($oldver) {
-
+function upgrade($oldver) 
+{
     switch ($oldver) {
         case 1.0:
 
