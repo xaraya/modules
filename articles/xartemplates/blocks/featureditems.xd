@@ -13,8 +13,8 @@
     </xar:if>
 </xar:foreach>
 <xar:if condition="!empty($items)">
-    <BR />
-    <div CLASS="xar-block-title"><xar:mlstring>More Featured Headlines</xar:mlstring>:</div>
+    <br />
+    <div class="xar-block-title"><xar:mlstring>More Featured Headlines</xar:mlstring>:</div>
     <xar:foreach in="$items" value="$item">
         &bull;
         <xar:if condition="empty($item['link'])">
