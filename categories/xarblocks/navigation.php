@@ -20,7 +20,11 @@ function categories_navigationblock_init()
         'showchildren' => 0,
         'showempty' => false,
         'startmodule' => '',
-        'dynamictitle' => false
+        'dynamictitle' => false,
+        'nocache' => 0, // cache by default
+        'pageshared' => 0, // don't share across pages
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
 }
 
