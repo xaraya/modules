@@ -13,7 +13,7 @@ function authinvision_registerblock_display($blockinfo)
 {
      $mainfile = xarModGetVar('authinivision','mainfile');
      require($mainfile);
-	 $regtext = show_reg();
+     $regtext = show_reg();
 }
 function authinvision_registerblock_modify() 
 {

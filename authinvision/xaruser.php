@@ -7,15 +7,15 @@ function authinvision_user_login()
 {
     $mainfile = xarModGetVar('authinvision','mainfile');
     require($mainfile);
-	
+    
 }
 
 function authinvision_user_main() 
 {
     $mainfile = xarModGetVar('authinvision','mainfile');
-	include("$mainfile");;
-	$data['regform'] = show_reg();
-	return $data;
+    include("$mainfile");;
+    $data['regform'] = show_reg();
+    return $data;
 }
 
 ?>

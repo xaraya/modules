@@ -12,19 +12,19 @@ function authinvision_usercpblock_info()
 function authinvision_usercpblock_display($blockinfo) 
 {
      $uname = xarUserGetVar('uname');
-	 $newmessages = xarModAPIFunc('authinvision','user','getmessages',array('username'=>$uname));
-	 $boardlocation = xarModGetVar('authinvision','forumroot');
-	 $data['uname'] = $uname;
-	 $data['newmessages'] = $newmessages;
-	 $data['forumroot'] = $boardlocation;
-	 
-	 if (empty($blockinfo['template'])) {
+     $newmessages = xarModAPIFunc('authinvision','user','getmessages',array('username'=>$uname));
+     $boardlocation = xarModGetVar('authinvision','forumroot');
+     $data['uname'] = $uname;
+     $data['newmessages'] = $newmessages;
+     $data['forumroot'] = $boardlocation;
+     
+     if (empty($blockinfo['template'])) {
         $template = 'usercp';
     } else {
         $template = $blockinfo['template'];
     }
-	 $blockinfo['content'] = xarTplBlock('authinvision', $template, $data);
-	 return $blockinfo;
+     $blockinfo['content'] = xarTplBlock('authinvision', $template, $data);
+     return $blockinfo;
 }
 function authinvision_usercpblock_modify() 
 {

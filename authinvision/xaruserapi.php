@@ -94,10 +94,10 @@ function authinvision_userapi_authenticate_user($args)
         // add a user that does NOT exist in the database
             $realname = "";
             $email = "";
-			// get username from array
-			$realname = authinvision__get_attribute_value($connect,$user_info,'name');
-			// get email from array
-			$email = authinvision__get_attribute_value($connect,$user_info,'email');
+            // get username from array
+            $realname = authinvision__get_attribute_value($connect,$user_info,'name');
+            // get email from array
+            $email = authinvision__get_attribute_value($connect,$user_info,'email');
 
             // call role module to create new user role
             $now = time();
@@ -134,14 +134,14 @@ function authinvision_userapi_authenticate_user($args)
             // Insert the user into the default users group
             if( !xarMakeRoleMemberByID($rid, $groupId))
                return XARUSER_AUTH_FAILED; 
-			
+            
         } else {
         $rid = $userRole['uid'];
     }
 
-	// retrieve a session ID for invision
-	//$boardlogin = authinvision__board_login($connect, $uname, $pass);
-	
+    // retrieve a session ID for invision
+    //$boardlogin = authinvision__board_login($connect, $uname, $pass);
+    
     // close invision connection --may not be necessary
     //authinvision__close_invision_connection($connect);
 
@@ -251,34 +251,34 @@ function authinvision_userapi_getlast()
 {
     $connect = authinvision__open_invision_connection();
     if (!$connect) return XARUSER_AUTH_FAILED;
-	
-	if($connect)  //just double-checking the connection.
+    
+    if($connect)  //just double-checking the connection.
     {
         // connect to the invision database and get the user data
-		
-		$prefix = xarModGetVar('authinvision','prefix');
-		$database = xarModGetVar('authinvision','database');
-		$table = $prefix.'_members';
-		
-		$sql = "SELECT name FROM $database.$table ORDER BY joined DESC LIMIT 1";
-		$result = mysql_query($sql,$connect);
+        
+        $prefix = xarModGetVar('authinvision','prefix');
+        $database = xarModGetVar('authinvision','database');
+        $table = $prefix.'_members';
+        
+        $sql = "SELECT name FROM $database.$table ORDER BY joined DESC LIMIT 1";
+        $result = mysql_query($sql,$connect);
 
-		if (!$result) {
-			//incorrect login.
-			return false;
-		} else {
-		    //correct login.  return name
-			while ($row = mysql_fetch_array($result)) {
-				$lastuser = $row;
-			}
+        if (!$result) {
+            //incorrect login.
+            return false;
+        } else {
+            //correct login.  return name
+            while ($row = mysql_fetch_array($result)) {
+                $lastuser = $row;
+            }
         }
     }
-	
-	//reset us back to the xaraya database.	
-	$xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
-	mysql_select_db($xardb);
-	
-	return $lastuser;
+    
+    //reset us back to the xaraya database.    
+    $xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
+    mysql_select_db($xardb);
+    
+    return $lastuser;
 }
 
 /* get the number of new private messages from invision */
@@ -292,8 +292,8 @@ function authinvision_userapi_getmessages($args)
    
     $connect = authinvision__open_invision_connection();
     if (!$connect) return XARUSER_AUTH_FAILED;
-	
-	if($connect)  //just double-checking the connection.
+    
+    if($connect)  //just double-checking the connection.
     {
    
        $user_info = authinvision__get_invision_publicuserdata($username);
@@ -314,11 +314,11 @@ function authinvision_userapi_getmessages($args)
             $invision_messagecount = $row['msg_total'];
            }
        }
-       	//reset us back to the xaraya database.
-    	$xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
-    	mysql_select_db($xardb);
-    	return $invision_messagecount;
-	}
+           //reset us back to the xaraya database.
+        $xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
+        mysql_select_db($xardb);
+        return $invision_messagecount;
+    }
 }
 /*
 function authinvision_userapi_get_all_users($args)
@@ -360,13 +360,13 @@ function authinvision_userapi_delete_user($args)
 function authinvision__open_invision_connection()
 {
     
-	$server = xarModGetVar('authinvision','server');
-	$uname = xarModGetVar('authinvision','username');
-	$pwd = xarModGetVar('authinvision','password');  
+    $server = xarModGetVar('authinvision','server');
+    $uname = xarModGetVar('authinvision','username');
+    $pwd = xarModGetVar('authinvision','password');  
 
 // TODO: use xarDBNewConn() and ADODB methods everywhere in this module
 
-	$connect = @mysql_connect($server, $uname, $pwd);
+    $connect = @mysql_connect($server, $uname, $pwd);
 
     if (!$connect) {
         $msg = "Invision: Connection to $server has failed: " & mysql_error();
@@ -389,14 +389,14 @@ function authinvision__open_invision_connection()
 function authinvision__board_login($connect,$username,$password)
 {
     $path = xarModGetVar('authinvision','forumroot');
-	require $path."/mod_login_to_ipb.php";
-	$validated = validate($username, $password, '', $path);
-	
-	//reset us back to the xaraya database.	
-	$xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
-	mysql_select_db($xardb);
-	
-	return $validated;
+    require $path."/mod_login_to_ipb.php";
+    $validated = validate($username, $password, '', $path);
+    
+    //reset us back to the xaraya database.    
+    $xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
+    mysql_select_db($xardb);
+    
+    return $validated;
 }
 
 /**
@@ -411,12 +411,12 @@ function authinvision__board_logout($connect,$username,$password)
 {
     $path = xarModGetVar('authinvision','forumroot');
     
-	require $path."/mod_logout_from_ipb.php";
-	
-	//reset us back to the xaraya database.
-	$xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
-	mysql_select_db($xardb);
-	return true;
+    require $path."/mod_logout_from_ipb.php";
+    
+    //reset us back to the xaraya database.
+    $xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
+    mysql_select_db($xardb);
+    return true;
 }
 
 /**
@@ -430,7 +430,7 @@ function authinvision__board_logout($connect,$username,$password)
 function authinvision__close_invision_connection($connect)
 {
 
-	return true;
+    return true;
 }
 
 /**
@@ -479,37 +479,37 @@ function authinvision__get_invision_publicuserdata($username)
 {
     $server = xarModGetVar('authinvision','server');
     $prefix = xarModGetVar('authinvision','prefix');
-	$database = xarModGetVar('authinvision','database');
-	$table = $prefix.'_members';
-	
-	// open invision connection
+    $database = xarModGetVar('authinvision','database');
+    $table = $prefix.'_members';
+    
+    // open invision connection
     $connect = authinvision__open_invision_connection();
     if (!$connect) return XARUSER_AUTH_FAILED;
 
     if($connect)  //just double-checking the connection.
     {
         // connect to the invision database and get the user data
-  		//$inv_db = mysql_select_db($database, $connect);
-  		$sql = "SELECT id, name, mgroup, email, joined, avatar, posts, aim_name, icq_number, location, signature, website, yahoo, title, time_offset, interests, hide_email FROM $database.$table WHERE name='$username'";
-  		$result = mysql_query($sql,$connect);
+          //$inv_db = mysql_select_db($database, $connect);
+          $sql = "SELECT id, name, mgroup, email, joined, avatar, posts, aim_name, icq_number, location, signature, website, yahoo, title, time_offset, interests, hide_email FROM $database.$table WHERE name='$username'";
+          $result = mysql_query($sql,$connect);
   
-  		if (!$result || mysql_num_rows($result)==0) {
-  			//incorrect login.
-  			return false;
-  		} else {
-  		    //correct login.  return userdata.
-  			while ($row = mysql_fetch_array($result)) {
-  				$invision_user_info = $row;
-  			}
+          if (!$result || mysql_num_rows($result)==0) {
+              //incorrect login.
+              return false;
+          } else {
+              //correct login.  return userdata.
+              while ($row = mysql_fetch_array($result)) {
+                  $invision_user_info = $row;
+              }
       }
     }
-	
-	//reset us back to the xaraya database.	
-	$xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
-	mysql_select_db($xardb);
+    
+    //reset us back to the xaraya database.    
+    $xardb = $GLOBALS['xarDB_systemArgs']['databaseName'];
+    mysql_select_db($xardb);
     //why on earth I need this I'm not sure, but it's here to fix bug #1264.
-	if (!$invision_user_info) { return false; }  
-	return $invision_user_info;
+    if (!$invision_user_info) { return false; }  
+    return $invision_user_info;
 }
 
 /**

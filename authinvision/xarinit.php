@@ -23,9 +23,9 @@ function authinvision_init()
     xarModSetVar('authinvision','database', 'iboard');
     xarModSetVar('authinvision','username','root');
     xarModSetVar('authinvision','password', '');
-	xarModSetVar('authinvision','prefix','ibf');
-	xarModSetVar('authinvision','defaultgroup','Users');
-	xarModSetVar('authinvision','forumroot','iboard');
+    xarModSetVar('authinvision','prefix','ibf');
+    xarModSetVar('authinvision','defaultgroup','Users');
+    xarModSetVar('authinvision','forumroot','iboard');
   
     // Register blocks
     if (!xarModAPIFunc('blocks',
@@ -86,9 +86,9 @@ function authinvision_delete()
     xarModDelVar('authinvision','database');
     xarModDelVar('authinvision','username');
     xarModDelVar('authinvision','password');
-	xarModDelVar('authinvision','prefix');
-	xarModDelVar('authinvision','defaultgroup');
-	xarModDelVar('authinvision','forumroot');
+    xarModDelVar('authinvision','prefix');
+    xarModDelVar('authinvision','defaultgroup');
+    xarModDelVar('authinvision','forumroot');
 
     // Remove authinvision to Site.User.AuthenticationModules in xar_config_vars
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
