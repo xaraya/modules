@@ -53,13 +53,14 @@ function pubsub_adminapi_getsubscribers($args)
                     ,$pubsubeventstable.xar_cid AS cid
                     ,$pubsubregtable.xar_subdate AS subdate
                     ,$pubsubregtable.xar_pubsubid AS pubsubid
-                FROM $rolestable
-                    ,$modulestable
+                    ,$pubsubregtable.xar_email AS email
+                    ,$pubsubregtable.xar_userid AS userid
+                FROM 
+                    $modulestable
                     ,$pubsubeventstable
-                    ,$pubsubregtable
+                    ,$pubsubregtable LEFT JOIN $rolestable ON ($pubsubregtable.xar_userid     = $rolestable.xar_uid)
                WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
                  AND $pubsubeventstable.xar_modid   = $modulestable.xar_regid
-                 AND $pubsubregtable.xar_userid     = $rolestable.xar_uid
                  AND $pubsubeventstable.xar_eventid = $eventid";
 
     $result =& $dbconn->Execute($query);
@@ -73,8 +74,16 @@ function pubsub_adminapi_getsubscribers($args)
             ,$cid
             ,$subdate
             ,$pubsubid
+            ,$email
+            ,$userid
            ) = $result->fields;
-        if (xarSecurityCheck('AdminPubSub', 0)) {
+        if (xarSecurityCheck('AdminPubSub', 0)) 
+        {
+            if( $userid == -1 )
+            {
+                $username = $email;
+            }
+        
             $subscribers[] = array('username'  => $username
                                   ,'modname'   => $modname
                                   ,'modid'     => $modid

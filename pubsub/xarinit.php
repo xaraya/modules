@@ -52,7 +52,8 @@ function pubsub_init()
         'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_userid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0'),
-        'xar_subdate'=>array('type'=>'integer','null'=>FALSE, 'default'=>'0')
+        'xar_subdate'=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
+        'xar_email'=>array('type'=>'varchar','size'=>255,'null'=>TRUE, 'default'=>'')
     );
     $query = xarDBCreateTable($pubsubregtable,$regfields);
     $result =& $dbconn->Execute($query);
@@ -371,6 +372,24 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
             // fall through to the next upgrade
         case '1.3':
             $modversion['user'] = 0;
+        case '1.4.0':
+            $dbconn =& xarDBGetConn();
+            $prefix = xarDBGetSiteTablePrefix();
+            
+            $xarTables =& xarDBGetTables();
+            $pubsubregtable = $xarTables['pubsub_reg'];
+            
+            // Add a column to the register table
+            $query = xarDBAlterTable($pubsubregtable,
+                                     array('command' => 'add',
+                                           'field' => 'xar_email',
+                                           'type' => 'varchar',
+                                           'size' => 255,
+                                           'null' => TRUE,
+                                           'default' => ''));
+                                           
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
         default:
             break;
     } // END switch

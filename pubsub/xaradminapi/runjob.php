@@ -48,7 +48,8 @@ function pubsub_adminapi_runjob($args)
                      xar_userid,
                      $pubsubregtable.xar_eventid,
                      xar_modid,
-                     xar_itemtype
+                     xar_itemtype,
+                     $pubsubregtable.xar_email
               FROM $pubsubregtable
               LEFT JOIN $pubsubeventstable
               ON $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
@@ -58,9 +59,16 @@ function pubsub_adminapi_runjob($args)
 
     if ($result->EOF) return;
 
-    list($actionid,$userid,$eventid,$modid,$itemtype) = $result->fields;
-    $info = xarUserGetVar('email',$userid);
-    $name = xarUserGetVar('uname',$userid);
+    list($actionid,$userid,$eventid,$modid,$itemtype,$email) = $result->fields;
+    
+    if( $userid != -1 )
+    {
+        $info = xarUserGetVar('email',$userid);
+        $name = xarUserGetVar('uname',$userid);
+    } else {
+        $info = $email;
+        $name = '';
+    }
 
     $modinfo = xarModGetInfo($modid);
     if (empty($modinfo['name'])) {
@@ -168,12 +176,12 @@ function pubsub_adminapi_runjob($args)
             $message .= "\n" . xarML('Link: #(1)',$tplData['link']);
          }
       // TODO: make configurable too ?
-	  
+      
          if(  xarModGetVar('pubsub','sendcontent') == 1 )
-		 {
-		     $subject = $tplData['title'];
-		 } else {
-		     $subject = xarML('Publish / Subscribe Notification');
+         {
+             $subject = $tplData['title'];
+         } else {
+             $subject = xarML('Publish / Subscribe Notification');
          }
          $fmail = xarConfigGetVar('adminmail');
          $fname = xarConfigGetVar('adminmail');

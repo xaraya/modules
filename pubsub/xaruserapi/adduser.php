@@ -18,7 +18,8 @@
  * Add a user's subscription to an event
  * @param $args['eventid'] Event to subscribe to
  * @param $args['actionid'] Requested action for this subscription
- * @param $args['userid'] UID of User to subscribe
+ * @param $args['userid'] UID of User to subscribe OR
+ * @param $args['email'] EMail address of anonymous user to subscribe
  * @return bool pubsub ID on success, false if not
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
@@ -35,8 +36,9 @@ function pubsub_userapi_adduser($args)
     if (!isset($actionid) || !is_numeric($actionid)) {
         $invalid[] = 'actionid';
     }
-    if (!isset($userid) || !is_numeric($userid)) {
-        $invalid[] = 'userid';
+    if ( (!isset($userid) || !is_numeric($userid)) && (!isset($email) || empty($email)) )
+    {
+        $invalid[] = 'userid or email';
     }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -44,6 +46,14 @@ function pubsub_userapi_adduser($args)
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
+    }
+
+    // Check if we're subscribing an anonymous user, or a known userid
+    if ( (!isset($userid) || !is_numeric($userid)) && (isset($email) || !empty($email)) )
+    {
+        $userid = -1;
+        
+        //TODO: EMail validation, is this a valid email address
     }
 
     // Security check
@@ -55,6 +65,7 @@ function pubsub_userapi_adduser($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // check not already subscribed
+    // TODO: Just noting that this doesn't actually do anything other then a useless query
     $query = "SELECT xar_pubsubid FROM $pubsubregtable";
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -68,13 +79,16 @@ function pubsub_userapi_adduser($args)
               xar_eventid,
               xar_userid,
               xar_actionid,
-              xar_subdate)
+              xar_subdate,
+              xar_email)
             VALUES (
               $nextId,
               " . xarVarPrepForStore($eventid) . ",
               " . xarVarPrepForStore($userid) . ",
               " . xarvarPrepForStore($actionid) . ",
-              " . time().")";
+              " . time() . ", 
+             '" . xarvarPrepForStore($email) . "'
+              " .")";
     $dbconn->Execute($query);
     if (!$result) return;
 

@@ -19,7 +19,10 @@
  * @param $args['modid'] module ID of event
  * @param $args['cid'] cid of event
  * @param $args['itemtype'] itemtype of event
- * @param $args['userid'] the subscriber
+ *
+ * @param $args['userid'] the subscriber OR
+ * @param $args['email'] EMail address of anonymous user
+ *
  * @param $args['groupdescr'] <unknown>
  * @returns output
  * @return output with pubsub information
@@ -31,15 +34,23 @@ function pubsub_userapi_subscribe($args)
     // Argument check
     $invalid = array();
     if (!isset($modid))      { $invalid[] = 'modid'; }
-    if (!isset($cid))           { $invalid[] = 'cid'; }
+    if (!isset($cid))        { $invalid[] = 'cid'; }
     if (!isset($itemtype))   { $invalid[] = 'itemtype'; }
-    if (!isset($userid))     { $invalid[] = 'userid'; }
+    if (!isset($userid) && !isset($email))     { $invalid[] = 'userid/email'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
         join(', ',$invalid), 'subscribe', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
+    }
+    
+    if( !isset($userid) && isset($email) && !empty($email) )
+    {
+        $userid = -1;
+        //TODO: Email validation to make sure this is a valid looking email address
+    } elseif ( !isset($email) ) {
+        $email = '';
     }
 
     // What is groupdescr???
@@ -62,6 +73,7 @@ function pubsub_userapi_subscribe($args)
                         array('eventid' => $eventid
                              ,'actionid' => 1
                              ,'userid' => $userid
+                             ,'email' => $email
                               ))) {
         $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                      'adduser', 'subscribe', 'Pubsub');
