@@ -30,7 +30,7 @@ function xarpages_userapi_encode_shorturl($args)
         // Fetch all pages, with no DD required.
         $pages = xarModAPIfunc(
             'xarpages', 'user', 'getpages',
-            array('dd_flag' => false, 'key' => 'pid')
+            array('dd_flag' => false, 'key' => 'pid', 'status' => 'ACTIVE')
         );
     }
 
@@ -62,18 +62,31 @@ function xarpages_userapi_encode_shorturl($args)
     // URL handlers to handle the remainder of the GET parameters.
     // The handler is placed into the xarencodeapi API directory, and will
     // return two arrays: 'path' with path components and 'get' with
-    // any unconsumed get parameters.
+    // any unconsumed (or new) get parameters.
     if (!empty($pages[$pid]['encode_url'])) {
         $extra = xarModAPIfunc('xarpages', 'encode', $pages[$pid]['encode_url'], $get, false);
 
-        if (!empty($extra) && !empty($extra['path'])) {
+        if (!empty($extra)) {
             // The handler has supplied some further short URL path components.
-            $path = array_merge($path, $extra['path']);
+            if (!empty($extra['path'])) {
+                $path = array_merge($path, $extra['path']);
+            }
             // Assume it has consumed some GET parameters too.
             // Take what is left (i.e. unconsumed).
             // Note the custom encoder cannot add further GET parameters without
-            // supplying further path components.
-            $get = $extra['get'];
+            // supplying further path components. (see below for further notes)
+            // NOTE: this is a flaw that should be fixed if this is going to
+            // be a core feature: a URL encoder should be able to add further
+            // GET parameters or alter existing GET parameters without having
+            // to add to the path.
+            // TODO: try this for now: so long as the 'get' value is an array,
+            // then assume it is the new set of GET parameters. A NULL or non-
+            // array can indicate that the current GET parameters should not
+            // change. Note the use of is_array(), since the value could be an
+            // empty array, indicating that all GET parameters have been consumed.
+            if (isset($extra['get']) && is_array($extra['get'])) {
+                $get = $extra['get'];
+            }
         }
     }
 

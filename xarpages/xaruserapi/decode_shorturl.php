@@ -62,7 +62,8 @@ function xarpages_userapi_decode_shorturl($params)
             array(
                 'left_range' => array($rootpage['left'], $rootpage['right']),
                 'dd_flag' => false,
-                'key' => 'pid'
+                'key' => 'pid',
+                'status' => 'ACTIVE'
             )
         );
 
