@@ -87,11 +87,11 @@ function tasks_admin_new($args)
     $sendmailoptions[] = array('id'=>3,'name'=>"weekly summaries");
     $sendmailoptions[] = array('id'=>4,'name'=>"Do NOT send email");
 	$data['sendmailoptions'] = $sendmailoptions;
-    $data['sendmails'] = pnVarPrepForDisplay(pnMLByKey('Email Group'));
+    $data['sendmails'] = pnVarPrepForDisplay(xarML('Email Group'));
 	for($x=0;$x<=9;$x++) {
 		$data['importantdaysdropdown'][] = array('id' => $x, 'name' => $x);
 	}
-    $data['importantdays'] = pnVarPrepForDisplay(pnMLByKey('Important Days'));
+    $data['importantdays'] = pnVarPrepForDisplay(xarML('Important Days'));
 	for($x=0;$x<=9;$x++) {
 		$data['criticaldaysdropdown'][] = array('id' => $x, 'name' => $x);
 	}
@@ -396,7 +396,7 @@ function tasks_admin_modifyconfig()
     $data['maxdepthdropdown']=$maxdepthdropdown;
 
     // Construct date format combobox
-	$dateformatlist = tasks_dateformatlist();
+	$dateformatlist = xarModAPIFunc('tasks', 'user', 'dateformatlist');
 	$dateformatdropdown = array();
 	foreach($dateformatlist as $formatid=>$format) {
 		$dateformatdropdown[] = array('id'	=> $formatid,

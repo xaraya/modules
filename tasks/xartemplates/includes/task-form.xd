@@ -17,7 +17,7 @@
         <td>
           <select name="status" id="status" size="1" tabindex="2">
             <xar:loop name="$statusoptions">
-              <option value="#$id#">#$name#</option>
+              <option value="#$loop:item['id']#">#$loop:item['name']#</option>
             </xar:loop>
           </select>
         </td>
@@ -27,7 +27,7 @@
         <td>
           <select name="priority" id="priority" size="1" tabindex="3">
             <xar:loop name="$prioritydropdown">
-              <option value="#$id#">#$name#</option>
+              <option value="#$loop:item['id']#">#$loop:item['name']#</option>
             </xar:loop>
           </select>
         </td>

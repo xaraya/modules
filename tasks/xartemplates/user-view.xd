@@ -19,20 +19,20 @@
 
   <select name="displaydepth" id="displaydepth" size="1" tabindex="1">
     <xar:loop name="$depthdropdown">
-      <xar:if condition="$id eq $maxdepth">
-        <option value="#$id#" selected="selected">#$name#</option>
+      <xar:if condition="$loop:item['id'] eq $maxdepth">
+        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
       <xar:else/>
-        <option value="#$id#" selected="selected">#$name#</option>
+        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
       </xar:if>
     </xar:loop>
   </select>
 
   <select name="filter" id="filter" size="1" tabindex="2">
     <xar:loop name="$filteroptions">
-      <xar:if condition="$id eq $filter">
-        <option value="#$id#" selected="selected">#$name#</option>
+      <xar:if condition="$loop:item['id'] eq $filter">
+        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
       <xar:else/>
-        <option value="#$id#" selected="selected">#$name#</option>
+        <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
       </xar:if>
     </xar:loop>
   </select>
@@ -103,7 +103,7 @@
             <xar:mlstring>Selected tasks</xar:mlstring>
               <select name="taskoption" id="taskoption" size="1" tabindex="4">
                 <xar:loop name="$taskoptions">
-                  <option value="#$id#" selected="selected">#$name#</option>
+                  <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
                 </xar:loop>
               </select>
             <input type="submit" value="#$tasksubmitbutton#"  tabindex="5" />

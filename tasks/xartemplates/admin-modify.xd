@@ -16,10 +16,10 @@
     <td>
       <select name="status" id="status">
         <xar:loop name="$statusoptions">
-          <xar:if condition="$task['status'] eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$task['status'] eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -36,10 +36,10 @@
     <td>
       <select name="priority" id="priority">
         <xar:loop name="$prioritydropdown">
-          <xar:if condition="$task['priority'] eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$task['priority'] eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -50,10 +50,10 @@
     <td>
       <select name="date_start_planned" >
         <xar:loop name="$start_planned_dropdown">
-          <xar:if condition="$task['date_start_planned'] eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$task['date_start_planned'] eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -64,10 +64,10 @@
     <td>
       <select name="date_start_actual" >
         <xar:loop name="$start_actual_dropdown">
-          <xar:if condition="$task['date_start_actual'] eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$task['date_start_actual'] eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -78,10 +78,10 @@
     <td>
       <select name="date_end_planned" >
         <xar:loop name="$end_planned_dropdown">
-          <xar:if condition="$task['date_end_planned'] eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$task['date_end_planned'] eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -92,10 +92,10 @@
     <td>
       <select name="date_end_actual" >
         <xar:loop name="$end_actual_dropdown">
-          <xar:if condition="$task['date_end_actual'] eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$task['date_end_actual'] eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>

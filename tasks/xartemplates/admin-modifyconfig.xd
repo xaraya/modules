@@ -10,7 +10,7 @@
     <td>
       <select name="maxdisplaydepth" id="maxdisplaydepth" size="1" tabindex="1">
         <xar:loop name="$maxdepthdropdown">
-          <option value="#$id#">#$name#</option>
+          <option value="#$loop:item['id']#">#$loop:item['name']#</option>
         </xar:loop>
       </select>
     </td>
@@ -20,10 +20,10 @@
     <td>
       <select name="dateformat" id="dateformat" size="1" tabindex="2">
         <xar:loop name="$dateformatdropdown">
-          <xar:if condition="$id eq $dateformat">
-            <option value="#$id#" selected="selected>>#$name#</option>
+          <xar:if condition="$loop:item['id'] eq $dateformat">
+            <option value="#$loop:item['id']#" selected="selected>>#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -40,10 +40,10 @@
     <td>
       <select name="returnfromadd" id="returnfromadd" size="1" tabindex="4">
         <xar:loop name="$returnfromoptions">
-          <xar:if condition="$returnfromadd eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$returnfromadd eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -54,10 +54,10 @@
     <td>
       <select name="returnfromedit" id="returnfromedit" size="1" tabindex="5">
         <xar:loop name="$returnfromoptions">
-          <xar:if condition="$returnfromedit eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$returnfromedit eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -68,10 +68,10 @@
     <td>
       <select name="returnfromsurface" id="returnfromsurface" size="1" tabindex="6">
         <xar:loop name="$returnfromoptions">
-          <xar:if condition="$returnfromsurface eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$returnfromsurface eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
@@ -82,10 +82,10 @@
     <td>
       <select name="returnfrommigrate" id="returnfrommigrate" size="1" tabindex="7">
         <xar:loop name="$returnfromoptions">
-          <xar:if condition="$returnfrommigrate eq $id">
-            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:if condition="$returnfrommigrate eq $loop:item['id']">
+            <option value="#$loop:item['id']#" selected="selected">#$loop:item['name']#</option>
           <xar:else/>
-            <option value="#$id#">#$name#</option>
+            <option value="#$loop:item['id']#">#$loop:item['name']#</option>
           </xar:if>
         </xar:loop>
       </select>
