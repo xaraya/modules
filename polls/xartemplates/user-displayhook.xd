@@ -24,6 +24,7 @@
     <input type="hidden" name="authid" value="#$authid#" />
     <input type="hidden" name="pid" value="#$pid#" />
     <input type="hidden" name="returnurl" value="#$returnurl#" />
+    <input type="hidden" name="callingmod" value="#$callingmod#" />
     <p><input type="submit" value="#$buttonlabel#" /></p>
     <xar:if condition="$previewresults">
     <p><a href="#$resultsurl#"><xar:mlstring>View Results</xar:mlstring></a></p>

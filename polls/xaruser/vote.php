@@ -7,7 +7,8 @@ function polls_user_vote($args)
 {
     // Get parameters
     list($pid,
-         $returnurl) = xarVarCleanFromInput('pid', 'returnurl');
+         $returnurl,
+         $callingmod) = xarVarCleanFromInput('pid', 'returnurl', 'callingmod');
     extract($args);
     if(empty($pid)){
         $msg = xarML('No poll specified');
@@ -84,6 +85,16 @@ function polls_user_vote($args)
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;
+    }
+    // CHECKME: find some cleaner way to update the page cache if necessary
+    if (function_exists('xarPageFlushCached') &&
+        !empty($GLOBALS['xarPage_cacheDisplay']) &&
+        xarModGetVar('xarcachemanager','FlushOnNewPollvote')) {
+        if (isset($callingmod)) {
+            xarPageFlushCached("$callingmod-user-");
+        } else {
+            xarPageFlushCached("polls-user-");
+        }
     }
 
     // Success, Redirect

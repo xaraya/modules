@@ -69,6 +69,7 @@ function polls_user_displayhook($args)
             $data['authid'] = xarSecGenAuthKey('polls');
             $data['pid'] =  $poll['pid'];
             $data['options'] = $poll['options'];
+            $data['callingmod'] = $modname;
         }
         else {
             // They have voted, display current results
