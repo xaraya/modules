@@ -151,7 +151,7 @@ if( ($children_count = count( $children ) ) > 0 ) {
 <td class="heading"><acronym title="Change this entry's RDN">Rename Entry</acronym></td>
 <td class="heading" align="right">
 	<nobr>
-	<form action="rename.php" method="post" class="edit_dn" />
+	<form action="rename.php" method="post" class="edit_dn" >
 	<input type="hidden" name="server_id" value="<?php echo $server_id; ?>" />
 	<input type="hidden" name="dn" value="<?php echo $encoded_dn; ?>" />
 	<input type="text" name="new_rdn" size="40" value="<?php echo htmlspecialchars( utf8_decode( $rdn ) ); ?>" />
