@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Run MailBag to get and process the mail
 
