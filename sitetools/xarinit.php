@@ -42,21 +42,23 @@ function sitetools_init()
     if (!$result) return;
 
     // Set up an initial value for a module variable.
-   if( isset( $_SERVER['PATH_TRANSLATED'] ) )
+    // Use relative path for now
+   /*   if( isset( $_SERVER['PATH_TRANSLATED'] ) )
     {
         $backupdir = dirname(realpath($_SERVER['PATH_TRANSLATED'])) . '/var/uploads/backup';
     } elseif( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
         $backupdir = dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/var/uploads/backup';
     } else {
         $backupdir = 'var/uploads/backup';
-    }
+    } */
+    $backupdir=xarCoerGetVarDirPath()."/uploads";
     xarModSetVar('sitetools','adocachepath',xarCoreGetVarDirPath()."/cache/adodb");
     xarModSetVar('sitetools','rsscachepath', xarCoreGetVarDirPath()."/cache/rss");
     xarModSetVar('sitetools','templcachepath', xarCoreGetVarDirPath()."/cache/templates");
     xarModSetVar('sitetools','backuppath', $backupdir);
     xarModSetVar('sitetools','lineterm','\n');
     xarModSetVar('sitetools','timestamp',1);
-    xarModSetVar('sitetools','colnumber',3);   
+    xarModSetVar('sitetools','colnumber',3);
     /**
      * Register the module components that are privileges objects
      * Format is
