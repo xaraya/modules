@@ -17,20 +17,34 @@ function bkview_user_patchview($args)
 {
     if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('rev','str::',$rev,'+')) return;
+    if(!xarVarFetch('file','str::',$file,'ChangeSet')) return;
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $repo =& $item['repo'];
 
-    $changeset= new bkChangeSet($repo,$rev);
+    if($file != 'ChangeSet') {
+        // rev is a delta revision
+        $deltarev = $rev;
+        $csetrev = $repo->bkChangeSet($file,$rev);
+    } else {
+        $csetrev = $rev;
+    }
+    $changeset= new bkChangeSet($repo,$csetrev);
     
     $data=array();
     $deltalist=array();
     $data['deltalist']=array();
     $counter=1;
     // First get a list of filenames and revisions in this changeset
-    $dlist = $changeset->bkDeltaList();
+    if(isset($deltarev)) {
+        $delta = new bkDelta($changeset, $file, $deltarev);
+        $dlist[$deltarev] = $delta;
+    } else {
+        $dlist = $changeset->bkDeltaList();
+    }
+    
     if(!is_null($dlist)) {
         foreach($dlist as $delta_id => $delta) {
             $delta->repoid = $repoid;
@@ -63,7 +77,8 @@ function bkview_user_patchview($args)
         }
     }
     // Return the data to BL compiler
-    $data['pageinfo']=xarML("All diffs for ChangeSet #(1)",$rev);
+    $data['file'] = $file;
+    $data['pageinfo']=xarML("Diffs for #(1) revision #(2)",$file, $rev);
     $data['repoid']=$repoid;
     $data['name_value']=$item['reponame'];
     $data['deltalist']=$deltalist;
