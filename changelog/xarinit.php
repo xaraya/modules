@@ -63,8 +63,7 @@ function changelog_init()
                                                             'size'        => 254,
                                                             'null'        => false,
                                                             'default'     => ''),
-                                   'xar_content'    => array('type'        => 'text',
-                                                            'default'     => '')));
+                                   'xar_content'    => array('type'        => 'text')));
 
     if (empty($query)) return; // throw back
 
