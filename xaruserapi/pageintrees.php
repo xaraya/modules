@@ -11,7 +11,8 @@
  * @todo This could probably be moved to the 'treeapi' since it is generic tree-related
  */
 
-function xarpages_userapi_pageintrees($args) {
+function xarpages_userapi_pageintrees($args)
+{
     extract($args);
 
     if (!isset($pid) || !is_numeric($pid) || !isset($tree_roots) || !is_array($tree_roots)) {
