@@ -36,36 +36,42 @@
  * @param 'commentary' commentary on the story content
  * @param 'commentarySource' source of the commentary from dropdown list
  * @param 'newCommentarySource' new source of the commentary
+ * @param 'articleid' articleid to use with story
  * @returns bool
  * @return true on success, false on failure
  */
 function newsletter_admin_createstory()
 {
+
+    
     // Get parameters from the input
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
         xarErrorFree();
-        $msg = xarML('You must select an owner name.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $formErrorMsg['owner'] .= xarML('You must select an owner name.');
     }
 
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
     if (!xarVarFetch('issueId', 'int:0:', $issueId, 0)) return;
     if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
+    if (!xarVarFetch('source', 'str:1:', $source, '')) return;
+    xarVarFetch('articleid', 'int:0', $articleid, 0);
+    xarVarFetch('title', 'str', $title);
+    xarVarFetch('content', 'str', $content);
 
-    if (!xarVarFetch('title', 'str:1:', $title)) {
+    if (empty($title) && ($articleid==0)) {
         xarErrorFree();
-        $msg = xarML('You must enter a title for the story.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $formErrorMsg['title'] = xarML('You must enter a title for the story');
+        if (xarModIsAvailable('articles')){
+             $formErrorMsg['title'] .= xarML(' or select an article to use.');
+        }
     }
 
-    if (!xarVarFetch('source', 'str:1:', $source, '')) return;
-    if (!xarVarFetch('content', 'str:1:', $content)) {
+    if (empty($content) && ($articleid==0)) {
         xarErrorFree();
-        $msg = xarML('You must provide content for the story.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $formErrorMsg['content'] = xarML('You must provide content for the story ');
+        if (xarModIsAvailable('articles')){
+             $formErrorMsg['content'] .= xarML('or select an article to use.');
+        }
     }
 
     if (!xarVarFetch('priority', 'int:0:1:', $priority, 0)) return;
@@ -80,17 +86,24 @@ function newsletter_admin_createstory()
     if (!xarVarFetch('commentarySource', 'str:1:', $commentarySource, '')) return;
     if (!xarVarFetch('newCommentarySource', 'str:1:', $newCommentarySource, '')) return;
     // Get submit button
-    if (!xarVarFetch('submit', 'str:1:', $submitbutton, '')) return;
+    if (!xarVarFetch('submitValue', 'str:1:', $submitbutton, '')) return;
 
     // If commentary exists, then check that a commentary source 
     // was entered
     if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
         xarErrorFree();
-        $msg = xarML('You must enter a commentary source for the commentary.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $formErrorMsg['comment'] = xarML('You must enter a commentary source for the commentary.');
     }
 
+    // see if an error was found above.  if so, put it in the data array and send them back to the form
+    if (!empty($formErrorMsg)){
+        $_sendBackData = array_merge(array('formErrorMsg'=>$formErrorMsg),$_REQUEST);
+        // go back to create story
+//        return xarModFunc('newsletter','admin','newstory',array('formErrorMsg'=>$formErrorMsg,'content'=>$content));
+
+        return xarModFunc('newsletter','admin','newstory',$_sendBackData);
+    }
+    
     // Add new commentary source if field isn't empty
     if (!empty($newCommentarySource)) {
             $newcommsource = xarModAPIFunc('newsletter',
@@ -152,7 +165,8 @@ function newsletter_admin_createstory()
                                     'linkExpiration' => $linkExpiration,
                                     'commentary' => $commentary,
                                     'commentarySource' => $commentarySource,
-                                    'tstmpDatePublished' => $tstmpDatePublished));
+                                    'tstmpDatePublished' => $tstmpDatePublished,
+                                    'articleid' => $articleid));
 
     // Check return value
     if (!isset($storyId) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 

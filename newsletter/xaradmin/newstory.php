@@ -22,20 +22,49 @@
  * @returns array
  * @return $data
  */
-function newsletter_admin_newstory()
+function newsletter_admin_newstory($args)
 {
+    // set a default value for form error messages
+    // this will get overwritten w/ the extract call if formErrorMsg was passed in args
+    $formErrorMsg=array();
+    
+    // get the arguments passed to us
+    //extract($args);
+    
+
     // Security check
     if(!xarSecurityCheck('AddNewsletter')) return;
 
-    // Get input parameters
+    // Get input parameters as defaults for new story
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
     if (!xarVarFetch('ownerId', 'int:0:', $ownerId, 0)) return;
     if (!xarVarFetch('issueId', 'int:0:', $issueId, 0)) return;
     if (!xarVarFetch('categoryId', 'int:0:', $categoryId, 0)) return;
+    if (!xarVarFetch('articleid', 'int:0:', $articleid, NULL,XARVAR_NOT_REQUIRED)) return;
+    
+    // get input if they have an error and need the form repopulated
+    if (!xarVarFetch('content', 'str:0:', $content, NULL,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('altDate', 'str:0:', $altDate, NULL,XARVAR_NOT_REQUIRED)) return;
+    
+    
+    // see if there was an error and they're passing back some vars
+    //xarVarFetch('content', 'str:0:', $data['content'], NULL,XARVAR_NOT_REQUIRED);
 
     // Get the admin menu
     $data = xarModAPIFunc('newsletter', 'admin', 'menu');
 
+    // see if we had anything passed to us
+    if (!empty($args) && is_array($args)){
+        // loop through all the args passed and put them in a form accessible array
+        while (list($key, $val) = each($args)) {
+            // get it the traditional xar way
+            xarVarFetch($key, 'str:0:', $value, NULL,XARVAR_NOT_REQUIRED);
+            // put it in the form array
+            $data[$key]=$val;
+        }
+    }
+    
+    
     // Set template strings
     $data['addlabel'] = xarVarPrepForDisplay(xarML('Finished'));
     $data['nextlabel'] = xarVarPrepForDisplay(xarML('Add Another Story'));
@@ -50,6 +79,24 @@ function newsletter_admin_newstory()
     // Check for exceptions
     if (!isset($data['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION)  {
         return; // throw back
+    }
+
+    // default is to not use articles
+    $data['canUseArticles']=false;
+    
+    // only do this step if they have the articles module loaded up
+    if (xarModIsAvailable('articles')){
+        $data['canUseArticles']=true;
+        
+        if (isset($articleid) && $articleid!=0){
+            $data['articleid']=$articleid;
+            
+            // get all the articles based on the users filter set (article_args)
+            $_articlearray = xarModAPIFunc(
+                'articles', 'user', 'get', array("aid"=>$data['articleid'] ));
+            // truncate the article title and put it back
+            $data['articletitle']=substr($_articlearray['title'],0,50);
+        }
     }
     
     // Check if we have an ownerid

@@ -61,7 +61,8 @@ function newsletter_userapi_getstory($args)
                      xar_registerlink,
                      xar_linkexpiration,
                      xar_commentary,
-                     xar_commentarysrc
+                     xar_commentarysrc,
+                     xar_articleid
               FROM $nwsltrTable
               WHERE xar_id = ?";
 
@@ -95,7 +96,8 @@ function newsletter_userapi_getstory($args)
          $registerLink,
          $linkExpiration,
          $commentary,
-         $commentarySource) = $result->fields;
+         $commentarySource,
+         $articleid) = $result->fields;
 
     // Close result set
     $result->Close();
@@ -152,7 +154,40 @@ function newsletter_userapi_getstory($args)
                    'registerLink' => $registerLink,
                    'linkExpiration' => $linkExpiration,
                    'commentary' => $commentary,
-                   'commentarySource' => $commentarySource);
+                   'commentarySource' => $commentarySource,
+                   'articleid' => $articleid);
+
+    // if we have an article ID, get the article
+    if (!empty($story['articleid'])){
+        // retrieve the article 
+        
+        $_article  = current(xarModAPIFunc('articles','user','getAll',
+                array('aids'=>array($story['articleid']),
+                      'extra'=>array('dynamicdata')
+                      )
+                 ));
+
+
+        // put all the article info in an array w/ the story array
+        $story['article']['title']=$_article['title'];
+        $story['article']['body']=$_article['body'];
+        $story['article']['summary']=$_article['summary'];
+
+        // loop through and get all the images, if any
+        // put them in vars the template can use
+        if (!empty($_article['image_output'])){
+            while (list($_key, $_image) = each($_article['image_output'])) {
+                $story['article']['imagesarray'][]=$_image;
+            }
+        }
+
+//xarDerefData("story",$_article,0);
+    }
+//if (xarModIsAvailable('images')){
+//    $tag = xarModAPIFunc('images', 'user', 'resize', array('src' => "http://ajones01/~ajones/xarChsf/index.php/uploads/374.jpg",'width' => "400",'constrain' => "1",'label' => "test"));
+//    die("tag: ".$tag);
+//}
+//
 
     // Return the story array
     return $story;

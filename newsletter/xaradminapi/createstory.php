@@ -33,6 +33,7 @@
  * @param $args['linkExpiration'] override of default publication link expiration
  * @param $args['commentary'] commentary for the story
  * @param $args['commentarySource'] commentary source for the story
+ * @param $args['articleid'] article ID for the story
  * @returns int
  * @return story id , or false on failure
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -114,8 +115,9 @@ function newsletter_adminapi_createstory($args)
               xar_registerlink,
               xar_linkexpiration,
               xar_commentary,
-              xar_commentarysrc)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              xar_commentarysrc,
+              xar_articleid)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $bindvars = array((int) $nextId,
                       (int) $ownerId,
@@ -132,7 +134,8 @@ function newsletter_adminapi_createstory($args)
                       (int) $registerLink,
                       (int) $linkExpiration,
                       (string) $commentary,
-                      (string) $commentarySource);
+                      (string) $commentarySource,
+                      (int) $articleid);
 
     $result =& $dbconn->Execute($query, $bindvars);
 

@@ -34,6 +34,7 @@
  * @param $args['linkExpiration'] override of default publication link expiration
  * @param $args['commentary'] commentary for the story
  * @param $args['commentarySource'] commentary source for the story
+ * @param $args['articleid'] id of the article to use in place of the story
  * @returns bool
  * @return true on success , or false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -93,7 +94,8 @@ function newsletter_adminapi_updatestory($args)
                   xar_registerlink = ?,
                   xar_linkexpiration = ?,
                   xar_commentary = ?,
-                  xar_commentarysrc = ?
+                  xar_commentarysrc = ?,
+                  xar_articleid = ?
               WHERE xar_id = ?";
 
     $bindvars = array((int)     $ownerId,
@@ -111,6 +113,7 @@ function newsletter_adminapi_updatestory($args)
                       (int)     $linkExpiration,
                       (string)  $commentary,
                       (string)  $commentarySource,
+                      (int)     $articleid,
                       (int)     $id);
 
     // Execute query

@@ -191,7 +191,8 @@ function newsletter_userapi_get($args)
                              $storiesTable.xar_fulltextlink,
                              $storiesTable.xar_registerlink,
                              $storiesTable.xar_commentary,
-                             $storiesTable.xar_commentarysrc
+                             $storiesTable.xar_commentarysrc,
+                             $storiesTable.xar_articleid
                       FROM  $storiesTable, $rolesTable, $categoriesTable, $publicationsTable
                       WHERE $storiesTable.xar_ownerid = $rolesTable.xar_uid
                       AND   $storiesTable.xar_cid = $categoriesTable.xar_cid
@@ -265,7 +266,8 @@ function newsletter_userapi_get($args)
                      $fullTextLink,
                      $registerLink,
                      $commentary,
-                     $commentarySource) = $result->fields;
+                     $commentarySource,
+                     $articleid) = $result->fields;
 
                 // Change date formats from UNIX timestamp to something readable
                 if ($storyDate['timestamp'] == 0) {
@@ -305,7 +307,8 @@ function newsletter_userapi_get($args)
                                  'fullTextLink' => $fullTextLink,
                                  'registerLink' => $registerLink,
                                  'commentary' => $commentary,
-                                 'commentarySource' => $commentarySource);
+                                 'commentarySource' => $commentarySource,
+                                 'articleid'=>$articleid);
             }
 
             // Close result set

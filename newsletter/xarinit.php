@@ -192,9 +192,10 @@ function newsletter_init()
         'xar_datepublished' => array('type'=>'integer','unsigned'=>TRUE,'null'=>TRUE,'default'=>'0'),
         'xar_fulltextlink'  => array('type'=>'varchar','size'=>255,'null'=>TRUE),
         'xar_registerlink'  => array('type'=>'integer','size'=>'tiny','null'=>FALSE,'default'=>'0'),
-        'xar_linkexpiration'  => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
+        'xar_linkexpiration' => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'xar_commentary'    => array('type'=>'text','null'=>FALSE),
-        'xar_commentarysrc' => array('type'=>'varchar','size'=>255,'null'=>TRUE)
+        'xar_commentarysrc' => array('type'=>'varchar','size'=>255,'null'=>TRUE),
+        'xar_articleid'     => array('type'=>'integer','null'=>TRUE,'default'=>'0')
     );
 
 

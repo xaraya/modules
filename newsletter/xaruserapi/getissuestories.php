@@ -95,7 +95,8 @@ function newsletter_userapi_getissuestories($args)
                      $storiesTable.xar_fulltextlink,
                      $storiesTable.xar_registerlink,
                      $storiesTable.xar_commentary,
-                     $storiesTable.xar_commentarysrc
+                     $storiesTable.xar_commentarysrc,
+                     $storiesTable.xar_articleid
               FROM  $storiesTable, $rolesTable, $categoriesTable, $topicsTable
               WHERE $storiesTable.xar_ownerid = $rolesTable.xar_uid
               AND   $storiesTable.xar_cid = $categoriesTable.xar_cid
@@ -165,7 +166,8 @@ function newsletter_userapi_getissuestories($args)
              $fullTextLink,
              $registerLink,
              $commentary,
-             $commentarySource) = $result->fields;
+             $commentarySource,
+             $articleid) = $result->fields;
 
         // Change date formats from UNIX timestamp to something readable
         if ($storyDate['timestamp'] == 0) {
@@ -188,6 +190,19 @@ function newsletter_userapi_getissuestories($args)
             $datePublished['year'] = date('Y', $datePublished['timestamp']);
         }
         
+        // no article title by 
+        $_article['title']=NULL;
+        
+        // if there is an article ID, get the article title
+        if (!empty($articleid)){
+            $_article  = current(xarModAPIFunc('articles','user','getAll',
+            array('aids'=>array($articleid),
+                  'extra'=>array('dynamicdata')
+                  )
+             ));
+
+        }
+        
         $stories[] = array('id' => $id,
                            'ownerId' => $ownerId,
                            'ownerName' => $ownerName,
@@ -204,9 +219,15 @@ function newsletter_userapi_getissuestories($args)
                            'fullTextLink' => $fullTextLink,
                            'registerLink' => $registerLink,
                            'commentary' => $commentary,
-                           'commentarySource' => $commentarySource);
-    }
+                           'commentarySource' => $commentarySource,
+                           'articleid' => $articleid,
+                           'article' => array("title"=>$_article['title']));
+                           
 
+    }
+    
+    
+    
     // Close result set
     $result->Close();
 

@@ -20,37 +20,102 @@
  * @author Richard Cave
  * @param 'id' the id of the story to be modified
  * @param 'publicationId' publication id of the issue the story is in
+ * @param 'articleid' id of an article used in place of a story
  * @returns array
  * @return $templateVarArray
  */
-function newsletter_admin_modifystory() 
+function newsletter_admin_modifystory($args=array()) 
 {
+    
+    
+    // set a default value for form error messages
+    // this will get overwritten w/ the extract call if formErrorMsg was passed in args
+    $formErrorMsg=array();
+    
+    $story=array();
+    
+    // get the arguments passed to us
+    extract($args);
+    
     // Security check
     if(!xarSecurityCheck('EditNewsletter')) return;
-
+    
     // Get input parameters
     if (!xarVarFetch('id', 'id', $id)) return;
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
+    
+    if (empty($story)){
+        // call the user API function to retrieve all the content
+        // for the story with the matching id ($id)
+        $story = xarModAPIFunc('newsletter',
+                               'user',
+                               'getstory',
+                               array('id' => $id));      
+    }
+    else{
+        // call the user API function to retrieve all the content
+        // for the story with the matching id ($id)
+        $_storyDB = xarModAPIFunc('newsletter',
+                               'user',
+                               'getstory',
+                               array('id' => $id));   
+                               
+        // put the story we just got in the form into the proper story format
+        // set the data from the form over the db pull
+        $_storyDB['articleid']=$story['articleid'];
+        $_storyDB['title']=$story['title'];
+        $_storyDB['source']=$story['source'];
+        $_storyDB['altDate']=$story['altDate'];
+        $_storyDB['content']=$story['content'];
+        $_storyDB['fullTextLink']=$story['fullTextLink'];
+        $_storyDB['commentary']=$story['commentary'];
+        $_storyDB['commentarySource']=$story['commentarySource'];
+        
+        // now make them the same for all the shared code below
+        $story = $_storyDB;
 
-    // The user API function is called
-    $story = xarModAPIFunc('newsletter',
-                           'user',
-                           'getstory',
-                           array('id' => $id));
-
-    // Check for exceptions
-    if (!isset($story) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
-        return; // throw back
-
+    }
+       
+    // set what we'll return to be an array and populate it depending on 
+    // if we use articles or stories
+    $templateVarArray = array();
+     
+    // default is to not use articles
+    $templateVarArray['canUseArticles']=false;
+    
+    
+    // only do this step if they have the articles module loaded up
+    if (xarModIsAvailable('articles')){
+        // get input parameters.  These allow the user
+        // to use an article in place of a story.  The first three (pubtypeid, catfilter, status) reduce
+        // the number of articles shown to the user to choose from.  ie article must be of this pubtype,
+        // in this category and of this status.
+        
+        // we may not have gotten the article vars from the form, they may need to be pulled from the
+        // database.  the previous xarModAPIFunc('newsletter','user','getstory',) call has what we need.  Do this 
+        // in the fourth xarVarFetch argument which will make the db value default if the form is empty.
+        xarVarFetch('articleid', 'int:0:', $vars['articleid'], $story['articleid'], XARVAR_NOT_REQUIRED);
+        
+        $templateVarArray['canUseArticles']=true;
+    }
+    
+    // get an array of all the publication from the database. we'll to put in the drop down
+    // to choose a publication for the story to use.
     $story['publications'] = xarModAPIFunc('newsletter',
                                            'user',
                                            'get',
                                             array('phase' => 'publication',
                                                   'sortby' => 'title'));
     
-    // Check for exceptions
+    // Check for exceptions from the xarMadAPIFunc call
     if (!isset($story['publications']) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
         return; // throw back
+                           
+                                                     
+    // Check for exceptions
+    if (!isset($story) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
+        return; // throw back
+
 
     // Find the publication based on story category
     if ($publicationId != 0) {
@@ -80,7 +145,7 @@ function newsletter_admin_modifystory()
 
         } elseif ($story['cid'] != 0) {
             // Get the parent category of the story
-            $storyCategory =  xarModAPIFunc('categories',
+            $storyCategory =  xarM0dAPIFunc('categories',
                                             'user',
                                             'getcatinfo',
                                              Array('cid' => $story['cid']));
@@ -180,13 +245,29 @@ function newsletter_admin_modifystory()
     // Get the admin menu
     $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
 
-    // Set template array
-    $templateVarArray = array(
-        'authid' => xarSecGenAuthKey(),
-        'updatebutton' => xarVarPrepForDisplay(xarML('Update Story')),
-        'menu' => $menu,
-        'hooks' => $hooks,
-        'story' => $story);
+
+    if (isset($vars['articleid']) && $vars['articleid']!=0){
+        $templateVarArray['articleid']=$vars['articleid'];
+        
+        // get all the articles based on the users filter set (article_args)
+        $_articlearray = xarModAPIFunc(
+            'articles', 'user', 'get', array("aid"=>$templateVarArray['articleid'] ));
+        // truncate the article title and put it back
+        $templateVarArray['articletitle']=substr($_articlearray['title'],0,50);
+    }
+
+    // if we were passed an auth id from updatestory, use it instead
+    $templateVarArray['authid'] = xarSecGenAuthKey();
+    if  (!empty($authid)){
+       $templateVarArray['authid']= $authid;
+    }
+
+    // Set template array with all story based info
+    $templateVarArray['updatebutton'] = xarVarPrepForDisplay(xarML('Update Story'));
+    $templateVarArray['menu'] = $menu;
+    $templateVarArray['hooks'] = $hooks;
+    $templateVarArray['story'] = $story;
+    $templateVarArray['formErrorMsg'] = $formErrorMsg;
 
     // Return the template variables defined in this function
     return $templateVarArray;

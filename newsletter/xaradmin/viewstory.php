@@ -28,6 +28,7 @@
  */
 function newsletter_admin_viewstory($args)
 {
+
     // Extract args
     extract ($args);
 

@@ -1,12 +1,27 @@
+
+<SCRIPT language="JavaScript">
+
+
+function newwindow(urlGoto,windowName,widthPassed,heightPassed)
+{
+window.open(urlGoto,windowName,'width='+widthPassed+',height='+heightPassed+',resizable=yes');
+}
+
+</SCRIPT>
+
 <div class="xar-mod-head">
     <span class="xar-mod-title">#$menutitle#</span>
 </div>
 <div class="xar-mod-body"><h2><xar:mlstring>New Story</xar:mlstring></h2><br />
     <div style="text-align: left;margin: auto;">
-        <form action="#xarModURL('newsletter', 'admin', 'createstory')#" method="post" enctype="application/x-www-form-urlencoded" >
+        <form action="#xarModURL('newsletter', 'admin', 'createstory')#" method="post" enctype="application/x-www-form-urlencoded" name="newstoryForm">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />     
         <input type="hidden" name="publicationId" id="publicationId" value="#$publicationId#" />       
-        <input type="hidden" name="issueId" id="issueId" value="#$issueId#" />       
+        <input type="hidden" name="issueId" id="issueId" value="#$issueId#" />  
+    
+        <xar:if condition="!empty($formErrorMsg)">
+            <font color="Red">There is an a problem with your story.  Please see details in red below.</font><br/>
+        </xar:if>         
         <table border="0" cellpadding="5">
             <tr>
                 <td>
@@ -31,12 +46,38 @@
                     </td>
                 </xar:if>
             </tr>
+           
+            
+            
+            <xar:if condition="$canUseArticles">
+                <tr >
+                    <td valign="top">
+                        <xar:mlstring>Use Article</xar:mlstring>:
+                    </td>
+                    <td>
+                        <xar:if condition="isSet($articletitle)">
+                            #$articletitle# <br>
+                            <a href="#xarModURL('newsletter', 'admin', 'newstory')#&publicationId=#$publicationId#&issueId=#$issueId#&articleid=0" tabindex="2">None</a> - 
+                            
+                                
+                            <A HREF="javascript:newwindow('#xarModURL('articles', 'user', 'display', array('aid' => $articleid))#?theme=print')" tabindex="3" >Preview</A> - 
+                            <input type="hidden" name="articleid" id="articleid" value="#$articleid#" />   
+                        </xar:if>
+                        <!--<A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&publicationId=#$publicationId#&issueId=#$issueId#','Choose Article','600','400')" >Choose</A>-->
+                        <A HREF="javascript:newwindow('#xarModURL('newsletter', 'admin', 'choosearticle')#&publicationId=#$publicationId#&issueId=#$issueId#')"  tabindex="4">Choose</A>
+                        
+                        
+                    </td>
+                </tr>
+            </xar:if>
+            
+            
             <tr>
                 <td>
                     <xar:mlstring>Story Owner:</xar:mlstring>
                 </td>
                 <td>
-                <select name="ownerId" tabindex="2">
+                <select name="ownerId" tabindex="5">
                     <xar:loop name="$owners">
                         <xar:if condition="$ownerId eq $loop:item['id']">
                             <option name="uid" value="#$loop:item['id']#" selected>#$loop:item['name']#</option>
@@ -45,6 +86,9 @@
                         </xar:if>
                     </xar:loop>
                 </select>
+                <xar:if condition="!empty($formErrorMsg['owner'])">
+                    <br/><font color="Red">#$formErrorMsg['owner']#</font><br/>
+                </xar:if>
                 </td>
             </tr>
             <xar:if condition="$number_of_categories != 0">
@@ -53,9 +97,13 @@
                         <xar:mlstring>Choose Category</xar:mlstring>
                     </td>
                     <td>
-                        <select name="categoryId" tabindex="3">
+                        <select name="categoryId" tabindex="6">
                             <xar:loop name="$categories">
-                                <option name="cid" value="#$loop:item['cid']#">#$loop:item['name']#</option>
+                                <xar:if condition="!empty($categoryId) && $categoryId eq $loop:item['cid']">
+                                    <option name="cid" value="#$loop:item['cid']#" selected>#$loop:item['name']#</option>
+                                <xar:else/>
+                                    <option name="cid" value="#$loop:item['cid']#">#$loop:item['name']#</option>
+                                </xar:if>
                             </xar:loop>
                         </select>
                     </td>
@@ -64,11 +112,20 @@
                 <input type="hidden" name="categoryId" id="categoryId" value="#$number_of_categories#" />       
             </xar:if>
             <tr>
-                <td>
+                <td valign="top"    >
                     <xar:mlstring>Title:</xar:mlstring>
                 </td>
                 <td>
-                    <input type="text" name="title" id="title" value="" size="50" maxlength="255" tabindex="4" />
+
+                        
+                    <xar:if condition="!empty($title)">
+                        <input type="text" name="title" id="title" value="#$title#" size="50" maxlength="255" tabindex="7" />
+                    <xar:else/>
+                        <input type="text" name="title" id="title" value="" size="50" maxlength="255" tabindex="7" />
+                    </xar:if>
+                    <xar:if condition="!empty($formErrorMsg['title'])">
+                        <br/><font color="Red">#$formErrorMsg['title']#</font><br/>
+                    </xar:if>
                 </td>
             </tr>
             <tr>
@@ -76,7 +133,12 @@
                     <xar:mlstring>Source:</xar:mlstring>
                 </td>
                 <td>
-                    <input type="text" name="source" id="source" value="" size="50" maxlength="255" tabindex="5" />
+                    <xar:if condition="!empty($source)">
+                        <input type="text" name="source" id="source" value="#$source#" size="50" maxlength="255" tabindex="8" />
+                    <xar:else/>
+                        <input type="text" name="source" id="source" value="" size="50" maxlength="255" tabindex="8" />
+                    </xar:if>
+                    
                 </td>
             </tr>
             <tr>
@@ -84,11 +146,11 @@
                     <xar:mlstring>Story Date:</xar:mlstring>
                 </td>
                 <td>
-                    <input type="text" name="storyDateMon" id="storyDateMon" value="#$storyDate['mon']#" size="2" maxlength="2" tabindex="6" />
+                    <input type="text" name="storyDateMon" id="storyDateMon" value="#$storyDate['mon']#" size="2" maxlength="2" tabindex="9" />
                     &nbsp;-&nbsp;
-                    <input type="text" name="storyDateDay" id="storyDateDay" value="#$storyDate['day']#" size="2" maxlength="2" tabindex="7" />
+                    <input type="text" name="storyDateDay" id="storyDateDay" value="#$storyDate['day']#" size="2" maxlength="2" tabindex="9" />
                     &nbsp;-&nbsp;
-                    <input type="text" name="storyDateYear" id="storyDateYear" value="#$storyDate['year']#" size="4" maxlength="4" tabindex="8" />
+                    <input type="text" name="storyDateYear" id="storyDateYear" value="#$storyDate['year']#" size="4" maxlength="4" tabindex="10" />
                     &nbsp;&nbsp;
                     (mm-dd-yyyy)
                 </td>
@@ -98,7 +160,12 @@
                     <xar:mlstring>Alternative Date:</xar:mlstring>
                 </td>
                 <td>
-                    <input type="text" name="altDate" id="altDate" value="" size="50" maxlength="255" tabindex="9" />
+                                           
+                    <xar:if condition="!empty($altDate)">
+                        <input type="text" name="altDate" id="altDate" value="#$altDate#" size="50" maxlength="255" tabindex="11" />
+                    <xar:else/>
+                        <input type="text" name="altDate" id="altDate" value="" size="50" maxlength="255" tabindex="11" />
+                    </xar:if>
                 </td>
             </tr>
             <tr>
@@ -106,7 +173,10 @@
                     <xar:mlstring>Content:</xar:mlstring>
                 </td>
                 <td>
-                    <textarea name="content" rows="15" cols="50" tabindex="10"></textarea>
+                    <textarea name="content" rows="15" cols="50" tabindex="12"><xar:if condition="!empty($content)">#$content# </xar:if></textarea>
+                    <xar:if condition="!empty($formErrorMsg['content'])">
+                        <br/><font color="Red">#$formErrorMsg['content']#</font><br/>
+                    </xar:if>
                 </td>
             </tr>
             <tr>
@@ -114,7 +184,12 @@
                     <xar:mlstring>Full Text Link:</xar:mlstring>
                 </td>
                 <td>
-                    <input type="text" name="fullTextLink" id="fullTextLink" value="" size="50" maxlength="255" tabindex="12" />
+                
+                    <xar:if condition="!empty($fullTextLink)">
+                        <input type="text" name="fullTextLink" id="fullTextLink" value="#$fullTextLink#" size="50" maxlength="255" tabindex="13" />
+                    <xar:else/>
+                        <input type="text" name="fullTextLink" id="fullTextLink" value="" size="50" maxlength="255" tabindex="13" />
+                    </xar:if>
                 </td>
             </tr>
             <tr>
@@ -122,7 +197,7 @@
                     <xar:mlstring>Registration Required to View Link:</xar:mlstring>
                 </td>
                 <td>
-                    <input type="checkbox" name="registerLink" value="1" tabindex="13" />
+                    <input type="checkbox" name="registerLink" value="1" tabindex="14" />
                 </td>
             </tr>
             <tr>
@@ -132,9 +207,9 @@
                 </td>
                 <td>
                     <xar:if condition="isset($linkExpires)">
-                        <input type="text" name="linkExpiration" id="linkExpiration" value="#$linkExpires#" size="4" maxlength="4" tabindex="14" />
+                        <input type="text" name="linkExpiration" id="linkExpiration" value="#$linkExpires#" size="4" maxlength="4" tabindex="15" />
                     <xar:else />
-                    <input type="text" name="linkExpiration" id="linkExpiration" size="4" maxlength="4" tabindex="14" />
+                        <input type="text" name="linkExpiration" id="linkExpiration" size="4" maxlength="4" tabindex="15" />
                     </xar:if>
                     &nbsp;<xar:mlstring>(0 = link never expires)</xar:mlstring>
                 <td>
@@ -144,7 +219,10 @@
                     <xar:mlstring>Commentary:</xar:mlstring>
                 </td>
                 <td>
-                    <textarea name="commentary" rows="8" cols="50" tabindex="15"></textarea>
+                    
+                    <textarea name="commentary" rows="8" cols="50" tabindex="16">
+                    <xar:if condition="!empty($commentary)">#$commentary#</xar:if>
+                    </textarea>
                 </td>
             </tr>
             <tr>
@@ -153,7 +231,7 @@
                 </td>
                 <td>
                     <xar:if condition="!empty($commentarySource)">
-                        <select name="commentarySource" tabindex="16">
+                        <select name="commentarySource" tabindex="17">
                             <option value=''>Choose Source</option>
                             <xar:loop name="$commentarySource">
                                 <option name="source" value="#$loop:item['source']#">#$loop:item['source']#</option>
@@ -163,14 +241,22 @@
                     </xar:if>
                     <xar:mlstring>Add a new commentary source:</xar:mlstring></b>
                     <br /><br />
-                    <input type="text" name="newCommentarySource" id="newCommentarySource" value="" size="50" maxlength="255" tabindex="17" />
+
+                    <xar:if condition="!empty($fullTextLink)">
+                        <input type="text" name="newCommentarySource" id="newCommentarySource" value="#$newCommentarySource#" size="50" maxlength="255" tabindex="18" />
+                    <xar:else/>
+                        <input type="text" name="newCommentarySource" id="newCommentarySource" value="" size="50" maxlength="255" tabindex="18" />
+                    </xar:if>
+                    <xar:if condition="!empty($formErrorMsg['comment'])">
+                    <br/><font color="Red">#$formErrorMsg['comment']#</font><br/>
+                    </xar:if>
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
                     <br /><br />
-                    <input type="submit" name="submit" value="#$nextlabel#" tabindex="18" />
-                    <input type="submit" name="submit" value="#$addlabel#" tabindex="19" />
+                    <input type="submit" name="submitValue" value="#$nextlabel#" tabindex="18" />
+                    <input type="submit" name="submitValue" value="#$addlabel#" tabindex="19" />
                 </td>
             </tr>
         </form>

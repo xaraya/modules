@@ -54,33 +54,17 @@ function newsletter_admin_updatestory()
 
     // Get parameters from the input
     if (!xarVarFetch('id', 'id', $id)) return;
+    if (!xarVarFetch('articleid', 'int:0:', $articleid,0)) return;
 
+    
+    // make sure they're the owner
     if (!xarVarFetch('ownerId', 'id', $ownerId)) {
         xarErrorFree();
-        $msg = xarML('You must select an owner name.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $formErrorMsg['owner'] .= xarML('You must select an owner name.');
     }
 
+    
     if (!xarVarFetch('publicationId', 'int:0:', $publicationId, 0)) return;
-    if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
-
-    if (!xarVarFetch('title', 'str:1:', $title)) {
-        xarErrorFree();
-        $msg = xarML('You must enter a title for the story.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
-
-    if (!xarVarFetch('source', 'str:1:', $source, '')) return;
-
-    if (!xarVarFetch('content', 'str:1:', $content)) {
-        xarErrorFree();
-        $msg = xarML('You must provide content for the story.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
-
     if (!xarVarFetch('priority', 'int:0:1:', $priority, 0)) return;
     if (!xarVarFetch('storyDateMon', 'int:0:', $storyDateMon, 0)) return;
     if (!xarVarFetch('storyDateDay', 'int:0:', $storyDateDay, 0)) return;
@@ -95,16 +79,47 @@ function newsletter_admin_updatestory()
     if (!xarVarFetch('datePublishedMon', 'int:0:', $datePublishedMon, 0)) return;
     if (!xarVarFetch('datePublishedDay', 'int:0:', $datePublishedDay, 0)) return;
     if (!xarVarFetch('datePublishedYear', 'int:0:', $datePublishedYear, 0)) return;
+    if (!xarVarFetch('categoryId', 'id', $categoryId, 0)) return;
+    if (!xarVarFetch('source', 'str:1:', $source, '')) return;
+    xarVarFetch('title', 'str:0:', $title,NULL);
+    xarVarFetch('content', 'str:0:', $content,NULL);
+
+    // they must enter a title, unless they have selected an article
+    if (empty($title) && ($articleid==0)) {
+        xarErrorFree();
+        $formErrorMsg['title'] = xarML('You must enter a title for the story');
+        if (xarModIsAvailable('articles')){
+             $formErrorMsg['title'] .= xarML(' or select an article to use.');
+        }
+    }
+    // they must enter content, unless they have selected an article
+    if (empty($content) && ($articleid==0)) {
+        xarErrorFree();
+        $formErrorMsg['content'] = xarML('You must provide content for the story ');
+        if (xarModIsAvailable('articles')){
+             $formErrorMsg['content'] .= xarML('or select an article to use.');
+        }
+    }
+
+
 
     // If commentary exists, then check that a commentary source 
     // was entered
     if (!empty($commentary) && (empty($commentarySource) && empty($newCommentarySource))) {
         xarErrorFree();
-        $msg = xarML('You must enter a commentary source for the commentary.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
+        $formErrorMsg['comment'] = xarML('You must enter a commentary source for the commentary.');
     }
 
+    // see if an error was found above.  if so, put it in the data array and send them back to the form
+    if (!empty($formErrorMsg)){
+        // get the auth id to pas back into the modify story
+        xarVarFetch('authid', 'str:1:', $authid);
+        $_sendBackData=array_merge(array('formErrorMsg'=>$formErrorMsg),array('story'=>$_REQUEST));
+        
+        // go back to modify story
+        return xarModFunc('newsletter','admin','modifystory',$_sendBackData);
+    }
+    
     // Add new commentary source if field isn't empty
     if (!empty($newCommentarySource)) {
             $newcommsource = xarModAPIFunc('newsletter',
@@ -171,6 +186,7 @@ function newsletter_admin_updatestory()
                             'linkExpiration' => $linkExpiration,
                             'commentary' => $commentary,
                             'commentarySource' => $commentarySource,
+                            'articleid' => $articleid,
                             'tstmpDatePublished' => $tstmpDatePublished))) {
         return; // throw back
     }
