@@ -27,7 +27,7 @@ function articles_admin_new($args)
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
     // Security check
-    if (!isset($ptid)) {
+    if (empty($ptid)) {
         $ptid = '';
     // TODO: check by category too ?
         if (!xarSecurityCheck('SubmitArticles',0)) {
@@ -60,6 +60,9 @@ function articles_admin_new($args)
                                 new SystemException($msg));
                 return;
             }
+        }
+        if (xarModIsHooked('uploads', 'articles', $ptid)) {
+            xarVarSetCached('Hooks.uploads','ishooked',1);
         }
     }
     if (!empty($preview)) {

@@ -35,11 +35,6 @@ function articles_admin_modify($args)
     $data['ptid'] = $ptid;
     $data['aid'] = $aid;
 
-    // Use articles user GUI function (not API) for preview
-    if (!xarModLoad('articles','user')) return;
-    $data['preview'] = xarModFunc('articles', 'user', 'display',
-                                  array('preview' => true, 'article' => $article));
-
     $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
     // Security check
@@ -54,6 +49,15 @@ function articles_admin_modify($args)
         return;
     }
     unset($input);
+
+    if (xarModIsHooked('uploads', 'articles', $ptid)) {
+        xarVarSetCached('Hooks.uploads','ishooked',1);
+    }
+
+    // Use articles user GUI function (not API) for preview
+    if (!xarModLoad('articles','user')) return;
+    $data['preview'] = xarModFunc('articles', 'user', 'display',
+                                  array('preview' => true, 'article' => $article));
 
     // preset some variables for hook modules
     $article['module'] = 'articles';
