@@ -177,8 +177,7 @@ function xarbb_user_viewforum()
 
     // Add the array of items to the template variables
     $data['fid'] = $fid;
-    //var_dump($topics); return;
-    usort($topics, 'sort_by_sticky');
+    sort_topics($topics);
     $data['items'] = $topics;
     $data['fname'] = $forums['fname'];
 
@@ -223,35 +222,36 @@ function xarbb_user_viewforum()
     // Return the template variables defined in this function
     return $data;
 }
- function ignoreme($a)
- {
-     return ($a['tstatus'] == 0 || $a['tstatus'] == 3) ? true : false;
- }
- function sort_by_sticky($a,$b)
- {
-     // ok, this should sort them all by status and ignore 0 and 3 tstatus
-     if(!ignoreme($a)) {
-         if($a['tstatus'] > $b['tstatus']) {
-             return -1;
-         } elseif($a['tstatus'] < $b['tstatus']) {
-             return 1;
-         } else {
-             return 0;
-         }
-     }
-     return -1;
- }
-/*
-function sort_by_sticky($a,$b)
+
+/**
+ *  Function to help sort the topics array by order of importance
+ *  @params $topics array topics to be sorted passed in by reference
+ *  @return null
+ */
+function sort_topics(&$topics)
 {
-// ok, this should sort them all by status
-    if($a['tstatus'] > $b['tstatus']) {
-        return -1;
-    } elseif($a['tstatus'] < $b['tstatus']) {
-        return 1;
-    } else {
-        return 0;
+    $normal = array();
+    $sticky = array();
+    $announcements = array();
+    
+    for($i=0, $max = count($topics); $i<$max; $i++) {
+        switch($topics[$i]['tstatus']) {
+            case '1':
+                $announcements[] = $topics[$i];
+                break;
+            case '2':
+                $sticky[] = $topics[$i];
+                break;
+            case '3':
+                $normal[] = $topics[$i];
+                break;
+            case '0':
+            default:
+                $normal[] = $topics[$i];
+                break;
+        }
     }
+    
+    $topics = array_merge($announcements,$sticky,$normal);
 }
-*/
 ?>
