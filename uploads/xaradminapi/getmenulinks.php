@@ -16,18 +16,13 @@ function uploads_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('uploads',
                                                    'admin',
                                                    "view"),
-                              'title' => xarML('View All Uploads'),
-                              'label' => xarML('View Uploads'));
+                              'title' => xarML('View All Files'),
+                              'label' => xarML('View Files'));
         $menulinks[] = Array('url'   => xarModURL('uploads',
                                                    'user',
                                                    'uploadform'),
-                              'title' => xarML('Upload a File'),
-                              'label' => xarML('Upload File'));
-        $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                   'admin',
-                                                   'fileimport'),
-                              'title' => xarML('Import Files'),
-                              'label' => xarML('Import Files'));
+                              'title' => xarML('Add a File'),
+                              'label' => xarML('Add File'));
     }
     if (xarSecurityCheck('AdminUploads')) {
         $menulinks[] = Array('url'   => xarModURL('uploads',

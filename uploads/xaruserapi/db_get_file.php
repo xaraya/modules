@@ -30,31 +30,31 @@ function uploads_userapi_db_get_file( $args )  {
     
     $where = array();
     
-    if (isset($fileIds) && is_array($fileIds)) {
-        $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileIds) . ')';
+    if (isset($fileId)) {
+        if (is_array($fileId)) {
+            $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileIds) . ')';
+        } else {
+            $where[] = "xar_fileEntry_id = $fileId";
+        }
     }
     
-    if(isset($fileId) && !isset($fileIds)) {
-        $where[] = "xar_fileEntry_id = $fileId";
-    }
-
-    if (isset($fileName)) {
+    if (isset($fileName) && !empty($fileName)) {
         $where[] = "(xar_filename LIKE '$fileName')";
     }
         
-    if (isset($fileStatus)) {
+    if (isset($fileStatus) && !empty($fileStatus)) {
         $where[] = "(xar_status = $fileStatus)";
     }
 
-    if (isset($userId)) {
+    if (isset($userId) && !empty($userId)) {
         $where[] = "(xar_user_id = $userId)";
     } 
 
-    if (isset($store_type)) {
+    if (isset($store_type) && !empty($store_type)) {
         $where[] = "(xar_store_type = $store_type)";
     }
     
-    if (isseT($fileType)) {
+    if (isseT($fileType) && !empty($fileType)) {
         $where[] = "(xar_mime_type LIKE '$fileType')";
     }
 
@@ -118,15 +118,32 @@ function uploads_userapi_db_get_file( $args )  {
         
         if (stristr($fileInfo['fileLocation'], $importDir)) {
             $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'IMPORTS', $fileInfo['fileLocation']));
-            $fileInfo['fileHashName']  = basename($fileInfo['fileLocation']);
+            $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         } elseif (stristr($fileInfo['fileLocation'], $uploadDir)) {
             $fileInfo['fileDirectory'] = dirname(str_replace($uploadDir, 'UPLOADS', $fileInfo['fileLocation']));
-            $fileInfo['fileHashName']  = basename($fileInfo['fileLocation']);
+            $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         } else {
             $fileInfo['fileDirectory'] = dirname($fileInfo['fileLocation']);
-            $fileInfo['fileHashName']  = basename($fileInfo['fileLocation']);
+            $fileInfo['fileHash']  = basename($fileInfo['fileLocation']);
         }
-       
+        
+        $fileInfo['fileHashName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
+               
+        switch($fileInfo['fileStatus']) {
+            case _UPLOADS_STATUS_REJECTED:
+                $fileInfo['fileStatusName'] = xarML('Rejected');
+                break;
+            case _UPLOADS_STATUS_APPROVED: 
+                $fileInfo['fileStatusName'] = xarML('Approved');
+                break;
+            case _UPLOADS_STATUS_SUBMITTED: 
+                $fileInfo['fileStatusName'] = xarML('Submitted');
+                break;
+            default:
+                $fileInfo['fileStatusName'] = xarML('Unknown!');
+                break;
+        }
+        
         $fileList[] = $fileInfo;
         $result->MoveNext();
     }

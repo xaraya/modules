@@ -75,6 +75,23 @@ function uploads_userapi_db_getall_files( /* VOID */ ) {
             $fileInfo['fileHashName']  = basename($fileInfo['fileLocation']);
         }
        
+        $fileInfo['fileHashName'] = $fileInfo['fileDirectory'] . '/' . $fileInfo['fileHash'];
+               
+        switch($fileInfo['fileStatus']) {
+            case _UPLOADS_STATUS_REJECTED:
+                $fileInfo['fileStatusName'] = xarML('Rejected');
+                break;
+            case _UPLOADS_STATUS_APPROVED: 
+                $fileInfo['fileStatusName'] = xarML('Approved');
+                break;
+            case _UPLOADS_STATUS_SUBMITTED: 
+                $fileInfo['fileStatusName'] = xarML('Submitted');
+                break;
+            default:
+                $fileInfo['fileStatusName'] = xarML('Unknown!');
+                break;
+        }
+        
         $fileList[] = $fileInfo;
         $result->MoveNext();
     }

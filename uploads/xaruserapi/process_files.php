@@ -18,7 +18,7 @@ function uploads_userapi_process_files( $args ) {
     } else {
         if (isset($import_path_override) && file_exists($import_path_override)) {
             $import_directory = $import_path_override;
-    } else {
+	    } else {
             $import_directory = xarModGetVar('uploads','path.imports-directory');
         }
     }
@@ -73,7 +73,7 @@ function uploads_userapi_process_files( $args ) {
     /**
      * Prepare the filelist of imports
      */    
-    if (isset($importFrom) && strlen($importFrom)) {
+    if (isset($importFrom) && strlen(trim($importFrom))) {
         
         /**
          * if the importFrom is an url, then

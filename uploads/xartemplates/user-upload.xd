@@ -1,4 +1,53 @@
-<xar:mlstring>The file was uploaded successfully.  
-Please check back at a later time to see if it has been approved.
-If you have any questions, please contact the site administrator.
-</xar:mlstring>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>File Upload/Import Status</xar:mlstring></span>
+</div>
+<table width="100%">
+    <xar:if condition="count($added)">
+        <tr>
+            <td>
+                <h2>
+                    <xar:mlstring>Files Successfully Added</xar:mlstring>
+                </h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%">
+                    <tr>
+                        <th><xar:mlstring>File</xar:mlstring></th>
+                        <th><var:mlstring>File ID</var;mlstring></th>
+                    </tr>
+                    <xar:foreach in="$added" key="$fileSrc" value="$fileInfo">
+                        <tr>
+                            <td>#$fileInfo['fileName']#</td>
+                            <td>#$fileInfo['fileId']#</td>
+                        </tr>
+                    </xar:foreach>
+                </table>
+            </td>
+        </tr>
+    </xar:if>
+    <xar:if condition="count($errors)">
+        <tr>
+            <th><xar:mlstring>File Upload Errors</xar:mlstring></th>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%">
+                    <tr>
+                        <th><xar:mlstring>File</xar:mlstring></th>
+                        <th><var:mlstring>Error</var;mlstring></th>
+                    </tr>
+
+                    <xar:foreach in="$errors" key="$fileSrc" value="$fileInfo">
+                        <tr>
+                            <td>#$fileInfo['fileName']#</td>
+                            <td>#$fileInfo['errID']#: #$fileInfo['errMsg']#</td>
+                        </tr>
+                    </xar:foreach>
+                </table>
+            </td>
+        </tr>
+    </xar:if>
+</table>
+        

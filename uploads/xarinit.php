@@ -25,12 +25,34 @@ function uploads_init()
     }
     xarModSetVar('uploads', 'path.uploads-directory',   $base_directory . 'var/uploads');
     xarModSetVar('uploads', 'path.imports-directory',   $base_directory . 'var/imports');
-    xarModSetVar('uploads', 'file.maxsize',             '10000000');
-    xarModSetVar('uploads', 'file.censored-mimetypes',   serialize(array()));
-    xarModSetVar('uploads', 'file.delete-confirmation',  TRUE);
-    xarModSetVar('uploads', 'file.obfuscate-on-import',  FALSE);
-    xarModSetVar('uploads', 'file.obfuscate-on-upload',  TRUE);
+    xarModSetVar('uploads', 'file.maxsize',            '10000000');
+    xarModSetVar('uploads', 'file.censored-mimetypes',  serialize(array()));
+    xarModSetVar('uploads', 'file.delete-confirmation', TRUE);
+    xarModSetVar('uploads', 'file.obfuscate-on-import', FALSE);
+    xarModSetVar('uploads', 'file.obfuscate-on-upload', TRUE);
+    xarModSetVar('uploads', 'file.auto-purge',          FALSE);
         
+    $data['filters']['mimetypes'][0]['typeId']      = 0;
+    $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
+    $data['filters']['subtypes'][0]['subtypeId']    = 0;
+    $data['filters']['subtypes'][0]['subtypeName']  = xarML('All');
+    $data['filters']['status'][0]['statusId']       = 0;
+    $data['filters']['status'][0]['statusName']     = xarML('All');
+    $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusId']    = _UPLOADS_STATUS_SUBMITTED;
+    $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusName']  = 'Submitted';
+    $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusId']     = _UPLOADS_STATUS_APPROVED;
+    $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusName']   = 'Approved';
+    $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusId']     = _UPLOADS_STATUS_REJECTED;
+    $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = 'Rejected';
+    $filter['fileType']     = '%';
+    $filter['fileStatus']   = '';
+    
+    $mimetypes =& $data['filters']['mimetypes'];
+    $mimetypes = array_merge($mimetypes, xarModAPIFunc('mime','user','getall_types'));
+    unset($mimetypes);
+
+    xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
+    
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -40,14 +62,14 @@ function uploads_init()
 
     xarDBLoadTableMaintenanceAPI();
     $fileEntry_fields = array(
-        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big',      'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_itemtype_id'  => array('type'=>'integer', 'size'=>'big',     'null'=>FALSE),
-        'xar_user_id'      => array('type'=>'integer', 'size'=>'big',     'null'=>FALSE),
-        'xar_filename'     => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
-        'xar_location'     => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
-        'xar_status'       => array('type'=>'integer', 'size'=>'tiny',      'null'=>FALSE,  'default'=>'0'),
-        'xar_filesize'     => array('type'=>'integer', 'size'=>64,     'null'=>FALSE),
-        'xar_store_type'   => array('type'=>'varchar', 'size'=>1,      'null'=>FALSE),
+        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_itemtype_id'  => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+        'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+        'xar_filename'     => array('type'=>'varchar', 'size'=>254,   'null'=>FALSE),
+        'xar_location'     => array('type'=>'varchar', 'size'=>254,   'null'=>FALSE),
+        'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE,  'default'=>'0'),
+        'xar_filesize'     => array('type'=>'integer', 'size'=>64,    'null'=>FALSE),
+        'xar_store_type'   => array('type'=>'varchar', 'size'=>1,     'null'=>FALSE),
         'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
     );
         
@@ -69,19 +91,18 @@ function uploads_init()
     $query  =  xarDBCreateTable($fileData_table, $fileData_fields);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-    
-    
-    xarRegisterMask('ViewUploads','All','uploads','Upload','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadUploads','All','uploads','Upload','All','ACCESS_READ');
-    xarRegisterMask('EditUploads','All','uploads','Upload','All','ACCESS_EDIT');
-    xarRegisterMask('AdminUploads','All','uploads','Upload','All','ACCESS_ADMIN');
-    
+ 
+    xarRegisterMask('UploadsView',  'All','uploads','Upload','All:All:All','ACCESS_READ');
+    xarRegisterMask('UploadsAdd',   'All','uploads','Upload','All:All:All','ACCESS_ADD');
+    xarRegisterMask('UploadsEdit',  'All','uploads','Upload','All:All:All','ACCESS_EDIT');
+    xarRegisterMask('UploadsDelete','All','uploads','Upload','All:All:All','ACCESS_DELELE');
+    xarRegisterMask('UploadsAdmin', 'All','uploads','Upload','All:All:All','ACCESS_ADMIN');
 
     /**
      * Register hooks
      */
     if (!xarModRegisterHook('item', 'transform', 'API',
-                           'uploads', 'user', 'transformhook')) {
+                            'uploads', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook');
          xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
@@ -146,7 +167,7 @@ function uploads_upgrade($oldversion)
             $linkagetable = $xartable['uploads'];
 
             xarDBLoadTableMaintenanceAPI();
-
+            
             // add the xar_itemtype column
             $query = xarDBAlterTable($linkagetable,
                                      array('command' => 'add',
@@ -366,7 +387,30 @@ function uploads_upgrade($oldversion)
             xarModSetVar('uploads','file.censored-mimetypes', $file_censored_mimetypes);
             xarModSetVar('uploads','file.obfuscate-on-import', $file_obfuscate_on_import);
             xarModSetVar('uploads','file.obfuscate-on-upload', $file_obfuscate_on_upload);
+            xarModSetVar('uploads', 'file.auto-purge',          FALSE);
 
+        
+            $data['filters']['mimetypes'][0]['typeId']      = 0;
+            $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
+            $data['filters']['subtypes'][0]['subtypeId']    = 0;
+            $data['filters']['subtypes'][0]['subtypeName']  = xarML('All');
+            $data['filters']['status'][0]['statusId']       = 0;
+            $data['filters']['status'][0]['statusName']     = xarML('All');
+            $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusId']    = _UPLOADS_STATUS_SUBMITTED;
+            $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusName']  = 'Submitted';
+            $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusId']     = _UPLOADS_STATUS_APPROVED;
+            $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusName']   = 'Approved';
+            $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusId']     = _UPLOADS_STATUS_REJECTED;
+            $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = 'Rejected';
+            $filter['fileType']     = '%';
+            $filter['fileStatus']   = '';
+
+            $mimetypes =& $data['filters']['mimetypes'];
+            $mimetypes = array_merge($mimetypes, xarModAPIFunc('mime','user','getall_types'));
+            unset($mimetypes);
+
+            xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
+            
             /** 
              * Last, but not least, we drop the old tables:
              * We wait to do this until the very end so that, in the event there 

@@ -1,69 +1,112 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Uploads Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>View Uploads</xar:mlstring></h2><br />
-<div style="margin: auto;">
-
-<p><b><xar:mlstring>Sort Options</xar:mlstring>:</b>
-<a href="#xarModURL('uploads', 'admin', 'view')#"><xar:mlstring>View All</xar:mlstring></a>&nbsp;|
-<a href="#xarModURL('uploads', 'admin', 'view')#&amp;filter=waiting"><xar:mlstring>Waiting for Approval</xar:mlstring></a>
-</p>
-
-
-<xar:if condition="count($items) gt 0">
-<table summary="Uploads" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-<tr>
-<!---	<th><xar:mlstring>Source Module</xar:mlstring></th>--->
-	<th><xar:mlstring>HitCount</xar:mlstring></th>
-	<th><xar:mlstring>Upload Code</xar:mlstring></th>
-<!---	<th><xar:mlstring>Mod Item ID</xar:mlstring></th>--->
-	<th><xar:mlstring>Uploaded by</xar:mlstring></th>
-	<th><xar:mlstring>User Given File Name</xar:mlstring></th>
-	<th><xar:mlstring>Current File Name</xar:mlstring></th>
-	<th><xar:mlstring>Actions</xar:mlstring></th>
-</tr>
-<xar:loop name="$items">
-<xar:if condition="(($loop:index + 1) % 2)">
-	<tr>
-<!---		<td class="xar-norm">#$loop:item['ulmod']#</td>--->
-		<td class="xar-norm">#$loop:item['uldownloadcount']#</td>
-		<td class="xar-norm">#ulid:#$loop:item['ulid']##</td>
-<!---		<td class="xar-norm">#$loop:item['ulmodid']#</td>--->
-		<td class="xar-norm">#$loop:item['uluid']#</td>
-		<td class="xar-norm">#$loop:item['ulfile']#</td>
-		<td class="xar-norm">#$loop:item['ulhash']#</td>
-		<td class="xar-norm">
-		<a href="#xarModURL('uploads', 'admin', 'download', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Download</xar:mlstring></a>
-		<xar:if condition="$loop:item['ulapp'] eq 0"> 
-		 | <a href="#xarModURL('uploads', 'admin', 'approve', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Approve</xar:mlstring></a> |
-		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Reject</xar:mlstring></a>
-		<xar:else />
-		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Delete</xar:mlstring></a>
-		</xar:if> 
-		</td>
-	</tr>
-<xar:else />
-	<tr>
-<!---		<td class="xar-accent">#$loop:item['ulmod']#</td>--->
-		<td class="xar-accent">#$loop:item['uldownloadcount']#</td>
-<!---		<td class="xar-accent">#ulid:#$loop:item['ulid']##</td>--->
-		<td class="xar-accent">#ulid:#$loop:item['ulid']##</td>
-		<td class="xar-accent">#$loop:item['uluid']#</td>
-		<td class="xar-accent">#$loop:item['ulfile']#</td>
-		<td class="xar-accent">#$loop:item['ulhash']#</td>
-		<td class="xar-accent">
-		<a href="#xarModURL('uploads', 'admin', 'download', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Download</xar:mlstring></a>
-		<xar:if condition="$loop:item['ulapp'] eq 0"> 
-		 | <a href="#xarModURL('uploads', 'admin', 'approve', array('ulid'=>$loop:item['ulid']))#"><xar:mlstring>Approve</xar:mlstring></a> |
-		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Reject</xar:mlstring></a>
-		<xar:else />
-		<a href="#xarModURL('uploads', 'admin', 'reject', array('ulid'=>$loop:item['ulid'], 'authid' => $authid))#"><xar:mlstring>Delete</xar:mlstring></a>
-		</xar:if> 
-		</td>
-	</tr>
-</xar:if>
-</xar:loop>
-</table>
-<xar:else/>
-	<xar:mlstring>No uploads with applied filter.</xar:mlstring>
-</xar:if>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>File Administration</xar:mlstring>
+    </span>
 </div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View Files</xar:mlstring></h2>
+    <br />
+    <div style="margin: auto;">
+
+        <xar:template file="filter_bar" type="module" />
+        
+        <form action="#xarModUrl('uploads','admin','view')#" method="post">
+        
+        <table summary="Files" width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+            <tr>
+                <th><xar:mlstring>Select</xar:mlstring></th>
+                <th><xar:mlstring>File Name</xar:mlstring></th>
+                <th><xar:mlstring>Uploaded By</xar:mlstring></th>
+                <th><xar:mlstring>Status</xar:mlstring></th>
+            </tr>
+            
+            <xar:if condition="count($items)">
+                <xar:loop name="$items">
+                    <xar:if condition="(($loop:index + 1) % 2)">
+                        <tr>
+                            <td class="xar-norm" align="center">
+                                <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#">
+                            </td>
+                            <td class="xar-norm" align="center">&nbsp;
+                                <a onClick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&fileId=#$loop:item['fileId']#',
+                                                                 '#$loop:item['fileName']#',
+                                                                 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=600,left=20,top=20'); 
+                                                                 return false;">
+                                    #$loop:item['fileName']#
+                                </a>
+                            </td>
+                            <td class="xar-norm" align="center">&nbsp;#$loop:item['userName']#</td>
+                            <td class="xar-norm" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
+                        </tr>
+                    <xar:else />
+                        <tr>
+                            <td class="xar-accent" align="center">
+                                <input type="checkbox" name="fileId[]" id="fileId_#$loop:item['fileId']#" value="#$loop:item['fileId']#">
+                            </td>
+                            <td class="xar-accent" align="center">&nbsp;
+                                <a onClick="MyWindow=window.open('#xarModURL('uploads','user','file_properties')#&fileId=#$loop:item['fileId']#',
+                                                                 '#$loop:item['fileName']#',
+                                                                 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=600,left=20,top=20'); 
+                                                                 return false;">
+                                    #$loop:item['fileName']#
+                                </a>
+                            <td class="xar-accent" align="center">&nbsp;#$loop:item['userName']#</td>
+                            <td class="xar-accent" align="center">&nbsp;#$loop:item['fileStatusName']#</td>
+                        </tr>
+                    </xar:if>
+                </xar:loop>
+                <tr>
+                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                    <td colspan="3" class="xar-accent">
+                    <xar:else />
+                    <td colspan="4" class="xar-accent">
+                    </xar:if>
+                        <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
+                            <tr>
+                                <td width="100%">
+                                    Change selected files to:&nbsp;
+                                    <select name="action" id="action">
+                                        <xar:foreach in="$filters['status']" key="$key" value="$status">
+                                            <xar:if condition="$key eq '0'">
+                                                <!--- skip --->
+                                            <xar:else />
+                                                <option value="#$status['statusId']#">
+                                                    #$status['statusName']# 
+                                                </option>
+                                            </xar:if>
+                                        </xar:foreach>
+                                    </select>
+                                    <input type="submit" name="fileDo" id="file_change" value="Change">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <xar:if condition="!xarModGetVar('uploads','file.auto-purge')">
+                        <td class="xar-accent">
+                            <table summary="Commands" width="100%" border="0" cellpadding="0" cellspacing="0" class="xar-norm">
+                                <tr>
+                                    <td width="100%" align="center">
+                                        <center>
+                                        <input type="submit" name="fileDo" id="file_purge"  value="Purge Rejected">
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>                    
+                    </xar:if>
+                </tr>                                    
+            <xar:else />
+                <tr>
+                    <td class="xar-norm" colspan="4" align="center">
+                        <br />
+                        <xar:mlstring>
+                            There are currently no files to view with the filter you have chosen.
+                        </xar:mlstring>
+                        <br />
+                    </td>
+                </td>
+            </xar:if>
+        </table>
+        </form>
+    </div>
 </div>

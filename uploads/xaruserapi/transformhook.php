@@ -31,9 +31,8 @@ function uploads_userapi_transformhook ( $args )
 function uploads_userapi_transform ( $body )
 {
     // Loop over each Upload ID Tag, Auto detect display tag based on extension
-    while( ereg('#ulid:([0-9]+)#',$body,$reg) )
-    {
-        $ulid = $reg[1];
+    while(ereg('#file:([0-9]+)#', $body, $matches)) {
+        $ulid = $matches[1];
 
         // Lookup Upload
         $info = xarModAPIFunc('uploads',
@@ -54,13 +53,13 @@ function uploads_userapi_transform ( $body )
                                ,array('ulid' => $ulid, 'ulfile' => $ulfile)
                                ,$info['ulext']);
         }
-        $body=ereg_replace("#ulid:$reg[1]#",$tpl,$body);
+        $body=ereg_replace("#ulid:$matches[1]#",$tpl,$body);
     }
 
     // Loop over each Upload Tag set to use Default Template
-    while( ereg('#ulidd:([0-9]+)#',$body,$reg) )
+    while( ereg('#ulidd:([0-9]+)#',$body,$matches) )
     {
-        $ulid = $reg[1];
+        $ulid = $matches[1];
 
         // Lookup Upload
         $info = xarModAPIFunc('uploads',
@@ -73,13 +72,13 @@ function uploads_userapi_transform ( $body )
         // Check if file approved
         $tpl = xarTplModule('uploads','user','viewdownload'
                            ,array('ulid' => $ulid, 'ulfile' => $ulfile));
-        $body=ereg_replace("#ulidd:$reg[1]#",$tpl,$body); 
+        $body=ereg_replace("#ulidd:$matches[1]#",$tpl,$body); 
     }
 
     // Loop over each Upload Tag set to use Default Template
-    while( ereg('#ulfn:(.+)#',$body,$reg) )
+    while( ereg('#ulfn:(.+)#',$body,$matches) )
     {
-        $ulname = $reg[1];
+        $ulname = $matches[1];
 
         // Lookup Upload
         $info = xarModAPIFunc('uploads',
@@ -92,7 +91,7 @@ function uploads_userapi_transform ( $body )
         // Check if file approved
         $tpl = xarTplModule('uploads','user','viewdownload'
                            ,array('ulid' => $ulid, 'ulfile' => $ulfile));
-        $body=ereg_replace("#ulidd:$reg[1]#",$tpl,$body); 
+        $body=ereg_replace("#ulidd:$matches[1]#",$tpl,$body); 
     }
 
     return $body;

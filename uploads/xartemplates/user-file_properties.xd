@@ -1,0 +1,122 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <xar:blockgroup name="header" id="header" />
+    <title>
+        <xar:mlstring>
+            File Properties
+        </xar:mlstring>
+        :: #$fileInfo['fileName']#
+    </title> 
+</head>
+<body>
+    <table width="100%" border="0" cellspacing="2" cellpadding="1">
+        <xar:if condition="!isset($error) AND count($fileInfo)">
+            <form action="#xarModUrl('uploads','user','file_properties')#" method="post">
+            <br />
+            <tr>
+                <td width="80%" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="20%">
+                                <img src=""$fileInfo['mimeImage']#" height="48" width="48">
+                            </td>
+                            <td width="80%">
+                                <input type="textbox" maxlength="128" size="#sizeof($fileInfo['fileName'])#" value="#$fileInfo['fileName']#">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><p style="height: 12px;">&nbsp;</p></td></tr>
+            <tr>
+                <td width="80%" align="center">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr> 
+                            <td class="xar-norm" width="20%">
+                                <xar:mlstring>
+                                    File ID
+                                </xar:mlstring>
+                            </td>
+                            <td width="80%">&nbsp;
+                                #$fileInfo['fileId']#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xar-accent"width="20%">
+                                <xar:mlstring>
+                                    Type
+                                </xar:mlstring>
+                            </td>
+                            <td width="80%">&nbsp;
+                                #$fileInfo['fileType']#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xar-norm" width="20%">
+                                <xar:mlstring>
+                                    Location
+                                </xar:mlstring>
+                            </td>
+                            <td width="80%">&nbsp;
+                                #$fileInfo['fileHashName']#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xar-accent"width="20%">
+                                <xar:mlstring>
+                                    Store Type
+                                </xar:mlstring>
+                            </td>
+                            <td width="80%">&nbsp;
+                                #$fileInfo['storeType']['long']# (#$fileInfo['storeType']['short']#)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xar-norm" width="20%">
+                                <xar:mlstring>
+                                    Uplaoded By
+                                </xar:mlstring>
+                            </td>
+                            <td width="80%">&nbsp;
+                                #$fileInfo['userName']# (#$fileInfo['userId']#)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xar-accent" width="20%">
+                                <xar:mlstring>
+                                    File Size
+                                </xar:mlstring>
+                            </td>
+                            <td width="80%">&nbsp;
+                                #$fileInfo['size']['short']# (#$fileInfo['size']['long']# bytes)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="xar-norm" width="20%">
+                                <xar:mlstring>
+                                    Reference String
+                                </xar:mlstring>
+                            </td>
+                            <td width="80%">&nbsp;
+                                file:#$fileInfo['fileId']#
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr><td><p style="height: 12px;">&nbsp;</p></td></tr>
+            </form>
+        <xar:else />
+            <tr>
+                <td width="100%">
+                    <br />
+                    <br />
+                    <p style="color: red;">#$error#</p>
+                    <br />
+                    <br />
+                </td>
+            </tr>
+        </xar:if>
+    </table>
+</body>
+</html>

@@ -26,15 +26,6 @@ function uploads_userapi_validate_upload( $args ) {
         return FALSE;
     }        
 
-    // Check to see if the mime-type is allowed
-    $censored_mime_types = unserialize(xarModGetVar('uploads','file.censored-mimetypes'));
-    
-    if (in_array($fileInfo['fileType'], $censored_mime_types)) {
-        $msg = xarML('Unable to save uploaded file - File type is not allowed!');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOADS_FILE_NOT_ALLOWED', new SystemException($msg));
-        return FALSE;
-    }
-    
     // Run the file specific validation routines. validate_file will set an exception
     // if the check doesn't pass so no need to set an exception here :)
     if (!xarModAPIFunc('uploads','user','validate_file', array('fileInfo' => $fileInfo))) {
