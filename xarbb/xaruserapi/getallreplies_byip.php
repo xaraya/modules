@@ -20,7 +20,8 @@
  *                   found for the particular modid/objectid pair, or raise an
  *                   exception and return false.
  */
-function xarbb_userapi_getallreplies_byip($args) {
+function xarbb_userapi_getallreplies_byip($args) 
+{
     extract($args);
 
     if ( !isset($modid) || empty($modid) ) {
