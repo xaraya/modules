@@ -60,7 +60,6 @@ function translations_adminapi_generate_module_skels($args)
     $transKeyEntriesCollection = array();
 
     $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',array('moddir'=>$moddir));
-    // $subnames = array('user', 'userapi', 'admin', 'adminapi', 'init');
 
     foreach ($subnames as $subname) {
         $filename = "modules/$moddir/xar$subname.php";
@@ -206,7 +205,11 @@ function translations_adminapi_generate_module_skels($args)
 
     foreach ($subnames as $subname) {
 
-        if (preg_match('/^template::(.*)/', $subname, $matches)) {
+//        $matchstring = '/^' . template . '::(.*)/';
+//        if (preg_match($matchstring, $subname, $matches)) {
+//            if (!$gen->create(XARMLS_CTXTYPE_TEMPLATE, $matches[1])) return;
+
+        if (preg_match('/^templates::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_TEMPLATE, $matches[1])) return;
         } elseif (preg_match('/^templateincludes::(.*)/', $subname, $matches)) {
             if (!$gen->create(XARMLS_CTXTYPE_INCLTEMPL, $matches[1])) return;

@@ -465,8 +465,8 @@ function translations_create_trabar($subtype, $subname, $backend=NULL)
             $currentTra = 0;
         }
         break;
-        case XARMLS_DNTYPE_MODULE:
 
+        case XARMLS_DNTYPE_MODULE:
         $subnames = xarModAPIFunc('translations','admin','get_module_phpfiles',
                                   array('moddir'=>$dnName));
         $j = 0;
@@ -477,16 +477,24 @@ function translations_create_trabar($subtype, $subname, $backend=NULL)
             $j++;
         }
 
-
-        if ($backend != NULL) {
-            $contexts = $GLOBALS['MLS']->getContexts();
-            foreach ($contexts as $context) {
-                if ($context->getName() != "file" && count($backend->getContextNames($context->getType())) >0) {
-                    $traLabels[$j] = $context->getLabel();
-                    $enabledTras[$j] = true;
-                    $traURLs[$j] = xarModURL('translations', 'admin', 'translate_context',array('name'=>$context->getName()));
-                    $j++;
-                }
+        if ($backend == NULL) {
+            $locale = translations_working_locale();
+            $args['interface'] = 'ReferencesBackend';
+            $args['locale'] = $locale;
+            $backend = xarModAPIFunc('translations','admin','create_backend_instance',$args);
+            if (!isset($backend)) return;
+            if (!$backend->bindDomain($dnType, $dnName)) {
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
+                return;
+            }
+        }
+        $contexts = $GLOBALS['MLS']->getContexts();
+        foreach ($contexts as $context) {
+            if ($context->getName() != "file" && count($backend->getContextNames($context->getType())) >0) {
+                $traLabels[$j] = $context->getLabel();
+                $enabledTras[$j] = true;
+                $traURLs[$j] = xarModURL('translations', 'admin', 'translate_context',array('name'=>$context->getName()));
+                $j++;
             }
         }
 
