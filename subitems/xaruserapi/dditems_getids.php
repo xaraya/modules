@@ -52,7 +52,7 @@ function subitems_userapi_dditems_getids($args)
     $ids = array();
     // Check for no rows found, and if so, close the result set and return an exception
    for (; !$result->EOF; $result->MoveNext()) {
-   		list($ddid) = $result->fields;
+           list($ddid) = $result->fields;
         $ids[] = $ddid;
     }
     // All successful database queries produce a result set, and that result

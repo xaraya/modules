@@ -60,12 +60,12 @@ function subitems_adminapi_dditem_detach($args)
     // the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "DELETE FROM {$xartable['subitems_ddids']}
-    	WHERE xar_objectid = $objectid AND xar_ddid = $ddid";
+        WHERE xar_objectid = $objectid AND xar_ddid = $ddid";
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-	// Get the ID of the item that we inserted.  It is possible, depending
+    // Get the ID of the item that we inserted.  It is possible, depending
    // on your database, that this is different from $nextId as obtained
    // above, so it is better to be safe than sorry in this situation
 

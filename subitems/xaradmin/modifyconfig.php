@@ -26,13 +26,13 @@ function subitems_admin_modifyconfig()
     $data['shorturlslabel'] = xarML('Enable short URLs?');
     $data['shorturlschecked'] = xarModGetVar('subitems', 'SupportShortURLs') ?
     'checked' : '';
-	//
+    //
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'subitems',
         array('module' => 'subitems'
-			  ,'itemtype' => 1
-			)
-		);
+              ,'itemtype' => 1
+            )
+        );
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {

@@ -30,7 +30,7 @@ function subitems_adminapi_ddobjectlink_create($args)
     if (!isset($itemtype) ||!is_numeric($itemtype))
         $invalid[] = 'itemtype';
     if (!isset($template))
-    	$invalid[] = 'template';
+        $invalid[] = 'template';
 
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
@@ -69,16 +69,16 @@ function subitems_adminapi_ddobjectlink_create($args)
               xar_itemtype,
               xar_template)
             VALUES (
-            	$objectid,
+                $objectid,
                 '".xarVarPrepForStore($module)."',
                 $itemtype,
                 '".xarVarPrepForStore($template)."'
-				)";
+                )";
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-	// Get the ID of the item that we inserted.  It is possible, depending
+    // Get the ID of the item that we inserted.  It is possible, depending
    // on your database, that this is different from $nextId as obtained
    // above, so it is better to be safe than sorry in this situation
 
@@ -92,7 +92,7 @@ function subitems_adminapi_ddobjectlink_create($args)
     $item = $args;
     $item['module'] = 'subitems';
     $item['itemid'] = $objectid;
-	$item['itemtype'] = 1;
+    $item['itemtype'] = 1;
     xarModCallHooks('item', 'create', $objectid, $item);
     // Return the id of the newly created item to the calling process
     return true;

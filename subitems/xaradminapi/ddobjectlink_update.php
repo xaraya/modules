@@ -15,20 +15,20 @@ function subitems_adminapi_ddobjectlink_update($args)
     extract($args);
 
     if(!isset($objectid))
-    	$invalid[] = "objectid";
+        $invalid[] = "objectid";
 
     // params in arg
     $params = array("template" => "xar_template",
                     "itemtype" => "xar_itemtype",
                     "module" => "xar_module");
-    foreach($params as $vvar => $dummy)	{
-    	if(isset($$vvar))	{
-			$set = true;
+    foreach($params as $vvar => $dummy)    {
+        if(isset($$vvar))    {
+            $set = true;
             break;
         }
     }
     if(    !isset($set)   )
-    	$invalid[] = "at least one of these has to be set: ".join(",",array_keys($fields));
+        $invalid[] = "at least one of these has to be set: ".join(",",array_keys($fields));
 
     // Argument check - make sure that at least on paramter is present
     // if not then set an appropriate error message and return
@@ -52,9 +52,9 @@ function subitems_adminapi_ddobjectlink_update($args)
     // now
     $time = date('Y-m-d G:i:s');
 
-    foreach($params as $vvar => $field)	{
-    	if(isset($$vvar))
-	    	$update[] = $field ."='".xarVarPrepForStore($$vvar)."'";
+    foreach($params as $vvar => $field)    {
+        if(isset($$vvar))
+            $update[] = $field ."='".xarVarPrepForStore($$vvar)."'";
     }
 
     // Update item

@@ -11,8 +11,8 @@
 function subitems_userapi_getarticlesubitems($args)
 {
     extract($args);
-	
-	// Get Sub-Items' Object ID of the Pubtype
+    
+    // Get Sub-Items' Object ID of the Pubtype
     $subitemArgs =  array();   
     $subitemArgs['module'] =  'articles';   
     $subitemArgs['itemtype'] =  $ptid;   
@@ -20,27 +20,27 @@ function subitems_userapi_getarticlesubitems($args)
     // nothing to see here
     if (empty($ddobjectlink['objectid'])) return array();
 
-	// Get the Object from DD
+    // Get the Object from DD
     $ddobjectArgs =  array();   
     $ddobjectArgs['objectid'] =  $ddobjectlink['objectid'];   
     $ddobjectArgs['status'] =  1;   
     $ddobject =  xarModAPIFunc('dynamicdata','user','getobject',$ddobjectArgs);
 
 
-	// Get SubItem IDs
+    // Get SubItem IDs
     $subitemIDArgs =  array();   
     $subitemIDArgs['objectid'] =  $ddobjectlink['objectid'];   
     $subitemIDArgs['itemid'] =  $aid;   
     $itemIDs =  xarModAPIFunc('subitems','user','dditems_getids',$subitemIDArgs);
 
-	// Get Actual Subitems
+    // Get Actual Subitems
     $subitemArgs =  array();   
     $subitemArgs['modid'] =  $ddobject->moduleid;   
     $subitemArgs['itemtype'] =  $ddobject->itemtype;   
     $subitemArgs['itemids'] =  $itemIDs;   
     $subitemInfo =  xarModAPIFunc('dynamicdata','user','getitems',$subitemArgs);
 
-	return $subitemInfo;
+    return $subitemInfo;
 }
 
 /*

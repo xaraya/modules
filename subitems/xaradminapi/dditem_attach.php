@@ -66,15 +66,15 @@ function subitems_adminapi_dditem_attach($args)
               xar_itemid,
               xar_ddid)
             VALUES (
-            	$objectid,
+                $objectid,
                 $itemid,
                 $ddid
-				)";
+                )";
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
-	// Get the ID of the item that we inserted.  It is possible, depending
+    // Get the ID of the item that we inserted.  It is possible, depending
    // on your database, that this is different from $nextId as obtained
    // above, so it is better to be safe than sorry in this situation
 

@@ -34,7 +34,7 @@ function subitems_xartables()
     $exampleTable = xarDBGetSiteTablePrefix() . '_subitems';
     // Set the table name
     $xarTables['subitems_ddids'] = $exampleTable.'_ddids';
-	$xarTables['subitems_ddobjects'] = $exampleTable.'_ddobjects';
+    $xarTables['subitems_ddobjects'] = $exampleTable.'_ddobjects';
     // Return the table information
     return $xarTables;
 }

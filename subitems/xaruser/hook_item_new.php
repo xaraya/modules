@@ -3,7 +3,7 @@
 
 function subitems_user_hook_item_new($args)
 {
-    	extract($args);
+        extract($args);
     // extrainfo -> module,itemtype,itemid
     if (!isset($extrainfo['module'])) {
         $extrainfo['module'] = xarModGetName();
@@ -21,7 +21,7 @@ function subitems_user_hook_item_new($args)
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object =& xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $objectid,
-                         			'status' => 1));
+                                     'status' => 1));
 
     $data['object'] = $object;
     return $data;

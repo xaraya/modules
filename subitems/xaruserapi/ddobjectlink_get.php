@@ -42,9 +42,9 @@ function subitems_userapi_ddobjectlink_get($args)
     // statement from the Execute() command allows for simpler debug operation
     // if it is ever needed
     if(isset($objectid))
-    	$where = "xar_objectid = $objectid";
+        $where = "xar_objectid = $objectid";
     else
-    	$where = "xar_module = '".xarVarPrepForStore($module)."' AND xar_itemtype = $itemtype";
+        $where = "xar_module = '".xarVarPrepForStore($module)."' AND xar_itemtype = $itemtype";
 
     $query = "SELECT xar_objectid,xar_module,xar_itemtype,xar_template
             FROM {$xartable['subitems_ddobjects']}
@@ -67,7 +67,7 @@ function subitems_userapi_ddobjectlink_get($args)
     $result->Close();
     // Create the item array
     $item = array(
-    	'objectid' => $objectid,
+        'objectid' => $objectid,
         'module' => $module,
         'itemtype' => $itemtype,
         'template' => $template);

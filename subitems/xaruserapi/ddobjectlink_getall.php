@@ -82,7 +82,7 @@ function subitems_userapi_ddobjectlink_getall($args)
         list($objectid,$module, $itemtype,$template) = $result->fields;
 
             $items[] = array(
-            	'objectid' => $objectid,
+                'objectid' => $objectid,
                 'module' => $module,
                 'itemtype' => $itemtype,
                 'template' => $template

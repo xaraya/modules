@@ -61,7 +61,7 @@ function subitems_adminapi_ddobjectlink_delete($args)
     // make the SQL statement relatively easy to read.  Also, separating
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
-	$query = "DELETE FROM {$xartable['subitems_ddobjects']}
+    $query = "DELETE FROM {$xartable['subitems_ddobjects']}
             WHERE xar_objectid = {$item['objectid']}";
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised
@@ -72,7 +72,7 @@ function subitems_adminapi_ddobjectlink_delete($args)
     // xarModCallHooks('item', 'delete', $warid, '');
     $item['module'] = 'subitems';
     $item['itemid'] = $objectid;
-	$item['itemtype'] = 1;
+    $item['itemtype'] = 1;
     xarModCallHooks('item', 'delete', $objectid, $item);
     // Let the calling process know that we have finished successfully
     return true;

@@ -22,11 +22,11 @@
  *//*
 function subitems_eventapi_OnServerRequest()
 {
-	// Code that needs to be executed by this module on each
-	// page view ( = ServerRequest ) goes here
-	// This function can call any api function of this module
+    // Code that needs to be executed by this module on each
+    // page view ( = ServerRequest ) goes here
+    // This function can call any api function of this module
 
-	return true;
+    return true;
 }*/
 
 ?>

@@ -28,19 +28,19 @@ function subitems_user_hook_item_display($args)
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object =& xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $objectid,
-                         			'status' => 1));
-	if (!isset($object)) return;
+                                     'status' => 1));
+    if (!isset($object)) return;
 
     // get existing subitems
     $ids = xarModAPIFunc('subitems','user','dditems_getids',array(
-    	'objectid' => $objectid,
-	    'itemid' => $param['itemid']));
+        'objectid' => $objectid,
+        'itemid' => $param['itemid']));
     if(!isset($ids))
-    	return;
+        return;
 
     // when itemids == array() => it will return all ids, but we don't want this
-    if(count($ids) > 0)	{
-	   $items = xarModAPIFunc('dynamicdata',
+    if(count($ids) > 0)    {
+       $items = xarModAPIFunc('dynamicdata',
                    'user',
                    'getitems',
                    array(
@@ -50,11 +50,11 @@ function subitems_user_hook_item_display($args)
                          ));
     }
     else
-    	$items = Array();
+        $items = Array();
 
     $template = $object->name;
-	if(!empty($ddobjectlink['template']))
-    	$template = $ddobjectlink['template'];
+    if(!empty($ddobjectlink['template']))
+        $template = $ddobjectlink['template'];
 
     // output
     $data['properties'] = & $object->getProperties();

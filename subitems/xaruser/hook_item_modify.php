@@ -3,7 +3,7 @@
 
 function subitems_user_hook_item_modify($args)
 {
-	extract($args);
+    extract($args);
     // extrainfo -> module,itemtype,itemid
     if (!isset($extrainfo['module'])) {
         $extrainfo['module'] = xarModGetName();
@@ -24,19 +24,19 @@ function subitems_user_hook_item_modify($args)
     // get the Dynamic Object defined for this module (and itemtype, if relevant)
     $object =& xarModAPIFunc('dynamicdata','user','getobject',
                              array('objectid' => $objectid,
-                         			'status' => 1));
+                                     'status' => 1));
     if (!isset($object)) return;
     
     // get existing subitems
     $ids = xarModAPIFunc('subitems','user','dditems_getids',array('objectid' => $objectid,'itemid' => $extrainfo['itemid']));
     if(!isset($ids))
-    	return;
+        return;
 
 
 
     // when itemids == array() => it will return all ids, but we don't want this
-    if(count($ids) > 0)	{
-	   $items = xarModAPIFunc('dynamicdata',
+    if(count($ids) > 0)    {
+       $items = xarModAPIFunc('dynamicdata',
                    'user',
                    'getitems',
                    array(
@@ -46,7 +46,7 @@ function subitems_user_hook_item_modify($args)
                          ));
     }
     else
-    	$items = Array();
+        $items = Array();
 
     // output
     $data['properties'] = & $object->getProperties();
