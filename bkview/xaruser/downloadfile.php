@@ -34,11 +34,10 @@ function bkview_user_downloadfile($args)
     // 2. using mime module
     // TODO: make this configurable
     $mime_type = "application/x-download";
-    if(function_exists('mime_content_type')) {
-        $mime_type = mime_content_type($fullname);
-    } elseif (xarModIsAvailable('mime')) {
-        // Use the mime module to determine the mime type
+    if(xarModIsAvailable('mime')) {
         $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $fullname));
+    } elseif(function_exists('mime_content_type')) {
+        $mime_type = mime_content_type($fullname);
     }
     
     $fp = @fopen($fullname, 'rb');

@@ -1,9 +1,7 @@
 <?php
 
 /**
- * File: $Id$
- *
- * Short description of purpose of file
+ * Create view over multiple csets
  *
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
