@@ -115,6 +115,7 @@ CREATE TABLE xar_seccache_rolesgraph (
     xarConfigSetVar('CacheSecurity.rolesgraph', false);
     xarConfigSetVar('CacheSecurity.privsgraph', false);
     xarConfigSetVar('CacheSecurity.privsmasks', false);
+    xarConfigSetVar('CacheSecurity.AutoSync', false);
 
     // set up permissions masks.
     xarRegisterMask('AdminCacheSecurity', 'All', 'cachesecurity', 'Item', 'All', 'ACCESS_ADMIN');
@@ -251,6 +252,7 @@ function cachesecurity_delete()
     xarConfigSetVar('CacheSecurity.rolesgraph', false);
     xarConfigSetVar('CacheSecurity.privsgraph', false);
     xarConfigSetVar('CacheSecurity.privsmasks', false);
+    xarConfigSetVar('CacheSecurity.AutoSync', false);
 
     // Drop the tables
     $dbconn =& xarDBGetConn();
