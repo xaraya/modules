@@ -302,7 +302,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td class="xar-sub">
-						<img src="#xarTplGetImage('new/folder_locked.gif')#" alt="#xarML('Locked topic')#" />
+						<img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
 					</td>
 					<td class="xar-sub">
 						<xar:mlstring>
