@@ -360,6 +360,11 @@ function xarpages_upgrade($oldversion)
                 $dbconn->execute($query_masks, array($new_mask, 'xarpages', $old_mask));
             }
 
+        case '0.2.3':
+        case '0.2.4':
+            // Upgrade from 0.2.3 or 0.2.4 to 0.2.5
+            xarModSetVar('xarpages', 'shortestpath', 1);
+
             break;
     }
 
