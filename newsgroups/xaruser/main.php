@@ -11,13 +11,14 @@ function newsgroups_user_main()
 
     $server     = xarModGetVar('newsgroups', 'server');
     $port       = xarModGetVar('newsgroups', 'port');
+    $wildmat    = xarModGetVar('newsgroups', 'wildmat');
 
     xarTplSetPageTitle(xarVarPrepForDisplay($server));
 
     $newsgroups = new Net_NNTP();
     $newsgroups -> connect($server, $port);
-    $data['items'] = $newsgroups -> getGroups();
-    $newsgroups -> quit();
+    $data['items'] = $newsgroups -> getGroups(true, $wildmat);
+    $newsgroups->quit();
 
     // Debug
     //var_dump($data['items']);

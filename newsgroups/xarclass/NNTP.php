@@ -20,7 +20,7 @@
 //
 // $Id: NNTP.php,v 1.14 2003/01/04 11:55:49 mj Exp $
 
-require_once 'PEAR.php';
+require_once dirname(__FILE__) . '/PEAR.php';
 
 define('PEAR_NNTP_ALL',   0);
 define('PEAR_NNTP_NAMES', 1);
@@ -351,9 +351,14 @@ class Net_NNTP extends PEAR
                 }
             } else {
                 if (isset($key)) {
-                    $headers[$key] .= str_replace(array('<','>'),
-                                                  array('&lt;','&gt;'),
-                                                  $header);
+                    $header = str_replace(array('<','>'),
+                                          array('&lt;','&gt;'),
+                                          $header);
+                    if (stristr($key, 'references')) {
+                        $headers[$key] = array_merge($headers[$key], explode(' ',$header));
+                    } else {
+                        $headers[$key] .= $header;
+                    }
                 }
             }
        }
@@ -469,9 +474,13 @@ class Net_NNTP extends PEAR
      *               existing newsgroups
      * @author Morgan Christiansson <mog@linux.nu>
      */
-    function getGroups($fetch = true)
+    function getGroups($fetch = true, $wildmat)
     {
-        $this->command("LIST");
+        if (!empty($wildmat)) {
+            $this->command("LIST ACTIVE $wildmat");
+        } else {
+            $this->command("LIST");
+        }
         foreach($this->_getData() as $line) {
             $arr = explode(" ",$line);
             $groups[$arr[0]]["group"] = $arr[0];
@@ -483,7 +492,11 @@ class Net_NNTP extends PEAR
             $groups[$arr[0]]["count"] = trim($arr[1], 0);
         }
 
-        $this->command("LIST NEWSGROUPS");
+        if (!empty($wildmat)) {
+            $this->command("LIST NEWSGROUPS $wildmat");
+        } else {
+            $this->command("LIST NEWSGROUPS");
+        }
         foreach($this->_getData() as $line) {
             preg_match("/^(.*?)\s(.*?$)/",$line,$matches);
             if (isset($matches[1]) && isset($matches[2]))

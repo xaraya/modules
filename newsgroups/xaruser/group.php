@@ -1,12 +1,13 @@
 <?php
 
-function newsgroups_user_displaygroup()
+function newsgroups_user_group()
 {
     // Security Check
     if(!xarSecurityCheck('ReadNewsGroups')) return;
 
+    $data = array();
     xarVarFetch('group', 'str:1', $data['group']);
-    xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED);
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['group']));
 
@@ -24,22 +25,28 @@ function newsgroups_user_displaygroup()
     $newsgroups = new Net_NNTP();
     $newsgroups -> connect($server, $port);
     $counts = $newsgroups -> selectGroup($data['group']);
-    if ($startnumitem == NULL){
-        $startnumitem = $counts['last'];
+    if (PEAR::isError($counts)) {
+        $data['error_message'] = $counts->message;
+        $newsgroups->quit();
+    } else {
+        if (empty($startnum)){
+            $startnum = $counts['last'];
+        }
+        $messages = $newsgroups->getOverview($startnum - $numitems, $startnum);
+        $newsgroups->quit();
+        $data['items'] = xarModAPIFunc('newsgroups','user','create_threads', $messages);
     }
-    $messages = $newsgroups->getOverview($startnumitem - $numitems, $counts['last']);
-    $newsgroups->quit();
-    $data['items'] = xarModAPIFunc('newsgroups','user','create_threads', $messages);
 
     //echo '<br /><pre> articles => '; print_r($data['items']); echo '</pre><br />';
    //var_dump($data['items']);
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
-    $data['pager'] = xarTplGetPager($startnumitem,
+    $data['pager'] = xarTplGetPager($startnum,
                                     $counts['last'],
-                                    xarModURL('newsgroups', 'user', 'displaygroup', array('startnumitem' => '%%')),
+                                    xarModURL('newsgroups', 'user', 'group', array('group' => $data['group'],'startnum' => '%%')),
                                     $numitems);
+// TODO: add support for first number $counts['first'] in pager
 
     // Debug
     //var_dump($data['items']);

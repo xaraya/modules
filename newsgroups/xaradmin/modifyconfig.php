@@ -34,7 +34,9 @@ function newsgroups_admin_modifyconfig()
 
             if (!xarVarFetch('server','str:1:',$server,'news.xaraya.com',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('port','int:1:',$port,119,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('wildmat','str:1:',$wildmat,'xaraya.*',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('numitems','int:1:',$itemsperpage,50,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('isalias','int:1:',$isalias,0, XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -43,7 +45,13 @@ function newsgroups_admin_modifyconfig()
 
             xarModSetVar('newsgroups', 'server', $server);
             xarModSetVar('newsgroups', 'port', $port);
+            xarModSetVar('newsgroups', 'wildmat', $wildmat);
             xarModSetVar('newsgroups', 'numitems', $itemsperpage);
+            if (empty($isalias)) {
+                xarModSetVar('newsgroups','SupportShortURLs',0);
+            } else {
+                xarModSetVar('newsgroups','SupportShortURLs',1);
+            }
 
             xarModCallHooks('module','updateconfig','newsgroups',
                            array('module' => 'newsgroups',

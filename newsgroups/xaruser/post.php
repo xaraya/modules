@@ -27,7 +27,7 @@ function newsgroups_user_post()
 
         case 'reply':
 
-            xarVarFetch('articleid', 'str:1', $articleid); 
+            xarVarFetch('article', 'str:1', $article); 
 
             include_once 'modules/newsgroups/xarclass/NNTP.php';
 
@@ -36,9 +36,10 @@ function newsgroups_user_post()
 
             $newsgroups = new Net_NNTP();
             $newsgroups -> connect($server, $port);
-            $data               = $newsgroups->splitHeaders($articleid);
-            $data['raw']        = explode("\n", $newsgroups->getBody($articleid));
-            $newsgroups -> quit();
+            $counts = $newsgroups->selectGroup($group);
+            $data               = $newsgroups->splitHeaders($article);
+            $data['raw']        = explode("\n", $newsgroups->getBody($article));
+            $newsgroups->quit();
 
             if (preg_match ("/Re: /i", $data['Subject'])) {
                 $data['subject']    = xarVarPrepForDisplay($data['Subject']);
@@ -46,14 +47,14 @@ function newsgroups_user_post()
                 $data['subject']    = xarVarPrepForDisplay("Re: " . $data['Subject']);
             }
           
-            $data['reference']  = $articleid;
+            $data['reference']  = $data['Message-ID'];
             $data['name']       = xarUserGetVar('name');
             $data['email']      = xarUserGetVar('email');
             $data['authid']     = xarSecGenAuthKey();
             $data['group']      = $group;
             $data['message']    = $data['From'];
             $data['message']    .= xarML(' wrote in message');
-            $data['message']    .= $articleid ."\n\n";
+            $data['message']    .= $data['Message-ID'] ."\n\n";
 
             $data['format'] = '';
              foreach($data['raw'] as $datatmp) {

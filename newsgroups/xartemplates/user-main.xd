@@ -10,12 +10,12 @@
 <xar:loop name="$items">
 	<xar:if condition="(($loop:index + 1) % 2)">
 	<div class="xar-norm" style="padding: 3px;">
-		<span style="float: left; text-align: left; width: 79%;"><a href="#xarModUrl('newsgroups', 'user', 'displaygroup', array('group' => $loop:item['group']))#"> #$loop:item['group']#</a> -- #$loop:item['desc']#</span>
+		<span style="float: left; text-align: left; width: 79%;"><a href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $loop:item['group']))#"> #$loop:item['group']#</a> <xar:if condition="!empty($loop:item['desc'])"> -- #$loop:item['desc']#</xar:if></span>
 		<span style="float: right; text-align: right; width: 19%;">#$loop:item['count']#</span><br />
 	</div>
 	<xar:else />
 	<div class="xar-accent" style="padding: 3px;">
-		<span style="float: left; text-align: left; width: 79%;"><a href="#xarModUrl('newsgroups', 'user', 'displaygroup', array('group' => $loop:item['group']))#">#$loop:item['group']#</a> -- #$loop:item['desc']#</span>
+		<span style="float: left; text-align: left; width: 79%;"><a href="#xarModUrl('newsgroups', 'user', 'group', array('group' => $loop:item['group']))#">#$loop:item['group']#</a> <xar:if condition="!empty($loop:item['desc'])"> -- #$loop:item['desc']#</xar:if></span>
 		<span style="float: right; text-align: right; width: 19%;">#$loop:item['count']#</span><br />
 	</div>
 	</xar:if>
