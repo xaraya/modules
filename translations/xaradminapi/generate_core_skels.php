@@ -34,7 +34,9 @@ function translations_adminapi_generate_core_skels($args)
 
     if(!xarSecurityCheck('AdminTranslations')) return;
 
+    // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
     include 'modules/translations/class/PHPParser.php';
+    // {ML_dont_parse 'modules/translations/class/TPLParser.php'}
     include 'modules/translations/class/TPLParser.php';
 
     $time = explode(' ', microtime());
