@@ -1,9 +1,10 @@
 <?php
     // $Id: s.xarversion.php 1.3 02/12/01 14:28:39+01:00 marcel@hsdev.com $
-    
+
     $modversion['name'] = 'Images';
     $modversion['id'] = '152';
     $modversion['version'] = '1.0.0';
+    $modversion['displayname']    = xarML('Images');
     $modversion['description'] = 'Handles basic image manipulation - resizing/croping/scaling/rotating';
     $modversion['credits'] = 'docs/credits.txt';
     $modversion['help'] = 'docs/help.txt';
