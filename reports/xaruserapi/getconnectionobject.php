@@ -23,3 +23,4 @@ function &reports_userapi_getconnectionobject($args)
         return $repconn;
     }
 }
+?>

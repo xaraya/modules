@@ -148,6 +148,10 @@ function reports_delete()
 	xarModDelVar('reports','images_location');
 	xarModDelVar('reports','reports_location');
 	xarModDelVar('reports','pdf_backend');
+
+    // Delete the custom tags
+    xarTplUnregisterTag('reports-dataset');
+    xarTplUnregisterTag('reports-dataitem');
 	
 	// Deletion successful
 	return true;
