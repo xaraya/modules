@@ -17,9 +17,13 @@
 function example_firstblock_init()
 {
     return array(
-        'numitems' => 5
+        'numitems' => 5,
+        'nocache' => 0, // cache by default (if block caching is enabled)
+        'pageshared' => 1, // share across pages
+        'usershared' => 1, // share across group members
+        'cacheexpire' => null
     );
-} 
+}
 
 /**
  * get information on block
