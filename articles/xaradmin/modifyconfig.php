@@ -17,13 +17,17 @@ function articles_admin_modifyconfig()
     }
 
     // Get the article settings for this publication type
+    //Sometimes $settings can be set but $string can return empty eg importing a pubtype
+    //Let's make provision for this
+    $string=''; //initialize
     if (!empty($ptid)) {
-        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
+        $string = xarModGetVar('articles', 'settings.'.$ptid);
     } else {
         $string = xarModGetVar('articles', 'settings');
-        if (!empty($string)) {
-            $settings = unserialize($string);
-        }
+
+    }
+    if (!empty($string)) {
+        $settings = unserialize($string);
     }
     $data = array();
     $data['ptid'] = $ptid;
