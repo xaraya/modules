@@ -118,7 +118,7 @@ function categories_userapi_navigation($args)
         return '';
     } else {
         $mastercids = explode(';',$cidlist);
-        // preserve order of root categories
+        // preserve order of root categories if possible
         //sort($mastercids,SORT_NUMERIC);
     }
 
@@ -351,7 +351,10 @@ function categories_userapi_navigation($args)
 
                 if (empty($catlist) || !is_array($catlist)) {return '';}
 
-                foreach ($catlist as $cat) {
+                // preserve order of root categories if possible
+                foreach ($mastercids as $cid) {
+                    if (!isset($catlist[$cid])) continue;
+                    $cat = $catlist[$cid];
                     // TODO: now this is a tricky part...
                     $link = xarModURL(
                         $modname,$type,$func,
