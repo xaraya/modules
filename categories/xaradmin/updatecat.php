@@ -50,8 +50,8 @@ function categories_admin_updatecat()
             $creating = true;
         }
 
-        if (intval($position[$key]) == 3 ||
-            intval($position[$key]) == 2 ) {
+        if (intval($position[$cid]) == 3 ||
+            intval($position[$cid]) == 2 ) {
             array_unshift ($cids, $cid);
         } else {
             array_push ($cids, $cid);
