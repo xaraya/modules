@@ -369,7 +369,7 @@ function authinvision__open_invision_connection()
     $connect = @mysql_connect($server, $uname, $pwd);
 
     if (!$connect) {
-        $msg = "Invision: Connection to $server has failed: " & mysql_error();
+        $msg = "Invision: Connection to $server has failed: " . mysql_error();
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         error_log("Invision Error: Connection to $server failed");
@@ -448,19 +448,32 @@ function authinvision__get_invision_userdata($connect,$username,$pass)
     $server = xarModGetVar('authinvision','server');
     $prefix = xarModGetVar('authinvision','prefix');
     $database = xarModGetVar('authinvision','database');
+    $version = xarModGetVar('authinvision','version');
     $password = md5($pass);
     $table = $prefix.'_members';
+    $table2 = $prefix.'_members_converge';
 
     if($connect)  //just double-checking the connection.
     {
         // connect to the invision database and get the user data
         //$inv_db = mysql_select_db($database, $connect);
-        $sql = "SELECT * FROM $database.$table WHERE name='$username' AND password='$password'";
-        $result = mysql_query($sql,$connect);
+        if (empty($version) || $version == '1') {
+            $sql = "SELECT * FROM $database.$table WHERE name='$username' AND password='$password'";
+            $result = mysql_query($sql,$connect);
+        } elseif ($version == '2') {
+            // cfr. converge_authenticate_member() method in ips_kernel/class_converge.php
+            $sql = "SELECT *
+                    FROM $database.$table
+                    LEFT JOIN $database.$table2
+                           ON email = converge_email
+                    WHERE name='$username'
+                      AND converge_pass_hash = MD5(CONCAT(MD5(converge_pass_salt),'$password'))";
+            $result = mysql_query($sql,$connect);
+        }
     
         if (!$result) {
         //incorrect login.
-            $msg = "Invision: Query to $table has failed: " & mysql_error();
+            $msg = "Invision: Query to $table has failed: " . mysql_error();
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                 new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             error_log("Invision Error: Query to $table failed");

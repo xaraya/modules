@@ -58,6 +58,25 @@
                 </tr>
                 <tr align="left" valign="top">
                     <td>
+                        <xar:mlstring>Invision version</xar:mlstring>
+                    </td>
+                    <td>
+                        <select name="version">
+                        <xar:if condition="empty($version) or $version eq '1'">
+                            <option value="1" selected="selected">1.x</option>
+                        <xar:else/>
+                            <option value="1">1.x</option>
+                        </xar:if>
+                        <xar:if condition="!empty($version) and $version eq '2'">
+                            <option value="2" selected="selected">2.x</option>
+                        <xar:else/>
+                            <option value="2">2.x</option>
+                        </xar:if>
+                        </select>
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
                         <xar:mlstring>Invision Forum Root</xar:mlstring>
                     </td>
                     <td>

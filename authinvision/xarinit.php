@@ -26,6 +26,7 @@ function authinvision_init()
     xarModSetVar('authinvision','prefix','ibf');
     xarModSetVar('authinvision','defaultgroup','Users');
     xarModSetVar('authinvision','forumroot','iboard');
+    xarModSetVar('authinvision','version','1');
   
     // Register blocks
     if (!xarModAPIFunc('blocks',
@@ -71,9 +72,8 @@ function authinvision_init()
 function authinvision_upgrade($oldVersion)
 {
     switch($oldVersion) {
-    case '1.0':
-        // compatability upgrade, nothing to be done
-        break;
+        case '1.0.0':
+            xarModSetVar('authinvision','version','1');
     }
     return true;
 }
@@ -89,6 +89,7 @@ function authinvision_delete()
     xarModDelVar('authinvision','prefix');
     xarModDelVar('authinvision','defaultgroup');
     xarModDelVar('authinvision','forumroot');
+    xarModDelVar('authinvision','version');
 
     // Remove authinvision to Site.User.AuthenticationModules in xar_config_vars
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');

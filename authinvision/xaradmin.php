@@ -44,6 +44,7 @@ function authinvision_admin_modifyconfig()
     $data['password'] = xarVarPrepForDisplay(xarModGetVar('authinvision','password'));
     $data['prefix'] = xarVarPrepForDisplay(xarModGetVar('authinvision','prefix'));
     $data['forumroot'] = xarVarPrepForDisplay(xarModGetVar('authinvision','forumroot'));
+    $data['version'] = xarVarPrepForDisplay(xarModGetVar('authinvision','version'));
 
     // Get groups
     $data['defaultgroup'] = xarModGetVar('authinvision', 'defaultgroup');
@@ -77,20 +78,14 @@ function authinvision_admin_modifyconfig()
 function authinvision_admin_updateconfig()
 {
     // Get parameters
-    
-    list($server,
-        $database,
-        $username,
-        $password,
-        $prefix,
-        $forumroot,
-        $defaultgroup ) = xarVarCleanFromInput('server',
-                                              'database', 
-                                              'username', 
-                                              'password', 
-                                              'prefix', 
-                                              'forumroot', 
-                                              'defaultgroup');
+    if (!xarVarFetch('server',       'str', $server,       NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('database',     'str', $database,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('username',     'str', $username,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('password',     'str', $password,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('prefix',       'str', $prefix,       NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('forumroot',    'str', $forumroot,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('version',      'str', $version,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('defaultgroup', 'str', $defaultgroup, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -101,6 +96,7 @@ function authinvision_admin_updateconfig()
     xarModSetVar('authinvision', 'password', $password);
     xarModSetVar('authinvision', 'prefix', $prefix);
     xarModSetVar('authinvision', 'forumroot', $forumroot);
+    xarModSetVar('authinvision', 'version', $version);
 
     // Get default users group
     if (!isset($defaultgroup)) {
