@@ -14,21 +14,13 @@ function trackback_adminapi_createhook($args)
     extract($args);
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object id', 'admin', 'updatehook', 'trackback');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
+        $msg = xarML('Invalid Parameter Count');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $extrainfo;
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'extrainfo', 'admin', 'updatehook', 'trackback');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
+        $msg = xarML('Invalid Parameter Count');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $extrainfo;
     }
 
@@ -42,12 +34,8 @@ function trackback_adminapi_createhook($args)
 
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'module name', 'admin', 'updatehook', 'trackback');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
+        $msg = xarML('Invalid Parameter Count');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $extrainfo;
     }
 
@@ -63,19 +51,15 @@ function trackback_adminapi_createhook($args)
         $itemid = $objectid;
     }
     if (empty($itemid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item id', 'admin', 'updatehook', 'trackback');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
+        $msg = xarML('Invalid Parameter Count');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return $extrainfo;
     }
     // Do we need to process further?
     if (isset($extrainfo['tb_pingurl']) && is_string($extrainfo['tb_pingurl'])) {
         $pingurl = $extrainfo['tb_pingurl'];
     } else {
-        $pingurl = xarVarCleanFromInput('tb_pingurl');
+        if (!xarVarFetch('tb_pingurl', 'str:1:', $pingurl, '', XARVAR_NOT_REQUIRED)) return;
     }
     if (empty($pingurl)) {
         return $extrainfo;
@@ -85,7 +69,7 @@ function trackback_adminapi_createhook($args)
         $excerpt = $extrainfo['tb_excerpt'];
         $excerpt = (strlen($excerpt > 255) ? substr($excerpt, 0, 252) ."..." : $excerpt);
     } else {
-        $excerpt = xarVarCleanFromInput('tb_excerpt');
+        if (!xarVarFetch('tb_excerpt', 'str:1:', $excerpt, '', XARVAR_NOT_REQUIRED)) return;
         $excerpt = (strlen($excerpt > 255) ? substr($excerpt, 0, 252) ."..." : $excerpt);
     }
     if (empty($excerpt)) {
@@ -93,7 +77,7 @@ function trackback_adminapi_createhook($args)
             $excerpt = $extrainfo['summary'];
             $excerpt = (strlen($excerpt > 255) ? substr($excerpt, 0, 252) ."..." : $excerpt);
         } else {
-            $excerpt = xarVarCleanFromInput('summary');
+            if (!xarVarFetch('summary', 'str:1:', $excerpt, '', XARVAR_NOT_REQUIRED)) return;
             $excerpt = (strlen($excerpt > 255) ? substr($excerpt, 0, 252) ."..." : $excerpt);
         }
         if (empty($excerpt)) {
@@ -104,7 +88,7 @@ function trackback_adminapi_createhook($args)
     if (isset($extrainfo['title'])) {
         $title = $extrainfo['title'];
     } else {
-        $title = xarVarCleanFromInput('title');
+        if (!xarVarFetch('title', 'str:1:', $title, '', XARVAR_NOT_REQUIRED)) return;
     }
     if (empty($title)) {
         $title = '';
