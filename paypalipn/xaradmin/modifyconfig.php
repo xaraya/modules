@@ -11,11 +11,11 @@
 */
 function paypalipn_admin_modifyconfig()
 {
-	// Security Check
-	//if (!xarSecurityCheck('AdminPayPalSetUp')) return; 
-	// Generate a one-time authorisation code for this operation
-	$data['authid'] = xarSecGenAuthKey(); 
+    // Security Check
+    //if (!xarSecurityCheck('AdminPayPalSetUp')) return; 
+    // Generate a one-time authorisation code for this operation
+    $data['authid'] = xarSecGenAuthKey(); 
     $data['createlabel'] = xarML('Submit');
-	return $data;
+    return $data;
 } 
 ?>

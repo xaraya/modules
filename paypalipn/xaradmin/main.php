@@ -10,15 +10,15 @@
 */
 function paypalipn_admin_main()
 {
-	// Security Check
-	if (!xarSecurityCheck('AdminPayPalIPN')) return;
-	if (xarModGetVar('adminpanels', 'overview') == 0) {
-		// Return the output
-		return array();
-	} else {
-		xarResponseRedirect(xarModURL('paypalipn', 'admin', 'modifyconfig'));
-	} 
-	// success
-	return true;
+    // Security Check
+    if (!xarSecurityCheck('AdminPayPalIPN')) return;
+    if (xarModGetVar('adminpanels', 'overview') == 0) {
+        // Return the output
+        return array();
+    } else {
+        xarResponseRedirect(xarModURL('paypalipn', 'admin', 'modifyconfig'));
+    } 
+    // success
+    return true;
 }
 ?>

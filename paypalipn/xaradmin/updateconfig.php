@@ -11,17 +11,17 @@
 */
 function paypalipn_admin_updateconfig()
 { 
-	// Get parameters
-	if (!xarVarFetch('testmode', 'checkbox', $testmode, false, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('email', 'checkbox', $email, false, XARVAR_NOT_REQUIRED)) return;
-	// Confirm authorisation code
-	if (!xarSecConfirmAuthKey()) return; 
-	// update the data
+    // Get parameters
+    if (!xarVarFetch('testmode', 'checkbox', $testmode, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('email', 'checkbox', $email, false, XARVAR_NOT_REQUIRED)) return;
+    // Confirm authorisation code
+    if (!xarSecConfirmAuthKey()) return; 
+    // update the data
     xarModSetVar('paypalipn', 'email', $email);
     xarModSetVar('paypalipn', 'testmode', $testmode);
-	// lets update status and display updated configuration
-	xarResponseRedirect(xarModURL('paypalipn', 'admin', 'modifyconfig')); 
-	// Return
-	return true;
+    // lets update status and display updated configuration
+    xarResponseRedirect(xarModURL('paypalipn', 'admin', 'modifyconfig')); 
+    // Return
+    return true;
 } 
 ?>

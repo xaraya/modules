@@ -31,7 +31,7 @@ function paypalipn_user_main()
     // post back to PayPal system to validate
     $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
     $header .= "User-Agent: PHP/".phpversion()."\r\n";
-	$header .= "Referer: " . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "\r\n";
+    $header .= "Referer: " . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . "\r\n";
     $header .= "Host: " . $domain . ":80\r\n";
     $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
     $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
