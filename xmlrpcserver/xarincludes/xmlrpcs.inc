@@ -105,7 +105,11 @@ class xmlrpc_server {
 				}
 				if ($itsOK) 
 					return array(1);
-			}
+			} else {
+                $wanted=sizeof($cursig) . " parameters";
+                $got = $in->getNumParams()+1;
+                $pno = $got;
+            }
 		}
 		return array(0, "Wanted ${wanted}, got ${got} at param ${pno})");
 	}
@@ -172,7 +176,8 @@ class xmlrpc_server {
                     // if no signature or correct signature
                     if ($sysCall) { 
                         xarLogMessage("calling syscall" . $dmap[$methName]['function']);
-                        $xarayafunc = __constructxarfunc($dmap[$methName]['function'],'$this, $m');
+                        $xarayafunc = __constructxarfunc($dmap[$methName]['function'],'array(\'server\' => $this, \'msg\' => $m)');
+                        xarLogMessage($xarayafunc);
                         eval('$r=' . $xarayafunc);
                     } else {
                         xarLogMessage("calling " . $dmap[$methName]['function']);
