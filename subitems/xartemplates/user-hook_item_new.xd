@@ -1,9 +1,9 @@
 <div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		#$object->label#:
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<xar:mlstring>Please create the item first, after that subitems can be created.</xar:mlstring>
-	</span>
+    <span style="float: left; width: 20%; text-align: right;">
+        #$object->label#:
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <xar:mlstring>Please create the item first, after that subitems can be created.</xar:mlstring>
+    </span>
 </div>
 

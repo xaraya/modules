@@ -1,40 +1,40 @@
 <div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		#$object->label#:
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
+    <span style="float: left; width: 20%; text-align: right;">
+        #$object->label#:
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
 <table cellpadding=4 width="100%">
 <thead>
 <tr>
-	<xar:foreach in="$properties" key="$name">
-		<th align="center" class="xar-normal" style="text-align: center;">
-		<xar:data-label property="$properties[$name]" />
-		</th>
-	</xar:foreach>				
-	<th></th>
+    <xar:foreach in="$properties" key="$name">
+        <th align="center" class="xar-normal" style="text-align: center;">
+        <xar:data-label property="$properties[$name]" />
+        </th>
+    </xar:foreach>                
+    <th></th>
 </tr>
 </thead>
-<tbody>	
+<tbody>    
 <xar:foreach in="$values" key="$uid">
 
-	<tr>
-	
-	<xar:foreach in="$properties" key="$name">
-	<td>
-	
-	<xar:if condition="isset($values[$uid][$name])">
-	<xar:data-output property="$properties[$name]" value="$values[$uid][$name]" />
-	<xar:else />
-			&nbsp;
-	</xar:if>
-	
-	</td>
-	</xar:foreach>
-	<td>
-		<a href="#xarModUrl('subitems','admin','item_modify',array('objectid' => $objectid,'ddid' => $uid))#">Edit</a> |
-		<a href="#xarModUrl('subitems','admin','item_delete',array('objectid' => $objectid,'ddid' => $uid))#">Delete</a>
-	</td>
-	</tr>
+    <tr>
+    
+    <xar:foreach in="$properties" key="$name">
+    <td>
+    
+    <xar:if condition="isset($values[$uid][$name])">
+    <xar:data-output property="$properties[$name]" value="$values[$uid][$name]" />
+    <xar:else />
+            &nbsp;
+    </xar:if>
+    
+    </td>
+    </xar:foreach>
+    <td>
+        <a href="#xarModUrl('subitems','admin','item_modify',array('objectid' => $objectid,'ddid' => $uid))#">Edit</a> |
+        <a href="#xarModUrl('subitems','admin','item_delete',array('objectid' => $objectid,'ddid' => $uid))#">Delete</a>
+    </td>
+    </tr>
 </xar:foreach>
 <tr>
 
@@ -42,10 +42,10 @@
 <td></td>
 </xar:foreach>
 
-	<td><a href="#xarModUrl('subitems','admin','item_new',array('objectid' => $objectid,'itemid' => $itemid))#">add Item</a></td>
+    <td><a href="#xarModUrl('subitems','admin','item_new',array('objectid' => $objectid,'itemid' => $itemid))#">add Item</a></td>
 </tr>
 </tbody>
 </table>
-	</span>
+    </span>
 </div>
 

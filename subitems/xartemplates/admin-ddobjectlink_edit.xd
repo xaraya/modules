@@ -11,32 +11,32 @@
 -->
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
        <input type="hidden" name="objectid" id="objectid" value="#$objectid#" />    
-	
+    
 <tr>
 <td>
-	<xar:mlstring>Hooked Module Name:</xar:mlstring>
+    <xar:mlstring>Hooked Module Name:</xar:mlstring>
 </td>
 <td>
-	<input type="text" name="modid" value="#$module['value']#" />
-	<span style="color:red">#$module['error']->msg#</span>
+    <input type="text" name="modid" value="#$module['value']#" />
+    <span style="color:red">#$module['error']->msg#</span>
 </td>
 </tr>
 <tr>
 <td>
-	<xar:mlstring>Hooked Item Type:</xar:mlstring>
+    <xar:mlstring>Hooked Item Type:</xar:mlstring>
 </td>
 <td>
-	<input type="text" name="itemtype" value="#$itemtype['value']#" />
-	<span style="color:red">#$itemtype['error']->msg#</span>
+    <input type="text" name="itemtype" value="#$itemtype['value']#" />
+    <span style="color:red">#$itemtype['error']->msg#</span>
 </td>
 </tr>
 <tr>
 <td>
-	<xar:mlstring>Template to use:</xar:mlstring>
+    <xar:mlstring>Template to use:</xar:mlstring>
 </td>
 <td>
-	<input type="text" name="template" value="#$template['value']#" />
-	<span style="color:red">#$template['error']->msg#</span>
+    <input type="text" name="template" value="#$template['value']#" />
+    <span style="color:red">#$template['error']->msg#</span>
 </td>
 </tr>
 <tr><td colspan="2" align="center">

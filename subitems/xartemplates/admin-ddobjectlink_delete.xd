@@ -12,34 +12,34 @@
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
 <tr>
 <td>
-	<xar:mlstring>Subitems Object:</xar:mlstring>
+    <xar:mlstring>Subitems Object:</xar:mlstring>
 </td>
 <td>
-	(#$objectid#) #$label#
-</td>
-</tr>
-<tr>
-<td>
-	<xar:mlstring>Hooked Module Name:</xar:mlstring>
-</td>
-<td>
-	#$module#
+    (#$objectid#) #$label#
 </td>
 </tr>
 <tr>
 <td>
-	<xar:mlstring>Hooked Item Type:</xar:mlstring>
+    <xar:mlstring>Hooked Module Name:</xar:mlstring>
 </td>
 <td>
-	#$itemtype#
+    #$module#
 </td>
 </tr>
 <tr>
 <td>
-	<xar:mlstring>Template to use:</xar:mlstring>
+    <xar:mlstring>Hooked Item Type:</xar:mlstring>
 </td>
 <td>
-	#$template#
+    #$itemtype#
+</td>
+</tr>
+<tr>
+<td>
+    <xar:mlstring>Template to use:</xar:mlstring>
+</td>
+<td>
+    #$template#
 </td>
 </tr>
 <tr><td colspan="2" align="center">
