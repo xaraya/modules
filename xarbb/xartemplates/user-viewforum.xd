@@ -1,362 +1,284 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-
-<xar:if condition="$showcats">
-	<table border="0" cellpadding="3" width="98%">
-		<tr>
-			<td colspan="2">
-				<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
-			</td>
-		</tr>
-	</table>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html 
+</xar:comment>
+<xar:comment>
+    minimum use of tables for layout - a css-driven template 
+</xar:comment>
+<xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
-
-<table width="98%" border="0" align="center">
-	<tr> 
-		<td align="left" valign="bottom" colspan="2">
-			<h1>
-				<a class="xar-title" href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
-					#$fname#
-				</a><br />
-			</h1>
-		</td>
-		<xar:if condition="!empty($pager)">
-			<td align="right" valign="bottom" nowrap="nowrap">
-				<span class="xar-sub">
-					<b>
-						#$pager#
-					</b>  
-				</span>
-			</td>
-		</xar:if>
-	</tr>
-	<tr> 
-		<xar:sec mask="PostxarBB" catch="false">
-			<td align="left" valign="middle" width="50">
-				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
-						<img src="#xarTplGetImage('new/post.gif')#" alt="#xarML('New Topic')#" />
-				</a>
-			</td>
-		</xar:sec>
-		<td align="left" valign="middle" width="100%">
-			<span class="xar-sub">
-				&nbsp;&nbsp;&nbsp;
-				<a href="#xarModUrl('xarbb', 'user', 'main')#">
-					<xar:mlstring>
-						Forum Index
-					</xar:mlstring>
-				</a> 
-				-> 
-				<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
-					#$catname#
-				</a> 
-				->
-				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
-					#$fname#
-				</a>
-			</span>
-		</td>
-		<td align="right" valign="bottom" nowrap="nowrap">
-			<span class="xar-sub">
-				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid, 'read' => 1))#">
-					<xar:mlstring>
-					    Mark all topics as read
-					</xar:mlstring>
-				</a><br />
-				<a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#">
-					<xar:mlstring>
-						Syndicate This Forum
-					</xar:mlstring>
-				</a>
-			</span>
-		</td>
-	</tr>
-</table>
-
-<table style="border: 1px solid #000;" width="98%">
-	<tr style="border: 1px solid #000;"> 
-		<th colspan="2" align="center" nowrap="nowrap">
-			<h4>
-				<xar:mlstring>
-					Topics
-				</xar:mlstring>
-			</h4>
-		</th>
-		<th width="50" align="center" nowrap="nowrap" >
-			<h4>
-				<xar:mlstring>
-					Replies
-				</xar:mlstring>
-			</h4>
-		</th>
-		<th width="100" align="center" nowrap="nowrap" >
-			<h4>
-				<xar:mlstring>
-					Author
-				</xar:mlstring>
-			</h4>
-		</th>
-		<th width="75" align="center" nowrap="nowrap" >
-			<h4>
-				<xar:mlstring>
-					Views
-				</xar:mlstring>
-			</h4>
-		</th>
-		<th width="250" align="center" nowrap="nowrap">
-			<h4>
-				<xar:mlstring>
-					Last Post
-				</xar:mlstring>
-			</h4>
-		</th>
-	</tr>
-<xar:loop name="$items">
-	<tr style="border: 1px solid #000;">
-		<td class="xar-norm" align="center" valign="middle" width="20" >
-			#$loop:item['timeimage']#
-		</td>
-		<td class="xar-norm" width="100%" >
-			<span>
-				<xar:if condition="$loop:item['tstatus'] eq 5">
-					<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tpost']))#">
-						#$loop:item['ttitle']#
-					</a>
-				<xar:else />
-					<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => 	$loop:item['tid']))#">
-						#$loop:item['ttitle']#
-					</a>
-				</xar:if>
-			</span>
-		</td>
-		<td class="xar-accent" align="center" valign="middle" >
-			<span>
-				#$loop:item['comments']#
-			</span>
-		</td>
-		<td class="xar-norm" align="center" valign="middle" >
-			<span>
-				<xar:comment>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['tftime'])#<br />
-				<strong><xar:mlstring>By: </xar:mlstring></strong> </xar:comment>
-                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['tposter']))#">#$loop:item['name']#</a>
-			</span>
-
-		</td>
-		<td class="xar-accent" align="center" valign="middle">
-			<span>
-				#$loop:item['hitcount']#
-			</span>
-		</td> 
-		<td class="xar-norm" align="center" valign="middle" nowrap="nowrap" >
-			<span>
-                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
-				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
-					#$loop:item['replyname']#
-				</a>
-			</span>
-		</td>
-	</tr>
-</xar:loop>
-	<tr >
-		<td  class="xar-accent" colspan="7" height="28" valign="middle">&nbsp;
-		</td>
-	</tr>
-</table>
-
-<table width="98%" border="0" align="center">
-	<tr> 
-		<xar:sec mask="PostxarBB" catch="false">
-			<td align="left" valign="middle" width="50">
+<xar:if condition="isset($catid)">
+    <div class="xarbb-noteswrapper">
+        <xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+    </div>
+</xar:if>
+<div class="xarbb-noteswrapper">
+    <div class="xar-sub rightnote">
+        <div>
+            <xar:if condition=" !empty($pager)">
+                <strong>
+                    #$pager# 
+                </strong>
+            </xar:if>
+        </div>
+        <div>
+            <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid, 'read' => 1))#">
+                <xar:mlstring>
+                    Mark all topics as read 
+                </xar:mlstring>
+            </a>
+        </div>
+        <div>
+            <a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#">
+                <xar:mlstring>
+                    Syndicate This Forum 
+                </xar:mlstring>
+            </a>
+        </div>
+    </div>
+    <h1>
+        <a class=" xar-title" href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+            #$fname# 
+        </a>
+    </h1>
+    <div class="xarbb-topiccontrols">
+        <span class="xar-sub">
+            <xar:sec mask="PostxarBB" catch="false">
+                <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+                    <img src="#xarTplGetImage('new/post.gif')#" alt="#xarML('New Topic')#" />
+                </a>
+            </xar:sec>
+            <a href="#xarModUrl('xarbb', 'user', 'main')#">
+                <xar:mlstring>
+                    Forum Index 
+                </xar:mlstring>
+            </a>
+            -&gt; 
+            <a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
+                #$catname# 
+            </a>
+            -&gt; 
+            <a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+                #$fname# 
+            </a>
+        </span>
+    </div>
+</div>
+<div class="xarbb-tablewrapper">
+    <table>
+        <tr>
+            <th>
+                <xar:mlstring>
+                    View 
+                </xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>
+                    Topic 
+                </xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>
+                    Author 
+                </xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>
+                    Posts 
+                </xar:mlstring>
+            </th>
+            <th>
+                <xar:mlstring>
+                    Last Post 
+                </xar:mlstring>
+            </th>
+        </tr>
+        <xar:loop name="$items">
+            <tr>
+                <td class="xar-norm icon">
+                    <xar:if condition="$loop:item['tstatus'] eq 5">
+                        <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tpost']))#">
+                            #$loop:item['timeimage']# 
+                        </a>
+                        <xar:else />
+                        <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#">
+                            #$loop:item['timeimage']# 
+                        </a>
+                    </xar:if>
+                </td>
+                <td class="xar-norm forumname">
+                    <xar:if condition="$loop:item['tstatus'] eq 5">
+                        <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tpost']))#">
+                            #$loop:item['ttitle']# 
+                        </a>
+                        <xar:else />
+                        <a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#">
+                            #$loop:item['ttitle']# 
+                        </a>
+                    </xar:if>
+                </td>
+                <td class="xar-accent authorname">
+                    <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['tposter']))#">
+                        #$loop:item['name']# 
+                    </a>
+                </td>
+                <td class="xar-norm stats">
+                    <div class="xar-sub xarbb-noteswrapper">
+                        <span class="leftnote">
+                            <xar:mlstring>
+                                Replies: 
+                            </xar:mlstring>
+                        </span>
+                        <strong class="rightnote">
+                            #$loop:item['comments']# 
+                        </strong>
+                        <span class="leftnote">
+                            <xar:mlstring>
+                                Views: 
+                            </xar:mlstring>
+                        </span>
+                        <strong class="rightnote">
+                            #$loop:item['hitcount']# 
+                        </strong>
+                    </div>
+                </td>
+                <td class="xar-accent lastpost">
+                    <div class="xar-sub">
+                        #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])# 
+                    </div>
+                    <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
+                        #$loop:item['replyname']# 
+                    </a>
+                </td>
+            </tr>
+        </xar:loop>
+    </table>
+</div>
+<div class="xarbb-noteswrapper">
+	<div class="xarbb-topiccontrols">
+		<span class="xar-sub">
+			<xar:sec mask="PostxarBB" catch="false">
 				<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
 					<img src="#xarTplGetImage('new/post.gif')#" alt="#xarML('New Topic')#" />
 				</a>
-			</td>
-		</xar:sec>
-		<td align="left" valign="middle" width="100%">
-			<span class="xar-sub">
-				&nbsp;&nbsp;&nbsp;
-				<a href="#xarModUrl('xarbb', 'user', 'main')#">
-					<xar:mlstring>
-						Forum Index
-					</xar:mlstring>
-				</a> 
-				-> 
-				<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
-					#$catname#
-				</a> 
-				->
-				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
-					#$fname#
-				</a>
-			</span>
-		</td>
-	<xar:if condition="!empty($pager)">	
-		<td align="right" valign="middle" nowrap="nowrap">
-				<span class="xar-sub">
-					<b>
-						#$pager#
-					</b>  
-				</span>
-			</td>
-	</xar:if>
-		<!--  Need an API Forum Picker. 
-		<td align="right" valign="bottom" nowrap="nowrap">
-			<span class="xar-sub">
-				TODO Picker
-			</span>
-		</td> -->
-	</tr>
-</table>
+			</xar:sec>
+			<a href="#xarModUrl('xarbb', 'user', 'main')#">
+				<xar:mlstring>
+					Forum Index 
+				</xar:mlstring>
+			</a>
+			-&gt; 
+			<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
+				#$catname# 
+			</a>
+			-&gt; 
+			<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+				#$fname# 
+			</a>
+		</span>
+	</div>
+	<div class="xar-sub rightnote">
+		<xar:if condition="!empty($pager)">
+			<strong>
+				#$pager# 
+			</strong>
+		</xar:if>
+	</div>
+</div>
 
-<table width="98%" align="center">
-	<tr>
-		<td align="left" valign="top">
-			<table cellspacing="3" cellpadding="0" border="0">
-				<tr>
-					<td width="20" align="left">
-						<img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							New post
-						</xar:mlstring>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-					<td width="20" align="center">
-						<img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							No new posts
-						</xar:mlstring>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-					<td width="20" align="center">
-						<img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							Announcement
-						</xar:mlstring>
-					</td>
-				</tr>
-				<tr> 
-					<td width="20" align="left">
-						<img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							New announcement
-						</xar:mlstring>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-					<td width="20" align="left">
-						<img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							New hot topic post
-						</xar:mlstring>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-					<td width="20" align="center">
-						<img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							Hot topic
-						</xar:mlstring>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td width="20" align="center">
-						<img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							Sticky
-						</xar:mlstring>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-					<td class="xar-sub">
-						<img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							New sticky
-						</xar:mlstring>
-					</td>
-					<td>
-						&nbsp;&nbsp;
-					</td>
-					<td class="xar-sub">
-						<img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
-					</td>
-					<td class="xar-sub">
-						<xar:mlstring>
-							Locked
-						</xar:mlstring>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-
+<div class="xarbb-legendwrapper">
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post')#" />
+        <xar:mlstring>
+            New post 
+        </xar:mlstring>
+    </span>
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder.gif')#" alt="#xarML('No new post')#" />
+        <xar:mlstring>
+            No new posts 
+        </xar:mlstring>
+    </span>
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_announce.gif')#" alt="#xarML('Announcement')#" />
+        <xar:mlstring>
+            Announcement 
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xarbb-legendwrapper">
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_announce_new.gif')#" alt="#xarML('New announcement')#" />
+        <xar:mlstring>
+            New announcement 
+        </xar:mlstring>
+    </span>
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_new_hot.gif')#" alt="#xarML('New hot topic')#" />
+        <xar:mlstring>
+            New hot topic post 
+        </xar:mlstring>
+    </span>
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_hot.gif')#" alt="#xarML('Hot topic')#" />
+        <xar:mlstring>
+            Hot topic 
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xarbb-legendwrapper">
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_sticky.gif')#" alt="#xarML('Sticky topic')#" />
+        <xar:mlstring>
+            Sticky 
+        </xar:mlstring>
+    </span>
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_sticky_new.gif')#" alt="#xarML('New sticky topic')#" />
+        <xar:mlstring>
+            New sticky 
+        </xar:mlstring>
+    </span>
+    <span class="xar-sub spacedout">
+        <img src="#xarTplGetImage('new/folder_lock.gif')#" alt="#xarML('Locked topic')#" />
+        <xar:mlstring>
+            Locked 
+        </xar:mlstring>
+    </span>
+</div>
 <xar:if condition="!xarUserIsLoggedIn()">
-	<form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
-		<table width="98%">
-			<tr> 
-				<th height="28" align="left">
-					<span class="xar-title">
-						<xar:mlstring>
-							Log in
-						</xar:mlstring>
-					</span>
-				</th>	
-			</tr>
-			<tr> 
-				<td align="center" valign="middle" height="28">
-					<span class="xar-sub">
-						<label for="uname">
-							<xar:mlstring>
-								Username
-							</xar:mlstring>: 
-						</label>
-						<input type="text" name="uname" id="uname" maxlength="64" size="10" />
-						&nbsp;&nbsp;&nbsp;
-						<label for="pass">
-							<xar:mlstring>
-								Password
-							</xar:mlstring>: 
-						</label>
-						<input type="password" name="pass" id="pass" maxlength="64" size="10" />
-						<xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
-							<label for="rememberme">
-								<xar:mlstring>
-									Remember me
-								</xar:mlstring>
-							</label>
-							<input type="checkbox" name="rememberme" id="rememberme" value="1" />
-						</xar:if>
-						&nbsp;&nbsp;&nbsp; 
-						<input type="hidden" name="redirecturl" id="returnurl" value="#$return_url#" />
-						<input type="submit" value="#$submitlabel#" />
-					</span> 
-				</td>
-			</tr>
-		</table>
-	</form>
+    <form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
+        <div class="xar-accent xarbb-noteswrapper xar-title">
+            <xar:mlstring>
+                Log in 
+            </xar:mlstring>
+        </div>
+        <div id="xarbb-loginwrapper">
+            <span class="xar-sub">
+                <label for="uname">
+                    <xar:mlstring>
+                        Username 
+                    </xar:mlstring>
+                    : 
+                </label>
+                <input type="text" name="uname" id="uname" maxlength="64" size="10" />
+                <label for="pass">
+                    <xar:mlstring>
+                        Password 
+                    </xar:mlstring>
+                    : 
+                </label>
+                <input type="password" name="pass" id="pass" maxlength="64" size="10" />
+                <xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
+                    <label for="rememberme">
+                        <xar:mlstring>
+                            Remember me 
+                        </xar:mlstring>
+                    </label>
+                    <input type="checkbox" name="rememberme" id="rememberme" value="1" />
+                </xar:if>
+                <input type="hidden" name="redirecturl" id="returnurl" value="#$return_url#" />
+                <input type="submit" value="#$submitlabel#" />
+            </span>
+        </div>
+    </form>
 </xar:if>
