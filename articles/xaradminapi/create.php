@@ -134,7 +134,16 @@ function articles_adminapi_create($args)
               xar_status,
               xar_language)
             VALUES (?,?,?,?,?,?,?,?,?,?)";
-    $bindvars = array($nextId, $title, $summary, $body, $authorid, (string) $pubdate, $ptid, $notes, $status, $language);
+    $bindvars = array((int)     $nextId, 
+                      (string)  $title, 
+                      (string)  $summary, 
+                      (string)  $body, 
+                      (int)     $authorid, 
+                      (int)     $pubdate, 
+                      (int)     $ptid, 
+                      (string)  $notes, 
+                      (int)     $status, 
+                      (string)  $language);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
