@@ -1,0 +1,132 @@
+<object name="encyclopedia">
+  <objectid>10</objectid>
+  <label>Encyclopedia</label>
+  <moduleid>182</moduleid>
+  <itemtype>3</itemtype>
+  <urlparam>itemid</urlparam>
+  <maxid>18</maxid>
+  <config></config>
+  <isalias>1</isalias>
+  <properties>
+    <property name="id">
+      <id>83</id>
+      <label>id</label>
+      <type>itemid</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>1</order>
+      <validation></validation>
+    </property>
+    <property name="vid">
+      <id>84</id>
+      <label>vid</label>
+      <type>dropdown</type>
+      <default>1</default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>2</order>
+      <validation>xarModAPIFunc('encyclopedia','user','vollist')</validation>
+    </property>
+    <property name="term">
+      <id>85</id>
+      <label>term</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>3</order>
+      <validation></validation>
+    </property>
+    <property name="pronunciation">
+      <id>86</id>
+      <label>pronunciation</label>
+      <type>textarea_small</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>4</order>
+      <validation></validation>
+    </property>
+    <property name="related">
+      <id>87</id>
+      <label>related</label>
+      <type>textarea_small</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>5</order>
+      <validation></validation>
+    </property>
+    <property name="links">
+      <id>88</id>
+      <label>links</label>
+      <type>textarea_small</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>6</order>
+      <validation></validation>
+    </property>
+    <property name="definition">
+      <id>89</id>
+      <label>definition</label>
+      <type>textarea_medium</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>7</order>
+      <validation></validation>
+    </property>
+    <property name="author">
+      <id>90</id>
+      <label>author</label>
+      <type>textbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>8</order>
+      <validation></validation>
+    </property>
+    <property name="image">
+      <id>91</id>
+      <label>image</label>
+      <type>fileupload</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>9</order>
+      <validation></validation>
+    </property>
+    <property name="validated">
+      <id>92</id>
+      <label>validated</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>10</order>
+      <validation></validation>
+    </property>
+    <property name="active">
+      <id>93</id>
+      <label>active</label>
+      <type>checkbox</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>11</order>
+      <validation></validation>
+    </property>
+    <property name="date">
+      <id>94</id>
+      <label>date</label>
+      <type>static</type>
+      <default></default>
+      <source>dynamic_data</source>
+      <status>1</status>
+      <order>12</order>
+      <validation></validation>
+    </property>
+  </properties>
+</object>

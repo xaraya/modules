@@ -1,0 +1,6 @@
+The original author of the PostNuke Encyclopedia module is Rebecca Smallwood (http://orodruin.sourceforge.net).
+Contributions to the search functionality were made by ColdRolledSteel (crs@mtrad.com), who started with faq.php and adapted it to work with Encyclopedia.
+
+The present module has been completely rewritten to run as a Xaraya module, with the idea of using the implementation to explore some of the more advanced functionality that Xaraya offers. As can be seen, although the UI of the original module has been largely preserved, the backend has changed completely. Not all of the functionality available in the original module has been implemented yet.
+
+The contributions to the functionality of the Xaraya committers are too numerous to mention, but should be acknowledged here. The current author's contribution is largely limited to one class file and assembling the pieces that the Xaraya framework offers to implement the module.

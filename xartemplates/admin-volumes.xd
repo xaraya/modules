@@ -1,0 +1,60 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+	<span class="xar-mod-title">
+		<xar:mlstring>Administration - Encyclopedia</xar:mlstring>
+	</span>
+</div>
+<div class="xar-mod-body">
+    <h2 style="width:100%;height:1.5em;">
+		<xar:mlstring>
+			View Volumes
+		</xar:mlstring>
+    </h2>
+	<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+	</xar:if>
+	<dl class="xar-tabs">
+		<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+			<a href="#xarModURL('encyclopedia','admin','newvol')#">
+				<xar:mlstring>Add a Volume</xar:mlstring>
+			</a>
+		</dd>    
+	</dl>
+	<div class="xar-norm-outline" style="margin-top:1px; width:100%;">
+		<table  class="xar-fullwidth" style="border-spacing:1px; padding:0;">
+			<tr>
+				<th style="width: 40em; text-align: left; padding-left: .5em;">
+					<xar:mlstring>Volume</xar:mlstring>
+				</th>
+				<th style="width: 60em; text-align: left; padding-left: .5em;">
+					<xar:mlstring>Description</xar:mlstring>
+				</th>
+				<th style="width: 20em; text-align: center;">
+					<xar:mlstring>Options</xar:mlstring>
+				</th>
+			</tr>
+			<xar:loop name="$rows">
+				<xar:if condition="(($loop:index + 1) % 2)">
+					<tr class="xar-norm">
+				<xar:else />
+					<tr class="xar-accent">
+				</xar:if>
+					<td class="xar-norm-outline" style="text-align: left;;border-width: 0px 0px 0px 0px;">
+						<a href="#$loop:item['edit']#">#$loop:item['volume']#</a>
+					</td>
+					<td class="xar-norm-outline" style="text-align: left;border-width: 0px 0px 0px 0px;">
+						#$loop:item['description']#
+					</td>
+					<td nowrap class="xar-norm-outline" style="text-align: center; border-width: 0px 0px 0px 0px;">
+						<xar:if condition="$loop:item['edit'] ne ''">
+							<a href="#$loop:item['edit']#"><xar:mlstring>Edit</xar:mlstring></a>
+						</xar:if>
+						&nbsp;
+						<xar:if condition="$loop:item['delete'] ne ''">
+							<a href="#$loop:item['delete']#"><xar:mlstring>Delete</xar:mlstring></a>
+						</xar:if>
+					</td>
+				</tr>
+			</xar:loop>
+		</table>
+	</div>
+</div>

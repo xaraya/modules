@@ -1,0 +1,171 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Encyclopedia</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View Entries</xar:mlstring></h2>
+    <div style="margin: auto;">
+
+        <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+        </xar:if>
+		<dl class="xar-tabs">
+			<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+				<a href="#xarModURL('encyclopedia','user','main')#">
+					<xar:mlstring>Volume Index</xar:mlstring>
+				</a>
+			</dd>  
+			<xar:if condition="xarModGetVar('encyclopedia','allowsearch')">
+				<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+					<a href="#xarModURL('encyclopedia','user','displayvol', array('phase' => 1))#">
+						<xar:mlstring>Search</xar:mlstring>
+					</a>
+				</dd>  
+			</xar:if>
+			<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+				<a href="#xarModURL('encyclopedia','user','newentry')#">
+					<xar:mlstring>Add Entry</xar:mlstring>
+				</a>
+			</dd>    
+		</dl>
+		<xar:if condition="xarModGetVar('encyclopedia','allowletters')">
+			<dl class="xar-tabs">
+				<dt class="help">
+					<xar:mlstring>
+						Section
+					</xar:mlstring>
+					: 
+				</dt>
+				<dd>
+					<a href="#xarModURL('encyclopedia','user','displayvol',array('letter' => 'All', 'vid' => $vid, 'confirmed' => 1))#">
+						<xar:mlstring>All</xar:mlstring>
+					</a>
+				</dd>
+				<xar:foreach in="$alphabet" value="$ltr">
+					<dd>
+						<a href="#xarModURL('encyclopedia','user','displayvol',array('letter' => $ltr, 'confirmed' => 1))#">
+							#$ltr#
+						</a>
+					</dd>
+				</xar:foreach>
+				<dd>
+					<a href="#xarModURL('encyclopedia','user','displayvol',array('letter' => 'Other', 'confirmed' => 1))#">
+						<xar:mlstring>Other</xar:mlstring>
+					</a>
+				</dd>
+			</dl>
+		</xar:if>
+
+	<xar:if condition="$phase eq 1">
+		<div>
+			<form method="post" action="#xarModURL('encyclopedia', 'user', 'displayvol', array('phase' => 0, 'confirmed' => 1))#">
+				<table>
+					<tr>
+						<td>
+							<label for="searchtype"><xar:mlstring>Search in</xar:mlstring>:</label>
+						</td>
+						<td>					
+							<select name="searchtype" id="searchtype" size="1" tabindex="3">
+								<option value="term"><xar:mlstring>Term</xar:mlstring></option>
+								<option value="definition"><xar:mlstring>Definition</xar:mlstring></option>
+								<option value="both"><xar:mlstring>Both</xar:mlstring></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="vid"><xar:mlstring>Volume</xar:mlstring>:</label>
+						</td>
+						<td>					
+							<select name="vid" id="vid" size="1" tabindex="1">
+								<xar:loop name="$volumes">
+									<option value="#$loop:item['id']#">
+										#xarVarPrepForDisplay($loop:item['name'])#
+									</option>
+								</xar:loop>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="search"><xar:mlstring>Search</xar:mlstring>:</label>
+							<input type="hidden" name="order" id="order" value="#xarVarPrepForDisplay($order)#" />
+							<input type="hidden" name="letter" id="letter" value="" />
+						</td>
+						<td>					
+							<input type="text" name="search" id="search" value="" size="40" maxlength="255" tabindex="1" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							&nbsp;
+						</td>
+						<td>					
+							<xar:set name="$searchlabel"><xar:mlstring>Search</xar:mlstring></xar:set>
+							<input type="submit" value="#$searchlabel#" />
+						</td>
+					</tr>
+				</table>
+			</form>
+			<xar:mlstring>Search condition</xar:mlstring>: 
+			<b>#xarVarPrepForDisplay($msg)#</b>
+			<br /><br />
+		</div>
+	</xar:if>
+			<xar:if condition="!empty($message)">
+				<p>#xarVarPrepForDisplay($message)#</p>
+			<xar:else />
+				<table width="100%" border="0" cellspacing="0" cellpadding="2">
+					<tr>
+						<th style="width: 100;">
+							<a href="#xarModURL('encyclopedia','user','displayvol',array('order' => 'term'))#">
+								<xar:mlstring>Term</xar:mlstring>
+							</a>
+						</th>
+						<th>
+							<xar:mlstring>Definition</xar:mlstring>
+						</th>
+					</tr>
+<xar:comment>-------------------------- Start the display 					</xar:comment>
+<xar:if condition="xarModGetVar('Encyclopedia', 'longdisplay') eq 1">
+	<xar:set name="$numberItems">count($items)</xar:set>
+	<xar:loop name="$items">
+						<xar:if condition="(($loop:index + 1) % 2)">
+							<tr class="xar-norm">
+						<xar:else />
+							<tr class="xar-accent">
+						</xar:if>
+							<td style="width: 20em">
+								<a href="#xarModURL('encyclopedia', 'user', 'displayterm', array('id' => $loop:item['id']))#">#xarVarPrepForDisplay($loop:item['term'])#</a>
+							</td>
+							<td>
+								#xarVarPrepForDisplay($loop:item['definition'])#
+							</td>
+							<xar:if condition="isset($properties) and count($properties) gt 0">
+								<xar:set name="uid">#$loop:item['uid']#</xar:set>
+								<xar:foreach in="$properties" key="$key">
+									<td>
+										<xar:if condition="isset($values[$uid][$key])">
+											<xar:data-output property="$properties[$key]" value="$values[$uid][$key]" />
+										<xar:else />
+											&nbsp;&nbsp;
+										</xar:if>
+									</td>
+								</xar:foreach>
+							</xar:if>
+						</tr>
+					</xar:loop>
+<xar:else />
+</xar:if>
+<xar:comment>-------------------------- End the display 					</xar:comment>
+				</table>
+
+
+				<!-- add the pager here -->
+			<xar:if condition="$pager ne ''">
+				<div class="xar-fullwidth xar-noborder" style="text-align: center">
+					#$pager#
+				</div>
+			</xar:if>
+		</xar:if>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head">
+	<span class="xar-mod-title">
+		<xar:mlstring>Administration - Encyclopedia</xar:mlstring>
+	</span>
+</div>
+
+
+<div class="xar-mod-body">
+    <h2 style="width:100%;height:1.5em;">
+		<xar:mlstring>
+			Modify Entry
+		</xar:mlstring>
+    </h2>
+	<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
+	</xar:if>
+	<dl class="xar-tabs">
+		<dd  class="active" style="float: right; margin-right: .5em; text-align: left;">
+			<a href="#xarModURL('encyclopedia','admin','getrecent')#">
+				<xar:mlstring>Recent Entries</xar:mlstring>
+			</a>
+		</dd>    
+	</dl>
+
+	<xar:set name="isupload">#$object:upload#</xar:set>
+	<xar:if condition="!empty($upload)">
+	<form class=xar-fullwidth" method="POST" action="#xarModURL('dynamicdata', 'admin', 'updateentry')#" enctype="multipart/form-data">
+	<xar:else />
+	<form class=xar-fullwidth" method="POST" action="#xarModURL('encyclopedia', 'admin', 'updateentry')#">
+	</xar:if>
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<input type="hidden" name="modid" id="modid" value="#$object:moduleid#" />
+		<input type="hidden" name="itemtype" id="itemtype" value="#$object:itemtype#" />
+		<input type="hidden" name="id" id="id" value="#$object:itemid#" />
+
+		<table class=xar-fullwidth xar-noborder" cellspacing="0" cellpadding="4">
+
+			<xar:comment> this does most of the hard work :)</xar:comment>
+			<xar:data-form object="$object" />
+			<tr>
+				<td colspan="2">
+					#$hooks#
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="#xarML('Update')#" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
