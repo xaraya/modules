@@ -1,0 +1,88 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="main"><strong>{#title_new_address#}</strong> </td>
+    <td><div align="right"><font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif">{#text_must#}</font></div></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  {if $gender=='1'}
+  <tr>
+    <td colspan="2" class="main" style="border-top: 1px solid; border-color: #cccccc;">{#text_new_address#}
+      <br><br> </td>
+  </tr>
+  <tr>
+    <td class="main" width="150">{#text_gender#}</td>
+    <td width="100%" class="main">
+<div align="left">{#text_male#} {$INPUT_MALE} {#text_female#}
+        {$INPUT_FEMALE}</div></td>
+  </tr>
+  {/if}
+  <tr>
+    <td width="150" class="main" >{#text_firstname#}</td>
+    <td width="100%" class="main" >
+<div align="left">{$INPUT_FIRSTNAME}</div></td>
+  </tr>
+  <tr>
+    <td width="150" class="main">{#text_lastname#}</td>
+    <td width="100%" class="main">
+<div align="left">{$INPUT_LASTNAME}</div></td>
+  </tr>
+  {if $company=='1'}
+  <tr>
+    <td width="150" class="main">&nbsp;</td>
+    <td width="100%" class="main">
+<div align="left"></div></td>
+  </tr>
+  <tr>
+    <td width="150" class="main">{#text_company#}<br> </td>
+    <td width="100%" class="main">
+<div align="left">{$INPUT_COMPANY}</div></td>
+  </tr>
+  {/if}
+  <tr>
+    <td width="150" class="main">&nbsp;</td>
+    <td width="100%" class="main" >
+<div align="left"></div></td>
+  </tr>
+  <tr>
+    <td class="main"  width="150">{#text_street#}</td>
+    <td width="100%" class="main" >
+<div align="left">{$INPUT_STREET}</div></td>
+  </tr>
+  {if $suburb=='1'}
+  <tr>
+    <td width="150" class="main">{#text_suburb#}</td>
+    <td width="100%" class="main">
+<div align="left">{$INPUT_SUBURB}</div></td>
+  </tr>
+  {/if}
+  <tr>
+    <td width="150" class="main">{#text_code#}</td>
+    <td width="100%" class="main">
+<div align="left">{$INPUT_CODE}</div></td>
+  </tr>
+  <tr>
+    <td width="150" class="main">{#text_city#}</td>
+    <td width="100%" class="main">
+<div align="left">{$INPUT_CITY}</div></td>
+  </tr>
+  {if $state=='1'}
+  <tr>
+    <td width="150" class="main">{#text_state#}</td>
+    <td width="100%" class="main">
+<div align="left">{$INPUT_STATE}</div></td>
+  </tr>
+  {/if}
+  <tr>
+    <td width="150" class="main">{#text_country#}</td>
+    <td width="100%" class="main">
+<div align="left">{$SELECT_COUNTRY}</div></td>
+  </tr>
+  {if $new=='1'}
+  <tr>
+    <td width="150" class="main">&nbsp;</td>
+    <td width="100%" class="main">
+<div align="left">{$CHECKBOX_PRIMARY} {#text_standard#}</div></td>
+  </tr>
+  {/if}
+</table>

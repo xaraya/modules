@@ -1,0 +1,73 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="main"><strong>{#title_address#}</strong> </td>
+    <td><div align="right"><font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif">{#text_must#}</font></div></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  {if $gender=='1'}
+  <tr>
+    <td class="main" style="border-top: 1px solid; border-color: #cccccc;" width="200">{#text_gender#}</td>
+    <td class="main" style="border-top: 1px solid; border-color: #cccccc;">{#text_male#}
+      {$INPUT_MALE} {#text_female#} {$INPUT_FEMALE}</td>
+  </tr>
+  {/if}
+  <tr>
+    <td class="main" >{#text_firstname#}</td>
+    <td class="main" >{$INPUT_FIRSTNAME}</td>
+  </tr>
+  <tr>
+    <td class="main">{#text_lastname#}</td>
+    <td class="main">{$INPUT_LASTNAME}</td>
+  </tr>
+  {if $company=='1'}
+  <tr>
+    <td class="main">&nbsp;</td>
+    <td class="main">&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main">{#text_company#}<br> </td>
+    <td class="main">{$INPUT_COMPANY}</td>
+  </tr>
+  {/if}
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="main">&nbsp;</td>
+    <td class="main" >&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"  width="200">{#text_street#}</td>
+    <td class="main" >{$INPUT_STREET}</td>
+  </tr>
+  {if $suburb=='1'}
+  <tr>
+    <td class="main">{#text_suburb#}</td>
+    <td class="main">{$INPUT_SUBURB}</td>
+  </tr>
+  {/if}
+  <tr>
+    <td class="main">{#text_code#}</td>
+    <td class="main">{$INPUT_CODE}</td>
+  </tr>
+  <tr>
+    <td class="main">{#text_city#}</td>
+    <td class="main">{$INPUT_CITY}</td>
+  </tr>
+  {if $state=='1'}
+  <tr>
+    <td class="main">{#text_state#}</td>
+    <td class="main">{$INPUT_STATE}</td>
+  </tr>
+  {/if}
+  <tr>
+    <td class="main">{#text_country#}</td>
+    <td class="main">{$SELECT_COUNTRY}</td>
+  </tr>
+  {if $new=='1'}
+  <tr>
+    <td class="main">&nbsp;</td>
+    <td class="main">{$CHECKBOX_PRIMARY} {#text_standard#}</td>
+  </tr>
+  {/if}
+</table>

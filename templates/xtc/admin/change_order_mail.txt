@@ -1,0 +1,8 @@
+
+{#greeting#} {$NAME},
+
+{#text#}
+{#comment#} {$NOTIFY_COMMENTS}
+
+{#status#} {$ORDER_STATUS}
+{#text_footer#}

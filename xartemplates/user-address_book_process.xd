@@ -1,0 +1,46 @@
+<xar:template file="application_top" type="module"/>
+<br>
+<br></strong></font>
+<FORM method="POST" name="addressbook" id="post" action="#xarModURL('commerce','user',(FILENAME_ADDRESS_BOOK_PROCESS, (isset($_GET['edit']) ? 'edit=' . $_GET['edit'] : ''), 'SSL')#" onSubmit="return check_form(addressbook);">
+<input type="hidden" name="action" value="update">
+<input type="hidden" name="edit" value="#$_GET['edit']#">
+{if $error!=''}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$error}</td>
+  </tr>
+</table>
+<br>
+{/if} {$MODULE_address_book_details} <br>
+{if $delete=='1'} <b>{#title_delete#}</b>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main" width="100%">{#text_delete#}<br>
+            <br>
+          </td>
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="4">
+              <tr>
+                <td width="1" align="center" valign="top" nowrap class="main">
+                  <div align="center"><strong>{#text_address#}</strong><br>
+                    <img src="{$tpl_path}img/arrow_south_east.gif"> </div></td>
+                <td width="150" nowrap bgcolor="f1f1f1" class="main" style="border-right: 1px solid; border-color: #cccccc;">
+<div align="left">{$ADDRESS}</div></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+
+
+{/if}
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$BUTTON_BACK}</td>
+    <td><div align="right">{$BUTTON_UPDATE}{$BUTTON_DELETE}</div></td>
+  </tr>
+</table>
+</FORM>

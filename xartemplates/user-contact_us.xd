@@ -1,0 +1,53 @@
+<xar:template file="application_top" type="module"/>
+<font size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong>{$CONTACT_HEADING}</strong></font><br>
+<br>
+{if $success!='1'}
+<FORM method="POST" name="contact_us" id="post" action="#xarModURL('commerce','user',(FILENAME_CONTACT_US, 'action=send')#">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="main">{$CONTACT_CONTENT}</td>
+  </tr>
+  <tr>
+    <td><div align="right"><br>
+      </div></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main" width="150">{#text_name#}</td>
+          <td>{$INPUT_NAME}</td>
+        </tr>
+        <tr>
+          <td class="main">{#text_email#}</td>
+          <td>{$INPUT_EMAIL}</td>
+        </tr>
+        <tr>
+          <td class="main" valign="top">{#text_message#}</td>
+          <td>{$INPUT_TEXT}</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><div align="right">{$BUTTON_SUBMIT}</div></td>
+  </tr>
+</table>
+</FORM>
+{else}
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+  <tr>
+    <td><img src="{$tpl_path}img/checkout_success.gif"></td>
+    <td class="main"valign="top"><br>
+      {#text_success#}<br> <br>
+      <br> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="right"><br>
+              {$BUTTON_CONTINUE}</div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+{/if}
+

@@ -1,0 +1,7 @@
+
+{#greeting#} {if $content.MAIL_GENDER =='m'}{#male#}{else}{#female#}{/if} {$content.MAIL_NAME},
+
+{#text#}
+
+{#text_question#} {$content.MAIL_REPLY_ADDRESS}.
+{#text_email#} {$content.MAIL_REPLY_ADDRESS}.

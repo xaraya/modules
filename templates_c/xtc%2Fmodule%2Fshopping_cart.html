@@ -1,0 +1,55 @@
+<?php /* Smarty version 2.5.0, created on 2004-02-17 14:28:51
+         compiled from xtc/module/shopping_cart.html */ ?>
+<p><?php $this->config_load($this->_tpl_vars['language']."/lang_".$this->_tpl_vars['language'].".conf", 'shopping_cart', 'local'); ?> <font size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong><?php echo $this->_config[0]['vars']['heading_cart']; ?>
+ 
+  </strong></font><br>
+  <br>
+<?php if ($this->_tpl_vars['info_message'] != ''): ?>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="main"><div align="center"><font color="#FF0000"><?php echo $this->_tpl_vars['info_message']; ?>
+ </font></div></td>
+  </tr>
+</table>
+<?php endif; ?>
+<br>
+  <?php if ($this->_tpl_vars['cart_empty'] == true): ?></p>
+  
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td class="main"><div align="center"><?php echo $this->_config[0]['vars']['text_empty']; ?>
+</div></td>
+  </tr>
+  <tr>
+    <td class="main"><div align="right"><?php echo $this->_tpl_vars['BUTTON_CONTINUE']; ?>
+</div></td>
+  </tr>
+</table>
+<?php else: ?>
+<form name="cart_quantity" action="<?php echo $this->_tpl_vars['FORM_ACTION']; ?>
+" method="post">
+<?php echo $this->_tpl_vars['HIDDEN_OPTIONS']; ?>
+
+  <br>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td><?php echo $this->_tpl_vars['MODULE_order_details']; ?>
+</td>
+    </tr>
+    <tr>
+      <td class="main"></td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td><div align="left"><?php echo $this->_tpl_vars['BUTTON_RELOAD']; ?>
+</div></td>
+	<td><div align="right"><?php echo $this->_tpl_vars['BUTTON_CHECKOUT']; ?>
+</div></td>
+  </tr>
+</table>
+
+</form>
+<div align="center" class="main"></div>
+<p><?php endif; ?> </p>

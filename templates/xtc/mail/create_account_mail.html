@@ -1,0 +1,13 @@
+<table  width="100%" border="0" align="center" cellpadding="4" cellspacing="0">
+  <tr>
+    <td style="border-bottom: 1px solid; border-color: #cccccc;"><div align="right"><img src="{$tpl_path}img/logo.gif"></div></td>
+  </tr>
+  <tr>
+    <td>{#greeting#} {if $content.MAIL_GENDER =='m'}{#male#}{else}{#female#}{/if}
+      {$content.MAIL_NAME},<br> <br>
+      {#text#} <br>
+      {#text_question#} {$content.MAIL_REPLY_ADDRESS}. <br>
+      {#text_email#} {$content.MAIL_REPLY_ADDRESS}. </td>
+  </tr>
+</table>
+

@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>{$PRODUCTS_NAME} / {$PRODUCTS_MODEL}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body leftmargin="0" topmargin="0" onload="window.print()">
+<table border="0" width="640" cellpadding="10" cellspacing="0" bgcolor="#ffffff">
+              <tr>
+                <td> <p><strong><font color="#999999" size="4" face="Arial, Helvetica, sans-serif">{$PRODUCTS_NAME}</font></strong><br>
+                    <font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$PRODUCTS_MODEL}</font></p>
+                  <table width="100%" border="0" cellpadding="5">
+                    <tr>
+                      <td style="border-right: 1px solid; border-color: #cccccc" width="1" align="left" valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="{$PRODUCTS_IMAGE}" border="0"></font></td>
+                      <td valign="top"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$PRODUCTS_DESCRIPTION}<br>
+                        <br>
+                        <strong>{if $module_content !=''}{#options#}<br>
+                        </strong> {foreach name=aussen item=module_data from=$module_content}
+                        {$module_data.GROUP}: {$module_data.NAME}<br>
+                        {/foreach} <br>
+                        <br>{/if}
+                        <strong>{#price#} <font color="#FF0000">{$PRODUCTS_PRICE}</font></strong>
+                        </font></td>
+                    </tr>
+                  </table>
+                  <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+                    <br>
+                    </font></p></td>
+              </tr></table>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<xar:template file="application_top" type="module"/>
+</strong></font><br>
+<br>
+{if $account_option=='account' or $account_option=='both'}
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+  <tr>
+    <td width="50%" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="border-bottom: 1px solid; border-color: #cccccc;" class="main"><strong>{#title_new#}</strong></td>
+        </tr>
+        <tr>
+          <td style="border-right: 1px solid; border-color: #cccccc;" class="main">{#text_new#}<br>
+            <br>
+            {$BUTTON_NEW_ACCOUNT} </td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+      <form action="{$FORM_ACTION}" method="post" name="login">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td style="border-bottom: 1px solid; border-color: #cccccc;"  class="main"><strong>{#title_returning#}</strong></td>
+          </tr>
+          <tr>
+            <td class="main"><p>{#text_returning#}<br>
+              </p>
+              <table width="100" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class="main" nowrap><strong>{#text_email#}</strong> </td>
+                  <td> {$INPUT_MAIL}</td>
+                </tr>
+                <tr>
+                  <td class="main"  nowrap> <strong>{#text_password#}</strong></td>
+                  <td><strong>{$INPUT_PASSWORD}</strong></td>
+                </tr>
+              </table>
+              <p><br>
+                <a href="{$LINK_LOST_PASSWORD}">{#text_lost_password#}</a></p>
+              <p>{$BUTTON_LOGIN} </p></td>
+          </tr>
+        </table>
+        <br>
+      </form>
+	</td>
+  </tr>
+</table>
+{/if}
+{if $account_option=='both' or $account_option=='guest'}<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center">
+<table width="50%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="border-bottom: 1px solid; border-color: #cccccc;" class="main"><strong>{#title_guest#}</strong></td>
+        </tr>
+        <tr>
+          <td style="border-right: 1px solid; border-color: #cccccc;" class="main">{#text_guest#}<br>
+            <br>
+            {$BUTTON_GUEST}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+{/if}

@@ -1,0 +1,85 @@
+<?php /* Smarty version 2.5.0, created on 2004-02-17 14:27:59
+         compiled from xtc/module/login.html */ ?>
+<?php $this->config_load($this->_tpl_vars['language']."/lang_".$this->_tpl_vars['language'].".conf", 'login', 'local'); ?><font size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong><?php echo $this->_config[0]['vars']['heading_login']; ?>
+ 
+</strong></font><br>
+<br>
+<?php if ($this->_tpl_vars['account_option'] == 'account' || $this->_tpl_vars['account_option'] == 'both'): ?> 
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+  <tr>
+    <td width="50%" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td style="border-bottom: 1px solid; border-color: #cccccc;" class="main"><strong><?php echo $this->_config[0]['vars']['title_new']; ?>
+</strong></td>
+        </tr>
+        <tr> 
+          <td style="border-right: 1px solid; border-color: #cccccc;" class="main"><?php echo $this->_config[0]['vars']['text_new']; ?>
+<br>
+            <br>
+            <?php echo $this->_tpl_vars['BUTTON_NEW_ACCOUNT']; ?>
+ </td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top"> 
+      <form action="<?php echo $this->_tpl_vars['FORM_ACTION']; ?>
+" method="post" name="login">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td style="border-bottom: 1px solid; border-color: #cccccc;"  class="main"><strong><?php echo $this->_config[0]['vars']['title_returning']; ?>
+</strong></td>
+          </tr>
+          <tr>
+            <td class="main"><p><?php echo $this->_config[0]['vars']['text_returning']; ?>
+<br>
+              </p>
+              <table width="100" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class="main" nowrap><strong><?php echo $this->_config[0]['vars']['text_email']; ?>
+</strong> </td>
+                  <td> <?php echo $this->_tpl_vars['INPUT_MAIL']; ?>
+</td>
+                </tr>
+                <tr>
+                  <td class="main"  nowrap> <strong><?php echo $this->_config[0]['vars']['text_password']; ?>
+</strong></td>
+                  <td><strong><?php echo $this->_tpl_vars['INPUT_PASSWORD']; ?>
+</strong></td>
+                </tr>
+              </table>
+              <p><br>
+                <a href="<?php echo $this->_tpl_vars['LINK_LOST_PASSWORD']; ?>
+"><?php echo $this->_config[0]['vars']['text_lost_password']; ?>
+</a></p>
+              <p><?php echo $this->_tpl_vars['BUTTON_LOGIN']; ?>
+ </p></td>
+          </tr>
+        </table>
+        <br>
+      </form>	
+	</td>
+  </tr>
+</table>
+<?php endif; ?>
+<?php if ($this->_tpl_vars['account_option'] == 'both' || $this->_tpl_vars['account_option'] == 'guest'): ?><br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center">
+<table width="50%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="border-bottom: 1px solid; border-color: #cccccc;" class="main"><strong><?php echo $this->_config[0]['vars']['title_guest']; ?>
+</strong></td>
+        </tr>
+        <tr>
+          <td style="border-right: 1px solid; border-color: #cccccc;" class="main"><?php echo $this->_config[0]['vars']['text_guest']; ?>
+<br>
+            <br>
+            <?php echo $this->_tpl_vars['BUTTON_GUEST']; ?>
+</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<?php endif; ?>

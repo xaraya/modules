@@ -1,0 +1,214 @@
+<xar:template file="application_top" type="module"/>
+
+<style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>
+<script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
+<xar:template file="adminheader" type="module"/>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td class="pageHeading"><ml:string>Currencies</ml:string></td>
+				<td class="pageHeading" align="right">
+					#xarModAPIFunc('commerce','user','draw_separator',array('image' => 'pixel_trans.gif'))#
+				</td>
+			  </tr>
+			</table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+					<td class="dataTableHeadingContent"><ml:string>Currency</ml:string></td>
+					<td class="dataTableHeadingContent"><ml:string>Code</ml:string></td>
+					<td class="dataTableHeadingContent" align="center">Value<ml:string></ml:string></td>
+					<td class="dataTableHeadingContent" align="right"><ml:string>Action</ml:string>&nbsp;</td>
+				  </tr>
+
+<xar:comment>  BEGIN LOOP ROWS  </xar:comment>
+    <xar:loop name="$items">
+    
+        <xar:if condition="is_array($cInfo) and($loop:item['currencies_id'] eq $cInfo.currencies_id)">
+            <tr class="dataTableRowSelected" onmouseover="this.style.cursor='hand'" onclick="document.location.href='#$loop:item['url']#'">
+        <xar:else />
+            <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='#$loop:item['url']#'">
+        </xar:if>
+
+            <td class="dataTableContent">#$loop:item['title']#</td>
+            <td class="dataTableContent">#$loop:item['code']#</td>
+            <td class="dataTableContent" align="center">#$loop:item['value']#</td>
+            <td class="dataTableContent" align="right">
+                <xar:if condition = "is_array($cInfo) and($loop:item['currencies_id'] eq $cInfo.currencies_id)">
+                    <img src="#xarTplGetImage('adminimages/icon_arrow_right.gif')#">
+                <xar:else />
+                    <a href="#xarModURL('commerce','admin','currencies',array('page' => $page, 'cID' =>  $loop:item['currencies_id']))#">
+                        <img src="#xarTplGetImage('adminimages/icon_info.gif')#" alt="#xarML('Info')#">
+                    </a>
+                </xar:if>
+            &nbsp;
+            </td>
+        </tr>
+    </xar:loop>
+<xar:comment>  END LOOP ROWS  </xar:comment>
+        <tr>
+            <td colspan="4">
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <td class="smallText" valign="top"> 
+                            #$pagermsg#   
+                        </td>
+                        <td class="smallText" align="right">
+                            #$displaylinks#
+                        </td>
+                    </tr>
+
+                    <xar:if condition = "!isset($action)">
+                        <tr>
+                            <td colspan="2" align="right">
+                                <a href="#xarModURL('commerce','admin','currencies',array('page' => $page, 'action' => 'new'))#">
+                                    <img src="#xarTplGetImage($language .'/admin/buttons/' . 'button_new_currency.gif')#" alt ="#xarML('New currency')#">                                  
+                                </a>
+                            </td>
+                        </tr>
+                    </xar:if>
+                </table>
+            </td>
+        </tr>
+			  </table>
+			</td>
+			<td width="25%" valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+		<xar:if condition = "$action eq 'new'">
+			<td class="infoBoxHeading" valign="top">
+			<b><xar:mlstring>New Currency</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="currency" action="#xarModURL('commerce','admin','currencies',array('page' => $page,'action' => 'insert'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please enter the new currency with its related data</xar:mlstring>		
+					<br /><xar:mlstring>Title</xar:mlstring><br />
+					<input type="text" name="title">
+					<br /><xar:mlstring>Code</xar:mlstring><br />
+					<input type="text" name="code">
+					<br /><xar:mlstring>Symbol Left</xar:mlstring><br />
+					<input type="text" name="symbol_left">
+					<br /><xar:mlstring>Symbol Right</xar:mlstring><br />
+					<input type="text" name="symbol_right">
+					<br /><xar:mlstring>Decimal Point</xar:mlstring><br />
+					<input type="text" name="decimal_point">
+					<br /><xar:mlstring>Thousands Point</xar:mlstring><br />
+					<input type="text" name="thousands_point">
+					<br /><xar:mlstring>Decimal Places</xar:mlstring><br />
+					<input type="text" name="decimal_places">
+					<br /><xar:mlstring>Value</xar:mlstring><br />
+					<input type="text" name="value">
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif')#" border="0" alt="#xarML('Insert')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','currencies',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'edit'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Edit Currency</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="currency" action="#xarModURL('commerce','admin','currencies',array('page' => $page,'cID' => $cInfo.currencies_id,'action' => 'save'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please make any necessary changes</xar:mlstring>
+					<br /><xar:mlstring>Title</xar:mlstring><br />
+					<input type="text" name="title" value="#$cInfo.title#">
+					<br /><xar:mlstring>Code</xar:mlstring><br />
+					<input type="text" name="code" value="#$cInfo.code#">
+					<br /><xar:mlstring>Symbol Left</xar:mlstring><br />
+					<input type="text" name="symbol_left" value="#$cInfo.symbol_left#">
+					<br /><xar:mlstring>Symbol Right</xar:mlstring><br />
+					<input type="text" name="symbol_right" value="#$cInfo.symbol_right#">
+					<br /><xar:mlstring>Decimal Point</xar:mlstring><br />
+					<input type="text" name="decimal_point" value="#$cInfo.decimal_point#">
+					<br /><xar:mlstring>Thousands Point</xar:mlstring><br />
+					<input type="text" name="thousands_point" value="#$cInfo.thousands_point#">
+					<br /><xar:mlstring>Decimal Places</xar:mlstring><br />
+					<input type="text" name="decimal_places" value="#$cInfo.decimal_places#">
+					<br /><xar:mlstring>Value</xar:mlstring><br />
+					<input type="text" name="value" value="#$cInfo.value#">
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" border="0" alt="#xarML('Edit')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','currencies',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'delete'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Delete Currency</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="currency" action="#xarModURL('commerce','admin','currencies',array('page' => $page,'cID' => $cInfo.currencies_id,'action' => 'deleteconfirm'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Are you sure you want to delete this currency?</xar:mlstring>
+					<br /><b>#$cInfo.title#</b>
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" border="0" alt="#xarML('Delete')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','currencies',array('page' => $page,'cID' => $cInfo.currencies_id))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:else />
+			<xar:if condition = "is_array($cInfo)">
+				<td class="infoBoxHeading" valign="top">
+					<b>#$cInfo.title#</b>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="center">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','currencies',array('page' => $page,'cID' => $cInfo.currencies_id,'action' => 'edit'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif')#" alt="#xarML('Edit')#">
+					</a>
+					<br />
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','currencies',array('page' => $page,'cID' => $cInfo.currencies_id,'action' => 'delete'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="left">
+					<xar:mlstring>Name</xar:mlstring>: 
+					<br />
+					#$cInfo.title#
+					<br /><br />
+					<xar:mlstring>Code</xar:mlstring>: #$cInfo.code#
+					<br /><br />
+					<xar:mlstring>Last Updated</xar:mlstring>: #$cInfo.last_updated#
+					<br />
+					<xar:mlstring>Value</xar:mlstring>: #$cInfo.value#
+				</td>
+			</xar:if>
+		</xar:if>
+				</tr>
+			</table>
+		</td>
+		</tr>
+	</table>
+	</td>
+  </tr>
+</table>

@@ -1,0 +1,36 @@
+<xar:template file="application_top" type="module"/>
+<br>
+<FORM method="GET" name="advanced_search" id="post" action="#xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH_RESULT, '', 'NONSSL', false)#" onSubmit="return check_form(this);">
+<br>
+{if $error!=''}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td bgcolor="#FF0000" class="main"><div align="center"><strong><font color="#FFFFFF">{$error}</font></strong></div></td>
+  </tr>
+</table>
+<br>
+{/if}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="main" colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main"><strong>{#title_keywords#}</strong></td>
+          <td class="main"><div align="right"><a href="{$HELP_LINK}">{#text_help#}</a></div></td>
+        </tr>
+      </table>
+      {$INPUT_KEYWORDS}</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="main"><div align="right">{$CHECKBOX_DESCRIPTION} {#text_description#}</div></td>
+  </tr>
+</table>
+
+<br>
+{$OPTIONS_BOX}<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><div align="right">{$BUTTON_SUBMIT}</div></td>
+  </tr>
+</table>
+</FORM>

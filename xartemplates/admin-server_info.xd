@@ -1,0 +1,106 @@
+<?php
+// ----------------------------------------------------------------------
+// Copyright (C) 2004: Marc Lutolf (marcinmilan@xaraya.com)
+// Purpose of file:  Configuration functions for commerce
+// ----------------------------------------------------------------------
+//  based on:
+//  (c) 2003 XT-Commerce
+//  (c) 2000-2001 The Exchange Project  (earlier name of osCommerce)
+//  (c) 2002-2003 osCommerce (oscommerce.sql,v 1.83); www.oscommerce.com
+//  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
+// ----------------------------------------------------------------------
+
+function commerce_admin_configuration()
+{
+  require('includes/application_top.php');
+
+  $system = xtc_get_system_information();
+
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+      <tr>
+        <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="pageHeading"><?php echo HEADING_TITLE; ?></td>
+            <td class="pageHeading" align="right"><?php echo xtc_draw_separator('pixel_trans.gif', HEADING_IMAGE_WIDTH, HEADING_IMAGE_HEIGHT); ?></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
+          <tr>
+            <td align="center"><table border="0" cellspacing="0" cellpadding="3">
+              <tr>
+                <td class="smallText"><b><?php echo TITLE_SERVER_HOST; ?></b></td>
+                <td class="smallText"><?php echo $system['host'] . ' (' . $system['ip'] . ')'; ?></td>
+                <td class="smallText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo TITLE_DATABASE_HOST; ?></b></td>
+                <td class="smallText"><?php echo $system['db_server'] . ' (' . $system['db_ip'] . ')'; ?></td>
+              </tr>
+              <tr>
+                <td class="smallText"><b><?php echo TITLE_SERVER_OS; ?></b></td>
+                <td class="smallText"><?php echo $system['system'] . ' ' . $system['kernel']; ?></td>
+                <td class="smallText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo TITLE_DATABASE; ?></b></td>
+                <td class="smallText"><?php echo $system['db_version']; ?></td>
+              </tr>
+              <tr>
+                <td class="smallText"><b><?php echo TITLE_SERVER_DATE; ?></b></td>
+                <td class="smallText"><?php echo $system['date']; ?></td>
+                <td class="smallText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo TITLE_DATABASE_DATE; ?></b></td>
+                <td class="smallText"><?php echo $system['db_date']; ?></td>
+              </tr>
+              <tr>
+                <td class="smallText"><b><?php echo TITLE_SERVER_UP_TIME; ?></b></td>
+                <td colspan="3" class="smallText"><?php echo $system['uptime']; ?></td>
+              </tr>
+              <tr>
+                <td colspan="4"><?php echo xtc_draw_separator('pixel_trans.gif', '1', '5'); ?></td>
+              </tr>
+              <tr>
+                <td class="smallText"><b><?php echo TITLE_HTTP_SERVER; ?></b></td>
+                <td colspan="3" class="smallText"><?php echo $system['http_server']; ?></td>
+              </tr>
+              <tr>
+                <td class="smallText"><b><?php echo TITLE_PHP_VERSION; ?></b></td>
+                <td colspan="3" class="smallText"><?php echo $system['php'] . ' (' . TITLE_ZEND_VERSION . ' ' . $system['zend'] . ')'; ?></td>
+              </tr>
+            </table></td>
+          </tr>
+        </table></td>
+      </tr>
+      <tr>
+        <td><?php echo xtc_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
+      </tr>
+      <tr>
+        <td>
+<?php
+  if (function_exists('ob_start')) {
+    ob_start();
+    phpinfo();
+    $phpinfo = ob_get_contents();
+    ob_end_clean();
+
+    $phpinfo = str_replace('border: 1px', '', $phpinfo);
+    ereg("(<style type=\"text/css\">{1})(.*)(</style>{1})", $phpinfo, $regs);
+    echo '<style type="text/css">' . $regs[2] . '</style>';
+    ereg("(<body>{1})(.*)(</body>{1})", $phpinfo, $regs);
+    echo $regs[2];
+  } else {
+    phpinfo();
+  }
+?>
+        </td>
+      </tr>
+    </table></td>
+<!-- body_text_eof //-->
+  </tr>
+</table>
+<!-- body_eof //-->
+
+<!-- footer //-->
+<?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
+<!-- footer_eof //-->
+<br>
+</body>
+</html>
+<?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>
+}
+?>

@@ -1,0 +1,52 @@
+<xar:template file="application_top" type="module"/>
+<br>
+<br>
+  <FORM method="POST" name="account_notifications" id="post" action="#xarModURL('commerce','user',(FILENAME_ACCOUNT_NOTIFICATIONS, '', 'SSL')#">
+<input type="hidden" name="action" value="process">
+<strong>{#title_notifications#}</strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;" class="main">{#text_notifications#}</td>
+  </tr>
+</table><br>
+
+<strong>{#title_global#}</strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="checkBox('product_global')">
+          <td class="main">{$CHECKBOX_GLOBAL} <strong>{#title_global#}</strong><br>
+            <table width="98%" border="0" align="right" cellpadding="0" cellspacing="0">
+              <tr>
+                <td class="main">{#text_global#}</td>
+              </tr>
+            </table> </td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+{if $GLOBAL_NOTIFICATION=='0'} <br>
+<strong>{#title_products#}</strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+		  <td class="main">{#text_products#} <br>
+          </td>
+		</tr><tr>
+          <td class="main">
+            {$PRODUCTS_NOTIFICATION}
+</td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+{/if}
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$BUTTON_BACK}</td>
+    <td><div align="right">{$BUTTON_CONTINUE}</div></td>
+  </tr>
+</table>
+</FORM>

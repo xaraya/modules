@@ -1,0 +1,48 @@
+<?php /* Smarty version 2.5.0, created on 2004-02-17 14:29:24
+         compiled from xtc/module/advanced_search.html */ ?>
+<?php $this->config_load($this->_tpl_vars['language']."/lang_".$this->_tpl_vars['language'].".conf", 'advanced_search', 'local'); ?> <font size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong><?php echo $this->_config[0]['vars']['heading_search']; ?>
+</strong></font> 
+<br><?php echo $this->_tpl_vars['FORM_ACTION']; ?>
+
+<br>
+<?php if ($this->_tpl_vars['error'] != ''): ?>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td bgcolor="#FF0000" class="main"><div align="center"><strong><font color="#FFFFFF"><?php echo $this->_tpl_vars['error']; ?>
+</font></strong></div></td>
+  </tr>
+</table>
+<br>
+<?php endif; ?>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td class="main" colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td class="main"><strong><?php echo $this->_config[0]['vars']['title_keywords']; ?>
+</strong></td>
+          <td class="main"><div align="right"><a href="<?php echo $this->_tpl_vars['HELP_LINK']; ?>
+"><?php echo $this->_config[0]['vars']['text_help']; ?>
+</a></div></td>
+        </tr>
+      </table>
+      <?php echo $this->_tpl_vars['INPUT_KEYWORDS']; ?>
+</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+    <td class="main"><div align="right"><?php echo $this->_tpl_vars['CHECKBOX_DESCRIPTION']; ?>
+ <?php echo $this->_config[0]['vars']['text_description']; ?>
+</div></td>
+  </tr>
+</table>
+
+<br>
+<?php echo $this->_tpl_vars['OPTIONS_BOX']; ?>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><div align="right"><?php echo $this->_tpl_vars['BUTTON_SUBMIT']; ?>
+</div></td>
+  </tr>
+</table>
+</form>

@@ -1,0 +1,77 @@
+<xar:template file="application_top" type="module"/>
+<p>
+  <br>
+  {$error_message} </strong></font></p>
+  {if $order_content}
+<strong>{#title_main#} </strong><a href="{$LINK_ALL}">{#text_all#}</a>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/arrow_south_east.gif"></td>
+    <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="3">
+
+        {foreach name=aussen item=order_data from=$order_content}
+        <tr>
+          <td width="1" valign="top" class="main"><img src="{$tpl_path}img/arrow_green.gif"></td>
+          <td class="main"><a href="{$order_data.ORDER_LINK}">{$order_data.ORDER_DATE}</a>&nbsp;&nbsp;{#order_nr#}{$order_data.ORDER_ID}<br>
+            {#order_total#}{$order_data.ORDER_TOTAL}&nbsp;&nbsp;{#order_status#}{$order_data.ORDER_STATUS}
+            {$order_data.ORDER_BUTTON}</td>
+        </tr>
+        {/foreach}
+		 </table></td>
+  </tr>
+</table>
+<br>
+{/if}
+<strong>{#title_account#} </strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/account_personal.gif"></td>
+    <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_EDIT}">{#text_edit#}</a></td>
+        </tr>
+        <tr>
+          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_ADDRESS}">{#text_address#}</a></td>
+        </tr>
+        <tr>
+          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_PASSWORD}">{#text_password#}</a></td>
+        </tr>
+      </table>
+
+      </td>
+  </tr>
+</table>
+{if $order_content}
+<br>
+<strong>{#title_orders#} </strong><br>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/account_orders.gif"></td>
+    <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_ORDERS}">{#text_orders#}</a></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+{/if}
+<strong><br>
+{#title_notification#} </strong><br>
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;" width="1"><img src="{$tpl_path}img/account_notifications.gif"></td>
+    <td valign="middle" class="main" style="border-top: 1px solid; border-color: #cccccc;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="3">
+        <tr>
+          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_NEWSLETTER}">{#text_newsletter#}</a></td>
+        </tr>
+        <tr>
+          <td class="main"><img src="{$tpl_path}img/arrow_green.gif"><a href="{$LINK_NOTIFICATIONS}">{#text_notifications#}</a></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<p>&nbsp;</p><p>&nbsp; </p>

@@ -1,0 +1,52 @@
+<?php /* Smarty version 2.5.0, created on 2004-02-17 14:28:38
+         compiled from xtc/module/new_products_overview.html */ ?>
+<?php $this->config_load($this->_tpl_vars['language']."/lang_".$this->_tpl_vars['language'].".conf", 'new_products', 'local'); ?> 
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="infoBoxHeading"><?php echo $this->_config[0]['vars']['heading_text']; ?>
+ </td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td> <div align="center"> 
+        <table width="100%" border="0">
+          <?php if (isset($this->_foreach['aussen'])) unset($this->_foreach['aussen']);
+$this->_foreach['aussen']['name'] = 'aussen';
+$this->_foreach['aussen']['total'] = count((array)$this->_tpl_vars['module_content']);
+$this->_foreach['aussen']['show'] = $this->_foreach['aussen']['total'] > 0;
+if ($this->_foreach['aussen']['show']):
+$this->_foreach['aussen']['iteration'] = 0;
+    foreach ((array)$this->_tpl_vars['module_content'] as $this->_tpl_vars['module_data']):
+        $this->_foreach['aussen']['iteration']++;
+        $this->_foreach['aussen']['first'] = ($this->_foreach['aussen']['iteration'] == 1);
+        $this->_foreach['aussen']['last']  = ($this->_foreach['aussen']['iteration'] == $this->_foreach['aussen']['total']);
+?> 
+          <tr> 
+            <td width="1" rowspan="2" style="border-bottom: 1px solid; border-color: #cccccc;"><a href="<?php echo $this->_tpl_vars['module_data']['PRODUCTS_LINK']; ?>
+"><img src="<?php echo $this->_tpl_vars['module_data']['PRODUCTS_IMAGE']; ?>
+" border="1"></a></td>
+            <td class="main"><strong><a href="<?php echo $this->_tpl_vars['module_data']['PRODUCTS_LINK']; ?>
+"><?php echo $this->_tpl_vars['module_data']['PRODUCTS_NAME']; ?>
+</a></strong></td>
+          </tr>
+          <tr> 
+            <td style="border-bottom: 1px solid; border-color: #cccccc;" class="main"><?php echo $this->_tpl_vars['module_data']['PRODUCTS_DESCRIPTION']; ?>
+<br> 
+              <strong><?php echo $this->_tpl_vars['module_data']['PRODUCTS_PRICE']; ?>
+<br>
+              </strong><?php echo $this->_tpl_vars['module_data']['BUTTON_BUY_NOW']; ?>
+</td>
+          </tr>
+          <?php endforeach; endif; ?> 
+        </table>
+      </div></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><?php echo $this->_tpl_vars['NAVIGATION_BAR']; ?>
+</td>
+  </tr>
+</table>

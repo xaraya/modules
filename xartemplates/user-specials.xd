@@ -1,0 +1,33 @@
+<xar:template file="application_top" type="module"/>
+{php} $col=0; {/php} 
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <xar:loop name="$content">
+  {foreach name=aussen item=module_data from=$module_content}
+  {php} $col++; 
+    <td class="main"><div align="center">
+    	<xar:if condition=" #$loop:item['product_image'] ne ''">
+    		<a href="#$loop:item['link']>" <img src="#$loop:item['image']#" border="1"></a><br>
+    	</xar:if>
+        <strong><a href="#$loop:item['productlink']#">#$loop:item['name']#</a></strong> 
+        <br>
+        <strong>#$loop:item['price']#</strong> <br>
+        <br>
+      </div></td>
+
+  if ($col>=2) {
+  $col=0;
+  echo '</tr><tr>';
+  }
+  </xar:loop>  
+  </tr>
+</table>
+
+
+<p>&nbsp;</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$NAVBAR}</td>
+  </tr>
+</table>
+

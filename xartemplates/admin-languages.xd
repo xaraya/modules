@@ -1,0 +1,224 @@
+<xar:template file="application_top" type="module"/>
+
+<style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>
+<script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
+<xar:template file="adminheader" type="module"/>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td class="pageHeading"><ml:string>Languages</ml:string></td>
+				<td class="pageHeading" align="right">
+					#xarModAPIFunc('commerce','user','draw_separator',array('image' => 'pixel_trans.gif'))#
+				</td>
+			  </tr>
+			</table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+					<td class="dataTableHeadingContent"><ml:string>Language</ml:string></td>
+					<td class="dataTableHeadingContent"><ml:string>Code</ml:string></td>
+					<td class="dataTableHeadingContent" align="right"><ml:string>Action</ml:string>&nbsp;</td>
+				  </tr>
+
+<xar:comment>  BEGIN LOOP ROWS  </xar:comment>
+    <xar:loop name="$items">
+    
+        <xar:if condition="is_array($cInfo) and($loop:item['languages_id'] eq $cInfo.languages_id)">
+            <tr class="dataTableRowSelected" onmouseover="this.style.cursor='hand'" onclick="document.location.href='#$loop:item['url']#'">
+        <xar:else />
+            <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='#$loop:item['url']#'">
+        </xar:if>
+
+            <td class="dataTableContent">#$loop:item['name']#
+					<xar:if condition="$loop:item['code'] eq $lang">
+						(<xar:mlstring>default</xar:mlstring>)
+					</xar:if>            
+            </td>
+            <td class="dataTableContent">#$loop:item['code']#</td>
+            <td class="dataTableContent" align="right">
+                <xar:if condition = "is_array($cInfo) and($loop:item['languages_id'] eq $cInfo.languages_id)">
+                    <img src="#xarTplGetImage('adminimages/icon_arrow_right.gif')#">
+                <xar:else />
+                    <a href="#xarModURL('commerce','admin','languages',array('page' => $page, 'cID' =>  $loop:item['languages_id']))#">
+                        <img src="#xarTplGetImage('adminimages/icon_info.gif')#" alt="#xarML('Info')#">
+                    </a>
+                </xar:if>
+            &nbsp;
+            </td>
+        </tr>
+    </xar:loop>
+<xar:comment>  END LOOP ROWS  </xar:comment>
+        <tr>
+            <td colspan="4">
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <td class="smallText" valign="top"> 
+                            #$pagermsg#   
+                        </td>
+                        <td class="smallText" align="right">
+                            #$displaylinks#
+                        </td>
+                    </tr>
+
+                    <xar:if condition = "!isset($action)">
+                        <tr>
+                            <td colspan="2" align="right">
+                                <a href="#xarModURL('commerce','admin','languages',array('page' => $page, 'action' => 'new'))#">
+                                    <img src="#xarTplGetImage($language .'/admin/buttons/' . 'button_new_language.gif')#" alt ="#xarML('New language')#">                                  
+                                </a>
+                            </td>
+                        </tr>
+                    </xar:if>
+                </table>
+            </td>
+        </tr>
+			  </table>
+			</td>
+			<td width="25%" valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+		<xar:if condition = "$action eq 'new'">
+			<td class="infoBoxHeading" valign="top">
+			<b><xar:mlstring>New Language</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="language" action="#xarModURL('commerce','admin','languages',array('page' => $page,'action' => 'insert'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please enter the new language with its related data</xar:mlstring>		
+					<br /><xar:mlstring>Name</xar:mlstring><br />
+					<input type="text" name="name">
+					<br /><xar:mlstring>Code</xar:mlstring><br />
+					<input type="text" name="code">
+					<br /><xar:mlstring>Character Set</xar:mlstring><br />
+					<input type="text" name="charset">
+					<br /><xar:mlstring>Image</xar:mlstring><br />
+					<input type="text" name="image" value="icon.gif">
+					<br /><xar:mlstring>Directory</xar:mlstring><br />
+					<input type="text" name="directory">
+					<br /><xar:mlstring>Sort Order</xar:mlstring><br />
+					<input type="text" name="sort_order">
+					<br />
+					<input type="checkbox" name="default">
+					<xar:mlstring>Set as default</xar:mlstring>
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif')#" border="0" alt="#xarML('Insert')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','languages',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'edit'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Edit Language</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="language" action="#xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $cInfo.languages_id,'action' => 'save'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please make any necessary changes</xar:mlstring>
+					<br /><xar:mlstring>Name</xar:mlstring><br />
+					<input type="text" name="name" value="#$cInfo.name#">
+					<br /><xar:mlstring>Code</xar:mlstring><br />
+					<input type="text" name="code" value="#$cInfo.code#">
+					<br /><xar:mlstring>Character Set</xar:mlstring><br />
+					<input type="text" name="charset" value="#$cInfo.language_charset#">
+					<br /><xar:mlstring>Image</xar:mlstring><br />
+					<input type="text" name="image" value="#$cInfo.image#">
+					<br /><xar:mlstring>Directory</xar:mlstring><br />
+					<input type="text" name="directory" value="#$cInfo.directory#">
+					<br /><xar:mlstring>Sort Order</xar:mlstring><br />
+					<input type="text" name="sort_order" value="#$cInfo.sort_order#">
+					<xar:if condition="$cInfo.code ne $lang">
+						<br />
+						<input type="checkbox" name="default">
+						<xar:mlstring>Set as default</xar:mlstring>
+					</xar:if>
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" border="0" alt="#xarML('Edit')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','languages',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'delete'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Delete Language</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="language" action="#xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $cInfo.languages_id,'action' => 'deleteconfirm'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Are you sure you want to delete this language?</xar:mlstring>
+					<br /><b>#$cInfo.name#</b>
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" border="0" alt="#xarML('Delete')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $cInfo.languages_id))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:else />
+			<xar:if condition = "is_array($cInfo)">
+				<td class="infoBoxHeading" valign="top">
+					<b>#$cInfo.name#</b>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="center">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $cInfo.languages_id,'action' => 'edit'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif')#" alt="#xarML('Edit')#">
+					</a>
+					<br />
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $cInfo.languages_id,'action' => 'delete'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+					</a>
+					<br />
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','languages',array('page' => $page,'cID' => $cInfo.languages_id,'action' => 'details'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_details.gif')#" alt="#xarML('Details')#">
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="left">
+					<br /><br />
+					<xar:mlstring>Name</xar:mlstring>: #$cInfo.name#
+					<br /><br />
+					<xar:mlstring>Code</xar:mlstring>: #$cInfo.code#
+					<br /><br />
+					<xar:mlstring>Charset</xar:mlstring>: #$cInfo.language_charset#
+					<br /><br />
+					<input type="image" src="#xarTplGetImage($cInfo.directory .'/icon.gif')#" border="0" alt="#$cInfo.name#">
+					<br /><br />
+					<xar:mlstring>Directory</xar:mlstring>: commerce/xarimages/<b>#$cInfo.directory#</b>
+					<br />
+					<xar:mlstring>Sort Order</xar:mlstring>: #$cInfo.sort_order#
+				</td>
+			</xar:if>
+		</xar:if>
+				</tr>
+			</table>
+		</td>
+		</tr>
+	</table>
+	</td>
+  </tr>
+</table>

@@ -1,0 +1,50 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr valign="top">
+          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong><font color="#666666" size="4">{$CATEGORIES_NAME}</font></strong>
+            </font></td>
+          <td align="right"><img src="{$CATEGORIES_IMAGE}"></td>
+        </tr>
+      </table>{if $CATEGORIES_DESCRIPTION}
+      <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> {$CATEGORIES_DESCRIPTION}</font>
+      <br>
+      <br>
+	  {/if}
+      {if $module_content !=''} <strong><font color="#000000" size="2">{#heading_more_categories#}</font></strong>
+      <br>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> {foreach name=aussen item=module_data from=$module_content}
+		{php}
+          $col++;
+		{/php}
+          <td class="main"><div align="left">
+              <table  width="100%" border="0" cellpadding="0" cellspacing="4">
+                <tr>
+                  <td width="1" rowspan="2" ><a href="{$module_data.CATEGORIES_LINK}"><img src="{$module_data.CATEGORIES_IMAGE}" border="0"></a></td>
+                  <td class="main"><strong><a href="{$module_data.CATEGORIES_LINK}">{$module_data.CATEGORIES_NAME}</a></strong></td>
+                </tr>
+                <tr>
+                  <td  class="main">{$module_data.CATEGORIES_DESCRIPTION}</td>
+                </tr>
+              </table>
+            </div></td>
+          {php}
+		  if ($col>=4) {
+		  $col=0;
+		  echo '</tr><tr>';
+		   }
+		  {/php}
+		 {/foreach} </tr>
+      </table>
+       {/if} <br>
+    </td>
+    <td class="main" nowrap width="1%">&nbsp; </td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$MODULE_new_products}</td>
+  </tr>
+</table>

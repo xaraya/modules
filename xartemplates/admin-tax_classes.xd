@@ -1,0 +1,184 @@
+<xar:template file="application_top" type="module"/>
+
+<style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>
+<script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
+<xar:template file="adminheader" type="module"/>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td class="pageHeading"><ml:string>Tax Classes</ml:string></td>
+				<td class="pageHeading" align="right">
+					#xarModAPIFunc('commerce','user','draw_separator',array('image' => 'pixel_trans.gif'))#
+				</td>
+			  </tr>
+			</table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+					<td class="dataTableHeadingContent"><ml:string>Tax Class</ml:string></td>
+					<td class="dataTableHeadingContent" align="right"><ml:string>Action</ml:string>&nbsp;</td>
+				  </tr>
+
+<xar:comment>  BEGIN LOOP ROWS  </xar:comment>
+    <xar:loop name="$items">
+    
+        <xar:if condition="is_array($cInfo) and($loop:item['tax_class_id'] eq $cInfo.tax_class_id)">
+            <tr class="dataTableRowSelected" onmouseover="this.style.cursor='hand'" onclick="document.location.href='#$loop:item['url']#'">
+        <xar:else />
+            <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='#$loop:item['url']#'">
+        </xar:if>
+
+            <td class="dataTableContent">#$loop:item['tax_class_title']#</td>
+            <td class="dataTableContent" align="right">
+                <xar:if condition = "is_array($cInfo) and($loop:item['tax_class_id'] eq $cInfo.tax_class_id)">
+                    <img src="#xarTplGetImage('adminimages/icon_arrow_right.gif')#">
+                <xar:else />
+                    <a href="#xarModURL('commerce','admin','tax_classes',array('page' => $page, 'cID' =>  $loop:item['tax_class_id']))#">
+                        <img src="#xarTplGetImage('adminimages/icon_info.gif')#" alt="#xarML('Info')#">
+                    </a>
+                </xar:if>
+            &nbsp;
+            </td>
+        </tr>
+    </xar:loop>
+<xar:comment>  END LOOP ROWS  </xar:comment>
+        <tr>
+            <td colspan="4">
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <td class="smallText" valign="top"> 
+                            #$pagermsg#   
+                        </td>
+                        <td class="smallText" align="right">
+                            #$displaylinks#
+                        </td>
+                    </tr>
+
+                    <xar:if condition = "!isset($action)">
+                        <tr>
+                            <td colspan="2" align="right">
+                                <a href="#xarModURL('commerce','admin','tax_classes',array('page' => $page, 'action' => 'new'))#">
+                                    <img src="#xarTplGetImage($language .'/admin/buttons/' . 'button_new_tax_class.gif')#" alt ="#xarML('New tax class')#">                                  
+                                </a>
+                            </td>
+                        </tr>
+                    </xar:if>
+                </table>
+            </td>
+        </tr>
+			  </table>
+			</td>
+			<td width="25%" valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+		<xar:if condition = "$action eq 'new'">
+			<td class="infoBoxHeading" valign="top">
+			<b><xar:mlstring>New Tax Class</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="tax_classes" action="#xarModURL('commerce','admin','tax_classes',array('page' => $page,'action' => 'insert'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please enter the new tax class with its related data</xar:mlstring>		
+					<br /><xar:mlstring>Tax Class</xar:mlstring><br />
+					<input type="text" name="tax_class_title">
+					<br /><xar:mlstring>Description</xar:mlstring><br />
+					<input type="text" name="tax_class_description">
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif')#" border="0" alt="#xarML('Insert')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','tax_classes',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'edit'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Edit Tax Class</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="tax_classes" action="#xarModURL('commerce','admin','tax_classes',array('page' => $page,'cID' => $cInfo.tax_class_id,'action' => 'save'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please make any necessary changes</xar:mlstring>
+					<br /><xar:mlstring>Tax Class</xar:mlstring><br />
+					<input type="text" name="tax_class_title" value="#$cInfo.tax_class_title#">
+					<br /><xar:mlstring>Description</xar:mlstring><br />
+					<input type="text" name="tax_class_description" value="#$cInfo.tax_class_description#">
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" border="0" alt="#xarML('Edit')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','tax_classes',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'delete'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Delete Tax Class</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="tax_classes" action="#xarModURL('commerce','admin','tax_classes',array('page' => $page,'cID' => $cInfo.tax_class_id,'action' => 'deleteconfirm'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Are you sure you want to delete this tax class?</xar:mlstring>
+					<br /><b>#$cInfo.tax_class_title#</b>
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" border="0" alt="#xarML('Delete')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','tax_classes',array('page' => $page,'cID' => $cInfo.tax_class_id))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:else />
+			<xar:if condition = "is_array($cInfo)">
+				<td class="infoBoxHeading" valign="top">
+					<b>#$cInfo.tax_class_title#</b>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="center">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','tax_classes',array('page' => $page,'cID' => $cInfo.tax_class_id,'action' => 'edit'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif')#" alt="#xarML('Edit')#">
+					</a>
+					<br />
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','tax_classes',array('page' => $page,'cID' => $cInfo.tax_class_id,'action' => 'delete'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="left">
+					<xar:mlstring>Tax Classes</xar:mlstring>: 
+					<br />
+					#$cInfo.tax_class_title#
+					<br /><br />
+					<xar:mlstring>Date Added</xar:mlstring>: #$cInfo.date_added#
+					<br />
+					<xar:mlstring>Last Modified</xar:mlstring>: #$cInfo.last_modified#
+				</td>
+			</xar:if>
+		</xar:if>
+				</tr>
+			</table>
+		</td>
+		</tr>
+	</table>
+	</td>
+  </tr>
+</table>

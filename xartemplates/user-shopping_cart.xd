@@ -1,0 +1,45 @@
+<p>{config_load file="$language/lang_$language.conf" section="shopping_cart"} <font size="3" face="Verdana, Arial, Helvetica, sans-serif"><strong>{#heading_cart#} 
+  </strong></font><br>
+  <br>
+{if $info_message!=''}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="main"><div align="center"><font color="#FF0000">{$info_message} </font></div></td>
+  </tr>
+</table>
+{/if}
+<br>
+  {if $cart_empty==true}</p>
+  
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td class="main"><div align="center">{#text_empty#}</div></td>
+  </tr>
+  <tr>
+    <td class="main"><div align="right">{$BUTTON_CONTINUE}</div></td>
+  </tr>
+</table>
+{else}
+<FORM name="cart_quantity" method="POST" id="'action=process&products_id=' . $_GET['products_id']" action="#{$FORM_ACTION}#">
+  <input type="hidden" name="#id[' . $products[$i]['id'] . '][' . $option . ']#" value="#$value#">
+{$HIDDEN_OPTIONS}
+  <br>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td>{$MODULE_order_details}</td>
+    </tr>
+    <tr>
+      <td class="main"></td>
+    </tr>
+  </table>
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td><div align="left">{$BUTTON_RELOAD}</div></td>
+	<td><div align="right">{$BUTTON_CHECKOUT}</div></td>
+  </tr>
+</table>
+
+</FORM>
+<div align="center" class="main"></div>
+<p>{/if} </p>

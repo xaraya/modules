@@ -1,0 +1,79 @@
+<br>
+<br>
+{if $action !='send'}
+<FORM method="POST" name="post" id="post" action="#$formaction#">
+  <input type="hidden" name="products_id#" value="#$_GET['products_id']#">
+<strong>{#title_yours#} </strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main" width="100%">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td class="main" width="200">{#text_name#}</td>
+                <td class="main" >{$INPUT_NAME}</td>
+              </tr>
+              <tr>
+                <td class="main" >{#text_email#}</td>
+                <td class="main" >{$INPUT_EMAIL}</td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<br>
+<strong>{#title_friend#} </strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main" width="100%"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td class="main" width="200">{#text_friendname#}</td>
+                <td class="main" >{$INPUT_FRIENDNAME}</td>
+              </tr>
+              <tr>
+                <td class="main" >{#text_friendemail#}</td>
+                <td class="main" >{$INPUT_FRIENDEMAIL}</td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<br>
+<strong>{#title_recomend#} </strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main" width="100%">{$INPUT_MESSAGE} </td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$BUTTON_BACK}</td>
+    <td><div align="right">{$BUTTON_SUBMIT}</div></td>
+  </tr>
+</table>
+</FORM>
+{else}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="main">{$message}</td>
+  </tr>
+  <tr>
+    <td><br>
+      {$BUTTON_CONTINUE}</td>
+  </tr>
+</table>
+{/if}
+
+

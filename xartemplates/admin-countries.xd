@@ -1,0 +1,198 @@
+<xar:template file="application_top" type="module"/>
+
+<style type="text/css">@import url(modules/commerce/xarstyles/adminstylesheet.css);</style>
+<script type="text/javascript" src="modules/commerce/xartemplates/general.js"></script>
+<xar:template file="adminheader" type="module"/>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td class="pageHeading"><ml:string>Countries</ml:string></td>
+				<td class="pageHeading" align="right">
+					#xarModAPIFunc('commerce','user','draw_separator',array('image' => 'pixel_trans.gif'))#
+				</td>
+			  </tr>
+			</table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+			<table border="0" width="100%" cellspacing="0" cellpadding="0">
+			  <tr>
+				<td valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+					<td class="dataTableHeadingContent"><ml:string>Country</ml:string></td>
+					<td class="dataTableHeadingContent"><ml:string>ISO Code (2)</ml:string></td>
+					<td class="dataTableHeadingContent" align="center">ISO Code (3)<ml:string></ml:string></td>
+					<td class="dataTableHeadingContent" align="right"><ml:string>Action</ml:string>&nbsp;</td>
+				  </tr>
+
+<xar:comment>  BEGIN LOOP ROWS  </xar:comment>
+    <xar:loop name="$items">
+    
+        <xar:if condition="is_array($cInfo) and($loop:item['countries_id'] eq $cInfo.countries_id)">
+            <tr class="dataTableRowSelected" onmouseover="this.style.cursor='hand'" onclick="document.location.href='#$loop:item['url']#'">
+        <xar:else />
+            <tr class="dataTableRow" onmouseover="this.className='dataTableRowOver';this.style.cursor='hand'" onmouseout="this.className='dataTableRow'" onclick="document.location.href='#$loop:item['url']#'">
+        </xar:if>
+
+            <td class="dataTableContent">#$loop:item['countries_name']#</td>
+            <td class="dataTableContent">#$loop:item['countries_iso_code_2']#</td>
+            <td class="dataTableContent" align="center">#$loop:item['countries_iso_code_3']#</td>
+            <td class="dataTableContent" align="right">
+                <xar:if condition = "is_array($cInfo) and($loop:item['countries_id'] eq $cInfo.countries_id)">
+                    <img src="#xarTplGetImage('adminimages/icon_arrow_right.gif')#">
+                <xar:else />
+                    <a href="#xarModURL('commerce','admin','countries',array('page' => $page, 'cID' =>  $loop:item['countries_id']))#">
+                        <img src="#xarTplGetImage('adminimages/icon_info.gif')#" alt="#xarML('Info')#">
+                    </a>
+                </xar:if>
+            &nbsp;
+            </td>
+        </tr>
+    </xar:loop>
+<xar:comment>  END LOOP ROWS  </xar:comment>
+        <tr>
+            <td colspan="4">
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <td class="smallText" valign="top"> 
+                            #$pagermsg#   
+                        </td>
+                        <td class="smallText" align="right">
+                            #$displaylinks#
+                        </td>
+                    </tr>
+
+                    <xar:if condition = "!isset($action)">
+                        <tr>
+                            <td colspan="2" align="right">
+                                <a href="#xarModURL('commerce','admin','countries',array('page' => $page, 'action' => 'new'))#">
+                                    <img src="#xarTplGetImage($language .'/admin/buttons/' . 'button_new_country.gif')#" alt ="#xarML('New country')#">                                  
+                                </a>
+                            </td>
+                        </tr>
+                    </xar:if>
+                </table>
+            </td>
+        </tr>
+			  </table>
+			</td>
+			<td width="25%" valign="top">
+				<table border="0" width="100%" cellspacing="0" cellpadding="2">
+				  <tr class="dataTableHeadingRow">
+		<xar:if condition = "$action eq 'new'">
+			<td class="infoBoxHeading" valign="top">
+			<b><xar:mlstring>New Country</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="countries" action="#xarModURL('commerce','admin','countries',array('page' => $page,'action' => 'insert'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please enter the new country with its related data</xar:mlstring>		
+					<br /><xar:mlstring>Name</xar:mlstring><br />
+					<input type="text" name="countries_name">
+					<br /><xar:mlstring>ISO Code (2)</xar:mlstring><br />
+					<input type="text" name="countries_iso_code_2">
+					<br /><xar:mlstring>ISO Code (3)</xar:mlstring><br />
+					<input type="text" name="countries_iso_code_3">
+					<br /><xar:mlstring>Address Format)</xar:mlstring><br />
+					#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'address_format_id', 'values' => xarModAPIFunc('commerce','user','get_address_formats')))#
+					<br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_insert.gif')#" border="0" alt="#xarML('Insert')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','countries',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'edit'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Edit Country</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="countries" action="#xarModURL('commerce','admin','countries',array('page' => $page,'cID' => $cInfo.countries_id,'action' => 'save'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Please make any necessary changes</xar:mlstring>
+					<br /><xar:mlstring>Name</xar:mlstring><br />
+					<input type="text" name="countries_name" value="#$cInfo.countries_name#">
+					<br /><xar:mlstring>ISO Code (2)</xar:mlstring><br />
+					<input type="text" name="countries_iso_code_2" value="#$cInfo.countries_iso_code_2#">
+					<br /><xar:mlstring>ISO Code (3)</xar:mlstring><br />
+					<input type="text" name="countries_iso_code_3" value="#$cInfo.countries_iso_code_3#">
+					<br /><xar:mlstring>Address Format)</xar:mlstring><br />
+					#xarModAPIFunc('commerce','user','draw_pull_down_menu',array('name' => 'address_format_id', 'values' => xarModAPIFunc('commerce','user','get_address_formats'), 'default' => $cInfo.address_format_id))#
+					<br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_update.gif')#" border="0" alt="#xarML('Edit')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','countries',array('page' => $page))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:elseif condition="$action eq 'delete'" />
+			<td class="infoBoxHeading">
+			<b><xar:mlstring>Delete Country</xar:mlstring></b>
+			</td>
+			</tr>
+			<tr>
+			<FORM name="countries" action="#xarModURL('commerce','admin','countries',array('page' => $page,'cID' => $cInfo.countries_id,'action' => 'deleteconfirm'))#" method="POST">
+				<td class="infoBoxContent">
+					<xar:mlstring>Are you sure you want to delete this country?</xar:mlstring>
+					<br /><b>#$cInfo.countries_name#</b>
+					<br /><br />
+					&nbsp;
+					<input type="image" src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" border="0" alt="#xarML('Delete')#">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','countries',array('page' => $page,'cID' => $cInfo.countries_id))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_cancel.gif')#" alt="#xarML('Cancel')#">
+					</a>
+				</td>
+			</FORM>
+		<xar:else />
+			<xar:if condition = "is_array($cInfo)">
+				<td class="infoBoxHeading" valign="top">
+					<b>#$cInfo.countries_name#</b>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="center">
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','countries',array('page' => $page,'cID' => $cInfo.countries_id,'action' => 'edit'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_edit.gif')#" alt="#xarML('Edit')#">
+					</a>
+					<br />
+					&nbsp;
+					<a href="#xarModURL('commerce','admin','countries',array('page' => $page,'cID' => $cInfo.countries_id,'action' => 'delete'))#">
+						<img src="#xarTplGetImage($language .'/admin/buttons/button_delete.gif')#" alt="#xarML('Delete')#">
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td class="infoBoxContent" align="left">
+					<xar:mlstring>Name</xar:mlstring>: 
+					<br />
+					#$cInfo.countries_name#
+					<br /><br />
+					<xar:mlstring>ISO Code (2)</xar:mlstring>: #$cInfo.countries_iso_code_2#
+					<br /><br />
+					<xar:mlstring>ISO Code (3)</xar:mlstring>: #$cInfo.countries_iso_code_3#
+					<br /><br />
+					<xar:mlstring>Address Format</xar:mlstring>: #$cInfo.address_format_id#
+				</td>
+			</xar:if>
+		</xar:if>
+				</tr>
+			</table>
+		</td>
+		</tr>
+	</table>
+	</td>
+  </tr>
+</table>

@@ -1,0 +1,33 @@
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td> <table border="0" width="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="14" class="infoBoxHeading"><img src="#xarTplGetImage('corner_right_left.gif','commerce')#" border="0" alt="" width="11" height="14"></td>
+    <td width="100%" height="14" class="infoBoxHeading"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{#heading_search#}</font></td>
+    <td height="14" class="infoBoxHeading" nowrap><img src="#xarTplGetImage('pixel_trans.gif','commerce')#" border="0" alt="" width="11" height="14"></td>
+  </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="1" class="infoBox">
+  <tr>
+    <td><table border="0" width="100%" cellspacing="0" cellpadding="3" class="infoBoxContents">
+  <tr>
+    <td><img src="#xarTplGetImage('pixel_trans.gif','commerce')#" border="0" alt="" width="100%" height="1"></td>
+  </tr>
+  <tr>
+                <td align="left" class="boxText"> 
+                    <FORM method="GET" name="quick_find" id="post" action="#xarModURL('commerce','user',(FILENAME_ADVANCED_SEARCH_RESULT, '', 'NONSSL', false)#">
+                 {$INPUT_SEARCH}{$BUTTON_SUBMIT}<br>
+                  <a href="{$LINK_ADVANCED}">{#text_advanced_search#}</a></FORM>
+                  </td>
+  </tr>
+  <tr>
+    <td><img src="#xarTplGetImage('pixel_trans.gif','commerce')#" border="0" alt="" width="100%" height="1"></td>
+  </tr>
+</table>
+</td>
+  </tr>
+</table></td>
+  </tr>
+</table>
+

@@ -1,0 +1,108 @@
+<?php /* Smarty version 2.5.0, created on 2004-02-17 14:23:36
+         compiled from xtc/index.html */ ?>
+<?php $this->config_load($this->_tpl_vars['language']."/lang_".$this->_tpl_vars['language'].".conf", 'index', 'local'); ?> 
+<table width="95%" align="center">
+  <tr> 
+    <td class="tableShop"><table border="0" width="100%" cellspacing="0" cellpadding="0">
+        <tr class="header"> 
+          <td width="123" valign="middle"><img src="<?php echo $this->_tpl_vars['tpl_path']; ?>
+img/logo_shop.gif"></td>
+          <td background="<?php echo $this->_tpl_vars['tpl_path']; ?>
+img/bg_top.jpg" align="left" valign="bottom"></td>
+          <td background="<?php echo $this->_tpl_vars['tpl_path']; ?>
+img/bg_top.jpg" align="right" valign="bottom"><img src="<?php echo $this->_tpl_vars['tpl_path']; ?>
+img/img_line.jpg" border="0" alt="" width="1" height="75"></td>
+        </tr>
+      </table>
+      <table border="0" width="100%" cellspacing="0" cellpadding="1">
+        <tr class="headerNavigation"> 
+          <td class="headerNavigation">&nbsp;<font size="1" face="Verdana, Arial, Helvetica, sans-serif"><?php echo $this->_tpl_vars['navtrail']; ?>
+</font></td>
+          <td align="right" class="headerNavigation"><?php if ($this->_tpl_vars['account']): ?><?php  if (isset($_SESSION['customer_id'])) {  ?><a href="<?php echo $this->_tpl_vars['logoff']; ?>
+"><?php echo $this->_config[0]['vars']['link_logoff']; ?>
+</a> 
+            | <?php  }  ?><?php endif; ?><?php if ($this->_tpl_vars['account']): ?><a href="<?php echo $this->_tpl_vars['account']; ?>
+"><?php echo $this->_config[0]['vars']['link_account']; ?>
+</a> | <?php endif; ?><a href="<?php echo $this->_tpl_vars['cart']; ?>
+"><?php echo $this->_config[0]['vars']['link_cart']; ?>
+</a> | <a href="<?php echo $this->_tpl_vars['checkout']; ?>
+"><?php echo $this->_config[0]['vars']['link_checkout']; ?>
+</a></td>
+        </tr>
+      </table>
+      <!-- header_eof //-->
+      <!-- body //-->
+      <table border="0" width="100%" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="125" valign="top" class="navLeft"> 
+            <table border="0" width="125" cellspacing="0" cellpadding="0">
+              <!-- left_navigation //-->
+              <!-- left_navigation_eof //-->
+            </table>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><?php echo $this->_tpl_vars['box_CATEGORIES']; ?>
+ <?php echo $this->_tpl_vars['box_ADD_QUICKIE']; ?>
+ <?php echo $this->_tpl_vars['box_CONTENT']; ?>
+ <?php echo $this->_tpl_vars['box_INFORMATION']; ?>
+ 
+                  <?php echo $this->_tpl_vars['box_REVIEWS']; ?>
+ <?php echo $this->_tpl_vars['box_SEARCH']; ?>
+ <?php echo $this->_tpl_vars['box_SPECIALS']; ?>
+ <?php echo $this->_tpl_vars['box_WHATSNEW']; ?>
+</td>
+              </tr>
+            </table> </td>
+          <!-- body_text //-->
+          <td class="tableBody" width="100%" valign="top"><br>
+            <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><?php echo $this->_tpl_vars['main_content']; ?>
+</font></td>
+              </tr>
+            </table>
+            <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> <br>
+            </font></td>
+          <!-- body_text_eof //-->
+          <td width="125" valign="top" class="navRight"> 
+            <table border="0" width="125" cellspacing="0" cellpadding="0">
+              <!-- right_navigation //-->
+              <!-- right_navigation_eof //-->
+            </table>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><?php echo $this->_tpl_vars['box_CART']; ?>
+ <?php echo $this->_tpl_vars['box_LOGIN']; ?>
+ <?php echo $this->_tpl_vars['box_INFOBOX']; ?>
+ <?php echo $this->_tpl_vars['box_ADMIN']; ?>
+ <?php echo $this->_tpl_vars['box_BESTSELLERS']; ?>
+ 
+                  <?php echo $this->_tpl_vars['box_CURRENCIES']; ?>
+ <?php echo $this->_tpl_vars['box_LANGUAGES']; ?>
+ <?php echo $this->_tpl_vars['box_MANUFACTURERS_INFO']; ?>
+ 
+                  <?php echo $this->_tpl_vars['box_MANUFACTURERS']; ?>
+ <?php echo $this->_tpl_vars['box_NOTIFICATIONS']; ?>
+ <?php echo $this->_tpl_vars['box_TELL_FRIEND']; ?>
+ 
+                </td>
+              </tr>
+            </table> </td>
+        </tr>
+      </table>
+      <!-- body_eof //-->
+      <!-- footer //-->
+      <table border="0" width="100%" cellspacing="0" cellpadding="1">
+        <tr class="footer"> 
+          <td class="footer">&nbsp;</td>
+          <td align="right" class="footer">&nbsp;</td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+
+<div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><?php echo $this->_config[0]['vars']['text_footer']; ?>
+ </font></div>
+</body>
+</html>
+<div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Powered by <a href="http://www.xt-commerce.com"  target="new">XT-Commerce</a></font></div>

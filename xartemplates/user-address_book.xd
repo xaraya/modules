@@ -1,0 +1,67 @@
+<xar:template file="application_top" type="module"/>
+<br><br>
+<FORM method="POST" name="post" id="post" action="#$formaction#">
+{if $error!=''}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$error}</td>
+  </tr>
+</table>
+<br>
+{/if} <strong>{#title_standard#} </strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="main" width="100%">{#text_standard#}<br>
+            <br>
+          </td>
+          <td><table width="100%" border="0" cellspacing="0" cellpadding="4">
+              <tr>
+                <td width="1" align="center" valign="top" nowrap class="main">
+                  <div align="center"><strong>{#title_standard#}</strong><br>
+                    <img src="{$tpl_path}img/arrow_south_east.gif"> </div></td>
+                <td width="150" nowrap bgcolor="f1f1f1" class="main" style="border-right: 1px solid; border-color: #cccccc;">
+                  <div align="left">{$ADDRESS_DEFAULT}</div></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<br>
+<strong>{#title_addresses#}</strong>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td style="border-top: 1px solid; border-color: #cccccc;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="border-right: 1px solid; border-color: #cccccc;" width="100%" valign="top" class="main"><br>
+            {foreach name=aussen item=addresses from=$addresses_data}
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)">
+                <td class="main"><strong>{$addresses.NAME}</strong> {if $addresses.PRIMARY=='1'}
+                  <em>({#title_standard#})</em> {/if}</td>
+                <td><div align="right">{$addresses.BUTTON_EDIT} {$addresses.BUTTON_DELETE}</div></td>
+              </tr>
+              <tr>
+                <td class="main">{$addresses.ADDRESS}</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+			{/foreach}
+
+</td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>{$BUTTON_BACK}</td>
+    <td><div align="right">{$BUTTON_NEW}<br>
+      </div></td>
+  </tr>
+</table><br>
+<font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$ADDRESS_COUNT} </font>
+</FORM>
