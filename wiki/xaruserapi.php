@@ -269,9 +269,9 @@ function wiki_userapitransform($cContent)
         // $tmpline = str_replace('&', '&amp;', $tmpline);
         // $tmpline = str_replace('>', '&gt;', $tmpline);
         // $tmpline = str_replace('<', '&lt;', $tmpline); 
-        // four or more dashes to <hr>
+        // four or more dashes to <hr/>
         $tmpline = ereg_replace("^-{4,}",
-            '<hr noshade>',
+            '<hr/>',
             $tmpline); 
         // %%%% are image blocks
         if (preg_match("|(%%%%)(.*?)(%%%%)|", $tmpline, $aContenu)) {

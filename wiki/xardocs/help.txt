@@ -58,7 +58,7 @@ In theory, it is possible to mix, in the same text, wiki encoding and html ...
 Misc:
 "!", "!!", "!!!" make headings, 
 "%%%" makes a linebreak, 
-"----" makes a horizontal rule <hr noshade>, if the tag <hr> is allowed in the settings, with parameters.
+"----" makes a horizontal rule <hr/>, if the tag <hr/> is allowed in the settings, with parameters.
 escape "[" with "[[" 
 %%% are linebreaks (<br>)
 ---this line will be centered---
