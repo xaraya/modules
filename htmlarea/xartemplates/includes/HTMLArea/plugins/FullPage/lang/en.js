@@ -13,13 +13,13 @@
 //       that states what encoding is necessary.)
 
 FullPage.I18N = {
-	"Alternate style-sheet:":		"Alternate style-sheet:",
-	"Background color:":			"Background color:",
-	"Cancel":				"Cancel",
-	"DOCTYPE:":				"DOCTYPE:",
-	"Document properties":			"Document properties",
-	"Document title:":			"Document title:",
-	"OK":					"OK",
-	"Primary style-sheet:":			"Primary style-sheet:",
-	"Text color:":				"Text color:"
+    "Alternate style-sheet:":        "Alternate style-sheet:",
+    "Background color:":            "Background color:",
+    "Cancel":                "Cancel",
+    "DOCTYPE:":                "DOCTYPE:",
+    "Document properties":            "Document properties",
+    "Document title:":            "Document title:",
+    "OK":                    "OK",
+    "Primary style-sheet:":            "Primary style-sheet:",
+    "Text color:":                "Text color:"
 };

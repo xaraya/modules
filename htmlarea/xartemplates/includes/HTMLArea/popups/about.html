@@ -49,31 +49,31 @@ function initDocument() {
   var plugins = document.getElementById("plugins");
   var j = 0;
   var html = "<table width='99%' cellpadding='0' style='margin-top: 1em; collapse-borders: collapse; border: 1px solid #8b8;'>" +
-	  "<thead><tr>" +
-	  "<td>Name</td>" +
-	  "<td>Developer</td>" +
-	  "<td>Sponsored by</td>" +
-	  "<td>License<sup>*</sup></td>" +
-	  "</tr></thead><tbody>";
+      "<thead><tr>" +
+      "<td>Name</td>" +
+      "<td>Developer</td>" +
+      "<td>Sponsored by</td>" +
+      "<td>License<sup>*</sup></td>" +
+      "</tr></thead><tbody>";
   for (var i in editor.plugins) {
     var info = editor.plugins[i];
     html += "<tr><td>" + info.name + " v" + info.version + "</td>" + 
             "<td><a href='" + info.developer_url + "' target='_blank' title='Visit developer website'>" +
-	    info.developer + "</a></td>" +
-	    "<td><a href='" + info.sponsor_url + "' target='_blank' title='Visit sponsor website'>" +
-	    info.sponsor + "</a></td>" +
-	    "<td>" + info.license + "</td></tr>";
+        info.developer + "</a></td>" +
+        "<td><a href='" + info.sponsor_url + "' target='_blank' title='Visit sponsor website'>" +
+        info.sponsor + "</a></td>" +
+        "<td>" + info.license + "</td></tr>";
     ++j;
   }
 
   if (j) {
           html += "</tbody></table>" +
-		  "<p><sup>*</sup> License \"htmlArea\" means that the plugin is distributed under the same terms " +
-		  "as HTMLArea itself.  Such plugins are likely to be those included in the official " +
-		  "HTMLArea distribution</p>";
-	  plugins.innerHTML = "<p>The following plugins have been loaded.</p>" + html;
+          "<p><sup>*</sup> License \"htmlArea\" means that the plugin is distributed under the same terms " +
+          "as HTMLArea itself.  Such plugins are likely to be those included in the official " +
+          "HTMLArea distribution</p>";
+      plugins.innerHTML = "<p>The following plugins have been loaded.</p>" + html;
   } else {
-	  plugins.innerHTML = "<p>No plugins have been loaded</p>";
+      plugins.innerHTML = "<p>No plugins have been loaded</p>";
   }
 
   plugins.innerHTML += "<p>User agent reports:<br/>" + navigator.userAgent + "</p>";

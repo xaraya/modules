@@ -62,17 +62,17 @@
         syntax highlighting on it ;-)&lt;/p&gt;
 
 &lt;pre&gt;var the_options = {
-	"Keyword"          : "keyword",
-	"Function name"    : "function-name",
-	"String"           : "string",
-	"Numeric"          : "integer",
-	"Variable name"    : "variable"
+    "Keyword"          : "keyword",
+    "Function name"    : "function-name",
+    "String"           : "string",
+    "Numeric"          : "integer",
+    "Variable name"    : "variable"
 };
 var css_class = {
-	id                 : "CSS-class",
-	tooltip            : i18n["tooltip"],
-	options            : the_options,
-	action             : function(editor) { self.onSelect(editor, this); }
+    id                 : "CSS-class",
+    tooltip            : i18n["tooltip"],
+    options            : the_options,
+    action             : function(editor) { self.onSelect(editor, this); }
 };
 cfg.registerDropdown(css_class);
 toolbar[0].unshift(["CSS-class"]);&lt;/pre&gt;

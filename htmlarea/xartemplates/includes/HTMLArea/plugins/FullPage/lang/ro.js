@@ -13,13 +13,13 @@
 //       that states what encoding is necessary.)
 
 FullPage.I18N = {
-	"Alternate style-sheet:":		"Template CSS alternativ:",
-	"Background color:":			"Culoare de fundal:",
-	"Cancel":				"Renunţă",
-	"DOCTYPE:":				"DOCTYPE:",
-	"Document properties":			"Proprietăţile documentului",
-	"Document title:":			"Titlul documentului:",
-	"OK":					"Acceptă",
-	"Primary style-sheet:":			"Template CSS principal:",
-	"Text color:":				"Culoare text:"
+    "Alternate style-sheet:":        "Template CSS alternativ:",
+    "Background color:":            "Culoare de fundal:",
+    "Cancel":                "Renunţă",
+    "DOCTYPE:":                "DOCTYPE:",
+    "Document properties":            "Proprietăţile documentului",
+    "Document title:":            "Titlul documentului:",
+    "OK":                    "Acceptă",
+    "Primary style-sheet:":            "Template CSS principal:",
+    "Text color:":                "Culoare text:"
 };
