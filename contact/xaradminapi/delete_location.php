@@ -19,18 +19,18 @@ function contact_adminapi_delete_location($args)
     // are getting - $table and $column don't cut it in more complex
     // modules
     $contacttable = $xartable['contact_infotype'];
-       $deletelocation = $cid;
-       for($i = 0; $i < count($deletelocation); $i++) {
-           $deletelocationID = $cid[$i];
-           $query = "DELETE FROM $contacttable WHERE xar_id = $deletelocationID";
-           $result = $dbconn->Execute($query);
-            if (!$result) return;
-       }
-       if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    $deletelocation = $cid;
+    for($i = 0; $i < count($deletelocation); $i++) {
+        $deletelocationID = $cid[$i];
+        $query = "DELETE FROM $contacttable WHERE xar_id = $deletelocationID";
+        $result = $dbconn->Execute($query);
+        if (!$result) return;
+    }
+    if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
-    xarSessionSetVar('statusmsg', xarMLByKey('LOCATIONDELETED'));
+    xarSessionSetVar('statusmsg', xarML('Location was successfully deleted'));
     return true;
-   }
+}
 
 ?>

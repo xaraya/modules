@@ -2,7 +2,7 @@
 
 function contact_adminapi_delete_titles($args)
 {
- // Get arguments from argument array - all arguments to this function
+    // Get arguments from argument array - all arguments to this function
     // should be obtained from the $args array, getting them from other
     // places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
@@ -19,18 +19,18 @@ function contact_adminapi_delete_titles($args)
     // are getting - $table and $column don't cut it in more complex
     // modules
     $contacttable = $xartable['contact_titles'];
-       $deletetitle = $cid;
-       for($i = 0; $i < count($deletetitle); $i++) {
-           $deletetitleID = $cid[$i];
-           $query = "DELETE FROM $contacttable WHERE xar_id = $deletetitleID";
-           $result = $dbconn->Execute($query);
-            if (!$result) return;
-       }
-       if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    $deletetitle = $cid;
+    for($i = 0; $i < count($deletetitle); $i++) {
+        $deletetitleID = $cid[$i];
+        $query = "DELETE FROM $contacttable WHERE xar_id = $deletetitleID";
+        $result = $dbconn->Execute($query);
+        if (!$result) return;
+    }
+    if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
-    xarSessionSetVar('statusmsg', xarMLByKey('TITLEDELETED'));
+    xarSessionSetVar('statusmsg', xarML('Title deleted'));
     return true;
-   }
+}
 
 ?>

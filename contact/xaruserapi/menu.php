@@ -9,7 +9,7 @@ function contact_userapi_menu()
     $menu = array();
 
     // Specify the menu title to be used in your blocklayout template
-    $menu['menutitle'] = xarMLByKey('CONTACT');
+    $menu['menutitle'] = xarML('Contacts');
 
     // Specify the menu items to be used in your blocklayout template
     $menu['menulabel_view'] = xarML('View Contacts');

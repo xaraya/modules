@@ -65,18 +65,9 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
+    if (!$dbconn->Execute($sql)) return;
 
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
-
-   $contact_dept_members = $xartable['contact_dept_members'];
+    $contact_dept_members = $xartable['contact_dept_members'];
 
      $fields = array(
         'xar_id'=>array('type'=>'integer','null'=>FALSE,'increment'=>FALSE,'primary_key'=>TRUE),
@@ -89,16 +80,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -118,16 +100,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -146,16 +119,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -176,16 +140,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -205,16 +160,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -256,16 +202,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -303,16 +240,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -343,16 +271,8 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
+    if (!$dbconn->Execute($sql)) return;
 
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
     //                langmembers_table
@@ -369,16 +289,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // ==================== NEXT TABLE =====================
@@ -397,16 +308,7 @@ function contact_init()
      if (empty($sql)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so raise the
-    // appropriate exception
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return;
-    }
+    if (!$dbconn->Execute($sql)) return;
 
     // ----------------------------------------------------------------------------------
     // Initialisation successful
@@ -414,137 +316,54 @@ function contact_init()
     // ----------------------------------------------------------------------------------------
     // Contact Type
 
-   $id = $dbconn->GenId($contact_departments);
+    $id = $dbconn->GenId($contact_departments);
     $query = "INSERT INTO $contact_departments (xar_id, xar_email, xar_name, xar_phone, xar_fax, xar_state, xar_country, xar_cid, xar_hide) VALUES ($id, 'support@yourdomain.com', 'Support', '111-111-11111', '222-222-2222', 'PA', 'USA', '1', '1');";
-    $dbconn->Execute($query);
+    if (!$dbconn->Execute($query)) return;
 
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
-
-  $id = $dbconn->GenId($contact_infotype);
+    $id = $dbconn->GenId($contact_infotype);
     $query = "INSERT INTO $contact_infotype (xar_id, xar_name, xar_cid) VALUES ($id, 'Home', '1');";
-    $dbconn->Execute($query);
-
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     $id = $dbconn->GenId($contact_infotype);
     $query = "INSERT INTO $contact_infotype (xar_id, xar_name, xar_cid) VALUES ($id, 'Work', '2');";
-    $dbconn->Execute($query);
-
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     $id = $dbconn->GenId($contact_infotype);
     $query = "INSERT INTO $contact_infotype (xar_id, xar_name, xar_cid) VALUES ($id, 'Private', '3');";
-    $dbconn->Execute($query);
-
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     // ----------------------------------------------------------------------------------------
     //Company
     $id = $dbconn->GenId($contact_company);
     $query = "INSERT INTO $contact_company (xar_id, xar_name, xar_address, xar_address2, xar_city, xar_state, xar_zip, xar_country, xar_phone, xar_fax, xar_mail, xar_logo, xar_hide, xar_defaultcountry) VALUES ($id, 'Company Name', 'Your Address', ' ', 'Your City', 'Your State', 'Postal Code', 'Country', '111-111-1111','222-222-2222','your@email','/modules/contact/xarimages/logo.gif','0','eng');";
-    $dbconn->Execute($query);
-
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     //City
     $id = $dbconn->GenId($contact_city);
     $query = "INSERT INTO $contact_city (xar_id, xar_name, xar_cid) VALUES ($id, 'Add City Below','1');";
-    $dbconn->Execute($query);
+    if (!$dbconn->Execute($query)) return;
 
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
-     //Country
+    //Country
     $id = $dbconn->GenId($contact_country);
     $query = "INSERT INTO $contact_country (xar_id, xar_name, xar_lang) VALUES ($id, 'USA','eng');";
-    $dbconn->Execute($query);
+    if (!$dbconn->Execute($query)) return;
 
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
     // Titles
     $id = $dbconn->GenId($contact_titles);
     $query = "INSERT INTO $contact_titles (xar_id, xar_name, xar_cid) VALUES ($id, 'Support', '3');";
-    $dbconn->Execute($query);
+    if (!$dbconn->Execute($query)) return;
 
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
-      $id = $dbconn->GenId($contact_titles);
+    $id = $dbconn->GenId($contact_titles);
     $query = "INSERT INTO $contact_titles (xar_id, xar_name, xar_cid) VALUES ($id, 'Programmer', '4');";
-    $dbconn->Execute($query);
+    if (!$dbconn->Execute($query)) return;
 
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
-       $id = $dbconn->GenId($contact_titles);
+    $id = $dbconn->GenId($contact_titles);
     $query = "INSERT INTO $contact_titles (xar_id, xar_name, xar_cid) VALUES ($id, 'Sales', '5');";
-    $dbconn->Execute($query);
+    if (!$dbconn->Execute($query)) return;
 
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
-      $id = $dbconn->GenId($contact_titles);
+    $id = $dbconn->GenId($contact_titles);
     $query = "INSERT INTO $contact_titles (xar_id, xar_name, xar_cid) VALUES ($id, 'Webmaster', '6');";
-    $dbconn->Execute($query);
-
-    // Check for db errors
-    if ($dbconn->ErrorNo() != 0) {
-        $msg = xarMLByKey('DATABASE_ERROR', $dbconn->ErrorMsg(), $query);
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-        return NULL;
-    }
+    if (!$dbconn->Execute($query)) return;
 
     /*********************************************************************
     * Define instances for this module
@@ -653,7 +472,7 @@ function contact_upgrade($oldversion)
     xarDBLoadTableMaintenanceAPI();
 
     $dbconn =& xarDBGetConn();
-    $xartable        =& xarDBGetTables();
+    $xartable =& xarDBGetTables();
     if(!is_array($xartable)){
         echo "<p><b>No tables found to update!</b></p>";
         return false;
@@ -694,17 +513,7 @@ function contact_upgrade($oldversion)
             if (empty($sql)) return; // throw back
 
             // Pass the Table Create DDL to adodb to create the table
-            $dbconn->Execute($sql);
-
-            // Check for an error with the database code, and if so raise the
-            // appropriate exception
-            if ($dbconn->ErrorNo() != 0) {
-                $msg = xarMLByKey('DATABASE_ERROR', $query);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                return;
-            }
-
+            if (!$dbconn->Execute($sql)) return;
 
             // Now comes the hard work, get all the OLD user attributes
             // into the new table and then delete the fields that is no longer in use
@@ -760,12 +569,8 @@ function contact_upgrade($oldversion)
                 ", ".$person_column['showdepartment'].", ".$person_column['showimage'].
                 " FROM ".$person_table;
 
-            $result = $dbconn->Execute( $query );
-            if ( $result == false ) {
-                xarErrorSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
-                   new SystemException($query));
-                return false;   
-            }
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return;
 
             for (; !$result->EOF; $result->MoveNext() ) {
                 $values = "'".$result->fields[0].
@@ -791,12 +596,7 @@ function contact_upgrade($oldversion)
                     "','".$result->fields[18]."'";
 
                 $sqlInsert = "INSERT INTO ".$table." (".$fields.") VALUES (".$values.")";
-                $dbconn->Execute( $sqlInsert );
-                if ($dbconn->ErrorNo() != 0) {
-                    xarErrorSet(XAR_USER_EXCEPTION, 'DATABASE_ERROR_QUERY',
-                        new SystemException($sqlInsert));
-                    return false;
-                }
+                if (!$dbconn->Execute($sqlInsert)) return;
             }
 
         case '0.2.4':

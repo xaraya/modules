@@ -2,7 +2,7 @@
 
 function contact_adminapi_delete_city($args)
 {
- // Get arguments from argument array - all arguments to this function
+    // Get arguments from argument array - all arguments to this function
     // should be obtained from the $args array, getting them from other
     // places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
@@ -19,18 +19,18 @@ function contact_adminapi_delete_city($args)
     // are getting - $table and $column don't cut it in more complex
     // modules
     $contacttable = $xartable['contact_city'];
-       $deletecity = $cid;
-       for($i = 0; $i < count($deletecity); $i++) {
-           $deletecityID = $cid[$i];
-           $query = "DELETE FROM $contacttable WHERE xar_id = $deletecityID";
-           $result = $dbconn->Execute($query);
-            if (!$result) return;
-       }
-       if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    $deletecity = $cid;
+    for($i = 0; $i < count($deletecity); $i++) {
+        $deletecityID = $cid[$i];
+        $query = "DELETE FROM $contacttable WHERE xar_id = $deletecityID";
+        $result = $dbconn->Execute($query);
+        if (!$result) return;
+    }
+    if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
-    xarSessionSetVar('statusmsg', xarMLByKey('CITYDELETED'));
+    xarSessionSetVar('statusmsg', xarML('City was successfully deleted'));
     return true;
-   }
+}
 
 ?>

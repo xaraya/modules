@@ -21,21 +21,20 @@ function contact_adminapi_delete_department($args)
     // modules
     $contacttable = $xartable['contact_departments'];
 
-          $deletedepartment = $cid;
-          for($i = 0; $i < count($deletedepartment);$i++) {
-            $deleteThisdepartment = $deletedepartment[$i];
-           $query = "DELETE FROM $contacttable WHERE xar_cid = $deleteThisdepartment";
-           $result = $dbconn->Execute($query);
-            if (!$result) return;
-          }
+    $deletedepartment = $cid;
+    for ($i = 0; $i < count($deletedepartment);$i++) {
+        $deleteThisdepartment = $deletedepartment[$i];
+        $query = "DELETE FROM $contacttable WHERE xar_cid = $deleteThisdepartment";
+        $result = $dbconn->Execute($query);
+        if (!$result) return;
+    }
 
-
-       if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
+    if (!isset($codel) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success
-    xarSessionSetVar('statusmsg', xarMLByKey('DEPARTMENTDELETED'));
+    xarSessionSetVar('statusmsg', xarML('Department was successfully deleted'));
 
-   return true;
-   }
+    return true;
+}
 
 ?>
