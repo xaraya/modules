@@ -18,6 +18,8 @@ $cachingConfiguration['Page.ShowTime'] = 1;
 $cachingConfiguration['Page.ExpireHeader'] = 1;
 // Allow page caching for the following user groups (besides anonymous)
 $cachingConfiguration['Page.CacheGroups'] = '';
+// Only cache the pages of modules hooked to xarCacheManager
+$cachingConfiguration['Page.HookedOnly'] = 0;
 
 // Allow session-less page caching of these URLs for first-time visitors
 $cachingConfiguration['Page.SessionLess'] = array();

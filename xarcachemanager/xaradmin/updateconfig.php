@@ -14,6 +14,7 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVarFetch('cachedisplayview', 'isset', $cachedisplayview, 0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachetimestamp',   'isset', $cachetimestamp,   0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('expireheader',     'isset', $expireheader,   0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagehookedonly',   'isset', $pagehookedonly,   0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('autoregenerate',   'isset', $autoregenerate,   0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cacheblocks',      'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockexpiretime',  'str:1:9', $blockexpiretime, '0',  XARVAR_NOT_REQUIRED)) { return; }
@@ -107,6 +108,7 @@ function xarcachemanager_admin_updateconfig()
     $configSettings['Page.DisplayView'] = $cachedisplayview;
     $configSettings['Page.ShowTime'] = $cachetimestamp;
     $configSettings['Page.ExpireHeader'] = $expireheader;
+    $configSettings['Page.HookedOnly'] = $pagehookedonly;
     $configSettings['Block.TimeExpiration'] = $blockexpiretime;
     
     xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 

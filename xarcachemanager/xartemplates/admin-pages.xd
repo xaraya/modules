@@ -18,18 +18,17 @@
 </tr>
 <tr>
   <td>&nbsp;</td>
-  <td><xar:mlstring>Module</xar:mlstring></td>
-  <td><xar:mlstring>All</xar:mlstring></td>
+  <td><xar:mlstring>Modules</xar:mlstring></td>
+  <xar:if condition="empty($settings['PageHookedOnly'])">
+    <td><xar:mlstring>All</xar:mlstring></td>
+  <xar:else />
+    <td><xar:mlstring>Hooked to xarCacheManager</xar:mlstring></td>
+  </xar:if>
 </tr>
 <tr>
   <td>AND</td>
   <td><xar:mlstring>Type</xar:mlstring></td>
   <td>user</td>
-</tr>
-<tr>
-  <td>AND NOT</td>
-  <td><xar:mlstring>Function</xar:mlstring></td>
-  <td>search</td>
 </tr>
 <xar:if condition="empty($settings['PageDisplayView'])">
 <tr>
@@ -41,7 +40,7 @@
 <tr>
   <td>AND</td>
   <td><xar:mlstring>Request Method</xar:mlstring></td>
-  <td>GET</td>
+  <td>GET or HEAD</td>
 </tr>
 <tr>
   <td>AND</td>

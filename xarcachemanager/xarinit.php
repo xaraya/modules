@@ -17,105 +17,9 @@
  */
 function xarcachemanager_init()
 {
-    // set up the output cache directory
+    // set up the config.caching file and output cache directory structure
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
-
-    if (is_writable($varCacheDir) || is_dir($varCacheDir.'/output')) {
-        if (!is_dir($varCacheDir.'/output')) {
-            // set up the output directorys
-            $old_umask = umask(0);
-            mkdir($varCacheDir.'/output', 0777);
-            mkdir($varCacheDir.'/output/page', 0777);
-            mkdir($varCacheDir.'/output/block', 0777);
-            umask($old_umask);
-        }
-        if (!is_writable($varCacheDir.'/output')) {
-            // tell them output dir needs to be writable
-            $msg=xarML('The var/cache/output directory must be writable 
-                       by the web server for output caching to work.  
-                       The xarCacheManager module has not been installed, 
-                       please make the var/cache/output directory 
-                       writable by the web server before re-trying to 
-                       install this module.');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                            new SystemException($msg));
-            return false;
-        } else {
-            $old_umask = umask(0);
-            if (!is_dir($varCacheDir.'/output/page')) {
-                mkdir($varCacheDir.'/output/page', 0777);
-            }
-            if (!is_dir($varCacheDir.'/output/block')) {
-                mkdir($varCacheDir.'/output/block', 0777);
-            }
-            umask($old_umask);
-        }
-    } else {
-        // tell them that cache needs to be writable or manually create output dir
-        $msg=xarML('The var/cache directory must be writable 
-                   by the web server for the install script to 
-                   set up output caching for you.
-                   The xarCacheManager module has not been installed, 
-                   please make the var/cache directory 
-                   writable by the web server before re-trying to 
-                   install this module.  
-                   Alternatively, you can manually create the 
-                   var/cache/output directory and copy the 
-                   xarcachemanager/config.caching.php.dist 
-                   file to var/cache/config.caching.php - the output 
-                   directory and the config.caching.php file must be 
-                   writable by the web server for output caching to work.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                        new SystemException($msg));
-        return false;
-    }
-    
-    // avoid directory browsing
-    if (!file_exists($varCacheDir.'/output/index.html')) {
-        @touch($varCacheDir.'/output/index.html');
-    }
-    if (!file_exists($varCacheDir.'/output/page/index.html')) {
-        @touch($varCacheDir.'/output/index.html');
-    }
-    if (!file_exists($varCacheDir.'/output/block/index.html')) {
-        @touch($varCacheDir.'/output/index.html');
-    }
-
-    // set up the config file.
-    $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
-    $cachingConfigFile = $varCacheDir .'/config.caching.php';
-    if (!file_exists($defaultConfigFile)) {
-        $msg=xarML('That is strange.  The default, distributed configuration 
-                   file, normally #(1), seems to be 
-                   missing.', $defaultConfigFile);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_FILE_NOT_EXIST',
-                        new SystemException($msg));
-        
-        return false;
-    }
-    if (is_writable($varCacheDir) || is_writable($cachingConfigFile)) {
-        $handle = fopen($defaultConfigFile, "rb");
-        $defaultConfig = fread ($handle, filesize ($defaultConfigFile));
-        $fp = @fopen($cachingConfigFile,"wb");
-        fwrite($fp, $defaultConfig);
-        fclose($fp);
-    } else {
-        // tell them that cache needs to be writable or manually create config file
-        $msg=xarML('The var/cache directory must be writable 
-                   by the web server for the install script to 
-                   set up output caching for you.
-                   The xarCacheManager module has not been installed, 
-                   please make the var/cache directory 
-                   writable by the web server before re-trying to 
-                   install this module.  
-                   Alternatively, you can manually copy the 
-                   xarcachemanager/config.caching.php.dist 
-                   file to var/cache/config.caching.php - the 
-                   config.caching.php file must be writable by the
-                   web server for output caching to be managed with
-                   the xarcachemanager module.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                        new SystemException($msg));
+    if (!xarcachemanager_fs_setup(array('varCacheDir' => $varCacheDir))) {
         return false;
     }
 
@@ -480,7 +384,28 @@ function xarcachemanager_upgrade($oldversion)
             xarOutputFlushCached('');
             break;
         case '0.3.2':
-            // Code to upgrade from the 0.3.1 version (base block level caching)
+            // Code to upgrade from the 0.3.2 version (base block level caching)
+            // Double check the file system setup
+            if (!xarcachemanager_fs_setup(array('varCacheDir' => $varCacheDir))) {
+                return false;
+            }
+            // Bring the config file up to current version
+            if (file_exists($cachingConfigFile)) {
+                $configSettings = xarModAPIFunc('xarcachemanager',
+                                                'admin',
+                                                'get_cachingconfig',
+                                                array('from' => 'file',
+                                                      'cachingConfigFile' => $cachingConfigFile));
+                @unlink($cachingConfigFile);
+                copy($defaultConfigFile, $cachingConfigFile); 
+                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                  array('configSettings' => $configSettings,
+                        'cachingConfigFile' => $cachingConfigFile));                
+            } else {
+                copy($defaultConfigFile, $cachingConfigFile);
+            }
+        case '0.3.3':
+            // Code to upgrade from the 0.3.3 version (base block level caching)
             break;
         case '0.4.0':
             // Code to upgrade from the 0.4.0 version (base module level caching)
@@ -503,26 +428,16 @@ function xarcachemanager_upgrade($oldversion)
  */
 function xarcachemanager_delete()
 {
-    //if still there, remove the cache.touch file, this turns everything off
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
-    if (file_exists($varCacheDir . '/output') && is_dir($varCacheDir . '/output')) {
-        if (file_exists($varCacheDir . '/output/cache.touch')) {
-            @unlink($varCacheDir . '/output/cache.touch');
+    $cacheOutputDir = $varCacheDir . '/output';
+    if (is_dir($cacheOutputDir)) {
+        //if still there, remove the cache.touch file, this turns everything off
+        if (file_exists($cacheOutputDir . '/cache.touch')) {
+            @unlink($cacheOutputDir . '/cache.touch');
         }
 
         // clear out the cache
-        if ($handle = @opendir($varCacheDir . '/output')) {
-            while (($file = readdir($handle)) !== false) {
-                $cache_file = $varCacheDir . '/output/' . $file;
-                if (is_file($cache_file)) {
-                    @unlink($cache_file);
-                }
-            }
-            closedir($handle);
-        }
-
-        // remove the output cache directory
-        @rmdir($varCacheDir . '/output');
+        @xarcachemanager_rmdirr($cacheOutputDir);
     }
 
     // remove the caching config file
@@ -569,5 +484,125 @@ function xarcachemanager_delete()
     // Deletion successful
     return true;
 } 
+
+function xarcachemanager_fs_setup($args)
+{
+    extract($args);
+    
+    // default var cache directory
+    if (!isset($varCacheDir)) { 
+        $varCacheDir = xarCoreGetVarDirPath() . '/cache';
+    }
+    
+    // output cache directory
+    $cacheOutputDir = $varCacheDir . '/output';
+    
+    // caching config files
+    $defaultConfigFile = 'modules/xarcachemanager/config.caching.php.dist';
+    $cachingConfigFile = $varCacheDir .'/config.caching.php';
+    
+    // confirm that the things are ready to be set up
+    if (is_writable($varCacheDir)) {
+        if (!file_exists($cachingConfigFile)) {
+            copy($defaultConfigFile, $cachingConfigFile);
+        }
+    } else {
+        if (!is_dir($cacheOutputDir) || !file_exists($cachingConfigFile)) {
+            // tell them that cache needs to be writable or manually create output dir
+            $msg=xarML('The #(1) directory must be writable by the web server 
+                       for the install script to set up output caching for you. 
+                       The xarCacheManager module has not been installed, 
+                       please make the #(1) directory writable by the web server
+                       before re-trying to install this module.  
+                       Alternatively, you can manually create the #(2) directory
+                       and copy the #(3) file to #(4) - the #(2) directory and 
+                       the #(4) file must be writable by the web server for 
+                       output caching to work.',
+                       $varCacheDir,
+                       $cacheOutputDir,
+                       $defaultConfigFile,
+                       $cachingConfigFile);
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                            new SystemException($msg));
+            return false;
+        }           
+    }
+    
+    // confirm the caching config file is good to go
+    if (!is_writable($cachingConfigFile)) {
+        $msg=xarML('The #(1) file must be writable by the web server for 
+                   output caching to work.', $cachingConfigFile);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                        new SystemException($msg));
+        return false;
+    }
+    
+    // set up the directories
+    $outputCacheDirs = array($cacheOutputDir);
+    $additionalDirs = array('page', 'mod', 'block');
+    foreach ($additionalDirs as $addDir) {
+        $outputCacheDirs[] = $cacheOutputDir . '/' . $addDir;
+    }
+    
+    foreach ($outputCacheDirs as $setupDir) {
+        // check if the directory already exists
+        if (is_dir($setupDir)) {
+            if (!is_writable($setupDir)) {
+                $msg=xarML('The #(1) directory is not writable by the web 
+                           web server. The #(1) must be writable by the web 
+                           server process owner for output caching to work. 
+                           Please change the permission on the #(1) directory
+                           so that the web server can write to it.', $setupDir);
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
+                                new SystemException($msg));
+                return false;
+            }
+        } else {
+            $old_umask = umask(0);
+            mkdir($setupDir, 0777);
+            umask($old_umask);
+            if (!file_exists($setupDir.'/index.html')) {
+                @touch($setupDir.'/index.html');
+            }
+        }
+    }
+    return true;
+}
+
+/**
+ * Delete a file, or a folder and its contents
+ *
+ * @author    Aidan Lister <aidan@php.net>
+ * @version   1.0
+ * @param     string   $dirname   The directory to delete
+ * @return    bool     Returns true on success, false on failure
+ */
+function xarcachemanager_rmdirr($dirname)
+{
+    // delete a file
+    if (is_file($dirname)) {
+        return unlink($dirname);
+    }
+    
+    // loop through the folder
+    $dir = dir($dirname);
+    while (false !== $entry = $dir->read()) {
+        // skip pointers
+        if ($entry == '.' || $entry == '..') {
+            continue;
+        }
+        
+        // Deep delete directories
+        if (is_dir("$dirname/$entry")) {
+            xarcachemanager_rmdirr("$dirname/$entry");
+        } else {
+            unlink("$dirname/$entry");
+        }
+    }
+    
+    // clean up
+    $dir->close();
+    return rmdir($dirname);
+}
 
 ?>
