@@ -22,3 +22,4 @@ function overlib_delete()
     xarTplUnregisterTag('overlib-popup-close');
     return true;
 }
+?>
