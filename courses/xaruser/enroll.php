@@ -111,7 +111,7 @@ function courses_user_enroll($args)
 
     if (isset($courses[$courseid])) {
     $msg = xarML('You are already enrolled in this course');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'ALLREADY_ENROLLED',
+        xarErrorSet(XAR_USER_EXCEPTION, 'ALLREADY_ENROLLED',
             new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
         return;
     }
