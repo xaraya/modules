@@ -106,12 +106,22 @@ function newsletter_adminapi_mailissue($args)
                                 'admin',
                                 'sendhtmlmail',
                                 $mailargs);
+
+        // Free any errors that occur.  We don't want mail to 
+        // set an error because as this will stop processing
+        // the newsletter to all recipients.
+        xarErrorFree();
     } else {
         // Send the mail as text using the mail module
         $result = xarModAPIFunc('mail',
                                 'admin',
                                 'sendmail',
                                 $mailargs);
+
+        // Free any errors that occur.  We don't want mail to 
+        // set an error because as this will stop processing
+        // the newsletter to all recipients.
+        xarErrorFree();
     }
 
     if (!$result)
