@@ -9,8 +9,14 @@
 // ------------------------------------------------
 //                                   www.j-cons.com
 // ================================================
-// $Revision: 1.10,               $Date: 2004/10/04 
+// $Revision: 1.10,               $Date: 2004/10/04
 // ================================================
+/*******************************************
+ *  Modified for Xaraya xarTinyMCE
+ *  Updated with fixes for Firefox 1.0 Preview +
+ *  Integrated to xarTinyMCE 2004/11/08 
+ *  xarTinyMCE pagackage - jojodee@xaraya.com
+ * ******************************************/
 
 // unset $tinyMCE_imglib_include
 unset($tinyMCE_imglib_include);
@@ -124,13 +130,11 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 
     // delete image
     function deleteClick() {
-    if (document.libbrowser.imglist.selectedIndex>=0)
-        {
-        if (confirm(tinyMCE.getLang('lang_ibrowser_confirmdelete')))
-        {
-            document.libbrowser.lib_action.value = 'delete';
-            document.libbrowser.submit();
-        }
+    if (document.libbrowser.imglist.selectedIndex>=0) {
+            if (confirm(tinyMCE.getLang('lang_ibrowser_confirmdelete')))  {
+                document.libbrowser.lib_action.value = 'delete';
+                document.libbrowser.submit();
+            }
         }
     }
 
@@ -147,7 +151,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
         oheight = eval(formObj.height.value);
         updateStyle();
     }
-    
+
     // init functions
     function init() {
         // if existing image (image properties)
@@ -155,10 +159,10 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
             var formObj = document.forms[0];
             for (var i=0; i<document.forms[0].align.options.length; i++) {
                 if (document.forms[0].align.options[i].value == tinyMCE.getWindowArg('align'))
-                document.forms[0].align.options.selectedIndex = i;                
+                document.forms[0].align.options.selectedIndex = i;
             }
 
-            formObj.src.value = tinyMCE.getWindowArg('src');                
+            formObj.src.value = tinyMCE.getWindowArg('src');
             formObj.alt.value = tinyMCE.getWindowArg('alt');
             formObj.border.value = tinyMCE.getWindowArg('border');
             formObj.vspace.value = tinyMCE.getWindowArg('vspace');
@@ -168,15 +172,15 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
             formObj.size.value = 'n/a';
             owidth = eval(formObj.width.value);
             oheight = eval(formObj.height.value);
-            
+
             frameID = "imgpreview";
             document.all(frameID).src = tinyMCE.getWindowArg('src');
-            updateStyle();                    
-        }            
-        
-        window.focus();        
+            updateStyle();
+        }
+
+        window.focus();
     }
-    
+
     // updates style settings
     function updateStyle() {
         if (validateParams()) {
@@ -186,32 +190,32 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
             document.getElementById('wrap').border = document.libbrowser.border.value;
             document.getElementById('wrap').alt = document.libbrowser.alt.value;}
     }
-    
+
     // change picture dimensions
     var oheight; // original width
     var owidth;  // original height
-    
+
     function changeDim(sel) {
         var formObj = document.forms[0];
         if (formObj.src.value!=''){
-            f=oheight/owidth;                    
+            f=oheight/owidth;
             if (sel==0){
                 formObj.width.value = Math.round(formObj.height.value/f);
             } else {
-                formObj.height.value= Math.round(formObj.width.value*f);}    
+                formObj.height.value= Math.round(formObj.width.value*f);}
         }
     }
-    
+
     function resetDim() {
          var formObj = document.forms[0];
         formObj.width.value = owidth;
         formObj.height.value = oheight;
-    }        
+    }
 </script>
 </head>
 <body onLoad="init();">
 <script type="text/JavaScript">
-    window.name = 'imglibrary'; 
+    window.name = 'imglibrary';
 </script>
 <form name="libbrowser" method="post" action="ibrowser.php?request_uri=<?php echo ($_SERVER["REQUEST_URI"])?>" enctype="multipart/form-data" target="imglibrary">
   <input type="hidden" name="request_uri" value="<?php echo ($_SERVER["REQUEST_URI"])?>">
@@ -239,39 +243,39 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td><?php 
+            <td><?php
     if (!ereg('/$', $_SERVER['DOCUMENT_ROOT']))
       $_root = $_SERVER['DOCUMENT_ROOT'].'/';
     else
       $_root = $_SERVER['DOCUMENT_ROOT'];
-    
+
     $d = @dir($_root.$imglib);
   ?>
-          <select name="imglist" size="15" style="width: 100%;" 
+          <select name="imglist" size="15" style="width: 100%;"
     onChange="if (this.selectedIndex &gt;=0) imgpreview.location.href = '<?php echo $tinyMCE_base_url.$imglib?>' + this.options[this.selectedIndex].value; selectChange(this);" ondblclick="selectClick();">
-            <?php 
-        if ($d) 
+            <?php
+        if ($d)
     {
       $i = 0;
       while (false !== ($entry = $d->read())) {
         $ext = strtolower(substr(strrchr($entry,'.'), 1));
         if (is_file($_root.$imglib.$entry) && in_array($ext,$tinyMCE_valid_imgs))
         {
-            $arr_tinyMCE_image_files[$i][file_name] = $entry;            
+            $arr_tinyMCE_image_files[$i][file_name] = $entry;
             $i++;
         }
       }
       $d->close();
       // sort the list of image filenames alphabetically.
       sort($arr_tinyMCE_image_files);
-      for($k=0; $k<count($arr_tinyMCE_image_files); $k++){ 
+      for($k=0; $k<count($arr_tinyMCE_image_files); $k++){
       $entry = $arr_tinyMCE_image_files[$k][file_name];
       $size = getimagesize($tinyMCE_base_url.$imglib.$entry);
       $fsize = filesize($_root.$imglib.$entry);
    ?>
             <option img_width="<?php echo $size[0]; ?>" img_height="<?php echo $size[1]; ?>" f_size="<?php echo filesize_h($fsize,2); ?>" value="<?php echo $entry?>" <?php echo ($entry == $img)?'selected':''?>><?php echo $entry?></option>
             <?php
-      }  
+      }
     }
     else
     {
@@ -378,7 +382,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
   <legend>{$lang_ibrowser_img_upload}</legend>
   <table width="440" border="0" cellpadding="0" cellspacing="0">
     <tr>
-      <td><?php  
+      <td><?php
     if (!empty($errors))
     {
       echo '<span class="error">';
@@ -389,7 +393,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
       echo '</span>';
     }
     ?>
-        <?php 
+        <?php
   if ($d) {
   ?>
         <table width="440" border="0" cellpadding="2" cellspacing="0">
@@ -401,7 +405,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
             <td colspan="3"><input type="submit" name="btnupload" class="bt" value="{$lang_ibrowser_uploadbt}"></td>
           </tr>
         </table>
-        <?php 
+        <?php
   }
   ?>
       </td>
@@ -412,7 +416,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 </form>
 </body>
 </html>
-<?php 
+<?php
 function liboptions($arr, $prefix = '', $sel = '') {
   $buf = '';
   foreach($arr as $lib) {
@@ -461,9 +465,7 @@ function uploadImg($img) {
       }
 
       return $img_name;
-    }
-    else
-    {
+    } else {
       $errors[] = '{$lang_ibrowser_errortype}';
     }
   }
@@ -484,14 +486,12 @@ function deleteImg() {
     $_root = $_SERVER['DOCUMENT_ROOT'].'/';
   else
     $_root = $_SERVER['DOCUMENT_ROOT'];
-    
+
   $full_img_name = $_root.$imglib.$img;
 
   if (@unlink($full_img_name)) {
       return true;
-  }
-  else
-  {
+  } else   {
       $errors[] = '{$lang_ibrowser_errordelete}';
     return false;
   }
