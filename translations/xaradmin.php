@@ -113,6 +113,18 @@ define('RELEASE', 4);
     return $tplData;
 }
 
+/* FUNC */function translations_admin_choose_a_theme()
+{
+// Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    if (!($themelist = xarThemeGetList())) return;
+
+    $tplData = translations_create_choose_a_theme_druidbar(CHOOSE);
+    $tplData['themelist'] = $themelist;
+    return $tplData;
+}
+
 /* FUNC */function translations_admin_module_overview()
 {
 // Security Check
@@ -127,6 +139,26 @@ define('RELEASE', 4);
     xarSessionSetVar('translations_dnName', $tplData['name']);
 
     $druidbar = translations_create_choose_a_module_druidbar(OVERVIEW);
+    $opbar = translations_create_opbar(OVERVIEW);
+    $tplData = array_merge($tplData, $druidbar, $opbar);
+
+    return $tplData;
+}
+
+/* FUNC */function translations_admin_theme_overview()
+{
+// Security Check
+    if(!xarSecurityCheck('AdminTranslations')) return;
+
+    $sessmodid = xarSessionGetVar('translations_modid');
+    if (!xarVarFetch('modid', 'id', $modid, $sessmodid)) return;
+    xarSessionSetVar('translations_modid', $modid);
+
+    if (!($tplData = xarModGetInfo($modid))) return;
+
+    xarSessionSetVar('translations_dnName', $tplData['name']);
+
+    $druidbar = translations_create_choose_a_theme_druidbar(OVERVIEW);
     $opbar = translations_create_opbar(OVERVIEW);
     $tplData = array_merge($tplData, $druidbar, $opbar);
 
@@ -640,6 +672,16 @@ function translations_create_choose_a_module_druidbar($currentStep) {
     $stepLabels[CHOOSE + 1] = xarML('Choose a module');
     $stepLabels[OVERVIEW + 1] = xarML('Overview');
     $stepURLs[CHOOSE + 1] = xarModURL('translations', 'admin', 'choose_a_module');
+    $stepURLs[OVERVIEW + 1] = NULL;
+
+    return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep + 1);
+}
+
+function translations_create_choose_a_theme_druidbar($currentStep) {
+    // This + 1 is actually an "hack"
+    $stepLabels[CHOOSE + 1] = xarML('Choose a theme');
+    $stepLabels[OVERVIEW + 1] = xarML('Overview');
+    $stepURLs[CHOOSE + 1] = xarModURL('translations', 'admin', 'choose_a_theme');
     $stepURLs[OVERVIEW + 1] = NULL;
 
     return array('stepLabels'=>$stepLabels, 'stepURLs'=>$stepURLs, 'currentStep'=>$currentStep + 1);
