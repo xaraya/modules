@@ -10,5 +10,5 @@
 <br /><br />
 
 
-<input type="submit" value="Modify Example Information" align="middle" tabindex="2" />
+<input type="submit" value="Modify Example Information"  tabindex="2" />
 </form>
