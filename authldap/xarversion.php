@@ -17,4 +17,6 @@ $modversion['class'] = 'Miscellaneous';
 $modversion['category'] = 'Global';
 // this module depends on the xarldap module
 $modversion['dependency'] = array(25);
+// this module requires the ldap extension
+$modversion['extensions'] = array('ldap');
 ?>
