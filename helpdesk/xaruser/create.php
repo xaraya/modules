@@ -85,9 +85,11 @@ function helpdesk_user_create($args)
     // Adds the Issue                                      
     $pid = 0; // parent id
     $itemid = $return_val; // id of ticket just created
+    $itemtype = 1;
     $result = xarModAPIFunc('comments', 'user', 'add', 
                             array('modid'    => $modid,
                                   'objectid' => $itemid,
+				  'itemtype' => $itemtype,
                                   'pid'      => $pid,
                                   'title'    => $subject,
                                   'comment'  => $issue,
@@ -100,6 +102,7 @@ function helpdesk_user_create($args)
         $result = xarModAPIFunc('comments', 'user', 'add', 
                                 array('modid'    => $modid,
                                       'objectid' => $itemid,
+				      'itemtype' => $itemtype,
                                       'pid'      => $result,
                                       'title'    => $subject,
                                       'comment'  => $notes,
@@ -109,15 +112,6 @@ function helpdesk_user_create($args)
                                );
     }                                                              
    
-    // Cats
-    xarModAPIFunc('categories', 'admin', 'linkcat', 
-                  array('cids'        => $cids,
-                        'iids'        => array($return_val),
-                        'modid'       => $modid,
-                        'itemtype'    => $itemtype,
-                        'clean_first' => true)
-                 );
-     
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already
@@ -132,10 +126,10 @@ function helpdesk_user_create($args)
     $item = array();
     $item['module'] = 'helpdesk';
     $item['itemtype'] = $itemtype;
-    //$item['returnurl'] = xarModURL('helpdesk', 'user', 'main');
+    $item['returnurl'] = xarModURL('helpdesk', 'user', 'display', array('tid' => $return_val));
     $hooks = xarModCallHooks('item', 'create', $return_val, $item, 'helpdesk');
     if (empty($hooks)) {
-        $data['hooks'] = '';
+        $data['hooks'] = array();
     } else {
         $data['hooks'] = $hooks;
     } 

@@ -13,9 +13,10 @@ function helpdesk_admin_view()
     if (!xarSecurityCheck('edithelpdesk')) return;
 
     // Get Vars
-    xarVarFetch('itemtype', 'int', $data['itemtype'],  null, XARVAR_NOT_REQUIRED);
+    xarVarFetch('itemtype', 'int', $itemtype,  10, XARVAR_NOT_REQUIRED);
     xarVarFetch('startnum', 'int', $data['startnum'],  NULL, XARVAR_NOT_REQUIRED);
     $data['itemsperpage'] = xarModGetVar('helpdesk','itemsperpage');
+    $data['itemtype'] = $itemtype;
     $modid = xarModGetIDFromName('helpdesk');
 
     if (empty($data['itemtype'])){
@@ -37,10 +38,6 @@ function helpdesk_admin_view()
             $data['objects'][] = $object;
         }
     }
-
-    /*
-      For now we get list data in the templates
-    */
     
     // Return the template variables defined in this function
     return $data;

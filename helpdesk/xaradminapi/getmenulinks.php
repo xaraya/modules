@@ -25,8 +25,7 @@ function helpdesk_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
                                                   'admin',
-                                                  'view',
-                                                  array('itemtype' => 1)),
+                                                  'view'),
                               'title' => xarML('View Items'),
                               'label' => xarML('View Items'));
     }

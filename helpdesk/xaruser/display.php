@@ -48,7 +48,6 @@ function helpdesk_user_display($args)
     // Security check
     // If you dont have EDIT access or
     // if you are NOT the ticket owner, display error
-
     $isticketowner = xarModAPIFunc('helpdesk', 
                                    'user', 
                                    'ticketowner', 
@@ -68,40 +67,17 @@ function helpdesk_user_display($args)
                           array('tid'=>$ticket_id)
                          );
 
-    $returnurl = xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id));
-
-    /* Get the path to the Cats. */
-    $cidlist =  xarModGetVar('helpdesk','mastercids.1');
-
-    $cats = array();
-    if(sizeOf($cidlist) > 0 && !empty($cidlist)){
-	$mastercids = explode(';',$cidlist);
-	foreach($data['categories'] as $category){
-	    $cats[] = xarModAPIFunc('helpdesk', 'user', 'cats', 
-				    array('cids' => $mastercids,
-					  'tcid' => $category['cid'])
-				   );
-	}    
-    }
-    $data['cats'] = $cats;  
     
-    // Get Comments for the Ticket    
-    $data['comments'] = xarModAPIFunc('helpdesk', 'user', 'getcomments', 
-                                      array('tid' => $ticket_id,
-                                            'returnurl' => $returnurl
-                                           )
-                                     );
     $item = array();
-    $item['module'] = 'helpdesk';
-    $item['itemtype'] = $itemtype;
-    $item['returnurl'] = $returnurl;
+    $item['module']    = 'helpdesk';
+    $item['itemtype']  = $itemtype;
+    $item['returnurl'] =  xarModURL('helpdesk', 'user', 'display', array('tid' => $ticket_id));
     $hooks = xarModCallHooks('item', 'display', $ticket_id, $item);
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     }else {
         $data['hookoutput'] = $hooks;
     }
-                                     
                                              
     $data['menu'] = xarModFunc('helpdesk', 'user', 'menu');    
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');    

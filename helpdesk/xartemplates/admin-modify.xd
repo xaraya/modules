@@ -32,11 +32,9 @@
         <xar:data-form object="$object" />
         <tr>
             <td colspan="2">
-            <xar:if condition="is_array($hooks)">
                 <xar:foreach in="$hooks" value="$hook">
                 #$hook#
                 </xar:foreach>
-            </xar:if>
             </td>
         </tr>
         <tr>

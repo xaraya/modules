@@ -58,19 +58,12 @@ function helpdesk_user_new()
     $data['status'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
                                      array('itemtype' => 3));
     
-    
-    $cidlist =  xarModGetVar('helpdesk','mastercids.1');
-    $data['cats'] = xarModAPIFunc('categories', 'visual', 'makeselect',
-                                 array('cid' => $cidlist,
-                                       'multiple' => false));                      
-    
     if($data['editaccess']){                                     
         $data['reps'] = xarModAPIFunc('helpdesk', 'user', 'gets', 
                                       array('itemtype' => 10));
         $data['users'] = xarModAPIFunc('roles', 'user', 'getall');
     }
                                       
-                                                 
     $data['enforceauthkey'] = xarModGetVar('helpdesk', 'EnforceAuthKey');
     $data['action']  = xarModURL('helpdesk', 'user', 'create');        
     $data['summary'] = xarModFunc('helpdesk', 'user', 'summaryfooter');

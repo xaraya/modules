@@ -81,9 +81,11 @@
         <td colspan="3"><input name="subject" size="45" maxlength="255">(required)</td>
     </tr>
     <tr>
+    <!---
         <td colspan="1"><xar:mlstring>Category:</xar:mlstring></td>
-        <td colspan="3">
-            #$cats#
+    --->
+        <td colspan="4">
+	    #$hooks['categories']#
         </td>
     </tr>
     <xar:foreach in="$hooks" value="$hook" key="$key">

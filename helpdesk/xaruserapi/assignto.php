@@ -22,9 +22,7 @@ function helpdesk_userapi_assignto($args)
                                 'itemtype' => 10,
                                 'cids'     => $cids)
                          );
-    /*
-        We are giving software ids higher precedence than type ids
-    */ 
+
     $rids = array();
     if(!empty($cats)){    
         foreach($cats as $cat){

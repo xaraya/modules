@@ -15,6 +15,10 @@ function helpdesk_admin_updateconfig()
         }
     }
 
+    if (!xarVarFetch('itemtype', 'int', $itemtype, 1, XARVAR_NOT_REQUIRED)) return;
+
+    if($itemtype == 1)
+    {
     xarVarFetch('enforceauthkey',       'isset', $enforceauthkey, '');
     xarVarFetch('rowsperpage',          'isset', $rowsperpage, '');
     xarVarFetch('pagecountlimit',       'isset', $pagecountlimit, '');
@@ -61,13 +65,19 @@ function helpdesk_admin_updateconfig()
     xarModSetVar('helpdesk', 'ShowStatusInSummary',         $showstatusinsummary);
     xarModSetVar('helpdesk', 'AllowDomainName',             $allowdomainname);
     xarModSetVar('helpdesk', 'EnableMyStatsHyperLink',      $enablemystatshyperlink);
-
-    if (!xarVarFetch('itemtype', 'int', $itemtype, 1, XARVAR_NOT_REQUIRED)) return;
+    }
             
     xarModCallHooks('module','updateconfig','helpdesk',
                     array('module'   => 'helpdesk',
                           'itemtype' => $itemtype)
-                   ); 
+		    ); 
+    
+    // this second hooks call should sync cats for the main mod with the ones for the reps
+    // which is what we really need
+    xarModCallHooks('module','updateconfig','helpdesk',
+                    array('module'   => 'helpdesk',
+                          'itemtype' => 10)
+		    ); 
     
     xarResponseRedirect(xarModURL('helpdesk', 'admin', 'modifyconfig'));
 

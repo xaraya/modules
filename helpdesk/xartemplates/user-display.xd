@@ -49,46 +49,23 @@
     <tr class="xar-accent">
         <td style="font-weight: bold;"><xar:mlstring>Categories:</xar:mlstring></td>
         <td colspan="3">
-        <xar:foreach in="$cats" value="$cat">
-            #$cat# <br />
-        </xar:foreach>
+	<xar:categories-navigation layout="" module="helpdesk" itemtype="1" itemid="$tid" />
         </td>
     </tr>
-    <!---
-    <xar:if condition="xarModGetVar('helpdesk', 'AllowSoftwareChoice')">
-    <tr>
-        <td style="font-weight: bold;"><xar:mlstring>Software:</xar:mlstring></td>
-        <td>#$software#</td>
-        <xar:if condition="xarModGetVar('helpdesk', 'AllowVersionChoice')">
-        <td style="font-weight: bold;"><xar:mlstring>Version:</xar:mlstring></td>
-        <td>#$swver#</td>
-        </xar:if>
-    </tr>    
-    </xar:if>
-    <tr class="xar-accent">
-        <td style="font-weight: bold;"><xar:mlstring>Type:</xar:mlstring></td>
-        <td>#$type#</td>    
-        <td style="font-weight: bold;"><xar:mlstring>Source:</xar:mlstring></td>
-        <td>#$source#</td>
-    </tr>
-    --->
     <tr class="">
         <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
         <td colspan="3">
             <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> | 
             <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
         </td>
-    </tr>   
-    <xar:if condition="is_array($hookoutput)">
+    </tr> 
+      
     <xar:foreach in="$hookoutput" value="$hook">
-        <tr><td colspan="4">#$hook#</td></tr>
+        <tr><td colspan="4"><br />#$hook#</td></tr>
     </xar:foreach>    
-    </xar:if>
 </table>
 
-<br />
-<br />
-
+<xar:comment>
 <xar:loop name="$comments">    
     <xar:set name="$margin">#$loop:item['depth'] * 10#</xar:set>
     <div class="xar-alt-outline" style="margin-left: #$margin#px; padding: 2px;">
@@ -102,7 +79,6 @@
     </div>
     <br/>
 </xar:loop>
-
 <form action="#xarModURL('helpdesk', 'user', 'createcomment')#" method="POST">
 <table style="margin: auto;">
     <tr>
@@ -122,6 +98,8 @@
     </tr>
 </table>
 </form>
+</xar:comment>
+
 </div>
 <br />
 #$summary#            

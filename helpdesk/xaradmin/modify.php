@@ -10,7 +10,7 @@
 */
 function helpdesk_admin_modify($args)
 {
-    if (!xarVarFetch('itemid',   'id', $itemid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemid',   'id', $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('itemtype', 'id', $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('objectid', 'id', $objectid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 

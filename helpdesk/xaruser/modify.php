@@ -67,10 +67,6 @@ function helpdesk_user_modify($args)
     $data['ticketdata']   = xarModAPIFunc('helpdesk','user','getticket',
                                           array('tid' => $tid));
     
-    // Get all of the comments associated with the ticket                                          
-    $data['comments'] = xarModAPIFunc('helpdesk', 'user', 'getcomments', 
-                                      array('tid' => $tid)
-                                     );        
     /*
     * These funcs should be rethought once we get the rest working
     */
@@ -93,26 +89,11 @@ function helpdesk_user_modify($args)
     $item['itemtype'] = $itemtype;
     $hooks = xarModCallHooks('item', 'modify', $tid, $item);
     if (empty($hooks)) {
-        $data['hookoutput'] = '';
+        $data['hookoutput'] = array();
     }else {
         $data['hookoutput'] = $hooks;
     }
     
-    
-    /*                                                   
-    * We aren't doing this now cause it's too complicated at this point
-    * lets get things working for a hosting co and then add this shit
-    */
-    /*
-    if(xarModGetVar('helpdesk', 'AllowSoftwareChoice')){
-        $data['swdropdown'] = xarModAPIFunc('helpdesk',
-                                            'user',
-                                            'buildswdrops',
-                                            array('formname'    => 'modify', 
-                                                  'softwareid'  => $data['ticketdata']['softwareid'],
-                                                  'swversionid' => $data['ticketdata']['swversionid']));     
-    }
-    */
     $data['tid'] = $tid;
     
     if(empty($hours))   { $data['hours'] = 0; }

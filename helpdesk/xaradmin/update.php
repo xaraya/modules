@@ -66,9 +66,9 @@ function helpdesk_admin_update($args)
         $item['module']   = 'helpdesk';
         $item['itemid']   = $itemid;
         $item['itemtype'] = $itemtype;
-        $hooks = xarModCallHooks('item','update',$itemid,$item);
+        $hooks = xarModCallHooks('item','modify',$itemid,$item);
         if (empty($hooks)) {
-            $data['hooks'] = '';
+            $data['hooks'] = array();
         }else {
             $data['hooks'] = $hooks;
         }
@@ -80,7 +80,18 @@ function helpdesk_admin_update($args)
     // update the item
     $itemid = $object->updateItem();
     if (empty($itemid)) return; // throw back
-
+				// Let's take care of the hooks
+    $item = array();
+    $item['module']   = 'helpdesk';
+    $item['itemid']   = $itemid;
+    $item['itemtype'] = $itemtype;
+    $hooks = xarModCallHooks('item','update',$itemid,$item);
+    if (empty($hooks)) {
+	$data['hooks'] = array();
+    }else {
+	$data['hooks'] = $hooks;
+    }
+    
     // let's go back to the admin view
     xarResponseRedirect(xarModURL('helpdesk', 'admin', 'view', array('itemtype' => $itemtype)));
 

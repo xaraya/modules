@@ -148,39 +148,6 @@
             </td>
         </tr>
     </table>     
-</div>
-<xar:loop name="$comments">    
-    <xar:set name="$margin">#$loop:item['depth'] * 10#</xar:set>
-    <div class="xar-alt-outline" style="margin-left: #$margin#px; padding: 2px;">
-        <div class="xar-accent" style=" padding: 5px;">
-            <b>Subject:</b> #$loop:item['xar_title']# <br />
-            <b>Author:</b> #$loop:item['xar_author']#<br />
-            <b>Date:</b> #$loop:item['xar_date']# <br />
-            <b>Host Name:</b> #$loop:item['xar_hostname']#
-        </div>
-        <div style="text-indent: 1em; padding: 5px;">#$loop:item['xar_text']#</div>
-    </div>
-    <br/>
-</xar:loop>
-
-<form action="#xarModURL('helpdesk', 'user', 'createcomment')#" method="POST">
-<table style="margin: auto;">
-    <tr>
-        <td><b>Subject:</b></td>
-        <td><input type="textbox" name="subject" size="50" value="Re: #$ticketdata['subject']#" /></td>
-    </tr>
-    <tr>
-        <td><b>Comment:</b></td>
-        <td><textarea name="comment" rows="8" cols="50"></textarea></td>
-    </tr>
-    <tr style="text-align: center;">
-        <td colspan="2">
-            <input type="hidden" name="tid" value="#$tid#" />
-            <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
-            <input type="submit" name="submit" value="Post" />
-        </td>
-    </tr>
-</table>
-</form>                
+</div>              
     #$summary#
 </div>

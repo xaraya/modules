@@ -124,11 +124,19 @@ function helpdesk_init()
                                     'description' => $subcat['description'],
                                     'parent_id' => $cid));
     }
-    // Enable categories hooks for articles
-    xarModAPIFunc('modules','admin','enablehooks',
-                array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));        
     
-         
+    // Enable categories hooks for helpdesk
+    xarModAPIFunc('modules','admin','enablehooks',
+		  array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));        
+    
+    // Enable comments hooks for helpdesk
+    xarModAPIFunc('modules','admin','enablehooks',
+		  array('callerModName' => 'helpdesk', 'hookModName' => 'comments'));        
+    
+    // Enable comments hooks for helpdesk
+    xarModAPIFunc('modules','admin','enablehooks',
+		  array('callerModName' => 'helpdesk', 'hookModName' => 'hitcount'));
+    
     /**
     * Ok, Now lets create all of our dd objects
     */
@@ -189,8 +197,8 @@ function helpdesk_init()
 function helpdesk_upgrade($oldversion)
 {
     // Get database information
-    $dbconn =& xarDBGetConn();
-    $xartable     =& xarDBGetTables();
+    $dbconn   =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
@@ -253,7 +261,7 @@ function helpdesk_upgrade($oldversion)
                                         array('name' => $subcat['name'],
                                             'description' => $subcat['description'],
                                             'parent_id' => $cid));
-            // Enable categories hooks for articles
+            // Enable categories hooks for helpdesk
             xarModAPIFunc('modules','admin','enablehooks',
                           array('callerModName' => 'helpdesk', 'hookModName' => 'categories'));
             }
@@ -301,11 +309,15 @@ function helpdesk_delete()
     }
 
     $objectid = xarModGetVar('helpdesk','representativeobjectid');
-    if (!empty($objectid)) {
+    //if (!empty($objectid)) {
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
+    //}
 
     xarModDelAllVars('helpdesk');
+    
+    // Remove all comments still in the system
+    xarModAPIFunc('comments', 'admin', 'remove_module', array('objectid' => 'helpdesk', 'extrainfo' => true));
+    
     xarRemoveMasks('helpdesk');
     xarRemoveInstances('helpdesk');    
             
