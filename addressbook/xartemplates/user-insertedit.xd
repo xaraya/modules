@@ -13,10 +13,7 @@
   </div>
 <!--- END WARN DISPLAY -------------------------------------------------------------  --->
 	<xar:if condition="!isset($insertStatus)">
-	<div class="xar-alt-outline" style="padding: 1px; text-align:center;">
-        <table width="100%">
-          <tr>
-            <td align="center">
+	<div class="xar-alt-outline" style="padding:.25; text-align:center;">
 <form action="#xarModURL(__ADDRESSBOOK__, 'user', 'insertedit')#" method="post" enctype="application/x-www-form-urlencoded" name="addcontact" id="addcontact">
 <!--- START MENUVALUES --->
 <input name="id" type="hidden" value="#$id#" id="id">
@@ -141,9 +138,7 @@
   <td>&nbsp;</td>
 </tr>
 </table>
-</form>     </td>
-          </tr>
-        </table>
+</form> 
 </div>
   <xar:else />
   <div class="xar-alt-outline" style="padding: 4em; text-align:center;">

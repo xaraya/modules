@@ -197,7 +197,7 @@ define('_AB_INSERT_RECORD',     " Save ");
 define('_AB_LASTCHANGED',       'Last changed ');
 define('_AB_NOIMAGE',           'No Image');
 define('_AB_NUM_COLS',          4);
-define('_AB_REGONLY',           "This website require it's users to be registered to use the address book.<br/> Register for free <a href=\"user.php\">here</a>, or <a href=\"user.php\">log in</a> if you are already registered.");
+define('_AB_REGONLY',           "This website require it's users to be registered to use the address book.<br /> Register for free <a href=\"user.php\">here</a>, or <a href=\"user.php\">log in</a> if you are already registered.");
 define('_AB_LABEL_NAME',        "NAME");
 define('_AB_TEMPLATE_ADDR',   1);
 define('_AB_TEMPLATE_CONTACT', 2);
@@ -301,7 +301,7 @@ define('_AB_DEVQA_NAME',	__ADDRESSBOOK__."QualityControl");
 define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
 // I use this to track individual builds in the event I push files that
 // do not require the user to upgrade
-define('_AB_BUILD_VER',	  '1.2.1.3'); 
+define('_AB_BUILD_VER',	  '1.2.1.4'); 
 
 ////////////////
 //

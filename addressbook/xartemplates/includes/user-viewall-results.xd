@@ -4,23 +4,29 @@
 <!--- Purpose of file:  Template to display address book result list --->
 <!--- -------------------------------------------------------------- --->
 
-<table class="xar-alt-outline" cellpadding="2" cellspacing="0">
+<table class="xar-alt-outline" cellpadding="2" cellspacing="1">
 <!--- END Header row --->
   <tr>
     <xar:foreach in="$headers" value="$header">
-    <th>#$header['header']#</th>
+    <th>
+	  <label class="xar-mod-title">#$header['header']#</label>
+	</th>
     </xar:foreach>
-    <th><xar:mlstring>CONTACT</xar:mlstring></th>
-    <th><xar:mlstring>ACTION</xar:mlstring></th>
+    <th>
+	  <label class="xar-mod-title"><xar:mlstring>CONTACT</xar:mlstring></label>
+	</th>
+    <th>
+	  <label class="xar-mod-title"><xar:mlstring>ACTION</xar:mlstring></label>
+	</th>
   </tr>
 <!--- END Header row --->
 <!--- Results --->
   <xar:set name="$i">1</xar:set>
   <xar:foreach in="$displayRows" value="$row">
-	<xar:if condition="($i % 2) eq 0">
-	  <xar:set name="$rowClass">"td.xar-norm"</xar:set>
+	<xar:if condition="($i % 2) eq 1">
+	  <xar:set name="$rowClass">"xar-norm"</xar:set>
 	<xar:else />
-	  <xar:set name="$rowClass">"td.xar-accent"</xar:set>
+	  <xar:set name="$rowClass">"xar-accent"</xar:set>
 	</xar:if>
   <tr>
     <xar:foreach in="$row['displayRow']" value="$rowData">

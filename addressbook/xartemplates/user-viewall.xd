@@ -7,198 +7,162 @@
 <div class="xar-mod-body" style="display:block;">
 <div class="xar-alt-outline">
   <div style="margin:1em; text-align:center;">
-        <xar:if condition="!$userIsLoggedIn and $globalprotect">
-        <div style="text-align:center;">
-            <br />
-            <p><xar:mlstring>You must be a registered user before you can view the</xar:mlstring> #xarModGetVar(__ADDRESSBOOK__,'abtitle')#.</p>
-            <p><a href="#xarModURL('roles', 'user', 'register')#"><xar:mlstring>Register</xar:mlstring></a> <xar:mlstring>for free, or</xar:mlstring> <a href="#xarModURL('roles', 'user', 'showloginform')#">log in</a> <xar:mlstring>if you are already registered.</xar:mlstring></p>
-        </div>
-        <xar:elseif condition="!$userCanViewModule" />
-        <div style="text-align:center;">
-            <p><xar:mlstring>We're sorry. You do not have authorization to access the</xar:mlstring> #xarModGetVar(__ADDRESSBOOK__,'abtitle')#.</p>
-            <p>Please contact the <a href="mailto:#xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail')#">Site Admin</a> for further assistance</p>
-        </div>
-        <xar:elseif condition="!$userCanViewEntries" />
-        <div style="text-align:center;">
-            <p><xar:mlstring>We're sorry. You do not have authorization to view</xar:mlstring> #xarModGetVar(__ADDRESSBOOK__,'abtitle')# <xar:mlstring>entries</xar:mlstring></p>
-            <p>Please contact the <a href="mailto:#xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail')#">Site Admin</a> for further assistance</p>
-        </div>
-        <xar:else />
-    <table width="100%" border="0" cellspacing="1" cellpadding="5">
-      <tr>
-        <td align="center">
-				  <table border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td align="center" valign="top">
-                <xar:if condition="!$show_menu_off">
-							<div class="xar-alt-outline">
-              <table border="0" cellspacing="1" cellpadding="0">
-                <tr>
-                  <td>
-                    <table align="center" cellspacing="0" cellpadding="5">
-                      <tr align="center" valign="middle">
-                        <td class="xar-alt-outline" align="center" valign="middle">
-                            <form name="catform" id="catform" action="#xarModURL(__ADDRESSBOOK__,'user','viewall')#" method="post" enctype="application/x-www-form-urlencoded">
-                              <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                              <input type="hidden" name="sortview" id="sortview" value="#$sortview#" />
-                              <input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
-                              <input type="hidden" name="all" id="all" value="#$all#" />
-                            <!--<input type="hidden" name="total" id="total" value="#$total#" />-->
-                              <input type="hidden" name="page" id="page" value="#$page#" />
-                              <input type="hidden" name="char" id="char" value="#$char#" />
-                              <table border="0" cellpadding="0" cellspacing="0">
-																<tr align="center" valign="middle">
-																			<td align="right" valign="middle"><xar:mlstring>Category</xar:mlstring>: </td>
-																			<td align="left" valign="middle">
-																				<select name="catview" id="catview" size="1" onchange="javascript:this.form.submit();">
-																						<option value="0">All Categories</option>
-																				<xar:foreach in="$cats" value="$cat">
-																					<xar:if condition="$cat['id'] ne $catview">
-																						<option value="#$cat['id']#">#$cat['name']#</option>
-																					<xar:else />
-																						<option selected value="#$cat['id']#">#$cat['name']#</option>
-																					</xar:if>
-																				</xar:foreach>
-																				</select>
-																			</td>
-																		</tr>
-                                  </table>
-                                </form>
-                              </td>
-                              <td class="xar-alt-outline" align="center" valign="middle">
-                                <form name="sortform" id="sortform" action="#xarModURL(__ADDRESSBOOK__,'user','viewall')#" method="post" enctype="application/x-www-form-urlencoded">
-                                  <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                                  <input type="hidden" name="catview" id="catview" value="#$catview#" />
-                                  <input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
-                                  <input type="hidden" name="all" id="all" value="#$all#" />
-                                  <!--<input type="hidden" name="total" id="total" value="#$total#" />-->
-                                  <input type="hidden" name="page" id="page" value="#$page#" />
-                                  <input type="hidden" name="char" id="char" value="#$char#" />
-                                  <table border="0" cellpadding="0" cellspacing="0">
-																		<tr align="center" valign="middle">
-																			<td align="right" valign="middle"><xar:mlstring>Sort&nbsp;by</xar:mlstring>: </td>
-																			<td align="left" valign="middle">
-																				<select name="sortview" id="sortview" size="1" onchange="this.form.submit();">
-																				<xar:foreach in="$sortby" value="$sb">
-																					<xar:if condition="$sb['id'] ne $sortview">
-																						<option value="#$sb['id']#">#$sb['name']#</option>
-																					<xar:else />
-																						<option selected value="#$sb['id']#">#$sb['name']#</option>
-																					</xar:if>
-																				</xar:foreach>
-																				</select>
-																			</td>
-																		</tr>
-                                  </table>
-                                </form>
-                              </td>
-                              <td class="xar-alt-outline" align="center" valign="middle">
-                              <form name="searchform" id="searchform" action="#xarModURL(__ADDRESSBOOK__, 'user', 'viewall')#" method="post" enctype="application/x-www-form-urlencoded">
-                                  <input type="hidden" name="authid" id="authid" value="#$authid#" />
-                                  <input type="hidden" name="catview" id="catview" value="#$catview#" />
-                                  <input type="hidden" name="sortview" id="sortview" value="#$sortview#" />
-                                  <input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
-                                  <input type="hidden" name="all" id="all" value="#$all#" />
-                                  <table border="0" cellpadding="0" cellspacing="0">
-																		<tr align="center" valign="middle">
-																			<td align="right" valign="middle">
-																				<xar:mlstring>Search</xar:mlstring>: 
-																			</td>
-																			<td align="left" valign="middle">
-																				<input type="text" name="formSearch" id="formSearch" value="" size="12" maxlength="60" tabindex="1" />
-																			</td>
-																		</tr>
-                                  </table>
-                                </form>
-                              </td>
-                            </tr>
-                            <xar:if condition="(xarModGetVar(__ADDRESSBOOK__, 'menu_semi') ne 1) or (xarSecurityCheck('EditAddressBook',0))">
-                            <tr align="center" valign="middle">
-                              <td class="xar-alt-outline" align="center" valign="middle">
-                              <table border="0" cellpadding="0" cellspacing="0">
-																<tr align="center" valign="middle">
-																	<td align="center" valign="middle">
-																		<xar:if condition="xarUserIsLoggedIn()">
-																			<a href="#xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$menuprivateParams)#">
-																				#$viewPrivateTEXT# [#$privateIndicator#]</a>
-																		</xar:if>
-																	</td>
-																</tr>
-															</table>
-                              </td>
-                              <td class="xar-alt-outline" align="center" valign="middle">
-															<table border="0" cellpadding="0" cellspacing="0">
-																<tr align="center" valign="middle">
-																	<td colspan="1" rowspan="1" align="center" valign="middle"><a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$azParams)#">[#$azInidcator#] #$azMenuTEXT#</a> | <a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$allParams)#"> #$allMenuTEXT# [#$allInidcator#]</a></td>
-																</tr>
-															</table>
-                              </td>
-                              <td class="xar-alt-outline" align="center" valign="middle">
-																<table border="0">
-																	<tr align="center" valign="middle">
-																		<td align="center" valign="middle">
-																		<xar:if condition="$addNewAddress">
-																			 <a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>
-																		</xar:if>
-																		</td>
-																	</tr>
-																</table>
-                              </td>
-                            </tr>
-                            </xar:if>
-                          </table>
-                    </td>
-                  </tr>
-                </table>
-							</div>
-              <br />
-              </xar:if>
-              <table border="0" cellspacing="1" cellpadding="0">
-                <tr>
-                  <td>
-              <xar:if condition="!$all">
-                 <div style="text-align:center;">
-                 <xar:foreach in="$azLinks" value="$link">
-                   #$link['azLink']#
-                 </xar:foreach>
-                  </div>
-                   </xar:if>
-                                    <br />
-                    <xar:if condition="!$total">
-                      <div class="xar-alt-outline" style="padding: 1em; text-align:center">
-                         <br />
-                         <strong><xar:template compile="false" file="mod-info-msg" type="module" /></strong>
-                         <br />
-                      </div>
-                    <xar:else />
-                      <div align="center">
-                         <xar:template file="user-viewall-results" compile="false" type="module" />
-                      </div>
-                      <br />
-                      <div style="text-align:center;">
-                      <xar:foreach in="$pageNav" value="$pn">
-                         <xar:if condition="$pn['pageNum'] ne 1">
-                            &nbsp;|&nbsp;
-                         </xar:if>
-                         <xar:if condition="$pn['pageNum'] eq $pn['absolutePage']">
-                           <b><u>#$pn['pageNum']#</u></b>
-                         <xar:else />
-                           <a href="#$pn['pageURL']#">#$pn['pageNum']#</a>
-                         </xar:if>
-                       </xar:foreach>
-                       </div>
-                    </xar:if>
-                    <br />
-                    </td>
-                  </tr>
-                </table>
-            </td>
-          </tr>
-        </table></td>
-      </tr>
-    </table>
+  <xar:if condition="!$userIsLoggedIn and $globalprotect">
+    <div style="text-align:center;">
+      <br />
+      <p><xar:mlstring>You must be a registered user before you can view the</xar:mlstring> #xarModGetVar(__ADDRESSBOOK__,'abtitle')#.</p>
+      <p><a href="#xarModURL('roles', 'user', 'register')#"><xar:mlstring>Register</xar:mlstring></a> <xar:mlstring>for free, or</xar:mlstring> <a href="#xarModURL('roles', 'user', 'showloginform')#">log in</a> <xar:mlstring>if you are already registered.</xar:mlstring></p>
+    </div>
+    <xar:elseif condition="!$userCanViewModule" />
+    <div style="text-align:center;">
+      <p><xar:mlstring>We're sorry. You do not have authorization to access the</xar:mlstring> #xarModGetVar(__ADDRESSBOOK__,'abtitle')#.</p>
+      <p>Please contact the <a href="mailto:#xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail')#">Site Admin</a> for further assistance</p>
+    </div>
+    <xar:elseif condition="!$userCanViewEntries" />
+    <div style="text-align:center;">
+      <p><xar:mlstring>We're sorry. You do not have authorization to view</xar:mlstring> #xarModGetVar(__ADDRESSBOOK__,'abtitle')# <xar:mlstring>entries</xar:mlstring></p>
+      <p>Please contact the <a href="mailto:#xarModGetVar(__ADDRESSBOOK__,'rptErrAdminEmail')#">Site Admin</a> for further assistance</p>
+    </div>
+    <xar:else />
+	<!--- START: display the menu & data --->
+    <div>
+    <xar:if condition="!$show_menu_off">
+      <div>
+	  <table cellspacing="0" cellpadding="5">
+		<tr>
+		  <td>
+		  <div id="formContainer" class="xar-alt-outline">
+          <form name="catform" id="catform" action="#xarModURL(__ADDRESSBOOK__,'user','viewall')#" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="authid" id="authid" value="#$authid#" />
+			<input type="hidden" name="sortview" id="sortview" value="#$sortview#" />
+			<input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
+			<input type="hidden" name="all" id="all" value="#$all#" />
+			<!--<input type="hidden" name="total" id="total" value="#$total#" />-->
+			<input type="hidden" name="page" id="page" value="#$page#" />
+			<input type="hidden" name="char" id="char" value="#$char#" />
+			<div>
+			  <label for="catview"><xar:mlstring>Category</xar:mlstring>:</label>
+			  <select name="catview" id="catview" size="1" onchange="javascript:this.form.submit();">
+				<option value="0">All Categories</option>
+				<xar:foreach in="$cats" value="$cat">
+				  <xar:if condition="$cat['id'] ne $catview">
+				<option value="#$cat['id']#">#$cat['name']#</option>
+				  <xar:else />
+				<option selected value="#$cat['id']#">#$cat['name']#</option>
+				  </xar:if>
+				</xar:foreach>
+			  </select>
+			</div>
+		  </form>
+          </div>
+		  </td>
+		  <td>
+		  <div id="formContainer" class="xar-alt-outline">
+		  <form name="sortform" id="sortform" action="#xarModURL(__ADDRESSBOOK__,'user','viewall')#" method="post" enctype="application/x-www-form-urlencoded">
+			<input type="hidden" name="authid" id="authid" value="#$authid#" />
+			<input type="hidden" name="catview" id="catview" value="#$catview#" />
+			<input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
+			<input type="hidden" name="all" id="all" value="#$all#" />
+			<!--<input type="hidden" name="total" id="total" value="#$total#" />-->
+			<input type="hidden" name="page" id="page" value="#$page#" />
+			<input type="hidden" name="char" id="char" value="#$char#" />
+			<div>
+			  <label for="sortview"><xar:mlstring>Sort&nbsp;by</xar:mlstring>:</label>
+			  <select name="sortview" id="sortview" size="1" onchange="this.form.submit();">
+				<xar:foreach in="$sortby" value="$sb">
+				  <xar:if condition="$sb['id'] ne $sortview">
+				<option value="#$sb['id']#">#$sb['name']#</option>
+				  <xar:else />
+				<option selected value="#$sb['id']#">#$sb['name']#</option>
+				  </xar:if>
+				</xar:foreach>
+			  </select>
+			</div>
+		  </form>
+		  </div>
+		  </td>
+		  <td>
+		  <div id="formContainer" class="xar-alt-outline">
+		  <form name="searchform" id="searchform" action="#xarModURL(__ADDRESSBOOK__, 'user', 'viewall')#" method="post" enctype="application/x-www-form-urlencoded">
+			<input type="hidden" name="authid" id="authid" value="#$authid#" />
+			<input type="hidden" name="catview" id="catview" value="#$catview#" />
+			<input type="hidden" name="sortview" id="sortview" value="#$sortview#" />
+			<input type="hidden" name="menuprivate" id="menuprivate" value="#$menuprivate#" />
+			<input type="hidden" name="all" id="all" value="#$all#" />
+			<div>
+			  <label for="formSearch"><xar:mlstring>Search</xar:mlstring>:</label>
+			  <input type="text" name="formSearch" id="formSearch" value="" size="12" maxlength="60" tabindex="1" />
+			</div>
+		  </form>
+		  </div>
+		  </td>
+	    </tr>
+	    <xar:if condition="(xarModGetVar(__ADDRESSBOOK__, 'menu_semi') ne 1) or (xarSecurityCheck('EditAddressBook',0))">
+	    <tr align="center" valign="middle">
+		  <td align="center" valign="middle">
+		  <xar:if condition="xarUserIsLoggedIn()">
+		  <div class="xar-alt-outline" style="padding:.5em;">
+		    <a href="#xarModURL(__ADDRESSBOOK__, 'user', 'viewall',$menuprivateParams)#">
+			  #$viewPrivateTEXT# [#$privateIndicator#]</a>
+		  </div>
+		  </xar:if>
+		  </td>
+          <td align="center" valign="middle">
+          <div class="xar-alt-outline" style="padding:.5em;">
+			<a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$azParams)#">[#$azInidcator#] #$azMenuTEXT#</a> | <a href="#xarModURL(__ADDRESSBOOK__,'user','viewall',$allParams)#"> #$allMenuTEXT# [#$allInidcator#]</a>
+		  </div>
+		  </td>
+		  <td align="center" valign="middle">
+		  <xar:if condition="$addNewAddress">
+		  <div class="xar-alt-outline" style="padding:.5em;">
+			<a href="#xarModURL(__ADDRESSBOOK__,'user','insertedit',$menuValues)#">[#$newAddrLinkTEXT#...]</a>
+		  </div>
+		  </xar:if>
+		  </td>
+        </tr>
         </xar:if>
+      </table>
+      </div>
+      <br />
+    </xar:if>
+	  <div>
+	<xar:if condition="!$all">
+	    <div style="text-align:center;">
+		<xar:foreach in="$azLinks" value="$link">
+			#$link['azLink']#
+		</xar:foreach>
+		</div>
+		</xar:if>
+		<br />
+		<xar:if condition="!$total">
+		<div class="xar-alt-outline" style="padding: 1em; text-align:center">
+		  <br />
+		  <strong><xar:template compile="false" file="mod-info-msg" type="module" /></strong>
+		  <br />
+		</div>
+		<xar:else />
+		<div align="center">
+		  <xar:template file="user-viewall-results" compile="false" type="module" />
+		</div>
+		<br />
+		<div style="text-align:center;">
+		  <xar:foreach in="$pageNav" value="$pn">
+			<xar:if condition="$pn['pageNum'] ne 1">
+			&nbsp;|&nbsp;
+			</xar:if>
+			<xar:if condition="$pn['pageNum'] eq $pn['absolutePage']">
+			<b><u>#$pn['pageNum']#</u></b>
+			<xar:else />
+			<a href="#$pn['pageURL']#">#$pn['pageNum']#</a>
+			</xar:if>
+		  </xar:foreach>
+		  </div>
+		</xar:if>
+		  <br />
+		  </div>
+        </div>		
+      </xar:if> 
+    </div>
   </div>
-</div>
 </div>
 <xar:template compile="false" file="mod-footer" type="module" />

@@ -69,10 +69,11 @@
 		  You can also disable it for guests only. Note, Administrators always see the full menu, regardless of this setting.
 		  </xar:mlstring></blockquote>
 		  <xar:mlstring>2.10 Disable the second line of the main menu</xar:mlstring>
-		  <blockquote><xar:mlstring>This disables the second menu line only Users still have access to the categories, sort order and the search field, but 
-		  not access to Private records, A-Z / Complete list view switch and the 
-		  Add New Record link.</xar:mlstring></blockquote>
-  		<xar:mlstring>2.11 Show zip before city</xar:mlstring>
+		  <blockquote><xar:mlstring>This hides the second menu line for all users who
+		      DO NOT have edit access. Users still have access to the categories,
+		      sort order and the search field, but not access to Private records,
+		      A-Z / Complete list view switch, and the Add New Record link.</xar:mlstring></blockquote>
+  		  <xar:mlstring>2.11 Show zip before city</xar:mlstring>
   		<blockquote><xar:mlstring>In Europe the postal code (zip in USA) is shown before the city. 
   		This option is off by default.</xar:mlstring></blockquote>
   		<xar:mlstring>2.12 Records viewed per page</xar:mlstring>
