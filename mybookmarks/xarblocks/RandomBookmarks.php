@@ -67,7 +67,7 @@ function mybookmarks_randombookmarksblock_display($blockinfo)
     if(!xarSecurityCheck('Viewmybookmarks', 0)) return;
 
     // Get variables from content block
-    $vars = @unserialize($data['content']);
+//    $vars = @unserialize($data['content']);
     $data = array();
 
     // Database information
