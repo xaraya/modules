@@ -17,7 +17,7 @@ function events_user_main()
     // able to see anything and so we refuse access altogether.  The lowest
     // level of access for users depends on the particular module, but it is
     // generally either 'overview' or 'read'
-	if(!xarSecurityCheck('OverviewEvents')) return;
+    if(!xarSecurityCheck('OverviewEvents')) return;
 
     // If you want to go directly to some default function, instead of
     // having a separate main function, you can simply call it here, and

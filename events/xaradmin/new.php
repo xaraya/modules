@@ -24,7 +24,7 @@ function events_admin_new($args)
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-	if(!xarSecurityCheck('AddEvents')) return;
+    if(!xarSecurityCheck('AddEvents')) return;
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
@@ -32,18 +32,18 @@ function events_admin_new($args)
     // Specify some labels for display
     $data['eventnamelabel'] = xarVarPrepForDisplay(xarML('Event Name:'));
     $data['companynamelabel'] = xarVarPrepForDisplay(xarML('Company Name:'));
-	$data['speakernamelabel'] = xarVarPrepForDisplay(xarML('Speaker Name:'));
-	$data['eventstartdatelabel'] = xarVarPrepForDisplay(xarML('Event Start Date:'));
+    $data['speakernamelabel'] = xarVarPrepForDisplay(xarML('Speaker Name:'));
+    $data['eventstartdatelabel'] = xarVarPrepForDisplay(xarML('Event Start Date:'));
     $data['eventstartdatedays'] = array();
     $data['eventstartdatedays'][''] = xarML('Choose Day');
 
-	for($i=1; $i < 32; $i++){
+    for($i=1; $i < 32; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventstartdatedays'][$i] = xarML($i);
-	}
-	$data['eventstartdatemonths'] = array();
+    }
+    $data['eventstartdatemonths'] = array();
     $data['eventstartdatemonths']['']     = xarML('Choose Month');
     $data['eventstartdatemonths']['01']   = xarML('January');
     $data['eventstartdatemonths']['02']   = xarML('February');
@@ -59,17 +59,17 @@ function events_admin_new($args)
     $data['eventstartdatemonths']['12']   = xarML('December');
 
 
-	$data['eventenddatelabel'] = xarVarPrepForDisplay(xarML('Event End Date:'));
+    $data['eventenddatelabel'] = xarVarPrepForDisplay(xarML('Event End Date:'));
     $data['eventenddatedays'] = array();
     $data['eventenddatedays'][''] = xarML('Choose Day');
 
-	for($i=1; $i < 32; $i++){
+    for($i=1; $i < 32; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventenddatedays'][$i] = xarML($i);
-	}
-	$data['eventenddatemonths'] = array();
+    }
+    $data['eventenddatemonths'] = array();
     $data['eventenddatemonths']['']     = xarML('Choose Month');
     $data['eventenddatemonths']['01']   = xarML('January');
     $data['eventenddatemonths']['02']   = xarML('February');
@@ -85,79 +85,79 @@ function events_admin_new($args)
     $data['eventenddatemonths']['12']   = xarML('December');
 
 
-	$data['eventstarttimelabel'] = xarVarPrepForDisplay(xarML('Event Start Time:'));
+    $data['eventstarttimelabel'] = xarVarPrepForDisplay(xarML('Event Start Time:'));
     $data['eventstarttimehour'] = array();
     $data['eventstarttimehour'][''] = xarML('Hour');
 
-	for($i=0; $i < 24; $i++){
+    for($i=0; $i < 24; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventstarttimehour'][$i] = xarML($i);
-	}
+    }
 
     $data['eventstarttimeminute'] = array();
     $data['eventstarttimeminute'][''] = xarML('Minute');
 
-	for($i=0; $i < 24; $i++){
+    for($i=0; $i < 24; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventstarttimeminute'][$i] = xarML($i);
-	}
+    }
 
-	$data['eventendtimelabel'] = xarVarPrepForDisplay(xarML('Event End Time:'));
+    $data['eventendtimelabel'] = xarVarPrepForDisplay(xarML('Event End Time:'));
     $data['eventendtimehour'] = array();
     $data['eventendtimehour'][''] = xarML('Hour');
 
-	for($i=0; $i < 24; $i++){
+    for($i=0; $i < 24; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventendtimehour'][$i] = xarML($i);
-	}
+    }
 
     $data['eventendtimeminute'] = array();
     $data['eventendtimeminute'][''] = xarML('Minute');
 
-	for($i=0; $i < 24; $i++){
+    for($i=0; $i < 24; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventendtimeminute'][$i] = xarML($i);
-	}
+    }
 
-	$data['eventregistrationtimelabel'] = xarVarPrepForDisplay(xarML('Event Registration Time:'));
+    $data['eventregistrationtimelabel'] = xarVarPrepForDisplay(xarML('Event Registration Time:'));
     $data['eventregistrationtimehour'] = array();
     $data['eventregistrationtimehour'][''] = xarML('Hour');
 
-	for($i=0; $i < 24; $i++){
+    for($i=0; $i < 24; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventregistrationtimehour'][$i] = xarML($i);
-	}
+    }
 
     $data['eventregistrationtimeminute'] = array();
     $data['eventregistrationtimeminute'][''] = xarML('Minute');
 
-	for($i=0; $i < 24; $i++){
+    for($i=0; $i < 24; $i++){
     if($i < 10){
-	$i = "0$i";
+    $i = "0$i";
     }
     $data['eventregistrationtimeminute'][$i] = xarML($i);
-	}
-	$data['eventaddresslabel'] = xarVarPrepForDisplay(xarML('Event Address:'));
-	$data['eventsummarylabel'] = xarVarPrepForDisplay(xarML('Event Summary:'));
-	$data['eventheadertextlabel'] = xarVarPrepForDisplay(xarML('Event Header Text:'));
-	$data['eventbodytextlabel'] = xarVarPrepForDisplay(xarML('Event Body Text:'));
-	$data['eventprintticketslabel'] = xarVarPrepForDisplay(xarML('Event Print Tickets:'));
-	$data['eventticketsavailablelabel'] = xarVarPrepForDisplay(xarML('# Of Tickets Available:'));
-	$data['eventcostlabel'] = xarVarPrepForDisplay(xarML('Event Cost:'));
+    }
+    $data['eventaddresslabel'] = xarVarPrepForDisplay(xarML('Event Address:'));
+    $data['eventsummarylabel'] = xarVarPrepForDisplay(xarML('Event Summary:'));
+    $data['eventheadertextlabel'] = xarVarPrepForDisplay(xarML('Event Header Text:'));
+    $data['eventbodytextlabel'] = xarVarPrepForDisplay(xarML('Event Body Text:'));
+    $data['eventprintticketslabel'] = xarVarPrepForDisplay(xarML('Event Print Tickets:'));
+    $data['eventticketsavailablelabel'] = xarVarPrepForDisplay(xarML('# Of Tickets Available:'));
+    $data['eventcostlabel'] = xarVarPrepForDisplay(xarML('Event Cost:'));
     $data['eventcostvalue'] = xarModGetVar('events', 'currency');
-	$data['eventtelephonelabel'] = xarVarPrepForDisplay(xarML('Event Telephone:'));
-	$data['eventheaderimagelabel'] = xarVarPrepForDisplay(xarML('Event Header Image:'));
-	$data['eventbodyimagelabel'] = xarVarPrepForDisplay(xarML('Event Body Image:'));
+    $data['eventtelephonelabel'] = xarVarPrepForDisplay(xarML('Event Telephone:'));
+    $data['eventheaderimagelabel'] = xarVarPrepForDisplay(xarML('Event Header Image:'));
+    $data['eventbodyimagelabel'] = xarVarPrepForDisplay(xarML('Event Body Image:'));
 
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add Event'));
 

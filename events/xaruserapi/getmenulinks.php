@@ -11,7 +11,7 @@ function events_userapi_getmenulinks()
 {
     // First we need to do a security check to ensure that we only return menu items
     // that we are suppose to see.
-	if (xarSecurityCheck('Overviewevents',0)) {
+    if (xarSecurityCheck('Overviewevents',0)) {
     // The main menu will look for this array and return it for a tree view of the module
     // We are just looking for three items in the array, the url, which we need to use the
     // xarModURL function, the title of the link, which will display a tool tip for the

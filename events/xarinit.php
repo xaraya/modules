@@ -24,7 +24,7 @@
 function events_init()
 {
 
-	    if(!xarModIsAvailable('categories')) {
+        if(!xarModIsAvailable('categories')) {
         $msg=xarML('The categories module should be activated first');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
@@ -145,7 +145,7 @@ function events_init()
     // there doesn't need to be a check to see if the variable is set in
     // the rest of the code as it always will be
     XarModSetVar('events', 'eventsperpage', 10);
-	XarModSetVar('events', 'currency', '€');
+    XarModSetVar('events', 'currency', '€');
     XarModSetVar('events', 'ticketsperuser', 5);
     XarModSetVar('events', 'imageuploadpath', 'modules/events/eventimages');
     XarModSetVar('events', 'headerimagesize', 512000);
@@ -154,28 +154,28 @@ function events_init()
     XarModSetVar('events', 'headerimageheight', 200);
     XarModSetVar('events', 'bodyimagewidth', 640);
     XarModSetVar('events', 'bodyimageheight', 200);
-	XarModSetVar('events', 'notificationemail', xarModGetVar('mail', 'adminmail'));
-	XarModSetVar('events', 'sendadminemail', 1);    
-	XarModSetVar('events', 'senduseremail', 1);
-	xarModSetVar('events', 'SupportShortURLs', 0);
-	XarModSetVar('events', 'opeventname', 1);
-	XarModSetVar('events', 'opcompanyname', 1);
+    XarModSetVar('events', 'notificationemail', xarModGetVar('mail', 'adminmail'));
+    XarModSetVar('events', 'sendadminemail', 1);    
+    XarModSetVar('events', 'senduseremail', 1);
+    xarModSetVar('events', 'SupportShortURLs', 0);
+    XarModSetVar('events', 'opeventname', 1);
+    XarModSetVar('events', 'opcompanyname', 1);
     XarModSetVar('events', 'opspeakername', 1);  
-	XarModSetVar('events', 'opeventstartdate', 1);
-	XarModSetVar('events', 'opeventenddate', 1);    
-	XarModSetVar('events', 'opeventstarttime', 1);    
-	XarModSetVar('events', 'opeventendtime', 1);
+    XarModSetVar('events', 'opeventstartdate', 1);
+    XarModSetVar('events', 'opeventenddate', 1);    
+    XarModSetVar('events', 'opeventstarttime', 1);    
+    XarModSetVar('events', 'opeventendtime', 1);
     XarModSetVar('events', 'opeventregistrationtime', 1);
-	XarModSetVar('events', 'opeventaddress', 1);
-	XarModSetVar('events', 'opeventsummary', 1);   
-	XarModSetVar('events', 'opeventheadertext', 1);   
-	XarModSetVar('events', 'opeventbodytext', 1);   
-	XarModSetVar('events', 'opeventprinttickets', 1);   
+    XarModSetVar('events', 'opeventaddress', 1);
+    XarModSetVar('events', 'opeventsummary', 1);   
+    XarModSetVar('events', 'opeventheadertext', 1);   
+    XarModSetVar('events', 'opeventbodytext', 1);   
+    XarModSetVar('events', 'opeventprinttickets', 1);   
     XarModSetVar('events', 'opeventticketsavailable', 1);  
-	XarModSetVar('events', 'opeventcost', 1);  
-	XarModSetVar('events', 'opeventtelephone', 1);  
-	XarModSetVar('events', 'opeventheaderimage', 0); 
-	XarModSetVar('events', 'opeventbodyimage', 0);    
+    XarModSetVar('events', 'opeventcost', 1);  
+    XarModSetVar('events', 'opeventtelephone', 1);  
+    XarModSetVar('events', 'opeventheaderimage', 0); 
+    XarModSetVar('events', 'opeventbodyimage', 0);    
 
     // Register Block types (this *should* happen at activation/deactivation)
     if (!xarModAPIFunc('blocks',
@@ -203,36 +203,36 @@ function events_init()
     * setInstance(Module,Type,ModuleTable,IDField,NameField,ApplicationVar,LevelTable,ChildIDField,ParentIDField)
     *********************************************************************/
 
-	// Instance definitions serve two purposes:
-	// 1. The define "filters" that are added to masks at runtime, allowing us to set
-	//    security checks over single objects or groups of objects
-	// 2. They generate dropdowns the UI uses to present the user with choices when
-	//    definng or modifying privileges.
+    // Instance definitions serve two purposes:
+    // 1. The define "filters" that are added to masks at runtime, allowing us to set
+    //    security checks over single objects or groups of objects
+    // 2. They generate dropdowns the UI uses to present the user with choices when
+    //    definng or modifying privileges.
 
-	// For each component we need to tell the system how to generate
-	// a list (dropdown) of all the component's instances.
-	// In addition, we add a header which will be displayed for greater clarity, and a number
-	// (limit) which defines the maximum number of rows a dropdown can have. If the number of
-	// instances is greater than the limit (e.g. registered users), the UI instead presents an
-	// input field for manual input, which is then checked for validity.
+    // For each component we need to tell the system how to generate
+    // a list (dropdown) of all the component's instances.
+    // In addition, we add a header which will be displayed for greater clarity, and a number
+    // (limit) which defines the maximum number of rows a dropdown can have. If the number of
+    // instances is greater than the limit (e.g. registered users), the UI instead presents an
+    // input field for manual input, which is then checked for validity.
 
-	$query1 = "SELECT DISTINCT xar_name FROM ".$eventstable;
-	$query2 = "SELECT DISTINCT xar_number FROM ".$eventstable;
-	$query3 = "SELECT DISTINCT xar_exid FROM ".$eventstable;
-	$instances = array(
-						array('header' => 'Events Name:',
-								'query' => $query1,
-								'limit' => 20
-							),
-						array('header' => 'Events Number:',
-								'query' => $query2,
-								'limit' => 20
-							),
-						array('header' => 'Events ID:',
-								'query' => $query3,
-								'limit' => 20
-							)
-					);
+    $query1 = "SELECT DISTINCT xar_name FROM ".$eventstable;
+    $query2 = "SELECT DISTINCT xar_number FROM ".$eventstable;
+    $query3 = "SELECT DISTINCT xar_exid FROM ".$eventstable;
+    $instances = array(
+                        array('header' => 'Events Name:',
+                                'query' => $query1,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Events Number:',
+                                'query' => $query2,
+                                'limit' => 20
+                            ),
+                        array('header' => 'Events ID:',
+                                'query' => $query3,
+                                'limit' => 20
+                            )
+                    );
     xarDefineInstance('events', 'Events', $instances, 0, 'All', 'All', 'All', 'Security instance for events module.');
 
 
@@ -350,9 +350,9 @@ function events_delete()
 
     // Delete any module variables
     XarModDelVar('events', 'eventsperpage');
-	XarModDelVar('events', 'currency');
+    XarModDelVar('events', 'currency');
     XarModDelVar('events', 'ticketsperuser');
-	XarModDelVar('events', 'imageuploadpath');
+    XarModDelVar('events', 'imageuploadpath');
     XarModDelVar('events', 'headerimagesize');
     XarModDelVar('events', 'bodyimagesize');
     XarModDelVar('events', 'headerimagewidth');
@@ -360,27 +360,27 @@ function events_delete()
     XarModDelVar('events', 'bodyimagewidth');
     XarModDelVar('events', 'bodyimageheight');
     XarModDelVar('events', 'notificationemail');
-	XarModDelVar('events', 'sendadminemail');    
-	XarModDelVar('events', 'senduseremail');
-	xarModDelVar('events', 'SupportShortURLs');
-	XarModDelVar('events', 'opeventname');
-	XarModDelVar('events', 'opcompanyname');
+    XarModDelVar('events', 'sendadminemail');    
+    XarModDelVar('events', 'senduseremail');
+    xarModDelVar('events', 'SupportShortURLs');
+    XarModDelVar('events', 'opeventname');
+    XarModDelVar('events', 'opcompanyname');
     XarModDelVar('events', 'opspeakername');  
-	XarModDelVar('events', 'opeventstartdate');
-	XarModDelVar('events', 'opeventenddate');    
-	XarModDelVar('events', 'opeventstarttime');    
-	XarModDelVar('events', 'opeventendtime');
+    XarModDelVar('events', 'opeventstartdate');
+    XarModDelVar('events', 'opeventenddate');    
+    XarModDelVar('events', 'opeventstarttime');    
+    XarModDelVar('events', 'opeventendtime');
     XarModDelVar('events', 'opeventregistrationtime');
-	XarModDelVar('events', 'opeventaddress');
-	XarModDelVar('events', 'opeventsummary');   
-	XarModDelVar('events', 'opeventheadertext');   
-	XarModDelVar('events', 'opeventbodytext');   
-	XarModDelVar('events', 'opeventprinttickets');   
+    XarModDelVar('events', 'opeventaddress');
+    XarModDelVar('events', 'opeventsummary');   
+    XarModDelVar('events', 'opeventheadertext');   
+    XarModDelVar('events', 'opeventbodytext');   
+    XarModDelVar('events', 'opeventprinttickets');   
     XarModDelVar('events', 'opeventticketsavailable');  
-	XarModDelVar('events', 'opeventcost');  
-	XarModDelVar('events', 'opeventtelephone');  
-	XarModDelVar('events', 'opeventheaderimage'); 
-	XarModDelVar('events', 'opeventbodyimage');
+    XarModDelVar('events', 'opeventcost');  
+    XarModDelVar('events', 'opeventtelephone');  
+    XarModDelVar('events', 'opeventheaderimage'); 
+    XarModDelVar('events', 'opeventbodyimage');
     if(xarModIsAvailable('categories'))
     {
         xarModDelVar('events', 'number_of_categories');

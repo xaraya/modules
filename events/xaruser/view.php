@@ -32,7 +32,7 @@ function events_user_view()
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-	if(!xarSecurityCheck('OverviewEvents')) return;
+    if(!xarSecurityCheck('OverviewEvents')) return;
 
     // Lets get the UID of the current user to check for overridden defaults
     $uid = xarUserGetVar('uid');
@@ -68,7 +68,7 @@ function events_user_view()
 
         // Security check 2 - if the user has read access to the item, show a
         // link to display the details of the item
-		    if(xarSecurityCheck('ReadEvents',0,'All',"$item[name]:All:$item[exid]")){
+            if(xarSecurityCheck('ReadEvents',0,'All',"$item[name]:All:$item[exid]")){
             $item['link'] = xarModURL('events',
                                      'user',
                                      'display',

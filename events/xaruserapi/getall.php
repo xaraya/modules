@@ -53,7 +53,7 @@ function events_userapi_getall($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-	if(!xarSecurityCheck('Overviewevents')) return;
+    if(!xarSecurityCheck('Overviewevents')) return;
 
     // Get database setup - note that both xarDBGetConn() and xarDBGetTables()
     // return arrays but we handle them differently.  For xarDBGetConn() we
@@ -91,7 +91,7 @@ function events_userapi_getall($args)
     // the details of the item, this *must* be verified by your function.
     for (; !$result->EOF; $result->MoveNext()) {
         list($exid, $name, $number) = $result->fields;
-		if(xarSecurityCheck('Overviewevents',0,'All',"$name:All:$exid")){
+        if(xarSecurityCheck('Overviewevents',0,'All',"$name:All:$exid")){
             $items[] = array('exid' => $exid,
                              'name' => $name,
                              'number' => $number);

@@ -14,24 +14,24 @@ function events_admin_modifyconfig()
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-	if(!xarSecurityCheck('AdminEvents')) return;
+    if(!xarSecurityCheck('AdminEvents')) return;
 
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
 
     // Here we set the global settings of the events module
 
-	$data['eventsperpagelabel'] = xarVarPrepForDisplay(xarML('Events Per Page:'));
+    $data['eventsperpagelabel'] = xarVarPrepForDisplay(xarML('Events Per Page:'));
     $data['eventsperpagevalue'] = xarModGetVar('events', 'eventsperpage');
-	$data['eventcurrencylabel'] = xarVarPrepForDisplay(xarML('Events Currency:'));
-	$data['eventcurrencyoptions'] = array();
+    $data['eventcurrencylabel'] = xarVarPrepForDisplay(xarML('Events Currency:'));
+    $data['eventcurrencyoptions'] = array();
     $data['eventcurrencyoptions']['€']   = '€';
     $data['eventcurrencyoptions']['$']   = '$';
     $data['eventcurrencyoptions']['£']   = '£';
     $data['eventcurrencyoptions']['¥']   = '¥';
     $data['eventcurrencyoptions']['KR.'] = 'KR.';
     $data['eventcurrencyoptions']['SEK'] = 'SEK';
-	$data['eventcurrencyvalue'] = xarModGetVar('events', 'currency');
+    $data['eventcurrencyvalue'] = xarModGetVar('events', 'currency');
     $data['ticketsperuserlabel'] = xarVarPrepForDisplay(xarML('Tickets Per User:'));
     $data['ticketsperuservalue'] = xarModGetVar('events', 'ticketsperuser');
     $data['imageuploadpathlabel'] = xarVarPrepForDisplay(xarML('Image Upload Path:'));
@@ -52,12 +52,12 @@ function events_admin_modifyconfig()
     $data['sendadminemailchecked'] = xarModGetVar('events','sendadminemail') ? 'checked' : '';
     $data['senduseremaillabel'] = xarVarPrepForDisplay(xarML('Send User e-mail:'));
     $data['senduseremailchecked'] = xarModGetVar('events','senduseremail') ? 'checked' : '';
-	$data['shorturlslabel'] = xarML('Enable short URLs:');
+    $data['shorturlslabel'] = xarML('Enable short URLs:');
     $data['shorturlschecked'] = xarModGetVar('events','SupportShortURLs') ? 'checked' : '';
 
-	// Here we set the required fields of the event
+    // Here we set the required fields of the event
 
-	$data['opeventnamelabel'] = xarVarPrepForDisplay(xarML('Event Name:'));
+    $data['opeventnamelabel'] = xarVarPrepForDisplay(xarML('Event Name:'));
     $data['opeventnamechecked'] = xarModGetVar('events','opeventname') ? 'checked' : '';
     $data['opcompanynamelabel'] = xarVarPrepForDisplay(xarML('Company Name:'));
     $data['opcompanynamechecked'] = xarModGetVar('events','opcompanyname') ? 'checked' : '';
@@ -85,7 +85,7 @@ function events_admin_modifyconfig()
     $data['opeventprintticketschecked'] = xarModGetVar('events','opeventprinttickets') ? 'checked' : '';
     $data['opeventticketsavailablelabel'] = xarVarPrepForDisplay(xarML('Event Tickets Available:'));
     $data['opeventticketsavailablechecked'] = xarModGetVar('events','opeventticketsavailable') ? 'checked' : '';
-	$data['opeventcostlabel'] = xarVarPrepForDisplay(xarML('Event Cost:'));
+    $data['opeventcostlabel'] = xarVarPrepForDisplay(xarML('Event Cost:'));
     $data['opeventcostchecked'] = xarModGetVar('events','opeventcost') ? 'checked' : '';
     $data['opeventtelephonelabel'] = xarVarPrepForDisplay(xarML('Event Telephone:'));
     $data['opeventtelephonechecked'] = xarModGetVar('events','opeventtelephone') ? 'checked' : '';

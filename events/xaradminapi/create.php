@@ -41,7 +41,7 @@ function events_adminapi_create($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-	if(!xarSecurityCheck('AddEvents',1,'All',"$name:All:All")){
+    if(!xarSecurityCheck('AddEvents',1,'All',"$name:All:All")){
         return;
     }
 

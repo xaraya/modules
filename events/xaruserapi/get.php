@@ -75,7 +75,7 @@ function events_userapi_get($args)
     // this one is a bit late in the function it is as early as we can do it as
     // this is the first time we have the relevant information.
     // For this function, the user must *at least* have READ access to this item
-	if(!xarSecurityCheck('Readevents',1,'All',"$name:All:$exid")){
+    if(!xarSecurityCheck('Readevents',1,'All',"$name:All:$exid")){
         return;
     }
 

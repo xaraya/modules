@@ -16,7 +16,7 @@ function events_adminapi_getmenulinks()
     // not that he/she doesn't.
 
 // Security Check
-	if (xarSecurityCheck('AddEvents',0)) {
+    if (xarSecurityCheck('AddEvents',0)) {
 
     // The main menu will look for this array and return it for a tree view of the module
     // We are just looking for three items in the array, the url, which we need to use the
@@ -34,7 +34,7 @@ function events_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('EditEvents',0)) {
+    if (xarSecurityCheck('EditEvents',0)) {
 
     // We do the same for each new menu item that we want to add to our admin panels.
     // This creates the tree view for each item.  Obviously, we don't need to add every
@@ -50,7 +50,7 @@ function events_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('AdminEvents',0)) {
+    if (xarSecurityCheck('AdminEvents',0)) {
 
     // We do the same for each new menu item that we want to add to our admin panels.
     // This creates the tree view for each item.  Obviously, we don't need to add every

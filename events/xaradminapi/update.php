@@ -63,10 +63,10 @@ function events_adminapi_update($args)
     // both of these to ensure that whoever is doing the modification has
     // suitable permissions to edit the item otherwise people can potentially
     // edit areas to which they do not have suitable access
-	if(!xarSecurityCheck('EditEvents',1,'All',"$item[name]:All:$exid")){
+    if(!xarSecurityCheck('EditEvents',1,'All',"$item[name]:All:$exid")){
         return;
     }
-	if(!xarSecurityCheck('EditEvents',1,'All',"$name:All:$exid")){
+    if(!xarSecurityCheck('EditEvents',1,'All',"$name:All:$exid")){
         return;
     }
 

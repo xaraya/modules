@@ -9,7 +9,7 @@ function events_admin_main()
     // anything and so we refuse access altogether.  The lowest level of access
     // for administration depends on the particular module, but it is generally
     // either 'edit' or 'delete'
-	if(!xarSecurityCheck('EditEvents')) return;
+    if(!xarSecurityCheck('EditEvents')) return;
 
     // The admin system looks for a var to be set to skip the introduction
     // page altogether.  This allows you to add sparse documentation about the 

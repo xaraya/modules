@@ -39,7 +39,7 @@ function events_admin_view()
 
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-	if(!xarSecurityCheck('EditEvents')) return;
+    if(!xarSecurityCheck('EditEvents')) return;
 
     // The user API function is called.  This takes the number of items
     // required and the first number in the list of all items, which we
@@ -60,7 +60,7 @@ function events_admin_view()
     // 'in place', and *then* pass the complete items array to $data
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-		    if(xarSecurityCheck('EditEvents',0,'All',"$item[name]:All:$item[exid]")){
+            if(xarSecurityCheck('EditEvents',0,'All',"$item[name]:All:$item[exid]")){
             $items[$i]['editurl'] = xarModURL('events',
                                              'admin',
                                              'modify',
@@ -69,7 +69,7 @@ function events_admin_view()
             $items[$i]['editurl'] = '';
         }
         $items[$i]['edittitle'] = xarML('Edit');
-		if(xarSecurityCheck('DeleteEvents',0,'All',"$item[name]:All:$item[exid]")){
+        if(xarSecurityCheck('DeleteEvents',0,'All',"$item[name]:All:$item[exid]")){
             $items[$i]['deleteurl'] = xarModURL('events',
                                                'admin',
                                                'delete',

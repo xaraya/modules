@@ -45,7 +45,7 @@ function events_adminapi_delete($args)
     // However, in this case we had to wait until we could obtain the item
     // name to complete the instance information so this is the first
     // chance we get to do the check
-	if(!xarSecurityCheck('DeleteEvents',1,'All',"$item[name]:All:$exid")){
+    if(!xarSecurityCheck('DeleteEvents',1,'All',"$item[name]:All:$exid")){
         return;
     }
 

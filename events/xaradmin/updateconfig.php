@@ -12,7 +12,7 @@ function events_admin_updateconfig()
     // assumptions that will not hold in future versions of Xaraya
     list($eventsperpage,
          $eventcurrency,
-		 $ticketsperuser,
+         $ticketsperuser,
          $imageuploadpath,
          $headerimagesize,
          $bodyimagesize,
@@ -155,7 +155,7 @@ function events_admin_updateconfig()
     xarModSetVar('events', 'SupportShortURLs', $shorturls);
 
     // Here we define the required fields
-	
+    
     if (!isset($opeventname)) {
         $opeventname = 0;
     }
