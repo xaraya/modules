@@ -202,15 +202,13 @@
                     <xar:else/>
                         <option value="database"><xar:mlstring>Database</xar:mlstring></option>
                     </xar:if>
-<xar:comment> TODO
                     <xar:if condition="!extension_loaded('memcache')">
                         <option value="memcached" disabled="disabled"><xar:mlstring>Memcache</xar:mlstring></option>
-                    <xar:elseif condition="$settings['PageCacheStorage'] eq 'memcache'"/>
+                    <xar:elseif condition="$settings['PageCacheStorage'] eq 'memcached'"/>
                         <option value="memcached" selected="selected"><xar:mlstring>Memcache</xar:mlstring></option>
                     <xar:else/>
                         <option value="memcached"><xar:mlstring>Memcache</xar:mlstring></option>
                     </xar:if>
-</xar:comment>
                 </select>
             </td>
         </tr>
@@ -274,15 +272,13 @@
                     <xar:else/>
                         <option value="database"><xar:mlstring>Database</xar:mlstring></option>
                     </xar:if>
-<xar:comment> TODO
                     <xar:if condition="!extension_loaded('memcache')">
                         <option value="memcached" disabled="disabled"><xar:mlstring>Memcache</xar:mlstring></option>
-                    <xar:elseif condition="$settings['BlockCacheStorage'] eq 'memcache'"/>
+                    <xar:elseif condition="$settings['BlockCacheStorage'] eq 'memcached'"/>
                         <option value="memcached" selected="selected"><xar:mlstring>Memcache</xar:mlstring></option>
                     <xar:else/>
                         <option value="memcached"><xar:mlstring>Memcache</xar:mlstring></option>
                     </xar:if>
-</xar:comment>
                 </select>
             </td>
         </tr>
