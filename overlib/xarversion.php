@@ -2,7 +2,7 @@
 //$Id: $
 
 $modversion['name']           = 'overlib';
-$modversion['id']             = '8';
+$modversion['id']             = '4';
 $modversion['version']        = '0.1.0';
 $modversion['description']    = 'overlib javascript module for blocklayout';
 $modversion['credits']        = 'credits.txt';
