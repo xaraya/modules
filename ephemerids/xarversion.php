@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Ephemerids
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -16,6 +16,7 @@
 $modversion['name'] = 'Ephemerids';
 $modversion['id'] = '15';
 $modversion['version'] = '1.4.1';
+$modversion['displayname']    = xarML('Ephemerids');
 $modversion['description'] = 'A "This day in history" type module.';
 $modversion['credits'] = '';
 $modversion['help'] = '';
@@ -27,5 +28,5 @@ $modversion['contact'] = 'http://www.postnuke.com/';
 $modversion['admin'] = 1;
 $modversion['securityschema'] = array('Ephemerids::' => 'Ephemerid::Ephemerid ID');
 $modversion['class'] = 'Complete';
-$modversion['category'] = 'Content'; 
+$modversion['category'] = 'Content';
 ?>
