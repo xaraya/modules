@@ -1,6 +1,6 @@
 <h3>#$message#</h3>
 <xar:if condition="$totalitems gt 0">
-	<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+	<table width="98%" border="0" align="center">
 		<tr> 
 			<xar:if condition="!empty($pager)">
 				<td align="left" valign="middle" nowrap="nowrap">
@@ -24,7 +24,7 @@
 		</tr>
 	</table>
 
-	<table width="100%" cellpadding="4" cellspacing="1" border="0">
+	<table width="98%" border="0">
 		<tr style="border: 1px solid #000;"> 
 			<th width="4%" height="25" nowrap="nowrap">&nbsp;</th>
 			<th nowrap="nowrap">
@@ -116,7 +116,7 @@
 		</tr>
 	</table>
 
-	<table width="100%" cellspacing="2" border="0" align="center" cellpadding="2">
+	<table width="98%" align="center">
 		<tr> 
 			<xar:if condition="!empty($pager)">
 				<td align="right" valign="bottom" nowrap="nowrap">

@@ -1,7 +1,7 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 
 <xar:base-include-javascript module="base" filename="confirmlink.js" />
-<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<table border="0" width="98%">
 	<tr>
 		<td colspan="2">
 			<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
@@ -9,7 +9,7 @@
 	</tr>
 </table>
 
-<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<table width="98%" border="0">
 	<tr>
 		<td align="left" valign="bottom" colspan="2">
 			<div id="top">
@@ -29,7 +29,7 @@
 	</tr>
 </table>
 
-<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<table width="98%" border="0">
 	<tr> 
 		<xar:if condition="$tstatus ne 3">
 			<xar:sec mask="PostxarBB" catch="false">
@@ -66,7 +66,7 @@
 	</tr>
 </table>
 
-<table width="100%" cellspacing="1" cellpadding="3" border="0">
+<table width="98%" border="0">
 	<xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
 		#$hooks['polls']#
 	</xar:if>
@@ -241,7 +241,7 @@
 	</xar:if>
 <xar:if condition="$startnum eq 1">
 </table>
-<table width="100%" cellspacing="1" cellpadding="3" border="0">
+<table width="98%" border="0">
 </xar:if>
     <!--- add alternating row colors --->
     <xar:foreach in="$items" value="$item" key="$key">
@@ -422,9 +422,7 @@
 	</tr>
     </xar:foreach>
 </table>
-
-
-<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<table width="98%" border="0">
 	<tr> 
 		<xar:if condition="$tstatus ne 3">
 			<xar:sec mask="PostxarBB" catch="false">

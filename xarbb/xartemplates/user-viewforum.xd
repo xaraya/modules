@@ -10,7 +10,7 @@
 	</table>
 </xar:if>
 
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+<table width="98%" border="0" align="center">
 	<tr> 
 		<td align="left" valign="bottom" colspan="2">
 			<h1>
@@ -69,7 +69,7 @@
 	</tr>
 </table>
 
-<table style="border: 1px solid #000;" cellpadding="4" cellspacing="1" width="100%">
+<table style="border: 1px solid #000;" width="98%">
 	<tr style="border: 1px solid #000;"> 
 		<th colspan="2" align="center" nowrap="nowrap">
 			<h4>
@@ -153,7 +153,7 @@
 	</tr>
 </table>
 
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+<table width="98%" border="0" align="center">
 	<tr> 
 		<xar:sec mask="PostxarBB" catch="false">
 			<td align="left" valign="middle" width="50">
@@ -195,7 +195,7 @@
 	</tr>
 </table>
 
-<table width="100%" cellspacing="0" border="0" align="center" cellpadding="0">
+<table width="98%" align="center">
 	<tr>
 		<td align="left" valign="top">
 			<table cellspacing="3" cellpadding="0" border="0">
@@ -305,7 +305,7 @@
 
 <xar:if condition="!xarUserIsLoggedIn()">
 	<form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
-		<table width="100%" cellpadding="3" cellspacing="1">
+		<table width="98%">
 			<tr> 
 				<th height="28" align="left">
 					<span class="xar-title">

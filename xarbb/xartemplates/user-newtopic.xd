@@ -1,4 +1,4 @@
-<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<table width="98%" border="0">
 	<tr> 
 		<td align="left" valign="middle" width="100%">
 			<span class="xar-sub">
@@ -18,7 +18,7 @@
 	</tr>
 </table>
 <form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" method="post" name="post" id="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
-<table border="0" cellpadding="3" cellspacing="1" width="100%">
+<table border="0" width="98%">
 	<tr style="border: 1px solid #000;"> 
 		<th colspan="2" height="25">
 			<h4>
@@ -199,7 +199,7 @@
 		</tr>
 </table>
 
-<table width="100%" cellspacing="0" border="0" align="center" cellpadding="2">
+<table width="98%" align="center">
 	<tr> 
 		<td align="right">
 			<span class="xar-sub">

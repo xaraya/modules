@@ -254,7 +254,7 @@
 
 <br clear="all" />
 
-<table align="center">
+<table align="center" width="98%">
 	<tr> 
 		<td width="20" align="center">
 			<img src="#xarTplGetImage('new/folder_new.gif')#" alt="#xarML('New post in forum')#" />
