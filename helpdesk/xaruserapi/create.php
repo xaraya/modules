@@ -13,8 +13,8 @@ function helpdesk_userapi_create($args)
     $newticket_id = helpdesk_new_id(array('table'=>'tickets','field'=>'ticket_id'));
     
     // Generate SQL code for Ticket entry
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
     $db_column = &$xartable['helpdesk_tickets_column'];
     $time = date("Y-m-d H:i:s");

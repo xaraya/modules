@@ -12,8 +12,8 @@ function helpdesk_userapi_gettickets($args)
 {
     extract($args);
     // Database information
-    list($dbconn)   = xarDBGetConn();
-    $xartable       = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable       =& xarDBGetTables();
     $helpdesktable  = $xartable['helpdesk_tickets'];
     $helpdeskcolumn = &$xartable['helpdesk_tickets_column'];
     

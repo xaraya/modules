@@ -14,8 +14,8 @@ function helpdesk_userapi_isticketowner($ticket_id)
 {
     //extract($args);
     //list($ticket_id,$userid)=xarVarCleanFromInput('ticket_id','userid');
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
     $db_column = &$xartable['helpdesk_tickets_column'];
 
@@ -41,8 +41,8 @@ function helpdesk_new_id($args)
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return false;
     }
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_'.$table];
     $db_column = &$xartable['helpdesk_'.$table.'_column'];
     $sql = "Select max(".$db_column[$field].") from ".$db_table;
@@ -55,8 +55,8 @@ function helpdesk_userapi_getlastx($ticketcount)
 {
     // Input: Integer - number of most recent tickets to request
     // Returns an Array of data to be parsed by block functions
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $helpdesktable = $xartable['helpdesk_tickets'];
     $helpdeskcolumn = &$xartable['helpdesk_tickets_column'];
     if($ticketcount < 1)

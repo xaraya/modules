@@ -11,8 +11,8 @@ function helpdesk_userapi_getstatusid($args)
     }else{
         $ticket_id = $args;
     }
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     $db_table     = $xartable['helpdesk_tickets'];
     $db_column    = &$xartable['helpdesk_tickets_column'];
     $sql = "SELECT $db_column[ticket_statusid]

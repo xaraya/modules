@@ -25,8 +25,8 @@ function helpdesk_userapi_runsearch($args)
     $wordCount = count($wordArray);
 
     // Database information
-    list($dbconn)    = xarDBGetConn();
-    $xartable        = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable        =& xarDBGetTables();
     $helpdesktable   = $xartable['helpdesk_histories'];
     $helpdeskcolumn  = &$xartable['helpdesk_histories_column'];
     $helpdesktable2  = $xartable['helpdesk_tickets'];

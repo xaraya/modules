@@ -26,8 +26,8 @@ extract($args);
 
 
 // Generate SQL code for Ticket entry
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
     $db_column = &$xartable['helpdesk_tickets_column'];
     $time = date("Y-m-d H:i:s");

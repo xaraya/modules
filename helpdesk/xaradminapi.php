@@ -41,8 +41,8 @@ function helpdesk_adminapi_new_id($args)
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return false;
     }
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_'.$table];
     $db_column = &$xartable['helpdesk_'.$table.'_column'];
     $sql = "Select max(".$db_column[$field].") from ".$db_table;

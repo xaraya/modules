@@ -25,8 +25,8 @@ function helpdesk_userapi_update($args)
     xarVarFetch('selection',  'str:1:',  $xtra_fields,  null,  XARVAR_NOT_REQUIRED);
 
     // Generate SQL code for Ticket entry
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
     $db_column = &$xartable['helpdesk_tickets_column'];
     $time = date("Y-m-d H:i:s");

@@ -27,8 +27,8 @@
 function helpdesk_init()
 {   
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
@@ -189,8 +189,8 @@ function helpdesk_init()
 function helpdesk_upgrade($oldversion)
 {
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable     = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable     =& xarDBGetTables();
     
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
@@ -287,8 +287,8 @@ function helpdesk_delete()
     xarDBLoadTableMaintenanceAPI();
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Delete tables
     $query = xarDBDropTable($xartable['helpdesk_tickets']);

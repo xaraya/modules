@@ -17,8 +17,8 @@ function helpdesk_userapi_getticket($args)
                        new SystemException($msg));
         return false;
     }
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
     $db_column = &$xartable['helpdesk_tickets_column'];
     $sql = "SELECT  $db_column[ticket_priorityid],
