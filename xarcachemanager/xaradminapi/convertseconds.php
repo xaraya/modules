@@ -3,10 +3,11 @@
 /**
  * Update the configuration parameters of the module based on data from the modification form
  * 
- * @author Jon Haworth | jsb
+ * @author Jon Haworth | jsb <jsb@xaraya.com>
  * @access public 
- * @param $starttime (seconds or hh:mm:ss), $direction (from or to) 
- * @return $convertedtime (hh:mm:ss or seconds)
+ * @param string $starttime (seconds or hh:mm:ss)
+ * @param string $direction (from or to) 
+ * @return string $convertedtime (hh:mm:ss or seconds)
  * @throws nothing
  * @todo maybe add support for days?
  */
