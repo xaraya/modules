@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: s.xaradminapi.php 1.3 02/12/01 14:27:28+01:00 marcel@hsdev.com $
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2001 by the PostNuke Development Team.
