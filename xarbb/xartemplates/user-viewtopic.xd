@@ -132,7 +132,7 @@
 						<xar:mlstring>
 							Posted
 						</xar:mlstring>: #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $tftime)#
-       <span class="xar-title">&nbsp; &nbsp; &nbsp;
+						<span class="xar-title">&nbsp; &nbsp; &nbsp;
 								<xar:mlstring>
 									Subject
 								</xar:mlstring>:
@@ -194,6 +194,16 @@
 					    Back to top
 					</xar:mlstring>
 				</a>
+				<xar:if condition="isset($changelog)">
+					<xar:sec mask="ModxarBB" catch="false">
+						<br />
+						<a href="#xarModUrl('changelog', 'admin', 'showlog', array('modid' => '300', 'itemtype' => $fid, 'itemid' => $tid))#">
+							<xar:mlstring>
+								View changes
+							</xar:mlstring>
+						</a>
+					</xar:sec>
+				</xar:if>
 			</span>
 		</td>
 		<td width="100%" height="28" valign="bottom" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
@@ -370,6 +380,16 @@
 					    Back to top
 					</xar:mlstring>
 				</a>
+				<xar:if condition="isset($changelog)">
+					<xar:sec mask="ModxarBB" catch="false">
+						<br />
+						<a href="#xarModUrl('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $item['xar_cid']))#">
+							<xar:mlstring>
+								View changes
+							</xar:mlstring>
+						</a>
+					</xar:sec>
+				</xar:if>
 			</span>
 		</td>
 		<td  class='#$myclass#' width="100%" height="28" valign="bottom" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
@@ -505,6 +525,7 @@
 		</tr>
 	</table>
 </xar:sec>
+<br /><br />
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
     <xar:foreach in="$hooks" key="$hookmodule">
     <!--- xarbb already deals with comments directly via API, using itemtype 0 (for now ?) --->

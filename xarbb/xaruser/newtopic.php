@@ -40,7 +40,9 @@ function xarbb_user_newtopic()
                               'getforum',
                               array('fid' => $fid));
     }
-    $data['fid']            = $fid;
+    if (isset($fid)){
+        $data['fid']            = $fid;
+    }
     $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$data['fid']));
     $data['allowhtml']      = $settings['allowhtml'];
     if (empty($data)) return;

@@ -193,6 +193,13 @@ function xarbb_user_viewtopic()
 
     $data['hooks'] = xarModCallHooks('item','display',$tid,$item);
 
+    // Let's handle the changelog a little differently 
+    // and add a link in the topic itself.
+    if (isset($data['hooks']['changelog'])){
+        $data['changelog']  = true;
+        $data['hooks']['changelog'] = '';
+    }
+
     // Let's suppress the hitcount hook from showing.
     $data['hooks']['hitcount'] = '';
     $data['authid'] = xarSecGenAuthKey();

@@ -87,11 +87,13 @@ function xarbb_userapi_updatetopic($args)
                           'gettopic',
                           array('tid' => $tid));
 
-    // Let any hooks know that we have created a new topic
-    $args['module'] = 'xarbb';
-    $args['itemtype'] = $data['fid']; // topic
-    $args['itemid'] = $tid;
-    xarModCallHooks('item', 'update', $tid, $args);
+    if (!isset($nohooks)){
+        // Let any hooks know that we have created a new topic
+        $args['module'] = 'xarbb';
+        $args['itemtype'] = $data['fid']; // topic
+        $args['itemid'] = $tid;
+        xarModCallHooks('item', 'update', $tid, $args);
+    }
 
     // Return the id of the newly created link to the calling process
     return true;

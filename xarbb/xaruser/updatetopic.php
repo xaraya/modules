@@ -59,17 +59,12 @@ function xarbb_user_updatetopic()
                        array('tid'      => $tid,
                              'treplier' => $poster))) return;
     }
-    // The user API function is called
-    $forum = xarModAPIFunc('xarbb',
-                           'user',
-                           'gettopic',
-                           array('tid' => $tid));
     // Let's not count up if the reply is being edited.
     if ($modify != 1){
         if (!xarModAPIFunc('xarbb',
                            'user',
                            'updateforumview',
-                           array('fid'      => $forum['fid'],
+                           array('fid'      => $data['fid'],
                                  'replies'  => 1,
                                  'move'     => 'positive',
                                  'fposter'  => $poster))) return;

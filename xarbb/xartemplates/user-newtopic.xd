@@ -147,7 +147,7 @@
 					<xar:mlstring>
 						HTML is
 					</xar:mlstring>
-					<xar:if condition="$allowhtml">
+					<xar:if condition="isset($allowhtml)">
 						<span style="color: green;">
 							On
 						</span>

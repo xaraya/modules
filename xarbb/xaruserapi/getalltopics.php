@@ -41,6 +41,12 @@ function xarbb_userapi_getalltopics($args)
         return;
     }
 
+    // Why do this look-up multiple times?  Return the cache instead.
+    if (xarVarIsCached('xarbb.topics', 'alltopicscache')){
+        $topics = xarVarGetCached('xarbb.topics', 'alltopicscache');
+        return $topics;
+    }
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
@@ -117,6 +123,8 @@ function xarbb_userapi_getalltopics($args)
         }
     }
     $result->Close();
+    // Save some variables to (temporary) cache for use in blocks etc.
+    xarVarSetCached('xarbb.topics','alltopicscache',$topics);
     return $topics;
 }
 ?>
