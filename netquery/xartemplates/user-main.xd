@@ -53,7 +53,7 @@
 </form>
 </xar:if>
 
-<xar:if condition="$dns_dig_enabled && !$windows_system">
+<xar:if condition="$dns_dig_enabled && !$pingexec['winsys']">
 <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="dig">
@@ -85,11 +85,21 @@
         <option>9</option>
         <option>10</option></td>
     <td>
-    <xar:if condition="$localexec_enabled">
-        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    <xar:else />
-        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="pingwindow(host.value);">
-    </xar:if>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$ping_remote_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="pingrem">
+    <tr>
+    <td colspan="2"><label for="host">#$pingremotelabel#</label>
+    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <td>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="pingwindow(host.value);">
     </td>
     </tr>
 </form>
@@ -100,14 +110,24 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="trace">
     <tr>
-    <td colspan="2"><label for="host">#$traceroutelabel#</label>
+    <td colspan="2"><label for="host">#$tracelabel#</label>
     <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
     <td>
-    <xar:if condition="$localexec_enabled">
-        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    <xar:else />
-        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="tracewindow(host.value);">
-    </xar:if>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$trace_remote_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="tracerem">
+    <tr>
+    <td colspan="2"><label for="host">#$traceremotelabel#</label>
+    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <td>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="tracewindow(host.value);">
     </td>
     </tr>
 </form>
@@ -136,12 +156,12 @@
 <script language="javascript" type="text/javascript">
 function pingwindow(target)
 {
-        var pingsite = "http://noc.thunderworx.net/cgi-bin/public/ping.pl?target=" + target;
+        var pingsite = "#$pingexec['remote']#?#$pingexec['remote_t']#=" + target;
         window.open (pingsite,"Ping","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
 }
 function tracewindow(target)
 {
-        var tracesite = "http://noc.thunderworx.net/cgi-bin/public/traceroute.pl?target=" + target;
+        var tracesite = "#$traceexec['remote']#?#$traceexec['remote_t']#=" + target;
         window.open (tracesite,"Trace","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
 }
 </script>

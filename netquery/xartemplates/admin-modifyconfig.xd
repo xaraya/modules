@@ -1,39 +1,22 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Netquery Configuration</xar:mlstring></h2>
 <div style="margin: auto;">
+
+<p><xar:mlstring>Configuration options determine which Netquery functions are available to users of your
+web site. You should select at least one, or else uninstall this module completely. </xar:mlstring>
+<xar:if condition="1 eq 1">
+[<a href=javascript:openwindow("#$helplink['url']#");>#$helplink['label']#</a>]
+</xar:if><br /><br />
+<xar:mlstring><b>Please note</b> that the local ping and traceroute options require
+read/execute permission for your operating system's ping and traceroute executables.
+If you check the Capture Logfile option, a netquery.log file will be created in
+Xaraya's var/logs sub-folder.</xar:mlstring><br /></p>
+
+<h4><xar:mlstring>Netquery Options</xar:mlstring></h4>
+
 <form action="#xarModURL('netquery', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="phase" id="phase" value="update" />
-<p>
-        <xar:mlstring>If you are using this Netquery module on a Microsoft Windows server, be sure to check that option below. Other options determine which Netquery functions are available to users of your web site.  You should select at least one, or else uninstall this module completely.</xar:mlstring><br /><br />
-        <xar:mlstring><b>Please note</b>: The local system execution option requires read/execute permission for your operating system's ping and traceroute executables. If you check the Capture Logfile option, results will be stored in the Netquery module directory in the capturedata.txt file.  This file requires write permission.</xar:mlstring><br />
-</p>
-<h4><xar:mlstring>Netquery Options</xar:mlstring></h4>
-<p>
-            <div>
-                <span>
-                    <xar:if condition="xarModGetVar('netquery', 'windows_system')">
-                        <input type="checkbox" name="windows_system" id="windows_system" value="1" checked="checked">
-                    <xar:else />
-                        <input type="checkbox" name="windows_system" id="windows_system" value="1">
-                    </xar:if>
-                </span>
-                <span>
-                    <xar:mlstring>Server Is Microsoft Windows</xar:mlstring>
-                </span>
-            </div>
-            <div>
-                <span>
-                    <xar:if condition="xarModGetVar('netquery', 'localexec_enabled')">
-                        <input type="checkbox" name="localexec_enabled" id="localexec_enabled" value="1" checked="checked">
-                    <xar:else />
-                        <input type="checkbox" name="localexec_enabled" id="localexec_enabled" value="1">
-                    </xar:if>
-                </span>
-                <span>
-                    <xar:mlstring>Enable Local System Execution</xar:mlstring>
-                </span>
-            </div>
             <div>
                 <span>
                     <xar:if condition="xarModGetVar('netquery', 'whois_enabled')">
@@ -91,8 +74,32 @@
                     </xar:if>
                 </span>
                 <span>
-                    <xar:mlstring>Enable ICMP Ping</xar:mlstring>
+                    <xar:mlstring>Enable Local ICMP Ping</xar:mlstring>
+                </span><br />&nbsp; &nbsp; &nbsp;
+                <span class="help" title="#xarML('Local ping EXECUTABLE including path if necessary')#"><label for="pingexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
+                <input type="text" name="pingexec_local" id="pingexec_local" value="#$pingexec['local']#" size="30" maxlength="100" />
+                <span class="help" title="#xarML('CHECK BOX if local system is Microsoft Windows')#"><label for="pingexec_winsys"><xar:mlstring>MS Windows:</xar:mlstring></label></span>
+                    <xar:if condition="$pingexec['winsys']">
+                        <input type="checkbox" name="pingexec_winsys" id="pingexec_winsys" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="pingexec_winsys" id="pingexec_winsys" value="1">
+                    </xar:if>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'ping_remote_enabled')">
+                        <input type="checkbox" name="ping_remote_enabled" id="ping_remote_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="ping_remote_enabled" id="ping_remote_enabled" value="1">
+                    </xar:if>
                 </span>
+                <span>
+                    <xar:mlstring>Enable Remote ICMP Ping</xar:mlstring>
+                </span><br />&nbsp; &nbsp; &nbsp;
+                <span class="help" title="#xarML('URL for remote system ping script')#"><label for="pingexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
+                <input type="text" name="pingexec_remote" id="pingexec_remote" value="#$pingexec['remote']#" size="30" maxlength="100" />
+                <span class="help" title="#xarML('Remote ping script url?PARAM=target')#"><label for="pingexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
+                <input type="text" name="pingexec_remote_t" id="pingexec_remote_t" value="#$pingexec['remote_t']#" size="6" maxlength="10" />
             </div>
             <div>
                 <span>
@@ -103,8 +110,32 @@
                     </xar:if>
                 </span>
                 <span>
-                    <xar:mlstring>Enable Traceroute</xar:mlstring>
+                    <xar:mlstring>Enable Local Traceroute</xar:mlstring>
+                </span><br />&nbsp; &nbsp; &nbsp;
+                <span class="help" title="#xarML('Local traceroute EXECUTABLE including path if necessary')#"><label for="traceexec_local"><xar:mlstring>Executable:</xar:mlstring></label></span>
+                <input type="text" name="traceexec_local" id="traceexec_local" value="#$traceexec['local']#" size="30" maxlength="100" />
+                <span class="help" title="#xarML('CHECK BOX if local system is Microsoft Windows')#"><label for="traceexec_winsys"><xar:mlstring>MS Windows:</xar:mlstring></label></span>
+                    <xar:if condition="$traceexec['winsys']">
+                        <input type="checkbox" name="traceexec_winsys" id="traceexec_winsys" value="1" checked="checked"><br />
+                    <xar:else />
+                        <input type="checkbox" name="traceexec_winsys" id="traceexec_winsys" value="1"><br />
+                    </xar:if>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'trace_remote_enabled')">
+                        <input type="checkbox" name="trace_remote_enabled" id="trace_remote_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="trace_remote_enabled" id="trace_remote_enabled" value="1">
+                    </xar:if>
                 </span>
+                <span>
+                    <xar:mlstring>Enable Remote Traceroute</xar:mlstring>
+                </span><br />&nbsp; &nbsp; &nbsp;
+                <span class="help" title="#xarML('URL for remote system traceroute script')#"><label for="traceexec_remote"><xar:mlstring>Script URL:</xar:mlstring></label></span>
+                <input type="text" name="traceexec_remote" id="traceexec_remote" value="#$traceexec['remote']#" size="30" maxlength="100" />
+                <span class="help" title="#xarML('Remote script traceroute url?PARAM=target')#"><label for="traceexec_remote_t"><xar:mlstring>Target Param:</xar:mlstring></label></span>
+                <input type="text" name="traceexec_remote_t" id="traceexec_remote_t" value="#$traceexec['remote_t']#" size="6" maxlength="10" />
             </div>
             <div>
                 <span>
@@ -130,9 +161,15 @@
                     <xar:mlstring>Enable Capture Logfile</xar:mlstring>
                 </span>
             </div>
-</p>
         <br /><br />
         <input type="submit" value="#$submitlabel#"  tabindex="2" />
 </form>
 </div>
 </div>
+
+<script language="javascript" type="text/javascript">
+    function openwindow(hlpfile)
+    {
+        window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
+    }
+</script>

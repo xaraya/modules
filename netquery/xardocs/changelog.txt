@@ -1,5 +1,19 @@
 Version 0.1 2004-08-26
-   - initial beta version
+   - initial development version
    
 Version 0.2 2004-09-07
    - added whois lookup database and related admin functions
+
+Version 0.3 2004-09-20
+   - added config option to enable/disable local system execution
+   - added popup windows for external ping and traceroute functions
+
+Version 0.3.1 2004-09-26
+   - minor bug fixes
+   - completed PHP4 and PHP5 (E_STRICT) testing
+   - beta release uploaded to Xaraya (courtesy of jojodee)
+
+Version 1.0 2004-10-06
+   - added server config options for local/remote ping and traceroute
+   - updated admin manual and other refs to reflect changes
+   - final release uploaded to Xaraya (courtesy of jojodee)

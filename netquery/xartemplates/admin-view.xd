@@ -64,4 +64,5 @@
     </xar:loop>
 </table>
 </div>
-</div>
+</div><br />
+<a href="#$addlink['url']#">#$addlink['title']#</a>

@@ -8,7 +8,7 @@ function netquery_admin_delete()
 
     $data = xarModAPIFunc('netquery',
                           'admin',
-                          'get',
+                          'getwhois',
                           array('whois_id' => $whois_id));
 
     if ($data == false) return;
@@ -20,7 +20,7 @@ function netquery_admin_delete()
     if (!xarSecConfirmAuthKey()) return;
     if (!xarModAPIFunc('netquery',
                        'admin',
-                       'delete', 
+                       'remove', 
                         array('whois_id' => $whois_id))) return;
     xarResponseRedirect(xarModURL('netquery', 'admin', 'view'));
     return true;

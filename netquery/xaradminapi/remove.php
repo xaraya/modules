@@ -1,12 +1,12 @@
 <?php
 /**
- * update a whois lookup link
+ * remove a whois lookup link
  */
-
-function netquery_adminapi_update($args)
+ 
+function netquery_adminapi_remove($args)
 {
     extract($args);
-    if ((!isset($whois_id)) || (!isset($whois_ext)) || (!isset($whois_server))) {
+    if (!isset($whois_id)) {
         $msg = xarML('Invalid Parameter Count');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
@@ -16,22 +16,19 @@ function netquery_adminapi_update($args)
                           'admin',
                           'getwhois',
                           array('whois_id' => $whois_id));
-
-    if ($data == false) {
+    if (empty($data)) {
         $msg = xarML('No Such Whois Lookup Link Present', 'netquery');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
 
-    if(!xarSecurityCheck('EditNetquery')) return;
+    if(!xarSecurityCheck('DeleteNetquery')) return;
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
 
-    $query = "UPDATE $WhoisTable
-            SET whois_ext    = '" . xarVarPrepForStore($whois_ext) . "',
-                whois_server = '" . xarVarPrepForStore($whois_server) . "'
+    $query = "DELETE FROM $WhoisTable
             WHERE whois_id = " . xarVarPrepForStore($whois_id);
     $result =& $dbconn->Execute($query);
     if (!$result) return;

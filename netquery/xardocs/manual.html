@@ -48,24 +48,14 @@
         can be enabled or disabled individually by the administrator. The administrator can also
         configure the Whois feature to specify which Whois server is associated with each domain
         name.ext entry and can add, modify and delete those entries in the Netquery Whois data table.</p>
-        <p>If you are using this Netquery module on a Microsoft Windows server, be sure to check
-        that option as noted below. Other options determine which Netquery functions are available
-        to users of your web site. You should select at least one, or else uninstall this module
-        completely. <b>Please note</b> that the local system execution option requires read/execute
-        permission for your operating system's ping and traceroute executables. If you check the
-        Capture Logfile option, results will be stored in the capturedata.txt file in the Netquery
-        module directory. This capturedata.txt file must have write permission for the server.</p>
+        <p>Configuration options determine which Netquery functions are available to users of your
+        web site. You should select at least one, or else uninstall this module completely.
+        <b>Please note</b> that the local ping and traceroute options requires read/execute permission
+        for your operating system's ping and traceroute executables. If you check the Capture Logfile
+        option, a netquery.log file will be created in the Xaraya's var/logs sub-folder.</p>
         <p>     
         </td>
-    <tr><td class="item-heading" colspan=2>Enable/Disable Features</td></tr>
-    <tr>
-        <td class="item">Server Is MS Windows</td>
-        <td class="item-desc">Check this if you are using a Windows server. (Affects local ping and traceroute exec.)</td>
-    </tr>
-    <tr>
-        <td class="item">Enable Local Execution</td>
-        <td class="item-desc">Ping and traceroute functions use local system calls. (Requires execute permission.)</td>
-    </tr>
+    <tr><td class="item-heading" colspan=2>Netquery Configuration Options</td></tr>
     <tr>
         <td class="item">Enable Whois Search</td>
         <td class="item-desc">Whois lookups are automated based on server->domain data entries. (See below.)</td>
@@ -83,20 +73,28 @@
         <td class="item-desc">DNS queries using the *nix dig function. (Not available on Windows servers.)</td>
     </tr>
     <tr>
-        <td class="item">Enable ICMP Ping</td>
-        <td class="item-desc">Ping is limited to a maximum of 10 counts. (Local excution if checked above.)</td>
+        <td class="item">Enable Local ICMP Ping</td>
+        <td class="item-desc">Ping is limited to a maximum of 10 counts. (Excutable entry may include full path.)</td>
     </tr>
     <tr>
-        <td class="item">Enable Traceroute</td>
-        <td class="item-desc">Traceroute from server to specified target. (Local execution if checked above.)</td>
+        <td class="item">Enable Remote ICMP Ping</td>
+        <td class="item-desc">Ping count is determined by remote script. (Target param entry is ?<i>param</i>= in URL.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Local Traceroute</td>
+        <td class="item-desc">Traceroute from your server to specified target. (Excutable entry may include full path.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Remote Traceroute</td>
+        <td class="item-desc">Traceroute from remote server to specified target. (Target param entry is ?<i>param</i>= in URL.)</td>
     </tr>
     <tr>
         <td class="item">Enable Port Check</td>
-        <td class="item-desc">Check specified server for availability of specified port.</td>
+        <td class="item-desc">Checks specified server for availability of specified port.</td>
     </tr>
     <tr>
         <td class="item">Enable Capture Log</td>
-        <td class="item-desc">Logs all Netquery queries in a capturedata.txt file on your server. (Requires write permission.)</td>
+        <td class="item-desc">Logs all Netquery actions in a netquery.log file in Xaraya's var/logs sub-folder.</td>
     </tr>
     <tr><td class="item-heading" colspan=2>Edit-Add-Delete Whois Lookup Links</td></tr>
     <tr>

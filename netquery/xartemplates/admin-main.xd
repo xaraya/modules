@@ -1,11 +1,3 @@
-<script language=javascript>
-function openWindow(sLocation, iWidth, iHeight) {
-    window.open(sLocation, '_blank', "toolbar=no,location=yes,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=" + iWidth + ",height=" + iHeight + ",left=20,top=20");
-}
-function ExecuteWindow(sLocation) {
-    return openWindow(sLocation, 640, 480);
-}
-</script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
@@ -22,7 +14,12 @@ function ExecuteWindow(sLocation) {
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The Netquery module includes whois, DNS, ping, traceroute and port check query functions. Availability of each query type and all entries in the whois lookup data table are configurable by the administrator.</xar:mlstring>
+            <xar:mlstring>The Netquery module includes whois, DNS, ping, traceroute and port check
+            query functions. Availability of each query type, local and remote execution, and all
+            entries in the whois lookup data table are configurable by the administrator. </xar:mlstring>
+            <xar:if condition="1 eq 1">
+                <a href=javascript:openwindow("#$helplink['url']#");>#$helplink['label']#</a>
+            </xar:if>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -32,9 +29,15 @@ function ExecuteWindow(sLocation) {
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>From the menu, you have three choices: </xar:mlstring>
             <ul>
-            <li><xar:mlstring>Modify Config:  From this menu option, you can select which Netquery functions will be available to users of your site. (<b>Please Note</b>: The local system execution option requires read/execute permission for your ping and traceroute executables.)</xar:mlstring></li>
-            <li><xar:mlstring>Edit Whois:  From this menu option, you can edit or delete existing "lookup links" between whois servers and domain name.ext entries.</xar:mlstring></li>
-            <li><xar:mlstring>Add Whois:  From this menu option, you can create new "lookup links" beteen whois servers and domain name.ext entries.</xar:mlstring></li>
+            <li><a href="#xarModURL('netquery', 'admin', 'modifyconfig')#"><xar:mlstring>Modify
+            Config</xar:mlstring></a><xar:mlstring>: From this menu option, you can select which Netquery functions
+            will be available to users of your site and configure local and remote excution.</xar:mlstring></li>
+            <li><a href="#xarModURL('netquery', 'admin', 'view')#"><xar:mlstring>Edit
+            Whois</xar:mlstring></a><xar:mlstring>: From this menu option, you can edit or delete existing
+            "lookup links" between whois servers and domain name.ext (TLD) entries.</xar:mlstring></li>
+            <li><a href="#xarModURL('netquery', 'admin', 'new')#"><xar:mlstring>Add
+            Whois</xar:mlstring></a><xar:mlstring>: From this menu option, you can create new "lookup
+            links" beteen whois servers and domain name.ext (TLD) entries.</xar:mlstring></li>
             </ul>
         </div>
         <br />
@@ -59,3 +62,10 @@ function ExecuteWindow(sLocation) {
         </div>
     </div>
 </div>
+
+<script language="javascript" type="text/javascript">
+    function openwindow(hlpfile)
+    {
+        window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
+    }
+</script>

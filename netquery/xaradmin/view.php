@@ -43,6 +43,13 @@ function netquery_admin_view()
     }
 
     $data['items'] = $links;
+
+    $data['addlink'] = Array('url'   => xarModURL('netquery',
+                                                  'admin',
+                                                  'new'),
+                              'title' => xarML('Add a new whois lookup link'),
+                              'label' => xarML('Add Whois'));
+
     return $data;
 }
 ?>

@@ -11,7 +11,7 @@ function netquery_admin_modify()
         default:
             $data = xarModAPIFunc('netquery',
                                   'admin',
-                                  'get',
+                                  'getwhois',
                                   array('whois_id' => $whois_id));
             if ($data == false) return;
             $data['authid']         = xarSecGenAuthKey();
