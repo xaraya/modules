@@ -313,6 +313,9 @@ function articles_user_archive($args)
 
     // Save some variables to (temporary) cache for use in blocks etc.
     xarVarSetCached('Blocks.articles','ptid',$ptid);
+    if (!empty($cids)) {
+        xarVarSetCached('Blocks.articles','cids',$cids);
+    }
 //if ($shownavigation) {
     xarVarSetCached('Blocks.categories','module','articles');
     xarVarSetCached('Blocks.categories','itemtype',$ptid);
