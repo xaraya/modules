@@ -19,6 +19,11 @@
  */
 function webdavserver_init()
 {
+    // Most privileges will be managed by the underlying modules, we just make distinction between
+    // admining the server and using it, so we can at least divide some operations over 2 groups.
+    xarRegisterMask( 'Usewebdavserver' ,'All' ,'webdavserver' ,'All' ,'All', 'ACCESS_DELETE' );
+    xarRegisterMask( 'Adminwebdavserver' ,'All' ,'webdavserver' ,'All' ,'All', 'ACCESS_ADMIN' );
+
     // Initialisation successful
     return true;
 }

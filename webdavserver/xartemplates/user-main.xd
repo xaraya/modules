@@ -1,16 +1,10 @@
+<xar:template   file="header" type="module"/>
 
-    <xar:template   file="header" type="module"/>
-
-<div xmlns="http://www.w3.org/TR/xhtml1/strict" class="xar-mod-body">
-    <div style="padding: 1px;" class="xar-norm-outline">
-
-        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
-            <p><xar:mlstring  >Add your content here</xar:mlstring></p>
-        </div>
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p><xar:mlstring  >Add the content for your module here. I have not worked hard on the layout here assuming this is your part :)</xar:mlstring></p>
-        </div>
-    </div>
+<div class="xar-mod-body">
+  <div style="padding: 1px;" class="xar-norm-outline">
+    <h4><xar:mlstring>Xaraya WebDAV server</xar:mlstring></h4>
+    <p><xar:mlstring>Idea is to put instructions here for your visitors how they can use Xaraya with their WebDAV clients.</xar:mlstring></p>
+  </div>
 </div>
 
 

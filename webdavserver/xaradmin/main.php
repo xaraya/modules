@@ -20,7 +20,7 @@
 
 function webdavserver_admin_main() {
 
-    if (!xarSecurityCheck( 'Editwebdavserver')) return;
+    if (!xarSecurityCheck( 'Adminwebdavserver')) return;
 
     // Check if we should show the overview page 
     // The admin system looks for a var to be set to skip the introduction

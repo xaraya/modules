@@ -1,3 +1,83 @@
-<xar:template   file="header" type="module"/><div xmlns="http://www.w3.org/TR/xhtml1/strict" class="xar-mod-body"><div style="padding: 1px;" class="xar-norm-outline"><div style="float:right;padding:10px;"><xar:if   condition="file_exists('modules/modules/xarimages/admin.gif')"><img src="modules/modules/xarimages/admin.gif" alt="official icon" width="96" height="96"/><xar:else/><img src="modules/modules/xarimages/admin_generic.gif" alt="official icon" width="96" height="96"/></xar:if></div><div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;"><p><xar:mlstring  >What is it?</xar:mlstring></p></div><div style="margin-left: 1em; margin-right: 1em; text-align:left;"><p><xar:mlstring  >Describe your module here.</xar:mlstring></p></div><div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;"><p><xar:mlstring  >How to use it?</xar:mlstring></p></div><div style="margin-left: 1em; margin-right: 1em; text-align:left;"><p><xar:mlstring  >
-                Describe the usage of your module here.
-                </xar:mlstring></p></div><div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;"><p><xar:mlstring  >Included Blocks</xar:mlstring></p></div><div style="margin-left: 1em; margin-right: 1em; text-align:left;"><p><xar:mlstring  >Describe the block included with your module here.</xar:mlstring></p></div><div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;"><p><xar:mlstring  >Included Hooks</xar:mlstring></p></div><div style="margin-left: 1em; margin-right: 1em; text-align:left;"><p><xar:mlstring  >Describe the provided hooks or delete this section.</xar:mlstring></p></div><div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;"><p><xar:mlstring  >Extended information about this module can be found here. [modules module]</xar:mlstring></p></div></div></div>
+<xar:template file="header" type="module"/>
+<div class="xar-mod-body">
+  <div style="padding: 1px;" class="xar-norm-outline">
+    <div style="float:right;padding:10px;">
+      <img src="#xarTplGetImage('webdav-logo.jpg')#" alt="official icon" />
+    </div>
+    <h4><xar:mlstring>What is it?</xar:mlstring></h4>
+    <p>
+      <xar:mlstring>
+        The webdavserver module exposes the webdav protocol for a Xaraya site.
+        A traditional webdav implementation does this by pointing at a certain 
+        location on the webserver and serving up files from there over WebDAV.
+      </xar:mlstring>
+    </p>
+    <p>
+      <xar:mlstring>
+        The Xaraya WebDAV implementation exposes a virtual filesystem based on
+        the content of the site and (optionally) a location on the server.
+        The modules, their itemtypes and the items therein are elements in this
+        virtual filesystem which can then be accessed over WebDAV.
+      </xar:mlstring>
+    </p>
+    <p>
+      <xar:mlstring>
+        WebDAV runs as a webservice in Xaraya, like xmlrpc and soap, so it's entry
+        point is ws.php instead of index.php. 
+      </xar:mlstring>
+    </p>
+    <h4><xar:mlstring>How to use it?</xar:mlstring></h4>
+    <p>
+      <xar:mlstring>
+        After the usual install through the modules module the WebDAV server is operational
+        and doesn't need any configuration in Xaraya itself. However because we need a virtual
+        filesystem root, we need a mapping from the entrypoint (ws.php?type=webdav&amp;path=/) to 
+        a directory like name where the virtual filesystem starts. To create such a mapping it
+        is necessary at this time to create a ReWrite rule in your webserver.
+      </xar:mlstring>
+    </p>
+    <p>
+      <xar:mlstring>
+        The easiest way (i think) to create such a rewrite rule is to place a .htaccess file in
+        the webroot where xaraya is installed with similar contents as shown below:
+      </xar:mlstring>
+    </p>
+    <pre>
+      RewriteEngine On
+      Options +FollowSymlinks
+      RewriteBase /
+      RewriteRule ^\.htaccess$ - [F]
+      RewriteRule ^content/(.*)$ ws.php?type=webdav&amp;path=/$1
+      php_value always_populate_raw_post_data 1
+      php_value allow_webdav_methods 1
+    </pre>
+    <p>
+      <xar:mlstring>
+        The specific contents of this file may differ in your situation, but there are a number 
+        of elements in it which should be present. The actual rewrite rule is at line 5.
+      </xar:mlstring>
+      <xar:mlstring>Some remarks on the above:</xar:mlstring>
+      <ol>
+        <li><xar:mlstring>Line 1 turns the ReWriteEngine on for Apache, this may not be 
+            necessary if you have this already enabled.</xar:mlstring></li>
+        <li><xar:mlstring>I needed line 2 because some things in my webroot are symbolic links to
+            somewhere else, Line 2 makes sure they are followed through</xar:mlstring></li>
+        <li><xar:mlstring>The rewriterule on line 4 says i forbid access to the .htaccess file itself</xar:mlstring></li>
+        <li><xar:mlstring>The key line in the .htaccess file is line 5. You'll notice the word 'webdav' in there 
+            and the entrypoint for the webdavserver. What this line does is if a request comes in at host.com/content/ over webdav
+            Xaraya actually executes host.com/ws.php?type=webdav&amp;path=/content/</xar:mlstring></li>
+            <pre>http://xaraya.com/content/ -&gt; http://xaraya.com/ws.php?type=webdav&amp;path=/content/</pre>
+      </ol>
+    </p>
+    <p><xar:mlstring>
+      After this the /content/ is the root of the virtual filesystem Xaraya will create and:</xar:mlstring>
+      <pre>http://xaraya.com/content/</pre> <xar:mlstring>will be the location to point your WebDAV to.</xar:mlstring>
+    <h4><xar:mlstring>Limitations</xar:mlstring></h4>
+    <p>
+      <ul>
+        <li><xar:mlstring>Requires PHP version 4.3 later than August 2003</xar:mlstring></li>
+        <li><xar:mlstring>Apache with mod_rewrite is needed</xar:mlstring></li>
+      </ul>
+    </p>
+  </div>
+</div>

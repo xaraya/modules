@@ -23,7 +23,7 @@
 
 function webdavserver_adminapi_getmenulinks ( $args ) {
 
-    if (xarSecurityCheck('Viewwebdavserver')) {
+    if (xarSecurityCheck('Adminwebdavserver')) {
 
         $menulinks[] = array(
             'url'       => xarModURL(
@@ -33,10 +33,10 @@ function webdavserver_adminapi_getmenulinks ( $args ) {
             ,'title'    => 'Show informations'
             ,'label'    => 'Overview' );
 
-        $menulinks[] = array(
-            'url'       => xarModURL( 'webdavserver', 'admin', 'view')
-            ,'title'    => 'Show the main page'
-            ,'label'    => 'Main Page' );
+        //        $menulinks[] = array(
+        //  'url'       => xarModURL( 'webdavserver', 'admin', 'view')
+        //  ,'title'    => 'Show the main page'
+        //  ,'label'    => 'Main Page' );
 
         
         // The main menu will look for this array and return it for a tree
@@ -47,13 +47,13 @@ function webdavserver_adminapi_getmenulinks ( $args ) {
         // for the function that we are displaying.
         
 
-        $menulinks[] = array(
-            'url'       => xarModURL(
-                'webdavserver'
-                ,'admin'
-                ,'config' )
-            ,'title'    => 'Modify the configuration'
-            ,'label'    => 'Modify Config' );
+        //$menulinks[] = array(
+        //  'url'       => xarModURL(
+        //      'webdavserver'
+        //      ,'admin'
+        //      ,'config' )
+        //  ,'title'    => 'Modify the configuration'
+        //  ,'label'    => 'Modify Config' );
 
     }
 

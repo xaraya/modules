@@ -34,7 +34,7 @@ function webdavserver_userapi_getmenulinks ( $args ) {
     // not that he/she doesn't.
     
 
-    if (xarSecurityCheck('Viewwebdavserver')) {
+    if (xarSecurityCheck('Usewebdavserver')) {
         
         // The main menu will look for this array and return it for a tree
         // view of the module. We are just looking for three items in the
