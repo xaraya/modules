@@ -22,7 +22,7 @@
 			#$loop:item['code']#
 		</td>
         <td class="xar-norm">
-			<img src="#$loop:item['icon']#" alt="#$loop:item['emotion']#" />
+			<img src="#xarTplGetImage($loop:item['icon'])#" alt="#$loop:item['emotion']#" />
 		</td>
         <td class="xar-norm">
 			#$loop:item['emotion']#
@@ -34,7 +34,7 @@
 			#$loop:item['code']#
 		</td>
         <td class="xar-accent">
-			<img src="#$loop:item['icon']#" alt="#$loop:item['emotion']#" />
+			<img src="#xarTplGetImage($loop:item['icon'])#" alt="#$loop:item['emotion']#" />
 		</td>
         <td class="xar-accent">
 			#$loop:item['emotion']#

@@ -20,11 +20,9 @@ xarDBLoadTableMaintenanceAPI();
  */
 function smilies_init()
 {
-
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $smiliestable = $xartable['smilies'];
 
     $fields = array(
@@ -37,7 +35,6 @@ function smilies_init()
     $query = xarDBCreateTable($smiliestable,$fields);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-
     $index = array('name'      => 'i_xar_smilies_1',
                    'fields'    => array('xar_code'),
                    'unique'    => TRUE);
@@ -45,43 +42,42 @@ function smilies_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $smilies = array("':D','modules/smilies/xarimages/happy.gif','Happy'",
-                    "':-D','modules/smilies/xarimages/happy.gif','Happy'",
-                    "':grin:','modules/smilies/xarimages/happy.gif','Happy'",
-                    "':\)','modules/smilies/xarimages/smile.gif','Smile'",
-                    "':-\)','modules/smilies/xarimages/smile.gif','Smile'",
-                    "':smile:','modules/smilies/xarimages/smile.gif','Smile'",
-                    "':\(','modules/smilies/xarimages/frown.gif','Frown'",
-                    "':-\(','modules/smilies/xarimages/frown.gif','Frown'",
-                    "':frown:','modules/smilies/xarimages/frown.gif','Frown'",
-                    "':sad:','modules/smilies/xarimages/frown.gif','Frown'",
-                    "':o','modules/smilies/xarimages/surprised.gif','Surprised'",
-                    "':0','modules/smilies/xarimages/surprised.gif','Surprised'",
-                    "':-o','modules/smilies/xarimages/surprised.gif','Surprised'",
-                    "':-0','modules/smilies/xarimages/surprised.gif','Surprised'",
-                    "':eek:','modules/smilies/xarimages/surprised.gif','Surprised'",
-                    "':\?','modules/smilies/xarimages/confused.gif','Confused'",
-                    "':-\?','modules/smilies/xarimages/confused.gif','Confused'",
-                    "'8\)','modules/smilies/xarimages/cool.gif','Cool'",
-                    "'8-\)','modules/smilies/xarimages/cool.gif','Cool'",
-                    "':cool:','modules/smilies/xarimages/cool.gif','Cool'",
-                    "':lol:','modules/smilies/xarimages/lol.gif','LOL!'",
-                    "':x','modules/smilies/xarimages/mad.gif','Mad'",
-                    "':-x','modules/smilies/xarimages/mad.gif','Mad'",
-                    "':mad:','modules/smilies/xarimages/mad.gif','Mad'",
-                    "':p','modules/smilies/xarimages/razz.gif','Razz'",
-                    "':-p','modules/smilies/xarimages/razz.gif','Razz'",
-                    "':razz:','modules/smilies/xarimages/razz.gif','Razz'",
-                    "':oops:','modules/smilies/xarimages/redface.gif','Embarassed'",
-                    "':cry:','modules/smilies/xarimages/cry.gif','Sad'",
-                    "':>','modules/smilies/xarimages/evil.gif','Evil'",
-                    "':->','modules/smilies/xarimages/evil.gif','Evil'",
-                    "':evil:','modules/smilies/xarimages/evil.gif','Evil'",
-                    "':roll:','modules/smilies/xarimages/rolleyes.gif','WhateeeEver!'",
-                    "';\)','modules/smilies/xarimages/wink.gif','Wink'",
-                    "';-\)','modules/smilies/xarimages/wink.gif','Wink'",
-                    "':wink:','modules/smilies/xarimages/wink.gif','Wink'");
-
+    $smilies = array("':D','happy.gif','Happy'",
+                    "':-D','happy.gif','Happy'",
+                    "':grin:','happy.gif','Happy'",
+                    "':\)','smile.gif','Smile'",
+                    "':-\)','smile.gif','Smile'",
+                    "':smile:','smile.gif','Smile'",
+                    "':\(','frown.gif','Frown'",
+                    "':-\(','frown.gif','Frown'",
+                    "':frown:','frown.gif','Frown'",
+                    "':sad:','frown.gif','Frown'",
+                    "':o','surprised.gif','Surprised'",
+                    "':0','surprised.gif','Surprised'",
+                    "':-o','surprised.gif','Surprised'",
+                    "':-0','surprised.gif','Surprised'",
+                    "':eek:','surprised.gif','Surprised'",
+                    "':\?','confused.gif','Confused'",
+                    "':-\?','confused.gif','Confused'",
+                    "'8\)','cool.gif','Cool'",
+                    "'8-\)','cool.gif','Cool'",
+                    "':cool:','cool.gif','Cool'",
+                    "':lol:','lol.gif','LOL!'",
+                    "':x','mad.gif','Mad'",
+                    "':-x','mad.gif','Mad'",
+                    "':mad:','mad.gif','Mad'",
+                    "':p','razz.gif','Razz'",
+                    "':-p','razz.gif','Razz'",
+                    "':razz:','razz.gif','Razz'",
+                    "':oops:','redface.gif','Embarassed'",
+                    "':cry:','cry.gif','Sad'",
+                    "':>','evil.gif','Evil'",
+                    "':->','evil.gif','Evil'",
+                    "':evil:','evil.gif','Evil'",
+                    "':roll:','rolleyes.gif','WhateeeEver!'",
+                    "';\)','wink.gif','Wink'",
+                    "';-\)','wink.gif','Wink'",
+                    "':wink:','wink.gif','Wink'");
 
     foreach ($smilies as $smilie) {
         // Get next ID in table
@@ -89,7 +85,6 @@ function smilies_init()
         $query = "INSERT INTO $smiliestable VALUES ($nextId,$smilie)";
         $result =& $dbconn->Execute($query);
         if (!$result) return;
-
     }
 
     // Set up module variables
@@ -108,9 +103,7 @@ function smilies_init()
                             'API',
                             'smilies',
                             'user',
-                            'transform')) {
-        return false;
-    }
+                            'transform')) return;
 
     // Register Masks
     xarRegisterMask('OverviewSmilies','All','smilies','All','All','ACCESS_READ');
@@ -123,15 +116,28 @@ function smilies_init()
     // Initialisation successful
     return true;
 }
-
-
-function smilies_upgrade($oldversion){
+function smilies_upgrade($oldversion)
+{
     switch($oldversion){
        case '1.0':
+       case '1.0.0':
+            $smilies = xarModAPIFunc('smilies','user','getall');
+            foreach ($smilies as $smile){
+                // get rid of the 
+                $smile['iconupdated'] = basename($smile['icon']);
+                // update the field
+                if(!xarModAPIFunc('smilies',
+                                  'admin',
+                                  'update',
+                                   array('sid'      => $smile['sid'],
+                                         'code'     => $smile['code'],
+                                         'icon'     => $smile['iconupdated'],
+                                         'emotion'  => $smile['emotion']))) return;
+            }
+            break;
     }
     return true;
 }
-
 /**
  * delete the smiley module
  */
@@ -143,21 +149,18 @@ function smilies_delete()
                               'API',
                               'smilies',
                               'user',
-                              'transform')) {
-        return false;
-    }
+                              'transform')) return;
 
     // Drop the table
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $smiliestable = $xartable['smilies'];
     $query = xarDBDropTable($smiliestable);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
     // Remove module variables
-    xarModDelVar('smilies', 'itemsperpage');
+    xarModDelAllVars('smilies');
 
     // UnRegister blocks
     if (!xarModAPIFunc('blocks',
@@ -173,5 +176,4 @@ function smilies_delete()
     // Deletion successful
     return true;
 }
-
 ?>
