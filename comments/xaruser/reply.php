@@ -47,7 +47,7 @@ function comments_user_reply()
             }
             // call transform input hooks
             // should we look at the title as well?
-            $package['text'] = xarModCallHooks('item', 'transform-input', 0, $package['text'], 
+            $package['text'] = xarModCallHooks('item', 'transform-input', 0, array($package['text']), 
                                                'comments', 0); 
                                                            
             xarModAPIFunc('comments','user','add',
