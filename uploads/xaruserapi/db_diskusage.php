@@ -56,18 +56,18 @@ function uploads_userapi_db_diskusage( $args )  {
 
     if (count($where) > 1) {
         if ($inverse) {
-            $where = implode(' OR ', $where);
+            $where = 'WHERE NOT (' . implode(' OR ', $where) .')';
         } else {
-            $where = implode(' AND ', $where);
+            $where = 'WHERE ' . implode(' AND ', $where);
         }
     } elseif (count($where) == 1) {
-        $where = implode('', $where);
+        if ($inverse) {
+            $where = 'WHERE NOT (' . implode('', $where) . ')';
+        } else {
+            $where = 'WHERE ' . implode('', $where);
+        }
     } else {
         $where = '';
-    }
-    
-    if ($inverse) {
-        $where = "NOT ($where)";
     }
     
     // Get database setup
@@ -79,7 +79,7 @@ function uploads_userapi_db_diskusage( $args )  {
     
     $sql = "SELECT SUM(xar_filesize) AS disk_usage
               FROM $fileEntry_table
-             WHERE $where";
+            $where";
     
     $result = $dbconn->Execute($sql);
 
