@@ -9,7 +9,12 @@
 <table border="1" width="100%">
     <tr bgcolor="#CCCCCC"><td width="1%" nowrap="nowrap"><strong>Form element</strong></td><td><strong>HTML output</strong></td></tr>
     <?php foreach ($_POST as $name => $value) { ?>
-        <tr><td width="1%" nowrap="nowrap"><?php=$name?></td><td><?php=stripslashes($value)?></td></tr>
+        <tr><td width="1%" nowrap="nowrap"><?php=$name?>
+        </td>
+        <td>
+        <?php=stripslashes($value)?>
+        </td>
+        </tr>
     <?php } ?>
 </table>
 
@@ -18,10 +23,14 @@
 <table border="1" width="100%">
     <tr bgcolor="#CCCCCC"><td width="1%" nowrap="nowrap"><strong>Form element</td><td><strong>Source output</strong></td></tr>
     <?php foreach ($_POST as $name => $value) { ?>
-        <tr><td width="1%" nowrap="nowrap"><?php=$name?></td><td><?php=htmlentities(stripslashes($value))?></td></tr>
+        <tr><td width="1%" nowrap="nowrap"><?php=$name?>
+        </td>
+        <td>
+        <?php=htmlentities(stripslashes($value))?>
+        </td>
+        </tr>
     <?php } ?>
 </table>
 
 </body>
 </html>
-
