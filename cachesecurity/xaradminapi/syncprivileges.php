@@ -74,6 +74,15 @@ function cachesecurity_adminapi_syncprivileges ()
                 $privileges[$i]['xar_instance'.($j+1)] = $instances[$j];
             }
         }
+
+        //Extra Hack. Sometimes modules appear with the first letter upper case
+        //Sometimes all lowered.
+        if ($privileges[$i]['xar_module'] != 'All') {
+            $privileges[$i]['xar_module'] = strtolower($privileges[$i]['xar_module']);
+        }
+        if ($privileges[$i]['xar_component'] != 'All') {
+            $privileges[$i]['xar_component'] = strtolower($privileges[$i]['xar_component']);
+        }
     }
 
     $columns = array_keys($privileges[0]);

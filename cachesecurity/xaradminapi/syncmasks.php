@@ -66,6 +66,15 @@ function cachesecurity_adminapi_syncmasks()
                 $masks[$i]['xar_instance'.($j+1)] = $instances[$j];
             }
         }
+
+        //Extra Hack. Sometimes modules appear with the first letter upper case
+        //Sometimes all lowered.
+        if ($masks[$i]['xar_module'] != 'All') {
+            $masks[$i]['xar_module'] = strtolower($masks[$i]['xar_module']);
+        }
+        if ($masks[$i]['xar_component'] != 'All') {
+            $masks[$i]['xar_component'] = strtolower($masks[$i]['xar_component']);
+        }
     }
 
     $columns = array_keys($masks[0]);
