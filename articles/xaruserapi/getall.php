@@ -169,7 +169,8 @@ function articles_userapi_getall($args)
             $select[] = $articlesdef[$field];
         }
     }
-    $query = 'SELECT ' . join(', ', $select);
+    // we need distinct for multi-category OR selects where articles fit in more than 1 category
+    $query = 'SELECT DISTINCT ' . join(', ', $select);
 
     // Create the FROM ... [LEFT JOIN ... ON ...] part
     $from = $articlesdef['table'];
