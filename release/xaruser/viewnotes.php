@@ -2,6 +2,9 @@
 
 function release_user_viewnotes()
 {
+    if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
 
@@ -31,7 +34,7 @@ function release_user_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('roles',
+                                        'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
                                         'approved' => 2));
             if ($items == false){
@@ -47,7 +50,7 @@ function release_user_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('roles',
+                                        'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
                                         'certified'=> 2));
             
@@ -64,7 +67,7 @@ function release_user_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('roles',
+                                        'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
                                         'price'    => 2));
             
@@ -81,7 +84,7 @@ function release_user_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('roles',
+                                        'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
                                         'price'    => 1));
             
@@ -98,7 +101,7 @@ function release_user_viewnotes()
                                    'user',
                                    'getallnotes',
                                   array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('roles',
+                                        'numitems' => xarModGetVar('release',
                                                                   'itemsperpage'),
                                         'supported'=> 2));
             
@@ -143,12 +146,17 @@ function release_user_viewnotes()
 
     }
 
-
+    $phase=strtolower($phase);
     // Add the array of items to the template variables
     $data['items'] = $items;
 
     // TODO : add a pager (once it exists in BL)
-    $data['pager'] = '';
+    $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('release', 'user', 'countnotes',array('phase'=>$phase)),
+        xarModURL('release', 'user', 'viewnotes', array('startnum' => '%%','phase'=>$phase,
+                                                                           'filter'=>$filter,
+                                                                            'type' =>$type)),
+        xarModGetUserVar('release', 'itemsperpage', $uid));
 
     // Return the template variables defined in this function
     return $data;

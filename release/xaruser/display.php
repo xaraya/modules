@@ -339,6 +339,7 @@ function release_user_display()
     $data['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
     $data['realname'] = $getuser['name'];
     $data['rid'] = $rid;
+
     return $data;
 }
 

@@ -3,8 +3,13 @@
 <div class="xar-mod-body">
   <h2><xar:mlstring>View Modules and Themes</xar:mlstring></h2>
 
-  <b><xar:mlstring>Sort By</xar:mlstring>:</b>
-  <br /><br />
+  <div style="margin-top:20px; margin-bottom:40px;">
+
+  <span style="float:left; text-align:left; width:15%;">
+    <strong><xar:mlstring>Filter By</xar:mlstring>:</strong>
+  </span>
+  <span style="float:left; text-align:left; width:85%;">
+
   <form action="#xarModURL('release', 'user', 'viewnotes')#" method="post" enctype="application/x-www-form-urlencoded">
 	  <input type="radio" name="phase" id="phase" value="certified"  />
 	  <xar:mlstring>Certified</xar:mlstring>
@@ -16,7 +21,9 @@
 	  <xar:mlstring>Supported</xar:mlstring>
     &nbsp;&nbsp;<input type="submit" value="Refresh"  tabindex="6" />
   </form>
-  <br /><br />
+  </span>
+</div>
+
 
   <xar:if condition="!empty($message)">
 	  <b>#$message#</b>
@@ -51,3 +58,8 @@
     </xar:loop>
   </xar:if>
 </div>
+<p>
+<!-- add the pager here -->
+#$pager#
+</p>
+
