@@ -3,7 +3,7 @@
     <xar:foreach in="$commentlist" value="$comment">
 
 	    <tr>
-    	  <td width="100%">               
+    	  <td style="width:100%;">               
 			<xar:if condition="$adddaysep=='on'">
 			  <xar:if condition="$comment['daychange']">
 				<!-- DAY SEPARATOR -->
@@ -62,22 +62,22 @@
 			<span class="xar-normal">
 			  <xar:if condition="$addauthor ge 1">                          
 				<!-- AUTHOR NAME-->  
-				<br /><xar:mlstring>by</xar:mlstring> 
+				<br /><xar:mlstring>by</xar:mlstring>
 				<xar:if condition="$comment['xar_postanon'] eq 0 or xarModGetVar('comments','AllowPostAsAnon') eq 0">
 				  <xar:if condition="$addauthor ge 2">
 					<a href="#xarModURL('users','user','view')#">
 				  </xar:if>
-				  #$comment['xar_author']#
+				  &nbsp;#$comment['xar_author']#
 				  <xar:if condition="$addauthor ge 2">
 					</a>
-				  </xar:if>  
+				  </xar:if>
 				<xar:else />
-				  <xar:mlstring>Anonymous</xar:mlstring>
+				  &nbsp;<xar:mlstring>Anonymous</xar:mlstring>
 				</xar:if>
 			  </xar:if> 
 			  <xar:if condition="$adddate=='on'">
 				<!-- DATE -->  
-				<xar:mlstring>on</xar:mlstring> #$comment['xar_date']#
+				<xar:mlstring>on</xar:mlstring>&nbsp;#$comment['xar_date']#
 			  </xar:if>
 			</span>
     	  </td>
@@ -86,7 +86,7 @@
     </xar:foreach>
     <xar:if condition="$addprevious=='on'">
       <tr>
-        <td width="100%">               
+        <td style="width:100%;">
           <p><a href="#$olderurl#">
             <xar:mlstring>Older comments</xar:mlstring>
             </a>
