@@ -107,7 +107,7 @@ function bbcode_encode($message, $is_html_disabled)
                                    'getall');
 
             foreach ($codes as $code) {
-                if (strpos(strtolower($message), $code['tag'])) {
+                if ((strpos(strtolower($message), $code['tag'])) or (preg_match($code['tag'], $message))) {
                     $message = xarModAPIFunc('bbcode',
                                              'user',
                                              $code['name'],
