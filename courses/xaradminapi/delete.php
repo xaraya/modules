@@ -62,8 +62,8 @@ function courses_adminapi_delete($args)
     // we currently just want the first item, which is the official
     // database handle.  For xarDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
     // modules

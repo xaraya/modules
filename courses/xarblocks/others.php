@@ -62,8 +62,8 @@ function courses_othersblock_display($blockinfo)
     }
     // Database information
     xarModDBInfoLoad('courses');
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $coursestable = $xartable['courses'];
     // Query
     $sql = "SELECT xar_courseid,
