@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * This is a standard function to modify the configuration parameters of the
@@ -14,18 +26,10 @@ function polls_admin_modifyconfig()
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
 
-    // everything else happens in Template for now
-    // prepare labels and values for display by the template
-
     $data['barscale'] = xarModGetVar('polls', 'barscale');
-
-    $data['itemsperpage'] = xarModGetVar('polls', 'itemsperpage');
-
     $data['defaultopts'] = xarModGetVar('polls', 'defaultopts');
-
-    $data['comments'] = xarModGetVar('polls', 'comments');
-
     $data['previewresults'] = xarModGetVar('polls', 'previewresults');
+    $data['shorturl'] = xarModGetVar('polls', 'SupportShortURLs');
 
     $data['imggraphs'] = array();
     $data['imggraphs']['0'] = xarML('Never');

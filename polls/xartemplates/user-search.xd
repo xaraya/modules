@@ -1,17 +1,59 @@
-<h2><xar:mlstring>Search Polls</xar:mlstring></h2>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<h2>
+    <xar:mlstring>
+        Search in Polls
+    </xar:mlstring>
+</h2>
 <xar:if condition="!empty($polls) and count($polls) gt 0">
-    <h3><xar:mlstring>Polls Found</xar:mlstring>:</h3>
+    <h4>
+        <xar:mlstring>
+            Polls Found
+        </xar:mlstring>
+        :
+    </h4>
     <ul>
-    <xar:foreach in="$polls" key="$pid" value="$poll">
-        <li><a href="#xarModURL('polls', 'user', 'display', array('pid' => $poll['pid']))#">#$poll['title']#</a></ul>
-    </xar:foreach>
+        <xar:foreach in="$polls" key="$pid" value="$poll">
+            <li>
+                <a href="#xarModURL('polls', 'user', 'display', array('pid' => $poll['pid']))#">
+                    #$poll['title']#
+                </a>
+            </li>
+        </xar:foreach>
     </ul>
 <xar:else/>
-<xar:if condition="!empty($status)">
-<p>#$status#</p>
+    <xar:if condition="!empty($status)">
+        <p>
+            #$status#
+        </p>
+    </xar:if>
 </xar:if>
-</xar:if>
-
-<p><xar:mlstring>Search</xar:mlstring>:</p>
-<p><xar:mlstring>Poll Title</xar:mlstring>:&nbsp;&nbsp;<input type="checkbox" name="polls_title" value="1" checked="checked" /> </p>
-<p><xar:mlstring>Poll Options</xar:mlstring>:&nbsp;&nbsp;<input type="checkbox" name="polls_options" value="1" checked="checked" /></p>
+<p>
+    <xar:mlstring>
+        Search in
+    </xar:mlstring>
+    :
+</p>
+<p>
+    <xar:mlstring>
+        Poll Title
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$title == 1">
+    <input type="checkbox" name="title" id="title" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="title" id="title" value="1" />
+    </xar:if>
+</p>
+<p>
+    <xar:mlstring>
+        Poll Options
+    </xar:mlstring>
+    :&nbsp;&nbsp;
+    <xar:if condition="$options == 1">
+    <input type="checkbox" name="options" id="options" value="1" checked="checked" />
+    <xar:else />
+    <input type="checkbox" name="options" id="options" value="1" />
+    </xar:if>
+</p>

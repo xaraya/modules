@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * reset a poll
@@ -34,8 +46,8 @@ function polls_adminapi_reset($args)
     $prefix = xarConfigGetVar('prefix');
 
     $sql = "UPDATE $pollsinfotable
-            SET ".$prefix."_votes = 0
-            WHERE ".$prefix."_pid = ?";
+            SET xar_votes = 0
+            WHERE xar_pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
@@ -45,9 +57,9 @@ function polls_adminapi_reset($args)
     $pollstable = $xartable['polls'];
 
     $sql = "UPDATE $pollstable
-            SET ".$prefix."_votes = 0,
-            ".$prefix."_reset = ".time()."
-            WHERE ".$prefix."_pid = ?";
+            SET xar_votes = 0,
+            xar_reset = ".time()."
+            WHERE xar_pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {

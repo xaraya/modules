@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * delete a poll
@@ -34,7 +46,7 @@ function polls_adminapi_delete($args)
     $prefix = xarConfigGetVar('prefix');
 
     $sql = "DELETE FROM $pollsinfotable
-            WHERE ".$prefix."_pid = ?";
+            WHERE xar_pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
@@ -44,11 +56,18 @@ function polls_adminapi_delete($args)
     $pollstable = $xartable['polls'];
 
     $sql = "DELETE FROM $pollstable
-            WHERE ".$prefix."_pid = ?";
+            WHERE xar_pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
     if (!$result) {
         return;
     }
+
+    $args['pid'] = $pid;
+    $args['module'] = 'polls';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $pid;
+
+    xarModCallHooks('item', 'delete', $pid, $args);
 
     return true;
 }

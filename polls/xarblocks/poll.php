@@ -1,14 +1,16 @@
 <?php
-// File: $Id: s.poll.php 1.8 03/02/09 00:22:42+01:00 besfred@chimera.medusa $
-// ----------------------------------------------------------------------
-// Xaraya eXtensible Management System
-// Copyright (C) 2002 by the Xaraya Development Team.
-// http://www.xaraya.org
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file: Poll Block
-// ----------------------------------------------------------------------
-
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 /**
  * initialise block
  */
@@ -161,13 +163,13 @@ function polls_pollblock_modify($blockinfo)
  */
 function polls_pollblock_update($blockinfo)
 {
-    $vars['pid'] = xarVarCleanFromInput('pid');
+    xarVarFetch('pid', 'id', $vars['pid'], -1, XARVAR_DONT_SET);
 
     // Defaults
-    if (empty($vars['pid'])) {
+    /* if (empty($vars['pid'])) {
         $vars['pid'] = -1;
     }
-
+*/
 
     $blockinfo['content'] = serialize($vars);
 

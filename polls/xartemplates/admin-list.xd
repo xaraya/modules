@@ -1,38 +1,194 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Existing Poll List</xar:mlstring></h2><br/>
-<xar:if condition="!isset($polls)">
-<div style="text-align: center; margin: auto;"><br/><br/><xar:mlstring>There are no polls available</xar:mlstring><br/><br/></div>
-<xar:else/>
-<table style="width: 100%;border: 0" cellpadding="2" cellspacing="1" class="xar-accent">
-    <tr>
-        <th><xar:mlstring>Title</xar:mlstring></th>
-        <th><xar:mlstring>Actions</xar:mlstring></th>
-    </tr>
-    <xar:loop name="$polls">
-    <tr>
-        <td class="xar-norm">#$loop:item['title']# (#$loop:item['type']#  - #$loop:item['open']#) #$loop:item['votes']# <xar:mlstring>votes</xar:mlstring>
-        <xar:if condition="$loop:item['private']"> [ <span class="xar-error"><xar:mlstring>Private</xar:mlstring></span> ]</xar:if>
-        </td>
-        <td style="text-align: center;" class="xar-norm"> [ 
-        <a href="#$loop:item['action_display']#"><xar:mlstring>Edit Options</xar:mlstring></a> | 
-        <xar:if condition="isset($loop:item['action_close'])">
-            <a href="#$loop:item['action_close']#"><xar:mlstring>Close</xar:mlstring></a> | 
-        </xar:if>
-        <xar:if condition="isset($loop:item['action_modify'])">
-            <a href="#$loop:item['action_modify']#"><xar:mlstring>Modify</xar:mlstring></a> | 
-        </xar:if>
-        <xar:if condition="isset($loop:item['action_reset'])">
-            <a href="#$loop:item['action_reset']#"><xar:mlstring>Reset</xar:mlstring></a> | 
-        </xar:if>
-        <a href="#$loop:item['action_delete']#"><xar:mlstring>Delete</xar:mlstring></a> ]
-        </td>
-    </tr>
-    </xar:loop>
-</table>
-<xar:if condition="empty($hooked)">
-    <p><a href="&xar-modurl-polls-admin-list;&amp;hooked=1"><xar:mlstring>Include Hooked Polls</xar:mlstring></a></p>
-<xar:else/>
-    <p><a href="&xar-modurl-polls-admin-list;"><xar:mlstring>Hide Hooked Polls</xar:mlstring></a></p>
-</xar:if>
-</xar:if>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Polls Administration
+        </xar:mlstring>
+    </span>
+</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Existing Poll List
+        </xar:mlstring>
+    </h2>
+    <div class="xar-fullwidth xar-noborder" style="padding-top: 10px;">
+        <form method="post" action="#xarModUrl('polls', 'admin', 'list')#">
+            <span style="float: left; width: 20%; text-align: center;">
+                <label for="polls">
+                    <xar:mlstring>
+                        Show polls
+                    </xar:mlstring>
+                </label>
+                :
+            </span>
+            <span style="float: left; width: 20%; text-align: left;">
+                <select name="status" id="status" onchange="this.form.submit()">
+                <xar:if condition="$status eq 2">
+                    <option value = 1 selected = selected>
+                    <xar:mlstring>
+                        opened
+                    </xar:mlstring>
+                    </option>
+                <xar:else />
+                    <option value = 1>
+                    <xar:mlstring>
+                        opened
+                    </xar:mlstring>
+                    </option>
+                </xar:if>
+                <xar:if condition="$status eq 0">
+                    <option value = 0 selected=selected>
+                    <xar:mlstring>
+                        closed
+                    </xar:mlstring>
+                    </option>
+                <xar:else />
+                    <option value = 0>
+                    <xar:mlstring>
+                        closed
+                    </xar:mlstring>
+                    </option>
+                </xar:if>
+                <xar:if condition="$status eq 2">
+                    <option value = 2 selected = selected>
+                    <xar:mlstring>
+                        all
+                    </xar:mlstring>
+                    </option>
+                <xar:else />
+                <option value = 2>
+                    <xar:mlstring>
+                        all
+                    </xar:mlstring>
+                    </option>
+                </xar:if>
+                </select>
+            </span>
+        </form>
+    </div>
+
+        <xar:if condition="!isset($polls)">
+            <div style="text-align: center; margin: auto; clear: both; padding-top: 10px;">
+                <xar:mlstring>
+                    There are no polls available
+                </xar:mlstring>
+            </div>
+        <xar:else/>
+        <div class="xar-fullwidth xar-noborder" style="padding-top: 20px;">
+            <table cellpadding="1" cellspacing="1" width="100%">
+                <tr>
+                    <th style="text-align: center;">
+                        <label class="xar-mod-title">
+                            <xar:mlstring>
+                                Title
+                            </xar:mlstring>
+                        </label>
+                    </th>
+                    <th style="text-align: center;">
+                        <label class="xar-mod-title">
+                            <xar:mlstring>
+                                Type
+                            </xar:mlstring>
+                        </label>
+                    </th>
+                    <th style="text-align: center;">
+                        <label class="xar-mod-title">
+                            <xar:mlstring>
+                                Hooked
+                            </xar:mlstring>
+                        </label>
+                    </th>
+                    <th style="text-align: center;">
+                        <label class="xar-mod-title">
+                            <xar:mlstring>
+                                Status
+                            </xar:mlstring>
+                        </label>
+                    </th>
+                    <th style="text-align: center;">
+                        <label class="xar-mod-title">
+                            <xar:mlstring>
+                                Votes
+                            </xar:mlstring>
+                        </label>
+                    </th>
+                    <th style="text-align: center;">
+                        <label class="xar-mod-title">
+                            <xar:mlstring>
+                                Actions
+                            </xar:mlstring>
+                        </label>
+                    </th>
+                </tr>
+                <xar:loop name="$polls">
+                <tr>
+                    <td style="text-align: left;">
+                        #$loop:item['title']#
+                        <xar:if condition="$loop:item['private']">
+                            [
+                            <span class="xar-error">
+                                <xar:mlstring>
+                                    Private
+                                </xar:mlstring>
+                            </span> ]
+                        </xar:if>
+                    </td>
+                    <td style="text-align: center;">
+                        #$loop:item['type']#
+                    </td>
+                    <td style="text-align: center;">
+                        #$loop:item['hook']#
+                    </td>
+                    <td style="text-align: center;">
+                        #$loop:item['open']#
+                    </td>
+                    <td style="text-align: center;">
+                        #$loop:item['votes']#
+                    </td>
+                    <td style="text-align: center;" class="xar-norm"> [
+                        <a href="#$loop:item['action_display']#">
+                            <xar:mlstring>
+                                Options
+                            </xar:mlstring>
+                        </a>
+                        |
+                        <xar:if condition="isset($loop:item['action_close'])">
+                            <a href="#$loop:item['action_close']#">
+                                <xar:mlstring>
+                                    Close
+                                </xar:mlstring>
+                            </a>
+                            |
+                        </xar:if>
+                        <xar:if condition="isset($loop:item['action_modify'])">
+                            <a href="#$loop:item['action_modify']#">
+                                <xar:mlstring>
+                                    Modify
+                                </xar:mlstring>
+                            </a>
+                            |
+                        </xar:if>
+                        <xar:if condition="isset($loop:item['action_reset'])">
+                            <a href="#$loop:item['action_reset']#">
+                                <xar:mlstring>
+                                    Reset
+                                </xar:mlstring>
+                            </a>
+                            |
+                        </xar:if>
+                        <a href="#$loop:item['action_delete']#">
+                            <xar:mlstring>
+                                Delete
+                            </xar:mlstring>
+                        </a>
+                        ]
+                    </td>
+                </tr>
+            </xar:loop>
+            </table>
+        </div>
+    </xar:if>
 </div>

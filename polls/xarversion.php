@@ -13,7 +13,7 @@
 
 $modversion['name'] = 'polls';
 $modversion['id'] = '23';
-$modversion['version'] = '1.3.0';
+$modversion['version'] = '1.4.0';
 $modversion['displayname']    = xarML('Polls');
 $modversion['description'] = 'Conduct polls';
 $modversion['credits'] = 'xardocs/credits.txt';
@@ -27,4 +27,5 @@ $modversion['user'] = 1;
 $modversion['securityschema'] = array('Polls::' => 'Poll name::Poll ID');
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Content';
+
 ?>

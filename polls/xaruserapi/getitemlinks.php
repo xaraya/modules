@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * utility function to pass individual item links to whoever
@@ -18,13 +30,12 @@ function polls_userapi_getitemlinks($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
-    $prefix = xarConfigGetVar('prefix');
 
     // Get polls
-    $sql = "SELECT ".$prefix."_pid,
-                   ".$prefix."_title
+    $sql = "SELECT xar_pid,
+                   xar_title
             FROM $pollstable
-            WHERE ".$prefix."_pid IN (". join(', ', $itemids) . ")";
+            WHERE xar_pid IN (". join(', ', $itemids) . ")";
     $result =& $dbconn->Execute($sql);
     if (!$result) return;
 

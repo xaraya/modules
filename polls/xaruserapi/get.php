@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * get a specific item
@@ -10,45 +22,41 @@ function polls_userapi_get($args)
 {
     // Get arguments from argument array
     extract($args);
- // Optional arguments.
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
+
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
-    $prefix = xarConfigGetVar('prefix');
 
     $bindvars  = array();
     // Selection check
     if (!empty($pid)) {
-        $extra = "WHERE ".$prefix."_pid = ?";
+        $extra = "WHERE xar_pid = ?";
         $bindvars[]=(int)$pid;
     } else {
-        $extra = "WHERE ".$prefix."_modid = " . xarModGetIDFromName('polls');
-        $extra .= " ORDER BY ".$prefix."_pid DESC";
+        $extra = "WHERE xar_modid = " . xarModGetIDFromName('polls');
+        $extra .= " ORDER BY xar_pid DESC";
     }
 
     // Get item
-    $sql = "SELECT ".$prefix."_pid,
-                   ".$prefix."_title,
-                   ".$prefix."_type,
-                   ".$prefix."_open,
-                   ".$prefix."_private,
-                   ".$prefix."_modid,
-                   ".$prefix."_itemtype,
-                   ".$prefix."_itemid,
-                   ".$prefix."_opts,
-                   ".$prefix."_votes,
-                   ".$prefix."_reset
+    $sql = "SELECT xar_pid,
+                   xar_title,
+                   xar_type,
+                   xar_open,
+                   xar_private,
+                   xar_modid,
+                   xar_itemtype,
+                   xar_itemid,
+                   xar_opts,
+                   xar_votes,
+                   xar_reset
             FROM $pollstable
             $extra";
 
     if (!empty($pid)) {
-         $result = $dbconn->SelectLimit($sql, 1, $startnum-1, $bindvars);
+         $result = $dbconn->execute($sql, $bindvars);
     }else {
-         $result = $dbconn->SelectLimit($sql, 1);
+         $result = $dbconn->execute($sql);
     }
 
     // Error check
@@ -74,12 +82,12 @@ function polls_userapi_get($args)
     // Get the options for this poll
     $pollsinfotable = $xartable['polls_info'];
 
-    $sql = "SELECT ".$prefix."_optnum,
-                   ".$prefix."_optname,
-                   ".$prefix."_votes
+    $sql = "SELECT xar_optnum,
+                   xar_optname,
+                   xar_votes
             FROM $pollsinfotable
-            WHERE ".$prefix."_pid = ?
-            ORDER BY ".$prefix."_optnum";
+            WHERE xar_pid = ?
+            ORDER BY xar_optnum";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {

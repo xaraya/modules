@@ -1,93 +1,135 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Configure Polls</xar:mlstring></h2><br />
-<div style="margin: auto;">
-    <form method="post" action="&xar-modurl-polls-admin-updateconfig;">
-    <input type="hidden" name="authid" value="#$authid#">
-<table cellspacing="0" cellpadding="2" style="margin: auto;border: 0px;">
-        <tr>
-            <td>
-                 <label for="barscale"><xar:mlstring>Scale of result bar</xar:mlstring>:</label>
-            </td>
-            <td>
-                <input type="text" name="barscale" id="barscale" value="#$barscale#" size="4" maxlength="3">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label for="defaultopts"><xar:mlstring>Number of options for new polls</xar:mlstring>:</label>
-            </td>
-            <td>
-                <input type="text" name="defaultopts" id="defaultopts" value="#$defaultopts#">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label for="itemsperpage"><xar:mlstring>Number of polls per list page</xar:mlstring>:</label>
-            </td>
-            <td>
-                <input type="text" name="itemsperpage" id="itemsperpage" value="#$itemsperpage#">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label for="comments"><xar:mlstring>Activate comments in polls?</xar:mlstring></label>
-            </td>
-            <td>
-                <xar:if condition="$comments == 1">
-                    <input type="checkbox" name="comments" id="comments" value="1" checked="checked">
-                <xar:else />
-                    <input type="checkbox" name="comments" id="comments" value="1">
-                </xar:if>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="imggraph"><xar:mlstring>Use images for graph display</xar:mlstring>:</label>
-            </td>
-            <td>
-                <select name="imggraph" id="imggraph">
-                <xar:foreach in="$imggraphs" value="$v" key="$k">
-                <xar:if condition="$imggraph eq $k">
-                   <option value="#$k#" selected="selected">#$v#</option>
-                <xar:else/>
-                   <option value="#$k#">#$v#</option>
-                </xar:if>
-                </xar:foreach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="voteinterval"><xar:mlstring>Allow users to vote (per poll)</xar:mlstring>:</label>
-            </td>
-            <td>
-                <select name="voteinterval" id="voteinterval">
-                <xar:foreach in="$voteintervals" value="$v" key="$k">
-                <xar:if condition="$voteinterval eq $k">
-                   <option value="#$k#" selected="selected">#$v#</option>
-                <xar:else/>
-                   <option value="#$k#">#$v#</option>
-                </xar:if>
-                </xar:foreach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                 <label for="previewresults"><xar:mlstring>Allow users to see results before voting?</xar:mlstring></label>
-            </td>
-            <td>
-                <xar:if condition="$previewresults == 1">
-                    <input type="checkbox" name="previewresults" id="previewresults" value="1" checked="checked">
-                <xar:else />
-                    <input type="checkbox" name="previewresults" id="previewresults" value="1">
-                </xar:if>
-            </td>
-        </tr>
-    </table><br /><br />
-<div style="text-align: center; margin: auto;">
-    <input type="submit" value="Submit" />
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Polls Administration
+        </xar:mlstring>
+    </span>
 </div>
-    </form>
-</div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Configure Polls
+        </xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+        <form method="post" action="&xar-modurl-polls-admin-updateconfig;">
+            <input type="hidden" name="authid" value="#$authid#">
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 35%; text-align: right;">
+                        <label for="barscale">
+                            <xar:mlstring>
+                                Scale of result bar
+                            </xar:mlstring>
+                            :
+                        </label>
+                    </span>
+                    <span style="float: right; width: 63%; text-align: left;">
+                        <input type="text" name="barscale" id="barscale" value="#$barscale#" size="4" maxlength="3">
+                    </span>
+                </div>
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 35%; text-align: right;">
+                        <label for="defaultopts">
+                            <xar:mlstring>
+                                Number of options for new polls
+                            </xar:mlstring>
+                            :
+                        </label>
+                    </span>
+                    <span style="float: right; width: 63%; text-align: left;">
+                        <input type="text" name="defaultopts" id="defaultopts" value="#$defaultopts#">
+                    </span>
+                </div>
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 35%; text-align: right;">
+                        <label for="imggraph">
+                            <xar:mlstring>
+                                Use images for graph display
+                            </xar:mlstring>
+                            :
+                        </label>
+                    </span>
+                    <span style="float: right; width: 63%; text-align: left;">
+                        <select name="imggraph" id="imggraph">
+                            <xar:foreach in="$imggraphs" value="$v" key="$k">
+                                <xar:if condition="$imggraph eq $k">
+                                    <option value="#$k#" selected="selected">
+                                        #$v#
+                                    </option>
+                                <xar:else/>
+                                    <option value="#$k#">
+                                        #$v#
+                                    </option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </span>
+                </div>
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 35%; text-align: right;">
+                        <label for="voteinterval">
+                            <xar:mlstring>
+                                Allow users to vote (per poll)
+                            </xar:mlstring>
+                            :
+                        </label>
+                    </span>
+                    <span style="float: right; width: 63%; text-align: left;">
+                        <select name="voteinterval" id="voteinterval">
+                            <xar:foreach in="$voteintervals" value="$v" key="$k">
+                                <xar:if condition="$voteinterval eq $k">
+                                    <option value="#$k#" selected="selected">
+                                        #$v#
+                                    </option>
+                                <xar:else/>
+                                    <option value="#$k#">
+                                        #$v#
+                                    </option>
+                                </xar:if>
+                            </xar:foreach>
+                        </select>
+                    </span>
+                </div>
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 35%; text-align: right;">
+                        <label for="previewresults">
+                            <xar:mlstring>
+                                Allow users to see results before voting?
+                            </xar:mlstring>
+                            :
+                        </label>
+                    </span>
+                    <span style="float: right; width: 63%; text-align: left;">
+                        <xar:if condition="$previewresults == 1">
+                            <input type="checkbox" name="previewresults" id="previewresults" value="1" checked="checked">
+                        <xar:else />
+                            <input type="checkbox" name="previewresults" id="previewresults" value="1">
+                        </xar:if>
+                    </span>
+                </div>
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 35%; text-align: right;">
+                        <label for="shorturl">
+                            <xar:mlstring>
+                                Enable Short URLs?
+                            </xar:mlstring>
+                            :
+                        </label>
+                    </span>
+                    <span style="float: right; width: 63%; text-align: left;">
+                        <xar:if condition="$shorturl == 1">
+                            <input type="checkbox" name="shorturl" id="shorturl" value="1" checked="checked">
+                        <xar:else />
+                            <input type="checkbox" name="shorturl" id="shorturl" value="1">
+                        </xar:if>
+                    </span>
+                </div>
+                <div style="clear: both; padding-top: 10px; text-align: center; margin: auto;">
+                        <input type="submit" value="Submit" />
+                </div>
+        </form>
+    </div>
 </div>

@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * Searches all active polls
@@ -7,7 +19,7 @@
  * @access private
  * @returns mixed description of return
  */
-function polls_userapi_search($args) 
+function polls_userapi_search($args)
 {
     if (empty($args) || count($args) < 1) {
         return;
@@ -18,28 +30,21 @@ function polls_userapi_search($args)
         return;
     }
     // Optional arguments.
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = xarModGetVar('polls', 'itemsperpage');
-    }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $prefix = xarConfigGetVar('prefix');
     $pollstable = $xartable['polls'];
     $pollsinfotable = $xartable['polls_info'];
 
     $polls = array();
     $where = array();
     if ($title == 1){
-        $where[] = $pollstable. '.' . $prefix . "_title LIKE '%$q%'";
+        $where[] = "$pollstable .xar_title LIKE '%$q%'";
     }
     $join = '';
     if ($options == 1){
-        $join = "LEFT JOIN $pollsinfotable ON $pollstable." . $prefix . "_pid = $pollsinfotable." . $prefix . "_pid";
-        $where[] = $pollsinfotable . '.' . $prefix . "_optname LIKE '%$q%'";
+        $join = "LEFT JOIN $pollsinfotable ON $pollstable.xar_pid = $pollsinfotable.xar_pid";
+        $where[] = "$pollsinfotable .xar_optname LIKE '%$q%'";
     }
     if(count($where) > 1){
         $clause = join($where, ' OR ');
@@ -52,21 +57,21 @@ function polls_userapi_search($args)
     }
 
     // Get item
-    $sql = "SELECT DISTINCT $pollstable.".$prefix."_pid,
-                   $pollstable.".$prefix."_title,
-                   $pollstable.".$prefix."_type,
-                   $pollstable.".$prefix."_open,
-                   $pollstable.".$prefix."_private,
-                   $pollstable.".$prefix."_modid,
-                   $pollstable.".$prefix."_itemtype,
-                   $pollstable.".$prefix."_itemid,
-                   $pollstable.".$prefix."_votes,
-                   $pollstable.".$prefix."_reset
+    $sql = "SELECT DISTINCT $pollstable.xar_pid,
+                   $pollstable.xar_title,
+                   $pollstable.xar_type,
+                   $pollstable.xar_open,
+                   $pollstable.xar_private,
+                   $pollstable.xar_modid,
+                   $pollstable.xar_itemtype,
+                   $pollstable.xar_itemid,
+                   $pollstable.xar_votes,
+                   $pollstable.xar_reset
 
             FROM $pollstable $join
             WHERE $clause";
 
-    $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+    $result =& $dbconn->Execute($sql);
         if (!$result) return;
 
     // Put polls into result array

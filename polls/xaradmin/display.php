@@ -1,8 +1,20 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 function polls_admin_display()
 {
-    $pid = xarVarCleanFromInput('pid');
+    if (!xarVarFetch('pid', 'id', $pid)) return;
 
     // Check arguments
     if (empty($pid)) {
@@ -40,6 +52,9 @@ function polls_admin_display()
                                 'admin',
                                 'newopt',
                                 array('pid' => $pid));
+    $data['backurl'] = xarModURL('polls',
+                                 'admin',
+                                 'list');
 
     $data['options'] = array();
 

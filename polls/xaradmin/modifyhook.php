@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')
@@ -105,7 +117,7 @@ function polls_admin_modifyhook($args)
     if (isset($extrainfo['poll'])) {
         $poll = $extrainfo['poll'];
     } else {
-        $newpoll = xarVarCleanFromInput('poll');
+        xarVarFetch('poll', 'array', $poll, null, XARVAR_NOT_REQUIRED);
         if (isset($newpoll)) {
             $poll = $newpoll;
         }

@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Polls table definitions function
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -19,11 +19,12 @@ function polls_xartables()
 {
     // Initialise table array
     $xartable = array();
+    $prefix = xarDBGetSiteTablePrefix();
 
-    $polls = xarConfigGetVar('prefix') . '_polls';
+    $polls = $prefix . '_polls';
     $xartable['polls'] = $polls;
 
-    $pollsinfo = xarConfigGetVar('prefix') . '_polls_info';
+    $pollsinfo = $prefix . '_polls_info';
     $xartable['polls_info'] = $pollsinfo;
 
     // Return the table information

@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * create a poll option
@@ -33,17 +45,16 @@ function polls_adminapi_createopt($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
-    $prefix = xarConfigGetVar('prefix');
 
     $newitemnum = $poll['opts'] + 1;
     if (empty($votes)) {
         $votes = 0;
     }
     $sql = "INSERT INTO $pollsinfotable (
-              ".$prefix."_pid,
-              ".$prefix."_optnum,
-              ".$prefix."_votes,
-              ".$prefix."_optname)
+              xar_pid,
+              xar_optnum,
+              xar_votes,
+              xar_optname)
             VALUES (?,?,?,?)";
 
     $bindvars = array((int)$pid, $newitemnum, $votes, $option);
@@ -57,8 +68,8 @@ function polls_adminapi_createopt($args)
 
     // Update poll information
     $sql = "UPDATE $pollstable
-            SET ".$prefix."_opts = ".$prefix."_opts +1
-            WHERE ".$prefix."_pid = ?";
+            SET xar_opts = xar_opts +1
+            WHERE xar_pid = ?";
 
     $result2 = $dbconn->Execute($sql, array((int)$pid));
     if (!$result2) {

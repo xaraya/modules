@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * update a poll
@@ -11,15 +23,14 @@ function polls_adminapi_update($args)
     extract($args);
 
     // Argument check
-    if ((!isset($pid)) ||
-        (!isset($title)) ||
-        (!isset($type))) {
+    if ((!isset($pid)) || (!isset($title)) || (!isset($type))) {
         $msg = xarML('Missing poll ID, title, or type');
         xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
                      new DefaultUserException($msg));
         return;
     }
+
     if($private != 1){
         $private = 0;
     }
@@ -38,10 +49,10 @@ function polls_adminapi_update($args)
     $prefix = xarConfigGetVar('prefix');
 
     $sql = "UPDATE $pollstable
-            SET ".$prefix."_title = ?,
-            ".$prefix."_type = ?,
-            ".$prefix."_private = ?
-            WHERE ".$prefix."_pid = ?";
+            SET xar_title = ?,
+            xar_type = ?,
+            xar_private = ?
+            WHERE xar_pid = ?";
 
     $bindvars = array($title, $type, $private, (int)$pid);
     $result = $dbconn->Execute($sql, $bindvars);
@@ -49,6 +60,12 @@ function polls_adminapi_update($args)
     if (!$result) {
         return;
     }
+    $args['pid'] = $pid;
+    $args['module'] = 'polls';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $pid;
+
+    xarModCallHooks('item', 'update', $pid, $args);
 
     return true;
 }

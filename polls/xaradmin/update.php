@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * update a poll
@@ -7,13 +19,10 @@ function polls_admin_update()
 {
 
     // Get parameters
-    list($pid,
-         $title,
-         $type,
-         $private) = xarVarCleanFromInput('pid',
-                                      'title',
-                                      'polltype',
-                                      'private');
+    if (!xarVarFetch('pid', 'id', $pid)) return;
+    if (!xarVarFetch('polltype', 'str:1:', $type, 'single', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('private', 'int:0:1', $private, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title', 'str:1:', $title, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;

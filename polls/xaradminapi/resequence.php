@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * resequence a poll's options
@@ -20,13 +32,12 @@ function polls_adminapi_resequence($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
-    $prefix = xarConfigGetVar('prefix');
 
     // Get the information
-    $sql = "SELECT ".$prefix."_optnum
+    $sql = "SELECT xar_optnum
             FROM $pollsinfotable
-            WHERE ".$prefix."_pid = ?
-            ORDER BY ".$prefix."_optnum";
+            WHERE xar_pid = ?
+            ORDER BY xar_optnum";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     // Fix sequence numbers
@@ -36,11 +47,11 @@ function polls_adminapi_resequence($args)
 
         if ($optnum != $seq) {
             $query = "UPDATE $pollsinfotable
-                SET ".$prefix."_optnum= ?
-                WHERE ".$prefix."_pid= ?
-                AND ".$prefix."_optnum= ?";
-            $result = $dbconn->Execute($query, array($seq, (int)$pid, $optnum));
-            if(!$result){
+                SET xar_optnum= ?
+                WHERE xar_pid= ?
+                AND xar_optnum= ?";
+            $result1 = $dbconn->Execute($query, array($seq, (int)$pid, $optnum));
+            if(!$result1){
                 return;
             }
 

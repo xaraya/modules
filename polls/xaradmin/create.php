@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * create a new poll
@@ -6,11 +18,10 @@
 function polls_admin_create()
 {
     // Get parameters
-    list($title,
-         $polltype,
-         $private) = xarVarCleanFromInput('title',
-                                      'polltype',
-                                      'private');
+
+    if (!xarVarFetch('polltype', 'str:1:', $polltype, 'single', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('private', 'int:0:1', $private, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title', 'str:1:', $title, XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -52,14 +63,15 @@ function polls_admin_create()
     }
 
     $optlimit = xarModGetVar('polls', 'defaultopts');
+
     for ($i = 1; $i <= $optlimit; $i++) {
-        $option = xarVarCleanFromInput("option_$i");
-        if (!empty($option)) {
+        xarVarFetch('option_' . $i, 'isset', $option[$i]);
+        if (!empty($option[$i])) {
             xarModAPIFunc('polls',
                          'admin',
                          'createopt',
                          array('pid' => $pid,
-                               'option' => $option));
+                               'option' => $option[$i]));
         }
     }
 

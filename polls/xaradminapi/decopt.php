@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * decrement poll option position
@@ -13,8 +25,7 @@ function polls_adminapi_decopt($args)
     extract($args);
 
     // Argument check
-    if ((!isset($pid)) ||
-        (!isset($opt))) {
+    if ((!isset($pid)) || (!isset($opt))) {
         $msg = xarML('Missing poll ID or option');
         xarErrorSet(XAR_USER_EXCEPTION,
                     'BAD_DATA',
@@ -43,31 +54,30 @@ function polls_adminapi_decopt($args)
     $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
     $pollsinfocolumn = &$xartable['polls_info_column'];
-    $prefix = xarConfigGetVar('prefix');
 
     // Swap positions - three updates
     $sql = "UPDATE $pollsinfotable
-            SET ".$prefix."_optnum = ".$prefix."_optnum + 900
-            WHERE ".$prefix."_pid = ?
-            AND ".$prefix."_optnum = ?";
+            SET xar_optnum = xar_optnum + 900
+            WHERE xar_pid = ?
+            AND xar_optnum = ?";
     $result = $dbconn->Execute($sql, array((int)$pid, $opt));
     if(!$result){
         return;
     }
     $optplusone=$opt + 1;
     $sql = "UPDATE $pollsinfotable
-            SET ".$prefix."_optnum = ?
-            WHERE ".$prefix."_pid = ?
-            AND ".$prefix."_optnum = ?";
+            SET xar_optnum = ?
+            WHERE xar_pid = ?
+            AND xar_optnum = ?";
     $result = $dbconn->Execute($sql, array($opt, (int)$pid, $optplusone));
     if(!$result){
         return;
     }
     $optplus=$opt + 900;
     $sql = "UPDATE $pollsinfotable
-            SET ".$prefix."_optnum = ".$prefix."_optnum - 899
-            WHERE ".$prefix."_pid = ?
-            AND ".$prefix."_optnum =?";
+            SET xar_optnum = xar_optnum - 899
+            WHERE xar_pid = ?
+            AND xar_optnum =?";
     $result = $dbconn->Execute($sql, array((int)$pid, $optplus));
     if(!$result){
         return;

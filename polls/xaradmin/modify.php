@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * modify a poll
@@ -6,7 +18,7 @@
 function polls_admin_modify()
 {
     // Get parameters
-    $pid = xarVarCleanFromInput('pid');
+    if (!xarVarFetch('pid', 'id', $pid)) return;
 
     // Start output
     $data = array();
@@ -53,6 +65,19 @@ function polls_admin_modify()
     }
 
     $data['options'] = $options;
+
+    $item['module'] = 'polls';
+    $item['itemid'] = $pid;
+    $item['itemtype'] = 0;
+    $hooks = xarModCallHooks('item', 'modify', $pid, $item);
+
+    if (empty($hooks)) {
+        $data['hooks'] = '';
+    } elseif (is_array($hooks)) {
+        $data['hooks'] = join('', $hooks);
+    } else {
+        $data['hooks'] = $hooks;
+    }
 
     return $data;
 }

@@ -1,46 +1,65 @@
-<xar:if condition="$canvote">
-<form method="post" action="#xarModUrl('polls', 'user', 'vote')#">
-<p>#$title#</p>
-
-<xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
-    
-<p>
-        <xar:if condition="$type eq 'single'">
-            <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
-        <xar:elseif  condition="$type eq 'multi'" />
-            <input type="checkbox" name="option_#$i#" id="option_#$bid#_#$i#" value="#$i#" />
-        </xar:if>
-    <label for="option_#$bid#_#$i#">#$options[$i]['name']#</label></p>
-</xar:for>
-        <div style="text-align:center; margin: auto;">
-        <input type="hidden" name="authid" value="#$authid#" />
-        <input type="hidden" name="pid" value="#$pid#" />
-        <input type="hidden" name="returnurl" value="#$returnurl#" />
-        <p><input type="submit" value="#$buttonlabel#" style="text-align:center; margin: auto;" /></p>
-        </div>
-</form>
-
-<xar:else />
-
-<p>#$title#</p>
-<xar:loop name="$options">
-    <p style="margin-bottom: 0pt; clear: both;"><b>#$loop:item['name']#</b> [ #$loop:item['percentage']#%&nbsp;(#$loop:item['votes']#) ]</p>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<div>
+    <xar:if condition="$canvote">
+        <form method="post" action="#xarModUrl('polls', 'user', 'vote')#">
+            <p style="text-align: center; font-weight: bold; text-transform: capitalize;">
+                #$title#
+            </p>
+            <xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
+                <p>
+                    <xar:if condition="$type eq 'single'">
+                        <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
+                    <xar:elseif  condition="$type eq 'multi'" />
+                        <input type="checkbox" name="option_#$i#" id="option_#$bid#_#$i#" value="#$i#" />
+                    </xar:if>
+                    <label for="option_#$bid#_#$i#">
+                        #$options[$i]['name']#
+                    </label>
+                </p>
+            </xar:for>
+            <div style="text-align:center; margin: auto;">
+                <input type="hidden" name="authid" value="#$authid#" />
+                <input type="hidden" name="pid" value="#$pid#" />
+                <input type="hidden" name="returnurl" value="#$returnurl#" />
+                <p>
+                    <input type="submit" value="#$buttonlabel#" style="text-align:center; margin: auto;" />
+                </p>
+            </div>
+        </form>
+    <xar:else />
+        <p style="text-align: center; font-weight: bold; text-transform: capitalize; ">
+            #$title#
+        </p>
+        <xar:loop name="$options">
+            <p style="margin-bottom: 0px; margin-top: 0px;; clear: both;">
+                <b>
+                    #$loop:item['name']#
+                </b>
+                [ #$loop:item['percentage']#%&nbsp;(#$loop:item['votes']#) ]
+            </p>
             <xar:if condition="$imggraph eq 1">
                 <xar:if condition="$loop:item['barwidth'] le 1">
-                <p><img src="#xarTplGetImage('bar.png', 'polls')#" width="2" height="10" alt="" /></p>
+                    <p style="margin-bottom: 0px; margin-top: 0px;; clear: both;">
+                        <img src="#xarTplGetImage('bar.png', 'polls')#" width="2" height="10" alt="" />
+                    </p>
                 <xar:else />
-                <p><img src="#xarTplGetImage('bar.png', 'polls')#" width="#$loop:item['barwidth']#%" height="10" alt="" /></p>
+                    <p style="margin-bottom: 0px; margin-top: 0px;; clear: both;">
+                        <img src="#xarTplGetImage('bar.png', 'polls')#" width="#$loop:item['barwidth']#%" height="10" alt="" />
+                    </p>
                 </xar:if>
             <xar:else/>
-                <div class="xar-alt" style="margin-top: 0pt; margin-bottom: 5pt; width:#$loop:item['barwidth']#%; height: 1em;min-width:1px; float:left; display:inline;"></div>
+                <div class="xar-alt" style="margin-top: 0pt; margin-bottom: 5pt; width:#$loop:item['barwidth']#%; height: 1em;min-width:1px; float:left; display:inline;">
+                </div>
             </xar:if>
- </xar:loop>
-
-
-</xar:if>
-
-<div style="clear:both; text-align:center;margin: auto;">
+        </xar:loop>
+    </xar:if>
+    <div style="clear:both; text-align:center;margin: auto;">
         <xar:if condition="$previewresults or empty($canvote)">
-            <a href="#$resultsurl#"><xar:mlstring>Results</xar:mlstring></a><br />
+            <a href="#$resultsurl#">
+                <xar:mlstring>Results</xar:mlstring>
+            </a>
         </xar:if>
-        <a href="&xar-modurl-polls-user-list;"><xar:mlstring>Previous Polls</xar:mlstring></a></div>
+    </div>
+</div>

@@ -19,29 +19,26 @@ function polls_init()
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $prefix = xarConfigGetVar('prefix');
     xarDBLoadTableMaintenanceAPI();
 
     // Create the main table
     $pollstable = $xartable['polls'];
     $pollscolumn = &$xartable['polls_column'];
 
-// FIXME: why are we using variable prefixes for column fields here ?
-
     $fields = array(
-        $prefix.'_pid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        $prefix.'_title'=>array('type'=>'varchar','size'=>255,'null'=>FALSE),
-        $prefix.'_type'=>array('type'=>'varchar','size'=>'16','null'=>FALSE,'default'=>''),
-        $prefix.'_open'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
-        $prefix.'_private'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
-        $prefix.'_modid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>xarModGetIDFromName('polls')),
-        $prefix.'_itemtype'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
-        $prefix.'_itemid'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
-        $prefix.'_opts'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
-        $prefix.'_votes'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0'),
-        $prefix.'_reset'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>'0')
+        'xar_pid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_title'=>array('type'=>'varchar','size'=>255,'null'=>FALSE),
+        'xar_type'=>array('type'=>'varchar','size'=>'16','null'=>FALSE,'default'=>''),
+        'xar_open'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
+        'xar_private'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
+        'xar_modid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>xarModGetIDFromName('polls')),
+        'xar_itemtype'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+        'xar_itemid'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+        'xar_opts'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
+        'xar_votes'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0'),
+        'xar_reset'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>'0')
     );
-    xarModGetIDFromName('polls');
+
     $sql = xarDBCreateTable($pollstable,$fields);
     if (empty($sql)) return; // throw back
     // Pass the Table Create DDL to adodb to create the table
@@ -59,13 +56,13 @@ function polls_init()
 
     // Create the information table
     $pollsinfotable = $xartable['polls_info'];
-    $pollsinfocolumn = &$xartable['polls_info_column'];
+   // $pollsinfocolumn = &$xartable['polls_info_column'];
 
     $fields = array(
-        $prefix.'_pid'=>array('type'=>'integer','null'=>FALSE),
-        $prefix.'_optnum'=>array('type'=>'integer','null'=>FALSE),
-        $prefix.'_optname'=>array('type'=>'varchar','size'=>'255','null'=>FALSE),
-        $prefix.'_votes'=>array('type'=>'integer','null'=>FALSE,'default'=>'0')
+        'xar_pid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_optnum'=>array('type'=>'integer','null'=>FALSE),
+        'xar_optname'=>array('type'=>'varchar','size'=>'255','null'=>FALSE),
+        'xar_votes'=>array('type'=>'integer','null'=>FALSE,'default'=>'0')
     );
 
 /*
@@ -95,15 +92,22 @@ function polls_init()
         return;
     }
 
+    $index = array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_polls_pid',
+                   'fields' => array('xar_pid'),
+                   'unique' => false);
+
+    $query = xarDBCreateIndex($pollsinfotable,$index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
     // Set up module variables
     xarModSetVar('polls', 'barscale', 1);
-    xarModSetVar('polls', 'itemsperpage', 20);
     xarModSetVar('polls', 'defaultopts', 10);
-    xarModSetVar('polls', 'comments', 1);
     xarModSetVar('polls', 'imggraph', 0);
     xarModSetVar('polls', 'voteinterval', '-1');
     xarModSetVar('polls', 'previewresults', 1);
     xarModSetVar('polls', 'uservotes', serialize(array()));
+    xarModSetVar('polls', 'SupportShortURLs', 1);
 
     // Register blocks
     if (!xarModAPIFunc('blocks',
@@ -161,9 +165,9 @@ function polls_init()
 
 // TODO: define instances based on module, itemtype and itemid later
 
-    $query1 = "SELECT DISTINCT ".$prefix."_title FROM ".$prefix."_polls";
-    $query2 = "SELECT DISTINCT ".$prefix."_type FROM ".$prefix."_polls";
-    $query3 = "SELECT DISTINCT ".$prefix."_pid FROM ".$prefix."_polls";
+    $query1 = "SELECT DISTINCT xar_title FROM ".xarDBGetSiteTablePrefix()."_polls";
+    $query2 = "SELECT DISTINCT xar_type FROM ".xarDBGetSiteTablePrefix()."_polls";
+    $query3 = "SELECT DISTINCT xar_pid FROM ".xarDBGetSiteTablePrefix()."_polls";
     $instances = array(
                         array('header' => 'Poll Title:',
                                 'query' => $query1,
@@ -180,9 +184,9 @@ function polls_init()
                     );
     xarDefineInstance('polls', 'Polls', $instances, 0, '', '', '', 'Security instance for Polls.');
 
-    $query1 = "SELECT DISTINCT ".$prefix."_pid FROM ".$prefix."_polls_info";
-    $query2 = "SELECT DISTINCT ".$prefix."_optnum FROM ".$prefix."_polls_info";
-    $query3 = "SELECT DISTINCT ".$prefix."_optname FROM ".$prefix."_polls_info";
+    $query1 = "SELECT DISTINCT xar_pid FROM ".xarDBGetSiteTablePrefix()."_polls_info";
+    $query2 = "SELECT DISTINCT xar_optnum FROM ".xarDBGetSiteTablePrefix()."_polls_info";
+    $query3 = "SELECT DISTINCT XAR_optname FROM ".xarDBGetSiteTablePrefix()."_polls_info";
     $instances = array(
                         array('header' => 'Polls Info ID:',
                                 'query' => $query1,
@@ -237,13 +241,12 @@ function polls_upgrade($oldversion)
             // Code to upgrade from version 1.0 goes here
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
-            $prefix = xarConfigGetVar('prefix');
             xarDBLoadTableMaintenanceAPI();
 
             $pollstable = $xartable['polls'];
 
             $args = array('command' => 'add',
-                          'field' => $prefix . '_private',
+                          'field' => 'xar_private',
                           'type' => 'integer',
                           'null' => false,
                           'default' => '0');
@@ -252,16 +255,9 @@ function polls_upgrade($oldversion)
             if (empty($sql)) return; // throw back
 
             // Pass the Table Create DDL to adodb to create the table
-            $dbconn->Execute($sql);
+            $result =& $dbconn->Execute($sql);
+            if (!$result) return;
 
-            // Check for an error with the database code, and if so raise the
-            // appropriate exception
-            if ($dbconn->ErrorNo() != 0) {
-                $msg = xarML('DATABASE_ERROR', $sql);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
-                               new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
-                return;
-            }
             xarRegisterMask('CommentPolls','All','polls','Polls','All:All:All','ACCESS_COMMENT');
 
         case 1.1:
@@ -270,14 +266,12 @@ function polls_upgrade($oldversion)
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
 
-            $prefix = xarConfigGetVar('prefix');
-
             //Load Table Maintenance API
             xarDBLoadTableMaintenanceAPI();
 
             $query = xarDBAlterTable($xartable['polls'],
                                      array('command'  => 'add',
-                                           'field'    => $prefix.'_itemtype',
+                                           'field'    => 'xar_itemtype',
                                            'type'     => 'integer',
                                            'unsigned' => true,
                                            'null'     => false,
@@ -288,7 +282,7 @@ function polls_upgrade($oldversion)
 
             $query = xarDBAlterTable($xartable['polls'],
                                      array('command'  => 'add',
-                                           'field'    => $prefix.'_itemid',
+                                           'field'    => 'xar_itemid',
                                            'type'     => 'integer',
                                            'unsigned' => true,
                                            'null'     => false,
@@ -327,7 +321,100 @@ function polls_upgrade($oldversion)
                                    'polls', 'admin', 'removehook')) {
                 return false;
             }
-        case '1.3':
+        case '1.3.0':
+
+            xarModSetVar('polls', 'SupportShortURLs', 1);
+            xarModDelVar('polls', 'comments');
+            xarModDelVar('polls', 'itemsperpage');
+
+           $pref = xarDBGetSiteTablePrefix();
+
+           if ($pref !== 'xar') {
+
+               $dbconn =& xarDBGetConn();
+               $xartable =& xarDBGetTables();
+               xarDBLoadTableMaintenanceAPI();
+
+               $pollstable = $pref . '_temp_polls';
+               $oldpollstable = $xartable['polls'];
+
+               $tables = $pref . '_tables';
+
+               $fields = array( 'xar_pid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+                                'xar_title'=>array('type'=>'varchar','size'=>255,'null'=>FALSE),
+                                'xar_type'=>array('type'=>'varchar','size'=>'16','null'=>FALSE,'default'=>''),
+                                'xar_open'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'1'),
+                                'xar_private'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
+                                'xar_modid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>xarModGetIDFromName('polls')),
+                                'xar_itemtype'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+                                'xar_itemid'=>array('type'=>'integer','unsigned'=>TRUE,'null'=>FALSE,'default'=>'0'),
+                                'xar_opts'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
+                                'xar_votes'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0'),
+                                'xar_reset'=>array('type'=>'integer','size'=>'large','null'=>FALSE,'default'=>'0')
+                              );
+
+                $sql = xarDBCreateTable($pollstable,$fields);
+                if (empty($sql)) return;
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+
+                $sql = 'INSERT INTO ' . $pollstable . ' SELECT * FROM ' . $oldpollstable;
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+
+                $sql = xarDBDropTable($oldpollstable);
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+
+                $sql = xarDBAlterTable($pollstable, array('command'  => 'rename',
+                                                           'new_name' => $pref . '_polls'));
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+
+                $oldpollsinfotable = $xartable['polls_info'];
+                $pollsinfotable = $pref . '_temp_polls_info';
+
+                $fields1 = array( 'xar_pid'=>array('type'=>'integer','null'=>FALSE),
+                                 'xar_optnum'=>array('type'=>'integer','null'=>FALSE),
+                                 'xar_optname'=>array('type'=>'varchar','size'=>'255','null'=>FALSE),
+                                 'xar_votes'=>array('type'=>'integer','null'=>FALSE,'default'=>'0')
+                                );
+
+                $sql = xarDBCreateTable($pollsinfotable,$fields1);
+                if (empty($sql)) return;
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+
+                $sql = 'INSERT INTO ' . $pollsinfotable . ' SELECT * FROM ' . $oldpollsinfotable;
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+
+                $sql = xarDBDropTable($oldpollsinfotable);
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+
+                $sql = xarDBAlterTable($pollsinfotable, array('command'  => 'rename',
+                                                               'new_name' => $pref . '_polls_info'));
+                $result =& $dbconn->Execute($sql);
+                if (!$result) return;
+                /*
+                $bindvars1 = array();
+                $sql9 = "UPDATE " . $tables . " SET xar_table = ? WHERE xar_table = ?";
+                $bindvars1[] = (string) $pref .'_polls_info';
+                $bindvars1[] = (string) $pref .'_temp_polls_info';
+                $result9 = $dbconn->Execute($sql9, $bindvars1);
+                if (!$result9) return;
+                */
+
+        }
+        $index = array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_polls_pid',
+               'fields' => array('xar_pid'),
+               'unique' => false);
+
+        $query = xarDBCreateIndex($pref . '_polls_info',$index);
+        $result =& $dbconn->Execute($query);
+        if (!$result) return;
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
@@ -345,33 +432,27 @@ function polls_delete()
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
+    xarDBLoadTableMaintenanceAPI();
 
     // Drop the tables
-    $sql = "DROP TABLE $xartable[polls_info]";
-    $dbconn->Execute($sql);
+    $sql = xarDBDropTable($xartable['polls_info']);
+    if (empty($sql)) return;
+    $result = &$dbconn->Execute($sql);
+    if (!$result) return;
 
-    if ($dbconn->ErrorNo() != 0) {
-        // Report failed deletion attempt
-        return false;
-    }
-
-    $sql = "DROP TABLE $xartable[polls]";
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        // Report failed deletion attempt
-        return false;
-    }
+    $sql = xarDBDropTable($xartable['polls']);
+    if (empty($sql)) return;
+    $result = &$dbconn->Execute($sql);
+    if (!$result) return;
 
     // Delete any module variables
     xarModDelVar('polls', 'barscale');
-    xarModDelVar('polls', 'comments');
     xarModDelVar('polls', 'defaultopts');
-    xarModDelVar('polls', 'itemsperpage');
     xarModDelVar('polls', 'imggraph');
     xarModDelVar('polls', 'voteinterval');
     xarModDelVar('polls', 'previewresults');
     xarModDelVar('polls', 'uservotes');
+    xarModDelVar('polls', 'SupportShortURLs');
 
     // Register blocks
     if (!xarModAPIFunc('blocks',
@@ -419,7 +500,7 @@ function polls_delete()
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
                               'polls', 'user', 'usermenu')) {
         return false;
-    } 
+    }
 */
 
     // Remove Masks and Instances

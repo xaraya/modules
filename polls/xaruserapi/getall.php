@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * get all polls
@@ -11,23 +23,6 @@ function polls_userapi_getall($args)
     // Get parameters from argument array
     extract($args);
 
-    // Optional arguments.
-    if (!isset($startnum)) {
-        $startnum = 1;
-    }
-    if (!isset($numitems)) {
-        $numitems = -1;
-    }
-
-    if ((!isset($startnum)) ||
-        (!isset($numitems))) {
-        $msg = xarML('Missing request parameters');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'BAD_DATA',
-                     new DefaultUserException($msg));
-        return;
-    }
-
     $polls = array();
 
     // Security check
@@ -39,29 +34,39 @@ function polls_userapi_getall($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollstable = $xartable['polls'];
-    $prefix = xarConfigGetVar('prefix');
 
-    if (!empty($modid) && is_numeric($modid)) {
-        $where = " WHERE ".$prefix."_modid = ".$modid;
+    $bindvars = array();
+
+    if (isset($status) && is_numeric($status)) {
+        $where = " WHERE xar_open = ?";
+        $bindvars[]= (int) $status;
+        if (isset($hook) && is_numeric($hook)) {
+            $where .= " AND xar_itemid = ?";
+            $bindvars[]= (int) $hook;
+            }
+    } else {
+        if (isset($modid) && is_numeric($modid)) {
+        $where = " WHERE xar_modid = ?";
+        $bindvars[]= (int) $modid;
     } else {
         $where = '';
     }
-
+    }
     // Get polls
-    $sql = "SELECT ".$prefix."_pid,
-                   ".$prefix."_title,
-                   ".$prefix."_type,
-                   ".$prefix."_open,
-                   ".$prefix."_private,
-                   ".$prefix."_modid,
-                   ".$prefix."_itemtype,
-                   ".$prefix."_itemid,
-                   ".$prefix."_votes,
-                   ".$prefix."_reset
+    $sql = "SELECT xar_pid,
+                   xar_title,
+                   xar_type,
+                   xar_open,
+                   xar_private,
+                   xar_modid,
+                   xar_itemtype,
+                   xar_itemid,
+                   xar_votes,
+                   xar_reset
             FROM $pollstable
             $where
-            ORDER BY ".$prefix."_pid DESC";
-    $result = $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+            ORDER BY xar_pid DESC";
+    $result = $dbconn->execute($sql, $bindvars);
 
     if (!$result) {
         return;

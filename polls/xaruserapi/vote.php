@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * vote on an item
@@ -60,7 +72,6 @@ function polls_userapi_vote($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
-    $prefix = xarConfigGetVar('prefix');
 
     $voteinc = 0;
 
@@ -101,9 +112,9 @@ function polls_userapi_vote($args)
             return;
         }
         $sql = "UPDATE $pollsinfotable
-                SET ".$prefix."_votes = ".$prefix."_votes + 1
-                WHERE ".$prefix."_pid = ?
-                  AND ".$prefix."_optnum = ?";
+                SET xar_votes = xar_votes + 1
+                WHERE xar_pid = ?
+                  AND xar_optnum = ?";
         $result = $dbconn->Execute($sql, array((int)$pid, $option));
         if (!$result) {
             return;
@@ -129,9 +140,9 @@ function polls_userapi_vote($args)
                 return;
             }
             $sql = "UPDATE $pollsinfotable
-                    SET ".$prefix."_votes = ".$prefix."_votes + 1
-                    WHERE ".$prefix."_pid = ?
-                      AND ".$prefix."_optnum = ?";
+                    SET xar_votes = xar_votes + 1
+                    WHERE xar_pid = ?
+                      AND xar_optnum = ?";
             $result = $dbconn->Execute($sql, array((int)$pid, $option));
             if (!$result) {
                 return;
@@ -151,8 +162,8 @@ function polls_userapi_vote($args)
     $pollscolumn = &$xartable['polls_column'];
 
     $sql = "UPDATE $pollstable
-            SET ".$prefix."_votes = ".$prefix."_votes + $voteinc
-            WHERE ".$prefix."_pid = ?";
+            SET xar_votes = xar_votes + $voteinc
+            WHERE xar_pid = ?";
     $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {

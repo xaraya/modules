@@ -1,51 +1,80 @@
-    <div style="clear: both; padding-top: 10px;">
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
-             <label for="poll_title"><xar:mlstring>Poll title</xar:mlstring></label>:
+        <label for="poll_title">
+            <xar:mlstring>
+                Poll title
+            </xar:mlstring>
+        </label>:
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-            <input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value="#$poll['title']#">
+        <input type="text" name="poll[title]" id="poll_title" size="50" maxlength="100" value="#$poll['title']#">
     </span>
-    </div>
+</div>
 
-    <div style="clear: both; padding-top: 10px;">
+<div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
-             <xar:mlstring>Poll type</xar:mlstring>:
+        <xar:mlstring>
+            Poll type
+        </xar:mlstring>:
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-            <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'single'">
-                <input type="radio" name="poll[type]" id="poll_type_single" value="single" checked="checked" />
-            <xar:else />
-                <input type="radio" name="poll[type]" id="poll_type_single" value="single" />
-            </xar:if>&nbsp;<label for="poll_type_single"><xar:mlstring>Single Choice</xar:mlstring></label>
-            <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'multi'">
-                <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" checked="checked" />
-            <xar:else />
-                <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" />
-            </xar:if>&nbsp;<label for="poll_type_multi"><xar:mlstring>Multiple Choice</xar:mlstring></label>
+        <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'single'">
+            <input type="radio" name="poll[type]" id="poll_type_single" value="single" checked="checked" />
+        <xar:else />
+            <input type="radio" name="poll[type]" id="poll_type_single" value="single" />
+        </xar:if>
+        &nbsp;
+        <label for="poll_type_single">
+            <xar:mlstring>
+                Single Choice
+            </xar:mlstring>
+        </label>
+        <xar:if condition="!empty($poll['type']) and $poll['type'] eq 'multi'">
+            <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" checked="checked" />
+        <xar:else />
+            <input type="radio" name="poll[type]" id="poll_type_multi" value="multi" />
+        </xar:if>
+        &nbsp;
+        <label for="poll_type_multi">
+            <xar:mlstring>
+                Multiple Choice
+            </xar:mlstring>
+        </label>
     </span>
-    </div>
+</div>
 
-    <div style="clear: both; padding-top: 10px;">
+<div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 20%; text-align: right;">
-             <label for="poll_private"><xar:mlstring>Private Poll</xar:mlstring></label>:
+        <label for="poll_private">
+            <xar:mlstring>
+                Private Poll
+            </xar:mlstring>
+        </label>:
     </span>
     <span style="float: right; width: 78%; text-align: left;">
-            <xar:if condition="!empty($poll['private'])">
+        <xar:if condition="!empty($poll['private'])">
             <input type="checkbox" name="poll[private]" id="poll_private" value="1" checked="checked" />
-            <xar:else />
+        <xar:else />
             <input type="checkbox" name="poll[private]" id="poll_private" value="1" />
-            </xar:if>
+        </xar:if>
     </span>
-    </div>
+</div>
 
-    <xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
+<xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
     <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 20%; text-align: right;">
-            <label for="poll_options_#$i#"><xar:mlstring>Poll Option</xar:mlstring> #$i#</label>:
-    </span>
-    <span style="float: right; width: 78%; text-align: left;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <label for="poll_options_#$i#">
+                <xar:mlstring>
+                    Poll Option
+                </xar:mlstring>
+                #$i#
+            </label>:
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
             <input type="text" name="poll[options][#$i#]" id="poll_options_#$i#" value="#$poll['options'][$i]#" size="50" maxlength="50">
-    </span>
+        </span>
     </div>
-    </xar:for>
-
+</xar:for>

@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * vote on an item
@@ -6,10 +18,13 @@
 function polls_user_vote($args)
 {
     // Get parameters
-    list($pid,
-         $returnurl,
-         $callingmod) = xarVarCleanFromInput('pid', 'returnurl', 'callingmod');
+
+    if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('returnurl', 'str:0:', $returnurl, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('callingmod', 'str:0:', $callingmod, XARVAR_DONT_SET)) return;
+
     extract($args);
+
     if(empty($pid)){
         $msg = xarML('No poll specified');
         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -49,13 +64,13 @@ function polls_user_vote($args)
     $options = array();
     // Get selected options
     if($poll['type'] == 'single'){
-        $opt = xarVarCleanFromInput('option');
+        xarVarFetch('option', 'isset', $opt, XARVAR_DONT_SET);
         $options[$opt] = $opt;
     }
     elseif($poll['type'] == 'multi'){
         for($i = 1; $i <= $poll['opts']; $i++){
-            $opt = xarVarCleanFromInput('option_' . $i);
-            if($opt == $i){
+            xarVarFetch('option_' . $i, 'isset', $opt[$i], XARVAR_DONT_SET);
+            if($opt[$i] == $i){
                 $options[$i] = $i;
             }
             $opt = '';
@@ -88,7 +103,7 @@ function polls_user_vote($args)
     }
     // CHECKME: find some cleaner way to update the page cache if necessary
     if (function_exists('xarOutputFlushCached')) {
-        if (isset($callingmod) && 
+        if (isset($callingmod) &&
             xarModGetVar('xarcachemanager','FlushOnNewPollvote')) {
             xarPageFlushCached("$callingmod-user-display-");
         } else {

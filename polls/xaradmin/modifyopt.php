@@ -1,11 +1,23 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 function polls_admin_modifyopt()
 {
     // Get parameters
-    list($pid,
-         $opt) = xarVarCleanFromInput('pid',
-                                        'opt');
+    if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('opt', 'int:0:', $opt, XARVAR_DONT_SET)) return;
+
     // Check arguments
     if (empty($pid) || empty($opt)) {
         $msg = xarML('No poll or option specified');

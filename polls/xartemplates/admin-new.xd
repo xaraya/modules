@@ -1,49 +1,95 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Polls Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Create New Poll</xar:mlstring></h2><br />
-<div style="text-align: center; margin: auto;">
-<form method="post" action="&xar-modurl-polls-admin-create;">
-<input type="hidden" name="authid" value="#$authid#">
-<table cellspacing="0" cellpadding="2" style="text-align: left; margin: auto;width: 70%;border: 0px;">
-    <tr>
-        <td>
-             <label for="title"><xar:mlstring>Poll title</xar:mlstring></label>:
-        </td>
-        <td>
-            <input type="text" name="title" id="title" size="50" maxlength="100" value="">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <xar:mlstring>Poll type</xar:mlstring>:
-        </td>
-        <td>
-            <input type="radio" name="polltype" value="single" checked="checked">&nbsp;<xar:mlstring>Single Choice</xar:mlstring><br />
-            <input type="radio" name="polltype" value="multi">&nbsp;<xar:mlstring>Multiple Choice</xar:mlstring><br />
-        </td>
-    </tr>
-    <tr>
-        <td>
-             <label for="private"><xar:mlstring>Private</xar:mlstring></label>:
-        </td>
-        <td>
-            <input type="checkbox" name="private" id="private" value="1" />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" style="text-align: center;">
-            <br />
-             <xar:mlstring>Please enter each available option into a single field</xar:mlstring>
-            <br />&nbsp;
-        </td>
-    </tr>
-    <xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
-        <tr>
-            <td><label for="option_#$i#"><xar:mlstring>Option</xar:mlstring> #$i#</label>:</td>
-            <td><input type="text" name="option_#$i#" value="" size="50" maxlength="50"></td>
-        </tr>
-    </xar:for>
-</table><br /><br />
-            <input type="submit" value="#$buttonlabel#">
-</form>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html
+</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            Polls Administration
+        </xar:mlstring>
+    </span>
 </div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>
+            Create New Poll
+        </xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+        <form method="post" name="post" id="post" action="&xar-modurl-polls-admin-create;" enctype="multipart/form-data">
+        <input type="hidden" name="authid" value="#$authid#">
+            <div style="clear: both; padding-top: 1opx;">
+                <span style="float: left; width: 20%; text-align: right;">
+                    <label for="title">
+                        <xar:mlstring>
+                            Poll title
+                        </xar:mlstring>
+                    </label>:
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                    <input type="text" name="title" id="title" size="50" maxlength="100" value="">
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 20%; text-align: right;">
+                    <xar:mlstring>
+                        Poll type
+                    </xar:mlstring>:
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                    <input type="radio" name="polltype" value="single" checked="checked">
+                    &nbsp;
+                    <xar:mlstring>
+                        Single Choice
+                    </xar:mlstring>
+                    <input type="radio" name="polltype" value="multi">
+                    &nbsp;
+                    <xar:mlstring>
+                        Multiple Choice
+                    </xar:mlstring>
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 20%; text-align: right;">
+                    <label for="private">
+                        <xar:mlstring>
+                            Private
+                        </xar:mlstring>
+                    </label>:
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                    <input type="checkbox" name="private" id="private" value="1" />
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 98%; text-align: centre;">
+                    <xar:mlstring>
+                        Please enter each available option into a single field
+                    </xar:mlstring>
+                </span>
+            </div>
+            <xar:for start="$i = 1" test="$i <= $optcount" iter="$i++">
+                <div style="clear: both; padding-top: 10px;">
+                    <span style="float: left; width: 20%; text-align: right;">
+                        <label for="option_#$i#">
+                            <xar:mlstring>
+                                Option
+                            </xar:mlstring>
+                            #$i#
+                        </label>:
+                    </span>
+                    <span style="float: right; width: 78%; text-align: left;">
+                        <input type="text" name="option_#$i#" value="" size="50" maxlength="50">
+                    </span>
+                </div>
+            </xar:for>
+            <div style="width: 98%;margin:auto;">
+                #$hooks#
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 98%; text-align: center;">
+                    <input type="submit" value="#$buttonlabel#" />
+                </span>
+            </div>
+        </form>
+    </div>
 </div>

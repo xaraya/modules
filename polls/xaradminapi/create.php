@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * create a poll
@@ -58,16 +70,16 @@ function polls_adminapi_create($args)
         $itemid = 0;
     }
     $sql = "INSERT INTO $pollstable (
-              ".$prefix."_pid,
-              ".$prefix."_title,
-              ".$prefix."_type,
-              ".$prefix."_open,
-              ".$prefix."_private,
-              ".$prefix."_votes,
-              ".$prefix."_modid,
-              ".$prefix."_itemtype,
-              ".$prefix."_itemid,
-              ".$prefix."_reset)
+              xar_pid,
+              xar_title,
+              xar_type,
+              xar_open,
+              xar_private,
+              xar_votes,
+              xar_modid,
+              xar_itemtype,
+              xar_itemid,
+              xar_reset)
             VALUES (?,?,?,1,?,?,?,?,?,?)";
 
     $bindvars = array((int)$nextId, $title, $polltype, $private, $votes, (int)$modid, $itemtype, $itemid, $time);
@@ -78,6 +90,14 @@ function polls_adminapi_create($args)
         return;
     }
     $pid = $dbconn->PO_Insert_ID($pollstable, 'xar_pid');
+
+    $args['pid'] = $pid;
+    $args['module'] = 'polls';
+    $args['itemtype'] = 0;
+    $args['itemid'] = $pid;
+
+    xarModCallHooks('item', 'create', $pid, $args);
+
     return $pid;
 }
 

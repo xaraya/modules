@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * utility function to count the number of items held by this module
@@ -18,22 +30,18 @@ function polls_userapi_countitems()
     // It's good practice to name the table and column definitions you are
     // getting - $table and $column don't cut it in more complex modules
     $pollstable = $xartable['polls'];
-    $pollscolumn = &$xartable['polls_column'];
-    $prefix = xarConfigGetVar('prefix');
 
     // Get item - the formatting here is not mandatory, but it does make the
     // SQL statement relatively easy to read.  Also, separating out the sql
     // statement from the Execute() command allows for simpler debug operation
     // if it is ever needed
     $sql = "SELECT COUNT(1)
-            FROM $pollstable";
+            FROM $pollstable
+            WHERE xar_itemid = 0
+            AND xar_open >= 0";
     $result = $dbconn->Execute($sql);
 
-    // Check for an error with the database code, and if so set an appropriate
-    // error message and return
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
+    if (!$result) return;
 
     // Obtain the number of items
     list($numitems) = $result->fields;

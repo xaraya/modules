@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * close a poll
@@ -32,9 +44,9 @@ function polls_adminapi_close($args)
     $prefix = xarConfigGetVar('prefix');
 
     $sql = "UPDATE $pollstable
-            SET ".$prefix."_open = 0
-            WHERE ".$prefix."_pid = ?";
-    $result = $dbconn->Execute($sql,array((int)$pid));
+            SET xar_open = ?
+            WHERE xar_pid = ?";
+    $result = $dbconn->Execute($sql,array(0,(int)$pid));
 
     if (!$result) {
         return;

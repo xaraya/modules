@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * show results
@@ -8,7 +20,7 @@
 function polls_user_results($args)
 {
     // Get parameters
-    $pid = xarVarCleanFromInput('pid');
+     if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
 
     extract($args);
 

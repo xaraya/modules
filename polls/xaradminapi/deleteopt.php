@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * delete a poll option
@@ -33,11 +45,10 @@ function polls_adminapi_deleteopt($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pollsinfotable = $xartable['polls_info'];
-    $prefix = xarConfigGetVar('prefix');
 
     $sql = "DELETE FROM $pollsinfotable
-            WHERE ".$prefix."_pid = ?
-              AND ".$prefix."_optnum = ?";
+            WHERE xar_pid = ?
+              AND xar_optnum = ?";
 
     $result = $dbconn->Execute($sql, array((int)$pid, $opt));
 
@@ -48,8 +59,8 @@ function polls_adminapi_deleteopt($args)
     // Decrement number of options
     $pollstable = $xartable['polls'];
     $sql = "UPDATE $pollstable
-            SET ".$prefix."_opts = ".$prefix."_opts - 1
-            WHERE ".$prefix."_pid = ?";
+            SET xar_opts = xar_opts - 1
+            WHERE xar_pid = ?";
 
     $result = $dbconn->Execute($sql, array((int)$pid));
 

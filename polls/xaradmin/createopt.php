@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * create new poll option
@@ -6,9 +18,10 @@
 function polls_admin_createopt()
 {
     // Get parameters
-    list($pid,
-         $option) = xarVarCleanFromInput('pid',
-                                         'option');
+
+    if (!xarVarFetch('pid', 'id', $pid, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('option', 'str:0:', $option, XARVAR_DONT_SET)) return;
+
     if (!isset($pid) || !isset($option) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Confirm authorisation code
@@ -29,6 +42,7 @@ function polls_admin_createopt()
                            'admin',
                            'createopt', array('pid' => $pid,
                                               'option' => $option));
+
     if (!$created && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
 
     // Success

@@ -1,4 +1,16 @@
 <?php
+/*
+ *
+ * Polls Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ *
+ * @subpackage polls
+ * @author Jim McDonalds, dracos, mikespub et al.
+ */
 
 /**
  * create an entry for a module item - hook for ('item','create','GUI')
@@ -57,7 +69,8 @@ function polls_adminapi_createhook($args)
     }
 
     // check if we need to save some poll here
-    $poll = xarVarCleanFromInput('poll');
+    xarVarFetch('poll', 'array', $poll, null, XARVAR_NOT_REQUIRED);
+
     if (empty($poll) && isset($extrainfo['poll']) && is_array($extrainfo['poll'])) {
         $poll = $extrainfo['poll'];
     }
