@@ -8,7 +8,7 @@
  * @package modules
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage categories
  * @author Carl P. Corlis
  */
@@ -472,28 +472,28 @@ function categories_renderer_array_image_substitution($node) {
     
     switch ($node) {
     case _CAT_O_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_nosub.gif" alt="0" width="9" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_nosub.gif" alt="0" width="9" />';
         break;
     case _CAT_P_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_sub.gif" alt="P" width="9" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_sub.gif" alt="P" width="9" />';
         break;
     case _CAT_T_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_sub_branch_t.gif" alt="t" width="12" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_sub_branch_t.gif" alt="t" width="12" />';
         break;
     case _CAT_L_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_sub_branch_l.gif" alt="L" width="12" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_sub_branch_l.gif" alt="L" width="12" />';
         break;
     case _CAT_I_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_sub_line.gif" alt="|" width="12" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_sub_line.gif" alt="|" width="12" />';
         break;
     case _CAT_BLANK_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_spacer.gif" alt="&nbsp;" width="12" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_spacer.gif" alt="&nbsp;" width="12"  />';
         break;
     case _CAT_DASH_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_sub_end.gif" alt="_" width="9" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_sub_end.gif" alt="_" width="9" />';
         break;
     case _CAT_CUTOFF_CONNECTOR:
-        $map = '<img height="21" align="top" src="modules/comments/xarimages/n_sub_cutoff.gif" alt="--&gt;" width="9" border="0" />';
+        $map = '<img style="vertical-align: top; border: 0" height="21" src="modules/comments/xarimages/n_sub_cutoff.gif" alt="--&gt;" width="9" />';
         break;
     default:
     case _CAT_NO_CONNECTOR:

@@ -113,9 +113,9 @@ function categories_admin_viewcats()
             $text = addslashes($text);
 //            $text .= '<td>'.$categories[$key]['description'].'</td>';
             $url = xarModURL('categories', 'admin', 'deletecat', array('cid' => $categories[$key]['cid']));
-            $text .= "&nbsp;<a href=\"$url\"><img src=\"modules/categories/xarimages/delete.gif\"></a>";
+            $text .= "&nbsp;<a href=\"$url\"><img src=\"modules/categories/xarimages/delete.gif\" alt=\"Delete\"/></a>";
             $url = xarModURL('categories', 'admin', 'modifycat', array('cid' => $categories[$key]['cid'], 'creating' => 'false'));
-            $text .= "&nbsp;<a href=\"$url\"><img src=\"modules/categories/xarimages/edit.gif\"></a>&nbsp;";
+            $text .= "&nbsp;<a href=\"$url\"><img src=\"modules/categories/xarimages/edit.gif\" alt=\"Edit\"/></a>&nbsp;";
 
             $node = &new HTML_TreeNode(array('text' => $text));
             $node->indentation = $categories[$key]['indentation'];
