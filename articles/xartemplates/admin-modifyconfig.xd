@@ -3,7 +3,7 @@
 <div style="margin: auto;">
 
 <xar:template file="navtabs" type="module" />
-
+<div>&nbsp;</div>
 <form method="post" action="&xar-modurl-articles-admin-updateconfig;">
 <div>
 <input type="hidden" name="authid" id="authid"value="#$authid#" />
