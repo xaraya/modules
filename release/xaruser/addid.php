@@ -35,9 +35,10 @@ function release_user_addid()
                     $cathook = $hooks['categories'];
                 } 
                 $data['cathook'] = $cathook;
-                //Set some defaults                
+                //Set some defaults
                 $data['idtype']='';
-
+                $data['class']='1';
+                $data['rstate']='0';
 
                 break;
 
