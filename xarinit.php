@@ -265,7 +265,7 @@ function example_upgrade($oldversion)
             // recurse the upgrade to handle any other upgrades that need
             // to be done.  This allows us to upgrade from any version to
             // the current version with ease
-            return example_upgrade(1.0);
+            return example_upgrade('1.0');
         case '1.0':
             // Code to upgrade from version 1.0 goes here
             break;
