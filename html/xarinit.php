@@ -111,7 +111,7 @@ function html_init()
                 xar_type)
               VALUES (?, ?)";
 
-    $result =& $dbconn->Execute($query, array((int) $nextid, (string) $defaulttype));
+    $result =& $dbconn->Execute($query, array($nextid, (string) $defaulttype));
 
     // Check for error
     if (!$result) return;
@@ -223,7 +223,7 @@ function html_init()
                         xar_allowed)
                     VALUES (?, ?, ?, ?)";
 
-        $bindvars = array((int) $nextid, 
+        $bindvars = array( $nextid, 
                           (int) $htmltypeid,
                           (string) $htmltag,
                           (int) $allowed);
@@ -362,7 +362,7 @@ function html_upgrade($oldversion)
                          xar_type)
                      VALUES (?, ?)";
 
-            $result =& $dbconn->Execute($query, array((int) $nextid, (string) $defaulttype));
+            $result =& $dbconn->Execute($query, array( $nextid, (string) $defaulttype));
 
             // Check for error
             if (!$result) return;
