@@ -59,9 +59,6 @@ function articles_userapi_showfield($args)
         case 'textarea_small':
         case 'textarea_medium':
         case 'textarea_large':
-            if (empty($wrap)) {
-                $wrap = 'soft';
-            }
             if (empty($cols)) {
                 $cols = 50;
             }
@@ -74,7 +71,7 @@ function articles_userapi_showfield($args)
                     $rows = 8;
                 }
             }
-            $output .= '<textarea name="'.$name.'" wrap="'.$wrap.'" rows="'.$rows.'" cols="'.$cols.'"'.$id.$tabindex.'>'.$value.'</textarea>';
+            $output .= '<textarea name="'.$name.'" rows="'.$rows.'" cols="'.$cols.'"'.$id.$tabindex.'>'.$value.'</textarea>';
             break;
     // TEST ONLY
         case 'webpage':
