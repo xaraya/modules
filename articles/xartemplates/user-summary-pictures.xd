@@ -6,8 +6,18 @@
             #$cat['cjoin']# <a href="#$cat['clink']#">#$cat['cname']#</a>
         </xar:foreach> ]<br />
     </xar:if>
-<!-- a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br / -->
-<a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br />
+
+    <xar:comment> allow images to be uploaded with the uploads mod</xar:comment>
+    <xar:if condition="xarModIsHooked('uploads','articles',$pubtypeid) and substr($body,0,1) eq ';'">
+      <xar:set name="img_output">xarModAPIFunc('uploads','user','showoutput',array('value' => $body))</xar:set>
+      <xar:foreach in="$img_output" key="$fileid" value="$fileinfo">
+        <a href="#$link#">
+          <xar:image-resize src="$fileid" label="$title" width="150px" height="150px" constrain="true" /></a><br>
+      </xar:foreach>
+    <xar:else />
+        <a href="#$link#"><img src="#$summary#" border="0" alt="" /></a><br />
+    </xar:if>
+
             <xar:if condition="!empty($title)">
                 <a class="xar-title" href="#$link#">#$title#</a><br />
             </xar:if>
