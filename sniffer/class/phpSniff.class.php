@@ -98,6 +98,7 @@ class phpSniff extends phpSniff_core
         'netscape6'                   => 'NS',
         'netscape'                    => 'NS',
         'galeon'                      => 'GA',
+        'firefox'                     => 'FX',
         'phoenix'                     => 'PX',
         'mozilla firebird'            => 'FB',
         'firebird'                    => 'FB',
@@ -123,7 +124,7 @@ class phpSniff extends phpSniff_core
 		);
 
     var $_javascript_versions = array(
-        '1.5'   =>  'NS5+,MZ,PX,FB,GA,CH,CA,SF,KQ3+,KM,EP', // browsers that support JavaScript 1.5
+        '1.5'   =>  'NS5+,MZ,PX,FB,FX,GA,CH,CA,SF,KQ3+,KM,EP', // browsers that support JavaScript 1.5
         '1.4'   =>  '',
         '1.3'   =>  'NS4.05+,OP5+,IE5+',
         '1.2'   =>  'NS4+,IE4+',
@@ -149,17 +150,17 @@ class phpSniff extends phpSniff_core
 		 *	(see phpSniff.core.php $_feature_set array)
 		 *	browsers listed here will be set to true
 		 **/
-		'css2'		=>	'NS5+,IE5+,MZ,PX,FB,CH,CA,SF,GA,KQ3+,OP7+,KM,EP',
-		'css1'		=>	'NS4+,IE4+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
-		'iframes'	=>	'LI,IE3+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
-		'xml'		=>	'IE5+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
-		'dom'		=>	'IE5+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+		'css2'		=>	'NS5+,IE5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ3+,OP7+,KM,EP',
+		'css1'		=>	'NS4+,IE4+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+		'iframes'	=>	'LI,IE3+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+		'xml'		=>	'IE5+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+		'dom'		=>	'IE5+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
 		'hdml'		=>	'',
 		'wml'		=>	''
 		);
 		
 	var $_browser_quirks = array(
-		'must_cache_forms'			=>	'NS,MZ,FB,PX',
+		'must_cache_forms'			=>	'NS,MZ,FB,PX,FX',
 		'avoid_popup_windows'		=>	'IE3,LI,LX',
 		'cache_ssl_downloads'		=>	'IE',
 		'break_disposition_header'	=>	'IE5.5',
