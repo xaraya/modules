@@ -1,0 +1,9 @@
+&xar-var-menu.status;
+<table width="100%" border="1" cellspacing="0" cellpadding="2">
+    <tr>
+        <th align="center">&xar-var-menu.title;</th>
+    </tr>
+</table>
+<div align="center"><h2><xar:mlstring>Pubsub Administration</xar:mlstring></h2
+></div><br />
+&xar-var-welcome;
