@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * xarCacheManager version information
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -12,6 +12,7 @@
 $modversion['name']           = 'xarCacheManager';
 $modversion['id']             = '1652';
 $modversion['version']        = '0.3.2';
+$modversion['displayname']    = xarML('xarCacheManager');
 $modversion['description']    = 'Manage the output cache system of Xaraya';
 $modversion['credits']        = '';
 $modversion['help']           = '';
