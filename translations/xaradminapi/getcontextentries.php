@@ -108,7 +108,14 @@ function translations_adminapi_getcontextentries($args)
 
 function translations_grab_source_code($references, $maxReferences = NULL)
 {
+    $result = array();
     //static $files = array(); <-- this just takes too much memory
+    $showContext = xarModGetVar('translations','showContext');
+    if(!$showContext) {
+        $result[] = xarML('References have been disabled');
+        return $result;
+    }
+
     $files = array();
     $result = array();
     if ($maxReferences == NULL) {

@@ -84,8 +84,23 @@
 	    </select>
 	    <xar:mlstring>(only PHP allowed for now)</xar:mlstring>
     </p>
-
-    <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
+    <h4><xar:mlstring>Display during translation</xar:mlstring></h4>
+    <p>
+    <xar:mlstring>
+      While translating you will be confronted with a lot of information. The settings below allow you to configure
+      what is displayed during translation.
+    </xar:mlstring>
+    </p>
+      <xar:if condition="$showcontext">
+        <input id="showcontext" type="checkbox" name="showcontext" checked="checked"/>
+       <xar:else/>
+        <input id="showcontext" type="checkbox" name="showcontext" />
+      </xar:if>
+        
+      <label for="showcontext">
+        <xar:mlstring>Show a bit of context for the translation. This could be helpfull for determining the exact translation</xar:mlstring>
+      </label>
+     <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 	  <p><input type="submit" value="#$updatelabel#"  /></p>
     </form>
   </div>

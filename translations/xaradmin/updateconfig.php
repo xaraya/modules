@@ -27,6 +27,7 @@ function translations_admin_updateconfig()
     if (!xarVarFetch('mlsmode','str:1:',$MLSMode,'SINGLE',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('translationsbackend','str:1:',$translationsBackend)) return;
     if (!xarVarFetch('releasebackend','str:1:',$releaseBackend)) return;
+    if (!xarVarFetch('showcontext','checkbox',$showContext,false,XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
 
@@ -40,6 +41,7 @@ function translations_admin_updateconfig()
     xarConfigSetVar('Site.MLS.MLSMode', 'SINGLE');
     xarConfigSetVar('Site.MLS.TranslationsBackend', $translationsBackend);
 //    xarModSetVar('translations', 'release_backend_type', $releaseBackend);
+    xarModSetVar('translations', 'showcontext',$showContext);
 
     xarResponseRedirect(xarModURL('translations', 'admin', 'modifyconfig'));
 

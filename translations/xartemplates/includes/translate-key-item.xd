@@ -18,6 +18,11 @@
     </tr>
     <tr>
       <td>
+      <xar:set name="showreferences">
+        <xar:var scope="module" module="translations" name="showcontext"/>
+      </xar:set>
+      <xar:if condition="$showreferences">
+        
         <table>
           <xar:loop name="$references">
             <tr>
@@ -42,6 +47,7 @@
             </tr>
           </xar:if>
         </table>
+      </xar:if>
       </td>
     </tr>
 </table>

@@ -19,6 +19,7 @@ function translations_admin_modifyconfig()
 
     $data['translationsBackend'] = xarConfigGetVar('Site.MLS.TranslationsBackend');
     $data['releaseBackend'] = xarModGetVar('translations', 'release_backend_type');
+    $data['showcontext'] = xarModGetVar('translations', 'showcontext');
 
     $data['authid'] = xarSecGenAuthKey();
     return $data;
