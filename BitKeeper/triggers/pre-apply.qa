@@ -128,7 +128,7 @@ passed 2.21
 failed=0
 test="Class declaration does not use the right bracing"
 for i in `bk sfiles -Ug | grep ".php$"`; do
-    result=`grep -n '[[:space:]]*class .*{.*' $i`
+    result=`grep -n '^[[:space:]]*class .*{.*' $i`
     if [ $? -ne 1 ] ; then
         failed 2.22 "in $i" $result
     fi
