@@ -9,7 +9,7 @@
  * @author Chris "Alley" van de Steeg
  */
 
- function opentracker_init()
+function opentracker_init()
 {
     if (!function_exists('version_compare') || ! version_compare(PHP_VERSION,'4.3','>=')) {
         $msg=xarML('Your PHP configuration does not seem to be the correct version. OpenTracker requires PHP version 4.3 or newer.');
@@ -262,8 +262,12 @@
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     
+    xarModSetVar('opentracker','countadmin',0);
+    xarModSetVar('opentracker','trackoutgoing',0);
+
     xarRegisterMask('OverviewOpentracker','All','opentracker','All','All','ACCESS_OVERVIEW');
-    
+    xarRegisterMask('AdminOpentracker','All','opentracker','All','All','ACCESS_ADMIN');
+
     session_unregister('_phpOpenTracker_Container');
 
     return true;
@@ -275,6 +279,21 @@
  */
 function opentracker_upgrade($oldversion)
 { 
+    // Upgrade dependent on old version number
+    switch($oldversion) {
+        case '0.1.0':
+            // preserve old default behaviour
+            xarModSetVar('opentracker','countadmin',1);
+            xarModSetVar('opentracker','trackoutgoing',1);
+
+            xarRegisterMask('AdminOpentracker','All','opentracker','All','All','ACCESS_ADMIN');
+
+        case '0.1.1':
+
+        default:
+            break;
+    }
+
     return true;
 } 
 
@@ -301,6 +320,9 @@ function opentracker_delete()
         if (!$result) return false;
     }
     
+    xarModDelVar('opentracker','countadmin');
+    xarModDelVar('opentracker','trackoutgoing');
+
     xarRemoveMasks('opentracker');
     xarRemoveInstances('opentracker');
     

@@ -1,7 +1,7 @@
 <?php
 $modversion['name']           = 'Opentracker';
 $modversion['id']             = '55555';
-$modversion['version']        = '0.1.0';
+$modversion['version']        = '0.1.1';
 $modversion['displayname']    = xarML('Opentracker');
 $modversion['description']    = 'Wrapper around phpOpenTracker(www.phpopentracker.de) for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -11,7 +11,7 @@ $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = 0;
 $modversion['author']         = 'Chris "ALLEY" van de Steeg';
 $modversion['contact']        = 'alley@ilikeu2.com';
-$modversion['admin']          = 0;
+$modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['securityschema'] = array('Opentracker::report' => 'Reportname::Reportid');
 $modversion['class']          = 'Complete';

@@ -22,10 +22,20 @@ function _opentracker_exit_urls($buffer)
 
 function opentracker_eventapi_OnServerRequest()
 {
-  // start output-buffering
-  ob_start('_opentracker_exit_urls');
+  // track outgoing URLs
+  $trackoutgoing = xarModGetVar('opentracker','trackoutgoing');
+  if (!empty($trackoutgoing)) {
+    // start output-buffering
+    ob_start('_opentracker_exit_urls');
+  }
 
   header('P3P: CP="NOI NID ADMa OUR IND UNI COM NAV"');
+
+  // don't count admin hits
+  $countadmin = xarModGetVar('opentracker','countadmin');
+  if (empty($countadmin) && xarSecurityCheck('AdminPanel', 0)) {
+    return true;
+  }
   xarOpenTracker::log(
     array(
       'document' => $GLOBALS['xarTpl_pageTitle'],
