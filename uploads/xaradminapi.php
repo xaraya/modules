@@ -77,8 +77,8 @@ function uploads_adminapi_download( $args )
 
 				if( !file_exists( $newfile ) )
 				{
-					// echo "Need to convert<br>";
-					// echo "Loaded image, converting<br>";
+					// echo "Need to convert<br/>";
+					// echo "Loaded image, converting<br/>";
 					$args = array( 'file' => $file
 					              ,'thumbwidth' => $thumbwidth
 								  ,'thumbheight' => $thumbheight
