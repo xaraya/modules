@@ -26,15 +26,13 @@ function uploads_init()
     // load the predefined constants
     xarModAPILoad('uploads', 'user');
 
-    if(xarServerGetVar('PATH_TRANSLATED')) {
-        $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
-    } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
+    if(xarServerGetVar('SCRIPT_FILENAME')) {
         $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
     } else {
         $base_directory = './';
     }
-    xarModSetVar('uploads', 'path.uploads-directory',   $base_directory .'/var/uploads');
-    xarModSetVar('uploads', 'path.imports-directory',   $base_directory . '/var/imports');
+    xarModSetVar('uploads', 'path.uploads-directory',   'Change me to something outside the webroot');
+    xarModSetVar('uploads', 'path.imports-directory',   'Change me to something outside the webroot');
     xarModSetVar('uploads', 'file.maxsize',            '10000000');
     xarModSetVar('uploads', 'file.delete-confirmation', TRUE);
     xarModSetVar('uploads', 'file.auto-purge',          FALSE);
@@ -164,7 +162,9 @@ function uploads_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.0.1':
+        case '0.01':
         case '0.0.2':
+        case '0.02':
             // change newhook from API to GUI
 
            $dbconn =& xarDBGetConn();
@@ -177,6 +177,7 @@ function uploads_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
         case '0.0.3':
+        case '0.03':
             // Remove unused hooks
             xarModUnregisterHook('item', 'new', 'GUI','uploads', 'admin', 'newhook');
             xarModUnregisterHook('item', 'create', 'API', 'uploads', 'admin', 'createhook');
@@ -197,7 +198,9 @@ function uploads_upgrade($oldversion)
             if (!$result) return;
             
         case '0.0.4':
+        case '0.04':
         case '0.0.5':
+        case '0.05':
             //Add mimetype column to DB
 //            ALTER TABLE `xar_uploads` ADD `ulmime` VARCHAR( 128 ) DEFAULT 'application/octet-stream' NOT NULL ;
 
@@ -223,6 +226,7 @@ function uploads_upgrade($oldversion)
             $result = &$dbconn->Execute($query);
             if (!$result) return;
                */
+        case '0.10':
         case '0.1.0':
 
             //Not needed anymore with the dependency checks.
@@ -233,6 +237,95 @@ function uploads_upgrade($oldversion)
             }
 
             xarModAPILoad('uploads','user');
+
+            xarRemoveMasks('uploads');
+            xarRemoveInstances('uploads');
+
+            xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
+            xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
+            xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
+            xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
+            xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
+
+            $xartable =& xarDBGetTables();
+            $instances[0]['header'] = 'external';
+            $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
+            $instances[0]['limit']  = 0;
+
+            xarDefineInstance('uploads', 'File', $instances);
+
+            if (xarServerGetVar('SCRIPT_FILENAME')) {
+                $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
+            } else {
+                $base_directory = './';
+            }
+
+            // Grab the old values
+            $path_uploads_directory   = xarModGetVar('uploads','uploads_directory');
+            if (empty($path_uploads_directory)) {
+                $path_uploads_directory = $base_directory . '/var/uploads';
+            }
+
+            $path_imports_directory   = xarModGetVar('uploads','import_directory');
+            if (empty($import_directory)) {
+               $path_imports_directory = $base_directory . '/var/imports';
+            }
+
+            $file_maxsize             = xarModGetVar('uploads','maximum_upload_size');
+            $file_censored_mimetypes  = serialize(array('application','video','audio', 'other', 'message'));
+            $file_delete_confirmation = xarModGetVar('uploads','confirm_delete') ? 1 : 0;
+            $file_obfuscate_on_import = xarModGetVar('uploads','obfuscate_imports') ? 1 : 0;
+            $file_obfuscate_on_upload = TRUE;
+
+            // Now remove the old module vars
+            xarModDelVar('uploads','uploads_directory');
+            xarModDelVar('uploads','maximum_upload_size');
+            xarModDelVar('uploads','allowed_types');
+            xarModDelVar('uploads','confirm_delete');
+            xarModDelVar('uploads','max_image_width');
+            xarModDelVar('uploads','max_image_height');
+            xarModDelVar('uploads','thumbnail_setting');
+            xarModDelVar('uploads','thumbnail_path');
+            xarModDelVar('uploads','netpbm_path');
+            xarModDelVar('uploads','import_directory');
+            xarModDelVar('uploads','obfuscate_imports');
+
+            // Now set up the new ones :)
+            xarModSetVar('uploads','path.uploads-directory', $path_uploads_directory);
+            xarModSetVar('uploads','path.imports-directory', $path_imports_directory);
+            xarModSetVar('uploads','file.maxsize', ($file_maxsize >= 0) ? $file_maxsize : 1000000);
+            xarModSetVar('uploads','file.obfuscate-on-import', ($file_obfuscate_on_import) ? $file_obfuscate_on_import : FALSE);
+            xarModSetVar('uploads','file.obfuscate-on-upload', ($file_obfuscate_on_upload) ? $file_obfuscate_on_upload : FALSE);
+            xarModSetVar('uploads','file.delete-confirmation', ($file_delete_confirmation) ? $file_delete_confirmation : FALSE);
+            xarModSetVar('uploads','file.auto-purge',          FALSE);
+            xarModSetVar('uploads','path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
+            xarModSetVar('uploads', 'dd.fileupload.stored',   TRUE);
+            xarModSetVar('uploads', 'dd.fileupload.external', TRUE);
+            xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
+            xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
+
+            $data['filters']['inverse']                     = FALSE;
+            $data['filters']['mimetypes'][0]['typeId']      = 0;
+            $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
+            $data['filters']['subtypes'][0]['subtypeId']    = 0;
+            $data['filters']['subtypes'][0]['subtypeName']  = xarML('All');
+            $data['filters']['status'][0]['statusId']       = 0;
+            $data['filters']['status'][0]['statusName']     = xarML('All');
+            $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusId']    = _UPLOADS_STATUS_SUBMITTED;
+            $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusName']  = 'Submitted';
+            $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusId']     = _UPLOADS_STATUS_APPROVED;
+            $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusName']   = 'Approved';
+            $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusId']     = _UPLOADS_STATUS_REJECTED;
+            $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = 'Rejected';
+            $filter['fileType']     = '%';
+            $filter['fileStatus']   = '';
+
+            $mimetypes =& $data['filters']['mimetypes'];
+            $mimetypes += xarModAPIFunc('mime','user','getall_types');
+            unset($mimetypes);
+
+            xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
+
             xarDBLoadTableMaintenanceAPI();
 
             $dbconn =& xarDBGetConn();
@@ -267,9 +360,9 @@ function uploads_upgrade($oldversion)
                 $entry['xar_fileEntry_id']  = $row['xar_ulid'];
                 $entry['xar_user_id']       = $row['xar_uluid'];
                 $entry['xar_filename']      = $row['xar_ulfile'];
-                $entry['xar_location']      = $row['xar_ulhash'];
+                $entry['xar_location']      = $path_uploads_directory . '/' . $row['xar_ulhash'];
                 $entry['xar_status']        = ($row['xar_ulapp']) ? _UPLOADS_STATUS_APPROVED : _UPLOADS_STATUS_SUBMITTED;
-                $entry['xar_filesize']      = @filesize($row['xar_ulhash']) ? filesize($row['xar_ulhash']) : 0;
+                $entry['xar_filesize']      = filesize($entry['xar_location']) ? filesize($entry['xar_location']) : 0;
                 
                 switch(strtolower($row['xar_ultype'])) {
                     case 'd':
@@ -280,7 +373,7 @@ function uploads_upgrade($oldversion)
                                 $entry['xar_store_type'] = _UPLOADS_STORE_FILESYSTEM;
                                 break;
                 }
-                $entry['xar_mime_type']     = xarModAPIFunc('mime','user','analyze_file', array('fileName' => $row['xar_ulhash']));
+                $entry['xar_mime_type']     = xarModAPIFunc('mime','user','analyze_file', array('fileName' => $entry['xar_location']));
                 $fileEntries[] = $entry;
                 $result->MoveNext();
             }
@@ -384,108 +477,6 @@ function uploads_upgrade($oldversion)
                 }
                 return;
             }
-
-            /*
-             * Note: the ones below need to be moved over to the image module...
-
-                xarModSetVar('uploads', 'max_image_width', '600');
-                xarModSetVar('uploads', 'max_image_height', '800');
-                xarModSetVar('uploads', 'thumbnail_setting', '0');
-                xarModSetVar('uploads', 'thumbnail_path', '');
-                xarModSetVar('uploads', 'netpbm_path', '');
-
-             *
-             */
-
-            xarRemoveMasks('uploads');
-            xarRemoveInstances('uploads');
-
-            xarRegisterMask('ViewUploads',  'All','uploads','File','All:All:All:All','ACCESS_READ');
-            xarRegisterMask('AddUploads',   'All','uploads','File','All:All:All:All','ACCESS_ADD');
-            xarRegisterMask('EditUploads',  'All','uploads','File','All:All:All:All','ACCESS_EDIT');
-            xarRegisterMask('DeleteUploads','All','uploads','File','All:All:All:All','ACCESS_DELETE');
-            xarRegisterMask('AdminUploads', 'All','uploads','File','All:All:All:All','ACCESS_ADMIN');
-
-            $xartable =& xarDBGetTables();
-            $instances[0]['header'] = 'external';
-            $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
-            $instances[0]['limit']  = 0;
-
-            xarDefineInstance('uploads', 'File', $instances);
-
-            if(xarServerGetVar('PATH_TRANSLATED')) {
-                $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
-            } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
-                $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
-            } else {
-                $base_directory = './';
-            }
-
-            // Grab the old values
-            $path_uploads_directory   = xarModGetVar('uploads','uploads_directory');
-            if (empty($path_uploads_directory)) {
-                $path_uploads_directory = $base_directory . '/var/imports';
-            }
-
-            $path_imports_directory   = xarModGetVar('uploads','import_directory');
-            if (empty($import_directory)) {
-               $path_imports_directory = $base_directory . '/var/imports';
-            }
-
-            $file_maxsize             = xarModGetVar('uploads','maximum_upload_size');
-            $file_censored_mimetypes  = serialize(array('application','video','audio', 'other', 'message'));
-            $file_delete_confirmation = xarModGetVar('uploads','confirm_delete') ? 1 : 0;
-            $file_obfuscate_on_import = xarModGetVar('uploads','obfuscate_imports') ? 1 : 0;
-            $file_obfuscate_on_upload = TRUE;
-
-            // Now remove the old module vars
-            xarModDelVar('uploads','uploads_directory');
-            xarModDelVar('uploads','maximum_upload_size');
-            xarModDelVar('uploads','allowed_types');
-            xarModDelVar('uploads','confirm_delete');
-            xarModDelVar('uploads','max_image_width');
-            xarModDelVar('uploads','max_image_height');
-            xarModDelVar('uploads','thumbnail_setting');
-            xarModDelVar('uploads','thumbnail_path');
-            xarModDelVar('uploads','netpbm_path');
-            xarModDelVar('uploads','import_directory');
-            xarModDelVar('uploads','obfuscate_imports');
-
-            // Now set up the new ones :)
-            xarModSetVar('uploads','path.uploads-directory', $path_uploads_directory);
-            xarModSetVar('uploads','path.imports-directory', $path_imports_directory);
-            xarModSetVar('uploads','file.maxsize', ($file_maxsize >= 0) ? $file_maxsize : 1000000);
-            xarModSetVar('uploads','file.obfuscate-on-import', ($file_obfuscate_on_import) ? $file_obfuscate_on_import : FALSE);
-            xarModSetVar('uploads','file.obfuscate-on-upload', ($file_obfuscate_on_upload) ? $file_obfuscate_on_upload : FALSE);
-            xarModSetVar('uploads','file.delete-confirmation', ($file_delete_confirmation) ? $file_delete_confirmation : FALSE);
-            xarModSetVar('uploads','file.auto-purge',          FALSE);
-            xarModSetVar('uploads','path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
-            xarModSetVar('uploads', 'dd.fileupload.stored',   TRUE);
-            xarModSetVar('uploads', 'dd.fileupload.external', TRUE);
-            xarModSetVar('uploads', 'dd.fileupload.upload',   TRUE);
-            xarModSetVar('uploads', 'dd.fileupload.trusted',  TRUE);
-
-            $data['filters']['inverse']                     = FALSE;
-            $data['filters']['mimetypes'][0]['typeId']      = 0;
-            $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
-            $data['filters']['subtypes'][0]['subtypeId']    = 0;
-            $data['filters']['subtypes'][0]['subtypeName']  = xarML('All');
-            $data['filters']['status'][0]['statusId']       = 0;
-            $data['filters']['status'][0]['statusName']     = xarML('All');
-            $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusId']    = _UPLOADS_STATUS_SUBMITTED;
-            $data['filters']['status'][_UPLOADS_STATUS_SUBMITTED]['statusName']  = 'Submitted';
-            $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusId']     = _UPLOADS_STATUS_APPROVED;
-            $data['filters']['status'][_UPLOADS_STATUS_APPROVED]['statusName']   = 'Approved';
-            $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusId']     = _UPLOADS_STATUS_REJECTED;
-            $data['filters']['status'][_UPLOADS_STATUS_REJECTED]['statusName']   = 'Rejected';
-            $filter['fileType']     = '%';
-            $filter['fileStatus']   = '';
-
-            $mimetypes =& $data['filters']['mimetypes'];
-            $mimetypes += xarModAPIFunc('mime','user','getall_types');
-            unset($mimetypes);
-
-            xarModSetVar('uploads','view.filter', serialize(array('data' => $data,'filter' => $filter)));
 
             /**
              * Last, but not least, we drop the old tables:

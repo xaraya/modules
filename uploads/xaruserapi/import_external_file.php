@@ -23,6 +23,10 @@ function uploads_userapi_import_external_file( $args )
     
     $fileList = xarModAPIFunc('uploads', 'user', 'import_get_filelist', array('fileLocation' => $uri['path'], 'descend' => TRUE));
     
+    if (empty($fileList) || (is_array($fileList) && !count($fileList))) {
+        return array();
+    }
+    
     $list = array();
     foreach ($fileList as $location => $fileInfo) {
         if ($fileInfo['inodeType'] == _INODE_TYPE_DIRECTORY) {
@@ -31,6 +35,7 @@ function uploads_userapi_import_external_file( $args )
             unset($fileList[$location]);
         }
     }
+
     $fileList += $list;
     unset($list);
     

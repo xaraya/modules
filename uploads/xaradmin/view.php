@@ -43,8 +43,6 @@ function uploads_admin_view( )
         unset($options);
     }
     
-
-    
     /**
      * Perform all actions
      */
@@ -62,6 +60,7 @@ function uploads_admin_view( )
                 }
             } else {
                 $args['fileType']   = $filter['fileType'];
+                $args['inverse']    = (isset($inverse) ? $inverse : FALSE);
                 $args['curStatus']  = $filter['fileStatus'];
             }
         }

@@ -13,6 +13,10 @@ function uploads_userapi_db_change_status( $args )
 {
     extract($args);
     
+    if (!isset($inverse)) {
+        $inverse = FALSE;
+    }
+    
     if (!isset($fileId) && !isset($fileType)) {
         $msg = xarML('Missing identifying parameter function [#(1)] in module [#(2)]', 
                      'db_change_status','uploads');
@@ -37,7 +41,11 @@ function uploads_userapi_db_change_status( $args )
         }
     // Otherwise, we're changing based on MIME type
     } else {
-        $where = " WHERE xar_mime_type LIKE '$fileType'";
+        if (!$inverse) {
+            $where = " WHERE xar_mime_type LIKE '$fileType'";
+        } else {
+            $where = " WHERE xar_mime_type NOT LIKE '$fileType'";
+        }
     }
     
     if (isset($curStatus) && is_numeric($curStatus)) {
