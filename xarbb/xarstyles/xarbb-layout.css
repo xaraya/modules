@@ -1,11 +1,24 @@
 /* debug rule - dont uncomment */
 /* * { outline: 1px dotted orange; } */
 /* lets minimize use of tables for layout and use instead css-driven templates */
-div#xarbb-topics,
-div.xarbb-tablewrapper,
-div.xarbb-noteswrapper,
+div#xarbb-topics {
+    float: none;
+    width: 99%;
+    margin: .5em 0;
+}
+div.xarbb-tablewrapper {
+    zoom: 100%;
+    float: left;
+    width: 99%;
+    margin: .5em 0;
+}
+div.xarbb-noteswrapper {
+    float: none;
+    width: 99%;
+    margin: .5em 0;
+}
+
 div.xarbb-topiccontrols,
-div.xarbb-noteswrapper,
 div.xarbb-messagecontrols {
     float: left;
     width: 99%;
