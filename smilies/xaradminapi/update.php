@@ -16,7 +16,7 @@ function smilies_adminapi_update($args)
         (!isset($icon)) ||
         (!isset($emotion))) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -28,7 +28,7 @@ function smilies_adminapi_update($args)
 
     if ($link == false) {
         $msg = xarML('No Such :) Present', 'smilies');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
 

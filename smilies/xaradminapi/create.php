@@ -18,7 +18,7 @@ function smilies_adminapi_create($args)
         (!isset($icon)) ||
         (!isset($emotion))) {
         $msg = xarML('Invalid Parameter Count');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     // Security Check
