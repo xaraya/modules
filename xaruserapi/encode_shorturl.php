@@ -39,12 +39,18 @@ function xarpages_userapi_encode_shorturl($args)
         return;
     }
 
+    $use_shortest_paths = xarModGetVar('xarpages', 'shortestpath');
+
     // Consume the pid from the get parameters.
     unset($get['pid']);
 
     // Follow the tree up to the root.
     $pid_follow = $pid;
     while ($pages[$pid_follow]['parent_key'] <> 0) {
+        // TODO: could do with an API to get all aliases for a given module in one go.
+        if (!empty($use_shortest_paths) && xarModGetAlias($pages[$pid_follow]['name']) == 'xarpages') {
+            break;
+        }
         array_unshift($path, $pages[$pid_follow]['name']);
         $pid_follow = $pages[$pid_follow]['parent_key'];
     }

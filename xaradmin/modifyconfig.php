@@ -42,6 +42,7 @@ function xarpages_admin_modifyconfig()
         $data['notfoundpage'] = xarModGetVar('xarpages', 'notfoundpage');
         $data['noprivspage'] = xarModGetVar('xarpages', 'noprivspage');
 
+        $data['shortestpath'] = xarModGetVar('xarpages', 'shortestpath');
         $data['shorturl'] = xarModGetVar('xarpages', 'SupportShortURLs');
     } else {
         // Form has been submitted.
@@ -63,6 +64,11 @@ function xarpages_admin_modifyconfig()
         xarVarFetch('shorturl', 'int:0:1', $shorturl, 0, XARVAR_NOT_REQUIRED);
         xarModSetVar('xarpages', 'SupportShortURLs', $shorturl);
         $data['shorturl'] = $shorturl;
+
+        // Shortest path flag.
+        xarVarFetch('shortestpath', 'int:0:1', $shortestpath, 0, XARVAR_NOT_REQUIRED);
+        xarModSetVar('xarpages', 'shortestpath', $shortestpath);
+        $data['shortestpath'] = $shortestpath;
     }
 
     $data['authid'] = xarSecGenAuthKey();

@@ -35,6 +35,15 @@
                         <input type="checkbox" name="shorturl" id="shorturl" value="1" />
                     </xar:if>        
                 </p>
+
+                <p class="param">
+                    <label for="shorturl" title="#xarML('Always use module aliases in paths where possible')#"><xar:mlstring>Use shortest paths</xar:mlstring></label>
+                    <xar:if condition="$shortestpath eq 1">
+                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1" checked="checked" />
+                    <xar:else />
+                        <input type="checkbox" name="shortestpath" id="shortestpath" value="1" />
+                    </xar:if>        
+                </p>
             </fieldset>
 
             <fieldset class="formelements xar-norm">
