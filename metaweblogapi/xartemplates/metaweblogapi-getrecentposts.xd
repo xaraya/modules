@@ -35,7 +35,7 @@
                   <member>
                     <name>postid</name>
                     <value>
-                      <i4>#$loop:item['postid']#</i4>
+                      <string>#$loop:item['postid']#</string>
                     </value>
                   </member>
                   <member>
@@ -45,7 +45,7 @@
                   <member>
                     <name>userid</name>
                     <value>
-                      <i4>#$loop:item['authorid']#</i4>
+                      <string>#$loop:item['authorid']#</string>
                     </value>
                   </member>
                 </struct>

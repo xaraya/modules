@@ -28,7 +28,7 @@
           <member>
             <name>postid</name>
             <value>
-              <i4>#$postid#</i4>
+              <string>#$postid#</string>
             </value>
           </member>
           <member>
@@ -38,7 +38,7 @@
           <member>
             <name>userid</name>
             <value>
-              <i4>#$userid#</i4>
+              <string>#$userid#</string>
             </value>
           </member>
         </struct>
