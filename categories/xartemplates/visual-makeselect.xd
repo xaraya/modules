@@ -52,7 +52,7 @@
         <option value="#$id#" selected="selected">#$indent##$name#</option>
         <xar:set name="already_passed">true</xar:set>
 <xar:comment>this is used to inform the calling function that we saw this category, when several select boxes are used</xar:comment>
-        <xar:set name="current_id">$id;$values[$id]--</xar:set>
+        <xar:set name="current_id">$id; $values[$id]--; $GLOBALS['Categories_MakeSelect_Values'][$id]--;</xar:set>
     <xar:else />
         <option value="#$id#">#$indent##$name#</option>
     </xar:if>

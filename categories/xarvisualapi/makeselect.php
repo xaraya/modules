@@ -72,6 +72,9 @@ function categories_visualapi_makeselect ($args)
 // Note : $args['values'][$id] will be updated inside the template, so that when several
 //        select boxes are used with overlapping trees, categories will only be selected once
 // This requires that the values are passed by reference : $args['values'] =& $seencids;
+    if (isset($args['values'])) {
+        $GLOBALS['Categories_MakeSelect_Values'] =& $args['values'];
+    }
 
     return xarTplModule('categories','visual','makeselect',
                         $args, $template);
