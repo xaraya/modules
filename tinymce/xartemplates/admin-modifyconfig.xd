@@ -11,7 +11,7 @@
 <xar:mlstring>To use TinyMCE you must make sure that you:</xar:mlstring>
 <ul>
     <li><xar:mlstring>Install, then set TinyMCE as default editor in the Base Module configuration (Other Tab) </xar:mlstring></li>
-    <li><xar:mlstring>Add the specific template tags to head section (after the javascript tag) of you page templates (default.xt or any others where you want the editor to have effect) as follows</xar:mlstring>
+    <li><xar:mlstring>Add the specific template tags to head section (after the javascript tag) of your page templates (default.xt or any others where you want the editor to have effect) as follows</xar:mlstring>
     <pre>
         &lt;xar:if condition="xarModGetVar('base','editor') eq 'tinymce'"&gt;
             &lt;xar:template file="tinymce_insert" module="tinymce" type="module" /&gt;
