@@ -33,6 +33,20 @@ function hookbridge_init()
     xarModSetVar('hookbridge', 'hookfunctions_create', serialize($emptyArray) );
     xarModSetVar('hookbridge', 'hookenabled_update', 0 );
     xarModSetVar('hookbridge', 'hookfunctions_update', serialize($emptyArray) );
+    xarModSetVar('hookbridge', 'hookenabled_delete', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_delete', serialize($emptyArray) );
+    xarModSetVar('hookbridge', 'hookenabled_remove', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_remove', serialize($emptyArray) );
+
+    xarModSetVar('hookbridge', 'hookenabled_transforminput', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_transforminput', serialize($emptyArray) );
+    xarModSetVar('hookbridge', 'hookenabled_transformoutput', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_transformoutput', serialize($emptyArray) );
+
+    xarModSetVar('hookbridge', 'hookenabled_modifyconfig', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_modifyconfig', serialize($emptyArray) );
+    xarModSetVar('hookbridge', 'hookenabled_updateconfig', 0 );
+    xarModSetVar('hookbridge', 'hookfunctions_updateconfig', serialize($emptyArray) );
 
     xarModSetVar('hookbridge', 'hookenabled_new', 0 );
     xarModSetVar('hookbridge', 'hookfunctions_new', serialize($emptyArray) );
