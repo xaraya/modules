@@ -1,0 +1,8 @@
+27/03/02 16:11:59
+Added the installation of a subsite with a prefix.
+
+27/03/02 18:27:40
+Replace default parameters/ to sitesettings/
+
+
+

@@ -1,0 +1,46 @@
+<table border="0" width="100%">
+    <tr>
+        <th colspan="4" align="center">
+            <xar:mlstring>Multisites Administration</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+
+<center>
+<form method="post" action="&xar-modurl-multisites-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="&xar-var-authid;" />
+	    <table border="0" width="100%">
+		    <tr>
+			    <th>
+					<xar:mlstring>Set Server Var</xar:mlstring>
+                </th>
+            </tr>
+            <tr>
+				<td>
+                <table border="0" width="100%">
+					<tr align="left" valign="middle">
+						<td>
+							<xar:mlstring>Use Server Name or HTTP Host</xar:mlstring>
+							TODO Explain these vars.
+						</td>
+						<td>
+							<select name="servervar" id="servervar" size="1" tabindex="1">
+								<xar:if condition="xarModGetVar('multisites', 'ServerVar') eq 'httphost'">
+									<option value="httphost" selected="selected"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
+									<option value="servername"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
+								<xar:elseif condition="xarModGetVar('multisites', 'ServerVar') eq 'servername'" />
+									<option value="httphost"><xar:mlstring>HTTP_HOST</xar:mlstring></option>
+									<option value="servername" selected="selected"><xar:mlstring>SERVER_NAME</xar:mlstring></option>
+								</xar:if>									
+							</select>
+						</td>
+					</tr>
+                </table>
+            </td>
+        </tr>
+   </table>
+   <br /><br />
+        <input type="submit" value="<xar:mlstring>Update Multisites Configuration</xar:mlstring>" align="middle" 
+tabindex="3" />
+</form>
+</center>

@@ -1,0 +1,17 @@
+<table border="0" width="100%">
+    <tr>
+        <th colspan="4" align="center">
+            <xar:mlstring>Multisites Administration</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+
+<br />
+<br />
+<br />
+
+<center>
+
+<b><xar:var scope="session" name="$multisites_statusmsg" /></b>
+
+</center>
