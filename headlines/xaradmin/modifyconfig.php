@@ -17,8 +17,7 @@ function headlines_admin_modifyconfig()
     }
 
     $data['shorturlslabel'] = xarML('Enable short URLs?');
-    $data['shorturlschecked'] = xarModGetVar('headlines', 'SupportShortURLs') ?
-    'checked' : '';
+    $data['shorturlschecked'] = xarModGetVar('headlines', 'SupportShortURLs') ?   true : false;
     // Include 'formcheck' JavaScript.
     xarModAPIfunc('base', 'javascript', 'modulefile', array('module'=>'base', 'filename'=>'formcheck.js'));
     $data['submitlabel'] = xarML('Submit');

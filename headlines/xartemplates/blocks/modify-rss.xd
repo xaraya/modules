@@ -21,9 +21,9 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
       <xar:if condition = "$show_chantitle eq 1">
-      <input type="checkbox" name="show_chantitle" value="1" checked>
+      <input type="checkbox" name="show_chantitle" value="1" checked="checked"/>
       <xar:else />
-      <input type="checkbox" name="show_chantitle" value="1">
+      <input type="checkbox" name="show_chantitle" value="1"/>
       </xar:if>
     </span>
     </div>
@@ -34,9 +34,9 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
       <xar:if condition = "$show_chandesc eq 1">
-      <input type="checkbox" name="show_chandesc" value="1" checked>
+      <input type="checkbox" name="show_chandesc" value="1" checked="checked"/>
       <xar:else />
-      <input type="checkbox" name="show_chandesc" value="1">
+      <input type="checkbox" name="show_chandesc" value="1"/>
       </xar:if>
     </span>
     </div>
@@ -47,9 +47,9 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
       <xar:if condition = "$showdescriptions eq 1">
-      <input type="checkbox" name="showdescriptions" value="1" checked>
+      <input type="checkbox" name="showdescriptions" value="1" checked="checked"/>
       <xar:else />
-      <input type="checkbox" name="showdescriptions" value="1">
+      <input type="checkbox" name="showdescriptions" value="1"/>
       </xar:if>
     </span>
     </div>
