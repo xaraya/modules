@@ -51,12 +51,36 @@ function categories_admin_privileges($args)
         $hookedmodlist = array();
     }
     $modlist = array();
-    foreach ($hookedmodlist as $modname => $val) {
+    $typelist = array();
+    foreach ($hookedmodlist as $modname => $value) {
         if (empty($modname)) continue;
         $modid = xarModGetIDFromName($modname);
         if (empty($modid)) continue;
         $modinfo = xarModGetInfo($modid);
         $modlist[$modid] = $modinfo['displayname'];
+        if (!empty($moduleid) && $moduleid == $modid) {
+            // Get the list of all item types for this module (if any)
+            $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                                     // don't throw an exception if this function doesn't exist
+                                     array(), 0);
+            if (empty($mytypes)) {
+                $mytypes = array();
+            }
+            if (!empty($value[0])) {
+                foreach ($mytypes as $id => $type) {
+                    $typelist[$id] = $type['label'];
+                }
+            } else {
+                foreach ($value as $id => $val) {
+                    if (isset($mytypes[$id])) {
+                        $type = $mytypes[$id]['label'];
+                    } else {
+                        $type = xarML('type #(1)',$id);
+                    }
+                    $typelist[$id] = $type;
+                }
+            }
+        }
     }
 
     if (empty($moduleid) || $moduleid == 'All' || !is_numeric($moduleid)) {
@@ -105,6 +129,7 @@ function categories_admin_privileges($args)
     if (!empty($moduleid)) {
         $numitems = xarModAPIFunc('categories','user','countitems',
                                   array('modid' => $moduleid,
+                                        'itemtype' => $itemtype,
                                         'cids'  => (empty($cid) ? null : array($cid))
                                        ));
     } else {
@@ -117,6 +142,7 @@ function categories_admin_privileges($args)
                   'itemtype'     => $itemtype,
                   'itemid'       => $itemid,
                   'modlist'      => $modlist,
+                  'typelist'     => $typelist,
                   'numitems'     => $numitems,
                   'extpid'       => $extpid,
                   'extname'      => $extname,

@@ -25,14 +25,20 @@
     </select>
 </td></tr>
 
-<!-- TODO: show dropdown box for all relevant item types
 <tr><th valign="top" align="right">
 <xar:mlstring>Item Type</xar:mlstring>
 </th><td>
-    <input type="text" name="itemtype" id="itemtype" value="#$itemtype#" size="10" onchange="submit()" />
+    <select name="itemtype" onchange="submit()">
+        <option value="0"><xar:mlstring>All</xar:mlstring></option>
+        <xar:foreach in="$typelist" key="$typeid" value="$typename">
+            <xar:if condition="!empty($itemtype) and $itemtype eq $typeid">
+                <option value="#$typeid#" selected="selected">#$typename#</option>
+            <xar:else />
+                <option value="#$typeid#">#$typename#</option>
+            </xar:if>
+        </xar:foreach>
+    </select>
 </td></tr>
--->
-<input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
 
 <tr><th valign="top" align="right">
 <xar:mlstring>Item ID</xar:mlstring>
@@ -96,13 +102,9 @@
 <br />
 
 <xar:mlstring>
-Some examples :  (assuming your users have read access by default)<br /><br />
-- In order to allow 'Friends' to assign articles (and only those) to categories, define a privilege 'SubmitArticleCats'
-(or whatever name you prefer), and choose the module "Articles" (instance 151:All:All:All) and
-access level "Submit (Comment)" above. Press "Finish and Apply to Privilege", and then assign that privilege to the 'Friends' role.
-<br /><br />
-- ...
-<br /><br />
+Note : if you want to limit access to categories in general, you should use the 'Category' component
+of categories, and if you want to limit access to articles based on pubtype/category/author/... you
+should use the 'Article' component of articles.
 </xar:mlstring>
 
 </div>
