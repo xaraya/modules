@@ -72,16 +72,17 @@ function xarbb_userapi_getalltopics_bytime($args)
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} ";
     // Get by UID
-    $query .= "AND $xbbtopicstable.xar_ttime > $from";
+    $query .= "AND $xbbtopicstable.xar_ttime > ? ";
+    $bindvars = array($from);
 
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 
     // Need to run the query and add $numitems to ensure pager works
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
 
     $topics = array();

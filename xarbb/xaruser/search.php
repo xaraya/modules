@@ -67,6 +67,7 @@ function xarbb_user_search( $args )
 
         // need to get the user's uid from the name
         // FIXME:  this should be an api function in the roles module
+        // <mrb> but we dont use roles_userapi_get because??
         $dbconn =& xarDBGetConn();
         $xartable =& xarDBGetTables();
 
@@ -74,8 +75,8 @@ function xarbb_user_search( $args )
         $rolestable = $xartable['roles'];
         $query = "SELECT xar_uid
                   FROM $rolestable
-                  WHERE xar_uname = '" . xarVarPrepForStore($author) . "'";
-        $result =& $dbconn->Execute($query);
+                  WHERE xar_uname = ?";
+        $result =& $dbconn->Execute($query,array($author));
         if (!$result) return;
 
         // if we found the uid add it to the search list,

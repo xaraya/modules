@@ -56,6 +56,8 @@ function xarbb_userapi_getalltopics_byuid($args)
     // make only one query to speed up
     // Get links
     //bug # 2531 -  prevent duplicates now    
+    // FIXME: all these getalltopics files should be migrated into one function and use the prepare
+    // statement for the queries.
     $query = "SELECT DISTINCT xar_tid,
                      $xbbtopicstable.xar_fid,
                      xar_ttitle,
@@ -79,7 +81,8 @@ function xarbb_userapi_getalltopics_byuid($args)
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} ";
     // Get by UID
-    $query .= "AND $xbbtopicstable.xar_tposter = " . xarVarPrepForStore($uid);
+    $query .= "AND $xbbtopicstable.xar_tposter = ?";
+    $bindvars = array($uid);
 
 
 
@@ -88,9 +91,9 @@ function xarbb_userapi_getalltopics_byuid($args)
 
     // Need to run the query and add $numitems to ensure pager works
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
 
     $topics = array();

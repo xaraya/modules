@@ -76,6 +76,7 @@ function xarbb_userapi_get_allposts($args)
 
     // if the depth is zero then we
     // only want one comment
+    
     $sql = "SELECT  $ctable[title] AS xar_title,
                     $ctable[cdate] AS xar_datetime,
                     $ctable[hostname] AS xar_hostname,
@@ -89,21 +90,26 @@ function xarbb_userapi_get_allposts($args)
                     $ctable[right] AS xar_right,
                     $ctable[postanon] AS xar_postanon
               FROM  $xartable[comments]
-             WHERE  $ctable[modid]='$modid' AND $ctable[objectid]='$objectid'
-               AND  $ctable[status]='$status'";
+             WHERE  $ctable[modid]=? AND $ctable[objectid]=?
+               AND  $ctable[status]=?";
+    $bindvars = array($modid, $objectid, $status))
 
 
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]='$itemtype'";
+        $sql .= " AND $ctable[itemtype]=?";
+        $bindvars[] = $itemtype;
     }
 
     if (isset($author) && $author > 0) {
-        $sql .= " AND $ctable[author] = '$author'";
+        $sql .= " AND $ctable[author] = ?";
+        $bindvars[] = $author;
     }
 
     if ($cid > 0) {
-        $sql .= " AND ($ctable[left] >= $nodelr[xar_left]";
-        $sql .= " AND  $ctable[right] <= $nodelr[xar_right])";
+        $sql .= " AND ($ctable[left] >= ?";
+        $bindvars[] = $nodelr['xar_left'];
+        $sql .= " AND  $ctable[right] <= ?)";
+        $bindvars[] =  $nodelr['xar_right'];
     }
 
 
@@ -111,9 +117,9 @@ function xarbb_userapi_get_allposts($args)
 
     //Add select limit for modules that call this function and need Pager
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1,$bindvars);
     } else {
-       $result =& $dbconn->Execute($query);
+       $result =& $dbconn->Execute($query,$bindvars);
     }
     //$result =& $dbconn->Execute($sql);
     if (!$result) return;

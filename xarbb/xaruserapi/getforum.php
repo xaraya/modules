@@ -38,6 +38,7 @@ function xarbb_userapi_getforum($args)
                                         'modid' => xarModGetIDFromName('xarbb')));
 
     // Get links
+    $bindvars = array();
     $query = "SELECT xar_fid,
                    xar_fname,
                    xar_fdesc,
@@ -52,12 +53,14 @@ function xarbb_userapi_getforum($args)
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']}";
     if (!empty($fid) && is_numeric($fid)) {
-        $query .= " AND xar_fid = " . xarVarPrepForStore($fid);
+        $query .= " AND xar_fid = ?";
+        $bindvars[] = $fid;
     } else {
-        $query .= " AND xar_fname = '" . xarVarPrepForStore($fname) . "'";
+        $query .= " AND xar_fname = ?";
+        $bindvars[] = $fname;
     }
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
 // FIXME: if forums are assigned to more than 1 category, this will only return the first one

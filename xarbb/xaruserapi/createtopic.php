@@ -108,20 +108,9 @@ function xarbb_userapi_createtopic($args)
               xar_treplier,
               xar_tstatus,
               xar_thostname)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($fid) . "',
-              '" . xarVarPrepForStore($ttitle) . "',
-              '" . xarVarPrepForStore($tpost) . "',
-              '" . xarVarPrepForStore($tposter) . "',
-              '$ttime',
-              '$tftime',
-              '" . xarVarPrepForStore($treplies) . "',
-              '" . xarVarPrepForStore($treplier) . "',
-              '" . xarVarPrepForStore($tstatus) . "',
-              '" . xarVarPrepForStore($thostname) . "')";
-
-    $result =& $dbconn->Execute($query);
+            VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    $bindvars = array($nextId, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $treplier, $tstatus, $thostname);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get the ID of the item that we inserted

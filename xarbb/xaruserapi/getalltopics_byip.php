@@ -59,15 +59,16 @@ function xarbb_userapi_getalltopics_byip($args)
                      xar_thostname
             FROM $xbbtopicstable ";
     // Get by UID
-    $query .= "WHERE $xbbtopicstable.xar_thostname = '$ip'";
+    $query .= "WHERE $xbbtopicstable.xar_thostname = ?";
+    $bindvars = array($ip);
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 
     // Need to run the query and add $numitems to ensure pager works
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
 
     $topics = array();

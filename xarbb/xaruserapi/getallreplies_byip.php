@@ -54,10 +54,12 @@ function xarbb_userapi_getallreplies_byip($args)
     $sql = "SELECT  $ctable[hostname] AS xar_hostname,
                     $ctable[author] AS xar_uid
               FROM  $xartable[comments]
-             WHERE  $ctable[modid]='$modid'";
+             WHERE  $ctable[modid]= ? ";
+    $bindvars = array($modid);
 
     if (isset($hostname) && $hostname > 0) {
-        $sql .= " AND $ctable[hostname] = '$hostname'";
+        $sql .= " AND $ctable[hostname] = ? ";
+        $bindvars[] = $hostname;
     }
 
 
@@ -65,9 +67,9 @@ function xarbb_userapi_getallreplies_byip($args)
 
     //Add select limit for modules that call this function and need Pager
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1,$bindvars);
     } else {
-       $result =& $dbconn->Execute($query);
+       $result =& $dbconn->Execute($sql,$bindvars);
     }
     //$result =& $dbconn->Execute($sql);
     if (!$result) return;

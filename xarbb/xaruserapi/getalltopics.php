@@ -64,6 +64,7 @@ function xarbb_userapi_getalltopics($args)
     // make only one query to speed up
     // Get links
     //Fix for duplicates listings of topics with topic itemtypes - select distinct - get bug #2335
+    $bindvars = array();
     $query = "SELECT xar_tid,
                      $xbbtopicstable.xar_fid,
                      xar_ttitle,
@@ -86,20 +87,24 @@ function xarbb_userapi_getalltopics($args)
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} ";
      if (isset($fid)) {
-        $query .= "AND $xbbforumstable.xar_fid = " . xarVarPrepForStore($fid);
+        $query .= "AND $xbbforumstable.xar_fid = ? ";
+         $bindvars[] = $fid;
         //#bug 2335 - some older upgrades of xarbb seem to need the following to prevent duplicates
         $query .= " AND {$categoriesdef['itemtype']} = 0";
      } else {
-        $query .= " AND xar_tid IN (" . join(', ', $tids) . ")";
+         // <mrb> is count($tids) > 0 always?
+         $bindmarkers = '?' . str_repeat(',?'count($tids) -1);
+         $bindvars = array_merge($bindvars, $tids);
+        $query .= " AND xar_tid IN ($bindmarkers)";
     }
     // FIXME we should add possibility change sorting order
     $query .= " ORDER BY xar_ttime DESC";
 
     // Need to run the query and add $numitems to ensure pager works
     if (isset($numitems) && is_numeric($numitems)) {
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1,$bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
  
     $topics = array();
