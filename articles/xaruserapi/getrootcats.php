@@ -71,7 +71,10 @@ function articles_userapi_getrootcats($args)
     if (empty($catlist)) {
         return $catlinks;
     }
-    foreach ($catlist as $cid => $info) {
+    // preserve order of root categories if possible
+    foreach ($rootcats as $cid) {
+        if (!isset($catlist[$cid])) continue;
+        $info = $catlist[$cid];
         $item = array();
         $item['catid'] = $info['cid'];
         $item['cattitle'] = xarVarPrepForDisplay($info['name']);

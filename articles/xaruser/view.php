@@ -589,14 +589,21 @@ function articles_user_view($args)
             $catinfo[$cid]['link'] = xarModURL('articles','user','view',
                                                array('ptid' => $ptid,
                                                      'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) ));
-            // only needed when sorting by root id
-            $catinfo[$cid]['root'] = $info['left'];
+            // only needed when sorting by root category id
+            $catinfo[$cid]['root'] = 0; // means not found under a root category
+            // only needed when sorting by root category order
+            $catinfo[$cid]['order'] = 0; // means not found under a root category
+            $rootidx = 1;
             foreach ($catroots as $rootcat) {
                 // see if we're a child category of this rootcat (cfr. Celko model)
                 if ($info['left'] >= $rootcat['catleft'] && $info['left'] < $rootcat['catright']) {
+                    // only needed when sorting by root category id
                     $catinfo[$cid]['root'] = $rootcat['catid'];
+                    // only needed when sorting by root category order
+                    $catinfo[$cid]['order'] = $rootidx;
                     break;
                 }
+                $rootidx++;
             }
         }
         // needed for sort function below
@@ -718,8 +725,10 @@ function articles_user_view($args)
             is_array($article['cids']) && count($article['cids']) > 0) {
 
             $cidlist = $article['cids'];
-            // order cids by root category (to be improved)
-            usort($cidlist,'articles_view_sortbyroot');
+            // order cids by root category order
+            usort($cidlist,'articles_view_sortbyorder');
+            // order cids by root category id
+            //usort($cidlist,'articles_view_sortbyroot');
             // order cids by position in Celko tree
             //usort($cidlist,'articles_view_sortbyleft');
 
@@ -736,6 +745,7 @@ function articles_user_view($args)
                 $item['cname'] = $catinfo[$cid]['name'];
                 $item['clink'] = $catinfo[$cid]['link'];
                 $item['root'] = $catinfo[$cid]['root'];
+                $item['order'] = $catinfo[$cid]['order'];
                 $item['parent'] = $catinfo[$cid]['parent'];
                 $item['cid'] = $catinfo[$cid]['cid'];
                 $item['description'] = empty($catinfo[$cid]['description']) ? $catinfo[$cid]['name'] : $catinfo[$cid]['description'];
@@ -927,5 +937,12 @@ function articles_view_sortbyleft ($a,$b)
     if ($GLOBALS['artviewcatinfo'][$a]['left'] == $GLOBALS['artviewcatinfo'][$b]['left']) return 0;
     return ($GLOBALS['artviewcatinfo'][$a]['left'] > $GLOBALS['artviewcatinfo'][$b]['left']) ? 1 : -1;
 }
+
+function articles_view_sortbyorder ($a,$b) 
+{
+    if ($GLOBALS['artviewcatinfo'][$a]['order'] == $GLOBALS['artviewcatinfo'][$b]['order']) return 0;
+    return ($GLOBALS['artviewcatinfo'][$a]['order'] > $GLOBALS['artviewcatinfo'][$b]['order']) ? 1 : -1;
+}
+
 
 ?>

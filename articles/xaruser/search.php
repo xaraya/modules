@@ -344,14 +344,21 @@ function articles_user_search($args)
                         $catinfo[$cid]['link'] = xarModURL('articles','user','view',
                                                            array('ptid' => $curptid,
                                                                  'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) ));
-                        // only needed when sorting by root id
-                        $catinfo[$cid]['root'] = $info['left'];
+                        // only needed when sorting by root category id
+                        $catinfo[$cid]['root'] = 0; // means not found under a root category
+                        // only needed when sorting by root category order
+                        $catinfo[$cid]['order'] = 0; // means not found under a root category
+                        $rootidx = 1;
                         foreach ($catroots as $rootcat) {
                             // see if we're a child category of this rootcat (cfr. Celko model)
                             if ($info['left'] >= $rootcat['catleft'] && $info['left'] < $rootcat['catright']) {
+                                // only needed when sorting by root category id
                                 $catinfo[$cid]['root'] = $rootcat['catid'];
+                                // only needed when sorting by root category order
+                                $catinfo[$cid]['order'] = $rootidx;
                                 break;
                             }
+                            $rootidx++;
                         }
                     }
 
@@ -384,8 +391,10 @@ function articles_user_search($args)
                         is_array($article['cids']) && count($article['cids']) > 0) {
 
                         $cidlist = $article['cids'];
-                        // order cids by root category (to be improved)
-                        usort($cidlist,'articles_search_sortbyroot');
+                        // order cids by root category order
+                        usort($cidlist,'articles_search_sortbyorder');
+                        // order cids by root category id
+                        //usort($cidlist,'articles_search_sortbyroot');
                         // order cids by position in Celko tree
                         //usort($cidlist,'articles_search_sortbyleft');
 
@@ -497,6 +506,12 @@ function articles_search_sortbyleft ($a,$b)
 {
     if ($GLOBALS['artsearchcatinfo'][$a]['left'] == $GLOBALS['artsearchcatinfo'][$b]['left']) return 0;
     return ($GLOBALS['artsearchcatinfo'][$a]['left'] > $GLOBALS['artsearchcatinfo'][$b]['left']) ? 1 : -1;
+}
+
+function articles_search_sortbyorder ($a,$b)
+{
+    if ($GLOBALS['artsearchcatinfo'][$a]['order'] == $GLOBALS['artsearchcatinfo'][$b]['order']) return 0;
+    return ($GLOBALS['artsearchcatinfo'][$a]['order'] > $GLOBALS['artsearchcatinfo'][$b]['order']) ? 1 : -1;
 }
 
 ?>
