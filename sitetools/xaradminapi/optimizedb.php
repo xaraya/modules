@@ -57,9 +57,10 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
 
                 $local_query = 'OPTIMIZE TABLE '.$row[0];
                 $resultat  = mysql_query($local_query);
+                if (!$resultat) {return false;} //TODO: fix bug # 2594 but need still clean up here 
             }
         }
-        if (!$resultat) {return false;}
+
 
         foreach ($rowdata as $datum) {
             $total = $datum['totaldata'] + $datum['totalidx'];
