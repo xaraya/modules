@@ -6,12 +6,12 @@
 <xar:loop name="$indlinks">
 <div class="xar-norm-outline">
 	<span style="text-align: left;"><a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a> -- #$loop:item['chandesc']#</span>
-	<span style="text-align: right;"><a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a></span>
+	<span style="text-align: right; float: right;"><a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a></span>
 	<br />
-	<span style="text-align: right;">#$loop:item['comments']#</span>
+	<span style="text-align: right; float: right;">#$loop:item['comments']#</span>
 	<br />
 	<xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
-		<span style="text-align: right;"><a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a></span>
+		<span style="text-align: right; float: right;"><a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a></span>
 		<br />
 	</xar:if>
 </div>
