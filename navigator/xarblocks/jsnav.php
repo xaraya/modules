@@ -68,8 +68,8 @@ function navigator_jsnavblock_info()
 function navigator_jsnavblock_display($blockinfo)
 {
     // Security Check
-    if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"menu:$blockinfo[title]:All")) return;
-
+    if(!xarSecurityCheck('ViewNavigatorBlock', 0, 'Block', "$blockinfo[title]")) { return; } 
+    
     $param_cache = xarCoreGetVarDirPath() . "/cache/jsnav_conf_$blockinfo[name].js";
     $cache = xarCoreGetVarDirPath() . "/cache/jsnav_$blockinfo[name].js";
 
@@ -116,6 +116,10 @@ function navigator_jsnavblock_display($blockinfo)
 */
 function navigator_jsnavblock_modify($blockinfo)
 {
+    if(!xarSecurityCheck('AdminNavigatorBlock', 1,'Block',"$blockinfo[title]")) {
+        return;
+    }
+
     // Break out options from our content field
     $vars = unserialize($blockinfo['content']);
     $blockinfo['content'] = '';
@@ -285,6 +289,10 @@ function navigator_jsnavblock_modify($blockinfo)
 */
 function navigator_jsnavblock_update($blockinfo)
 {
+    if(!xarSecurityCheck('AdminNavigatorBlock', 1,'Block',"$blockinfo[title]")) {
+        return;
+    }
+
     xarVarFetch('menumaxheight',        'isset', $vars['menumaxheight'],20);
     xarVarFetch('menumaxwidth',         'isset', $vars['menumaxwidth'],150);
     xarVarFetch('lowbgcolor',           'isset', $vars['lowbgcolor'],'#FFFFFF');

@@ -7,6 +7,10 @@
 
 function navigator_user_menutype_images( $args )
 {
+    if (!xarSecurityCheck('ViewNavigatorMenu', 0, 'Menu', $args['id'], 'navigator')) {
+        return;
+    }
+
     $data = xarModAPIFunc('navigator', 'user',
                           'process_menu_attributes', &$args);
 
@@ -65,7 +69,7 @@ function navigator_user_menutype_images( $args )
         }
     }
 
-    $data['tree']     = $list;
+    $data['tree']     = isset($list) ? $list : array();
     $data['tagId']    = $id;
 
     xarModAPIFunc('navigator', 'user', 'set_style',

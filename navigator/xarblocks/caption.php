@@ -41,9 +41,7 @@ function navigator_captionblock_info()
 function navigator_captionblock_display($blockinfo)
 {
     // Security Check
-    if(!xarSecurityCheck('ViewNavigatorBlock',0,'Block',"$blockinfo[title]")) {
-        return;
-    }
+    if(!xarSecurityCheck('ViewNavigatorBlock', 0, 'Block', "$blockinfo[title]")) { return; } 
 
     $args['module'] = 'navigator';
     $args['moduleid'] = xarModGetIDFromName('navigator');
@@ -97,6 +95,10 @@ function navigator_captionblock_display($blockinfo)
  */
 function navigator_captionblock_modify($blockinfo)
 {
+    if(!xarSecurityCheck('AdminNavigatorBlock', 1,'Block',"$blockinfo[title]")) {
+        return;
+    }
+
     $image_args['name']           = 'image';
     $image_args['label']          = 'Image';
     $image_args['type']           = 9;
@@ -200,6 +202,10 @@ function navigator_captionblock_modify($blockinfo)
  */
 function navigator_captionblock_update($blockinfo)
 {
+    if(!xarSecurityCheck('AdminNavigatorBlock', 1,'Block',"$blockinfo[title]")) {
+        return;
+    }
+
     $args['extrainfo']['module']   = 'navigator';
     $args['extrainfo']['itemid']   = 0;
     $args['extrainfo']['itemtype'] = $blockinfo['bid'];

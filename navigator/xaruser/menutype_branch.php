@@ -19,6 +19,10 @@
 
 function navigator_user_menutype_branch( $args )
 {
+    if (!xarSecurityCheck('ViewNavigatorMenu', 0, 'Menu', $args['id'], 'navigator')) {
+        return;
+    }
+    
     extract($args);
 
     if (!isset($exclude) || empty($exclude)) {
@@ -30,7 +34,6 @@ function navigator_user_menutype_branch( $args )
     if (isset($maxdepth) && is_numeric($maxdepth)) {
         $data['maxdepth'] = $maxdepth;
     }
-
 
     if (isset($rename)) {
         $renameList = xarModAPIFunc('navigator', 'user', 'parse_name_changes',

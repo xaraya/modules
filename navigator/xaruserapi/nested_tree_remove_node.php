@@ -10,6 +10,27 @@
 
 function navigator_userapi_nested_tree_remove_node( $args )
 {
+    $matrix    = xarModGetVar('navigator', 'style.matrix') ? TRUE : FALSE;
+    $primary   = 'All';
+    $secondary = 'All';
+    if ($matrix) {
+        
+        if (isset($args['type']) && eregi('(primary|secondary)', $args['type'])) {
+            $type = strtolower($args['type']);
+            
+            $current_ids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
+            if (count($current_ids)) {
+                $primary   = $current_ids['primary']['id'];
+                $secondary = $current_ids['secondary']['id'];
+            }
+        } else {
+            $type = 'primary';
+        }
+    } else {
+        $type = 'primary';
+    }
+    
+
     if (isset($args['keep-parent']) && $args['keep-parent'] == TRUE) {
         $keep_parent = TRUE;
     } else {
@@ -33,6 +54,18 @@ function navigator_userapi_nested_tree_remove_node( $args )
     }
 
     foreach ($tree as $key => $branch) {
+             
+        if ('primary' == $type) {
+            $instance = $branch['cid'] . ':' . $secondary;
+        } else {
+            $instance = $primary . ':' . $branch['cid'];
+        }
+
+        if (!xarSecurityCheck('ViewNavigatorMenuItem', 0, 'Menu Item', $instance, 'navigator')) {
+            unset($tree[$key]);
+            continue;
+        }
+
         if (in_array($branch['cid'], $cids)) {
             if ($keep_parent) {
                 unset($tree[$key]['children']);
@@ -42,7 +75,8 @@ function navigator_userapi_nested_tree_remove_node( $args )
         } else {
             if (isset($branch['children']) && count($branch['children'])) {
                 navigator_userapi_nested_tree_remove_node(array('cids' => $cids,
-                                                          'tree' => &$tree[$key]['children']));
+                                                                'tree' => &$tree[$key]['children'],
+                                                                'type' => $type));
             }
         }
     }

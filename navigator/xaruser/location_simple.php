@@ -7,6 +7,10 @@
 
 function navigator_user_location_simple( $args )
 {
+    if (!xarSecurityCheck('ViewNavigatorMenu', 0, 'Menu', $args['id'], 'navigator')) {
+        return;
+    }
+
     extract($args);
 
     // pass through to the template all extra keys

@@ -30,13 +30,9 @@ function navigator_userapi_get_current_cats( /* VOID */ )
         return $list;
     } else {
 
-        if (xarModGetVar('navigator', 'style.matrix')) {
-            $matrix = TRUE;
-        } else {
-            $matrix = FALSE;
-        }
-
+        $matrix = xarModGetVar('navigator', 'style.matrix') ? TRUE : FALSE;
         $catList = xarVarGetCached('Blocks.articles', 'cids');
+
         if (!is_array($catList)) {
             return array();
         }

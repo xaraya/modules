@@ -40,8 +40,7 @@ function navigator_newsletter_subblock_info()
  */
 function navigator_newsletter_subblock_display($blockinfo)
 {
-    // Security Check
-    if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:All")) return;
+    if(!xarSecurityCheck('ViewNavigatorBlock', 0, 'Block', "$blockinfo[title]")) { return; } 
 
     // Initialize data array
     $data = array();

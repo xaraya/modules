@@ -7,6 +7,10 @@
 
 function navigator_user_location_crumbtrail( $args )
 {
+    if (!xarSecurityCheck('ViewNavigatorMenu', 0, 'Menu', $args['id'], 'navigator')) {
+        return;
+    }
+
     extract($args);
     // Get the catid from input:
     $matrix   = xarModGetVar ('navigator', 'style.matrix');

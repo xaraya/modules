@@ -19,6 +19,9 @@
 
 function navigator_user_menutype_list( $args )
 {
+    if (!xarSecurityCheck('ViewNavigatorMenu', 0, 'Menu', $args['id'], 'navigator')) {
+        return;
+    }
 
     $data = xarModAPIFunc('navigator', 'user', 'process_menu_attributes', $args);
 

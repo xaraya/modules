@@ -138,7 +138,8 @@ function navigator_userapi_process_menu_attributes( $args )
         // Remove any nodes that need removing
         xarModAPIFunc('navigator', 'user', 'nested_tree_remove_node',
                        array('tree' => &$tree,
-                             'cids' => $exclude));
+                             'cids' => $exclude,
+                             'type' => $base));
     }
 
     $curcids[0] = $primary;
