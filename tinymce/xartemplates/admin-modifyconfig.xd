@@ -397,11 +397,15 @@
         <div style="clear: both; padding-top: 10px;">
             <span style="float: left; width: 30%; text-align: right;">
                 <span class="help" title="#xarML('Additional html tags, forced or alternate attributes and so on, separated by commas')#">
-                    <label for="tinyextended"><xar:mlstring>Additional or alternate tags and attributes:</xar:mlstring></label>
+                    <label for="tinyextended"><xar:mlstring>Additional/alternate tags or attributes:</xar:mlstring></label>
                 </span>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="80" maxlength="240" />
+            <p><xar:mlstring>Make sure you have 'style' and 'class' as allowed attributes in img or a tags if you need them.
+            *[*] allows all tags and attributes. Use with disallowed tags below. Your HTML module settings will
+            finally filter all tags (but not attributes).</xar:mlstring></p>
+
             </span>
         </div>
         
@@ -581,7 +585,7 @@
             <xar:mlstring>The ADVANCED theme is defined BY DEFAULT with extra buttons and functions.
             You DO NOT have to change anything on this page. If you do wish to change the defaults then you can add buttons, remove them, or define
             exactly what buttons appear. Valid button names are (separate names by comma - no spaces):</xar:mlstring>
-            <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, charmap, visualaid, spacer, cut, copy, paste, advhr
+            <p><xar:mlstring>bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, backcolor, charmap, visualaid, spacer, cut, copy, paste, advhr
               (and for plugins - save, ibrowser, iespell, preview, zoom, emotions, insertdate, inserttime, advhr, flash)
                </xar:mlstring>
             </p>
