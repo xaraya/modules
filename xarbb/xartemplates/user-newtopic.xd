@@ -46,7 +46,7 @@
 	#$warning#
 	<br /><br />
 </xar:if>
-<form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
+<form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" method="post" name="post" id="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="fid" id="fid" value="#$fid#" />
     <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
