@@ -33,7 +33,7 @@ function messages_user_view( $args ) {
     }
 
     $data['message'] = $messages[0];
-
+    $data['action']  = 'view';
     /*
      * Add this message id to the list of 'seen' messages
      * if it's not already in there :)
