@@ -7,9 +7,9 @@
 </div>
 
 <iframe id="appwindow" src="#$page#" width="#$hsize#" height="#$vsize#" frameborder="0" marginheight="0" marginwidth="0">
-<!----
+<xar:comment>-
 ."  <br />"._SORRYBROWSER."<a class=\"pn-pagetitle\" href=\"$page\" target=\"_blank\">"._LINKYOU."</a>"._SORRYBROWSER1."<br /><br />\n"
----->
+-</xar:comment>
 </iframe>
 
 <xar:if condition="!empty($hooks)">
