@@ -11,6 +11,7 @@
  */
 function categories_userapi_getparents($args)
 {
+    $return_itself = true;
     extract($args);
 
     if (!isset($cid) && !isset($cids)) {
@@ -54,20 +55,23 @@ function categories_userapi_getparents($args)
     if (!$result) return;
 
     while (!$result->EOF) {
-        list($cid, $name, $description, $image, $parent, $left, $right) = $result->fields;
+        list($pid, $name, $description, $image, $parent, $left, $right) = $result->fields;
         if (!xarSecurityCheck('ViewCategories',0,'Category',"$name:$cid")) {
              $result->MoveNext();
              continue;
         }
-        $info[$cid] = Array(
-                            "cid"         => $cid,
-                            "name"        => $name,
-                            "description" => $description,
-                            "image"       => $image,
-                            "parent"      => $parent,
-                            "left"        => $left,
-                            "right"       => $right
-                           );
+        
+        if(($cid == $pid && $return_itself) || ($cid != $pid)) {
+            $info[$pid] = Array(
+                                "cid"         => $pid,
+                                "name"        => $name,
+                                "description" => $description,
+                                "image"       => $image,
+                                "parent"      => $parent,
+                                "left"        => $left,
+                                "right"       => $right
+                                );
+        }
         $result->MoveNext();
     }
     return $info;
