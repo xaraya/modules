@@ -14,8 +14,8 @@ function printToDoTable($xquery, $xis_search, $page) {
     global $abfrage, $order_by;
     global $priority, $responsible_person, $search_project, $wildcards;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $stati = array (
             0    => xarML('open'),
             1    => xarML('in progress'),
@@ -596,8 +596,8 @@ function search_box($priority,$search_status, $search_project,$responsible_perso
 function details_page($id){
     global $detail_project;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $str = "";
 
     if (isset ($detail_project)){

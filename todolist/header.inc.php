@@ -11,8 +11,8 @@ function page_top($page,$printlayout)
 {
     global $order_by, $feedback, $QUERY_STRING, $date, $id;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $modinfo = pnModGetInfo(pnModGetIDFromName('todolist'));
     $todoimagespath = 'modules/'.pnVarPrepForOS($modinfo['directory']).'/xarimages/';
 

@@ -41,8 +41,8 @@ $modinfo = pnModGetInfo(pnModGetIDFromName('todolist'));
 function makeUserDropdownList($myname,$selected_names,$selected_project, $emty_choice, $multiple, $all) {
     global $route, $page;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     if ($all == 'all') {
        $result = $dbconn->Execute("SELECT xar_uid, xar_uname FROM $pntable[roles] ORDER BY xar_uname");

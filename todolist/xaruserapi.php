@@ -53,8 +53,8 @@ function todolist_userapi_getallprojects($args)
         return $items;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_projects_column = &$pntable['todolist_projects_column'];
 
@@ -98,8 +98,8 @@ function todolist_userapi_getproject($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_projects_column = &$pntable['todolist_projects_column'];
 
@@ -140,8 +140,8 @@ function todolist_userapi_getproject($args)
  */
 function todolist_userapi_countprojects()
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $sql = "SELECT COUNT(1) FROM $pntable[todolist_projects]";
     $result = $dbconn->Execute($sql);
@@ -184,8 +184,8 @@ function todolist_userapi_getallgroups($args)
         return $items;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_groups_column = &$pntable['todolist_groups_column'];
 
@@ -229,8 +229,8 @@ function todolist_userapi_getgroup($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_groups_column = &$pntable['todolist_groups_column'];
 
@@ -271,8 +271,8 @@ function todolist_userapi_getgroup($args)
  */
 function todolist_userapi_countgroups()
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $sql = "SELECT COUNT(1) FROM $pntable[todolist_groups]";
     $result = $dbconn->Execute($sql);
@@ -315,8 +315,8 @@ function todolist_userapi_getallusers($args)
         return $items;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];    
     $sql = "SELECT DISTINCT $todolist_project_members_column[member_id] FROM $pntable[todolist_project_members]";
@@ -384,8 +384,8 @@ function todolist_userapi_getuser($args)
  */
 function todolist_userapi_countusers()
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];    
 
@@ -453,8 +453,8 @@ function todolist_userapi_getprojectmembers($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
     $sql = "SELECT $todolist_project_members_column[member_id]
@@ -495,8 +495,8 @@ function todolist_userapi_getgroupmembers($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_group_members_column = &$pntable['todolist_group_members_column'];
     $sql = "SELECT $todolist_group_members_column[member_id]

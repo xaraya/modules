@@ -21,8 +21,8 @@
 function update_todo($due_date, $priority, $status, $percentage_completed, $text, $responsible_persons, $id,
         $note_text, $selected_project)
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     /* Das Datum muﬂ evtl. wieder nach US-Format konvertiert werden... */
     if (pnModGetVar('todolist', 'DATEFORMAT') != "1") {
         $due_date=convDateToUS($due_date);
@@ -96,8 +96,8 @@ function update_todo($due_date, $priority, $status, $percentage_completed, $text
  */
 function add_todo($due_date,$priority,$project,$percentage_completed,$text,$responsible_person,$note_text)
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     if (pnModGetVar('todolist', 'DATEFORMAT') != "1") {
         // datum is the due date
         $due_date = convDateToUS($due_date);
@@ -156,8 +156,8 @@ function add_todo($due_date,$priority,$project,$percentage_completed,$text,$resp
  */
 function delete_todo($todo_id)
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     if (pnUserGetVar('uid')) {
         // TODO: Add mail-notification
         generateMail($todo_id, "todo_delete");
@@ -193,8 +193,8 @@ function delete_todo($todo_id)
  */
 function makeFrontQuery($order_by, $selected_project)
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_todos_column = &$pntable['todolist_todos_column'];
     $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
@@ -263,8 +263,8 @@ function makeSearchQuery($wildcards,$priority, $status, $project, $responsible_p
 {
     global $abfrage;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     /* Generate the SQL-Statement */
     $todolist_todos_column = &$pntable['todolist_todos_column'];
     $todolist_responsible_persons_column = &$pntable['todolist_responsible_persons_column'];
@@ -428,8 +428,8 @@ function generateMail($id,$action)
     if (!pnModGetVar('todolist', 'SEND_MAILS'))
         return;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $message_headers="From: ToDo-List <webmaster@$SERVER_NAME>\n";
     $message_headers.="MIME-Version: 1.0\n";
     $message_headers.="Content-type: multipart/mixed; boundary=\"simple boundary\"\n";
@@ -651,8 +651,8 @@ function makeUserDropdown($myname,$selected_names,$selected_project, $emty_choic
 {
     global $route, $page;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $str = "";
 
     if (empty($selected_names)) {
@@ -749,8 +749,8 @@ function makeProjectDropdown($myname,$selected_project,$all=false, $java=false)
 {
     global $page, $route;
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
     $str = "";
 
     // If we are not the admin do only get the projects we're member of.
@@ -797,8 +797,8 @@ function makeProjectDropdown($myname,$selected_project,$all=false, $java=false)
 */
 function makeProjectDropdown($myname,$selected_project,$all=false, $java=false)
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_projects_column = &$pntable['todolist_projects_column'];
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
@@ -845,8 +845,8 @@ function makeProjectDropdown($myname,$selected_project,$all=false, $java=false)
  */
 function makeGroupDropdown($myname,$selected_group, $emty_choice, $multiple)
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_groups_column = &$pntable['todolist_groups_column'];
     $result = $dbconn->Execute("SELECT * FROM $pntable[todolist_groups] ORDER BY $todolist_groups_column[group_name]");

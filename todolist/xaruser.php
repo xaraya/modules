@@ -11,8 +11,8 @@ list($route, $id, $order_by, $abfrage, $priority, $wildcards, $responsible_perso
      'note_text', 'printlayout', 'status', 'search_status', 'search_project', 'date_min', 'date_max');
 
 $modinfo = pnModGetInfo(pnModGetIDFromName('todolist'));
-list($dbconn) = pnDBGetConn();
-$pntable = pnDBGetTables();
+$dbconn =& xarDBGetConn();;
+$pntable =& xarDBGetTables();
 
 // overall routes
 define ('FRONTPAGE', 0);

@@ -40,8 +40,8 @@ function todolist_adminapi_creategroup($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_groups_column = &$pntable['todolist_groups_column'];
     $newgid = $dbconn->GenId("$pntable[todolist_groups]");
@@ -77,8 +77,8 @@ function todolist_adminapi_updategroup($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_groups_column = &$pntable['todolist_groups_column'];
     $query = "UPDATE $pntable[todolist_groups] SET
@@ -139,8 +139,8 @@ function todolist_adminapi_deletegroup($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_groups_column = &$pntable['todolist_groups_column'];
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_groups]
@@ -183,8 +183,8 @@ function todolist_adminapi_createproject($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_projects_column = &$pntable['todolist_projects_column'];
     $newpid = $dbconn->GenId("$pntable[todolist_projects]");
@@ -219,8 +219,8 @@ function todolist_adminapi_updateproject($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_projects_column = &$pntable['todolist_projects_column'];
     $query = "UPDATE $pntable[todolist_projects] SET
@@ -280,8 +280,8 @@ function todolist_adminapi_deleteproject($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $todolist_projects_column = &$pntable['todolist_projects_column'];
     $result = $dbconn->Execute("DELETE FROM $pntable[todolist_projects] WHERE 
@@ -363,8 +363,8 @@ function todolist_adminapi_createuser($args)
     $userpref = $user_email_notify.';'.$user_primary_project.';'.$user_my_tasks.';'.$user_show_icons;
     xarModSetUserVar('todolist','userpref',$userpref,$user_id);
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     // Every user is member of project 1 (default)
     $todolist_project_members_column = &$pntable['todolist_project_members_column'];
@@ -397,8 +397,8 @@ function todolist_adminapi_updateuser($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $userpref = $new_email_notify.';'.$new_primary_project.';'.$new_my_tasks.';'.$showicons;
     xarModSetUserVar('todolist','userpref',$userpref,$user_id);
@@ -424,8 +424,8 @@ function todolist_adminapi_deleteuser($args)
         return false;
     }
 
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     xarModDelUserVar('todolist','userpref',$user_id);
 

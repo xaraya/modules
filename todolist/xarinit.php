@@ -33,8 +33,8 @@
  */
 function todolist_init()
 {
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     $sql = "CREATE TABLE $pntable[todolist_group_members] (
             pn_group_id int(10) NOT NULL default '0',
@@ -159,7 +159,7 @@ function todolist_upgrade($oldversion)
             // Code to upgrade from version 0.9.13 goes here
             pnModSetVar('todolist','userpref','1;all;0;1');
             
-            list($dbconn) = pnDBGetConn();
+            $dbconn =& xarDBGetConn();;
             $todolist_users = pnConfigGetVar('prefix') . '_todolist_users';
             $sql = "DROP TABLE $todolist_users";
             $dbconn->Execute($sql);
@@ -189,8 +189,8 @@ function todolist_delete()
     // we currently just want the first item, which is the official
     // database handle.  For pnDBGetTables() we want to keep the entire
     // tables array together for easy reference later on
-    list($dbconn) = pnDBGetConn();
-    $pntable = pnDBGetTables();
+    $dbconn =& xarDBGetConn();;
+    $pntable =& xarDBGetTables();
 
     // Drop the table - for such a simple command the advantages of separating
     // out the SQL statement from the Execute() command are minimal, but as
