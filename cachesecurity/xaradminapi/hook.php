@@ -13,7 +13,7 @@
  * @author Flavio Botelho <nuncanada@xaraya.com>
 */
 
-function cachesecurity_adminapi_hook()
+function cachesecurity_adminapi_hook($args)
 {
     if (!xarModAPIFunc('cachesecurity','admin','turnoff')) return;
 
@@ -24,7 +24,9 @@ function cachesecurity_adminapi_hook()
     if (!xarModAPIFunc('cachesecurity','admin','syncall')) return;
 
     if (!xarModAPIFunc('cachesecurity','admin','turnon')) return;
-    return true;
+  
+    //I know this doesnt make any sense, whatsoever but what can i do?
+    return $args['extrainfo'];
 }
 
 ?>
