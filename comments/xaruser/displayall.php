@@ -116,6 +116,13 @@ function comments_user_displayall($args) {
                 }
             } else {
                 $modlist[$module] = ucwords($module);
+                // allow selecting individual item types here too (if available)
+                if (!empty($mytypes) && count($mytypes) > 0) {
+                    foreach ($mytypes as $itemtype => $mytype) {
+                        if (!isset($mytype['label'])) continue;
+                        $modlist["$module.$itemtype"] = ucwords($module) . ' - ' . $mytype['label'];
+                    }
+                }
             }
         }
     }

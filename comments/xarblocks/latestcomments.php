@@ -141,12 +141,12 @@ function comments_latestcommentsblock_modify($blockinfo)
     $modlist['all'] = xarML('All');
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
+            // Get the list of all item types for this module (if any)
+            $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
+                                     // don't throw an exception if this function doesn't exist
+                                     array(), 0);
             // we have hooks for individual item types here
             if (!isset($value[0])) {
-                // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modname,'user','getitemtypes',
-                                         // don't throw an exception if this function doesn't exist
-                                         array(), 0);
                 foreach ($value as $itemtype => $val) {
                     if (isset($mytypes[$itemtype])) {
                         $type = $mytypes[$itemtype]['label'];
@@ -157,6 +157,13 @@ function comments_latestcommentsblock_modify($blockinfo)
                 }
             } else {
                 $modlist[$modname] = ucwords($modname);
+                // allow selecting individual item types here too (if available)
+                if (!empty($mytypes) && count($mytypes) > 0) {
+                    foreach ($mytypes as $itemtype => $mytype) {
+                        if (!isset($mytype['label'])) continue;
+                        $modlist["$modname.$itemtype"] = ucwords($modname) . ' - ' . $mytype['label'];
+                    }
+                }
             }
         }
     }
