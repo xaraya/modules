@@ -1,5 +1,5 @@
 <xar:if condition="!empty($maplink) or !empty($archivelink) or !empty($submitlink)">
-    <xar:if condition="xarTplAddStyleLink('articles', 'navtabs')">
+    <xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
         <div class="tabnav">
             <div class="navhelp help" title="#xarML('Click on a tab to explore further')#">
                 <xar:mlstring>

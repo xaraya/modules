@@ -1,4 +1,4 @@
-<xar:if condition="xarTplAddStyleLink('articles', 'navtabs')">
+<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
     <div class="tabnav">
         <div class="navhelp help" title="#xarML('Click on a tab to display articles from that publication type')#">
             <xar:mlstring>
