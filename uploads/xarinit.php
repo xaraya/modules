@@ -36,45 +36,37 @@ function uploads_init()
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     
-    $uploadstable = $xartable['uploads'];
-    $blobstable = $xartable['uploads_blobs'];
+    $fileEntry_table = $xartable['file_entry'];
+    $fileData_table = $xartable['file_data'];
 
     xarDBLoadTableMaintenanceAPI();
-    $uploadsfields = array(
-        'xar_file_id'    => array('type'=>'integer', 'size'=>32      'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_userid'     => array('type'=>'integer', 'size'=>32,     'null'=>FALSE),
-        'xar_filename'   => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
-        'xar_location'   => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
-        'xar_status'     => array('type'=>'tinyint', 'size'=>3,      'null'=>FALSE,  'default'=>'0'),
-        'xar_filesize'   => array('type'=>'integer', 'size'=>64,     'null'=>FALSE);
-        'xar_store_type' => array('type'=>'char',    'size'=>1,      'null'=>FALSE),
-        'xar_mime_type'  => array('type'=>'varchar', 'size' => 128,  'null'=>FALSE,  'default' => 'application/octet-stream')
+    $fileEntry_fields = array(
+        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>32      'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_user_id'      => array('type'=>'integer', 'size'=>32,     'null'=>FALSE),
+        'xar_filename'     => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
+        'xar_location'     => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
+        'xar_status'       => array('type'=>'tinyint', 'size'=>3,      'null'=>FALSE,  'default'=>'0'),
+        'xar_filesize'     => array('type'=>'integer', 'size'=>64,     'null'=>FALSE);
+        'xar_store_type'   => array('type'=>'char',    'size'=>1,      'null'=>FALSE),
+        'xar_mime_type'    => array('type'=>'varchar', 'size' => 128,  'null'=>FALSE,  'default' => 'application/octet-stream')
     );
         
         
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
-    $query = xarDBCreateTable($uploadstable,$uploadsfields);
-    $result =& $dbconn->Execute($query);
+    $query   =  xarDBCreateTable($fileEntry_table, $fileEntry_fields);
+    $result  =& $dbconn->Execute($query);
     if (!$result) return;
 
-    //now create the blob table to contain images & files in the database.
-    /*CREATE TABLE `xar_uploadblobs` (
-        `xar_ulbid` INT( 32 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-        `xar_ulid` INT( 32 ) UNSIGNED NOT NULL ,
-        `xar_ulblob` BLOB NOT NULL ,
-    INDEX ( `xar_ulid` ) 
-     );*/
-
-    $blobsfields = array(
-        'xar_upload_blob_id' =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_file_id'      =>array('type'=>'varchar','size'=>32,'null'=>FALSE),
-        'xar_ulblob'         =>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0')
+    $fileData_fields = array(
+        'xar_fileData_id'  => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_fileEntry_id' => array('type'=>'varchar','size'=>32,'null'=>FALSE),
+        'xar_fileData'     => array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0')
     );
         
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
-    $query = xarDBCreateTable($blobstable,$blobsfields);
+    $query  =  xarDBCreateTable($fileData_table, $fileData_fields);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     
@@ -88,14 +80,12 @@ function uploads_init()
     /**
      * Register hooks
      */
-    // Set up module hooks
     if (!xarModRegisterHook('item', 'transform', 'API',
                            'uploads', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook');
          xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
     }
-
     
     return true;
 }
@@ -134,7 +124,10 @@ function uploads_upgrade($oldversion)
         
             $hookstable = xarDBGetSiteTablePrefix() . '_hooks';
             $query = "DELETE FROM $hookstable
-                      WHERE xar_tmodule='uploads' AND (xar_tfunc='formdisplay' OR xar_tfunc='createhook' OR xar_tfunc='newhook')";
+                            WHERE xar_tmodule='uploads' 
+                              AND (xar_tfunc='formdisplay' 
+                               OR xar_tfunc='createhook' 
+                               OR xar_tfunc='newhook')";
         
             $result =& $dbconn->Execute($query);
             if (!$result) return;

@@ -20,12 +20,12 @@ function uploads_xartables()
  
     // Get the name for the uploads item table.  This is not necessary 
     // but helps in the following statements and keeps them readable 
-    $uploads = xarDBGetSiteTablePrefix() . '_uploads'; 
-    $blobs   = xarDBGetSiteTablePrefix() . '_upload_blobs'; 
+    $fileEntry_table = xarDBGetSiteTablePrefix() . '_file_entry'; 
+    $fileData_table   = xarDBGetSiteTablePrefix() . '_file_data'; 
  
     // Set the table name 
-    $xartable['uploads'] = $uploads; 
-    $xartable['blobs'] = $blobs; 
+    $xartable['file_entry'] = $fileEntry_table; 
+    $xartable['file_data'] = $fileData_table; 
  
     // Return the table information 
     return $xartable; 

@@ -11,7 +11,13 @@
  * ---------------------------------------------------------------------- 
  */ 
  
- 
+define('_UPLOADS_STORE_FILESYSTEM', 1);
+define('_UPLOADS_STORE_DATABASE',2);
+
+define('_UPLOADS_STATUS_SUBMITTED',1);
+define('_UPLOADS_STATUS_APPROVED',2);
+define('_UPLOADS_STATUS_REJECTED',3);
+
 /**
  *  Retrieve the metadata stored for a particular file based on either 
  *  the file id or the file name.
@@ -19,8 +25,13 @@
  * @author Carl P. Corliss
  * @author Micheal Cortez
  * @access public
- * @param  integer  file_id     (Optional ID of the file we want to retrieve
- * @param  string   fileName    (Optional) Name of the file we want to retrieve
+ * @param  integer  file_id     (Optional) grab file with the specified file id
+ * @param  array    file_ids    (Optional) grab files with the specified file ids
+ * @param  string   fileName    (Optional) grab file(s) with the specified file name
+ * @param  integer  status      (Optional) grab files with a specified status  (SUBMITTED, APPROVED, REJECTED)
+ * @param  integer  user_id     (Optional) grab files uploaded by a particular user
+ * @param  integer  store_type  (Optional) grab files with the specified store type (FILESYSTEM, DATABASE)
+ * @param  integer  mime_type   (Optional) grab files with the specified mime type 
  *
  * @returns array   All of the metadata stored for the particular file
  */
@@ -29,35 +40,63 @@ function uploads_userapi_db_get_fileEntry( $args )  {
     
     extract($args);
     
-    if (!isset($file_id) && !isset($fileName)) {            
-        $msg = xarML('Missing parameters [#(1)] for function [(#(2)] in module [#(3)]',
-                     'file_id/fileName','get','uploads');
+    if (!isset($file_id) && !isset($fileName) && !isset($file_ids) && 
+        !isset($status)  && !isset($user_id)  && !isset($mime_type) && !isset($store_type)) {            
+        $msg = xarML('Missing parameters for function [(#(1)] in module [#(2)]', 'get', 'uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }        
-
     
+    $where = '';
+    
+    if (isset($file_ids) && is_array($file_ids)) {
+        $where[] 'xar_fileEntry_id IN (' . implode(',', $file_ids) . ')';
+    }
+    
+    if(isset($file_id) && !isset($file_ids)) {
+        $where[] = "xar_fileEntry_id = $file_id";
+    }
+
+    if (isset($fileName)) {
+        $where[] = "(xar_filename = '$fileName')";
+    }
+        
+    if (isset($status)) {
+        $where[] = "(xar_status = $status)";
+    }
+
+    if (isset($user_id)) {
+        $where[] = "(xar_user_id = $user_id)";
+    }
+
+    if (isset($store_type)) {
+        $where[] = "(xar_store_type = $store_type)";
+    }
+    
+    if (isseT($mime_type)) {
+        $where[] = "(xar_mime_type = $mime_type)";
+    }
+
+    if (count($where) > 1) {
+        $where = implode(' AND ', $where);
+    } else {
+        $where = implode('', $where);
+    }
     // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable     = xarDBGetTables();
         
         // table and column definitions
-    $uploadstable = $xartable['uploads'];
-
-    if (isset($file_id)) {
-        $where = "xar_file_id = $file_id";
-    } else {
-        $where = "xar_filename = '".xarVarPrepForStore($fileName)."'";
-    }
+    $fileEntry_table = $xartable['file_entry'];
     
-    $sql = "SELECT xar_id, 
-                   xar_uid, 
+    $sql = "SELECT xar_fileEntry_id, 
+                   xar_user_id, 
                    xar_filename, 
                    xar_location, 
                    xar_status, 
                    xar_store_type, 
                    xar_mime_type
-              FROM $uploadstable
+              FROM $fileEntry_table
              WHERE $where";
     
     $result = $dbconn->Execute($sql);
@@ -72,6 +111,59 @@ function uploads_userapi_db_get_fileEntry( $args )  {
     }
     
    return $result->GetRowAssoc(false);
+}
+
+/**
+ * Retrieve the metadata stored for all files in the database
+ * 
+ * @author Carl P. Corliss
+ * @author Micheal Cortez
+ * @access public
+ *
+ * @returns array   All of the metadata stored for the particular file
+ */
+ 
+function uploads_userapi_db_get_all_fileEntries( /* VOID */ ) {
+    
+    // Get database setup
+    list($dbconn) = xarDBGetConn();
+    $xartable     = xarDBGetTables();
+        
+        // table and column definitions
+    $fileEntry_table = $xartable['file_entry'];
+
+    $sql = "SELECT xar_fileEntry_id, 
+                   xar_user_id, 
+                   xar_filename, 
+                   xar_location, 
+                   xar_status, 
+                   xar_store_type, 
+                   xar_mime_type
+              FROM $fileEntry_table";
+    
+    $result = $dbconn->Execute($sql);
+
+    if (!$result)  {
+        return;
+    }
+
+    // if no record found, return an empty array        
+    if ($result->EOF) {
+        return array();
+    }
+    // zip through the list of results and
+    // add it to the array we will return
+    while (!$result->EOF) {
+        $row = $result->GetRowAssoc(false);
+        $row['xar_user_name'] = xarUserGetVar('name',$row['xar_user_id']);
+        $filelist[] = $row;
+        $result->MoveNext();
+    }
+
+    $result->Close();
+
+                                                                    
+   return $filelist;
 }
 
 /** 
@@ -134,14 +226,14 @@ function uploads_userapi_db_add_fileEntry( $args ) {
 
 
     // table and column definitions
-    $uploadstable = $xartable['uploads'];
-    $file_id    = $dbconn->GenID($uploadstable);
+    $fileEntry_table = $xartable['file_entry'];
+    $file_id    = $dbconn->GenID($fileEntry_table);
 
     // insert value into table
-    $sql = "INSERT INTO $uploadstable 
+    $sql = "INSERT INTO $fileEntry_table 
                       ( 
-                        xar_id, 
-                        xar_uid, 
+                        xar_fileEntry_id, 
+                        xar_user_id, 
                         xar_filename, 
                         xar_location, 
                         xar_status,
@@ -152,11 +244,11 @@ function uploads_userapi_db_add_fileEntry( $args ) {
                VALUES 
                       (
                         $file_id,
-                        $user_id,'".
-                        xarVarPrepForStore($filename) . "', '"
-                        xarVarPrepForStore($location) . "', "
+                        $user_id,'" .
+                        xarVarPrepForStore($filename) . "', '" .
+                        xarVarPrepForStore($location) . "', 
                         $status, " .
-                        filesize($location) . ",
+                        filesize($location) . ", '" .
                         xarVarPrepForStore($mime_type) . "', 
                         $store_type
                       )";
@@ -166,7 +258,7 @@ function uploads_userapi_db_add_fileEntry( $args ) {
     if (!$result) {
         return FALSE;
     } else {
-        $id = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
+        $id = $dbconn->PO_Insert_ID($xartable['file_entry'], 'xar_cid');
         return $id;
     }
 }
@@ -200,11 +292,11 @@ function uploads_userapi_db_delete_fileEntry( $args ) {
     $xartable       = xarDBGetTables();
 
     // table and column definitions
-    $uploadstable   = $xartable['uploads'];
+    $fileEntry_table   = $xartable['file_entry'];
     
     // insert value into table
-    $sql = "DELETE FROM $uploadstable
-                  WHERE xar_file_id = $file_id";
+    $sql = "DELETE FROM $fileEntry_table
+                  WHERE xar_fileEntry_id = $file_id";
                   
                       
     $result = &$dbconn->Execute($sql);
@@ -218,7 +310,7 @@ function uploads_userapi_db_delete_fileEntry( $args ) {
 }
 
 /** 
- *  <description>
+ *  Modifies a file's metadata stored in the database
  *
  *  @author  Carl P. Corliss
  *  @access  public
@@ -229,11 +321,11 @@ function uploads_userapi_db_delete_fileEntry( $args ) {
  *  @param   integer status     (optional) The status of the file (APPROVED, SUBMITTED, READABLE, REJECTED)
  *  @param   string  mime_type  (optional) The mime content-type of the file
  *  @param   integer store_type (optional) The manner in which the file is to be stored (filesystem, database)
- 
+ * 
  *  @returns integer The number of affected rows on success, or FALSE on error
  */
 
-function uploads_userapi_db_modify_fileEntry $args ) {
+function uploads_userapi_db_modify_fileEntry( $args ) {
     extract($args);
     
     $update_fields = array();
@@ -255,7 +347,7 @@ function uploads_userapi_db_modify_fileEntry $args ) {
     }
     
     if (isset($user_id)) {
-        $update_fields[] = "xar_uid = $user_id";
+        $update_fields[] = "xar_user_id = $user_id";
     }
     
     if (isset($status)) {
@@ -276,19 +368,19 @@ function uploads_userapi_db_modify_fileEntry $args ) {
     
     //add to uploads table
     // Get database setup
-    list($dbconn)   = xarDBGetConn();
-    $xartable       = xarDBGetTables();
+    list($dbconn)    = xarDBGetConn();
+    $xartable        = xarDBGetTables();
 
-    $uploadstable   = $xartable['uploads'];
+    $fileEntry_table = $xartable['file_entry'];
     
-    $update_string  = implode(', ', $update_fields);
+    $update_string   = implode(', ', $update_fields);
                           
-    $sql            = "UPDATE $uploadstable 
-                          SET $update_string
-                        WHERE xar_file_id = $file_id";
+    $sql             = "UPDATE $fileEntry_table 
+                           SET $update_string
+                         WHERE xar_fileEntry_id = $file_id";
     
         
-    $result         = &$dbconn->Execute($sql);
+    $result          = &$dbconn->Execute($sql);
 
     if (!$result) {
         return FALSE;
@@ -336,7 +428,7 @@ function uploads_userapi_db_modify_fileEntry $args ) {
  *                   fileInfo['tmp_name'] The temporary file name (complete path) of the file
  *                   fileInfo['error']    Number representing any errors that were encountered during the upload
  *                   fileInfo['size']     The size of the file (in bytes)
- *  @returns boolean     TRUE on success, FALSE on failure
+ *  @returns boolean                      TRUE on success, FALSE on failure
  */
 
 function uploads_userapi_prcoess_upload( &$args ) {
@@ -366,17 +458,22 @@ function uploads_userapi_prcoess_upload( &$args ) {
         return FALSE;
     }
         
+    $fileInfo['filename'] = $fileInfo['tmp_name'];
+    
     // Check to see if we're importing and, if not, check the file and ensure that it 
     // meets any requirements we might have for it
-    if ((FALSE == $import) && !xarModAPIFunc('uploads','user','validate_upload', array('fileInfo' => $fileInfo))) {
+    if ((FALSE == $import) && 
+            !xarModAPIFunc('uploads','user','validate_upload', 
+                            array('fileInfo' => $fileInfo))) {
         // doh - looks like the file didn't pass the validation tests so now
         // we delete it from the /tmp directory. Note: if it fails, we don't need to
         // set an exception as the file_delete() function will do that for us :)
-        xarModAPIFunc('uploads','user','file_delete', array('fileName' => $fileInfo['name']));
+        xarModAPIFunc('uploads','user','file_delete', 
+                       array('fileName' => $fileInfo['tmp_name']));
         return FALSE;
     } else {
         
-        if ($store_type == _UPLOADS_STORE_FILE) {
+        if ($store_type == _UPLOADS_STORE_FILESYSTEM) {
             // Check to see if we were asked to obfuscate the file's name
             if ($obfuscate_fileName) {
                 $obf_fileName = xarModAPIFunc('uploads','user','file_obfuscate_name', 
@@ -431,12 +528,18 @@ function uploads_userapi_prcoess_upload( &$args ) {
 }
 
 /** 
- *  <description>
+ *  Validates file based on criteria specified by hooked modules (well, that's the intended future 
+ *  functionality anyhow - which won't be available until the hooks system has been revamped......
  *
  *  @author  Carl P. Corliss
  *  @access  public
- *  @param   <type>
- *  @returns <type> 
+ *  @param   array   fileInfo             An array containing (name, type, tmp_name, error and size):
+ *                   fileInfo['name']     The name of the file (minus any path information)
+ *                   fileInfo['type']     The mime content-type of the file
+ *                   fileInfo['tmp_name'] The temporary file name (complete path) of the file
+ *                   fileInfo['error']    Number representing any errors that were encountered during the upload
+ *                   fileInfo['size']     The size of the file (in bytes)
+ *  @returns boolean                      TRUE if checks pass, FALSE otherwise 
  */
 
 function uploads_userapi_validate_upload( $args ) {
@@ -449,6 +552,16 @@ function uploads_userapi_validate_upload( $args ) {
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }        
+
+    // Check to see if the mime-type is allowed
+    $censored_mime_types = unserialize(xarModGetVar('uploads','file.censored-mime-types'));
+    $mime_type = xarModAPIFunc('mime','user','analyze_file', 
+                                array('fileInfo' => $fileInfo));
+    if (in_array($mime_type, $censored_mime_tyeps)) {
+        $msg = xarML('Unable to save uploaded file - File type is not allowed!');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOADS_FILE_NOT_ALLOWED', new SystemException($msg));
+        return FALSE;
+    }
     
     // Run the file specific validation routines. validate_file will set an exception
     // if the check doesn't pass so no need to set an exception here :)
@@ -464,6 +577,20 @@ function uploads_userapi_validate_upload( $args ) {
     return TRUE;
 }
 
+/**
+ *  Check an uploaded file for valid mime-type, and any errors that might 
+ *  have been encountered during the upload
+ *
+ *  @author  Carl P. Corliss
+ *  @access  private
+ *  @param   array   fileInfo             An array containing (name, type, tmp_name, error and size):
+ *                   fileInfo['name']     The name of the file (minus any path information)
+ *                   fileInfo['type']     The mime content-type of the file
+ *                   fileInfo['tmp_name'] The temporary file name (complete path) of the file
+ *                   fileInfo['error']    Number representing any errors that were encountered during the upload
+ *                   fileInfo['size']     The size of the file (in bytes)
+ *  @returns boolean            TRUE if it passed the checks, FALSE otherwise
+ */
 function uploads_userapi_validate_file ( $args ) {
                 
     extract ($args);
@@ -504,7 +631,7 @@ function uploads_userapi_validate_file ( $args ) {
     }
 
 
-    if (!is_uploaded_file($fileInfo['name'])) {
+    if (!is_uploaded_file($fileInfo['tmp_name'])) {
         $msg = xarML('Possible attempted malicious file upload.');
         xarExceptionSet(XAR_USER_EXCEPTION, 'UPLOAD_ERR_MAL_ATTEMPT', new SystemException($msg));
         return FALSE;
