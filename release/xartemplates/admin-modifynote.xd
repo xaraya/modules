@@ -153,7 +153,7 @@
 					<label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<textarea name="changelog" cols="60" rows="5" wrap="virtual" class="xar-normal">#$changelog#</textarea>
+					<textarea name="changelog" cols="60" rows="5" class="xar-normal">#$changelog#</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -161,7 +161,7 @@
 					<label for="notes"><xar:mlstring>Additional Notes</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<textarea name="notes" cols="60" rows="5" wrap="virtual" class="xar-normal">#$notes#</textarea>
+					<textarea name="notes" cols="60" rows="5" class="xar-normal">#$notes#</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -169,7 +169,7 @@
 					<label for="enotes"><xar:mlstring>Editor Notes</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<textarea name="enotes" cols="60" rows="5" wrap="virtual" class="xar-normal">#$enotes#</textarea>
+					<textarea name="enotes" cols="60" rows="5" class="xar-normal">#$enotes#</textarea>
 				</td>
 			</tr>
 			<tr align="left" valign="middle" class="xar-norm">

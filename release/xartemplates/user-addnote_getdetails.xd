@@ -82,7 +82,7 @@
 					<label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<textarea name="changelog" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
+					<textarea name="changelog" cols="60" rows="5" class="xar-normal"></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -90,7 +90,7 @@
 					<label for="notes"><xar:mlstring>Additional Notes</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
-					<textarea name="notes" cols="60" rows="5" wrap="virtual" class="xar-normal"></textarea>
+					<textarea name="notes" cols="60" rows="5" class="xar-normal"></textarea>
 				</td>
 			</tr>
 		</table>			
