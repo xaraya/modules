@@ -2,6 +2,7 @@
 $modversion['name']           = 'weather';
 $modversion['id']             = '662';
 $modversion['version']        = '1.0.0';
+$modversion['displayname']    = xarML('Weather');
 $modversion['description']    = 'Weather.com XML Weather Feed Module';
 $modversion['credits']        = 'credits.txt';
 $modversion['help']           = 'help.txt';
