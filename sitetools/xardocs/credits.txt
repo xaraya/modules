@@ -1,2 +1,3 @@
-jojodee (jojodee@xaraya.com) - author
+jojodee (jojodee@xaraya.com)
 Michaelius (michaelius@nukeland.de) for basis of the Optimize function (from MySQL_Tools)
+mikespub Check links - Check URLs and images in articles, roles, ...

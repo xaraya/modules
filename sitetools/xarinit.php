@@ -248,7 +248,8 @@ function sitetools_upgrade($oldversion)
             if (empty($objectid)) return;
             // save the object id for later
             xarModSetVar('sitetools','objectid_links',$objectid);
-
+            //update vars for backup tool
+            xarModSetVar('sitetools','colnumber',3);
         case 1.0:
             // Code to upgrade from version 1.0 goes here
         case 2.0:
@@ -272,9 +273,7 @@ function sitetools_delete()
     xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['sitetools']);
-    if (empty($query)) {
-    //return; // let's let delete go to completion.
-    }
+    if (empty($query)) return;
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
     if (!$result) return;
@@ -301,6 +300,7 @@ function sitetools_delete()
     xarModDelVar('sitetools','backuppath');
     xarModDelVar('sitetools','lineterm'); 
     xarModDelVar('sitetools','timestamp');
+    xarModDelVar('sitetools','colnumber');
 
     // Remove Masks and Instances
     xarRemoveMasks('sitetools');
