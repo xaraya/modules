@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.17 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
+ * File: $Id$
  * 
  * Example initialization functions
  * 
@@ -14,7 +14,7 @@
  */
 $modversion['name']           = 'Example';
 $modversion['id']             = '36';
-$modversion['version']        = '1.0';
+$modversion['version']        = '1.0.0';
 $modversion['description']    = 'Example for new modules';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
