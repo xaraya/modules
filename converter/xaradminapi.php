@@ -24,7 +24,7 @@ function converter_adminapi_pntheme($args)
     // Argument check
     if ((!isset($theme)) ||
         (!isset($theme_dir))) {
-        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'delete', 'converter');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -260,7 +260,7 @@ function converter_adminapi_pnuketheme($args)
     // Argument check
     if ((!isset($theme)) ||
         (!isset($theme_dir))) {
-        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'delete', 'converter');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -469,7 +469,7 @@ function converter_adminapi_createxarthemefile($args)
     if ((!isset($theme)) ||
         (!isset($id))    ||
         (!isset($author))) {
-        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'delete', 'converter');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
