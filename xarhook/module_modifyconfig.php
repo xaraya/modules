@@ -29,8 +29,8 @@ function hookbridge_hook_module_modifyconfig ( $args )
     {
         return '';
     }
-	
-	
+    
+    
     extract( $args );
 
     if (!isset($extrainfo)) {
