@@ -33,6 +33,7 @@ class PHPParser
 
     function parse($filename)
     {
+        xarLogMessage("xarMLS: parsing $filename"); 
         $this->parseFile($filename);
 
         $this->parsedFiles[$filename] = true;
