@@ -13,12 +13,18 @@
     * The #$match# variable contains the full matched string. Other DD properties may be
       set up to supply different parts of the matched string, using a RE match.
 </xar:comment>
-<xar:set name="$stdattributes['href']">#$url#</xar:set>
-<xar:set name="$stdattributes['title']">#xarML($title)#</xar:set>
+
+<xar:comment>TODO: provide alternative to deprecated 'target' attribute.</xar:comment>
 <xar:if condition="!empty($target)">
-    <xar:set name="$stdattributes['target']">#$target#</xar:set>
+    <xar:if condition="!empty($style)">
+        <a href="#$url#" title="#$title#" target="#$target#">#$match#</a>
+    <xar:else />
+        <a href="#$url#" title="#$title#" target="#$target#" style="#$style#">#$match#</a>
+    </xar:if>
+<xar:else />
+    <xar:if condition="!empty($style)">
+        <a href="#$url#" title="#$title#">#$match#</a>
+    <xar:else />
+        <a href="#$url#" title="#$title#" style="#$style#">#$match#</a>
+    </xar:if>
 </xar:if>
-<xar:if condition="!empty($style)">
-    <xar:set name="$stdattributes['style']">#$style#</xar:set>
-</xar:if>
-<a #xarModAPIfunc('autolinks', 'user', 'htmlattributes', $stdattributes)#>#$match#</a>
