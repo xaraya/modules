@@ -28,7 +28,7 @@ function pubsub_user_main()
  * @returns output
  * @return output with pubsub information
  */
-function pubsub_user_display($args)
+function pubsub_user_displayicon($args)
 {
 // This function will display the output code next to an item that has a 
 // registered pubsub event associated with it.
