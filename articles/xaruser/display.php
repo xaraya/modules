@@ -233,6 +233,9 @@ function articles_user_display($args)
                                        'status' => array(3,2),
                                        'enddate' => time()));
         if (!empty($prevart['aid'])) {
+            //Make all previous article info available to template
+            $data['prevartinfo'] = $prevart;
+            
             $data['prevart'] = xarModURL('articles','user','display',
                                          array('ptid' => $prevart['pubtypeid'],
                                                'aid' => $prevart['aid']));
@@ -246,6 +249,9 @@ function articles_user_display($args)
                                        'status' => array(3,2),
                                        'enddate' => time()));
         if (!empty($nextart['aid'])) {
+            //Make all next art info available to template 
+            $data['nextartinfo'] = $nextart;
+
             $data['nextart'] = xarModURL('articles','user','display',
                                          array('ptid' => $nextart['pubtypeid'],
                                                'aid' => $nextart['aid']));

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
+ * File: $Id
  *
  * Articles System
  *
@@ -11,9 +11,17 @@
  * @subpackage articles module
  * @author mikespub
 */
+
+/* WARNING
+ * Modification of this file is not supported.
+ * Any modification is at your own risk and
+ * may lead to inablity of the system to process
+ * the file correctly, resulting in unexpected results.
+ */
 $modversion['name'] = 'articles';
 $modversion['id'] = '151';
 $modversion['version'] = '1.5.1';
+$modversion['displayname'] = xarML('Articles');
 $modversion['description'] = 'Display articles';
 $modversion['credits'] = '';
 $modversion['help'] = '';
