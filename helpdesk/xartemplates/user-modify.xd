@@ -64,7 +64,7 @@
                         <td>
                             <select name="priority">
                             <xar:loop name="$priority">
-                                <xar:if condition="$ticketdata['priority'] eq $loop:item['priority']">
+                                <xar:if condition="$ticketdata['priority']['priority'] eq $loop:item['priority']">
                                     <option value="#$loop:item['id']#" selected="selected">#$loop:item['priority']#</option>
                                 <xar:else />
                                     <option value="#$loop:item['id']#">#$loop:item['priority']#</option>
