@@ -13,8 +13,8 @@ function xarcachemanager_admin_updateconfig()
     if (!xarVarFetch('pageexpiretime',   'str:1:9', $pageexpiretime,  '0',  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachedisplayview', 'isset', $cachedisplayview, 0,  XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('cachetimestamp',   'isset', $cachetimestamp,   0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('expireheader', 	 'isset', $expireheader,   0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cacheblocks', 	 'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('expireheader',      'isset', $expireheader,   0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cacheblocks',      'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED)) { return; }
     if (!xarVarFetch('blockexpiretime',  'str:1:9', $blockexpiretime, '0',  XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
