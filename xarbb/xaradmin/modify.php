@@ -65,6 +65,9 @@ function xarbb_admin_modify()
             if (!isset($data['hottopic'])) {
                 $data['hottopic'] = 20;
             }
+            if (!isset($data['editstamp'])) {
+                $data['editstamp'] = 1;
+            }
             if (!isset($data['allowhtml'])) {
                 $data['allowhtml'] = '';
             }
