@@ -9,6 +9,7 @@
  */
 function categories_adminapi_getmenulinks()
 {
+    $menulinks = array();
 
 // Security Check
     if (xarSecurityCheck('AddCategories',0)) {
@@ -31,13 +32,15 @@ function categories_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('categories',
                                                    'admin',
+                                                   'stats'),
+                              'title' => xarML('View category statistics per module'),
+                              'label' => xarML('View Statistics'));
+
+        $menulinks[] = Array('url'   => xarModURL('categories',
+                                                   'admin',
                                                    'modifyconfig'),
                               'title' => xarML('Config the Categories module'),
                               'label' => xarML('Modify Config'));
-    }
-
-    if (empty($menulinks)){
-        $menulinks = '';
     }
 
     return $menulinks;

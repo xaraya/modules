@@ -123,7 +123,7 @@ function categories_user_main()
             $mytypes = xarModAPIFunc($modinfo['name'],'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
                                      array(), 0);
-            foreach ($itemtypes as $itemtype => $numitems) {
+            foreach ($itemtypes as $itemtype => $stats) {
                 $moditem = array();
                 if ($itemtype == 0) {
                     $moditem['name'] = ucwords($modinfo['displayname']);
@@ -137,7 +137,9 @@ function categories_user_main()
                         $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                     }
                 }
-                $moditem['numitems'] = $numitems;
+                $moditem['numitems'] = $stats['items'];
+                $moditem['numcats'] = $stats['cats'];
+                $moditem['numlinks'] = $stats['links'];
 
                 $links = xarModAPIFunc('categories','user','getlinks',
                                        array('modid' => $modid,

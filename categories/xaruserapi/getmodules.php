@@ -4,7 +4,7 @@
  * get the list of modules and itemtypes for which we're categorising items
  *
  * @returns array
- * @return $array[$modid][$itemtype] = $numitems
+ * @return $array[$modid][$itemtype] = array('items' => $numitems,'cats' => $numcats,'links' => $numlinks);
  */
 function categories_userapi_getmodules($args)
 {
@@ -24,7 +24,7 @@ function categories_userapi_getmodules($args)
     $categoriestable = $xartable['categories_linkage'];
 
     // Get items
-    $sql = "SELECT xar_modid, xar_itemtype, COUNT(*)
+    $sql = "SELECT xar_modid, xar_itemtype, COUNT(*), COUNT(DISTINCT xar_iid), COUNT(DISTINCT xar_cid)
             FROM $categoriestable";
     if (!empty($cid)) {
         $sql .= " WHERE xar_cid = " . xarVarPrepForStore($cid);
@@ -36,11 +36,11 @@ function categories_userapi_getmodules($args)
 
     $modlist = array();
     while (!$result->EOF) {
-        list($modid,$itemtype,$numitems) = $result->fields;
+        list($modid,$itemtype,$numlinks,$numitems,$numcats) = $result->fields;
         if (!isset($modlist[$modid])) {
             $modlist[$modid] = array();
         }
-        $modlist[$modid][$itemtype] = $numitems;
+        $modlist[$modid][$itemtype] = array('items' => $numitems, 'cats' => $numcats, 'links' => $numlinks);
         $result->MoveNext();
     }
     $result->close();

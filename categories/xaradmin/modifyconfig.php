@@ -38,6 +38,15 @@ function categories_admin_modifyconfig()
                            'hooks'         => $hooks);
             $data['submitlabel'] = xarML('Submit');
 
+            $data['numstats'] = xarModGetVar('categories','numstats');
+            if (empty($data['numstats'])) {
+                $data['numstats'] = 100;
+            }
+            $data['showtitle'] = xarModGetVar('categories','showtitle');
+            if (!empty($data['showtitle'])) {
+                $data['showtitle'] = 1;
+            }
+
             return xarTplModule('categories','admin','config',$data);
             break;
 
@@ -47,6 +56,10 @@ function categories_admin_modifyconfig()
             if (!xarSecConfirmAuthKey()) return;
             xarModSetVar('categories','catsperpage', $catsperpage);
             xarModSetVar('categories','useJSdisplay', $useJSdisplay);
+            if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
+            xarModSetVar('categories', 'numstats', $numstats);
+            xarModSetVar('categories', 'showtitle', $showtitle);
 
             // Call update config hooks
             xarModCallHooks('module','updateconfig','categories', array('module' => 'categories'));

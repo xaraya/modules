@@ -37,6 +37,29 @@
             </xar:if>
 		</span>
 		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Specify how many links you want to see per page.')#"><label for="numstats"><xar:mlstring>Number of links shown in statistics</xar:mlstring>:</label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('In many cases, you can see the item title if you want.')#"><label for="showtitle"><xar:mlstring>Show the item title in statistics</xar:mlstring>:</label></span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+		<xar:if condition="!empty($showtitle)">
+		  <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
+		<xar:else/>
+		  <input type="checkbox" name="showtitle" id="showtitle" value="1" />
+		</xar:if>
+		</span>
+		</div>
+
 		<xar:if condition="!empty($hooks)">
 		<h4><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h4>
 		#$hooks#
