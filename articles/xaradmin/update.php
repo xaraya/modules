@@ -63,9 +63,14 @@ function articles_admin_update()
                                                        'value' => $article[$field]));
             $check = $properties[$field]->checkInput($field);
             if (!$check) {
-                $article[$field] = '';
-                $invalid[$field] = $properties[$field]->invalid;
-                $preview = 1;
+                if ($field == 'authorid') {
+                    // re-assign article to Anonymous
+                    $article[$field] = _XAR_ID_UNREGISTERED;
+                } else {
+                    $article[$field] = '';
+                    $invalid[$field] = $properties[$field]->invalid;
+                    $preview = 1;
+                }
             } else {
                 $article[$field] = $properties[$field]->value;
             }

@@ -272,12 +272,17 @@ function articles_user_display($args)
         }
         switch ($value['format']) {
             case 'username':
+                $data[$field] = $article[$field];
         // TODO: replace by authorid and sync with templates
                 $data['author'] = xarUserGetVar('name', $article[$field]);
-                if (empty($data['author'])) {
+                if (!isset($data['author'])) {
+                    $data['author'] = '';
+                    // clear error retrieving non-existing author
+                    xarErrorFree();
+                } elseif (empty($data['author'])) {
                     $data['author'] = xarUserGetVar('uname', $article[$field]);
                 }
-                if ($article[$field] > 1) {
+                if ($article[$field] > _XAR_ID_UNREGISTERED) {
                     $data['profile'] = xarModURL('roles','user','display',
                                                 array('uid' => $article[$field]));
                 }
