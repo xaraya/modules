@@ -86,9 +86,12 @@ function newsgroups_user_post()
 
             xarSecConfirmAuthKey();
 
+            // FIXME: put this class somewhere central or rename it.
             include_once 'modules/newsgroups/xarclass/NNTP.php';
 
-            $body       = wordwrap($body, 72, "\n", 1);
+            // Encode the body as quoted-printable, since we are declaring it
+            // as such in the header.
+            $body = xarModAPIfunc('newsgroups', 'user', 'encode_quoted_printable', array('string'=>$body));
 
             $server     = xarModGetVar('newsgroups', 'server');
             $port       = xarModGetVar('newsgroups', 'port');
