@@ -68,10 +68,11 @@ function polls_user_display($args)
     else {
         $data['canvote'] = 0;
     }
-
-	// Let hooks know we're displaying a poll, so they can provide us with related stuff
-	$hooks = xarModCallHooks('item','display', $poll['pid'],
-	   xarModURL('polls','user', 'display', array('pid' => $poll['pid'])));
+    // Let hooks know we're displaying a poll, so they can provide us with related stuff
+    $item = $poll;
+    $item['module'] = 'polls';
+    $item['returnurl'] = xarModURL('polls','user', 'display', array('pid' => $poll['pid']));
+    $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
 
     $data['hookoutput'] = join('',$hooks);
 

@@ -91,13 +91,14 @@ function polls_user_results($args)
     }
 
     if (empty($nohooks)) {
-	// Let hooks know we're displaying a poll, so they can provide us with related stuff
-	$hooks = xarModCallHooks('item','display', $poll['pid'],
-	   xarModURL('polls','user', 'results', array('pid' => $poll['pid'])));
-
-    $data['hookoutput'] = join('',$hooks);
+        // Let hooks know we're displaying a poll, so they can provide us with related stuff
+        $item = $poll;
+        $item['module'] = 'polls';
+        $item['returnurl'] = xarModURL('polls','user', 'results', array('pid' => $poll['pid']));
+        $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
+        $data['hookoutput'] = join('',$hooks);
     } else {
-    $data['hookoutput'] = '';
+        $data['hookoutput'] = '';
     }
 
     // Return output
