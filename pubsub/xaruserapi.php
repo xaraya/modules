@@ -62,44 +62,6 @@ function pubsub_userapi_updatesubscription($args)
 }
 
 /**
- * return a pubsub user's subscriptions
- * @param $args['userid'] ID of the user whose subscriptions to return
- * @returns array
- * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
- */
-function pubsub_userapi_getsubscriptions($args)
-{
-    // Get arguments from argument array
-    extract($args);
-
-    // Argument check
-    $invalid = array();
-    if (!isset($userid) || !is_numeric($userid)) {
-        $invalid[] = 'userid';
-    }
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'user', 'getsubscriptions', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
-
-    // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $pubsubregtable = $xartable['pubsub_reg'];
-
-    // fetch items
-    $query = "SELECT xar_pubsubid FROM $pubsubregtable
-              WHERE xar_userid = '" . xarVarPrepForStore($userid) . "'";
-    $dbconn->Execute($query);
-    if (!$result) return;
-
-    return $result;
-}
-
-/**
  * delete a pubsub user's subscriptions
  * this needs to be done when a user unregisters from the site.
  * @param $args['userid'] ID of the user whose subscriptions to delete

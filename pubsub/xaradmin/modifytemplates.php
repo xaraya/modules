@@ -48,7 +48,8 @@ function pubsub_admin_modifytemplates()
     switch ($action) {
         case 'display':
         // TODO: adapt if/when we support more template variables in runjob()
-            $tplData = array('name' => xarUserGetVar('uname'),
+            $tplData = array('userid' => xarUserGetVar('uid'),
+                             'name' => xarUserGetVar('uname'),
                              'module' => 'example',
                              'itemtype' => 0,
                              'itemid' => 123,
@@ -63,7 +64,7 @@ function pubsub_admin_modifytemplates()
         case 'new':
             $data['name'] = '';
         // TODO: adapt if/when we support more template variables in runjob()
-            $templatevariables = array('#$name#','#$module#','#$itemtype#','#$itemid#','#$title#','#$link#');
+            $templatevariables = array('#$userid#','#$name#','#$module#','#$itemtype#','#$itemid#','#$title#','#$link#');
             $data['template'] = join("<br/>\n",$templatevariables);
             $data['templateid'] = 0;
             $data['submitbutton'] = xarML('Create Template');
@@ -120,7 +121,14 @@ function pubsub_admin_modifytemplates()
         case 'recompile':
             if (!xarSecConfirmAuthKey()) return; 
             foreach ($templates as $id => $templatename) {
+                $info = xarModAPIFunc('pubsub','admin','gettemplate',
+                                      array('templateid' => $id));
+                if (empty($info)) continue;
+                if (!xarModAPIFunc('pubsub','admin','updatetemplate',
+                                   $info)) return;
             }
+            xarResponseRedirect(xarModURL('pubsub', 'admin', 'modifytemplates'));
+            return true;
             break;
 
         default:

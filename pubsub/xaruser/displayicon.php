@@ -39,39 +39,43 @@ function pubsub_user_displayicon($args)
          $extrainfo = array();
     }
 
-	/**
-	 * Validate parameters
-	 */
-//    $itemtype = 0; // needed?? <garrett>
-	$invalid = array();
-	if(!isset($extrainfo) || !is_array($extrainfo)) {
-		$invalid[] = 'extrainfo';
-	} elseif(isset($extrainfo['cid'])) {
-		
-		$cid = $extrainfo['cid'];
-		
-		if(isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-			$itemtype = $extrainfo['itemtype'];
-		}
+    /**
+     * Validate parameters
+     */
+    $invalid = array();
+    if(!isset($extrainfo) || !is_array($extrainfo)) {
+        $invalid[] = 'extrainfo';
+    } elseif(isset($extrainfo['cid'])) {
+        
+        $cid = $extrainfo['cid'];
+        
         if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
             $cid = $extrainfo['cid'];
         }
-        if (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
+// FIXME: handle this in a cleaner way - cfr. categories navigation
+        if (isset($extrainfo['current_module']) && is_string($extrainfo['current_module'])) {
+            $modname = $extrainfo['current_module'];
+        } elseif (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
+        }
+        if(isset($extrainfo['current_itemtype']) && is_numeric($extrainfo['current_itemtype'])) {
+            $itemtype = $extrainfo['current_itemtype'];
+        } elseif(isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+            $itemtype = $extrainfo['itemtype'];
         }
         if (isset($extrainfo['returnurl']) && is_string($extrainfo['returnurl'])) {
             $returnurl = $extrainfo['returnurl'];
         }
-	} else {
-		// May only subscribe to categories, no category, pubsub does nothing.		
-		return array('donotdisplay'=>TRUE);
-	}
-	
+    } else {
+        // May only subscribe to categories, no category, pubsub does nothing.        
+        return array('donotdisplay'=>TRUE);
+    }
+    
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-            join(', ', $invalid), 'admin', 'updateItems', __ADDRESSBOOK__);
+            join(', ', $invalid), 'user', 'displayicon','pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-            				new SystemException($msg));
+                            new SystemException($msg));
     } else {
     }
 ///
@@ -84,6 +88,13 @@ function pubsub_user_displayicon($args)
 
     $modid = xarModGetIDFromName($modname);
 
+    if (empty($itemtype)) {
+        $itemtype = 0;
+    }
+
+    // if pubsub isn't hooked to this module & itemtype, don't show subscription either
+    if (!xarModIsHooked('pubsub',$modname,$itemtype)) return array('donotdisplay'=>TRUE);
+
 /// check for unsubscribe
     /**
      * Fetch the eventid to check
@@ -93,17 +104,15 @@ function pubsub_user_displayicon($args)
     $xartable = xarDBGetTables();
 
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
     $query = "SELECT xar_pubsubid
-                FROM $pubsubeventstable, $pubsubeventcidstable, $pubsubregtable
+                FROM $pubsubeventstable, $pubsubregtable
                WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
                  AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+                 AND $pubsubeventstable.xar_cid = '" . xarVarPrepForStore($cid) . "'
                  AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                 AND $pubsubregtable.xar_userid = $userid
-                 AND $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+                 AND $pubsubregtable.xar_userid = $userid";
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -116,20 +125,20 @@ function pubsub_user_displayicon($args)
         $data['subscribe'] = FALSE;
     }
 
-	$data['subdata'] = array ('modname' => xarVarPrepForDisplay($modname)
-	                         ,'modid'   => xarVarPrepForDisplay($modid)
-	                         ,'cid'     => xarVarPrepForDisplay($cid)
-	                         ,'userid'  => xarVarPrepForDisplay($userid)
-	                         ,'itemtype' => xarVarPrepForDisplay($itemtype)
-	                         ,'returnurl' => rawurlencode($returnurl)
-	                         ,'subaction' => $data['subscribe']
-	                         );
+    $data['subdata'] = array ('modname' => xarVarPrepForDisplay($modname)
+                             ,'modid'   => xarVarPrepForDisplay($modid)
+                             ,'cid'     => xarVarPrepForDisplay($cid)
+                             ,'userid'  => xarVarPrepForDisplay($userid)
+                             ,'itemtype' => xarVarPrepForDisplay($itemtype)
+                             ,'returnurl' => rawurlencode($returnurl)
+                             ,'subaction' => $data['subscribe']
+                             );
 
-	$data['subURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);	                         
-	$data['subTEXT'] = xarML ('Subscribe');	                         
+    $data['subURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);                             
+    $data['subTEXT'] = xarML ('Subscribe');                             
 
-	$data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);	                         
-	$data['unsubTEXT'] = xarML ('Unsubscribe');	                         
+    $data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);                             
+    $data['unsubTEXT'] = xarML ('Unsubscribe');                             
 
     return $data;
 

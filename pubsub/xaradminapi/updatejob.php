@@ -2,10 +2,11 @@
 
 /**
  * update an existing pubsub job
- * @param $args['handlingid'] the ID of the item
- * @param $args['pubsubid'] the new pubsub id for the item
- * @param $args['objectid'] the new object id for the item
- * @param $args['status']   the new status for the item
+ * @param $args['handlingid'] the ID of this job
+ * @param $args['pubsubid'] the new pubsub id for this job
+ * @param $args['objectid'] the new object id for this job
+ * @param $args['templateid'] the template id for this job
+ * @param $args['status']   the new status for this job
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -25,6 +26,9 @@ function pubsub_adminapi_updatejob($args)
     }
     if (!isset($objectid) || !is_numeric($objectid)) {
         $invalid[] = 'objectid';
+    }
+    if (!isset($templateid) || !is_numeric($templateid)) {
+        $invalid[] = 'templateid';
     }
     if (!isset($status) || !is_string($status)) {
         $invalid[] = 'status';

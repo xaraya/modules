@@ -20,32 +20,51 @@
  */
 function pubsub_admin_viewsubscribers()
 {
-    if (!xarVarFetch('catname', 'str::', $catname)) return;
-    if (!xarVarFetch('cid',     'int::', $cid)) return;
+    if (!xarVarFetch('eventid', 'int::', $eventid)) return;
     if (!xarVarFetch('pubsubid','int::', $pubsubid, FALSE)) return;
     if (!xarVarFetch('unsub',   'int::', $unsub, FALSE)) return;
 
-	if ($unsub) {
+    if (empty($eventid)) {
+        $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
+                    'event id', 'viewsubscribers', 'Pubsub');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
+
+    if ($unsub && $pubsubid) {
         if (!xarModAPIFunc('pubsub',
-	                       'user',
-	                       'deluser',
-	                        array('pubsubid' => $pubsubid))) {
-	        $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
-	                     'deluser', 'viewsubscribers', 'Pubsub');
-	        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-	                       new SystemException($msg));
-	    }
-	} 
+                           'user',
+                           'deluser',
+                            array('pubsubid' => $pubsubid))) {
+            $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
+                         'deluser', 'viewsubscribers', 'Pubsub');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                           new SystemException($msg));
+            return;
+        }
+    } 
+
+    $info = xarModAPIFunc('pubsub','admin','getevent',
+                          array('eventid' => $eventid));
+    if (empty($info)) {
+        $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
+                    'event id', 'viewsubscribers', 'Pubsub');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
+        return;
+    }
 
     $data['items'] = array();
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Publish / Subscribe Administration'));
-    $data['catname'] = xarVarPrepForDisplay($catname);
-    $data['cid'] = $cid;
-    $data['headinglabel'] = xarVarPrepForDisplay(xarML('Subscriber Summary'));
-    $data['usernamelabel'] = xarVarPrepForDisplay(xarML('User Name'));
-    $data['subdatelabel'] = xarVarPrepForDisplay(xarML('Date Subscribed'));
-    $data['modnamelabel'] = xarVarPrepForDisplay(xarML('Module'));
-    $data['actionlabel'] = xarVarPrepForDisplay(xarML('Action'));
+    $data['catname'] = xarVarPrepForDisplay($info['catname']);
+    $data['cid'] = $info['cid'];
+    $data['modname'] = $info['modname'];
+    if (!empty($info['itemtype'])) {
+        $data['modname'] .= ' ' . $info['itemtype'];
+    }
+    $data['itemtype'] = $info['itemtype'];
+    $data['eventid'] = $eventid;
     $data['authid'] = xarSecGenAuthKey();
     $data['pager'] = '';
 
@@ -55,21 +74,15 @@ function pubsub_admin_viewsubscribers()
     $subscribers = xarModAPIFunc('pubsub'
                                 ,'admin'
                                 ,'getsubscribers'
-                                ,array('cid'=>$cid));
+                                ,array('eventid'=>$eventid));
 
     $data['items'] = $subscribers;
 
-	$data['returnurl'] = xarModURL('pubsub'
-							      ,'admin'
-							      ,'viewsubscribers'
-							      ,array('catname'=>$catname
-							            ,'cid'=>$cid));
+    $data['returnurl'] = xarModURL('pubsub'
+                                  ,'admin'
+                                  ,'viewsubscribers'
+                                  ,array('eventid'=>$eventid));
 
-	$data['removeParam'] = array('catname'=>$catname
-	                            ,'cid'=>$cid
-	                            ,'pubsubid'=>$pubsubid
-	                            ,'unsub'=>1);
-	                            					   
     // TODO: add a pager (once it exists in BL)
     $data['pager'] = '';
 

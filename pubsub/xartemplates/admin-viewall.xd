@@ -13,23 +13,26 @@
   @author Garrett Hunter <garrett@blacktower.com>
 --->
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$namelabel#</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Subscription Summary</xar:mlstring></h2>
     <div align="center">
     <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
         <th>
-            #$modnamelabel#
+            <xar:mlstring>Module Name</xar:mlstring>
         </th>
         <th>
-            #$categorylabel#
+            <xar:mlstring>Item Type</xar:mlstring>
         </th>
         <th>
-            #$numsubscriberslabel#
+            <xar:mlstring>Category</xar:mlstring>
         </th>
         <th>
-            #$actionlabel#
+            <xar:mlstring>Subscribers</xar:mlstring>
+        </th>
+        <th>
+            <xar:mlstring>Action</xar:mlstring>
         </th>
     </tr>
     <xar:if condition="count($items) gt 0">
@@ -39,13 +42,16 @@
             #$item['modname']#
         </td>
         <td>
+            #$item['itemtype']#
+        </td>
+        <td>
             #$item['catname']#
         </td>
         <td>
             #$item['numsubscribers']#
         </td>
         <td>
-            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('catname'=>$item['catname'],'cid'=>$item['cid']))#"><xar:mlstring>Subscribers</xar:mlstring></a>
+            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('eventid'=>$item['eventid']))#"><xar:mlstring>Subscribers</xar:mlstring></a>
         </td>
      </tr>
      </xar:foreach>

@@ -26,15 +26,14 @@
  */
 function pubsub_userapi_subscribe($args)
 {
-	extract($args);
-	
+    extract($args);
+    
     // Argument check
     $invalid = array();
     if (!isset($modid))      { $invalid[] = 'modid'; }
-    if (!isset($cid)) 	 	 { $invalid[] = 'cid'; }
+    if (!isset($cid))           { $invalid[] = 'cid'; }
     if (!isset($itemtype))   { $invalid[] = 'itemtype'; }
     if (!isset($userid))     { $invalid[] = 'userid'; }
-    if (!isset($groupdescr)) { $invalid[] = 'groupdescr'; }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
         join(', ',$invalid), 'subscribe', 'Pubsub');
@@ -43,40 +42,17 @@ function pubsub_userapi_subscribe($args)
         return;
     }
 
-    // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
+    // What is groupdescr???
+    if (!isset($groupdescr))
+        $groupdescr = 'Subscribe';
 
-    // make sure event exists, create it if necessary
-    $extrainfo = array('modid' => $modid,
-                       'cid' => $cid,
-                       'itemtype' => $itemtype,
-                       'groupdescr' => $groupdescr);
-
-    if (!xarModAPIFunc('pubsub',
-                       'admin',
-                       'createhook',
-                        array('extrainfo' => $extrainfo))) {
-        $msg = xarML('Step2 #(1) in function #(2)() in module #(3)',
-        join(', ',$invalid), 'subscribe', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-    }
-
-    // fetch eventid to subscribe to
-    $query = "SELECT $pubsubeventstable.xar_eventid
- 	    FROM  $pubsubeventstable, $pubsubeventcidstable
-	    WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
-	    AND   $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-        AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
-	    AND   $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
-
-    $result = $dbconn->Execute($query);
-    if (!$result) return;
-
-    $eventid = $result->fields[0];
+    // check if we already have an event for this, or create it if necessary
+    $eventid = xarModAPIFunc('pubsub','admin','checkevent',
+                             array('modid' => $modid,
+                                   'itemtype' => $itemtype,
+                                   'cid' => $cid,
+                                   'groupdescr' => $groupdescr));
+    if (empty($eventid)) return; // throw back
 
 // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
 // AM hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later

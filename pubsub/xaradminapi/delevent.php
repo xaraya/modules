@@ -53,12 +53,6 @@ function pubsub_adminapi_delevent($args)
     $dbconn->Execute($query);
     if (!$result) return;
 
-    // Delete item from event categoriess table
-    $query = "DELETE FROM $pubsubeventcidstable
-            WHERE xar_eventid = " . xarVarPrepForStore($eventid) ;
-    $result = $dbconn->Execute($query);
-    if (!$result) return;
-
     return true;
 
 } // END delevent

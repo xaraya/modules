@@ -15,8 +15,8 @@
  */
 
 /**
- * handle a pubsub 'delete' event
- * delete event for an item - hook for ('item','delete','API')
+ * handle a pubsub 'update' event
+ * update event for an item - hook for ('item','update','API')
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
@@ -24,7 +24,7 @@
  * @return $extrainfo, like any hook function should :)
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
-function pubsub_adminapi_deletehook($args)
+function pubsub_adminapi_updatehook($args)
 {
     // Get arguments from argument array
     extract($args);
@@ -32,14 +32,14 @@ function pubsub_adminapi_deletehook($args)
     // This has to be an argument
     if (empty($objectid)) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-                     'object ID', 'deletehook', 'pubsub');
+                     'object ID', 'updatehook', 'pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
     if (!isset($extrainfo)) {
         $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-                     'extrainfo', 'deletehook', 'pubsub');
+                     'extrainfo', 'updatehook', 'pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -61,13 +61,13 @@ function pubsub_adminapi_deletehook($args)
         $itemtype = 0;
     }
 
-    $templateid = xarModGetVar('pubsub',"$modname.$itemtype.delete");
-    // if there's no 'delete' template defined for this module+itemtype, we're done here
+    $templateid = xarModGetVar('pubsub',"$modname.$itemtype.update");
+    // if there's no 'update' template defined for this module+itemtype, we're done here
     if (empty($templateid)) {
         return $extrainfo;
     }
 
-// FIXME: get categories for deleted item, if we're not too late already
+// FIXME: get categories for updated item
     $cid = '';
     if (isset($extrainfo['cid']) && is_numeric($extrainfo['cid'])) {
         $cid = $extrainfo['cid'];
@@ -92,6 +92,6 @@ function pubsub_adminapi_deletehook($args)
 
     return $extrainfo;
 
-} // END deletehook
+} // END updatehook
 
 ?>

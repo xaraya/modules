@@ -5,6 +5,7 @@
  * @param $args['handlingid'] the process handling id
  * @param $args['pubsubid'] the subscription id
  * @param $args['objectid'] the specific object in the module
+ * @param $args['templateid'] the template id for this job
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, DATABASE_ERROR
@@ -25,6 +26,9 @@ function pubsub_adminapi_runjob($args)
     if (!isset($objectid) || !is_numeric($objectid)) {
         $invalid[] = 'objectid';
     }
+    if (!isset($templateid) || !is_numeric($templateid)) {
+        $invalid[] = 'templateid';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'runjob', 'Pubsub');
@@ -44,7 +48,7 @@ function pubsub_adminapi_runjob($args)
                      xar_userid,
                      $pubsubregtable.xar_eventid,
                      xar_modid,
-                     xar_itemtype,
+                     xar_itemtype
               FROM $pubsubregtable
               LEFT JOIN $pubsubeventstable
               ON $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
@@ -52,27 +56,37 @@ function pubsub_adminapi_runjob($args)
     $result   = $dbconn->Execute($query);
     if (!$result) return;
 
-    $actionid = $result->fields[0];
-    $userid   = $result->fields[1];
-    $eventid  = $result->fields[2];
-    $modid    = $result->fields[3];
-    $itemtype = $result->fields[4];
+    if ($result->EOF) return;
+
+    list($actionid,$userid,$eventid,$modid,$itemtype) = $result->fields;
     $info = xarUserGetVar('email',$userid);
     $name = xarUserGetVar('uname',$userid);
 
     $modinfo = xarModGetInfo($modid);
     if (empty($modinfo['name'])) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'runjob', 'Pubsub');
+                    'module', 'runjob', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     } else {
         $modname = $modinfo['name'];
     }
-    $templateid = xarModGetVar('pubsub',"$modname.$itemtype");
 
-    if ($actionid == "mail" || $actionid == "htmlmail") {
+    switch ($actionid)
+    {
+        case 1:
+            $action = 'mail';
+            break;
+        case 2: // currently unused
+            $action = 'htmlmail';
+            break;
+        default:
+            $action = 'unknown';
+            break;
+    }
+
+    if ($action == "mail" || $action == "htmlmail") {
         // Database information
         $pubsubtemplatestable = $xartable['pubsub_templates'];
         // Get the (compiled) template to use
@@ -101,6 +115,7 @@ function pubsub_adminapi_runjob($args)
         }
 
         $tplData = array();
+        $tplData['userid'] = $userid;
         $tplData['name'] = $name;
         $tplData['module'] = $modname;
         $tplData['itemtype'] = $itemtype;
@@ -124,7 +139,7 @@ function pubsub_adminapi_runjob($args)
         // might not be able to use the normal BL user vars as they would
         // probabaly expand to currently logged in user, not the user for
         // this event.
-        // need to create the $tplData array with all the information in it
+        // But you can use $userid to get the relevant user, as above...
 
         // call BL with the (compiled) template to parse it and generate the HTML
         $html = xarTplString($compiled, $tplData);
@@ -149,7 +164,14 @@ function pubsub_adminapi_runjob($args)
          } else {
             // plaintext mail
             $message=$plaintext;
+            // add the link at the bottom, because it's probably gone with the strip_tags
+            $message .= "\n" . xarML('Link: #(1)',$tplData['link']);
          }
+      // TODO: make configurable too ?
+         $subject = xarML('Publish / Subscribe Notification');
+         $fmail = xarConfigGetVar('adminmail');
+         $fname = xarConfigGetVar('adminmail');
+
          // Send the mail using the mail module
          if (!xarModAPIFunc('mail',
                             'admin',
@@ -170,6 +192,7 @@ function pubsub_adminapi_runjob($args)
                       array('handlingid' => $handlingid,
                             'pubsubid' => $pubsubid,
                             'objectid' => $objectid,
+                            'templateid' => $templateid,
                             'status' => 'error'));
         $msg = xarML('Invalid #(1) action',
                      'Pubsub');

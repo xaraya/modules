@@ -30,7 +30,7 @@ function pubsub_adminapi_getmenulinks()
                                                   'admin',
                                                   'viewall'),
                              'title' => xarML('View all Pubsub Subscriptions'),
-                             'label' => xarML('View All'));
+                             'label' => xarML('View Subscriptions'));
         $menulinks[] = Array('url'   => xarModURL('pubsub',
                                                   'admin',
                                                   'modifytemplates'),

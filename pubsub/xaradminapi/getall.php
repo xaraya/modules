@@ -40,25 +40,24 @@ function pubsub_adminapi_getall($args)
     $modulestable = $xartable['modules'];
     $categoriestable = $xartable['categories'];
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
     $query = "SELECT $pubsubeventstable.xar_eventid
                     ,$modulestable.xar_name
+                    ,$pubsubeventstable.xar_itemtype
                     ,$categoriestable.xar_name
                     ,$categoriestable.xar_cid
                     ,COUNT($pubsubregtable.xar_userid) AS numsubscribers
                 FROM $pubsubeventstable
-                    ,$pubsubeventcidstable
                     ,$modulestable
                     ,$categoriestable
                     ,$pubsubregtable
                WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
-                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
-                 AND $pubsubeventcidstable.xar_cid = $categoriestable.xar_cid
+                 AND $pubsubeventstable.xar_cid = $categoriestable.xar_cid
                  AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
             GROUP BY $pubsubeventstable.xar_eventid
                     ,$modulestable.xar_name
+                    ,$pubsubeventstable.xar_itemtype
                     ,$categoriestable.xar_name
                     ,$categoriestable.xar_cid";
 
@@ -66,9 +65,11 @@ function pubsub_adminapi_getall($args)
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
-        list($eventid, $modname, $catname, $cid, $numsubscribers) = $result->fields;
+        list($eventid, $modname, $itemtype, $catname, $cid, $numsubscribers) = $result->fields;
         if (xarSecurityCheck('AdminPubSub', 0)) {
-            $events[] = array('modname'        => $modname
+            $events[] = array('eventid'        => $eventid
+                             ,'modname'        => $modname
+                             ,'itemtype'       => $itemtype
                              ,'catname'        => $catname
                              ,'cid'            => $cid
                              ,'numsubscribers' => $numsubscribers

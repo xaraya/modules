@@ -37,19 +37,12 @@ function pubsub_init()
         'xar_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_modid'=>array('type'=>'integer','null'=>FALSE),
         'xar_itemtype'=>array('type'=>'integer','null'=>FALSE),
+        'xar_cid'=>array('type'=>'integer','null'=>FALSE),
+    // TODO: support other types of grouping later on
+        'xar_extra'=>array('type'=>'varchar','size'=>254,'null'=>FALSE,'default'=>''),
         'xar_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE,'default'=>'')
     );
     $query = xarDBCreateTable($pubsubeventstable,$eventsfields);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
-    $eventcidsfields = array(
-        'xar_eid'=>array('type'=>'integer','null'=>FALSE,'primary_key'=>TRUE),
-        'xar_cid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_flag'=>array('type'=>'integer','null'=>FALSE,'default'=>'0')
-    );
-    $query = xarDBCreateTable($pubsubeventcidstable,$eventcidsfields);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -70,6 +63,7 @@ function pubsub_init()
         'xar_handlingid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_pubsubid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_objectid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_templateid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
         'xar_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
     );
     $query = xarDBCreateTable($pubsubprocesstable,$processfields);
@@ -127,6 +121,14 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
         return false;
     }
     if (!xarModRegisterHook('item',
+                           'update',
+                           'API',
+                           'pubsub',
+                           'admin',
+                           'updatehook')) {
+        return false;
+    }
+    if (!xarModRegisterHook('item',
                            'delete',
                            'API',
                            'pubsub',
@@ -134,30 +136,7 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
                            'deletehook')) {
         return false;
     }
-    #if (!xarModRegisterHook('item',
-    #                       'create',
-    #                       'API',
-    #                       'pubsub',
-    #                       'user',
-    #                       'subscribe')) {
-    #   return false;
-    #}
-    #if (!xarModRegisterHook('item',
-    #                       'delete',
-    #                       'API',
-    #                       'pubsub',
-    #                       'user',
-    #                       'unsubscribe')) {
-    #    return false;
-    #}
-    if (!xarModRegisterHook('item',
-                           'delete',
-                           'API',
-                           'pubsub',
-                           'user',
-                           'delsubscriptons')) {
-        return false;
-    }
+// used by categories only (for now)
     if (!xarModRegisterHook('item',
                            'display',
                            'GUI',
@@ -166,6 +145,18 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
                            'displayicon')) {
         return false;
     }
+
+// used by roles only
+    if (!xarModRegisterHook('item',
+                           'usermenu',
+                           'GUI',
+                           'pubsub',
+                           'user',
+                           'usermenu')) {
+        return false;
+    }
+
+// TODO: review this :-)
 
     // Define instances for this module
     $query1 = "SELECT DISTINCT xar_pubsubid FROM " . $pubsubregtable;
@@ -210,6 +201,8 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
  */
 function pubsub_upgrade($oldversion)
 {
+    xarDBLoadTableMaintenanceAPI();
+
     switch ($oldversion) {
         case '1.0':
             list($dbconn) = xarDBGetConn();
@@ -218,8 +211,6 @@ function pubsub_upgrade($oldversion)
             $xarTables = xarDBGetTables();
             $pubsubregtable = $xarTables['pubsub_reg'];
             $pubsubtemplatetable = $prefix.'_pubsub_template';
-
-            xarDBLoadTableMaintenanceAPI();
 
             // Drop the template table
             $query = xarDBDropTable($pubsubtemplatetable);
@@ -243,8 +234,6 @@ function pubsub_upgrade($oldversion)
             list($dbconn) = xarDBGetConn();
             $xartable = xarDBGetTables();
             $prefix = xarDBGetSiteTablePrefix();
-
-            xarDBLoadTableMaintenanceAPI();
 
             $pubsubtemplatestable = $xartable['pubsub_templates'];
             $templatesfields = array(
@@ -287,7 +276,99 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
             $result =& $dbconn->Execute($query);
             if (!$result) return;
 
-            break;
+            // fall through to the next upgrade
+
+        case 1.2:
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $prefix = xarDBGetSiteTablePrefix();
+
+            $query = xarDBDropTable($xartable['pubsub_eventcids']);
+            if (empty($query)) return; // throw back
+
+            // Drop the table and send exception if returns false.
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // Add xar_cid to the events table
+            $query = xarDBAlterTable($xartable['pubsub_events'],
+                                     array('command' => 'add',
+                                           'field' => 'xar_cid',
+                                           'type' => 'integer',
+                                           'null' => false));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+        // TODO: support other types of grouping later on
+            // Add xar_extra to the events table
+            $query = xarDBAlterTable($xartable['pubsub_events'],
+                                     array('command' => 'add',
+                                           'field' => 'xar_extra',
+                                           'type' => 'varchar',
+                                           'size' => 254,
+                                           'null' => false,
+                                           'default' => ''));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // Add xar_templateid to the process table
+            $query = xarDBAlterTable($xartable['pubsub_process'],
+                                     array('command' => 'add',
+                                           'field' => 'xar_templateid',
+                                           'type' => 'integer',
+                                           'size' => 'medium',
+                                           'null' => false));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // Remove the delsubscriptions hook
+            if (!xarModUnregisterHook('item',
+                                      'delete',
+                                      'API',
+                                      'pubsub',
+                                      'user',
+                                      'delsubscriptions')) {
+                return false;
+            }
+
+            // Add the update hook
+            if (!xarModRegisterHook('item',
+                                    'update',
+                                    'API',
+                                    'pubsub',
+                                    'admin',
+                                    'updatehook')) {
+                return false;
+            }
+
+        // used by roles only
+            if (!xarModRegisterHook('item',
+                                    'usermenu',
+                                    'GUI',
+                                    'pubsub',
+                                    'user',
+                                    'usermenu')) {
+                return false;
+            }
+
+            // Let's start over with all this events stuff, shall we ?
+            $query = "DELETE FROM $xartable[pubsub_events]";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // Let's start over with all this registration stuff, shall we ?
+            $query = "DELETE FROM $xartable[pubsub_reg]";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // Let's start over with all this processing stuff, shall we ?
+            $query = "DELETE FROM $xartable[pubsub_process]";
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // You also need to go through Configure Hooks for pubsub again, to refresh the hooklist
+
+            // fall through to the next upgrade
 
         default:
             break;
@@ -315,36 +396,12 @@ function pubsub_delete()
                            'createhook')) {
         xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
-    #if (!xarModUnregisterHook('item',
-    #                       'create',
-    #                       'API',
-    #                       'pubsub',
-    #                       'user',
-    #                       'subscribe')) {
-    #    xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
-    #}
     if (!xarModUnregisterHook('item',
-                           'display',
-                           'GUI',
-                           'pubsub',
-                           'user',
-                           'displayicon')) {
-        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
-    }
-    #if (!xarModUnregisterHook('item',
-    #                       'delete',
-    #                       'API',
-    #                       'pubsub',
-    #                       'user',
-    #                       'unsubscribe')) {
-    #    xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
-    #}
-    if (!xarModUnregisterHook('item',
-                           'delete',
+                           'update',
                            'API',
                            'pubsub',
-                           'user',
-                           'delsubscriptions')) {
+                           'admin',
+                           'updatehook')) {
         xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
     if (!xarModUnregisterHook('item',
@@ -353,6 +410,22 @@ function pubsub_delete()
                            'pubsub',
                            'admin',
                            'deletehook')) {
+        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
+    }
+    if (!xarModUnregisterHook('item',
+                           'display',
+                           'GUI',
+                           'pubsub',
+                           'user',
+                           'displayicon')) {
+        xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
+    }
+    if (!xarModUnregisterHook('item',
+                           'usermenu',
+                           'GUI',
+                           'pubsub',
+                           'user',
+                           'usermenu')) {
         xarSessionSetVar('errormsg', xarML('Could not unregister hook for Pubsub module'));
     }
 
@@ -365,13 +438,6 @@ function pubsub_delete()
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['pubsub_events']);
-    if (empty($query)) return; // throw back
-
-    // Drop the table and send exception if returns false.
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $query = xarDBDropTable($xartable['pubsub_eventcids']);
     if (empty($query)) return; // throw back
 
     // Drop the table and send exception if returns false.

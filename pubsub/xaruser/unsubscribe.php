@@ -24,6 +24,14 @@
  */
 function pubsub_user_unsubscribe($args)
 {
+    // do nothing if user not logged in otherwise unsubscribe 
+    // the currently logged in user
+    if (xarUserIsLoggedIn()) {
+        $userid = xarUserGetVar('uid');
+    } else {
+        return;
+    }
+
     list($modid,
          $cid,
          $itemtype,
@@ -61,17 +69,16 @@ function pubsub_user_unsubscribe($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
-    // fetch eventid to unsubscribe from
+    // fetch pubsubid to unsubscribe from
     $query = "SELECT xar_pubsubid
-                FROM $pubsubeventstable, $pubsubeventcidstable, $pubsubregtable
-	           WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
-	             AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+                FROM $pubsubeventstable, $pubsubregtable
+               WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+                 AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
                  AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-	             AND $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+                 AND $pubsubregtable.xar_userid = '" . xarVarPrepForStore($userid) . "'
+                 AND $pubsubeventstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
 
     $result = $dbconn->Execute($query);
     if (!$result || $result->EOF) return;

@@ -17,12 +17,13 @@
 /**
  * Get the subscribers for a particular event
  *
+ * @param $args['eventid'] the event id we're looking for
  * @returns array
  * @return array of events
 */
 function pubsub_adminapi_getsubscribers($args)
 {
-	$subscribers = array();
+    $subscribers = array();
     /*
      * lets get...
      *  - username (need to get from db)
@@ -33,7 +34,7 @@ function pubsub_adminapi_getsubscribers($args)
      */
     extract($args);
     $events = array();
-    if (!xarSecurityCheck('AdminPubSub', 0)) {
+    if (empty($eventid) || !is_numeric($eventid)) {
         return $events;
     }
 
@@ -42,25 +43,24 @@ function pubsub_adminapi_getsubscribers($args)
 
     $rolestable           = $xartable['roles'];
     $modulestable         = $xartable['modules'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
     $pubsubeventstable    = $xartable['pubsub_events'];
     $pubsubregtable       = $xartable['pubsub_reg'];
 
     $query = "SELECT $rolestable.xar_uname  AS username
                     ,$modulestable.xar_name AS modname
                     ,$pubsubeventstable.xar_modid AS modid
+                    ,$pubsubeventstable.xar_itemtype AS itemtype
+                    ,$pubsubeventstable.xar_cid AS cid
                     ,$pubsubregtable.xar_subdate AS subdate
                     ,$pubsubregtable.xar_pubsubid AS pubsubid
                 FROM $rolestable
                     ,$modulestable
-                    ,$pubsubeventcidstable
                     ,$pubsubeventstable
                     ,$pubsubregtable
-               WHERE $pubsubeventcidstable.xar_cid  = $cid
-                 AND $pubsubeventcidstable.xar_eid  = $pubsubregtable.xar_eventid
+               WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
                  AND $pubsubeventstable.xar_modid   = $modulestable.xar_regid
-                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
-                 AND $pubsubregtable.xar_userid     = $rolestable.xar_uid";
+                 AND $pubsubregtable.xar_userid     = $rolestable.xar_uid
+                 AND $pubsubeventstable.xar_eventid = $eventid";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -69,6 +69,8 @@ function pubsub_adminapi_getsubscribers($args)
         list($username
             ,$modname
             ,$modid
+            ,$itemtype
+            ,$cid
             ,$subdate
             ,$pubsubid
            ) = $result->fields;
@@ -76,6 +78,8 @@ function pubsub_adminapi_getsubscribers($args)
             $subscribers[] = array('username'  => $username
                                   ,'modname'   => $modname
                                   ,'modid'     => $modid
+                                  ,'itemtype'  => $itemtype
+                                  ,'cid'       => $cid
                                   ,'subdate'   => xarLocaleFormatDate("%a, %d-%B-%Y",$subdate)
                                   ,'pubsubid'  => $pubsubid
                                   );

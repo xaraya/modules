@@ -1,4 +1,4 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Pubsub Administration</xar:mlstring></span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Overview</xar:mlstring></h2>
         <div style="padding: 1px;" class="xar-norm-outline">
@@ -14,7 +14,8 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The Pubsub module allows users to subscribe to events on your system such as new articles being posted in a particular category or replies on a forum thread.  It also allows you to use predetermined hooks from Xaraya if you have them installed and activated. This module uses the Mail module to actually send the notifications.</xar:mlstring>
+            <xar:mlstring>The Pubsub module allows users to subscribe to events on your system such as new articles being posted in a particular category or replies on a forum thread.
+This module uses the Scheduler module to process events and the Mail module to actually send the notifications.</xar:mlstring>
 	</div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -22,8 +23,9 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>From the menu, you have one choice. </xar:mlstring>
-            <xar:mlstring>"Modify Configuration".  From this menu option, you can update the necessary configuration options.</xar:mlstring>
+            <xar:mlstring><p>The pubsub module should be hooked to the categories module first, so that your users can subscribe to events concerning a particular category.</p>
+<p>Then you should enable the pubsub hooks for any other module (e.g. articles) where you want to send out create/update/delete notifications to your users.</p>
+<p>And finally you should specify which templates to use for each module and how often events should be processed in "Modify Configuration".</p></xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -31,7 +33,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-	    <xar:mlstring>The Pubsub Module has no blocks included at this time.</xar:mlstring>
+	    <xar:mlstring>The Pubsub module has no blocks included at this time.</xar:mlstring>
 	</div>
 	<br />
 	<div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -39,7 +41,7 @@
 	</div>
 	<br />
 	<div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>The pubsub hook allows you to let users subscribe to events when an item is created or deleted.  This can be configured in the modules module.</xar:mlstring>
+            <xar:mlstring>The Pubsub module supports item display hooks to let your users subscribe to events in particular categories. It also supports item create, item update and item delete hooks to inform your users when a module item is created, updated or deleted. This can be configured in the modules module.</xar:mlstring>
         </div>
         <br />
         <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">

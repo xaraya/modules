@@ -39,9 +39,17 @@ function pubsub_admin_modifyconfig()
             // we have hooks for individual item types here
             if (!isset($value[0])) {
                 foreach ($value as $itemtype => $val) {
-                    $template = xarModGetVar('pubsub', "$modname.$itemtype");
-                    if (empty($template)) {
-                        $template = 0;
+                    $create = xarModGetVar('pubsub', "$modname.$itemtype.create");
+                    if (empty($create)) {
+                        $create = 0;
+                    }
+                    $update = xarModGetVar('pubsub', "$modname.$itemtype.update");
+                    if (empty($update)) {
+                        $update = 0;
+                    }
+                    $delete = xarModGetVar('pubsub', "$modname.$itemtype.delete");
+                    if (empty($delete)) {
+                        $delete = 0;
                     }
                     if (isset($mytypes[$itemtype])) {
                         $type = $mytypes[$itemtype]['label'];
@@ -51,26 +59,48 @@ function pubsub_admin_modifyconfig()
                         $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
                     }
                     $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
-                                                                    'template' => $template);
+                                                                    'create' => $create,
+                                                                    'update' => $update,
+                                                                    'delete' => $delete);
                 }
             } else {
-                $template = xarModGetVar('pubsub', "$modname");
-                if (empty($template)) {
-                    $template = 0;
+                $create = xarModGetVar('pubsub', "$modname.create");
+                if (empty($create)) {
+                    $create = 0;
+                }
+                $update = xarModGetVar('pubsub', "$modname.update");
+                if (empty($update)) {
+                    $update = 0;
+                }
+                $delete = xarModGetVar('pubsub', "$modname.delete");
+                if (empty($delete)) {
+                    $delete = 0;
                 }
                 $link = xarModURL($modname,'user','main');
                 $data['settings'][$modname] = array('label' => xarML('Configuration for <a href="#(1)">#(2)</a> module', $link, $modname),
-                                                    'template' => $template);
+                                                    'create' => $create,
+                                                    'update' => $update,
+                                                    'delete' => $delete);
                 if (!empty($mytypes) && count($mytypes) > 0) {
                     foreach ($mytypes as $itemtype => $mytype) {
-                        $template = xarModGetVar('pubsub', "$modname.$itemtype");
-                        if (empty($template)) {
-                            $template = 0;
+                        $create = xarModGetVar('pubsub', "$modname.$itemtype.create");
+                        if (empty($create)) {
+                            $create = 0;
+                        }
+                        $update = xarModGetVar('pubsub', "$modname.$itemtype.update");
+                        if (empty($update)) {
+                            $update = 0;
+                        }
+                        $delete = xarModGetVar('pubsub', "$modname.$itemtype.delete");
+                        if (empty($delete)) {
+                            $delete = 0;
                         }
                         $type = $mytypes[$itemtype]['label'];
                         $link = $mytypes[$itemtype]['url'];
                         $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
-                                                                        'template' => $template);
+                                                                        'create' => $create,
+                                                                        'update' => $update,
+                                                                        'delete' => $delete);
                     }
                 }
             }

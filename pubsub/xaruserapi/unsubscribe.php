@@ -25,12 +25,12 @@
  */
 function pubsub_userapi_unsubscribe($args)
 {
-	extract($args);
+    extract($args);
 
     // Argument check
     $invalid = array();
     if (!isset($modid))     { $invalid[] = 'modid'; }
-    if (!isset($cid)) 		{ $invalid[] = 'cid'; }
+    if (!isset($cid))         { $invalid[] = 'cid'; }
 //    if (!isset($itemtype))  { $invalid[] = 'itemtype'; }
     if (!isset($userid))    { $invalid[] = 'userid'; }
     if (count($invalid) > 0) {
@@ -45,27 +45,15 @@ function pubsub_userapi_unsubscribe($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
     $pubsubregtable = $xartable['pubsub_reg'];
 
-    // fetch eventid to unsubscribe from
-/*
+    // fetch pubsubid to unsubscribe from
     $query = "SELECT xar_pubsubid
-                FROM $pubsubeventstable, $pubsubeventcidstable, $pubsubregtable
-	           WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
-	             AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
-                 AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-                 AND $pubsubregtable.xar_userid = xarVarPrepForStore($userid)
-	             AND $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
-*/
-    $query = "SELECT xar_pubsubid
-                FROM $pubsubeventstable, $pubsubeventcidstable, $pubsubregtable
-	           WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
-                 AND $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
+                FROM $pubsubeventstable, $pubsubregtable
+               WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
                  AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
                  AND $pubsubregtable.xar_userid = '" . xarVarPrepForStore($userid) . "'
-	             AND $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+                 AND $pubsubeventstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
 
     $result = $dbconn->Execute($query);
     if (!$result || $result->EOF) return;

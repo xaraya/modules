@@ -24,6 +24,14 @@
  */
 function pubsub_user_subscribe()
 {
+    // do nothing if user not logged in otherwise subscribe 
+    // the currently logged in user
+    if (xarUserIsLoggedIn()) {
+        $userid = xarUserGetVar('uid');
+    } else {
+        return;
+    }
+
     list($modid
         ,$cid
         ,$itemtype
@@ -61,40 +69,13 @@ function pubsub_user_subscribe()
     if (!isset($groupdescr))
         $groupdescr = 'Subscribe';
 
-    // Database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-    $pubsubeventstable = $xartable['pubsub_events'];
-    $pubsubeventcidstable = $xartable['pubsub_eventcids'];
-
-    // make sure event exists, create it if necessary
-    $extrainfo = array('modid' => $modid,
-                       'cid' => $cid,
-                       'itemtype' => $itemtype,
-                       'groupdescr' => $groupdescr);
-
-    if (!xarModAPIFunc('pubsub',
-                       'admin',
-                       'createhook',
-                        array('extrainfo' => $extrainfo))) {
-        $msg = xarML('Step2 #(1) in function #(2)() in module #(3)',
-        join(', ',$invalid), 'subscribe', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-    }
-
-    // fetch eventid to subscribe to
-    $query = "SELECT $pubsubeventstable.xar_eventid
- 	    FROM  $pubsubeventstable, $pubsubeventcidstable
-	    WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
-	    AND   $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-        AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
-	    AND   $pubsubeventcidstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
-
-    $result = $dbconn->Execute($query);
-    if (!$result) return;
-
-    $eventid = $result->fields[0];
+    // check if we already have an event for this, or create it if necessary
+    $eventid = xarModAPIFunc('pubsub','admin','checkevent',
+                             array('modid' => $modid,
+                                   'itemtype' => $itemtype,
+                                   'cid' => $cid,
+                                   'groupdescr' => $groupdescr));
+    if (empty($eventid)) return; // throw back
 
 // TODO: fill in eventid *and* actionid (wherever that is supposed to come from)
 // AM hardcoding actionid to 1 for now, will have to work out options for htmlmail etc. later
@@ -102,7 +83,8 @@ function pubsub_user_subscribe()
                        'user',
                        'adduser',
                         array('eventid' => $eventid,
-                              'actionid' => 1))) {
+                              'actionid' => 1,
+                              'userid' => $userid))) {
         $msg = xarML('Bad return from #(1) in function #(2)() in module #(3)',
                      'adduser', 'subscribe', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',

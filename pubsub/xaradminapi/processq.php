@@ -33,22 +33,24 @@ function pubsub_adminapi_processq($args)
     // Get all jobs in pending state
     $query = "SELECT xar_handlingid,
                      xar_pubsubid,
-                     xar_objectid
+                     xar_objectid,
+                     xar_templateid
               FROM $pubsubprocesstable
-              WHERE xar_status = " . xarVarPrepForStore('pending');
+              WHERE xar_status = '" . xarVarPrepForStore('pending') . "'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
-    // set count to 0
-    $count = 0;
+    // set count to 1 so that the scheduler knows we're doing OK :)
+    $count = 1;
 
     while (!$result->EOF) {
-        list($handlingid,$pubsubid,$objectid) = $result->fields;
+        list($handlingid,$pubsubid,$objectid,$templateid) = $result->fields;
         // run the job passing it the handling, pubsub and object ids.
         xarModAPIFunc('pubsub','admin','runjob',
                       array('handlingid' => $handlingid,
                             'pubsubid' => $pubsubid,
-                            'objectid' => $objectid));
+                            'objectid' => $objectid,
+                            'templateid' => $templateid));
         $count++;
         $result->MoveNext();
     }

@@ -33,6 +33,7 @@ function pubsub_xartables()
     // Table name
     $xartable['pubsub_events'] = $pubsub_events;
 
+// Note : this table is no longer in use - leave in here to handle upgrades
     // Name for pubsub event category ids database entities
     $pubsub_eventcids = xarDBGetSiteTablePrefix() . '_pubsub_eventcids';
 

@@ -13,23 +13,20 @@
   @author Garrett Hunter <garrett@blacktower.com>
 --->
 
-<div class="xar-mod-head"><span class="xar-mod-title">#$namelabel#</span></div>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Publish / Subscribe Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
-    <h2>#$catname# - #$headinglabel#</h2>
+    <h2>#$modname# [#$catname#] - <xar:mlstring>Subscriber Summary</xar:mlstring></h2>
     <div align="center">
     <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
         <th>
-            #$usernamelabel#
+            <xar:mlstring>User Name</xar:mlstring>
         </th>
         <th>
-            #$subdatelabel#
+            <xar:mlstring>Date Subscribed</xar:mlstring>
         </th>
         <th>
-            #$modnamelabel#
-        </th>
-        <th>
-            #$actionlabel#
+            <xar:mlstring>Action</xar:mlstring>
         </th>
     </tr>
     <xar:if condition="count($items) gt 0">
@@ -42,16 +39,13 @@
             #$item['subdate']#
         </td>
         <td>
-            #$item['modname']#
-        </td>
-        <td>
-            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('catname'=>$catname,'cid'=>$cid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
+            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
         </td>
      </tr>
      </xar:foreach>
     <xar:else />
     <tr>
-      <td colspan="5" align="left">
+      <td colspan="3" align="left">
       <br />
       <strong><xar:mlstring>No subscriptions found for this category</xar:mlstring></strong>
       </td>

@@ -15,11 +15,15 @@
  */
 
 /**
- * process a pubsub event and add it to the Queue
- * @param $args['pubsubid'] subscription identifier
+ * process a pubsub event, by adding a job for each subscriber to the process queue
+ * @param $args['modid'] the module id for the event
+ * @param $args['itemtype'] the itemtype for the event
+ * @param $args['cid'] the category id for the event
+ * @param $args['extra'] some extra group criteria // TODO: for later, and
  * @param $args['objectid'] the specific object in the module
- * @returns int
- * @return handling ID on success, false on failure
+ * @param $args['templateid'] the template id for the jobs
+ * @returns bool
+ * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function pubsub_adminapi_processevent($args)
@@ -27,49 +31,74 @@ function pubsub_adminapi_processevent($args)
     // Get arguments from argument array
     extract($args);
     $invalid = array();
-    if (!isset($pubsubid) || !is_numeric($pubsubid)) {
-        $invalid[] = 'pubsubid';
+    if (empty($modid) || !is_numeric($modid)) {
+        $invalid[] = 'modid';
+    }
+    if (!isset($cid) || !is_numeric($cid)) {
+        $invalid[] = 'cid';
     }
     if (!isset($objectid) || !is_numeric($objectid)) {
         $invalid[] = 'objectid';
     }
+    if (!isset($templateid) || !is_numeric($templateid)) {
+        $invalid[] = 'templateid';
+    }
     if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
-                    join(', ',$invalid), 'processevent', 'Pubsub');
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    join(', ',$invalid), 'admin', 'processevent', 'Pubsub');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
-    // Security check
-    if (!xarSecurityCheck('AddPubSub')) return;
+    if (empty($itemtype) || !is_numeric($itemtype)) {
+        $itemtype = 0;
+    }
+
+    // Security check - not via hooks
+//    if (!xarSecurityCheck('AddPubSub')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
+    $pubsubeventstable  = $xartable['pubsub_events'];
+    $pubsubregtable     = $xartable['pubsub_reg'];
     $pubsubprocesstable = $xartable['pubsub_process'];
 
-    // Get next ID in table
-    $nextId = $dbconn->GenId($pubsubprocesstable);
+    $query = "SELECT xar_pubsubid
+                FROM $pubsubeventstable, $pubsubregtable
+               WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
+                 AND $pubsubeventstable.xar_modid = " . xarVarPrepForStore($modid) . "
+                 AND $pubsubeventstable.xar_itemtype = " . xarVarPrepForStore($itemtype) . "
+                 AND $pubsubeventstable.xar_cid = " . xarVarPrepForStore($cid);
 
-    // Add item
-    $query = "INSERT INTO $pubsubprocesstable (
-              xar_handlingid,
-              xar_pubsubid,
-              xar_objectid,
-	      xar_status)
-            VALUES (
-              $nextId,
-              " . xarVarPrepForStore($pubsubid) . ",
-              " . xarvarPrepForStore($objectid) . ",
-              " . xarvarPrepForStore('pending') . ")";
-    $result = $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    $nextId = $dbconn->PO_Insert_ID($pubsubprocesstable, 'xar_handlingid');
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($pubsubid) = $result->fields;
 
-    // return handlingID
-    return $nextId;
+        // Get next ID in table
+        $nextId = $dbconn->GenId($pubsubprocesstable);
+
+        // Add item
+        $query = "INSERT INTO $pubsubprocesstable (
+                  xar_handlingid,
+                  xar_pubsubid,
+                  xar_objectid,
+                  xar_templateid,
+	          xar_status)
+                VALUES (
+                  $nextId,
+                  " . xarVarPrepForStore($pubsubid) . ",
+                  " . xarvarPrepForStore($objectid) . ",
+                  " . xarvarPrepForStore($templateid) . ",
+                  '" . xarvarPrepForStore('pending') . "')";
+        $result2 = $dbconn->Execute($query);
+        if (!$result2) return;
+    }
+
+    return true;
 
 } // END processevent
 

@@ -26,58 +26,39 @@
  */
 function pubsub_user_modifysubscription()
 {
-	if (!xarVarFetch('modid', 	 'int::',$modid,FALSE)) return;
-	if (!xarVarFetch('cid',	     'int::',$cid,FALSE)) return;
-	if (!xarVarFetch('itemtype', 'int::',$itemtype,FALSE)) return;
-	if (!xarVarFetch('returnurl','str::',$returnurl,FALSE)) return;
-	if (!xarVarFetch('subaction','int::',$subaction,FALSE)) return;
-	if (!xarVarFetch('userid',   'int::',$userid,FALSE)) return;
+    if (!xarVarFetch('modid',      'int::',$modid,FALSE)) return;
+    if (!xarVarFetch('cid',         'int::',$cid,FALSE)) return;
+    if (!xarVarFetch('itemtype', 'int::',$itemtype,FALSE)) return;
+    if (!xarVarFetch('returnurl','str::',$returnurl,FALSE)) return;
+    if (!xarVarFetch('subaction','int::',$subaction,FALSE)) return;
+    if (!xarVarFetch('userid',   'int::',$userid,FALSE)) return;
     // What is groupdescr???
     if (!xarVarFetch('groupdescr',   'str::',$groupdescr,'Subscribe')) return;
 
     $returnurl = rawurldecode($returnurl);
 
-/* FIXMD:<garrett> not needed 'cause VarFetch will ALWAYS set these
-    // Argument check
-    $invalid = array();
-    if (!isset($returnurl))  { $invalid[] = 'returnurl'; }
-    if (!isset($modid))      { $invalid[] = 'modid'; }
-    if (!isset($cid)) 		 { $invalid[] = 'cid'; }
-    if (!isset($itemtype))   { $invalid[] = 'itemtype'; }
-    if (!isset($subaction))  { $invalid[] = 'subaction'; }
-    if (!isset($userid))     { $invalid[] = 'userid'; }
-    if (!isset($groupdescr)) { $invalid[] = 'groupdescr'; }
-
-    if (count($invalid) > 0) {
-        $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
-        join(', ',$invalid), 'subscribe', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
-*/
-	switch ($subaction) {
-		case 0:
-			xarModAPIFunc('pubsub','user','unsubscribe',
-						  array('modid'   =>$modid
-					           ,'cid'     =>$cid
-							   ,'itemtype'=>$itemtype
-							   ,'userid'  =>$userid
-							   ));
-			break; 
-		case 1:
-			xarModAPIFunc('pubsub','user','subscribe',
-						  array('modid'   =>$modid
-					           ,'cid'     =>$cid
-					           ,'groupdescr'=>$groupdescr
-							   ,'itemtype'=>$itemtype
-							   ,'userid'  =>$userid
-							   ));
-			break; 
-		default:
-			// do nothing
-			break;
-	} // end switch 
+    switch ($subaction) {
+        case 0:
+            xarModAPIFunc('pubsub','user','unsubscribe',
+                          array('modid'   =>$modid
+                               ,'cid'     =>$cid
+                               ,'itemtype'=>$itemtype
+                               ,'userid'  =>$userid
+                               ));
+            break; 
+        case 1:
+            xarModAPIFunc('pubsub','user','subscribe',
+                          array('modid'   =>$modid
+                               ,'cid'     =>$cid
+                               ,'groupdescr'=>$groupdescr
+                               ,'itemtype'=>$itemtype
+                               ,'userid'  =>$userid
+                               ));
+            break; 
+        default:
+            // do nothing
+            break;
+    } // end switch 
 
     xarResponseRedirect($returnurl);
     return true;
