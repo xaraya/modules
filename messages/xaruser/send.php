@@ -55,6 +55,7 @@ function messages_user_send() {
             }
             $data['post_url']       = xarModURL('messages', 'user', 'send');
             $data['input_title']    = xarML('Reply to a Message');
+            $data['receipient']     = $messages[0]['sender_id'];
             $data['message']        = $messages[0];
 
             break;
