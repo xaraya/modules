@@ -13,8 +13,9 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcvalidatorapi_userapi_arrayofstructs($msg) 
+function xmlrpcvalidatorapi_userapi_arrayofstructs($args) 
 {
+    extract($args);
     $sno=$msg->getParam(0);
     $numcurly=0;
     for($i=0; $i<$sno->arraysize(); $i++) {

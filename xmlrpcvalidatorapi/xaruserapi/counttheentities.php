@@ -13,8 +13,9 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-function xmlrpcvalidatorapi_userapi_counttheentities($msg) 
+function xmlrpcvalidatorapi_userapi_counttheentities($args) 
 {
+    extract($args);
     $sno=$msg->getParam(0);
     $str=$sno->scalarval();
     $gt=0; $lt=0; $ap=0; $qu=0; $amp=0;
