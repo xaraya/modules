@@ -1,1 +1,1 @@
-<a href="index.php%3Fmodule%3Dpubsub%26func%3Dsubscribe%26modid%3D#xar-var-modid#%26cid%3D#xar-var-cid#%26iid%3D#xar-var-iid#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#xarML('Subscribe')#" /></a>
+<a href="#xarModURL('pubsub','user','subscribe',array('modid' => $modid, 'cid' => $cid, 'iid' => $iid))#"><img src="modules/pubsub/xarimages/subscribe.gif" alt="#xarML('Subscribe')#" /></a>
