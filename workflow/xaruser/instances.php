@@ -50,6 +50,10 @@ if (isset($_REQUEST['exception'])) {
 	$GUI->gui_exception_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
+if (isset($_REQUEST['resume'])) {
+	$GUI->gui_resume_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+}
+
 if (isset($_REQUEST['grab'])) {
 	$GUI->gui_grab_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
