@@ -1,19 +1,20 @@
-<tr align="left" valign="middle">
-  <td>
-    <label for="xlink_base"><xar:mlstring>XLink ID</xar:mlstring></label>
-  </td>
-  <td>
-    <select name="xlink_base" id="xlink_base">
-      <option value="-"><xar:mlstring>[none]</xar:mlstring></option>
-      <xar:foreach in="$basenames" value="$name">
-        <xar:if condition="!empty($base) and $base eq $name">
-          <option value="#$name#" selected="selected">#$name#</option>
-        <xar:else/>
-          <option value="#$name#">#$name#</option>
-        </xar:if>
-      </xar:foreach>
-    </select>
-    <input type="text" name="xlink_id" value="#$id#" size="20" />
-  </td>
-</tr>
+<div class="xar-title"><span><xar:mlstring>X-linking</xar:mlstring></span></div>
+
+
+<div>
+ <span><label for="xlink_base"><xar:mlstring>X-link base</xar:mlstring></label></span>
+ <span>
+   <select id="xlink_base" name="xlink_base">
+     <option value="-"><xar:mlstring>[none]</xar:mlstring></option>
+     <xar:foreach in="$basenames" value="$name">
+       <xar:if condition="!empty($base) and $base eq $name">
+         <option value="#$name#" selected="selected">#$name#</option>
+       <xar:else/>
+         <option value="#$name#">#$name#</option>
+       </xar:if>
+     </xar:foreach>
+   </select>
+ <span><label for="xlink_id"><xar:mlstring>X-link reference</xar:mlstring></label></span>
+ <span><input type="text" name="xlink_id" value="#$id#" size="20" /></span>
+</div>
 
