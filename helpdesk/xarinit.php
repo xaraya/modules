@@ -379,6 +379,7 @@ function helpdesk_upgrade($oldversion)
             /*
                 Now let load the data again
             */
+            $path = "modules/helpdesk/xardata/";
             xarModAPIFunc('dynamicdata','util','import',
                           array('file' => $path . 'hd_priority.data.xml'));
 
