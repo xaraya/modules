@@ -2,10 +2,10 @@
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("hottopic", "fdesc");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Hot Topic", "Forum Description");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("hottopic", "fdesc");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Hot Topic", "Forum Description");
 //-->
 </script>
 
@@ -16,134 +16,134 @@
 
 <form method="post" action="#xarModURL('xarbb', 'admin', 'modifyconfig', array('phase' => 'update'))#" id="post" enctype="application/x-www-form-urlencoded" />
 
-	<div style="clear: both; padding-top: 10px;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short Urls</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<xar:if condition="xarModGetVar('xarbb', 'SupportShortURLs')">
-			<input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
-		<xar:else />
-			<input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
-		</xar:if>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short Urls</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <xar:if condition="xarModGetVar('xarbb', 'SupportShortURLs')">
+            <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="supportshorturls" id="supportshorturls" value="1" />
+        </xar:if>
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The name of the cookie that xarBB will create.')#"><label for="cookiename"><xar:mlstring>Cookie Name</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="cookiename" id="cookiename" value="#xarModGetVar('xarbb', 'cookiename', 1)#" size="32" maxlength="100" />
-	</span>
-	</div> 
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('The name of the cookie that xarBB will create.')#"><label for="cookiename"><xar:mlstring>Cookie Name</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="cookiename" id="cookiename" value="#xarModGetVar('xarbb', 'cookiename', 1)#" size="32" maxlength="100" />
+    </span>
+    </div> 
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The domain for the xarBB cookie.  Leave blank if you are unsure')#"><label for="cookiedomain"><xar:mlstring>Cookie Domain</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="cookiename" id="cookiedomain" value="#xarModGetVar('xarbb', 'cookiedomain', 1)#" size="32" maxlength="100" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('The domain for the xarBB cookie.  Leave blank if you are unsure')#"><label for="cookiedomain"><xar:mlstring>Cookie Domain</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="cookiename" id="cookiedomain" value="#xarModGetVar('xarbb', 'cookiedomain', 1)#" size="32" maxlength="100" />
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The path for the xarBB cookie.  Leave blank if you are unsure')#"><label for="cookiepath"><xar:mlstring>Cookie Path</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="cookiepath" id="cookiepath" value="#xarModGetVar('xarbb', 'cookiepath', 1)#" size="32" maxlength="100" />
-	</span>
-	</div> 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Default number of forums to show per page in admin view.')#"><label for="forumsperpage"><xar:mlstring>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('The path for the xarBB cookie.  Leave blank if you are unsure')#"><label for="cookiepath"><xar:mlstring>Cookie Path</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="cookiepath" id="cookiepath" value="#xarModGetVar('xarbb', 'cookiepath', 1)#" size="32" maxlength="100" />
+    </span>
+    </div> 
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Default number of forums to show per page in admin view.')#"><label for="forumsperpage"><xar:mlstring>
         Forums per page in admin view</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="forumsperpage" id="forumsperpage" value="#xarModGetVar('xarbb', 'forumsperpage', 1)#"" size="2" maxlength="4" />
-	</span>
-	</div>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="forumsperpage" id="forumsperpage" value="#xarModGetVar('xarbb', 'forumsperpage', 1)#"" size="2" maxlength="4" />
+    </span>
+    </div>
 
-	<!-- Start Default Forum configuration -->
+    <!-- Start Default Forum configuration -->
     <!-- Moved to individual forum configuration 
          but - we can set overall defaults here for new forums -->
-	<div style="clear: both; padding-top: 10px;">
-	<h2><xar:mlstring>Default Values for New Forums</xar:mlstring></h2>
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Default number of topics to show per page in a forum.')#"><label for="topicsperpage"><xar:mlstring>Topics per page</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <h2><xar:mlstring>Default Values for New Forums</xar:mlstring></h2>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Default number of topics to show per page in a forum.')#"><label for="topicsperpage"><xar:mlstring>Topics per page</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Default Threshhold for individual topics to be considered hot.')#"><label for="hottopic"><xar:mlstring>Hot Topic</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px; width:98%;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Default Threshhold for individual topics to be considered hot.')#"><label for="hottopic"><xar:mlstring>Hot Topic</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
+    </span>
+    </div>
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Default number of topics to show per page in a forum.')#"><label for="postsperpage"><xar:mlstring>Posts per page</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Default number of topics to show per page in a forum.')#"><label for="postsperpage"><xar:mlstring>Posts per page</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
+    </span>
+    </div>
 
 
-	<div style="clear: both; padding-top: 10px;">
-	    <span style="float: left; width: 20%; text-align: right;">
-	        <span class="help" title="#xarML('Default value for HTML in a new forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
-		    </span>
-		    <span style="float: right; width: 78%; text-align: left;">
-	        <xar:if condition="xarModIsAvailable('html')">
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Default value for HTML in a new forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="xarModIsAvailable('html')">
                 <xar:if condition="$allowhtml">
-		            <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
+                    <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="allowhtml" id="allowhtml" value="1" />
                 </xar:if>
             <xar:else />
- 		        <span style="float: right; width: 78%; text-align: left;">
-		        <em><xar:mlstring>HTML Module is not available.</xar:mlstring></em>
-		        </span>
+                 <span style="float: right; width: 78%; text-align: left;">
+                <em><xar:mlstring>HTML Module is not available.</xar:mlstring></em>
+                </span>
             </xar:if>
-		</span>
+        </span>
     </div>
 
-	<div style="clear: both; padding-top: 10px;">
-	    <span style="float: left; width: 20%; text-align: right;">
-	        <span class="help" title="#xarML('Default value for BBCode in a new forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
-		    </span>
-		    <span style="float: right; width: 78%; text-align: left;">
-	        <xar:if condition="xarModIsAvailable('bbcode')">
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Default value for BBCode in a new forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="xarModIsAvailable('bbcode')">
                 <xar:if condition="$allowbbcode">
-		            <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
+                    <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="allowbbcode" id="allowbbcode" value="1" />
                 </xar:if>
             <xar:else />
- 		        <span style="float: right; width: 78%; text-align: left;">
-		        <em><xar:mlstring>BBCode Module is not available</xar:mlstring></em>
-		        </span>
+                 <span style="float: right; width: 78%; text-align: left;">
+                <em><xar:mlstring>BBCode Module is not available</xar:mlstring></em>
+                </span>
             </xar:if>
-		</span>
+        </span>
     </div>
 
      <div style="clear: both; width: 98%; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Default value for Topic Edit Stamp use')#">
+        <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Default value for Topic Edit Stamp use')#">
             <label for="editstamp"><xar:mlstring>Use Topic Edit Stamp?</xar:mlstring></label>
         </span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
             <select name="editstamp" id="editstamp" size="1">
             <xar:if condition="$editstamp eq '0'">
                <option value="0" selected="selected"><xar:mlstring>None</xar:mlstring></option>
@@ -160,38 +160,38 @@
             </xar:if> </select>
                 </select>
 
- 	   </span>
+        </span>
     </div>
 
 
 
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Show category trails')#"><label for="showcats"><xar:mlstring>Show Categories</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Show category trails')#"><label for="showcats"><xar:mlstring>Show Categories</xar:mlstring></label>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
     <xar:if condition="$showcats">
-		<input type="checkbox" name="showcats" id="showcats" checked="checked" />
+        <input type="checkbox" name="showcats" id="showcats" checked="checked" />
     <xar:else />
         <input type="checkbox" name="showcats" id="showcats" value="1" />
     </xar:if>
-	</span>
-	</div>
-    	</div>
-	<!-- End Default Forum configuration -->
+    </span>
+    </div>
+        </div>
+    <!-- End Default Forum configuration -->
 
-	<div style="clear: both; padding-top: 10px;">
-		#$hooks#
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+        #$hooks#
+    </div>
 
-	<xar:set name="$mlupdateconf"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
+    <xar:set name="$mlupdateconf"><xar:mlstring>Update Configuration</xar:mlstring></xar:set>
 
-	<div style="clear: both; padding-top: 10px; width:98%;">
-		<span style="float: left; width: 30%; text-align: right;">
-			<input type="submit" value="#$mlupdateconf#" />
-		</span>
-	</div>
-	</form>
+    <div style="clear: both; padding-top: 10px; width:98%;">
+        <span style="float: left; width: 30%; text-align: right;">
+            <input type="submit" value="#$mlupdateconf#" />
+        </span>
+    </div>
+    </form>
 </div>
 </div>
 

@@ -11,7 +11,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>xarbb provides basic forum functions provided mainly from Xaraya utility modules.  The forum itself is very light weight, but designed to handle large volume postings.</xar:mlstring>
+            <xar:mlstring>xarbb provides basic forum functions provided mainly from Xaraya utility modules.  The forum itself is very light weight, but designed to handle large volume postings.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -20,13 +20,13 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>
-			From the menu, you have three choices.  "Modify Configuration", "Add Forums", and "View Forums". 
-			</xar:mlstring>
-			<ul>
-				<li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
-				<li><xar:mlstring>View Forums -- Allows you to view the forums that you have configured on your system.</xar:mlstring></li>
-				<li><xar:mlstring>Add Forums -- Allows you to add new forums to your system.</xar:mlstring></li>
-			</ul>
+            From the menu, you have three choices.  "Modify Configuration", "Add Forums", and "View Forums". 
+            </xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Modify Configuration -- Allows you to set certain configuration routines for forums.</xar:mlstring></li>
+                <li><xar:mlstring>View Forums -- Allows you to view the forums that you have configured on your system.</xar:mlstring></li>
+                <li><xar:mlstring>Add Forums -- Allows you to add new forums to your system.</xar:mlstring></li>
+            </ul>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">

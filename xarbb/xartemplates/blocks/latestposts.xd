@@ -25,15 +25,15 @@ TODO: layout, security checks etc
     <xar:if condition="$vars['addauthor'] eq '1'">
         <xar:if condition="!empty($item['poster']) AND !($item['anon'] eq '1')">
             <xar:mlstring>by </xar:mlstring>
-					#$item['postername']#
-		<xar:else />
+                    #$item['postername']#
+        <xar:else />
             <xar:mlstring>by Anonymous</xar:mlstring>
         </xar:if>
     <xar:elseif condition="$vars['addauthor'] eq '2'" />
         <xar:if condition="!empty($item['poster']) AND !($item['anon'] eq '1')">
             <xar:mlstring>by</xar:mlstring> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $item['poster']))#">
-					#$item['postername']#</a>
-		<xar:else />
+                    #$item['postername']#</a>
+        <xar:else />
             <xar:mlstring>by Anonymous</xar:mlstring>
         </xar:if>
     </xar:if>

@@ -5,15 +5,15 @@
 <h2><xar:mlstring>Delete a Post</xar:mlstring></h2>
 <form method="post" action="#xarModURL('xarbb', 'user', 'deletereply')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<input type="hidden" name="cid" id="cid" value="#$cid#" />
-	<input type="hidden" name="confirm" id="confirm" value="1" />
-	<input type="hidden" name="confirmation" id="confirmation" value="1" />
+    <input type="hidden" name="cid" id="cid" value="#$cid#" />
+    <input type="hidden" name="confirm" id="confirm" value="1" />
+    <input type="hidden" name="confirmation" id="confirmation" value="1" />
 
-	<span class="xar-title"><xar:mlstring>Confirm deletion of reply</xar:mlstring></span><br /><br />
+    <span class="xar-title"><xar:mlstring>Confirm deletion of reply</xar:mlstring></span><br /><br />
 
     <xar:set name="$mlconfirm"><xar:mlstring>Confirm</xar:mlstring></xar:set>
-	<input type="submit" value="#$mlconfirm#"  tabindex="1" /><br /><br />
-	
-	<a href="#xarModURL('xarbb', 'user', 'viewtopic')#"><xar:mlstring>Cancel deletion of reply</xar:mlstring></a>
+    <input type="submit" value="#$mlconfirm#"  tabindex="1" /><br /><br />
+    
+    <a href="#xarModURL('xarbb', 'user', 'viewtopic')#"><xar:mlstring>Cancel deletion of reply</xar:mlstring></a>
 </form>        
 </div>
