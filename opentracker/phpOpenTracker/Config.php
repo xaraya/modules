@@ -74,7 +74,11 @@ class phpOpenTracker_Config {
     }
 
       //modification for Xaraya:
-      	$config["db_type"] = xarCore_getSystemVar('DB.Type');
+        if (xarCore_getSystemVar('DB.Type') == "postgres") {
+            $config["db_type"] = 'pgsql';
+        } else {
+            $config["db_type"] = xarCore_getSystemVar('DB.Type');
+        }
       	$config["db_host"] = xarCore_getSystemVar('DB.Host');
       	$config["db_database"] = xarCore_getSystemVar('DB.Name');
       	$config["db_user"] = xarCore_getSystemVar('DB.UserName');
