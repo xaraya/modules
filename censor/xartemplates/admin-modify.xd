@@ -12,7 +12,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Censored Word</xar:mlstring></h2>
     <div style="margin: auto;">
     <form action="#xarModURL('censor', 'admin', 'update')#" method="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded" >
-        
+
         <div style="clear: both; padding-top: 10px;">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="cid" id="cid" value="#$cid#" />
@@ -23,7 +23,7 @@
             <input type="text" name="keyword" id="keyword" value="#$keyword#" size="32" maxlength="255" />
         </span>
         </div>
-        
+
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
             <span class="help" title="#xarML('Case Sensitive substitution.')#"><label for="case"><xar:mlstring>Case sensitive</xar:mlstring></label>:</span>
@@ -36,53 +36,53 @@
                 </xar:if>
         </span>
         </div>
-        
+
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
             <span class="help" title="#xarML('Match Case substitution.')#"><label for="matchcase"><xar:mlstring>Match Case</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
             <xar:if condition="$match_case eq 0">
-			<p><input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring></p>
+      <p><input type="radio" name="matchcase" id="matchcase" value="0" checked="checked" /><xar:mlstring>Exact</xar:mlstring></p>
                 <xar:else />
-		        <p><input type="radio" name="matchcase" id="matchcase" value="0" /><xar:mlstring>Exact</xar:mlstring></p>
+            <p><input type="radio" name="matchcase" id="matchcase" value="0" /><xar:mlstring>Exact</xar:mlstring></p>
                 </xar:if>
                 <xar:if condition="$match_case eq 1">
-			<p><input type="radio" name="matchcase" id="matchcase" value="1" checked="checked" /><xar:mlstring>Start with</xar:mlstring> ...</p>
+      <p><input type="radio" name="matchcase" id="matchcase" value="1" checked="checked" /><xar:mlstring>Start with</xar:mlstring> ...</p>
                 <xar:else />
-		        <p><input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...</p>
+            <p><input type="radio" name="matchcase" id="matchcase" value="1" /><xar:mlstring>Start with</xar:mlstring> ...</p>
                 </xar:if>
                 <xar:if condition="$match_case eq 2">
-			<p><input type="radio" name="matchcase" id="matchcase" value="2" checked="checked" /><xar:mlstring>End with</xar:mlstring> ...</p>
+      <p><input type="radio" name="matchcase" id="matchcase" value="2" checked="checked" /><xar:mlstring>End with</xar:mlstring> ...</p>
                 <xar:else />
-		        <p><input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...</p>
+            <p><input type="radio" name="matchcase" id="matchcase" value="2" /><xar:mlstring>End with</xar:mlstring> ...</p>
                 </xar:if>
                 <xar:if condition="$match_case eq 3">
-			<p><input type="radio" name="matchcase" id="matchcase" value="3" checked="checked" /><xar:mlstring>Everywhere</xar:mlstring></p>
+      <p><input type="radio" name="matchcase" id="matchcase" value="3" checked="checked" /><xar:mlstring>Everywhere</xar:mlstring></p>
                 <xar:else />
-		        <p><input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring></p>
+            <p><input type="radio" name="matchcase" id="matchcase" value="3" /><xar:mlstring>Everywhere</xar:mlstring></p>
                 </xar:if>
         </span>
         </div>
-        
+
         <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 20%; text-align: right;">
             <span class="help" title="#xarML('This is the locale, for that when matched will be replaced.')#"><label for="keyword"><xar:mlstring>Locale</xar:mlstring></label>:</span>
         </span>
         <span style="float: right; width: 78%; text-align: left;">
-		<select multiple size="5" name="locale[]" id="locale">
-		<xar:loop name="$locales">
-		<xar:if condition="$loop:item['check'] eq 1">
-		<option value="#$loop:item['value']#" selected="selected">#$loop:item['name']#</option>
+    <select multiple size="5" name="locale[]" id="locale">
+    <xar:loop name="$locales">
+    <xar:if condition="$loop:item['check'] eq 1">
+    <option value="#$loop:item['value']#" selected="selected">#$loop:item['name']#</option>
         <xar:else />
-					<option value="#$loop:item['value']#">#$loop:item['name']#</option>
+          <option value="#$loop:item['value']#">#$loop:item['name']#</option>
         </xar:if>
-		</xar:loop>
+    </xar:loop>
                 </select>
                 </span>
-		<div style="clear: both; padding-top: 10px;">
+    <div style="clear: both; padding-top: 10px;">
         <span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createlabel#" /></span>
-	        </div>
+          </div>
     </form>
     </div>
 </div>

@@ -12,11 +12,11 @@
 
 /**
  * modify a censored word item
- * 
+ *
  * @param  $ 'cid' the id of the censored word to be modified
  */
 function censor_admin_modify($args)
-{ 
+{
     // Get parameters
     if (!xarVarFetch('cid', 'int:1:', $cid)) return;
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
@@ -25,7 +25,7 @@ function censor_admin_modify($args)
 
     if (!empty($obid)) {
         $cid = $obid;
-    } 
+    }
 
     $data = xarModAPIFunc('censor',
         'user',
@@ -40,13 +40,13 @@ function censor_admin_modify($args)
     $data['authid'] = xarSecGenAuthKey();
     $data['createlabel'] = xarML('Submit');
     $allowedlocales = xarConfigGetVar('Site.MLS.AllowedLocales');
-     
+
      foreach($allowedlocales as $loc) {
-  	if (in_array($loc, $data['locale'])) {
-    	  $data['locales'][] = array('name' => $loc, 'value' => $loc, 'check' => '1');
-    	 } else {
-    	  $data['locales'][] = array('name' => $loc, 'value' => $loc, 'check' => '0');
-    	}	
+    if (in_array($loc, $data['locale'])) {
+        $data['locales'][] = array('name' => $loc, 'value' => $loc, 'check' => '1');
+       } else {
+        $data['locales'][] = array('name' => $loc, 'value' => $loc, 'check' => '0');
+      }
       }
 
     return $data;

@@ -42,7 +42,7 @@
             <xar:mlstring>Everywhere</xar:mlstring>
             </xar:if>
             </td>
-			<td class="xar-norm-outline" style="text-align: left; width: 200px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+      <td class="xar-norm-outline" style="text-align: left; width: 200px;border-width: 0px 0px 1px 0px;border-style: dotted;">
             #$loop:item['locale']#
             </td>
             <td class="xar-norm-outline" style="text-align: center; width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
@@ -51,6 +51,6 @@
             </td>
         </tr>
         </xar:loop>
-        
+
     </table>
 </div>
