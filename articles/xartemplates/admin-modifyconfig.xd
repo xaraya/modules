@@ -106,8 +106,12 @@
         <td><input type="text" name="number_of_columns" id="number_of_columns" size="1" maxlength="2" value="#$numcols#" /></td>
     </tr>
     <tr>
-        <td><label for="itemsperpage"><xar:mlstring>Items per page</xar:mlstring> <i>($number)</i></label></td>
+        <td><label for="itemsperpage"><xar:mlstring>Items per page on user view</xar:mlstring> <i>($number)</i></label></td>
         <td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /></td>
+    </tr>
+    <tr>
+        <td><label for="adminitemsperpage"><xar:mlstring>Items per page on admin view</xar:mlstring> <i>($number)</i></label></td>
+        <td><input type="text" name="adminitemsperpage" id="adminitemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /></td>
     </tr>
     <tr>
         <td><label for="showcategories"><xar:mlstring>Show category links in article summaries</xar:mlstring> <i>($categories)</i></label></td>

@@ -41,6 +41,7 @@ function articles_admin_updateconfig()
 
     $settings = array();
     $settings['itemsperpage']       = $itemsperpage;
+    $settings['adminitemsperpage']  = $adminitemsperpage;
     $settings['number_of_columns']  = $number_of_columns;
     $settings['defaultview']        = $defaultview;
     $settings['showcategories']     = $showcategories;
@@ -95,4 +96,3 @@ function articles_admin_updateconfig()
     return true;
 }
 
-?>
