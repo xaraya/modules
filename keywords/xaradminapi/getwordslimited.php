@@ -28,21 +28,27 @@ function keywords_adminapi_getwordslimited($args)
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
- 
+
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords_restr'];
+    $bindvars = array();
 
     // Get restricted keywords for this module item
     $query = "SELECT xar_id,
                      xar_keyword
               FROM $keywordstable
-              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid);
+              WHERE xar_moduleid = ?";
+
+              $bindvars[] = $moduleid;
+
     if (isset($itemtype)) {
-          $query .= " AND xar_itemtype = ". xarVarPrepForStore($itemtype);
+          $query .= " AND xar_itemtype = ?";
+          $bindvars[] = $itemtype;
     }
     $query .= " ORDER BY xar_keyword ASC";
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query,$bindvars);
+
     if (!$result) return;
     $keywords = array();
     $keywords = '';
@@ -54,15 +60,13 @@ function keywords_adminapi_getwordslimited($args)
         list($id,
              $word) = $result->fields;
         $keywords[$id] = $word;
-       //$keywords = $word;
         $result->MoveNext();
     }
     $result->Close();
-    
+
     $delimiters = xarModGetVar('keywords','delimiters');
     $delimiter = substr($delimiters,0,1);
     $keywords = implode($delimiter, $keywords);
-    //$keywords = implode(",", $keywords);
     return $keywords;
 }
 ?>

@@ -50,6 +50,7 @@ function keywords_userapi_getitems($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
+    $bindvars = array();
 
     // Get module item for this id
     $query = "SELECT xar_id,
@@ -62,19 +63,24 @@ function keywords_userapi_getitems($args)
         if (is_array($id)) {
             $query .= " WHERE xar_id IN (" . join(', ',$id) . ")";
         } else {
-            $query .= " WHERE xar_id = '" . xarVarPrepForStore($id) . "'";
+            $query .= " WHERE xar_id = ?";
+            $bindvars[] = $id;
         }
     } else {
-        $query .= " WHERE xar_keyword = '" . xarVarPrepForStore($keyword) . "'";
+        $query .= " WHERE xar_keyword = ?";
+        $bindvars[] = $keyword;
     }
     if (!empty($itemid) && is_numeric($itemid) ) {
-        $query .= " AND xar_itemid = '".xarVarPrepForStore($itemid) ."'";
+        $query .= " AND xar_itemid = ?";
+        $bindvars[] = $itemid;
     }
      if (!empty($itemtype) && is_numeric($itemtype) ) {
-        $query .= " AND xar_itemtype = '".xarVarPrepForStore($itemtype) ."'";
+        $query .= " AND xar_itemtype = ?";
+        $bindvars[] = $itemtype;
     }
     if (!empty($modid) && is_numeric($modid) ) {
-        $query .= " AND xar_moduleid = '".xarVarPrepForStore($modid) ."'";
+        $query .= " AND xar_moduleid = ?";
+        $bindvars[] = $modid;
     }
     $query .= " ORDER BY xar_moduleid ASC, xar_itemtype ASC, xar_itemid DESC";
 
@@ -82,9 +88,9 @@ function keywords_userapi_getitems($args)
         if (empty($startnum)) {
             $startnum = 1;
         }
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,$bindvars);
     }
     if (!$result) return;
 

@@ -46,25 +46,31 @@ function keywords_userapi_getwords($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
+    $bindvars = array();
+    $bindvars[] = $modid;
 
     // Get words for this module item
     $query = "SELECT xar_id,
                      xar_keyword
               FROM $keywordstable
-              WHERE xar_moduleid = " . xarVarPrepForStore($modid);
+              WHERE xar_moduleid = ?";
+
     if (!empty($itemtype) && is_numeric($itemtype) ) {
-        $query .= " AND xar_itemtype = '".xarVarPrepForStore($itemtype) ."'";
+        $query .= " AND xar_itemtype = ?";
+        $bindvars[] = $itemtype;
     }
-    $query .= " AND xar_itemid = " . xarVarPrepForStore($itemid) . "
-              ORDER BY xar_keyword ASC";
+    $query .= " AND xar_itemid = ?";
+    $bindvars[] = $itemid;
+
+    $query .= " ORDER BY xar_keyword ASC";
 
     if (isset($numitems) && is_numeric($numitems)) {
         if (empty($startnum)) {
             $startnum = 1;
         }
-        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
+        $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     } else {
-        $result =& $dbconn->Execute($query);
+         $result =& $dbconn->Execute($query,$bindvars);
     }
     if (!$result) return;
 
