@@ -127,7 +127,7 @@ function articles_admin_new($args)
             $input['type'] = $value['format'];
             $input['id'] = $field;
             if (!empty($preview) && isset($article[$field])) {
-                $input['value'] = xarVarPrepForDisplay($article[$field]);
+                $input['value'] = $article[$field];
             } else {
                 $input['value'] = '';
             }

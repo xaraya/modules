@@ -170,6 +170,11 @@ if (empty($title) && !empty($isfile)) {
         }
     }
 
+    // call transform input hooks
+    $article['transform'] = array('summary','body','notes');
+    $article = xarModCallHooks('item', 'transform-input', 0, $article,
+                               'articles', $ptid);
+
     // Pass to API
     $aid = xarModAPIFunc('articles', 'admin', 'create', $article);
 

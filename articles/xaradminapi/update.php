@@ -68,23 +68,14 @@ function articles_adminapi_update($args)
 //        or if it's not set at all
 
     if (isset($summary)) {
-    // CHECKME: why are we doing this here, instead of in xaradmin/update.php ?
-    // TODO: switch to new-style hook call
-        $summary =     xarModCallHooks('item', 'transform-input', $aid, $summary, 'articles', $ptid);
         $query .= ", xar_summary = '" . xarVarPrepForStore($summary) . "'";
     }
 
     if (isset($body)) {
-    // CHECKME: why are we doing this here, instead of in xaradmin/update.php ?
-    // TODO: switch to new-style hook call
-        $body   =     xarModCallHooks('item', 'transform-input', $aid, $body, 'articles', $ptid);
         $query .= ", xar_body = '" . xarVarPrepForStore($body) . "'";
     }
 
     if (isset($notes)) {
-    // CHECKME: why are we doing this here, instead of in xaradmin/update.php ?
-    // TODO: switch to new-style hook call
-        $notes  =     xarModCallHooks('item', 'transform-input', $aid, $notes, 'articles', $ptid);
         $query .= ", xar_notes = '" . xarVarPrepForStore($notes) . "'";
     }
 

@@ -92,7 +92,7 @@ function articles_admin_modify($args)
         $input['name'] = $field;
         $input['id'] = $field;
         $input['type'] = $value['format'];
-        $input['value'] = xarVarPrepForDisplay($article[$field]);
+        $input['value'] = $article[$field];
 
         if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
             $data['withupload'] = 1;

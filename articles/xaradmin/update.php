@@ -158,6 +158,11 @@ function articles_admin_update()
         }
     }
 
+    // call transform input hooks
+    $article['transform'] = array('summary','body','notes');
+    $article = xarModCallHooks('item', 'transform-input', $aid, $article,
+                               'articles', $ptid);
+
     // Pass to API
     if (!xarModAPIFunc('articles', 'admin', 'update', $article)) {
         return;

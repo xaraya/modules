@@ -114,18 +114,6 @@ function articles_adminapi_create($args)
         $nextId = $aid;
     }
 
-// CHECKME: why are we doing this here, instead of in xaradmin/create.php ?
-    // Transform before we insert.
-// TODO: switch to new-style hook call
-    list($summary,
-         $body,
-         $notes) = xarModCallHooks('item', 'transform-input', $nextId,
-                                   array($summary,
-                                         $body,
-                                         $notes),
-                                   // Specify module and itemtype
-                                   'articles', $ptid);
-
     // Add item
     $query = "INSERT INTO $articlestable (
               xar_aid,
