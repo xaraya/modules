@@ -21,6 +21,7 @@
  * @param $args['publicationId'] publication the issue belongs to
  * @param $args['owner'] count only logged user stories (1=true, 0=false)
  * @param $args['display'] count 'published' or 'unpublished' or 'all' stories
+ * @param $args['external'] retrieve issues marked external (1=true, 0=false)
  * @returns integer
  * @return number of items
  * @raise BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
@@ -44,6 +45,10 @@ function newsletter_userapi_countissues($args)
 
     if (!isset($owner)) {
         $owner = 0;
+    }
+
+    if (!isset($external)) {
+        $external = 0;
     }
 
     // Get database setup
@@ -86,6 +91,12 @@ function newsletter_userapi_countissues($args)
         default:
             $query .= " AND $issuesTable.xar_datepublished >= 0";
             break;
+    }
+
+    // Check if we want to display external issues.  This is only
+    // applicable to viewing issue archives.
+    if ($external) {
+        $query .= " AND $issuesTable.xar_external = 1";
     }
 
     $result =& $dbconn->Execute($query, $bindvars);
