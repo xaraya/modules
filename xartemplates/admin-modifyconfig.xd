@@ -43,11 +43,11 @@
                         <xar:mlstring>Anonymously Bind to Server</xar:mlstring> 
                     </td>
                     <td>
-                        <if condition="$anonymousbindvalue">
+                        <xar:if condition="$anonymousbindvalue">
                             <input type="checkbox" name="anonymousbind" value="1" checked="checked" />
-                        <xar:else />
+                        <xar:else/>
                             <input type="checkbox" name="anonymousbind" value="1" />
-                        </if>
+                        </xar:if>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -71,11 +71,11 @@
                         <xar:mlstring>Search User DN</xar:mlstring> 
                     </td>
                     <td>
-                        <if condition="$searchuserdnvalue">
+                        <xar:if condition="$searchuserdnvalue">
                             <input type="checkbox" name="searchuserdn" value="1" checked="checked" />
-                        <xar:else />
+                        <xar:else/>
                             <input type="checkbox" name="searchuserdn" value="1" />
-                        </if>
+                        </xar:if>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
@@ -101,7 +101,7 @@
                     <td>
                         <xar:if condition="$tls">
                             <input type="checkbox" name="tls" value="1" checked="checked" />
-                        <xar:else />
+                        <xar:else/>
                             <input type="checkbox" name="tls" value="1" />
                         </xar:if>
                     </td>
@@ -138,7 +138,7 @@
                     <td>
                         <xar:if condition="$failovervalue">
                             <input type="checkbox" name="failover" value="1" checked="checked" />
-                        <xar:else />
+                        <xar:else/>
                             <input type="checkbox" name="failover" value="1" />
                         </xar:if>
                     </td>
@@ -163,7 +163,7 @@
                     <td>
                         <xar:if condition="$adduservalue">
                             <input type="checkbox" name="adduser" value="1" checked="checked" />
-                        <xar:else />
+                        <xar:else/>
                             <input type="checkbox" name="adduser" value="1" />
                         </xar:if>
                     </td>
@@ -177,7 +177,7 @@
                     <td>
                         <xar:if condition="$storepasswordvalue">
                             <input type="checkbox" name="storepassword" value="1" checked="checked" />
-                        <xar:else />
+                        <xar:else/>
                             <input type="checkbox" name="storepassword" value="1" />
                         </xar:if>
                     </td>
@@ -207,7 +207,7 @@
                         <xar:loop name="$groups">
                             <xar:if condition="$loop:item.name eq $defaultgroup">
                                 <option name="#$loop:item.name#" id="#$loop:item.name#" value="#$loop:item.name#" selected="selected">#$loop:item.name#</option>
-                            <xar:else />
+                            <xar:else/>
                                 <option name="#$loop:item.name#" id="#$loop:item.name#" value="#$loop:item.name#">#$loop:item.name#</option>
                             </xar:if>
                         </xar:loop>
