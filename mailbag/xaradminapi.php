@@ -907,7 +907,8 @@ if ($mailbagdebug) echo "<b>MailBag is done</b><br>";
 
 // Reply mail to message sender
 
-function mailbagreply($replyto, $mailerror) {
+function mailbagreply($replyto, $mailerror) 
+{
 
   // Prevent sending mail to own domain, send warning to postmaster
   if (eregi(pnModGetVar('MailBag', 'emaildomain'), $replyto)) mail(pnModGetVar('MailBag', 'postmaster'), "Mail loop warning", "Prevented mail loop to ".$replyto."\n\nReply message:\n".$msgindex[$i][text], "From: ".pnModGetVar('MailBag', 'postmaster'));
@@ -975,7 +976,8 @@ function B64QPDecode( $s )
 // http://webgadgets.com/phpost/
 // ----------------------------------------------------------------------------
 
-function FindBoundary( $b ) {
+function FindBoundary( $b )
+{
   global $mbsocket;
   $b2 = $b . "--";
   while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 );
@@ -991,7 +993,8 @@ function FindBoundary( $b ) {
 // http://webgadgets.com/phpost/
 // ----------------------------------------------------------------------------
 
-function ExtractTEXT( $b, $a, $i ) {
+function ExtractTEXT( $b, $a, $i ) 
+{
   global $mbsocket, $msgindex;
   $b2 = $b . "--";
   while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
@@ -1012,7 +1015,8 @@ function ExtractTEXT( $b, $a, $i ) {
 // http://webgadgets.com/phpost/
 // ----------------------------------------------------------------------------
 
-function ExtractQP( $b, $a, $i ) {
+function ExtractQP( $b, $a, $i ) 
+{
   global $mbsocket, $msgindex;
   $b2 = $b . "--";
   while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
@@ -1032,7 +1036,8 @@ function ExtractQP( $b, $a, $i ) {
 // http://webgadgets.com/phpost/
 // ----------------------------------------------------------------------------
 
-function ExtractBASE64( $b, $i ) {
+function ExtractBASE64( $b, $i ) 
+{
   global $mbsocket, $msgindex;
   $b2 = $b . "--";
   while( ($line = chop( fgets( $mbsocket, 10000 ) )) != "." && $line != $b && $line != $b2 ) {
