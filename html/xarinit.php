@@ -41,6 +41,7 @@ function html_init()
     /*****************************************************************
     * $query = "CREATE TABLE $htmltable (
     *       xar_cid INT(11) NOT NULL auto_increment,
+    *       xar_tid INT(11) NOT NULL default '0',
     *       xar_tag VARCHAR(100) NOT NULL default '',
     *       xar_allowed INT(11)  NOT NULL default '0',
     *       PRIMARY KEY (xar_cid),
@@ -48,6 +49,7 @@ function html_init()
     *****************************************************************/
     $fields = array(
     'xar_cid'      => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+    'xar_tid'      => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
     'xar_tag'      => array('type'=>'varchar','size'=>100,'null'=>false,'default'=>''),
     'xar_allowed'  => array('type'=>'integer','null'=>false,'increment'=>false,'default'=>'0'),
     );
@@ -59,7 +61,7 @@ function html_init()
 
     // Create index on xar_tag
     $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_tag',
-                   'fields'    => array('xar_tag'),
+                   'fields'    => array('xar_tid, xar_tag'),
                    'unique'    => TRUE);
     
     // Create index
@@ -67,96 +69,147 @@ function html_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    // Create htmltypes table
+    $htmltypestable = $xartable['htmltypes'];
+
+    /*****************************************************************
+    * $query = "CREATE TABLE $htmltypestable (
+    *       xar_id INT(11) NOT NULL auto_increment,
+    *       xar_type VARCHAR(20) NOT NULL default ''
+    *       PRIMARY KEY (xar_type),
+    *       UNIQUE KEY tag (xar_name))";
+    *****************************************************************/
+    $fields = array(
+    'xar_id'       => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+    'xar_type'     => array('type'=>'varchar','size'=>20,'null'=>false,'default'=>'')
+    );
+
+    // Create table
+    $query = xarDBCreateTable($htmltypestable, $fields);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // Create index on xar_type
+    $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_type',
+                   'fields'    => array('xar_type'),
+                   'unique'    => TRUE);
+
+    $query = xarDBCreateIndex($htmltypestable, $index);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    // Insert HTML types into xar_htmltypes table
+    $defaulttype = 'html';
+
+    // Get the next ID in the table
+    $nextid = $dbconn->GenId($htmltypestable);
+
+    // Insert html
+    $query = "INSERT INTO $htmltypestable (
+                xar_id,
+                xar_type)
+              VALUES (
+                $nextid, 
+                '" . xarVarPrepForStore($defaulttype) ."')";
+
+    $result =& $dbconn->Execute($query);
+
+    // Check for error
+    if (!$result) return;
+
+    // Get the ID of the item that was inserted
+    $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'xar_id');
+
     // The default values of the HTML tags are:
-    //   1 = Not allowed
-    //   2 = Allowed
-    //   3 = Allowed with parameters
-    $htmltags = array('!--' =>      3,
-                      'a' =>        3,
-                      'abbr' =>     1,
-                      'acronym' =>  1,
-                      'address' =>  1,
-                      'applet' =>   1,
-                      'area' =>     1,
-                      'b' =>        3,
-                      'base' =>     1,
-                      'basefont' => 1,
-                      'bdo' =>      1,
-                      'big' =>      1,
-                      'blockquote' => 3,
-                      'br' =>       3,
-                      'button' =>   1,
-                      'caption' =>  1,
-                      'center' =>   3,
-                      'cite' =>     1,
-                      'code' =>     1,
-                      'col' =>      1,
-                      'colgroup' => 1,
-                      'dd' =>       1,
-                      'del' =>      1,
-                      'dfn' =>      1,
-                      'dir' =>      1,
-                      'div' =>      3,
-                      'dl' =>       1,
-                      'dt' =>       1,
-                      'em' =>       3,
-                      'embed' =>    1,
-                      'fieldset' => 1,
-                      'font' =>     1,
-                      'form' =>     1,
-                      'h1' =>       1,
-                      'h2' =>       1,
-                      'h3' =>       1,
-                      'h4' =>       1,
-                      'h5' =>       1,
-                      'h6' =>       1,
-                      'hr' =>       3,
-                      'i' =>        3,
-                      'iframe' =>   1,
-                      'img' =>      1,
-                      'input' =>    1,
-                      'ins' =>      1,
-                      'isindex' =>  1,
-                      'kbd' =>      1,
-                      'l' =>        1,
-                      'label' =>    1,
-                      'legend' =>   1,
-                      'li' =>       3,
-                      'map' =>      1,
-                      'marquee' =>  1,
-                      'menu' =>     1,
-                      'nl' =>       1,
-                      'nobr' =>     1,
-                      'object' =>   1,
-                      'ol' =>       3,
-                      'optgroup' => 1,
-                      'option' =>   1,
-                      'p' =>        3,
-                      'param' =>    1,
-                      'pre' =>      3,
-                      'q' =>        1,
-                      's' =>        1,
-                      'samp' =>     1,
-                      'script' =>   1,
-                      'select' =>   1,
-                      'small' =>    1,
-                      'span' =>     1,
-                      'strike' =>   1,
-                      'strong' =>   3,
-                      'sub' =>      1,
-                      'sup' =>      1,
-                      'table' =>    3,
-                      'tbody' =>    1,
-                      'td' =>       3,
-                      'textarea' => 1,
-                      'tfoot' =>    1,
-                      'th' =>       3,
-                      'thead' =>    1,
-                      'tr' =>       3,
-                      'tt' =>       3,
-                      'u' =>        1,
-                      'ul' =>       3,
-                      'var' =>      1);
+    //   0 = Not allowed
+    //   1 = Allowed
+    //   2 = Allowed with parameters
+    $htmltags = array('!--' =>      2,
+                      'a' =>        2,
+                      'abbr' =>     0,
+                      'acronym' =>  0,
+                      'address' =>  0,
+                      'applet' =>   0,
+                      'area' =>     0,
+                      'b' =>        2,
+                      'base' =>     0,
+                      'basefont' => 0,
+                      'bdo' =>      0,
+                      'big' =>      0,
+                      'blockquote' => 2,
+                      'br' =>       2,
+                      'button' =>   0,
+                      'caption' =>  0,
+                      'center' =>   2,
+                      'cite' =>     0,
+                      'code' =>     0,
+                      'col' =>      0,
+                      'colgroup' => 0,
+                      'dd' =>       0,
+                      'del' =>      0,
+                      'dfn' =>      0,
+                      'dir' =>      0,
+                      'div' =>      2,
+                      'dl' =>       0,
+                      'dt' =>       0,
+                      'em' =>       2,
+                      'embed' =>    0,
+                      'fieldset' => 0,
+                      'font' =>     0,
+                      'form' =>     0,
+                      'h1' =>       0,
+                      'h2' =>       0,
+                      'h3' =>       0,
+                      'h4' =>       0,
+                      'h5' =>       0,
+                      'h6' =>       0,
+                      'hr' =>       2,
+                      'i' =>        2,
+                      'iframe' =>   0,
+                      'img' =>      0,
+                      'input' =>    0,
+                      'ins' =>      0,
+                      'isindex' =>  0,
+                      'kbd' =>      0,
+                      'l' =>        0,
+                      'label' =>    0,
+                      'legend' =>   0,
+                      'li' =>       2,
+                      'map' =>      0,
+                      'marquee' =>  0,
+                      'menu' =>     0,
+                      'nl' =>       0,
+                      'nobr' =>     0,
+                      'object' =>   0,
+                      'ol' =>       2,
+                      'optgroup' => 0,
+                      'option' =>   0,
+                      'p' =>        2,
+                      'param' =>    0,
+                      'pre' =>      2,
+                      'q' =>        0,
+                      's' =>        0,
+                      'samp' =>     0,
+                      'script' =>   0,
+                      'select' =>   0,
+                      'small' =>    0,
+                      'span' =>     0,
+                      'strike' =>   0,
+                      'strong' =>   2,
+                      'sub' =>      0,
+                      'sup' =>      0,
+                      'table' =>    2,
+                      'tbody' =>    0,
+                      'td' =>       2,
+                      'textarea' => 0,
+                      'tfoot' =>    0,
+                      'th' =>       2,
+                      'thead' =>    0,
+                      'tr' =>       2,
+                      'tt' =>       2,
+                      'u' =>        0,
+                      'ul' =>       2,
+                      'var' =>      0);
 
     // Insert HTML tags into xar_html table
     foreach ($htmltags as $htmltag=>$allowed) {
@@ -166,10 +219,12 @@ function html_init()
         // Insert HTML tags
         $query = "INSERT INTO $htmltable (
                         xar_cid,
+                        xar_tid,
                         xar_tag,
                         xar_allowed)
                     VALUES (
                         $nextid, 
+                        " . xarVarPrepForStore($htmltypeid) . ", 
                         '" . xarVarPrepForStore($htmltag) . "', 
                         " . xarVarPrepForStore($allowed) . ")";
 
@@ -323,14 +378,15 @@ function html_upgrade($oldversion)
                                            'type' => 'integer',
                                            'null' => false,
                                            'default' => $htmltypeid));
-            $result = &$dbconn->Execute($query);
+            $result = & $dbconn->Execute($query);
             if (!$result) return;
 
             // Drop current index
             $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_tag',
                            'fields'    => array('xar_tag'));
             $query = xarDBDropIndex($htmltable, $index);
-            $result =& $dbconn->Execute($query);
+            $result = & $dbconn->Execute($query);
+            if (!$result) return;
             
             // Set current html tags in xar_html to default type
             $query = "UPDATE $htmltable 
