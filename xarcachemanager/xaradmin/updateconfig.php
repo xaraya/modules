@@ -50,6 +50,9 @@ function xarcachemanager_admin_updateconfig()
     xarVarFetch('cacheblocks', 'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED);
     if ($cacheblocks) {
         xarModSetVar('xarcachemanager','CacheBlockOutput', 1);
+        if(!file_exists($outputCacheDir . '/cache.blocklevel')) {
+            touch($outputCacheDir . '/cache.blocklevel');
+        }
         // flush adminpanels blocks to show new options if necessary
         if (!function_exists('xarPageFlushCached')) {
             include_once('includes/xarCache.php');
@@ -59,6 +62,9 @@ function xarcachemanager_admin_updateconfig()
         xarPageFlushCached($cacheKey);
     } else {
         xarModSetVar('xarcachemanager','CacheBlockOutput', 0);
+        if(file_exists($outputCacheDir . '/cache.blocklevel')) {
+            unlink($outputCacheDir . '/cache.blocklevel');
+        }
     }
 
     $cachesizelimit *= 1048576;

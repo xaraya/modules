@@ -145,7 +145,7 @@
                 <xar:mlstring>Enable Block Output Caching:</xar:mlstring>
             </label></span></td>
             <td>
-                <xar:if condition="xarModGetVar('xarcachemanager','CacheBlockOutput')">
+                <xar:if condition="$blockCachingEnabled eq 1 ">
                     <input type="checkbox" name="cacheblocks" id="cacheblocks" value="1" checked="checked" />
                 <xar:else />
                     <input type="checkbox" name="cacheblocks" id="cacheblocks" value="1" />

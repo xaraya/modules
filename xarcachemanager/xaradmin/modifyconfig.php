@@ -30,6 +30,11 @@ function xarcachemanager_admin_modifyconfig()
     } else {
         $data['pageCachingEnabled'] = 0;
     }
+    if (file_exists($varCacheDir . '/output/cache.blocklevel') && xarModGetVar('xarcachemanager','CacheBlockOutput')) {
+        $data['blockCachingEnabled'] = 1;
+    } else {
+        $data['blockCachingEnabled'] = 0;
+    }
 
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
