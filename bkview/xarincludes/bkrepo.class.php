@@ -144,27 +144,47 @@ class bkRepo
     }
 
     // Get changesets
-    function bkChangeSets($revs, $range,$dspec='\":REV:\",\":C:\"',$showmerge='',$sort=0,$user='') 
+    function bkChangeSets($user, $range,$flags = 0)
     {
-        // FIXME: apparently -e and -r don't work together
-        // FIXME: This sets too many non logical restrictions on how dspec should look
-        $params='-n ';
-        if ($sort==1) {
-            $params.='-f ';
-        }
-        if ($showmerge==0) {
+        $params='-n '; $dspec = "'";
+        
+        // Do we want tagged only csets?
+        if($flags & BK_FLAG_TAGGEDONLY) $dspec .= "\$if(:TAG:){";
+        $dspec .= ":TAG:|:AGE:|:P:|:REV:|:UTC:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
+        if($flags & BK_FLAG_TAGGEDONLY) $dspec .= "}";
+        $dspec .= "'";
+        
+        // Do we want forward sorting?
+        if ($flags & BK_FLAG_FORWARD) $params.='-f ';
+        
+        // Do we want to show merge csets?
+        if ($flags & BK_FLAG_SHOWMERGE) {
             $dspec="'\$unless(:MERGE:){".substr($dspec,1,strlen($dspec)-2)."}'";
         } else {
             $params.='-e ';
         }
+        
         if ($range!='') $params.='-c'.$range.' ';
-        if ($revs!='') $params.='-r'.$revs.' ';
         if ($user!='') $params.='-u'.$user.' ';
 
         $params.="-d$dspec";
         $cmd="bk changes $params";
         //echo $cmd."<br/>";
-        return $this->_run($cmd);
+        $csetlist = $this->_run($cmd);
+
+        $csets=array();
+        while (list($key,$val) = each($csetlist)) {
+            list($tag,$age, $author, $rev, $utc, $comments) = explode('|',$val);
+            $changeset = (object) null;
+            $changeset->file = 'ChangeSet';
+            $changeset->tag = $tag;
+            $changeset->age = $age;
+            $changeset->author = $author;
+            $changeset->rev = $rev;
+            $changeset->comments = $comments;
+            $csets[$rev] = $changeset;
+        }
+        return $csets;
     }
     
     function bkGetUsers() 

@@ -15,9 +15,8 @@ function bkview_user_csetview($args)
 {
     if(!xarVarFetch('repoid','id',$repoid)) return;
     if(!xarVarFetch('range','str::',$range,NULL,XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('revs','str::',$revs,NULL,XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('showmerge','int:0:1',$showmerge,0)) return;
-    if(!xarVarFetch('sort','str::',$sort,0)) return;
+    if(!xarVarFetch('sort','int:0:1',$sort,0)) return;
     if(!xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('taggedonly','int:0:1',$taggedonly,0,XARVAR_NOT_REQUIRED)) return;
 
@@ -28,32 +27,25 @@ function bkview_user_csetview($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     
     $repo =& $item['repo'];
-    $formatstring = "'";
-    if($taggedonly) $formatstring .= "\$if(:TAG:){";
-    $formatstring .= ":TAG:|:AGE:|:P:|:REV:|:UTC:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
-    if($taggedonly) $formatstring .= "}";
-    $formatstring .= "'";
-    $list = $repo->bkChangeSets($revs,$range,$formatstring,$showmerge,$sort,$user);
 
-    $counter=1;
-    $data['csets']=array();
-    $csets=array();
-    while (list($key,$val) = each($list)) {
-        list($tag,$age, $author, $rev, $utc, $comments) = explode('|',$val);
-        $csets[$counter]['file'] = 'ChangeSet';
-        $csets[$counter]['tag']=$tag;
-        $csets[$counter]['age']=$age;
-        $csets[$counter]['age_code'] =  bkAgeToRangeCode($age);
-        $csets[$counter]['author']=$author;
-        $csets[$counter]['rev']=$rev;
-        $csets[$counter]['utc']=$utc;
-        $csets[$counter]['repoid'] = $repoid;
-        $csets[$counter]['range'] = bkAgeToRangeCode($age);
-        $csets[$counter]['taggedonly'] = $taggedonly;
-        $comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
-        $comments=nl2br(xarVarPrepForDisplay($comments));
-        $csets[$counter]['comments']=$comments;
-        $counter++;
+    $flags = ($sort * BK_FLAG_FORWARD) + ($showmerge * BK_FLAG_SHOWMERGE) + ($taggedonly * BK_FLAG_TAGGEDONLY);
+    $csetlist =& $repo->bkChangeSets($user, $range, $flags);
+
+    if(xarModIsAvailable('mime') && file_exists($repo->_root . '/ChangeSet')) {
+        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $repo->_root . '/ChangeSet'));
+        $icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+        $checkedout = true;
+    } else {
+        $icon = xarTplGetImage('bkmissing.png','bkview');
+        $checkedout = false;
+    }
+
+    $csets = array();
+    foreach($csetlist as $rev => $changeset) {
+        $changeset->repoid = $repoid;
+        $changeset->icon = $icon;
+        $changeset->checkedout = $checkedout;
+        $csets[$rev] = (array) $changeset;
     }
 
     // Pass data to BL compiler
