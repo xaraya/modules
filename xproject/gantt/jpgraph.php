@@ -346,7 +346,7 @@ else {
 //user
 //
 if( isset($GLOBALS['php_errormsg']) ) {
-    JpGraphError::Raise("<b>General PHP error:</b><br>".$GLOBALS['php_errormsg']);
+    JpGraphError::Raise("<b>General PHP error:</b><br />".$GLOBALS['php_errormsg']);
 }
 
 //
@@ -916,7 +916,7 @@ class Graph {
 	elseif( $aAxisType=="log" ) {
 	    $this->y2scale = new LogScale($aY2Min,$aY2Max);
 	}
-	else JpGraphError::Raise("JpGraph: Unsupported Y2 axis type: $axtype<br>");
+	else JpGraphError::Raise("JpGraph: Unsupported Y2 axis type: $axtype<br />");
 			
 	$this->y2scale->Init($this->img);	
 	$this->y2axis = new Axis($this->img,$this->y2scale);
@@ -984,11 +984,11 @@ class Graph {
 	return $csim;
     }
 	
-    // Get a complete <MAP>..</MAP> tag for the final image map
+    // Get a complete <map>..</map> tag for the final image map
     function GetHTMLImageMap($aMapName) {
-	$im = "<MAP NAME=\"$aMapName\">\n";
+	$im = "<map name=\"$aMapName\">\n";
 	$im .= $this->GetCSIMareas();
-	$im .= "</MAP>"; 
+	$im .= "</map>"; 
 	return $im;
     }
 
@@ -998,7 +998,7 @@ class Graph {
 
 	if( empty($HTTP_GET_VARS[_CSIM_DISPLAY]) ) {
 	    echo $this->GetHTMLImageMap($aCSIMName);
-	    echo "<img src='".$aScriptName."?"._CSIM_DISPLAY."=1' ISMAP USEMAP='#".$aCSIMName."' border=$aBorder>";
+	    echo "<img src='".$aScriptName."?"._CSIM_DISPLAY."=1' ismap usemap='#".$aCSIMName."' border=$aBorder>";
 	}
 	else {
 	    $this->Stroke();
@@ -1045,15 +1045,15 @@ class Graph {
 	// scaling you also have to supply the tick steps as well.
 	if( (!$this->yscale->IsSpecified() && count($this->plots)==0) ||
 	    ($this->y2scale!=null && !$this->y2scale->IsSpecified() && count($this->y2plots)==0) ) {
-	    $e = "Can't draw unspecified Y-scale.<br>\nYou have either:<br>\n";
-	    $e .= "1. Specified an Y axis for autoscaling but have not supplied any plots<br>\n";
+	    $e = "Can't draw unspecified Y-scale.<br />\nYou have either:<br />\n";
+	    $e .= "1. Specified an Y axis for autoscaling but have not supplied any plots<br />\n";
 	    $e .= "2. Specified a scale manually but have forgot to specify the tick steps";
 	    JpGraphError::Raise($e);
 	}
 		
 	// Bail out if no plots and no specified X-scale
 	if( (!$this->xscale->IsSpecified() && count($this->plots)==0 && count($this->y2plots)==0) )
-	    JpGraphError::Raise("<strong>JpGraph: Can't draw unspecified X-scale.</strong><br>No plots.<br>");
+	    JpGraphError::Raise("<strong>JpGraph: Can't draw unspecified X-scale.</strong><br />No plots.<br />");
 
 	//Check if we should autoscale y-axis
 	if( !$this->yscale->IsSpecified() && count($this->plots)>0 ) {
@@ -1323,8 +1323,8 @@ class Graph {
 	    $imgtag = "jpg";
 	if( !strstr($this->background_image,$imgtag) && strstr($this->background_image,".") ) {
 	    $t = " Background image seems to be of different type (has different file extension)".
-		 " than specified imagetype. <br>Specified: '".
-		$aImgFormat."'<br>File: '".$this->background_image."'";
+		 " than specified imagetype. <br />Specified: '".
+		$aImgFormat."'<br />File: '".$this->background_image."'";
 	    JpGraphError::Raise($t);
 	}
 	$img = $f($this->background_image);
@@ -3143,12 +3143,12 @@ class LinearScale {
 	$this->off=$aStart;
 		
 	if( $this->world_size<=0 ) {
-	    JpGraphError::Raise("<b>JpGraph Fatal Error</b>:<br>
-		 You have unfortunately stumbled upon a bug in JpGraph. <br>
+	    JpGraphError::Raise("<b>JpGraph Fatal Error</b>:<br />
+		 You have unfortunately stumbled upon a bug in JpGraph. <br />
 		 It seems like the scale range is ".$this->world_size." [for ".
-				$this->type." scale] <br>
+				$this->type." scale] <br />
 	         Please report Bug #01 to jpgraph@aditus.nu and include the script
-		 that gave this error. <br>
+		 that gave this error. <br />
 		 This problem could potentially be caused by trying to use \"illegal\"
 		 values in the input data arrays (like trying to send in strings or
 		 only NULL values) which causes the autoscaling to fail.");
@@ -3196,7 +3196,7 @@ class LinearScale {
 	    ++$ld;
 	}
 
-//	echo "min=$min, max=$max, majstep=$majstep, minstep=$minstep, adjmax=$adjmax, adjmin=$adjmin<br>";
+//	echo "min=$min, max=$max, majstep=$majstep, minstep=$minstep, adjmax=$adjmax, adjmin=$adjmin<br />";
 
 	$minstep=$majstep/$b;
 	$adjmin=floor($min/$minstep)*$minstep;	
@@ -3844,13 +3844,13 @@ class Image {
 	if( $GLOBALS['gd2']==true && USE_TRUECOLOR ) {
 	    $this->img = @imagecreatetruecolor($aWidth, $aHeight);
 	    if( $this->img < 1 ) {
-		die("<font color=red><b>JpGraph Error:</b></font> Can't create truecolor image. Check that you really have GD2 library installed.");
+		die("<font color=\"red\"><b>JpGraph Error:</b></font> Can't create truecolor image. Check that you really have GD2 library installed.");
 	    }
 	    imagefilledrectangle($this->img, 0, 0, $aWidth, $aHeight, 0xffffff);
 	} else {
 	    $this->img = @imagecreate($aWidth, $aHeight);	
 	    if( $this->img < 1 ) {
-		die("<font color=red><b>JpGraph Error:</b></font> Can't create image. Check that you really have correct GD library installed.");
+		die("<font color=\"red\"><b>JpGraph Error:</b></font> Can't create image. Check that you really have correct GD library installed.");
 	    }
 	}		
 	assert($this->img > 0);		
@@ -4224,7 +4224,7 @@ class Image {
 	$this->current_color=$this->rgb->allocate($color);
 	if( $this->current_color == -1 ) {
 	    $tc=imagecolorstotal($this->img);
-	    JpGraphError::Raise("<b> Can't allocate any more colors.</b><br>
+	    JpGraphError::Raise("<b> Can't allocate any more colors.</b><br />
 				Image has already allocated maximum of <b>$tc colors</b>. 
 				This might happen if you have anti-aliasing turned on
 				together with a background image or perhaps gradient fill 

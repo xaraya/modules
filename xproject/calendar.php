@@ -68,10 +68,10 @@ function Kalender($Monat,$Jahr)
         if($Jahr%100==0) $Stop--;
         if($Jahr%400==0) $Stop++;
     }
-    echo "<table border=3 cellpadding=1 cellspacing=1>";
+    echo "<table border=\"3\" cellpadding=\"1\" cellspacing=\"1\">";
     $Monatskopf = $Monatsname[$Monat-1] . " " . $Jahr;
-    $Monatskopf = $Monatskopf . "<BR><a class=cal href=".$modurl."&amp;m=" . ($Monat-1) ."&amp;dj=" . $Jahr .
-          ">&#60;&#60;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class=cal href=".
+    $Monatskopf = $Monatskopf . "<br /><a class=\"cal\" href=\"".$modurl."&amp;m=" . ($Monat-1) ."&amp;dj=" . $Jahr .
+          "\">&#60;&#60;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"cal\" href=".
           $modurl."&amp;m=".($Monat+1) ."&amp;dj=" . $Jahr . ">&#62;&#62;</a>";
     SchreibeKopf($Monatskopf,$Khgrund,$KSchrFarbe,$KSchrGroesse,$KSchrArt);
     $Tageszahl = 1;
@@ -124,7 +124,7 @@ function SchreibeKopf($Monatstitel,$HgFarbe,$SchrFarbe,$SchrGroesse,$SchrArt)
 {
     $Tag = explode(' ', _XPROJECT_SHORT_DAY_NAMES);
     echo "<tr>";
-    echo "<td class=\"cal\" align=center colspan=7 valign=middle bgcolor=" . $HgFarbe . ">";
+    echo "<td class=\"cal\" align=\"center\" colspan=\"7\" valign=\"middle\" bgcolor=\"" . $HgFarbe . "\">";
     echo "<font size=" . $SchrGroesse . " color=" . $SchrFarbe . " face=" . $SchrArt . "><b>";
     echo $Monatstitel;
     echo "</b></font></td></tr>";
@@ -145,7 +145,7 @@ function SchreibeKopf($Monatstitel,$HgFarbe,$SchrFarbe,$SchrGroesse,$SchrArt)
  */
 function SchreibeZelle($Inhalt,$HgFarbe,$SchrFarbe,$SchrGroesse,$SchrArt)
 {
-    echo "<td align=center valign=middle bgcolor=" . $HgFarbe . " class=cal >";
+    echo "<td align=\"center\" valign=\"middle\" bgcolor=" . $HgFarbe . " class=\"cal\" >";
     echo "<font size=" . $SchrGroesse . " color=" . $SchrFarbe . " face=" . $SchrArt . "><b>";
     echo $Inhalt;
     echo "</b></font></td>";

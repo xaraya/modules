@@ -124,7 +124,7 @@
 	$recordRaw = array_shift($rawdata);
       	if (strlen($recordRaw)>1)
       	{ 
-	  //echo ("RecordRaw: $recordRaw, length:" . strlen($recordRaw)."<BR>");
+	  //echo ("RecordRaw: $recordRaw, length:" . strlen($recordRaw)."<br />");
 	  $recordNr++;
 	  if ($this->crypt)
             $recordRaw = $this->decrypt($recordRaw, $this->cryptKey);

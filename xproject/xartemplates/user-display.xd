@@ -152,7 +152,7 @@ function xprojectToggleView(id){
 
         <a href="&xar-modurl-xproject-user-display;&amp;projectid=#$task_projectid#&amp;taskid=#$task_taskid#">#$task_name#</a><br/>
         <i>[created: #$task_created#]<br/>
-		[modified: #$task_modified#]<br>
+		[modified: #$task_modified#]<br />
 		[creator: #$task_createdby#]<br/>
 		[assigned to: #$task_assignedto#]</i>
         </td>

@@ -1,6 +1,6 @@
 Crypt example....
 
-Insert a record...<br>
+Insert a record...<br />
 <?
   include("textdb.php");
   
@@ -9,7 +9,7 @@ Insert a record...<br>
   $record = $test->first();
   while ($record)
   {
-    echo $record[id]." ".$record[label]." ".$record[text]."<br>";
+    echo $record[id]." ".$record[label]." ".$record[text]."<br />";
     $record = $test->next();
   }
 
@@ -22,7 +22,7 @@ Insert a record...<br>
   $record = $test->first();
   while ($record)
   {
-    echo "Result : ".$record[id]." ".$record[label]." ".$record[text]."<br>";
+    echo "Result : ".$record[id]." ".$record[label]." ".$record[text]."<br />";
     $record = $test->next();
   }
 
