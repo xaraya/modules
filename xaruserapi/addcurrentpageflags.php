@@ -14,7 +14,8 @@
  * @todo Support a 'master root' virtual page (ID 0) pointing to the proper root page.
  */
 
-function xarpages_userapi_addcurrentpageflags($args) {
+function xarpages_userapi_addcurrentpageflags($args)
+{
     extract($args);
 
     if (empty($pagedata) || empty($pid) || !isset($pagedata['pages'][$pid])) {return;}
