@@ -23,48 +23,6 @@ function xarcachemanager_init()
         return false;
     }
 
-    // Set up database tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    $cacheblockstable = $xartable['cache_blocks'];
-
-    // Get a data dictionary object with item create methods.
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-
-    $tables = $datadict->getTables();
-    if (!array_search($cacheblockstable, $tables)) {
-        // Table didn't exist, create table
-        /*****************************************************************
-        * CREATE TABLE xar_cache_blocks (
-        * xar_bid int(11) NOT NULL default '0',
-        * xar_nocache tinyint(4) NOT NULL default '0',
-        * xar_page tinyint(4) NOT NULL default '0',
-        * xar_user tinyint(4) NOT NULL default '0',
-        * xar_expire int(11)
-        * UNIQUE KEY `i_xar_cache_blocks_1` (`xar_bid`)
-        * );
-        *****************************************************************/
-    
-        $flds = "
-            xar_bid             I           NotNull DEFAULT 0,
-            xar_nocache         L           NotNull DEFAULT 0,
-            xar_page            L           NotNull DEFAULT 0,
-            xar_user            L           NotNull DEFAULT 0,
-            xar_expire          I           Null
-        ";
-    
-        // Create or alter the table as necessary.
-        $result = $datadict->changeTable($cacheblockstable, $flds);    
-        if (!$result) {return;}
-    
-        // Create a unique key on the xar_bid collumn
-        $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_cache_blocks_1',
-                                         $cacheblockstable,
-                                         'xar_bid',
-                                         array('UNIQUE'));
-    }
-
     // Set up module variables
     xarModSetVar('xarcachemanager','FlushOnNewComment', 0);
     xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
@@ -204,20 +162,6 @@ function xarcachemanager_upgrade($oldversion)
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
-            // Add new table to DB
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $cacheblockstable = $xartable['cache_blocks'];
-            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-            $flds = "
-                    xar_bid             I           NotNull DEFAULT 0,
-                    xar_nocache         L           NotNull DEFAULT 0,
-                    xar_page            L           NotNull DEFAULT 0,
-                    xar_user            L           NotNull DEFAULT 0,
-                    xar_expire          I           Null
-                    ";
-            $result = $datadict->changeTable($cacheblockstable, $flds);    
-            if (!$result) {return;}
             // Register new Admin Modify GUI Hook
             if (!xarModRegisterHook('item', 'modify', 'GUI',
                                     'xarcachemanager', 'admin', 'modifyhook')) {
@@ -259,15 +203,6 @@ function xarcachemanager_upgrade($oldversion)
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
-            // Add the unique index that was added with this release
-            $dbconn =& xarDBGetConn();
-            $xartable =& xarDBGetTables();
-            $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-            $cacheblockstable = $xartable['cache_blocks'];
-            $result = $datadict->createIndex('i_' . xarDBGetSiteTablePrefix() . '_cache_blocks_1',
-                                             $cacheblockstable,
-                                             'xar_bid',
-                                             array('UNIQUE'));
             // switch to the file bashed block caching enabler
             if (xarModGetVar('xarcachemanager', 'CacheBlockOutput')) {
                 $outputCacheDir = $varCacheDir . '/output/';
@@ -407,9 +342,11 @@ function xarcachemanager_upgrade($oldversion)
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
+
         case '0.3.3':
-            // Code to upgrade from the 0.3.3 version (base block level caching)
-            break;
+            // Code to upgrade from the 0.3.3 version (use xar_cache_data as optional replacement for filesystem)
+            //xarcachemanager_create_cache_data();
+
         case '0.4.0':
             // Code to upgrade from the 0.4.0 version (base module level caching)
             break;
@@ -470,14 +407,6 @@ function xarcachemanager_delete()
         return false;
     }
 
-/*    // Drop the tables
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
-    
-    $cacheblockstable = $xartable['cache_blocks'];
-    $result = $datadict->dropTable($cacheblockstable);
-*/
     // Remove module variables
     xarModDelAllVars('xarcachemanager');
 
@@ -614,6 +543,77 @@ function xarcachemanager_rmdirr($dirname)
     // clean up
     $dir->close();
     return rmdir($dirname);
+}
+
+// TODO: if we want to re-use this for compiled templates someday,
+//       this will need to move to the core somewhere...
+function xarcachemanager_create_cache_data()
+{
+    // Set up database tables
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+
+    // optional database storage for cached data (instead of filesystem)
+    $cachedatatable = $xartable['cache_data'];
+
+    // Load Table Maintenance API (still some issues with xarDataDict)
+    xarDBLoadTableMaintenanceAPI();
+
+    $query = xarDBCreateTable($cachedatatable,
+                              array('xar_id    => array('type'        => 'integer',
+                                                        'null'        => false,
+                                                        'default'     => '0',
+                                                        'increment'   => true,
+                                                        'primary_key' => true),
+                                    // cache type : page, block, template, module, ...
+                                    'xar_type' => array('type'        => 'varchar',
+                                                        'size'        => 20,
+                                                        'null'        => false,
+                                                        'default'     => ''),
+                                    // cache key
+                                    'xar_key'  => array('type'        => 'varchar',
+                                                        'size'        => 127,
+                                                        'null'        => false,
+                                                        'default'     => ''),
+                                    // cache code
+                                    'xar_code' => array('type'        => 'varchar',
+                                                        'size'        => 32,
+                                                        'null'        => false,
+                                                        'default'     => ''),
+                                    // last modified time
+                                    'xar_time' => array('type'        => 'integer',
+                                                        'null'        => false,
+                                                        'default'     => '0'),
+                                    // size of the cached data (e.g. for clean-up or gzip)
+                                    'xar_size' => array('type'        => 'integer',
+                                                        'null'        => false,
+                                                        'default'     => '0'),
+                                    // check for the cached data (e.g. crc for gzip, or md5 for ...)
+                                    'xar_check' => array('type'        => 'varchar',
+                                                         'size'        => 32,
+                                                         'null'        => false,
+                                                         'default'     => ''),
+                                    // the actual cached data
+                                    'xar_data'  => array('type'        => 'text',
+                                                         'size'        => 'medium', // 16 MB
+                                                         'null'        => false,
+                                                         'default'     => '')));
+    if (empty($query)) return; // throw back
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+// TODO: verify if separate indexes work better here or not (varchar)
+    $query = xarDBCreateIndex($cachedatatable,
+                              array('name'   => 'i_' . xarDBGetSiteTablePrefix() . '_cachedata_combo',
+                                    'fields' => array('xar_type',
+                                                      'xar_key',
+                                                      'xar_code')));
+// TODO: verify if we can make this index unique despite concurrent saves
+//                                    'unique' => 'true'));
+    if (empty($query)) return; // throw back
+    $result = $dbconn->Execute($query);
+    if (!isset($result)) return;
+
 }
 
 ?>
