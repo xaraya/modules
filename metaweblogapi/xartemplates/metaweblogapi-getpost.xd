@@ -8,8 +8,8 @@
             <value>
               <array>
                 <data>
-                  <xar:loop in="$categories"/>
-                    <value>#$loop:item['name']#</value>
+                  <xar:loop name="$categories">
+                    <value><string>#$loop:item['name']#</string></value>
                   </xar:loop>
                 </data>
               </array>
@@ -23,7 +23,7 @@
           </member>
           <member>
             <name>description</name>
-            <value>#$content#</value>
+            <value><string>#$content#</string></value>
           </member>
           <member>
             <name>postid</name>
@@ -33,7 +33,7 @@
           </member>
           <member>
             <name>title</name>
-            <value>#$title#</value>
+            <value><string>#$title#</string></value>
           </member>
           <member>
             <name>userid</name>

@@ -24,7 +24,11 @@ function metaweblogapi_userapi_newpost($args)
     
     $title = $struct['title'];
     $content = $struct['description'];
-    $dateCreated = iso8601_decode($struct['dateCreated']);
+    if(array_key_exists('dateCreated', $struct)) {
+        $dateCreated = iso8601_decode($struct['dateCreated']);
+    } else {
+        $dateCreated = time();
+    }
     
     // categories are optional
     $categories = array();

@@ -27,7 +27,8 @@ function metaweblogapi_userapi_getdmap()
         The method returns a an array of structs with description, htmlUrl and rssUrl";
     
     // metaWeblog.getRecentPosts(string blogid, string username, string password) : array
-    $getRecentPosts_sig = array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcI4));
+    $getRecentPosts_sig = array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcI4),
+                                array($xmlrpcArray, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcInt));
     $getRecentPosts_doc = "
         Get the most recent posts from the specified blog. The fourth parameter denotes
         the number of posts to get. If that number is larger than the number of 

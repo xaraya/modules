@@ -45,14 +45,12 @@ function metaweblogapi_userapi_getcategories($args)
             // Construct an array of structs to return
             foreach($childcats as $index => $category) {
                 $elements[$index]['description'] = $category['name'];
-                $elements[$index]['htmlUrl'] = 'http://xartest.hsdev.com';
-                $elements[$index]['rssUrl'] = 'http://xartest.hsdev.com';
+                $elements[$index]['htmlUrl'] = xarModUrl('articles','user','view', array('ptid' => $pubtype, 'catid' => $category['cid']));
+                $elements[$index]['rssUrl'] = $elements[$index]['htmlUrl'] . "&amp;theme=rss"; // xarmodurl doesnt handle this correctly, hence this
             }
         }
     }
     
-    
-    //xarLogMessage(print_r($elements,true), XARLOG_LEVEL_WARNING);
     // Simple debugging can be done by assigning a value to $err at this point
     if (!empty($err)) {
         $out = xarModAPIFunc('xmlrpcserver','user','faultresponse',array('errorstring' => $err));

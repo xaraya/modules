@@ -33,6 +33,7 @@ function metaweblogapi_userapi_getpost($args)
         $dateCreated = iso8601_encode($article['pubdate']);
         
         // create a struct for the response
+        $data['title'] = $article['title'];
         $data['userid']=$article['authorid'];
         $data['dateCreated']=$dateCreated;
         $data['categories'] = array();
