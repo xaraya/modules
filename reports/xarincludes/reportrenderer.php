@@ -169,7 +169,7 @@ class report {
     
 	// Constructor
 	function report($node, &$db, $filter="") {
-		//		echo "report element <BR>";
+		//		echo "report element <br/>";
 		$t=&$node->nodes[$node->getNode("DATASOURCE",1)];
 		if ($filter!="\"\"") {
 			if ($t->nodes[$t->getNode("WHERE",1)]->cdata!="\"\"") {
@@ -941,7 +941,7 @@ class renderer {
 				if (method_exists($this,substr($exp,0,$brace))) {
 					// Method exists, eval it
 					$str="\$ret=\$this->".$exp.";";
-					//echo $str."<BR>";
+					//echo $str."<br/>";
 				}
 			}
 			// FIXME: This allows only ONE expression in tag because we require it to be methods or php globals!!!
