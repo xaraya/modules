@@ -21,8 +21,8 @@ function tasks_init()
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
-    list($dbconn) = xarDBGetConn();
-    $xartables = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
     
     $tasktable = $xartables['tasks'];
     $taskcolumn = &$xartables['tasks_columns'];
@@ -88,8 +88,8 @@ function tasks_delete()
     //Load Table Maintenance API
     xarDBLoadTableMaintenanceAPI();
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $query = xarDBDropTable($xartable['tasks']);
     $res =& $dbconn->Execute($query);

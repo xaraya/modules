@@ -30,8 +30,8 @@ function tasks_adminapi_create($args)
 //         return false;
 //     }
 		
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -119,8 +119,8 @@ function tasks_adminapi_update($args)
 //         return false;
 //     }
 			
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -162,8 +162,8 @@ function tasks_adminapi_close($args)
 //         return false;
 //     }
 			
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -203,8 +203,8 @@ function tasks_adminapi_open($args)
 //         return false;
 //     }
 			
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -245,8 +245,8 @@ function tasks_adminapi_approve($args)
 //         return false;
 //     }
 			
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -287,8 +287,8 @@ function tasks_adminapi_publish($args)
 //         return false;
 //     }
 			
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -331,8 +331,8 @@ function tasks_adminapi_accept($args)
 //         return false;
 //     }
 			
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -393,8 +393,8 @@ function tasks_adminapi_migrate($args)
 //         return false;
 //     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 	

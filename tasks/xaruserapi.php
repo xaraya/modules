@@ -37,8 +37,8 @@ function tasks_userapi_getall($args)
 //         return $tasks;
 //     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -197,8 +197,8 @@ function tasks_userapi_get($args)
         return false;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
 
@@ -305,8 +305,8 @@ function tasks_userapi_countitems($args)
 	
 	if(empty($parentid)) $parentid = "0";
 	
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
     $taskscolumn = &$xartable['tasks_column'];
@@ -344,8 +344,8 @@ function tasks_userapi_getroot($args)
         return false;
     }
 	
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $taskstable = $xartable['tasks'];
     $taskscolumn = &$xartable['tasks_columns'];
