@@ -18,9 +18,7 @@
 
     <!-- Show the form for a process -->
     <xar:template file="processform"/>
-    
-
-   
+       
     <!-- Show a courtesy footer -->
     <xar:template file="galaxfooter"/>
   </div>

@@ -1,6 +1,6 @@
 <div>
     <h3><xar:mlstring>Process Transitions</xar:mlstring></h3>
-    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em;">
+    <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; width: 100%">
 
       <!-- Filter form -->
       <form action="&xar-modurl-workflow-admin-activities;" method="post" id='filtran'>

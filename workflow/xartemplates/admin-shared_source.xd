@@ -10,7 +10,7 @@ function setSomeElement(fooel, foo1) {
 <div class="xar-mod-body">
   <h2><xar:mlstring>Admin process sources</xar:mlstring></h2>
 
-  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; margin: auto;">
+  <div class="xar-norm-outline" style="padding: 0.5em 1em 0.5em; margin: auto; width: 100%">
     <form id='editsource' action="&xar-modurl-workflow-admin-shared_source;" method="post">
       <input type="hidden" name="pid" value="#$pid#" />
       <input type="hidden" name="source_name" value="#$source_name#" />

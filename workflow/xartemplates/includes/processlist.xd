@@ -26,7 +26,7 @@
       </form>
       
       <!-- List of processes -->
-      <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-processes;" method="post">
+      <form style="margin-left: 1em; width: 100%" action="&xar-modurl-workflow-admin-processes;" method="post">
         <input type="hidden" name="offset" value="#$offset#" />
         <input type="hidden" name="find" value="#$find#" />
         <input type="hidden" name="where" value="#$where#" />
