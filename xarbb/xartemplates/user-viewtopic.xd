@@ -203,7 +203,7 @@
                         <img src="#xarTplGetImage('new/icon_email.gif')#" alt="#xarML('Email')#" />
                     </a>
                     <xar:if condition="xarModIsAvailable('messages')">
-                        <a href="#xarModUrl('messages', 'user', 'outbox')#">
+                        <a href="#xarModUrl('messages', 'user', 'send',array('action'=>'post'))#">
                             <img src="#xarTplGetImage('new/icon_pm.gif')#" alt="#xarML('Private Message')#" />
                         </a>
                     </xar:if>
@@ -418,7 +418,7 @@
                             <img src="#xarTplGetImage('new/icon_email.gif')#" alt="#xarML('Email')#" />
                         </a>
                         <xar:if condition="xarModIsAvailable('messages')">
-                            <a href="#xarModUrl('messages', 'user', 'outbox')#">
+                            <a href="#xarModUrl('messages', 'user', 'send',array('action'=>'post'))#">
                                 <img src="#xarTplGetImage('new/icon_pm.gif')#" alt="#xarML('Private Message')#" />
                             </a>
                         </xar:if>
