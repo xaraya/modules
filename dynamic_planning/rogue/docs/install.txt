@@ -1,0 +1,25 @@
+$Id$
+
+This script is intended to facilitate project management.
+
+Install:
+
+Unpack into modules folder.  If you want, add [NS-Dynamic_Planning], to your block menu.
+
+You'll need to add two table to your database (at the moment this script still uses mysql calls -- sorry), use the table.sql provided.  Change the table names to use the prefix that you're using with your site.  This module has been changed (thanks to Tony Sherman) to work with Postnuke Multi-Site.
+
+Log in as admin and you can start creating tracks.  You'll want to associate tracks with a news category and a track leader user name.  If you haven't made news categories, you'll probably want to -- you can do this when you post News by clicking 'edit' next to the "Category" drop-down.
+
+Once you've done that, you probably want to create permissions for your track leaders, so they can make edits to their task, planning documents, and task status.
+
+If you don't want them as admins (I don't) give each track leader the following user permissions (this is under Permissions in the admin menu -- view for Users):
+
+All realms | user name | Dynamic:: | Track Name:: | Edit
+
+They will be able to edit their track, tasks, status, and planning sheets.
+
+That's it for now.
+
+Cheers,
+Curtis Nelson
+curtis_nelson@health.state.ak.us
