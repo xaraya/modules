@@ -1,18 +1,19 @@
 <?php
 /**
  * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
- * 
+ *
  * Ratings System
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * @subpackage ratings module
- * @author Jim McDonald 
+ * @author Jim McDonald
  */
 $modversion['name']           = 'Ratings';
 $modversion['id']             = '41';
 $modversion['version']        = '1.2.0';
+$modversion['displayname']    = xarML('Ratings');
 $modversion['description']    = 'Rate Xaraya items';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
