@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: s.xarinit.php 1.11 03/01/18 11:39:31-05:00 John.Cox@mcnabb. $
+ * File: $Id$
  *
  * Xaraya xarbb
  *
@@ -270,6 +270,7 @@ function xarbb_upgrade($oldversion)
             $dbconn =& xarDBGetConn();
             $xartable =& xarDBGetTables();
             $topicstable = $xartable['xbbtopics'];
+            $xbbforumstable = $xartable['xbbforums'];
 
              xarDBLoadTableMaintenanceAPI();
 
@@ -294,10 +295,22 @@ function xarbb_upgrade($oldversion)
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return;
+            //Now the forums table
+            $query = xarDBAlterTable($xbbforumstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_nfpostid',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
 
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            //convert both topics and forum dates
             $converttopicstable=xarbb_convertdates();
             if (!$converttopicstable)  return;
-
+            //move to new fields and drop temp fields
             $coyptopicdates=xarbb_copydates();
             if (!$coyptopicdates)  return;
 
@@ -338,10 +351,11 @@ function xarbb_upgrade($oldversion)
                                     'field'   => 'xar_thostname',
                                     'type'    => 'varchar',
                                     'null'    => false,
-                                    'size'    => '255'));
+                                    'size'    => '255',
+                                    'default' => ''));
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
-            if (!$result) return; 
+            if (!$result) return;
             return xarbb_upgrade('1.0.5');
             break;
         case '1.0.5':
@@ -352,9 +366,9 @@ function xarbb_upgrade($oldversion)
                 $settings['topicsperpage']      = 20;
                 $settings['forumsperpage']      = 20;
                 $settings['hottopic']           = 20;
-                $settings['allowhtml']          = NULL;
-                $settings['showcats']           = NULL;
-                $settings['linknntp']           = NULL;
+                $settings['allowhtml']          = false;
+                $settings['showcats']           = false;
+                $settings['linknntp']           = false;
                 $settings['nntpport']           = 119;
                 $settings['nntpserver']         = 'news.xaraya.com';
                 $settings['nntpgroup']          = 'xaraya.test';
@@ -376,16 +390,27 @@ function xarbb_upgrade($oldversion)
             return xarbb_upgrade('1.0.7');
             break;
         case '1.0.7':
-            return xarbb_upgrade('1.0.8');
             //catlinkage table updated with itemtype 2 - not required now
-            break; 
+            return xarbb_upgrade('1.0.8');
+            break;
         case '1.0.8':
-            //let's clean up the catlinkage table incase anyone got 1.0.8
+            //Update the new default cid
+            $oldcatno =xarModGetVar('xarbb','number_of_categories.1');
+            if (isset($oldcatno) && !empty($oldcatno)) {
+                xarModSetVar('xarbb','number_of_categories',$oldcatno);
+            } 
+            $oldbasecids= xarModGetVar('xarbb','mastercids.1');
+            if (isset($oldbasecids) && !empty($oldbasecids)) {
+                xarModSetVar('xarbb','mastercids',$oldbasecids);
+            }
+            //let's clean up the catlinkage table
             //And make sure all forums have a catlink entry for each existing forum
             //in prior versions hooks were not consistently called and mixed itemtypes added
             //TODO
-            //$cleanupxarbb=xarbb_cleanitemtypes();
-             //   if (!$cleanupxarbb)  return;
+            $cleanupxarbb=xarbb_cleanitemtypes();
+                if (!$cleanupxarbb)  return;
+            break;
+        case '1.0.9':
             break;
         default:
             break;
@@ -401,6 +426,7 @@ function xarbb_delete()
 
     //Now if there are forums, let's identify all the topics associated with each forum
     // and delete al the replies associated with each topic
+
     foreach($forums as $forum) {
            xarModAPIFunc('xarbb','admin','deletealltopics',
                                   array('fid'=>$forum['fid']));
@@ -476,12 +502,14 @@ function xarbb_updatetopicstable()
 /**
  * Copy fields from temp fields to new fields
  * Due to change from datetime to integer field types for topic table dates in 1.0.2
+ * Routine for forum and topics table
 */
 function xarbb_copydates()
 {
        $dbconn =& xarDBGetConn();
        $xartable =& xarDBGetTables();
        $xbbtopicstable = $xartable['xbbtopics'];
+       $xbbforumstable = $xartable['xbbforums'];
       
        $query= "SELECT COUNT(1)
                     FROM $xbbtopicstable";
@@ -497,6 +525,20 @@ function xarbb_copydates()
            if (!$doupdate) return;
        }
 
+       //Now do forums table
+       $query= "SELECT COUNT(1)
+                    FROM $xbbforumstable";
+       $result =& $dbconn->Execute($query);
+       if (!$result) return;
+
+       for (; !$result->EOF; $result->MoveNext()) {
+
+           $docopy = "UPDATE $xbbforumstable
+                      SET xar_fpostid  = xar_nfpostid";
+           $doupdate =& $dbconn->Execute($docopy);
+           if (!$doupdate) return;
+       }
+
        //Drop the temp fields
        $query="ALTER TABLE $xbbtopicstable DROP xar_nttime";
        // Pass to ADODB, and send exception if the result isn't valid.
@@ -507,6 +549,13 @@ function xarbb_copydates()
       // Pass to ADODB, and send exception if the result isn't valid.
        $result = &$dbconn->Execute($query);
        if (!$result) return;
+       
+       //Drop the temp fields in forums table
+       $query="ALTER TABLE $xbbforumstable DROP xar_nfpostid";
+       // Pass to ADODB, and send exception if the result isn't valid.
+       $result = &$dbconn->Execute($query);
+       if (!$result) return;
+
 
        $result->close();
  return true;
@@ -520,7 +569,8 @@ function xarbb_convertdates()
        $dbconn =& xarDBGetConn();
        $xartable =& xarDBGetTables();
        $xbbtopicstable = $xartable['xbbtopics'];
-      
+       $xbbforumstable = $xartable['xbbforums'];
+       //First do the topics table
        $tottopics = "SELECT xar_tid,xar_ttime,xar_tftime,xar_nttime,xar_ntftime
                      FROM $xbbtopicstable";
        $result =& $dbconn->Execute($tottopics);
@@ -528,6 +578,7 @@ function xarbb_convertdates()
 
        for (; !$result->EOF; $result->MoveNext()) {
           list($tid,$ttime, $tftime, $nttime, $ntftime) = $result->fields;
+
           // Covert the first field data
           $thisdate = new xarDate();
           $thisdate->DBtoTS($ttime);
@@ -535,6 +586,14 @@ function xarbb_convertdates()
           $anotherdate = new xarDate();
           $anotherdate->DBtoTS($tftime);
           $newtftime=$anotherdate->timestamp;
+          //Make sure fields aren't null - recent changes will cause error
+          
+          if (!isset($newttime) || empty($newttime)) {
+              $newttime=0;
+          }
+          if (!isset($newtftime) || empty($newtftime)) {
+              $newtftime=0;
+          }
           //Copy to temp fields
           $docopy = "UPDATE $xbbtopicstable
                       SET xar_nttime = $newttime,
@@ -549,13 +608,11 @@ function xarbb_convertdates()
             $result = &$dbconn->Execute($query);
             if (!$result) return;
 
-        $query="ALTER TABLE $xbbtopicstable DROP xar_tftime";
+       $query="ALTER TABLE $xbbtopicstable DROP xar_tftime";
             // Pass to ADODB, and send exception if the result isn't valid.
             $result = &$dbconn->Execute($query);
             if (!$result) return;
-
-
-        $query = xarDBAlterTable($xbbtopicstable,
+       $query = xarDBAlterTable($xbbtopicstable,
                               array('command' => 'add',
                                     'field'   => 'xar_tftime',
                                     'type'    => 'integer',
@@ -578,15 +635,73 @@ function xarbb_convertdates()
             if (!$result) return;
            $result->Close();
 
+        //Now do the same for forums table
+        $totforums = "SELECT xar_fid, xar_fpostid, xar_nfpostid
+                     FROM $xbbforumstable";
+        $result =& $dbconn->Execute($totforums);
+        if (!$result) return;
+
+        for (; !$result->EOF; $result->MoveNext()) {
+          list($fid, $fpostid, $nfpostid) = $result->fields;
+          //Make sure fields aren't null - recent changes will cause error
+
+          // Covert the first field data
+          $thisdate = new xarDate();
+          $thisdate->DBtoTS($fpostid);
+          $newfposttime=$thisdate->timestamp;
+          if (!isset($newfposttime) || empty($newfposttime)) {
+              $newfposttime=0;
+          }
+
+          //Copy to temp fields
+          $docopy = "UPDATE $xbbforumstable
+                      SET xar_fpostid = $newfposttime
+                     WHERE xar_fid   = $fid";
+           $doupdate =& $dbconn->Execute($docopy);
+           if(!$doupdate) return;
+        }
+
+        $query="ALTER TABLE $xbbforumstable DROP xar_fpostid";
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+        $query = xarDBAlterTable($xbbforumstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_fpostid',
+                                    'type'    => 'integer',
+                                    'unsigned'=> true,
+                                    'null'    => false,
+                                    'default' => '0'));
+            // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+           $result->Close();
+
 return true;
 }
-
-//TODO
-function xarbb_cleanupxarbb()
+//Cleanout catlinkage table so only xarbb itemtypes of 0 remain
+function xarbb_cleanitemtypes()
 {   //We have to assume here everyone has been working with itemtype = 1 for forums
     //As has been setin upgrade in 0.9 above
-	//Let's first get all the forums
+	//May also be junk with itemtypes > 0
+    $xbbid=xarModGetIDFromName('xarbb');
+	// Update catlinkage table so all entries of itemtype 1 are are itemtype 0
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $catlinkage =  xarDBGetSiteTablePrefix() . '_categories_linkage';
 
+    $updatetypes = "UPDATE $catlinkage SET xar_itemtype = 0
+                    WHERE  xar_modid= $xbbid AND xar_itemtype =1";
+    $result =& $dbconn->Execute($updatetypes);
+    if (!$result) return;
+    //Remove all catlinkage entries where itemtype >0 for xarbb
+    $removeoldtypes = "DELETE FROM $catlinkage
+                   WHERE  xar_modid = $xbbid AND xar_itemtype > 0";
+    $result =& $dbconn->Execute($removeoldtypes);
+    if (!$result) return;
+
+    $result->Close();
     return true;
 }
 ?>
