@@ -54,7 +54,7 @@ function smilies_userapitransform($text)
         foreach ($tmpsmilies as $tmpsmiley) {
             // Munge word boundaries to stop autolinks from linking to
             // themselves or other autolinks in step 2
-            $tmpsmiley['icon'] = preg_replace('/(\b)/', '\\1ALSPACEHOLDER', $tmpsmiley['icon']);
+            // $tmpsmiley['icon'] = preg_replace('/(\b)/', '\\1ALSPACEHOLDER', $tmpsmiley['icon']);
 
             // Allow matches for smiles with < and > entities.
             $tmpsmiley['code'] = preg_quote($tmpsmiley['code'], '/');
@@ -64,7 +64,7 @@ function smilies_userapitransform($text)
             // for instance ones that are not part of a hyphenated phrase
             // or (most) bits of an email address
             $alsearch[] = '/(?<![\w@\.:-])(' . $tmpsmiley['code'] . ')(?![\w@:-])(?!\.\w)/i';
-            $alreplace[] = '<img src="' . htmlspecialchars(xarTplGetImage($tmpsmiley['icon'])) .
+            $alreplace[] = '<img src="' . htmlspecialchars(xarTplGetImage($tmpsmiley['icon'], 'smilies')) .
                            '" alt="' . htmlspecialchars(xarML($tmpsmiley['emotion'])) .
                            '" title="' . htmlspecialchars(xarML($tmpsmiley['emotion'])) .
                            '" />';
