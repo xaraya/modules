@@ -55,16 +55,11 @@ function mime_userapi_add_magic( $args )
                    xar_mime_magic_offset,
                    xar_mime_magic_length
                  ) 
-            VALUES 
-                 (
-                   $subtypeId,
-                   $magicId,
-                   '".xarVarPrepForStore($magicValue)."',
-                   $magicOffset,
-                   $magicLength
-                 )";
-    
-    $result = $dbconn->Execute($sql);
+            VALUES (?, ?, ?, ?)";
+
+    $bindvars = array((int) $subtypeId, (int) $magicId, (string) $magicValue, (int) $magicOffset, (int) $magicLength);
+
+    $result = $dbconn->Execute($sql, $bindvars);
     
     if (!$result) {
         return FALSE;

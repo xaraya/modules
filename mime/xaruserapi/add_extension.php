@@ -41,14 +41,10 @@ function mime_userapi_add_extension( $args )
                    xar_mime_extension_id, 
                    xar_mime_extension_name
                  )
-            VALUES
-                 (
-                   $subtypeId,
-                   $extensionId,
-                   '".strtolower(xarVarPrepForStore($extensionName))."' 
-                 )";
-    
-    $result = $dbconn->Execute($sql);
+            VALUES (?, ?, ?)";
+    $bindvars = array((int) $subtypeId, (int) $extensionId, (string) strtolower($extensionName));
+
+    $result = $dbconn->Execute($sql,$bindvars);
     
     if (!$result) {
         return FALSE;
