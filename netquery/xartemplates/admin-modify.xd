@@ -1,0 +1,33 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Modify a Whois Lookup Link</xar:mlstring></h2>
+
+<form method="post" action="#xarModURL('netquery', 'admin', 'modify', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" >
+    <div style="clear: both; padding-top: 10px;">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="whois_id" id="whois_id" value="#$whois_id#" />
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('The .ext part of domainname.ext including the dot')#"><label for="whois_ext"><xar:mlstring>.ext</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="whois_ext" id="whois_ext" value="#$whois_ext#" size="10" maxlength="10" />
+    </span>
+    </div>
+
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('The whois lookup server to be used for this domainname.ext')#"><label for="whois_server"><xar:mlstring>Server</xar:mlstring></label></span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="text" name="whois_server" id="whois_server" value="#$whois_server#" size="30" maxlength="100" />
+    </span>
+    </div>
+
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: right; width: 78%; text-align: left;">
+        <input type="submit" value="#$submitlabel#"/>
+    </span>
+    </div>
+</form>
+</div>

@@ -1,0 +1,138 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Netquery Configuration</xar:mlstring></h2>
+<div style="margin: auto;">
+<form action="#xarModURL('netquery', 'admin', 'modifyconfig')#" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="phase" id="phase" value="update" />
+<p>
+        <xar:mlstring>If you are using this Netquery module on a Microsoft Windows server, be sure to check that option below. Other options determine which Netquery functions are available to users of your web site.  You should select at least one, or else uninstall this module completely.</xar:mlstring><br /><br />
+        <xar:mlstring><b>Please note</b>: The local system execution option requires read/execute permission for your operating system's ping and traceroute executables. If you check the Capture Logfile option, results will be stored in the Netquery module directory in the capturedata.txt file.  This file requires write permission.</xar:mlstring><br />
+</p>
+<h4><xar:mlstring>Netquery Options</xar:mlstring></h4>
+<p>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'windows_system')">
+                        <input type="checkbox" name="windows_system" id="windows_system" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="windows_system" id="windows_system" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Server Is Microsoft Windows</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'localexec_enabled')">
+                        <input type="checkbox" name="localexec_enabled" id="localexec_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="localexec_enabled" id="localexec_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable Local System Execution</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'whois_enabled')">
+                        <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable Whois Search</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'whoisip_enabled')">
+                        <input type="checkbox" name="whoisip_enabled" id="whoisip_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="whoisip_enabled" id="whoisip_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable Whois IP Search</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'dns_lookup_enabled')">
+                        <input type="checkbox" name="dns_lookup_enabled" id="dns_lookup_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="dns_lookup_enabled" id="dns_lookup_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable DNS Lookup</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'dns_dig_enabled')">
+                        <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="dns_dig_enabled" id="dns_dig_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable DNS (Dig) Query</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'ping_enabled')">
+                        <input type="checkbox" name="ping_enabled" id="ping_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="ping_enabled" id="ping_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable ICMP Ping</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'trace_enabled')">
+                        <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="trace_enabled" id="trace_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable Traceroute</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'port_check_enabled')">
+                        <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="port_check_enabled" id="port_check_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable Port Check</xar:mlstring>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <xar:if condition="xarModGetVar('netquery', 'capture_log_enabled')">
+                        <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1" checked="checked">
+                    <xar:else />
+                        <input type="checkbox" name="capture_log_enabled" id="capture_log_enabled" value="1">
+                    </xar:if>
+                </span>
+                <span>
+                    <xar:mlstring>Enable Capture Logfile</xar:mlstring>
+                </span>
+            </div>
+</p>
+        <br /><br />
+        <input type="submit" value="#$submitlabel#"  tabindex="2" />
+</form>
+</div>
+</div>

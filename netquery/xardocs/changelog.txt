@@ -1,0 +1,5 @@
+Version 0.1 2004-08-26
+   - initial beta version
+   
+Version 0.2 2004-09-07
+   - added whois lookup database and related admin functions

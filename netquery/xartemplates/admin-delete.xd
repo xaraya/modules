@@ -1,0 +1,17 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Delete a Whois Lookup Link</xar:mlstring></h2>
+<form method="post" action="#xarModURL('netquery', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="whois_id" id="whois_id" value="#$whois_id#" />
+    <input type="hidden" name="confirm" id="confirm" value="1" />
+    <input type="hidden" name="confirmation" id="confirmation" value="1" />
+
+    <span class="xar-title"><xar:mlstring>Confirm deletion of whois link</xar:mlstring></span><br /><br />
+
+    <input type="submit" value="Confirm"  tabindex="1" /><br /><br />
+    
+    <a href="#xarModURL('netquery', 'admin', 'view')#"><xar:mlstring>Cancel deletion of whois link</xar:mlstring></a>
+</form>        
+</div>

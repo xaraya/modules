@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Netquery Administration</title>
+<style>
+    body,td,div {
+        font-family : Verdana,Arial,Helvetica,sans-serif;
+        font-size : .8em;
+        color: black;
+        background-color: white;
+        text-align : justify;
+        
+    }
+    table.main {
+        background-color: black;
+        width : 100%;
+    }
+    .help-topic {
+        font-weight : bold;
+        font-size : 1em;        
+        color : white;
+        background-color : black;
+    }
+    .item-heading {
+        font-weight : bold;
+        vertical-align : top;
+        text-align : center;
+        background-color: #dddddd;
+    }
+    .item {
+        font-weight : bold;
+        vertical-align : top;
+        background-color: #cccccc;
+    }
+    .item-desc {
+
+    }
+</style>
+</head>
+<body>
+<table class="main" cellpadding=4 cellspacing=1>
+    <tr class="help-topic">
+        <td class="help-topic" colspan=2>Netquery Administration</td>
+    </tr>
+    <tr>
+        <td class="help-desc" colspan=2>
+        <p>Netquery provides users of your site with a range of common network tools, including
+        Whois lookups, DNS queries, ICMP ping, traceroute and server port checking. Each feature
+        can be enabled or disabled individually by the administrator. The administrator can also
+        configure the Whois feature to specify which Whois server is associated with each domain
+        name.ext entry and can add, modify and delete those entries in the Netquery Whois data table.</p>
+        <p>If you are using this Netquery module on a Microsoft Windows server, be sure to check
+        that option as noted below. Other options determine which Netquery functions are available
+        to users of your web site. You should select at least one, or else uninstall this module
+        completely. <b>Please note</b> that the local system execution option requires read/execute
+        permission for your operating system's ping and traceroute executables. If you check the
+        Capture Logfile option, results will be stored in the capturedata.txt file in the Netquery
+        module directory. This capturedata.txt file must have write permission for the server.</p>
+        <p>     
+        </td>
+    <tr><td class="item-heading" colspan=2>Enable/Disable Features</td></tr>
+    <tr>
+        <td class="item">Server Is MS Windows</td>
+        <td class="item-desc">Check this if you are using a Windows server. (Affects local ping and traceroute exec.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Local Execution</td>
+        <td class="item-desc">Ping and traceroute functions use local system calls. (Requires execute permission.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Whois Search</td>
+        <td class="item-desc">Whois lookups are automated based on server->domain data entries. (See below.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Whois IP Search</td>
+        <td class="item-desc">Whois lookups for IP addresses using IANA's query server.</td>
+    </tr>
+    <tr>
+        <td class="item">Enable DNS Lookup</td>
+        <td class="item-desc">Domain name service forward and reverse lookups.</td>
+    </tr>
+    <tr>
+        <td class="item">Enable DNS (Dig) Query</td>
+        <td class="item-desc">DNS queries using the *nix dig function. (Not available on Windows servers.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable ICMP Ping</td>
+        <td class="item-desc">Ping is limited to a maximum of 10 counts. (Local excution if checked above.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Traceroute</td>
+        <td class="item-desc">Traceroute from server to specified target. (Local execution if checked above.)</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Port Check</td>
+        <td class="item-desc">Check specified server for availability of specified port.</td>
+    </tr>
+    <tr>
+        <td class="item">Enable Capture Log</td>
+        <td class="item-desc">Logs all Netquery queries in a capturedata.txt file on your server. (Requires write permission.)</td>
+    </tr>
+    <tr><td class="item-heading" colspan=2>Edit-Add-Delete Whois Lookup Links</td></tr>
+    <tr>
+        <td class="item">General</td>
+        <td class="item-desc">This admin menu option displays a list of whois server - domain.ext pairs.</td>
+    </tr>
+    <tr>
+        <td class="item">Edit</td>
+        <td class="item-desc">This option for each listed whois pair allows you to edit that "linkage".</td>
+    </tr>
+    <tr>
+        <td class="item">Delete</td>
+        <td class="item-desc">This option for each listed whois pair allows you to remove that "linkage".</td>
+    </tr>
+    <tr>
+        <td class="item">Add New</td>
+        <td class="item-desc">This option allows you to add a new whois server - domain.ext pair.</td>
+    </tr>
+    <tr>
+        <td class="item">*NOTE*</td>
+        <td class="item-desc"> 
+            Deleting all whois pairs from the Netquery database will produce an error. Disable the whois feature in the main admin menu instead.
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

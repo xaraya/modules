@@ -1,0 +1,291 @@
+Installation
+---------------
+1. Extract zipped files under /modules directory (/Netquery subdirectory).
+2. Install as usual from the modules page of the Xaraya admin panel.
+3. Open Netquery admin and select module features to be available to users.
+4. IMPORTANT: The ping and traceroute features require read/execute
+   permission for your system's ping and traceroute executables.
+
+That's it -- enjoy!
+
+
+
+Here are some additional Whois Servers (not guaranteed)
+
+.us -> whois.nic.us - Not found
+.org -> whois.publicinterestregistry.net - NOT FOUND
+.biz -> whois.neulevel.biz - Not found
+.info -> whois.afilias.info - NOT FOUND
+.ws -> whois.website.ws - No match
+
+com,whois.crsnic.net,No match,
+net,whois.crsnic.net,No match,
+org,whois.crsnic.net,No match,
+co.uk,whois.nic.uk,No match,
+org.uk,whois.nic.uk,No match,
+ca,whois.cira.ca,AVAIL,Canada
+ab.ca,whois.cira.ca,AVAIL,Canada Regional
+bc.ca,whois.cira.ca,AVAIL,Canada Regional
+mb.ca,whois.cira.ca,AVAIL,Canada Regional
+nb.ca,whois.cira.ca,AVAIL,Canada Regional
+nf.ca,whois.cira.ca,AVAIL,Canada Regional
+ns.ca,whois.cira.ca,AVAIL,Canada Regional
+nt.ca,whois.cira.ca,AVAIL,Canada Regional
+on.ca,whois.cira.ca,AVAIL,Canada Regional
+pe.ca,whois.cira.ca,AVAIL,Canada Regional
+qc.ca,whois.cira.ca,AVAIL,Canada Regional
+sk.ca,whois.cira.ca,AVAIL,Canada Regional
+yk.ca,whois.cira.ca,AVAIL,Canada Regional
+edu,whois.crsnic.net,No match,
+mil,whois.crsnic.net,No match,
+br.com,whois.centralnic.com,No match,
+cn.com,whois.centralnic.com,No match,
+eu.com,whois.centralnic.com,No match,
+hu.com,whois.centralnic.com,No match,
+no.com,whois.centralnic.com,No match,
+qc.com,whois.centralnic.com,No match,
+sa.com,whois.centralnic.com,No match,
+se.com,whois.centralnic.com,No match,
+se.net,whois.centralnic.com,No match,
+us.com,whois.centralnic.com,No match,
+uy.com,whois.centralnic.com,No match,
+za.com,whois.centralnic.com,No match,
+ac,whois.ripe.net,No entries found,
+ac.ac,whois.ripe.net,No entries found,
+co.ac,whois.ripe.net,No entries found,
+gv.ac,whois.ripe.net,No entries found,
+or.ac,whois.ripe.net,No entries found,
+af,whois.netnames.net,No Match,Afghanistan
+am,whois.nic.am,No information available,Armenia
+as,whois.nic.as,Domain Not Found,American Somoa
+at,whois.nic.at,No entries found,Austria General
+ac.at,whois.nic.at,No entries found,Austria Academic
+co.at,whois.nic.at,No entries found,Austria Commercial
+gv.at,whois.nic.at,No entries found,Austria Government
+or.at,whois.nic.at,No entries found,Austria Organization
+asn.au,whois.aunic.net,No entries found,Australia Association
+com.au,whois.aunic.net,No entries found,Australia Commercial
+edu.au,whois.aunic.net,No entries found,Australia Educational
+org.au,whois.aunic.net,No entries found,Australia Organization
+net.au,whois.net.au,AUNIC -T domain,Australia ISP
+be,whois.ripe.net,No entries found,Belgium
+ac.be,whois.ripe.net,No entries found,Belgium Academic
+br,whois.nic.br,No match for,Entidades de pesquisa e/ou ensino superior
+adm.br,whois.nic.br,No match for,Administradores
+adv.br,whois.nic.br,No match for,Advogados
+am.br,whois.nic.br,No match for,Empresas de radiodifusão sonora
+arq.br,whois.nic.br,No match for,Arquitetos
+art.br,whois.nic.br,No match for,"Artes: música, pintura, folclore"
+bio.br,whois.nic.br,No match for,Biólogos
+cng.br,whois.nic.br,No match for,Cenógrafos
+cnt.br,whois.nic.br,No match for,Contadores
+com.br,whois.nic.br,No match for,Comércio em geral
+ecn.br,whois.nic.br,No match for,Economistas
+eng.br,whois.nic.br,No match for,Engenheiros
+esp.br,whois.nic.br,No match for,Esporte em geral
+etc.br,whois.nic.br,No match for,Entidades que não se enquadram
+eti.br,whois.nic.br,No match for,Especialista em Tecnologia da Informação
+fm.br,whois.nic.br,No match for,Empresas de radiodifusão sonora
+fot.br,whois.nic.br,No match for,Fotógrafos
+fst.br,whois.nic.br,No match for,Fisioterapeutas
+g12.br,whois.nic.br,No match for,Entidades de ensino de primeiro
+gov.br,whois.nic.br,No match for,Entidades do governo federal
+ind.br,whois.nic.br,No match for,Industrias
+inf.br,whois.nic.br,No match for,Meios de informação
+jor.br,whois.nic.br,No match for,Jornalistas
+lel.br,whois.nic.br,No match for,Leiloeiros
+med.br,whois.nic.br,No match for,Médicos
+mil.br,whois.nic.br,No match for,Forças Armadas Brasileiras
+net.br,whois.nic.br,No match for,Exclusivamente para provedores
+nom.br,whois.nic.br,No match for,Pessoas Físicas
+ntr.br,whois.nic.br,No match for,Nutricionistas
+odo.br,whois.nic.br,No match for,Dentistas
+org.br,whois.nic.br,No match for,Entidades não governamentais
+ppg.br,whois.nic.br,No match for,Publicitários e profissionais
+pro.br,whois.nic.br,No match for,Professores
+psc.br,whois.nic.br,No match for,Psicólogos
+psi.br,whois.nic.br,No match for,Provedores de serviço Internet
+rec.br,whois.nic.br,No match for,"Atividades de entretenimento, etc..."
+slg.br,whois.nic.br,No match for,Sociólogos
+tmp.br,whois.nic.br,No match for,Eventos temporários
+tur.br,whois.nic.br,No match for,Entidades da área de turismo
+tv.br,whois.nic.br,No match for,Empresas de radiodifusão de sons e imagens
+vet.br,whois.nic.br,No match for,Veterinários
+zlg.br,whois.nic.br,No match for,Zoólogos
+bt,whois.nic.bt,shrubbery.com,Bhutan
+cc,whois.nic.cc,No match,ISC International
+ch,whois.nic.ch,No entries found,Switzerland
+ac.cn,whois.cnnic.cn,No entries,China Academic
+com.cn,whois.cnnic.cn,No entries,China Commercial
+edu.cn,whois.cnnic.cn,No entries,China Educational
+gov.cn,whois.cnnic.cn,No entries,China Government
+net.cn,whois.cnnic.cn,No entries,China Internet/Networking
+org.cn,whois.cnnic.cn,No entries,China Organization
+bj.cn,whois.cnnic.cn,No entries,China Regional
+sh.cn,whois.cnnic.cn,No entries,China Regional
+tj.cn,whois.cnnic.cn,No entries,China Regional
+cq.cn,whois.cnnic.cn,No entries,China Regional
+he.cn,whois.cnnic.cn,No entries,China Regional
+nm.cn,whois.cnnic.cn,No entries,China Regional
+ln.cn,whois.cnnic.cn,No entries,China Regional
+jl.cn,whois.cnnic.cn,No entries,China Regional
+hl.cn,whois.cnnic.cn,No entries,China Regional
+js.cn,whois.cnnic.cn,No entries,China Regional
+zj.cn,whois.cnnic.cn,No entries,China Regional
+ah.cn,whois.cnnic.cn,No entries,China Regional
+hb.cn,whois.cnnic.cn,No entries,China Regional
+hn.cn,whois.cnnic.cn,No entries,China Regional
+gd.cn,whois.cnnic.cn,No entries,China Regional
+gx.cn,whois.cnnic.cn,No entries,China Regional
+hi.cn,whois.cnnic.cn,No entries,China Regional
+sc.cn,whois.cnnic.cn,No entries,China Regional
+gz.cn,whois.cnnic.cn,No entries,China Regional
+yn.cn,whois.cnnic.cn,No entries,China Regional
+xz.cn,whois.cnnic.cn,No entries,China Regional
+sn.cn,whois.cnnic.cn,No entries,China Regional
+gs.cn,whois.cnnic.cn,No entries,China Regional
+qh.cn,whois.cnnic.cn,No entries,China Regional
+nx.cn,whois.cnnic.cn,No entries,China Regional
+xj.cn,whois.cnnic.cn,No entries,China Regional
+tw.cn,whois.cnnic.cn,No entries,China Regional
+hk.cn,whois.cnnic.cn,No entries,China Regional
+mo.cn,whois.cnnic.cn,No entries,China Regional
+cx,whois.nic.cx,No match for,Christmas Island
+cz,whois.ripe.net,No entries found,Czech Republic
+de,whois.nic.de,No entries found,Germany
+dk,whois.ripe.net,No entries found,Denmark
+com.ec,whois.lac.net,No match found,Ecuador Commercial
+org.ec,whois.lac.net,No match found,Ecuador Organization
+net.ec,whois.lac.net,No match found,Ecuador ISP
+gov.ec,whois.lac.net,No match found,Ecuador Government
+mil.ec,whois.lac.net,No match found,Ecuador Military
+fin.ec,whois.lac.net,No match found,Ecuador Finance
+med.ec,whois.lac.net,No match found,Ecuador Medical
+fo,whois.ripe.net,No entries found,Faroe Islands
+fr,whois.nic.fr,No entries found,France General
+tm.fr,whois.nic.fr,No entries found,France Trade Mark
+com.fr,whois.nic.fr,No entries found,France Commercial
+asso.fr,whois.nic.fr,No entries found,France Asso
+presse.fr,whois.nic.fr,No entries found,France Presse
+gf,whois.nplus.gf,not found in our database,French Guiana
+gs,whois.adamsnames.tc,is not registered,South Georgia and South Sandwich islands
+co.il,whois.ripe.net,NOT in the RIPE database.,Israel Commercial
+org.il,whois.ripe.net,NOT in the RIPE database.,Israel Organization
+net.il,whois.ripe.net,NOT in the RIPE database.,Israel Network
+ac.il,whois.ripe.net,NOT in the RIPE database.,Israel Academic
+k12.il,whois.ripe.net,NOT in the RIPE database.,Israel K12
+gov.il,whois.ripe.net,NOT in the RIPE database.,Israel Government
+muni.il,whois.ripe.net,NOT in the RIPE database.,Israel Municipality
+ac.in,whois.iisc.ernet.in,no entries found,India Academic
+co.in,whois.iisc.ernet.in,no entries found,India Commercial
+ernet.in,whois.iisc.ernet.in,no entries found,India ERNET
+gov.in,whois.iisc.ernet.in,no entries found,India Government
+net.in,whois.iisc.ernet.in,no entries found,India Network
+res.in,whois.iisc.ernet.in,no entries found,India Research
+is,whois.ripe.net,No entries found,Iceland
+it,whois.ripe.net,No entries found,Italy
+ac.jp,whois.nic.ad.jp,No match,Japan Academic
+co.jp,whois.nic.ad.jp,No match,Japan Commercial
+go.jp,whois.nic.ad.jp,No match,Japan Government
+or.jp,whois.nic.ad.jp,No match,Japan Organization
+ne.jp,whois.nic.ad.jp,No match,Japan Network
+ac.kr,whois.nic.or.kr,is not registered,Korea Academic
+co.kr,whois.nic.or.kr,is not registered,Korea Commercial
+go.kr,whois.nic.or.kr,is not registered,Korea Government
+ne.kr,whois.nic.or.kr,is not registered,Korea Network
+nm.kr,whois.nic.or.kr,is not registered,Korea Nm
+or.kr,whois.nic.or.kr,is not registered,Korea Organization
+re.kr,whois.nic.or.kr,is not registered,Korea Research
+li,whois.nic.li,No entries found,Liechtenstein
+lt,whois.ripe.net,No entries found,Lithuania
+lu,whois.ripe.net,No entries found,Luxembourg
+asso.mc,whois.ripe.net,No entries found,Monaco Organization
+tm.mc,whois.ripe.net,No entries found,Monaco Commercial
+com.mm,whois.nic.mm,No domains matched,Myanmar Commercial
+org.mm,whois.nic.mm,No domains matched,Myanmar Organization
+net.mm,whois.nic.mm,No domains matched,Myanmar Network
+edu.mm,whois.nic.mm,No domains matched,Myanmar Educational
+gov.mm,whois.nic.mm,No domains matched,Myanmar Government
+ms,whois.adamsnames.tc,is not registered,Montserrat
+mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico General
+com.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Commercial
+net.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Network
+org.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Organization
+edu.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Educational
+gov.mx,whois.nic.mx,Referencias de Organization No Encontradas,Mexico Government
+nl,whois.domain-registry.nl,not a registered domain,Netherlands
+no,whois.norid.no,no matches,Norway
+nu,whois.nic.nu,Match for,Niue
+pl,whois.dns.pl,No information about,Poland General
+com.pl,whois.dns.pl,No information about,Poland Commercial
+net.pl,whois.dns.pl,No information about,Poland Network
+org.pl,whois.dns.pl,No information about,Poland Organization
+pt,whois.ripe.net,No entries found,Portugal
+com.ro,whois.ripe.net,No entries found,Romania Commercial
+org.ro,whois.ripe.net,No entries found,Romania Organization
+store.ro,whois.ripe.net,No entries found,Romania Store
+tm.ro,whois.ripe.net,No entries found,Romania TradeMark
+firm.ro,whois.ripe.net,No entries found,Romania Firm
+www.ro,whois.ripe.net,No entries found,Romania Web
+arts.ro,whois.ripe.net,No entries found,Romania Artistic
+rec.ro,whois.ripe.net,No entries found,Romania Recreational
+info.ro,whois.ripe.net,No entries found,Romania Informational
+nom.ro,whois.ripe.net,No entries found,Romania Personal
+nt.ro,whois.ripe.net,No entries found,Romania Nt
+ru,whois.ripn.net,No entries found,Russian Companies Only
+com.ru,whois.ripn.net,No entries found,Russia Commercial
+net.ru,whois.ripn.net,No entries found,Russia Network
+org.ru,whois.ripn.net,No entries found,Russia Organization
+se,whois.nic-se.se,No data found,Sweden
+si,whois.arnes.si,No entries found,Slovenia
+com.sg,whois.nic.net.sg,NO entry found,Singapore Commercial
+org.sg,whois.nic.net.sg,NO entry found,Singapore Organization
+net.sg,whois.nic.net.sg,NO entry found,Singapore Network
+gov.sg,whois.nic.net.sg,NO entry found,Singapore Government
+sk,whois.ripe.net,No entries found,Slovak Republic
+st,whois.nic.st,No entries found,Sao Tome and Principe
+tc,whois.adamsnames.tc,is not registered,Turks and Caicos islands
+tf,whois.adamsnames.tc,is not registered,French Southern Territories
+ac.th,whois.thnic.net,No entries,Thailand Academic
+co.th,whois.thnic.net,No entries,Thailand Commercial
+go.th,whois.thnic.net,No entries,Thailand Government
+mi.th,whois.thnic.net,No entries,Thailand Military
+net.th,whois.thnic.net,No entries,Thailand Network
+or.th,whois.thnic.net,No entries,Thailand Organization
+tj,whois.nic.tj,No match,Tajikistan
+tm,whois.nic.tm,No Match,Turkmenistan
+to,monarch.tonic.to,Not found,Tonga
+bbs.tr,whois.metu.edu.tr,Not found in database,Turkey BBS
+com.tr,whois.metu.edu.tr,Not found in database,Turkey Commercial
+edu.tr,whois.metu.edu.tr,Not found in database,Turkey Educational
+gov.tr,whois.metu.edu.tr,Not found in database,Turkey Government
+k12.tr,whois.metu.edu.tr,Not found in database,Turkey K12
+mil.tr,whois.metu.edu.tr,Not found in database,Turkey Military
+net.tr,whois.metu.edu.tr,Not found in database,Turkey Network
+org.tr,whois.metu.edu.tr,Not found in database,Turkey Organization
+com.tw,whois.twnic.net,No Records Found,Taiwan Commercial
+net.tw,whois.twnic.net,No Records Found,Taiwan Network
+org.tw,whois.twnic.net,No Records Found,Taiwan Organization
+ac.uk,whois.ja.net,Sorry - no,UK Academic
+net.uk,whois.nic.uk,No match,UK Network
+ltd.uk,whois.nic.uk,No match,UK Ltd
+plc.uk,whois.nic.uk,No match,UK Plc
+uk.co,whois.uk.co,NO MATCH,UK Commercial Alternative
+uk.com,whois.nomination.net,No match for,Alternative UK Name
+uk.net,whois.nomination.net,No match for,Alternative UK Name
+gb.com,whois.nomination.net,No match for,Alternative UK Name
+gb.net,whois.nomination.net,No match for,Alternative UK Name
+vg,whois.adamsnames.tc,is not registered,British Virgin islands
+ac.za,whois.co.za,No information available,South Africa Academic
+alt.za,whois.co.za,No information available,South Africa Alternative
+co.za,whois.co.za,No information available,South Africa Commercial
+edu.za,whois.co.za,No information available,South Africa Educational
+gov.za,whois.co.za,No information available,South Africa Government
+mil.za,whois.co.za,No information available,South Africa Military
+net.za,whois.co.za,No information available,South Africa Network
+ngo.za,whois.co.za,No information available,South Africa Non Govt Org
+nom.za,whois.co.za,No information available,South Africa Individual
+org.za,whois.co.za,No information available,South Africa Organization
+school.za,whois.co.za,No information available,South Africa School
+tm.za,whois.co.za,No information available,South Africa Trademark
+web.za,whois.co.za,No information available,South Africa Web

@@ -1,0 +1,147 @@
+<div class="xar-mod-head"><span class="xar-mod-title">#$maintitle#</span></div>
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<div class="xar-mod-body"><h2>#$subtitle#</h2>
+<div style="margin: auto;">
+#$results#
+
+<xar:if condition="$whois_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="whois">
+    <tr>
+    <td><label for="domain">#$domainlabel#</label>
+    <br><input type="text" name="domain" id="domain" value="#$domain#" size="30" maxlength="100"></td>
+    <td><label for="ext">#$extlabel#</label>
+    <br><select name="ext" id="ext">
+                <option selected>#$ext#</option>
+                <xar:foreach in="$all_tlds" value="$current_tld">
+                        <option value="#$current_tld#">#$current_tld#</option>
+                </xar:foreach>
+    </select></td>
+    <td>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$whoisip_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="whoisip">
+    <tr>
+    <td colspan="2"><label for="addr">#$whoisiplabel#</label>
+    <br><input type="text" name="addr" id="addr" value="#$addr#" size="30" maxlength="100"></td>
+    <td>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$dns_lookup_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="lookup">
+    <tr>
+    <td colspan="2"><label for="host">#$lookuplabel#</label>
+    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <td>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$dns_dig_enabled && !$windows_system">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="dig">
+    <tr>
+    <td colspan="2"><label for="host">#$diglabel#</label>
+    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <td>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$ping_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="ping">
+    <tr>
+    <td><label for="host">#$pinglabel#</label>
+    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <td><label for="count">#$countlabel#</label>
+    <br><select size="1" name="maxp" id="count">
+        <option selected>#$maxp#</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option></td>
+    <td>
+    <xar:if condition="$localexec_enabled">
+        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    <xar:else />
+        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="pingwindow(host.value);">
+    </xar:if>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$trace_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="trace">
+    <tr>
+    <td colspan="2"><label for="host">#$traceroutelabel#</label>
+    <br><input type="text" name="host" id="host" value="#$host#" size="30" maxlength="100"></td>
+    <td>
+    <xar:if condition="$localexec_enabled">
+        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    <xar:else />
+        <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="tracewindow(host.value);">
+    </xar:if>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+<xar:if condition="$port_check_enabled">
+<form method="post" action="&xar-modurl-netquery-user-main;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="querytype" id="querytype" value="port">
+    <tr>
+    <td><label for="server">#$serverlabel#</label>
+    <br><input type="text" name="server" id="server" value="#$server#" size="30" maxlength="100"></td>
+    <td><label for="portnum">#$portnumlabel#</label>
+    <br><input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10"></td>
+    <td>
+    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
+    </td>
+    </tr>
+</form>
+</xar:if>
+
+</div>
+</div>
+</table>
+
+<script language="javascript" type="text/javascript">
+function pingwindow(target)
+{
+        var pingsite = "http://noc.thunderworx.net/cgi-bin/public/ping.pl?target=" + target;
+        window.open (pingsite,"Ping","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
+}
+function tracewindow(target)
+{
+        var tracesite = "http://noc.thunderworx.net/cgi-bin/public/traceroute.pl?target=" + target;
+        window.open (tracesite,"Trace","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
+}
+</script>
