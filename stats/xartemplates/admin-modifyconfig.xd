@@ -9,18 +9,18 @@
             <td><label for="startdate"><xar:mlstring>Site Start Date</xar:mlstring>:</label></td>
             <td><input type="text" name="startdate" id="startdate" value="#xarModGetVar('stats', 'startdate')#" size="15" maxlength="50" /></td>
         </tr> -->
-	    <tr>
+        <tr>
             <td><label for="countadmin"><xar:mlstring>Count Administrator Hits</xar:mlstring>:</label></td>
             <td>
-		<xar:if condition="xarModGetVar('stats', 'countadmin')">
-			<input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
-		<xar:else />
-			<input type="checkbox" name="countadmin" id="countadmin" value="1" />
-		</xar:if></td>
+        <xar:if condition="xarModGetVar('stats', 'countadmin')">
+            <input type="checkbox" name="countadmin" id="countadmin" value="1" checked="checked" />
+        <xar:else />
+            <input type="checkbox" name="countadmin" id="countadmin" value="1" />
+        </xar:if></td>
         </tr>
     </table>
-	<br /><br />
-	<input type="submit" value="#$updatelabel#"  />
+    <br /><br />
+    <input type="submit" value="#$updatelabel#"  />
 </form>
 </div>
 </div>

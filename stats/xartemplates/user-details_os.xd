@@ -1,16 +1,16 @@
 <xar:template file="header" type="module" />
-	<div>
-		<h3><xar:mlstring>Operating systems</xar:mlstring></h3>
-		<table cellspacing="0" cellpadding="2">
-			<xar:loop name="$os">
-				<tr>
-					<td><img src="#$picpath#/#$loop:item['pic']#" border="0" alt="#$loop:item['name']#" /></td>
-					<td>#$loop:item['name']#</td>
-					<td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
-				</tr>
-			</xar:loop>
-		</table>
-	</div>
+    <div>
+        <h3><xar:mlstring>Operating systems</xar:mlstring></h3>
+        <table cellspacing="0" cellpadding="2">
+            <xar:loop name="$os">
+                <tr>
+                    <td><img src="#$picpath#/#$loop:item['pic']#" border="0" alt="#$loop:item['name']#" /></td>
+                    <td>#$loop:item['name']#</td>
+                    <td><div class="xar-alt" style="width:#$loop:item['wid']#px; min-width:1px; float:left; display:inline;">&nbsp;</div>&nbsp;#$loop:item['rel']#&nbsp;%&nbsp;(#$loop:item['abs']#)</td>
+                </tr>
+            </xar:loop>
+        </table>
+    </div>
 </div>
 </div>
 <!-- end of stats details_browser template -->
