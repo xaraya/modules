@@ -76,7 +76,7 @@ function authphpbb2_admin_updateconfig()
             }
         }
         xarConfigSetVar('Site.User.AuthenticationModules', $newauth);
-    } elseif (!in_array('authphpbb2', $authmodules)) {
+    } elseif (!empty($activate) && !in_array('authphpbb2', $authmodules)) {
         $newauth = array();
         foreach ($authmodules as $module) {
             if ($module == 'authsystem') {
