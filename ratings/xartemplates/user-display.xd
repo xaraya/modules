@@ -34,7 +34,7 @@
 	</xar:if>
 	<xar:if condition="empty($rated)">
 		<xar:if condition="xarSecurityCheck('CommentRatings',0)">
-		  <form method="post" action="&xar-modurl-ratings-user-rate;" method="post" enctype="application/x-www-form-urlencoded" >
+		  <form method="post" action="&xar-modurl-ratings-user-rate;" id="post" enctype="application/x-www-form-urlencoded" >
 			 <input type="submit" value="#xarML('Rate this Item')#"  />
 
 		   <xar:if condition="$style eq 'percentage'">
