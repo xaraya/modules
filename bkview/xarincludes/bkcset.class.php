@@ -14,33 +14,18 @@
 /**
  * Class to model a bitkeeper changeset
  */
-class bkChangeSet  
+class bkChangeSet extends bkDelta
 {
-    var $repo;     // in which repository is this changeset?
-    var $rev;      // which changeset to instantiate?
     var $deltas;   // array of file/rev combos which hold the deltas in this cset
-    var $author;   // author of this cset
-    var $comments; // cset comments
-    var $key;      // fixed key of this cset
     var $tag;      // tag, if any
-    var $age;      // how old is this
+    var $key;      // cset key
     
     function bkChangeset($repo,$rev='+') 
    {
-        $this->repo=$repo;
-        $this->rev=$rev;   // changeset revision number
-                            // Fill basic properties
-        $cmd = "bk changes -r".$rev. " -d':P:\n\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}\n:KEY:\n:AGE:\n:TAG:'";
-        $tmp = $this->repo->_run($cmd);
-        $this->author = $tmp[0];
-        $this->comments = explode(BK_NEWLINE_MARKER,$tmp[1]);
-        $this->key = $tmp[2];
-        $this->age = $tmp[3];
-        if(array_key_exists(4,$tmp)) {
-            $this->tag = $tmp[4];
-        } else {
-            $this->tag = '';
-        }
+        parent::bkDelta($repo,'ChangeSet', $rev);
+ 
+        $this->tag = $this->bkGetTag();
+        $this->key = $this->bkGetKey();
         
         // Fill delta array with identification of deltas
         $this->deltas=NULL;
@@ -55,7 +40,7 @@ class bkChangeSet
         while (list(,$did) = each($tmp)) {
             list($file,$rev) = explode('|',$did);
             if (strtolower($file)!="changeset") {
-                $this->_deltas[$did]=new bkDelta($this,$file,$rev);
+                $this->deltas[$did]=new bkDelta($this->repo,$file,$rev);
             }
         }
    }
@@ -89,12 +74,24 @@ class bkChangeSet
     
     function bkGetKey()
    {
-        return $this->key;
+        $cmd = "bk changes -n -r" . $this->rev . " -d':KEY:'";
+        $key = $this->repo->_run($cmd);
+        if(!empty($key)) {
+            return $key[0];
+        } else {
+            return '';
+        }
    }
     
     function bkGetTag()
    {
-        return $this->tag;
+        $cmd = "bk changes -n -r" . $this->rev . " -d':TAG:'";
+        $tags = $this->repo->_run($cmd);
+        if(!empty($tags)) {
+            return $tags[0];
+        } else {
+            return '';
+        }
    }
     
     function bkGetAge()

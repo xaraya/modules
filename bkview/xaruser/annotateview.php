@@ -28,10 +28,7 @@ function bkview_user_annotateview($args)
     if (!isset($item) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
     $repo =& $item['repo'];
 
-    $csetrev=$repo->bkChangeSet($file,$rev);
-    $changeset=new bkChangeSet($repo,$csetrev);
-    
-    $delta = new bkDelta($changeset,$file,$rev);
+    $delta = new bkDelta($repo, $file, $rev);
     $annotate = $delta->bkAnnotate();
     $annolines =array();
     $data['annolines']=array();

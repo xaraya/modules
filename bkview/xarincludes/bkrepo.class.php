@@ -93,6 +93,7 @@ class bkRepo
         return $this->_config[$var];
     }
     
+    // FIXME: this is a method of a delta
     function bkChangeSet($file,$rev) 
     {
         if($file == 'ChangeSet') return $rev;

@@ -16,7 +16,7 @@
  */
 class bkDelta 
 {
-    var $cset;       // in which cset is this delta
+    var $repo;       // which repo are we talking about?
     var $file;       // which file
     var $rev;        // what revision?
     var $author;     // who authored it?
@@ -24,19 +24,21 @@ class bkDelta
     var $domain;     // from where?
     var $comments;   // what were the comments?
     var $date;       // exact date of the delta
+    var $time;       // exact time of the delta
     var $checkedout; // is the file containing this delta check out?
     
-    function bkDelta(&$cset,$file,$rev) 
+    function bkDelta($repo, $file, $rev) 
    {
+        $this->repo = $repo;
         $file = __fileproper($file);
         $this->file=$file;
-        $abspath =  $cset->repo->_root . '/' . $this->file;
-        $this->checkedout = file_exists($abspath);
         $this->rev=$rev;
-        $this->cset=$cset;
+        $abspath =  $repo->_root . '/' . $this->file;
+        $this->checkedout = file_exists($abspath);
+        
         $cmd ="bk prs -hvn -r$rev -d':D:|:T:|:AGE:|:P:|:DOMAIN:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' $file";
         
-        $info = $this->cset->repo->_run($cmd);
+        $info = $this->repo->_run($cmd);
         list($date,$time,$age, $author,$domain, $comments) = explode('|',$info[0]);
         $this->date = $date;
         $this->time = $time;
@@ -49,13 +51,13 @@ class bkDelta
     function bkDiffs() 
    {
         $cmd="bk diffs -hu -R".$this->rev." ".$this->file;
-        return $this->cset->repo->_run($cmd);
+        return $this->repo->_run($cmd);
    }
     
     function bkAnnotate() 
    {
         $cmd="bk annotate -aum -r".$this->rev." ".$this->file;
-        return $this->cset->repo->_run($cmd);
+        return $this->repo->_run($cmd);
    }
     
     function bkFile() 

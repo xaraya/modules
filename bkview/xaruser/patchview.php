@@ -39,7 +39,7 @@ function bkview_user_patchview($args)
     $counter=1;
     // First get a list of filenames and revisions in this changeset
     if(isset($deltarev)) {
-        $delta = new bkDelta($changeset, $file, $deltarev);
+        $delta = new bkDelta($repo, $file, $deltarev);
         $dlist[$deltarev] = $delta;
     } else {
         $dlist = $changeset->bkDeltaList();
@@ -88,7 +88,7 @@ function bkview_user_patchview($args)
     $data['cset']['age'] = $changeset->bkGetAge();
     $data['cset']['range'] = bkAgeToRangeCode($changeset->bkGetAge());
     $data['cset']['author'] = $changeset->bkGetAuthor();
-    $data['cset']['comments'] = nl2br(xarVarPrepForDisplay(implode("\n",$changeset->bkGetComments())));
+    $data['cset']['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
     $data['cset']['tag'] = $changeset->bkGetTag();
     return $data;
 }

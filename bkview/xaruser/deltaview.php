@@ -36,8 +36,9 @@ function bkview_user_deltaview($args)
     
     // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
-    if(!empty($changeset->bkDeltaList())) {
-        foreach($changeset->bkDeltaList() as $delta_id => $delta) {
+    $dlist = $changeset->bkDeltaList();
+    if(!empty($dlist)) {
+        foreach($dlist as $delta_id => $delta) {
             // Repo id is a xaraya thing, add it sneaky to the object because we dont
             // want it in the class
             
@@ -94,7 +95,7 @@ function bkview_user_deltaview($args)
     $data['cset']['age'] = $changeset->bkGetAge();
     $data['cset']['range'] = bkAgeToRangeCode($changeset->bkGetAge());
     $data['cset']['author'] = $changeset->bkGetAuthor();
-    $data['cset']['comments'] = nl2br(xarVarPrepForDisplay(implode("\n",$changeset->bkGetComments())));
+    $data['cset']['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
     $data['cset']['tag'] = $changeset->bkGetTag();
     return $data;
 }
