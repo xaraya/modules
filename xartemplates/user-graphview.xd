@@ -15,6 +15,7 @@
         <input type="submit" value="Show"/>
     </form>
     <div style="text-align: center; border: thin solid black; overflow: auto; height: 400pt;">
-        <img border="1" src="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#"/>
+        <img usemap="#G" border="1" src="&xar-modurl-bkview-user-graphproducer;&amp;repoid=#$repoid#&amp;start=#$start#&amp;end=#$end#&amp;file=#$file#"/>
+        <xar:module main="false" module="bkview" func="graphproducer" format="cmapx" repoid="$repoid" file="$file" start="$start" end="$end"/>
     </div>
 </div>
