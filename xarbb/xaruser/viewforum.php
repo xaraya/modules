@@ -237,21 +237,23 @@ function sort_topics(&$topics)
     for($i=0, $max = count($topics); $i<$max; $i++) {
         switch($topics[$i]['tstatus']) {
             case '1':
-                $announcements[] = $topics[$i];
+                $announcements[] =& $topics[$i];
                 break;
             case '2':
-                $sticky[] = $topics[$i];
+                $sticky[] =& $topics[$i];
                 break;
             case '3':
-                $normal[] = $topics[$i];
+                $normal[] =& $topics[$i];
                 break;
             case '0':
             default:
-                $normal[] = $topics[$i];
+                $normal[] =& $topics[$i];
                 break;
         }
     }
-    
+    // merge the arrays and form the new topics array
     $topics = array_merge($announcements,$sticky,$normal);
+    // get rid of these since we no longer need them in memory
+    unset($announcements,$sticky,$normal);
 }
 ?>
