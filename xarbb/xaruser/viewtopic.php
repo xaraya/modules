@@ -76,8 +76,8 @@ function xarbb_user_viewtopic()
                               'get_multiple',
                               array('modid'       => $header['modid'],
                                     'objectid'    => $header['objectid']));
-
-    for ($i = 0; $i < count($comments); $i++) {
+    $totalcomments=count($comments);
+    for ($i = 0; $i < $totalcomments; $i++) {
         $comment = $comments[$i];
 
         list($comments[$i]['xar_text'],

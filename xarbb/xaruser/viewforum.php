@@ -38,8 +38,8 @@ function xarbb_user_viewforum()
                             array('fid' => $fid,
                                   'startnum' => $startnumitem,
                                   'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
-
-    for ($i = 0; $i < count($topics); $i++) {
+    $totaltopics=count($topics);
+    for ($i = 0; $i < $totaltopics; $i++) {
         $topic = $topics[$i];
 
         $topics[$i]['comments'] = xarVarPrepForDisplay($topic['treplies']);
