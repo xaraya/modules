@@ -1,0 +1,25 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Release Module :: Add Documentation</xar:mlstring></h2>
+
+<xar:mlstring>Enter your module or theme ID below, so the system can begin the release notification process.</xar:mlstring>
+<center>
+	<br /><br />
+	<form action="#xarModURL('release', 'user', 'adddocs')#" method="post" enctype="application/x-www-form-urlencoded">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<input type="hidden" name="phase" id="phase" value="basic" />
+		<table border="0" cellpadding="5">
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
+					<xar:mlstring>Module or Theme ID</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					<input type="text" name="rid" id="rid" value="" size="5" maxlength="5" tabindex="1" />
+				</td>
+			</tr>
+		</table>			
+		<br /><br />
+		<input type="submit" value="<xar:mlstring>Begin Release Notification</xar:mlstring>" align="middle" tabindex="6" />
+	</form>
+</center>

@@ -251,9 +251,7 @@ function release_userapi_getallnotes($args)
     if (!isset($numitems)) {
         $numitems = -1;
     }
-    if (!isset($userapproved)) {
-        $userapproved = 1;
-    }
+
     $releaseinfo = array();
 
     // Security check
