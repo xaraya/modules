@@ -31,9 +31,9 @@ function translations_upgrade($oldversion)
 {
     switch($oldversion){
         case '0.01':
-
+            break;
     }
-    return false;
+    return true;
 }
 
 /**
