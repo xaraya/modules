@@ -190,18 +190,11 @@ function xarbb_user__getforuminfo($args)
         // Forum Options
         // Check to see if forum is locked
         if ($forum['fstatus'] == 1){
-            $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('Forum Locked').'" />';
+            $forums[$i]['timeimage'] = 1;
+
         } else {
             if (xarUserIsLoggedIn()){
                 // Here we can check the updated images or standard ones.
-                // Images
-                /*
-                if (isset($_COOKIE[$cookie_name_all_read])){
-                    $alltimecompare = unserialize($_COOKIE[$cookie_name_all_read]);
-                } else {
-                    $alltimecompare = '';
-                }
-                */
                 $cookie_name_this_forum_read = xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'];
                 if (isset($_COOKIE[$cookie_name_this_forum_read])){
                     $forumtimecompare = unserialize($_COOKIE[$cookie_name_this_forum_read]);
@@ -214,12 +207,12 @@ function xarbb_user__getforuminfo($args)
                 $time_compare = $forumtimecompare;
 
                 if ($time_compare > $forum['fpostid']) {
-                    $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
+                    $forums[$i]['timeimage'] = 2;
                 } else {
-                    $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+                    $forums[$i]['timeimage'] = 3;
                 }
             } else {
-                $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
+                $forums[$i]['timeimage'] = 2;
             }
         }
     }

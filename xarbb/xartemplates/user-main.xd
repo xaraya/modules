@@ -138,7 +138,17 @@
             <xar:foreach in="$loop:item['forums']" value="$forum">
                 <tr>
                     <td class="xar-norm icon">
-                        #$forum['timeimage']# 
+						<xar:if condition="$forum['timeimage']  eq 1">
+							<xar:set name="image">xarTplGetImage('new/folder_lock.gif')</xar:set>
+							<xar:set name="alt">xarML('Forum Locked')</xar:set>
+						<xar:elseif condition="$forum['timeimage'] eq 2" />
+							<xar:set name="image">xarTplGetImage('new/folder.gif')</xar:set>
+							<xar:set name="alt">xarML('No New posts')</xar:set>
+						<xar:elseif condition="$forum['timeimage'] eq 3" />
+							<xar:set name="image">xarTplGetImage('new/folder_new.gif')</xar:set>
+							<xar:set name="alt">xarML('New post')</xar:set>
+						</xar:if>
+						<img src="#$image#" alt="#$alt#" />
                     </td>
                     <td class="xar-norm forumname">
                         <span class="xar-title">
