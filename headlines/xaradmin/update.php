@@ -5,26 +5,15 @@
  * @param 'hid' the id of the link to be updated
  * @param 'url' the url of the link to be updated
  */
-function headlines_admin_update($args)
+function headlines_admin_update()
 {
     // Get parameters from whatever input we need
-    list($hid,
-         $obid,
-         $title,
-         $desc,
-         $order,
-         $url) = xarVarCleanFromInput('hid',
-                                      'obid',
-                                      'title',
-                                      'desc',
-                                      'order',
-                                      'url');
-
-    extract($args);
-
-    if (!empty($obid)) {
-        $hid = $onid;
-    }
+    if (!xarVarFetch('hid','int:1:',$hid)) return;
+    if (!xarVarFetch('obid','str:1:',$obid,$hid,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('title','str:1:',$title,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('desc','str:1:',$desc,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('order','str:1:',$order,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('url','str:1:',$url,'http://www.xaraya.com/?theme=rss',XARVAR_NOT_REQUIRED)) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;

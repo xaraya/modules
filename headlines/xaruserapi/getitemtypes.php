@@ -9,12 +9,12 @@
 function headlines_userapi_getitemtypes($args)
 {
     $itemtypes = array();
-
+/*
     // do not use this if you only handle one type of items in your module
     $itemtypes[1] = array('label' => xarVarPrepForDisplay(xarML('Headlines')),
                           'title' => xarVarPrepForDisplay(xarML('View Headlines')),
                           'url'   => xarModURL('headlines','user','main'));
-
+*/
     return $itemtypes;
 }
 

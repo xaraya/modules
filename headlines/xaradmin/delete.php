@@ -4,19 +4,12 @@
  * @param 'hid' the id of the item to be deleted
  * @param 'confirmation' confirmation that this item can be deleted
  */
-function headlines_admin_delete($args)
+function headlines_admin_delete()
 {
     // Get parameters from whatever input we need
-    list($hid,
-         $obid,
-         $confirmation) = xarVarCleanFromInput('hid',
-                                               'obid',
-                                               'confirmation');
-    extract($args);
-
-     if (!empty($obid)) {
-         $hid = $obid;
-     }
+    if (!xarVarFetch('hid','int:1:',$hid)) return;
+    if (!xarVarFetch('obid','str:1:',$obid,$hid,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
 
     // Security Check
 	if(!xarSecurityCheck('DeleteHeadlines')) return;
@@ -30,7 +23,7 @@ function headlines_admin_delete($args)
     if ($link == false) return; 
 
     // Check for confirmation.
-    if (empty($confirmation)) {
+    if (empty($confirm)) {
     $link['submitlabel'] = xarML('Submit');
     $link['authid'] = xarSecGenAuthKey();
 

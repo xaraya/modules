@@ -47,6 +47,7 @@ function headlines_adminapi_update($args)
     if (!$result) return;
 
     // Let the calling process know that we have finished successfully
+    xarModCallHooks('item', 'update', $hid, '');
     return true;
 }
 ?>

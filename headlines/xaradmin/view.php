@@ -6,9 +6,8 @@ function headlines_admin_view()
 {
 
     // Get parameters from whatever input we need
-    $startnum = xarVarCleanFromInput('startnum');
+    if (!xarVarFetch('startnum','str:1:',$startnum,'',XARVAR_NOT_REQUIRED)) return;
     $data['items'] = array();
-
     // Specify some labels for display
     $data['urllabel'] = xarVarPrepForDisplay(xarML('URL'));
     $data['orderlabel'] = xarVarPrepForDisplay(xarML('Order'));
@@ -54,7 +53,9 @@ function headlines_admin_view()
             $links[$i]['deleteurl'] = xarModURL('headlines',
                                                 'admin',
                                                 'delete',
-                                                array('hid' => $link['hid']));
+                                                array('hid' => $link['hid'],
+                                                      'authid' => $data['authid']));
+            $links[$i]['javascript'] = "return confirmLink(this, '" . xarML('Delete Headline Feed') . " $link[url] ?')";
         } else {
             $links[$i]['deleteurl'] = '';
         }
@@ -64,6 +65,13 @@ function headlines_admin_view()
     // Add the array of items to the template variables
     $data['items'] = $links;
 
+    $data['selstyle']  = xarModGetUserVar('headlines', 'selstyle');
+    if (empty($data['selstyle'])){
+        $data['selstyle'] = 'plain';
+    }
+    // select vars for drop-down menus
+    $data['style']['plain']   = xarML('Plain');
+    $data['style']['compact'] = xarML('Compact');
     // Return the template variables defined in this function
     return $data;
 }

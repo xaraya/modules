@@ -18,6 +18,7 @@ function headlines_admin_new()
         $data['hooks'] = $hooks;
     }
     
+    $data['submitlabel'] = xarML('Submit');
     $data['authid'] = xarSecGenAuthKey();
 
     // Return the output

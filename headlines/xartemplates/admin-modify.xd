@@ -37,10 +37,14 @@
 		<input type="text" name="order" id="order" value="#$order#" size="3" maxlength="3" />
 	</span>
 	</div>
-	<br /><br />
-	<table>
+
 	#$hooks#
-	</table>
-    <p><input type="submit" value="Modify Headline" align="middle" /></p>
+
+	<div style="clear: both; padding-top: 10px;">
+	<span style="float: right; width: 78%; text-align: left;">
+		<input type="submit" value="#$submitlabel#"/>
+	</span>
+	</div>
+
 </form>
 </div>
