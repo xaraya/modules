@@ -45,6 +45,8 @@ function trackback_userapi_get($args)
     $xartable = xarDBGetTables();
     $trackbacktable = $xartable['trackback'];
 
+// TODO: add item type
+
     // Get items
     $query = "SELECT xar_url, xar_blog_name, xar_title, xar_excerpt
             FROM $trackbacktable

@@ -51,11 +51,20 @@ function trackback_user_main()
  */
 function trackback_user_display($args)
 {
-
     extract($args);
 
     // Run API function
     $args['modname'] = xarModGetName();
+
+    $args['itemtype'] = 0;
+    if (isset($extrainfo) && is_array($extrainfo)) {
+        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+            $args['itemtype'] = $extrainfo['itemtype'];
+        }
+    }
+
+// TODO: do you need the returnurl here too for some reason ?
+
     $trackback = xarModAPIFunc('trackback',
                              'user',
                              'get',
@@ -65,7 +74,8 @@ function trackback_user_display($args)
         // Display current trackback or set the cached variable
         if (!xarVarIsCached('Hooks.trackback','save') ||
             xarVarGetCached('Hooks.trackback','save') == false ) {
-            return '(' . $trackback . ' ' . xarML('Reads') . ')';
+// TODO: do something here :-)
+            return '(' . join('-',$trackback) . ' ' . xarML('TODO: trackback output ?') . ')';
         } else {
             xarVarSetCached('Hooks.trackback','value',$trackback);
         }
