@@ -132,19 +132,20 @@ function translations_create_translate_druidbar($currentStep, $tran_type)
 
 function translations_create_generate_trans_druidbar($currentStep, $tran_type) 
 {
-    $sessmodid = xarSessionGetVar('translations_modid');
-    if (!xarVarFetch('modid', 'id', $modid, $sessmodid)) return;
-
     switch($tran_type) {
     case XARMLS_DNTYPE_CORE:
         $stepLabels[CHOOSE] = xarML('Core');
         $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'core_overview');
         break;
     case XARMLS_DNTYPE_MODULE:
+        $sessmodid = xarSessionGetVar('translations_modid');
+        if (!xarVarFetch('modid', 'id', $modid, $sessmodid)) return;
         $stepLabels[CHOOSE] = xarML('Choose a module');
         $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_module');
         break;
     case XARMLS_DNTYPE_THEME:
+        $sessthemeid = xarSessionGetVar('translations_themeid');
+        if (!xarVarFetch('themeid', 'id', $themeid, $sessthemeid)) return;
         $stepLabels[CHOOSE] = xarML('Choose a theme');
         $stepURLs[CHOOSE] = xarModURL('translations', 'admin', 'choose_a_theme');
         break;
