@@ -1,7 +1,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Converter Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Theme Conversion</xar:mlstring></h2><br />
 <div style="margin: auto;">
-<form method="post" action="#xarModURL('converter', 'admin', 'phpnuketheme')#" method="post" enctype="application/x-www-form-urlencoded" />
+<form method="post" action="#xarModURL('converter', 'admin', 'phpnuketheme')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="confirmation" id="confirmation" value="1" />
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 		<p><label for="theme"><xar:mlstring>Theme Name</xar:mlstring></label>:&nbsp;&nbsp;<input type="text" name="theme" id="theme" value="" size="32" maxlength="100" /></p>
