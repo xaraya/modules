@@ -60,9 +60,10 @@
                     speed increase is considerably less, because the whole page will be fetched regardless.</xar:mlstring>
                 </li>
                 <li>
-                    <xar:mlstring>If you have page caching enabled, and bkview pages are normally cached, this option will defeat this. This needs
+                    <strike><xar:mlstring>If you have page caching enabled, and bkview pages are normally cached, this option will defeat this. This needs
                     to be fixed eventually. For now, if you have page caching, this option will still work, but the page wont be cached
-                    in the output cache. In your configuration, you'll have to test what is the optimal configuration.</xar:mlstring>
+                    in the output cache. In your configuration, you'll have to test what is the optimal configuration.</xar:mlstring></strike>
+                    UPDATE: It works with page output caching, especially if the xmlhttprequest option is used it can be blazingly fast now.
                 </li>
                 <li>
                     <xar:mlstring>Not really an issue, because it is by design, but worth mentioning is that this technique basically NEVER 

@@ -26,7 +26,8 @@
         This module has the following disadvantages:
         <ol>
             <li>It's probably very hard to get it working reliably under windows</li>
-            <li>bkview is slower than bkweb, because it adds another level of abstraction (the php layer)</li>
+            <li><strike>bkview is slower than bkweb, because it adds another level of abstraction (the php layer)</strike>
+            UPDATE: When used with page/item caching and the xmlhttprequest option it's about 35%-50% faster than bkweb :-)</li>
             <li>It relies on spawning bk commands on the server, parsing the output those commands generate, this is
                 far from ideal, both in terms of performance and security</li>
         </ol>
