@@ -5,9 +5,9 @@ function xarbb_user_deletereply()
     // Get parameters
     list($cid,
          $confirmation) = xarVarCleanFromInput('cid',
-                                              'confirmation');
+                                               'confirmation');
 
-        // for sec check
+    // for sec check
     if(!$comment = xarModAPIFunc('comments','user','get_one',array('cid' => $cid))) return;
     $tid = $comment[0]['xar_objectid'];
 
@@ -20,7 +20,7 @@ function xarbb_user_deletereply()
     if (empty($confirmation)) {
         //Load Template
         $data['authid'] = xarSecGenAuthKey();
-	    $data['catid'] = $cid;
+        $data['cid'] = $cid;
         return $data;
     }
 
@@ -29,10 +29,10 @@ function xarbb_user_deletereply()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
-	if (!xarModAPIFunc('xarbb',
-                      'admin',
-                      'deletereplies',
-                       array('cid' => $cid))) return;
+    if (!xarModAPIFunc('xarbb',
+                       'admin',
+                       'deletereplies',
+                        array('cid' => $cid))) return;
 
     // Redirect
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic',array(

@@ -35,13 +35,12 @@ function xarbb_adminapi_deletereplies($args)
         if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
 		
 
-    	if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;  // TODO
+        if(!xarSecurityCheck('ModxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) continue;  // TODO
 
-        if(!xarModAPIFunc("comments","admin","delete_branch",array("node" => $cid)))
-        	return;
+        if(!xarModAPIFunc("comments","admin","delete_branch",array("node" => $cid))) return;
 
         // update topics view, must do this here, because cids can contain different tids
-	    if(!xarModAPIFunc('xarbb','user','updatetopicsview',array("tid" => $tid))) return;
+        if(!xarModAPIFunc('xarbb','user','updatetopicsview',array("tid" => $tid))) return;
     }
 
 

@@ -55,7 +55,7 @@ function xarbb_userapi_getalltopics($args)
                      xar_treplies,
                      xar_tstatus,
                      xar_treplier,
-                   	 xar_fname,
+                     xar_fname,
                      xar_fdesc,
                      xar_ftopics,
                      xar_fposts,
@@ -71,6 +71,8 @@ function xarbb_userapi_getalltopics($args)
     } else {
         $query .= "AND xar_tid IN (" . join(', ', $tids) . ")";
     }
+    // FIXME we should add possibility change sorting order
+    $query .= " ORDER BY xar_ttime DESC";
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;

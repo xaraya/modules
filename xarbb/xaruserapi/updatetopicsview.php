@@ -32,24 +32,25 @@ function xarbb_userapi_updatetopicsview($args)
     // Security Check: needed? only called through this module and data inconsistency if fails (wrong number of reply posts,..)
     // if(!xarSecurityCheck('ReadxarBB')) return;
 
-	//---------------------------------------------------------------
-	// DO Update Stuff
+    //---------------------------------------------------------------
+    // DO Update Stuff
     $treplies = xarModAPIFunc('comments','user','get_count',array(
-    	'modid' => xarModGetIdFromName('xarbb'),
+        'modid' => xarModGetIdFromName('xarbb'),
         'objectid' => $tid
         ));
-    if(!$treplies)
-    	return;
+
+    // FIXME 0 replies - it's ok
+    // if(!$treplies) return;
 
     $param = array(
-    	"tid" => $tid,
+        "tid" => $tid,
         "treplies" => $treplies,
         );
 
-    if(isset($treplier))             {
-    	$param["treplier"] = $treplier;
+    if(isset($treplier)) {
+        $param["treplier"] = $treplier;
         $param["time"] = date('Y-m-d G:i:s');
-	}
+    }
 
     // Update the topic: call api func
     if(!xarModAPIFunc('xarbb','user','updatetopic',$param)) return;
