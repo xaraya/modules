@@ -64,12 +64,12 @@ function newsletter_admin_updateissue()
     if (!xarVarFetch('title', 'str:1:', $title, '')) return;
     if (!xarVarFetch('editorNote', 'str:1:', $editorNote, '')) return;
     if (!xarVarFetch('external', 'int:0:1:', $external, 0)) return;
-    if (!xarVarFetch('datePublishedMon', 'str:1:', $datePublishedMon, '')) return;
-    if (!xarVarFetch('datePublishedDay', 'str:1:', $datePublishedDay, '')) return;
-    if (!xarVarFetch('datePublishedYear', 'str:1:', $datePublishedYear, '')) return;
+    if (!xarVarFetch('datePublishedMon', 'int:0:', $datePublishedMon, 0)) return;
+    if (!xarVarFetch('datePublishedDay', 'int:0:', $datePublishedDay, 0)) return;
+    if (!xarVarFetch('datePublishedYear', 'int:0:', $datePublishedYear, 0)) return;
 
     // Check and format datePublished - dates are stored as UNIX timestamp
-    if (empty($datePublishedMon) || empty($datePublishedDay) || empty($datePublishedYear)) { 
+    if ($datePublishedMon == 0 || $datePublishedDay == 0 || $datePublishedYear == 0) { 
             $tstmpDatePublished =  0;
     } else {
         $tstmpDatePublished = mktime(0,0,0,$datePublishedMon,$datePublishedDay,$datePublishedYear);

@@ -82,28 +82,28 @@ function newsletter_admin_updatestory()
     }
 
     if (!xarVarFetch('priority', 'int:0:1:', $priority, 0)) return;
-    if (!xarVarFetch('storyDateMon', 'str:1:', $storyDateMon, '')) return;
-    if (!xarVarFetch('storyDateDay', 'str:1:', $storyDateDay, '')) return;
-    if (!xarVarFetch('storyDateYear', 'str:1:', $storyDateYear, '')) return;
+    if (!xarVarFetch('storyDateMon', 'int:0:', $storyDateMon, 0)) return;
+    if (!xarVarFetch('storyDateDay', 'int:0:', $storyDateDay, 0)) return;
+    if (!xarVarFetch('storyDateYear', 'int:0:', $storyDateYear, 0)) return;
     if (!xarVarFetch('altDate', 'str:1:', $altDate, '')) return;
     if (!xarVarFetch('fullTextLink', 'str:1:', $fullTextLink, '')) return;
     if (!xarVarFetch('registerLink', 'int:0:1:', $registerLink, 0)) return;
     if (!xarVarFetch('linkExpiration', 'int:0:', $linkExpiration, -1)) return;
     if (!xarVarFetch('commentary', 'str:1:', $commentary, '')) return;
     if (!xarVarFetch('commentarySource', 'str:1:', $commentarySource, '')) return;
-    if (!xarVarFetch('datePublishedMon', 'str:1:', $datePublishedMon, '')) return;
-    if (!xarVarFetch('datePublishedDay', 'str:1:', $datePublishedDay, '')) return;
-    if (!xarVarFetch('datePublishedYear', 'str:1:', $datePublishedYear, '')) return;
+    if (!xarVarFetch('datePublishedMon', 'int:0:', $datePublishedMon, 0)) return;
+    if (!xarVarFetch('datePublishedDay', 'int:0:', $datePublishedDay, 0)) return;
+    if (!xarVarFetch('datePublishedYear', 'int:0:', $datePublishedYear, 0)) return;
 
     // Check and format storyDate - dates are stored as UNIX timestamp
-    if (empty($storyDateMon) || empty($storyDateDay) || empty($storyDateYear)) {
+    if ($storyDateMon == 0 || $storyDateDay == 0 || $storyDateYear == 0) {
         $tstmpStoryDate =  0;
     } else {
         $tstmpStoryDate = mktime(0,0,0,$storyDateMon,$storyDateDay,$storyDateYear);
     }
 
     // Check and format datePublished - dates are stored as UNIX timestamp
-    if (empty($datePublishedMon) || empty($datePublishedDay) || empty($datePublishedYear)) { 
+    if ($datePublishedMon == 0 || $datePublishedDay == 0 || $datePublishedYear == 0) { 
             $tstmpDatePublished =  0;
     } else {
         $tstmpDatePublished = mktime(0,0,0,$datePublishedMon,$datePublishedDay,$datePublishedYear);
