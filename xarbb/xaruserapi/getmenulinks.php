@@ -24,7 +24,7 @@ function xarbb_userapi_getmenulinks()
                               'user',
                               'getforum',
                               array('fid' => $forum['fid']));
-        if(xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$forum['fid'])) {;
+        if(xarSecurityCheck('ReadxarBB',0,'Forum',$data['catid'].':'.$forum['fid'])) {
         $menulinks[] = Array('url'   => xarModURL('xarbb',
                                                   'user',
                                                   'viewforum', array('fid' => $forum['fid'])),

@@ -1,10 +1,10 @@
 <?php
 /**
- * File: $Id$ 
- * 
+ * File: $Id$
+ *
  * Main user function to display list of all existing forums
  * And existing categories
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -45,7 +45,7 @@ function xarbb_user_main()
     $args['modid']      = xarModGetIDfromName('xarbb');
     $args['itemtype']   = 0;
     $data               = array();
-    $data['pager']      = '';    
+    $data['pager']      = '';
     $data['uid']        = xarUserGetVar('uid');
     $data['catid']      = $catid;
     $data['items']      = array();
@@ -57,11 +57,17 @@ function xarbb_user_main()
     $data['submitlabel']= xarML('Submit');
 
     // List the categories available as well
- 
+
     // Regular Categories
     if (isset($catid)){
         $args['cid'] = $catid;
-        $items = xarModAPIfunc('categories', 'user', 'getcat', $args);
+        $cats = xarModAPIfunc('categories', 'user', 'getcat', $args);
+
+// Security check: remove categories the user should not see
+            $catcount = count($cats);
+            foreach($cats as $cat)
+                if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
+                    $items[] = $cat;
 
         $totalitems = count($items);
         for ($i = 0; $i < $totalitems; $i++) {
@@ -69,13 +75,18 @@ function xarbb_user_main()
                     // The user API function is called
             $args['basecat'] = $item['cid'];
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
-            $items[$i]['forums'] = xarModAPIFunc('xarbb',
+            $forums = xarModAPIFunc('xarbb',
                                     'user',
                                     'getallforums',
                                      array('catid' => $item['cid'],
                                            'startnum' => $startnum,
                                             'numitems' => xarModGetVar('xarbb',
                                                                     'forumsperpage')));
+// Security check: remove forums the user should not see
+            $forumcount = count($forums);
+            foreach($forums as $forum)
+                if(xarSecurityCheck('ReadxarBB',0,'Forum','All:'.$forum['fid']))
+                $items[$i]['forums'][] = $forum;
 
             $args = $items[$i]['forums'];
             $items[$i]['forums'] = xarbb_user__getforuminfo($args);
@@ -83,7 +94,14 @@ function xarbb_user_main()
     } else {
         // Base Categories
         // Get an array of assigned category details for a specific item
-        $items = xarModAPIfunc('categories', 'user', 'getallcatbases', $args);
+        $cats = xarModAPIfunc('categories', 'user', 'getallcatbases', $args);
+
+// Security check: remove categories the user should not see
+            $catcount = count($cats);
+            foreach($cats as $cat)
+                if(xarSecurityCheck('ReadxarBB',0,'Forum','$cat[id]:All'))
+                    $items[] = $cat;
+
         $totalitems = count($items);
         for ($i = 0; $i < $totalitems; $i++) {
             $item = $items[$i];
@@ -92,13 +110,19 @@ function xarbb_user_main()
             $items[$i]['cbchild'] = xarModAPIfunc('categories', 'user', 'getchildren', array('cid' => $item['cid']));
 
                     // The user API function is called
-            $items[$i]['forums'] = xarModAPIFunc('xarbb',
+            $forums = xarModAPIFunc('xarbb',
                                     'user',
                                     'getallforums',
                                      array('catid' => $item['cid'],
                                            'startnum' => $startnum,
                                             'numitems' => xarModGetVar('xarbb',
                                                                     'forumsperpage')));
+
+// Security check: remove forums the user should not see
+            $forumcount = count($forums);
+            foreach($forums as $forum)
+                if(xarSecurityCheck('ReadxarBB',0,'Forum','All:'.$forum['fid']))
+                $items[$i]['forums'][] = $forum;
 
             $args = $items[$i]['forums'];
             $items[$i]['forums'] = xarbb_user__getforuminfo($args);
@@ -148,14 +172,14 @@ function xarbb_user__getforuminfo($args)
 
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
-        // Get the name of the poster.  Does it make sense to split this 
+        // Get the name of the poster.  Does it make sense to split this
         // to the API, since it is called so often?
         $getname = xarModAPIFunc('roles',
                                  'user',
                                  'get',
                                  array('uid' => $forum['fposter']));
         $forums[$i]['name'] = $getname['name'];
-        
+
         // Forum Options
         // Check to see if forum is locked
         if ($forum['fstatus'] == 1){
@@ -182,7 +206,7 @@ function xarbb_user__getforuminfo($args)
                 } else {
                     $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
                 }
-            } else { 
+            } else {
                 $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';
             }
         }

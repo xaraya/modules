@@ -1,9 +1,9 @@
 <?php
 /**
- * File: $Id$ 
- * 
+ * File: $Id$
+ *
  * Get info for a forum
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
@@ -32,11 +32,11 @@ function xarbb_userapi_getforum($args)
 
     $xbbforumstable = $xartable['xbbforums'];
 
-    // Get link 
+    // Get link
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => array(),
                                         'modid' => xarModGetIDFromName('xarbb')));
-    
+
     // Get links
     $query = "SELECT xar_fid,
                    xar_fname,
@@ -63,7 +63,7 @@ function xarbb_userapi_getforum($args)
     list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('ViewxarBB', 1, 'Forum',"$catid:$fid")) {
+    if (!xarSecurityCheck('ViewxarBB', 0, 'Forum',"$catid:$fid")) {
         return;
     }
     $forum = array('fid'     => $fid,
