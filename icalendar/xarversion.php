@@ -4,6 +4,7 @@
 $modversion['name']           = 'icalendar';
 $modversion['id']             = '8';
 $modversion['version']        = '0.1.0';
+$modversion['displayname']    = xarML('iCalendar');
 $modversion['description']    = 'iCalendar Parser Utility Module';
 $modversion['credits']        = 'credits.txt';
 $modversion['help']           = 'help.txt';
