@@ -30,7 +30,7 @@ function mime_userapi_extension_to_mime( $args ) {
 
         $type = xarModAPIFunc('mime','user','array_search_r',
                               array('needle'   => $extension,
-                                    'haystack' => xarModGetVar('mime','mime.magic')));
+                                    'haystack' => unserialize)xarModGetVar('mime','mime.magic'))));
 
         if (FALSE !== $type && is_array($type)) {
             return $type[0];

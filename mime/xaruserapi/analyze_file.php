@@ -17,7 +17,7 @@ function mime_userapi_analyze_file( $args )
 {
     extract($args);
     
-    $mime_list = xarModGetVar('mime','mime.magic');
+    $mime_list = unserialie(xarModGetVar('mime','mime.magic'));
 
     if (!isset($fileName)) {
         $msg = xarML('Unable to retrieve mime type. No filename supplied!');

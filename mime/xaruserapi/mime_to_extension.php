@@ -21,7 +21,7 @@ function mime_userapi_mime_to_extension( $args ) {
         return FALSE;
     }
 
-    $mime_list = xarModGetVar('mime','mime.magic');
+    $mime_list = unserialize(xarModGetVar('mime','mime.magic'));
 
     if (isset($mime_list[$mime_type])) {
         if (isset($mime_list[$mime_type]['extension_list']) && is_array($mime_list[$mime_type]['extension_list'])) {
