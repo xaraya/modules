@@ -1,6 +1,18 @@
 <?php
 /**
- *  iCalendar file parser
+ * File: $Id: 
+ *
+ * iCalendar file parser
+ *
+ * @package icalendar
+ * @copyright (C) 2004 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @author Roger Raymond
+ */
+
+/**
+ *  Defines
  */
 define('_VCALENDAR_', 0);
 define('_VEVENT_',    1);
@@ -9,7 +21,11 @@ define('_VFREEBUSY_', 3);
 define('_VALARM_',    4);
 define('_VTIMEZONE_', 5);
 
+/**
+ * Use the PEAR date class
+ */
 require_once('Date/Calc.php');
+
 
 class iCal_Parser
 {
@@ -37,22 +53,25 @@ class iCal_Parser
     var $vcalendar  = array();
     
     /**
-     *  ical_parser constructor
-     *  @access public
-     *  @param string $file optional file to parse
+     * Constructor
+     *
+     * @access public
+     * @param string $file optional file to parse
      */
-    function iCal_Parser($file=null)
+    function iCal_Parser($file = NULL)
     {
-        if(isset($filename)) {
+        if(isset($file)) {
             $this->file =& $file;
             $this->parse();
         }
+
     }
 
     /**
-     *  Set the file to parse
-     *  @access public
-     *  @param string $file path and name of icalendar file
+     * Set the file to parse
+     *
+     * @access public
+     * @param string $file path and name of icalendar file
      */
     function setFile($file) 
     {
@@ -60,9 +79,10 @@ class iCal_Parser
     }
     
     /**
-     *  Sets the icalendar file content from text
-     *  @access public
-     *  @param string $in icalendar content
+     * Set the icalendar file content from text
+     *
+     * @access public
+     * @param string $content icalendar content
      */
     function setContent($content)
     {
@@ -71,8 +91,9 @@ class iCal_Parser
 
 
     /**
-     *  Parses the icalendar content
-     *  @access public
+     * Parse the icalendar content
+     *  
+     * @access public
      *  
      */
     function parse()
@@ -85,8 +106,9 @@ class iCal_Parser
 
 
     /**
-     *  reads the file into $this->content
-     *  @access private
+     * Read the file into $this->content
+     * 
+     * @access private
      */
     /*function __read_file()
     {
@@ -103,14 +125,15 @@ class iCal_Parser
             return false;
         }
         $this->file_mtime = filemtime($this->file);
-		$fd = fopen($this->file, 'r');
-		$this->content =& trim(fread($fd, filesize($this->file)));
-		fclose($fd);  
+        $fd = fopen($this->file, 'r');
+        $this->content =& trim(fread($fd, filesize($this->file)));
+        fclose($fd);  
     }*/
 
     /**
-     *  parses the actual icalendar content
-     *  @access private
+     * Parse the actual icalendar content
+     * 
+     * @access private
      */
     function __parse_file()
     {
@@ -140,16 +163,16 @@ class iCal_Parser
         // parse the rest of the file
         while(!feof($this->ifile)) {
             $this->line = $nextline;
-			$nextline = fgets($this->ifile, 1024);
-			$nextline = preg_replace('/[\r\n]/', '', $nextline);
-			// check for folding
+            $nextline = fgets($this->ifile, 1024);
+            $nextline = preg_replace('/[\r\n]/', '', $nextline);
+            // check for folding
             while(substr($nextline,0,1) == ' ') {
-				$this->line = $this->line . substr($nextline, 1);
-				$nextline = fgets($this->ifile, 1024);
-				$nextline = preg_replace('/[\r\n]/', '', $nextline);
-			}
-			$this->line =& trim($this->line);
-            
+                $this->line = $this->line . substr($nextline, 1);
+                $nextline = fgets($this->ifile, 1024);
+                $nextline = preg_replace('/[\r\n]/', '', $nextline);
+            }
+            $this->line =& trim($this->line);
+
             switch($this->line) {
                 
                 case 'BEGIN:VCALENDAR' :
@@ -300,29 +323,38 @@ class iCal_Parser
     }
     
     /**
-     *  Grabs the property name and and data associated with it
+     * Grab the property name and and data associated with it
+     * 
+     * @access private
      */
     function &__get_property()
     {
         unset($field, $data, $prop_pos, $property);
-		preg_match("/([^:]+):(.*)/i", $this->line, $line);
-		$this->field =& $line[1];
-		$this->data =& $line[2];
+        preg_match("/([^:]+):(.*)/i", $this->line, $line);
+        $this->field =& $line[1];
+        $this->data =& $line[2];
         $property =& $this->field;
-		$prop_pos = strpos($property,';');
-		if ($prop_pos !== false) $property = substr($property,0,$prop_pos);
-		$this->property = strtoupper($property);
+        $prop_pos = strpos($property,';');
+        if ($prop_pos !== false) $property = substr($property,0,$prop_pos);
+        $this->property = strtoupper($property);
     }
     
     /**
-     *  Parses the information associated with the
+     * Parse the information associated with the
      *  top level VCALENDAR component.
+     *
+     * @access private
      */
     function __parse_vcalendar()
     {
         $this->vcalendar[$this->vcal_pos][$this->property] = $this->data;
     }
     
+    /**
+     * Parse VEVENT
+     *
+     * @access private
+     */
     function __parse_vevent()
     {
         // set up our link to the current VEVENT object
@@ -336,17 +368,17 @@ class iCal_Parser
                 
             case 'SUMMARY':
                 $this->data = str_replace("\\n", "<br/>", $this->data);
-				$this->data = str_replace("\\r", "<br/>", $this->data);
+                $this->data = str_replace("\\r", "<br/>", $this->data);
                 // why do the phpical devs do this?
-				$this->data = htmlentities(urlencode($this->data));
+                $this->data = htmlentities(urlencode($this->data));
                 $el['SUMMARY'] = $this->data;
                 break;
                 
             case 'DESCRIPTION':
                 $this->data = str_replace("\\n", "<br/>", $this->data);
-				$this->data = str_replace("\\r", "<br/>", $this->data);
+                $this->data = str_replace("\\r", "<br/>", $this->data);
                 // why do the phpical devs do this?
-				$this->data = htmlentities(urlencode($this->data));
+                $this->data = htmlentities(urlencode($this->data));
                 $el['DESCRIPTION'] = $this->data;
                 break;
                 
@@ -367,7 +399,7 @@ class iCal_Parser
                 break;
                 
             case 'DURATION':
-			    // allow for multiple durations if they exist
+                // allow for multiple durations if they exist
                 $durations = explode(',',strtoupper($this->data));
                 foreach($durations as $key=>$duration) {
                     if(!isset($el['DURATION'][$key])) {
@@ -415,11 +447,11 @@ class iCal_Parser
             
             case 'RRULE':
                 $this->data = str_replace('RRULE:', '', $this->data);
-				$rrule = split (';', $this->data);
-				foreach ($rrule as $recur) {
-					preg_match('/(.*)=(.*)/i', $recur, $match);
-					$el['RRULE'][$match[1]] = $match[2];
-				}
+                $rrule = split (';', $this->data);
+                foreach ($rrule as $recur) {
+                    preg_match('/(.*)=(.*)/i', $recur, $match);
+                    $el['RRULE'][$match[1]] = $match[2];
+                }
                 break;
             
             default:
@@ -430,11 +462,21 @@ class iCal_Parser
         
     }
     
+    /**
+     * Parse VTODO
+     *
+     * @access private
+     */
     function __parse_vtodo()
     {
     
     }
     
+    /**
+     * Parse VTIMEZONE
+     *
+     * @access private
+     */
     function __parse_vtimezone()
     {
         // what object are we assigning data to?
@@ -447,7 +489,7 @@ class iCal_Parser
         }
         
         switch ($this->property) {
-			case 'TZID' :
+            case 'TZID' :
                 // populate the current TZID for this element
                 // TODO::this element probably exists in a lot of different ways
                 $el['TZID'] = $this->data;
@@ -518,19 +560,19 @@ class iCal_Parser
                 
             case 'RRULE':
                 $this->data = str_replace('RRULE:', '', $this->data);
-		        $rrule = split (';', $this->data);
-		        foreach ($rrule as $recur) {
-			        preg_match('/(.*)=(.*)/i', $recur, $match);
-			        $el['RRULE'][$match[1]] = $match[2];
-		        }
+                $rrule = split (';', $this->data);
+                foreach ($rrule as $recur) {
+                    preg_match('/(.*)=(.*)/i', $recur, $match);
+                    $el['RRULE'][$match[1]] = $match[2];
+                }
                 break;
                 
             case 'RDATE':
                 // see if the date is represented in UTC
                 $zulu = (substr($this->data,-1)=='Z') ? true : false;
-		        $this->data  = str_replace('T','',$this->data); // remove the T for easier processing
-		        $this->data  = str_replace('Z','',$this->data); // remove the Z if it exists
-		        $this->field = str_replace(';VALUE=DATE-TIME','',$this->field); // yep, we know :)
+                $this->data  = str_replace('T','',$this->data); // remove the T for easier processing
+                $this->data  = str_replace('Z','',$this->data); // remove the Z if it exists
+                $this->field = str_replace(';VALUE=DATE-TIME','',$this->field); // yep, we know :)
                 preg_match('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})([0-9]{0,2})/', $this->data, $regs);
                 $lt100 = ($regs[1] < 100) ? true : false ;
                 $lt100subtract = (($regs[1] < 33) ? strftime('%C') : strftime('%C')-1) * 100 ;
@@ -564,9 +606,14 @@ class iCal_Parser
                 $el["$this->property"] = $this->data;    
                 break;
             
-	    }
+        }
     }
     
+    /**
+     * Time Zone Offset ????
+     *
+     * @access public ????
+     */
     function tzOffset2Seconds($offset) 
     {
         // make sure the offset starts with a + or -
