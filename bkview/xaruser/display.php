@@ -42,28 +42,57 @@ function bkview_user_display($args)
     
     $repo = new bkRepo($item['repopath']);
     // Now construct the count array
-    $times=array('1h','2h','4h','1d','2d','3d','4d','1w','2w','3w','4w','8w','12w','6M','9M','1y','2y','3y');
-    $csets=array();
-    // FIXME: performance, this calls bk count($times) times
-    while (list(,$time) = each($times)) {
-        $csets[$time]=$repo->bkCountChangeSets("-$time",false,$user);
-    }
-    $csets=array_unique($csets);
-    // Now we have the array, construct the ML texts for them
-    $rangetext=array();
-    while (list($time,$nrofcsets) = each($csets)) {
-        if ($nrofcsets !=0 ) {
-            $rangetext[$time] = xarML('#(1) Changesets #(2)',$nrofcsets,bkRangeToText("-$time"));
-        }
-    }
-    $allsets=$repo->bkCountChangeSets('',true,$user);
-    $mrgsets=$allsets - $repo->bkCountChangeSets('',false,$user);
-    
-    // Call the generic item search hook (this page is the overall search page)
-    $data['hooks'] = xarModCallHooks('item','search',$repoid,array());
+    // FIXME: Do mktime and bk range agree on what time is??? (especially in first 4 entries this is sensitive)
+    $times=array('1h' => date("YmdHis",mktime(date("H")-1,date("i"),date("s"),date("m"),date("d"),date("Y"))),
+                 '2h' => date("YmdHis",mktime(date("H")-2,date("i"),date("s"),date("m"),date("d"),date("Y"))),
+                 '4h' => date("YmdHis",mktime(date("H")-4,date("i"),date("s"),date("m"),date("d"),date("Y"))),
+                 '1d' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-1,date("Y"))),
+                 '2d' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-2,date("Y"))),
+                 '3d' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-3,date("Y"))),
+                 '4d' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-4,date("Y"))),
+                 '1w' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-7,date("Y"))),
+                 '2w' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-14,date("Y"))),
+                 '3w' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-21,date("Y"))),
+                 '4w' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-28,date("Y"))),
+                 '8w' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-56,date("Y"))),
+                 '12w'=> date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d")-72,date("Y"))),
+                 '6M' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m")-6,date("d"),date("Y"))),
+                 '9M' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m")-9,date("d"),date("Y"))),
+                 '1y' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y")-1)),
+                 '2y' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y")-2)),
+                 '3y' => date("YmdHis",mktime(date("H"),date("i"),date("s"),date("m"),date("d"),date("Y")-3))
+                 );
 
+    // Get a time sorted array of all csets
+    $stats = $repo->bkGetStats($user);
+
+    // The total number of csets is easy, just count
+    $allsets = array_sum(array_count_values($stats))-1;
+    $mrgsets=$allsets - $repo->bkCountChangeSets('',false,$user);
+
+    // Now we need to count the number of entries in the slices defined by the times array
+    $rangetext = array();
+    $correctwith = 0;
+    foreach($times as $rangecode => $timestamp) {
+        if(!array_key_exists($timestamp,$stats)) {
+            // This will be almost always i guess, chance that the timestamp key exists is rather minimal
+            $stats[$timestamp] ="BUG! this shouldn't be visible";
+            $correctwith++;
+            krsort($stats);
+        }
+        $keys = array_keys($stats);
+        $cutoff = array_search($timestamp,$keys);
+        $nrofsets = array_sum(array_count_values(array_slice($stats,0,$cutoff)))-$correctwith;
+        if(($nrofsets > 0) && ($nrofsets != $savesets)) {
+            $rangetext[$rangecode] = xarML('#(1) Changesets #(2)',$nrofsets, bkRangeToText("-$rangecode"));
+        }
+        $savesets = $nrofsets;
+    }
     
     // Deliver the data to BL compiler
+    // Call the generic item search hook (this page is the overall search page)
+    $data['hooks'] = xarModCallHooks('item','search',$repoid,array());
+    
     if($user == '') {
         $data['pageinfo']=xarML("Changeset activity ");
     } else {

@@ -44,15 +44,14 @@ function bkview_user_csetview($args)
     $csets=array();
     while (list($key,$val) = each($list)) {
         list($tag,$age, $author, $rev, $comments) = explode('|',$val);
-        $comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
-        $comments=nl2br(xarVarPrepForDisplay($comments));
         $csets[$counter]['tag']=$tag;
         $csets[$counter]['age']=$age;
         $csets[$counter]['age_code'] =  bkAgeToRangeCode($age);
         $csets[$counter]['author']=$author;
         $csets[$counter]['rev']=$rev;
-        $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
-        $csets[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
+        $comments=str_replace(BK_NEWLINE_MARKER,"\n",$comments);
+        $comments=nl2br(xarVarPrepForDisplay($comments));
+        $csets[$counter]['comments']=$comments;
         $counter++;
     }
 
