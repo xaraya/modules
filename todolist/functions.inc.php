@@ -815,16 +815,16 @@ function makeProjectDropdown($myname,$selected_project,$all=false, $java=false)
     }
     $result = $dbconn->Execute($sql2);
     if($result->EOF) {
-	return false;
+    return false;
     }
     $resarray = array();
     if ($all) {
         $resarray[] = array('id' => "all",'name' => xarML('all'));
     }
     while(list($project_id, $project_name) = $result->fields) {
-	$result->MoveNext();
-	$project_name = stripslashes($project_name);
-	$resarray[] = array('id' => $project_id,'name' => $project_name);
+    $result->MoveNext();
+    $project_name = stripslashes($project_name);
+    $resarray[] = array('id' => $project_id,'name' => $project_name);
     }
     $result->Close();
 
@@ -852,13 +852,13 @@ function makeGroupDropdown($myname,$selected_group, $emty_choice, $multiple)
     $result = $dbconn->Execute("SELECT * FROM $pntable[todolist_groups] ORDER BY $todolist_groups_column[group_name]");
 
     if($result->EOF) {
-	return false;
+    return false;
     }
     $resarray = array();
     while(list($group_id, $group_name) = $result->fields) {
-	$result->MoveNext();
-	$group_name = stripslashes($group_name);
-	$resarray[] = array('id' => $group_id,'name' => $group_name);
+    $result->MoveNext();
+    $group_name = stripslashes($group_name);
+    $resarray[] = array('id' => $group_id,'name' => $group_name);
     }
     $result->Close();
 

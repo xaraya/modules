@@ -137,7 +137,7 @@ function todolist_adminmenu()
     $authid = pnSecGenAuthKey();
 
     if(!(pnSecAuthAction(0, 'todolist::', '::', ACCESS_EDIT))) {
-	$output->Text(xarML('Not authorised to access Todolist module'));
+    $output->Text(xarML('Not authorised to access Todolist module'));
         return $output->GetOutput();
     }
 
