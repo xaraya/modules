@@ -1,0 +1,91 @@
+<!--- $Id --->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View All Sites</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<xar:if condition="$mastersite eq false">
+    <table border="0" width="100%" align="center">
+	     <tr align="left" valign="middle">
+	 	    <td>
+			    <xar:mlstring>$infomsg</xar:mlstring>
+			</td>
+	     </tr>
+    </table>
+<xar:else condition="$mastersite eq true" />
+    <xar:mlstring>Total number of sites, including Master Site:</xar:mlstring> #$siteno#
+<!--- TO DO: get rid of tables --->
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <th><xar:mlstring>Site</xar:mlstring></th>
+        <th><xar:mlstring>Prefix</xar:mlstring></th>
+        <th><xar:mlstring>DB</xar:mlstring></th>
+        <th><xar:mlstring>Shared</xar:mlstring></th>
+        <th><xar:mlstring>Status</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+
+ <xar:foreach in="$items" value="$item">
+    <xar:if condition="$item['mssite'] eq $masterurl">
+
+     <tr>
+        <td>#xarVarPrepForDisplay($item['mssite'])#</td>
+        <td>#xarVarPrepForDisplay($item['msprefix'])#</td>
+        <td>#xarVarPrepForDisplay($item['msdb'])#</td>
+        <td>#xarVarPrepForDisplay($item['msshare'])# &nbsp;</td>
+        <td>
+           <xar:if condition="$item['msstatus'] eq 0">
+                <xar:mlstring>Pending</xar:mlstring>
+            <xar:elseif condition="$item['msstatus'] eq 1" />
+                <xar:mlstring>Active</xar:mlstring>
+            <xar:elseif condition="$item['msstatus'] eq 2" />
+                <xar:mlstring>InActive</xar:mlstring>
+            </xar:if>
+        </td>
+        <td align='center'>
+        <xar:mlstring>MASTER SITE</xar:mlstring>
+        </td>
+    </tr>
+    <xar:else />
+      <tr>
+        <td>#xarVarPrepForDisplay($item['mssite'])#</td>
+        <td>#xarVarPrepForDisplay($item['msprefix'])#</td>
+        <td>#xarVarPrepForDisplay($item['msdb'])#</td>
+        <td>#xarVarPrepForDisplay($item['msshare'])#</td>
+        <td>
+           <xar:if condition="$item['msstatus'] eq 0">
+                <xar:mlstring>Pending</xar:mlstring>
+            <xar:elseif condition="$item['msstatus'] eq 1" />
+                <xar:mlstring>Active</xar:mlstring>
+            <xar:elseif condition="$item['msstatus'] eq 2" />
+                <xar:mlstring>InActive</xar:mlstring>
+            </xar:if>
+        </td>
+        <td align="center">
+            <xar:if condition="empty($item['enableurl'])">
+                #$item['enablelabel']# |
+            <xar:else />
+                <a href="#$item['enableurl']#">#$item['enablelabel']#</a> |
+            </xar:if>
+            <xar:if condition="empty($item['editurl'])">
+                <xar:mlstring>Edit</xar:mlstring> |
+            <xar:else />
+                <a href="#$item['editurl']#">#$item['editlabel']#</a> |
+            </xar:if>
+            <xar:if condition="empty($item['deleteurl'])">
+                <xar:mlstring>Delete</xar:mlstring>
+            <xar:else />
+                <a href="#$item['deleteurl']#">#$item['deletelabel']#</a>
+            </xar:if>
+        </td>
+    </tr>
+    </xar:if>
+   </xar:foreach>
+
+
+</table>
+<br />
+
+<!-- add the pager here -->
+#$pager#
+</xar:if>
+</div>
+</div>

@@ -1,0 +1,99 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Multisites Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Add A New Site</xar:mlstring></h2><br />
+<div align="center">
+<xar:if condition="$mastersite eq false">
+    <table border="0" width="100%" align="center">
+	     <tr align="left" valign="middle">
+	 	    <td>
+			    <xar:mlstring>$infomsg</xar:mlstring>
+			</td>
+	     </tr>
+    </table>
+<xar:else condition="$mastersite eq true" />
+<div class="xar-mod-body" align="left">
+ <xar:mlstring>Before you continue, please make sure you have ALREADY created your subsite tables. To do this:</xar:mlstring>
+        <ol>
+          <li><xar:mlstring>Protect your master config.system.php file located in the /var directory (copy it out somewhere safe).</xar:mlstring></li>
+          <li><xar:mlstring>Run Xaraya Install to create your subsite tables.</xar:mlstring></li>
+          <li><xar:mlstring>Put your master config.system.php file back in the /var directory.</xar:mlstring></li>
+          <li><xar:mlstring>Then return here to finalize creation of the subsite.</xar:mlstring></li><br />
+</div>
+<form method="post" action="&xar-modurl-multisites-admin-createsite;" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="&xar-var-authid;" />
+
+        <table border="0" width="100%" align="center">
+		    <th align="center" valign="middle" colspan="3">
+			    <xar:mlstring>Site Parameters</xar:mlstring>
+			</th>
+                <tr align="left" valign="middle">
+				    <td ><br />
+					    <xar:mlstring>Site Domain Name:</xar:mlstring>
+					</td>
+					<td><br />
+					    <input type="text" name="siteDN" id="siteDN" size="40" maxlength="60" value="#$siteDN#" />
+					</td>
+					<td><br />
+					    <xar:mlstring>Domain or subdomain eg hosting.mydomain.com</xar:mlstring>
+					</td>
+					</tr>
+					<tr align="left" valign="middle">
+						<td>
+							<xar:mlstring>Site Table Prefix:</xar:mlstring>
+						</td>
+						<td>
+						<input type="text" name="msPrefix" id="msPrefix" size="10" maxlength="15" value="#$msPrefix#" />
+						</td>
+						<td><xar:mlstring>Prefix of site tables<br />(system prefix is&nbsp; </xar:mlstring>'#$sysPrefix#').
+						</td>
+					</tr>
+					<tr align=left" valign="middle">
+						<td>
+							<xar:mlstring>Site Database:</xar:mlstring>
+						</td>
+						<td>
+						<input type="text" name="siteDB" id="siteDB" size="20" maxlength="30" value="#$siteDB#" />
+						</td>
+						<td><xar:mlstring>Defaults to master site database</xar:mlstring>
+						</td>
+					</tr>
+<!--- TO DO: Additional options to be added later
+					<tr align=left" valign="middle">
+						<td>
+							<xar:mlstring>Shared tables prefix:</xar:mlstring>
+						</td>
+						<td>
+						<input type="text" name="sharedTables" id="sharedTables" size="20" maxlength="30" value="#$sharedTables#" />
+						</td>
+						<td><xar:mlstring>Defaults to master site prefix</xar:mlstring>
+						</td>
+					</tr>
+
+					<tr align=left" valign="middle">
+						<td>
+							<xar:mlstring>Site Status:</xar:mlstring>
+						</td>
+						<td>
+                            <select name="siteStatus" id="siteStatus" size="1">
+		                        <xar:foreach in="$siteStatus" value="$v" key="$k">
+                                    <xar:if condition="$k eq $siteStatus">
+                                        <option value="#$k#" selected="selected">#$v#</option>
+                                    <xar:else />
+                                        <option value="#$k#">#$v#</option>
+                                    </xar:if>
+                                </xar:foreach>
+                            </select>
+						</td>
+						<td><xar:mlstring>Pending is the default state.</xar:mlstring>
+						</td>
+					</tr>
+--->
+                    <tr align="center" valign="middle">
+                        <td colspan="3"><br /><br /><input type="submit" value="#$btnAddSite#" align="middle" tabindex="3" />
+                    </td>
+                </tr>
+        </table>
+ </form>
+</xar:if>
+</div>
+</div>
+
