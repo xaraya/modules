@@ -65,6 +65,11 @@ function logconfig_admin_update($args)
 
     if (empty($itemid)) return; // throw back
 
+    //Update the Configuration file if Logging is on
+     if (xarModAPIFunc('logconfig','admin','islogon')) {
+        if (!xarModAPIFunc('logconfig','admin','saveconfig')) return;
+     }
+
     // let's go back to the admin view
     xarResponseRedirect(xarModURL('logconfig', 'admin', 'view'));
 
