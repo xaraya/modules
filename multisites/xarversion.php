@@ -3,6 +3,7 @@
 $modversion['name'] = 'Multisites';
 $modversion['id'] = '20';
 $modversion['version'] = '0.2.1';
+$modversion['displayname']    = xarML('Multisites');
 $modversion['description'] = 'Basic installation of a multisite Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
