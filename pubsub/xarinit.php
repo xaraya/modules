@@ -107,6 +107,14 @@ function pubsub_init()
                            'unsubscribe')) {
         return false;
     }
+    if (!xarModRegisterHook('item',
+                           'delete',
+                           'API',
+                           'pubsub',
+                           'user',
+                           'delsubscriptons')) {
+        return false;
+    }
     if (!xarModRegisterHook('category',
                            'display',
                           'GUI',
@@ -156,7 +164,7 @@ function pubsub_delete()
                            'API',
                            'pubsub',
                            'user',
-                           'adduser')) {
+                           'subscribe')) {
         xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
     if (!xarModUnregisterHook('category',
@@ -172,7 +180,15 @@ function pubsub_delete()
                            'API',
                            'pubsub',
                            'user',
-                           'deluser')) {
+                           'unsubscribe')) {
+        xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
+    }
+    if (!xarModUnregisterHook('item',
+                           'delete',
+                           'API',
+                           'pubsub',
+                           'user',
+                           'delsubscriptions')) {
         xarSessionSetVar('errormsg', _PUBSUBSCOULDNOTUNREGISTER);
     }
     if (!xarModUnregisterHook('item',
