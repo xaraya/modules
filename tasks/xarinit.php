@@ -72,6 +72,8 @@ function tasks_upgrade($oldversion)
     switch($oldversion) {
         case 0.1:
             break;
+        case 0.2:
+        case '0.2':
         case 1.0:
             break;
         case 2.0:
