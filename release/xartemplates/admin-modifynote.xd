@@ -166,7 +166,7 @@
 
 	                <select name="rstate" id="rstate" size="1">
 		            <xar:foreach in="$stateoptions" value="$v" key="$k">
-		                <xar:if condition="$k eq $rstatesel">
+		                <xar:if condition="$k eq $rstate">
 			                <option value="#$k#" selected="selected">#$v#</option>
 		                <xar:else />
 			                <option value="#$k#">#$v#</option>
