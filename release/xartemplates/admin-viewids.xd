@@ -1,43 +1,44 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Release Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-  <h2><xar:mlstring>View IDs</xar:mlstring></h2>
-  <table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <h2><xar:mlstring>View IDs</xar:mlstring></h2>
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
-      <th>
-			  <xar:mlstring>ID</xar:mlstring>
-		  </th>
-      <th>
+        <th>
+		    <xar:mlstring>ID</xar:mlstring>
+		</th>
+        <th>
 			  <xar:mlstring>Name</xar:mlstring>
- 		  </th>
-      <th>
+ 		</th>
+        <th>
 			  <xar:mlstring>Options</xar:mlstring>
-		  </th>
-	  </tr>
+		</th>
+	</tr>
     <xar:loop name="$items">
     <tr>
-      <td>
-			  #$loop:item['rid']#
-		  </td>
-      <td>
-			  #$loop:item['regname']#
-		  </td>
-		  <td align="center">
-        <xar:if condition="empty($loop:item['editurl'])">
-          #$loop:item['edittitle']#
-        <xar:else />
-          <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
-        </xar:if>
-        |
-        <xar:if condition="empty($loop:item['deleteurl'])">
-          #$loop:item['deletetitle']#
-        <xar:else />
-          <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
-        </xar:if>
-      </td>
+        <td>
+		    #$loop:item['rid']#
+		</td>
+        <td>
+	        #$loop:item['regname']#
+	    </td>
+    	<td align="center">
+            <xar:if condition="empty($loop:item['editurl'])">
+                 #$loop:item['edittitle']#
+            <xar:else />
+                 <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+            </xar:if>
+            |
+            <xar:if condition="empty($loop:item['deleteurl'])">
+              #$loop:item['deletetitle']#
+            <xar:else />
+              <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+            </xar:if>
+        </td>
     </tr>
-  </xar:loop>
-</table>
+    </xar:loop>
+    </table>
+</div>
 <p style="margin-top:20px;">
 <!-- add the pager here -->
 #$pager#
