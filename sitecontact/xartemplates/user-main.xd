@@ -39,7 +39,7 @@
                 <span style="float: left; width: 20%;">
                     <label for="username"><xar:mlstring>Your Name</xar:mlstring></label>:<span style="color:red;">*</span>
                 </span>
-                <span style="float: left; width:78%; margin-top:10px;">
+                <span style="float: left; width:75%; margin-top:10px;">
                         <xar:if condition = "xarUserIsLoggedIn()">
                     <input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
                     #xarUserGetVar('name')#
@@ -53,7 +53,7 @@
                    <label for="useremail"><xar:mlstring>Your Email</xar:mlstring></label>:
                    <span style="color:red;">*</span>
                </span>
-               <span style="float: left; width:78%; margin-top:10px;">
+               <span style="float: left; width:75%; margin-top:10px;">
                <xar:if condition = "xarUserIsLoggedIn()">
                    <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
                        #xarUserGetVar('email')#
@@ -72,7 +72,7 @@
                          <span style="color:red;">*</span>
                     </span>
                 </span>
-                <span style="float: left; width: 78%; text-align: left;">
+                <span style="float: left; width: 75%; text-align: left;">
                     <select id="requesttext" name="requesttext">
                     <xar:foreach in="$optionitems" value="$optionrequest" key="$key" >
                         <xar:if condition="$optionrequest[0] eq $requesttext">
@@ -91,7 +91,7 @@
                     <label for="company"><xar:mlstring>Organization</xar:mlstring></label>:
                 </span>
                 </span>
-                <span style="float: left; width: 78%; text-align: left;">
+                <span style="float: left; width: 75%; text-align: left;">
                     <input type="text" name="company" id="company" size="40" value="" maxlength="128"  />
                 </span>
             </div>
@@ -102,7 +102,7 @@
                 <xar:mlstring>Your message:</xar:mlstring></label></span><span style="color:red;">*</span>
             </span>
 
-            <span style="float: left; width:78%;">
+            <span style="float: left; width:75%;">
                 <textarea name="usermessage" id="usermessage" rows="5" cols="40"></textarea>
             </span>
             </div>
@@ -115,7 +115,7 @@
                         </label>
                     </span>
                 </span>
-                <span style="float: left; width:78%;">
+                <span style="float: left; width:75%;">
                     <input type="checkbox" name="sendcopy" id="sendcopy" value="1" checked="checked" />
                 </span>
             </div>
