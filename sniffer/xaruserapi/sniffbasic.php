@@ -29,18 +29,18 @@ function sniffer_userapi_sniffbasic($args)
         extract($args);
     }
 
-	// sniff process
+    // sniff process
     include_once('modules/sniffer/class/xarSniff.php');
     $client = new xarSniff('',0);
     $client->init();
 
-	// Get database setup
+    // Get database setup
     $dbconn =& xarDBGetConn();
     $xartable     =& xarDBGetTables();
 
-	// set some variables used in the database call
+    // set some variables used in the database call
     $sniffertable  =  $xartable['sniffer'];
-//	$uacolumn = &$xartable['user_agent_column'];
+//    $uacolumn = &$xartable['user_agent_column'];
 
     $sql = "SELECT xar_ua_id
             FROM $sniffertable
@@ -53,7 +53,7 @@ function sniffer_userapi_sniffbasic($args)
     } else {
         $nextID = $dbconn->GenId($sniffertable);
         $insarr = array($nextID, xarVarPrepForStore($client->get_property('ua')),
-				        $client->property('platform'), $client->property('os'),
+                        $client->property('platform'), $client->property('os'),
                         $client->getname('browser'), $client->property('version'));
 
         $query = "INSERT INTO $sniffertable
@@ -61,7 +61,7 @@ function sniffer_userapi_sniffbasic($args)
                          '{$insarr[3]}', '{$insarr[4]}', '{$insarr[5]}', '', '')";
 //      last 2 are reserved for caps and quirks, supported by the sniffers cvs-version
         $result =& $dbconn->Execute($query);
-	    if (!$result) return;        
+        if (!$result) return;        
         $uaid = $dbconn->PO_Insert_ID($sniffertable, 'xar_ua_id');
     }
     

@@ -53,7 +53,7 @@ function sniffer_adminapi_delete($args)
     }
 
     // Security Check
-	if(!xarSecurityCheck('DeleteSniffer')) return;
+    if(!xarSecurityCheck('DeleteSniffer')) return;
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();

@@ -27,7 +27,7 @@
 function sniffer_admin_main()
 {
     // Security Check
-	if(!xarSecurityCheck('AdminSniffer')) return;
+    if(!xarSecurityCheck('AdminSniffer')) return;
 
     // Get the admin menu
     $data = xarModAPIFunc('sniffer', 'admin', 'menu');

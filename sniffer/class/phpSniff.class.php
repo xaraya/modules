@@ -1,11 +1,11 @@
 <?php
 /*******************************************************************************
-	$Id: phpSniff.class.php,v 1.21 2003/07/02 23:28:35 epsilon7 Exp $
+    $Id: phpSniff.class.php,v 1.21 2003/07/02 23:28:35 epsilon7 Exp $
     
     phpSniff: HTTP_USER_AGENT Client Sniffer for PHP
-	Copyright (C) 2001 Roger Raymond ~ epsilon7@users.sourceforge.net
+    Copyright (C) 2001 Roger Raymond ~ epsilon7@users.sourceforge.net
 
-	This library is free software; you can redistribute it and/or
+    This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
     version 2.1 of the License, or (at your option) any later version.
@@ -29,7 +29,7 @@ require_once('modules/sniffer/class/phpSniff.core.php');
 
 class phpSniff extends phpSniff_core
 {   var $_version = '2.1.4';
-	/**
+    /**
      *  Configuration
      *
      *  $_temp_file_path
@@ -67,7 +67,7 @@ class phpSniff extends phpSniff_core
      *              :         note: the search parameters rely on the values
      *              :               set in the $_browsers array
      *
-	 *  $_browser_features
+     *  $_browser_features
      *      desc    : 2D Array of browser features supported by which browser
      *              : in key => value pairs.
      *              : key   = feature
@@ -75,8 +75,8 @@ class phpSniff extends phpSniff_core
      *              :         feature listed in the key (comma delimited)
      *              :         note: the search parameters rely on the values
      *              :               set in the $_browsers array
-	 *
-	 *  $_browser_quirks
+     *
+     *  $_browser_quirks
      *      desc    : 2D Array of browser quirks present in which browser
      *              : in key => value pairs.
      *              : key   = quirk
@@ -84,7 +84,7 @@ class phpSniff extends phpSniff_core
      *              :         quirk listed in the key (comma delimited)
      *              :         note: the search parameters rely on the values
      *              :               set in the $_browsers array
-	 **/
+     **/
 
     var $_temp_file_path        = '/tmp/'; // with trailing slash
     var $_check_cookies         = NULL;
@@ -112,16 +112,16 @@ class phpSniff extends phpSniff_core
         'konqueror'                   => 'KQ',
         'icab'                        => 'IC',
         'lynx'                        => 'LX',
-		'links'                       => 'LI',					
+        'links'                       => 'LI',                    
         'ncsa mosaic'                 => 'MO',
         'amaya'                       => 'AM',
         'omniweb'                     => 'OW',
-		'hotjava'					  => 'HJ',
+        'hotjava'                      => 'HJ',
         'browsex'                     => 'BX',
         'amigavoyager'                => 'AV',
         'amiga-aweb'                  => 'AW',
         'ibrowse'                     => 'IB'
-		);
+        );
 
     var $_javascript_versions = array(
         '1.5'   =>  'NS5+,MZ,PX,FB,FX,GA,CH,CA,SF,KQ3+,KM,EP', // browsers that support JavaScript 1.5
@@ -130,43 +130,43 @@ class phpSniff extends phpSniff_core
         '1.2'   =>  'NS4+,IE4+',
         '1.1'   =>  'NS3+,OP,KQ',
         '1.0'   =>  'NS2+,IE3+',
-		'0'     =>	'LI,LX,HJ'	
+        '0'     =>    'LI,LX,HJ'    
         );
-		
-	var $_browser_features = array(
-		/**
-		 *	the following are true by default
-		 *	(see phpSniff.core.php $_feature_set array)
-		 *	browsers listed here will be set to false
-		 **/
-		'html'		=>	'',
-		'images'	=>	'LI,LX',
-		'frames' 	=>	'LX',
-		'tables'	=>	'',
-		'java'		=>	'OP3,LI,LX,NS1,MO,IE1,IE2',
-		'plugins'	=>	'IE1,IE2,LI,LX',
-		/**  
-		 *	the following are false by default
-		 *	(see phpSniff.core.php $_feature_set array)
-		 *	browsers listed here will be set to true
-		 **/
-		'css2'		=>	'NS5+,IE5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ3+,OP7+,KM,EP',
-		'css1'		=>	'NS4+,IE4+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
-		'iframes'	=>	'LI,IE3+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
-		'xml'		=>	'IE5+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
-		'dom'		=>	'IE5+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
-		'hdml'		=>	'',
-		'wml'		=>	''
-		);
-		
-	var $_browser_quirks = array(
-		'must_cache_forms'			=>	'NS,MZ,FB,PX,FX',
-		'avoid_popup_windows'		=>	'IE3,LI,LX',
-		'cache_ssl_downloads'		=>	'IE',
-		'break_disposition_header'	=>	'IE5.5',
-		'empty_file_input_value'	=>	'KQ',
-		'scrollbar_in_way'			=>	'IE6'
-		);
+        
+    var $_browser_features = array(
+        /**
+         *    the following are true by default
+         *    (see phpSniff.core.php $_feature_set array)
+         *    browsers listed here will be set to false
+         **/
+        'html'        =>    '',
+        'images'    =>    'LI,LX',
+        'frames'     =>    'LX',
+        'tables'    =>    '',
+        'java'        =>    'OP3,LI,LX,NS1,MO,IE1,IE2',
+        'plugins'    =>    'IE1,IE2,LI,LX',
+        /**  
+         *    the following are false by default
+         *    (see phpSniff.core.php $_feature_set array)
+         *    browsers listed here will be set to true
+         **/
+        'css2'        =>    'NS5+,IE5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ3+,OP7+,KM,EP',
+        'css1'        =>    'NS4+,IE4+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+        'iframes'    =>    'LI,IE3+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+        'xml'        =>    'IE5+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+        'dom'        =>    'IE5+,NS5+,MZ,PX,FB,FX,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+        'hdml'        =>    '',
+        'wml'        =>    ''
+        );
+        
+    var $_browser_quirks = array(
+        'must_cache_forms'            =>    'NS,MZ,FB,PX,FX',
+        'avoid_popup_windows'        =>    'IE3,LI,LX',
+        'cache_ssl_downloads'        =>    'IE',
+        'break_disposition_header'    =>    'IE5.5',
+        'empty_file_input_value'    =>    'KQ',
+        'scrollbar_in_way'            =>    'IE6'
+        );
 
     function phpSniff($UA='',$settings = true)
     {   //  populate the HTTP_USER_AGENT string

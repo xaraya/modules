@@ -1,11 +1,11 @@
 <?php
 /*******************************************************************************
-	$Id: phpSniff.core.php,v 1.16 2003/07/02 23:30:29 epsilon7 Exp $
+    $Id: phpSniff.core.php,v 1.16 2003/07/02 23:30:29 epsilon7 Exp $
     
     phpSniff: HTTP_USER_AGENT Client Sniffer for PHP
-	Copyright (C) 2001 Roger Raymond ~ epsilon7@users.sourceforge.net
+    Copyright (C) 2001 Roger Raymond ~ epsilon7@users.sourceforge.net
 
-	This library is free software; you can redistribute it and/or
+    This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
     version 2.1 of the License, or (at your option) any later version.
@@ -22,55 +22,55 @@
 
 class phpSniff_core
 {   // initialize some vars
-	var $_browser_info = array(
-    	'ua'         => '',
-    	'browser'    => 'Unknown',
-    	'version'    => 0,
-    	'maj_ver'    => 0,
-    	'min_ver'    => 0,
-    	'letter_ver' => '',
-    	'javascript' => '0.0',
-    	'platform'   => 'Unknown',
-    	'os'         => 'Unknown',
-    	'ip'         => 'Unknown',
+    var $_browser_info = array(
+        'ua'         => '',
+        'browser'    => 'Unknown',
+        'version'    => 0,
+        'maj_ver'    => 0,
+        'min_ver'    => 0,
+        'letter_ver' => '',
+        'javascript' => '0.0',
+        'platform'   => 'Unknown',
+        'os'         => 'Unknown',
+        'ip'         => 'Unknown',
         'cookies'    => 'Unknown', // remains for backwards compatability
-    	'ss_cookies' => 'Unknown',
+        'ss_cookies' => 'Unknown',
         'st_cookies' => 'Unknown',
-    	'language'   => '',
-		'long_name'  => '',
-		'gecko'      => '',
+        'language'   => '',
+        'long_name'  => '',
+        'gecko'      => '',
         'gecko_ver'  => ''
-		);
-	
-	var $_feature_set = array(
-		'html'		 =>	true,
-		'images'	 =>	true,
-		'frames' 	 =>	true,
-		'tables'	 =>	true,
-		'java'		 =>	true,
-		'plugins'	 => true,
-		'iframes'	 => false,
-		'css2'		 =>	false,
-		'css1'		 =>	false,
-		'xml'		 =>	false,
-		'dom'		 =>	false,
-		'wml'		 =>	false,
-		'hdml'		 =>	false
-		);
-	
-	var $_quirks = array(
-		'must_cache_forms'			=>	false,
-		'avoid_popup_windows'		=>	false,
-		'cache_ssl_downloads'		=>	false,
-		'break_disposition_header'	=>	false,
-		'empty_file_input_value'	=>	false,
-		'scrollbar_in_way'			=>	false
-		);
+        );
+    
+    var $_feature_set = array(
+        'html'         =>    true,
+        'images'     =>    true,
+        'frames'      =>    true,
+        'tables'     =>    true,
+        'java'         =>    true,
+        'plugins'     => true,
+        'iframes'     => false,
+        'css2'         =>    false,
+        'css1'         =>    false,
+        'xml'         =>    false,
+        'dom'         =>    false,
+        'wml'         =>    false,
+        'hdml'         =>    false
+        );
+    
+    var $_quirks = array(
+        'must_cache_forms'            =>    false,
+        'avoid_popup_windows'        =>    false,
+        'cache_ssl_downloads'        =>    false,
+        'break_disposition_header'    =>    false,
+        'empty_file_input_value'    =>    false,
+        'scrollbar_in_way'            =>    false
+        );
 
-	var $_get_languages_ran_once = false;
-	var $_browser_search_regex = '([a-z]+)([0-9]*)([0-9.]*)(up|dn|\+|\-)?';
-	var $_language_search_regex = '([a-z-]{2,})';
-	var $_browser_regex;
+    var $_get_languages_ran_once = false;
+    var $_browser_search_regex = '([a-z]+)([0-9]*)([0-9.]*)(up|dn|\+|\-)?';
+    var $_language_search_regex = '([a-z-]{2,})';
+    var $_browser_regex;
     
     /**
      *  init
@@ -79,25 +79,25 @@ class phpSniff_core
     function init ()
     {   
         //  collect the ip
-        	$this->_get_ip();
+            $this->_get_ip();
         //  run the cookie check routine first
         //  [note: method only runs if allowed]
-        	$this->_test_cookies();
-		//  rip the user agent to pieces
-        	$this->_get_browser_info();
-        //	gecko build
-			$this->_get_gecko();
-		//  look for other languages
-        	$this->_get_languages();
-		//  establish the operating platform
-        	$this->_get_os_info();
-		//  determine javascript version
-        	$this->_get_javascript();
-		//	determine current feature set
-			$this->_get_features();
-		//	point out any quirks
-			$this->_get_quirks();
-	}
+            $this->_test_cookies();
+        //  rip the user agent to pieces
+            $this->_get_browser_info();
+        //    gecko build
+            $this->_get_gecko();
+        //  look for other languages
+            $this->_get_languages();
+        //  establish the operating platform
+            $this->_get_os_info();
+        //  determine javascript version
+            $this->_get_javascript();
+        //    determine current feature set
+            $this->_get_features();
+        //    point out any quirks
+            $this->_get_quirks();
+    }
 
     /**
      *  property
@@ -112,14 +112,14 @@ class phpSniff_core
         {   return $this->_browser_info[strtolower($p)];
         }
     }
-	
-	/**
-	 *	get_property
-	 *	alias for property
-	 **/
-	function get_property ($p)
-	{	return $this->property($p);
-	}
+    
+    /**
+     *    get_property
+     *    alias for property
+     **/
+    function get_property ($p)
+    {    return $this->property($p);
+    }
 
     /**
      *  is
@@ -129,7 +129,7 @@ class phpSniff_core
      **/
     function is ($s)
     {   // perform language search
-		if(preg_match('/l:'.$this->_language_search_regex.'/i',$s,$match))
+        if(preg_match('/l:'.$this->_language_search_regex.'/i',$s,$match))
         {   if($match) return $this->_perform_language_search($match);
         }
         // perform browser search
@@ -138,48 +138,48 @@ class phpSniff_core
         }
         return false;
     }
-	
-	/**
-	 *	browser_is
-	 *	@param $s string search phrase for browser
-	 *  @return bool true on success
+    
+    /**
+     *    browser_is
+     *    @param $s string search phrase for browser
+     *  @return bool true on success
      *  ex: $client->browser_is('OP5Up');
-	 **/
-	function browser_is ($s)
-	{	preg_match('/'.$this->_browser_search_regex.'/i',$s,$match);
-		if($match) return $this->_perform_browser_search($match);
-	}
-	
-	/**
-	 *	language_is
-	 *	@param $s string search phrase for language
-	 *  @return bool true on success
+     **/
+    function browser_is ($s)
+    {    preg_match('/'.$this->_browser_search_regex.'/i',$s,$match);
+        if($match) return $this->_perform_browser_search($match);
+    }
+    
+    /**
+     *    language_is
+     *    @param $s string search phrase for language
+     *  @return bool true on success
      *  ex: $client->language_is('en-US');
-	 **/
-	function language_is ($s)
-	{	preg_match('/'.$this->_language_search_regex.'/i',$s,$match);
-		if($match) return $this->_perform_language_search($match);
-	}
-	
-	/**
-	 *	has_feature
-	 *	@param $s string feature we're checking on
-	 *  @return bool true on success
+     **/
+    function language_is ($s)
+    {    preg_match('/'.$this->_language_search_regex.'/i',$s,$match);
+        if($match) return $this->_perform_language_search($match);
+    }
+    
+    /**
+     *    has_feature
+     *    @param $s string feature we're checking on
+     *  @return bool true on success
      *  ex: $client->has_feature('html');
-	 **/
-	function has_feature ($s)
-	{	return $this->_feature_set[$s];
-	}
-	
-	/**
-	 *	has_quirk
-	 *	@param $s string quirk we're looking for
-	 *  @return bool true on success
+     **/
+    function has_feature ($s)
+    {    return $this->_feature_set[$s];
+    }
+    
+    /**
+     *    has_quirk
+     *    @param $s string quirk we're looking for
+     *  @return bool true on success
      *  ex: $client->has_quirk('avoid_popup_windows');
-	 **/
-	function has_quirk ($s)
-	{	return $this->_quirks[$s];
-	}
+     **/
+    function has_quirk ($s)
+    {    return $this->_quirks[$s];
+    }
 
     /**
      *  _perform_browser_search
@@ -189,12 +189,12 @@ class phpSniff_core
      **/
     function _perform_browser_search ($data)
     {   $search = array();
-		$search['phrase'] 		= isset($data[0]) ? $data[0] : '';
-		$search['name']   		= isset($data[1]) ? strtolower($data[1]) : '';
-		$search['maj_ver']   	= isset($data[2]) ? $data[2] : '';
-		$search['min_ver']   	= isset($data[3]) ? $data[3] : '';
-		$search['direction']	= isset($data[4]) ? strtolower($data[4]) : '';
-		
+        $search['phrase']         = isset($data[0]) ? $data[0] : '';
+        $search['name']           = isset($data[1]) ? strtolower($data[1]) : '';
+        $search['maj_ver']       = isset($data[2]) ? $data[2] : '';
+        $search['min_ver']       = isset($data[3]) ? $data[3] : '';
+        $search['direction']    = isset($data[4]) ? strtolower($data[4]) : '';
+        
         $looking_for = $search['maj_ver'].$search['min_ver'];
         if($search['name'] == 'aol' || $search['name'] == 'webtv') {   
             return stristr($this->_browser_info['ua'],$search['name']);
@@ -210,15 +210,15 @@ class phpSniff_core
                && ($what_we_are >= $looking_for))
             {   return true;
             }
-			elseif(($search['direction'] == 'dn' || $search['direction'] == '-')
+            elseif(($search['direction'] == 'dn' || $search['direction'] == '-')
                    && ($what_we_are <= $looking_for))
-			{	return true;
-			}
+            {    return true;
+            }
             elseif($what_we_are == $looking_for)
             {   return true;
             }
         }
-		return false;
+        return false;
     }
 
     function _perform_language_search ($data)
@@ -260,16 +260,16 @@ class phpSniff_core
         // look for Windows Box
         if(preg_match_all($regex_windows,$this->_browser_info['ua'],$match))
         {   /** Windows has some of the most ridiculous HTTP_USER_AGENT strings */
-			//$match[1][count($match[0])-1];
+            //$match[1][count($match[0])-1];
             $v  = $match[2][count($match[0])-1];
             $v2 = $match[3][count($match[0])-1];
             // Establish NT 5.1 as Windows XP
-				if(stristr($v,'NT') && $v2 == 5.1) $v = 'xp';
-			// Establish NT 5.0 and Windows 2000 as win2k
+                if(stristr($v,'NT') && $v2 == 5.1) $v = 'xp';
+            // Establish NT 5.0 and Windows 2000 as win2k
                 elseif($v == '2000') $v = '2k';
                 elseif(stristr($v,'NT') && $v2 == 5.0) $v = '2k';
-			// Establish 9x 4.90 as Windows 98
-				elseif(stristr($v,'9x') && $v2 == 4.9) $v = '98';
+            // Establish 9x 4.90 as Windows 98
+                elseif(stristr($v,'9x') && $v2 == 4.9) $v = '98';
             // See if we're running windows 3.1
                 elseif($v.$v2 == '16bit') $v = '31';
             // otherwise display as is (31,95,98,NT,ME,XP)
@@ -393,7 +393,7 @@ class phpSniff_core
             if($this->_allow_masquerading && $count > 0) $count--;
             // insert findings into the container
             $this->_set_browser('browser',$this->_get_short_name($results[1][$count]));
-			$this->_set_browser('long_name',$results[1][$count]);
+            $this->_set_browser('long_name',$results[1][$count]);
             $this->_set_browser('maj_ver',$results[2][$count]);
             // parse the minor version string and look for alpha chars
             preg_match('/([.\0-9]+)?([\.a-z0-9]+)?/i',$results[3][$count],$match);
@@ -474,7 +474,7 @@ class phpSniff_core
 
     function _get_javascript()
     {   $set=false;
-		// see if we have any matches
+        // see if we have any matches
         while(list($version,$browser) = each($this->_javascript_versions))
         {   $browser = explode(',',$browser);
             while(list(,$search) = each($browser))
@@ -487,66 +487,66 @@ class phpSniff_core
         if($set) break;
         }
     }
-	
-	function _get_features ()
-	{	while(list($feature,$browser) = each($this->_browser_features))
-		{	$browser = explode(',',$browser);
-			while(list(,$search) = each($browser))
-			{	if($this->browser_is($search))
-				{	$this->_set_feature($feature);
-					break;
-				}
-			}
-		}
-	}
-	
-	function _get_quirks ()
-	{	while(list($quirk,$browser) = each($this->_browser_quirks))
-		{	$browser = explode(',',$browser);
-			while(list(,$search) = each($browser))
-			{	if($this->browser_is($search))
-				{	$this->_set_quirk($quirk);
-					break;
-				}
-			}
-		}		
-	}
-	
-    function _get_gecko ()
-	{	if(preg_match('/gecko\/([0-9]+)/i',$this->property('ua'),$match))
-		{	$this->_set_browser('gecko',$match[1]);
-            if (preg_match('/rv[: ]?([0-9a-z.+]+)/i',$this->property('ua'),$mozv)) {   
-				// mozilla release
-				$this->_set_browser('gecko_ver',$mozv[1]);
-            } elseif (preg_match('/(m[0-9]+)/i',$this->property('ua'),$mozv)) {   
-				// mozilla milestone version
-				$this->_set_browser('gecko_ver',$mozv[1]);
-            }
-			// if this is a mozilla browser, get the rv: information
-			if($this->browser_is($this->_get_short_name('mozilla'))) {
-                if(preg_match('/([0-9]+)([\.0-9]+)([a-z0-9+]?)/i',$mozv[1],$match)) {
-				    $this->_set_browser('version',$mozv[1]);
-				    $this->_set_browser('maj_ver',$match[1]);
-				    $this->_set_browser('min_ver',$match[2]);
-				    $this->_set_browser('letter_ver',$match[3]);
+    
+    function _get_features ()
+    {    while(list($feature,$browser) = each($this->_browser_features))
+        {    $browser = explode(',',$browser);
+            while(list(,$search) = each($browser))
+            {    if($this->browser_is($search))
+                {    $this->_set_feature($feature);
+                    break;
                 }
-			}
+            }
+        }
+    }
+    
+    function _get_quirks ()
+    {    while(list($quirk,$browser) = each($this->_browser_quirks))
+        {    $browser = explode(',',$browser);
+            while(list(,$search) = each($browser))
+            {    if($this->browser_is($search))
+                {    $this->_set_quirk($quirk);
+                    break;
+                }
+            }
+        }        
+    }
+    
+    function _get_gecko ()
+    {    if(preg_match('/gecko\/([0-9]+)/i',$this->property('ua'),$match))
+        {    $this->_set_browser('gecko',$match[1]);
+            if (preg_match('/rv[: ]?([0-9a-z.+]+)/i',$this->property('ua'),$mozv)) {   
+                // mozilla release
+                $this->_set_browser('gecko_ver',$mozv[1]);
+            } elseif (preg_match('/(m[0-9]+)/i',$this->property('ua'),$mozv)) {   
+                // mozilla milestone version
+                $this->_set_browser('gecko_ver',$mozv[1]);
+            }
+            // if this is a mozilla browser, get the rv: information
+            if($this->browser_is($this->_get_short_name('mozilla'))) {
+                if(preg_match('/([0-9]+)([\.0-9]+)([a-z0-9+]?)/i',$mozv[1],$match)) {
+                    $this->_set_browser('version',$mozv[1]);
+                    $this->_set_browser('maj_ver',$match[1]);
+                    $this->_set_browser('min_ver',$match[2]);
+                    $this->_set_browser('letter_ver',$match[3]);
+                }
+            }
         } elseif($this->is('b:'.$this->_get_short_name('mozilla'))) {
-			// this is probably a netscape browser or compatible
-			$this->_set_browser('long_name','netscape');
-			$this->_set_browser('browser',$this->_get_short_name('netscape'));
-		}
-	}
-	
-	function _set_browser ($k,$v)
+            // this is probably a netscape browser or compatible
+            $this->_set_browser('long_name','netscape');
+            $this->_set_browser('browser',$this->_get_short_name('netscape'));
+        }
+    }
+    
+    function _set_browser ($k,$v)
     {   $this->_browser_info[strtolower($k)] = strtolower($v);
     }
-	
-	function _set_feature ($k)
+    
+    function _set_feature ($k)
     {   $this->_feature_set[strtolower($k)] = !$this->_feature_set[strtolower($k)];
     }
-	
-	function _set_quirk ($k)
+    
+    function _set_quirk ($k)
     {   $this->_quirks[strtolower($k)] = true;
     }
 }

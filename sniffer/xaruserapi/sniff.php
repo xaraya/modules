@@ -26,10 +26,10 @@ function sniffer_userapi_sniff($args)
 {
 /*
     // check whether proceed or quit
-	$uas = xarSessionGetVar('uaid');
-	if (!empty($uas)) {
-		return true;
-	}
+    $uas = xarSessionGetVar('uaid');
+    if (!empty($uas)) {
+        return true;
+    }
 */
     // Note : we can't use xarModAPIFunc as this function
     // is not defined on start of Xaraya session

@@ -31,7 +31,7 @@
 function sniffer_admin_delete()
 {
     // Security Check
-	if(!xarSecurityCheck('DeleteSniffer')) return;
+    if(!xarSecurityCheck('DeleteSniffer')) return;
 
     // Get parameters from input
     if (!xarVarFetch('id', 'int:0:', $id)) return;
