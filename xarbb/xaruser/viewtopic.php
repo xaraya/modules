@@ -19,24 +19,21 @@ function xarbb_user_viewtopic()
     if(!xarVarFetch('startnum', 'id', $startnum,1, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('tid', 'id', $tid)) return;
 
-    // Lets deal with the cookie in a more sane manner
-    if (xarUserIsLoggedIn()){
-        $time    = serialize(time());
-        setcookie(xarModGetVar('xarbb', 'cookiename') . '_t_' . $tid, $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
-        // Easier to set a cookie for the last visit than it is
-        // roll through all the forums to check the time set.
-        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
-    }
-
-    //$tid = xarVarCleanFromInput('tid');
-
-
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;    
 
     if ($topic['fstatus'] == 1) {
         $msg = xarML('Forum -- #(1) -- all associated topics have been locked by administrator', $topic['fname']);
         xarExceptionSet(XAR_USER_EXCEPTION, 'LOCKED_FORUM', new SystemException($msg));
         return;
+    }
+
+    // Lets deal with the cookie in a more sane manner
+    if (xarUserIsLoggedIn()){
+        $time    = serialize(time());
+        setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_' . $topic['fid'], $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+        // Easier to set a cookie for the last visit than it is
+        // roll through all the forums to check the time set.
+        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
     }
 
     $settings               = unserialize(xarModGetVar('xarbb', 'settings.'.$topic['fid']));

@@ -41,6 +41,15 @@ function xarbb_user_viewforum()
         setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
     }
 
+    // Lets deal with the cookie in a more sane manner
+    if (xarUserIsLoggedIn()){
+        $time    = serialize(time());
+        setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+        // Easier to set a cookie for the last visit than it is
+        // roll through all the forums to check the time set.
+        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
+    }
+
     // Get the cookie names
     $cookie_name_all_forums_read = xarModGetVar('xarbb', 'cookiename') . '_f_all';
     $cookie_name_this_forum_read = xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid;
@@ -82,15 +91,7 @@ function xarbb_user_viewforum()
         $topics[$i]['tpost'] = xarVarPrepHTMLDisplay($topic['tpost']);
         $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
 
-        // Finish our cookie look-up here.
-        $cookie_name_this_topic_read = xarModGetVar('xarbb', 'cookiename') . '_t_' . $topic['tid'];
-        if (isset($_COOKIE[$cookie_name_this_topic_read])){
-            $topictimecompare = unserialize($_COOKIE[$cookie_name_this_topic_read]);
-        } else {
-            $topictimecompare = '';
-        }
-
-        $cookie_time_compare = max($allforumtimecompare, $forumtimecompare, $topictimecompare);
+        $cookie_time_compare = max($allforumtimecompare, $forumtimecompare);
 
         switch(strtolower($topic['tstatus'])) {
             // Just a regular old topic
