@@ -207,6 +207,20 @@ function xarbb_init()
     }
     //Set default settings
     xarModSetVar('xarbb', 'settings', serialize($settings));
+
+    if (!xarModRegisterHook('item', 'create', 'API', 'xarbb', 'admin', 'createhook')) {
+        return false;
+    }
+
+    if (!xarModRegisterHook('item', 'new', 'GUI', 'xarbb', 'admin', 'newhook')) {
+        return false;
+    }
+
+    // search hook
+    if (!xarModRegisterHook('item', 'search', 'GUI', 'xarbb', 'user', 'search')) {
+        return false;
+    }
+
     return true;
 }
 
@@ -418,9 +432,25 @@ function xarbb_upgrade($oldversion)
             //TODO
             $cleanupxarbb=xarbb_cleanitemtypes();
                 if (!$cleanupxarbb)  return;
-            break;
+            continue;
         case '1.0.9':
+            if (!xarModRegisterHook('item', 'create', 'API',
+                                   'xarbb', 'admin', 'createhook')) {
+                return false;
+            }
+
+            if (!xarModRegisterHook('item', 'new', 'GUI',
+                                   'xarbb', 'admin', 'newhook')) {
+                return false;
+            }
+            continue;
+        case '1.1.0':
+            // search hook
+            if (!xarModRegisterHook('item', 'search', 'GUI', 'xarbb', 'user', 'search')) {
+                return false;
+            }
             break;
+
         default:
             break;
     }
@@ -460,6 +490,16 @@ function xarbb_delete()
     // Remove Masks and Instances
     xarRemoveMasks('xarbb');
     xarRemoveInstances('xarbb');
+
+    if (!xarModUnregisterHook('item', 'create', 'API', 'xarbb', 'admin', 'createhook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'new', 'GUI', 'xarbb', 'admin', 'newhook')) {
+        return false;
+    }
+    if (!xarModUnregisterHook('item', 'search', 'GUI', 'xarbb', 'user', 'search')) {
+        return false;
+    }
 
     return true;
 }
