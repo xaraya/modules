@@ -75,7 +75,8 @@ function xarpages_userapi_addcurrentpageflags($args)
         // Reference the page. Note we are working back down the tree
         // towards the root page, so will unshift each page to the front
         // of the ancestors array.
-        array_unshift($pagedata['ancestors'], &$pagedata['pages'][$this_pid]);
+        array_unshift($pagedata['ancestors'], NULL);
+        $pagedata['ancestors'][0] =& $pagedata['pages'][$this_pid];
 
         // Get the parent page.
         $pid_ancestor = $pagedata['pages'][$this_pid]['parent_key'];
