@@ -50,11 +50,11 @@
             </td>
             <td>
                 <xar:if condition="$order eq 'ASC'">
-                Ascending Order: <input type="radio" name="order" value="ASC" checked="checked" onChange="javascript:document.options.submit();" />
-                Descending Order: <input type="radio" name="order" value="DESC" onChange="javascript:document.options.submit();" />
+                <xar:mlstring>Ascending Order:</xar:mlstring> <input type="radio" name="order" value="ASC" checked="checked" onChange="javascript:document.options.submit();" />
+                <xar:mlstring>Descending Order:</xar:mlstring> <input type="radio" name="order" value="DESC" onChange="javascript:document.options.submit();" />
                 <xar:else />
-                Ascending Order: <input type="radio" name="order" value="ASC" onChange="javascript:document.options.submit();" />
-                Descending Order: <input type="radio" name="order" value="DESC" checked="checked" onChange="javascript:document.options.submit();" />
+                <xar:mlstring>Ascending Order:</xar:mlstring> <input type="radio" name="order" value="ASC" onChange="javascript:document.options.submit();" />
+                <xar:mlstring>Descending Order:</xar:mlstring> <input type="radio" name="order" value="DESC" checked="checked" onChange="javascript:document.options.submit();" />
                 </xar:if>
             </td>
             <td>
@@ -67,22 +67,22 @@
                 </xar:if>
 
                 <option value="">-------------</option>
-                <option value="MYALL">My Tickets</option>
+                <option value="MYALL"><xar:mlstring>My Tickets</xar:mlstring></option>
 
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
-                <option value="MYOPEN">My Open Tickets</option>
+                <option value="MYOPEN"><xar:mlstring>My Open Tickets</xar:mlstring></option>
                 </xar:if>
 
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
-                <option value="ALL">All Tickets</option>
+                <option value="ALL"><xar:mlstring>All Tickets</xar:mlstring></option>
                 </xar:if>
 
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
-                <option value="MYASSIGNEDALL">My Assigned Tickets</option>
+                <option value="MYASSIGNEDALL"><xar:mlstring>My Assigned Tickets</xar:mlstring></option>
                 </xar:if>
 
                 <xar:if condition="xarSecurityCheck('edithelpdesk',0) and xarModGetVar('helpdesk', 'Techs see all tickets')">
-                <option value="UNASSIGNED">All Unassigned Tickets</option>
+                <option value="UNASSIGNED"><xar:mlstring>All Unassigned Tickets</xar:mlstring></option>
                 </xar:if>
 
                 </select>
@@ -107,41 +107,57 @@
             </a>
         </th>
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'SUBJECT', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Subject</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'SUBJECT', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Subject</xar:mlstring>
+            </a>
         </th>
         <xar:if condition="$showstatusinsummary">
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'STATUS', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Status</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'STATUS', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Status</xar:mlstring>
+            </a>
         </th>
         </xar:if>
         <xar:if condition="$showpriorityinsummary">
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'PRIORITY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Priority</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'PRIORITY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Priority</xar:mlstring>
+            </a>
         </th>
         </xar:if>
         <xar:if condition="$showopenbyinsummary">
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'OPENEDBY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Opened by</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'OPENEDBY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Opened by</xar:mlstring>
+            </a>
         </th>
         </xar:if>
         <xar:if condition="$showassignedtoinsummary">
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'ASSIGNEDTO', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Assigned to</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'ASSIGNEDTO', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Assigned to</xar:mlstring>
+            </a>
         </th>
         </xar:if>
         <xar:if condition="$showclosedbyinsummary">
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'CLOSEDBY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Closed by</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'CLOSEDBY', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Closed by</xar:mlstring>
+            </a>
         </th>
         </xar:if>
         <xar:if condition="$showdateenteredinsummary">
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'DATE', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Date Entered</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'DATE', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Date Entered</xar:mlstring>
+            </a>
         </th>
         </xar:if>
         <xar:if condition="$showlastmodifiedinsummary">
         <th class="xar-norm-outline">
-            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'DATEUPDATED', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#"><xar:mlstring>Last Modified</xar:mlstring></a>
+            <a href="#xarModURL('helpdesk', 'user', 'view', array('sortorder' => 'DATEUPDATED', 'order' => $order, 'selection' => $selection, 'statusfilter' => $statusfilter))#">
+            <xar:mlstring>Last Modified</xar:mlstring>
+            </a>
         </th>
         </xar:if>
     </tr>
@@ -150,7 +166,7 @@
          Fields to show: Ticket Number/Date/Subject/Status/Last Update -->
     <xar:set name="$class">'xar-norm'</xar:set>
     <xar:if condition="empty($mytickets_data)">
-    <tr><td colspan="10">There are no tickets!</td></tr>
+    <tr><td colspan="10"><xar:mlstring>There are no tickets!</xar:mlstring></td></tr>
     </xar:if>
     <xar:foreach in="$mytickets_data" value="$ticket">
         <xar:set name="$ticket_id">$ticket['ticket_id']</xar:set>
