@@ -127,6 +127,7 @@ function articles_featureditemsblock_display(& $blockinfo)
                 )
             );
             if (empty($vars['showfeaturedbod'])) {$vars['showfeaturedbod'] = false;}
+            if(!isset($featuredart['cids'])) $featuredart['cids'] = "";
 
             $feature= array(
                 'featuredlabel'     => $featuredart['title'],
