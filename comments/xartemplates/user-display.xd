@@ -64,7 +64,7 @@
             <xar:if condition="$number_of_comments ne 0">
                 <xar:mlstring>Total number of attached comments:</xar:mlstring> #$number_of_comments#
             <xar:else />
-            	<xar:mlstring>There are no comments attached to this item.</xar:mlstring>
+                <xar:mlstring>There are no comments attached to this item.</xar:mlstring>
             </xar:if>
         </p>
     </xar:if>

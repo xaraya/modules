@@ -4,7 +4,7 @@
         <xar:if condition="!isset($receipt['action']) or ($receipt['action'] ne 'reply' and $receipt['action'] ne 'modify')">
             <xar:sec catch="false" mask="Comments-Reply" instance="$header[modid]:$header[objectid]:ALL">
                 <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" class="xar-cm-actions">
-					<div>
+                    <div>
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" />
                         <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
                         <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
@@ -13,28 +13,28 @@
                         <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
                         <input type="hidden" name="receipt[action]" value="reply" /> 
                         <input type="submit" name="submit" id="submit-reply#$loop:item['xar_cid']#" value="#xarML('Reply')#" />
-					</div>
+                    </div>
                 </form>
             </xar:sec>
             <xar:if condition="xarUserIsLoggedIn()">
                 <xar:if condition="xarSecurityCheck('Comments-Edit',0,'',$header['modid'].':'.$header['objectid'].':'.$loop:item['xar_cid']) or $loop:item['xar_uid'] eq $package['uid']">
                     <form action="#xarModUrl('comments', 'user', 'modify')#" method="post" class="xar-cm-actions">
-						<div>
-							<input type="hidden" name="header[modid]" value="#$header['modid']#" />
-							<input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
-							<input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
-							<input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
-							<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
-							<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
-							<input type="hidden" name="receipt[action]" value="modify" /> 
-							<input type="submit" name="submit-modify#$loop:item['xar_cid']#" id="submit" value="#xarML('Modify')#" /> 
-						</div>
+                        <div>
+                            <input type="hidden" name="header[modid]" value="#$header['modid']#" />
+                            <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
+                            <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
+                            <input type="hidden" name="header[cid]" value="#$loop:item['xar_cid']#" />
+                            <input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
+                            <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
+                            <input type="hidden" name="receipt[action]" value="modify" /> 
+                            <input type="submit" name="submit-modify#$loop:item['xar_cid']#" id="submit" value="#xarML('Modify')#" /> 
+                        </div>
                     </form>
                 </xar:if>
             </xar:if>
             <xar:sec catch="false" mask="Comments-Delete" instance="$header[modid]:$header[objectid]:$loop:item[xar_cid]">
                 <form action="#xarModUrl('comments', 'user', 'delete')#" method="post" class="xar-cm-actions">
-                	<div>
+                    <div>
                         <input type="hidden" name="header[modid]" value="#$header['modid']#" />
                         <input type="hidden" name="header[itemtype]" value="#$header['itemtype']#" />
                         <input type="hidden" name="header[objectid]" value="#$header['objectid']#" />
@@ -44,7 +44,7 @@
                         <input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
                         <input type="hidden" name="receipt[action]" value="confirm-delete" />
                         <input type="submit" name="submit" id="submit-delete#$loop:item['xar_cid']#" value="#xarML('Delete')#" /> 
-                	</div>
+                    </div>
                 </form>
             </xar:sec>
         </xar:if>
@@ -85,18 +85,18 @@
         <div class="xar-accent xar-cm-comment">
             <xar:if condition="isset($package['transformed-text'])">
                 #$package['transformed-text']# 
-				<p>
-					<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
-						#
-					</a>
-				</p>
+                <p>
+                    <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+                        #
+                    </a>
+                </p>
                 <xar:else />
                 #$loop:item['xar_text']# 
-				<p>
-					<a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
-						#
-					</a>
-				</p>
+                <p>
+                    <a href="#xarModURL('comments','user','display',array('cid' => $loop:item['xar_cid']))#" title="#xarML('Permalink')#" rel="bookmark">
+                        #
+                    </a>
+                </p>
                 <xar:if condition="isset($loop:item['xar_branchout']) and $loop:item['xar_branchout'] eq 1">
 <!--                     <br /> -->
                     <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[itemtype]=#$header['itemtype']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a>
