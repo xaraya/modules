@@ -148,7 +148,8 @@ function translations_adminapi_generate_module_skels($args)
             $ctxtype1 = '';
             $ctxname1 = $subname;
         }
-        if (!$gen->create('modules:'.$ctxtype1,$ctxname1)) return;
+        
+        $fileAlreadyOpen = false;
 
         $statistics[$subname] = array('entries'=>0, 'keyEntries'=>0);
 
@@ -164,6 +165,10 @@ function translations_adminapi_generate_module_skels($args)
                 // Get previous translation, it's void if not yet translated
                 $translation = $backend->translate($string);
 
+                if (!$fileAlreadyOpen) {
+                    if (!$gen->create('modules:'.$ctxtype1,$ctxname1)) return;
+                    $fileAlreadyOpen = true;
+                }
                 // Add entry
                 $gen->addEntry($string, $references, $translation);
             }
@@ -180,11 +185,18 @@ function translations_adminapi_generate_module_skels($args)
             $translation = $backend->translateByKey($key);
             // Get the original translation made by developer if any
             if (!$translation && isset($KEYS[$key])) $translation = $KEYS[$key];
+
+            if (!$fileAlreadyOpen) {
+                if (!$gen->create('modules:'.$ctxtype1,$ctxname1)) return;
+                $fileAlreadyOpen = true;
+            }
             // Add key entry
             $gen->addKeyEntry($key, $references, $translation);
         }
 
-        $gen->close();
+        if ($fileAlreadyOpen) {
+            $gen->close();
+        }
     }
 
     $time = explode(' ', microtime());

@@ -11,10 +11,9 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-
 function translations_admin_translate_update()
 {
-// Security Check
+    // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
     // FIXME voll context validation
@@ -60,9 +59,19 @@ function translations_admin_translate_update()
     if (!$gen->bindDomain($dnType, $dnName)) return;
     if (!$gen->create($ctxType, $ctxName)) return;
 
+    require_once "includes/transforms/xarCharset.php";
+    if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) return false;
+    if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) return false;
+    $workingCharset = $parsedWorkingLocale['charset'];
+    $siteCharset = $parsedSiteLocale['charset'];
+    $newEncoding = new xarCharset;
+
     for ($i = 0; $i < $numEntries; $i++) {
         unset($translation);
         if (!xarVarFetch('tid'.$i, 'str::', $translation, '', XARVAR_POST_ONLY)) return;
+        if ($siteCharset != $workingCharset) {
+            $translation = $newEncoding->convert($translation, $siteCharset, $workingCharset, 0);
+        }
         // Lookup the string bounded to the tid$i transient id
         $e = $backend->lookupTransientId($i);
         if ($e) {
@@ -72,6 +81,9 @@ function translations_admin_translate_update()
     while (list($key, $translation) = $backend->enumKeyTranslations()) {
         unset($translation);
         if (!xarVarFetch('key'.$key, 'str::', $translation, '', XARVAR_POST_ONLY)) return;
+        if ($siteCharset != $workingCharset) {
+            $translation = $newEncoding->convert($translation, $siteCharset, $workingCharset, 0);
+        }
         $e = $backend->getEntryByKey($key);
         if ($e) {
             $gen->addKeyEntry($key, $e['references'], $translation);
@@ -80,7 +92,8 @@ function translations_admin_translate_update()
 
     $gen->close();
 
-// voll    xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
+    // voll    
+    // xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', array('subtype'=>$subtype, 'subname'=>$subname)));
     xarResponseRedirect(xarModURL('translations', 'admin', 'translate_subtype', 
        array(
            'dnType' => $dnType,  
@@ -88,4 +101,5 @@ function translations_admin_translate_update()
            'extid' => $extid,  
            'defaultcontext'=>$subtype.':'.$subname)));
 }
+
 ?>

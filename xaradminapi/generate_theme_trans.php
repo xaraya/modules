@@ -35,14 +35,17 @@ function translations_adminapi_generate_theme_trans($args)
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
 
-    $l = xarLocaleGetInfo($locale);
-//    if ($l['charset'] == 'utf-8') {
-//        $ref_locale = $locale;
-//    } else {
-//        $l['charset'] = 'utf-8';
-//        $ref_locale = xarLocaleGetString($l);
-//    }
+    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+        $l = xarLocaleGetInfo($locale);
+        if ($l['charset'] == 'utf-8') {
+            $ref_locale = $locale;
+        } else {
+            $l['charset'] = 'utf-8';
+            $ref_locale = xarLocaleGetString($l);
+        }
+    } else {
         $ref_locale = $locale;
+    }
 
     $backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $ref_locale));
     if (!isset($backend)) return;

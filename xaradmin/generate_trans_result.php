@@ -35,8 +35,8 @@ function translations_admin_generate_trans_result()
         $res = xarModAPIFunc('translations','admin','generate_theme_trans',$args);
         break;
     }
-    if (!isset($res)) return;
 
+    if (!isset($res)) return;
     $tplData = $res;
     if ($tplData == NULL) {
         xarResponseRedirect(xarModURL('translations', 'admin', 'generate_trans_info'));

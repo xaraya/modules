@@ -12,10 +12,13 @@
 
 class PHPTranslationsGenerator 
 {
-
     var $locale;
     var $fp;
-
+    var $outCharset;
+    var $isUTF8;
+    var $fileName;
+    var $baseDir;
+    
     function PHPTranslationsGenerator($locale)
     {
         $this->locale = $locale;

@@ -26,7 +26,6 @@ function translations_adminapi_create_generator_instance($args)
         $bt = xarModAPIFunc('translations','admin','release_backend_type');
     }
     if (!$bt) return;
-
     switch ($bt) {
         case 'php':
             include_once 'modules/translations/class/PHPTransGenerator.php';

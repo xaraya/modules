@@ -11,10 +11,11 @@
 
 class XMLTranslationsSkelsGenerator 
 {
-
     var $locale;
     var $fp;
-
+    var $fileName;
+    var $baseDir;
+                
     function XMLTranslationsSkelsGenerator($locale)
     {
         $this->locale = $locale;

@@ -58,11 +58,24 @@ function translations_adminapi_getcontextentries($args)
 
     $maxReferences = xarModGetVar('translations', 'maxreferences');
 
+    require_once "includes/transforms/xarCharset.php";
+    if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) return false;
+    if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) return false;
+    $workingCharset = $parsedWorkingLocale['charset'];
+    $siteCharset = $parsedSiteLocale['charset'];
+    $newEncoding = new xarCharset;
+
     $numEntries = 0;
     $numEmptyEntries = 0;
     $entries = array();
     while (list($string, $translation) = $backend->enumTranslations()) {
-        $entry = array('string' => htmlspecialchars($string), 'translation' => htmlspecialchars($translation), 'tid' => $backend->getTransientId($string));
+        if ($siteCharset != $workingCharset) {
+            $translation = $newEncoding->convert($translation, $workingCharset, $siteCharset, 0);
+        }
+        $entry = array(
+            'string' => htmlspecialchars($string),
+            'translation' => htmlspecialchars($translation),
+            'tid' => $backend->getTransientId($string));
         $e = $backend->getEntry($string);
         $entry['references'] = translations_grab_source_code($e['references'], $maxReferences);
         if (count($e['references']) > $maxReferences) {
@@ -80,7 +93,12 @@ function translations_adminapi_getcontextentries($args)
     $numEmptyKeyEntries = 0;
     $keyEntries = array();
     while (list($key, $translation) = $backend->enumKeyTranslations()) {
-        $keyEntry = array('key' => htmlspecialchars($key), 'translation' => htmlspecialchars($translation));
+        if ($siteCharset != $workingCharset) {
+            $translation = $newEncoding->convert($translation, $workingCharset, $siteCharset, 0);
+        }
+        $keyEntry = array(
+            'key' => htmlspecialchars($key),
+            'translation' => htmlspecialchars($translation));
         $e = $backend->getEntryByKey($key);
         $keyEntry['references'] = translations_grab_source_code($e['references'], $maxReferences);
         if (count($e['references']) > $maxReferences) {
@@ -99,8 +117,13 @@ function translations_adminapi_getcontextentries($args)
         if (empty($translation)) $numEmptyKeyEntries++;
     }
 
-    return array('entries'=>$entries, 'numEntries'=> $numEntries, 'numEmptyEntries'=>$numEmptyEntries,
-                 'keyEntries'=>$keyEntries, 'numKeyEntries'=> $numKeyEntries, 'numEmptyKeyEntries'=> $numEmptyKeyEntries,);
+    return array(
+        'entries'=>$entries,
+        'numEntries'=> $numEntries,
+        'numEmptyEntries'=>$numEmptyEntries,
+        'keyEntries'=>$keyEntries,
+        'numKeyEntries'=> $numKeyEntries, 
+        'numEmptyKeyEntries'=> $numEmptyKeyEntries,);
 }
 
 function translations_grab_source_code($references, $maxReferences = NULL)

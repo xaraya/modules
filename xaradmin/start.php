@@ -23,8 +23,18 @@ function translations_admin_start()
     // Security Check
     if(!xarSecurityCheck('AdminTranslations')) return;
 
-    //    $tplData['locales'] = xarLocaleGetList(array('charset'=>'utf-8'));
-    $tplData['locales'] = $GLOBALS['xarMLS_allowedLocales'];
+    if (xarConfigGetVar('Site.MLS.TranslationsBackend') == 'xml2php') {
+        $locales = $GLOBALS['xarMLS_allowedLocales'];
+        foreach ($locales as $locale) {
+            $l = xarMLS__parseLocaleString($locale);
+            if ($l['charset'] != 'utf-8') continue;
+            $list[] = $locale;
+        }
+        $tplData['locales'] = $list;
+    } else {
+        $tplData['locales'] = $GLOBALS['xarMLS_allowedLocales'];
+    }
+
     $tplData['working_locale'] = translations_working_locale();
     $tplData['dnType'] = XARMLS_DNTYPE_CORE;
 
