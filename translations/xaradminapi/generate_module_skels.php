@@ -96,16 +96,7 @@ function translations_adminapi_generate_module_skels($args)
         }
     }
 
-    $allowedcontexts = array();
-    $allcontexts = $GLOBALS['MLS']->getContexts();
-    foreach ($allcontexts as $context) {
-        $contextName = $context->getName();
-        if ($contextName == 'core' || $contextName == 'file' ||
-            $contextName == 'templates' || $contextName == 'templateincludes' ||
-            $contextName == 'templateblocks') continue;
-        $allowedcontexts[] = $contextName;
-    }
-    // $allowedcontexts = array("blocks", "admin", "adminapi", "user", "userapi");
+    $allowedcontexts = array("blocks", "admin", "adminapi", "user", "userapi", "visualapi");
 
     foreach($allowedcontexts as $allowedcontext) {
         ${$allowedcontext . "names"} = array();
@@ -231,7 +222,7 @@ function translations_adminapi_generate_module_skels($args)
 function translations_gather_common_entries($transEntriesCollection)
 {
     $commonEntries = array();
-    $subnames = array_keys($transEntriesCollection);
+    $subnames = array_keys($transEntriesCollection); // ('user', 'userapi', 'admin', 'adminapi');
     foreach ($subnames as $subname) {
         foreach ($transEntriesCollection[$subname] as $string => $references) {
 
