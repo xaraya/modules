@@ -8,6 +8,10 @@
                       the complete tree.
 </xar:comment>
 
+<xar:if condition="!isset($root_depth)">
+    <xar:set name="root_depth">1</xar:set>
+</xar:if>
+
 <xar:if condition="$parent.has_children">
     <xar:comment>
         In this menu, we want to display:
@@ -31,7 +35,7 @@
     <xar:set name="display_children">false</xar:set>
     <xar:loop name="$parent.child_keys">
         <xar:set name="page">#$pages[$loop:item]#</xar:set>
-        <xar:if condition="$page.depth le 1 or !empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor)">
+        <xar:if condition="$page.depth le $root_depth or !empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor)">
             <xar:set name="display_children">true</xar:set>
         </xar:if>
     </xar:loop>
@@ -45,7 +49,7 @@
         <ul>
             <xar:loop name="$parent.child_keys">
                 <xar:set name="page">#$pages[$loop:item]#</xar:set>
-                <xar:if condition="$page.depth le 1 or !empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor)">
+                <xar:if condition="$page.depth le $root_depth or !empty($page.is_child) or !empty($page.is_sibling) or !empty($page.is_ancestor)">
                     <xar:comment>Set a class if the page has sub-pages</xar:comment>
                     <xar:if condition="!empty($page.has_children)">
                     </xar:if>
@@ -59,25 +63,37 @@
                     </xar:if>
 
                     <li>
-                        <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#" title="#xarVarPrepForDisplay($page.desc)#">
-                            <xar:if condition="!empty($page.dd.menu_title)">
+                        <xar:comment>
+                            An empty page with no children is treated as a section header,
+                            used to divide sections of pages in a single menu level.
+                        </xar:comment>
+                        <xar:if condition="$page.status eq 'EMPTY' and empty($page.has_children)">
+                            &gt; <xar:if condition="!empty($page.dd.menu_title)">
                                 #xarVarPrepForDisplay($page.dd.menu_title)#
                             <xar:else />
                                 #$page.name#
                             </xar:if>
-                        </a>
+                        <xar:else />
+                            <a href="#xarModURL('xarpages','user','display',array('pid'=&gt;$page.pid))#" title="#xarVarPrepForDisplay($page.desc)#">
+                                <xar:if condition="!empty($page.dd.menu_title)">
+                                    #xarVarPrepForDisplay($page.dd.menu_title)#
+                                <xar:else />
+                                    #$page.name#
+                                </xar:if>
+                            </a>
 
-                        <xar:comment>Flag the current page</xar:comment>
-                        <xar:if condition="!empty($page.is_current)">[*]</xar:if>
+                            <xar:comment>Flag the current page</xar:comment>
+                            <xar:if condition="!empty($page.is_current)">[*]</xar:if>
 
-                        <xar:comment>If the page has children and is not open</xar:comment>
-                        <xar:if condition="!empty($page.has_children) and empty($page.is_ancestor)">&gt;</xar:if>
+                            <xar:comment>If the page has children and is not open</xar:comment>
+                            <xar:if condition="!empty($page.has_children) and empty($page.is_ancestor)">&gt;</xar:if>
 
-                        <xar:comment>If the page has children and is open</xar:comment>
-                        <xar:if condition="!empty($page.has_children) and !empty($page.is_ancestor)">v</xar:if>
+                            <xar:comment>If the page has children and is open</xar:comment>
+                            <xar:if condition="!empty($page.has_children) and !empty($page.is_ancestor)">v</xar:if>
 
-                        <xar:if condition="!empty($page.has_children)">
-                            <xar:template file="side-menu" subdata="array('parent'=&gt;$page,'pages'=&gt;$pages)" />
+                            <xar:if condition="!empty($page.has_children)">
+                                <xar:template file="side-menu" subdata="array('parent'=&gt;$page,'pages'=&gt;$pages,'root_depth'=&gt;$root_depth)" />
+                            </xar:if>
                         </xar:if>
                     </li>
                 </xar:if>
