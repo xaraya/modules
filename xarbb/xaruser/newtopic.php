@@ -141,7 +141,7 @@ function xarbb_user_newtopic()
             if(isset($tid))    {
                  $modified_date= xarLocaleFormatDate('%d %B %Y %H:%M:%S %Z',time());
                  $tpost .= "\n\n";
-                 $tpost .=xarML('[Modified by: #(1) (#(2)) on #(3)]',
+                 $tpost .=xarML('[Modified by: #(1) on #(3)]',
                      xarUserGetVar('name'),
                      xarUserGetVar('uname'),
                      $modified_date);
@@ -159,14 +159,14 @@ function xarbb_user_newtopic()
                  //Only update the user if new topic, not edited
                  $tposter = xarUserGetVar('uid');
 
-                 if (!xarModAPIFunc('xarbb',
+                 $tid = xarModAPIFunc('xarbb',
                                'user',
                                'createtopic',
                                array('fid'      => $data['fid'],
                                      'ttitle'   => $ttitle,
                                      'tpost'    => $tpost,
                                      'tposter'  => $tposter,
-                                     'tstatus'  => $tstatus))) return;
+                                     'tstatus'  => $tstatus));
                  // NNTP?
                  $settings   = unserialize(xarModGetVar('xarbb', 'settings.'.$fid));
                  if ($settings['linknntp']){
@@ -190,11 +190,19 @@ function xarbb_user_newtopic()
                                          'fposter'  => $tposter))) return;
              }
 
+            $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
+            $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid));
 
+            /*
             if($redirect == 'topic')
                 xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
             else
                 xarResponseRedirect(xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid'])));
+            */
+
+            $data = xarTplModule('xarbb','user', 'return', array('forumreturn'     => $forumreturn,
+                                                                 'topicreturn'     => $topicreturn));
+
 
             break;
 
@@ -208,6 +216,8 @@ function xarbb_user_newtopic()
                                                            $data['fid']);
     //Make sure we return the preview state
     $data['preview']=$preview;
+
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('New Topic')));
 
     // Return the output
    return $data;

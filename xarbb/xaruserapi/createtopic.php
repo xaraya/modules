@@ -136,5 +136,4 @@ function xarbb_userapi_createtopic($args)
     // Return the id of the newly created link to the calling process
     return $tid;
 }
-
 ?>

@@ -126,6 +126,8 @@ function xarbb_user_main()
         }
     }
 
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Forum Index')));
+
     return $data;
 }
 

@@ -121,6 +121,8 @@ function xarbb_user_newreply()
     $data['header']     = $header;
     $data['authid']     = xarSecGenAuthkey();
 
+    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Reply to ') . $data['ttitle']));
+
     return $data;
 }
 ?>

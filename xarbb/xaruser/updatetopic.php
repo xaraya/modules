@@ -69,7 +69,11 @@ function xarbb_user_updatetopic()
                                  'move'     => 'positive',
                                  'fposter'  => $poster))) return;
     }
-    xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid)));
-    return;
+
+    $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
+    $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid));
+    $data = xarTplModule('xarbb','user', 'return', array('forumreturn'     => $forumreturn,
+                                                         'topicreturn'     => $topicreturn));
+    return $data;
 }
 ?>
