@@ -133,6 +133,9 @@ function articles_admin_new($args)
             $input['id'] = $field;
             if (!empty($preview) && isset($article[$field])) {
                 $input['value'] = $article[$field];
+            } elseif ($field == 'pubdate') {
+                // default publication time is now
+                $input['value'] = time();
             } else {
                 $input['value'] = '';
             }
