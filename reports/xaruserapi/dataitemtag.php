@@ -12,9 +12,10 @@ function reports_userapi_dataitemtag($args)
     } else {
         // Type denotes a mime formatted type, generate a cache representation of
         // TODO: test for value of id
+        if(!isset($extension)) $extension='bin';// TODO: make this better
         $code = ';
         $cachekey = md5("'.$name.'".'.$dataset.'->fields[\''.$unique_id.'\']);
-        $cacheFile = "var/cache/reports/$cachekey.bin";
+        $cacheFile = "var/cache/reports/$cachekey.'.$extension.'";
         $fp = @fopen($cacheFile,"w");
         if (!empty($fp)) {
             @fwrite($fp,'.$dataset.'->fields[\''.$name.'\']);
