@@ -1,4 +1,14 @@
 <?php
+/*
+ *
+ * Keywords Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @author mikespub
+*/
 
 /**
  * return the path for a short URL to xarModURL for this module

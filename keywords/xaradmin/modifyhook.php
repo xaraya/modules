@@ -1,4 +1,15 @@
 <?php
+/*
+ *
+ * Keywords Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @author mikespub
+*/
+
 
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')
@@ -62,8 +73,12 @@ function keywords_admin_modifyhook($args)
         $itemid = $objectid;
     }
 
-    // get the current keywords for this item
-    $oldwords = xarModAPIFunc('keywords','user','getwords',
+
+	$restricted = xarModGetVar('keywords','restricted');
+        if ($restricted == '0') {
+           $oldwords = xarModAPIFunc('keywords',
+                                     'user',
+                                     'getwords',
                               array('modid' => $modid,
                                     'itemtype' => $itemtype,
                                     'itemid' => $itemid));
@@ -132,10 +147,33 @@ function keywords_admin_modifyhook($args)
     }
 */
 
-    return xarTplModule('keywords','admin','modifyhook',
+	} else {
+			
+			$keywords = xarModAPIFunc('keywords','user','getwords',
+                           array('modid' => $modid,
+                                 'itemtype' => $itemtype,
+                                 'itemid' => $itemid));
+        
+        
+        
+        	$keywords1 = xarModAPIFunc('keywords',
+                                'admin',
+                                'getallkey',
+                                 array('moduleid' => $modid));
+                                 
+       
+			$wordlist=array_diff($keywords1,$keywords);
+
+                                 
+     		}
+
+    return xarTplModule('keywords',
+                        'admin',
+                        'modifyhook',
                         array('keywords' => $keywords,
                               'wordlist' => $wordlist,
-                              'delimiters'=>$delimiters));
+                              'delimiters' => $delimiters,
+                              'restricted' => $restricted));
 }
 
 ?>

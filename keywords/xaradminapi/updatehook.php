@@ -1,4 +1,14 @@
 <?php
+/*
+ *
+ * Keywords Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by the Xaraya Development Team
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
+ * @link http://www.xaraya.com
+ * @author mikespub
+*/
 
 /**
  * update entry for a module item - hook for ('item','update','API')
@@ -13,6 +23,8 @@
 function keywords_adminapi_updatehook($args)
 {
     extract($args);
+
+
 
     if (!isset($objectid) || !is_numeric($objectid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',

@@ -1,9 +1,72 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->	
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 20%; text-align: right;">
-		<xar:mlstring>Keywords</xar:mlstring>:
+		<span class="help" title="#xarML('select the keywords for this item.')#"><xar:mlstring>Keywords</xar:mlstring>:</span>
 	</span>
 	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" />
-		<br/><xar:mlstring>Allowed delimiters</xar:mlstring>: #$delimiters#
+
+	<xar:if condition="$restricted eq 0">	
+		<p><input type="text" name="keywords" id="keywords" value="#$keywords#" size="50" maxlength="254" /></p>
+		<p><xar:mlstring>Allowed delimiters</xar:mlstring>: #$delimiters#</p>
+	<xar:else />
+	
+	<xar:base-include-javascript filename="selectbox.js"/>
+	
+	<SCRIPT language=JavaScript>
+        var opt = new OptionTransfer("list1","list2");
+	opt.setAutoSort(true);
+	opt.setDelimiter(",");
+	opt.saveNewRightOptions("keywords");
+	</SCRIPT>
+	<div style="clear: both; padding-top: 10px;">
+		<table>
+  			<tbody onload=opt.init(document.forms[0]);>
+  				<tr>
+  					<td align="middle">
+						<xar:mlstring>
+							List of keywords
+						</xar:mlstring>
+					</td>
+  					<td>
+						<img name="pix" src="modules/keywords/xarimages/pix.gif" alt="" onLoad="opt.init(document.forms[0]);" /> 
+					</td>
+  					<td>
+						<xar:mlstring>
+							Choosen keywords
+						</xar:mlstring>
+					</td>
+  				</tr>
+  				<tr>
+					<td>
+              			<select ondblclick=opt.transferRight() multiple size=10 name=list1> 
+							<xar:foreach in="$keywords" value="$item">
+								<option name="keywords" value="#$item#">#$item#</option>
+							</xar:foreach>
+        				</select> 
+					</td>
+    				<td>
+    					<p>
+    					    <input onclick=opt.transferRight() type=button value="&gt;"name="right" />
+    					</p>
+    					<p>
+    					    <input onclick=opt.transferAllRight() type=button value="&gt;&gt;" name="right" />
+    					</p>
+    					<p>
+    					    <input onclick=opt.transferLeft() type=button value="&lt;" name="left" />
+    					</p>
+    					<p>
+    					    <input onclick=opt.transferAllLeft() type=button value="&lt;&lt;" name="left" />
+    					</p>
+      				</td>
+    				<td>
+    					<select ondblclick=opt.transferLeft() multiple size=10 name=list2> 
+        				</select> 
+					</td>
+      			</tr>
+      		</tbody>
+      	</table>
+		<input type="hidden" size=70 name=keywords id="keywords">
+		</div>
+	</xar:if>			
 	</span>
 	</div>

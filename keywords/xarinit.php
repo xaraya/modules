@@ -74,12 +74,32 @@ function keywords_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    $query = xarDBCreateTable($xartable['keywords_restr'],
+                             array('xar_id'         => array('type'        => 'integer',
+                                                            'null'       => false,
+                                                            'increment'  => true,
+                                                            'primary_key' => true),
+                                   'xar_keyword'    => array('type'        => 'varchar',
+                                                            'size'        => 254,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+// TODO: replace with unique id
+                                   'xar_moduleid'   => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0')
+                                  ));
+
+    if (empty($query)) return; // throw back
+
+    // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
+
     xarModSetVar('keywords', 'SupportShortURLs', 1);
     xarModSetVar('keywords', 'delimiters', ';, ');
-
-// TODO: optionally restrict to known keywords (coming from somewhere to be defined)
     xarModSetVar('keywords', 'restricted', 0);
-    xarModSetVar('keywords', 'default', 'not functional yet...');
+    xarModSetVar('keywords', 'default', 'xaraya');
 
     if (!xarModRegisterHook('item', 'new', 'GUI',
                            'keywords', 'admin', 'newhook')) {
@@ -149,7 +169,35 @@ function keywords_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case '1.0':
-            // Code to upgrade from version 1.0 goes here
+        case '1.0.0':
+
+                xarModSetVar('keywords', 'restricted', 0);
+                xarModSetVar('keywords', 'default', 'xaraya');
+
+                $dbconn =& xarDBGetConn();
+                $xartable =& xarDBGetTables();
+                xarDBLoadTableMaintenanceAPI();
+                $query = xarDBCreateTable($xartable['keywords_restr'],
+                             array('xar_id'         => array('type'        => 'integer',
+                                                            'null'       => false,
+                                                            'increment'  => true,
+                                                            'primary_key' => true),
+                                   'xar_keyword'    => array('type'        => 'varchar',
+                                                            'size'        => 254,
+                                                            'null'        => false,
+                                                            'default'     => ''),
+                                   'xar_moduleid'   => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
+                                                            'default'     => '0')
+                                  ));
+
+                if (empty($query)) return; // throw back
+
+                // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+                $result = &$dbconn->Execute($query);
+                if (!$result) return;
+
             break;
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
@@ -187,8 +235,12 @@ function keywords_delete()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-    // Delete any module variables
-    xarModDelVar('keywords', 'SupportShortURLs'); 
+    $query = xarDBDropTable($xartable['keywords_restr']);
+    if (empty($query)) return; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result = &$dbconn->Execute($query);
+    if (!$result) return;
 
     // Remove module hooks
     if (!xarModUnregisterHook('item', 'new', 'GUI',
