@@ -10,20 +10,8 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-  function commerce_userapi_get_zone_name($args) {
-    include_once 'modules/xen/xarclasses/xenquery.php';
-    $xartables = xarDBGetTables();
-    extract($args);
-    $q = new xenQuery("SELECT",$xartables['commerce_zones']);
-    if (!isset($zone_id)) $zone_id = 1;
-    $q->eq('zone_id',$zone_id);
-    if (isset($country_id)) $q->eq('zone_country_id',$country_id);
-    if (!$q->run()) return;
-    if ($q->row() != array()) {
-      $zone = $q->row();
-      return $zone['zone_name'];
-    } else {
-      return $default_zone;
-    }
-  }
- ?>
+function commerce_userapi_get_customer_status_name() {
+    $row = xarModAPIFunc('commerce','user','get_customer_status');
+    return $row['name'];
+}
+?>

@@ -2,6 +2,7 @@
 $modversion['name'] = 'commerce';
 $modversion['id'] = '3006';
 $modversion['version'] = '0.5.0';
+$modversion['displayname'] = xarML('Commerce');
 $modversion['description'] = 'E-commerce application';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

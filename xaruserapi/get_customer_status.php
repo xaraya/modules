@@ -17,13 +17,14 @@ function commerce_userapi_get_customer_status($args) {
 
     extract($args);
     $q = new xenQuery('SELECT',
-                      $xartables['commerce_customers_status'],
-                      array('customers_status_id', 'customers_status_name', 'customers_status_public', 'customers_status_image', 'customers_status_discount', 'customers_status_ot_discount_flag', 'customers_status_ot_discount', 'customers_status_graduated_prices')
+                      $xartables['commerce_customers_status']
                      );
     if (!isset($language_id)) {
+        $languages = xarModAPIFunc('commerce','user','get_languages');
         $localeinfo = xarLocaleGetInfo(xarMLSGetSiteLocale());
-        $locale = $localeinfo['lang'] . "_" . $localeinfo['country'];
-        $language_id = $language['id'];
+        $language = $localeinfo['lang'] . "_" . $localeinfo['country'];
+        $currentlang = xarModAPIFunc('commerce','user','get_language',array('locale' => $language));
+        $language_id = $currentlang['id'];
     }
     $q->eq('language_id',$language_id);
     if (isset($customer_id)) {
@@ -34,7 +35,8 @@ function commerce_userapi_get_customer_status($args) {
     else if (isset($customer_status_id)) {
         $q->eq('customers_status_id',$customer_status_id);
     }
-    $q->run();
+//    $q->qecho();
+    if(!$q->run()) return;
     return $q->row();
 }
 ?>

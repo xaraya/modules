@@ -45,7 +45,7 @@ function commerce_admin_modules($args)
     switch ($action) {
         case 'save':
             while (list($key, $value) = each($configuration)) {
-                $q = new xenQuery('UPDATE',$xartable['commerce_configuration']);
+                $q = new xenQuery('UPDATE',$xartables['commerce_configuration']);
                 $q->addfield('configuration_value',$value);
                 $q->eq('configuration_key',$key);
             }

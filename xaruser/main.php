@@ -19,12 +19,12 @@
 /**
  * the main administration function
  */
-function commerce_admin_main()
+function commerce_user_main()
 {
    // Security Check
 //    if(!xarSecurityCheck('EditCommerce')) return;
 
-    xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main Menu',
+    xarSessionSetVar('commerce_statusmsg', xarML('Commerce Main User Menu',
                     'commerce'));
 
     if(!xarVarFetch('branch', 'str', $branch,   "start", XARVAR_NOT_REQUIRED)) {return;}
@@ -35,7 +35,7 @@ function commerce_admin_main()
     else {
         switch(strtolower($branch)) {
             case 'start':
-                xarResponseRedirect(xarModURL('commerce', 'admin', 'configuration',array('gID' => 1)));
+                xarResponseRedirect(xarModURL('commerce', 'user', 'start'));
                 break;
         }
    }

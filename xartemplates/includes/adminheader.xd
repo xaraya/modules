@@ -43,3 +43,4 @@
 	</td>
   </tr>
 </table>
+<xar:template file="admin-navigation" type="module"/>
