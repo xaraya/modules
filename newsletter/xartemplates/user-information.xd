@@ -1,0 +1,32 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">#$menutitle#</span>
+</div>
+<div class="xar-mod-body">
+    <div style="text-align: left;margin: auto;">
+        <table border="0" width="100%">
+            <tr>
+                <td align="left" valign="top">
+                    #$information#
+                </td>
+            </tr>
+        </table>
+        <br /><hr/><br />
+        <xar:if condition="$loggedin eq true">
+            <table border="0" width="100%">
+                <tr>
+                    <td align="left" valign="top">
+                        <xar:mlstring>To subscribe to a Newsletter,</xar:mlstring>&nbsp;<a href="#$subscribelink#"><xar:mlstring>Click Here</xar:mlstring></a>
+                    </td>
+                </tr>
+            </table>
+        <xar:else />
+            <table border="0" width="100%">
+                <tr>
+                    <td align="left" valign="top">
+                        <xar:mlstring>To subscribe to a Newsletter, you must first</xar:mlstring>&nbsp;<a href="#$registerlink#"><xar:mlstring>Register Here</xar:mlstring></a>
+                    </td>
+                </tr>
+            </table>
+        </xar:if>
+    </div>
+</div>
