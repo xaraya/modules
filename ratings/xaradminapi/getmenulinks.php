@@ -9,10 +9,13 @@
  */
 function ratings_adminapi_getmenulinks()
 {
-
-// Security Check
     // Security Check
-	if (xarSecurityCheck('AdminRatings')) {
+    if (xarSecurityCheck('AdminRatings')) {
+        $menulinks[] = Array('url'   => xarModURL('ratings',
+                                                  'admin',
+                                                  'view'),
+                              'title' => xarML('View ratings statistics per module'),
+                              'label' => xarML('View Statistics'));
         $menulinks[] = Array('url'   => xarModURL('ratings',
                                                   'admin',
                                                   'modifyconfig'),
