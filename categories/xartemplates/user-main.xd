@@ -1,7 +1,7 @@
 <h2>
-	<xar:mlstring>
-		Browse Categories
-	</xar:mlstring>
+    <xar:mlstring>
+        Browse Categories
+    </xar:mlstring>
 </h2>
 
 <xar:if condition="!empty($parents) and count($parents) gt 0">

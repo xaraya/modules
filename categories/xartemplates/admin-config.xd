@@ -1,70 +1,70 @@
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("catsperpage");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Categories per page.");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("catsperpage");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Categories per page.");
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Modify Categories Configuration</xar:mlstring></h2>
-	<div style="margin: auto;">
-	<form action="#xarModURL('categories','admin','modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
+    <div style="margin: auto;">
+    <form action="#xarModURL('categories','admin','modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, fieldRequired, fieldDescription);" enctype="application/x-www-form-urlencoded">
 
-		<div style="clear: both; padding-top: 10px;">
-		<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-		<input type="hidden" name="phase" id="phase" value="update" />
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('The number of categories that you want displayed per page.')#"><label for="catsperpage"><xar:mlstring>Categories per page</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+        <input type="hidden" name="phase" id="phase" value="update" />
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The number of categories that you want displayed per page.')#"><label for="catsperpage"><xar:mlstring>Categories per page</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="catsperpage" id="catsperpage" value="#$catsperpage#" size="5" />
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('The categories can be navigated in an explorer style interface.')#"><label for="useJSdisplayYes"><xar:mlstring>Windows Explorer style tree</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="$useJSdisplay">
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The categories can be navigated in an explorer style interface.')#"><label for="useJSdisplayYes"><xar:mlstring>Windows Explorer style tree</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="$useJSdisplay">
                 <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" checked="checked" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
                 <input type="radio" name="useJSdisplay" id="useJSdisplayNo" value="false" /><label for="useJSdisplayNo"><xar:mlstring>No</xar:mlstring></label>
             <xar:else />
                 <input type="radio" name="useJSdisplay" id="useJSdisplayYes" value="true" /><label for="useJSdisplayYes"><xar:mlstring>Yes</xar:mlstring></label>
                 <input type="radio" name="useJSdisplay" id="useJSdisplayNo" value="false" checked="checked" /><label for="useJSdisplayNo"><xar:mlstring>No</xar:mlstring></label>
             </xar:if>
-		</span>
-		</div>
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Specify how many links you want to see per page.')#"><label for="numstats"><xar:mlstring>Number of links shown in statistics</xar:mlstring>:</label></span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Specify how many links you want to see per page.')#"><label for="numstats"><xar:mlstring>Number of links shown in statistics</xar:mlstring>:</label></span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <input type="text" name="numstats" id="numstats" size="4" maxlength="4" value="#$numstats#" />
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('In many cases, you can see the item title if you want.')#"><label for="showtitle"><xar:mlstring>Show the item title in statistics</xar:mlstring>:</label></span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-		<xar:if condition="!empty($showtitle)">
-		  <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
-		<xar:else/>
-		  <input type="checkbox" name="showtitle" id="showtitle" value="1" />
-		</xar:if>
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('In many cases, you can see the item title if you want.')#"><label for="showtitle"><xar:mlstring>Show the item title in statistics</xar:mlstring>:</label></span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+        <xar:if condition="!empty($showtitle)">
+          <input type="checkbox" name="showtitle" id="showtitle" value="1" checked="checked" />
+        <xar:else/>
+          <input type="checkbox" name="showtitle" id="showtitle" value="1" />
+        </xar:if>
+        </span>
+        </div>
 
-		<xar:if condition="!empty($hooks)">
-		<h4><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h4>
-		#$hooks#
-		</xar:if>
-		<br /><br /><span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$submitlabel#" /></span>
-	</form>
-	</div>
+        <xar:if condition="!empty($hooks)">
+        <h4><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h4>
+        #$hooks#
+        </xar:if>
+        <br /><br /><span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$submitlabel#" /></span>
+    </form>
+    </div>
 </div>

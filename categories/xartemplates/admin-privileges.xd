@@ -54,29 +54,29 @@
 </th><td>
     <select name="extlevel" id="extlevel">
         <xar:if condition="$extlevel eq 0">
-        	<option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
+            <option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
         <xar:else />
-        	<option value="0"><xar:mlstring>No Access</xar:mlstring></option>
+            <option value="0"><xar:mlstring>No Access</xar:mlstring></option>
         </xar:if>
         <xar:if condition="$extlevel eq 100">
-        	<option value="100" selected="selected"><xar:mlstring>Overview</xar:mlstring></option>
+            <option value="100" selected="selected"><xar:mlstring>Overview</xar:mlstring></option>
         <xar:else />
-        	<option value="100"><xar:mlstring>Overview</xar:mlstring></option>
+            <option value="100"><xar:mlstring>Overview</xar:mlstring></option>
         </xar:if>
         <xar:if condition="$extlevel eq 300">
-        	<option value="300" selected="selected"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+            <option value="300" selected="selected"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
         <xar:else />
-        	<option value="300"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
+            <option value="300"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
         </xar:if>
         <xar:if condition="$extlevel eq 500">
-        	<option value="500" selected="selected"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
+            <option value="500" selected="selected"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
         <xar:else />
-        	<option value="500"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
-        </xar:if>	
+            <option value="500"><xar:mlstring>Modify (Edit)</xar:mlstring></option>
+        </xar:if>    
         <xar:if condition="$extlevel eq 700">
-        	<option value="700" selected="selected"><xar:mlstring>Delete All</xar:mlstring></option>
+            <option value="700" selected="selected"><xar:mlstring>Delete All</xar:mlstring></option>
         <xar:else />
-        	<option value="700"><xar:mlstring>Delete All</xar:mlstring></option>
+            <option value="700"><xar:mlstring>Delete All</xar:mlstring></option>
         </xar:if>
     </select>
 </td></tr>

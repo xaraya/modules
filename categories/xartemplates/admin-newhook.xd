@@ -1,10 +1,10 @@
-	<div style="clear: both; padding-top: 10px;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Select the categories for this item.')#"><xar:mlstring>Categories</xar:mlstring>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<xar:loop name="$items">
-			#$loop:item['select']#
-		</xar:loop>
-	</span>
-	</div>
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 20%; text-align: right;">
+        <span class="help" title="#xarML('Select the categories for this item.')#"><xar:mlstring>Categories</xar:mlstring>:</span>
+    </span>
+    <span style="float: right; width: 78%; text-align: left;">
+        <xar:loop name="$items">
+            #$loop:item['select']#
+        </xar:loop>
+    </span>
+    </div>
