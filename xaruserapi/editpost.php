@@ -53,6 +53,7 @@ function bloggerapi_userapi_editpost($args)
         // FIXME: test for exceptions
         $pubType= xarModGetVar('bloggerapi','bloggerpubtype');
         $modId = xarModGetIDFromName('articles');
+        $cids = array();
         $cids = array_keys(xarModAPIFunc('categories','user','getlinks',array('iids'=>$iids,'modid'=>$modId,'itemtype' => $pubType,'reverse'=>0)));
         if ($publish) {
             $status ='publishstatus'; 
