@@ -15,7 +15,7 @@
 <table style="width: 95%">
 <tfoot>
   <tr class="xar-accent xar-accent-outline">
-    <td class="xar-accent xar-accent-outline">Totals:</td>
+    <td class="xar-accent xar-accent-outline"><xar:mlstring>Totals</xar:mlstring>:</td>
     <td class="xar-accent xar-accent-outline">#$total_entries#</td>
     <td class="xar-accent xar-accent-outline">#$total_untranslated#</td>
     <td class="xar-accent xar-accent-outline">#$total_keyentries#</td>
@@ -80,19 +80,19 @@
 <h3><xar:mlstring>Chart</xar:mlstring></h3>
 <table style="width:95%">
   <tr>
-    <td>Core</td><td>#$core_progress*100/$scale#%</td>
+    <td><xar:mlstring>Core</xar:mlstring></td><td>#$core_progress*100/$scale#%</td>
     <td><div class="xar-alt" style="width:#$core_progress#px; min-width:1px; display:inline; float:left;">&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Modules</td><td> #$mod_progress*100/$scale#%</td>
+    <td><xar:mlstring>Modules</xar:mlstring></td><td> #$mod_progress*100/$scale#%</td>
     <td><div class="xar-alt" style="width:#$mod_progress#px; min-width:1px; display:inline; float:left;">&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Themes</td><td> #$theme_progress*100/$scale#%</td>
+    <td><xar:mlstring>Themes</xar:mlstring></td><td> #$theme_progress*100/$scale#%</td>
     <td><div class="xar-alt" style="width:#$theme_progress#px; min-width:1px; display:inline; float:left;">&nbsp;</div></td>
   </tr>
   <tr>
-    <td>Total</td><td>#$total_progress*100/$scale#%</td>
+    <td><xar:mlstring>Total</xar:mlstring></td><td>#$total_progress*100/$scale#%</td>
     <td><div class="xar-alt" style="width:#$total_progress#px; min-width:1px; display:inline; float:left;">&nbsp;</div></td>
   </tr>
 </table>
@@ -101,7 +101,7 @@
 <table style="width: 95%">
 <tfoot>
   <tr class="xar-accent xar-accent-outline">
-    <td class="xar-accent xar-accent-outline">Totals:</td>
+    <td class="xar-accent xar-accent-outline"><xar:mlstring>Totals</xar:mlstring>:</td>
     <td class="xar-accent xar-accent-outline">#$coreentries['numEntries']#</td>
     <td class="xar-accent xar-accent-outline">#$coreentries['numEmptyEntries']#</td>
     <td class="xar-accent xar-accent-outline">#$coreentries['numKeyEntries']#</td>
@@ -132,7 +132,7 @@
 <table style="width: 95%">
 <tfoot>
   <tr class="xar-accent xar-accent-outline">
-    <td class="xar-accent xar-accent-outline">Totals:</td>
+    <td class="xar-accent xar-accent-outline"><xar:mlstring>Totals</xar:mlstring>:</td>
     <td class="xar-accent xar-accent-outline">#$mod_totalentries#</td>
     <td class="xar-accent xar-accent-outline">#$mod_untranslated#</td>
     <td class="xar-accent xar-accent-outline">#$mod_keytotalentries#</td>
@@ -165,7 +165,7 @@
 <table style="width: 95%">
 <tfoot>
   <tr class="xar-accent xar-accent-outline">
-    <td class="xar-accent xar-accent-outline">Totals:</td>
+    <td class="xar-accent xar-accent-outline"><xar:mlstring>Totals</xar:mlstring>:</td>
     <td class="xar-accent xar-accent-outline">#$theme_totalentries#</td>
     <td class="xar-accent xar-accent-outline">#$theme_untranslated#</td>
     <td class="xar-accent xar-accent-outline">#$theme_keytotalentries#</td>
