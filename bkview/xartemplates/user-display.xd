@@ -5,10 +5,10 @@
   <div style="float:left;">
     <ul>
       <xar:while condition="list($range,$text)= each($rangetext)">
-        <li><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#">#$text#</a></li>
+        <li><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#&amp;user=#$user#">#$text#</a></li>
       </xar:while>
       <li>
-        <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#">
+        <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#&amp;user=#$user#">
           <xar:ml>
             <xar:mlstring>All #(1) Changesets ( #(2) empty merges)</xar:mlstring>
             <xar:mlvar>#$allsets#</xar:mlvar>

@@ -2,14 +2,15 @@
 
 <table class="csets">
     <tr>
-      <th><xar:mlstring>Author</xar:mlstring></th>
+    <th><xar:mlstring>Author</xar:mlstring></th>
     <th><xar:mlstring>Recent changesets</xar:mlstring></th>
     <th><xar:mlstring>All changesets</xar:mlstring></th>
   </tr>
 
     <xar:loop name="$users">    
         <tr class="csets">
-            <td class="csets">#$loop:item['user']#</td>
+            <td class="csets">
+                <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#&amp;user=#$loop:item['user']#">#$loop:item['user']#</a></td>
             <td class="csets" width="33%">#$loop:item['recentcsets']#&nbsp;</td>
             <td class="csets" width="33%">#$loop:item['allcsets']#</td>
         </tr>    

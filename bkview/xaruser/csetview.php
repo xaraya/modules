@@ -22,6 +22,8 @@ function bkview_user_csetview($args)
     xarVarFetch('revs','str::',$revs,NULL,XARVAR_NOT_REQUIRED);
     xarVarFetch('showmerge','int:0:1',$showmerge,0);
     xarVarFetch('sort','str::',$sort,0);
+    xarVarFetch('user','str::',$user,'',XARVAR_NOT_REQUIRED);
+
     extract($args);
     $data=array();
         
@@ -30,7 +32,7 @@ function bkview_user_csetview($args)
     
     $repo = new bkRepo($item['repopath']);
     $formatstring = "':TAG:|:AGE:|:P:|:REV:|\$each(:C:){(:C:)<br/>}'";
-    $list = $repo->bkChangeSets($revs,$range,$formatstring,$showmerge,$sort);
+    $list = $repo->bkChangeSets($revs,$range,$formatstring,$showmerge,$sort,$user);
 
     $counter=1;
     $data['csets']=array();
@@ -48,7 +50,13 @@ function bkview_user_csetview($args)
     }
 
     // Pass data to BL compiler
-    $data['pageinfo']=xarML("Changeset summaries");
+    $rangetext = bkRangeToText($range);
+    if($user == '') {
+        $data['pageinfo']=xarML("Changeset summaries #(1)",$rangetext);
+    } else {
+        $data['pageinfo']=xarML("Changeset summaries #(1) by #(2)",$rangetext,$user);
+        $data['user'] = $user;
+    }
     $data['csets']=$csets;
     $data['name_value'] = $item['reponame'];
     $data['repoid']=$repoid;

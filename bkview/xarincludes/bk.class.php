@@ -138,7 +138,7 @@ class bkRepo {
     }
 
     // Get changesets
-    function bkChangeSets($revs, $range,$dspec='\":REV:\",\":C:\"',$showmerge='',$sort=0) {
+    function bkChangeSets($revs, $range,$dspec='\":REV:\",\":C:\"',$showmerge='',$sort=0,$user='') {
         // FIXME: apparently -e and -r don't work together
         // FIXME: This sets too many non logical restrictions on how dspec should look
         $params='-n ';
@@ -152,6 +152,7 @@ class bkRepo {
         }
         if ($range!='') $params.='-c'.$range.' ';
         if ($revs!='') $params.='-r'.$revs.' ';
+        if ($user!='') $params.='-u'.$user.' ';
 
         $params.="-d$dspec";
         $cmd="bk changes $params";
