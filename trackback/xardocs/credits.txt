@@ -1,0 +1,2 @@
+Drupal  -- I "borrowed" some of their pinging implementation http://www.drupal.org
+Jannis Herman -- Also a little bit of borrowing http://www.jannis.to/programming/trackback.html

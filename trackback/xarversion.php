@@ -1,19 +1,32 @@
 <?php
-// $Id: s.xarversion.php 1.6 03/01/25 20:48:07-05:00 John.Cox@mcnabb. $
-$modversion['name'] = 'trackback';
+/**
+ * File: $Id$
+ *
+ * contains the module information
+ *
+ * @package modules
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ *
+ * @subpackage trackback
+ * @author John Cox
+*/
+$modversion['name'] = 'TrackBack';
 $modversion['id'] = '183';
 $modversion['version'] = '1.0.0';
-$modversion['description'] = 'Implements the Trackback Specification for Xaraya';
+$modversion['description'] = 'Allows for the sending and recieving of trackbacks';
 $modversion['credits'] = 'xardocs/credits.txt';
-$modversion['help'] = 'xardocs/help.txt';
-$modversion['changelog'] = 'xardocs/changelog.txt';
-$modversion['license'] = 'xardocs/license.txt';
-$modversion['coding'] = 'xardocs/coding.txt';
-$modversion['official'] = 1;
-$modversion['author'] = 'Gregor J. Rothfuss';
-$modversion['contact'] = 'http://greg.abstrakt.ch/';
-$modversion['admin'] = 0;
-$modversion['user'] = 1;
+$modversion['help'] = '';
+$modversion['changelog'] = '';
+$modversion['license'] = '';
+$modversion['official'] = 0;
+$modversion['author'] = 'John Cox';
+$modversion['contact'] = 'niceguyeddie@xaraya.com';
+$modversion['admin'] = 1;
+$modversion['user'] = 0;
+$modversion['securityschema'] = array('Trackback::' => 'Module Id : Module Page ID : Comment ID');
 $modversion['class'] = 'Utility';
 $modversion['category'] = 'Content';
+// dependancies??
+$modversion['requires'] = array(14);
 ?>
