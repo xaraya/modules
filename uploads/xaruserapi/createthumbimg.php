@@ -9,13 +9,14 @@
 function uploads_userapi_createthumbimg($args)
 {
 	extract($args);
-	$usePBM = false;
-	
-	if( $usePBM )
+
+	$netpbm_path = xarModGetVar('uploads', 'netpbm_path');
+
+	if( isset($netpbm_path) && ($netpbm_path != '') )
 	{
-		createthumb( $file, $thumbwidth, $thumbheight, $newfile );
-	} else {
 		createthumbNetPBM( $file, $thumbwidth, $thumbheight, $newfile );
+	} else {
+		createthumb( $file, $thumbwidth, $thumbheight, $newfile );
 	}
 	
 }
@@ -207,10 +208,10 @@ function ImageCopyResampleBicubic (&$dst_img, &$src_img, $dst_x,
 // ** NetPBM Support
 // *****************
 				     
-function createThumb( $file, $thumbwidth, $thumbheight, $newfile );
+function createthumbnetpbm( $file, $thumbwidth, $thumbheight, $newfile )
 {	
 	// Path to NetPBM installation
-	$bin_path = "/data/playground/sites/190/docs/netpbm/";		
+	$bin_path = xarModGetVar('uploads', 'netpbm_path');
 
 	// Create thumb from $file and store it as $newfile
 	$absname = $file;		
@@ -225,13 +226,13 @@ function createThumb( $file, $thumbwidth, $thumbheight, $newfile );
 	// Workout thumbnail width/height	
 	$new_w = $thumbwidth;			
 	$new_h = $thumbheight;
-	if( !isset( $new_h ) )
+	if( !isset( $new_h ) || ($new_h == 0) )
 	{
 		$scale = ($imagewidth / $new_w);			
 		$new_h = round($imageheight / $scale);			
 	}
 	
-	if( !isset( $new_w ) )
+	if( !isset( $new_w ) || ($new_w == 0) )
 	{
 		$scale = ($thumbheight / $new_h);			
 		$new_w = round($imagewidth / $scale);			
@@ -270,6 +271,17 @@ function createThumb( $file, $thumbwidth, $thumbheight, $newfile );
 	$cmd .= $bin_path . $tothumb . " > \"" . $thumbname . "\"";		
 	// create the path to the thumbnail, if necessary, and execute the shell command		
 	// to create the thumbnail file		
+/*	
+	echo $cmd;
+	echo "<hr>";
+//	exit();
+	echo "Executing...<br>";
+	echo "<pre>";
+//	passthru($cmd);
+	exit();
+	exit();
+*/	
+	
 	exec($cmd);	
 }
 
