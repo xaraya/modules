@@ -144,7 +144,7 @@ function comments_user_modify() {
 
     }
 
-    $hooks = comments_user_formhooks();
+    $hooks = xarModAPIFunc('comments','user','formhooks');
 
     $output['hooks']              = $hooks;
     $output['header']             = $header;
