@@ -34,8 +34,7 @@ function autolinks_init()
     $autolinkstypestable = $xartable['autolinks_types'];
 
     // Get a data dictionary object with item create methods.
-    // TODO: I'm guessing at the 'CREATE' mode.
-    $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     // Table didn't exist, create table
     /*****************************************************************
@@ -176,7 +175,7 @@ function autolinks_upgrade($oldversion)
     // Set up database tables
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-    $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     $autolinkstable = $xartable['autolinks'];
     $autolinkstypestable = $xartable['autolinks_types'];
@@ -376,7 +375,7 @@ function autolinks_delete()
     // Drop the tables
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-    $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+    $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
     $autolinkstable = $xartable['autolinks'];
     $result = $datadict->dropTable($autolinkstable);
