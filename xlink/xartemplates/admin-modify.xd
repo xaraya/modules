@@ -1,0 +1,15 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XLink Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify XLink Definition</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post">
+<table border="0" cellpadding="5">
+    <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <xar:data-form object="$object" />
+    #$hooks#
+    <tr><td colspan="2" align="center"><input type="submit" name="confirm" value="#$confirm#" /></td></tr>
+</table>
+</form>
+</div>
+</div>
+
