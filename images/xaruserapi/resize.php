@@ -137,10 +137,10 @@ function images_userapi_resize($args)
 
     $attribs .= sprintf(' width="%s" height="%s"', $image->getWidth(), $image->getHeight());
 
-    $url = htmlentities(xarModURL('images', 'user', 'display',
+    $url = xarModURL('images', 'user', 'display',
                       array('fileId' => $src,
                             'height' => $image->getHeight(),
-                            'width'  => $image->getWidth())));
+                            'width'  => $image->getWidth()));
 
     $imgTag = sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
 
