@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.1 2003/06/30 01:46:00 garrett Exp $
+ * File: $Id: xarinit.php,v 1.2 2003/07/09 11:20:20 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -227,15 +227,7 @@ function AddressBook_init()
     *********************************************************************/
     xarRegisterMask('AdminAddressBook',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
 
-    /**
-     * These are redundant since you need admin access just to get here. However, I've left then
-     * in to suggest that in the future, some role could be delegated to non-admins
-     */
-    xarRegisterMask('ModifyLabels',       'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
-    xarRegisterMask('ModifyCategories',   'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
-    xarRegisterMask('ModifyPrefixes',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
-    xarRegisterMask('ModifyCustomFields', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_ADMIN');
-
+    xarRegisterMask('ModerateAddressBook', 'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_MODERATE');
     xarRegisterMask('EditAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_EDIT');
 
     xarRegisterMask('ViewAddressBook',     'All',__ADDRESSBOOK__,'Item','All:All:All','ACCESS_READ');

@@ -21,7 +21,8 @@
  */
 function AddressBook_userapi_getmenulinks()
 {
-    if (xarSecurityCheck('EditAddressBook',0)) {
+	// FIXME:<garrett> should be able to move this all into Xaraya sec model
+    if (xarModAPIFunc(__ADDRESSBOOK__,'user','checkAccessLevel',array('option'=>'create'))) {
 
     // We do the same for each new menu item that we want to add to our admin panels.
     // This creates the tree view for each item.  Obviously, we don't need to add every
