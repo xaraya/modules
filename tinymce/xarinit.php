@@ -71,7 +71,6 @@ function tinymce_upgrade($oldversion)
     case '0.0.1':
         // Set up new module vars
         xarModSetVar('tinymce', 'tinybuttonsremove', '');
-        if (!$result) return;
         break;
     case '0.0.2':
     // Current version
