@@ -1,0 +1,10 @@
+<xar:if condition="empty($status)">
+    <xar:mlstring>Please provide an id (and optional base name)</xar:mlstring>
+<xar:elseif condition="$status eq 1" />
+    <xar:mlstring>Unable to find corresponding item</xar:mlstring>
+<xar:elseif condition="$status eq 2" />
+    <xar:mlstring>Unable to find module for the corresponding item</xar:mlstring>
+<xar:else />
+    <xar:mlstring>Unknown status</xar:mlstring>
+</xar:if>
+

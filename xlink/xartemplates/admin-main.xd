@@ -1,0 +1,29 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XLink Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Overview</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<table border="0" width="100%">
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>What is it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>The XLink module is a utility module that allows you to establish relationships between module items and some independent identifier, e.g. for shortcut URLs or foreign key look-ups with external databases. Enable its hooks for any module where you want to use it...</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" valign="top" width="100px">
+            <b><xar:mlstring>How to use it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>
+The independent identifier can be composed of a base name (optional) and an identifier. Examples : 200309121551.xyz, kbase 123, products "This Nice Product", ...
+<br/><br/>
+For each hooked module, specify the acceptable base names for the items you want to reference.
+<br/><br/>
+When you declare a base name as alias for short URLs, you can use index.php/kbase/123 instead of index.php/xlink/kbase/123
+            </xar:mlstring>
+        </td>
+    </tr>
+</table>
+</div>
+</div>

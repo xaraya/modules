@@ -1,0 +1,17 @@
+<tr align="left" valign="middle">
+    <td>
+        <xar:mlstring>XLink ID</xar:mlstring>
+    </td>
+    <td><select name="xlink_base">
+            <option value="-"><xar:mlstring>[none]</xar:mlstring></option>
+            <xar:foreach in="$basenames" value="$name">
+                <xar:if condition="!empty($base) and $base eq $name">
+                    <option value="#$name#" selected="selected">#$name#</option>
+                <xar:else/>
+                    <option value="#$name#">#$name#</option>
+                </xar:if>
+            </xar:foreach>
+        </select>
+        <input type="text" name="xlink_id" value="#$id#" size="20" /> </td>
+</tr>
+

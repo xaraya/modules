@@ -1,0 +1,12 @@
+<xar:if condition="isset($links) and count($links) gt 0">
+<xar:mlstring>XLink ID :</xar:mlstring>
+<xar:foreach in="$links" value="$link">
+    <xar:if condition="!empty($link['basename'])">
+        <a href="#$link['url']#">#$link['basename']# #$link['refid']#</a>
+    <xar:else/>
+        <a href="#$link['url']#">#$link['refid']#</a>
+    </xar:if>
+</xar:foreach>
+<br/>
+</xar:if>
+
