@@ -9,6 +9,7 @@ email support@phatcom.net
 $modversion['name'] = 'xartelnet';
 $modversion['id'] = '9915';
 $modversion['version'] = '1.1';
+$modversion['displayname']    = xarML('xarTelNet');
 $modversion['description'] = 'A set of telnet functions that can be used for just about anything. You can run/save scripts. Connections cannot be passed through a session however so there is a limitation to its abilities. Xaraya-ized a script on www.phpbuilder.com by Marc Ennaji.';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
