@@ -5,8 +5,8 @@
 <table class="normal">
   <tr>
     <td class="heading"><xar:mlstring>Process</xar:mlstring></td>
-    <td class="heading"><xar:mlstring>Owner</xar:mlstring></td>
     <td class="heading"><xar:mlstring>Start</xar:mlstring></td>
+    <td class="heading"><xar:mlstring>Owner</xar:mlstring></td>
     <td class="heading"><xar:mlstring>Current Activity</xar:mlstring></td>
     <td class="heading"><xar:mlstring>Assigned To</xar:mlstring></td>
     <td class="heading"><xar:mlstring>Action</xar:mlstring></td>
@@ -15,8 +15,8 @@
   <tr>
 <form method="post" action="&xar-modurl-workflow-user-instances;">
     <td>#$item['procname']# #$item['version']#</td>
-    <td>#$item['owner']#</td>
     <td>#$item['started']#</td>
+    <td>#$item['owner']#</td>
     <td>
     <xar:if condition="$item['type'] eq 'start'">
       <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
