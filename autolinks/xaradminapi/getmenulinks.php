@@ -64,7 +64,7 @@ function autolinks_adminapi_getmenulinks()
         $menulinks[] = Array(
             'url'   => xarModURL('autolinks', 'util', 'main'),
             'title' => xarML('Autolink utilities'),
-            'label' => xarML('Utlilities')
+            'label' => xarML('Utilities')
         );
     }
 
