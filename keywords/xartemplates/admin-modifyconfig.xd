@@ -49,7 +49,31 @@
  </select> 
  </span> 
 </div> 
+
+<xar:if condition="$restricted eq 1">
+<div style="clear: both; padding-top: 10px;">
+<span style="float: left; width: 20%; text-align: right;"> 
+ <span class="help" title="#xarML('Use different keywords for different itemtype.')#"><label for="useitemtype"><xar:mlstring>Use itemtype:</xar:mlstring></label></span> 
+ </span> 
+ <span style="float: right; width: 78%; text-align: left;"> 
+ <select name="useitemtype" id="useitemtype" onchange="javascript:this.form.action = '&xar-modurl-keywords-admin-modifyconfig;';this.form.submit();"> 
+ <xar:if condition="$useitemtype eq 1"> 
+ <option value="1" selected="selected">#xarML('Yes')#</option> 
+ <xar:else /> 
+ <option value="1">#xarML('Yes')#</option> 
+ </xar:if> 
+ <xar:if condition="$useitemtype eq 0"> 
+ <option value="0" selected="selected">#xarML('No')#</option> 
+<xar:else/> 
+ <option value="0">#xarML('No')#</option> 
+</xar:if> 
+ </select> 
+ </span> 
+</div>
+</xar:if>
+
 <xar:if condition="$restricted eq 1"> 
+<xar:if condition="$useitemtype eq 0">
 <xar:foreach in="$settings" key="$modname" value="$config">
  <div style="clear: both; padding-top: 10px;">
  <span style="float: left; width: 100%;  text-align: left;"><b>#$config['label']#</b></span> 
@@ -61,6 +85,30 @@
  </span> 
  </div>
 </xar:foreach> 
+<xar:else/>
+
+<xar:foreach in="$settings" key="$modname" value="$module">
+<div style="clear: both; padding-top: 20px;">
+ <span style="float: left; width: 100%;  text-align: center;">#xarML('Configuration for itemtype in module')#: <b>#$modname#</b></span>
+
+<xar:foreach in="$module" key="$itemtype" value="$item">
+<span style="float: left; width: 100%; padding-top: 5px;  text-align: left;">#$item['label']#</span>
+
+<span style="float: left; width: 20%; text-align: right;"> 
+<span class="help" title="#xarML('Define keywords for the itemtype.')#"><xar:mlstring>Allowed Keywords</xar:mlstring> :</span>
+ </span> 
+ <span style="float: right; width: 78%; text-align: left;"> 
+<input type="text" name="keywords[#$modname#.#$itemtype#]" id="keywords[#$modname#]" value="#$item['keywords']#" size="40" /> 
+ </span>
+</xar:foreach> 
+
+
+
+</div>
+
+</xar:foreach>
+
+</xar:if>
 </xar:if> 
 <br /><br /><br />  
 <input type="submit" value="Update Keywords Configuration" /> 

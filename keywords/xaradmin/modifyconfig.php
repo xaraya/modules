@@ -23,9 +23,24 @@
 function keywords_admin_modifyconfig()
 { 
     if (!xarVarFetch('restricted', 'int', $restricted, $restricted, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useitemtype', 'int', $useitemtype, $useitemtype, XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('AdminKeywords')) return;
 
     $data = array();
+    
+    if (isset($restricted)) {
+        $data['restricted'] = $restricted;
+    } else {
+    $data['restricted'] = xarModGetVar('keywords','restricted');
+    }
+    
+    if (isset($useitemtype)) {
+        $data['useitemtype'] = $useitemtype;
+    } else {
+    $data['useitemtype'] = xarModGetVar('keywords','useitemtype');
+    }
+    
+    
     $data['settings'] = array();
     $keywords = xarModAPIFunc('keywords',
                               'admin',
@@ -34,8 +49,13 @@ function keywords_admin_modifyconfig()
 
 
     // $keywords = xarModGetVar('keywords','default');
+    if ($data['useitemtype']== 0) {
     $data['settings']['default'] = array('label' => xarML('Default configuration'),
                                          'keywords' => $keywords);
+    } else {
+    $data['settings']['default'][0] = array('label' => xarML('Default configuration'),
+                                            'keywords' => $keywords);
+    }
 
     $hookedmodules = xarModAPIFunc('modules',
                                    'admin',
@@ -44,32 +64,32 @@ function keywords_admin_modifyconfig()
 
     if (isset($hookedmodules) && is_array($hookedmodules)) {
         foreach ($hookedmodules as $modname => $value) {
-            // we have hooks for individual item types here
-            if (!isset($value[0])) {
-                // Get the list of all item types for this module (if any)
-                $mytypes = xarModAPIFunc($modname,
-                                         'user',
-                                         'getitemtypes',
-                                         // don't throw an exception if this function doesn't exist
-                                         array(), 0);
-                foreach ($value as $itemtype => $val) {
-                         $moduleid = xarModGetIDFromName($modname,'module');
+            
+            if ($data['useitemtype']== 1) {
+                $modules[$modname] = xarModAPIFunc($modname,'user','getitemtypes',array(), 0);
+                if (!isset($modules[$modname])) {  
+                    $modules[$modname][0]['label']= $modname; 
+                 }
+                foreach ($modules as $mod => $v1) {
+                    foreach ($v1 as $itemtype => $item) {
+                        foreach ($item as $k3 => $v3) {
+                            $moduleid = xarModGetIDFromName($mod,'module');
                          $keywords = xarModAPIFunc('keywords',
                                                    'admin',
                                                    'getwordslimited',
                                                    array('moduleid' => $moduleid,
 						   	 'itemtype' => $itemtype));
-
-
-                    if (isset($mytypes[$itemtype])) {
-                        $type = $mytypes[$itemtype]['label'];
-                        $link = $mytypes[$itemtype]['url'];
+                            if ($itemtype == 0) {                          
+                                $link = xarModURL($mod,'user','main');
                     } else {
-                        $type = xarML('type #(1)',$itemtype);
-                        $link = xarModURL($modname,'user','view',array('itemtype' => $itemtype));
+                                $link = xarModURL($mod,'user','view',array('itemtype' => $itemtype));
                     }
-                    $data['settings']["$modname.$itemtype"] = array('label' => xarML('Configuration for #(1) module - <a href="#(2)">#(3)</a>', $modname, $link, $type),
+                            $label = $item['label'];
+                            $data['settings'][$mod][$itemtype] = array('label' => xarML('Keywords for <a href="#(1)">#(2)</a>', $link, $label),
                                                                     'keywords'   => $keywords);
+        		
+  	   	}
+   	   	}
                 }
             } else {
 
@@ -85,6 +105,7 @@ function keywords_admin_modifyconfig()
             }
         }
     }
+    
     $data['isalias'] = xarModGetVar('keywords','SupportShortURLs');
 
     if (isset($restricted)) {

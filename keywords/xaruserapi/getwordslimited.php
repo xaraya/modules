@@ -40,24 +40,28 @@ function keywords_userapi_getwordslimited($args)
     $keywordstable = $xartable['keywords_restr'];
 
     // Get restricted keywords for this module item
+
     $query = "SELECT xar_id,
                      xar_keyword
-              FROM $keywordstable
-              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid);
+             FROM $keywordstable ";
     if (isset($itemtype)) {
-              $query .= " AND xar_itemtype = ". xarVarPrepForStore($itemtype);
+          $query .= " WHERE xar_moduleid = '0' OR ( xar_moduleid= " . xarVarPrepForStore($moduleid) ." AND  xar_itemtype = ". xarVarPrepForStore($itemtype) ." ) ORDER BY xar_keyword ASC";
+       } else {
+          $query .= " WHERE xar_moduleid = '0' OR  xar_moduleid= " . xarVarPrepForStore($moduleid) ." ORDER BY xar_keyword ASC";
     }
-    $query .= " ORDER BY xar_keyword ASC";
+
+
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     if ($result->EOF) {
         $result->Close();
-        $query = "SELECT xar_id,
+  /*      $query = "SELECT xar_id,
                      xar_keyword
               FROM $keywordstable
               WHERE xar_moduleid = " . xarVarPrepForStore($moduleid) . " ORDER BY xar_keyword ASC";
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query); */
     }
+    
     $keywords = array();
 
     while (!$result->EOF) {

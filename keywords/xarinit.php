@@ -115,6 +115,7 @@ function keywords_init()
     xarModSetVar('keywords', 'SupportShortURLs', 1);
     xarModSetVar('keywords', 'delimiters', ';,');
     xarModSetVar('keywords', 'restricted', 0);
+    xarModSetVar('keywords', 'useitemtype', 0);
     xarModSetVar('keywords', 'default', 'xaraya');
 
     if (!xarModRegisterHook('item', 'new', 'GUI',
@@ -267,6 +268,9 @@ function keywords_upgrade($oldversion)
                     array('modName'  => 'keywords',
                             'blockType'=> 'keywordscategories'))) return;
 
+            break;
+        case '1.0.3':
+            xarModSetVar('keywords', 'useitemtype', 0);
             break;
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here

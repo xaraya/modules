@@ -18,6 +18,7 @@ function keywords_admin_updateconfig()
     
     // Get parameters
     xarVarFetch('restricted','isset',$restricted,'', XARVAR_DONT_SET);
+    xarVarFetch('useitemtype','isset',$useitemtype,'', XARVAR_DONT_SET);
     xarVarFetch('keywords','isset',$keywords,'', XARVAR_DONT_SET);
     xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
     xarVarFetch('delimiters','isset',$delimiters,'', XARVAR_DONT_SET);
@@ -29,7 +30,10 @@ function keywords_admin_updateconfig()
 
     if (isset($restricted)) {
         xarModSetVar('keywords','restricted',$restricted);
-
+    }
+    if (isset($useitemtype)) {
+        xarModSetVar('keywords','useitemtype',$useitemtype);
+    }
     if (isset($keywords) && is_array($keywords)) {
 
     	xarModAPIFunc('keywords',
@@ -37,7 +41,7 @@ function keywords_admin_updateconfig()
                       'resetlimited');
 
         foreach ($keywords as $modname => $value) {
-            if ($modname == 'default') {
+            if ($modname == 'default.0' || $modname == 'default') {
                 $moduleid='0';
 		$itemtype = '0';
             } else {
@@ -56,7 +60,7 @@ function keywords_admin_updateconfig()
             } 
         } 
     } 
-    }
+    
 
     if (empty($isalias)) {
         xarModSetVar('keywords','SupportShortURLs',0);
@@ -66,6 +70,7 @@ function keywords_admin_updateconfig()
     if (isset($delimiters)) {
         xarModSetVar('keywords','delimiters',trim($delimiters));
     }
+
 
     xarResponseRedirect(xarModURL('keywords', 'admin', 'modifyconfig'));
 
