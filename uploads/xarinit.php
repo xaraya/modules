@@ -15,9 +15,9 @@
  * initialise the module
  */
 function uploads_init()
-{	
-	// load the predefined constants
-	xarModAPILoad('uploads', 'user');
+{    
+    // load the predefined constants
+    xarModAPILoad('uploads', 'user');
 
     if(xarServerGetVar('PATH_TRANSLATED')) {
         $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
@@ -26,14 +26,15 @@ function uploads_init()
     } else {
         $base_directory = './';
     }
-    xarModSetVar('uploads', 'path.uploads-directory',   $base_directory . 'var/uploads');
-    xarModSetVar('uploads', 'path.imports-directory',   $base_directory . 'var/imports');
+    xarModSetVar('uploads', 'path.uploads-directory',   $base_directory .'/var/uploads');
+    xarModSetVar('uploads', 'path.imports-directory',   $base_directory . '/var/imports');
     xarModSetVar('uploads', 'file.maxsize',            '10000000');
     xarModSetVar('uploads', 'file.delete-confirmation', TRUE);
     xarModSetVar('uploads', 'file.auto-purge',          FALSE);
     xarModSetVar('uploads', 'file.obfuscate-on-import', FALSE);
     xarModSetVar('uploads', 'file.obfuscate-on-upload', TRUE);
-        
+    xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
+
     $data['filters']['mimetypes'][0]['typeId']      = 0;
     $data['filters']['mimetypes'][0]['typeName']    = xarML('All');
     $data['filters']['subtypes'][0]['subtypeId']    = 0;
@@ -65,7 +66,6 @@ function uploads_init()
     xarDBLoadTableMaintenanceAPI();
     $fileEntry_fields = array(
         'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_itemtype_id'  => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
         'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
         'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>FALSE),
         'xar_location'     => array('type'=>'varchar', 'size'=>256,   'null'=>FALSE),
@@ -393,7 +393,8 @@ function uploads_upgrade($oldversion)
             xarModSetVar('uploads','file.censored-mimetypes', $file_censored_mimetypes);
             xarModSetVar('uploads','file.obfuscate-on-import', $file_obfuscate_on_import);
             xarModSetVar('uploads','file.obfuscate-on-upload', $file_obfuscate_on_upload);
-            xarModSetVar('uploads', 'file.auto-purge',          FALSE);
+            xarModSetVar('uploads','file.auto-purge',          FALSE);
+            xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
 
         
             $data['filters']['mimetypes'][0]['typeId']      = 0;
@@ -464,18 +465,17 @@ function uploads_delete()
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
-    if (!$result) 
-        return;
+    // handle any exception
+    xarExceptionHandled();
 
     // Generate the SQL to drop the table using the API
-    $query = xarDBDropTable($xartable['file_data']);
+    $query = xarDBDropTable($xartables['file_data']);
     if (empty($query)) 
         return; // throw back
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
-    if (!$result) 
-        return;
+    xarExceptionHandled();
 
     return true;
 }

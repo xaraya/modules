@@ -31,6 +31,14 @@ function uploads_admin_updateconfig()
             }
         }
     }
+
+	// FIXME: change only if the imports-directory was changed? <rabbitt>
+	// Now update the 'current working imports directory' in case the 
+    // imports directory was changed. We do this by first deleting the modvar
+    // and then recreating it to ensure that the user's version is cleared
+    xarModDelVar('uploads', 'path.imports-cwd');
+    xarModSetVar('uploads', 'path.imports-cwd', xarModGetVar('uploads', 'path.imports-directory'));
+
     xarModCallHooks('module',
                     'updateconfig',
                     'uploads',

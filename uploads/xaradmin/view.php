@@ -61,13 +61,19 @@ function uploads_admin_view( ) {
         
         switch ($action) {
             case _UPLOADS_STATUS_APPROVED:
-                    xarModAPIFunc('uploads','user','db_change_status', $args +  array('newStatus'    => _UPLOADS_STATUS_APPROVED));
+                    if (!isset($args['fileId'])) {
+                        break;
+                    }
+                    xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_APPROVED));
                     break;
             case _UPLOADS_STATUS_SUBMITTED:
-                    xarModAPIFunc('uploads','user','db_change_status', $args +  array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
+                    if (!isset($args['fileId'])) {
+                        break;
+                    }
+                    xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'    => _UPLOADS_STATUS_SUBMITTED));
                     break;
             case _UPLOADS_STATUS_REJECTED:
-                xarModAPIFunc('uploads','user','db_change_status', $args +  array('newStatus'   => _UPLOADS_STATUS_REJECTED));
+                xarModAPIFunc('uploads','user','db_change_status', $args + array('newStatus'   => _UPLOADS_STATUS_REJECTED));
                 if (xarModGetVar('uploads', 'file.auto-purge')) {
                     if (xarModGetVar('uploads', 'file.delete-confirmation')) {
                         return xarModFunc('uploads', 'user', 'purge_rejected');

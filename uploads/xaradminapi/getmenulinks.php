@@ -9,27 +9,27 @@ function uploads_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('EditUploads')) {
         $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                   'admin',
-                                                   'main'),
-                              'title' => xarML('Uploads Module Overview'),
-                              'label' => xarML('Overview'));
+                                                  'admin',
+                                                  'main'),
+                             'title' => xarML('Uploads Module Overview'),
+                             'label' => xarML('Overview'));
         $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                   'admin',
-                                                   "view"),
-                              'title' => xarML('View All Files'),
-                              'label' => xarML('View Files'));
+                                                  'admin',
+                                                  "view"),
+                             'title' => xarML('View All Files'),
+                             'label' => xarML('View Files'));
         $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                   'user',
-                                                   'uploadform'),
-                              'title' => xarML('Add a File'),
-                              'label' => xarML('Add File'));
+                                                  'admin',
+                                                  'get_files'),
+                             'title' => xarML('Add a File'),
+                             'label' => xarML('Add File'));
     }
     if (xarSecurityCheck('AdminUploads')) {
         $menulinks[] = Array('url'   => xarModURL('uploads',
-                                                   'admin',
-                                                   'modifyconfig'),
-                              'title' => xarML('Edit the Uploads Configuration'),
-                              'label' => xarML('Modify Config'));
+                                                  'admin',
+                                                  'modifyconfig'),
+                             'title' => xarML('Edit the Uploads Configuration'),
+                             'label' => xarML('Modify Config'));
     }
     if (empty($menulinks)){
         $menulinks = '';

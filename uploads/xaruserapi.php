@@ -11,24 +11,33 @@
  * ---------------------------------------------------------------------- 
  */ 
  
-define('_UPLOADS_STORE_DB_ENTRY',   1);
-define('_UPLOADS_STORE_FILESYSTEM', 2);
+define('_UPLOADS_STORE_DB_ENTRY',   1<<0);
+define('_UPLOADS_STORE_FILESYSTEM', 1<<1);
 define('_UPLOADS_STORE_FSDB',       _UPLOADS_STORE_FILESYSTEM | _UPLOADS_STORE_DB_ENTRY);
-define('_UPLOADS_STORE_DB_DATA',    4);
+define('_UPLOADS_STORE_DB_DATA',    1<<2);
 define('_UPLOADS_STORE_DB_FULL',    _UPLOADS_STORE_DB_ENTRY | _UPLOADS_STORE_DB_DATA);
-define('_UPLOADS_STORE_TEXT',       8);
+define('_UPLOADS_STORE_TEXT',       1<<3);
 
-define('_UPLOADS_STATUS_SUBMITTED',1);
-define('_UPLOADS_STATUS_APPROVED',2);
-define('_UPLOADS_STATUS_REJECTED',3);
+define('_UPLOADS_STATUS_SUBMITTED', 1);      // File has been recently submitted and needs approving
+define('_UPLOADS_STATUS_APPROVED',  2);      // File has been approved and is ready for system use
+define('_UPLOADS_STATUS_REJECTED',  3);      // File has been rejected and needs deleting
 
-define('_INODE_TYPE_DIRECTORY', 1);
-define('_INODE_TYPE_FILE', 2);
-define('_INODE_TYPE_LINK', 3);
+define('_INODE_TYPE_P_DIRECTORY', 1);      // Inode is the previous directory
+define('_INODE_TYPE_C_DIRECTORY', 2);      // Inode is the current directory
+define('_INODE_TYPE_DIRECTORY',   3);      // Inode is a directory
+define('_INODE_TYPE_FILE',        4);      // Inode is a file
+define('_INODE_TYPE_LINK',        5);      // Inode is a link (symbolic or otherwise)
 
-define('_UPLOADS_ERROR_UNKNOWN', -1);
-define('_UPLOADS_ERROR_NONE', 0);
-define('_UPLOADS_ERROR_NO_OBFUSCATE', 1);
-define('_UPLOADS_ERROR_BAD_FORMAT', 2);
+define('_UPLOADS_ERROR_UNKNOWN',     -1); // Unidentifiable error
+define('_UPLOADS_ERROR_NONE',         0); // No error
+define('_UPLOADS_ERROR_NO_OBFUSCATE', 1); // Unable to obfuscate the filename
+define('_UPLOADS_ERROR_BAD_FORMAT',   2); // Incorrect DATA structure
+
+define('_UPLOADS_GET_UPLOAD',        1);
+define('_UPLOADS_GET_EXTERNAL',      2);
+define('_UPLOADS_GET_LOCAL',         3);
+define('_UPLOADS_GET_REFRESH_LOCAL', 4);
+define('_UPLOADS_GET_NOTHING',       5);
+
 
 ?>

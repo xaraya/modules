@@ -21,7 +21,7 @@ function uploads_userapi_db_get_file( $args )  {
     
     extract($args);
     
-    if (!isset($fileId) && !isset($fileName) && !isset($fileStatus) && 
+    if (!isset($fileId) && !isset($fileName) && !isset($fileStatus) && !isset($fileLocation) &&
         !isset($userId)  && !isset($fileType) && !isset($store_type)) {            
         $msg = xarML('Missing parameters for function [#(1)] in module [#(2)]', 'db_get_file', 'uploads');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
@@ -54,8 +54,12 @@ function uploads_userapi_db_get_file( $args )  {
         $where[] = "(xar_store_type = $store_type)";
     }
     
-    if (isseT($fileType) && !empty($fileType)) {
+    if (isset($fileType) && !empty($fileType)) {
         $where[] = "(xar_mime_type LIKE '$fileType')";
+    }
+
+    if (isset($fileLocation) && !empty($fileLocation)) {
+        $where[] = "(xar_location LIKE '$fileType')";
     }
 
     if (count($where) > 1) {

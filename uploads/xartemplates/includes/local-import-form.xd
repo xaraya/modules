@@ -1,0 +1,129 @@
+<div>
+	<xar:if condition="isset($curDir)">
+	<div>
+		<p>
+			<span>
+			<strong>
+				<xar:mlstring>Current Directory:</xar:mlstring>
+				/imports#$curDir#
+    		<strong>
+			</span>
+		</p>
+	</div>
+	</xar:if>
+	<xar:base-include-javascript filename="checkall.js" />
+
+    <form name="local_import_form" id="local_import_form" action="#$local_import_post_url#" method="post">
+        <table summary="Files" width="100%" border="1" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
+            <tr>
+                <th width="10%"><xar:mlstring>Select</xar:mlstring></th>
+                <th width="65%"><xar:mlstring>File / Directory</xar:mlstring></th>
+                <th width="25%"><xar:mlstring>Size (in bytes)</xar:mlstring></th>
+            </tr>
+            
+            <xar:if condition="isset($fileList) && count($fileList)">
+                <xar:loop name="$fileList">
+                    <xar:if condition="(($loop:index + 1) % 2)">
+                        <tr>
+                            <td width="10%" class="xar-norm" align="center">
+								<xar:if condition="$loop:item[0] eq _INODE_TYPE_C_DIRECTORY">
+									<input type="checkbox" name="file_all" id="file_all" onClick="CheckAll();" />
+								<xar:elseif condition="$loop:item[0] eq _INODE_TYPE_P_DIRECTORY" />
+									&nbsp;
+								<xar:else />
+	                                <input type="checkbox" name="fileList[]" id="file_#$loop:index#" value="#$loop:item['fileName']#" />
+								</xar:if>
+                            </td>
+                            <td width="65%" class="xar-norm" align="left">&nbsp;
+								<xar:if condition="$loop:item[0] eq _INODE_TYPE_DIRECTORY">
+									<a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => $loop:item['fileName'], 'action' => _UPLOADS_GET_REFRESH_LOCAL))#"
+									   alt="#xarML('Open Folder')#"
+									   title="#xarML('Open Folder')#">
+		                                <strong>#$loop:item['fileName']#</strong>
+									</a>
+								<xar:elseif condition="$loop:item[0] eq _INODE_TYPE_P_DIRECTORY" />
+									<a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => '...', 'action' => _UPLOADS_GET_REFRESH_LOCAL))#"
+									   alt="#xarML('Open Folder')#"
+									   title="#xarML('Open Folder')#">
+		                                <strong>#$loop:item['fileName']#</strong>
+									</a>
+								<xar:else />
+	                                #$loop:item['fileName']#
+								</xar:if>
+                            </td>
+							<xar:if condition="is_array($loop:item['fileSize'])">
+	                            <td width="25%" class="xar-norm" align="right">&nbsp;#$loop:item['fileSize']['long']#</td>
+							<xar:else />
+	                            <td width="25%" class="xar-norm" align="right">&nbsp;#$loop:item['fileSize']#</td>
+							</xar:if>
+                        </tr>
+                    <xar:else />
+                        <tr>
+                            <td width="10%" class="xar-accent" align="center">
+								<xar:if condition="$loop:item[0] eq _INODE_TYPE_C_DIRECTORY">
+									<input type="checkbox" name="file_all" id="file_all" onClick="CheckAll();" />
+								<xar:elseif condition="$loop:item[0] eq _INODE_TYPE_P_DIRECTORY" />
+									&nbsp;
+								<xar:else />
+	                                <input type="checkbox" name="fileList[]" id="file_#$loop:index#" value="#$loop:item['fileName']#" />
+								</xar:if>
+                            </td>
+                            <td width="65%" class="xar-accent" align="left">&nbsp;
+								<xar:if condition="$loop:item[0] eq _INODE_TYPE_DIRECTORY">
+									<a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => $loop:item['fileName'], 'action' => _UPLOADS_GET_REFRESH_LOCAL))#"
+									   alt="#xarML('Open Folder')#"
+									   title="#xarML('Open Folder')#">
+		                                <strong>#$loop:item['fileName']#</strong>
+									</a>
+								<xar:elseif condition="$loop:item[0] eq _INODE_TYPE_P_DIRECTORY" />
+									<a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => '...', 'action' => _UPLOADS_GET_REFRESH_LOCAL))#"
+									   alt="#xarML('Open Folder')#"
+									   title="#xarML('Open Folder')#">
+		                                <strong>#$loop:item['fileName']#</strong>
+									</a>
+								<xar:else />
+	                                #$loop:item['fileName']#
+								</xar:if>
+                            </td>
+							<xar:if condition="is_array($loop:item['fileSize'])">
+	                            <td width="25%" class="xar-accent" align="right">&nbsp;#$loop:item['fileSize']['long']#</td>
+							<xar:else />
+	                            <td width="25%" class="xar-accent" align="right">&nbsp;#$loop:item['fileSize']#</td>
+							</xar:if>
+                        </tr>
+                    </xar:if>
+                </xar:loop>
+                <tr>
+                    <td colspan="3" class="xar-accent xar-accent-outline">
+						<div class="xar-norm">
+	                        <input type="submit" name="button" id="button" value="#xarML('Import')#" />
+							<input type="hidden" name="action" id="action" value="3" />
+					        <input type="hidden" name="authid" value="#$authid#" />
+						</div>
+                    </td>
+                    </form>
+                </tr>                                    
+            <xar:else />
+                <tr>
+                    <td class="xar-norm" colspan="3" align="center">
+                        <br />
+                        <xar:mlstring>
+                            There are currently no files to import.
+                        </xar:mlstring>
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="xar-accent xar-accent-outline">
+						<div class="xar-norm">
+                            <xar:mlstring>Check import directory for available files: </xar:mlstring>
+							<input type="hidden" name="action" id="action" value="4" />
+                            <input type="submit" name="button" id="button" value="#xarML('Go')#" />
+                    	</div>
+                    </td>
+                </tr>
+			</xar:if>
+        </table>
+        <br />                    
+    </form>
+</div>

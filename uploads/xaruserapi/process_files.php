@@ -25,7 +25,7 @@ function uploads_userapi_process_files( $args ) {
     $storeList = array();
     
     // If we have an import then verify the information given
-    if (!isset($importFrom)) {
+    if (!isset($importFrom) || empty($importFrom)) {
         $importFrom = NULL;
         $override['import']['path'] = NULL;
     } else {
