@@ -20,7 +20,7 @@
     </SCRIPT>
     <div style="clear: both; padding-top: 10px;">
         <table>
-            <tbody onload=opt.init(document.forms[0]);>
+            <tbody>
                 <tr>
                     <td align="middle">
                         <xar:mlstring>
@@ -28,7 +28,7 @@
                         </xar:mlstring>
                     </td>
                     <td>
-                        <img name="pix" src="modules/keywords/xarimages/pix.gif" alt="" onLoad="opt.init(document.forms[0]);" /> 
+                        <img name="pix" src="modules/keywords/xarimages/pix.gif" alt="" /> 
                     </td>
                     <td>
                         <xar:mlstring>
@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <select ondblclick=opt.transferRight() multiple size=10 name=list1> 
+                        <select ondblclick=opt.transferRight() multiple size=10 name=list1 id=list1> 
                             <xar:foreach in="$keywords" value="$item">
                                 <option name="keywords" value="#$item#">#$item#</option>
                             </xar:foreach>
@@ -59,7 +59,7 @@
                         </p>
                     </td>
                     <td>
-                        <select ondblclick=opt.transferLeft() multiple size=10 name=list2> 
+                        <select ondblclick=opt.transferLeft() multiple size=10 name=list2 id=list2> 
                         </select> 
                     </td>
                 </tr>
@@ -67,6 +67,10 @@
         </table>
         <input type="hidden" size=70 name=keywords id="keywords">
         </div>
+    <SCRIPT language=JavaScript>
+        opt.init(document.forms['post']);
+    </SCRIPT>
     </xar:if>           
     </span>
     </div>
+
