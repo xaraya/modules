@@ -361,7 +361,12 @@ function articles_user_display($args)
         if (!empty($properties) && count($properties) > 0) {
             foreach (array_keys($properties) as $field) {
                 $data[$field] = $properties[$field]->getValue();
-            // TODO: clean up this temporary fix
+                // POOR mans flagging for transform hooks
+                $validation = $properties[$field]->validation;
+                if(substr($validation,0,10) == 'transform:') {
+                    $data['transform'][] = $field;
+                }
+                // TODO: clean up this temporary fix
                 $data[$field.'_output'] = $properties[$field]->showOutput();
             }
         }
@@ -372,12 +377,21 @@ function articles_user_display($args)
     // pieces of text that you want to transform (e.g. for autolinks, wiki,
     // smilies, bbcode, ...).
     $data['itemtype'] = $pubtypeid;
-// TODO: what about transforming DD fields ?
+    // TODO: what about transforming DDfields ?
+    // <mrb> see above for a hack, needs to be a lot better.
+
+    // Summary is always included, is that handled somewhere else? (article config says i can ex/include it)
     if (!isset($titletransform)) {
         if (empty($settings['titletransform'])) {
-            $data['transform'] = array('summary','body','notes');
+            $data['transform'][] = 'summary';
+            $data['transform'][] = 'body';
+            $data['transform'][] = 'notes';
+
         } else {
-            $data['transform'] = array('title','summary','body','notes');
+            $data['transform'][] = 'title';
+            $data['transform'][] = 'summary';
+            $data['transform'][] = 'body';
+            $data['transform'][] = 'notes';
         }
     }
     $data = xarModCallHooks('item', 'transform', $aid, $data, 'articles');
