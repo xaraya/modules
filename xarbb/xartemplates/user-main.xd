@@ -1,6 +1,6 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 <xar:if condition="isset($catid)">
-	<table border="0" cellpadding="3" cellspacing="0" width="100%">
+	<table border="0" width="100%">
 		<tr>
 			<td colspan="2">
 				<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
