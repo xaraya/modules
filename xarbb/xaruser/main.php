@@ -35,7 +35,6 @@ function xarbb_user_main()
     // Lets deal with the cookie in a more sane manner
     if (isset($read)){
         $time    = serialize(time());
-        setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_all', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
         // Easier to set a cookie for the last visit than it is
         // roll through all the forums to check the time set.
         setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
@@ -143,7 +142,7 @@ function xarbb_user__getforuminfo($args)
     $totalforums = count($forums);
 
     // Cookie Name for Mark All Read
-    $cookie_name_all_read = xarModGetVar('xarbb', 'cookiename') . '_f_all';
+    $cookie_name_all_read = xarModGetVar('xarbb', 'cookiename') . 'lastvisit';
 
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
@@ -163,17 +162,18 @@ function xarbb_user__getforuminfo($args)
             if (xarUserIsLoggedIn()){
                 // Here we can check the updated images or standard ones.
                 // Images
-                if (isset($_COOKIE["$cookie_name_all_read"])){
-                    $alltimecompare = unserialize($_COOKIE["$cookie_name_all_read"]);
+                if (isset($_COOKIE[$cookie_name_all_read])){
+                    $alltimecompare = unserialize($_COOKIE[$cookie_name_all_read]);
                 } else {
                     $alltimecompare = '';
                 }
-                $fid = $forum['fid'];
-                if (isset($_COOKIE["xarbb_f_$fid"])){
-                    $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
+                $cookie_name_this_forum_read = xarModGetVar('xarbb', 'cookiename') . '_f_' . $forum['fid'];
+                if (isset($_COOKIE[$cookie_name_this_forum_read])){
+                    $forumtimecompare = unserialize($_COOKIE[$cookie_name_this_forum_read]);
                 } else {
                     $forumtimecompare = '';
                 }
+
                 $time_compare = max($alltimecompare, $forumtimecompare);
                 if ($time_compare > $forum['fpostid']) {
                     $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New posts').'" />';

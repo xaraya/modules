@@ -39,9 +39,6 @@ function xarbb_user_viewforum()
     if (isset($read)){
         $time    = serialize(time());
         setcookie(xarModGetVar('xarbb', 'cookiename') . '_f_' . $fid, $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
-        // Easier to set a cookie for the last visit than it is
-        // roll through all the forums to check the time set.
-        setcookie(xarModGetVar('xarbb', 'cookiename') . 'lastvisit', $time, time()+60*60*24*120, xarModGetVar('xarbb', 'cookiepath'), xarModGetVar('xarbb', 'cookiedomain'), 0);
     }
 
     // Get the cookie names
