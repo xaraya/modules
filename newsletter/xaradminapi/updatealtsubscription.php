@@ -74,9 +74,9 @@ function newsletter_adminapi_updatealtsubscription($args)
 
     // Update the item
     $query = "UPDATE $nwsltrTable 
-                 SET xar_name = ?
-                     xar_email = ?
-                     xar_htmlmail = ?
+              SET xar_name = ?,
+                  xar_email = ?,
+                  xar_htmlmail = ?
               WHERE xar_id = ?";
     
     $bindvars[] = (string) $name;

@@ -79,22 +79,22 @@ function newsletter_adminapi_updatestory($args)
 
     // Update the item
     $query = "UPDATE $nwsltrTable 
-                 SET xar_ownerid = ?
-                     xar_pid = ?
-                     xar_cid = ?
-                     xar_title = ?
-                     xar_source = ?
-                     xar_content = ?
-                     xar_priority = ?
-                     xar_storydate = ?
-                     xar_altdate = ?
-                     xar_datepublished = ?
-                     xar_fulltextlink = ?
-                        xar_registerlink = ?
-                     xar_linkexpiration = ?
-                     xar_commentary = ?
-                     xar_commentarysrc = ?
-               WHERE xar_id = ?";
+              SET xar_ownerid = ?,
+                  xar_pid = ?,
+                  xar_cid = ?,
+                  xar_title = ?,
+                  xar_source = ?,
+                  xar_content = ?,
+                  xar_priority = ?,
+                  xar_storydate = ?,
+                  xar_altdate = ?,
+                  xar_datepublished = ?,
+                  xar_fulltextlink = ?,
+                  xar_registerlink = ?,
+                  xar_linkexpiration = ?,
+                  xar_commentary = ?,
+                  xar_commentarysrc = ?
+              WHERE xar_id = ?";
 
     $bindvars = array((int)     $ownerId,
                       (int)     $publicationId,

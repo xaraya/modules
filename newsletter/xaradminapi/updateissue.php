@@ -70,13 +70,13 @@ function newsletter_adminapi_updateissue($args)
 
     // Update the item
     $query = "UPDATE $nwsltrTable 
-                 SET xar_pid = ?
-                     xar_ownerid = ?
-                     xar_title = ?
-                     xar_external = ?
-                     xar_editornote = ?
-                     xar_datepublished = ?
-               WHERE xar_id = ?";
+              SET xar_pid = ?,
+                  xar_ownerid = ?,
+                  xar_title = ?,
+                  xar_external = ?,
+                  xar_editornote = ?,
+                  xar_datepublished = ?
+              WHERE xar_id = ?";
 
     $bindvars = array((int) $publicationId,
                       (int) $ownerId,

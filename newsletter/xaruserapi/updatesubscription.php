@@ -73,7 +73,7 @@ function newsletter_userapi_updatesubscription($args)
                WHERE xar_uid = ?
                  AND xar_pid = ?";
 
-    $bindvars[] = (int) $disclaimer;
+    $bindvars[] = (int) $htmlmail;
     $bindvars[] = (int) $uid;
     $bindvars[] = (int) $pid;
 

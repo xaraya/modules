@@ -69,11 +69,13 @@ function newsletter_adminapi_updatedisclaimer($args)
 
     // Update the item
     $query = "UPDATE $nwsltrTable 
-                 SET xar_title = ?
-                       xar_text = ?
-               WHERE xar_id = ?";
+              SET xar_title = ?,
+                  xar_text = ?
+              WHERE xar_id = ?";
 
-    $bindvars = array((string) $title, (string) $disclaimer, (int) $id);
+    $bindvars[] = (string) $title;
+    $bindvars[] = (string) $disclaimer;
+    $bindvars[] = (int) $id;
 
     // Execute query
     $result =& $dbconn->Execute($query, $bindvars);

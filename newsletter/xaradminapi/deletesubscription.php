@@ -49,7 +49,7 @@ function newsletter_adminapi_deletesubscription($args)
     // Name the table and column definitions
     $nwsltrTable = $xartable['nwsltrSubscriptions'];
 
-    // Delete the disclaimer
+    // Delete the subscription
     $query = "DELETE 
                 FROM $nwsltrTable
                WHERE xar_uid = ?";

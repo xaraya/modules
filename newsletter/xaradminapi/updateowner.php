@@ -67,9 +67,9 @@ function newsletter_adminapi_updateowner($args)
 
     // Update the item
     $query = "UPDATE $nwsltrTable 
-                 SET xar_rid = ?
-                       xar_signature = ?
-               WHERE xar_uid = ?";
+              SET xar_rid = ?,
+                  xar_signature = ?
+              WHERE xar_uid = ?";
 
     $bindvars = array((int) $rid, (string) $signature, (int) $id);
 

@@ -86,31 +86,31 @@ function newsletter_adminapi_updatepublication($args)
 
     // Update the item
     $query = "UPDATE $nwsltrTable 
-                 SET xar_cid = ?
-                     xar_altcids = ?
-                     xar_ownerid = ?
-                     xar_template_html = ?
-                     xar_template_text = ?
-                     xar_title = ?
-                     xar_logo = ?
-                     xar_linkexpiration = ?
-                     xar_linkregistration = ?
-                     xar_description = ?
-                     xar_disclaimerid = ?
-                     xar_introduction = ?
-                     xar_private = ?
-                     xar_subject = ?
-               WHERE xar_id = ?";
+              SET xar_cid = ?,
+                  xar_altcids = ?,
+                  xar_ownerid = ?,
+                  xar_template_html = ?,
+                  xar_template_text = ?,
+                  xar_title = ?,
+                  xar_logo = ?,
+                  xar_linkexpiration = ?,
+                  xar_linkregistration = ?,
+                  xar_description = ?,
+                  xar_disclaimerid = ?,
+                  xar_introduction = ?,
+                  xar_private = ?,
+                  xar_subject = ?
+              WHERE xar_id = ?";
 
     $bindvars = array((int)     $categoryId,
                       (string)  $altcids,
-                      (int)      $ownerId,
+                      (int)     $ownerId,
                       (string)  $templateHTML,
                       (string)  $templateText,
                       (string)  $title,
                       (string)  $logo,
                       (int)     $linkExpiration,
-                      (string)   $linkRegistration,
+                      (string)  $linkRegistration,
                       (string)  $description,
                       (int)     $disclaimerId,
                       (string)  $introduction,
