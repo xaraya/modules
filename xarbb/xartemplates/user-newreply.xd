@@ -20,16 +20,16 @@
 <form action="#$receipt['post_url']#" method="post" name="post" id="post" style="display: inline;" #$hooks['formaction']# >
 <table border="0" cellpadding="3" cellspacing="1" width="100%">
 	<tr> 
-		<th colspan="2" height="25">
-			<b>
+		<th colspan="2" height="25" style="border: 1px solid #000;">
+			<h4>
 				<xar:mlstring>
 					Reply to
 				</xar:mlstring> : #$ttitle#
-			</b>
+			</h4>
 		</th>
 	</tr>
 	<tr> 
-		<td class="xar-accent">
+		<td class="xar-accent" style="border: 1px solid #000;">
 			<h3>
 				<xar:mlstring>
 					Name
@@ -65,7 +65,7 @@
 		</td>
 	</tr>
 	<tr> 
-		<td class="xar-accent" width="22%">
+		<td class="xar-accent" width="22%" style="border: 1px solid #000;">
 			<h3>
 				<xar:mlstring>
 					Subject
@@ -84,7 +84,7 @@
 	</tr>
 	<xar:if condition="xarModIsHooked('bbcode')">
 		<tr> 
-			<td class="xar-accent" valign="top"> 
+			<td class="xar-accent" valign="top" style="border: 1px solid #000;"> 
 				<h3>
 					<xar:mlstring>
 						Form Controls
@@ -97,7 +97,7 @@
 		</tr>
 	</xar:if>
 		<tr> 
-			<td class="xar-accent" valign="top"> 
+			<td class="xar-accent" valign="top" style="border: 1px solid #000;"> 
 				<h3>
 					<xar:mlstring>
 						Body
@@ -113,7 +113,7 @@
 			</td>
 		</tr>
 		<tr> 
-			<td class="xar-accent" valign="top"> 
+			<td class="xar-accent" valign="top" style="border: 1px solid #000;"> 
 				<h3>
 				<!-- Uggghhh, here is the tough one.  Need to be able to show the options for this forum.  Also need to be able to turn off (selective) different option.  DB design is going to need to change to allow for a serialized entry here, and then a ton of new code I would imagine.  We are going to need this for the nntp integration.  Also, we need to add the data types to allow hooking to each individual module.  UGGGHHHH freaking UGGGHHHH -->
 				<!-- For the time being, let's just get the announcement, etc going. -->
@@ -165,8 +165,8 @@
 			<td class="xar-norm" width="78%">
 			</td>
 		</tr>
-		<tr> 
-			<td class="xar-accent" colspan="2" align="center" height="28"> 
+		<tr style="border: 1px solid #000;"> 
+			<td class="xar-accent" colspan="2" align="center" height="28" style="border: 1px solid #000;"> 
 				<input type="hidden" name="authid" id="authid" value="#$authid#" />
 				<input type="hidden" name="header[modid]" id="header-modid" value="#$header['modid']#" />
 				<input type="hidden" name="header[objectid]" id="header-objectid" value="#$header['objectid']#" />

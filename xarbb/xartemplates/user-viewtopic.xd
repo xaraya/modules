@@ -100,21 +100,24 @@
 	<xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
 		#$hooks['polls']#
 	</xar:if>
-	<tr>
-		<th width="150" height="26" nowrap="nowrap">
-			<xar:mlstring>
-			    Author
-			</xar:mlstring>
+	<tr style="border: 1px solid #000;">
+		<th width="150" height="20" nowrap="nowrap" style="border: 1px solid #000;">
+			<h4>
+				<xar:mlstring>
+					Author
+				</xar:mlstring>
+			</h4>
 		</th>
-		<th nowrap="nowrap">
-			<xar:mlstring>
-			    Message
-			</xar:mlstring>
+		<th nowrap="nowrap" style="border: 1px solid #000;">
+			<h4>
+				<xar:mlstring>
+					Message
+				</xar:mlstring>
+			</h4>
 		</th>
 	</tr>
-	<!-- BEGIN postrow -->
 	<tr> 
-		<td width="150" align="left" valign="top">
+		<td width="150" align="left" valign="top" style="border-right: 1px solid #000; border-left: 1px solid #000;">
 			<span>
 				<b>
 					<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $tposter))#">
@@ -146,7 +149,7 @@
 				</xar:if>
 			</span><br />
 		</td>
-		<td width="100%" height="28" valign="top">
+		<td width="100%" height="28" valign="top" style="border-right: 1px solid #000;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="100%">
@@ -213,7 +216,7 @@
 		</td>
 	</tr>
 	<tr> 
-		<td width="150" align="left" valign="middle">
+		<td width="150" align="left" valign="middle" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
 			<span>
 				<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
 					<xar:mlstring>
@@ -222,7 +225,7 @@
 				</a>
 			</span>
 		</td>
-		<td width="100%" height="28" valign="bottom" nowrap="nowrap">
+		<td width="100%" height="28" valign="bottom" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
 			<hr />
 			<table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
 				<tr> 
@@ -277,12 +280,10 @@
 	</tr>
 </table>
 
-<hr />
-
 <xar:foreach in="$items" value="$item" key="$key">
 <table width="100%" cellspacing="1" cellpadding="3" border="0">
 	<tr> 
-		<td width="150" align="left" valign="top" nowrap="nowrap">
+		<td width="150" align="left" valign="top" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000;">
 			<span>
 				<b>
 					<!--- Reply post could be anonymous - need to check --->
@@ -328,7 +329,7 @@
 				</xar:if>
 			</span><br />
 		</td>
-		<td width="100%" height="28" valign="top">
+		<td width="100%" height="28" valign="top" style="border-right: 1px solid #000; border-left: 1px solid #000;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="100%">
@@ -397,7 +398,7 @@
 		</td>
 	</tr>
 	<tr> 
-		<td width="150" align="left" valign="middle">
+		<td width="150" align="left" valign="middle" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
 			<span>
 				<a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid))##top">
 					<xar:mlstring>
@@ -406,7 +407,7 @@
 				</a>
 			</span>
 		</td>
-		<td width="100%" height="28" valign="bottom" nowrap="nowrap">
+		<td width="100%" height="28" valign="bottom" nowrap="nowrap" style="border-right: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000;">
 			<hr />
 			<table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
 				<tr> 
@@ -460,8 +461,6 @@
 		</td>
 	</tr>
 </table>
-
-<hr />
 </xar:foreach>
 
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
