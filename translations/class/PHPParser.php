@@ -53,6 +53,7 @@ class PHPParser
         $line = 0;
 
         if (!file_exists($filename)) return;
+//        echo file_exists($filename)
         $fd = fopen($filename, 'r');
 
         if (!$filesize = filesize($filename)) return;
@@ -62,25 +63,28 @@ class PHPParser
             $line++;
             if (preg_match_all('/(xarML|xarMLByKey)\s*\(\s*\'(.*)\'[,|\)]/', $buf, $matches)) {
                 foreach ($matches[2] as $match) {
-                    if ($string = $this->parseString($match)) {
+//                    if ($string = $this->parseString($match)) {
+                        $string = $match;
                         if (!isset($this->transEntries[$string])) {
                             $this->transEntries[$string] = array();
                         }
                         $this->transEntries[$string][] = array('line' => $line, 'file' => $filename);
                     }
-                }
+//                }
             }
             if (preg_match_all('/(xarML|xarMLByKey)\s*\(\s*\"(.*)\"[,|\)]/', $buf, $matches)) {
                 foreach ($matches[2] as $match) {
-                    if ($string = $this->parseString($match)) {
+//                    if ($string = $this->parseString($match)) {
+                      $string = $match;
                         if (!isset($this->transEntries[$string])) {
                             $this->transEntries[$string] = array();
                         }
                         $this->transEntries[$string][] = array('line' => $line, 'file' => $filename);
-                    }
+//                    }
                 }
             } elseif (preg_match('!^\s*//\s*\{(ML_dont_parse|ML_include|ML_add_string|ML_add_key)\s*(.*)\}!', $buf, $match)) {
-                if ($string = $this->parseString($match[2])) {
+//                if ($string = $this->parseString($match[2])) {
+                    $string = $match[2];
                     if ($match[1] == 'ML_dont_parse') {
                         $this->notToParseFiles[$string] = true;
                     } elseif ($match[1] == 'ML_include') {
@@ -96,10 +100,15 @@ class PHPParser
                         }
                         $this->transKeyEntries[$string][] = array('line' => $line, 'file' => $filename);
                     }
-                }
-            } elseif (preg_match('/(include_once|include|require_once|require)\s*\(?\s*(.*)/', $buf, $match)) {
-                if (($string = $this->parseString($match[2])) && strpos($string, '$') === false) {
-                    $this->includedFiles[$string] = true;
+//                }
+            }
+            if (preg_match('/(include_once|include|require_once|require)\s*\(?\s*(.*)/', $buf, $match)) {
+            //disregrd loggers
+                $string = $match[2];
+                if (!preg_match('/loggers/', $string, $match)) {
+                    if (($string = $this->parseString($string)) && strpos($string, '$') === false) {
+                        $this->includedFiles[$string] = true;
+                    }
                 }
             }
         }
@@ -109,7 +118,6 @@ class PHPParser
 
     function parseString($buf)
     {
-        return $buf;
         $pos = 0;
         $len = strlen($buf);
         while ($pos < $len) {
@@ -144,14 +152,4 @@ class PHPParser
     }
 
 }
-/*
-$time = explode(' ', microtime());
-$startTime = $time[1] + $time[0];
-$p = new PHPParser();
-$p->parse('/home/marco/src/xaraya/html/modules/users/xaruser.php');
-$time = explode(' ', microtime());
-$endTime = $time[1] + $time[0];
-var_dump($p);
-echo "Total time: ".($endTime - $startTime)."\n";
-/**/
 ?>
