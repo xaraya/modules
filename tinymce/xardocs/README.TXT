@@ -1,15 +1,17 @@
-INSTALLATION AND USE - XarTinyMCE Version 0.1.3
+INSTALLATION AND USE - XarTinyMCE Version 0.2.0
 
 XarTinyMCE is a very configurable, lightweight WYSIWYG editor.
-It has limited options compared to HTMLArea, but is earlier in it's
-development stage so I expect further enhancements. In addition, it is very
-configurable and has some nice features not available in other wysiwyg editors.
+It is early in it's development stage so I expect further enhancements. 
+In addition to being very configurable it has some nice features not 
+available in other wysiwyg editors.
 
 See the documentation included in the docs directory of the module for
 browse compatibility, and further options for customization.
 
 The current version of this Xaraya integration provides for some basic
 configuration options via a user interface in the admin configuration area for XarTinyMCE.
+This version sees integration of a basic image browser.
+
 
 ****************************
 To INSTALL and get started:
@@ -41,7 +43,7 @@ To INSTALL and get started:
         <xar:template file="tinymce_insert" module="tinymce" type="module" />
     </xar:if>
 
-    The default Mode in the configuration settings for XarTinyMCE is "All Text Areas" 
+    The default Mode in the configuration settings for XarTinyMCE is "All Text Areas"
     and enables the WYSIWYG action as described above.
 
     Additional method:
@@ -50,6 +52,29 @@ To INSTALL and get started:
     You must then also add the attribute: mce_editable="true"
     to any "textarea" or "div" tag that you wish to use as a WYSIWYG textarea.
 
+4. Alternatively, add a xarTinyMCE wysiwyg textarea to any of your articles and the editor.
+   No need to add any template tags. Just set the configuration in Modify Config
+
+IMAGE BROWSER (IBROWSER), UPLOADS MODULE, SECURITY
+******************************
+Please make sure you edit and update any settings in the
+modules/tinymce/xartemplates/includes/ibrowserconfig.inc file
+
+Most settings will work as is, but you must set the image libraries to your own.
+Also, keep in mind that using Xaraya's inbuilt Uploads and Images module
+is much more secure. If you use the image browser, please be sure once you have
+modified the file, to chmod the ibrowserconfig.inc file chmod 444 so it is not writeable.
+
+Using the ibrowser also means that the path to your images will be available to those
+browsing your site. 
+
+For added security, turn of Upload ability in the IBrowser and use the Uploads and Images module.
+Point your Image library to the Image module's directory or trusted directory of Uploads.
+
+An alternative to using the IBrowser is to install the Images and Uploads modules.
+You can attach an Upload DD field to your articles and upload images to an image 
+or trusted directory. From there you can drag the link of the file to your wysiwyg editor.
+Alternatively - cut and paste the image to your WYSIWYG editor from word or a supported image editor.
 ******************************
 To UPGRADE:
 1. Remove all files in the tinymce module directory and all files in it and

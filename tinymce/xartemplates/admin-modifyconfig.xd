@@ -227,10 +227,10 @@
                 <xar:mlstring><strong>Dynamic Data Property</strong> :  </xar:mlstring>
             </span>
             <span style="float: right; width: 68%; text-align: left;">
-                  <xar:mlstring>You can now use a TinyMCE Dynamic Data WYSIWYG textarea with either of the above
-                  modes. Install and add the XarTinyMCE code to your templates as usual. Add a 
-                  XarTinyMCE GUI TextArea Dynamic Data property to your publication types, or
-                  other modules (in usual way). You can set the row height and column width in the 
+                  <xar:mlstring>There is a xarTinyMCE Dynamic Data WYSIWYG textarea which works with All Textareas or 
+                  Specific text areas mode. Install XarTinyMCE as usual. You <strong>do not</strong> have to add the template code to your
+                  templates. Add a  XarTinyMCE GUI TextArea Dynamic Data property to your publication types, or
+                  other modules (in usual way). You can set the row height and column width in the
                   validation field of the DD property. eg 20:80 for 20 rows high, 80 columns wide.</code></xar:mlstring>
             </span>
              </p>
@@ -275,6 +275,18 @@
             </span>
             <span style="float: right; width: 68%; text-align: left;">
                 <input type="text" name="tinywidth" id="tinywidth" value="#$tinywidth#" size="3" maxlength="3" /> px
+                <xar:mlstring>All WYSIWYG textareas affected.</xar:mlstring>
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#xarML('Defaults to height of individual textareas if left blank')#">
+                    <label for="tinyheight"><xar:mlstring>Override height for all textareas:</xar:mlstring></label>
+                </span>
+            </span>
+            <span style="float: right; width: 68%; text-align: left;">
+                <input type="text" name="tinyheight" id="tinyheigh" value="#$tinyheight#" size="3" maxlength="3" /> px
+                <xar:mlstring>All WYSIWYG textareas affected.</xar:mlstring>
             </span>
         </div>
         <div style="clear: both; padding-top: 10px;">
@@ -426,8 +438,44 @@
             </span>
         </div>
         </xar:if>
+       <div style="clear: both; width: 98%; padding-top: 10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <span class="help" title="#xarML('Automatically add the image browser to use with xarTinyMCE')#">
+                    <label for="useibrowser"><xar:mlstring>Auto add the image browser?</xar:mlstring></label>
+                </span>
+            </span>
+           <span style="float: right; width: 51%; text-align: left;">
+                <xar:mlstring>This will auto add the plugin, change theme to Advanced, add the Ibrowser button, and remove
+                the Image button (on the next screen). Alternatively, set this to No and do the settings manually.</xar:mlstring>
+            </span>
 
-
+            <span style="float: right; width: 15%; text-align: left;">
+                <select name="useibrowser" id="useibrowser" size="1">
+                <xar:if condition="$useibrowser eq 0">
+                    <option value="0" selected="selected"><xar:mlstring>Manual set</xar:mlstring></option>
+                    <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+                    <option value="2"><xar:mlstring>No</xar:mlstring></option>
+                <xar:elseif condition="$useibrowser eq 1" />
+                    <option value="0"><xar:mlstring>Manual set</xar:mlstring></option>
+                    <option value="1" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                    <option value="2"><xar:mlstring>No</xar:mlstring></option>
+                <xar:elseif condition="$useibrowser eq 2" />
+                    <option value="0"><xar:mlstring>Manual set</xar:mlstring></option>
+                    <option value="1"><xar:mlstring>Yes</xar:mlstring></option>
+                    <option value="2" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                </xar:if>
+            </select>
+            </span>
+        </div>
+         <div style="clear:both; margin-top:10px; margin-bottom:10px; float:right; width:68%; text-align:left;">
+           <span style="left:30%; width: 68%; text-align: left;">
+            <xar:mlstring><strong>TO USE THE IBROWSER REMEMBER:</strong> Update the <a href="modules/tinymce/xartemplates/includes/ibrowserconfig.inc">configuration file 
+            at modules/tinymce/xartemplates/includes/ibrowserconfig.inc</a> for the IBrowser Plugin - then chmod 444
+            for added security. Using the IBrowser is an alternative to using the Images and Uploads module, or can be using in conjunction
+            with them by pointing your image libraries to one or more of the Upload and Image modules' image, upload and
+            trusted directories.  Keep in mind that using the Uploads module is much more secure.</xar:mlstring>
+            </span>
+         </div>
         <div style="clear: both; margin-top: 20px; margin-bottom: 10px;width:98%;">
             <input type="submit" value="#$updatebutton#" />
         </div>

@@ -33,6 +33,7 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinstances', 'str:1:', $tinyinstances, 'summary,body,tpost,message', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinywidth','int:1:',$tinywidth,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('tinyheight','int:1:',$tinyheight,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinylang','str:1:',$tinylang,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinybr','str:1:',$tinybr,'false',XARVAR_NOT_REQUIRED)) return;
                xarModSetVar('tinymce', 'tinymode', $tinymode);
@@ -42,6 +43,7 @@ function tinymce_admin_updateconfig()
                xarModSetVar('tinymce','tinydirection', $tinydirection);
                xarModSetVar('tinymce', 'tinyinstances', $tinyinstances); //not used at this stage
                xarModSetVar('tinymce', 'tinywidth', $tinywidth);
+               xarModSetVar('tinymce', 'tinyheight', $tinyheight);
                xarModSetVar('tinymce', 'tinylang', $tinylang);
                xarModSetVar('tinymce', 'tinybr', $tinybr);
 
@@ -55,6 +57,8 @@ function tinymce_admin_updateconfig()
             if (!xarVarFetch('tinydate', 'str:1:', $tinydate, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinytime', 'str:1:', $tinytime, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('tinyinvalid', 'str:1:', $tinyinvalid, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('useibrowser','int:1:',$useibrowser,0,XARVAR_NOT_REQUIRED)) return;
+    
                 xarModSetVar('tinymce', 'tinyextended', $tinyextended);
                 xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
                 xarModSetVar('tinymce','tinyencode', $tinyencode); //not used at this stage
@@ -63,6 +67,7 @@ function tinymce_admin_updateconfig()
                 xarModSetVar('tinymce','tinydate', $tinydate);
                 xarModSetVar('tinymce','tinytime', $tinytime);
                 xarModSetVar('tinymce','tinyinvalid', $tinyinvalid);
+                xarModSetVar('tinymce', 'useibrowser', $useibrowser);
 
             break;
         case 'customadvanced':
@@ -90,10 +95,67 @@ function tinymce_admin_updateconfig()
 
            break;
     }
-
-
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
+   
+    //use the image browser? Check configuration
+   $useibrowser=xarModGetVar('tinymce','useibrowser');
+    if ($useibrowser == 1) {
+        //theme
+        xarModSetVar('tinymce', 'tinytheme', 'advanced');
+        //plugins
+       $currentplugs = xarModGetVar('tinymce', 'tinyplugins');
+        if (trim($currentplugs)=='')  {
+             $currentplugs= 'ibrowser';
+        }elseif (strstr($currentplugs,'ibrowser')==false) {
+             $currentplugs=$currentplugs.',ibrowser';
+        }
+        xarModSetVar('tinymce','tinyplugins', $currentplugs);
+
+        //remove image button
+        $currentremove=  xarModGetVar('tinymce', 'tinybuttonsremove');
+        if (trim($currentremove)=='') {
+             $currentremove= 'image';
+        }elseif (strstr($currentremove,'image')==false) {
+             $currentremove=$currentremove.',image';
+        }
+        xarModSetVar('tinymce', 'tinybuttonsremove', $currentremove);
+       //add ibrowser button
+         $currentbutton2=xarModGetVar('tinymce', 'tinybuttons2');
+        if (trim($currentbutton2)=='') {
+             $currentbutton2= 'ibrowser';
+        }elseif (strstr($currentbutton2,'ibrowser')==false) {
+             $currentbutton2=$currentbutton2.',ibrowser';
+        }
+         xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
+
+    }elseif ($useibrowser ==2) {
+       //theme - leave as is
+        //xarModSetVar('tinymce', 'tinytheme', 'Default');
+        //remove plugin
+        $currentplugs = xarModGetVar('tinymce', 'tinyplugins');
+        if ((trim($currentplugs)<>'') && (strstr($currentplugs,'ibrowser')==true))  {
+             $currentplugs= str_replace(array(',ibrowser','ibrowser','ibrowser,'),'',$currentplugs);
+        }
+        xarModSetVar('tinymce','tinyplugins', $currentplugs);
+
+        //add back image button
+        $currentremove=  xarModGetVar('tinymce', 'tinybuttonsremove');
+        if ((trim($currentremove)<>'') && (strstr($currentremove,'image')==true)) {
+             $currentremove=str_replace(array('image',',image','image,'),'',$currentremove);
+        }
+        xarModSetVar('tinymce', 'tinybuttonsremove', $currentremove);
+       //remove ibrowser button
+         $currentbutton2=xarModGetVar('tinymce', 'tinybuttons2');
+        if ((trim($currentbutton2)<>'') && (strstr($currentbutton2,'ibrowser')==true)) {
+             $currentbutton2=str_replace(array('ibrowser',',ibrowser','ibrowser,'),'',$currentbutton2);
+        }
+         xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
+    
+    } else {
+           	xarModSetVar('tinymce','iusebrowse',0);
+    }
+
 
     //Turn our settings into javascript for insert into template
     //Let's call the variable jstext
@@ -108,6 +170,9 @@ function tinymce_admin_updateconfig()
 
     if (xarModGetVar('tinymce','tinywidth') > 0) {
         $jstext .='width : "'.xarModGetVar('tinymce','tinywidth').'px",';
+    }
+    if (xarModGetVar('tinymce','tinyheight') > 0) {
+        $jstext .='height : "'.xarModGetVar('tinymce','tinyheight').'px",';
     }
 
     if (trim(xarModGetVar('tinymce','tinyplugins')) <> '') {
@@ -162,7 +227,7 @@ function tinymce_admin_updateconfig()
         if (trim(xarModGetVar('tinymce','tinybuild3')) <> '') {
           $jstext .='theme_advanced_buttons3 : "'.xarModGetVar('tinymce','tinybuild3').'",';
         }
-        
+  //      $jstext .= 'debug : "true",';
         if (trim(xarModGetVar('tinymce','tinyadvformat')) <> '') {
           $jstext .='theme_advanced_blockformats : "'.xarModGetVar('tinymce','tinyadvformat').'",';
         }

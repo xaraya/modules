@@ -42,6 +42,7 @@ function tinymce_admin_modifyconfig()
     $data['tinybuttonsremove'] = xarModGetVar('tinymce', 'tinybuttonsremove');                    
     $data['tinytoolbar'] = xarModGetVar('tinymce', 'tinytoolbar');
     $data['tinywidth'] = xarModGetVar('tinymce', 'tinywidth');
+    $data['tinyheight'] = xarModGetVar('tinymce', 'tinyheight');
     $data['tinyinlinestyle'] = xarModGetVar('tinymce', 'tinyinlinestyle');
     $data['tinyundolevel'] = xarModGetVar('tinymce', 'tinyundolevel');
     $data['defaulteditor'] = xarModGetVar('base','editor');
@@ -52,7 +53,8 @@ function tinymce_admin_modifyconfig()
     $data['tinytime']=xarModGetVar('tinymce', 'tinytime');
     $data['tinybr']=xarModGetVar('tinymce', 'tinybr');
     $data['tinyinvalid']=xarModGetVar('tinymce', 'tinyinvalid');    
-    $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');        
+    $data['tinyadvformat']=xarModGetVar('tinymce', 'tinyadvformat');     
+    $data['useibrowser']=xarModGetVar('tinymce', 'useibrowser');              
     if (strpos($data['tinyplugins'], 'insertdatetime')) {
         $data['dateplug']=1;
     } else {
