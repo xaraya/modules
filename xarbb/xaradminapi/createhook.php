@@ -122,14 +122,15 @@ function xarbb_adminapi_createhook($args)
     $tposter = xarUserGetVar('uid');
     $tstatus = 0;
 
-    if (!xarModAPIFunc('xarbb',
-                       'user',
-                       'createtopic',
-                       array('fid'      => $fid,
-                             'ttitle'   => $ttitle,
-                             'tpost'    => $tpost,
-                             'tposter'  => $tposter,
-                             'tstatus'  => $tstatus))) {
+    $tid = xarModAPIFunc('xarbb',
+                         'user',
+                         'createtopic',
+                         array('fid'      => $fid,
+                               'ttitle'   => $ttitle,
+                               'tpost'    => $tpost,
+                               'tposter'  => $tposter,
+                               'tstatus'  => $tstatus));
+    if (empty($tid)) {
         return $extrainfo;
     }
 
@@ -137,6 +138,9 @@ function xarbb_adminapi_createhook($args)
                        'user',
                        'updateforumview',
                        array('fid'      => $fid,
+                             'tid'      => $tid,
+                             'ttitle'   => $ttitle,
+                             'treplies' => 0,
                              'topics'   => 1,
                              'move'     => 'positive',
                              'replies'  => 1,

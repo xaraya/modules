@@ -65,22 +65,51 @@ function xarbb_user_movetopic()
                                array('fid'      => $fid,
                                      'tid'      => $tid,
                                      'ttitle'   => $data['ttitle'],
+                                     'treplies' => $data['treplies'],
                                      'topics'   => 1,
                                      'replies'  => $data['treplies'] + 1,
                                      'move'     => 'positive',
                                      'fposter'  => $data['tposter']))) return;
 
+            // Get the last topic from the old forum again
+            $numtopics = xarModAPIFunc('xarbb', 'user', 'counttopics',
+                                       array('fid' => $data['fid']));
+            if (!empty($numtopics)) {
+                $list = xarModAPIFunc('xarbb', 'user', 'getalltopics',
+                                      array('fid' => $data['fid'],
+                                            'startnum' => $count,
+                                            'numitems' => 1));
+                if (!empty($list)) {
+                    $last = $list[0];
+                    if (!empty($last['treplies'])) {
+                        $tposter = $last['treplier'];
+                    } else {
+                        $tposter = $last['tposter'];
+                    }
+                } else {
+                    $last = array('tid' => 0,
+                                  'ttitle' => '',
+                                  'treplies' => 0);
+                    $tposter = $data['tposter'];
+                }
+            } else {
+                $last = array('tid' => 0,
+                              'ttitle' => '',
+                              'treplies' => 0);
+                $tposter = $data['tposter'];
+            }
             // Then update the old forum
             if (!xarModAPIFunc('xarbb',
                                'user',
                                'updateforumview',
                                array('fid'      => $data['fid'],
-                                     'tid'      => $tid,
-                                     'ttitle'   => $data['ttitle'],
+                                     'tid'      => $last['tid'],
+                                     'ttitle'   => $last['ttitle'],
+                                     'treplies' => $last['treplies'],
                                      'topics'   => 1,
                                      'replies'  => $data['treplies'] + 1,
                                      'move'     => 'negative',
-                                     'fposter'  => $data['tposter']))) return;
+                                     'fposter'  => $tposter))) return;
 
             // Now let's check to see if there is a shadow post
             if ($shadow != false){

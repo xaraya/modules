@@ -19,6 +19,9 @@
  * @param $args['topics'] how many topics were added or removed
  * @param $args['replies'] how many replies were added or removed
  * @param $args['fposter'] userid of the last poster
+ * @param $args['tid'] the last topic id
+ * @param $args['ttitle'] the last topic title
+ * @param $args['treplies'] the number of replies to the last topic
  */
 function xarbb_userapi_updateforumview($args)
 {
@@ -53,6 +56,7 @@ function xarbb_userapi_updateforumview($args)
     $options = array();
     $options['tid'] = $tid;
     $options['ttitle'] = $ttitle;
+    $options['treplies'] = empty($treplies) ? 0 : $treplies;
     $options = serialize($options);
 
 // TODO: shouldn't xar_fpostid contain the last post id someday ?

@@ -211,7 +211,8 @@ function xarbb_user_newtopic()
                                          'replies'  => 1,
                                          'fposter'  => $tposter,
                                          'tid'      => $tid,
-                                         'ttitle'   => $ttitle))) return;
+                                         'ttitle'   => $ttitle,
+                                         'treplies' => 0))) return;
              }
 
             $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));

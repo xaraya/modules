@@ -47,6 +47,12 @@ function xarbb_user_deletereply()
                        'deletereplies',
                         array('cid' => $cid))) return;
 
+    if (!empty($topic['treplies'])) {
+        $topic['treplies'] = $topic['treplies'] - 1;
+    } else {
+        $topic['treplies'] = 0;
+    }
+
     // Need to update the forum page to show one less reply
     if (!xarModAPIFunc('xarbb',
                        'user',
@@ -56,7 +62,8 @@ function xarbb_user_deletereply()
                              'move'     => 'negative',
                              'fposter'  => $topic['tposter'],
                              'tid'      => $tid,
-                             'ttitle'   => $topic['ttitle']))) return;
+                             'ttitle'   => $topic['ttitle'],
+                             'treplies' => $topic['treplies']))) return;
  
     // Redirect
     xarResponseRedirect(xarModURL('xarbb', 'user', 'viewtopic',array("tid" => $tid)));

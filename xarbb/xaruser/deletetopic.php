@@ -43,14 +43,41 @@ function xarbb_user_deletetopic()
                        'deletetopics',
                         array('tid' => $tid))) return;
 
-    $tposter = xarUserGetVar('uid');
+    // Get the last topic from this forum again
+    $numtopics = xarModAPIFunc('xarbb', 'user', 'counttopics',
+                               array('fid' => $topic['fid']));
+    if (!empty($numtopics)) {
+        $list = xarModAPIFunc('xarbb', 'user', 'getalltopics',
+                              array('fid' => $topic['fid'],
+                                    'startnum' => $count,
+                                    'numitems' => 1));
+        if (!empty($list)) {
+            $last = $list[0];
+            if (!empty($last['treplies'])) {
+                $tposter = $last['treplier'];
+            } else {
+                $tposter = $last['tposter'];
+            }
+        } else {
+            $last = array('tid' => 0,
+                          'ttitle' => '',
+                          'treplies' => 0);
+            $tposter = xarUserGetVar('uid');
+        }
+    } else {
+        $last = array('tid' => 0,
+                      'ttitle' => '',
+                      'treplies' => 0);
+        $tposter = xarUserGetVar('uid');
+    }
 
     if (!xarModAPIFunc('xarbb',
                        'user',
                        'updateforumview',
                        array('fid'      => $topic['fid'],
-                             'tid'      => $tid,
-                             'ttitle'   => $topic['ttitle'],
+                             'tid'      => $last['tid'],
+                             'ttitle'   => $last['ttitle'],
+                             'treplies' => $last['treplies'],
                              'topics'   => 1,
                              'replies'  => $topic['treplies'],
                              'move'     => 'negative',
