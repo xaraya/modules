@@ -350,7 +350,7 @@ function articles_userapi_getall($args)
                         $articles[$key][$name] = $value;
                     // TODO: clean up this temporary fix
                         if (isset($properties[$name]) && !empty($value)) {
-                            $articles[$key][$name.'_output'] = $properties[$name]->showOutput($value);
+                            $articles[$key][$name.'_output'] = $properties[$name]->showOutput(array('value' => $value));
                         }
                     }
                 }
