@@ -1,0 +1,36 @@
+<xar:template file="admin-menu" type="module"/>
+
+<table>
+  <tr>
+    <th colspan="5"><xar:mlstring>Define reports</xar:mlstring></th>
+  </tr>
+  <tr>
+    <th><xar:mlstring>Report name</xar:mlstring></th>
+    <th><xar:mlstring>Description</xar:mlstring></th>
+    <th><xar:mlstring>Definition file</xar:mlstring></th>
+    <th><xar:mlstring>Connection</xar:mlstring></th>
+    <th><xar:mlstring>Actions</xar:mlstring>
+  </tr>
+  <xar:loop name="$reports">
+    <tr>
+      <td><a href="&xar-modurl-reports-admin-modify_report;&rep_id=#$id#">#$name#</a></td>
+      <td>#$description#</td>
+      <td>#$xmlfile#</td>
+      <td><a href="&xar-modurl-reports-admin-modify_connection;&conn_id=#$connection['id']#">#$connection['name']#</a></td>
+      <td>
+        <a href="&xar-modurl-reports-admin-delete_report;&rep_id=#$id#">
+          <xar:mlstring>Delete</xar:mlstring>
+        </a>
+      </td>
+    </tr>
+  </xar:loop>
+</table>
+
+<a href="&xar-modurl-reports-admin-new_report;">
+<xar:mlstring>Create new report</xar:mlstring>
+</a>
+
+
+
+
+      

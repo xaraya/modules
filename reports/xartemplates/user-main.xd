@@ -1,0 +1,27 @@
+<table width="100%" border="0">
+  <tr>
+    <td>
+      <xar:mlstring>Choose a report</xar:mlstring>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%" cellspacing="1" cellpadding="1" border="0">
+        <tr>
+          <th><xar:mlstring>Report name</xar:mlstring></th>
+          <th><xar:mlstring>Report description</xar:mlstring></th>
+        </tr>
+        <xar:loop name="$reportlist">
+          <tr>
+            <td>
+             <a href="&xar-modurl-reports-user-generate;&rep_id=#$id#&xmlfile=#$xmlfile#&conn_id=#$conn_id#">#$name#</a>
+            </td>
+            <td>#$desc#</td>
+          </tr>
+        </xar:loop>
+      </table>
+    </td>
+  </tr>
+</table>
+  
+    

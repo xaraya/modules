@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<document page="a4" type="portrait" left="40" right="20" top="30" bottom="30">
+<report>
+	<datasource>
+		<fields>"*"</fields>
+		<table>"xar_roles"</table>
+		<where>""</where>
+		<groupby>""</groupby>
+		<orderby>"xar_name"</orderby>
+	</datasource>
+	<pageheader height="40">
+		<text size="7" bold="true" x="0" y="0" width="275" height="38" align="left" bgcolor="f0f0f0">
+		 "Multiline\nMultiline in pageheader and left-wrapped"
+		</text>
+		<line x1="0" y1="38" x2="535" y2="+0" width="0.5" type="1"/>
+		<line x1="0" y1="39" x2="535" y2="+0" width="0.5" type="1"/>
+	</pageheader>
+	<documentheader height="80">
+		<text font="Courier" size="9" bold="true" x="80" y="5" width="150" height="11" bgcolor="f0f0f0">
+			"Documentheader";
+		</text>
+		<image x="400" y="30" type="jpeg" src="1.jpg" width="100" height="40"/>
+		<rectangle x="200" y="30" width="100" height="37" type="0" linewidth="0.5" color="ff0000" bgcolor="0000ff"/>
+		<line x1="0" y1="79" x2="535" y2="+0" width="0.5" type="1"/>
+	</documentheader>
+	<detail width="100" height="15" repeat="0" flow="vertical" columns="1">
+		<detailheader height="20">
+  		<text font="Courier" size="8" bold="true" x="0" y="5" width="50" height="10" align="center" bgcolor="f0f0f0">
+  			"ID"
+  		</text>
+  		<text font="Courier" size="8" bold="true" x="+5" y="-10" width="400" height="10" align="center" bgcolor="f0f0f0">
+  			"NAME"
+  		</text>
+      <line x1="0" y1="19" x2="535" y2="+0" width="0.5" type="1"/>  		
+		</detailheader>
+		<text font="Courier" size="8" x="0" y="2" width="50" height="10" bgcolor="f0f0f0">
+			fields("xar_uid")
+		</text>
+		<text font="Courier" size="8" x="+5" y="-10" width="400" height="10" bgcolor="f0f0f0">
+			fields("xar_name")
+		</text>
+	</detail>
+	<documentfooter height="15">
+		<line x1="0" y1="0" x2="535" y2="+0" width="0.5" type="1"/>
+		<text font="Courier" size="8" bold="true" x="0" y="5" width="60" height="10" align="right" bgcolor="f0f0f0">
+			"No. RUS:"
+		</text>
+		<text font="Courier" size="8" bold="true" x="+5" y="-10" width="60" height="10" align="right" bgcolor="f0f0f0">
+			rcount("")
+		</text>
+	</documentfooter>
+	<pagefooter height="12">
+		<line x1="0" y1="0" x2="535" y2="0" width="0.5" type="1"/>
+		<line x1="0" y1="1" x2="535" y2="1" width="0.5" type="1"/>
+		<text font="Helvetica" size="7" x="00" y="3" width="495" height="9" align="center" bgcolor="f0f0f0">
+			"RUS"
+		</text>
+		<text font="Helvetica" size="7" x="500" y="3" width="35" height="9" align="center" bgcolor="f0f0f0">
+			page()
+		</text>
+	</pagefooter>
+</report>
+</document>

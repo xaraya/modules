@@ -1,0 +1,27 @@
+<input type="hidden" name="authid" value="#$authid#"/>
+<input type="hidden" name="rep_id" value="#$rep_id#"/>
+
+<table>
+  <tr>
+    <td><xar:mlstring>Report name</xar:mlstring></td>
+    <td><input type="text" name="rep_name" value="#$name#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Description</xar:mlstring></td>
+    <td><input type="textarea" name="rep_desc" value="#$description#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Definition file</xar:mlstring></td>
+    <td><input type="text" name="rep_xmlfile" value="#$xmlfile#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Connection</xar:mlstring></td>
+    <td>
+      <select name="rep_conn_id">
+      <xar:loop name="$connections">
+        <option <xar:if condition="$rep_conn_id == $id">selected="selected"</xar:if> value="#$id#">#$name#</option>
+      </xar:loop>
+      </select>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,37 @@
+<xar:template file="admin-menu" type="module"/>
+<table>
+  <tr>
+    <th colspan="7"><xar:mlstring>Define connections</xar:mlstring></th>
+  </tr>
+  <tr>
+    <th><xar:mlstring>Connection name</xar:mlstring></th>
+    <th><xar:mlstring>Description</xar:mlstring></th>
+    <th><xar:mlstring>Type</xar:mlstring></th>
+    <th><xar:mlstring>Server</xar:mlstring></th>
+    <th><xar:mlstring>Database</xar:mlstring></th>
+    <th><xar:mlstring>User</xar:mlstring></th>
+    <th><xar:mlstring>Actions</xar:mlstring>
+  </tr>
+  <xar:loop name="$connections">
+    <tr>
+      <td><a href="&xar-modurl-reports-admin-modify_connection;&conn_id=#$id#">#$name#</a></td>
+      <td>#$description#</td>
+      <td>#$type#</td>
+      <td>#$server#</td>
+      <td>#$database#</td>
+      <td>#$user#</td>
+      <td>
+        <a href="&xar-modurl-reports-admin-delete_connection;&conn_id=#$id#">
+          <xar:mlstring>Delete</xar:mlstring>
+        </a>
+      </td>
+    </tr>
+  </xar:loop>
+</table>
+
+<a href="&xar-modurl-reports-admin-new_connection;">
+<xar:mlstring>Create new connection</xar:mlstring>
+</a>
+
+
+      

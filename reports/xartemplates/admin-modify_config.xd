@@ -1,0 +1,32 @@
+<xar:template file="admin-menu" type="module"/>
+
+<table>
+  <tr>
+    <th colspan="2"><xar:mlstring>Modify configuration</xar:mlstring></th>
+  </tr>
+  <tr>
+    <form action="&xar-modurl-reports-admin-update_config;" method="post">
+    <input type="hidden" name="authid" value="#$authid#"/>
+    <td><xar:mlstring>Report location</xar:mlstring></td>
+    <td><input type="text" size="70" name="config_replocation" value="#$rep_location#"/></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Images location</xar:mlstring></td>
+    <td><input type="text" size="70" name="config_imglocation" value="#$img_location#"/></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>PDF backend processor</xar:mlstring></td>
+    <td>
+      <select name="config_pdfbackend">
+        <xar:loop name="$backends">
+          <option <xar:if condition="$selectedbackend==$id">selected="selected"</xar:if> value="#$id#">#$name#</option>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><input type="submit" value="<xar:mlstring>Update config</xar:mlstring>"/></td>
+    <td>&nbsp;</td>
+  </tr>
+  </form>
+</table>

@@ -1,0 +1,40 @@
+
+<input type="hidden" name="authid" value="#$authid#"/>
+<input type="hidden" name="conn_id" value="#$conn_id#"/>
+
+<table>
+  <tr>
+    <td><xar:mlstring>Connection name</xar:mlstring></td>
+    <td><input type="text" name="conn_name" value="#$name#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Description</xar:mlstring></td>
+    <td><input type="textarea" name="conn_desc" value="#$description#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Type</xar:mlstring>
+    <td>
+      <select name="conn_type">
+        <option <xar:if condition="$type=='mysql'">selected="selected"</xar:if> value="mysql">MySql</option>
+        <option <xar:if condition="$type=='odbc'">selected="selected"</xar:if> value="odbc">ODBC</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Server</xar:mlstring></td>
+    <td><input type="text" name="conn_server" value="#$server#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Database name</xar:mlstring></td>
+    <td><input type="text" name="conn_database" value="#$database#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>User</xar:mlstring></td>
+    <td><input type="text" name="conn_user" value="#$user#"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Password</xar:mlstring></td>
+    <td><input type="password" name="conn_password" value="#$password#"></td>
+  </tr>
+</table>
+

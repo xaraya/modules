@@ -1,0 +1,15 @@
+<xar:template file="admin-menu" type="module"/>
+
+<table>
+  <tr>
+    <th><xar:mlstring>Create a new connection</xar:mlstring></th>
+  </tr>
+  <tr>
+    <td>
+      <form action="&xar-modurl-reports-admin-create_connection;" method="post"  enctype="application/x-www-form-urlencoded">
+        <xar:template file="connection_form" type="module"/>
+        <input type="submit" value="<xar:mlstring>Create connection</xar:mlstring>"/>
+      </form>
+    </td>
+  </tr>
+</table>
