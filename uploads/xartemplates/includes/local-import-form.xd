@@ -5,7 +5,7 @@
             <span>
             <strong>
                 <xar:mlstring>Current Directory:</xar:mlstring>
-                /incoming/trusted#$curDir#
+                &nbsp;#xarModGetVar('uploads', 'path.imports-directory')##$curDir#
             <strong>
             </span>
         </p>

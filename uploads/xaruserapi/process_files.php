@@ -58,7 +58,7 @@ function uploads_userapi_process_files( $args )
             if (isset($override['upload']['path']) && file_exists($override['upload']['path'])) {
                 $upload_directory = $override['upload']['path'];
             } else {
-                $upload_directory = xarModGetVar('uploads','path.uploads-directotry');
+                $upload_directory = xarModGetVar('uploads','path.uploads-directory');
             }
 
             // Check for override of upload obfuscation and set accordingly

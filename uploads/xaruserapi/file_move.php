@@ -54,19 +54,21 @@ function uploads_userapi_file_move( $args )
         return FALSE;
     }        
         
-    if (!file_exists(dirname($fileDest)))  {
+    $dirDest = realpath(dirname($fileDest));
+
+    if (!file_exists($dirDest))  {
         $msg = xarML('Unable to move file - Destination directory does not exist!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NOT_EXIST', new SystemException($msg));
         return FALSE;
     }        
         
-    if (!is_writable(dirname($fileDest))) {
+    if (!is_writable($dirDest)) {
         $msg = xarML('Unable to move file - Destination directory is not writable!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_WRITE', new SystemException($msg));
         return FALSE;
     }        
         
-    if (disk_free_space(dirname($fileDest)) <= filesize($fileSrc)) {
+    if (disk_free_space($dirDest) <= filesize($fileSrc)) {
         $msg = xarML('Unable to move file - Destination drive does not have enough free space!');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SPACE', new SystemException($msg));
         return FALSE;
