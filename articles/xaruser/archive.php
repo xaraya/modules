@@ -220,13 +220,14 @@ function articles_user_archive($args)
         if (empty($articles[$key]['title'])) {
             $articles[$key]['title'] = xarML('(none)');
         }
+/* TODO: move date formatting to template, delete this code after testing
         if ($showdate && !empty($articles[$key]['pubdate'])) {
             $articles[$key]['date'] = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",
                                                $articles[$key]['pubdate']);
         } else {
             $articles[$key]['date'] = '';
         }
-
+*/
 // TODO: find some better way to do this...
         $list = array();
         // get all the categories for that article and put them under the

@@ -68,7 +68,7 @@
                         </td>
                         <xar:if condition="!empty($showdate)">
                             <td>
-                                #$article['date']# 
+                                #xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$article['pubdate'])# 
                             </td>
                         </xar:if>
                     </tr>
@@ -86,7 +86,7 @@
                         </td>
                         <xar:if condition="!empty($showdate)">
                             <td>
-                                #$article['date']# 
+                                #xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$article['pubdate'])# 
                             </td>
                         </xar:if>
                     </tr>
