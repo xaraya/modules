@@ -54,7 +54,7 @@ function opentracker_userapi_get_last_visitors($args)
     
     $query .= ' ORDER BY AL.timestamp';
     
-    $result =& $dbconn->SelectLimit($query, $num_users, $bindvars); 
+    $result =& $dbconn->SelectLimit($query, $num_users, -1, $bindvars); 
 
     if (!$result) return; 
     $items = array();
