@@ -29,7 +29,7 @@
       </tr>
     </table>
     <br /><br />
-    <input type="submit" value="Update bloggerapi Configuration" align="middle" tabindex="3" />
+    <input type="submit" value="Update bloggerapi Configuration"  tabindex="3" />
 </form>
 </div>
 </div>
