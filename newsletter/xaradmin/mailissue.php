@@ -54,8 +54,8 @@ function newsletter_admin_mailissue()
     if (!$publication)
         return; // throw back
     
-    // Get the admin menu
-    $menu = xarModAPIFunc('newsletter', 'admin', 'menu');
+    // Get the admin edit menu
+    $menu = xarModFunc('newsletter', 'admin', 'editmenu');
 
     // create template array
     $templateVarArray = array(
