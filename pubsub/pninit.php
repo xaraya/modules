@@ -14,68 +14,85 @@ function pubsub_init()
     // Get database information
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
-
+    include ('includes/pnTableDDL.php');
+    
     // Create tables
     $pubsubeventstable = $pntable['pubsub_events'];
-    $sql = "CREATE TABLE $pubsubeventstable (
-            pn_eventid int(10) NOT NULL auto_increment,
-            pn_module varchar(32) NOT NULL default '',
-            pn_eventtype varchar(64) NOT NULL default '',
-            pn_groupdescr varchar(64) NOT NULL default '',
-            pn_actionid  varchar(100) NOT NULL default 'email',
-            PRIMARY KEY(pn_eventid))";
+    $eventsfields = array(
+        'pn_eventid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pn_module'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
+        'pn_eventtype'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
+        'pn_groupdescr'=>array('type'=>'varchar','size'=>64,'null'=>FALSE),
+        'pn_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+    );
+    $sql = pnDBCreateTable($pubsubeventstable,$eventsfields);
+    if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        // Report failed initialisation attempt
-        return false;
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     $pubsubregtable = $pntable['pubsub_reg'];
-    $sql = "CREATE TABLE $pubsubregtable (
-            pn_pubsubid int(10) NOT NULL default '',
-            pn_eventid int(10) NOT NULL default '',
-            pn_users text NOT NULL default '',
-	    pn_actionid varchar(100) NOT NULL default 'email',
-	    PRIMARY KEY(pn_pubsubid))";
+    $regfields = array(
+        'pn_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pn_eventid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
+        'pn_users'=>array('type'=>'text','size'=>'medium','null'=>FALSE),
+        'pn_actionid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE,'default'=>'0')
+    );
+    $sql = pnDBCreateTable($pubsubregtable,$regfields);
+    if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        // Report failed initialisation attempt
-        return false;
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
     $pubsubprocesstable = $pntable['pubsub_process'];
-    $sql = "CREATE TABLE $pubsubprocesstable (
-            pn_handlingid int(10) NOT NULL default '',
-            pn_pubsubid int(10) NOT NULL default '',
-            pn_objectid int(10) NOT NULL default '',
-	    pn_status varchar(100) NOT NULL default '',
-	    PRIMARY KEY(pn_handlingid))";
+    $processfields = array(
+        'pn_handlingid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pn_pubsubid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
+        'pn_objectid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
+        'pn_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
+    );
+    $sql = pnDBCreateTable($pubsubprocesstable,$processfields);
+    if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        // Report failed initialisation attempt
-        return false;
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
     
     $pubsubtemplatetable = $pntable['pubsub_template'];
-    $sql = "CREATE TABLE $pubsubtemplatetable (
-            pn_templateid int(10) NOT NULL default '',
-            pn_eventid int(10) NOT NULL default '',
-            pn_template text NOT NULL default '',
-	    PRIMARY KEY(pn_templateid))";
+    $templatefields = array(
+        'pn_templateid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'pn_eventid'=>array('type'=>'integrer','size'=>'medium','null'=>FALSE),
+        'pn_template'=>array('type'=>'text','size'=>'long','null'=>FALSE)
+    );
+    $sql = pnDBCreateTable($pubsubtemplatetable,$templatefields);
+    if (empty($sql)) return;
     $dbconn->Execute($sql);
 
     // Check database result
     if ($dbconn->ErrorNo() != 0) {
-        // Report failed initialisation attempt
-        return false;
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
-
+    
     // Set up module hooks
     if (!pnModRegisterHook('item',
                            'create',
@@ -180,43 +197,65 @@ function pubsub_delete()
     // Get database information
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
+    include ('includes/pnTableDDL.php');
 
-    // Delete tables
-    $sql = "DROP TABLE $pntable[pubsub_events]";
+    // Generate the SQL to drop the table using the API
+    $sql = pnDBDropTable($pntable['pubsub_events']);
+    if (empty($sql)) return; // throw back
+
+    // Drop the table
     $dbconn->Execute($sql);
-
-    // Check database result
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        // Report failed deletion attempt
-        return false;
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
-    $sql = "DROP TABLE $pntable[pubsub_reg]";
-    $dbconn->Execute($sql);
+    $sql = pnDBDropTable($pntable['pubsub_reg']);
+    if (empty($sql)) return; // throw back
 
-    // Check database result
+    // Drop the table
+    $dbconn->Execute($sql);
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        // Report failed deletion attempt
-        return false;
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
+    }
+    
+    $sql = pnDBDropTable($pntable['pubsub_process']);
+    if (empty($sql)) return; // throw back
+
+    // Drop the table
+    $dbconn->Execute($sql);
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
+    if ($dbconn->ErrorNo() != 0) {
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
-    $sql = "DROP TABLE $pntable[pubsub_process]";
-    $dbconn->Execute($sql);
+    $sql = pnDBDropTable($pntable['pubsub_template']);
+    if (empty($sql)) return; // throw back
 
-    // Check database result
+    // Drop the table
+    $dbconn->Execute($sql);
+    // Check for an error with the database code, and if so raise the
+    // appropriate exception
     if ($dbconn->ErrorNo() != 0) {
-        // Report failed deletion attempt
-        return false;
+        $msg = pnMLByKey('DATABASE_ERROR', $query);
+        pnExceptionSet(PN_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                       new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
+        return;
     }
 
-    $sql = "DROP TABLE $pntable[pubsub_template]";
-    $dbconn->Execute($sql);
-
-    // Check database result
-    if ($dbconn->ErrorNo() != 0) {
-        // Report failed deletion attempt
-        return false;
-    }
     // Deletion successful
     return true;
 }
