@@ -44,10 +44,30 @@ function xarbb_userapi_updatetopicsview($args)
 
         //---------------------------------------------------------------
         // DO Update Stuff
+        $modid = xarModGetIDFromName('xarbb');
+        $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
+
         $treplies = xarModAPIFunc('comments','user','get_count',
-                                  array('modid' => xarModGetIdFromName('xarbb'),
+                                  array('modid' => $modid,
                                         'itemtype' => $topic['fid'],
                                         'objectid' => $tid));
+        // get the last comment
+        $comments = xarModAPIFunc('comments',
+                                  'user',
+                                  'get_multiple',
+                                  array('modid'    => $modid,
+                                        'itemtype' => $topic['fid'],
+                                        'objectid' => $tid,
+                                        'startnum' => $treplies,
+                                        'numitems' => 1));
+        $totalcomments=count($comments);
+        $isanon=$comments[$totalcomments-1]['xar_postanon'];
+        if ($isanon==1) {
+            $treplier = $anonuid;
+        } else {
+            $treplier = $comments[$totalcomments-1]['xar_uid'];
+        }
+        $time = $comments[$totalcomments-1]['xar_datetime'];
     }
 
     $param = array(
@@ -57,7 +77,11 @@ function xarbb_userapi_updatetopicsview($args)
 
     if (isset($treplier)) {
         $param["treplier"] = $treplier;
-        $param["time"] = time();
+        if (isset($time)) {
+            $param["time"] = $time;
+        } else {
+            $param["time"] = time();
+        }
     }
 
     // We also want to call the hooks seperately so that the reply information
