@@ -7,7 +7,7 @@
 @echo off
 
 :initial
-set patchfile=amoro.patch.txt
+set patchfile=my.patch
 if "%1" == "" goto error
 set range=%1
 if "%2" == "" goto defaultmail
@@ -33,7 +33,7 @@ echo recipient = %recipient%
 echo patchfile = %patchfile%
 bk makepatch %range%>%patchfile%
 blat %patchfile% -to %recipient%
-rm %patchfile%
-%patchfile% removed
+del %patchfile%
+echo %patchfile% removed
 :done
 
