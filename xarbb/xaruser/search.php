@@ -33,6 +33,8 @@ function xarbb_user_search( $args )
     }
 
     $q = "%$q%";
+    $search['title'] = $q;
+
     // Default parameters
     if (!isset($startnum)) {
         $startnum = 1;
