@@ -108,10 +108,18 @@ function sitecontact_user_contactus()
     $siteurl = xarServerGetBaseURL();
     $subject = $requesttext;
     //Prepare the html text message to user
-    $htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
-    $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
-    $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
-    $htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
+     
+    $trans = get_html_translation_table(HTML_ENTITIES);
+    $trans = array_flip($trans);
+    $htmlsubject = strtr(xarVarPrepHTMLDisplay($requesttext), $trans);
+    $htmlcompany = strtr(xarVarPrepHTMLDisplay($company), $trans);
+    $htmlusermessage  = strtr(xarVarPrepHTMLDisplay($usermessage), $trans);
+    $htmlnotetouser  = strtr(xarVarPrepHTMLDisplay($notetouser), $trans);
+    // jojodee: html_entity_decode only available in php >=4.3
+    //$htmlsubject = html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
+    //  $htmlcompany = html_entity_decode(xarVarPrepHTMLDisplay($company));
+    //  $htmlusermessage = html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
+    //$htmlnotetouser = xarVarPrepHTMLDisplay($notetouser);
     $userhtmlmessage= xarTplModule('sitecontact',
                                    'user',
                                    'usermail',
