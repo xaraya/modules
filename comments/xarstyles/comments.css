@@ -55,9 +55,12 @@ form.xar-cm-actions > input {
 	height: 19em;
 }
 .xar-ib-leftpanel {
+	margin:0;
+}
+.xar-ib-leftpanelshort {
 	margin-right:15em;
 }
-.xar-ib-leftpanel label {
+.xar-ib-leftpanel label, .xar-ib-leftpanelshort label {
 	padding: 0 .25em;
 	margin: .5em 0;
 	font-weight: bold;
