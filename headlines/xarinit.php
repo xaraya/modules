@@ -26,8 +26,8 @@ function headlines_init()
 {
 
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $table = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $table =& xarDBGetTables();
 
     // Create tables
     $headlinesTable = xarDBGetSiteTablePrefix() . '_headlines';
@@ -96,8 +96,8 @@ function headlines_upgrade($oldVersion)
             // in version 0.2
 
             // Get database setup
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
             $headlinestable = $xartable['headlines'];
 
             // Add a column to the table
@@ -129,8 +129,8 @@ function headlines_delete()
 
     // need to drop the module tables too
     // Get database information
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['headlines']);

@@ -181,8 +181,8 @@ function headlines_rssblock_insert($blockinfo)
  */
 function headlines_rssblock_modify($blockinfo)
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Break out options from our content field
     $vars = unserialize($blockinfo['content']);

@@ -23,8 +23,8 @@ function headlines_userapi_getall($args)
     // Security Check
 	if(!xarSecurityCheck('OverviewHeadlines')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $headlinestable = $xartable['headlines'];
 

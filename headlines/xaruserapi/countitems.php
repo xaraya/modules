@@ -7,8 +7,8 @@
  */
 function headlines_userapi_countitems()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Security Check
 	if(!xarSecurityCheck('OverviewHeadlines')) return;

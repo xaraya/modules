@@ -26,8 +26,8 @@ function headlines_adminapi_create($args)
 	if(!xarSecurityCheck('AddHeadlines')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $headlinestable = $xartable['headlines'];
 

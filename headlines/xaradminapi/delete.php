@@ -31,8 +31,8 @@ function headlines_adminapi_delete($args)
 	if(!xarSecurityCheck('DeleteHeadlines')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $headlinestable = $xartable['headlines'];
 

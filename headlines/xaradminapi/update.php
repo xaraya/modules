@@ -31,8 +31,8 @@ function headlines_adminapi_update($args)
 	if(!xarSecurityCheck('EditHeadlines')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $headlinestable = $xartable['headlines'];
 
