@@ -63,6 +63,11 @@ if (isset($_REQUEST['save'])) {
 
 // Get the instance and set instance information
 $ins_info = $instanceManager->get_instance($_REQUEST['iid']);
+if (!empty($ins_info['started'])) {
+    $date = xarLocaleGetFormattedDate('medium',$ins_info['started']) . ' '
+            . xarLocaleGetFormattedTime('short',$ins_info['started']);
+    $ins_info['started'] = $date;
+}
 $tplData['ins_info'] =&  $ins_info;
 
 // Get the process from the instance and set information

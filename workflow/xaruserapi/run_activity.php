@@ -30,13 +30,19 @@ $__activity_completed = false;
 // parameter and get the activity information
 // load then the compiled version of the activity
 if (!isset($args['activityId'])) {
-	$msg = xarML("No activity indicated");
+	$msg = xarML("No workflow activity indicated");
 	xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
 			new SystemException($msg));
 	return;
 }
 
 $activity = $baseActivity->getActivity($args['activityId']);
+if (empty($activity)) {
+	$msg = xarML("Invalid workflow activity specified");
+	xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+			new SystemException($msg));
+	return;
+}
 $process->getProcess($activity->getProcessId());
 
 $source = GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';

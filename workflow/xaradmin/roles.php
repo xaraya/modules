@@ -142,6 +142,9 @@ if (isset($_REQUEST['mapg'])) {
 if (isset($_REQUEST['save_map'])) {
     if (isset($_REQUEST['user']) && isset($_REQUEST['role'])) {
         foreach ($_REQUEST['user'] as $a_user) {
+            if (empty($a_user)) {
+                $a_user = _XAR_ID_UNREGISTERED;
+            }
             foreach ($_REQUEST['role'] as $role) {
                 $roleManager->map_user_to_role($_REQUEST['pid'], $a_user, $role);
             }

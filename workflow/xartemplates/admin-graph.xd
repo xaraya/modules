@@ -58,7 +58,7 @@
 
 <input type="submit" name="filter" value="#xarML('filter')#" />
 </form>
-<form action="&xar-modurl-workflow-admin-graph;" method="post">
+<form action="&xar-modurl-workflow-admin-processes;" method="post">
 <input type="hidden" name="offset" value="#$offset#" />
 <input type="hidden" name="find" value="#$find#" />
 <input type="hidden" name="where" value="#$where#" />

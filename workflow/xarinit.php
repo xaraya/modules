@@ -157,6 +157,7 @@ function workflow_init()
 
     xarModSetVar('workflow','SupportShortURLs',0);
     xarModSetVar('workflow','itemsperpage',20);
+    xarModSetVar('workflow','seenlist','');
 
     if (!xarModRegisterHook('item', 'create', 'API',
                            'workflow', 'admin', 'createhook')) {
@@ -181,6 +182,17 @@ function workflow_init()
         return false;
     }
 */
+
+    // Register BL tags
+    // show the output of a workflow activity in a template (e.g. shopping cart or whatever)
+    xarTplRegisterTag('workflow', 'workflow-activity',
+                      array(),
+                      'workflow_userapi_handleactivitytag');
+
+    // show the status (current activity/exception/aborted/completed) for "your" instances
+    xarTplRegisterTag('workflow', 'workflow-status',
+                      array(),
+                      'workflow_userapi_handlestatustag');
 
     // define privilege instances and masks
     $instances = array(
@@ -268,6 +280,34 @@ function workflow_upgrade($oldversion)
             }
             // fall through to next upgrade
 
+        case 1.2:
+            // Re-compile all activities with new compiler code
+            include_once('modules/workflow/tiki-setup.php');
+            include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
+            $all_procs = $processManager->list_processes(0, -1, 'pId_asc', '', '');
+            if (!empty($all_procs) && count($all_procs['data']) > 0) {
+                foreach ($all_procs['data'] as $info) {
+                    $activities = $activityManager->list_activities($info['pId'], 0, -1, 'activityId_asc', '', '');
+                    if (empty($activities) || count($activities['data']) < 1) continue;
+                    foreach ($activities['data'] as $actinfo) {
+                        $activityManager->compile_activity($info['pId'],$actinfo['activityId']);
+                    }
+                }
+            }
+
+            // Register BL tags
+            // show the output of a workflow activity in a template (e.g. shopping cart or whatever)
+            xarTplRegisterTag('workflow', 'workflow-activity',
+                              array(),
+                             'workflow_userapi_handleactivitytag');
+            // show the status (current activity/exception/aborted/completed) for "your" instances
+            xarTplRegisterTag('workflow', 'workflow-status',
+                              array(),
+                              'workflow_userapi_handlestatustag');
+
+            xarModSetVar('workflow','seenlist','');
+            // fall through to next upgrade
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
@@ -336,6 +376,10 @@ function workflow_delete()
         return false;
     } 
 */
+
+    // Unregister BL tags
+    xarTplUnregisterTag('workflow-activity');
+    xarTplUnregisterTag('workflow-status');
 
     // Remove Masks and Instances
     xarRemoveMasks('workflow');

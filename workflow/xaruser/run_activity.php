@@ -29,7 +29,7 @@ $__activity_completed = false;
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");
 
-	return xarTplModule('workflow', 'run', 'error', $tplData);
+	return xarTplModule('workflow', 'user', 'error', $tplData);
 	die;
 }
 
@@ -37,7 +37,7 @@ if (!isset($_REQUEST['auto'])) {
 	if ($tiki_p_use_workflow != 'y') {
 		$tplData['msg'] =  xarML("Permission denied");
 
-		return xarTplModule('workflow', 'run', 'error', $tplData);
+		return xarTplModule('workflow', 'user', 'error', $tplData);
 		die;
 	}
 }
@@ -46,13 +46,15 @@ if (!isset($_REQUEST['auto'])) {
 // parameter and get the activity information
 // load then the compiled version of the activity
 if (!isset($_REQUEST['activityId'])) {
-	$tplData['msg'] =  xarML("No activity indicated");
-
-	return xarTplModule('workflow', 'run', 'error', $tplData);
-	die;
+	$tplData['msg'] =  xarML("No workflow activity indicated");
+	return xarTplModule('workflow', 'user', 'error', $tplData);
 }
 
 $activity = $baseActivity->getActivity($_REQUEST['activityId']);
+if (empty($activity)) {
+	$tplData['msg'] = xarML("Invalid workflow activity specified");
+	return xarTplModule('workflow', 'user', 'error', $tplData);
+}
 $process->getProcess($activity->getProcessId());
 
 // Get user roles
@@ -65,9 +67,9 @@ $user_roles = $activity->getUserRoles($user);
 // activity
 if ($activity->isInteractive() == 'y') {
 	if (!count(array_intersect($act_roles, $user_roles))) {
-		$tplData['msg'] =  xarML("You cant execute this activity");
+		$tplData['msg'] =  xarML("You can't execute this activity");
 
-		return xarTplModule('workflow', 'run', 'error', $tplData);
+		return xarTplModule('workflow', 'user', 'error', $tplData);
 		die;
 	}
 }
@@ -128,8 +130,23 @@ $tplData['procversion'] =  $process->getVersion();
 $tplData['actname'] =  $activity->getName();
 $tplData['actid'] = $activity->getActivityId();
 
+// Put the current activity id in a template variable
+$tplData['activityId'] = $activity->getActivityId();
+
+// Put the current instance id in a template variable
+$tplData['iid'] = $instance->getInstanceId();
+
+// URL to return to if some action is taken - use htmlspecialchars() here
+if (!empty($_REQUEST['return_url'])) {
+    $tplData['return_url'] = htmlspecialchars($_REQUEST['return_url']);
+} else {
+    $tplData['return_url'] = '';
+}
+
 if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteractive()) {
-    if (empty($instance->instanceId)) {
+    if (!empty($_REQUEST['return_url'])) {
+        xarResponseRedirect($_REQUEST['return_url']);
+    } elseif (empty($instance->instanceId)) {
         xarResponseRedirect(xarModURL('workflow', 'user', 'activities'));
     } else {
         xarResponseRedirect(xarModURL('workflow', 'user', 'instances'));

@@ -33,6 +33,18 @@ The sample CD Loan process has been modified a bit to be more representative of 
 <li>create a new article and have fun...</li>
 </ol>
 </p>
+
+<p>Version 1.3 adds the support for two BL tags : &lt;xar:workflow-activity activityId="123" ... /&gt; and &lt;xar:workflow-status ... /&gt;.
+Those can be used in any template to run some workflow activity and show its output, resp. to show you the status of all the instances *you* started.
+To try that out, you should :
+<ol>
+<li>delete your old "Music Loan 3" process, import the new version, assign users and mark as active</li>
+<li>find out what the activityId of activity "Request CD" is, in that new process</li>
+<li>in some template, add the following BL tags : &lt;xar:workflow-activity activityId="123"/&gt; (with 123 the activityId) and &lt;xar:workflow-status/&gt;</li>
+<li>go to that page and enjoy...</li>
+</ol>
+</p>
+
 <p><b>Patches and contributions are most welcome ;-)</b></p>
 </xar:mlstring>
 

@@ -96,10 +96,10 @@ function workflow_admin_modifyconfig()
     $activities = $processMonitor->monitor_list_activities(0, -1, 'pId_asc', '', "type='start' and isInteractive='n'");
 
     // get the name of all processes
-    $all_procs = $processMonitor->monitor_list_all_processes('pId_asc');
+    $all_procs = $processMonitor->monitor_list_all_processes('pId_asc', "isActive='y'");
     $pid2name = array();
     foreach ($all_procs as $info) {
-        $pid2name[$info['pId']] = $info['name'];
+        $pid2name[$info['pId']] = $info['name'] . ' ' . $info['version'];
     }
 
     // build a list of activity ids and names
@@ -108,8 +108,6 @@ function workflow_admin_modifyconfig()
     foreach ($activities['data'] as $info) {
         if (isset($pid2name[$info['pId']])) {
             $data['activities'][$info['activityId']] = $pid2name[$info['pId']] . ' - ' . $info['name'];
-        } else {
-            $data['activities'][$info['activityId']] = '? - ' . $info['name'];
         }
     }
 

@@ -1,0 +1,88 @@
+<xar:if condition="empty($layout) or $layout eq 'default'">
+<div style="margin: auto;">
+<h3><xar:mlstring>My Workflows</xar:mlstring></h3>
+<xar:if condition="!empty($items) and count($items) gt 0">
+<table class="normal">
+  <tr>
+    <td class="heading"><xar:mlstring>Start</xar:mlstring></td>
+    <td class="heading"><xar:mlstring>Process</xar:mlstring></td>
+    <td class="heading"><xar:mlstring>Status</xar:mlstring></td>
+    <td class="heading"><xar:mlstring>Current Activity</xar:mlstring></td>
+    <td class="heading"><xar:mlstring>Assigned To</xar:mlstring></td>
+    <td class="heading"><xar:mlstring>Action</xar:mlstring></td>
+  </tr>
+  <xar:foreach in="$items" value="$item">
+  <tr>
+    <td>#$item['started']#</td>
+    <td>#$item['procname']# #$item['version']#</td>
+    <td>
+      <xar:if condition="$item['status'] eq 'active'">
+        <span style="color:green;">#$item['status']#</span>
+      <xar:elseif condition="$item['status'] eq 'completed'"/>
+        <span style="color:black;">#$item['status']#</span>
+      <xar:elseif condition="$item['status'] eq 'aborted'"/>
+        <span style="color:grey;">#$item['status']#</span>
+      <xar:elseif condition="$item['status'] eq 'exception'"/>
+        <span style="color:red;">#$item['status']#</span>
+      <xar:else/>
+        #$item['status']#
+      </xar:if>
+    </td>
+    <td>
+      <xar:if condition="$item['type'] eq 'start'">
+        <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
+      <xar:elseif condition="$item['type'] eq 'end'"/>
+        <img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
+      <xar:elseif condition="$item['type'] eq 'activity'"/>
+        <img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
+      <xar:elseif condition="$item['type'] eq 'switch'"/>
+        <img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
+      <xar:elseif condition="$item['type'] eq 'standalone'"/>
+        <img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
+      <xar:elseif condition="$item['type'] eq 'split'"/>
+        <img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
+      <xar:elseif condition="$item['type'] eq 'join'"/>
+        <img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$item['type']#" title="#$item['type']#" border="0" />
+      <xar:else/>
+        #$item['type']# 
+      </xar:if>
+      #$item['name']#
+    </td>
+    <td>#$item['user']#</td>
+    <td>
+      <xar:if condition="$item['isInteractive'] eq 'y' and $item['status'] eq 'active' and $item['userId'] eq $userId">
+      <a href="&xar-modurl-workflow-user-run_activity;&amp;iid=#$item['instanceId']#&amp;activityId=#$item['activityId']#&amp;return_url=#$return_url#"><img border='0' title='#xarML('run instance')#' alt='#xarML('run instance')#' src='modules/workflow/lib/Galaxia/img/icons/next.gif'></a>
+      </xar:if>
+      <xar:if condition="$item['status'] ne 'aborted' and $item['status'] ne 'exception' and $item['status'] ne 'completed'">
+      <a href="&xar-modurl-workflow-user-instances;&amp;exception=1&amp;iid=#$item['instanceId']#&amp;aid=#$item['activityId']#"><img border='0' title='#xarML('exception handling')#' alt='#xarML('exception handling')#' src='modules/workflow/lib/Galaxia/img/icons/stop.gif'></a>
+      </xar:if>
+      <xar:if condition="$item['status'] eq 'exception' and $item['userId'] eq $userId">
+      <a href="&xar-modurl-workflow-user-instances;&amp;resume=1&amp;iid=#$item['instanceId']#&amp;aid=#$item['activityId']#"><img border='0' title='#xarML('resume instance')#' alt='#xarML('resume instance')#' src='modules/workflow/lib/Galaxia/img/icons/refresh2.gif'></a>
+      </xar:if>
+      <xar:if condition="$item['status'] ne 'aborted' and $item['status'] ne 'completed'">
+      <a href="&xar-modurl-workflow-user-instances;&amp;abort=1&amp;iid=#$item['instanceId']#&amp;aid=#$item['activityId']#"><img border='0' title='#xarML('abort instance')#' alt='#xarML('abort instance')#' src='modules/workflow/lib/Galaxia/img/icons/trash.gif'></a>
+      </xar:if>
+      <xar:if condition="$item['user'] eq '*' and $item['status'] eq 'active'">
+      <a href="&xar-modurl-workflow-user-instances;&amp;grab=1&amp;iid=#$item['instanceId']#&amp;aid=#$item['activityId']#"><img border='0' title='#xarML('grab instance')#' alt='#xarML('grab instance')#' src='modules/workflow/lib/Galaxia/img/icons/fix.gif'></a>
+      <xar:else/>
+      <xar:if condition="$item['status'] eq 'active' and $item['userId'] eq $userId">
+      <a href="&xar-modurl-workflow-user-instances;&amp;release=1&amp;iid=#$item['instanceId']#&amp;aid=#$item['activityId']#"><img border='0' title='#xarML('release instance')#' alt='#xarML('release instance')#' src='modules/workflow/lib/Galaxia/img/icons/float.gif'></a>
+      </xar:if>
+      </xar:if>
+      <xar:if condition="$item['status'] eq 'completed' or $item['status'] eq 'aborted'">
+      <a href="&xar-modurl-workflow-user-main;&amp;iid=#$item['instanceId']#&amp;return_url=#$return_url#"><img border='0' title='#xarML('remove from list')#' alt='#xarML('remove from list')#' src='modules/workflow/lib/Galaxia/img/icons/select.gif'></a>
+      </xar:if>
+    </td>
+  </tr>
+  </xar:foreach>
+</table>
+<xar:else/>
+<xar:mlstring>No workflows found</xar:mlstring>
+</xar:if>
+</div>
+
+<xar:else/>
+<!--- you can provide different layouts here, or use separate templates --->
+<xar:mlstring>This layout is undefined - please specify it in modules/workflow/xartemplates/user-showstatus.xd</xar:mlstring>
+
+</xar:if>

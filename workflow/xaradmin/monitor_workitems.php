@@ -55,7 +55,7 @@ if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'instanceId_asc';
+	$sort_mode = 'instanceId_asc, `itemId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
