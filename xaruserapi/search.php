@@ -85,7 +85,8 @@ function comments_userapi_search($args)
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_date']);
+        // FIXME Delete after time output testing
+        // $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_date']);
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         $commentlist[] = $row;
         $result->MoveNext();

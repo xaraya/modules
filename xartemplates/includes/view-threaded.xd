@@ -39,7 +39,7 @@
                 </xar:if>
             </span>
             <span class="xar-tr-date">
-                #$loop:item['xar_date']#
+                #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['xar_date'])#
             </span>
         </div>
 
@@ -168,7 +168,7 @@
             </span>
             
             <span class="xar-tr-date">
-                #$loop:item['xar_date']#
+                #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$loop:item['xar_date'])#
             </span>
         </div>
 

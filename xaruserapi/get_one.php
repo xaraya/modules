@@ -70,7 +70,9 @@ function comments_userapi_get_one( $args )
     // add it to the array we will return
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
-        $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
+        // FIXME delete after date output testing
+        // $row['xar_date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['xar_datetime']);
+        $row['xar_date'] = $row['xar_datetime'];
         $row['xar_author'] = xarUserGetVar('name',$row['xar_author']);
         comments_renderer_wrap_words($row['xar_text'],80);
         $commentlist[] = $row;

@@ -76,7 +76,7 @@
             </xar:if> 
             <xar:if condition="$adddate=='on'">
               <!-- DATE -->  
-              <xar:mlstring>on</xar:mlstring>&nbsp;#$comment['xar_date']#
+              <xar:mlstring>on</xar:mlstring>&nbsp;#xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['xar_date'])#
             </xar:if>
           </span>
         </li>

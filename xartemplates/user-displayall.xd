@@ -1,6 +1,7 @@
 <xar:comment> DISPLAY WHERE THE COMMENTS ARE COMING FROM </xar:comment>
   <span class="xar-title">  
-    <xar:mlstring>Showing comments n. </xar:mlstring> #$first# - #$first+$howmany-1#                
+    <xar:mlstring>Showing comments n.</xar:mlstring>
+    &nbsp;#$first# - #$first+$howmany-1#&nbsp;
     <xar:if condition="$modarray[0]!='all'">                
       <xar:mlstring>from</xar:mlstring>  
       <xar:foreach in="$modarray" key="$i">
@@ -76,7 +77,7 @@
                   </xar:if> 
                   <xar:if condition="$adddate=='on'">
                     <xar:comment> DATE </xar:comment>  
-                    <xar:mlstring>on</xar:mlstring> #$comment['xar_date']#
+                    <xar:mlstring>on</xar:mlstring> #xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['xar_date'])#
                   </xar:if>
                 </span>
             </li>
