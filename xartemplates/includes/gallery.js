@@ -1,5 +1,5 @@
 // Javascript from tutorial found on:
-// URL: http://clagnut.com/sandbox/imagefades//images/loading.gif
+// URL: http://clagnut.com/sandbox/imagefades/
 // Discussion found on subject:
 // URL: http://clagnut.com/blog/1299/
 
