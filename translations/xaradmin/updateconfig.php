@@ -27,6 +27,7 @@ function translations_admin_updateconfig()
     if (!xarVarFetch('mlsmode','str:1:',$MLSMode,'SINGLE',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('translationsbackend','str:1:',$translationsBackend)) return;
     if (!xarVarFetch('releasebackend','str:1:',$releaseBackend)) return;
+
     if (!xarSecConfirmAuthKey()) return;
 
     if (!isset($cacheTemplates)) {
