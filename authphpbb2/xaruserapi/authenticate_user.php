@@ -43,8 +43,8 @@ function authphpbb2_userapi_authenticate_user($args)
     // OK, authentication worked
     // now we still have to fetch the $uid for return
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Get user information from roles
     $userRole = xarModAPIFunc('roles',
