@@ -1,6 +1,6 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
 <xar:comment> ************************ Setup Tabs************************</xar:comment>
-<xar:if condition="xarTplAddStyleLink('roles', 'tabs')">
+<xar:if condition="xarTplAddStyleLink('base', 'navtabs')">
 </xar:if>
 <xar:base-include-javascript module="base" filename="formcheck.js" />
 <script type="text/javascript">
@@ -18,61 +18,61 @@
 </div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Modify XarTinyMCE Configuration</xar:mlstring></h2>
-    <div id="tabnav">
-        <div class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</div>
+   <dl class="xar-tabs">
+        <dt class="help" title="Choose a set of configuration options"><xar:mlstring>Actions</xar:mlstring> :</dt>
         <xar:if condition="$tab eq 'basic'">
-            <div>
+            <dd class="active">
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'basic'))#" class="active">
                     <xar:mlstring>Installation</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         <xar:else />
-            <div>
+            <dd>
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'basic'))#">
                     <xar:mlstring>Installation</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         </xar:if>
         <xar:if condition="$tab eq 'general'">
-            <div>
+            <dd class="active">
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'general'))#" class="active">
                     <xar:mlstring>Basic Options</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         <xar:else />
-            <div>
+            <dd>
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'general'))#">
                     <xar:mlstring>Basic Options</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         </xar:if>
         <xar:if condition="$tab eq 'cssplug'">
-            <div>
+            <dd class="active">
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'cssplug'))#" class="active">
                     <xar:mlstring>Styles and Plugins</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         <xar:else />
-            <div>
+            <dd>
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'cssplug'))#">
                     <xar:mlstring>Styles and Plugins</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         </xar:if>
         <xar:if condition="$tab eq 'customadvanced'">
-            <div>
+            <dd class="active">
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'customadvanced'))#" class="active">
                      <xar:mlstring>Customize Advanced Theme</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         <xar:else />
-            <div>
+            <dd>
                 <a href="#xarModURL('tinymce', 'admin', 'modifyconfig', array('tab' => 'customadvanced'))#">
                     <xar:mlstring>Customize Advanced Theme</xar:mlstring>
                 </a>
-            </div>
+            </dd>
         </xar:if>
-    </div>
+    </dl>
     <div style="border: 1px solid #ccc; text-align: left; width: 100%; border-top: none; padding-left: 5px;">
 
 <xar:comment> ************************ Begin Install Options ************************</xar:comment>
