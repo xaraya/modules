@@ -69,19 +69,18 @@ function xarbb_init()
     // TSTATUS -- Special attributes of the topic (sticky, locked, etc)
     // TFTIME -- Time of the topic post itself
     $fields = array(
-    'xar_tid'          => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>true,'primary_key'=>true),
-    'xar_fid'          => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment'=>false,'primary_key'=>false),
+    'xar_tid'          => array('type'=>'integer', 'null'=>false, 'default' => '0' , 'increment' => true, 'primary_key' => true),
+    'xar_fid'          => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment'=> false,  'primary_key' => false),
     'xar_ttitle'       => array('type'=>'varchar', 'null'=>false, 'default'=>'','size'=>255 ),
     'xar_tpost'        => array('type'=>'text'),
-    'xar_tposter'      => array('type'=>'integer', 'null'=>false, 'default'=> '0', 'increment' => false, 'primary_key' =>false),
+    'xar_tposter'      => array('type'=>'integer', 'null'=>false, 'default'=> '0', 'increment' => false, 'primary_key' => false),
     'xar_thostname'    => array('type'=>'varchar',  'null' => FALSE,  'size'=>255),
     'xar_ttime'        => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
     'xar_tftime'       => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
-    //'xar_ttime'        => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
-    //'xar_tftime'       => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
-    'xar_treplies'     => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>false,'primary_key'=>false),
-    'xar_treplier'     => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment'=>false,'primary_key'=>false),
-    'xar_tstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny')
+    'xar_treplies'     => array('type'=>'integer', 'null'=>false, 'default' => '0', 'increment' => false, 'primary_key' => false),
+    'xar_treplier'     => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment' => false, 'primary_key' => false),
+    'xar_tstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny'),
+    'xar_toptions'     => array('type'=>'text')
     );
 
      $query = xarDBCreateTable($xbbtopicstable,$fields);
@@ -516,6 +515,18 @@ function xarbb_upgrade($oldversion)
                                     'field'   => 'xar_foptions',
                                     'type'    => 'text'));
             // Pass to ADODB, and send exception if the result isn't valid.
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+            // fall through to next upgrade
+        case '1.1.4':
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $xbbforumstable = $xartable['xbbtopics'];
+            xarDBLoadTableMaintenanceAPI();
+            $query = xarDBAlterTable($xbbforumstable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_toptions',
+                                    'type'    => 'text'));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
             // fall through to next upgrade

@@ -2,7 +2,7 @@
 /**
  * File: $Id$
  * 
- * View a list of topics in a forum
+ * View an IP by poster
  * 
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team.
@@ -14,17 +14,13 @@
 */
 function xarbb_admin_checkip()
 {
-    // Get parameters from whatever input we need
+    if(!xarSecurityCheck('AdminxarBB')) return; 
+
     if(!xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('ip', 'str', $ip)) return;
-    // Security Check PROLLY Not good enough as is.
-    if(!xarSecurityCheck('AdminxarBB')) return;
 
     $data['items'] = array();
-    // The user API function is called
-
     $data['message'] = xarML('Your topics');
-
     $topics = xarModAPIFunc('xarbb',
                             'user',
                             'getalltopics_byip',
@@ -39,10 +35,9 @@ function xarbb_admin_checkip()
                                   'hostname' => $ip,
                                   'startnum' => $startnumitem,
                                   'numitems' => xarModGetVar('xarbb', 'topicsperpage')));
-    $replies = array_unique($replies);
-    $results = array_merge($topics, $replies);
-
-    $totalresults=count($results);
+    $replies        = array_unique($replies);
+    $results        = array_merge($topics, $replies);
+    $totalresults   = count($results);
     for ($i = 0; $i < $totalresults; $i++) {
         $result = $results[$i];
         if (isset($result['tposter'])){
@@ -50,12 +45,6 @@ function xarbb_admin_checkip()
         } elseif (isset($result['xar_uid'])){
             $results[$i]['uid'] = xarVarPrepForDisplay($result['xar_uid']);
         }
-        //} elseif (isset($result['thostname'])){
-        //    $results[$i]['ip'] = xarVarPrepForDisplay($result['thostname']);
-        //} elseif (isset($result['xar_hostname'])){
-        //   $results[$i]['ip'] = xarVarPrepForDisplay($result['xar_hostname']);
-        //}
-
         if (isset($result['tposter'])){
             $getname = xarModAPIFunc('roles',
                                      'user',
@@ -67,14 +56,10 @@ function xarbb_admin_checkip()
                                      'get',
                                      array('uid' => $result['xar_uid']));
         }
-
         $results[$i]['name'] = $getname['name'];
-
     }
     $data['items'] = $results;
     $data['ip']     = $ip;
-    //var_dump($results); return;
-    
     return $data; 
 }
 ?>

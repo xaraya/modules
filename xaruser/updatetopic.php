@@ -82,11 +82,17 @@ function xarbb_user_updatetopic()
                                  'replies'  => 1,
                                  'move'     => 'positive',
                                  'fposter'  => $poster))) return;
+
+        // While we are here, let's send any subscribers notifications.
+        if (!xarModAPIFunc('xarbb',
+                           'user',
+                           'replynotify',
+                           array('tid'      => $tid))) return;
     }
 
     $forumreturn = xarModURL('xarbb', 'user', 'viewforum', array('fid' => $data['fid']));
     $replyreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid, 'startnum' => $count));
-    $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid, 'startnum' => $count));
+    $topicreturn = xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $tid));
     $xarbbtitle         = xarModGetVar('xarbb', 'xarbbtitle', 0);
     $xarbbtitle = isset($xarbbtitle) ? $xarbbtitle :'';
     $data = xarTplModule('xarbb','user', 'return', array('forumreturn'     => $forumreturn,

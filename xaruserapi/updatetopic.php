@@ -38,23 +38,22 @@ function xarbb_userapi_updatetopic($args)
                     "treplies"  => "xar_treplies",
                     "treplier"  => "xar_treplier",
                     "tftime"    => "xar_tftime",
-                    "tstatus"   => "xar_tstatus");
+                    "tstatus"   => "xar_tstatus",
+                    "toptions"  => "xar_toptions");
     foreach($params as $vvar => $dummy)    {
         if(isset($$vvar))    {
             $set = true;
             break;
         }
     }
-    if(    !isset($set)   )
+    if(!isset($set))
         $invalid[] = "at least one of these has to be set: ".join(",",array_keys($fields));
 
     // Argument check - make sure that at least on paramter is present
     // if not then set an appropriate error message and return
     if ( isset($invalid) ) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'create', 'xarbb');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -69,11 +68,9 @@ function xarbb_userapi_updatetopic($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $xbbtopicstable = $xartable['xbbtopics'];
-
     if (empty($time)){
         $time = time();
     }
-
     $update = array();
     $bindvars = array();
     foreach($params as $vvar => $field)    {
@@ -82,11 +79,9 @@ function xarbb_userapi_updatetopic($args)
             $bindvars[] = $$vvar;
         }
     }
-
     // Update item
     $query = "UPDATE $xbbtopicstable SET ".join(",",$update)." WHERE xar_tid = ?";
     $bindvars[] = $tid;
-
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
@@ -104,12 +99,10 @@ function xarbb_userapi_updatetopic($args)
         $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
     }
-
     $data = xarModAPIFunc('xarbb',
                           'user',
                           'gettopic',
                           array('tid' => $tid));
-
     if (!isset($nohooks)){
         // Let any hooks know that we have created a new topic
         $args['module'] = 'xarbb';
@@ -117,7 +110,6 @@ function xarbb_userapi_updatetopic($args)
         $args['itemid'] = $tid;
         xarModCallHooks('item', 'update', $tid, $args);
     }
-
     // Return the id of the newly created link to the calling process
     return true;
 }

@@ -21,19 +21,16 @@
 function xarbb_userapi_gettopic($args)
 {
     extract($args);
-
     if (!isset($tid)) {
-        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $xbbtopicstable = $xartable['xbbtopics'];
     $xbbforumstable = $xartable['xbbforums'];
-
     // Get link
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => array(),
@@ -53,7 +50,8 @@ function xarbb_userapi_gettopic($args)
                      xar_treplier,
                      xar_tstatus,
                      xar_thostname,
-                        xar_fname,
+                     xar_toptions,
+                     xar_fname,
                      xar_fdesc,
                      xar_ftopics,
                      xar_fposts,
@@ -73,13 +71,9 @@ function xarbb_userapi_gettopic($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
         return;
     }
-  
-    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname,
-        $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
+    list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies,$treplier, $tstatus, $thostname,              $toptions, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus, $catid) = $result->fields;
     $result->Close();
-
     if (!xarSecurityCheck('ReadxarBB',1,'Forum',"$catid:$fid")) return;
-
     $topic = array('tid'        => $tid,
                    'fid'        => $fid,
                    'ttitle'     => $ttitle,
@@ -91,6 +85,7 @@ function xarbb_userapi_gettopic($args)
                    'tstatus'    => $tstatus,
                    'treplier'   => $treplier,
                    'thostname'  => $thostname,
+                   'toptions'   => $toptions,
                    'fname'      => $fname,
                    'fdesc'      => $fdesc,
                    'ftopics'    => $ftopics,
@@ -99,8 +94,6 @@ function xarbb_userapi_gettopic($args)
                    'fpostid'    => $fpostid,
                    'fstatus'    => $fstatus,
                    'catid'      => $catid);
-
     return $topic;
 }
-
 ?>

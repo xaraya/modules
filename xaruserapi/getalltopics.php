@@ -25,7 +25,6 @@
 function xarbb_userapi_getalltopics($args)
 {
     extract($args);
-
      // Optional argument
     if (!isset($startnum)) {
         $startnum = 1;
@@ -38,7 +37,7 @@ function xarbb_userapi_getalltopics($args)
     }
 
     if (empty($fid) && empty($tids)) {
-        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
@@ -77,6 +76,7 @@ function xarbb_userapi_getalltopics($args)
                      xar_treplies,
                      xar_tstatus,
                      xar_treplier,
+                     xar_toptions,
                      xar_fname,
                      xar_fdesc,
                      xar_ftopics, 
@@ -173,7 +173,7 @@ function xarbb_userapi_getalltopics($args)
  
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
-        list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus,$treplier,
+        list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $tftime, $treplies, $tstatus, $treplier, $toptions,
         $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid,$catid) = $result->fields;
 
         if (xarSecurityCheck('ReadxarBB',0,'Forum',"$catid:$fid"))    {
@@ -186,7 +186,8 @@ function xarbb_userapi_getalltopics($args)
                    'tftime'  => $tftime,
                    'treplies'=> $treplies,
                    'tstatus' => $tstatus,
-                   'treplier' => $treplier,
+                   'treplier'=> $treplier,
+                   'toptions'=> $toptions,
                    'fname'   => $fname,
                    'fdesc'   => $fdesc,
                    'ftopics' => $ftopics,
@@ -198,7 +199,8 @@ function xarbb_userapi_getalltopics($args)
     }
     $result->Close();
     // Save some variables to (temporary) cache for use in blocks etc.
-    xarVarSetCached('xarbb.topics','alltopicscache',$topics);
+    // If we ain't using it, then lets not set it...
+    // xarVarSetCached('xarbb.topics','alltopicscache',$topics);
     return $topics;
 }
 ?>

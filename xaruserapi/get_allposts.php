@@ -155,8 +155,6 @@ function xarbb_userapi_get_allposts($args)
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SYSTEM_ERROR', new SystemException(__FILE__.'('.__LINE__.'):  '.$msg));
         return;
     }
-
     return $commentlist;
 }
-
 ?>

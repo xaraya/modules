@@ -49,6 +49,12 @@
                     Print this topic
                 </xar:mlstring>
             </a>
+            :: 
+            <a href="#xarModUrl('xarbb', 'user', 'subscribe', array('tid' => $tid, 'uid' => xarUserGetVar('uid')))#">
+                <xar:mlstring>
+                    Subscribe to topic
+                </xar:mlstring>
+            </a>
         </div>
         </xar:if>
     </div>
