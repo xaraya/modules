@@ -1,7 +1,7 @@
 <?php
 $modversion['name']           = 'Opentracker';
 $modversion['id']             = '55555';
-$modversion['version']        = '0.1';
+$modversion['version']        = '0.1.0';
 $modversion['description']    = 'Wrapper around phpOpenTracker(www.phpopentracker.de) for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
