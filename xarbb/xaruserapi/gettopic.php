@@ -65,7 +65,7 @@ function xarbb_userapi_gettopic($args)
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
             WHERE {$categoriesdef['where']} AND xar_tid = ?";
-    $result =& $dbconn->Execute($query, array($xbbforumstable.xar_fid, $tid));
+    $result =& $dbconn->Execute($query, array($xbbforumstable.'xar_fid', $tid));
     if (!$result) return;
 
     if($result->EOF) 	{
