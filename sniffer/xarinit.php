@@ -62,9 +62,22 @@ function sniffer_init()
 
     $result = &$dbconn->Execute($query);
     if (!$result) return false; 
+
+    // Register Masks
+    xarRegisterMask('ReadSniffer','All','sniffer','All','All','ACCESS_READ');
+    xarRegisterMask('EditSniffer','All','sniffer','All','All','ACCESS_EDIT');
+    xarRegisterMask('AddSniffer','All','sniffer','All','All','ACCESS_ADD');
+    xarRegisterMask('DeleteSniffer','All','sniffer','All','All','ACCESS_DELETE');
+    xarRegisterMask('AdminSniffer','All','sniffer','All','All','ACCESS_ADMIN');
+
+    // Set up module variables
+    xarModSetVar('sniffer', 'itemsperpage', '20');
+
     // sniff the installing user
-    include_once('modules/sniffer/xaruserapi.php');
-    sniffer_userapi_sniffbasic(''); 
+    xarModAPIFunc('sniffer',
+                  'user',
+                  'sniffbasic');
+
     // Initialisation successful
     return true;
 } 
@@ -107,22 +120,30 @@ function sniffer_upgrade($oldversion)
  */
 function sniffer_delete()
 { 
+    // Remove Masks and Instances
+    xarRemoveMasks('sniffer');
+    xarRemoveInstances('sniffer');
+
+    // Delete any module variables
+    xarModDelVar('sniffer', 'itemsperpage');
+
     // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables(); 
+
     // load the table maintenance API
     xarDBLoadTableMaintenanceAPI(); 
+
     // Drop the table
     $query = xarDBDropTable($xartable['sniffer']);
     if (empty($query)) return; // throw back
      
     // Drop the table
     $result = &$dbconn->Execute($query); 
+
     // Check for an error with the database code, and if so raise the
     if (!$result) return false; 
-    // Remove Masks and Instances
-    xarRemoveMasks('sniffer');
-    xarRemoveInstances('sniffer'); 
+
     // Deletion successful
     return true;
 } 

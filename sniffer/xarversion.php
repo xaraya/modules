@@ -21,10 +21,10 @@ $modversion['license']			= 'xardocs/license.txt';
 $modversion['official']			= 1;
 $modversion['author']			= 'Frank Besler';
 $modversion['contact']			= 'http://www.besler.net';
-$modversion['admin']			= 0;
+$modversion['admin']			= 1;
 $modversion['user']				= 0;
 $modversion['securityschema']	= array('sniffer::' => '::');
 $modversion['class'] 			= 'Utility';
-$modversion['category'] 		= 'Global';
+$modversion['category'] 		= 'Miscellaneous';
 
 ?>

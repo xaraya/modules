@@ -1,0 +1,53 @@
+<div class="xar-mod-head"><span class="xar-mod-title">#$menutitle#</span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Sniffs</xar:mlstring></h2><br />
+<div style="text-align: left;margin: auto;">
+
+<table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <xar:if condition="$agentlink != ''">
+            <th><a href="#$agentlink#"><xar:mlstring>Agent</xar:mlstring></a></th>
+        <xar:else />
+            <th><xar:mlstring>Agent</xar:mlstring></th>
+        </xar:if>
+        <xar:if condition="$osnamlink != ''">
+            <th><a href="#$osnamlink#"><xar:mlstring>OS Name</xar:mlstring></a></th>
+        <xar:else />
+            <th><xar:mlstring>OS Name</xar:mlstring></th>
+        </xar:if>
+        <xar:if condition="$osverlink != ''">
+            <th><a href="#$osverlink#"><xar:mlstring>OS Version</xar:mlstring></a></th>
+        <xar:else />
+            <th><xar:mlstring>OS Version</xar:mlstring></th>
+        </xar:if>
+        <xar:if condition="$agnamlink != ''">
+            <th><a href="#$agnamlink#"><xar:mlstring>Browser Name</xar:mlstring></a></th>
+        <xar:else />
+            <th><xar:mlstring>Browser Name</xar:mlstring></th>
+        </xar:if>
+        <xar:if condition="$agverlink != ''">
+            <th><a href="#$agverlink#"><xar:mlstring>Browser Version</xar:mlstring></a></th>
+        <xar:else />
+            <th><xar:mlstring>Browser Version</xar:mlstring></th>
+        </xar:if>
+        <th><xar:mlstring>Options</xar:mlstring></th>
+    </tr>
+    <xar:loop name="$items">
+    <tr>
+        <td>#$loop:item['agent']#</td>
+        <td>#$loop:item['osnam']#</td>
+        <td>#$loop:item['osver']#</td>
+        <td>#$loop:item['agnam']#</td>
+        <td>#$loop:item['agver']#</td>
+        <td>
+           <xar:if condition="empty($loop:item['deleteurl'])">
+               #$loop:item['deletetitle']#
+           <xar:else />
+               <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:loop>
+</table>
+<br />
+<!-- add the pager here -->
+#$pager#

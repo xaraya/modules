@@ -7,7 +7,7 @@
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * @subpackage aniffer module
+ * @subpackage Sniffer Module
  * @author Frank Besler using phpSniffer by Roger Raymond
  */
 
@@ -19,7 +19,7 @@
 function sniffer_eventapi_OnSessionCreate($arg)
 {
     // Note : we can't use xarModAPIFunc for this event !
-    include_once 'modules/sniffer/xaruserapi.php';
+    include_once 'modules/sniffer/xaruserapi/sniff.php';
     return sniffer_userapi_sniff($arg);
 }
 
