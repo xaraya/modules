@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * webdavserver
@@ -6,7 +6,7 @@
  * @copyright   by Marcel van der Boom
  * @license     GPL (http://www.gnu.org/licenses/gpl.html)
  * @author      Marcel van der Boom
- * @link        
+ * @link
  *
  * @package     Xaraya eXtensible Management System
  * @subpackage  webdavserver
@@ -17,6 +17,7 @@
 $modversion['name']           = 'webdavserver';
 $modversion['id']             = '4705';
 $modversion['version']        = '0.0.1';
+$modversion['displayname']    = xarML('WebDAVServer');
 $modversion['description']    = 'Implementation of WebDAV protocol for Xaraya';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
