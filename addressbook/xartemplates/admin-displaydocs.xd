@@ -10,7 +10,8 @@
   <h2><xar:mlstring>Administrator Documentation</xar:mlstring></h2>
   <div class="xar-norm-outline" style="padding:.25em;">
     <div style="float:right;display:block;background-color:#ffffff;padding:.5em;">
-        <img src="modules/addressbook/xarimages/admin.gif" alt="official icon" width="96" height="96" />height="96" />
+	    <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
+          <img src="modules/#$modInfo['directory']#/xarimages/admin.gif" alt="official icon" width="96" height="96" />
     </div>
 		<div style="margin:0em 1em;">
 		  <h4><xar:mlstring>Access Level</xar:mlstring></h4>

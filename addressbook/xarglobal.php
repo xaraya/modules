@@ -110,11 +110,6 @@ define('_AB_ERR_DEBUG_STYLE',    '');
 
 /* end exception handling */
 
-/**
- * User Messages
- */
-define('_AB_NOAUTH_FUNCTION',       xarML('You are not authorized to perform this function'));
-
 //from admin.php
 //////////////////////////////
 define('_AB_NORECORDS',             xarML('There are no records to show in this view'));
@@ -224,7 +219,7 @@ define('_AB_MENU_AZ',               xarML('Show A - Z'));
 define('_AB_MENU_ALL',              xarML('Show all records'));
 define('_AB_MENU_ADD',              xarML('Add new address'));
 define('_AB_MENU_SEARCH',           xarML('Search'));
-define('_AB_SORTBY',                xarML('Sort by'));
+define('_AB_SORTBY',                xarML('Sort&nbsp;by'));
 define('_AB_LABEL_DELETE',          xarML("Delete"));
 define('_AB_LABEL_EDIT',            xarML("Edit"));
 define('_AB_LABEL_SHOWDETAIL',      xarML("Details"));

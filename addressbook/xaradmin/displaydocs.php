@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xaradmin.php,v 1.3 2003/07/09 11:20:20 garrett Exp $
+ * File: $Id: xaradmin.php,v 1.4 2003/07/16 01:06:10 garrett Exp $
  *
  * AddressBook admin functions
  *
@@ -14,7 +14,13 @@
  * Based on pnAddressBook by Thomas Smiatek <thomas@smiatek.com>
  */
 
-//FIXME: until we figure out module globals
-include_once ('modules/addressbook/xarglobal.php');
+/**
+ * Placeholder function to display a static page
+ */
+function addressbook_admin_displaydocs () {
+
+    return array();
+
+} // END displayDocs
 
 ?>

@@ -2,7 +2,7 @@
 /**
  * File: $Id: modifyconfig.php,v 1.6 2003/07/09 11:19:41 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook admin functions
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -24,6 +24,7 @@
 function addressbook_admin_modifyconfig() {
 
     $output = array(); // template contents go here
+
     /**
      * Security check first
      */

@@ -2,7 +2,7 @@
 /**
  * File: $Id: xaruser.php,v 1.3 2003/07/09 00:12:23 garrett Exp $
  *
- * AddressBook utility functions
+ * AddressBook user functions
  *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2003 by the Xaraya Development Team
@@ -16,14 +16,5 @@
 
 //FIXME: until we figure out module globals
 include_once ('modules/addressbook/xarglobal.php');
-//=========================================================================
-//  the main function
-//=========================================================================
-function addressbook_user_main() {
-
-$output = xarModFunc(__ADDRESSBOOK__,'user','viewall');
-
-    return xarModAPIFunc(__ADDRESSBOOK__,'util','handleexception',array('output'=>$output));
-} // END main
 
 ?>
