@@ -24,7 +24,7 @@ function messages_userapi_getall( $args )
         $message['posting_host']  = $node['xar_hostname'];
         $message['subject']       = $node['xar_title'];
         $message['raw_date']      = $node['xar_datetime'];
-        $message['date']          = strftime('%A, %B %d @ %H:%M:%S', $node['xar_datetime']);
+        $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['xar_datetime']);
         $message['body']          = $node['xar_text'];
         $message['reciepient']    = xarUserGetVar('uname');
         $message['reciepient_id'] = xarUserGetVar('uid');

@@ -33,7 +33,7 @@ function messages_userapi_get( $args )
         $message['receipient_id'] = xarUserGetVar('uid');
         $message['posting_host']  = $node['xar_hostname'];
         $message['raw_date']      = $node['xar_datetime'];
-        $message['date']          = strftime('%A, %B %d @ %H:%M:%S', $node['xar_datetime']);
+        $message['date']          = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $node['xar_datetime']);
         $message['subject']       = $node['xar_title'];
         $message['body']          = $node['xar_text'];
 
