@@ -1,26 +1,27 @@
-<xar:if condition="!empty($feature['featuredlabel'])">
-        <xar:if condition="!empty($feature['alttitle'])">
-            <a href="#$feature['featuredlink']#">#$feature['alttitle']#</a>
+<xar:loop name="$feature">
+    <xar:if condition="!empty($loop:item['featuredlabel'])">
+        <xar:if condition="!empty($loop:item['alttitle'])">
+            <a href="#$loop:item['featuredlink']#">#$loop:item['alttitle']#</a>
         <xar:else />
-            <a href="#$feature['featuredlink']#">#xarVarPrepForDisplay($feature['featuredlabel'])#</a>
+            <a href="#$loop:item['featuredlink']#">#xarVarPrepForDisplay($loop:item['featuredlabel'])#</a>
         </xar:if>
         <br />
-        <xar:if condition="$feature['showfeaturedsum'] eq true">
-            <xar:if condition="!empty($feature['altsummary'])">
-                #$feature['altsummary']#
+        <xar:if condition="$loop:item['showfeaturedsum'] eq true">
+            <xar:if condition="!empty($loop:item['altsummary'])">
+                #$loop:item['altsummary']#
             <xar:else />
-                <xar:if condition="!empty($feature['featureddesc'])">
-                    #xarVarPrepHTMLDisplay($feature['featureddesc'])#
+                <xar:if condition="!empty($loop:item['featureddesc'])">
+                    #xarVarPrepHTMLDisplay($loop:item['featureddesc'])#
                 </xar:if>
             </xar:if>
              <br />
         </xar:if>
-        <xar:if condition="$feature['showfeaturedbod'] eq true">
-                #$feature['featuredbody']#
+        <xar:if condition="$loop:item['showfeaturedbod'] eq true">
+                #$loop:item['featuredbody']#
        </xar:if>
         <br />
-</xar:if>
-
+    </xar:if>
+</xar:loop>
 
 <xar:if condition="!empty($items)">
     <br />

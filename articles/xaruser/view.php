@@ -17,7 +17,6 @@ function articles_user_view($args)
     if(!xarVarFetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('ptid',     'id',    $ptid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('itemtype', 'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('template', 'str',   $template,     NULL, XARVAR_NOT_REQUIRED)) {return;}
     // can't use list enum here, because we don't know which sorts might be used
     // True - but we can provide some form of validation and normalisation.
     // The original 'regexp:/^[\w,]*$/' lets through *any* non-space character.
@@ -26,7 +25,6 @@ function articles_user_view($args)
     if(!xarVarFetch('sort', 'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('numcols',  'int:0', $numcols,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('authorid', 'id',    $authorid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-
 // This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
 //    if(!xarVarFetch('startdate','int:0', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
 //    if(!xarVarFetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
@@ -46,11 +44,6 @@ function articles_user_view($args)
 
     if (!isset($ptid) && !empty($itemtype) && is_numeric($itemtype)) {
         $ptid = $itemtype;
-    }
-
-    //Custom template e.g. user-summary-pubtype-customtemplate.xt
-    if (isset($template)) {
-        $customtemplate = $template;
     }
 
     // Get publication types
@@ -404,7 +397,7 @@ function articles_user_view($args)
         } else {
             $where .= $extrawhere;
         }
-
+        
     }
 
     // Get articles
@@ -773,7 +766,7 @@ function articles_user_view($args)
         if (!isset($columns[$col])) {
             $columns[$col] = array();
         }
-
+        
         /*BIG COMMENT FOR MIKE
             BIG COMMENT FOR MIKE
                 BIG COMMENT FOR MIKE
@@ -810,12 +803,10 @@ function articles_user_view($args)
 
         // fill in the summary template for this article
         $template = $pubtypes[$article['pubtypeid']]['name'];
-        //Add customtemplate if defined
-        if (!empty($customtemplate)) $template .= "-".$customtemplate;
         $columns[$col][] = xarTplModule('articles', 'user', 'summary', $article, $template);
         $number++;
     }
-
+    
     unset($articles);
     if ($showcategories) {
         unset($GLOBALS['artviewcatinfo']);
@@ -925,7 +916,7 @@ function articles_user_view($args)
  * sorting function for article categories
  */
 
-function articles_view_sortbyroot ($a,$b)
+function articles_view_sortbyroot ($a,$b) 
 {
     if ($GLOBALS['artviewcatinfo'][$a]['root'] == $GLOBALS['artviewcatinfo'][$b]['root']) {
         return articles_view_sortbyleft($a,$b);
@@ -939,7 +930,7 @@ function articles_view_sortbyleft ($a,$b)
     return ($GLOBALS['artviewcatinfo'][$a]['left'] > $GLOBALS['artviewcatinfo'][$b]['left']) ? 1 : -1;
 }
 
-function articles_view_sortbyorder ($a,$b)
+function articles_view_sortbyorder ($a,$b) 
 {
     if ($GLOBALS['artviewcatinfo'][$a]['order'] == $GLOBALS['artviewcatinfo'][$b]['order']) {
         return articles_view_sortbyleft($a,$b);

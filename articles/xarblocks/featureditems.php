@@ -35,7 +35,6 @@ function articles_featureditemsblock_init()
         'showfeaturedbod' => false,
         'moreitems' => array(),
         'showsummary' => false,
-        'showdynamic' => false,
         'linkpubtype' => false,
         'linkcat' => false
     );
@@ -84,7 +83,6 @@ function articles_featureditemsblock_display(& $blockinfo)
     if (empty($vars['toptype'])) {$vars['toptype'] = 'date';}
     if (empty($vars['moreitems'])) {$vars['moreitems'] = array();}
     if (empty($vars['linkcat'])) {$vars['linkcat'] = false;}
-    if (empty($vars['showdynamic'])) {$vars['showdynamic'] = false;}
     if (!isset($vars['showvalue'])) {
         if ($vars['toptype'] == 'rating') {
             $vars['showvalue'] = false;
@@ -112,45 +110,42 @@ function articles_featureditemsblock_display(& $blockinfo)
         $fields[] = 'summary';
     }
 
-    if (!empty($vars['showdynamic']) && xarModIsHooked('dynamicdata', 'articles')) {
-        $fields[] = 'dynamicdata';
-    }
     // Initialize arrays
-    $data['featured'] = array();
+    $data['feature'] = array();
     $data['items'] = array();
 
     // Setup featured item
     if ($featuredaid > 0) {
-        $data['featured'] = xarModAPIFunc(
+        $featuredart = xarModAPIFunc(
             'articles','user','get',
             array(
                 'aid' => $featuredaid,
                 'fields' => $fields
             )
         );
+
         $featuredlink = xarModURL(
             'articles', 'user', 'display',
             array(
-                'aid' => $featuredaid,
-                'itemtype' => (!empty($vars['linkpubtype']) ? $data['featured']['pubtypeid'] : NULL),
+                'aid' => $featuredart['aid'],
+                'itemtype' => (!empty($vars['linkpubtype']) ? $featuredart['pubtypeid'] : NULL),
                 'catid' => ((!empty($vars['linkcat']) && !empty($vars['catfilter'])) ? $vars['catfilter'] : NULL)
             )
         );
         if (empty($vars['showfeaturedbod'])) {$vars['showfeaturedbod'] = false;}
-        $values = array(
-            'featuredlabel'     => $data['featured']['title'],
+        $data['feature'][] = array(
+            'featuredlabel'     => $featuredart['title'],
             'featuredlink'      => $featuredlink,
             'alttitle'          => $vars['alttitle'],
             'altsummary'        => $vars['altsummary'],
             'showfeaturedsum'   => $vars['showfeaturedsum'],
             'showfeaturedbod'   => $vars['showfeaturedbod'],
-            'featureddesc'      => $data['featured']['summary'],
-            'featuredbody'      => $data['featured']['body']
+            'featureddesc'      => $featuredart['summary'],
+            'featuredbody'      => $featuredart['body']
         );
-        $data['featured'] = array_merge($data['featured'],$values);
     }
 
-    // Setup additional items
+    // Setup additional items 
     if (!empty($vars['moreitems'])) {
         $articles = xarModAPIFunc(
             'articles', 'user', 'getall',
@@ -210,14 +205,13 @@ function articles_featureditemsblock_display(& $blockinfo)
         }
     }
 
-    if (empty($data['featured']) && empty($data['items'])) {
+    if (empty($data['feature']) && empty($data['items'])) {
         // Nothing to display.
         return;
     }
-    $data['feature'][0] = $data['featured'];
+
     // Set the data to return.
     $blockinfo['content'] = $data;
-
    return $blockinfo;
 }
 
