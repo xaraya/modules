@@ -1,0 +1,54 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<div align="center"><h2><xar:mlstring>Allowed HTML</xar:mlstring></h2><br />
+<form method="post" action="#xarModURL('html','admin','updateset')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" value="#$authid#" />
+	<table width="40%" border="1" cellspacing="0" cellpadding="4">
+		<tr>
+			<th>
+				#$namelabel#
+			</th>
+			<th>
+				#$notallowedlabel#
+			</th>
+			<th>
+				#$allowedlabel#
+			</th>
+			<th>
+				#$parameterslabel#
+			</th>
+		</tr>
+		<xar:loop name="$items">
+		<tr>
+			<td width="70%" align="center">
+				#$loop:item['htmltag']# 
+			</td>
+			<td width="10%" align="center">
+				<xar:if condition="$allowed eq 1">
+				   <input type=radio value="0" name="htmlallow#$loop:item['htmltag']#tag" checked="checked" />
+				<xar:else />
+					<input type=radio value="0" name="htmlallow#$loop:item['htmltag']#tag" />
+				</xar:if>
+			</td>
+			<td width="10%" align="center">
+				<xar:if condition="$allowed eq 2">
+				   <input type=radio value="1" name="htmlallow#$loop:item['htmltag']#tag" checked="checked" />
+				<xar:else />
+					<input type=radio value="1" name="htmlallow#$loop:item['htmltag']#tag" />
+				</xar:if>
+				
+			</td>
+			<td width="10%" align="center">
+				<xar:if condition="$allowed eq 3">
+				   <input type=radio value="2" name="htmlallow#$loop:item['htmltag']#tag" checked="checked" />
+				<xar:else />
+					<input type=radio value="2" name="htmlallow#$loop:item['htmltag']#tag" />
+				</xar:if>
+			</td>
+		</tr>
+		</xar:loop>
+	</table>
+	<br />
+	<input type="submit" value="#$submitlabel#" align="middle" tabindex="3" />
+</form>
