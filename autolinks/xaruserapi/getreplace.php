@@ -121,6 +121,8 @@ function autolinks_userapi_getreplace($args)
         // Catch any exceptions.
         if (xarExceptionMajor()) {
             $error_text = xarExceptionRender('text');
+            // Hack until exceptions are sorted.
+            if (isset($error_text['short'])) {$error_text = $error_text['short'];}
 
             // Handle the exception since we have rendered it.
             xarExceptionHandled();

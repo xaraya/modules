@@ -17,6 +17,8 @@ function autolinks_admin_create()
     if (!xarVarFetch('tid', 'id', $tid)) {
         $errorcount += 1;
         $data['tid_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['tid_error']['short'])) {$data['tid_error'] = $data['tid_error']['short'];}
         xarExceptionHandled();
     } else {
         // Get the autolink type details.
@@ -37,6 +39,8 @@ function autolinks_admin_create()
     if (!xarVarFetch('keyword', 'str:1', $keyword)) {
         $errorcount += 1;
         $data['keyword_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['keyword_error']['short'])) {$data['keyword_error'] = $data['keyword_error']['short'];}
         xarExceptionHandled();
         if (trim($keyword) == '' ) {
             $keyword = NULL;
@@ -46,18 +50,24 @@ function autolinks_admin_create()
     if (!xarVarFetch('title', 'str', $title)) {
         $errorcount += 1;
         $data['title_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['title_error']['short'])) {$data['title_error'] = $data['title_error']['short'];}
         xarExceptionHandled();
     }
 
     if (!xarVarFetch('url', 'str:1', $url)) {
         $errorcount += 1;
         $data['url_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['url_error']['short'])) {$data['url_error'] = $data['url_error']['short'];}
         xarExceptionHandled();
     }
 
     if (!xarVarFetch('comment', 'isset', $comment, NULL, XARVAR_DONT_SET)) {
         $errorcount += 1;
         $data['comment_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['comment_error']['short'])) {$data['comment_error'] = $data['comment_error']['short'];}
         xarExceptionHandled();
     }
 
@@ -65,6 +75,8 @@ function autolinks_admin_create()
     if (!xarVarFetch('name', 'str:1', $name, $keyword)) {
         $errorcount += 1;
         $data['name_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['name_error']['short'])) {$data['name_error'] = $data['name_error']['short'];}
         xarExceptionHandled();
     }
 
@@ -91,6 +103,8 @@ function autolinks_admin_create()
     if (xarExceptionMajor()) {
         $errorcount += 1;
         $data['global_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['global_error']['short'])) {$data['global_error'] = $data['global_error']['short'];}
         xarExceptionHandled();
     }
 

@@ -18,6 +18,8 @@ function autolinks_admin_createtype()
     if (!xarVarFetch('type_name', 'str:1:', $type_name)) {
         $errorcount += 1;
         $data['type_name_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['type_name_error']['short'])) {$data['type_name_error'] = $data['type_name_error']['short'];}
         xarExceptionHandled();
     }
 
@@ -25,18 +27,24 @@ function autolinks_admin_createtype()
     if (!xarVarFetch('template_name', 'str:1:', $template_name)) {
         $errorcount += 1;
         $data['template_name_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['template_name_error']['short'])) {$data['template_name_error'] = $data['template_name_error']['short'];}
         xarExceptionHandled();
     }
 
     if (!xarVarFetch('dynamic_replace', 'int:0:1', $dynamic_replace, '0')) {
         $errorcount += 1;
         $data['dynamic_replace_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['dynamic_replace_error']['short'])) {$data['dynamic_replace_error'] = $data['dynamic_replace_error']['short'];}
         xarExceptionHandled();
     }
 
     if (!xarVarFetch('type_desc', 'str:0:400', $type_desc)) {
         $errorcount += 1;
         $data['type_desc_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['type_desc_error']['short'])) {$data['type_desc_error'] = $data['type_desc_error']['short'];}
         xarExceptionHandled();
     }
 
@@ -60,6 +68,8 @@ function autolinks_admin_createtype()
     if (xarExceptionMajor()) {
         $errorcount += 1;
         $data['global_error'] = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($data['global_error']['short'])) {$data['global_error'] = $data['global_error']['short'];}
         xarExceptionHandled();
     }
 

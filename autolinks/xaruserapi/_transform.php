@@ -28,6 +28,11 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
     // Catch any exceptions.
     if (xarExceptionMajor()) {
         // The template errored.
+
+        $error_text = xarExceptionRender('text');
+        // Hack until exceptions are sorted.
+        if (isset($error_text['short'])) {$error_text = $error_text['short'];}
+
         if (xarModGetVar('autolinks', 'showerrors') || xarVarIsCached('autolinks', 'showerrors')) {
             // Pass the error through the error template if required.
             // This mode of operation is used during setup.
@@ -36,7 +41,7 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
                     'match' => $matched_text,
                     'template_base' => xarModGetVar('autolinks', 'templatebase'),
                     'template_name' => $template_name,
-                    'error_text' => xarExceptionRender('text')
+                    'error_text' => $error_text
                 )
             );
             if (xarExceptionMajor()) {
