@@ -11,8 +11,7 @@ function smilies_userapi_get($args)
     extract($args);
 
     if (!isset($sid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'get', 'smilies');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

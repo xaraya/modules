@@ -13,8 +13,7 @@ function smilies_userapi_transform($args)
 
     // Argument check
     if (!isset($extrainfo)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'transform', 'smilies');
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
