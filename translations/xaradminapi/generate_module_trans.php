@@ -57,8 +57,8 @@ function translations_adminapi_generate_module_trans($args)
         return;
     }
 
-    $allcontexts = $GLOBALS['ML']->getContexts;
-    foreach ($contexts as $context)
+    $allcontexts = $GLOBALS['MLS']->getContexts();
+    foreach ($allcontexts as $context)
         $allCtxNames[$context->getType()] = $backend->getContextNames($context->getType());
 
 /*    $allCtxNames[XARMLS_CTXTYPE_FILE] = $backend->getContextNames(XARMLS_CTXTYPE_FILE);
