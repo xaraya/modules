@@ -40,7 +40,7 @@ function images_userapi_decode_shorturl($params)
 
         if (!isset($fileInfo[$fileId]) || !count($fileInfo[$fileId])) {
             $msg = xarML('Unable to display - file \'#(1)\' does not exist!', $params[1] );
-            xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
+            xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
             return;
         } else {
             $fileInfo = $fileInfo[$fileId];
@@ -54,7 +54,7 @@ function images_userapi_decode_shorturl($params)
             if ($mimeType[0] != 'image' || $mimeType[1] != $type) {
 
                 $msg = xarML('Unable to display. File \'#(1)\' is either not an image or does not exist.', $params[1]);
-                xarErrorSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NO_EXIST', new DefaultUserException($msg));
                 return;
             } else {
 

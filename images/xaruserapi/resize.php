@@ -18,27 +18,27 @@ function images_userapi_resize($args)
 
     if (!isset($src) || empty($src) || !is_numeric($src)) {
         $msg = xarML('Required parameter \'#(1)\' is missing or not numeric.', 'src');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
 
     if (!isset($label) || empty($label)) {
         $msg = xarML('Required parameter \'#(1)\' is missing or empty.', 'label');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
 
     if (!isset($width) && !isset($height)) {
         $msg = xarML('Required parameters \'#(1)\' and \'#(2)\' are missing.', 'width', 'height');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Parameters'), new DefaultUserException($msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, xarML('Missing Parameters'), new DefaultUserException($msg));
         return FALSE;
     } elseif (!isset($width) && !xarVarFetch('height', 'regexp:/[0-9]+(px|%)/:', $height)) {
         $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'height');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     } elseif (!isset($height) && !xarVarFetch('width', 'regexp:/[0-9]+(px|%)/:', $width)) {
         $msg = xarML('\'#(1)\' parameter is incorrectly formatted.', 'width');
-        xarErrorSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
+        xarExceptionSet(XAR_USER_EXCEPTION, xarML('Invalid Parameter'), new DefaultUserException($msg));
         return FALSE;
     }
 

@@ -369,7 +369,7 @@ function pruneFiles( $FilesInDir, $image_import_dir, $album )
             // error message and return
             if ($dbconn->ErrorNo() != 0) {
                 $msg = xarMLByKey('DATABASE_ERROR', $sql);
-                xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                                new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
                                
                 return;

@@ -26,7 +26,7 @@ function images_init()
 {
     if (!xarModIsAvailable('uploads')) {
         $msg = xarML('The module [#(1)] should be activated first.', 'uploads');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'MODULE_DEPENDENCY', new SystemException($msg));
         return;
     }
     
@@ -47,7 +47,7 @@ function images_init()
 
     if (!xarModRegisterHook('item', 'transform', 'API', 'images', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook.');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
          return;
     }
 

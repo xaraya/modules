@@ -8,8 +8,8 @@ class Image_Properties
     var $_thumbsdir;
     var $height;
     var $width;
-    var $original_height;
-    var $original_width;
+    var $_oheight;
+    var $_owidth;
     var $_percent;
     var $mime = null;
     var $_tmpFile;
@@ -28,8 +28,8 @@ class Image_Properties
         $imageInfo = getimagesize($this->fileLocation);
         
         if (is_array($imageInfo)) {
-            $this->original_width  = $this->width  = $imageInfo[0];
-            $this->original_height = $this->height = $imageInfo[1];
+            $this->_owidth  = $this->width  = $imageInfo[0];
+            $this->_oheight = $this->height = $imageInfo[1];
             $this->setPercent(100);
             $this->setMime($this->_getMimeType($imageInfo[2]));
             return $this;
@@ -106,16 +106,12 @@ class Image_Properties
                     $ratios[1]['height'] = $this->getHeight2WidthRatio() * $this->width;
                     $ratios[1]['width']  = $this->getWidth2HeightRatio() * $ratios[1]['height'];
                     
-                    foreach($ratios as $key => $ratio) {
-                        echo "\nRATIO: $key -- {$ratio['width']} <= {$this->width} && {$ratio['height']} <= {$this->height} == ";
-                        
+                    foreach($ratios as $ratio) {
                         if($ratio['width'] <= $this->width && $ratio['height'] <= $this->height) {
-                            echo "TRUE";
                             $this->setWidth($ratio['width']);
                             $this->setHeight($ratio['height']);
                             break;
-                        } else 
-                            echo "FALSE";
+                        }
                     }
                     // free up some memory
                     unset($ratios,$ratio);
@@ -132,7 +128,7 @@ class Image_Properties
    
     function setHeight($height) 
     {
-        $new_hpercent = @($height / $this->original_height);
+        $new_hpercent = @($height / $this->_oheight);
         $this->_percent['height'] = $new_hpercent * 100;
         $this->height = ceil($height);
         return $this->height;
@@ -145,7 +141,7 @@ class Image_Properties
 
     function setWidth($width) 
     {
-        $new_wpercent = @($width / $this->original_width);
+        $new_wpercent = @($width / $this->_owidth);
         $this->_percent['width'] = $new_wpercent * 100;
         $this->width = ceil($width);
         return $this->width;
@@ -153,12 +149,12 @@ class Image_Properties
 
     function getWidth2HeightRatio() 
     {
-        return $this->original_width / $this->original_height;
+        return $this->_owidth / $this->_oheight;
     }
 
     function getHeight2WidthRatio() 
     {
-        return @($this->original_height / $this->original_width);
+        return @($this->_oheight / $this->_owidth);
     }
 
     function getPercent() 
@@ -202,20 +198,20 @@ class Image_Properties
 
     function _setPercent($percent) 
     {
-        $this->setHeight($this->original_height * ($percent / 100));
+        $this->setHeight($this->_oheight * ($percent / 100));
         $this->_percent['height'] = $percent;
 
-        $this->setWidth($this->original_width * ($percent / 100));
+        $this->setWidth($this->_owidth * ($percent / 100));
         $this->_percent['width']  = $percent;
         return TRUE;
     }
 
     function _setWxHPercent($wpercent, $hpercent) 
     {
-        $this->setHeight($this->original_height * ($hpercent / 100));
+        $this->setHeight($this->_oheight * ($hpercent / 100));
         $this->_percent['height'] = $hpercent;
 
-        $this->setWidth($this->original_width * ($wpercent / 100));
+        $this->setWidth($this->_owidth * ($wpercent / 100));
         $this->_percent['width']  = $wpercent;
         return TRUE;
     }
@@ -223,13 +219,13 @@ class Image_Properties
     function _setWPercent($wpercent) 
     {
         $this->_percent['width'] = $wpercent;
-        return $this->setWidth($this->original_width * ($wpercent / 100));
+        return $this->setWidth($this->_owidth * ($wpercent / 100));
     }
 
     function _setHPercent($hpercent) 
     {
         $this->_percent['height'] = $hpercent;
-        return $this->setHeight($this->original_height * ($hpercent / 100));
+        return $this->setHeight($this->_oheight * ($hpercent / 100));
     }
     
     function save() 
@@ -271,35 +267,6 @@ class Image_Properties
         }
     }
     
-    function testPercents($height, $width) {
-        $this->original_height = $this->height = 25;
-        $this->original_width  = $this->width  = 50;
-        
-        echo "\n=========================================================";
-        echo "\nCurrent Image Height / Width: " . $this->height . ' / ' . $this->width;
-        $this->setPercent(array('wpercent' => $width));
-        $this->Constrain('width');
-        $pWidth = $this->width;
-        $this->setPercent(array('hpercent' => $height));
-        $this->Constrain('height');
-        $pHeight = $this->height;
-        echo "\nChosen  Image Height / Width percents: $pHeight / $pWidth";
-        
-        $this->setPercent(array('wpercent' => 100, 'hpercent' => 100));
-        $this->Constrain('width');
-
-        $this->setPercent(array('hpercent' => $height));
-        $this->setPercent(array('wpercent' => $width));
-        $this->Constrain('both');
-
-        echo "\nCurrent Image Height / Width: " . $this->height . ' / ' . $this->width;
-        echo "\n=========================================================";
-        echo "\n";
-        
-        $this->setPercent(array('wpercent' => 100, 'hpercent' => 100));
-        $this->Constrain('width');
-    }
-    
     function getDerivative() 
     {
         
@@ -315,7 +282,7 @@ class Image_Properties
         } else {
             $fileName = $this->fileName;
         }
-        if ($this->width == $this->original_width && $this->height == $this->original_height) {
+        if ($this->width == $this->_owidth && $this->height == $this->_oheight) {
             $derivName = $this->fileLocation;
         } else {
             $derivName = $this->_thumbsdir . '/' . $fileName . "-{$this->width}x{$this->height}.jpg";
