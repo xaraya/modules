@@ -262,6 +262,7 @@
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
+                         'defaultstatus'        => 0,
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Topics',
                                                          'Categories',
@@ -284,6 +285,7 @@
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
+                         'defaultstatus'        => 2,
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Sections',
                                                          'Generic1'));
@@ -304,6 +306,7 @@
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
+                         'defaultstatus'        => 0,
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Generic1'));
 
@@ -324,6 +327,7 @@
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
+                         'defaultstatus'        => 2,
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('FAQ',
                                                          'Generic1'));
@@ -344,6 +348,7 @@
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
+                         'defaultstatus'        => 2,
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Gallery',
                                                          'Generic1'));
@@ -364,6 +369,7 @@
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
+                         'defaultstatus'        => 0,
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Web Links',
                                                          'Generic1'));
@@ -384,6 +390,7 @@
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
+                         'defaultstatus'        => 0,
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Generic1',
                                                          'Generic2'));

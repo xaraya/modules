@@ -197,6 +197,29 @@
         <td colspan="2"><i><xar:mlstring>Note: the ($...) indicates the name of the variable used in the different templates</xar:mlstring></i></td>
     </tr>
 
+<xar:if condition="!empty($withstatus)">
+    <tr>
+        <td colspan="2"><h3><xar:mlstring>Article Create Options</xar:mlstring></h3></td>
+    </tr>
+    <tr>
+        <td>
+	<label for="defaultstatus"><xar:mlstring>Default start status</xar:mlstring></label>
+	</td>
+        <td><select name="defaultstatus" id="defaultstatus">
+            <xar:foreach in="$statusoptions" value="$statusoption">
+                <xar:if condition="$statusoption['value'] eq $defaultstatus">
+                    <option value="#$statusoption['value']#" selected="selected">#$statusoption['label']#</option>
+                <xar:else />
+                    <option value="#$statusoption['value']#">#$statusoption['label']#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+        </td>
+    </tr>
+<xar:else/>
+     <input type="hidden" name="defaultstatus" value="2" />
+</xar:if>
+
 <xar:if condition="!empty($hooks)">
     <tr>
         <td colspan="2"><h3><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h3></td>

@@ -28,6 +28,8 @@ function articles_admin_modifyconfig()
     $data = array();
     $data['ptid'] = $ptid;
 
+    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+
     if (isset($settings) && is_array($settings)) {
         $data['itemsperpage'] = $settings['itemsperpage'];
         $data['numcols'] = $settings['number_of_columns'];
@@ -43,6 +45,7 @@ function articles_admin_modifyconfig()
         $data['dotransform'] = !empty($settings['dotransform']) ? 'checked' : '';
         $data['prevnextart'] = !empty($settings['prevnextart']) ? 'checked' : '';
         $data['page_template'] = isset($settings['page_template']) ? $settings['page_template'] : '';
+        $data['defaultstatus'] = isset($settings['defaultstatus']) ? $settings['defaultstatus'] : null;
     }
     if (!isset($data['itemsperpage'])) {
         $data['itemsperpage'] = 20;
@@ -85,6 +88,24 @@ function articles_admin_modifyconfig()
     }
     if (!isset($data['page_template'])) {
         $data['page_template'] = '';
+    }
+    if (!isset($data['defaultstatus'])) {
+        if (empty($ptid)) {
+            $data['defaultstatus'] = 2;
+        } elseif (!isset($pubtypes[$ptid])) {
+            $data['defaultstatus'] = 2;
+        } else {
+            if (empty($pubtypes[$ptid]['config']['status']['label'])) {
+                $data['defaultstatus'] = 2;
+            } else {
+                $data['defaultstatus'] = 0;
+            }
+        }
+    }
+    if (empty($ptid) || empty($pubtypes[$ptid]['config']['status']['label'])) {
+        $data['withstatus'] = 0;
+    } else {
+        $data['withstatus'] = 1;
     }
 
     // call modifyconfig hooks with module + itemtype
@@ -161,7 +182,6 @@ function articles_admin_modifyconfig()
     $pubfilters[] = $pubitem;
 
     // Links to settings per publication type
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
     foreach ($pubtypes as $id => $pubtype) {
         if (!xarSecurityCheck('AdminArticles',0,'Article',"$id:All:All:All")) {
             continue;
@@ -191,6 +211,13 @@ function articles_admin_modifyconfig()
             xarModSetVar('articles','sortpubtypes','id');
         }
     }
+
+    $data['statusoptions'] = array(
+                                   array('value' => 0, 'label' => xarML('Submitted')),
+                                   array('value' => 1, 'label' => xarML('Rejected')),
+                                   array('value' => 2, 'label' => xarML('Approved')),
+                                   array('value' => 3, 'label' => xarML('Front Page')),
+                                  );
 
     // Module alias for short URLs
     if (!empty($ptid)) {

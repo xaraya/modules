@@ -67,6 +67,11 @@ function articles_admin_pubtypes()
             if (empty($ptid)) {
                 return; // throw back
             } else {
+                if (empty($config['status']['label'])) {
+                    $status = 2;
+                } else {
+                    $status = 0;
+                }
                 $settings = array('number_of_columns'    => 0,
                                   'itemsperpage'         => 20,
                                   'defaultview'          => 1,
@@ -81,7 +86,8 @@ function articles_admin_pubtypes()
                                   'dotransform'          => 0,
                                   'prevnextart'          => 0,
                                   'usealias'             => 0,
-                                  'page_template'        => '');
+                                  'page_template'        => '',
+                                  'defaultstatus'        => $status);
                 xarModSetVar('articles', 'settings.'.$ptid,serialize($settings));
                 xarModSetVar('articles', 'number_of_categories.'.$ptid, 0);
                 xarModSetVar('articles', 'mastercids.'.$ptid, '');

@@ -27,6 +27,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('showpublinks',      'isset', $showpublinks,      0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('prevnextart',       'isset', $prevnextart,       0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('page_template',     'isset', $page_template,     '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('defaultstatus',     'isset', $defaultstatus,     0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('usealias',          'isset', $usealias,          0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('ptid',              'isset', $ptid,              0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('dotransform',       'isset', $dotransform,       0,  XARVAR_NOT_REQUIRED)) {return;}
@@ -54,6 +55,7 @@ function articles_admin_updateconfig()
     $settings['dotransform'] = $dotransform;
     $settings['prevnextart'] = $prevnextart;
     $settings['page_template'] = $page_template;
+    $settings['defaultstatus'] = $defaultstatus;
 
     if (!empty($ptid)) {
         xarModSetVar('articles', 'settings.'.$ptid, serialize($settings));
