@@ -2,7 +2,8 @@
 
 /**
  * update entry for a module item - hook for ('item','update','API')
- * Optional $extrainfo['xlink_remark'] from arguments, or 'xlink_remark' from input
+ * Optional $extrainfo['xlink_base'] and $extrainfo['xlink_id'] from arguments,
+ * or 'xlink_base' and 'xlink_id' from input
  *
  * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
@@ -74,11 +75,19 @@ function xlink_adminapi_updatehook($args)
     }
 
     // check if we need to save some reference id here
-    $base = xarVarCleanFromInput('xlink_base');
+    if (isset($extrainfo['xlink_base'])) {
+        $base = $extrainfo['xlink_base'];
+    } else {
+        $base = xarVarCleanFromInput('xlink_base');
+    }
     if (!isset($base) || $base == '-') {
         return $extrainfo;
     }
-    $refid = xarVarCleanFromInput('xlink_id');
+    if (isset($extrainfo['xlink_id'])) {
+        $refid = $extrainfo['xlink_id'];
+    } else {
+        $refid = xarVarCleanFromInput('xlink_id');
+    }
     if (!isset($refid)) {
         return $extrainfo;
     }
