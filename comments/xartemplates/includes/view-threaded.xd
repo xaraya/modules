@@ -1,12 +1,12 @@
  <table cellspacing="0" cellpadding="0" width="100%" border="0">
     <tr>
-        <th nowrap width="60%">
-            <xar:mlstring>Title</xar:mlstring> <img src="modules/comments/xarimages/n_spacer.gif" alt="" width="1" height="1" align="absmiddle" alt="" />
+        <th width="60%" style="word-wrap: nowrap;">
+            <xar:mlstring>Title</xar:mlstring> <img src="modules/comments/xarimages/n_spacer.gif" alt="" width="1" height="1" />
         </th>
-        <th nowrap width="15%">
+        <th width="15%" style="word-wrap: nowrap;">
             <xar:mlstring>Author</xar:mlstring>
         </th>
-        <th nowrap width="25%" align="center">
+        <th width="25%" style="word-wrap: nowrap; text-align: center;">
             <xar:mlstring>Date</xar:mlstring>
         </th>
     </tr>
