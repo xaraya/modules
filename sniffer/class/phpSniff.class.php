@@ -103,6 +103,7 @@ class phpSniff extends phpSniff_core
         'firebird'                    => 'FB',
         'chimera'                     => 'CH',
         'camino'                      => 'CA',
+        'epiphany'                    => 'EP',
         'safari'                      => 'SF',
         'k-meleon'                    => 'KM',
         'mozilla'                     => 'MZ',
@@ -122,7 +123,7 @@ class phpSniff extends phpSniff_core
 		);
 
     var $_javascript_versions = array(
-        '1.5'   =>  'NS5+,MZ,PX,FB,GA,CH,CA,SF,KQ3+,KM', // browsers that support JavaScript 1.5
+        '1.5'   =>  'NS5+,MZ,PX,FB,GA,CH,CA,SF,KQ3+,KM,EP', // browsers that support JavaScript 1.5
         '1.4'   =>  '',
         '1.3'   =>  'NS4.05+,OP5+,IE5+',
         '1.2'   =>  'NS4+,IE4+',
@@ -139,7 +140,7 @@ class phpSniff extends phpSniff_core
 		 **/
 		'html'		=>	'',
 		'images'	=>	'LI,LX',
-		'frames' 	=>	'LI,LX',
+		'frames' 	=>	'LX',
 		'tables'	=>	'',
 		'java'		=>	'OP3,LI,LX,NS1,MO,IE1,IE2',
 		'plugins'	=>	'IE1,IE2,LI,LX',
@@ -148,11 +149,11 @@ class phpSniff extends phpSniff_core
 		 *	(see phpSniff.core.php $_feature_set array)
 		 *	browsers listed here will be set to true
 		 **/
-		'css2'		=>	'NS5+,IE5+,MZ,PX,FB,CH,CA,SF,GA,KQ3+,OP7+,KM',
-		'css1'		=>	'NS4+,IE4+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM',
-		'iframes'	=>	'IE3+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM',
-		'xml'		=>	'IE5+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM',
-		'dom'		=>	'IE5+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM',
+		'css2'		=>	'NS5+,IE5+,MZ,PX,FB,CH,CA,SF,GA,KQ3+,OP7+,KM,EP',
+		'css1'		=>	'NS4+,IE4+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+		'iframes'	=>	'LI,IE3+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+		'xml'		=>	'IE5+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
+		'dom'		=>	'IE5+,NS5+,MZ,PX,FB,CH,CA,SF,GA,KQ,OP7+,KM,EP',
 		'hdml'		=>	'',
 		'wml'		=>	''
 		);
@@ -181,15 +182,15 @@ class phpSniff extends phpSniff_core
             $run = $settings;
         }
         
-        // try to get the user agent from the environment
-        if(empty($UA)) $UA = getenv('HTTP_USER_AGENT');
-        
-        // if the user agent is still empty, see if it exists elsewhere
+        // if the user agent is empty, see if it exists somewhere
         if(empty($UA)) {
             if(isset($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) {
                 $UA = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
             } elseif(isset($_SERVER['HTTP_USER_AGENT'])) {
                 $UA = $_SERVER['HTTP_USER_AGENT'];
+            } else {
+                // try to use the getenv function as a last resort
+                $UA = getenv('HTTP_USER_AGENT');
             }
         }
         

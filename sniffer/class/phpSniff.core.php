@@ -196,13 +196,16 @@ class phpSniff_core
 		$search['direction']	= isset($data[4]) ? strtolower($data[4]) : '';
 		
         $looking_for = $search['maj_ver'].$search['min_ver'];
-        if($search['name'] == 'aol' || $search['name'] == 'webtv')
-        {   return stristr($this->_browser_info['ua'],$search['name']);
-        }
-        elseif($this->_browser_info['browser'] == $search['name'])
-        {   $majv = $search['maj_ver'] ? $this->_browser_info['maj_ver'] : '';
-            $minv = $search['min_ver'] ? $this->_browser_info['min_ver'] : '';
-            $what_we_are = $majv.$minv;
+        if($search['name'] == 'aol' || $search['name'] == 'webtv') {   
+            return stristr($this->_browser_info['ua'],$search['name']);
+        } elseif($this->_browser_info['browser'] == $search['name'] || $search['name'] == 'gecko') {   
+            if(strtolower($search['name']) == 'gecko') {
+                $what_we_are =& $this->_browser_info['gecko_ver'];
+            } else {
+                $majv = $search['maj_ver'] ? $this->_browser_info['maj_ver'] : '';
+                $minv = $search['min_ver'] ? $this->_browser_info['min_ver'] : '';
+                $what_we_are = $majv.$minv;
+            }
             if(($search['direction'] == 'up' || $search['direction'] == '+') 
                && ($what_we_are >= $looking_for))
             {   return true;
@@ -442,27 +445,29 @@ class phpSniff_core
         {   $fp = @fopen($this->_temp_file_path.$this->property('ip'),'r');
             if(!$fp)
             {   $fp = @fopen($this->_temp_file_path.$this->property('ip'),'a');
-                fclose($fp);
-                setcookie('phpSniff_session','ss',0,'/');
-                setcookie('phpSniff_stored','st',time()+3600*24*365,'/');
-                $QS=getenv('QUERY_STRING');
-                $script_path=getenv('PATH_INFO')?getenv('PATH_INFO'):getenv('SCRIPT_NAME');
-                if(is_integer($pos=strpos(strrev($script_path),"php.xedni/"))&&!$pos) {
-                    $script_path=strrev(substr(strrev($script_path),9));
+                // make sure we have a valid file pointer
+                if($fp) {
+                    fclose($fp);
+                    setcookie('phpSniff_session','ss',0,'/');
+                    setcookie('phpSniff_stored','st',time()+3600*24*365,'/');
+                    $QS=getenv('QUERY_STRING');
+                    $script_path=getenv('PATH_INFO')?getenv('PATH_INFO'):getenv('SCRIPT_NAME');
+                    if(is_integer($pos=strpos(strrev($script_path),"php.xedni/"))&&!$pos) {
+                        $script_path=strrev(substr(strrev($script_path),9));
+                    }
                 }
                 $location='http://'.getenv('SERVER_NAME').$script_path.($QS==''?'':'?'.$QS);
                 header("Location: $location");
                 exit;
-            }
-            else
-            {   unlink($this->_temp_file_path.$this->property('ip'));
+            } elseif($fp) {   
+                // we only want to proceed if we have a file pointer
+                unlink($this->_temp_file_path.$this->property('ip'));
                 fclose($fp);
                 $this->_set_browser('ss_cookies',isset($cookies['phpSniff_session'])?'true':'false');
                 $this->_set_browser('st_cookies',isset($cookies['phpSniff_stored'])?'true':'false');
                 // delete the old cookies
                 setcookie('phpSniff_session','',0,'/');
                 setcookie('phpSniff_stored','',0,'/');
-                
             }
         }
     }
