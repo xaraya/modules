@@ -57,11 +57,6 @@ function xproject_groups_viewallgroups()
     $func = xarVarCleanFromInput('func');
 	if($func == "viewallgroups" && xarModLoad('xproject','user')) $output->Text(xproject_usermenu());
 
-
-    if (!xarModAPILoad('xproject', 'groups')) {
-		xarSessionSetVar('errormsg', _APILOADFAILED);
-		return $output->GetOutput();
-    }
     $groups = xarModAPIFunc('xproject',
 			   'groups',
 			   'getall');
@@ -121,11 +116,6 @@ function xproject_groups_viewgroup($args)
 {
 	extract($args);
 	
-	if(!xarModAPILoad('xproject','groups')) {
-        xarSessionSetVar('errormsg', _PMLOGLOADFAILED);
-        return false;
-	}
-	
 	if (!isset($gid)) {
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return false;
@@ -156,11 +146,6 @@ function xproject_groups_viewgroup($args)
 
     $output->TableStart('', $tableHead, 1);
 
-    if (!xarModAPILoad('xproject', 'groups')) {
-		xarSessionSetVar('errormsg', _APILOADFAILED);
-		return $output->GetOutput();
-    }
-	
     $users = xarModAPIFunc('xproject',
 			  'groups',
 			  'getmembers', array('gid' => $group['gid']));
@@ -238,11 +223,6 @@ function xproject_groups_addgroup()
         return true;
     }
 	
-    if (!xarModAPILoad('groups', 'admin')) {
-		xarSessionSetVar('errormsg', _APILOADFAILED);
-		return $output-GetOutput();
-    }
-	
     $gname = xarModAPIFunc('xproject',
 			  'groups',
 			  'addgroup', array('gname' => $gname));
@@ -276,11 +256,6 @@ function xproject_groups_deletegroup()
 
     if (!xarSecAuthAction(0, 'Groups::', "$gname::$gid", ACCESS_DELETE)) {
 		xarSessionSetVar('errormsg', _GROUPSDELNOAUTH);
-		xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
-    }
-	
-    if (!xarModAPILoad('xproject', 'groups')) {
-		xarSessionSetVar('errormsg', _APILOADFAILED);
 		xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
     }
 	
@@ -326,11 +301,6 @@ function xproject_groups_adduser()
     $func = xarVarCleanFromInput('func');
 	if($func == "adduser" && xarModLoad('xproject','user')) $output->Text(xproject_usermenu());
     $output->LineBreak();
-	
-    if (!xarModAPILoad('xproject', 'groups')) {
-		xarSessionSetVar('errormsg', _APILOADFAILED);
-		xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
-    }
 	
 	$group = xarModAPIFunc('xproject','groups','get',array('gid' => $gid));
 
@@ -391,11 +361,6 @@ function xproject_groups_insertuser()
         return true;
     }
 	
-    if (!xarModAPILoad('xproject', 'groups')) {
-		xarSessionSetVar('errormsg', _APILOADFAILED);
-		xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
-    }
-	
     if (!xarSecAuthAction(0, 'Groups::', "::", ACCESS_ADD)) {
 		xarSessionSetVar('errormsg', _GROUPSDELNOAUTH);
 		xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
@@ -427,10 +392,6 @@ function xproject_groups_deleteuser()
         xarSessionSetVar('errormsg', _BADAUTHKEY);
         xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
         return true;
-    }
-    if (!xarModAPILoad('xproject', 'groups')) {
-		xarSessionSetVar('errormsg', _APILOADFAILED);
-		xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
     }
     if (!xarSecAuthAction(0, 'Groups::', "::", ACCESS_DELETE)) {
 		xarSessionSetVar('errormsg', _GROUPSDELNOAUTH);
@@ -513,10 +474,6 @@ function xproject_groups_renamegroup()
         xarSessionSetVar('errormsg', _BADAUTHKEY);
         xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
         return true;
-    }
-    if (!xarModAPILoad('xproject', 'groups')) {
-	xarSessionSetVar('errormsg', _APILOADFAILED);
-	xarResponseRedirect(xarModURL('xproject', 'groups', 'main'));
     }
     if (empty($confirmation)) {
 

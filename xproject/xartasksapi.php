@@ -704,8 +704,6 @@ function xproject_tasksapi_delete($args)
         return;
     }
 
-    if (!xarModAPILoad('xproject', 'tasks')) return;
-
     // does it exist ?
     $task = xarModAPIFunc('xproject',
 							'tasks',

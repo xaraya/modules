@@ -80,8 +80,6 @@ function xproject_admin_create($args)
         return;
     }
 
-    if (!xarModAPILoad('xproject', 'admin')) return;
-
     $projectid = xarModAPIFunc('xproject',
                         'admin',
                         'create',
@@ -118,8 +116,6 @@ function xproject_admin_modify($args)
     if (!empty($objectid)) {
         $projectid = $objectid;
     }
-	
-	if (!xarModAPILoad('xproject', 'user')) return;
 	
 	$project = xarModAPIFunc('xproject',
                          'user',
@@ -209,8 +205,6 @@ function xproject_admin_update($args)
         return;
     }
 
-    if (!xarModAPILoad('xproject', 'admin')) return;
-
     if(!xarModAPIFunc('xproject',
 					'admin',
 					'update',
@@ -250,9 +244,6 @@ function xproject_admin_delete($args)
      if (!empty($objectid)) {
          $projectid = $objectid;
      }                     
-
-    if (!xarModAPILoad('xproject', 'user')) return;
-
     $project = xarModAPIFunc('xproject',
                          'user',
                          'get',
@@ -288,7 +279,6 @@ function xproject_admin_delete($args)
                        new SystemException($msg));
         return;
     }
-	if (!xarModAPILoad('xproject', 'admin')) return;
     if (!xarModAPIFunc('xproject',
                      'admin',
                      'delete',
@@ -475,8 +465,6 @@ function xproject_admin_migrate($args)
                        new SystemException($msg));
         return;
     }
-
-    if (!xarModAPILoad('xproject', 'admin')) return;
 
     if($newtaskid = xarModAPIFunc('xproject',
 								'admin',

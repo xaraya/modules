@@ -59,8 +59,6 @@ function xproject_user_view($args)
         return;
     }
 
-    if (!xarModAPILoad('xproject', 'user')) return;
-
     $xprojects = xarModAPIFunc('xproject',
                           'user',
                           'getall',
@@ -122,8 +120,6 @@ function xproject_user_display($args)
 	$data['status'] = '';
 	$data['taskid'] = $taskid;
 	
-    if (!xarModAPILoad('xproject', 'user')) return;
-
     $project = xarModAPIFunc('xproject',
                           'user',
                           'get',
@@ -140,8 +136,6 @@ function xproject_user_display($args)
     $data['description'] = $project['description'];
 
 	if(is_numeric($taskid) && $taskid > 0) {
-		if (!xarModAPILoad('xproject', 'tasks')) return;
-	
 		$task = xarModAPIFunc('xproject',
 							  'tasks',
 							  'get',
@@ -239,55 +233,53 @@ function xproject_user_display($args)
 	$data['filterbutton'] = xarVarPrepForDisplay(xarMLByKey('Filter'));
 	// BUILD TASKS ARRAY
 	$data['tasks'] = array();
-	if (xarModAPILoad('xproject', 'tasks')) {
-		$data['tasklistfilter'] = $filter;
-		$tasks = xarModAPIFunc('xproject',
-								'tasks',
-								'getall',
-								array('startnum' => $startnum,
-                                	'projectid' => $projectid,
-									'parentid' => $taskid,
-									'filter' => $filter));
-		if (isset($tasks) && is_array($tasks) && (xarExceptionMajor() == XAR_NO_EXCEPTION)) {
-			for ($i = 0; $i < count($tasks); $i++) {
-				$task = $tasks[$i];
-				$tasks[$i]['created'] = strftime($data['dateformatlist'][xarModGetVar('xproject','dateformat')],$task['date_created']);
-				$tasks[$i]['modified'] = strftime($data['dateformatlist'][xarModGetVar('xproject','dateformat')],$task['date_changed']);
-				$tasks[$i]['closed'] = ($task['status'] == 1) ? "x" : "";
-				$tasks[$i]['createdby'] = xarUserGetVar('uname',$task['creator']);
-				$tasks[$i]['assignedto'] = xarUserGetVar('uname',$task['owner']);
-				if (xarSecAuthAction(0, 'xproject::Tasks', "$task[name]::$task[taskid]", ACCESS_EDIT)) {
-					$tasks[$i]['editurl'] = xarModURL('xproject',
-													   'tasks',
-													   'modify',
-													   array('taskid' => $task['taskid']));
-				} else {
-					$tasks[$i]['editurl'] = '';
-				}
-				if (xarSecAuthAction(0, 'xproject::Tasks', "$task[name]::$task[taskid]", ACCESS_DELETE)) {
-					$tasks[$i]['deleteurl'] = xarModURL('xproject',
-													   'tasks',
-													   'delete',
-													   array('taskid' => $task['taskid']));
-				} else {
-					$tasks[$i]['deleteurl'] = '';
-				}
+	$data['tasklistfilter'] = $filter;
+	$tasks = xarModAPIFunc('xproject',
+							'tasks',
+							'getall',
+							array('startnum' => $startnum,
+                               	'projectid' => $projectid,
+								'parentid' => $taskid,
+								'filter' => $filter));
+	if (isset($tasks) && is_array($tasks) && (xarExceptionMajor() == XAR_NO_EXCEPTION)) {
+		for ($i = 0; $i < count($tasks); $i++) {
+			$task = $tasks[$i];
+			$tasks[$i]['created'] = strftime($data['dateformatlist'][xarModGetVar('xproject','dateformat')],$task['date_created']);
+			$tasks[$i]['modified'] = strftime($data['dateformatlist'][xarModGetVar('xproject','dateformat')],$task['date_changed']);
+			$tasks[$i]['closed'] = ($task['status'] == 1) ? "x" : "";
+			$tasks[$i]['createdby'] = xarUserGetVar('uname',$task['creator']);
+			$tasks[$i]['assignedto'] = xarUserGetVar('uname',$task['owner']);
+			if (xarSecAuthAction(0, 'xproject::Tasks', "$task[name]::$task[taskid]", ACCESS_EDIT)) {
+				$tasks[$i]['editurl'] = xarModURL('xproject',
+												   'tasks',
+												   'modify',
+												   array('taskid' => $task['taskid']));
+			} else {
+				$tasks[$i]['editurl'] = '';
 			}
-			$data['tasks'] = $tasks;
-			$data['numtasks'] = count($data['tasks']);
-			$numtasks = count($data['tasks']);
+			if (xarSecAuthAction(0, 'xproject::Tasks', "$task[name]::$task[taskid]", ACCESS_DELETE)) {
+				$tasks[$i]['deleteurl'] = xarModURL('xproject',
+												   'tasks',
+												   'delete',
+												   array('taskid' => $task['taskid']));
+			} else {
+				$tasks[$i]['deleteurl'] = '';
+			}
 		}
-		
-		$taskoptionslist = array(1 => xarMLByKey('Surface'),
-								2 => xarMLByKey('Delete') . ' (' . xarMLByKey('delete subtasks') . ')',
-								3 => xarMLByKey('Delete') . ' (' . xarMLByKey('move subtasks up') . ')');
-		$taskoptions = array();
-		foreach($taskoptionslist as $optionid=>$option) {
-			$taskoptions[] = array('id' => $optionid,
-									'name' => $option);
-		}
-		$data['taskoptions'] = $taskoptions;
+		$data['tasks'] = $tasks;
+		$data['numtasks'] = count($data['tasks']);
+		$numtasks = count($data['tasks']);
 	}
+		
+	$taskoptionslist = array(1 => xarMLByKey('Surface'),
+							2 => xarMLByKey('Delete') . ' (' . xarMLByKey('delete subtasks') . ')',
+							3 => xarMLByKey('Delete') . ' (' . xarMLByKey('move subtasks up') . ')');
+	$taskoptions = array();
+	foreach($taskoptionslist as $optionid=>$option) {
+		$taskoptions[] = array('id' => $optionid,
+								'name' => $option);
+	}
+	$data['taskoptions'] = $taskoptions;
 
 	return $data;
 }

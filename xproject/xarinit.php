@@ -99,7 +99,7 @@ function xproject_init()
     }
 
 
-    if(xarModIsAvailable('categories') && xarModAPILoad('categories', 'admin'))
+    if(xarModIsAvailable('categories'))
     {
         $mastercid = xarModAPIFunc('categories',
                                     'admin',
@@ -236,17 +236,13 @@ function xproject_delete()
         return;
     }
 
-        if(xarModAPILoad('categories', 'admin'))
-        {
-                xarModAPIFunc('categories', 'admin', 'deletecat', array('cid' => xarModGetVar('xproject', 'mastercid')));
-                xarModDelVar('xproject', 'mastercid');
-                xarModDelVar('xproject', 'statuslistcid');
-                xarModDelVar('xproject', 'projectmastercid');
-                xarModDelVar('xproject', 'private');
-                xarModDelVar('xproject', 'public');
-                xarModDelVar('xproject', 'admin');
-
-        }
+    xarModAPIFunc('categories', 'admin', 'deletecat', array('cid' => xarModGetVar('xproject', 'mastercid')));
+    xarModDelVar('xproject', 'mastercid');
+    xarModDelVar('xproject', 'statuslistcid');
+    xarModDelVar('xproject', 'projectmastercid');
+    xarModDelVar('xproject', 'private');
+    xarModDelVar('xproject', 'public');
+    xarModDelVar('xproject', 'admin');
 
     xarModDelVar('xproject', 'display_dates');
     xarModDelVar('xproject', 'display_hours');

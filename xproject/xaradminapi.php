@@ -114,8 +114,6 @@ function xproject_adminapi_update($args)
         return;
     }
 
-	if (!xarModAPILoad('xproject', 'user')) return;
-
     $item = xarModAPIFunc('xproject',
 						'user',
 						'get',
@@ -186,8 +184,6 @@ function xproject_adminapi_delete($args)
         return;
     }
 
-    if (!xarModAPILoad('xproject', 'user')) return;
-
     // does it exist ?
     $project = xarModAPIFunc('xproject',
 							'user',
@@ -235,8 +231,6 @@ function xproject_adminapi_migrate($args)
 
     $invalid = array();
 	if (!isset($targetfocus)) $targetfocus = 0;
-
-	if (!xarModAPILoad('xproject', 'user')) return;
 
     $item = xarModAPIFunc('xproject',
 						'user',

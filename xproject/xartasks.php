@@ -55,8 +55,6 @@ function xproject_tasks_create($args)
         return;
     }
 
-    if (!xarModAPILoad('xproject', 'tasks')) return;
-
     $taskid = xarModAPIFunc('xproject',
                         'tasks',
                         'create',
@@ -108,8 +106,6 @@ function xproject_tasks_modify($args)
         $taskid = $objectid;
     }
 	
-	if (!xarModAPILoad('xproject', 'tasks')) return;
-	if (!xarModAPILoad('xproject', 'user')) return;
 	if (!xarModLoad('xproject', 'user')) return;
 	
 	$data = xproject_user_menu();
@@ -284,8 +280,6 @@ function xproject_tasks_update($args)
         return;
     }
 
-    if (!xarModAPILoad('xproject', 'tasks')) return;
-
     if(!xarModAPIFunc('xproject',
 					'tasks',
 					'update',
@@ -334,7 +328,6 @@ function xproject_tasks_delete($args)
          $taskid = $objectid;
      }                     
 
-    if (!xarModAPILoad('xproject', 'tasks')) return;
     if (!xarModLoad('xproject', 'user')) return;
 
     $task = xarModAPIFunc('xproject',
@@ -372,7 +365,6 @@ function xproject_tasks_delete($args)
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
-	if (!xarModAPILoad('xproject', 'tasks')) return;
     if (!xarModAPIFunc('xproject',
                      'tasks',
                      'delete',

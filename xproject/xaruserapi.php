@@ -124,9 +124,7 @@ function xproject_userapi_getall($args)
 			$sendmailfreq, 
 			$billable) = $result->fields;
         if (xarSecAuthAction(0, 'xproject::', "$name::$projectid", ACCESS_READ)) {
-			if(xarModAPILoad('xproject', 'tasks')) {
-				$numtasks = xarModAPIFunc('xproject', 'tasks', 'countitems', array('projectid' => $projectid));
-			}
+			$numtasks = xarModAPIFunc('xproject', 'tasks', 'countitems', array('projectid' => $projectid));
             $tasks[] = array('projectid' => $projectid,
                              'name' => $name,
 							 'description' => $description,
