@@ -21,6 +21,7 @@ function bkview_user_historyview($args)
 {
     xarVarFetch('repoid','id',$repoid);
     xarVarFetch('file','str::',$file,'ChangeSet');
+    xarVarFetch('user','str::',$user,'');
     extract($args);
 
     $item = xarModAPIFunc('bkview','user','get',array('repoid' => $repoid));
@@ -29,7 +30,11 @@ function bkview_user_historyview($args)
 
     $the_file=new bkFile($repo,$file);
 
-    $formatstring="':AGE:|:P:|:REV:|\$each(:C:){(:C:)}'";
+    $formatstring="'";
+    if($user != '') $formatstring .="\$if(:P:=$user){";
+    $formatstring .= ":AGE:|:P:|:REV:|\$each(:C:){(:C:)}";
+    if($user != '') $formatstring .= "}";
+    $formatstring .= "'";
     $history= $the_file->bkHistory($formatstring);
     $data['history']=array();
     $histlist=array();
@@ -37,6 +42,7 @@ function bkview_user_historyview($args)
     while (list(,$row) = each($history)) {
         list($age, $author, $filerev, $comments) = explode('|',$row);
         $histlist[$counter]['age']=$age;
+        $histlist[$counter]['age_code'] = bkAgeToRangeCode($age);
         $histlist[$counter]['author']=$author;
         $histlist[$counter]['rev']=$filerev;
         $histlist[$counter]['comments']=$comments;
@@ -47,7 +53,12 @@ function bkview_user_historyview($args)
     }
     
     // Return data to BL
-    $data['pageinfo']=xarML("Revision history for #(1)",$file);
+    if($user != '') {
+        $data['pageinfo'] = xarML('Revision history for #(1) by #(2)',$file, $user);
+        $data['user'] = $user;
+    } else {
+        $data['pageinfo']=xarML("Revision history for #(1)",$file);
+    }
     $data['histlist']=$histlist;
     $data['name_value']=$item['reponame'];
     $data['repoid']=$repoid;

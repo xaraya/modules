@@ -10,7 +10,11 @@
 	<xar:loop name="$histlist">
 		<tr class="csets">
 			<td class="csets" nowrap>#$loop:item['age']#</td>
-      <td class="csets">#$loop:item['author']#</td>
+      <td class="csets">
+        <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$file#&amp;user=#$loop:item['author']#">
+          #$loop:item['author']#
+        </a>
+      </td>
       <xar:if condition="!empty($loop:item['tag'])">
         <td class="bktagged">
       <xar:else/>

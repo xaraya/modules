@@ -213,7 +213,7 @@ class bkRepo {
     }
     
     function bkFileList($dir='/') {
-        $cmd="bk prs -hn -r+ -d':GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
+        $cmd="bk prs -hn -r+ -d':TAG:|:GFILE:|:REV:|:AGE:|:P:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}' ".$this->_root."/".$dir;
         $filelist = $this->_run($cmd);
         asort($filelist);
         return $filelist;

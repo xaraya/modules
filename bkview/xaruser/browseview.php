@@ -50,7 +50,7 @@ function bkview_user_browseview($args)
     $files=array();
     $counter=1;
     while (list(,$file) = each($filelist)) {
-        list($name,$rev,$age,$author,$comments) = explode('|',$file);
+        list($tag,$name,$rev,$age,$author,$comments) = explode('|',$file);
         $files[$counter]['name']=$name;
         $files[$counter]['basename']=basename($name);
         $files[$counter]['rev']=$rev;
@@ -61,8 +61,8 @@ function bkview_user_browseview($args)
         $files[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $files[$counter]['relfile']=substr($dir,0,strlen($dir)-1)."/".basename($name);
         // FIXME: huge performance penalty for this, make it configurable
-        $the_file= new bkFile($repo,$files[$counter]['relfile']);
-        $files[$counter]['tag'] = $the_file->bkTag($rev);
+        //$the_file= new bkFile($repo,$files[$counter]['relfile']);
+        $files[$counter]['tag'] = $tag;
         $counter++;
     }
     
