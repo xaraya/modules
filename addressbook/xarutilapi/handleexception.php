@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.14 2003/12/22 07:12:50 garrett Exp $
+ * File: $Id: handleexception.php,v 1.15 2004/01/25 02:05:09 garrett Exp $
  *
  * AddressBook utilapi handleException
  *
@@ -38,7 +38,7 @@ function addressbook_utilapi_handleexception ($args) {
     /**
      * Check for any type of exception
      */
-    if ((xarCurrentErrorType() != XAR_NO_EXCEPTION) || (isCoreException())) {
+    if ((xarCurrentErrorType() != XAR_NO_EXCEPTION) || (xarIsCoreException())) {
 
         /**
          * Handle the exception
