@@ -1,8 +1,8 @@
 <tr align="left" valign="middle">
-	<td>
-		<xar:mlstring>Number of events items to display</xar:mlstring>
-	</td>
-	<td>
-		<input type="text" name="numitems" id="numitems" value="#$numitems#" size="5" maxlength="5" tabindex="1" />
-	</td>
+    <td>
+        <xar:mlstring>Number of events items to display</xar:mlstring>
+    </td>
+    <td>
+        <input type="text" name="numitems" id="numitems" value="#$numitems#" size="5" maxlength="5" tabindex="1" />
+    </td>
 </tr>

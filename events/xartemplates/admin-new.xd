@@ -60,25 +60,25 @@
 <tr><td>#$eventstartdatelabel#</td>
 
 <td><select name="eventstartdatedays" id="eventstartdatedays">
-				<xar:foreach in="$eventstartdatedays" value="$eventstartdatedaysv">
-						<option value="#$eventstartdatedaysv#">#$eventstartdatedaysv#</option>
-				</xar:foreach>
-				</select> <select name="eventstartdatemonths" id="eventstartdatemonths">
-				<xar:foreach in="$eventstartdatemonths" value="$eventstartdatemonthsv">
-						<option value="#$eventstartdatemonthsv#">#$eventstartdatemonthsv#</option>
-				</xar:foreach>
-				</select> <input type="text" name="eventstartdateyear" id="eventstartdateyear" size="4" value="#$eventstartdateyear#" maxlength="4" /> (*)</td></tr>
+                <xar:foreach in="$eventstartdatedays" value="$eventstartdatedaysv">
+                        <option value="#$eventstartdatedaysv#">#$eventstartdatedaysv#</option>
+                </xar:foreach>
+                </select> <select name="eventstartdatemonths" id="eventstartdatemonths">
+                <xar:foreach in="$eventstartdatemonths" value="$eventstartdatemonthsv">
+                        <option value="#$eventstartdatemonthsv#">#$eventstartdatemonthsv#</option>
+                </xar:foreach>
+                </select> <input type="text" name="eventstartdateyear" id="eventstartdateyear" size="4" value="#$eventstartdateyear#" maxlength="4" /> (*)</td></tr>
               <xar:else />
 <tr><td>#$eventstartdatelabel#</td>
 <td><select name="eventstartdatedays" id="eventstartdatedays">
-				<xar:foreach in="$eventstartdatedays" value="$eventstartdatedaysv">
-						<option value="#$eventstartdatedaysv#">#$eventstartdatedaysv#</option>
-				</xar:foreach>
-				</select> <select name="eventstartdatemonths" id="eventstartdatemonths">
-				<xar:foreach in="$eventstartdatemonths" value="$eventstartdatemonthsv">
-						<option value="#$eventstartdatemonthsv#">#$eventstartdatemonthsv#</option>
-				</xar:foreach>
-				</select> <input type="text" name="eventstartdateyear" id="eventstartdateyear" size="4" value="#$eventstartdateyear#" maxlength="4" /></td></tr>
+                <xar:foreach in="$eventstartdatedays" value="$eventstartdatedaysv">
+                        <option value="#$eventstartdatedaysv#">#$eventstartdatedaysv#</option>
+                </xar:foreach>
+                </select> <select name="eventstartdatemonths" id="eventstartdatemonths">
+                <xar:foreach in="$eventstartdatemonths" value="$eventstartdatemonthsv">
+                        <option value="#$eventstartdatemonthsv#">#$eventstartdatemonthsv#</option>
+                </xar:foreach>
+                </select> <input type="text" name="eventstartdateyear" id="eventstartdateyear" size="4" value="#$eventstartdateyear#" maxlength="4" /></td></tr>
 
               </xar:if>
 
@@ -86,25 +86,25 @@
 <tr><td>#$eventenddatelabel#</td>
 
 <td><select name="eventenddatedays" id="eventenddatedays">
-				<xar:foreach in="$eventenddatedays" value="$eventenddatedaysv">
-						<option value="#$eventenddatedaysv#">#$eventenddatedaysv#</option>
-				</xar:foreach>
-				</select> <select name="eventenddatemonths" id="eventenddatemonths">
-				<xar:foreach in="$eventenddatemonths" value="$eventenddatemonthsv">
-						<option value="#$eventenddatemonthsv#">#$eventenddatemonthsv#</option>
-				</xar:foreach>
-				</select> <input type="text" name="eventenddateyear" id="eventenddateyear" size="4" value="#$eventenddateyear#" maxlength="4" /> (*)</td></tr>
+                <xar:foreach in="$eventenddatedays" value="$eventenddatedaysv">
+                        <option value="#$eventenddatedaysv#">#$eventenddatedaysv#</option>
+                </xar:foreach>
+                </select> <select name="eventenddatemonths" id="eventenddatemonths">
+                <xar:foreach in="$eventenddatemonths" value="$eventenddatemonthsv">
+                        <option value="#$eventenddatemonthsv#">#$eventenddatemonthsv#</option>
+                </xar:foreach>
+                </select> <input type="text" name="eventenddateyear" id="eventenddateyear" size="4" value="#$eventenddateyear#" maxlength="4" /> (*)</td></tr>
               <xar:else />
 <tr><td>#$eventenddatelabel#</td>
 <td><select name="eventenddatedays" id="eventenddatedays">
-				<xar:foreach in="$eventenddatedays" value="$eventenddatedaysv">
-						<option value="#$eventenddatedaysv#">#$eventenddatedaysv#</option>
-				</xar:foreach>
-				</select> <select name="eventenddatemonths" id="eventenddatemonths">
-				<xar:foreach in="$eventenddatemonths" value="$eventenddatemonthsv">
-						<option value="#$eventenddatemonthsv#">#$eventenddatemonthsv#</option>
-				</xar:foreach>
-				</select> <input type="text" name="eventenddateyear" id="eventenddateyear" size="4" value="#$eventenddateyear#" maxlength="4" /></td></tr>
+                <xar:foreach in="$eventenddatedays" value="$eventenddatedaysv">
+                        <option value="#$eventenddatedaysv#">#$eventenddatedaysv#</option>
+                </xar:foreach>
+                </select> <select name="eventenddatemonths" id="eventenddatemonths">
+                <xar:foreach in="$eventenddatemonths" value="$eventenddatemonthsv">
+                        <option value="#$eventenddatemonthsv#">#$eventenddatemonthsv#</option>
+                </xar:foreach>
+                </select> <input type="text" name="eventenddateyear" id="eventenddateyear" size="4" value="#$eventenddateyear#" maxlength="4" /></td></tr>
 
               </xar:if>
 
@@ -112,25 +112,25 @@
 <tr><td>#$eventstarttimelabel#</td>
 
 <td><select name="eventstarttimehour" id="eventstarttimehour">
-				<xar:foreach in="$eventstarttimehour" value="$eventstarttimehourv">
-						<option value="#$eventstarttimehourv#">#$eventstarttimehourv#</option>
-				</xar:foreach>
-				</select> <select name="eventstarttimeminute" id="eventstarttimeminute">
-				<xar:foreach in="$eventstarttimeminute" value="$eventstarttimeminutev">
-						<option value="#$eventstarttimeminutev#">#$eventstarttimeminutev#</option>
-				</xar:foreach>
-				</select> (*)</td></tr>
+                <xar:foreach in="$eventstarttimehour" value="$eventstarttimehourv">
+                        <option value="#$eventstarttimehourv#">#$eventstarttimehourv#</option>
+                </xar:foreach>
+                </select> <select name="eventstarttimeminute" id="eventstarttimeminute">
+                <xar:foreach in="$eventstarttimeminute" value="$eventstarttimeminutev">
+                        <option value="#$eventstarttimeminutev#">#$eventstarttimeminutev#</option>
+                </xar:foreach>
+                </select> (*)</td></tr>
               <xar:else />
 <tr><td>#$eventstarttimelabel#</td>
 <td><select name="eventstarttimehour" id="eventstarttimehour">
-				<xar:foreach in="$eventstarttimehour" value="$eventstarttimehourv">
-						<option value="#$eventstarttimehourv#">#$eventstarttimehourv#</option>
-				</xar:foreach>
-				</select> <select name="eventstarttimeminutes" id="eventstarttimeminutess">
-				<xar:foreach in="$eventstarttimeminute" value="$eventstarttimeminutev">
-						<option value="#$eventstarttimeminutev#">#$eventstarttimeminutev#</option>
-				</xar:foreach>
-				</select> </td></tr>
+                <xar:foreach in="$eventstarttimehour" value="$eventstarttimehourv">
+                        <option value="#$eventstarttimehourv#">#$eventstarttimehourv#</option>
+                </xar:foreach>
+                </select> <select name="eventstarttimeminutes" id="eventstarttimeminutess">
+                <xar:foreach in="$eventstarttimeminute" value="$eventstarttimeminutev">
+                        <option value="#$eventstarttimeminutev#">#$eventstarttimeminutev#</option>
+                </xar:foreach>
+                </select> </td></tr>
 
               </xar:if>
 
@@ -138,25 +138,25 @@
 <tr><td>#$eventendtimelabel#</td>
 
 <td><select name="eventendtimehour" id="eventendtimehour">
-				<xar:foreach in="$eventendtimehour" value="$eventendtimehourv">
-						<option value="#$eventendtimehourv#">#$eventendtimehourv#</option>
-				</xar:foreach>
-				</select> <select name="eventendtimeminute" id="eventendtimeminute">
-				<xar:foreach in="$eventendtimeminute" value="$eventendtimeminutev">
-						<option value="#$eventendtimeminutev#">#$eventendtimeminutev#</option>
-				</xar:foreach>
-				</select> (*)</td></tr>
+                <xar:foreach in="$eventendtimehour" value="$eventendtimehourv">
+                        <option value="#$eventendtimehourv#">#$eventendtimehourv#</option>
+                </xar:foreach>
+                </select> <select name="eventendtimeminute" id="eventendtimeminute">
+                <xar:foreach in="$eventendtimeminute" value="$eventendtimeminutev">
+                        <option value="#$eventendtimeminutev#">#$eventendtimeminutev#</option>
+                </xar:foreach>
+                </select> (*)</td></tr>
               <xar:else />
 <tr><td>#$eventendtimelabel#</td>
 <td><select name="eventendtimehour" id="eventendtimehour">
-				<xar:foreach in="$eventendtimehour" value="$eventendtimehourv">
-						<option value="#$eventendtimehourv#">#$eventendtimehourv#</option>
-				</xar:foreach>
-				</select> <select name="eventendtimeminutes" id="eventendtimeminutess">
-				<xar:foreach in="$eventendtimeminute" value="$eventendtimeminutev">
-						<option value="#$eventendtimeminutev#">#$eventendtimeminutev#</option>
-				</xar:foreach>
-				</select> </td></tr>
+                <xar:foreach in="$eventendtimehour" value="$eventendtimehourv">
+                        <option value="#$eventendtimehourv#">#$eventendtimehourv#</option>
+                </xar:foreach>
+                </select> <select name="eventendtimeminutes" id="eventendtimeminutess">
+                <xar:foreach in="$eventendtimeminute" value="$eventendtimeminutev">
+                        <option value="#$eventendtimeminutev#">#$eventendtimeminutev#</option>
+                </xar:foreach>
+                </select> </td></tr>
 
               </xar:if>
 
@@ -164,25 +164,25 @@
 <tr><td>#$eventregistrationtimelabel#</td>
 
 <td><select name="eventregistrationtimehour" id="eventregistrationtimehour">
-				<xar:foreach in="$eventregistrationtimehour" value="$eventregistrationtimehourv">
-						<option value="#$eventregistrationtimehourv#">#$eventregistrationtimehourv#</option>
-				</xar:foreach>
-				</select> <select name="eventregistrationtimeminute" id="eventregistrationtimeminute">
-				<xar:foreach in="$eventregistrationtimeminute" value="$eventregistrationtimeminutev">
-						<option value="#$eventregistrationtimeminutev#">#$eventregistrationtimeminutev#</option>
-				</xar:foreach>
-				</select> (*)</td></tr>
+                <xar:foreach in="$eventregistrationtimehour" value="$eventregistrationtimehourv">
+                        <option value="#$eventregistrationtimehourv#">#$eventregistrationtimehourv#</option>
+                </xar:foreach>
+                </select> <select name="eventregistrationtimeminute" id="eventregistrationtimeminute">
+                <xar:foreach in="$eventregistrationtimeminute" value="$eventregistrationtimeminutev">
+                        <option value="#$eventregistrationtimeminutev#">#$eventregistrationtimeminutev#</option>
+                </xar:foreach>
+                </select> (*)</td></tr>
               <xar:else />
 <tr><td>#$eventregistrationtimelabel#</td>
 <td><select name="eventregistrationtimehour" id="eventregistrationtimehour">
-				<xar:foreach in="$eventregistrationtimehour" value="$eventregistrationtimehourv">
-						<option value="#$eventregistrationtimehourv#">#$eventregistrationtimehourv#</option>
-				</xar:foreach>
-				</select> <select name="eventregistrationtimeminutes" id="eventregistrationtimeminutess">
-				<xar:foreach in="$eventregistrationtimeminute" value="$eventregistrationtimeminutev">
-						<option value="#$eventregistrationtimeminutev#">#$eventregistrationtimeminutev#</option>
-				</xar:foreach>
-				</select> </td></tr>
+                <xar:foreach in="$eventregistrationtimehour" value="$eventregistrationtimehourv">
+                        <option value="#$eventregistrationtimehourv#">#$eventregistrationtimehourv#</option>
+                </xar:foreach>
+                </select> <select name="eventregistrationtimeminutes" id="eventregistrationtimeminutess">
+                <xar:foreach in="$eventregistrationtimeminute" value="$eventregistrationtimeminutev">
+                        <option value="#$eventregistrationtimeminutev#">#$eventregistrationtimeminutev#</option>
+                </xar:foreach>
+                </select> </td></tr>
 
               </xar:if>
 

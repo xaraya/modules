@@ -43,14 +43,14 @@
 <tr><td>#$eventcurrencylabel#</td>
 
 <td><select name="eventcurrency" id="eventcurrency">
-				<xar:foreach in="$eventcurrencyoptions" value="$eventcurrencyoption">
-			<xar:if condition="$eventcurrencyoption eq $eventcurrencyvalue">
-						<option value="#$eventcurrencyoption#" selected>#$eventcurrencyoption#</option>
-			<xar:else />
-			                        <option value="#$eventcurrencyoption#">#$eventcurrencyoption#</option>
-		        </xar:if>
-				</xar:foreach>
-				</select> </td></tr>
+                <xar:foreach in="$eventcurrencyoptions" value="$eventcurrencyoption">
+            <xar:if condition="$eventcurrencyoption eq $eventcurrencyvalue">
+                        <option value="#$eventcurrencyoption#" selected>#$eventcurrencyoption#</option>
+            <xar:else />
+                                    <option value="#$eventcurrencyoption#">#$eventcurrencyoption#</option>
+                </xar:if>
+                </xar:foreach>
+                </select> </td></tr>
 
 
 <tr><td>#$ticketsperuserlabel#</td>
