@@ -199,11 +199,7 @@ function articles_admin_importpages()
             if (!empty($data['title']) && !empty($title)) {
                 $article[$data['title']] = $title;
             }
-            if ($data['content'] == 'bodytext') {
-                $article['body'] = $page;
-            } else {
-                $article[$data['content']] = $page;
-            }
+            $article[$data['content']] = $page;
             if (isset($test)) {
                 // preview the first file as a test
                 $data['preview'] = xarModFunc('articles','user','display',

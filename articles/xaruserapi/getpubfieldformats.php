@@ -18,14 +18,15 @@ function articles_userapi_getpubfieldformats($args)
         'textarea_small'  => xarML('Small Text Area'),
         'textarea_medium' => xarML('Medium Text Area'),
         'textarea_large'  => xarML('Large Text Area'),
+        'textupload'      => xarML('Text Upload'),
+        'url'             => xarML('URL'),
+        'image'           => xarML('Image'),
 // TODO: define how to fill this in (cfr. status)
 //        'dropdown'        => xarML('Dropdown List'),
         'username'        => xarML('Username'),
         'calendar'        => xarML('Calendar'),
-        'fileupload'      => xarML('File Upload'),
         'status'          => xarML('Status'),
-        'url'             => xarML('URL'),
-        'image'           => xarML('Image'),
+        'fileupload'      => xarML('File Upload'),
         'webpage'         => xarML('HTML Page'),
     );
 }

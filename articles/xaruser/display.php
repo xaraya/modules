@@ -233,13 +233,6 @@ function articles_user_display($args)
 
     // Fill in the fields based on the pubtype configuration
     foreach ($pubtypes[$pubtypeid]['config'] as $field => $value) {
-        // TODO: replace by bodytext and sync with templates
-        if ($field == 'bodyfile') {
-            continue;
-        } elseif ($field == 'bodytext') {
-            $field = 'body';
-        }
-
         if (empty($value['label'])) {
             $data[$field] = '';
             continue;

@@ -485,12 +485,6 @@ function articles_user_view()
     // TODO: make time display user/config dependent
         // publication date of article (if needed)
         foreach ($pubtypes[$curptid]['config'] as $field => $value) {
-            if ($field == 'bodyfile') {
-                continue;
-            } elseif ($field == 'bodytext') {
-                $field = 'body';
-            }
-
             if (empty($value['label'])) {
                 continue;
             }

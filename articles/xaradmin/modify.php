@@ -92,14 +92,9 @@ function articles_admin_modify($args)
         $input['name'] = $field;
         $input['id'] = $field;
         $input['type'] = $value['format'];
-        if ($field == 'bodytext') {
-            $input['value'] = xarVarPrepForDisplay($article['body']);
-        } elseif ($field == 'bodyfile') {
-            $input['value'] = '';
-        } else {
-            $input['value'] = xarVarPrepForDisplay($article[$field]);
-        }
-        if ($input['type'] == 'fileupload') {
+        $input['value'] = xarVarPrepForDisplay($article[$field]);
+
+        if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
             $data['withupload'] = 1;
         }
         // using new field tags here

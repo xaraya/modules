@@ -36,13 +36,6 @@ function articles_user_redirect($args)
 // TODO: improve this e.g. when multiple URL fields are present
     // Find an URL field based on the pubtype configuration
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
-        // TODO: replace by bodytext and sync with templates
-        if ($field == 'bodyfile') {
-            continue;
-        } elseif ($field == 'bodytext') {
-            $field = 'body';
-        }
-
         if (empty($value['label'])) {
             continue;
         }

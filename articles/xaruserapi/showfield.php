@@ -10,6 +10,10 @@
  */
 function articles_userapi_showfield($args)
 {
+    if (empty($args['type']) || $args['type'] != 'fieldtype') {
+        return xarModAPIFunc('dynamicdata','admin','showinput',$args);
+    }
+
     extract($args);
     if (empty($name)) {
         return xarML('Missing \'name\' attribute in field tag or definition');

@@ -24,7 +24,8 @@ function articles_userapi_getpubtypes()
                    xar_pubtypename,
                    xar_pubtypedescr,
                    xar_pubtypeconfig
-            FROM $pubtypestable";
+            FROM $pubtypestable
+            ORDER BY xar_pubtypeid ASC";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 

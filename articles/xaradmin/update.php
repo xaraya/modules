@@ -9,8 +9,7 @@ function articles_admin_update()
     if(!xarVarFetch('aid',      'isset', $aid,       NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('title',    'isset', $title,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('summary',  'isset', $summary,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('bodyfile', 'isset', $bodyfile,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('bodytext', 'isset', $bodytext,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('body',     'isset', $body,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('notes',    'isset', $notes,     NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('pubdate',  'isset', $pubdate,   NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('status',   'isset', $status,    NULL, XARVAR_DONT_SET)) {return;}
@@ -57,32 +56,30 @@ function articles_admin_update()
         $pubdate = '';
     }
 
-    if (!isset($bodytext) || !is_string($bodytext)) {
-        $bodytext = '';
+    if (!isset($body) || !is_string($body)) {
+        $body = '';
     }
 
     // Get relevant text
-    // Note : $bodyfile is no longer set in PHP 4.2.1+
-    if (!empty($_FILES) && !empty($_FILES['bodyfile']) && !empty($_FILES['bodyfile']['tmp_name'])
+    // Note : $body_upload is no longer set in PHP 4.2.1+
+    if (!empty($_FILES) && !empty($_FILES['body_upload']) && !empty($_FILES['body_upload']['tmp_name'])
         // is_uploaded_file() : PHP 4 >= 4.0.3
-        && is_uploaded_file($_FILES['bodyfile']['tmp_name']) && $_FILES['bodyfile']['size'] > 0 && $_FILES['bodyfile']['size'] < 1000000) {
+        && is_uploaded_file($_FILES['body_upload']['tmp_name']) && $_FILES['body_upload']['size'] > 0 && $_FILES['body_upload']['size'] < 1000000) {
         
         if (xarModIsHooked('uploads', 'articles', $ptid)) 
         {
             $magicLink = xarModAPIFunc('uploads',
                                        'user',
                                        'uploadmagic',
-                                       array('uploadfile'=>'bodyfile',
+                                       array('uploadfile'=>'body_upload',
                                              'mod'=>'articles',
                                              'modid'=>0,
                                              'utype'=>'file'));
             
-            $body = $bodytext .' '. $magicLink;
+            $body .= ' '. $magicLink;
         } else {
-            $body = join('', @file($_FILES['bodyfile']['tmp_name']));
+            $body = join('', @file($_FILES['body_upload']['tmp_name']));
         }
-    } else {
-        $body = $bodytext;
     }
 
     if (!isset($status)) {
@@ -102,9 +99,8 @@ function articles_admin_update()
                              $var['mon'],$var['mday'],$var['year']);
         } elseif ($value['format'] == 'url' && isset($$field) && $$field == 'http://') {
             $$field = '';
-        }
-        if ($field == 'bodytext' && $value['format'] == 'url' && $body == 'http://') {
-            $body = '';
+        } elseif ($value['format'] == 'image' && isset($$field) && $$field == 'http://') {
+            $$field = '';
         }
         if (!isset($$field)) {
             $$field = '';

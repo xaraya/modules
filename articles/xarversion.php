@@ -13,7 +13,7 @@
 */
 $modversion['name'] = 'articles';
 $modversion['id'] = '151';
-$modversion['version'] = '1.4';
+$modversion['version'] = '1.5';
 $modversion['description'] = 'Display articles';
 $modversion['credits'] = '';
 $modversion['help'] = '';

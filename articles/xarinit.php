@@ -357,7 +357,33 @@ function articles_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case 1.4:
-            //Moved code temp to the upgrade script.
+            // Get current publication types
+            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+            // Get configurable fields for articles
+            $pubfields = xarModAPIFunc('articles','user','getpubfields');
+            // Update the configuration of each publication type
+            foreach ($pubtypes as $ptid => $pubtype) {
+                // Map the (bodytext + bodyfile) fields to a single body field
+                // + use the textupload format if relevant
+                $pubtype['config']['body'] = $pubtype['config']['bodytext'];
+                if (!empty($pubtype['config']['bodyfile']['label'])) {
+                    $pubtype['config']['body']['format'] = 'textupload';
+                    if (empty($pubtype['config']['body']['label'])) {
+                        $pubtype['config']['body']['label'] = $pubtype['config']['bodyfile']['label'];
+                    }
+                }
+                $config = array();
+                foreach (array_keys($pubfields) as $field) {
+                    $config[$field] = $pubtype['config'][$field];
+                }
+                if (!xarModAPIFunc('articles', 'admin', 'updatepubtype',
+                                   array('ptid' => $ptid,
+                                   //      'name' => $name, /* not allowed here */
+                                         'descr' => $pubtype['descr'],
+                                         'config' => $config))) {
+                    return false;
+                }
+            }
             break;
         case 2.0:
             // Code to upgrade from version 2.0 goes here

@@ -50,7 +50,7 @@ function articles_admin_pubtypes()
                 $config[$field]['format'] = $value;
             }
             foreach ($input as $field => $value) {
-                $config[$field]['input'] = $value;
+                $config[$field]['input'] = 1;
             }
             $ptid = xarModAPIFunc('articles',
                                  'admin',
@@ -96,7 +96,7 @@ function articles_admin_pubtypes()
                 $config[$field]['format'] = $value;
             }
             foreach ($input as $field => $value) {
-                $config[$field]['input'] = $value;
+                $config[$field]['input'] = 1;
             }
             if (!xarModAPIFunc('articles',
                               'admin',
@@ -167,13 +167,14 @@ function articles_admin_pubtypes()
                                array('action' => 'new'));
     $data['newtitle'] = xarML('New');
 
+/*
     // Get the list of defined field formats
     $pubfieldformats = xarModAPIFunc('articles','user','getpubfieldformats');
     $data['formats'] = array();
     foreach ($pubfieldformats as $fname => $flabel) {
         $data['formats'][] = array('fname' => $fname, 'flabel' => $flabel);
     }
-
+*/
     // Fill in relevant variables
     if ($action == 'new') {
         $data['authid'] = xarSecGenAuthKey();

@@ -125,22 +125,15 @@ function articles_admin_new($args)
             $input = array();
             $input['name'] = $field;
             $input['type'] = $value['format'];
-
-            // Fixes problem where mozilla expects ID and Name to be the same.
-            if ($field == 'bodytext'){
-                $field = 'body';
-                $input['id'] = 'bodytext';
-            } else {
-                $input['id'] = $field;
-            }
-            if ($input['type'] == 'fileupload') {
-                $data['withupload'] = 1;
-            }
-
+            $input['id'] = $field;
             if (!empty($preview) && isset($article[$field])) {
                 $input['value'] = xarVarPrepForDisplay($article[$field]);
             } else {
                 $input['value'] = '';
+            }
+
+            if ($input['type'] == 'fileupload' || $input['type'] == 'textupload' ) {
+                $data['withupload'] = 1;
             }
             $fields[] = array('label' => $value['label'], 'id' => $field,
                               'definition' => $input);

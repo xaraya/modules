@@ -78,18 +78,6 @@ function articles_admin_exportpubtype($args)
     </property>
 ';
 
-    // Map the (bodytext + bodyfile) fields to a single body field
-    // + use the textupload format if relevant
-    $pubtype['config']['body'] = $pubtype['config']['bodytext'];
-    if (!empty($pubtype['config']['bodyfile']['label'])) {
-        $pubtype['config']['body']['format'] = 'textupload';
-        if (empty($pubtype['config']['body']['label'])) {
-            $pubtype['config']['body']['label'] = $pubtype['config']['bodyfile']['label'];
-        }
-    }
-    unset($pubtype['config']['bodytext']);
-    unset($pubtype['config']['bodyfile']);
-
     // Configurable fields for articles
     $fields = array('title','summary','body','notes','authorid','pubdate','status');
     $id = 3;
@@ -102,6 +90,11 @@ function articles_admin_exportpubtype($args)
             $status = 2;
         } else {
             $status = 1;
+        }
+        if (empty($specs['input'])) {
+            $specs['input'] = 0;
+        } else {
+            $specs['input'] = 1;
         }
         $data['xml'] .= '    <property name="' . $field . '">
       <id>' . $id . '</id>

@@ -27,6 +27,7 @@ function articles_userapi_getfieldformatnums($args)
         'url'             => 11,
         'image'           => 12,
         'webpage'         => 13,
+        'textupload'      => 38,
     );
 }
 
