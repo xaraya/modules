@@ -1,7 +1,13 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>Add a New Topic</xar:mlstring></h2>
+<h2>
+<xar:if condition="!isset($tid)">
+	<xar:mlstring>Add a New Topic</xar:mlstring>
+<xar:else />
+	<xar:mlstring>Edit Topic</xar:mlstring>
+</xar:if>
+</h2>
 <xar:if condition="!empty($warning)">
 	#$warning#
 	<br /><br />
@@ -9,6 +15,8 @@
 <form method="post" action="#xarModURL('xarbb', 'user', 'newtopic', array('phase' => 'update'))#" method="post" enctype="application/x-www-form-urlencoded" #$formhooks['formaction']#>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="fid" id="fid" value="#$fid#" />
+    <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
+    <xar:if condition="isset($tid)"><input type="hidden" name="tid" id="tid" value="#$tid#" /></xar:if>
     <table border="0" width="100%">
         <tr>
             <td>
@@ -40,6 +48,11 @@
 			</td>
 		</tr>
 	</table>
-	<input type="submit" value="New Topic" align="middle" tabindex="3" />
+	<xar:if condition="!isset($tid)">
+		<input type="submit" value="#xarML('New Topic')#" align="middle" tabindex="3" />
+	<xar:else />
+		<input type="submit" value="#xarML('Edit Topic')#" align="middle" tabindex="3" />
+	</xar:if>
+	
 </form>
 </div>

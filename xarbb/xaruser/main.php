@@ -3,7 +3,7 @@
 function xarbb_user_main()
 {
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
 
     // Get parameters from whatever input we need
     $data = array();

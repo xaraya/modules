@@ -25,10 +25,12 @@ function xarbb_userapi_getalltopics($args)
         return;
     }
 
+
+
     $links = array();
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -50,9 +52,11 @@ function xarbb_userapi_getalltopics($args)
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 
+    $topics = array();
+
     for (; !$result->EOF; $result->MoveNext()) {
         list($tid, $fid, $ttitle, $tposter, $ttime, $treplies, $treplier, $tstatus) = $result->fields;
-        if (xarSecurityCheck('ReadxarBB', 0)) {
+        if (xarSecurityCheck('ViewxarBB', 0,'Forum',"$fid:All")) {
             $topics[] = array('tid'     => $tid,
                               'fid'     => $fid,
                               'ttitle'  => $ttitle,
@@ -63,7 +67,6 @@ function xarbb_userapi_getalltopics($args)
                               'tstatus' => $tstatus);
         }
     }
-
 
     $result->Close();
 

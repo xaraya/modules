@@ -90,13 +90,47 @@ function xarbb_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
+    //-----------------------------------------------------------------------------------
+    // Forum
+    $instances = array(
+        array('header' => 'Forum ID:',
+            'query' => "SELECT distinct xar_fid FROM " . $xbbforumstable,
+            'limit' => 20
+            ),
+        array('header' => 'Forum Name:',
+            'query' => "SELECT distinct xar_fname FROM ".$xbbforumstable,  // Todo
+            'limit' => 20
+            )
+        );
+    xarDefineInstance('xarbb', 'Forum', $instances);
     // Register Masks
-    xarRegisterMask('ReadxarBB','All','xarbb','All','All','ACCESS_READ');
-    xarRegisterMask('ModxarBB','All','xarbb','All','All','ACCESS_MODERATE');
-    xarRegisterMask('EditxarBB','All','xarbb','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddxarBB','All','xarbb','All','All','ACCESS_ADD');
-    xarRegisterMask('DeletexarBB','All','xarbb','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminxarBB','All','xarbb','All','All','ACCESS_ADMIN');
+    xarRegisterMask('ReadxarBB','All','xarbb','Forum','All:All','ACCESS_READ');     // Allows Posting Replys and Topics
+    xarRegisterMask('EditxarBB','All','xarbb','Forum','All:All','ACCESS_EDIT');
+    xarRegisterMask('AddxarBB','All','xarbb','Forum','All:All','ACCESS_ADD');
+    xarRegisterMask('DeletexarBB','All','xarbb','Forum','All:All','ACCESS_DELETE');
+    xarRegisterMask('AdminxarBB','All','xarbb','Forum','All:All','ACCESS_ADMIN');	// Allows all ;D
+    xarRegisterMask('ModxarBB','All','xarbb','Forum','All:All','ACCESS_MODERATE');	// Allows Editing + Deleting Replys + Topics
+    xarRegisterMask('ViewxarBB','All','xarbb','Forum','All:All','ACCESS_OVERVIEW'); // Allows seeing Forum + reading Forum
+	// for what is moderate good?
+
+ /*   //-----------------------------------------------------------------------------------
+    // Topic
+    $instances = array(
+        array('header' => 'Topic ID:',
+            'query' => "SELECT DISTINCT xar_tid FROM " . $xbbtopicstable,
+            'limit' => 20
+            )
+        );
+    xarDefineInstance('xarbb', 'Topic', $instances);
+    // Register Masks
+    xarRegisterMask('ReadxarBB','All','xarbb','Topic','All','ACCESS_READ');
+    xarRegisterMask('EditxarBB','All','xarbb','Topic','All','ACCESS_EDIT');
+    xarRegisterMask('AddxarBB','All','xarbb','Topic','All','ACCESS_ADD');
+    xarRegisterMask('DeletexarBB','All','xarbb','Topic','All','ACCESS_DELETE');
+    xarRegisterMask('AdminxarBB','All','xarbb','Topic','All','ACCESS_ADMIN');
+    xarRegisterMask('ModxarBB','All','xarbb','Topic','All','ACCESS_MODERATE');    */
+	// for what is moderate good?
+
 
     // Initialisation successful
     return true;
@@ -105,19 +139,19 @@ function xarbb_init()
 function xarbb_activate()
 {
     // Enable categories hooks for xarbb forums (= item type 1)
-    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb', 
-                                                         'callerItemType'   => 1, 
+    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
+                                                         'callerItemType'   => 1,
                                                          'hookModName'      => 'categories'));
 
 
     // Enable comments hooks for xarbb topics (= item type 2)
-        xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb', 
-                                                             'callerItemType'   => 2, 
+    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
+                                                             'callerItemType'   => 2,
                                                              'hookModName'      => 'comments'));
 
     // Enable hitcount hooks for xarbb topics (= item type 2)
-        xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb', 
-                                                             'callerItemType'   => 2, 
+    xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
+                                                             'callerItemType'   => 2,
                                                              'hookModName'      => 'hitcount'));
 
     // modvars
@@ -131,7 +165,7 @@ function xarbb_activate()
         'create',
         Array('name' => 'xarbb',
             'description' => 'XarBB Categories',
-            'parent_id' => 0)); 
+            'parent_id' => 0));
     // Note: you can have more than 1 mastercid (cfr. articles module)
     xarModSetVar('xarbb', 'number_of_categories', 1);
     xarModSetVar('xarbb', 'mastercids', $xarbbcid);

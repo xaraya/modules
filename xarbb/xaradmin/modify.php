@@ -23,7 +23,7 @@ function xarbb_admin_modify()
             if ($data == false) return;
 
             // Security Check
-            if(!xarSecurityCheck('EditxarBB')) return;
+            if(!xarSecurityCheck('EditxarBB',1,'Forum','$fid:All')) return;
 
             $data['module'] = 'xarbb';
             $data['itemtype'] = 1; // forum
@@ -41,7 +41,7 @@ function xarbb_admin_modify()
             $data['authid'] = xarSecGenAuthKey();
 
             break;
-        
+
         case 'update':
             // Get parameters
             list($fid,
@@ -66,7 +66,7 @@ function xarbb_admin_modify()
 
             break;
     }
-    
+
 	return $data;
 
 }

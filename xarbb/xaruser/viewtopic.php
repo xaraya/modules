@@ -7,8 +7,11 @@ function xarbb_user_viewtopic()
 
     $tid = xarVarCleanFromInput('tid');
 
+    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
+    $fid = $topic['fid'];
+
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    if(!xarSecurityCheck('ViewxarBB',1,'Forum',"$fid:All")) return;
 
     // The user API function is called
     $data = xarModAPIFunc('xarbb',

@@ -23,7 +23,7 @@ function xarbb_userapi_countposts($args)
     $xbbtopicstable = $xartable['xbbtopics'];
 
     $query = "SELECT COUNT(1)
-              FROM $xbbtopicstable            
+              FROM $xbbtopicstable
               WHERE xar_tposter = $uid";
     $result =& $dbconn->Execute($query);
     if (!$result) return;

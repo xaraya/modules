@@ -11,7 +11,17 @@
     <td class="xar-accent">
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
-          <td width="45%"><b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b></td>
+          <td width="45%"><b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b>
+          
+          [ 
+          <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
+          ]&nbsp;
+          <xar:if condition="true">[ 
+          <a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $tid))#" ><xar:mlstring>Delete</xar:mlstring></a> 
+          ]</xar:if>
+          
+          </td>
+          
 		  <td width="40%" align="right">
 			<a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid))#"><xar:mlstring>Back to Forum View</xar:mlstring></a>
 		  </td>
@@ -123,9 +133,7 @@
 				<xar:if condition="xarModIsAvailable('bbcode')">
 					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
 					</xar:if>
-					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('tid' => $tid, 'phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a> |
-					<a href="TODO"><xar:mlstring>Delete</xar:mlstring></a>
-			</td>
+					<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
         </tr>
       </table>
 
@@ -187,7 +195,7 @@
 					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'quote'))#"><xar:mlstring>Quote</xar:mlstring></a> |
 					</xar:if>
 					<a href="#xarModUrl('xarbb', 'user', 'newreply', array('cid' => $item['xar_cid'], 'tid' => $tid, 'phase' => 'edit'))#"><xar:mlstring>Edit</xar:mlstring></a> |
-					<a href="TODO"><xar:mlstring>Delete</xar:mlstring></a>
+					<a href="#xarModUrl('xarbb','user','deletereply',array('cid' => $item['xar_cid']))#"><xar:mlstring>Delete</xar:mlstring></a>
 			</td>
         </tr>
       </table>

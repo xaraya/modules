@@ -44,7 +44,7 @@ function xarbb_userapi_getforum($args)
     list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('ReadxarBB', 0)) {
+    if (!xarSecurityCheck('ViewxarBB', 0, 'Forum',"$fid:All")) {
         return false;
     }
     $forum = array('fid'     => $fid,

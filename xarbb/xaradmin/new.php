@@ -4,7 +4,7 @@
  * add new forum
  */
 function xarbb_admin_new()
-{               
+{
     list($fname,
          $fdesc,
          $warning,
@@ -14,7 +14,7 @@ function xarbb_admin_new()
                                         'phase');
 
     // Security Check
-    if(!xarSecurityCheck('AddxarBB')) return;
+    if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
 
     if (empty($phase)){
         $phase = 'form';
@@ -90,7 +90,7 @@ function xarbb_admin_new()
             // Need to create a topic so we don't get the nasty empty error when viewing the forum.
             $ttitle = xarML('First Post');
             $tpost = xarML('This is your first topic');
-            
+
             if (!xarModAPIFunc('xarbb',
                                'user',
                                'createtopic',
@@ -104,7 +104,7 @@ function xarbb_admin_new()
             xarResponseRedirect(xarModURL('xarbb', 'admin', 'view'));
 
             break;
-     
+
     }
 
     // Return the output

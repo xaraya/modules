@@ -23,31 +23,36 @@ function xarbb_userapi_updatetopicsview($args)
     if ($link == false) {
         $msg = xarML('No Such Topic Present',
                     'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
+        xarExceptionSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
-        return; 
+        return;
     }
 
-    // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    // Security Check: needed? only called through this module and data inconsistency if fails (wrong number of reply posts,..)
+    // if(!xarSecurityCheck('ReadxarBB')) return;
 
-    // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+	//---------------------------------------------------------------
+	// DO Update Stuff
+    $treplies = xarModAPIFunc('comments','user','get_count',array(
+    	'modid' => xarModGetIdFromName('xarbb'),
+        'objectid' => $tid
+        ));
+    if(!$treplies)
+    	return;
 
-    $xbbtopicstable = $xartable['xbbtopics'];
-    $time = date('Y-m-d G:i:s');
-    $treplies = $link['treplies'] + 1;
+    $param = array(
+    	"tid" => $tid,
+        "treplies" => $treplies,
+        );
 
-    // Update the forum
-    $query = "UPDATE $xbbtopicstable
-            SET xar_ttime = '$time',
-                xar_treplies = $treplies,
-                xar_treplier = $treplier
-            WHERE xar_tid = " . xarVarPrepForStore($tid);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    if(isset($treplier))             {
+    	$param["treplier"] = $treplier;
+        $param["time"] = date('Y-m-d G:i:s');
+	}
+
+    // Update the topic: call api func
+    if(!xarModAPIFunc('xarbb','user','updatetopic',$param)) return;
 
     // Let the calling process know that we have finished successfully
     return true;

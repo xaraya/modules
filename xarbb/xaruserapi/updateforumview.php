@@ -29,14 +29,15 @@ function xarbb_userapi_updateforumview($args)
     if ($link == false) {
         $msg = xarML('No Such Forum Present',
                     'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
+        xarExceptionSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
-        return; 
+        return;
     }
 
-    // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    // why security check?
+    // Only called from other functions and when not called, data inconsistency (num replies,..)
+	//    if(!xarSecurityCheck('ReadxarBB')) return;
 
     if (empty($reply)){
         $ftopics = $link['ftopics'] + 1;

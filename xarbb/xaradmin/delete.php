@@ -16,7 +16,7 @@ function xarbb_admin_delete()
     if ($data == false) return;
 
     // Security Check
-    if(!xarSecurityCheck('DeletexarBB')) return;
+    if(!xarSecurityCheck('DeletexarBB', 1, 'Forum', '$fid:All')) return;
 
     // Check for confirmation.
     if (empty($confirmation)) {
@@ -32,12 +32,12 @@ function xarbb_admin_delete()
 
     if (!xarModAPIFunc('xarbb',
 		               'admin',
-		               'delete', 
+		               'delete',
                         array('fid' => $fid))) return;
 
     if (!xarModAPIFunc('xarbb',
 		               'admin',
-		               'deletealltopics', 
+		               'deletealltopics',
                         array('fid' => $fid))) return;
 
     // Redirect

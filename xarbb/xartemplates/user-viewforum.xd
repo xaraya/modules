@@ -97,6 +97,10 @@
     <td width="75" align="center">#$loop:item['comments']#</td>
     <td width="75" align="center">#$loop:item['hitcount']#</td>
     <td width="130" align="right" valign="top">#$loop:item['ttime']#</td>
+    <td width="130" align="right" valign="top">
+    	<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Edit</xar:mlstring></a> | 
+    	<a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Delete</xar:mlstring></a>
+    </td>
   </tr>
 <xar:else />
   <tr>
@@ -107,6 +111,10 @@
     <td width="75" class="xar-accent" align="center">#$loop:item['comments']#</td>
     <td width="75" class="xar-accent" align="center">#$loop:item['hitcount']#</td>
     <td width="130" class="xar-accent" align="right" valign="top">#$loop:item['ttime']#</td>
+    <td class="xar-accent" align="right" valign="top">
+    	<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Edit</xar:mlstring></a> | 
+    	<a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Delete</xar:mlstring></a>
+    </td>
   </tr>
 </xar:if>
 </xar:loop>

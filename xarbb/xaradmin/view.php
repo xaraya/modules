@@ -12,7 +12,7 @@ function xarbb_admin_view()
     $data['pager'] = '';
 
     // Security Check
-    if(!xarSecurityCheck('EditxarBB')) return;
+    if(!xarSecurityCheck('EditxarBB',1,'Forum')) return;
 
     // The user API function is called
     $links = xarModAPIFunc('xarbb',

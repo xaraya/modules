@@ -10,7 +10,7 @@
 function xarbb_adminapi_getmenulinks()
 {
 
-    if (xarSecurityCheck('AddxarBB', 0)) {
+    if (xarSecurityCheck('AddxarBB', 0,'Forum')) {
 
         $menulinks[] = Array('url'   => xarModURL('xarbb',
                                                   'admin',
@@ -19,7 +19,7 @@ function xarbb_adminapi_getmenulinks()
                               'label' => xarML('Add'));
     }
 
-    if (xarSecurityCheck('EditxarBB', 0)) {
+    if (xarSecurityCheck('EditxarBB', 0,'Forum')) {
 
         $menulinks[] = Array('url'   => xarModURL('xarbb',
                                                   'admin',

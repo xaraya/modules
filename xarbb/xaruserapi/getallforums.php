@@ -18,7 +18,7 @@ function xarbb_userapi_getallforums($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    if(!xarSecurityCheck('ViewxarBB',1,'Forum')) return;
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -56,7 +56,7 @@ function xarbb_userapi_getallforums($args)
     $forums = array();
     for (; !$result->EOF; $result->MoveNext()) {
         list($fid, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid) = $result->fields;
-        if (xarSecurityCheck('ReadxarBB', 0)) {
+        if (xarSecurityCheck('ViewxarBB', 0,'Forum',"$fid:All")) {
             $forums[] = array('fid'     => $fid,
                               'fname'   => $fname,
                               'fdesc'   => $fdesc,

@@ -26,7 +26,7 @@ function xarbb_adminapi_create($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('AddxarBB')) return;
+    if(!xarSecurityCheck('AddxarBB',1,'Forum')) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();

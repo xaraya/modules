@@ -29,14 +29,17 @@ function xarbb_adminapi_delete($args)
     if ($link == false) {
         $msg = xarML('No Such Forum Present',
                     'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
+        xarExceptionSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check
-    if(!xarSecurityCheck('DeletexarBB')) return;
+    if(!xarSecurityCheck('DeletexarBB',1,'Forum',"$fid:All")) return;
+
+	// topics and comments are deleted in delete gui func so do not care
+    // shouldn't this call be here?
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();

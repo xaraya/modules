@@ -31,14 +31,14 @@ function xarbb_adminapi_update($args)
     if ($link == false) {
         $msg = xarML('No Such Forum Present',
                     'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
+        xarExceptionSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check
-    if(!xarSecurityCheck('EditxarBB')) return;
+    if(!xarSecurityCheck('EditxarBB',1,'Forum',"$fid:All")) return;
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();

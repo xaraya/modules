@@ -2,7 +2,7 @@
 
 /**
  * delete a forum
- * @param $args['fid'] ID of the forum
+ * @param $args['tids'] Array( IDs ) of the forum   or $args['tid'] ID
  * @returns bool
  * @return true on success, false on failure
  */
@@ -14,16 +14,17 @@ function xarbb_adminapi_deletetopics($args)
     extract($args);
 
     // Argument check
-    if (!isset($fid)) {
-        $msg = xarML('Invalid Parameter Count',
+    if ( (!isset($tids) || !is_array($tids) || count($tids) == 0) &&
+    	 (!isset($tid) || !($tid > 0)) ) {
+        $msg = xarML('Invalid Parameter count',
                     join(', ',$invalid), 'admin', 'delete', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
 
-    // Security Check
-    if(!xarSecurityCheck('DeletexarBB')) return;
+    if(!isset($tids))
+    	$tids = Array($tid);
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -31,15 +32,29 @@ function xarbb_adminapi_deletetopics($args)
 
     $xbbtopicstable = $xartable['xbbtopics'];
 
-    // Delete the item
-    $query = "DELETE FROM $xbbtopicstable
-              WHERE xar_fid = " . xarVarPrepForStore($fid);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
+    foreach($tids as $tid)	{
+    	// get forum id
+        if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
+		$fid = $topic['fid'];
 
-    // Let any hooks know that we have deleted a link
-// should call item delete hooks for each topic, really
-//    xarModCallHooks('item', 'delete', $fid, '');
+	    // Item Specific Security Check
+	    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) continue;
+
+		// Delete comments
+        if(!xarModAPIFunc("xarbb","admin","deleteallreplies",array(
+        			"tid" => $tid
+				))) return;
+	    // Delete the item
+	    $query = "DELETE FROM $xbbtopicstable
+	              WHERE xar_tid = $tid";
+	    $result =& $dbconn->Execute($query);
+	    if (!$result) return;
+
+        // Let any hooks know that we have deleted a topic
+        $args['module'] = 'xarbb';
+	    $args['itemtype'] = 2; // topic
+	    xarModCallHooks('item', 'delete', $tid, $args);
+	}
 
     // Let the calling process know that we have finished successfully
     return true;

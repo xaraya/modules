@@ -2,7 +2,7 @@
 
 /**
  * get a specific link
- * @poaram $args['lid'] id of link to get
+ * @poaram $args['tid'] id of topic to get
  * @returns array
  * @return link array, or false on failure
  */
@@ -40,7 +40,7 @@ function xarbb_userapi_gettopic($args)
     list($tid, $fid, $ttitle, $tpost, $tposter, $ttime, $treplies, $tstatus) = $result->fields;
     $result->Close();
 
-    if (!xarSecurityCheck('ReadxarBB')) return;
+    if (!xarSecurityCheck('ViewxarBB',1,'Forum',"$fid:All")) return;
 
     $topic = array('tid'     => $tid,
                    'fid'     => $fid,

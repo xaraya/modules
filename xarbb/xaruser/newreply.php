@@ -7,7 +7,7 @@ function xarbb_user_newreply()
     if (!xarVarFetch('cid','int:1:',$cid,'',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase','str:1:',$phase,'',XARVAR_NOT_REQUIRED)) return;
 
-    // Let's get the title, and check to see if we are 
+    // Let's get the title, and check to see if we are
     if ((!empty($tid)) && (empty($cid))){
         // The user API function is called
         $data = xarModAPIFunc('xarbb',
@@ -28,7 +28,7 @@ function xarbb_user_newreply()
                               'get_one',
                               array('cid' => $cid));
 
-        foreach ($data as $comment){  
+        foreach ($data as $comment){
             $package['title'] = xarVarPrepForDisplay($comment['xar_title']);
             if ($phase == 'quote'){
                 $package['text'] = '[quote]'. $comment['xar_text'] .'[/quote]';
@@ -38,16 +38,29 @@ function xarbb_user_newreply()
         }
     }
 
+    if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
+    $fid = $topic['fid'];
+
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    if($phase == "edit")
+	    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) return;
+	else
+   	    if(!xarSecurityCheck('ReadxarBB',1,'Forum',"$fid:All")) return;
 
     // Var Set-up
     $header['input-title']  = xarML('Post a Reply');
     $header['modid']        = xarModGetIDFromName('xarbb');
     $header['objectid']     = $tid;
+    $header['cid'] 			= $cid;
 
-    $receipt['post_url']    = xarModUrl('comments', 'user', 'reply', array('tid' => $tid));
-    $receipt['action']      = 'reply';
+	if($phase == 'edit')
+    	$action = 'modify';
+    else
+    	$action = 'reply';
+
+
+    $receipt['post_url']    = xarModUrl('comments', 'user', $action, array('tid' => $tid));
+    $receipt['action']      = $action;
     $receipt['returnurl']['decoded'] = xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid));
     $receipt['returnurl']['encoded'] = rawurlencode($receipt['returnurl']['decoded']);
 

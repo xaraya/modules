@@ -29,14 +29,25 @@ function xarbb_adminapi_deletealltopics($args)
     if ($link == false) {
         $msg = xarML('No Such Forum Present',
                     'xarbb');
-        xarExceptionSet(XAR_USER_EXCEPTION, 
+        xarExceptionSet(XAR_USER_EXCEPTION,
                     'MISSING_DATA',
                      new DefaultUserException($msg));
-        return; 
+        return;
     }
 
     // Security Check
-    if(!xarSecurityCheck('DeletexarBB')) return;
+    if(!xarSecurityCheck('ModxarBB',1,'Forum',"$fid:All")) return;
+
+    $topics =  xarModAPIFunc("xarbb","user","getalltopics",array("fid" => $fid));
+    if(!$topics)
+     	return;
+
+
+    foreach($topics as $topic)	   {
+		if(!xarModAPIFunc("xarbb","admin","deleteallreplies",array(
+        			"tid" => $topic["tid"]
+				))) return;
+    }
 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
@@ -50,9 +61,12 @@ function xarbb_adminapi_deletealltopics($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Let any hooks know that we have deleted a link
-// should call item delete hooks for each topic, really
-//    xarModCallHooks('item', 'delete', $fid, '');
+// Let any hooks know that we have deleted topics
+	foreach($topics as $topic)	{
+	    $args['module'] = 'xarbb';
+	    $args['itemtype'] = 2; // topic
+	    xarModCallHooks('item', 'delete', $topic["tid"], $args);
+    }
 
     // Let the calling process know that we have finished successfully
     return true;

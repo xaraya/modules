@@ -3,11 +3,11 @@
 function xarbb_user_viewforum()
 {
     // Get parameters from whatever input we need
-    xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED); 
-    xarVarFetch('fid', 'id', $fid); 
+    xarVarFetch('startnumitem', 'id', $startnumitem, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('fid', 'id', $fid);
 
     // Security Check
-    if(!xarSecurityCheck('ReadxarBB')) return;
+    if(!xarSecurityCheck('ViewxarBB',1,'Forum',"$fid:All")) return;
 
     $data['items'] = array();
 
@@ -23,11 +23,11 @@ function xarbb_user_viewforum()
         $topic = $topics[$i];
 
         $topics[$i]['comments'] = xarVarPrepForDisplay($topic['treplies']);
-        
+
         // While we are here, lets do the hot topics, etc.
         $redhotTopic    = xarModGetVar('xarbb', 'redhottopic');
         $hotTopic       = xarModGetVar('xarbb', 'hottopic');
-        
+
         if (($topics[$i]['comments']) >= ($hotTopic)){
             $topics[$i]['folder']       = '<img src="' . xarTplGetImage('hot_folder.gif') . '" />';
         } else if (($topics[$i]['comments']) >= ($redhotTopic)){
@@ -41,7 +41,7 @@ function xarbb_user_viewforum()
                                                 'get',
                                                 array('modname' => 'xarbb',
                                                       'objectid' => $topic['tid']));
-        
+
         if (!$topics[$i]['hitcount']) {
             $topics[$i]['hitcount'] = '0';
         } elseif ($topics[$i]['hitcount'] == 1) {
@@ -73,7 +73,7 @@ function xarbb_user_viewforum()
 
         $topics[$i]['replyname'] = $getreplyname['name'];
     }
-    
+
     $forums = xarModAPIFunc('xarbb',
                             'user',
                             'getforum',
@@ -89,7 +89,7 @@ function xarbb_user_viewforum()
 
     //images
     $data['newtopic'] = '<img src="' . xarTplGetImage('newpost.gif') . '" />';
-    
+
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.
     $data['pager'] = xarTplGetPager($startnumitem,
