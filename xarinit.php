@@ -618,8 +618,7 @@ function xarcachemanager_create_cache_data()
                                     // the actual cached data
                                     'xar_data'  => array('type'        => 'text',
                                                          'size'        => 'medium', // 16 MB
-                                                         'null'        => false,
-                                                         'default'     => '')));
+                                                         'null'        => false)));
     if (empty($query)) return; // throw back
     $result =& $dbconn->Execute($query);
     if (!$result) return;
