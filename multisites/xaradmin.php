@@ -848,12 +848,12 @@ function multisitesConfigSetVar( 	$name,
 {
 $value = str_replace($masterfolderOriginal,$masterfolderSubSite,$value);
 /*
-print("VALUE: ".$value.'<br>');
-print("MASTERFOLDER ORIGINAL: ".$masterfolderOriginal.'<br>');
-print("MASTERFOLDER SUB SITE: ".$masterfolderSubSite.'<br>');
-print("OLDPREFIX: ".$oldPrefix.'<br>');
-print("PREFIX_UTILISE: ".$prefix_utilise.'<br>');
-print("WHEREISPERSO: ".$whereisperso.'<br>');
+print("VALUE: ".$value.'<br />');
+print("MASTERFOLDER ORIGINAL: ".$masterfolderOriginal.'<br />');
+print("MASTERFOLDER SUB SITE: ".$masterfolderSubSite.'<br />');
+print("OLDPREFIX: ".$oldPrefix.'<br />');
+print("PREFIX_UTILISE: ".$prefix_utilise.'<br />');
+print("WHEREISPERSO: ".$whereisperso.'<br />');
 // die;
 */
 
@@ -904,7 +904,7 @@ $query = "UPDATE $table
           WHERE xar_modname='" . xarVarPrepForStore(_XAR_CONFIG_MODULE) . "'
           AND xar_name='" . xarVarPrepForStore($name) . "'";
 
-// print($query.'<br>');
+// print($query.'<br />');
 
 $dbconn->Execute($query);
 if($dbconn->ErrorNo() != 0) {
