@@ -14,8 +14,9 @@
  * @return void
 */
 
-function xarcachemanager_adminapi_regenstatic()
-{   
+function xarcachemanager_adminapi_regenstatic($nolimit = NULL)
+{
+    $urls = array();
     $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
 
     // make sure output caching is really enabled, and that we are caching pages
@@ -27,24 +28,29 @@ function xarcachemanager_adminapi_regenstatic()
     $configKeys = array('Page.SessionLess');
     $sessionlessurls = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                      array('keys' => $configKeys, 'from' => 'file', 'viahook' => TRUE));
+
+    $urls = $sessionlessurls['Page.SessionLess'];
     
-    $baseGetfileRealPath = realpath('modules/base/xaruserapi/getfile.php');
-    register_shutdown_function('xar_regenerate_static_cache', $sessionlessurls['Page.SessionLess'], $baseGetfileRealPath);
+    if (!$nolimit) {
+        // randomize the order of the urls just in case the timelimit cuts the 
+        // process short - no need to always drop the same pages.
+        shuffle($urls);
+
+        // set a time limit for the regeneration
+        // TODO: make the timelimit variable and configurable.
+        $timelimit = time() + 10;
+    }
+
+    foreach ($urls as $url) {
+        // Make sure the url isn't empty before calling getfile()
+        if (strlen(trim($url))) {
+            xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
+        }
+        if (!$nolimit && time() > $timelimit) break;
+    }
     
     return;
 
 }
 
-function xar_regenerate_static_cache($sessionlessurls, $baseGetfileRealPath)
-{
-    include_once($baseGetfileRealPath);
-    foreach ($sessionlessurls as $url) {
-        // Make sure the url isn't empty before calling getfile()
-        if (strlen(trim($url))) {
-            //xarModAPIFunc('base', 'user', 'getfile', array('url' => $url));
-            base_userapi_getfile(array('url' => $url));
-        }
-    }
-    return;        
-}
 ?>
