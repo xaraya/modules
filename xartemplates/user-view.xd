@@ -5,6 +5,11 @@
 <xar:if condition="xarModIsHooked('categories','headlines')">
 <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" itemid="$hid" />
 </xar:if>
+<xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModGetVar('headlines','importpubtype')">
+    <xar:set name="showimport">1</xar:set>
+<xar:else/>
+    <xar:set name="showimport">0</xar:set>
+</xar:if>
 <xar:if condition="empty($warning)">
     <xar:if condition="!empty($chandesc)">
          <p>#$chandesc#</p>
@@ -19,7 +24,7 @@
             </xar:if>
             <xar:if condition="!empty($loop:item['description'])">
                 <p>#$loop:item['description']#</p>
-                <xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
+                <xar:if condition="!empty($showimport)">
                     <p class="xar-sub">
                         [ <a href="#xarModUrl('headlines', 'admin', 'importitem', array('theme' => 'print', 'title' => $loop:item['title'], 'description' => $loop:item['description'], 'authid' => $authid, 'hid' => $hid))#"><xar:mlstring>Import to News Queue</xar:mlstring></a> ]
                     </p>

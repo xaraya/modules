@@ -3,7 +3,14 @@ function headlines_admin_import()
 {
     // Security Check
     if(!xarSecurityCheck('EditHeadlines')) return;
-    xarVarFetch('hid', 'id', $hid);
+
+    if (!xarVarFetch('hid', 'id', $hid)) return;
+
+    $importpubtype = xarModGetVar('headlines','importpubtype');
+    if (empty($importpubtype)) {
+        xarResponseRedirect(xarModURL('articles', 'admin', 'view'));
+        return true;
+    }
 
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');
@@ -90,15 +97,6 @@ function headlines_admin_import()
         return;
     }
 
-    $importpubtype = xarModGetVar('headlines','importpubtype');
-    if (empty($importpubtype)) {
-        $importpubtype = xarModGetVar('articles','defaultpubtype');
-        if (empty($importpubtype)) {
-            $importpubtype = 1;
-        }
-        xarModSetVar('headlines','importpubtype',1);
-    }
-
     foreach ($imports as $import){
 
         $article['title'] = $import['title'];
@@ -116,5 +114,6 @@ function headlines_admin_import()
     }
     
     xarResponseRedirect(xarModURL('articles', 'admin', 'view'));
+    return true;
 }
 ?>

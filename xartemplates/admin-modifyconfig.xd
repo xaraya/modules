@@ -45,6 +45,7 @@
         </span>
         <span style="float: right; width: 78%; text-align: left;">
             <select name="importpubtype" id="importpubtype">
+                <option value="0"></option>
             <xar:foreach in="$pubtypes" key="$ptid" value="$pubtype">
                 <xar:if condition="!empty($importpubtype) and $importpubtype eq $ptid">
                     <option value="#$ptid#" selected="selected">#$pubtype['descr']#</option>

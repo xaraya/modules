@@ -31,7 +31,7 @@ function headlines_admin_view()
                                 'numitems' => xarModGetVar('headlines',
                                                           'itemsperpage')));
 
-    if (empty($links)) return;
+    if (!isset($links)) return;
 
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($links); $i++) {

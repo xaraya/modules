@@ -10,11 +10,8 @@ function headlines_admin_importitem()
     if (!xarVarFetch('hid','int', $hid)) return;
     $importpubtype = xarModGetVar('headlines','importpubtype');
     if (empty($importpubtype)) {
-        $importpubtype = xarModGetVar('articles','defaultpubtype');
-        if (empty($importpubtype)) {
-            $importpubtype = 1;
-        }
-        xarModSetVar('headlines','importpubtype',1);
+        xarResponseRedirect(xarModURL('headlines', 'user', 'view', array('hid' => $hid)));
+        return true;
     }
     $article['title'] = $title;
     $article['summary'] = $description;

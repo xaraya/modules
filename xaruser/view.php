@@ -2,19 +2,16 @@
 function headlines_user_view()
 {
     // Security Check
-    if(!xarSecurityCheck('ReadHeadlines')) return;
-    xarVarFetch('hid', 'id', $hid, XARVAR_PREP_FOR_DISPLAY);
+    if (!xarSecurityCheck('ReadHeadlines')) return;
+    if (!xarVarFetch('hid', 'id', $hid)) return;
+
     // The user API function is called
     $links = xarModAPIFunc('headlines',
                           'user',
                           'get',
                           array('hid' => $hid));
+    if (empty($links)) return;
 
-    if (isset($links['catid'])) {
-        $data['catid'] = $links['catid'];
-    } else {
-        $data['catid'] = '';
-    }
     // Check and see if a feed has been supplied to us.
     if(isset($links['url'])) {
         $feedfile = $links['url'];
@@ -29,6 +26,11 @@ function headlines_user_view()
 
     xarTplSetPageTitle(xarVarPrepForDisplay($data['chantitle']));
 
+    if (isset($links['catid'])) {
+        $data['catid'] = $links['catid'];
+    } else {
+        $data['catid'] = '';
+    }
     $data['hid'] = $hid;
     $data['module'] = 'headlines';
     $data['itemtype'] = 0;
@@ -45,7 +47,13 @@ function headlines_user_view()
     } else {
         $data['hooks'] = $hooks;
     }
-    $data['authid'] = xarSecGenAuthKey();
+    // only generate authid when the user is allowed to import
+    $importpubtype = xarModGetVar('headlines','importpubtype');
+    if (!empty($importpubtype) && xarSecurityCheck('EditHeadlines', 0)) {
+        $data['authid'] = xarSecGenAuthKey();
+    } else {
+        $data['authid'] = '';
+    }
     return $data;
 }
 ?>

@@ -8,7 +8,7 @@ function headlines_admin_updateconfig()
     if(!xarSecurityCheck('AdminHeadlines')) return;
     if (!xarVarFetch('itemsperpage', 'str:1:', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('importpubtype', 'id', $importpubtype, 1, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('importpubtype', 'id', $importpubtype, 0, XARVAR_NOT_REQUIRED)) return;
     xarModSetVar('headlines', 'itemsperpage', $itemsperpage);
     xarModSetVar('headlines', 'SupportShortURLs', $shorturls);
     xarModSetVar('headlines', 'importpubtype', $importpubtype);
