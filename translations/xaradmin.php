@@ -322,19 +322,16 @@ define('RELEASE', 4);
     $subnames = $backend->getContextNames($context->getType());
     $args = array();
     $entrydata = array();
-    $i=0;
     $subnams = $subnames;
+    $subnames = array();
     $args['subtype'] = $context->getName();
     foreach($subnams as $subname) {
         $args['subname'] = $subname;
         $entry = xarModAPIFunc('translations','admin','getcontextentries',$args);
-        if ($entry['numEntries']+$entry['numKeyEntries'] == 0) {
-            array_splice($subnames,$i,1);
-        }
-        else {
+        if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
             $entrydata[] = $entry;
+            $subnames[] = $subname;
         }
-        $i++;
     }
     $tplData['subnames'] = $subnames;
     $tplData['entrydata'] = $entrydata;
