@@ -6,7 +6,6 @@
  */
 function comments_user_displayall($args) 
 {
-
     $modarray = array();
     if (empty($args['modid'])) {
         $args['modid'] = xarVarCleanFromInput('modid');
@@ -206,6 +205,14 @@ function comments_user_displayall($args)
         if (!empty($comments[$i]['xar_text'])) {
             $comments[$i]['xar_text'] = xarVarPrepHTMLDisplay($comments[$i]['xar_text']);
         }
+        list($comments[$i]['xar_text'],
+             $comments[$i]['xar_subject']) = xarModCallHooks('item',
+                                                             'transform',
+                                                              $comments[$i]['xar_cid'],
+                                                             array($comments[$i]['xar_text'],
+                                                                   $comments[$i]['xar_subject']),
+                                                                   'comments');
+
         if ($args['adddaysep']=='on') {
         // find out whether to change day separator        
             $msgunixtime=$comments[$i]['xar_datetime'];
@@ -251,10 +258,9 @@ function comments_user_displayall($args)
     $templateargs['modlist']        =$modlist;
     $templateargs['decoded_returnurl'] = rawurldecode(xarModURL('comments','user','displayall'));
     $templateargs['decoded_nexturl'] = xarModURL('comments','user','displayall',array(
-                                                                            'first'=>$args['first']+$args['howmany'],
+                                                                         'first'=>$args['first']+$args['howmany'],
                                                                             'howmany'=>$args['howmany'],
-                                                                            'modid'=>$modarray                                                              
-                                                                            )
+                                                                            'modid'=>$modarray)
                                                             );
     $templateargs['commentlist']    =$comments;
     $templateargs['order']          =$settings['order'];
@@ -274,5 +280,4 @@ function comments_user_displayall($args)
     
     return $output;
 }
-
 ?>
