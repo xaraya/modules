@@ -168,10 +168,20 @@ function categories_userapi_getcat($args)
 
     $SQLquery .= " ORDER BY P1.xar_left";
 
+// cfr. xarcachemanager - this approach might change later
+    $expire = xarModGetVar('categories','cache.userapi.getcat');
     if (is_numeric($count) && $count > 0 && is_numeric($start) && $start > -1) {
-       $result = $dbconn->SelectLimit($SQLquery, $count, $start);
+        if (!empty($expire)){
+            $result = $dbconn->CacheSelectLimit($expire,$SQLquery, $count, $start);
+        } else {
+            $result = $dbconn->SelectLimit($SQLquery, $count, $start);
+        }
     } else {
-       $result = $dbconn->Execute($SQLquery);
+        if (!empty($expire)){
+            $result = $dbconn->CacheExecute($expire,$SQLquery);
+        } else {
+            $result = $dbconn->Execute($SQLquery);
+        }
     }
 
     if (!$result) return;
