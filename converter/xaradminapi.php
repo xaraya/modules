@@ -449,7 +449,8 @@ $date = time();
 }
 
 
-function converter_adminapi_articleviewtop(){
+function converter_adminapi_articleviewtop()
+{
 
 echo '<div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">'."\n";
 echo '<div class="xar-norm" style="padding: 3px;">'."\n";
@@ -502,11 +503,13 @@ function converter_adminapi_simulateheader($theme)
     echo '#$tpl:headJavaScript#'."\n\n";
 }
 
-function converter_adminapi_fullarticletop(){
+function converter_adminapi_fullarticletop()
+{
     echo '<xar:template file="publinks" type="module" /><p /><xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" itemid="$aid" cids="$cids" />';
 }
 
-function converter_adminapi_fullarticlebottom(){
+function converter_adminapi_fullarticlebottom()
+{
     echo '<xar:if condition="!empty($prevart) || !empty($nextart)">
     <br />
     <table border="0" width="95%">
@@ -543,7 +546,8 @@ function converter_adminapi_fullarticlebottom(){
     </xar:if>';
 }
 
-function converter_adminapi_addxarcss(){
+function converter_adminapi_addxarcss()
+{
     echo '
 
     /* these defaults apply to the left block group */
@@ -712,7 +716,8 @@ function footmsg()
 
 // Simulate PHPNuke themeheader
 
-function converter_adminapi_themeheadersimulate($theme) {
+function converter_adminapi_themeheadersimulate($theme) 
+{
 
     if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/header.html")) {
         $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/header.html";
@@ -735,7 +740,8 @@ function converter_adminapi_themeheadersimulate($theme) {
     }
 }
 
-function converter_adminapi_themefootersimulate($theme) {
+function converter_adminapi_themefootersimulate($theme) 
+{
 
     if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html")) {
         $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html";
@@ -758,7 +764,8 @@ function converter_adminapi_themefootersimulate($theme) {
     }
 }
 
-function converter_adminapi_themeblocksimulate($theme, $title, $content) {
+function converter_adminapi_themeblocksimulate($theme, $title, $content) 
+{
 
     if (file_exists(xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/center_right.html")) {
         $tmpl_file = xarConfigGetVar('Site.BL.ThemesDirectory')."/$theme/blocks.html";
