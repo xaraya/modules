@@ -49,7 +49,8 @@ $local_stories = $pnconfig['prefix']."_stories" ;
 $trackmsg = "Editing";
 
 //Main Project Page -- default
-function viewproject() {
+function viewproject() 
+{
  global $tracks , $tasks , $local_stories ;
  include("header.php");
 
@@ -94,7 +95,8 @@ function viewproject() {
 	
 }
 
-function viewtrack($trackid) {
+function viewtrack($trackid) 
+{
 global $tracks , $tasks ;
 
   include("header.php");
@@ -133,7 +135,8 @@ global $tracks , $tasks ;
 
 }
 
-function edittrack($trackid) {
+function edittrack($trackid) 
+{
 global $tracks , $tasks , $trackmsg;
   include("header.php");
 
@@ -195,7 +198,8 @@ global $tracks , $tasks , $trackmsg;
 
 }
 
-function updatetask($trackid) {
+function updatetask($trackid) 
+{
 
   global $trackmsg, $taskid, $title, $start, $end, $percent, $tracks , $tasks ;
   if (authorised(0,"Dynamic::","::",ACCESS_EDIT)) {
@@ -206,7 +210,8 @@ function updatetask($trackid) {
 }
 
 
-function addtask($trackid) {
+function addtask($trackid) 
+{
 
   global $trackmsg, $title, $start, $end, $percent, $tracks , $tasks ;
   
@@ -217,7 +222,8 @@ function addtask($trackid) {
   } else { echo "<p>You are not authorised to update this page.</p>";}
 }
 
-function updatetrack($trackid) {
+function updatetrack($trackid) 
+{
 
   global $trackmsg, $tracktext, $trackstatus, $tracks , $tasks ;
   if (authorised(0,"Dynamic::","::",ACCESS_EDIT)) {
@@ -226,7 +232,8 @@ function updatetrack($trackid) {
   } else { echo "<p>You are not authorised to update this page.</p>";}
 }
 
-function viewsheet($trackid) {
+function viewsheet($trackid) 
+{
 global $tracks , $tasks ;
 
   include("header.php");
@@ -261,7 +268,8 @@ global $tracks , $tasks ;
   include("footer.php");
 }
 
-function editsheet($trackid) {
+function editsheet($trackid) 
+{
 
   global $trackmsg, $tracks , $tasks ;
   include("header.php");
@@ -297,7 +305,8 @@ function editsheet($trackid) {
   include("footer.php");
 }
 
-function updatesheet($trackid) {
+function updatesheet($trackid) 
+{
 
   global $trackmsg, $taskid, $text, $steps, $team, $tracks , $tasks ;
   
@@ -308,7 +317,8 @@ function updatesheet($trackid) {
   } else { echo "<p>You are not authorised to update this page.</p>";}
 }
 
-function adminproject() {
+function adminproject() 
+{
 
   global $trackmsg, $tracks , $tasks ;
   include("header.php");
@@ -345,7 +355,8 @@ function adminproject() {
   include("footer.php");
 }
 
-function updateproject($trackid) {
+function updateproject($trackid) 
+{
 
   global $trackmsg, $trackid, $trackname, $tracklead, $trackcat, $tracks , $tasks ;
   if (authorised(0,"Dynamic::",0,ACCESS_ADMIN)) {
@@ -354,7 +365,8 @@ function updateproject($trackid) {
   } else { echo "<p>You are not authorised to update this page.</p>";}
 }
 
-function addtrack() {
+function addtrack() 
+{
 
   global $trackmsg, $trackname, $tracklead, $trackcat, $tracks , $tasks ;
   if (authorised(0,"Dynamic::",0,ACCESS_ADMIN)) {
@@ -363,7 +375,8 @@ function addtrack() {
   } else { echo "<p>You are not authorised to edit this page.</p>";}
 }
 
-function printtracksummary($trackid) {
+function printtracksummary($trackid) 
+{
 global $tracks , $tasks ;
 
   $result1 = mysql_query("SELECT taskid, title, text, DATE_FORMAT(startdate, '%b %d, %y'), DATE_FORMAT(enddate, '%b %d, %y'), DATE_FORMAT(lastdate, '%b %d, %y'), percent FROM $tasks where trackid='$trackid' ORDER BY startdate ASC");
@@ -402,7 +415,8 @@ global $tracks , $tasks ;
   echo "</div></body></html>";
 }
 
-function printtrackcomplete($trackid) {
+function printtrackcomplete($trackid) 
+{
 global $tracks , $tasks ;
 
   echo "
@@ -462,7 +476,8 @@ global $tracks , $tasks ;
   ";
 }
 
-function printprojectcomplete() {
+function printprojectcomplete() 
+{
 	
   global $sitename, $tracks , $tasks ;
   $result = mysql_query("SELECT trackid, trackname, tracklead, trackstatus FROM $tracks ORDER BY trackname");
@@ -498,7 +513,8 @@ function printprojectcomplete() {
   echo "</div></body></html>";
 }
 
-function printprojectsummary() {
+function printprojectsummary() 
+{
   //This function isn't really used anymore
 	
   global $sitename, $tracks , $tasks ;
