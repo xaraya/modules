@@ -9,13 +9,13 @@
     <input type="hidden" name="module" value="weather" />
     <input type="hidden" name="func" value="main" />
     <input type="hidden" name="type" value="user" />
-	<select name="xwloc">
+    <select name="xwloc">
     <xar:foreach in="$matches" value="$location">
         <option value="#$location.zip#">#$location.name#</option>
     </xar:foreach>
     </select>
-	<input type="submit" name="submit" value="Get Forecast">
-	</form>
+    <input type="submit" name="submit" value="Get Forecast">
+    </form>
 <xar:elseif condition="$error eq true" />
     <p class="xar-error">No Matches were found</p>
 </xar:if>
