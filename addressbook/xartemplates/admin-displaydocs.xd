@@ -6,10 +6,10 @@
 <!--- START TITLE BAR -----------------------------------------------------------  --->
 <xar:template compile="false" file="mod-admin-title" type="module" />
 <!--- END TITLE BAR -------------------------------------------------------------  --->
-<div class="xar-mod-body" style="display:block;">
-  <div class="xar-alt-outline" style="padding:0em 2em 2em 2em;">
+<div class="xar-mod-body">
   <h2><xar:mlstring>Administrator Documentation</xar:mlstring></h2>
-    <div style="float:right;display:block;background-color:#ffffff;padding:.25em;">
+  <div class="xar-norm-outline" style="padding:.25em;">
+    <div style="float:right;display:block;background-color:#ffffff;padding:.5em;">
 	    <xar:set name="$modInfo">xarModGetInfo(xarModGetIDFromName(__ADDRESSBOOK__))</xar:set>
           <img src="modules/#$modInfo['directory']#/xarimages/admin.gif" alt="official icon" width="96" height="96" />
     </div>

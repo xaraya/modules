@@ -301,7 +301,7 @@ define('_AB_DEVQA_NAME',	__ADDRESSBOOK__."QualityControl");
 define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
 // I use this to track individual builds in the event I push files that
 // do not require the user to upgrade
-define('_AB_BUILD_VER',	  '1.2.1.2'); 
+define('_AB_BUILD_VER',	  '1.2.1.3'); 
 
 ////////////////
 //
