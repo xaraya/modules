@@ -1,7 +1,8 @@
 <?php
 
-function comments_user_usermenu() 
+function comments_user_usermenu($args) 
 {
+    extract($args);
 
     // Security Check
     if (xarSecurityCheck('Comments-Read',0)) {

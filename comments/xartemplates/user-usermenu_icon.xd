@@ -1,7 +1,20 @@
-<p>
-    <a href="#xarModURL('comments', 'user', 'usermenu', array('phase' => 'form'))#">
-        <xar:mlstring>
-            Set Comment Viewing Defaults
-        </xar:mlstring>
-    </a>
-</p>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+<xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'comments'))</xar:set>
+<xar:if condition="$compare eq $current">
+    <dd class="active">
+        <a href="#xarServerGetCurrentURL()#">
+            <xar:mlstring>
+                Comments
+            </xar:mlstring>
+        </a>
+    </dd>    
+<xar:else />
+    <dd>
+        <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'comments'))#">
+            <xar:mlstring>
+                Comments
+            </xar:mlstring>
+        </a>
+    </dd>    
+</xar:if>
