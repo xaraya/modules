@@ -18,44 +18,44 @@
     <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td class="xar-norm">
-            #$loop:item['whois_ext']#
+            #$loop:item.whois_ext#
         </td>
         <td class="xar-norm">
-            #$loop:item['whois_server']#
+            #$loop:item.whois_server#
         </td>
         <td align="center" class="xar-norm">
-           <xar:if condition="empty($loop:item['editurl'])">
+           <xar:if condition="empty($loop:item.editurl)">
                #$edittitle#
                <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
            </xar:if>
            |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
+           <xar:if condition="empty($loop:item.deleteurl)">
+               #$loop:item.deletetitle#
                <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
            </xar:if>
         </td>
     </tr>
     <xar:else />
     <tr>
         <td class="xar-accent">
-            #$loop:item['whois_ext']#
+            #$loop:item.whois_ext#
         </td>
         <td class="xar-accent">
-            #$loop:item['whois_server']#
+            #$loop:item.whois_server#
         </td>
         <td align="center" class="xar-accent">
-           <xar:if condition="empty($loop:item['editurl'])">
-               #$loop:item['edittitle']#
+           <xar:if condition="empty($loop:item.editurl)">
+               #$loop:item.edittitle#
                <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
            </xar:if>
            |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
+           <xar:if condition="empty($loop:item.deleteurl)">
+               #$loop:item.deletetitle#
                <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
            </xar:if>
         </td>
     </tr>
@@ -64,9 +64,9 @@
 </table>
 </div>
 </div>
-<p><a href="#$wialink['url']#">#$wialink['title']#</a> -
-<a href="#$cfglink['url']#">#$cfglink['title']#</a> -
-<a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
+<p><a href="#$wialink.url#">#$wialink.title#</a> -
+<a href="#$cfglink.url#">#$cfglink.title#</a> -
+<a href='javascript:openwindow("#$hlplink.url#");'>#$hlplink.label#</a></p>
 <script type="text/javascript">
     function openwindow(hlpfile)
     {

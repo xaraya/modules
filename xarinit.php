@@ -67,6 +67,8 @@ function netquery_upgrade($oldversion)
         case '2.0.0':
             break;
         case '2.1.0':
+            break;
+        case '2.2.0':
         default:
             break;
     }

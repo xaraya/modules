@@ -3,7 +3,6 @@ function netquery_user_main()
 {
     $data = xarModAPIFunc('netquery', 'user', 'mainapi');
     $clrlink = $data['clrlink'];
-    $data['authid'] = xarSecGenAuthKey();
     if ($data['querytype'] == 'none')
     {
         return $data;
@@ -20,7 +19,8 @@ function netquery_user_main()
             $target = $domain[$j].$whois_ext[$j];
             $link = xarModAPIFunc('netquery', 'user', 'getlink', array('whois_ext' => $whois_ext[$j]));
             $whois_server = $link['whois_server'];
-            $msg = ('<p><b>Whois Results '.$j.' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+            if ($whois_server == 'whois.denic.de') $target = ' -T dn '.$target;
+            $msg = ('<p><b>Whois Results '.$j.' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
             if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)){
                 unset($sock);
                 $msg .= "Timed-out connecting to $whois_server (port 43)";
@@ -57,8 +57,8 @@ function netquery_user_main()
                 }
             }
             $msg .= nl2br($readbuf);
-            $msg .= "</blockquote></p>";
-            $data['results'] .= $msg . '<hr>';
+            $msg .= '<br /><hr /></p>';
+            $data['results'] .= $msg;
             $j++;
         }
     }
@@ -69,7 +69,7 @@ function netquery_user_main()
         $extra = '';
         $target = $data['host'];
         $whois_server = "whois.arin.net";
-        $msg = ('<p><b>IP Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg = ('<p><b>IP Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if (!$target = gethostbyname($target)) {
             $msg .= "IP Whois requires an IP address.";
         } else {
@@ -109,26 +109,26 @@ function netquery_user_main()
             $readbuf = str_replace(" ", "&nbsp;", $readbuf);
             $msg .= nl2br($readbuf);
         }
-        $msg .= "</blockquote></p>";
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '<br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     else if ($data['querytype'] == 'lookup')
     {
         $target = $data['host'];
-        $msg = ('<p><b>DNS Lookup Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg = ('<p><b>DNS Lookup Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         $msg .= $target.' resolved to ';
         if (eregi("[a-zA-Z]", $target))
             $msg .= gethostbyname($target);
         else
             $msg .= gethostbyaddr($target);
-        $msg .= '</blockquote></p>';
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '<br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     else if ($data['querytype'] == 'dig')
     {
         $target = $data['host'];
         $digparam = $data['digparam'];
-        $msg = ('<p><b>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg = ('<p><b>DNS Query (Dig) Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if (eregi("[a-zA-Z]", $target))
             $ntarget = gethostbyname($target);
         else
@@ -140,8 +140,8 @@ function netquery_user_main()
             if (! $msg .= trim(nl2br(`dig $digparam '$target'`)))
                 $msg .= "The <i>dig</i> command is not working on your system.";
         }
-        $msg .= '</blockquote></p>';
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '<br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     else if ($data['querytype'] == 'port')
     {
@@ -151,7 +151,7 @@ function netquery_user_main()
         $portdata = xarModAPIFunc('netquery', 'user', 'getportdata', array('port' => $tport));
         $msg = ('<p><b>Port '.$tport.' Services &amp; Exploits [<a href="http://isc.sans.org/port_details.php?port='.$tport.'" target="_blank">Details</a>]');
         if ($data['user_submissions']) $msg .= (' [<a href="'.$submitlink['url'].'">'.$submitlink['label'].'</a>]');
-        $msg .= (' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg .= (' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if (!empty($target) && $target != 'None') {
             if (! $sock = @fsockopen($target, $tport, $errnum, $error, 10)) {
                 $msg .= 'Port '.$tport.' does not appear to be open.<br />';
@@ -162,18 +162,18 @@ function netquery_user_main()
         } else {
             $msg .= "No host specified for port check.";
         }
-        $msg .= '<table border=0 cellspacing=0 cellpadding=4>';
-        $msg .= '<tr><th align="left">Protocol</th><th align="left">Service/Exploit</th><th align="left">Notes (Click to Search)</th></tr>';
+        $msg .= '<table class="results">';
+        $msg .= '<tr><th>Protocol</th><th>Service/Exploit</th><th>Notes (Click to Search)</th></tr>';
         foreach($portdata as $portdatum)
         {
           if (!empty($portdatum['protocol'])) {
             $flagdata = xarModAPIFunc('netquery', 'user', 'getflagdata', array('flagnum' => $portdatum['flag']));
             $notes = '<font color="'.$flagdata['fontclr'].'">['.$flagdata['keyword'].']</font> <a href="'.$flagdata['lookup_1'].$portdatum['comment'].'" target="_blank">'.$portdatum['comment'].'</a>';
-            $msg .= '<tr><td>'.$portdatum['protocol'].'</td><td>'.$portdatum['service'].'</td><td>'.$notes.'</td></tr>';
+            $msg .= '<tr><td class="results">'.$portdatum['protocol'].'</td><td class="results">'.$portdatum['service'].'</td><td class="results">'.$notes.'</td></tr>';
           }
         }
-        $msg .= '</table></blockquote></p>';
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '</table><br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     else if ($data['querytype'] == 'http')
     {
@@ -193,7 +193,7 @@ function netquery_user_main()
         $fp_Send      = $data['httpreq'] . " $url_Req HTTP/1.0\n";
         $fp_Send     .= "Host: $url_Host\n";
         $fp_Send     .= "User-Agent: Netquery/1.2 PHP/" . phpversion() . "\n";
-        $msg = ('<p><b>HTTP Request Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote><pre>');
+        $msg = ('<p><b>HTTP Request Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p><pre>');
         if (! $sock = @fsockopen($url_Host, $url_Port, $errnum, $error, 10)) {
             unset($sock);
             $msg .= 'Unable to connect to host: '.$url_Host.' port: '.$url_Port.'.';
@@ -205,8 +205,8 @@ function netquery_user_main()
             @fclose($sock);
             $msg .= htmlspecialchars($readbuf);
         }
-        $msg .= '</pre></blockquote></p>';
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '</pre><br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     else if ($data['querytype'] == 'ping')
     {
@@ -214,7 +214,7 @@ function netquery_user_main()
         $target = $data['host'];
         $tpoints = $data['maxp'];
         $pexec = $data['pingexec'];
-        $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg = ('<p><b>ICMP Ping Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if ($data['winsys']) {$PN=$pexec['exec_local'].' -n '.$tpoints.' '.$target;}
         else {$PN=$pexec['exec_local'].' -c'.$tpoints.' -w'.$tpoints.' '.$target;}
         exec($PN, $response, $rval);
@@ -224,8 +224,8 @@ function netquery_user_main()
         if (! $msg .= trim(nl2br($png))) {
             $msg .= 'Ping failed. You may need to configure your server permissions.';
         }
-        $msg .= '</blockquote></p>';
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '<br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     else if ($data['querytype'] == 'pingrem')
     {
@@ -235,7 +235,7 @@ function netquery_user_main()
         $rt = '';
         $target = $data['host'];
         $texec = $data['traceexec'];
-        $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg = ('<p><b>Traceroute Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if ($data['winsys']) {$TR=$texec['exec_local'].' '.$target;}
         else {$TR=$texec['exec_local'].' '.$target;}
         exec($TR, $response, $rval);
@@ -245,8 +245,8 @@ function netquery_user_main()
         if (! $msg .= trim(nl2br($rt))) {
             $msg .= 'Traceroute failed. You may need to configure your server permissions.';
         }
-        $msg .= '</blockquote></p>';
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '<br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     else if ($data['querytype'] == 'tracerem')
     {
@@ -279,7 +279,7 @@ function netquery_user_main()
         {
             $lgpassword = $lgdefault['password'];
         }
-        $msg = ('<p><b>Looking Glass Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        $msg = ('<p><b>Looking Glass Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b></p><p>');
         if (!$lghandler)
         {
             $msg .= 'This '.$lgrequest['request'].' request is not permitted for '.$lgrouter['router'].':'.$lgport.' by administrator.';
@@ -314,8 +314,8 @@ function netquery_user_main()
             $msg .= nl2br(substr($readbuf, $start, $len));
             @fclose ($sock);
         }
-        $msg .= '</blockquote></p>';
-        $data['results'] .= $msg . '<hr>';
+        $msg .= '<br /><hr /></p>';
+        $data['results'] .= $msg;
     }
     $logfp = $data['logfile'];
     if ($data['capture_log_enabled'] && $logfp['exec_local'])

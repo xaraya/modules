@@ -2,7 +2,7 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Delete a Whois Lookup Link</xar:mlstring></h2>
 <p>#$confirminfo#</p>
-<form method="post" action="#xarModURL('netquery', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded">
+<form action="#xarModURL('netquery', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded">
     <div style="clear: both; padding-top: 10px;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="whois_id" id="whois_id" value="#$whois_id#" />

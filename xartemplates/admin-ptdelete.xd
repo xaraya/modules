@@ -1,21 +1,20 @@
 <div class="xar-mod-head">
-<span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
 
-<h2><xar:mlstring>Delete a Port Service</xar:mlstring></h2>
+<h2><xar:mlstring>Deleting Port Service Data Id #</xar:mlstring>#$port_id#</h2>
 
 <p>#$confirminfo#</p>
 
-<form method="post" action="#xarModURL('netquery', 'admin', 'ptdelete')#" method="post" enctype="application/x-www-form-urlencoded">
+<form action="#xarModURL('netquery', 'admin', 'ptdelete')#" method="post" enctype="application/x-www-form-urlencoded">
     <div style="clear: both; padding-top: 10px;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="port_id" id="port_id" value="#$port_id#" />
     <input type="hidden" name="pflag" id="pflag" value="#$pflag#" />
     <input type="hidden" name="confirm" id="confirm" value="1" />
     <input type="hidden" name="confirmation" id="confirmation" value="1" />
-    </div>
-    <div style="clear: both; padding-top: 10px;">
     <span class="xar-title" style="float: right; width: 78%; text-align: left;">
         <xar:mlstring>Confirm deletion: </xar:mlstring>
         <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
@@ -23,4 +22,5 @@
     </span>
     </div>
 </form>
+
 </div>

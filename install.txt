@@ -12,6 +12,9 @@ IMPORTANT NOTES:
   Port Check feature, its "Build New Table" option must be run once.  Updates
   for the xaports.php and xaports2.php files will be available from time to time
   on the http://www.virtech.org/tools/ page.
+- All packages include two image sets (blue and grey) of query selector buttons and
+  two CSS stylesheet layouts (vertical and horizontal) to overwrite the netquery.css
+  file, or "roll your own"</td>
 ---------------
 That's it -- enjoy!
 Richard Virtue - http://virtech.org/

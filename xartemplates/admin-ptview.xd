@@ -1,21 +1,30 @@
 <div class="xar-mod-head">
-<span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
 
-<h2><xar:mlstring>View-Edit Port Services/Exploits</xar:mlstring></h2>
+<h2><xar:mlstring>Netquery Port Services Configuration</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img style="vertical-align:top;" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+</h2>
+
 <h4><xar:mlstring>Flag ## entry overrides port ## entry</xar:mlstring></h4>
+
+<form action="#xarModURL('netquery', 'admin', 'ptview')#" method="post" enctype="application/x-www-form-urlencoded" >
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
-<form method="post" action="#xarModURL('netquery', 'admin', 'ptview')#" method="post" enctype="application/x-www-form-urlencoded" >
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <tr><td><label for="portnum">#$portnumlabel#</label>
-    <input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10">
-    <label for="pflag">#$pflaglabel#</label>
-    <input type="text" name="pflag" id="pflag" value="#$pflag#" size="3" maxlength="4">
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td></tr>
-</form>
+    <tr>
+        <td>
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <label for="portnum">#$portnumlabel#</label>
+        <input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10" />
+        <label for="pflag">#$pflaglabel#</label>
+        <input type="text" name="pflag" id="pflag" value="#$pflag#" size="3" maxlength="4" />
+        <input type="image" style="vertical-align:top;" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />
+        </td>
+    </tr>
 </table>
+</form>
+
 <div class="xar-accent">
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <tr>
@@ -36,50 +45,50 @@
     <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td class="xar-norm">
-            #$loop:item['port']#
+            #$loop:item.port#
         </td>
         <td class="xar-norm">
-            #$loop:item['protocol']#
+            #$loop:item.protocol#
         </td>
         <td class="xar-norm">
-            #$loop:item['service']#
+            #$loop:item.service#
         </td>
-        <td align="center" class="xar-norm">
-           <xar:if condition="empty($loop:item['editurl'])">
+        <td class="xar-norm">
+           <xar:if condition="empty($loop:item.editurl)">
                #$edittitle#
                <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
            </xar:if>
            |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
+           <xar:if condition="empty($loop:item.deleteurl)">
+               #$loop:item.deletetitle#
                <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
            </xar:if>
         </td>
     </tr>
     <xar:else />
     <tr>
         <td class="xar-accent">
-            #$loop:item['port']#
+            #$loop:item.port#
         </td>
         <td class="xar-accent">
-            #$loop:item['protocol']#
+            #$loop:item.protocol#
         </td>
         <td class="xar-accent">
-            #$loop:item['service']#
+            #$loop:item.service#
         </td>
-        <td align="center" class="xar-accent">
-           <xar:if condition="empty($loop:item['editurl'])">
-               #$loop:item['edittitle']#
+        <td class="xar-accent">
+           <xar:if condition="empty($loop:item.editurl)">
+               #$loop:item.edittitle#
                <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
            </xar:if>
            |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
+           <xar:if condition="empty($loop:item.deleteurl)">
+               #$loop:item.deletetitle#
                <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
            </xar:if>
         </td>
     </tr>
@@ -88,10 +97,9 @@
 </table>
 </div>
 
-<p><a href="#$ptalink['url']#">#$ptalink['title']#</a> -
-<a href="#$cfglink['url']#">#$cfglink['title']#</a> -
-<a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
-<script language="javascript" type="text/javascript">
+<p><a href="#$ptalink.url#">#$ptalink.title#</a> -
+<a href="#$cfglink.url#">#$cfglink.title#</a></p>
+<script type="text/javascript">
     function openwindow(hlpfile)
     {
         window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");

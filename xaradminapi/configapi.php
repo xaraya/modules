@@ -25,6 +25,19 @@ function netquery_adminapi_configapi()
     $data['lgdefault'] = xarModAPIFunc('netquery', 'admin', 'getlgrdata', array('router' => 'default'));
     $data['portsubmits'] = xarModAPIFunc('netquery', 'admin', 'countportflag', array('flag' => '99'));
     $data['whoislimits'] = Array(1, 2, 3, 4, 5);
+    $startoptions = array();
+      $startoptions[] = array('name' => 'Whois', 'value' => 'whois');
+      $startoptions[] = array('name' => 'Whois IP', 'value' => 'whoisip');
+      $startoptions[] = array('name' => 'DNS Lookup', 'value' => 'lookup');
+      $startoptions[] = array('name' => 'DNS Dig', 'value' => 'dig');
+      $startoptions[] = array('name' => 'Port Check', 'value' => 'port');
+      $startoptions[] = array('name' => 'HTTP Request', 'value' => 'http');
+      $startoptions[] = array('name' => 'Ping', 'value' => 'ping');
+      $startoptions[] = array('name' => 'Ping Remote', 'value' => 'pingrem');
+      $startoptions[] = array('name' => 'Traceroute', 'value' => 'trace');
+      $startoptions[] = array('name' => 'Trace Remote', 'value' => 'tracerem');
+      $startoptions[] = array('name' => 'Looking Glass', 'value' => 'lgquery');
+    $data['startoptions'] = $startoptions;
     $data['cfglink'] = Array('url'   => xarModURL('netquery', 'admin', 'config'),
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));

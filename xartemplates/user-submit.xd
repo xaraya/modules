@@ -5,17 +5,16 @@
 
 <xar:if condition="empty($thankyou)">
 
-<h2><xar:mlstring>Submit a New Port Service/Exploit</xar:mlstring></h2>
+<h2><xar:mlstring>Submit a New Port Service or Exploit</xar:mlstring></h2>
 
-<table border=0 cellspacing=0 cellpadding=4>
-<form method="post" action="#xarModURL('netquery', 'user', 'submit')#" method="post" enctype="application/x-www-form-urlencoded" >
+<form action="#xarModURL('netquery', 'user', 'submit')#" method="post" enctype="application/x-www-form-urlencoded" >
+<table border="0" cellspacing="0" cellpadding="4">
+<tr><td>
 <input type="hidden" name="authid" value="#$authid#" />
 <input type="hidden" name="phase" id="phase" value="update" />
 <input type="hidden" name="portnum" id="portnum" value="#$portnum#" />
 <input type="hidden" name="port_flag" id="port_flag" value="99" />
-<tr><td colspan=4>
-<span><xar:mlstring>Adding a New Port Service or Exploit</xar:mlstring></span>
-</tr></td><tr><td>
+</td></tr><tr><td>
 <span class="help" title="#xarML('The port number')#"><label for="port_port"><xar:mlstring>Port</xar:mlstring></label></span>
 </td><td>
 <span class="help" title="#xarML('The port protocol')#"><label for="port_protocol"><xar:mlstring>Protocol</xar:mlstring></label></span>
@@ -23,7 +22,7 @@
 <span class="help" title="#xarML('The port service')#"><label for="port_service"><xar:mlstring>Service</xar:mlstring></label></span>
 </td><td>
 <span class="help" title="#xarML('Notes and comments')#"><label for="port_comment"><xar:mlstring>Comment</xar:mlstring></label></span>
-</tr></td><tr><td>
+</td></tr><tr><td>
 <input type="text" name="port_port" id="port_port" value="#$portnum#" size="2" maxlength="5" />
 </td><td>
 <input type="text" name="port_protocol" id="port_protocol" value="" size="3" maxlength="3" />
@@ -31,12 +30,12 @@
 <input type="text" name="port_service" id="port_service" value="" size="20" maxlength="35" />
 </td><td>
 <input type="text" name="port_comment" id="port_comment" value="" size="25" maxlength="50" />
-</td></tr><tr><td colspan=4 align="center">
+</td></tr><tr><td colspan="4" style="text-align:center;">
 <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
 <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
 </td></tr>
-</form>
 </table>
+</form>
 
 <xar:else />
 

@@ -41,12 +41,12 @@ function create_exectable()
         $query ="INSERT INTO $ExecTable (`exec_id`, `exec_type`, `exec_local`, `exec_winsys`, `exec_remote`, `exec_remote_t`) VALUES
         (1, 'ping', 'ping.exe', 1, 'http://noc.thunderworx.net/cgi-bin/public/ping.pl', 'target'),
         (2, 'trace', 'tracert.exe', 1, 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', 'target'),
-        (3, 'log', 'var/logs/nq_log.txt', 1, 'Y-m-d H:i:s', '-');";
+        (3, 'log', 'var/logs/nq_log.txt', 1, 'Y-m-d H:i:s', 'whois');";
     } else {
         $query ="INSERT INTO $ExecTable (`exec_id`, `exec_type`, `exec_local`, `exec_winsys`, `exec_remote`, `exec_remote_t`) VALUES
         (1, 'ping', 'ping.exe', 0, 'http://noc.thunderworx.net/cgi-bin/public/ping.pl', 'target'),
         (2, 'trace', 'traceroute.exe', 0, 'http://noc.thunderworx.net/cgi-bin/public/traceroute.pl', 'target'),
-        (3, 'log', 'var/logs/nq_log.txt', 0, 'Y-m-d H:i:s', '-');";
+        (3, 'log', 'var/logs/nq_log.txt', 0, 'Y-m-d H:i:s', 'whois');";
     }
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {
@@ -97,9 +97,9 @@ function create_flagstable()
         return;
     }
     $query = "INSERT INTO $FlagsTable (`flag_id`, `flagnum`, `keyword`, `fontclr`, `backclr`, `lookup_1`, `lookup_2`) VALUES
-    (1, 0, 'service', 'black', 'white', 'http://www.google.com/search?num=20&hl=en&ie=UTF-8&q=port+service+', ''),
-    (2, 1, 'trojan', 'red', 'white', 'http://www.google.com/search?num=20&hl=en&ie=UTF-8&q=trojan+', ''),
-    (3, 2, 'backdoor', 'purple', 'white', 'http://www.google.com/search?num=20&hl=en&ie=UTF-8&q=backdoor+', ''),
+    (1, 0, 'service', 'black', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=port+service+', ''),
+    (2, 1, 'trojan', 'red', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=trojan+', ''),
+    (3, 2, 'backdoor', 'purple', 'white', 'http://www.google.com/search?num=20&amp;hl=en&amp;ie=UTF-8&amp;q=backdoor+', ''),
     (4, 99, 'pending', 'green', 'white', '', '');";
     $result =& $dbconn->Execute($query);
     if ($dbconn->ErrorNo() != 0) {

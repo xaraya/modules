@@ -28,22 +28,22 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>From the administration menu, you have three choices:</xar:mlstring>
+            <xar:mlstring>From the administration menu, you have five choices:</xar:mlstring>
             <ul>
-            <li><a href="#$cfglink['url']#">#$cfglink['label']#</a><xar:mlstring>: From this
+            <li><a href="#$cfglink.url#">#$cfglink.label#</a><xar:mlstring>: From this
             menu option, you can select which Netquery functions will be available to users of
             your site, configure local and remote excution and set defaults for "looking glass"
             queries.</xar:mlstring></li>
-            <li><a href="#$wivlink['url']#">#$wivlink['label']#</a><xar:mlstring>: From this
+            <li><a href="#$wivlink.url#">#$wivlink.label#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete whois "lookup links" between top level domain
             (TLD) entries and whois servers.</xar:mlstring></li>
-            <li><a href="#$lgvlink['url']#">#$lgvlink['label']#</a><xar:mlstring>: From this
+            <li><a href="#$lgvlink.url#">#$lgvlink.label#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete "looking glass" router entries overriding
             default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
-            <li><a href="#$ptvlink['url']#">#$ptvlink['label']#</a><xar:mlstring>: From this
+            <li><a href="#$ptvlink.url#">#$ptvlink.label#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete port services data entries, including
             keyword comments on vulnerabilities displayed to port lookup users.</xar:mlstring></li>
-            <li><a href="#$flvlink['url']#">#$flvlink['label']#</a><xar:mlstring>: From this
+            <li><a href="#$flvlink.url#">#$flvlink.label#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete the flagging data used for services and
             exploits, including keywords, font colors and search lookup URLs.</xar:mlstring></li>
             </ul>
@@ -67,11 +67,11 @@
         <br />
         <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
             <xar:mlstring>Extended information about this module can be found in the</xar:mlstring>
-            <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a>
+            <a href='javascript:openwindow("#$hlplink.url#");'>#$hlplink.label#</a>
         </div>
     </div>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
     function openwindow(hlpfile)
     {
         window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");

@@ -1,47 +1,118 @@
-<html>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
 <head>
 <title>Netquery Manual</title>
-<style>
-    body,td,div {
-        font-family : Verdana,Arial,Helvetica,sans-serif;
-        font-size : .8em;
-        color: black;
-        background-color: white;
-    }
-    table.main {
-        background-color: black;
-        width : 100%;
-    }
-    .help-topic {
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<style type="text/css">
+body {
+    font-family: "trebuchet ms", "luxi sans", verdana, helvetica, sans-serif;
+    font-size: 100.01%;
+    line-height: 125%;
+    margin: 5px 1%;
+    padding: 0;
+    color: #000000;
+    background-color: #FFFFFF;
+    background-image: url(images/page_bg.gif);
+    background-repeat: repeat-x;
+    background-position: 0% 0%;
+    background-attachment: fixed;
+    text-align: left;
+}
+a:link {
+	color: #003366;
+	text-decoration: none;
+}
+a:visited {
+	color: #323232;
+	text-decoration: none;
+}
+a:link:hover {
+	text-decoration: underline;
+}
+a:visited:hover {
+	text-decoration: underline;
+}
+a:link:active {
+	color: #800000;
+	text-decoration: underline;
+}
+a:visited:active {
+	color: red;
+	text-decoration: underline;
+}
+h3 {
+	background-color: #A0C0F0;
+	color: #000000;
+	width: 98%;
+	padding: 3px 6px;
+}
+img {
+	border-style: none;
+	margin: 2px 2px 2px 2px;
+}
+img.zero {
+	border-style: none;
+	margin: 0 0 0 0;
+}
+img.outset {
+  border-style: outset;
+  border-width: 4px;
+  border-color: #CCCC99;
+	padding: 0;
+	margin: 0 0 0 0;
+}
+table {
+	text-align: left;
+	margin-left: 10px;
+	background-color: #D0E0F0;
+        border-collapse: collapse;
+}
+th {
+	border-bottom: 1px solid #404050;
+	border-right: 1px dotted #606070;
+        border-top: none;
+        border-left: none;
+	padding: 0px 5px 1px 5px;
+	font-weight: bold;
+	background-color: #A0C0F0;
+}
+td {
+	padding: 0px 5px 1px 5px;
+	border-right: 1px dotted #606070;
+        border-left: none;
+        border-bottom: none;
+        border-top: none;
+}
+.help-topic {
         font-weight : bold;
         font-size : 1em;
-        color : white;
-        background-color : black;
-    }
-    .item-heading {
+        color : black;
+        background-color : #A0C0F0;
+}
+.item-heading {
         font-weight : bold;
         vertical-align : top;
         text-align : center;
-        background-color: #dddddd;
-    }
-    .item {
-        font-weight : bold;
-        vertical-align : top;
-        background-color: #cccccc;
-    }
-    .item-desc {
-    }
+        background-color: #CCCC99;
+}
+.item {
+}
+.item-desc {
+}
 </style>
 </head>
+
 <body>
 <h1 align="center">
-<a name="top"><img src="nqtoppix.gif" border=0 width=225 height=111 alt=""></a>
+<a name="top"><img src="../xarimages/nqtoppix.gif" class="outset" width="225" height="111" alt="" /></a>
 <br />Netquery Manual</h1>
 
 <h2><a name="summary">Summary</a></h2>
 
 <p>Netquery, the complete PHP/SQL toolkit of network information utilities, includes the following
-major features:<ul>
+major features:</p><ul>
 <li>multidomain and IP/AS whois lookups,</li>
 <li>DNS and Dig (ANY, SOA, NS, MX) queries,</li>
 <li>port services and exploits lookup with status check,</li>
@@ -51,7 +122,7 @@ major features:<ul>
 <li>looking glass router interrogation,</li>
 <li>whois lookup server autodiscovery,</li>
 <li>data table updates independent of module updating, and</li>
-<li>user submissions with admin notification and approval.</li></ul></p>
+<li>user submissions with admin notification and approval.</li></ul>
 
 <p>The administrator can enable or disable each feature individually and can configure local execution
 and/or a remote server script for the ping and traceroute features. The administrator can also edit
@@ -63,7 +134,7 @@ downloaded and updated independently of the module itself.</p>
 
 <p>A standlone edition and three CMS module editions of Netquery are available for download from the
 home site or from their respective CMS development project sites.  Live test installations and
-user-to-user discussion and help forums are also available on line as follows:<ul>
+user-to-user discussion and help forums are also available on line as follows:</p><ul>
 <li><a href="http://www.virtech.org/tools/" target="_top">Netquery Home</a>
  ~ <a href="http://www.virtech.org/netquery/" target="_top">Standalone Edition Live</a></li>
 <li><a href="http://noc.postnuke.com/projects/netquery/" target="_top">Postnuke Project</a>
@@ -73,7 +144,7 @@ user-to-user discussion and help forums are also available on line as follows:<u
 <li><a href="http://dev.xoops.org/modules/xfmod/project/?mwr-netquery" target="_top">Xoops Project</a>
  ~ <a href="http://xoops.virtech.org/modules/netquery/" target="_top">Xoops Edition Live</a></li>
 <li><a href="http://www.virtech.org/phpbb2/" target="_top">Discussion &amp; Help Forums</a></li>
-</ul></p>
+</ul>
 
 <h3>Download Notes</h3>
 
@@ -123,21 +194,23 @@ reconfigured to suit your needs and preferences.</p>
 
 <p>The following table summarizes the set-up steps and all available administrative options.</p>
 
-<table class="main" cellpadding=4 cellspacing=1>
+<table class="main" cellpadding="4" cellspacing="1">
     <tr class="help-topic">
-        <td class="help-topic" colspan=2><a name="admin">Netquery Administration</a></td>
+        <td class="help-topic" colspan="2"><a name="admin">Netquery Administration</a></td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Installation of the Standalone Edition</td></tr>
+    <tr><td class="item-heading" colspan="2">Installation of the Standalone Edition</td></tr>
     <tr>
         <td class="item">1. Unzip and Edit</td>
-        <td class="item-desc">From the unzipped download, edit nqconfig.php to
-                              specify parameters for your SQL database.</td>
+        <td class="item-desc">Unzip the download and edit nqconfig.php to specify parameters for your SQL database.
+        All packages include two image sets (blue and grey) of query selector buttons and two CSS stylesheet
+        layouts (vertical and horizontal) to overwrite the netquery.css file, or "roll your own"</td>
     </tr>
     <tr>
         <td class="item">2. Upload and Start</td>
         <td class="item-desc">Upload all Netquery files and subfolders to your web site and
                               browse to netquery/index.php.</td>
     </tr>
+    <tr>
         <td class="item">3. Remove Set-Up File</td>
         <td class="item-desc">Run the automatic setup process, remove the nqsetup.php
                               file and go to the main nquser.php page.</td>
@@ -148,10 +221,12 @@ reconfigured to suit your needs and preferences.</p>
         If you wish to display services and exploits data for port checks, be sure to select the "Build New Table"
         option for that feature and follow the on-screen instructions.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Installation of Content Management System (CMS) Editions</td></tr>
+    <tr><td class="item-heading" colspan="2">Installation of Content Management System (CMS) Editions</td></tr>
     <tr>
         <td class="item">1. Unzip and Copy</td>
-        <td class="item-desc">Copy the unzipped download into your CMS modules folder as Netquery sub-folder.</td>
+        <td class="item-desc">Copy the unzipped download into your CMS modules folder as Netquery sub-folder.
+        All packages include two image sets (blue and grey) of query selector buttons and two CSS stylesheet
+        layouts (vertical and horizontal) to overwrite the netquery.css file, or "roll your own"</td>
     </tr>
     <tr>
         <td class="item">2. Install and Activate</td>
@@ -163,11 +238,15 @@ reconfigured to suit your needs and preferences.</p>
         If you wish to display services and exploits data for port checks, be sure to select the "Build New Table"
         option for that feature and follow the on-screen instructions.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Netquery Options Configuration</td></tr>
+    <tr><td class="item-heading" colspan="2">Netquery Options Configuration</td></tr>
+    <tr>
+        <td class="item">Default Startup Page</td>
+        <td class="item-desc">Select the query type for the default user interface on startup.</td>
+    </tr>
     <tr>
         <td class="item">Enable Netquery Log</td>
-        <td class="item-desc">Logs actions and <a href="#datetime">datetime</a>
-        to specified path/filename. (Requires write permission.)</td>
+        <td class="item-desc">Logs actions and <a href="#datetime">datetime</a> to specified path/filename.
+        (Requires write permission.)</td>
     </tr>
     <tr>
         <td class="item">Enable Whois Search</td>
@@ -213,7 +292,7 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Enable Looking Glass</td>
         <td class="item-desc">Interrogates looking glass routers using IPv4 and IPv6 daemons.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Edit Whois Server/TLD Links</td></tr>
+    <tr><td class="item-heading" colspan="2">Edit Whois Server/TLD Links</td></tr>
     <tr>
         <td class="item">Edit</td>
         <td class="item-desc">This option for each listed whois server-TLD pair allows you to edit that "linkage".</td>
@@ -226,7 +305,7 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new whois server-TLD pair.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Edit Port Services/Exploits</td></tr>
+    <tr><td class="item-heading" colspan="2">Edit Port Services/Exploits</td></tr>
     <tr>
         <td class="item">Edit</td>
         <td class="item-desc">This option for each listed port service allows you to edit its protocol and service notes.</td>
@@ -239,7 +318,7 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new port service and lookup information.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Edit Service/Exploit Flags</td></tr>
+    <tr><td class="item-heading" colspan="2">Edit Service/Exploit Flags</td></tr>
     <tr>
         <td class="item">Edit</td>
         <td class="item-desc">This option for each listed flag allows you to edit its display keyword and search URL.</td>
@@ -252,7 +331,7 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new flag for classifying port services/exploits.</td>
     </tr>
-    <tr><td class="item-heading" colspan=2>Edit Looking Glass Routers</td></tr>
+    <tr><td class="item-heading" colspan="2">Edit Looking Glass Routers</td></tr>
     <tr>
         <td class="item">Edit</td>
         <td class="item-desc">This option for each listed looking glass router allows you to edit its settings.</td>
@@ -265,9 +344,9 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new looking glass router.</td>
     </tr>
+    <tr><td class="item-heading" colspan="2">Important Notes</td></tr>
     <tr>
-        <td class="help-desc" colspan=2>
-        <p><b>Important Notes</b>:<br />
+        <td class="help-desc" colspan="2">
         - Netquery's local ping and traceroute options require read/execute permission for your
           server OS executables.<br />
         - The Netquery Log option requires write permission for the specified path/filename.<br />
@@ -278,7 +357,7 @@ reconfigured to suit your needs and preferences.</p>
         - Looking glass default settings, except disabled items, may be overridden by individual
           router settings.<br />
         - Individual looking glass daemon port passwords take precedence over the default user password.
-        </p></td>
+        </td>
     </tr>
 </table>
 
@@ -329,7 +408,7 @@ for looking glass, it can be disabled for an individual router, but NOT vice ver
 <p>It is beyond this manual's scope to provide a complete background course on the Internet itself and
 on the entire range of issues involved in examining various aspects of its complex structure, topology
 and day-to-day operations. Instead, we'll focus here on actual usage and application of Netquery's
-"looking glass" tools and we'll include a few useful links to other documentation for those who might
+network info tools and we'll include a few useful links to other documentation for those who might
 like to pursue some of the underlying issues in greater depth.  Let it suffice to say that the better
 one understands those issues and their impacts on both service providers and end users, the more useful
 Netquery becomes.</p>
@@ -355,7 +434,8 @@ listing, you can ask the administrator to add it if an associated whois server i
 
 <h3><a name="whoisip">Whois IP Lookups</a></h3>
 <p>This Netquery feature provides owner-registrar information on a particular IP address, useful
-when you do not have the domain information needed to use the Whois Lookup feature described above.
+when you do not have the domain information needed to use the Whois Lookup feature described above.</p>
+
 <p>More info:
 <a href="http://www.arin.net/whois/" target="_blank">ARIN</a></p>
 
@@ -372,7 +452,8 @@ on the Internet, that domain name and its associated IP address.</p>
 
 <p>Netquery can provide users with both forward and reverse DNS resolutions. If the user enters a domain
 name, it will be resolved to its IP address.  If the user enters an IP address, it will be resolved to its
-domain name, if one has been allocated and propagated for that IP address.
+domain name, if one has been allocated and propagated for that IP address.</p>
+
 <p>More info:
 <a href="http://www.phpwebhosting.biz/faq_dns.php" target="_blank">phpweb</a>
 <a href="http://www.simplehost.com/tutorials/dns.htm" target="_blank">simplehost</a>
@@ -397,7 +478,7 @@ doors".  If you also enter a host name or IP address, that host will be checked 
 the specified port is open and accepting connections.</p>
 
 <p>While viewing any listing of port services/exploits, users may click "Submit" to send a new item
-for the administrator's attention to be added to the listing upon acceptance.
+for the administrator's attention to be added to the listing upon acceptance.</p>
 
 <p>More info:
 <a href="http://www.iana.org/assignments/port-numbers" target="_blank">IANA</a>
@@ -465,572 +546,573 @@ BGP neighborship, OSPF RT, BGP RR, Zebra Any RR, and Zebra Interface Info.</p>
 <p>The following table lists recognized characters for use in the datetime format configuration string.
 Any other unrecognized characters included in the string are recorded as is.</p>
 
-<TABLE
-CLASS="main"
+<table
+class="main"
 >
-<COL><COL><COL>
-<THEAD
-><TR
-CLASS="help-topic"
-><TH
-CLASS="help-topic"
->Character</TH
-><TH
->Description</TH
-><TH
->Example Values</TH
-></TR
-></THEAD
-><TBODY
-><TR
-><TD
-><VAR
-CLASS="literal"
->a</VAR
-></TD
-><TD
->Lowercase Ante meridiem and Post meridiem</TD
-><TD
-><VAR
-CLASS="literal"
->am</VAR
-> or <VAR
-CLASS="literal"
->pm</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->A</VAR
-></TD
-><TD
->Uppercase Ante meridiem and Post meridiem</TD
-><TD
-><VAR
-CLASS="literal"
->AM</VAR
-> or <VAR
-CLASS="literal"
->PM</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->B</VAR
-></TD
-><TD
->Swatch Internet time</TD
-><TD
-><VAR
-CLASS="literal"
->000</VAR
-> through <VAR
-CLASS="literal"
->999</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->c</VAR
-></TD
-><TD
->ISO 8601 date (added in PHP 5)</TD
-><TD
->2004-02-12T15:19:21+00:00</TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->d</VAR
-></TD
-><TD
->Day of the month, 2 digits with leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->01</VAR
-> to <VAR
-CLASS="literal"
->31</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->D</VAR
-></TD
-><TD
->A textual representation of a day, three letters</TD
-><TD
-><VAR
-CLASS="literal"
->Mon</VAR
-> through <VAR
-CLASS="literal"
->Sun</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->F</VAR
-></TD
-><TD
->A full textual representation of a month, such as January or March</TD
-><TD
-><VAR
-CLASS="literal"
->January</VAR
-> through <VAR
-CLASS="literal"
->December</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->g</VAR
-></TD
-><TD
->12-hour format of an hour without leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->1</VAR
-> through <VAR
-CLASS="literal"
->12</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->G</VAR
-></TD
-><TD
->24-hour format of an hour without leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->0</VAR
-> through <VAR
-CLASS="literal"
->23</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->h</VAR
-></TD
-><TD
->12-hour format of an hour with leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->01</VAR
-> through <VAR
-CLASS="literal"
->12</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->H</VAR
-></TD
-><TD
->24-hour format of an hour with leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->00</VAR
-> through <VAR
-CLASS="literal"
->23</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->i</VAR
-></TD
-><TD
->Minutes with leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->00</VAR
-> to <VAR
-CLASS="literal"
->59</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->I</VAR
-> (capital i)</TD
-><TD
->Whether or not the date is in daylights savings time</TD
-><TD
-><VAR
-CLASS="literal"
->1</VAR
-> if Daylight Savings Time, <VAR
-CLASS="literal"
->0</VAR
-> otherwise.</TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->j</VAR
-></TD
-><TD
->Day of the month without leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->1</VAR
-> to <VAR
-CLASS="literal"
->31</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->l</VAR
-> (lowercase 'L')</TD
-><TD
->A full textual representation of the day of the week</TD
-><TD
-><VAR
-CLASS="literal"
->Sunday</VAR
-> through <VAR
-CLASS="literal"
->Saturday</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->L</VAR
-></TD
-><TD
->Whether it's a leap year</TD
-><TD
-><VAR
-CLASS="literal"
->1</VAR
-> if it is a leap year, <VAR
-CLASS="literal"
->0</VAR
-> otherwise.</TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->m</VAR
-></TD
-><TD
->Numeric representation of a month, with leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->01</VAR
-> through <VAR
-CLASS="literal"
->12</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->M</VAR
-></TD
-><TD
->A short textual representation of a month, three letters</TD
-><TD
-><VAR
-CLASS="literal"
->Jan</VAR
-> through <VAR
-CLASS="literal"
->Dec</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->n</VAR
-></TD
-><TD
->Numeric representation of a month, without leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->1</VAR
-> through <VAR
-CLASS="literal"
->12</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->O</VAR
-></TD
-><TD
->Difference to Greenwich time (GMT) in hours</TD
-><TD
->Example: <VAR
-CLASS="literal"
->+0200</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->r</VAR
-></TD
-><TD
-><A
-HREF="http://www.faqs.org/rfcs/rfc2822"
-TARGET="_blank"
->RFC 2822</A
-> formatted date</TD
-><TD
->Example: <VAR
-CLASS="literal"
->Thu, 21 Dec 2000 16:01:07 +0200</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->s</VAR
-></TD
-><TD
->Seconds, with leading zeros</TD
-><TD
-><VAR
-CLASS="literal"
->00</VAR
-> through <VAR
-CLASS="literal"
->59</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->S</VAR
-></TD
-><TD
->English ordinal suffix for the day of the month, 2 characters</TD
-><TD
->&#13;<VAR
-CLASS="literal"
->st</VAR
->, <VAR
-CLASS="literal"
->nd</VAR
->, <VAR
-CLASS="literal"
->rd</VAR
+<col /><col /><col />
+<thead
+><tr
+class="help-topic"
+><th
+class="help-topic"
+>Character</th
+><th
+>Description</th
+><th
+>Example Values</th
+></tr
+></thead
+><tbody
+><tr
+><td
+><var
+class="literal"
+>a</var
+></td
+><td
+>Lowercase Ante meridiem and Post meridiem</td
+><td
+><var
+class="literal"
+>am</var
+> or <var
+class="literal"
+>pm</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>A</var
+></td
+><td
+>Uppercase Ante meridiem and Post meridiem</td
+><td
+><var
+class="literal"
+>AM</var
+> or <var
+class="literal"
+>PM</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>B</var
+></td
+><td
+>Swatch Internet time</td
+><td
+><var
+class="literal"
+>000</var
+> through <var
+class="literal"
+>999</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>c</var
+></td
+><td
+>ISO 8601 date (added in PHP 5)</td
+><td
+>2004-02-12T15:19:21+00:00</td
+></tr
+><tr
+><td
+><var
+class="literal"
+>d</var
+></td
+><td
+>Day of the month, 2 digits with leading zeros</td
+><td
+><var
+class="literal"
+>01</var
+> to <var
+class="literal"
+>31</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>D</var
+></td
+><td
+>A textual representation of a day, three letters</td
+><td
+><var
+class="literal"
+>Mon</var
+> through <var
+class="literal"
+>Sun</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>F</var
+></td
+><td
+>A full textual representation of a month, such as January or March</td
+><td
+><var
+class="literal"
+>January</var
+> through <var
+class="literal"
+>December</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>g</var
+></td
+><td
+>12-hour format of an hour without leading zeros</td
+><td
+><var
+class="literal"
+>1</var
+> through <var
+class="literal"
+>12</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>G</var
+></td
+><td
+>24-hour format of an hour without leading zeros</td
+><td
+><var
+class="literal"
+>0</var
+> through <var
+class="literal"
+>23</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>h</var
+></td
+><td
+>12-hour format of an hour with leading zeros</td
+><td
+><var
+class="literal"
+>01</var
+> through <var
+class="literal"
+>12</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>H</var
+></td
+><td
+>24-hour format of an hour with leading zeros</td
+><td
+><var
+class="literal"
+>00</var
+> through <var
+class="literal"
+>23</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>i</var
+></td
+><td
+>Minutes with leading zeros</td
+><td
+><var
+class="literal"
+>00</var
+> to <var
+class="literal"
+>59</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>I</var
+> (capital i)</td
+><td
+>Whether or not the date is in daylights savings time</td
+><td
+><var
+class="literal"
+>1</var
+> if Daylight Savings Time, <var
+class="literal"
+>0</var
+> otherwise.</td
+></tr
+><tr
+><td
+><var
+class="literal"
+>j</var
+></td
+><td
+>Day of the month without leading zeros</td
+><td
+><var
+class="literal"
+>1</var
+> to <var
+class="literal"
+>31</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>l</var
+> (lowercase 'L')</td
+><td
+>A full textual representation of the day of the week</td
+><td
+><var
+class="literal"
+>Sunday</var
+> through <var
+class="literal"
+>Saturday</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>L</var
+></td
+><td
+>Whether it's a leap year</td
+><td
+><var
+class="literal"
+>1</var
+> if it is a leap year, <var
+class="literal"
+>0</var
+> otherwise.</td
+></tr
+><tr
+><td
+><var
+class="literal"
+>m</var
+></td
+><td
+>Numeric representation of a month, with leading zeros</td
+><td
+><var
+class="literal"
+>01</var
+> through <var
+class="literal"
+>12</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>M</var
+></td
+><td
+>A short textual representation of a month, three letters</td
+><td
+><var
+class="literal"
+>Jan</var
+> through <var
+class="literal"
+>Dec</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>n</var
+></td
+><td
+>Numeric representation of a month, without leading zeros</td
+><td
+><var
+class="literal"
+>1</var
+> through <var
+class="literal"
+>12</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>O</var
+></td
+><td
+>Difference to Greenwich time (GMT) in hours</td
+><td
+>Example: <var
+class="literal"
+>+0200</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>r</var
+></td
+><td
+><a
+href="http://www.faqs.org/rfcs/rfc2822"
+target="_blank"
+>RFC 2822</a
+> formatted date</td
+><td
+>Example: <var
+class="literal"
+>Thu, 21 Dec 2000 16:01:07 +0200</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>s</var
+></td
+><td
+>Seconds, with leading zeros</td
+><td
+><var
+class="literal"
+>00</var
+> through <var
+class="literal"
+>59</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>S</var
+></td
+><td
+>English ordinal suffix for the day of the month, 2 characters</td
+><td
+>&#13;<var
+class="literal"
+>st</var
+>, <var
+class="literal"
+>nd</var
+>, <var
+class="literal"
+>rd</var
 >or
-<VAR
-CLASS="literal"
->th</VAR
->. Works well with <VAR
-CLASS="literal"
->j</VAR
+<var
+class="literal"
+>th</var
+>. Works well with <var
+class="literal"
+>j</var
 >
-</TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->t</VAR
-></TD
-><TD
->Number of days in the given month</TD
-><TD
-><VAR
-CLASS="literal"
->28</VAR
-> through <VAR
-CLASS="literal"
->31</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->T</VAR
-></TD
-><TD
->Timezone setting of this machine</TD
-><TD
->Examples: <VAR
-CLASS="literal"
->EST</VAR
->, <VAR
-CLASS="literal"
->MDT</VAR
-> ...</TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->U</VAR
-></TD
-><TD
->Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)</TD
-><TD
->See also <A
-HREF="http://www.php.net/manual/en/function.time.php"
-TARGET="_blank"
-><B
-CLASS="function"
->time()</B
-></A
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->w</VAR
-></TD
-><TD
->Numeric representation of the day of the week</TD
-><TD
-><VAR
-CLASS="literal"
->0</VAR
-> (for Sunday) through <VAR
-CLASS="literal"
->6</VAR
-> (for Saturday)</TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->W</VAR
-></TD
-><TD
->ISO-8601 week number of year, weeks starting on Monday (added in PHP 4.1.0)</TD
-><TD
->Example: <VAR
-CLASS="literal"
->42</VAR
-> (the 42nd week in the year)</TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->Y</VAR
-></TD
-><TD
->A full numeric representation of a year, 4 digits</TD
-><TD
->Examples: <VAR
-CLASS="literal"
->1999</VAR
-> or <VAR
-CLASS="literal"
->2003</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->y</VAR
-></TD
-><TD
->A two digit representation of a year</TD
-><TD
->Examples: <VAR
-CLASS="literal"
->99</VAR
-> or <VAR
-CLASS="literal"
->03</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->z</VAR
-></TD
-><TD
->The day of the year (starting from 0)</TD
-><TD
-><VAR
-CLASS="literal"
->0</VAR
-> through <VAR
-CLASS="literal"
->365</VAR
-></TD
-></TR
-><TR
-><TD
-><VAR
-CLASS="literal"
->Z</VAR
-></TD
-><TD
+</td
+></tr
+><tr
+><td
+><var
+class="literal"
+>t</var
+></td
+><td
+>Number of days in the given month</td
+><td
+><var
+class="literal"
+>28</var
+> through <var
+class="literal"
+>31</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>T</var
+></td
+><td
+>Timezone setting of this machine</td
+><td
+>Examples: <var
+class="literal"
+>EST</var
+>, <var
+class="literal"
+>MDT</var
+> ...</td
+></tr
+><tr
+><td
+><var
+class="literal"
+>U</var
+></td
+><td
+>Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)</td
+><td
+>See also <a
+href="http://www.php.net/manual/en/function.time.php"
+target="_blank"
+><b
+class="function"
+>time()</b
+></a
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>w</var
+></td
+><td
+>Numeric representation of the day of the week</td
+><td
+><var
+class="literal"
+>0</var
+> (for Sunday) through <var
+class="literal"
+>6</var
+> (for Saturday)</td
+></tr
+><tr
+><td
+><var
+class="literal"
+>W</var
+></td
+><td
+>ISO-8601 week number of year, weeks starting on Monday (added in PHP 4.1.0)</td
+><td
+>Example: <var
+class="literal"
+>42</var
+> (the 42nd week in the year)</td
+></tr
+><tr
+><td
+><var
+class="literal"
+>Y</var
+></td
+><td
+>A full numeric representation of a year, 4 digits</td
+><td
+>Examples: <var
+class="literal"
+>1999</var
+> or <var
+class="literal"
+>2003</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>y</var
+></td
+><td
+>A two digit representation of a year</td
+><td
+>Examples: <var
+class="literal"
+>99</var
+> or <var
+class="literal"
+>03</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>z</var
+></td
+><td
+>The day of the year (starting from 0)</td
+><td
+><var
+class="literal"
+>0</var
+> through <var
+class="literal"
+>365</var
+></td
+></tr
+><tr
+><td
+><var
+class="literal"
+>Z</var
+></td
+><td
 >Timezone offset in seconds. The offset for timezones west of UTC is always
-negative, and for those east of UTC is always positive.</TD
-><TD
-><VAR
-CLASS="literal"
->-43200</VAR
-> through <VAR
-CLASS="literal"
->43200</VAR
-></TD
-></TR
-></TBODY
-></TABLE
-></DIV
+negative, and for those east of UTC is always positive.</td
+><td
+><var
+class="literal"
+>-43200</var
+> through <var
+class="literal"
+>43200</var
+></td
+></tr
+></tbody
+></table
 >
+
 </body>
+
 </html>

@@ -1,0 +1,85 @@
+img.gobutton {
+  border-style: none;
+  padding: 0;
+  margin:  0 2px 2px 0;
+  vertical-align: top;
+}
+input.gobutton {
+  border-style: none;
+  padding: 0;
+  margin:  0 2px 2px 0;
+  vertical-align: top;
+}
+input.outset {
+  border-style: outset;
+  border-width: 4px;
+  border-color: #CCCC99;
+  padding: 0;
+  margin:  0 2px 2px 0;
+  float: left;
+  clear: left;
+}
+input.inset {
+  border-style: inset;
+  border-width: 4px;
+  border-color: #99CCCC;
+  padding: 0;
+  margin:  0 2px 2px 0;
+  float: left;
+  clear: left;
+}
+span.pagename {
+  font-size: 130%;
+  font-weight: bold;
+}
+div.pagetop {
+  position: relative;
+  text-align: center;
+  margin: auto;
+}
+div.pagemain {
+  position: relative;
+  text-align: left;
+  margin: auto;
+}
+div.results {
+  position: relative;
+  text-align: left;
+  margin: auto;
+}
+table.results {
+  position: relative;
+  width: 80%;
+  font-size: small;
+  padding: 2;
+  margin: 2;
+  clear: none;
+}
+label.whoisext {
+  position: absolute;
+  left: 230px;
+}
+label.digparam {
+  position: absolute;
+  left: 230px;
+}
+label.portnum {
+  position: absolute;
+  left: 230px;
+}
+label.httpreq {
+  position: absolute;
+  left: 230px;
+}
+label.count {
+  position: absolute;
+  left: 230px;
+}
+label.lgparam {
+  position: absolute;
+  left: 170px;
+}
+label.lgrouter {
+  position: absolute;
+  left: 260px;
+}

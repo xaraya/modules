@@ -1,9 +1,13 @@
 <div class="xar-mod-head">
-<span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
 
-<h2><xar:mlstring>View-Edit Service Flags</xar:mlstring></h2>
+<h2><xar:mlstring>Netquery Flags Configuration</xar:mlstring>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img style="vertical-align:top;" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+</h2>
+
 <div class="xar-accent">
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <tr>
@@ -24,50 +28,50 @@
     <xar:if condition="(($loop:index + 1) % 2)">
     <tr>
         <td class="xar-norm">
-            #$loop:item['flagnum']#
+            #$loop:item.flagnum#
         </td>
         <td class="xar-norm">
-            #$loop:item['keyword']#
+            #$loop:item.keyword#
+        </td>
+        <td class="xar-norm" style="color:#$loop:item.fontclr#;">
+            #$loop:item.fontclr#
         </td>
         <td class="xar-norm">
-            #$loop:item['fontclr']#
-        </td>
-        <td align="center" class="xar-norm">
-           <xar:if condition="empty($loop:item['editurl'])">
+           <xar:if condition="empty($loop:item.editurl)">
                #$edittitle#
                <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
            </xar:if>
            |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
+           <xar:if condition="empty($loop:item.deleteurl)">
+               #$loop:item.deletetitle#
                <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
            </xar:if>
         </td>
     </tr>
     <xar:else />
     <tr>
         <td class="xar-accent">
-            #$loop:item['flagnum']#
+            #$loop:item.flagnum#
         </td>
         <td class="xar-accent">
-            #$loop:item['keyword']#
+            #$loop:item.keyword#
+        </td>
+        <td class="xar-accent" style="color:#$loop:item.fontclr#;">
+            #$loop:item.fontclr#
         </td>
         <td class="xar-accent">
-            #$loop:item['fontclr']#
-        </td>
-        <td align="center" class="xar-accent">
-           <xar:if condition="empty($loop:item['editurl'])">
-               #$loop:item['edittitle']#
+           <xar:if condition="empty($loop:item.editurl)">
+               #$loop:item.edittitle#
                <xar:else />
-                   <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
+                   <a href="#$loop:item.editurl#">#$loop:item.edittitle#</a>
            </xar:if>
            |
-           <xar:if condition="empty($loop:item['deleteurl'])">
-               #$loop:item['deletetitle']#
+           <xar:if condition="empty($loop:item.deleteurl)">
+               #$loop:item.deletetitle#
                <xar:else />
-                   <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
+                   <a href="#$loop:item.deleteurl#">#$loop:item.deletetitle#</a>
            </xar:if>
         </td>
     </tr>
@@ -76,10 +80,9 @@
 </table>
 </div>
 
-<p><a href="#$flalink['url']#">#$flalink['title']#</a> -
-<a href="#$cfglink['url']#">#$cfglink['title']#</a> -
-<a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
-<script language="javascript" type="text/javascript">
+<p><a href="#$flalink.url#">#$flalink.title#</a> -
+<a href="#$cfglink.url#">#$cfglink.title#</a></p>
+<script type="text/javascript">
     function openwindow(hlpfile)
     {
         window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");

@@ -16,4 +16,7 @@ Version 2.0 2004-12-01
 Version 2.1 2005-01-05
    - added whois lookup server autodiscovery
    - minor template changes for Xaraya 0.9.11
-   - updated manual and other refs to reflect changes
+Version 2.2 2005-01-28
+   - verfied CSS and XHTML Strict validation
+   - new user interface with query type selection
+   - special handling for whois.denic.de lookups

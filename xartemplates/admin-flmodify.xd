@@ -1,45 +1,60 @@
 <div class="xar-mod-head">
-<span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+    <span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
 </div>
+
 <div class="xar-mod-body">
 
-<h2><xar:mlstring>Modify a Service Flag</xar:mlstring></h2>
+<h2><xar:mlstring>Editing Data for Flag #</xar:mlstring>#$flagnum#</h2>
 
-<table border=0 cellspacing=0 cellpadding=4>
-<form method="post" action="#xarModURL('netquery', 'admin', 'flmodify')#" method="post" enctype="application/x-www-form-urlencoded" >
-<input type="hidden" name="authid" value="#$authid#" />
-<input type="hidden" name="phase" id="phase" value="update" />
-<input type="hidden" name="flag_id" id="flag_id" value="#$flag_id#" />
-<input type="hidden" name="flag_flagnum" id="flag_flagnum" value="#$flagnum#" />
-<tr><td colspan=4>
-<span><xar:mlstring>Editing Data for Flag #</xar:mlstring>#$flagnum#<xar:mlstring> --</xar:mlstring></span>
-</tr></td><tr><td>
-<span class="help" title="#xarML('The flag keyword text')#"><label for="flag_keyword"><xar:mlstring>Keyword</xar:mlstring></label></span>
-</td><td>
-<span class="help" title="#xarML('The flag keyword font color')#"><label for="flag_fontclr"><xar:mlstring>Font</xar:mlstring></label></span>
-</td><td>
-<span class="help" title="#xarML('Lookup search URL for flagged items')#"><label for="flag_lookup_1"><xar:mlstring>Lookup Search URL</xar:mlstring></label></span>
-</tr></td><tr><td>
-<input type="text" name="flag_keyword" id="flag_keyword" value="#$keyword#" size="10" maxlength="20" />
-</td><td>
-<select name="flag_fontclr" id="flag_fontclr" tabindex="0">
-    <xar:foreach in="$colors" value="$color">
-        <xar:if condition="!empty($color)">
-            <xar:if condition="$color eq $fontclr">
-                <option selected style="color:#$color#" value="#$color#">#$color#</option>
-            <xar:else />
-                <option style="color:#$color#" value="#$color#">#$color#</option>
+<form action="#xarModURL('netquery', 'admin', 'flmodify')#" method="post" enctype="application/x-www-form-urlencoded" >
+<table>
+<tr>
+    <td>
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="phase" id="phase" value="update" />
+    <input type="hidden" name="flag_id" id="flag_id" value="#$flag_id#" />
+    <input type="hidden" name="flag_flagnum" id="flag_flagnum" value="#$flagnum#" />
+    </td>
+</tr>
+<tr>
+    <td>
+    <span class="help" title="#xarML('The flag keyword text')#"><label for="flag_keyword"><xar:mlstring>Keyword</xar:mlstring></label></span>
+    </td>
+    <td>
+    <span class="help" title="#xarML('The flag keyword font color')#"><label for="flag_fontclr"><xar:mlstring>Font</xar:mlstring></label></span>
+    </td>
+    <td>
+    <span class="help" title="#xarML('Lookup search URL for flagged items')#"><label for="flag_lookup_1"><xar:mlstring>Lookup Search URL</xar:mlstring></label></span>
+    </td>
+</tr>
+<tr>
+    <td>
+    <input type="text" name="flag_keyword" id="flag_keyword" value="#$keyword#" size="10" maxlength="20" />
+    </td>
+    <td>
+    <select name="flag_fontclr" id="flag_fontclr" tabindex="0">
+        <xar:foreach in="$colors" value="$color">
+            <xar:if condition="!empty($color)">
+                <xar:if condition="$color eq $fontclr">
+                    <option selected="selected" style="color:#$color#;" value="#$color#">#$color#</option>
+                <xar:else />
+                    <option style="color:#$color#;" value="#$color#">#$color#</option>
+                </xar:if>
             </xar:if>
-        </xar:if>
-    </xar:foreach>
-</select>
-</td><td>
-<input type="text" name="flag_lookup_1" id="flag_lookup_1" value="#$lookup_1#" size="30" maxlength="100" />
-</tr></td><tr><td colspan=4 align="center">
-<input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
-<input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
-</td></tr>
-</form>
+        </xar:foreach>
+    </select>
+    </td>
+    <td>
+    <input type="text" name="flag_lookup_1" id="flag_lookup_1" value="#$lookup_1#" size="30" maxlength="100" />
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+    <input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
+    <input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
+    </td>
+</tr>
 </table>
+</form>
 
 </div>

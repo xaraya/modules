@@ -1,264 +1,252 @@
+<xar:if condition="xarTplAddStyleLink('netquery', 'netquery')">
+</xar:if>
+
 <div class="xar-mod-head">
-<span class="xar-mod-title">#$maintitle#</span></div>
+<span class="xar-mod-title">#$maintitle#</span>
+</div>
+
 <div class="xar-mod-body">
 <div style="margin: auto;">
 
+<!-- <h4>#$subtitle#</h4> -->
+
+<div class="pagetop">
+<form method="post" action="&xar-modurl-netquery-user-main;"><p>
+  <xar:if condition="$whois_enabled"><input name="b1" id="b1" type="image" src="modules/netquery/xarimages/btn_whois.gif" class="#$b1class#" alt="Whois" /></xar:if>
+  <xar:if condition="$whoisip_enabled"><input name="b2" id="b2" type="image" src="modules/netquery/xarimages/btn_whoisip.gif" class="#$b2class#" alt="Whois IP" /></xar:if>
+  <xar:if condition="$dns_lookup_enabled"><input name="b3" id="b3" type="image" src="modules/netquery/xarimages/btn_dns.gif" class="#$b3class#" alt="DNS Lookup" /></xar:if>
+  <xar:if condition="$dns_dig_enabled and (!$winsys)"><input name="b4" id="b4" type="image" src="modules/netquery/xarimages/btn_dig.gif" class="#$b4class#" alt="DNS Dig" /></xar:if>
+  <xar:if condition="$port_check_enabled"><input name="b5" id="b5" type="image" src="modules/netquery/xarimages/btn_port.gif" class="#$b5class#" alt="Port Check" /></xar:if>
+  <xar:if condition="$http_req_enabled"><input name="b6" id="b6" type="image" src="modules/netquery/xarimages/btn_http.gif" class="#$b6class#" alt="HTTP Request" /></xar:if>
+  <xar:if condition="$ping_enabled"><input name="b7" id="b7" type="image" src="modules/netquery/xarimages/btn_ping.gif" class="#$b7class#" alt="Ping" /></xar:if>
+  <xar:if condition="$ping_remote_enabled"><input name="b8" id="b8" type="image" src="modules/netquery/xarimages/btn_pingrem.gif" class="#$b8class#" alt="Ping Remote" /></xar:if>
+  <xar:if condition="$trace_enabled"><input name="b9" id="b9" type="image" src="modules/netquery/xarimages/btn_trace.gif" class="#$b9class#" alt="Traceroute" /></xar:if>
+  <xar:if condition="$trace_remote_enabled"><input name="b10" id="b10" type="image" src="modules/netquery/xarimages/btn_tracerem.gif" class="#$b10class#" alt="Traceroute Remote" /></xar:if>
+  <xar:if condition="$looking_glass_enabled"><input name="b11" id="b11" type="image" src="modules/netquery/xarimages/btn_lgquery.gif" class="#$b11class#" alt="Looking Glass" /></xar:if>
+</p></form>
+</div>
+
 <xar:if condition="'' ne $results">
-#$results#
+  <div class="results">
+  #$results#
+  </div>
 </xar:if>
 
-<h4>#$subtitle# <br /><a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></h4>
-
-<table>
-
-<xar:if condition="$whois_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<div class="pagemain">
+<xar:if condition="$formtype eq 'whois'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="whois">
-    <tr><td colspan="2">
-    <label for="domain">#$domainlabel#</label>
-    </td><td>
-    <label for="ext">#$extlabel#</label>
-<xar:while condition="(++$j le $whois_max_limit)">
-    </td></tr><tr><td colspan="2">
-    <input type="text" name="domain_#$j#" id="domain_#$j#" value="#$domain[$j]#" size="32" maxlength="100">
-    </td><td>
+    <input type="hidden" name="querytype" id="querytype" value="whois" />
+    <label for="domain_1">#$domainlabel#</label>
+    <label class="whoisext" for="whois_ext_1">#$extlabel#</label>
+   <xar:while condition="(++$j le $whois_max_limit)">
+    <br />
+    <input type="text" name="domain_#$j#" id="domain_#$j#" value="#$domain[$j]#" size="32" maxlength="100" />
     <select name="whois_ext_#$j#" id="whois_ext_#$j#">
         <xar:foreach in="$links" value="$link">
-            <xar:if condition="!empty($link['whois_ext'])">
-                <xar:if condition="$link['whois_ext'] eq $whois_ext[$j]">
-                    <option selected value="#$link['whois_ext']#">#$link['whois_ext']#</option>
+            <xar:if condition="!empty($link.whois_ext)">
+                <xar:if condition="$link.whois_ext eq $whois_ext[$j]">
+                    <option selected="selected" value="#$link.whois_ext#">#$link.whois_ext#</option>
                 <xar:else />
-                    <option value="#$link['whois_ext']#">#$link['whois_ext']#</option>
+                    <option value="#$link.whois_ext#">#$link.whois_ext#</option>
                 </xar:if>
             </xar:if>
         </xar:foreach>
     </select>
-</xar:while>
-    </td><td>
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+   </xar:while>
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$whoisip_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'whoisip'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="whoisip">
-    <tr>
-    <td colspan="3"><label for="host">#$whoisiplabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    <input type="hidden" name="querytype" id="querytype" value="whoisip" />
+    <label for="host">#$whoisiplabel#</label>
+    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$dns_lookup_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'lookup'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="lookup">
-    <tr>
-    <td colspan="3"><label for="host">#$lookuplabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    <input type="hidden" name="querytype" id="querytype" value="lookup" />
+    <label for="host">#$lookuplabel#</label>
+    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$dns_dig_enabled && !$winsys">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'dig'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="dig">
-    <tr>
-    <td colspan="2"><label for="host">#$diglabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
-    <td><label for="digparam">#$digparamlabel#</label>
-    <br /><select name="digparam" id="digparam">
+    <input type="hidden" name="querytype" id="querytype" value="dig" />
+    <label for="host">#$diglabel#</label>
+    <label class="digparam" for="digparam">#$digparamlabel#</label>
+    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <select name="digparam" id="digparam">
         <xar:foreach in="$digoptions" value="$digoption">
-            <xar:if condition="!empty($digoption['value'])">
-                <xar:if condition="$digoption['value'] eq $digparam">
-                    <option selected value="#$digoption['value']#">#$digoption['name']#</option>
+            <xar:if condition="!empty($digoption.value)">
+                <xar:if condition="$digoption.value eq $digparam">
+                    <option selected="selected" value="#$digoption.value#">#$digoption.name#</option>
                 <xar:else />
-                    <option value="#$digoption['value']#">#$digoption['name']#</option>
+                    <option value="#$digoption.value#">#$digoption.name#</option>
                 </xar:if>
             </xar:if>
         </xar:foreach>
-    </select></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    </select>
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$port_check_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'port'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="port">
-    <tr>
-    <td colspan="2"><label for="server">#$serverlabel#</label>
-    <br /><input type="text" name="server" id="server" value="#$server#" size="32" maxlength="100"></td>
-    <td><label for="portnum">#$portnumlabel#</label>
-    <br /><input type="text" name="portnum" id="portnum" value="#$portnum#" size="5" maxlength="10"></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    <input type="hidden" name="querytype" id="querytype" value="port" />
+    <label for="server">#$serverlabel#</label>
+    <label class="portnum" for="portnum">#$portnumlabel#</label>
+    <br /><input type="text" name="server" id="server" value="#$server#" size="32" maxlength="100" />
+    <input type="text" name="portnum" id="portnum" value="#$portnum#" size="5" maxlength="10" />
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$http_req_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'http'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="http">
-    <tr>
-    <td colspan="2"><label for="httpurl">#$httpurllabel#</label>
-    <br /><input type="text" name="httpurl" id="httpurl" value="#$httpurl#" size="32" maxlength="100"></td>
-    <td><label for="httpreq">#$httpreqlabel#</label>
-    <br /><select name="httpreq" id="httpreq">
+    <input type="hidden" name="querytype" id="querytype" value="http" />
+    <label for="httpurl">#$httpurllabel#</label>
+    <label class="httpreq" for="httpreq">#$httpreqlabel#</label>
+    <br /><input type="text" name="httpurl" id="httpurl" value="#$httpurl#" size="32" maxlength="100" />
+    <select name="httpreq" id="httpreq">
         <xar:foreach in="$httpoptions" value="$httpoption">
             <xar:if condition="!empty($httpoption)">
                 <xar:if condition="$httpoption eq $httpreq">
-                    <option selected value="#$httpoption#">#$httpoption#</option>
+                    <option selected="selected" value="#$httpoption#">#$httpoption#</option>
                 <xar:else />
                     <option value="#$httpoption#">#$httpoption#</option>
                 </xar:if>
             </xar:if>
         </xar:foreach>
-    </select></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    </select>
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$ping_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'ping'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="ping">
-    <tr>
-    <td colspan="2"><label for="host">#$pinglabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
-    <td><label for="maxp">#$maxplabel#</label>
-    <br /><select name="maxp" id="maxp">
+    <input type="hidden" name="querytype" id="querytype" value="ping" />
+    <label for="host">#$pinglabel#</label>
+    <label class="count" for="maxp">#$maxplabel#</label>
+    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <select name="maxp" id="maxp">
         <xar:foreach in="$maxpoptions" value="$maxpoption">
             <xar:if condition="!empty($maxpoption)">
                 <xar:if condition="$maxpoption eq $maxp">
-                    <option selected value="#$maxpoption#">#$maxpoption#</option>
+                    <option selected="selected" value="#$maxpoption#">#$maxpoption#</option>
                 <xar:else />
                     <option value="#$maxpoption#">#$maxpoption#</option>
                 </xar:if>
             </xar:if>
         </xar:foreach>
-    </select></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    </select>
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$ping_remote_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'pingrem'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="pingrem">
-    <tr>
-    <td colspan="3"><label for="host">#$pingremotelabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="pingwindow(host.value);">
-    </td>
-    </tr>
-</form>
+    <input type="hidden" name="querytype" id="querytype" value="pingrem" />
+    <label for="host">#$pingremotelabel#</label>
+    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" onclick="pingwindow(host.value);" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$trace_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'trace'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="trace">
-    <tr>
-    <td colspan="3"><label for="host">#$tracelabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    <input type="hidden" name="querytype" id="querytype" value="trace" />
+    <label for="host">#$tracelabel#</label>
+    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$trace_remote_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'tracerem'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="tracerem">
-    <tr>
-    <td colspan="3"><label for="host">#$traceremotelabel#</label>
-    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100"></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0 onclick="tracewindow(host.value);">
-    </td>
-    </tr>
-</form>
+    <input type="hidden" name="querytype" id="querytype" value="tracerem" />
+    <label for="host">#$traceremotelabel#</label>
+    <br /><input type="text" name="host" id="host" value="#$host#" size="32" maxlength="100" />
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" onclick="tracewindow(host.value);" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
 
-<xar:if condition="$looking_glass_enabled">
-<form method="post" action="&xar-modurl-netquery-user-main;">
+<xar:if condition="$formtype eq 'lgquery'">
+  <form method="post" action="&xar-modurl-netquery-user-main;"><p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="querytype" id="querytype" value="lgquery">
-    <tr>
-    <td><label for="request">#$lgrequestlabel#</label>
+    <input type="hidden" name="querytype" id="querytype" value="lgquery" />
+    <label for="request">#$lgrequestlabel#</label>
+    <label class="lgparam" for="lgparam">#$lgparamlabel#</label>
+    <label class="lgrouter" for="router">#$lgrouterlabel#</label>
     <br /><select name="request" id="request">
         <xar:foreach in="$lgrequests" value="$req">
-            <xar:if condition="!empty($req['request'])">
-                <xar:if condition="$lgdefault[$req['handler']] && (! ( ($req['argc']) && (!$lgdefault['use_argc']) ) )">
-                    <xar:if condition="$req['request'] eq $request">
-                        <option selected value="#$req['request']#">#$req['request']#</option>
+            <xar:if condition="!empty($req.request)">
+                <xar:if condition="$lgdefault[$req.handler] and !(($req.argc) and (!$lgdefault.use_argc))">
+                    <xar:if condition="$req.request eq $request">
+                        <option selected="selected" value="#$req.request#">#$req.request#</option>
                     <xar:else />
-                        <option value="#$req['request']#">#$req['request']#</option>
+                        <option value="#$req.request#">#$req.request#</option>
                     </xar:if>
                 </xar:if>
             </xar:if>
         </xar:foreach>
     </select>
-    <td><label for="lgparam">#$lgparamlabel#</label>
-    <br /><input type="text" name="lgparam" id="lgparam" value="#$lgparam#" size="8" maxlength="100"></td>
-    <td><label for="router">#$lgrouterlabel#</label>
-    <br /><select name="router" id="router">
+    <input class="col2" type="text" name="lgparam" id="lgparam" value="#$lgparam#" size="8" maxlength="100" />
+    <select class="col3" name="router" id="router">
         <xar:foreach in="$lgrouters" value="$rtr">
-            <xar:if condition="!empty($rtr['router'])">
-                <xar:if condition="$rtr['router'] eq $router">
-                    <option value="#$rtr['router']#">#$rtr['router']#</option>
+            <xar:if condition="!empty($rtr.router)">
+                <xar:if condition="$rtr.router eq $router">
+                    <option selected="selected" value="#$rtr.router#">#$rtr.router#</option>
                 <xar:else />
-                    <option value="#$rtr['router']#">#$rtr['router']#</option>
+                    <option value="#$rtr.router#">#$rtr.router#</option>
                 </xar:if>
             </xar:if>
         </xar:foreach>
-    </select></td>
-    <td><br />
-    <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
-    </td>
-    </tr>
-</form>
+    </select>
+    <input class="gobutton" type="image" src="modules/netquery/xarimages/btn_go.gif" alt="Go" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href='javascript:openwindow("#$hlplink.url#");'><img class="gobutton" src="modules/netquery/xarimages/btn_help.gif" alt="#$hlplink.label#" /></a>
+  <br /></p></form>
 </xar:if>
+<br />
+</div>
 
-</table>
 </div>
 </div>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 function pingwindow(target)
 {
-        var pingsite = "#$pingexec['exec_remote']#?#$pingexec['exec_remote_t']#=" + target;
+        var pingsite = "#$pingexec.exec_remote#?#$pingexec.exec_remote_t#=" + target;
         window.open (pingsite,"Ping","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
 }
 function tracewindow(target)
 {
-        var tracesite = "#$traceexec['exec_remote']#?#$traceexec['exec_remote_t']#=" + target;
+        var tracesite = "#$traceexec.exec_remote#?#$traceexec.exec_remote_t#=" + target;
         window.open (tracesite,"Trace","toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
 }
 function openwindow(hlpfile)

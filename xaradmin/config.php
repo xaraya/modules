@@ -16,6 +16,7 @@ function netquery_admin_config()
             if (!xarVarFetch('capture_log_enabled', 'checkbox', $capture_log_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('logfile_local', 'str:1:100', $logfile_local, 'var/logs/netquery.log', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('logfile_remote', 'str:1:100', $logfile_remote, 'Y-m-d H:i:s', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('logfile_remote_t', 'str:1:10', $logfile_remote_t, 'whois', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whois_enabled', 'checkbox', $whois_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('whoisip_enabled', 'checkbox', $whoisip_enabled, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('dns_lookup_enabled', 'checkbox', $dns_lookup_enabled, '0', XARVAR_NOT_REQUIRED)) return;
@@ -77,9 +78,10 @@ function netquery_admin_config()
             $LGRouterTable = $xartable['netquery_lgrouter'];
             $query = "UPDATE $ExecTable
                 SET exec_local    = ?,
-                    exec_remote   = ?
+                    exec_remote   = ?,
+                    exec_remote_t = ?
                 WHERE exec_type = 'log'";
-            $bindvars = array($logfile_local, $logfile_remote);
+            $bindvars = array($logfile_local, $logfile_remote, $logfile_remote_t);
             $result =& $dbconn->Execute($query,$bindvars);
             $query = "UPDATE $ExecTable
                 SET exec_local    = ?,
