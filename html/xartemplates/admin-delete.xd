@@ -4,17 +4,17 @@
 <div align="center">
 <form method="post" action="#xarModURL('html', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="#$authid#" />
-	<input type="hidden" name="cid" id="cid" value="#$cid#" />
-	<input type="hidden" name="confirm" id="confirm" value="1"/>
+    <input type="hidden" name="cid" id="cid" value="#$cid#" />
+    <input type="hidden" name="confirm" id="confirm" value="1"/>
 
-	<font class="xar-title"><xar:mlstring>Confirm deletion of the tag</xar:mlstring></font>
+    <font class="xar-title"><xar:mlstring>Confirm deletion of the tag</xar:mlstring></font>
     <br /><br />
     #$tag#
     <br /><br />
 
-	<input type="submit" value="#$submitlabel#"  /><br /><br />
-	
-	<a href="#xarModURL('html', 'admin', 'set')#"><xar:mlstring>Cancel deletion of the tag</xar:mlstring>.</a>
+    <input type="submit" value="#$submitlabel#"  /><br /><br />
+    
+    <a href="#xarModURL('html', 'admin', 'set')#"><xar:mlstring>Cancel deletion of the tag</xar:mlstring>.</a>
 </form>        
 </div>
 </div>

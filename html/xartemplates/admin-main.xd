@@ -27,7 +27,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>There are no included blocks with this module.</xar:mlstring>
+            <xar:mlstring>There are no included blocks with this module.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -35,12 +35,12 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-			<xar:mlstring>
-				Transform hooks are also provided for linebreaks.  
-				<strong>
-					Please note, if you do not want linebreaks, do not hook this module to another.  The transform hook only affects linebreaks and not the allowed HTML of the module.
-				</strong>
-			</xar:mlstring>
+            <xar:mlstring>
+                Transform hooks are also provided for linebreaks.  
+                <strong>
+                    Please note, if you do not want linebreaks, do not hook this module to another.  The transform hook only affects linebreaks and not the allowed HTML of the module.
+                </strong>
+            </xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">

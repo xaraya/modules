@@ -4,8 +4,8 @@
 <div align="center">
 <form method="post" action="#xarModURL('html', 'admin', 'edittype')#" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" value="#$authid#" />
-	<input type="hidden" name="id" id="id" value="#$id#" />
-	<input type="hidden" name="confirm" id="confirm" value="1"/>
+    <input type="hidden" name="id" id="id" value="#$id#" />
+    <input type="hidden" name="confirm" id="confirm" value="1"/>
     <table border="0" cellspacing="0" cellpadding="2">
         <tr>
         <td>
@@ -13,12 +13,12 @@
         </td>
         <td>
             <input type="text" name="tagtype" id="tagtype" value="#$type#" size="32" maxlength="100" tabindex="1" />
-		</td>
-		</tr>
-	</table><br />
-	<input type="submit" value="#$editbutton#"  tabindex="2" />
+        </td>
+        </tr>
+    </table><br />
+    <input type="submit" value="#$editbutton#"  tabindex="2" />
     <br /><br />
-	<a href="#xarModURL('html', 'admin', 'viewtypes')#"><xar:mlstring>Cancel edit of the tag</xar:mlstring>.</a>
+    <a href="#xarModURL('html', 'admin', 'viewtypes')#"><xar:mlstring>Cancel edit of the tag</xar:mlstring>.</a>
 </form>
 </div>
 </div>

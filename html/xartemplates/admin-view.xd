@@ -6,43 +6,43 @@
 <table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent">
     <tr>
         <th>
-			 <xar:mlstring>HTML Tag</xar:mlstring>
-		</th>
+             <xar:mlstring>HTML Tag</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Not Allowed</xar:mlstring>
-		</th>
+            <xar:mlstring>Not Allowed</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Allowed</xar:mlstring>
-		</th>
+            <xar:mlstring>Allowed</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Allowed With Parameters</xar:mlstring>
-		</th>
+            <xar:mlstring>Allowed With Parameters</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Options</xar:mlstring>
-		</th>
-	</tr>
+            <xar:mlstring>Options</xar:mlstring>
+        </th>
+    </tr>
     <xar:loop name="$items">
-		<xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+        <xar:if condition="(($_bl_loop_index1 + 1) % 2)">
     <tr>
         <td class="xar-norm">
-			#$loop:item['htmltag']#
-		</td>
-		<td class="xar-norm">
+            #$loop:item['htmltag']#
+        </td>
+        <td class="xar-norm">
            <xar:if condition="$allowed eq 1">
                <xar:mlstring>Yes</xar:mlstring>
            </xar:if>
-		</td>
-		<td class="xar-norm">
+        </td>
+        <td class="xar-norm">
            <xar:if condition="$allowed eq 2">
                <xar:mlstring>Yes</xar:mlstring>
            </xar:if>
-		</td>
-		<td class="xar-norm">
+        </td>
+        <td class="xar-norm">
            <xar:if condition="$allowed eq 3">
                <xar:mlstring>Yes</xar:mlstring>
            </xar:if>
-		</td class="xar-norm">
-		<td align="center" class="xar-norm"> 
+        </td class="xar-norm">
+        <td align="center" class="xar-norm"> 
            <xar:if condition="empty($deleteurl)">
                <xar:mlstring>Delete</xar:mlstring>
                <xar:else />
@@ -50,27 +50,27 @@
            </xar:if>
         </td>
     </tr>
-	<xar:else />
+    <xar:else />
     <tr>
         <td class="xar-accent">
-			#$loop:item['htmltag']#
-		</td>
-		<td class="xar-accent">
+            #$loop:item['htmltag']#
+        </td>
+        <td class="xar-accent">
            <xar:if condition="$allowed eq 1">
                <xar:mlstring>Yes</xar:mlstring>
            </xar:if>
-		</td>
-		<td class="xar-accent">
+        </td>
+        <td class="xar-accent">
            <xar:if condition="$allowed eq 2">
                <xar:mlstring>Yes</xar:mlstring>
            </xar:if>
-		</td>
-		<td class="xar-accent">
+        </td>
+        <td class="xar-accent">
            <xar:if condition="$allowed eq 3">
                <xar:mlstring>Yes</xar:mlstring>
            </xar:if>
-		</td>
-		<td align="center" class="xar-accent"> 
+        </td>
+        <td align="center" class="xar-accent"> 
            <xar:if condition="empty($deleteurl)">
                <xar:mlstring>Delete</xar:mlstring>
                <xar:else />
@@ -78,7 +78,7 @@
            </xar:if>
         </td>
     </tr>
-	</xar:if>
+    </xar:if>
     </xar:loop>
 </table>
 <br />
