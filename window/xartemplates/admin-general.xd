@@ -18,7 +18,7 @@
 <table border="0" width="80%">
 <tr>
     <td>
-        <xar:mlstring>Display off-site pages</xar:mlstring>
+        <xar:mlstring>Allow only local pages</xar:mlstring>
     </td>
     <td>
         <xar:if condition = "$allow_local_only eq 1">
@@ -119,7 +119,7 @@
                 <xar:else />
                         <input type="radio" name="open_direct" id="open_direct" value="0" checked  tabindex="13" />
                         <xar:mlstring>No</xar:mlstring>
-                        <input type="radio" name="open_direct" id="open_direct" value="1 tabindex="14" />
+                        <input type="radio" name="open_direct" id="open_direct" value="1" tabindex="14" />
                         <xar:mlstring>Yes</xar:mlstring>
                 </xar:if>
     </td>
