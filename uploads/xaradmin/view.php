@@ -53,7 +53,13 @@ function uploads_admin_view( )
         
         if ($action > 0) {
             if (isset($fileDo)) {
-                $args['fileId']     = $fileId;
+                // If we got a signal to change status but no list of files to change,
+                // then do nothing
+                if (isset($fileId) && !empty($fileId)) {
+                    $args['fileId']     = $fileId;
+                } else {
+                    $action = 0;
+                }
             } else {
                 $args['fileType']   = $filter['fileType'];
                 $args['curStatus']  = $filter['fileStatus'];
