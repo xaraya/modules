@@ -38,7 +38,7 @@ function reports_init() {
     if(!$res) return;
 
     // Create indexes
-    $index = array('name' => $tab."_name_idx",
+    $index = array('name' => 'i_'.$tab.'_name',
                    'fields' => array($cols['name']),
                    'unique' => 'false');
     $query = xarDBCreateIndex($tab,$index);
@@ -68,7 +68,7 @@ function reports_init() {
     if(!$res) return;
 
     // Create indexes
-    $index = array('name' => $tab."_name_idx",
+    $index = array('name' => 'i_'.$tab.'_name',
                    'fields' => array($cols['name']),
                    'unique' => 'false');
     $query = xarDBCreateIndex($tab,$index);
