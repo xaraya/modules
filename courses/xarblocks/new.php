@@ -1,7 +1,5 @@
 <?php
 /**
- * File: $Id: s.first.php 1.8 03/03/18 02:35:04-05:00 johnny@falling.local.lan $
- * 
  * Example Block
  * 
  * @package Xaraya eXtensible Management System
@@ -100,35 +98,6 @@ function courses_newblock_display($blockinfo)
     }
     // Now we need to send our output to the template.
     $blockinfo['content'] = xarTplBlock('courses', $template, $data);
-
-    return $blockinfo;
-}
-
-/**
- * modify block settings
- */
-function courses_newblock_modify($blockinfo)
-{
-    // Get current content
-    $vars = @unserialize($blockinfo['content']);
-    // Defaults
-    if (empty($vars['numitems'])) {
-        $vars['numitems'] = 5;
-    }
-    // Send content to template
-    $output = xarTplBlock('courses', 'newAdmin', array('numitems' => $vars['numitems'], 'blockid' => $blockinfo['bid']));
-    // Return output
-    return $output;
-}
-
-/**
- * update block settings
- */
-function courses_newblock_update($blockinfo)
-{
-    if (!xarVarFetch('numitems', 'isset', $vars['numitems'], NULL, XARVAR_DONT_SET)) return;
-
-    $blockinfo['content'] = serialize($vars);
 
     return $blockinfo;
 }
