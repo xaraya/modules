@@ -23,13 +23,13 @@ function bbcode_userapi_code($args)
     $replacements[5] = xarTplModule('bbcode','user', 'delphicode', array('replace' => '\\1'));
 
     $patterns[6] = "#\[code=jscript\](.*?)\[/code\]#si";
-    $replacements[6] = xarTplModule('bbcode','user', 'jscript', array('replace' => '\\1'));
+    $replacements[6] = xarTplModule('bbcode','user', 'jscriptcode', array('replace' => '\\1'));
 
     $patterns[7] = "#\[code=python\](.*?)\[/code\]#si";
-    $replacements[7] = xarTplModule('bbcode','user', 'python', array('replace' => '\\1'));
+    $replacements[7] = xarTplModule('bbcode','user', 'pythoncode', array('replace' => '\\1'));
 
     $patterns[8] = "#\[code=vb\](.*?)\[/code\]#si";
-    $replacements[8] = xarTplModule('bbcode','user', 'vb', array('replace' => '\\1'));
+    $replacements[8] = xarTplModule('bbcode','user', 'vbcode', array('replace' => '\\1'));
 
     $message = preg_replace($patterns, $replacements, $message);
 
