@@ -5,24 +5,25 @@
 <xar:set name="extdocsurladm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'93'))</xar:set>
 <xar:set name="extdocsurlthm">xarModURL('articles','user','view',array('itemtype'=>'9','catid'=>'82'))</xar:set>
 
-<div class="xar-mod-head">
-    <span class="xar-mod-title">
-        <xar:mlstring>
-            Xaraya Extensions and Releases Overview
-        </xar:mlstring>
-    </span>
+<div class="xar-mod-head" tyle="width:98%;">
+	<span class="xar-mod-title">
+		<xar:mlstring>
+			Xaraya Extensions and Releases Overview
+		</xar:mlstring>
+	</span>
 </div>
-<div class="xar-mod-body" style="display:block;">
-    <xar:blockgroup name="releasemodule" id="releasemodule" />
+<div class="xar-mod-body" style="width:98%;">
+	<xar:blockgroup name="releasemodule" id="releasemodule" />
 
 
-<p style="float: left; width: 100%; margin-top:10px; margin-bottom:10px; text-align: left;">
+<p style="margin-top:10px; margin-bottom:10px; text-align: left;">
 <xar:mlstring>Xaraya uses extensions, also known as modules or themes, that each have a unique ID to identify them by. This unique ID is not only used in the Xaraya codebase itself, but also used to track and aggregate documentation, releases, information and activities that are related to a specific Extenstion.</xar:mlstring>
 </p>
-<p style="float: left; width: 100%; margin-top:10px; margin-bottom:10px; text-align: left;">
+<p style="margin-top:10px; margin-bottom:10px; text-align: left;">
 <xar:mlstring>The release module is Xaraya.com's tool of tracking module and theme information.  It does this by: </xar:mlstring>
 </p>
-        <ol style="float: left; width: 95%; margin-top:10px; margin-bottom:10px; text-align: left;">
+<div style="float: left; margin-top:10px; margin-bottom:10px; text-align: left;">
+        <ol >
             <li><strong><xar:mlstring>Tracking Module and Theme ID's</xar:mlstring></strong>
                 <p style="margin-bottom:20px;"><xar:mlstring>You can view all Registered Extensions in the </xar:mlstring><a href="#$extlisturl#"><xar:mlstring>Extension List View Page</xar:mlstring></a>. <xar:mlstring>You can also </xar:mlstring><a href="#$extregisterurl#"><xar:mlstring>register your own extensions</xar:mlstring></a><xar:mlstring> with the link from that page.</xar:mlstring></p>
             </li>
@@ -35,5 +36,5 @@
                  the xaraya.com site.</xar:mlstring></p>
             </li>
       </ol>
-
+</div>
 </div>
