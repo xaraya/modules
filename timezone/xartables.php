@@ -7,11 +7,12 @@ function & timezone_xartables()
         $xartable = array();
         $prefix = xarDBGetSiteTablePrefix();
         // let us define our table structure
-        $xartable['timezone_zones']      = $prefix . '_timezone_zones';
-        $xartable['timezone_zones_data'] = $prefix . '_timezone_zones_data';
-        $xartable['timezone_links']      = $prefix . '_timezone_links';
-        $xartable['timezone_rules']      = $prefix . '_timezone_rules';
-        $xartable['timezone_rules_data'] = $prefix . '_timezone_rules_data';
+        $xartable['timezone_zones']           = $prefix . '_timezone_zones';
+        $xartable['timezone_zones_data']      = $prefix . '_timezone_zones_data';
+        $xartable['timezone_links']           = $prefix . '_timezone_links';
+        $xartable['timezone_rules']           = $prefix . '_timezone_rules';
+        $xartable['timezone_rules_data']      = $prefix . '_timezone_rules_data';
+        $xartable['timezone_zones_has_rules'] = $prefix . '_timezone_zones_has_rules';
     }
     // return the structure
     return $xartable;

@@ -3,7 +3,7 @@
 
 $modversion['name']           = 'timezone';
 $modversion['id']             = '5';
-$modversion['version']        = '0.2.0';
+$modversion['version']        = '0.2.1';
 $modversion['description']    = 'timezone module';
 $modversion['credits']        = 'credits.txt';
 $modversion['help']           = 'help.txt';
