@@ -19,7 +19,7 @@ function comments_userapi_modify($args) {
         $error = TRUE;
     }
 
-    if (!isset($id)) {
+    if (!isset($cid)) {
         $msg .= xarMLbykey('cid ');
         $error = TRUE;
     }

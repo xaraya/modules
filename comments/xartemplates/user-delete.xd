@@ -14,5 +14,8 @@
         <input type="submit" name="submit" id="receipt-action-delete" value="#xarML('Delete')#" />
         <input type="button" value="#xarML('Cancel')#" onClick="javascript:history.go(-1);" />
     </form>
+    <xar:if condition="!empty($header['objectlink']) and !empty($header['objecttitle'])">
+        <p><xar:mlstring>Return to</xar:mlstring> <a href="#$header['objectlink']#">#$header['objecttitle']#</a></p>
+    </xar:if>
 </div>
 <br />
