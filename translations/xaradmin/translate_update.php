@@ -3,15 +3,15 @@
 /**
  * File: $Id$
  *
- * Short description of purpose of file
+ * Update translations of a certain subtype
  *
- * @package Xaraya eXtensible Management System
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @package modules
+ * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
  * 
- * @subpackage module name
- * @link  link to where more info can be found
- * @author author name <author@email> (this tag means responsible person)
+ * @subpackage translations
+ * @author Marco Canini
+ * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
 
