@@ -100,7 +100,7 @@ class FieldPlot extends Plot {
 		if( $cc  == "" ) $cc = $bc;
 		if( $cs  == "" ) $cs = $bs;
 		if( $cas == "" ) $cas = $bas;
-		//echo "f=$f, cc=$cc, cs=$cs, cas=$cas<br>";
+		//echo "f=$f, cc=$cc, cs=$cs, cas=$cas<br/>";
 		$this->arrow->SetColor($cc);	    
 		$this->arrow->SetSize($cs,$cas);
 	    }
