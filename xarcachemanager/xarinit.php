@@ -121,6 +121,9 @@ function xarcachemanager_upgrade($oldversion)
                         new SystemException($msg));
         return false;
     }
+    
+    // parse the current distribution config file so we have default values
+    include_once($defaultConfigFile);
 
     // Upgrade dependent on old version number
     switch ($oldversion) {
@@ -203,7 +206,7 @@ function xarcachemanager_upgrade($oldversion)
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
-            // switch to the file bashed block caching enabler
+            // switch to the file based block caching enabler
             if (xarModGetVar('xarcachemanager', 'CacheBlockOutput')) {
                 $outputCacheDir = $varCacheDir . '/output/';
                 if(!file_exists($outputCacheDir . 'cache.blocklevel')) {
