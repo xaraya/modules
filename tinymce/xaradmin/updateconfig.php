@@ -153,7 +153,7 @@ function tinymce_admin_updateconfig()
          xarModSetVar('tinymce', 'tinybuttons2', $currentbutton2);
     
     } else {
-           	xarModSetVar('tinymce','iusebrowse',0);
+            xarModSetVar('tinymce','iusebrowse',0);
     }
 
 

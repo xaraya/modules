@@ -21,12 +21,11 @@ include 'config.php';
 $request_uri = urldecode(empty($HTTP_POST_VARS['request_uri'])?(empty($HTTP_GET_VARS['request_uri'])?'':$HTTP_GET_VARS['request_uri']):$HTTP_POST_VARS['request_uri']);
 
 // if set include file specified in $tinyMCE_imglib_include
-if (!empty($tinyMCE_imglib_include))
-{
+if (!empty($tinyMCE_imglib_include)) {
   include $tinyMCE_imglib_include;
 }
 ?>
-<?php 
+<?php
 $imglib = isset($HTTP_POST_VARS['lib'])?$HTTP_POST_VARS['lib']:'';
 if (empty($imglib) && isset($HTTP_GET_VARS['lib'])) $imglib = $HTTP_GET_VARS['lib'];
 
@@ -34,7 +33,7 @@ $value_found = false;
 // callback function for preventing listing of non-library directory
 function is_array_value($value, $key, $_imglib)
 {
-  global $value_found;  
+  global $value_found;
   if (is_array($value)) array_walk($value, 'is_array_value',$_imglib);
   if ($value == $_imglib){
     $value_found=true;
@@ -42,28 +41,24 @@ function is_array_value($value, $key, $_imglib)
 }
 array_walk($tinyMCE_imglibs, 'is_array_value',$imglib);
 
-if (!$value_found || empty($imglib))
-{
+if (!$value_found || empty($imglib)) {
   $imglib = $tinyMCE_imglibs[0]['value'];
 }
 $lib_options = liboptions($tinyMCE_imglibs,'',$imglib);
-
 
 $img = isset($HTTP_POST_VARS['imglist'])?$HTTP_POST_VARS['imglist']:'';
 
 $preview = '';
 
 $errors = array();
-if (isset($HTTP_POST_FILES['img_file']['size']) && $HTTP_POST_FILES['img_file']['size']>0)
-{
-  if ($img = uploadImg('img_file'))
-  {
+if (isset($HTTP_POST_FILES['img_file']['size']) && $HTTP_POST_FILES['img_file']['size']>0) {
+  if ($img = uploadImg('img_file'))   {
     $preview = $tinyMCE_base_url.$imglib.$img;
   }
 }
 
 // delete image
-if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action']) 
+if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     && ($HTTP_POST_VARS['lib_action']=='delete') && !empty($img)) {
   deleteImg();
 }
@@ -75,7 +70,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 <script language="javascript" type="text/JavaScript" src="../../tiny_mce_popup.js"></script>
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<script language="JavaScript" type="text/JavaScript"> 
+<script language="JavaScript" type="text/JavaScript">
     // click ok - select picture or save changes
     function selectClick() {
         if (validateParams()) {
@@ -128,8 +123,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
     // delete image
-    function deleteClick()
-    {
+    function deleteClick() {
     if (document.libbrowser.imglist.selectedIndex>=0)
         {
         if (confirm(tinyMCE.getLang('lang_ibrowser_confirmdelete')))
@@ -141,8 +135,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
 
 // set picture attributes on change
-    function selectChange(obj)
-    {
+    function selectChange(obj) {
         var formObj = document.forms[0];
 
         formObj.src.value = '<?php echo $tinyMCE_base_url.$imglib?>'+obj.options[obj.selectedIndex].value;
@@ -156,8 +149,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
     }
     
     // init functions
-    function init()
-    {        
+    function init() {
         // if existing image (image properties)
         if (tinyMCE.getWindowArg('src') != '') {
             var formObj = document.forms[0];
@@ -421,8 +413,7 @@ if ($tinyMCE_img_delete_allowed && isset($HTTP_POST_VARS['lib_action'])
 </body>
 </html>
 <?php 
-function liboptions($arr, $prefix = '', $sel = '')
-{
+function liboptions($arr, $prefix = '', $sel = '') {
   $buf = '';
   foreach($arr as $lib) {
     $buf .= '<option value="'.$lib['value'].'"'.(($lib['value'] == $sel)?' selected':'').'>'.$prefix.$lib['text'].'</option>'."\n";
@@ -439,14 +430,14 @@ function uploadImg($img) {
   global $errors;
   global $l;
   global $tinyMCE_upload_allowed;
-  
+
   if (!$tinyMCE_upload_allowed) return false;
 
   if (!ereg('/$', $_SERVER['DOCUMENT_ROOT']))
     $_root = $_SERVER['DOCUMENT_ROOT'].'/';
   else
     $_root = $_SERVER['DOCUMENT_ROOT'];
-  
+
   if ($HTTP_POST_FILES[$img]['size']>0) {
     $data['type'] = $HTTP_POST_FILES[$img]['type'];
     $data['name'] = $HTTP_POST_FILES[$img]['name'];
@@ -479,15 +470,14 @@ function uploadImg($img) {
   return false;
 }
 
-function deleteImg()
-{
+function deleteImg() {
   global $HTTP_SERVER_VARS;
   global $imglib;
   global $img;
   global $tinyMCE_img_delete_allowed;
   global $errors;
   global $l;
-  
+
   if (!$tinyMCE_img_delete_allowed) return false;
 
   if (!ereg('/$', $_SERVER['DOCUMENT_ROOT']))
@@ -511,8 +501,7 @@ function deleteImg()
 // @param int $size a file size
 // @param int $dec a number of decimal places
 
-function filesize_h($size, $dec = 1)
-{
+function filesize_h($size, $dec = 1) {
     $sizes = array('byte(s)', 'kb', 'mb', 'gb');
     $count = count($sizes);
     $i = 0;

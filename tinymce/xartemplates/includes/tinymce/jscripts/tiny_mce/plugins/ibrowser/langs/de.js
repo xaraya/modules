@@ -35,4 +35,4 @@ tinyMCELang['lang_ibrowser_error_width_nan'] = 'Ung&uuml;ltige Eingabe - Breite 
 tinyMCELang['lang_ibrowser_error_height_nan'] = 'Ung&uuml;ltige Eingabe - H&ouml;he ist kein numerischer Wert!';
 tinyMCELang['lang_ibrowser_error_border_nan'] = 'Ung&uuml;ltige Eingabe - Rand ist kein numerischer Wert!';
 tinyMCELang['lang_ibrowser_error_hspace_nan'] = 'Ung&uuml;ltige Eingabe - Horizontaler Abstand ist kein numerischer Wert!';
-tinyMCELang['lang_ibrowser_error_vspace_nan'] = 'Ung&uuml;ltige Eingabe - Vertikaler Abstand ist kein numerischer Wert!';	
+tinyMCELang['lang_ibrowser_error_vspace_nan'] = 'Ung&uuml;ltige Eingabe - Vertikaler Abstand ist kein numerischer Wert!';       

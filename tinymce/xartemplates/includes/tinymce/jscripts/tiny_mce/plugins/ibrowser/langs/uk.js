@@ -35,4 +35,4 @@ tinyMCELang['lang_ibrowser_error_width_nan'] = 'Width is not a number!';
 tinyMCELang['lang_ibrowser_error_height_nan'] = 'Height is not a number!';
 tinyMCELang['lang_ibrowser_error_border_nan'] = 'Border is not a number!';
 tinyMCELang['lang_ibrowser_error_hspace_nan'] = 'Horizontal space is not a number!';
-tinyMCELang['lang_ibrowser_error_vspace_nan'] = 'Vertical space is not a number!';	
+tinyMCELang['lang_ibrowser_error_vspace_nan'] = 'Vertical space is not a number!';      
