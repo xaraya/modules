@@ -20,7 +20,7 @@
  *
  * @param $args['aids'] optional array of aids that we are selecting on
  * @param $args['authorid'] the ID of the author
- * @param $args['ptid'] publication type ID (for news, sections, reviews, ...)
+ * @param $args['ptid'] publication type ID (for news, sections, reviews, ...) or array of pubtype IDs
  * @param $args['status'] array of requested status(es) for the articles
  * @param $args['search'] search text parameter(s)
  * @param $args['searchfields'] array of fields to search in
@@ -75,8 +75,23 @@ function articles_userapi_leftjoin($args)
     if (!empty($authorid) && is_numeric($authorid)) {
         $whereclauses[] = $leftjoin['authorid'] . ' = ' . $authorid;
     }
-    if (!empty($ptid) && is_numeric($ptid)) {
-        $whereclauses[] = $leftjoin['pubtypeid'] . ' = ' . $ptid;
+    if (!empty($ptid)) {
+        if (is_numeric($ptid)) {
+            $whereclauses[] = $leftjoin['pubtypeid'] . ' = ' . $ptid;
+        } elseif (is_array($ptid) && count($ptid) > 0) {
+            $seenptid = array();
+            foreach ($ptid as $id) {
+                if (empty($id) || !is_numeric($id)) continue;
+                $seenptid[$id] = 1;
+            }
+            if (count($seenptid) == 1) {
+                $ptids = array_keys($seenptid);
+                $whereclauses[] = $leftjoin['pubtypeid'] . ' = ' . $ptids[0];
+            } elseif (count($seenptid) > 1) {
+                $ptids = join(', ', array_keys($seenptid));
+                $whereclauses[] = $leftjoin['pubtypeid'] . ' IN (' . $ptids . ')';
+            }
+        }
     }
     if (!empty($status) && is_array($status)) {
         if (count($status) == 1 && is_numeric($status[0])) {
