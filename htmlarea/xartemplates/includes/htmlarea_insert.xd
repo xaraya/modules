@@ -1,9 +1,9 @@
 <xar:set name="$localeinfo">xarLocaleGetInfo(xarMLSGetSiteLocale())</xar:set>
 <xar:if condition="!isset($editorwidth)">
-	<xar:set name="$editorwidth">"500px"</xar:set>
+    <xar:set name="$editorwidth">"500px"</xar:set>
 </xar:if>
 <xar:if condition="!isset($editorheight)">
-	<xar:set name="$editorheight">"400px"</xar:set>
+    <xar:set name="$editorheight">"400px"</xar:set>
 </xar:if><script type="text/javascript">
   _editor_url = "#xarServerGetBaseURL()#modules/htmlarea/xartemplates/includes/HTMLArea/";
   _editor_lang = "#$localeinfo['lang']#";
@@ -14,12 +14,12 @@
 </script>
 <xar:set name="sniff">xarModAPIFunc('sniffer','user','sniff')</xar:set>
 <xar:if condition="xarSessionGetVar('browsername') == 'Microsoft Internet Explorer'">
-	<script type="text/javascript" defer="1">
-		var config = new HTMLArea.Config(); 
-		config.width = '#$editorwidth#';
-		config.height = '#$editorheight#';
-		HTMLArea.replaceAll(config);
-	</script>
+    <script type="text/javascript" defer="1">
+        var config = new HTMLArea.Config(); 
+        config.width = '#$editorwidth#';
+        config.height = '#$editorheight#';
+        HTMLArea.replaceAll(config);
+    </script>
 <xar:else />
-	<xar:base-include-javascript filename="htmlarea_exe.js" module="htmlarea" position="body"/>
+    <xar:base-include-javascript filename="htmlarea_exe.js" module="htmlarea" position="body"/>
 </xar:if>
