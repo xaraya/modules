@@ -142,13 +142,9 @@ function xproject_user_display($args)
                                          $project['projectid'],
                                          array($project['name']));
 
-    $data['name_label'] = xarMLByKey('Project');
-    $data['name_value'] = xarVarCensor($project['name']);
-    $data['description_label'] = xarMLByKey('Description');
-    $data['description_value'] = $project['description'];
+    $data['name'] = xarVarCensor($project['name']);
+    $data['description'] = $project['description'];
 
-	$data['taskname_label'] = xarMLByKey('Task');
-	$data['taskdescription_label'] = xarMLByKey('Description');
 	$data['curtask_edittitle'] = "Edit";
 	$data['curtask_deletetitle'] = "Delete";
 	if(is_numeric($taskid) && $taskid > 0) {
@@ -166,8 +162,8 @@ function xproject_user_display($args)
 												 array($task['name']));
 		}
 		
-		$data['taskname_value'] = xarVarCensor($task['name']);
-		$data['taskdescription_value'] = $task['description'];
+		$data['taskname'] = xarVarCensor($task['name']);
+		$data['taskdescription'] = $task['description'];
 		
 		if (xarSecAuthAction(0, 'xproject::Tasks', '$task[name]::$taskid', ACCESS_EDIT)) {
 			$data['curtask_editurl'] = xarModURL('xproject', 'tasks', 'modify', array('taskid' => $taskid));
@@ -215,10 +211,6 @@ function xproject_user_display($args)
 		if(!isset($taskid) || $taskid == 0) $data['tasknamelabel'] = xarVarPrepForDisplay(xarMLByKey('New Task'));
 		else $data['tasknamelabel'] = xarVarPrepForDisplay(xarMLByKey('New Sub-Task'));
 		
-		$data['prioritylabel'] = xarVarPrepForDisplay(xarMLByKey('Priority'));
-		$data['statuslabel'] = xarVarPrepForDisplay(xarMLByKey('Status'));
-		$data['descriptionlabel'] = xarVarPrepForDisplay(xarMLByKey('Description'));
-
 		$statusoptions = array();    
 		$statusoptions[] = array('id'=>0,'name'=>'Open');
 		$statusoptions[] = array('id'=>1,'name'=>'Closed');
@@ -241,24 +233,24 @@ function xproject_user_display($args)
 		}
 	}
 	
-	$filteroptions = array("default",
-							"My Tasks",
-							"Available Tasks",
-							"Priority List",
-							"Recent Activity",
+	$filteroptions = array(xarMLByKey('default'),
+							xarMLByKey('My Tasks'),
+							xarMLByKey('Available Tasks'),
+							xarMLByKey('Priority List'),
+							xarMLByKey('Recent Activity'),
 							"");
 	$data['filteroptions'] = array();
 	foreach($filteroptions as $id=>$name) {
 		$data['filteroptions'][] = array('id' => $id,
 										'name' => $name,
-										'selected' => ($id == $filter ? "selected" : ""));
+										'selected' => ($id == $filter ? 1 : 0));
 	}
-	
+	$data['filterbutton'] = xarVarPrepForDisplay(xarMLByKey('Filter'));
 	// BUILD TASKS ARRAY
 	$data['tasks'] = array();
 	if (xarModAPILoad('xproject', 'tasks')) {
 		$data['tasklistname_label'] = "Task";
-		$data['tasklistdesc_label'] = "Description (filter: $filter)";
+		$data['tasklistfilter'] = $filter;
 		$data['tasklistpri_label'] = "!";
 		$data['taskliststatus_label'] = "X";
 		$data['tasklistsubs_label'] = "#";

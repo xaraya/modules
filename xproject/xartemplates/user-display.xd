@@ -37,22 +37,22 @@ function xprojectToggleView(id){
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="2" id="xproject_info">
     <tr valign="top">
-        <td align="right" width="30%">#$name_label# : </td>
-        <td>#$name_value#</td>
+        <td align="right" width="30%"><xar:mlstring>Project</xar:mlstring> :</td>
+        <td>#$name#</td>
     </tr>
     <tr valign="top">
-        <td align="right">#$description_label# : </td>
-        <td>#$description_value#</td>
+        <td align="right"><xar:mlstring>Description</xar:mlstring> :</td>
+        <td>#$description#</td>
     </tr>
 	<xar:if condition="!empty($hookoutput)">
     <tr><td colspan="2">#$hookoutput#</td>
     </tr>
 	</xar:if>
 	</table>
-<xar:if condition="!empty($taskname_value)">
+<xar:if condition="!empty($taskname)">
 <table width="100%" border="1" cellspacing="0" cellpadding="2">
-        <tr valign="top"><td align="right">#$taskname_label# : </td>
- 		<td><b>#$taskname_value#</b></td></tr>
+        <tr valign="top"><td align="right"><xar:mlstring>Task</xar:mlstring> :</td>
+ 		<td><b>#$taskname#</b></td></tr>
         <tr valign="top">
 	        <td align="right">#$taskparent_label# : </td>
 		<td>
@@ -61,33 +61,20 @@ function xprojectToggleView(id){
 	</xar:if>
 	  	(<a href="&xar-modurl-xproject-user-display;&amp;projectid=#$projectid#">#$taskroot_name#</a>)</td>
         </tr>
-	  <tr valign="top"><td align="right">#$taskdescription_label# : </td>
-		<td>#$taskdescription_value#</td></tr>
+	  <tr valign="top"><td align="right"><xar:mlstring>Description</xar:mlstring> : </td>
+		<td>#$taskdescription#</td></tr>
       <tr valign="top">
         <td></td>
-        <td>
-           <xar:if condition="empty($curtask_editurl)">
-               #$curtask_edittitle#
-           <xar:else />
-                   <a href="#$curtask_editurl#">#$curtask_edittitle#</a>
-           </xar:if>
-           |
-           <xar:if condition="empty($curtask_deleteurl)">
-               #$curtask_deletetitle#
-           <xar:else />
-                   <a href="#$curtask_deleteurl#">#$curtask_deletetitle#</a>
-           </xar:if>
-        </td>
+        <td>[&nbsp;<xar:if condition="empty($curtask_editurl)"><xar:mlstring>Edit</xar:mlstring><xar:else /><a href="#$curtask_editurl#"><xar:mlstring>Edit</xar:mlstring></a></xar:if>&nbsp;|&nbsp;<xar:if condition="empty($curtask_deleteurl)"><xar:mlstring>Delete</xar:mlstring><xar:else /><a href="#$curtask_deleteurl#"><xar:mlstring>Delete</xar:mlstring></a></xar:if>&nbsp;]</td>
       </tr>
 </xar:if>
 
 <xar:if condition="!empty($authid)">
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
-    <tr class="xar-accent"><td colspan="2" align="right">Add Task Form: <input type="checkbox" name="" value="" checked="checked" onclick="xprojectToggleView('xproject_taskform');"></td></tr>
+    <tr class="xar-accent"><td colspan="2" align="right"><xar:mlstring>Add Task Form</xar:mlstring>: <input type="checkbox" name="" value="" checked="checked" onclick="xprojectToggleView('xproject_taskform');"></td></tr>
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="2" id="xproject_taskform">
-	<tr><td align="right" valign="top">#$tasknamelabel#
-         </td>
+	<tr><td align="right" valign="top"><xar:mlstring>New Task</xar:mlstring></td>
     <td>
            <form method="post" action="&xar-modurl-xproject-tasks-create;" style="margin: 0 0 0 0;>
     <input type="hidden" name="authid" value="#$authid#" />
@@ -97,15 +84,15 @@ function xprojectToggleView(id){
        <tr>
          <td colspan="3"><input type="text" name="name" size="50" maxlength="255"></td>
        </tr>
-       <tr><td colspan="3">#$descriptionlabel#</td></tr>
+       <tr><td colspan="3"><xar:mlstring>Description</xar:mlstring></td></tr>
        <tr><td colspan="3"><textarea name="description" cols="50" rows="3"></textarea></td></tr>
-       <tr><td>#$statuslabel# <select name="status">
+       <tr><td><xar:mlstring>Status</xar:mlstring> <select name="status">
 		<xar:loop name="$statusoptions">
 	      	<option name="status" value="#$id#">#$name#</option>
 		</xar:loop>
 		</select>
 	</td>
-	<td>#$prioritylabel# <select name="priority">
+	<td><xar:mlstring>Priority</xar:mlstring> <select name="priority">
 		<xar:loop name="$prioritydropdown">
 	      	<option name="priority" value="#$id#">#$name#</option>
 		</xar:loop>
@@ -128,25 +115,29 @@ function xprojectToggleView(id){
 		<input type="hidden" name="taskid" value="#$taskid#" />
 		<select name="filter">
 		<xar:loop name="$filteroptions" prefix="filter">
-				<option value="#$filter_id#" #$filter_selected#>#$filter_name#</option>
+				<xar:if condition="$filter_id eq $tasklistfilter">
+				<option value="#$filter_id#" selected="selected">#$filter_name#</option>
+				<xar:else/>
+				<option value="#$filter_id#">#$filter_name#</option>
+				</xar:if>
 		</xar:loop>
 		</select>
-		<input type="submit" value="Filter">
+		<input type="submit" value="#$filterbutton#">
 		</form>
 	</td>
-	<td colspan="4" align="right">Sub Tasks: <input type="checkbox" name="" value="" checked="checked" onclick="xprojectToggleView('xproject_tasks');"></td></tr>
+	<td colspan="4" align="right"><xar:mlstring>Sub Tasks</xar:mlstring>: <input type="checkbox" name="" value="" checked="checked" onclick="xprojectToggleView('xproject_tasks');"></td></tr>
 	</table>
 <xar:if condition="count($tasks)">
 <table border="0" width="100%" cellpadding="2" cellspacing="0" id="xproject_tasks">
     <tr>
-	<th>Num Tasks: #$numtasks#
-		<form action="&xar-modurl-xproject-admin-migrate;" method="POST" style="margin: 0 0 0 0;">
+	<th><xar:mlstring>Tasks</xar:mlstring>: #$numtasks#
+		<form action="&xar-modurl-xproject-admin-migrate;" method="post" style="margin: 0 0 0 0;">
 	    <input type="hidden" name="authid" value="#$authid#" />
 	    <input type="hidden" name="projectid" value="#$projectid#" />
 	    <input type="hidden" name="parentid" value="#$taskparent_id#" />
 	    <input type="hidden" name="taskid" value="#$taskid#" />
 	</th>
-	<th>#$tasklistdesc_label#</th>
+	<th><xar:mlstring>Description</xar:mlstring> (<xar:mlstring>Filter</xar:mlstring>: #$filter#)</th>
 	<th>#$tasklistpri_label#</th>
 	<th>#$taskliststatus_label#</th>
 	<th>#$tasklistsubs_label#</th>
