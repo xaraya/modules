@@ -248,9 +248,8 @@ function contact_admin_create_contact($args)
     // Success
     xarSessionSetVar('statusmsg', xarML('CONTACTATTRIBUTESCREATED'));
 
-    list ($id,
-          $department) = xarVarCleanFromInput('id',
-                                               'department');
+     if (!xarVarFetch('id', 'isset', $id, '', XARVAR_NOT_REQUIRED)) return;
+     if (!xarVarFetch('department', 'str:1:', $department, '', XARVAR_NOT_REQUIRED)) return;
 
     // The API function is called.  Note that the name of the API function and
     // the name of this function are identical, this helps a lot when
