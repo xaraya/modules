@@ -51,8 +51,8 @@ function bkview_adminapi_update($args)
     // Check for exceptions
     if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
 
     $sql = "UPDATE $bkviewtable

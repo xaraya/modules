@@ -33,8 +33,8 @@ function bkview_userapi_get($args)
         return;
     }
     
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
     $sql = "SELECT xar_repoid,
                    xar_name,

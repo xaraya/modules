@@ -27,8 +27,8 @@ xarDBLoadTableMaintenanceAPI();
  */
 function bkview_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
     $fields = array(
         'xar_repoid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
@@ -92,8 +92,8 @@ function bkview_delete()
     // 1. make the module less function (hooks)
     // 2. remove the data
     // 3. remove the security
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
 
     // Unregister the hook

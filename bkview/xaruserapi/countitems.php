@@ -23,8 +23,8 @@
  */
 function bkview_userapi_countitems()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $bkviewtable = $xartable['bkview'];
 
     $sql = "SELECT COUNT(1)

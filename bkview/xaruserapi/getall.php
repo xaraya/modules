@@ -30,8 +30,8 @@ function bkview_userapi_getall($args)
 
     if (!xarSecurityCheck('ViewAllRepositories')) return;
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $bkviewtable = $xartable['bkview'];
 
