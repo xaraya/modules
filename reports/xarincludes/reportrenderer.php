@@ -4,7 +4,7 @@
 // PDFReports-Lite Version 1.0.p0.1 // patched for Xaraya use and changed xml schema to allow more complex reports
 // ***
 //if (!defined('PDF_VERSION')) define('PDF_VERSION',"PDFReports-Lite 1.0 - HSD patch version 0.1");
-define('PDF_VERSION',"PDFReports-Lite 1.0 - HSD patch version 0.2");
+define('PDF_VERSION',"PDFReports-Lite 1.0 - Xaraya patch version 0.2");
 
 // Defines the absolute path to the PDFWrapper library
 if (!defined('PDF_WRAPPER')) define('PDF_WRAPPER',dirname(__FILE__));
@@ -47,6 +47,42 @@ function PDF_numeric($location, $value) {
  */
 function PDF_contain($location, $item) {
   PDF_die($location,  "XML-ERROR: Element cannot contain type: [".strtoupper($item)."].");  
+}
+
+/*
+ * check wheter an value is an value unit specification
+ *
+ */
+function PDF_unit($location, $item) {
+    $expr = '/^([-|+]*[0-9]*.*[0-9]+)(mm|pt)*$/';
+    if (!preg_match($expr, $item, $matches)) {
+        PDF_DIE($location, "XML-ERROR: Wrong unit specification: [".strtoupper($item)."].");
+    }
+    // match should have 3 entries:
+    // 0 -> the whole
+    // 1 -> the value
+    // 2 -> the unit
+    if(count($matches) == 2) {
+        // No unit was specified, insert the default
+        $matches[2] = 'pt';
+    }
+    return toPoints($matches[1],$matches[2]);
+}
+
+/*
+ * Convert a measurement to points
+ *
+ */
+function toPoints($value, $unit_from) 
+{
+    switch (strtolower($unit_from)) {
+    case 'mm':
+        return 2.8452756 * $value ;
+    case 'pt':
+        return $value;
+    default:
+        return $value;
+    }
 }
 
 /*
@@ -221,14 +257,11 @@ class document {
 		// Default type is portrait
 		$this->type=(strlen($node->attrs["TYPE"])>0)?strtoupper($node->attrs["TYPE"]):"PORTRAIT";
 		PDF_in("[DOCUMENT][TYPE]", $this->type, array("PORTRAIT", "LANDSCAPE") );
-		$this->left=$node->attrs["LEFT"];
-		PDF_numeric("[DOCUMENT][LEFT]",$this->left);
-		$this->right=$node->attrs["RIGHT"];
-		PDF_numeric("[DOCUMENT][RIGHT]",$this->right);
-		$this->top=$node->attrs["TOP"];
-		PDF_numeric("[DOCUMENT][TOP]",$this->top);
-		$this->bottom=$node->attrs["BOTTOM"];
-		PDF_numeric("[DOCUMENT][BOTTOM]",$this->bottom);
+
+		$this->left   = PDF_unit("[DOCUMENT][LEFT]" , $node->attrs["LEFT"]);
+		$this->right  = PDF_unit("[DOCUMENT][RIGHT]", $node->attrs["RIGHT"]);
+		$this->top    = PDF_unit("[DOCUMENT][TOP]"  , $node->attrs["TOP"]);
+        $this->bottom = PDF_unit("[DOCUMENT][BOTTOM", $node->attrs["BOTTOM"]);
 
 		if ($this->type=="LANDSCAPE") {
 			$this->width=$this->pagelist[$this->page]["height"];
@@ -301,8 +334,7 @@ class headerfooter {
 	var $container;
 	var $n;
 	function headerfooter($node,$tagstring) {
-		$this->height=$node->attrs["HEIGHT"];
-		PDF_numeric("$tagstring[HEIGHT]",$this->height);
+		$this->height = PDF_unit("$tagstring[HEIGHT]",$node->attrs["HEIGHT"]);
 		$this->container=array();
 		$this->n=0;
 		for ($i=0;$i<$node->n;$i++) {
@@ -379,10 +411,9 @@ class detail {
 	var $hasSub;
 	
 	function detail($node, &$db) {
-		$this->width=$node->attrs["WIDTH"];
-        PDF_numeric("[DOCUMENT]::[DETAIL][WIDTH]",$this->width);
-		$this->height=$node->attrs["HEIGHT"];
-		PDF_numeric("[DOCUMENT]::[DETAIL][HEIGHT]",$this->height);
+		$this->width = PDF_unit("[DOCUMENT]::[DETAIL][WIDTH]" ,$node->attrs["WIDTH"]);
+		$this->height= PDF_unit("[DOCUMENT]::[DETAIL][HEIGHT]",$node->attrs["HEIGHT"]);
+
 		$this->repeat=$node->attrs["REPEAT"];
 		PDF_numeric("[DOCUMENT]::[DETAIL][REPEAT]",$this->repeat);
 		$this->flow=strtoupper($node->attrs["FLOW"]);
@@ -444,6 +475,7 @@ class text {
 	var $bgreen;
 	var $bblue;
 	var $text;
+    var $position;
 	
 	function text($node) {
         // If font tag omitted, default to Helvetica
@@ -452,9 +484,9 @@ class text {
             $this->font=(strlen($node->attrs["FONT"])>0)?$node->attrs["FONT"]:"Helvetica";
         }
 
-		// Default size is 10
-		$this->size=(strlen($node->attrs["SIZE"])>0)?$node->attrs["SIZE"]:10;
-		PDF_numeric("[DOCUMENT]::[TEXT][SIZE]",$this->size);
+		// Default size is 10pt
+		$this->size=(strlen($node->attrs["SIZE"])>0)?$node->attrs["SIZE"]:'10pt';
+		$this->size= PDF_unit("[DOCUMENT]::[TEXT][SIZE]",$this->size);
 
 		// Default not bold
         $this->bold="FALSE";
@@ -462,6 +494,13 @@ class text {
             $this->bold=(strtoupper($node->attrs["BOLD"]=="BOLD"))?"TRUE":"FALSE";
         }
         PDF_in("[DOCUMENT]::[TEXT][BOLD]", $this->bold, array("TRUE", "FALSE", "") ); //Empty means tag is omitted and thus is false
+
+        // Default positioning is relative
+        $this->position='RELATIVE';
+        if(array_key_exists("POSITION", $node->attrs)) {
+            $this->position=(strlen($node->attrs["POSITION"])>0)?$node->attrs["POSITION"]:"RELATIVE";
+        }
+        PDF_in("[DOCUMENT]::[TEXT][[POSITION]",$this->position,array("ABSOLUTE","RELATIVE"));
 
         // Default not italic
         $this->italic="FALSE";
@@ -487,16 +526,19 @@ class text {
         }
 		PDF_in("[DOCUMENT]::[TEXT][UNDERLINE]", $this->underline, array("TRUE", "FALSE","") );		
         
-		$this->x=$node->attrs["X"];
-		PDF_numeric("[DOCUMENT]::[TEXT][X]",$this->x);
-		$this->y=$node->attrs["Y"];
-		PDF_numeric("[DOCUMENT]::[TEXT][Y]",$this->y);
+        // Default x pos =0 
+        $this->x = (array_key_exists('X',$node->attrs))?$node->attrs["X"]:0;
+		$this->x = PDF_unit("[DOCUMENT]::[TEXT][X]",$this->x);
+        $this->y = (array_key_exists('Y',$node->attrs))?$node->attrs["Y"]:0;
+		$this->y= PDF_unit("[DOCUMENT]::[TEXT][Y]", $this->y);
+
 		// If width is not specified set it to -1 and let renderer decide
 		$this->width=(strlen($node->attrs["WIDTH"])>0)?$node->attrs["WIDTH"]:-1;
-		PDF_numeric("[DOCUMENT]::[TEXT][WIDTH]",$this->width);
+		$this->width = PDF_unit("[DOCUMENT]::[TEXT][WIDTH]",$this->width);
+
 		// Height defaults to textsize
-		$this->height=(strlen($node->attrs["HEIGHT"])>0)?$node->attrs["HEIGHT"]:$this->size;               
-		PDF_numeric("[DOCUMENT]::[TEXT][HEIGHT]",$this->height);
+		$this->height = (strlen($node->attrs["HEIGHT"])>0)?$node->attrs["HEIGHT"]:$this->size;               
+		$this->height = PDF_unit("[DOCUMENT]::[TEXT][HEIGHT]",$this->height);
 
 		// Default align is left
         $this->align="LEFT";
@@ -517,8 +559,8 @@ class text {
 		$this->blue=hexdec(substr($this->color,4,2));
 		$this->blue=$this->blue/255;
         
-		// Default background color is which
-		$this->bgcolor=(strlen($node->attrs["BGCOLOR"])>0)?$node->attrs["BGCOLOR"]:"ffffff";
+		// Default background color is white
+		$this->bgcolor=(array_key_exists('BGCOLOR',$node->attrs))?$node->attrs["BGCOLOR"]:"ffffff";
 		$this->bred=hexdec(substr($this->bgcolor,0,2));
 		$this->bred=$this->bred/255;
 		$this->bgreen=hexdec(substr($this->bgcolor,2,2));
@@ -536,16 +578,24 @@ class image {
 	var $height;
 	var $src;
 	var $type;
+    var $position;
 	
 	function image($node) {
-		$this->x=$node->attrs["X"];
-		PDF_numeric("[DOCUMENT]::[IMAGE][X]",$this->x);
-		$this->y=$node->attrs["Y"];
-		PDF_numeric("[DOCUMENT]::[IMAGE][Y]",$this->y);
-		$this->width=$node->attrs["WIDTH"];
-		PDF_numeric("[DOCUMENT]::[IMAGE][WIDTH]",$this->width);
-		$this->height=$node->attrs["HEIGHT"];
-        PDF_numeric("[DOCUMENT]::[IMAGE][HEIGHT]",$this->height);
+        // Default positioning is relative
+        $this->position='RELATIVE';
+        if(array_key_exists("POSITION", $node->attrs)) {
+            $this->position=(strlen($node->attrs["POSITION"])>0)?$node->attrs["POSITION"]:"RELATIVE";
+        }
+        PDF_in("[DOCUMENT]::[IMAGE][[POSITION]",$this->position,array("ABSOLUTE","RELATIVE"));
+
+        $this->x = (strlen($node->attrs["X"])>0)?$node->attrs["X"]:0;
+		$this->x = PDF_unit("[DOCUMENT]::[IMAGE][X]", $this->x);
+        $this->y = (strlen($node->attrs["Y"])>0)?$node->attrs["Y"]:0;
+		$this->y=  PDF_unit("[DOCUMENT]::[IMAGE][Y]", $node->attrs["Y"]);
+
+		$this->width = PDF_unit("[DOCUMENT]::[IMAGE][WIDTH]",$node->attrs["WIDTH"]);
+		$this->height= PDF_unit("[DOCUMENT]::[IMAGE][HEIGHT]",$node->attrs["HEIGHT"]);
+
 		$this->src=$node->attrs["SRC"];
 		$this->type=strtoupper($node->attrs["TYPE"]);
 		PDF_in("[DOCUMENT]::[IMAGE][TYPE]", $this->type, array("JPEG", "PNG", "GIF") );
@@ -568,20 +618,32 @@ class rectangle {
 	var $bred;
 	var $bgreen;
 	var $bblue;
+    var $position;
 	
 	function rectangle($node) {
-		$this->x=$node->attrs["X"];
-		PDF_numeric("[DOCUMENT]::[RECTANGLE][X]",$this->x);
-		$this->y=$node->attrs["Y"];
-		PDF_numeric("[DOCUMENT]::[RECTANGLE][Y]",$this->y);
+        // Default positioning is relative
+        $this->position='RELATIVE';
+        if(array_key_exists("POSITION", $node->attrs)) {
+            $this->position=(strlen($node->attrs["POSITION"])>0)?$node->attrs["POSITION"]:"RELATIVE";
+        }
+        PDF_in("[DOCUMENT]::[IMAGE][[POSITION]",$this->position,array("ABSOLUTE","RELATIVE"));
+
+        $this->x = (array_key_exist('X',$node->attrs))?$node->attrs["X"]:0;
+		$this->x = PDF_unit("[DOCUMENT]::[RECTANGLE][X]",$this->x);
+        $this->y = (array_key_exists('Y',$node->attrs))?$node->attrs["Y"]:0;
+		$this->y = PDF_unit("[DOCUMENT]::[RECTANGLE][Y]",$this->y);
+
 		$this->width=$node->attrs["WIDTH"];
-		PDF_numeric("[DOCUMENT]::[RECTANGLE][WIDTH]",$this->width);
+		$this->width = PDF_unit("[DOCUMENT]::[RECTANGLE][WIDTH]",$this->width);
 		$this->height=$node->attrs["HEIGHT"];
-		PDF_numeric("[DOCUMENT]::[RECTANGLE][HEIGHT]",$this->height);
+		$this->height = PDF_unit("[DOCUMENT]::[RECTANGLE][HEIGHT]",$this->height);
+
 		$this->type=$node->attrs["TYPE"];
 		PDF_in("[DOCUMENT]::[RECTANGLE][TYPE]", $this->type, array("0", "1", "2", "3", "4") );
+
 		$this->linewidth=$node->attrs["LINEWIDTH"];
-		PDF_numeric("[DOCUMENT]::[RECTANGLE][LINEWIDTH]",$this->linewidth);
+		$this->linewidth= PDF_unit("[DOCUMENT]::[RECTANGLE][LINEWIDTH]",$this->linewidth);
+
 		$this->color=$node->attrs["COLOR"];
 		$this->red=hexdec(substr($this->color,0,2));
 		$this->red=$this->red/255;
@@ -613,17 +675,29 @@ class line {
 	var $green;
 	var $blue;
 	var $height;
+    var $position;
 	
 	function line($node) {
+        // Default positioning is relative
+        $this->position='RELATIVE';
+        if(array_key_exists("POSITION", $node->attrs)) {
+            $this->position=(strlen($node->attrs["POSITION"])>0)?$node->attrs["POSITION"]:"RELATIVE";
+        }
+        PDF_in("[DOCUMENT]::[IMAGE][[POSITION]",$this->position,array("ABSOLUTE","RELATIVE"));
+
 		$this->y=0;
-		$this->x1=$node->attrs["X1"];
-		PDF_numeric("[DOCUMENT]::[LINE][X1]",$this->x1);
-		$this->y1=$node->attrs["Y1"];
-		PDF_numeric("[DOCUMENT]::[LINE][Y1]",$this->y1);
-		$this->x2=$node->attrs["X2"];
-		PDF_numeric("[DOCUMENT]::[LINE][X2]",$this->x2);
-		$this->y2=$node->attrs["Y2"];
-		PDF_numeric("[DOCUMENT]::[LINE][Y2]",$this->y2);
+        $this->x1 = (array_key_exists('X1',$node->attrs))?$node->attrs["X1"]:0;
+		$this->x1 = PDF_unit("[DOCUMENT]::[LINE][X1]",$this->x1);
+
+        $this->y1 = (array_key_exists('Y1',$node->attrs))?$node->attrs["Y1"]:0;
+		$this->y1 = PDF_unit("[DOCUMENT]::[LINE][Y1]",$this->y1);
+
+        $this->x2 = (array_key_exists('X2',$node->attrs))?$node->attrs["X2"]:0;
+		$this->x2 = PDF_unit("[DOCUMENT]::[LINE][X2]",$this->x2);
+
+        $this->y2= (array_key_exists('Y2',$node->attrs))?$node->attrs["Y2"]:0;
+		$this->y2 = PDF_unit("[DOCUMENT]::[LINE][Y2]",$this->y2);
+
 		$this->type=$node->attrs["TYPE"];
 		PDF_in("[DOCUMENT]::[LINE][TYPE]", $this->type, array("0", "1", "2", "3", "4") );
 
@@ -818,12 +892,11 @@ class renderer {
 		switch (get_class($element)) {
         case "text":
             // If x or y are specified relative update the x/y property of this element
-            if (substr($element->x,0,1)=="+" || substr($element->x,0,1)=="-") {
+            if ($element->position="RELATIVE") {
                 $element->x+=$this->xrel;
-            }
-            if (substr($element->y,0,1)=="+" || substr($element->y,0,1)=="-") {
                 $element->y+=$this->yrel;
             }
+
             if ($element->width==-1) {
                 // No width specified, let renderer predict 
                 $element->width = $this->p->GetTextWidth($this->solveexp($element->text,$datasource),$element->size); 
@@ -845,33 +918,26 @@ class renderer {
             }
             break;
         case "image":
-            if (substr($element->x,0,1)=="+" || substr($element->x,0,1)=="-") {
+            if ($element->position="RELATIVE") {
                 $element->x+=$this->xrel;
-            }
-            $this->xrel=$element->x+$element->width;					
-            if (substr($element->y,0,1)=="+" || substr($element->y,0,1)=="-") {
                 $element->y+=$this->yrel;
             }
+            $this->xrel=$element->x+$element->width;					
             $this->yrel=$element->y+$element->height;
             if ($this->doWrite==1) {
                 $this->p->PlaceScaledImage($element->type, $element->src, ($this->left + $element->x + $x), ($this->y - $element->y - $element->height - $y), $element->width, $element->height );
             }
             break;
         case "line":
-            if (substr($element->x1,0,1)=="+" || substr($element->x1,0,1)=="-") {
+            if ($element->position="RELATIVE") {
                 $element->x1+=$this->xrel;
-            }
-            if (substr($element->x2,0,1)=="+" || substr($element->x2,0,1)=="-") {
                 $element->x2=$element->x1+$element->x2;
-            }					
-            $this->xrel=$element->x2;
-            if (substr($element->y1,0,1)=="+" || substr($element->y1,0,1)=="-") {
                 $element->y1+=$this->yrel;
-            }
-            if (substr($element->y2,0,1)=="+" || substr($element->y2,0,1)=="-") {
                 $element->y2=$element->y1+$element->y2;
-            }						
+            }
+            $this->xrel=$element->x2;
             $this->yrel=$element->y2;
+
             if ($this->doWrite==1) {					
                 $this->p->SetColor($element->red, $element->green, $element->blue);
                 $this->p->SetLineStyle($element->width,1,0);
@@ -879,13 +945,11 @@ class renderer {
             }
             break;
         case "rectangle":
-            if (substr($element->x,0,1)=="+" || substr($element->x,0,1)=="-") {
+            if ($element->position="RELATIVE") {
                 $element->x+=$this->xrel;
-            }
-            $this->xrel=$element->x+$element->width;					
-            if (substr($element->y,0,1)=="+" || substr($element->y,0,1)=="-") {
                 $element->y+=$this->yrel;
             }
+            $this->xrel=$element->x+$element->width;					
             $this->yrel=$element->y+$element->height;
             if ($this->doWrite==1) {					
                 $this->p->SetBGColor($element->bred, $element->bgreen, $element->bblue);
@@ -946,7 +1010,7 @@ class renderer {
 			}
 			// FIXME: This allows only ONE expression in tag because we require it to be methods or php globals!!!
             //echo $str;
-            eval($str);
+            @eval($str);
 		}
 		if (isset($ret)) {
 			//echo "$exp=".$ret."<br/>";
