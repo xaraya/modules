@@ -17,54 +17,6 @@
  */
 function cachesecurity_init()
 {
-    // set up the output cache directory
-    $varCacheDir = xarCoreGetVarDirPath();
-    $cacheSecurityDir = xarCoreGetVarDirPath() . '/security';
-
-    if (is_writable($varCacheDir) || is_dir($cacheSecurityDir)) {
-        if (!is_dir($cacheSecurityDir)) {
-            // set up the output directory
-            $old_umask = umask(0);
-            mkdir($cacheSecurityDir, 0777);
-            mkdir($cacheSecurityDir.'/masks', 0777);
-            umask($old_umask);
-        }
-        if (!is_writable($cacheSecurityDir)) {
-            // tell them output dir needs to be writable
-            $msg=xarML('The #(1) directory must be writable 
-                       by the web server for security caching to work.  
-                       The CacheSecurity module has not been installed, 
-                       please make the #(1) directory 
-                       writable by the web server before re-trying to 
-                       install this module.', $cacheSecurityDir);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                            new SystemException($msg));
-            return false;
-        }
-    } else {
-        // tell them that cache needs to be writable or manually create output dir
-        $msg=xarML('The var/cache directory must be writable 
-                   by the web server for the install script to 
-                   set up output caching for you.
-                   The SecurityCache module has not been installed, 
-                   please make the var/cache directory 
-                   writable by the web server before re-trying to 
-                   install this module.  
-                   Alternatively, you can manually create the 
-                   var/cache/security directory and make sure the 
-                   directory is writable by the web server for output
-                   caching to work.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'FUNCTION_FAILED',
-                        new SystemException($msg));
-        return false;
-    }
-    
-    // avoid directory browsing
-    if (!file_exists($cacheSecurityDir.'/index.html')) {
-        @touch($cacheSecurityDir.'/index.html');
-    }
-
-
     // Set up database tables
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
@@ -443,11 +395,6 @@ function cachesecurity_upgrade($oldversion)
  */
 function cachesecurity_delete()
 {
-    //if still there, remove the cache.touch file, this turns everything off
-    $cacheSecurityDir = xarCoreGetVarDirPath() . '/security';
-
-    if (!cachesecurity_recursivedelete ($cacheSecurityDir)) return false;
-
     // Drop the tables
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
@@ -493,25 +440,4 @@ function cachesecurity_delete()
     // Deletion successful
     return true;
 } 
-
-function cachesecurity_recursivedelete ($directory)
-{
-
-    if (file_exists($directory) && is_dir($directory)) {
-        if ($handle = opendir($directory)) {
-            while (($file = readdir($handle)) !== false) {
-                $cache_file = $directory . '/' .$file;
-                if (is_file($cache_file) || is_link($cache_file)) {
-                    unlink($cache_file);
-                } elseif (is_dir($cache_file)) {
-                    if (!cachesecurity_recursivedelete ($cache_file)) return false;
-                }
-            }
-            closedir($handle);
-        }
-
-        rmdir($directory);
-    }
-}
-
 ?>
