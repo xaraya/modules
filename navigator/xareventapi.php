@@ -18,7 +18,7 @@
  */
 function navigator_eventapi_OnServerRequest($arg)
 {
-    $styleList = unserialize(xarModGetVar('navigator', 'style.list.inline'));
+    $styleList = @unserialize(xarModGetVar('navigator', 'style.list.inline'));
 
     // Make sure the list menu get's it's styles included as well...
     xarTplAddStyleLink('navigator','navigator-listmenu');

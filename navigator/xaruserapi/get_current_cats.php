@@ -42,8 +42,8 @@ function navigator_userapi_get_current_cats( /* VOID */ )
         }
 
         // Grab the default Parent Category List
-        $prilist  = unserialize(xarModGetVar('navigator', 'categories.list.primary'));
-        $seclist  = unserialize(xarModGetVar('navigator', 'categories.list.secondary'));
+        $prilist  = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
+        $seclist  = @unserialize(xarModGetVar('navigator', 'categories.list.secondary'));
 
 
         xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$prilist);

@@ -29,7 +29,7 @@ function navigator_userapi_dynimages($args)
         $pid = 0;
         $typeId = 0;
     } else {
-        $pids = unserialize(xarModGetVar('navigator', 'categories.list.primary'));
+        $pids = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
         xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$pids);
         if (count($cids) == 1) {
             $cids[1] = 0;
@@ -55,14 +55,14 @@ function navigator_userapi_dynimages($args)
     $images = xarModGetVar('navigator', "category.image-list.$pid");
 
     if (isset($images) && !empty($images)) {
-        $images = unserialize($images);
+        $images = @unserialize($images);
     } else {
         $images = array();
     }
 
     $siteDefaults = xarmodGetVar('navigator', 'category.image-list.0');
     if (isset($siteDefaults) && !empty($siteDefaults)) {
-        $siteDefaults = unserialize($siteDefaults);
+        $siteDefaults = @unserialize($siteDefaults);
     } else {
         $siteDefaults = array();
     }

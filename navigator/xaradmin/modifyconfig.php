@@ -82,7 +82,7 @@ function navigator_admin_modifyconfig()
     $secondary_start   = xarModGetVar('navigator', 'categories.secondary.default');
 
     if (!empty($primary_list)) {
-        $data['primary_list'] = unserialize($primary_list);
+        $data['primary_list'] = @unserialize($primary_list);
 
     } else {
         $data['primary_list'] = array();
@@ -95,7 +95,7 @@ function navigator_admin_modifyconfig()
     }
 
     if (!empty($secondary_list)) {
-        $data['secondary_list'] = unserialize($secondary_list);
+        $data['secondary_list'] = @unserialize($secondary_list);
         xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$data['secondary_list']);
         xarModAPIFunc('navigator', 'user', 'set_startpoint',
                        array('tree' => &$data['secondary_list'],

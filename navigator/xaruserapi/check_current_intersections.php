@@ -34,7 +34,7 @@ function navigator_userapi_check_current_intersections( $args )
         return TRUE;
     }
 
-    $primary_list = unserialize(xarModGetVar('navigator', 'categories.list.primary'));
+    $primary_list = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
     xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$primary_list);
 
     // reindex by cid => metadata

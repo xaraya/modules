@@ -52,7 +52,7 @@ function navigator_userapi_parsecids($args)
     }
 
     // Get default parents
-    $primary_list = unserialize(xarModGetVar('navigator', 'categories.list.primary'));
+    $primary_list = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
 
     if (!is_array($primary_list)) {
         $primary_list = array();

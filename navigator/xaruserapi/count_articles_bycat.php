@@ -41,7 +41,7 @@ function navigator_userapi_count_articles_bycat($args)
 
     if ($matrix) {
 
-        $tmpList = unserialize(xarModGetVar('navigator', 'categories.list.secondary'));
+        $tmpList = @unserialize(xarModGetVar('navigator', 'categories.list.secondary'));
         if (is_array($tmpList)&& count($tmpList)) {
             xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$tmpList);
             foreach ($tmpList as $key => $item) {
@@ -74,7 +74,7 @@ function navigator_userapi_count_articles_bycat($args)
 
     } else {
 
-        $tmpList = unserialize(xarModGetVar('navigator', 'categories.list.primary'));
+        $tmpList = @unserialize(xarModGetVar('navigator', 'categories.list.primary'));
         if (is_array($tmpList)&& count($tmpList)) {
             xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$tmpList);
             foreach ($tmpList as $key => $item) {

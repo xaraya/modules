@@ -97,7 +97,7 @@ function navigator_admin_tag_generator()
             }
 
             $plist = xarModGetVar('navigator', 'categories.list.primary');
-            $plist = unserialize($plist);
+            $plist = @unserialize($plist);
 
             xarModAPIFunc('navigator', 'user', 'nested_tree_remove_node',
                            array('tree' => &$plist,
@@ -112,7 +112,7 @@ function navigator_admin_tag_generator()
 
             if ('secondary' == $base) {
                 $slist = xarModGetVar('navigator', 'categories.list.secondary');
-                $slist = unserialize($slist);
+                $slist = @unserialize($slist);
 
                 xarModAPIFunc('navigator', 'user', 'nested_tree_remove_node',
                                array('tree' => &$slist,

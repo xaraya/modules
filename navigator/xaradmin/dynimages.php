@@ -14,8 +14,8 @@ function navigator_admin_dynimages()
         xarResponseRedirect(xarModURL('navigator', 'admin', 'modifyconfig'));
         exit();
     } else {
-        $primary_list    = unserialize($primary_list);
-        $secondary_list  = unserialize($secondary_list);
+        $primary_list    = @unserialize($primary_list);
+        $secondary_list  = @unserialize($secondary_list);
 
         xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$primary_list);
         xarModAPIFunc('navigator', 'user', 'nested_tree_flatten', &$secondary_list);

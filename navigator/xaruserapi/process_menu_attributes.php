@@ -71,7 +71,7 @@ function navigator_userapi_process_menu_attributes( $args )
 
     $data['emptygroups'] = $emptygroups;
 
-    $tree = unserialize(xarModGetVar('navigator', 'categories.list.'.$base));
+    $tree = @unserialize(xarModGetVar('navigator', 'categories.list.'.$base));
     $current_cids = xarModAPIFunc('navigator', 'user', 'get_current_cats');
 
     if (xarModGetVar('navigator', 'style.matrix')) {
