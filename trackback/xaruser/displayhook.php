@@ -6,7 +6,8 @@
  * @access   public
  * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
  */
-function trackback_user_displayhook($args) {
+function trackback_user_displayhook($args)
+{
     extract($args);
     // Security Check
 	if(!xarSecurityCheck('Viewtrackback')) return;
