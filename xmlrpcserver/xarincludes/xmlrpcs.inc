@@ -175,7 +175,7 @@ class xmlrpc_server {
                      || $sr[0]) {
                     // if no signature or correct signature
                     if ($sysCall) { 
-                        xarLogMessage("calling syscall" . $dmap[$methName]['function']);
+                        xarLogMessage("calling syscall: " . $dmap[$methName]['function']);
                         $xarayafunc = __constructxarfunc($dmap[$methName]['function'],'array(\'server\' => $this, \'msg\' => $m)');
                         xarLogMessage($xarayafunc);
                         eval('$r=' . $xarayafunc);
