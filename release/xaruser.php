@@ -503,6 +503,15 @@ function release_user_modifyid()
                                   array('rid' => $rid));
 
             if ($data == false) return;
+            // The user API function is called.
+           
+            $uid = xarUserGetVar('uid');
+
+            if (($data['uid'] == $uid) or (xarSecurityCheck('EditRelease', 0))) {
+                $message = '';
+            } else {
+                $message = xarML('You are not allowed to add a release notification to this module');               
+            }
 
             $data['authid'] = xarSecGenAuthKey();
 
