@@ -97,7 +97,9 @@ function xarbb_user_newtopic()
                 $item['module'] = 'xarbb';
                 $item['itemtype'] = $fid;// Forum Topics
                 $item['itemid'] = $tid;// Forum Topics
-                /*$data['hooks'] = xarModCallHooks('item','modify',$tid, $item);*/
+                //Call hooks here - but need to null out the ones that will cause trouble                
+                $data['hooks'] = xarModCallHooks('item','modify',$tid, $item);
+                $data['hooks']['categories']=null;
 
             } else  {
 
@@ -117,7 +119,9 @@ function xarbb_user_newtopic()
                 $item['module'] = 'xarbb';
                 $item['itemtype'] = $fid;
                 $item['itemid'] = '';
-                /*$data['hooks'] = xarModCallHooks('item','new','',$item);*/
+                //Call hooks here - but need to null out the ones that will cause trouble
+                $data['hooks'] = xarModCallHooks('item','new','',$item);
+                $data['hooks']['categories']=null;
             }
 
             $data['authid'] = xarSecGenAuthKey();
