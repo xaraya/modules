@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id$
+ * File: $Id: s.xarinit.php 1.28 03/07/19 15:58:09+02:00 marcel@hsdev.com $
  *
  * Xaraya Autolinks
  *
@@ -150,26 +150,26 @@ function autolinks_upgrade($oldversion)
             $queries[] = xarDBAlterTable(
                 $autolinkstable,
                 array (
-                    'command'    => 'add',
-                    'field'      => 'xar_enabled',
-                    'type'       => 'integer',
-                    'size'       => 'tiny',
-                    'null'       => false,
-                    'first'      => false,
-                    'default'    => '1'
+                    'command'   => 'add',
+                    'field'     => 'xar_enabled',
+                    'type'      => 'integer',
+                    'size'      => 'tiny',
+                    'null'      => false,
+                    'first'     => false,
+                    'default'   => '1'
                 )
             );
 
             $queries[] = xarDBAlterTable(
                 $autolinkstable,
                 array (
-                    'command'    => 'add',
-                    'field' => 'xar_valid',
-                    'type' => 'integer',
-                    'size' => 'tiny',
-                    'null' => false,
-                    'first' => false,
-                    'default' => '1'
+                    'command'   => 'add',
+                    'field'     => 'xar_valid',
+                    'type'      => 'integer',
+                    'size'      => 'tiny',
+                    'null'      => false,
+                    'first'     => false,
+                    'default'   => '1'
                 )
             );
 
@@ -183,44 +183,47 @@ function autolinks_upgrade($oldversion)
             }
 
         case '1.2':
-            // Changes to upgrade from 1.1 to 1.2
+            // Changes to upgrade from 1.2 to 1.3
+
+            // Add columns to the Autolinks table.
+            $queries = array ();
 
             $queries[] = xarDBAlterTable(
                 $autolinkstable,
                 array (
-                    'command'    => 'add',
-                    'field' => 'xar_match_re',
-                    'type' => 'integer',
-                    'size' => 'tiny',
-                    'null' => false,
-                    'first' => false,
-                    'default' => '0'
+                    'command'   => 'add',
+                    'field'     => 'xar_match_re',
+                    'type'      => 'integer',
+                    'size'      => 'tiny',
+                    'null'      => false,
+                    'first'     => false,
+                    'default'   => '0'
                 )
             );
 
             $queries[] = xarDBAlterTable(
                 $autolinkstable,
                 array (
-                    'command'    => 'add',
-                    'field' => 'xar_sample',
-                    'type' => 'varchar',
-                    'size' => '200',
-                    'null' => true,
-                    'first' => false,
-                    'default' => ''
+                    'command'   => 'add',
+                    'field'     => 'xar_sample',
+                    'type'      => 'varchar',
+                    'size'      => '200',
+                    'null'      => true,
+                    'first'     => false,
+                    'default'   => ''
                 )
             );
 
             $queries[] = xarDBAlterTable(
                 $autolinkstable,
                 array (
-                    'command'    => 'add',
-                    'field' => 'xar_cache_replace',
-                    'type' => 'varchar',
-                    'size' => '200',
-                    'null' => true,
-                    'first' => false,
-                    'default' => ''
+                    'command'   => 'add',
+                    'field'     => 'xar_cache_replace',
+                    'type'      => 'varchar',
+                    'size'      => '200',
+                    'null'      => true,
+                    'first'     => false,
+                    'default'   => ''
                 )
             );
 
