@@ -9,6 +9,10 @@ function polls_user_displayhook($args)
 {
     extract($args);
 
+    if (empty($objectid)) {
+        return '';
+    }
+
     $data = array();
     $data['objectid'] = $objectid;
 
@@ -45,10 +49,12 @@ function polls_user_displayhook($args)
     $pid = $poll['pid'];
 
     $data['title'] = $poll['title'];
-    $data['itemtype'] = $itemtype;
+    if (empty($data['returnurl'])) {
+        $data['returnurl'] = xarServerGetCurrentURL();
+    }
 
     // See if user is allowed to vote
-    if (xarSecurityCheck('VotePolls',0,'All',"$poll[title]:All:$poll[pid]")){
+    if (xarSecurityCheck('VotePolls',0,'All',"$poll[title]:All:$poll[pid]")) {
         if ((xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid)))) {
             // They have not voted yet, display voting options
             $data['canvote'] = 1;
@@ -56,7 +62,7 @@ function polls_user_displayhook($args)
             $data['private'] = $poll['private'];
             $data['resultsurl'] = xarModURL('polls',
                                   'user',
-                                  'results',
+                                  'resultshook',
                                   array('pid' => $poll['pid']));
             $data['previewresults'] = xarModGetVar('polls', 'previewresults');
         
@@ -68,26 +74,21 @@ function polls_user_displayhook($args)
             // They have voted, display current results
             return xarModFunc('polls',
                               'user',
-                              'results',
-                              array('pid' => $pid,'nohooks' => 1));
+                              'resultshook',
+                              array('pid' => $pid,
+                                    'returnurl' => $data['returnurl']));
         }
     }
     else {
         $data['canvote'] = 0;
     }
 
-/*
-	// Let hooks know we're displaying a poll, so they can provide us with related stuff
-	$hooks = xarModCallHooks('item','display', $poll['pid'],
-	   xarModURL('polls','user', 'display', array('pid' => $poll['pid'])));
+/* no hook calls inside hook calls :-) */
 
-    $data['hookoutput'] = join('',$hooks);
-*/
-    $data['hookoutput'] = '';
+    $data['buttonlabel'] = xarML('Vote');
 
-	$data['buttonlabel'] = xarML('Vote');
     // Return output
-    return xarTplModule('polls','user','display',$data);
+    return $data;
 }
 
 ?>

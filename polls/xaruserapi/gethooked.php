@@ -40,6 +40,8 @@ function polls_userapi_gethooked($args)
                    ".$prefix."_open,
                    ".$prefix."_private,
                    ".$prefix."_modid,
+                   ".$prefix."_itemtype,
+                   ".$prefix."_itemid,
                    ".$prefix."_opts,
                    ".$prefix."_votes,
                    ".$prefix."_reset
@@ -61,7 +63,7 @@ function polls_userapi_gethooked($args)
     }
 
     // Obtain the poll information from the result set
-    list($pid, $title, $type, $open, $private, $modid, $opts, $votes, $reset) = $result->fields;
+    list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $opts, $votes, $reset) = $result->fields;
 
     $result->Close();
 
@@ -100,6 +102,8 @@ function polls_userapi_gethooked($args)
                   'open' => $open,
                   'private' => $private,
                   'modid' => $modid,
+                  'itemtype' => $itemtype,
+                  'itemid' => $itemid,
                   'opts' => $opts,
                   'votes' => $votes,
                   'reset' => $reset,

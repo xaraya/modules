@@ -57,6 +57,8 @@ function polls_userapi_search($args) {
                    $pollstable.".$prefix."_open,
                    $pollstable.".$prefix."_private,
                    $pollstable.".$prefix."_modid,
+                   $pollstable.".$prefix."_itemtype,
+                   $pollstable.".$prefix."_itemid,
                    $pollstable.".$prefix."_votes,
                    $pollstable.".$prefix."_reset
 
@@ -68,7 +70,7 @@ function polls_userapi_search($args) {
 
     // Put polls into result array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($pid, $title, $type, $open, $private, $modid, $votes, $reset) = $result->fields;
+        list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $votes, $reset) = $result->fields;
         if (xarSecurityCheck('ViewPolls',0)) {
             $polls[] = array('pid' => $pid,
                              'title' => $title,
@@ -76,6 +78,8 @@ function polls_userapi_search($args) {
                              'open' => $open,
                              'private' => $private,
                              'modid' => $modid,
+                             'itemtype' => $itemtype,
+                             'itemid' => $itemid,
                              'votes' => $votes,
                              'reset' => $reset);
         }

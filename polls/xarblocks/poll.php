@@ -79,7 +79,7 @@ function polls_pollblock_display($blockinfo)
 
         $data['authid'] = xarSecGenAuthKey('polls');
         $data['pid'] =  $poll['pid'];
-        xarSessionSetVar('pollsreturnurl',  xarServerGetCurrentURL());
+        $data['returnurl'] = xarServerGetCurrentURL();
         $data['options'] = $poll['options'];
         $data['canvote'] = 1;
     } else {

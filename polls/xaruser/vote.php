@@ -7,7 +7,7 @@ function polls_user_vote($args)
 {
     // Get parameters
     list($pid,
-         $blockvote) = xarVarCleanFromInput('pid', 'blockvote');
+         $returnurl) = xarVarCleanFromInput('pid', 'returnurl');
     extract($args);
     if(empty($pid)){
         $msg = xarML('No poll specified');
@@ -22,8 +22,13 @@ function polls_user_vote($args)
     if(!$canvote){
         xarSessionSetVar('polls_statusmsg', xarML('You cannot vote at this time.',
                     'polls'));
-        xarResponseRedirect(xarModURL('polls', 'user', 'results',
-                               array('pid' => $pid)));
+        if (!empty($returnurl)) {
+            xarResponseRedirect($returnurl);
+        } else {
+            xarResponseRedirect(xarModURL('polls', 'user', 'results',
+                                          array('pid' => $pid)));
+        }
+        return true;
     }
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -82,8 +87,7 @@ function polls_user_vote($args)
     }
 
     // Success, Redirect
-    $returnurl = xarSessionGetVar('pollsreturnurl');
-    if(isset($returnurl) && $blockvote == 1){
+    if (!empty($returnurl)){
         xarResponseRedirect($returnurl);
     }
     else {

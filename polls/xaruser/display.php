@@ -36,8 +36,7 @@ function polls_user_display($args)
 
     $data = array();
     $data['title'] = $poll['title'];
-
-    xarSessionSetVar('pollsreturnurl',  xarServerGetCurrentURL());
+    $data['returnurl'] =  xarServerGetCurrentURL();
 
     // See if user is allowed to vote
     if (xarSecurityCheck('VotePolls',0,'All',"$poll[title]:All:$poll[pid]")){
@@ -68,15 +67,20 @@ function polls_user_display($args)
     else {
         $data['canvote'] = 0;
     }
-    // Let hooks know we're displaying a poll, so they can provide us with related stuff
-    $item = $poll;
-    $item['module'] = 'polls';
-    $item['returnurl'] = xarModURL('polls','user', 'display', array('pid' => $poll['pid']));
-    $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
 
-    $data['hookoutput'] = join('',$hooks);
+    if ($poll['modid'] == xarModGetIDFromName('polls')) {
+        // Let hooks know we're displaying a poll, so they can provide us with related stuff
+        $item = $poll;
+        $item['module'] = 'polls';
+        $item['returnurl'] = xarModURL('polls','user', 'display', array('pid' => $poll['pid']));
+        $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
 
-	$data['buttonlabel'] = xarML('Vote');
+        $data['hookoutput'] = join('',$hooks);
+    } else {
+        $data['hookoutput'] = '';
+    }
+
+    $data['buttonlabel'] = xarML('Vote');
     // Return output
     return $data;
 }

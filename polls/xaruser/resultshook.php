@@ -1,15 +1,16 @@
 <?php
 
 /**
- * show results
- * This is a standard function to provide detailed informtion on a single item
- * available from the module.
+ * show results in display hook
+ * @param $args['pid'] poll ID (from displayhook)
+ * @param $args['returnurl'] return URL (from displayhook)
  */
-function polls_user_results($args)
+function polls_user_resultshook($args)
 {
     // Get parameters
     $pid = xarVarCleanFromInput('pid');
 
+    // override with arguments here
     extract($args);
 
     if (!isset($pid)) {
@@ -20,11 +21,6 @@ function polls_user_results($args)
         return;
     }
     $canvote = xarModAPIFunc('polls', 'user', 'usercanvote', array('pid' => $pid));
-    if(!xarModGetVar('polls', 'previewresults') && $canvote){
-        xarResponseRedirect(xarModURL('polls', 'user', 'display',
-                               array('pid' => $pid)));
-    }
-
 
     $data = array();
 
@@ -49,10 +45,27 @@ function polls_user_results($args)
     // Number of participants
     $data['totalvotes'] = $poll['votes'];
     $data['options'] = array();
-    $data['voteurl'] = xarModURL('polls', 'user', 'display',
-                               array('pid' => $pid));
-    $data['listurl'] = xarModURL('polls', 'user', 'list',
-                               array('pid' => $pid));
+    if (!empty($returnurl)) {
+        $data['voteurl'] = $returnurl;
+    } elseif ($poll['modid'] != xarModGetIDFromName('polls') && !empty($poll['itemid'])) {
+        $modinfo = xarModGetInfo($poll['modid']);
+        if (!empty($modinfo)) {
+            $itemlinks = xarModAPIFunc($modinfo['name'],'user','getitemlinks',
+                                       array('itemtype' => $poll['itemtype'],
+                                             'itemids' => array($poll['itemid'])),
+                                       // don't throw an exception if this function doesn't exist
+                                       0);
+            if (!empty($itemlinks) && !empty($itemlinks[$poll['itemid']])) {
+                $data['voteurl'] = $itemlinks[$poll['itemid']]['url'];
+                $data['itemtitle'] = $itemlinks[$poll['itemid']]['label'];
+            }
+        }
+    }
+    if (empty($data['voteurl'])) {
+        // fall back to standard display if necessary
+        $data['voteurl'] = xarModURL('polls', 'user', 'display',
+                                     array('pid' => $pid));
+    }
 
     $data['canvote'] = $canvote;
     $barscale = xarModGetVar('polls', 'barscale');
@@ -90,17 +103,7 @@ function polls_user_results($args)
         $data['options'][$i] = $row;
     }
 
-    if ($poll['modid'] == xarModGetIDFromName('polls')) {
-        // Let hooks know we're displaying a poll, so they can provide us with related stuff
-        $item = $poll;
-        $item['module'] = 'polls';
-        $item['returnurl'] = xarModURL('polls','user', 'results', array('pid' => $poll['pid']));
-        $hooks = xarModCallHooks('item','display', $poll['pid'], $item);
-
-        $data['hookoutput'] = join('',$hooks);
-    } else {
-        $data['hookoutput'] = '';
-    }
+/* no hook calls inside hook calls :-) */
 
     // Return output
     return $data;

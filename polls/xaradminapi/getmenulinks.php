@@ -9,8 +9,7 @@
  */
 function polls_adminapi_getmenulinks()
 {
-
-    $data['authid'] = xarSecGenAuthKey();
+    $menulinks = array();
 
     if (xarSecurityCheck('AddPolls',0)) {
         $menulinks[] = Array('url'   => xarModURL('polls',
@@ -29,14 +28,10 @@ function polls_adminapi_getmenulinks()
     if (xarSecurityCheck('AdminPolls',0)) {
         $menulinks[] = Array('url' => xarModURL('polls',
                                                    'admin',
-                                                   "modifyconfig&amp;authid=$data[authid]"),
+                                                   'modifyconfig'),
                               'title' => xarML('Modify Polls configuration'),
                               'label' => xarML('Modify Config'));
     }
-    if (empty($menulinks)){
-        $menulinks = '';
-    }
-
     return $menulinks;
 }
 

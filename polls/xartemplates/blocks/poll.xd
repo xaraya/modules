@@ -7,9 +7,6 @@
 <xar:for start="$i = 1" test="$i <= count($options)" iter="$i++">
 <tr>
 	<td>
-		<input type="hidden" name="authid" value="#$authid#" />
-		<input type="hidden" name="pid" value="#$pid#" />
-		<input type="hidden" name="blockvote" value="1" />
         <xar:if condition="$type eq 'single'">
             <input type="radio" name="option" id="option_#$bid#_#$i#" value="#$i#" />
         <xar:elseif  condition="$type eq 'multi'" />
@@ -21,6 +18,9 @@
 </xar:for>
 </table>
         <div style="text-align:center; margin: auto;">
+        <input type="hidden" name="authid" value="#$authid#" />
+        <input type="hidden" name="pid" value="#$pid#" />
+        <input type="hidden" name="returnurl" value="#$returnurl#" />
         <p><input type="submit" value="#$buttonlabel#" style="text-align:center; margin: auto;" /></p>
         </div>
 </form>

@@ -81,10 +81,7 @@ function polls_admin_updateconfig()
     xarModSetVar('polls', 'previewresults', $previewresults);
 
 
-    // lets update status and display updated configuration
-    xarSessionSetVar('polls_statusmsg', xarML('Polls Configuration Updated',
-                    ' polls'));
-    xarResponseRedirect(xarModURL('polls', 'admin', 'main'));
+    xarResponseRedirect(xarModURL('polls', 'admin', 'modifyconfig'));
 
     // Return
     return true;

@@ -54,6 +54,8 @@ function polls_userapi_getall($args)
                    ".$prefix."_open,
                    ".$prefix."_private,
                    ".$prefix."_modid,
+                   ".$prefix."_itemtype,
+                   ".$prefix."_itemid,
                    ".$prefix."_votes,
                    ".$prefix."_reset
             FROM $pollstable
@@ -67,7 +69,7 @@ function polls_userapi_getall($args)
 
     // Put polls into result array.
     for (; !$result->EOF; $result->MoveNext()) {
-        list($pid, $title, $type, $open, $private, $modid, $votes, $reset) = $result->fields;
+        list($pid, $title, $type, $open, $private, $modid, $itemtype, $itemid, $votes, $reset) = $result->fields;
         if (xarSecurityCheck('ViewPolls',0,'All',"$title:All:$pid")) {
             $polls[] = array('pid' => $pid,
                              'title' => $title,
@@ -75,6 +77,8 @@ function polls_userapi_getall($args)
                              'open' => $open,
                              'private' => $private,
                              'modid' => $modid,
+                             'itemtype' => $itemtype,
+                             'itemid' => $itemid,
                              'votes' => $votes,
                              'reset' => $reset);
         }
