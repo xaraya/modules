@@ -1,7 +1,8 @@
 <?php
 
-function pubsub_user_usermenu()
+function pubsub_user_usermenu($args)
 {
+    extract($args);
     xarVarFetch('action','str:1:',$action,'menu',XARVAR_NOT_REQUIRED);
 
     switch($action) {

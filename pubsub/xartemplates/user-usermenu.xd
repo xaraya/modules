@@ -1,10 +1,24 @@
 <xar:if condition="empty($action)">
-<xar:mlstring>Your Subscriptions</xar:mlstring>:
-<p>
-<a href="#xarModURL('pubsub','user','usermenu',array('action' => 'list'))#">
-    <img src="#xarTplGetImage('unsubscribe.gif','pubsub')#" border="0" alt=""> TODO: anybody got a spare icon for this ? :-)
-</a>
-</p>
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="compare">xarServerGetCurrentURL()</xar:set>
+<xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))</xar:set>
+<xar:if condition="$compare eq $current">
+    <dd class="active">
+        <a href="#xarServerGetCurrentURL()#">
+            <xar:mlstring>
+                Subscriptions
+            </xar:mlstring>
+        </a>
+    </dd>    
+<xar:else />
+    <dd>
+        <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))#">
+            <xar:mlstring>
+                Subscriptions
+            </xar:mlstring>
+        </a>
+    </dd>    
+</xar:if>
 <xar:elseif condition="$action eq 'list'"/>
 <div class="xar-mod-head">
     <span class="xar-mod-title">
