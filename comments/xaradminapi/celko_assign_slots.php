@@ -25,7 +25,7 @@ function comments_adminapi_celko_assign_slots( $data ) {
 	if (isset($node_data['children'])) {
             $node_data['children'] = xarModAPIFunc('comments',
                                                    'admin',
-                                                   'create_celko_r',
+                                                   'celko_assign_slots',
                                                     $node_data['children']);
         } else {
             $node_data['children'] = FALSE;
