@@ -65,7 +65,7 @@ function translations_adminapi_generate_theme_skels($args)
 
     foreach ($dirnames as $dirname) {
         ${$dirname . "names"} = array();
-        $pattern = '/^([a-z\-_]+)\.xt$/i';
+        $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
         $xtype = 'xt';
         $subnames = xarModAPIFunc('translations','admin','get_theme_files',
                          array('themedir'=>"themes/$themedir/$dirname",'pattern'=>$pattern));
