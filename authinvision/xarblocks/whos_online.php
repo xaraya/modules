@@ -43,8 +43,8 @@ function authinvision_whos_onlineblock_display($blockinfo)
     $vars = unserialize($blockinfo['content']);
 
     // Database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $sessioninfotable = $xartable['session_info'];
     $activetime = time() - (xarConfigGetVar('Site.Session.Duration') * 60);
     $sql = "SELECT COUNT(1)
