@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'SiteTools';
 $modversion['id']             = '887';
-$modversion['version']        = '0.2';
+$modversion['version']        = '0.2.0';
 $modversion['description']    = 'Set of tools for site and database maintenance';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

@@ -252,6 +252,7 @@ function sitetools_upgrade($oldversion)
             //update vars for backup tool
             xarModSetVar('sitetools','colnumber',3);
             xarModSetVar('sitetools','defaultbktype','complete');
+        case '0.2':
         case 1.0:
             // Code to upgrade from version 1.0 goes here
         case 2.0:
