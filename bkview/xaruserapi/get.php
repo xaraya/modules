@@ -67,6 +67,7 @@ function bkview_userapi_get($args)
 
     // Create the item array
     $repo = new bkRepo($repopath);
+    if(!$repo) $repopath = xarML("[INVALID]") . $repopath;
     $item = array('repoid' => $repoid,
                   'reponame' => $reponame,
                   'repopath' => $repopath,

@@ -25,13 +25,14 @@ class bkRepo
     // Constructor
     function bkRepo($root='') 
     {
-        if ($root!='') {
+        if ($root!='' && file_exists($root)) {
             $this->_root=$root;
             $this->_getconfig();
             $cmd="bk changes -t -d':REV:\n'";
             $this->_tagcsets = $this->_run($cmd);
             return $this;
         } else {
+            $this=false;
             return false;
         }
     }
@@ -174,6 +175,7 @@ class bkRepo
         
         $csets=array();
         while (list($key,$val) = each($csetlist)) {
+            $tags = array();
             if(substr($val,0,1) != '|') {
                 // We have a tagline
                 $tags[] = str_replace('S ','',$val);
