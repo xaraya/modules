@@ -15,10 +15,11 @@ function xarbb_userapi_getitemlinks($args)
     $itemlinks = array();
 
     if (empty($itemtype)) {
-        return $itemlinks;
+        $itemtype = 2; // xarbb accesses some hooks directly without itemtype atm
+    }
 
     // forums
-    } elseif ($itemtype == 1) {
+    if ($itemtype == 1) {
          $forums = xarModAPIFunc('xarbb','user','getallforums');
          if (empty($forums)) {
              return $itemlinks;
