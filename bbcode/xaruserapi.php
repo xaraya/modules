@@ -473,7 +473,7 @@ function bbcode_encode_list($message)
                     
                     //$between_tags = str_replace("[*]", "<li>", $between_tags);
 
-                    // Need to replace [*] with <LI> inside the list.
+                    // Need to replace [*] with <li> inside the list.
                     $between_tags = preg_replace("/\[li\](.*?)\[\/li\]/si", "<li>\\1</li>", $between_tags);
                    
                     // everything after the [/list] tag.
