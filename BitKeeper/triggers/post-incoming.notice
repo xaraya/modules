@@ -81,7 +81,7 @@ then (
 		# FIXME: when pushing a merge changest this gives an ambigious redirect
 		# BK_CSETLIST is not empty we check for that, what's happening?
 		echo Links for the differences:
-		cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //'
+		cat $BK_CSETLIST | xargs -n1 -i echo -e "\"$BKURL/patch@{}\"" | sed 's/ //'
 fi
 ) | $POSTPROGRAM $SUBJECTSWITCH"${NUMSETS} ${CHANGETEXT} pushed to ${VIRGIN}/${REPO}: ${CSCOMMENT:0:40}..." $DESTINATION
 
