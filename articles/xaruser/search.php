@@ -9,50 +9,46 @@
  */
 function articles_user_search($args)
 {
-// TODO: clean up this parameter list
-    // Get parameters
-    list($startnum,
-     // categories stuff
-         $cids,
-         $andcids,
-         $catid,
-     // single publication type when called via the pager
-         $ptid,
-     // multiple publication types when called via search hooks
-         $ptids,
-     // date stuff via forms
-         $startdate,
-         $enddate,
-     // date stuff via URLs
-         $start,
-         $end,
-     // search button was pressed
-         $search,
-     // select by article status
-         $status,
-     // yes, this is the query
-         $q,
-     // (to be) replaced by "this text" and +text kind of queries
-         $bool,
-         $sort,
-         $by,
-         $author) = xarVarCleanFromInput('startnum',
-                                        'cids',
-                                        'andcids',
-                                        'catid',
-                                        'ptid',
-                                        'ptids',
-                                        'articles_startdate',
-                                        'articles_enddate',
-                                        'start',
-                                        'end',
-                                        'search',
-                                        'status',
-                                        'q',
-                                        'bool',
-                                        'sort',
-                                        'by',
-                                        'author');
+    // pager stuff
+    if(!xarVarFetch('startnum', 'int:0', $startnum,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // categories stuff
+    if(!xarVarFetch('cids',     'array', $cids,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('andcids',  'str',   $andcids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // single publication type when called via the pager
+    if(!xarVarFetch('ptid',     'id',    $ptid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // multiple publication types when called via search hooks
+    if(!xarVarFetch('ptids',    'array', $ptids,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // date stuff via forms
+    if(!xarVarFetch('articles_startdate','str', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('articles_enddate',  'str', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // date stuff via URLs
+    if(!xarVarFetch('start',    'int:0', $start,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('end',      'int:0', $end,       NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // search button was pressed
+    if(!xarVarFetch('search',   'str',   $search,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // select by article status (array or string)
+    if(!xarVarFetch('status',   'isset', $status,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // yes, this is the query
+    if(!xarVarFetch('q',        'str',   $q,         NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('author',   'str',   $author,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // filter by category
+    if(!xarVarFetch('by',       'str',   $by,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // can't use list enum here, because we don't know which sorts might be used
+    if(!xarVarFetch('sort', 'regexp:/^[\w,]*$/', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+
+    // boolean AND/OR for words (no longer used)
+    //if(!xarVarFetch('bool',     'str',   $bool,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (isset($args['objectid'])) {
         $ishooked = 1;
@@ -98,6 +94,12 @@ function articles_user_search($args)
             $status = array($status);
         }
     }
+    $seenstatus = array();
+    foreach ($status as $this) {
+        if (empty($this) || !is_numeric($this)) continue;
+        $seenstatus[$this] = 1;
+    }
+    $status = array_keys($seenstatus);
     if (count($status) != 2 || !in_array(2,$status) || !in_array(3,$status)) {
         $statusline = implode('+',$status);
     } else {
@@ -109,7 +111,7 @@ function articles_user_search($args)
     }
 
     // default publication type(s) to search in
-    if (!empty($ptid)) {
+    if (!empty($ptid) && isset($pubtypes[$ptid])) {
         $ptids = array($ptid);
         $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
         if (empty($settings['showcategories'])) {
@@ -151,7 +153,7 @@ function articles_user_search($args)
     $catid = null;
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
-            if (empty($cid)) continue;
+            if (empty($cid) || !is_numeric($cid)) continue;
             $seencid[$cid] = 1;
         }
         $cids = array_keys($seencid);
@@ -164,7 +166,7 @@ function articles_user_search($args)
     $seenptid = array();
     if (isset($ptids) && is_array($ptids)) {
         foreach ($ptids as $curptid) {
-            if (empty($curptid)) continue;
+            if (empty($curptid) || !isset($pubtypes[$curptid])) continue;
             $seenptid[$curptid] = 1;
         }
         $ptids = array_keys($seenptid);
@@ -199,8 +201,6 @@ function articles_user_search($args)
     }
 
     $data = array();
-    $data['startdate'] = !empty($startdate) ? $startdate : 'N/A';
-    $data['enddate'] = !empty($enddate) ? $enddate : 'N/A';
     $data['results'] = array();
     $data['status'] = '';
     $data['ishooked'] = $ishooked;
@@ -264,6 +264,7 @@ function articles_user_search($args)
     $now = time();
     if (empty($startdate)) {
         $startdate = null;
+        $data['startdate'] = 'N/A';
     } else {
         if (!preg_match('/[a-zA-Z]+/',$startdate)) {
             $startdate .= ' GMT';
@@ -274,9 +275,11 @@ function articles_user_search($args)
         if ($startdate > $now && !$isadmin) {
             $startdate = $now;
         }
+        $data['startdate'] = $startdate;
     }
     if (empty($enddate)) {
         $enddate = $now;
+        $data['enddate'] = 'N/A';
     } else {
         if (!preg_match('/[a-zA-Z]+/',$enddate)) {
             $enddate .= ' GMT';
@@ -287,6 +290,7 @@ function articles_user_search($args)
         if ($enddate > $now && !$isadmin) {
             $enddate = $now;
         }
+        $data['enddate'] = $enddate;
     }
 
     if (!empty($q) || (!empty($author) && isset($authorid)) || !empty($search) || !empty($ptid) || !empty($startdate) || $enddate != $now || !empty($catid)) {

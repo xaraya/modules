@@ -6,7 +6,7 @@
 function articles_user_redirect($args)
 {
     // Get parameters from user
-    $aid = xarVarCleanFromInput('aid');
+    if(!xarVarFetch('aid', 'id', $aid, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);

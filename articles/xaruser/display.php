@@ -6,11 +6,11 @@
 function articles_user_display($args)
 {
     // Get parameters from user
-    if(!xarVarFetch('aid',  'isset', $aid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('page', 'isset', $page,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('aid',  'id',    $aid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('page', 'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
-    if(!xarVarFetch('ptid', 'isset', $ptid,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ptid', 'id',    $ptid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array (e.g. preview)
     extract($args);
@@ -19,6 +19,7 @@ function articles_user_display($args)
     if (!isset($page)) {
         $page = 1;
     }
+    // via arguments only
     if (!isset($preview)) {
         $preview = 0;
     }
@@ -46,6 +47,14 @@ function articles_user_display($args)
 
     if (!is_array($article)) {
         return xarML('Failed to retrieve article');
+    }
+
+    // Get publication types
+    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+
+    // Check that the publication type is valid, otherwise use the article's pubtype
+    if (!empty($ptid) && !isset($pubtypes[$ptid])) {
+        $ptid = $article['pubtypeid'];
     }
 
 // keep original ptid (if any)
@@ -248,9 +257,6 @@ function articles_user_display($args)
     }
 
     // Display article
-
-    // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
     if (!empty($article['title'])) {
         xarTplSetPageTitle(xarVarPrepForDisplay($article['title']), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));

@@ -10,11 +10,11 @@ function articles_user_viewmap($args)
     //return xarModFunc('categories', 'user', 'viewmap');
 
     // Get parameters
-    if(!xarVarFetch('ptid',  'isset', $ptid,   NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
-    if(!xarVarFetch('by',    'isset', $by,     NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
-    if(!xarVarFetch('go',    'isset', $go,     NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
-    if(!xarVarFetch('catid', 'isset', $catid,  NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
-    if(!xarVarFetch('cids',  'isset', $cids,   NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if(!xarVarFetch('ptid',  'id',    $ptid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('by', 'enum:pub:cat:grid',   $by,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('go',    'str',   $go,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('catid', 'str',   $catid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('cids',  'array', $cids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);
@@ -44,12 +44,21 @@ function articles_user_viewmap($args)
     $seencid = array();
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
-            if (!empty($cid)) {
+            // make sure cids are numeric
+            if (!empty($cid) && is_numeric($cid)) {
                 $seencid[$cid] = 1;
             }
         }
         $cids = array_keys($seencid);
         sort($cids,SORT_NUMERIC);
+    }
+
+    // Get publication types
+    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+
+    // Check that the publication type is valid
+    if (!empty($ptid) && !isset($pubtypes[$ptid])) {
+        $ptid = null;
     }
 
     // redirect to filtered view
@@ -233,8 +242,6 @@ function articles_user_viewmap($args)
         }
 
         if (!empty($ptid)) {
-            // Get publication types
-            $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
             $descr = $pubtypes[$ptid]['descr'];
         }
 
@@ -346,8 +353,6 @@ function articles_user_viewmap($args)
     }
 
     if (!empty($ptid)) {
-        // Get publication types
-        $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
         $template = $pubtypes[$ptid]['name'];
     } else {
 // TODO: allow templates per category ?

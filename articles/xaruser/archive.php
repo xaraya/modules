@@ -6,16 +6,23 @@
 function articles_user_archive($args)
 {
     // Get parameters from user
-    if (!xarVarFetch('ptid',  'isset', $ptid,  xarModGetVar('articles','defaultpubtype'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {return;}
-    if (!xarVarFetch('sort',  'isset', $sort,  'd',                                       XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {return;}
-    if (!xarVarFetch('month', 'isset', $month, '',                                        XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {return;}
-    if (!xarVarFetch('cids',  'isset', $cids,   NULL,                                     XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if (!xarVarFetch('ptid',  'id',           $ptid,  xarModGetVar('articles','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('month', 'str',          $month, '',   XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('cids',  'array',        $cids,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);
 
-    if (empty($ptid)) {
+    // Get publication types
+    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+
+    // Check that the publication type is valid
+    if (empty($ptid) || !isset($pubtypes[$ptid])) {
         $ptid = null;
+    }
+
+    if (empty($ptid)) {
         if (!xarSecurityCheck('ViewArticles',0,'Article','All:All:All:All')) {
             return xarML('You have no permission to view these items');
         }
@@ -29,7 +36,7 @@ function articles_user_archive($args)
     $andcids = false;
     if (isset($cids) && is_array($cids)) {
         foreach ($cids as $cid) {
-            if (!empty($cid)) {
+            if (!empty($cid) && is_numeric($cid)) {
                 $seencid[$cid] = 1;
             }
         }
@@ -54,13 +61,13 @@ function articles_user_archive($args)
     } else {
         $startdate = '';
         $enddate = time();
+        if (!empty($month) && $month != 'all') {
+            $month = '';
+        }
     }
 
     // Load API
     if (!xarModAPILoad('articles', 'user')) return;
-
-    // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
     if (!empty($ptid) && !empty($pubtypes[$ptid]['config']['pubdate']['label'])) {
         $showdate = 1;
@@ -268,6 +275,7 @@ function articles_user_archive($args)
     } elseif ($sort == 't') {
         usort($articles,'articles_archive_sortbytitle');
     } else {
+        $sort = 'd';
         // default sort by date is already done in getall() function
     }
 

@@ -11,19 +11,20 @@
 function articles_user_view($args)
 {
     // Get parameters
-    if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',     'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('andcids',  'isset', $andcids,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('catid',    'isset', $catid,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',     'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('numcols',  'isset', $numcols,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('authorid', 'isset', $authorid,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('startnum', 'int:0', $startnum,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('cids',     'array', $cids,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('andcids',  'str',   $andcids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('ptid',     'id',    $ptid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('itemtype', 'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    // can't use list enum here, because we don't know which sorts might be used
+    if(!xarVarFetch('sort', 'regexp:/^[\w,]*$/', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('numcols',  'int:0', $numcols,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('authorid', 'id',    $authorid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 // This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
-//    if(!xarVarFetch('startdate','isset', $startdate, NULL, XARVAR_DONT_SET)) {return;}
-//    if(!xarVarFetch('enddate',  'isset', $enddate,   NULL, XARVAR_DONT_SET)) {return;}
-//    if(!xarVarFetch('where',    'isset', $where,     NULL, XARVAR_DONT_SET)) {return;}
+//    if(!xarVarFetch('startdate','int:0', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
+//    if(!xarVarFetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+//    if(!xarVarFetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);
@@ -35,6 +36,14 @@ function articles_user_view($args)
 
     if (!isset($ptid) && !empty($itemtype) && is_numeric($itemtype)) {
         $ptid = $itemtype;
+    }
+
+    // Get publication types
+    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
+
+    // Check that the publication type is valid
+    if (!empty($ptid) && !isset($pubtypes[$ptid])) {
+        $ptid = null;
     }
 
     // Check if we want the default 'front page'
@@ -278,6 +287,14 @@ function articles_user_view($args)
     // rebuild $catid in standard format again
     $catid = null;
     if (count($cids) > 0) {
+        $seencid = array();
+        foreach ($cids as $cid) {
+            // make sure cids are numeric
+            if (!empty($cid) && is_numeric($cid)) {
+                $seencid[$cid] = 1;
+            }
+        }
+        $cids = array_keys($seencid);
         sort($cids,SORT_NUMERIC);
         if ($andcids) {
             $catid = join('+',$cids);
@@ -378,9 +395,6 @@ function articles_user_view($args)
     if (isset($data['author'])) {
         xarVarSetCached('Blocks.articles','author',$data['author']);
     }
-
-    // Get publication types
-    $pubtypes = xarModAPIFunc('articles','user','getpubtypes');
 
 // TODO: add this to articles configuration ?
 //if ($shownavigation) {

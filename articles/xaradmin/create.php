@@ -6,9 +6,9 @@
 function articles_admin_create()
 {
     // Get parameters
-    if (!xarVarFetch('ptid',     'notempty', $ptid)) {return;}
-    if (!xarVarFetch('new_cids', 'isset',    $cids,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('preview',  'isset',    $preview, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('ptid',     'id',    $ptid)) {return;}
+    if (!xarVarFetch('new_cids', 'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('preview',  'str',   $preview, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -31,7 +31,7 @@ function articles_admin_create()
     }
     $properties = array();
     foreach ($pubtypes[$ptid]['config'] as $field => $value) {
-        if (!empty($value['label'])) {
+        if (!empty($value['label']) && !empty($value['input'])) {
             if (!isset($value['validation'])) {
                 $value['validation'] = '';
             }
