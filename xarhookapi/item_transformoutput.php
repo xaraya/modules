@@ -58,7 +58,7 @@ function hookbridge_hookapi_item_transformoutput ( $args )
 function hookbridge_transformoutput( $text ) 
 {
 //    return '[ My Hook: Change me in xarhookapi/item_transformoutput.xsl ] ' . $text;
-	return $text;
+    return $text;
 }
 
 
