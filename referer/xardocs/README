@@ -1,0 +1,23 @@
+Original PostNuke Referer Module Credits.
+
+/******************************************************************************* 
+ * This is a new referer function for PostNuke Instead of logging each URL 
+ * as its coming in, it logs the frequency of that URL. This function was written 
+ * first by Michael Yarbrough [gte649i@prism.gatech.edu]. Bjorn Sodergren re-wrote 
+ * it to what it is now and added more complete/descriptive comments.  
+ * 
+ * modified from PHP-Nuke 4.4 to Postnuke .6* by
+ * Timothy Litwiller [timlitw@onemain.com]
+ * 
+ * Re-Written by 
+ * Bjorn Sodergren [sweede@gallatinriver.net] 
+ * 
+ * Originally written by 
+ * Michael Yarbrough [gte649i@prism.gatech.edu] 
+ *
+ * Added ideas and code (array_chunk) from 
+ * Andreas Langer [ http://www.andylanger.de ]
+ * 
+ ******************************************************************************/ 
+
+ Port of Referers module from PostNuke.  Module rewritten by J. Cox.  

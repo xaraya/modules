@@ -1,0 +1,61 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Referer Module</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2>Recent Referers</h2>
+<b><xar:mlstring>Delete Referers</xar:mlstring>:</b><br />
+
+<form action="#xarModURL('referer', 'admin', 'delete')#" method="post">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+	<input type="hidden" name="confirm" id="confirm" value="1" />
+	<input type="hidden" name="confirmation" id="confirmation" value="1" />
+
+	<input type="submit" value="#$confirmbutton#" align="middle" tabindex="1" />
+</form>
+
+<br />
+<xar:if condition="!empty($message)">
+	#$message#
+<xar:else />
+
+	<table width="80%" border="0" cellspacing="0" cellpadding="4">
+		<tr>        
+			<th width="70%">
+				<xar:mlstring>Url</xar:mlstring>
+			</th>
+			<th width="10%">
+				<xar:mlstring>Frequency</xar:mlstring>
+			</th>
+		</tr>
+		<xar:loop name="$items">
+			<xar:if condition="(($loop:index + 1) % 2)">
+				<tr>
+					<td class="xar-norm">
+						<xar:if condition="$loop:item['url'] eq 'bookmark'">
+							#$loop:item['url']#
+						<xar:else />
+							<a href="#$loop:item['url']#" target="_BLANK">#$loop:item['urldisplay']#</a>
+						</xar:if>
+					</td>
+					<td class="xar-norm" align="center">
+						#$loop:item['frequency']#
+					</td>
+				</tr>
+			<xar:else />
+				<tr>
+					<td class="xar-accent">
+						<a href="#$loop:item['url']#" target="_BLANK">#$loop:item['urldisplay']#</a>
+					</td>
+					<td class="xar-accent" align="center">
+						#$loop:item['frequency']#
+					</td>
+				</tr>
+			</xar:if>
+		</xar:loop>
+	</table>
+	<br />
+
+	<!-- add the pager here -->
+	<div align="center">#$pager#</div>
+</xar:if>
+</div>
+</div>

@@ -1,0 +1,31 @@
+<table border="1" width="100%" cellpadding="2" cellspacing="0">
+    <tr>
+        <th align="center">
+            <xar:mlstring>Referer Administration</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+<div align="center"><h2><xar:mlstring>Modify Mail Configuration</xar:mlstring></h2><br />
+<form method="post" action="&xar-modurl-referer-admin-updateconfig;" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+	<table border="0" width="100%">
+		<tr>
+			<td>
+				<table border="0" width="100%">
+										<tr>
+						<td align="left" valign="middle">
+							<xar:mlstring>Items Per Page</xar:mlstring>
+						</td>
+						<td align="left" valign="middle">
+							<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('referer', 'itemsperpage')#" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<br /><br />
+	<input type="submit" value="Update Referer Configuration" align="middle" tabindex="3" />
+</form>
+</center>
