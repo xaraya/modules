@@ -2,9 +2,9 @@
 
 /**
  * File: $Id$
- * 
+ *
  * Xaraya Smilies
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -17,6 +17,7 @@
 $modversion['name'] = 'Smilies';
 $modversion['id'] = '153';
 $modversion['version'] = '1.0.1';
+$modversion['displayname']    = xarML('Smilies');
 $modversion['description'] = 'Transform smilies to images';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
