@@ -22,11 +22,14 @@
 		<th width="5%">
 			<xar:mlstring>Docs</xar:mlstring>
 		</th>
-		<th width="25%">
+		<th width="20%">
 			<xar:mlstring>Author</xar:mlstring>
 		</th>
 		<th width="25%">
 			<xar:mlstring>Name</xar:mlstring>
+		</th>
+		<th width="5%">
+			<xar:mlstring>Docs</xar:mlstring>
 		</th>
 		<th width="5%">
 			<xar:mlstring>Comments</xar:mlstring>
@@ -72,6 +75,9 @@
 			#$name#
 		</td>
 		<td width="5%" class="xar-norm">
+			#$docs#
+		</td>
+		<td width="5%" class="xar-norm">
 			#$comments#
 		</td>
 		<td width="5%" class="xar-norm">
@@ -112,6 +118,9 @@
 		</td>
 		<td align="center" valign="top" width="25%" class="xar-accent">
 			#$name#
+		</td>
+		<td width="5%" class="xar-accent">
+			#$docs#
 		</td>
 		<td width="5%" class="xar-accent">
 			#$comments#

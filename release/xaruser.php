@@ -48,11 +48,10 @@ function release_user_viewids()
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
 
-        // FIXME.  Why am I having problems with this on the site?
         $getuser = xarModAPIFunc('roles',
                                  'user',
                                  'get',
-                                  array('uid' => $uid));
+                                  array('uid' => $item['uid']));
 
         // Author Name and Contact URL
         $items[$i]['author'] = $getuser['name'];
@@ -140,6 +139,11 @@ function release_user_viewids()
                 $items[$i]['hitcount'] .= ' ';
             }
         }
+
+        $items[$i]['docs'] = xarModAPIFunc('release',
+                                           'user',
+                                           'countdocs',
+                                           array('rid' => $item['rid']));
     }
 
     // Add the array of items to the template variables
@@ -1476,27 +1480,17 @@ function release_user_getdoc()
 
     if ($item == false) return;
 
-    // The user API function is called. 
-    $id = xarModAPIFunc('release',
-                         'user',
-                         'getid',
-                          array('rid' => $item['rid']));
-
-
-    $getuser = xarModAPIFunc('roles',
-                             'user',
-                             'get',
-                              array('uid' => $id['uid']));
-
-
     $hooks = xarModCallHooks('item',
                              'display',
-                             $item['rdid'],
+                             $rdid,
                              array('itemtype' => '3',
                                      xarModURL('release',
                                                'user',
                                                'getdoc',
                                                array('rdid' => $rdid))));
+
+
+
     if (empty($hooks)) {
         $item['hooks'] = '';
     } elseif (is_array($hooks)) {
@@ -1505,11 +1499,8 @@ function release_user_getdoc()
         $item['hooks'] = $hooks;
     }
 
-    $item['desc'] = nl2br($id['desc']);
-    $item['name'] = $id['name'];
-    $item['type'] = $id['type'];
-    $item['contacturl'] = xarModUrl('roles', 'user', 'email', array('uid' => $id['uid']));
-    $item['realname'] = $getuser['name'];
+    $item['docsf'] = nl2br(xarVarPrepHTMLDisplay($item['docs']));
+    $item['title'] = xarVarPrepHTMLDisplay($item['title']);
 
     return $item;
 }
