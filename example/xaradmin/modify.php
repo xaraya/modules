@@ -10,6 +10,13 @@
 function example_admin_modify($args)
 { 
 
+    // Admin functions of this type can be called by other modules.  If this
+    // happens then the calling module will be able to pass in arguments to
+    // this function through the $args parameter.  Hence we extract these
+    // arguments *before* we have obtained any form-based input through
+    // xarVarFetch(), so that parameters passed by the modules can also be
+    // checked by a certain validation.
+    extract($args);
 
     // Get parameters from whatever input we need.  All arguments to this
     // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
@@ -18,17 +25,10 @@ function example_admin_modify($args)
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('exid', 'int:1:', $exid)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return; 
-    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return; 
+    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('invalid', 'str:1:', $invalid, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number', 'str:1:', $number, $number,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
-
-    // Admin functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *after* we have obtained any form-based input through
-    // xarVarCleanFromInput().
-    extract($args);
 
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.  This could have been passed in by a hook or

@@ -11,19 +11,22 @@
  */
 function example_user_display($args)
 { 
+    // User functions of this type can be called by other modules.  If this
+    // happens then the calling module will be able to pass in arguments to
+    // this function through the $args parameter.  Hence we extract these
+    // arguments *before* we have obtained any form-based input through
+    // xarVarFetch(), so that parameters passed by the modules can also be
+    // checked by a certain validation.
+    extract($args);
+
     // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
     // is a degraded function.  xarVarFetch allows the checking of the input
     // variables as well as setting default values if needed.  Getting vars
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('exid', 'int:1:', $exid)) return;
-    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return; 
-    // User functions of this type can be called by other modules.  If this
-    // happens then the calling module will be able to pass in arguments to
-    // this function through the $args parameter.  Hence we extract these
-    // arguments *after* we have obtained any form-based input through
-    // xarVarCleanFromInput().
-    extract($args); 
+    if (!xarVarFetch('objectid', 'str:1:', $objectid, '', XARVAR_NOT_REQUIRED)) return;
+
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.  This could have been passed in by a hook or
     // through some other function calling this as part of a larger module, but

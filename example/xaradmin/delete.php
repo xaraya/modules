@@ -17,11 +17,12 @@
  */
 function example_admin_delete($args)
 { 
-    // User functions of this type can be called by other modules.  If this
+    // Admin functions of this type can be called by other modules.  If this
     // happens then the calling module will be able to pass in arguments to
     // this function through the $args parameter.  Hence we extract these
     // arguments *before* we have obtained any form-based input through
-    // xarVarFetch().
+    // xarVarFetch(), so that parameters passed by the modules can also be
+    // checked by a certain validation.
     extract($args);
 
     // Get parameters from whatever input we need.  All arguments to this
