@@ -467,14 +467,14 @@ function xarcachemanager_delete()
         return false;
     }
 
-    // Drop the tables
+/*    // Drop the tables
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
     
     $cacheblockstable = $xartable['cache_blocks'];
     $result = $datadict->dropTable($cacheblockstable);
-
+*/
     // Remove module variables
     xarModDelAllVars('xarcachemanager');
 
