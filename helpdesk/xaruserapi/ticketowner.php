@@ -20,8 +20,8 @@ function helpdesk_userapi_ticketowner($args)
     $column   = $xartable['helpdesk_tickets_column'];
     
     $sql = "SELECT $column[ticket_id], $column[ticket_openedby]
-	    FROM $table
-	    WHERE $column[ticket_id] = $ticket_id AND $column[ticket_openedby] = " . xarUserGetVar('uid');
+        FROM $table
+        WHERE $column[ticket_id] = $ticket_id AND $column[ticket_openedby] = " . xarUserGetVar('uid');
     $result = $dbconn->Execute($sql);
     
     return $result->Rowcount();

@@ -70,14 +70,14 @@ function helpdesk_admin_updateconfig()
     xarModCallHooks('module','updateconfig','helpdesk',
                     array('module'   => 'helpdesk',
                           'itemtype' => $itemtype)
-		    ); 
+            ); 
     
     // this second hooks call should sync cats for the main mod with the ones for the reps
     // which is what we really need
     xarModCallHooks('module','updateconfig','helpdesk',
                     array('module'   => 'helpdesk',
                           'itemtype' => 10)
-		    ); 
+            ); 
     
     xarResponseRedirect(xarModURL('helpdesk', 'admin', 'modifyconfig'));
 

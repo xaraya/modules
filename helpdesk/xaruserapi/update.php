@@ -32,11 +32,11 @@ function helpdesk_userapi_update($args)
     $time = date("Y-m-d H:i:s");
 
     $sql = "UPDATE $db_table SET
-        $db_column[ticket_priorityid]	= '".xarVarPrepForStore($priority)."',
+        $db_column[ticket_priorityid]    = '".xarVarPrepForStore($priority)."',
         $db_column[ticket_subject]      = '".xarVarPrepForStore($subject)."',
         $db_column[ticket_domain]       = '".xarVarPrepForStore($domain)."',
         $db_column[ticket_openedby]     = '".xarVarPrepForStore($openedby)."',
-        $db_column[ticket_lastupdate]	= '".xarVarPrepForStore($time)."'";
+        $db_column[ticket_lastupdate]    = '".xarVarPrepForStore($time)."'";
     if(!empty($name)) { $sql .= " , xar_name = '" . xarVarPrepForStore($name) . "'"; }
     if(!empty($phone)) { $sql .= " , xar_phone = '" . xarVarPrepForStore($phone) . "'"; }
         // The following If block is only executed if the user has EDIT access
@@ -44,27 +44,27 @@ function helpdesk_userapi_update($args)
         // NOTE: I don't like this I am going to change this, with the way Xaraya
         //       is set up I don't think half of this is needed
     if (!empty($assignedto) && !empty($source)){
-        $sql .=",		
-            $db_column[ticket_sourceid]		= '".xarVarPrepForStore($source)."',
-            $db_column[ticket_assignedto]	= '".xarVarPrepForStore($assignedto)."'";
+        $sql .=",        
+            $db_column[ticket_sourceid]        = '".xarVarPrepForStore($source)."',
+            $db_column[ticket_assignedto]    = '".xarVarPrepForStore($assignedto)."'";
     }
 
     if ($statusid =='3' && empty($closedby)){
-	// User has changed status to closed but not specified closer
-	// so, set current user as closer
-	$closer = $userid;
+    // User has changed status to closed but not specified closer
+    // so, set current user as closer
+    $closer = $userid;
     } 
     if (!empty($closedby)) {
-	// If a closer was specified but status wasn't changed to closed, then we need to set to close
-	$closer		= $closedby;
-	$statusid 	= 3;
+    // If a closer was specified but status wasn't changed to closed, then we need to set to close
+    $closer        = $closedby;
+    $statusid     = 3;
     }
     if ($statusid == '3'){
-	$sql .=", $db_column[ticket_closedby]		= '".xarVarPrepForStore($closer)."'";
+    $sql .=", $db_column[ticket_closedby]        = '".xarVarPrepForStore($closer)."'";
     }
 
-    $sql .=", $db_column[ticket_statusid]	= '".xarVarPrepForStore($statusid)."'";
-    $sql .=" WHERE $db_column[ticket_id] 	= '$tid'";
+    $sql .=", $db_column[ticket_statusid]    = '".xarVarPrepForStore($statusid)."'";
+    $sql .=" WHERE $db_column[ticket_id]     = '$tid'";
     // Uncomment the following line to debug
     //return false;
     $dbconn->Execute($sql);

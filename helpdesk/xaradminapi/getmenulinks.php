@@ -11,7 +11,7 @@ function helpdesk_adminapi_getmenulinks()
     $menulinks = array();
 
 // Security Check
-	if (xarSecurityCheck('adminhelpdesk',0)) {
+    if (xarSecurityCheck('adminhelpdesk',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
                                                   'admin',
@@ -21,7 +21,7 @@ function helpdesk_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('adminhelpdesk',0)) {
+    if (xarSecurityCheck('adminhelpdesk',0)) {
 
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
                                                   'admin',
@@ -31,7 +31,7 @@ function helpdesk_adminapi_getmenulinks()
     }
 
 // Security Check
-	if (xarSecurityCheck('adminhelpdesk',0)) {
+    if (xarSecurityCheck('adminhelpdesk',0)) {
         $menulinks[] = Array('url'   => xarModURL('helpdesk',
                                                   'admin',
                                                   'modifyconfig'),

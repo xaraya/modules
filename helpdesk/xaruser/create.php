@@ -54,7 +54,7 @@ function helpdesk_user_create($args)
     
     // If it is closed by someone, the ticket must be closed
     if(!empty($closedby))
-	$status = 3;
+    $status = 3;
     
     
     // If there is not assigned to rep we will try and 
@@ -105,7 +105,7 @@ function helpdesk_user_create($args)
     $result = xarModAPIFunc('comments', 'user', 'add', 
                             array('modid'    => $modid,
                                   'objectid' => $itemid,
-				  'itemtype' => $itemtype,
+                  'itemtype' => $itemtype,
                                   'pid'      => $pid,
                                   'title'    => $subject,
                                   'comment'  => $issue,
@@ -118,7 +118,7 @@ function helpdesk_user_create($args)
         $result = xarModAPIFunc('comments', 'user', 'add', 
                                 array('modid'    => $modid,
                                       'objectid' => $itemid,
-				      'itemtype' => $itemtype,
+                      'itemtype' => $itemtype,
                                       'pid'      => $result,
                                       'title'    => $subject,
                                       'comment'  => $notes,

@@ -80,16 +80,16 @@ function helpdesk_admin_update($args)
     // update the item
     $itemid = $object->updateItem();
     if (empty($itemid)) return; // throw back
-				// Let's take care of the hooks
+                // Let's take care of the hooks
     $item = array();
     $item['module']   = 'helpdesk';
     $item['itemid']   = $itemid;
     $item['itemtype'] = $itemtype;
     $hooks = xarModCallHooks('item','update',$itemid,$item);
     if (empty($hooks)) {
-	$data['hooks'] = array();
+    $data['hooks'] = array();
     }else {
-	$data['hooks'] = $hooks;
+    $data['hooks'] = $hooks;
     }
     
     // let's go back to the admin view
