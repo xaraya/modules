@@ -22,7 +22,7 @@
 function navigator_admin_modifyconfig()
 {
     // Security check
-    if (!xarSecurityCheck('AdminCHSFnav')) return;
+    if (!xarSecurityCheck('AdminNavigator')) return;
 
     $matrix     = xarModGetVar('navigator', 'style.matrix');
     $rootcids   = xarModGetVar('navigator', 'categories.roots');

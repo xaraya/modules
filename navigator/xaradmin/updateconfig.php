@@ -21,7 +21,7 @@
  */
 function navigator_admin_updateconfig()
 {
-//    if (!xarSecurityCheck('AdminCHSFnav')) return;
+//    if (!xarSecurityCheck('AdminNavigator')) return;
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;

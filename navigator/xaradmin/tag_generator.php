@@ -24,7 +24,7 @@ function navigator_admin_tag_generator()
     $menuTypes = array('images', 'list');
     $locTypes  = array('simple', 'crumbtrail');
 
-    // if (!xarSecurityCheck('AdminNavigator')) return;
+    if (!xarSecurityCheck('AdminNavigator')) return;
 
     if (!xarVarFetch('tag',     'enum:location:menu:image:', $tag)) return;
 

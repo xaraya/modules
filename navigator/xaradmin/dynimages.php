@@ -2,7 +2,7 @@
 
 function navigator_admin_dynimages()
 {
-    if (!xarSecurityCheck('AdminCHSFnav')) return;
+    if (!xarSecurityCheck('AdminNavigator')) return;
 
     // Grab the parent id's / names for use later on
     $primary_list    = xarModGetVar('navigator', 'categories.list.primary');
