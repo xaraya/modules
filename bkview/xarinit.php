@@ -19,9 +19,6 @@
  */
 xarDBLoadTableMaintenanceAPI();
 
-list($dbconn) = xarDBGetConn();
-$xartable = xarDBGetTables();
-$bkviewtable = $xartable['bkview'];
 
 /**
  * initialise the bkview module
@@ -30,6 +27,9 @@ $bkviewtable = $xartable['bkview'];
  */
 function bkview_init()
 {
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $bkviewtable = $xartable['bkview'];
     $fields = array(
         'xar_repoid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_name'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
@@ -57,7 +57,7 @@ function bkview_init()
 
 
     // item:search:api hook registration
-    xarRegisterHook('item','search','API','bkview','user','search');
+    xarModRegisterHook('item','search','API','bkview','user','search');
 
     return true;
 }
@@ -92,9 +92,12 @@ function bkview_delete()
     // 1. make the module less function (hooks)
     // 2. remove the data
     // 3. remove the security
+    list($dbconn) = xarDBGetConn();
+    $xartable = xarDBGetTables();
+    $bkviewtable = $xartable['bkview'];
 
     // Unregister the hook
-    if (!xarModUnregisterHook('item','search','API','bkview','search')) return;
+    if (!xarModUnregisterHook('item','search','API','bkview','user','search')) return;
 
     // Generate the SQL to drop the table using the API
     $sql = xarDBDropTable($xartable['bkview']);
