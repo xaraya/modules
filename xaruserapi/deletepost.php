@@ -36,7 +36,9 @@ function bloggerapi_userapi_deletepost($args)
     if (!xarUserLogin($username,$password)) {
         $err = xarML("Invalid user (#(1)) while trying to delete post",$username);
     } else {
-        if (!xarModAPIFunc('articles','admin','delete',array('aid'=>$postid))) {
+        // Apparently we have to pass in the itemtype to get the hooks to run properly, bleh
+        $pubType = xarModGetVar('bloggerapi','bloggerpubtype');
+        if (!xarModAPIFunc('articles','admin','delete',array('aid'=>$postid, 'itemtype' => $pubType))) {
             // Prevent exception to propagate
             xarErrorFree();
             $err = xarML("Failed to delete post #(1)",$postid);
