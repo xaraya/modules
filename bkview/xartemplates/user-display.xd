@@ -3,7 +3,7 @@
   <xar:template file="user-menu" />
   
   <div style="float:left; margin-top: 1em;">
-    <dd>
+    <dl>
       <xar:while condition="list($range,$text)= each($rangetext)">
         <dt><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#&amp;user=#$user#">#$text#</a></dt>
       </xar:while>
@@ -16,7 +16,7 @@
           </xar:ml>
         </a>
       </dt>    
-    </dd>
+    </dl>
   </div>
   
   <div style="float:right;">

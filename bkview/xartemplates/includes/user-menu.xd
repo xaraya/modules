@@ -17,7 +17,7 @@
             <li>
           </xar:if>
           <a href="&xar-modurl-bkview-user-main;">
-            <img border="1" src="#xarTplGetImage('bkindex.gif')#"/>
+            <img src="#xarTplGetImage('bkindex.gif')#" alt="#xarML('Index')#"/>
             <xar:mlstring>Index</xar:mlstring>
           </a>
         </li>
@@ -28,7 +28,7 @@
             <li>
           </xar:if>
           <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#">
-            <img src="#xarTplGetImage('bkcset.gif')#"/>
+            <img src="#xarTplGetImage('bkcset.gif')#" alt="#xarML('Changeset activity')#"/>
             <xar:mlstring>Changeset activity</xar:mlstring>
           </a>
           </li>
@@ -38,7 +38,7 @@
               <li>
           </xar:if>
             <a href="&xar-modurl-bkview-user-csetview;&amp;taggedonly=1&amp;repoid=#$repoid#&amp;showmerge=1">
-              <img src="#xarTplGetImage('bktags.gif')#"/>
+              <img src="#xarTplGetImage('bktags.gif')#" alt="#xarML('Tags')#"/>
               <xar:mlstring>Tags</xar:mlstring>
             </a>
           </li>
@@ -48,7 +48,7 @@
               <li>
           </xar:if>
             <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#">
-              <img src="#xarTplGetImage('bktree.gif')#"/>
+              <img src="#xarTplGetImage('bktree.gif')#" alt="#xarML('Browse source tree')#"/>
               <xar:mlstring>Browse source tree</xar:mlstring>
             </a>
           </li>
@@ -58,7 +58,7 @@
               <li>
           </xar:if>
             <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#">
-              <img src="#xarTplGetImage('bkstats.gif')#"/>
+              <img src="#xarTplGetImage('bkstats.gif')#" alt="#xarML('User statistics')#"/>
               <xar:mlstring>User statistics</xar:mlstring>
             </a>
           </li>
