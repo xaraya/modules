@@ -1,65 +1,77 @@
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Differences between versions #(1) and #(2) of #(3)</xar:mlstring><xar:mlvar>#$oldversion#</xar:mlvar><xar:mlvar>#$newversion#</xar:mlvar><xar:mlvar>#$numversions#</xar:mlvar></xar:ml></h2><br />
-<div style="margin: auto;">
-<xar:if condition="!empty($itemlink)">
-<a href="#$itemlink#">#$itemtitle# &quot;#$itemlabel#&quot;</a>
-<br /><br />
-</xar:if>
-<table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-	<tr>
-		<th><xar:mlstring>Version</xar:mlstring></th>
-		<th><xar:mlstring>Status</xar:mlstring></th>
-		<th><xar:mlstring>Editor</xar:mlstring></th>
-		<xar:if condition="$showhost">
-		<th><xar:mlstring>Hostname</xar:mlstring></th>
-		</xar:if>
-		<th><xar:mlstring>Date</xar:mlstring></th>
-		<th><xar:mlstring>Remark</xar:mlstring></th>
-	</tr>
-<xar:foreach in="$changes" key="$logid" value="$change">
-	<tr>
-		<td class="xar-norm">
-			<xar:if condition="!empty($change['link'])">
-				<a href="#$change['link']#">#$change['version']#</a>
-			<xar:else />
-				#$change['version']#
-			</xar:if>
-		</td>
-		<td class="xar-norm">#$change['status']#</td>
-		<td class="xar-norm"><a href="#$change['profile']#">#$change['editorname']#</a></td>
-		<xar:if condition="$showhost">
-			<td class="xar-norm">#$change['hostname']#</td>
-		</xar:if>
-		<td class="xar-norm">
-			#xarLocaleGetFormattedDate('medium',$change['date'])#&nbsp;
-			#xarLocaleGetFormattedTime('medium',$change['date'])# 
-		</td>
-		<td class="xar-norm">#$change['remark']#</td>
-	</tr>
-</xar:foreach>
-</table>
-<br />
-<a href="#$link#"><xar:mlstring>Back to overview</xar:mlstring></a>
--
-<xar:if condition="!empty($prevdiff)">
-<a href="#$prevdiff#"><xar:mlstring>Show previous diff</xar:mlstring></a>
-</xar:if>
--
-<xar:if condition="!empty($nextdiff)">
-<a href="#$nextdiff#"><xar:mlstring>Show next diff</xar:mlstring></a>
-</xar:if>
-<br /><br />
-<table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
-	<tr>
-		<th colspan="2"><xar:mlstring>Field Changes</xar:mlstring></th>
-	</tr>
-	<xar:foreach in="$fields" key="$field" value="$value">
-	<tr>
-		<td>#$field#</td>
-		<td class="xar-norm">#$value# </td>
-	</tr>
-	</xar:foreach>
-</table>
-<br />
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Change Log</xar:mlstring></span>
 </div>
+<div class="xar-mod-body">
+    <h2>
+        <xar:ml>
+            <xar:mlstring>Differences between versions #(1) and #(2) of #(3)</xar:mlstring>
+            <xar:mlvar>#$oldversion#</xar:mlvar>
+            <xar:mlvar>#$newversion#</xar:mlvar>
+            <xar:mlvar>#$numversions#</xar:mlvar>
+        </xar:ml>
+    </h2>
+    <div style="margin: auto;">
+        <xar:if condition="!empty($itemlink)">
+        <p><a href="#$itemlink#">#$itemtitle#&nbsp;&quot;#$itemlabel#&quot;</a></p>
+        </xar:if>
+        <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+            <tr>
+                <th><xar:mlstring>Version</xar:mlstring></th>
+                <th><xar:mlstring>Status</xar:mlstring></th>
+                <th><xar:mlstring>Editor</xar:mlstring></th>
+                <xar:if condition="$showhost">
+                <th><xar:mlstring>Hostname</xar:mlstring></th>
+                </xar:if>
+                <th><xar:mlstring>Date</xar:mlstring></th>
+                <th><xar:mlstring>Remark</xar:mlstring></th>
+            </tr>
+            <xar:foreach in="$changes" key="$logid" value="$change">
+            <tr>
+                <td class="xar-norm">
+                <xar:if condition="!empty($change['link'])">
+                    <a href="#$change['link']#">#$change['version']#</a>
+                <xar:else />
+                    #$change['version']#
+                </xar:if>
+                </td>
+                <td class="xar-norm">#$change['status']#</td>
+                <td class="xar-norm"><a href="#$change['profile']#">#$change['editorname']#</a></td>
+                <xar:if condition="$showhost">
+                <td class="xar-norm">#$change['hostname']#</td>
+                </xar:if>
+                <td class="xar-norm">
+                    <xar:ml>
+                        <xar:mlstring>#(1) #(2)</xar:mlstring>
+                        <xar:mlvar>#xarLocaleGetFormattedDate('medium',$change['date'])#</xar:mlvar>
+                        <xar:mlvar>#xarLocaleGetFormattedTime('medium',$change['date'])#</xar:mlvar>
+                    </xar:ml>
+                </td>
+                <td class="xar-norm">#$change['remark']#</td>
+            </tr>
+            </xar:foreach>
+        </table>
+        <p>
+            <a href="#$link#"><xar:mlstring>Back to overview</xar:mlstring></a>
+            -
+            <xar:if condition="!empty($prevdiff)">
+            <a href="#$prevdiff#"><xar:mlstring>Show previous diff</xar:mlstring></a>
+            </xar:if>
+            -
+            <xar:if condition="!empty($nextdiff)">
+            <a href="#$nextdiff#"><xar:mlstring>Show next diff</xar:mlstring></a>
+            </xar:if>
+        </p>
+        <table width="100%" border="0" cellpadding="2" cellspacing="1" class="xar-accent">
+            <tr>
+                <th><xar:mlstring>Fields</xar:mlstring></th>
+                <th><xar:mlstring>Value Changes</xar:mlstring></th>
+            </tr>
+            <xar:foreach in="$fields" key="$field" value="$value">
+            <tr>
+                <td class="xar-norm">#$field#</td>
+                <td class="xar-norm">#$value#</td>
+            </tr>
+            </xar:foreach>
+        </table>
+    </div>
 </div>
