@@ -46,6 +46,20 @@ function authsso_init()
 }
 
 /**
+ * module upgrade function
+ *
+ */
+function authsso_upgrade($oldVersion)
+{
+    switch($oldVersion) {
+    case '0.2':
+        // compatability upgrade, nothing to be done
+        break;
+    }
+    return true;
+}
+
+/**
  * module removal function
 */
 function authsso_delete()
