@@ -33,8 +33,8 @@ function keywords_userapi_getitems($args)
         }
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
 
     // Get module item for this id

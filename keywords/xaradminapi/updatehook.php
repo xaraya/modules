@@ -173,8 +173,8 @@ function keywords_adminapi_updatehook($args)
         $new = $cleanwords;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
 
     if (count($delete) > 0) {

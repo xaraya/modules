@@ -18,8 +18,8 @@
  */
 function keywords_init()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $keywordstable = $xartable['keywords'];
 
@@ -174,8 +174,8 @@ function keywords_delete()
         xarModDelVar('keywords','objectid');
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
 

@@ -126,8 +126,8 @@ function keywords_adminapi_createhook($args)
     }
 */
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
 
     foreach ($cleanwords as $word) {

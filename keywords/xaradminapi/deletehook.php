@@ -72,8 +72,8 @@ function keywords_adminapi_deletehook($args)
         return $extrainfo;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
 
     $query = "DELETE FROM $keywordstable

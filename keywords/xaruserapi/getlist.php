@@ -7,8 +7,8 @@
  */
 function keywords_userapi_getlist($args)
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords'];
 
     // Get count per keyword from the database
