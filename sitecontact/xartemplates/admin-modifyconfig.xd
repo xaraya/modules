@@ -13,7 +13,7 @@
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
 	<div style="clear: both; padding-top: 10px;">
 	<span style="float: left; width: 30%; text-align: right;">
-		<span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short Urls</xar:mlstring></label>:</span>
+		<span class="help" title="#xarML('Short URLS for forums.')#"><label for="supportshorturls"><xar:mlstring>Support Short URLSs [DO NOT USE - NOT WORKING]</xar:mlstring></label>:</span>
 	</span>
 	<span style="float: right; width: 68%; text-align: left;">
 		<xar:if condition="xarModGetVar('sitecontact', 'SupportShortURLs')">
