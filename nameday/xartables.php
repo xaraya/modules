@@ -27,7 +27,7 @@
 // Purpose of file:  Table information for nameday module
 // ----------------------------------------------------------------------
 
-function nameday_pntables()
+function nameday_xartables()
 {
     // Initialise table array
     $pntable = array();
