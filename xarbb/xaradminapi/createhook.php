@@ -66,7 +66,7 @@ function xarbb_adminapi_createhook($args)
     if (isset($extrainfo['xarbb_forum']) && is_int($extrainfo['xarbb_forum'])) {
         $fid = $extrainfo['xarbb_forum'];
     } else {
-        $fid = xarVarCleanFromInput('xarbb_forum');
+        if (!xarVarFetch('fid', 'id', $fid, NULL, XARVAR_DONT_SET)) return;
     }
     if (empty($fid)) {
         // We are not attaching this to a forum, so no need to go further.
@@ -76,7 +76,7 @@ function xarbb_adminapi_createhook($args)
     if (isset($extrainfo['summary'])) {
         $tpost = $extrainfo['summary'];
     } else {
-        $tpost = xarVarCleanFromInput('summary');
+        if (!xarVarFetch('summary', 'str', $tpost, '', XARVAR_NOT_REQUIRED)) return;
     }
     if (empty($tpost)) {
         // No summary, no forum post.
@@ -86,7 +86,7 @@ function xarbb_adminapi_createhook($args)
     if (isset($extrainfo['title'])) {
         $ttitle = $extrainfo['title'];
     } else {
-        $ttitle = xarVarCleanFromInput('title');
+        if (!xarVarFetch('ttitle', 'str', $ttitle, '', XARVAR_NOT_REQUIRED)) return;
     }
     if (empty($ttitle)) {
         // No title, no forum post.

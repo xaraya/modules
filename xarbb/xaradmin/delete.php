@@ -17,13 +17,13 @@
  * @author John Cox
  * @function to delete a forum and related topics
  */
-function xarbb_admin_delete()
+function xarbb_admin_delete($args)
 {
     // Get parameters
-    list($fid,
-         $confirmation) = xarVarCleanFromInput('fid',
-                                              'confirmation');
-
+    if (!xarVarFetch('fid', 'int:1:', $fid)) return;
+    if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
+    extract($args);
     // The user API function is called.
     $data = xarModAPIFunc('xarbb',
                           'user',

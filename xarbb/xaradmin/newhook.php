@@ -62,7 +62,7 @@ function xarbb_admin_newhook($args)
     if (isset($extrainfo['xarbb_forum'])) {
         $data['default'] = $extrainfo['xarbb_forum'];
     } else {
-        $data['default'] = xarVarCleanFromInput('xarbb_forum');
+        if (!xarVarFetch('xarbb_forum', 'id', $data['default'], NULL, XARVAR_DONT_SET)) return;
     }
     if (empty($forum)) {
         $data['default'] = '';

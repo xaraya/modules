@@ -117,6 +117,20 @@ function xarbb_latestpostsblock_modify($blockinfo)
  */
 function xarbb_latestpostsblock_update($blockinfo)
 {
+    /*Something wrong with this fetch, but I don't know the block.
+    Jojo, please review
+    if (!xarVarFetch('addtopics', 'checkbox', $vars['addtopics'], false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addposts', 'checkbox', $vars['addposts'], false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('latestpost', 'checkbox', $vars['latestpost'], false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('howmany', 'int:1', $vars['howmany'], '10', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('truncate', 'int:1', $vars['truncate'], '20', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('forumid','isset',$forumid)) return;
+    if (!xarVarFetch('addauthor', 'int:1', $vars['addauthor'], '0',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('addlink', 'int:1', $vars['addlink'], '0',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('forumlink', 'int:1', $vars['forumlink'], '0',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], false, XARVAR_NOT_REQUIRED)) return;
+    */
+
     $vars['addtopics']   = xarVarCleanFromInput('addtopics');
     $vars['addposts']    = xarVarCleanFromInput('addposts');
     $vars['latestpost']  = xarVarCleanFromInput('latestpost');
@@ -134,5 +148,4 @@ function xarbb_latestpostsblock_update($blockinfo)
 
     return $blockinfo;
 }
-
 ?>
