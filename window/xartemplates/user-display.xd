@@ -1,5 +1,5 @@
 <xar:if condition="$auto_resize eq 1">
-    <script language="javascript" type="text/javascript" src="modules/window/xartemplates/appwindow.js">
+    <script type="text/javascript" src="modules/window/xartemplates/appwindow.js">
     </script>
 </xar:if>
 <div class="xar-mod-head">
