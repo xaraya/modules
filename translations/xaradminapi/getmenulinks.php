@@ -7,7 +7,7 @@
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage module name
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
@@ -23,7 +23,7 @@ function translations_adminapi_getmenulinks()
     $menuLinks[] = array('url'   => xarModURL('translations','admin','start'),
                          'title' => xarML('Work on translations'),
                          'label' => xarML('Translate'));
-    $menuLinks[] = array('url'   => xarModURL('translations','admin','generate_trans'),
+    $menuLinks[] = array('url'   => xarModURL('translations','admin','generate_trans_info'),
                          'title' => xarML('Package a finished translation'),
                          'label' => xarML('Package'));
 

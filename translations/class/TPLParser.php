@@ -15,7 +15,7 @@ class TPLParser
 {
     var $transEntries = array();
     var $transKeyEntries = array();
-    
+
     var $_fd;
     var $_offs;
     var $_pos;
@@ -38,7 +38,7 @@ class TPLParser
     {
         return $this->transKeyEntries;
     }
-    
+
     function _get_token($t_array, $right) {
         $found = false;
         while (!$found && !feof($this->_fd)) {
@@ -47,7 +47,7 @@ class TPLParser
                 $this->_offs = 0;
                 $this->_len = strlen($this->_buf);
                 $this->_line++;
-            // printf("Getting line %d\n", $this->_line);
+             printf("Getting line %d\n", $this->_line);
             }
             foreach ($t_array as $n => $t) {
                 if (($this->_pos = strpos($this->_buf, $t, $this->_offs)) !== false) {  // токен найден
@@ -56,7 +56,7 @@ class TPLParser
                     $this->_offs = $this->_pos + strlen($t);
                     $this->_token = $n;
                     $found = true;
-                    // printf("Found token %s[%d] at pos %d\n", $t, $n, $this->_pos);
+                     printf("Found token %s[%d] at pos %d\n", $t, $n, $this->_pos);
                     break;
                 }
             }
@@ -75,19 +75,19 @@ class TPLParser
         $this->_fd = fopen($filename, 'r') or die("Cannot open file");
 
         if (!$filesize = filesize($filename)) return;
-    
+
     $this->_offs = 0;
     $this->_len = 0;
-        
+
         while (!feof($this->_fd)) {
-            
+
             if ($this->_get_token(array("<xar:mlstring>", "<xar:mlkey>", "xarML(", "xarMLByKey("), false)) {
-            
+
                 $this->_string ='';
                 $line = $this->_line;
-                
+
                 switch ($this->_token) {
-                    case 0: 
+                    case 0:
                         if ($this->_get_token(array("</xar:mlstring>"), true)) {
                             $this->_string = trim($this->_string);
                             if (!isset($this->transEntries[$this->_string])) {
@@ -131,7 +131,7 @@ class TPLParser
                 }
             }
         }
-        
+
         fclose($this->_fd);
     }
 

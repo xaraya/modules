@@ -25,8 +25,6 @@
 function translations_admin_updateconfig()
 {
     if (!xarVarFetch('mlsmode','str:1:',$MLSMode,'SINGLE',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('defaultlocale','str:1:',$defaultLocale)) return;
-    if (!xarVarFetch('localeslist','str:1:',$localesList)) return;
     if (!xarVarFetch('translationsbackend','str:1:',$translationsBackend)) return;
 
     if (!xarSecConfirmAuthKey()) return;
@@ -38,12 +36,6 @@ function translations_admin_updateconfig()
     // MLS variables
     xarLogVariable('mls mode',$MLSMode);
     xarConfigSetVar('Site.MLS.MLSMode', $MLSMode);
-    xarConfigSetVar('Site.MLS.DefaultLocale', $defaultLocale);
-    // Strip the spaces from the locales.
-    $localesList = str_replace(' ','', $localesList);
-    // each locales is separated by a comma
-    $allowedLocales = split(',',$localesList);
-    xarConfigSetVar('Site.MLS.AllowedLocales', $allowedLocales);
     xarConfigSetVar('Site.MLS.TranslationsBackend', $translationsBackend);
 
     xarResponseRedirect(xarModURL('translations', 'admin', 'modifyconfig'));

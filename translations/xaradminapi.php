@@ -76,7 +76,7 @@
         xarLogMessage("MLS: Creating XML backend");
         // FIXME: why does this come from core and php backend does not?
         include_once 'includes/xarMLSXMLBackend.php';
-        return new xarMLS__XMLTranslationsBackend(array($locale));
+       return new xarMLS__XMLTranslationsBackend(array($locale));
     }
     xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNKNOWN');
 }

@@ -1,7 +1,7 @@
 <!-- include the module header on all admin pages -->
 <div class="xar-mod-head">
   <span class="xar-mod-title">
-    <xar:mlstring>Translations administration</xar:mlstring>
+    <xar:mlstring>Translations Administration</xar:mlstring>
   </span>
 </div>
 <xar:set name="$menu_dntype">#xarSessionGetVar('translations_dnType')#</xar:set>
@@ -14,12 +14,60 @@
 <xar:set name="$menu_dntypetext">''</xar:set>
 </xar:if>
 
-<div>
-  <span><xar:mlstring>Translating</xar:mlstring></span>
-  <span class="xar-title">#$menu_dntypetext# #xarSessionGetVar('translations_dnName')#</span>
-  <span><xar:mlstring>to</xar:mlstring></span>
-  <span class="xar-title">#xarSessionGetVar('translations_working_locale')#</span>
-  <span><xar:mlstring>Site display</xar:mlstring>:</span>
-  <span class="xar-title">#xarConfigGetVar('Site.MLS.DefaultLocale')#</span>
+<div class="xar-mod-body">
+  <h3><xar:mlstring>Summary of Current Settings</xar:mlstring></h3>
 
+<table>
+	<tr>
+		<td width="45%" valign="top">
+			<span><b><xar:mlstring>Translation Settings</xar:mlstring></b></span>
+		</td>
+		<td>
+		</td>
+		<td>
+			<span><b><xar:mlstring>Site MLS Settings</xar:mlstring></b></span>
+		</td>
+	</tr>
+	<tr>
+		<td width="45%" valign="top">
+			<span><xar:mlstring>Translating</xar:mlstring></span>
+			<span class="xar-title">
+				#$menu_dntypetext# #xarSessionGetVar('translations_dnName')#
+			</span>
+			<span><xar:mlstring>to:</xar:mlstring></span>
+			<span class="xar-title">
+				<a href="#xarModURL('translations','admin','start')#">
+					#xarSessionGetVar('translations_working_locale')#
+				</a>
+			</span>
+			<br/>
+			<span><xar:mlstring>Translation Backend</xar:mlstring>:</span>
+			<span class="xar-title">
+				<a href="#xarModURL('translations','admin','modifyconfig')#">
+					#xarConfigGetVar('Site.MLS.TranslationsBackend')#
+				</a>
+			</span>
+		</td>
+		<td width="10%">
+			&nbsp;
+		</td>
+		<td width="45%" valign="top">
+			<span><xar:mlstring>Site Display Locale</xar:mlstring>:</span>
+			<span class="xar-title">
+				<a href="#xarModURL('base','admin','modifyconfig')#">
+					#xarConfigGetVar('Site.MLS.DefaultLocale')#
+				</a>
+			</span>
+			(recommended: utf)
+			<br/>
+			<span><xar:mlstring>MLS Mode</xar:mlstring>:</span>
+			<span class="xar-title">
+				<a href="#xarModURL('translations','admin','modifyconfig')#">
+					#xarConfigGetVar('Site.MLS.MLSMode')#
+				</a>
+			</span>
+			<br/>
+		</td>
+	</tr>
+</table>
 </div>

@@ -63,37 +63,6 @@
 		    </xar:if>
 	    </select>
     </p>
- 
-    <h4><xar:mlstring>Default locale</xar:mlstring></h4>
-    <p>
-      Which locale should be used by default. The global default of Xaraya is en_US.iso8859-1 (the "hard-coded" locale)
-      which means that if no translation is available and no specific locale is set, the US variant of the english
-      language will be used, encoded in iso8859-1 format.
-    </p>
-    <p>
-      <label for="defaultlocale"><xar:mlstring>Default Locale</xar:mlstring></label>:&nbsp;&nbsp;
-	    <select name="defaultlocale" id="defaultlocale" size="1">
-        <xar:foreach in="$locales" value="$locale">
-          <xar:if condition="xarMLSGetSiteLocale() eq $locale">
-            <option value="#$locale#" selected="selected">#$locale#</option>
-           <xar:else />
-            <option value="#$locale#">#$locale#</option>
-          </xar:if>
-        </xar:foreach>
-      </select>
-    </p>
-
-    <h4><xar:mlstring>Locale exposure</xar:mlstring></h4>
-    <p><xar:mlstring>
-      Which locales are available for use within the system. Whether the locale will actually be used is not determined
-      by this setting. It just makes it available.
-    </xar:mlstring></p>
-    <p>
-      <label for="localeslist">
-        <xar:mlstring>Available Locales (comma-delimited)</xar:mlstring>
-      </label>:&nbsp;&nbsp;
-      <input type="text" id="localeslist" name="localeslist" value="#$localeslist#" size="40" maxlength="100" />
-    </p>
 
     <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 	  <p><input type="submit" value="#$updatelabel#" align="middle" /></p>
