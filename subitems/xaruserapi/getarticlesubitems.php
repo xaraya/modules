@@ -34,11 +34,15 @@ function subitems_userapi_getarticlesubitems($args)
     $itemIDs =  xarModAPIFunc('subitems','user','dditems_getids',$subitemIDArgs);
 
     // Get Actual Subitems
-    $subitemArgs =  array();   
-    $subitemArgs['modid'] =  $ddobject->moduleid;   
-    $subitemArgs['itemtype'] =  $ddobject->itemtype;   
-    $subitemArgs['itemids'] =  $itemIDs;   
-    $subitemInfo =  xarModAPIFunc('dynamicdata','user','getitems',$subitemArgs);
+    if (!empty($itemIDs)) {
+        $subitemArgs =  array();   
+        $subitemArgs['modid'] =  $ddobject->moduleid;   
+        $subitemArgs['itemtype'] =  $ddobject->itemtype;   
+        $subitemArgs['itemids'] =  $itemIDs;   
+        $subitemInfo =  xarModAPIFunc('dynamicdata','user','getitems',$subitemArgs);
+    } else {
+        $subitemInfo =  array();   
+    }
 
     return $subitemInfo;
 }

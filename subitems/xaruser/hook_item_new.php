@@ -1,4 +1,3 @@
-
 <?php
 
 function subitems_user_hook_item_new($args)
