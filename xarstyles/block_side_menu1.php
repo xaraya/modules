@@ -37,6 +37,21 @@
  * would always be a valid CSS script available for development
  * in a non-PHP environment.
  *
+ * An example of how this could work would be (note: read * / as a closing comment):
+ *
+ * div.my_container li { /*xar_replace: div.${container_class} li {* /
+ *  margin: 0; /*xar_replace: margin: ${margin_size};* /
+ * }
+ *
+ * In the above example, the comments could indicate that the complete
+ * line should be replaced by the expression in the comments. A browser
+ * would normally interpret this as simple comments. Other comments
+ * could enable or disable sections depending upon browser sniffing, or
+ * even session or user vaiables, or parameters passed in (all sorts could
+ * be referenced). It could become a very complex meta-language, so before
+ * embarking down that route, it would be worth investigating ready-built
+ * solutions.
+ *
  * It may accept parameters and it may check the browser version.
  */
 
@@ -115,7 +130,7 @@ $total_width = 170; // Width of menu container.
 $anchor_border = 1;
 
 // We name the container class here, for ease of customisation.
-// We could also set a contain ID. Either way, it could allow this
+// We could also set a container ID. Either way, it could allow this
 // stylesheet to be invoked several times for one page, delivering
 // slightly different styles to individual named blocks.
 $container_class = 'xarpages-side-menu1';
@@ -245,6 +260,10 @@ div.${container_class} ul.side-menu4 a, div.${container_class} ul.side-menu4 h2 
  * The positioning will, howver,
  * affect the placing of the
  * background image bullets.
+ * Ideally this section should be
+ * in a different file so the colours
+ * can be overridden without affecting
+ * other styles.
  */
 
 div.${container_class} {

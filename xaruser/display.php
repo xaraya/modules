@@ -111,72 +111,22 @@ function xarpages_user_display($args)
                     break;
                 }
             }
-            //var_dump($data['pages'][$pid]['child_keys']);
         }
     }
 
-    // Point the current page at the page in the tree.
-    $data['current_page'] =& $data['pages'][$pid];
+    // Now we can cache all this data away for the blocks.
+    // The blocks should have access to most of the same data as the page.
+    xarVarSetCached('Blocks.xarpages', 'pagedata', $data);
 
-    // TODO: at this point, if the page is 'EMPTY', then scan its children
-    // for a non-empty page, and move to that child as the current page.
-    // The same process should be followed in the short URL generation.
+    // Save the current page ID. This is used by blocks in 'automatic' mode.
+    xarVarSetCached('Blocks.xarpages', 'current_pid', $pid);
 
-
-    // Create an ancestors array.
-    // We don't do that in getpagestree() since that function does not
-    // have any knowledge of the 'current' page.
-    // Shift the pages onto the start of the array, so the resultant array
-    // is in order furthest ancestor towards the current page.
-    // The ancestors array includes the current page.
-    // TODO: stop at an non-ACTIVE page. Non-ACTIVE pages act as blockers
-    // in the hierarchy.
-    // Ancestors will include self - filter out in the template if required.
-    $ancestors = array();
-    $pid_ancestor = $pid;
-
-    // TODO: protect against infinite loops if we never reach a parent of zero.
-    // This *could* happen if a root page is set to INACTIVE and a child page is
-    // set as a module alias.
-    while ($data['pages'][$pid_ancestor]['parent_pid'] > 0) {
-        // Set flag for menus.
-        $data['pages'][$pid_ancestor]['is_ancestor'] = true;
-        // Reference the page. Note we are working back down the tree
-        // towards the root page, so will unshift each page to the front
-        // of the ancestors array.
-        array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
-        $pid_ancestor = $data['pages'][$pid_ancestor]['parent_key'];
-    }
-    $data['pages'][$pid_ancestor]['is_ancestor'] = true;
-    array_unshift($ancestors, &$data['pages'][$pid_ancestor]);
-    $data['ancestors'] = $ancestors;
-
-    // Create a 'children' array for children of the current page.
-    $data['children'] = array();
-    if (!empty($data['current_page']['child_keys'])) {
-        foreach ($data['current_page']['child_keys'] as $key => $child) {
-            // Set flag for menus.
-            $data['pages'][$key]['is_child'] = true;
-            // Reference the child page.
-            $data['children'][$key] =& $data['pages'][$child];
-        }
-    }
-
-    // TODO: create a 'siblings' array.
-    // Siblings are the children of the current page parent.
-    // The root page will have no siblings, as we want to keep this in
-    // a single tree.
-    // Siblings will include self - filter out in the template if necessary.
-    $data['siblings'] = array();
-    if (!empty($data['current_page']['parent_key'])) {
-        // Loop though all children of the parent.
-        foreach ($data['pages'][$data['current_page']['parent_key']]['child_keys'] as $key => $child) {
-            // Set flag for menus.
-            $data['pages'][$key]['is_sibling'] = true;
-            // Reference the page.
-            $data['siblings'][$key] =& $data['pages'][$child];
-        }
-    }
+    // Add in flags etc. to the data indicating where the current
+    // page is in relation to the page tree.
+    $data = xarModAPIfunc(
+        'xarpages', 'user', 'addcurrentpageflags',
+        array('pagedata' => $data, 'pid' => $pid)
+     );
 
     // Provide a 'rolled up' version of the current page (or page and
     // ancestors) that contain inherited values from the pages before it.
@@ -184,7 +134,7 @@ function xarpages_user_display($args)
     // TODO: we could save each step here in an array indexed by pid or key - 
     // just have a hunch it would be useful, but not sure how at this stage.
     $inherited = array();
-    foreach ($ancestors as $ancestor) {
+    foreach ($data['ancestors'] as $ancestor) {
         $inherited = xarModAPIfunc(
             'xarpages', 'user', 'arrayoverlay',
             array($inherited, $ancestor)
@@ -235,34 +185,6 @@ function xarpages_user_display($args)
             // Carry on processing any further functions.
         }
     }
-
-
-    // Set up a bunch of flags against pages to allow hierarchical menus
-    // to be generated. We do not want to make any assumptions here as to
-    // how the menus will look and function (i.e. what will be displayed,
-    // what will be suppressed, hidden etc) but rather just provide flags
-    // that allow a template to build a menu of its choice.
-    //
-    // The basic flags are:
-    // 'depth' - 0 for root, counting up for each subsequent level [done]
-    // 'is_ancestor' - flag indicates an ancestor of the current page [done]
-    // 'is_child' - flag indicates a child of the current page [done]
-    // 'is_sibling' - flag indicates a sibling of the current page [done]
-    // 'is_current' - flag indicates the current page [done]
-    // 'is_root' - flag indicates the page is a root page of the hierarchy - good
-    //      starting point for menus [done]
-    // 'has_children' - flag indicates a page has children [done - in getpagestree]
-    //
-    // Any page will have a depth flag, and may have one or more of the
-    // remaining flags.
-    // NOTE: with the exception of the following, all the above flags are
-    // set in previous loops.
-
-    $data['pages'][$pid]['is_current'] = true;
-
-    // Now we can cache all this data away for the blocks.
-    // The blocks should have access to exactly the same data as the page.
-    xarVarSetCached('Blocks.xarpages', 'pagedata', $data);
 
     // Set the theme.
     // Use rolled-up page here so the theme is inherited.

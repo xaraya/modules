@@ -1,8 +1,45 @@
 <div>
+    <div>
     <xar:if condition="!empty($multi_homed)">
-        <input id="multi_homed_#$bid#" name="multi_homed" type="checkbox" value="true" checked="checked" />
+        <input name="multi_homed" type="checkbox" value="true" id="multi_homed_#$bid#" checked="checked" />
     <xar:else />
-        <input id="multi_homed_#$bid#" name="multi_homed" type="checkbox" value="true" />
+        <input name="multi_homed" type="checkbox" value="true" id="multi_homed_#$bid#" />
     </xar:if>
-    <label for="multi_homed_#$bid#"><xar:mlstring>Multi-homed (hides single root page)</xar:mlstring></label>
+    <label for="multi_homed_#$bid#"><xar:mlstring>Multi-homed (hides top root page)</xar:mlstring></label>
+    </div>
+
+    <div>
+    <label for="current_source_#$bid#"><xar:mlstring>Source of the current page</xar:mlstring></label>
+    <select name="current_source" id="current_source_#$bid#">
+        <xar:if condition="$current_source eq 'AUTO'">
+            <option value="AUTO" selected="selected"><xar:mlstring>Automatic - set by the current module</xar:mlstring></option>
+        <xar:else />
+            <option value="AUTO"><xar:mlstring>Automatic - set by the current module</xar:mlstring></option>
+        </xar:if>
+        <xar:if condition="$current_source eq 'DEFAULT'">
+            <option value="DEFAULT" selected="selected"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>
+        <xar:else />
+            <option value="DEFAULT"><xar:mlstring>Default - force use of the default page</xar:mlstring></option>
+        </xar:if>
+    </select>
+    </div>
+
+    <div>
+    <label for="default_pid_#$bid#"><xar:mlstring>Default page</xar:mlstring></label>
+    <select name="default_pid" id="default_pid_#$bid#">
+        <xar:if condition="$default_pid eq 0">
+            <option value="-1" selected="selected">-- <xar:mlstring>None</xar:mlstring> --</option>
+        <xar:else />
+            <option value="-1">-- <xar:mlstring>None</xar:mlstring> --</option>
+        </xar:if>
+        <xar:loop name="$all_pages.pages">
+            <xar:if condition="$loop:item.pid eq $default_pid">
+                <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+            <xar:else />
+                <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+            </xar:if>
+        </xar:loop>
+    </select>
+    </div>
+
 </div>
