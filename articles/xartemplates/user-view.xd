@@ -39,20 +39,20 @@
 </xar:if>
 
 <xar:if condition="!empty($maplink) or !empty($archivelink)">
-<table border="0" style="text-align: left; padding: 50px">
+<table border="0" style="text-align: left; padding: 10px">
 <tr>
     <xar:if condition="!empty($maplink)">
-    <td>
+    <td style="text-align: left; padding: 50px">
         <a href="#$maplink#">#$maplabel#</a>
     </td>
     </xar:if>
     <xar:if condition="!empty($submitlink)">
-    <td>
+    <td style="text-align: center; padding: 50px">
         <a href="#$submitlink#" title="Submit Article"><xar:mlstring>Contribute</xar:mlstring></a>
     </td>
     </xar:if>
     <xar:if condition="!empty($archivelink)">
-    <td>
+    <td style="text-align: right; padding: 50px">
         <a href="#$archivelink#">#$archivelabel#</a>
     </td>
     </xar:if>
