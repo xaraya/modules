@@ -1,27 +1,40 @@
 Various stuff to do:
 
-- Privileges (registered, but not yet actually used)
 - Import/export (itemtypes and items, with hook data, esp. DD)
 - Sample page types and pages (use the import function for this)
 - Sample functions (perhaps handling a publication type and categories)
 - A screen to give sample mod_rewrite rules to support the config (i.e. to
-  remove the index.php/[xarpages] part of the path.
+  remove the index.php/[xarpages] part of the path; if provided  by an API
+  then a trigger or hook could be developed to automatically update
+  mod_rewrite rules each time the pages are changed
 - Creation of sample blocks - a crumb-trail, a CSS menu etc.
 - A site map example page
-- Write a module delete/remove function
 - Have a really good think about how to implement searches. This won't be
   easy as each page type could get its data from a different place, and this
-  module has no inside knowledge of how to access that data
+  module has no inside knowledge of how to access that data - am tempted not
+  to do this, but to use an external search engine on the rendered pages
 - Some good docs with examples and diagrams
-- Fix page view so that the image on the first item displays correctly
+- Fix page view so that the image on the first item displays correctly - it
+  is currently displayed as an empty root node regardless of whether it has
+  children
+- Completely templatize the selection of images in the tree view
 - Provide selection methods (by tree etc) on the admin/view page to help
   view large numbers of pages
 - Provide selection box when there is more than one template page for a
-  given page type (possibly including -none- as an option)
+  given page type (possibly including -none- as an option) - when creating
+  a new page
 - Cache the page details so that they can be used by blocks
-- Overview of module in the 'admin/main' template
+- Implement customisable page template as well as item template field to
+  the page
+- Nicer error when an attempt is made to create a duplicate page type;
+  currently the user gets a complex database error
+
+- Privileges (registered, but not yet actually used) - DONE
+- Overview of module in the 'admin/main' template - DONE
+- Write a module delete/remove function - DONE
 
 
 To get this thing working in the meantime, create a page type called 'html'
 and set up a DD column for it called 'body' - a large textarea field would
-be good. Create pages and away you go.
+be good. Create pages and away you go :-)
+

@@ -24,6 +24,9 @@ function xarpages_admin_updatepage()
     if (!xarVarFetch('template', 'str:0:100', $template_default)) return;
     if (!xarVarFetch('template_select', 'str:1:100', $template, $template_default, XARVAR_NOT_REQUIRED)) return;
 
+    if (!xarVarFetch('page_template', 'str:0:100', $page_template_default)) return;
+    if (!xarVarFetch('page_template_select', 'str:1:100', $page_template, $page_template_default, XARVAR_NOT_REQUIRED)) return;
+
     // The function/encode_url/decode_url come from form variables of
     // the same name, but may be over-ridden if any of *_select form
     // fields contain a value.
@@ -60,6 +63,7 @@ function xarpages_admin_updatepage()
                 'name'          => $name,
                 'desc'          => $desc,
                 'template'      => $template,
+                'page_template' => $page_template,
                 'theme'         => $theme,
                 'function'      => $function,
                 'encode_url'    => $encode_url,
@@ -79,6 +83,7 @@ function xarpages_admin_updatepage()
                 'name'          => $name,
                 'desc'          => $desc,
                 'template'      => $template,
+                'page_template' => $page_template,
                 'theme'         => $theme,
                 'function'      => $function,
                 'encode_url'    => $encode_url,

@@ -135,6 +135,7 @@ function xarpages_admin_modifypage()
                 'status' => 'ACTIVE',
                 'alias' => 0,
                 'template' => '',
+                'page_template' => '',
                 'pagetype' => xarModAPIfunc('xarpages', 'user', 'gettype', array('ptid' => $ptid))
             );
 
@@ -147,6 +148,7 @@ function xarpages_admin_modifypage()
                 $data['page']['function'] = $template['function'];
                 $data['page']['theme'] = $template['theme'];
                 $data['page']['template'] = $template['template'];
+                $data['page']['page_template'] = $template['page_template'];
             }
         }
     }

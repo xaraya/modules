@@ -36,6 +36,7 @@ function xarpages_init()
           `xar_left` int(11) NOT NULL default '0',
           `xar_right` int(11) NOT NULL default '0',
           `xar_template` varchar(100) default NULL,
+          `xar_page_template` varchar(100) default NULL,
           `xar_theme` varchar(100) default NULL,
           `xar_encode_url` varchar(100) default NULL,
           `xar_decode_url` varchar(100) default NULL,
@@ -55,6 +56,7 @@ function xarpages_init()
         xar_left            I           NotNull DEFAULT 0,
         xar_right           I           NotNull DEFAULT 0,
         xar_template        C(100)      Null,
+        xar_page_template   C(100)      Null,
         xar_theme           C(100)      Null,
         xar_encode_url      C(100)      Null,
         xar_decode_url      C(100)      Null,
@@ -267,31 +269,47 @@ function xarpages_upgrade($oldversion)
     // Upgrade dependent on old version number.
     switch ($oldversion) {
         case '0.1.0':
-            // Drop an eroneous unique index and recreate it non-unique.
-            $result = $datadict->dropIndex(
-                'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
-                $pagestable
-            );
+            // Upgrading from 0.1.0
+            // Check these indexes exist before attempting to 
+            // drop and/or create them.
 
-            $result = $datadict->createIndex(
-                'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type',
-                $pagestable,
-                'xar_itemtype'
-            );
+            // Get a list of indexes for the pages table.
+            $indexes = $datadict->getIndexes($pagestable);
+
+            // Drop an erroneous unique index and recreate it non-unique.
+            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_page_type';
+            if (isset($indexes[$indexname])) {
+                $result = $datadict->dropIndex($indexname, $pagestable);
+            }
+
+            // Create the non-unique index of the same name.
+            $result = $datadict->createIndex($indexname, $pagestable, 'xar_itemtype');
             if (!$result) {return;}
 
             // Create a new index.
 
+            // Get a list of indexes for the page types table.
+            $indexes = $datadict->getIndexes($typestable);
+
             // The page type name must be unique.
-            $result = $datadict->createIndex(
-                'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name',
-                $typestable,
-                'xar_name',
-                array('UNIQUE' => true)
+            $indexname = 'i_' . xarDBGetSiteTablePrefix() . '_xarpages_type_name';
+            if (!isset($indexes[$indexname])) {
+                $result = $datadict->createIndex(
+                    $indexname, $typestable, 'xar_name', array('UNIQUE' => true)
+                );
+                if (!$result) {return;}
+            }
+
+        case '0.1.1':
+            // Upgrading from 0.1.1
+            // An extra page property is introduced in 0.1.2
+
+            $result = $datadict->ChangeTable(
+                $pagestable, 'xar_page_template C(100) Null'
             );
             if (!$result) {return;}
 
-        case '0.1.1':
+        case '0.1.2':
             break;
     }
 
@@ -314,9 +332,9 @@ function xarpages_delete()
     // Get a data dictionary object with item create methods.
     $datadict =& xarDBNewDataDict($dbconn, 'ALTERTABLE');
 
-    // TODO: delete module aliases?
+    // TODO: delete module aliases.
     // Probably have to loop through all pages and check whether they
-    // are module aliases to drop.
+    // are module aliases to drop. This should be done in the core.
 
     // Drop tables
     $result = $datadict->dropTable($pagestable);
@@ -324,7 +342,7 @@ function xarpages_delete()
 
     // TODO: remove blocks
 
-    // TODO: delete module variables
+    // Delete module variables
     xarModDelAllVars('xarpages');
 
     // Drop privileges.

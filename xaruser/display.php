@@ -199,6 +199,14 @@ function xarpages_user_display($args)
         xarTplSetThemeName($inherited['theme']);
     }
 
+    // Set the page template.
+    // Use rolled-up page here so the theme is inherited.
+    // The special case theme name 'default' will disable this feature
+    // and just use the default theme.
+    if (!empty($inherited['page_template']) && $inherited['page_template'] != 'default') {
+        xarTplSetPageTemplateName($inherited['page_template']);
+    }
+
     // TODO: provide an alternative, configurable, default template, for when none found,
     // ultimately falling back to 'page'. We need to start messing around consuming
     // errors from the error stack to do that though, as xarTplModule() does not have a

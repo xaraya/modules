@@ -3,7 +3,7 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Page Administration</xar:mlstring></span></div>
 
 <div class="xar-mod-body"><h2><xar:mlstring>View Page Types</xar:mlstring></h2>
-    <div style="margin: auto;">
+    <div class="xar-fullwidth style="margin: auto;">
         <div><a href="#xarModURL('xarpages','admin','newtype')#"><xar:mlstring>Add Page Type</xar:mlstring></a></div>
 
         <table border="0" width="100%" cellspacing="0" cellpadding="0">

@@ -98,7 +98,7 @@ function xarpages_userapi_getpages($args)
         $query = 'SELECT DISTINCT tpages.xar_pid, tpages.xar_name, tpages.xar_desc,'
             . ' tpages.xar_itemtype, tpages.xar_parent, tpages.xar_left, tpages.xar_right,'
             . ' tpages.xar_template, tpages.xar_status, tpages.xar_encode_url, tpages.xar_decode_url,'
-            . ' tpages.xar_theme, tpages.xar_function';
+            . ' tpages.xar_theme, tpages.xar_function, tpages.xar_page_template';
     }
 
     $query .= ' FROM ' . $xartable['xarpages_pages'] . ' AS tpages';
@@ -157,7 +157,7 @@ function xarpages_userapi_getpages($args)
                 $parent_pid, $left, $right,
                 $template, $status,
                 $encode_url, $decode_url,
-                $theme, $function
+                $theme, $function, $page_template
             ) = $result->fields;
 
             $pid = (int)$pid;
@@ -188,6 +188,7 @@ function xarpages_userapi_getpages($args)
                 'left' => (int)$left,
                 'right' => (int)$right,
                 'template' => $template,
+                'page_template' => $page_template,
                 'theme' => $theme,
                 'status' => $status,
                 'encode_url' => $encode_url,

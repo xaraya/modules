@@ -52,7 +52,7 @@ function xarpages_adminapi_createpage($args)
     $cols = array();
 
     // Include the optional parameters.
-    foreach(array('desc', 'template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
+    foreach(array('desc', 'template', 'page_template', 'theme', 'encode_url', 'decode_url', 'function', 'status') as $colname) {
         if (isset($$colname) && is_string($$colname)) {
             $bind[] = $$colname;
             $cols[] = 'xar_' . $colname;
