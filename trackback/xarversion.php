@@ -14,6 +14,7 @@
 $modversion['name'] = 'TrackBack';
 $modversion['id'] = '183';
 $modversion['version'] = '1.0.0';
+$modversion['displayname']    = xarML('Trackback');
 $modversion['description'] = 'Allows for the sending and recieving of trackbacks';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = '';
