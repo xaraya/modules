@@ -25,29 +25,16 @@ function bkview_user_statsview($args)
     if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
     $repo= new bkRepo($item['repopath']);
     
-    $list=$repo->bkGetUsers();
+    $stats = $repo->bkGetStats();
     
     $data['users']=array();
-    $userlist=array();
     $counter=1;
     
-    // Bk web uses this as base:
-    // prs -h -d'$if(:Li: -gt 0){:USER: :AGE:}\n' ChangeSet
-    // My slow machine wasnt going in time retrying allcsets and recentsets
-    set_time_limit ( 100 );
-    
-    foreach ($list as $user) {
-        
-        $user_csets = $repo->bkGetChangeSets('',true,$user);
-        // This is simply too slow...
-        // Can´t we get these informations in a quickier way?
-        //        $userlist[$counter]['lines']=$repo->bkCountChangedLines($user_csets);
-        
+    foreach ($stats as $user => $stat) {
         $userlist[$counter] = array();
         $userlist[$counter]['user']=$user;
-        $userlist[$counter]['allcsets']=count($user_csets);
-        // FIXME: -c and -u options don't go well together, postpone until they do
-        $userlist[$counter]['recentcsets']=$repo->bkCountChangeSets('-1M',false,$user);
+        $userlist[$counter]['allcsets']=$stat['nrtotal'];
+        $userlist[$counter]['recentcsets']=$stat['nrrecent'];
         $counter++;
     }
     $userlist = array_csort($userlist,'allcsets',SORT_DESC);
