@@ -57,7 +57,8 @@
     <xar:if condition="!empty($hooks) and !empty($hooks['polls'])">
         #$hooks['polls']# 
     </xar:if>
-    <xar:data-getitems name="$properties" value="$posterdata" module="roles" itemids="$posterlist" />
+    <xar:comment>if you have other dynamic user fields that you want to include in this template, add them to the fieldlist</xar:comment>
+    <xar:data-getitems name="$properties" value="$posterdata" module="roles" itemids="$posterlist" fieldlist="website,avatar,location,signature,icq,msnm,yim,aim" />
     <table>
         <tr>
             <th>
