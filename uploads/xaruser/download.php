@@ -27,7 +27,7 @@ function uploads_user_download()
     $instance = implode(':', $instance);
 
     // If you are an administrator OR the file is approved, continue
-    if (!xarSecurityCheck('AdminUploads', 1, 'File' . $instance)  && $fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED) {
+    if ($fileInfo['fileStatus'] != _UPLOADS_STATUS_APPROVED && !xarSecurityCheck('AdminUploads', false, 'File' . $instance)) {
         xarExceptionHandled();
         $msg = xarML('You do not have the necessary permissions for this object.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION', new DefaultUserException($msg));
