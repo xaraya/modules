@@ -21,4 +21,4 @@
 <xar:if condition="!empty($style)">
     <xar:set name="$stdattributes['style']">#$style#</xar:set>
 </xar:if>
-<a#xarModAPIfunc('autolinks', 'user', 'htmlattributes', $stdattributes)#>#$match#</a>
+<a #xarModAPIfunc('autolinks', 'user', 'htmlattributes', $stdattributes)#>#$match#</a>
