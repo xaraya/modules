@@ -1,6 +1,6 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>HelpDesk</xar:mlstring>
+        #xarModGetDisplayableName('helpdesk')#
     </span>
 </div>
 
@@ -8,12 +8,16 @@
 
 <div class="xar-mod-body">
 
-#$menu#
+<xar:var name="menu" />
 
 <div class="tborder">
 
-<p><xar:mlstring>Welcome to the Help Desk. Please click New Ticket
-to submit any questions or problems.</xar:mlstring></p>
+<p>
+    <xar:ml>
+        <xar:mlstring>Welcome to the #(1). Please click New Ticket to submit any questions or problems.</xar:mlstring>
+        <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+    </xar:ml>
+</p>
 
 <p><xar:mlstring>If you are a registered site member and are logged in,
 return to this page and 'View Tickets' to see a response to your inquiries.</xar:mlstring></p>
@@ -40,6 +44,6 @@ We will do our best to answer any questions and fix any problems.
 
 </div>
 
-<p>#$summary#</p>
+<p><xar:var name="summary" /></p>
 
 </div>

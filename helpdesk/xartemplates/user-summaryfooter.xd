@@ -1,5 +1,5 @@
 <div class="xar-norm-outline xar-accent">
-    <table border="0" width="100%" class="xar-accent">
+    <table border="0" width="99%" class="xar-accent">
         <tr>
             <td>
                 <xar:mlstring>Total Tickets in System</xar:mlstring>: <b>#$return_val#</b>

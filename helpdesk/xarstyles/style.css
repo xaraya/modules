@@ -22,3 +22,24 @@ table.std TH {
 table.std td.hilite {
     background-color: #ffffff;
 }
+
+div.row {
+	clear: both; 
+	padding-top: 10px;
+}
+
+div.row .label {
+	float: left; 
+	width: 20%; 
+	text-align: right;
+}
+
+div.row .field {
+	float: right; 
+	width: 78%; 
+	text-align: left;
+}
+
+.field select {
+	width:  200px;
+}

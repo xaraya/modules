@@ -1,11 +1,14 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>HelpDesk - Display Ticket</xar:mlstring>
+    <xar:ml>
+        <xar:mlstring>#(1) - Display Ticket</xar:mlstring>
+        <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+    </xar:ml>
     </span>
 </div>
 <div class="xar-mod-body">
 <br />
-#$menu#
+<xar:var name="menu" />
 <div class="tborder">
 
 <table width="100%">
@@ -55,8 +58,10 @@
     <tr class="">
         <td><b><xar:mlstring>Ticket Options:</xar:mlstring></b></td>
         <td colspan="3">
-            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a> |
+            <a href="#xarModURL('helpdesk', 'user', 'modify', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Modify</a>
+            <xar:comment>
             <a href="#xarModURL('helpdesk', 'user', 'delete', array('tid' => $tid, 'authkey' => xarSecGenAuthKey()))#">Delete</a>
+            </xar:comment>
         </td>
     </tr>
 
@@ -67,5 +72,5 @@
 
 </div>
 <br />
-#$summary#
+<xar:var name="summary" />
 </div>

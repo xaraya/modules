@@ -1,12 +1,14 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>HelpDesk - New Ticket Sent</xar:mlstring>
+    <xar:ml>
+        <xar:mlstring>#(1) - New Ticket Submitted</xar:mlstring>
+        <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+    </xar:ml>
     </span>
 </div>
 <div class="xar-mod-body">
-<!-- <p><xar:mlstring>Welcome to the Help Desk. Please click a link to use the system.</xar:mlstring></p> -->
 
-<p>#$menu#</p>
+<p><xar:var name="menu" /></p>
 
 <div class="tborder">
 
@@ -39,6 +41,6 @@
 
 </div>
 
-<p>#$summaryfooter#</p>
+<p><xar:var name="summaryfooter" /></p>
 
 </div>

@@ -1,11 +1,14 @@
 <div class="xar-mod-head">
     <span class="xar-mod-title">
-        <xar:mlstring>HelpDesk</xar:mlstring>
+    <xar:ml>
+        <xar:mlstring>#(1) - Stats</xar:mlstring>
+        <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+    </xar:ml>
     </span>
 </div>
 <div class="xar-mod-body">
 
-#$menu#
+<xar:var name="menu" />
 
 <div class="tborder">
 
@@ -18,6 +21,6 @@
 
 </div>
 
-#$summary#
+<xar:var name="summary" />
 
 </div>

@@ -3,7 +3,10 @@
 <xar:else />
     <div class="xar-mod-head">
         <span class="xar-mod-title">
-            <xar:mlstring>HelpDesk - View Tickets</xar:mlstring>
+        <xar:ml>
+            <xar:mlstring>#(1) - View Ticket</xar:mlstring>
+            <xar:mlvar>#xarModGetDisplayableName('helpdesk')#</xar:mlvar>
+        </xar:ml>
         </span>
     </div>
     <br />
@@ -11,7 +14,7 @@
 </xar:if>
 
 <div class="xar-mod-body">
-<xar:if condition="isset($menu)">#$menu#</xar:if>
+<xar:if condition="isset($menu)"><xar:var name="menu" /></xar:if>
 <div class="tborder">
 
 <xar:if condition="$UserLoggedIn">
