@@ -17,7 +17,6 @@ function ephemerids_admin_main()
 {
     // Security Check
     if(!xarSecurityCheck('EditEphemerids')) return;
-
     // we only really need to show the default view (overview in this case)
     if (xarModGetVar('adminpanels', 'overview') == 0){
         return array();
@@ -35,11 +34,8 @@ function ephemerids_admin_new()
 {
     // Security Check
     if(!xarSecurityCheck('AddEphemerids')) return;
-
     // TODO: figure out how to get a list of *available* languages
-
     $data['authid'] = xarSecGenAuthKey();
-
     return $data;
 }
 
@@ -111,19 +107,12 @@ function ephemerids_admin_view()
  */
 function ephemerids_admin_add()
 {
-    list($did, 
-         $mid, 
-         $yid, 
-         $content, 
-         $elanguage) = xarVarCleanFromInput('did',
-                                            'mid', 
-                                            'yid', 
-                                            'content', 
-                                            'elanguage');
-
-    if (!empty($elanguage)) {
-        $elanguage = 'ALL';
-    }
+    // Get parameters from whatever input we need
+    if (!xarVarFetch('did','int:1:',$did)) return;
+    if (!xarVarFetch('mid','int:1:',$mid)) return;
+    if (!xarVarFetch('yid','int:1:',$yid)) return;
+    if (!xarVarFetch('content','str:1:',$content, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('elanguage','str:1:',$elanguage, 'ALL',XARVAR_NOT_REQUIRED)) return;
 
     // Confirm Auth
     if (!xarSecConfirmAuthKey()) return;
@@ -143,11 +132,9 @@ function ephemerids_admin_add()
 
     // The return value of the function is checked here
     if (!isset($emp) && xarCurrentErrorType() != XAR_NO_EXCEPTION) return; // throw back
-
     // This function generated no output, and so now it is complete we redirect
     // the user to an appropriate page for them to carry on their work
     xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
-
     // Return
     return true;
 }
@@ -157,14 +144,13 @@ function ephemerids_admin_add()
  */
 function ephemerids_admin_delete($args)
 {
-    list($eid, 
-         $confirmation,
-         $confirm) = xarVarCleanFromInput('eid',
-                                          'confirmation',
-                                          'confirm');
+    // Get parameters from whatever input we need
+    if (!xarVarFetch('eid','int:1:',$eid)) return;
+    if (!xarVarFetch('obid','str:1:',$obid,$eid,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirmation','str:1:',$confirmation,'',XARVAR_NOT_REQUIRED)) return;
 
     extract ($args);
-
     // Security Check
     if(!xarSecurityCheck('DeleteEphemerids')) return;
 
@@ -172,13 +158,9 @@ function ephemerids_admin_delete($args)
     if (empty($confirmation)) {
     $data['eid'] = $eid;
     $data['authid'] = xarSecGenAuthKey();
-
     return $data;
-
     }
-
     if (!xarSecConfirmAuthKey()) return;
-
     // The API function is called
     if (xarModAPIFunc('ephemerids',
                       'admin',
@@ -186,28 +168,17 @@ function ephemerids_admin_delete($args)
                       array('eid' => $eid))) {
 
     }
-
     xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
-
     // Return
     return true;
 }
 
 function ephemerids_admin_modify($args)
 {
-    // Get parameters
-    list($eid,
-         $objectid)= xarVarCleanFromInput('eid',
-                                         'objectid');
-
+    // Get parameters from whatever input we need
+    if (!xarVarFetch('eid','int:1:',$eid)) return;
+    if (!xarVarFetch('objectid','str:1:',$objectid,$eid,XARVAR_NOT_REQUIRED)) return;
     extract($args);
-
-    // At this stage we check to see if we have been passed $objectid, the
-    // generic item identifier.  
-    if (!empty($objectid)) {
-        $eid = $objectid;
-    }
-
     // The user API function is called. 
     $data = xarModAPIFunc('ephemerids',
                          'user',
@@ -215,12 +186,9 @@ function ephemerids_admin_modify($args)
                          array('eid' => $eid));
 
     if ($data == false) return;
-
     // Security Check
     if(!xarSecurityCheck('EditEphemerids')) return;
-
     // Get menu variables 
-    
     $hooks = xarModCallHooks('item','modify',$eid,$data);
     if (empty($hooks)) {
         $data['hooks'] = '';
@@ -229,9 +197,7 @@ function ephemerids_admin_modify($args)
     } else {
         $data['hooks'] = $hooks;
     }
-    
     $data['authid'] = xarSecGenAuthKey();
-    
     // Return the template variables defined in this function
     return $data;
 }
@@ -239,31 +205,16 @@ function ephemerids_admin_modify($args)
 
 function ephemerids_admin_update($args)
 {
-    // Get parameters
-    list($did, 
-         $mid, 
-         $yid, 
-         $content, 
-         $elanguage,
-         $eid,
-         $objectid) = xarVarCleanFromInput('did',
-                                           'mid', 
-                                           'yid', 
-                                           'content', 
-                                           'elanguage',
-                                           'eid',
-                                           'objectid');
 
+    // Get parameters from whatever input we need
+    if (!xarVarFetch('did','int:1:',$did)) return;
+    if (!xarVarFetch('mid','int:1:',$mid)) return;
+    if (!xarVarFetch('yid','int:1:',$yid)) return;
+    if (!xarVarFetch('content','str:1:',$content, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('elanguage','str:1:',$elanguage, 'ALL',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('eid','int:1:',$eid)) return;
+    if (!xarVarFetch('objectid','str:1:',$objectid,$eid,XARVAR_NOT_REQUIRED)) return;
     extract($args);
-
-    if (!empty($objectid)) {
-        $eid = $objectid;
-    }
-
-    if (!empty($elanguage)) {
-        $elanguage = 'All';
-    }
-
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
 
@@ -279,10 +230,8 @@ function ephemerids_admin_update($args)
                           'elanguage' => $elanguage))) {
         return; // throw back
     }
-
     //Redirect
     xarResponseRedirect(xarModURL('ephemerids', 'admin', 'view'));
-
     // Return
     return true;
 }
@@ -294,7 +243,6 @@ function ephemerids_admin_modifyconfig()
 {
     // Security Check
     if(!xarSecurityCheck('AdminEphemerids')) return;
-
     $data['authid'] = xarSecGenAuthKey();
     return $data;
 }
@@ -304,21 +252,11 @@ function ephemerids_admin_modifyconfig()
  */
 function ephemerids_admin_updateconfig()
 {
-    $itemsperpage = xarVarCleanFromInput('itemsperpage');
-
+    if (!xarVarFetch('itemsperpage','int:1:',$itemsperpage, 10)) return;
     if (!xarSecConfirmAuthKey()) return;
-
-    // Security Check
     if(!xarSecurityCheck('AdminEphemerids')) return;
-
-    if (!isset($itemsperpage)) {
-        $itemsperpage = 10;
-    }
     xarModSetVar('ephemerids', 'itemsperpage', $itemsperpage);
-
     xarResponseRedirect(xarModURL('ephemerids', 'admin', 'modifyconfig'));
-
     return true;
 }
-
 ?>
