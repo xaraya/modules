@@ -189,7 +189,13 @@ function categories_navigationblock_display($blockinfo)
         xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET);
     }
     // turn $catid into $cids array (and set $andcids flag)
+    $istree = 0;
     if (!empty($catid)) {
+        // if we're viewing all items below a certain category, i.e. catid = _NN
+        if (strstr($catid,'_')) {
+             $catid = preg_replace('/_/','',$catid);
+             $istree = 1;
+        }
         if (strpos($catid,' ')) {
             $cids = explode(' ',$catid);
             $andcids = true;
