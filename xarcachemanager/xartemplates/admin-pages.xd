@@ -1,0 +1,15 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Configure Page Caching</xar:mlstring></h2>
+<div style="margin: auto;">
+<xar:if condition="empty($pages) or count($pages) lt 1">
+<xar:mlstring>Page caching is currently disabled...</xar:mlstring>
+<xar:else/>
+<form method="post">
+<xar:mlstring>This page is reserved for future extensions...</xar:mlstring>
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="submit" name="submit" value="#xarML('Submit')#" />
+</form>
+</xar:if>
+</div>
+</div>

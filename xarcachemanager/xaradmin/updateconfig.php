@@ -60,6 +60,9 @@ function xarcachemanager_admin_updateconfig()
     xarVarFetch('cacheblocks', 'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED);
     if ($cacheblocks && $cacheenabled) {
         xarModSetVar('xarcachemanager','CacheBlockOutput', 1);
+        // flush adminpanels blocks to show new options if necessary
+        $cacheKey = "adminpanels-blockid";
+        xarPageFlushCached($cacheKey);
     } else {
         xarModSetVar('xarcachemanager','CacheBlockOutput', 0);
     }
