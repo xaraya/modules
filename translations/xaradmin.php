@@ -144,7 +144,7 @@ function translations_create_opbar($currentOp)
 
 function translations_create_trabar($subtype, $subname, $backend=NULL)
 {
-    set_time_limit(0);
+   @set_time_limit(0);
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
 
