@@ -58,8 +58,6 @@ function trackback_user_displayhook($args)
 
     $trackbackid    = implode(',', $implode);
 
-    $data['open'] = '<!--';
-    $data['close']  = '-->';
     $data['rdflink'] = xarModUrl('trackback', 'trackback', 'receive', array('id' => $trackbackid), false, null, 'ws.php');
     $data['permalink'] = htmlspecialchars($data['rdflink']);
     return $data;
