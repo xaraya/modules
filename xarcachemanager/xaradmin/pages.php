@@ -121,6 +121,11 @@ function xarcachemanager_admin_pages($args)
                 $excludelist = "'" . join("','",$checkurls) . "'";
             }
         }
+        if (empty($autocache['keepstats'])) {
+            $autocache['keepstats'] = 0;
+        } else {
+            $autocache['keepstats'] = 1;
+        }
 
         if (!is_writable($cachingConfigFile)) {
             $msg=xarML('The caching configuration file is not writable by the web server.  
@@ -142,6 +147,7 @@ function xarcachemanager_admin_pages($args)
         $cachingConfig = preg_replace('/\[\'AutoCache.MaxPages\'\]\s*=\s*(.*?);/', "['AutoCache.MaxPages'] = $autocache[maxpages];", $cachingConfig);
         $cachingConfig = preg_replace('/\[\'AutoCache.Include\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Include'] = array($includelist);", $cachingConfig);
         $cachingConfig = preg_replace('/\[\'AutoCache.Exclude\'\]\s*=\s*array\s*\((.*)\)\s*;/i', "['AutoCache.Exclude'] = array($excludelist);", $cachingConfig);
+        $cachingConfig = preg_replace('/\[\'AutoCache.KeepStats\'\]\s*=\s*(.*?);/', "['AutoCache.KeepStats'] = $autocache[keepstats];", $cachingConfig);
 
         $fp = fopen ($cachingConfigFile, 'wb');
         fwrite ($fp, $cachingConfig);
@@ -166,6 +172,13 @@ function xarcachemanager_admin_pages($args)
             touch($outputCacheDir . '/autocache.start');
             $fp = fopen($outputCacheDir . '/autocache.log', 'w');
             fclose($fp);
+        }
+
+        if (empty($autocache['keepstats'])) {
+            // remove autocache.stats file
+            if (file_exists($outputCacheDir . '/autocache.stats')) {
+                unlink($outputCacheDir . '/autocache.stats');
+            }
         }
 
         xarResponseRedirect(xarModURL('xarcachemanager','admin','pages'));
@@ -212,6 +225,9 @@ function xarcachemanager_admin_pages($args)
     } elseif (is_array($data['settings']['AutoCacheExclude'])) {
         $data['settings']['AutoCacheExclude'] = join("\n",$data['settings']['AutoCacheExclude']);
     }
+    if (!isset($data['settings']['AutoCacheKeepStats'])) {
+        $data['settings']['AutoCacheKeepStats'] = 0;
+    }
 
     // Get some current information from the auto-cache log
     $data['autocachepages'] = array();
@@ -242,6 +258,7 @@ function xarcachemanager_admin_pages($args)
             $autocacheproposed[$url]++;
         }
         unset($logs);
+        ksort($data['autocachepages']);
         $data['autocachestart'] = $start;
         $data['autocacheend'] = $end;
         // check that all required URLs are included
@@ -269,6 +286,34 @@ function xarcachemanager_admin_pages($args)
             }
             $data['autocacheproposed'][$url] = $count;
         }
+    }
+
+    // Get some statistics from the auto-cache stats file
+    $data['autocachestats'] = array();
+    $data['autocachefirstseen'] = array();
+    $data['autocachelastseen'] = array();
+    if (file_exists($outputCacheDir . '/autocache.stats') &&
+        filesize($outputCacheDir . '/autocache.stats') > 0) {
+        $stats = file($outputCacheDir . '/autocache.stats');
+
+        $data['autocachetotal'] = array('HIT' => 0,
+                                        'MISS' => 0,
+                                        'Ratio' => 0);
+        foreach ($stats as $entry) {
+            if (empty($entry)) continue;
+            list($url,$hit,$miss,$first,$last) = explode(' ',$entry);
+            $last = trim($last);
+            $data['autocachestats'][$url] = array('HIT' => $hit,
+                                                  'MISS' => $miss,
+                                                  'Ratio' => sprintf("%.1f",100.0 * $hit / ($hit + $miss)));
+            $data['autocachefirstseen'][$url] = $first;
+            $data['autocachelastseen'][$url] = $last;
+            $data['autocachetotal']['HIT'] += $hit;
+            $data['autocachetotal']['MISS'] += $miss;
+        }
+        unset($stats);
+        ksort($data['autocachestats']);
+        $data['autocachetotal']['Ratio'] = sprintf("%.1f",100.0 * $data['autocachetotal']['HIT'] / ($data['autocachetotal']['HIT'] + $data['autocachetotal']['MISS']));
     }
 
     // Get some page caching configurations

@@ -1,4 +1,5 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<a name="config"></a>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarCacheManager Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Configure Page Caching</xar:mlstring></h2>
 <div style="margin: auto;">
@@ -87,7 +88,7 @@
 </tr>
 <tr>
   <th colspan="3">
-    <xar:mlstring>Auto-cache configuration</xar:mlstring> [ <a href="#xarServerGetCurrentURL()##viewlog"><xar:mlstring>view log</xar:mlstring></a> ]
+    <xar:mlstring>Auto-cache configuration</xar:mlstring>
   </th>
 </tr>
 <tr>
@@ -102,6 +103,7 @@
   <td>
     <input type="text" name="autocache[period]" id="autocache_period" size="9" value="#$settings['AutoCachePeriod']#" />
     <xar:mlstring>hh:mm:ss</xar:mlstring>
+    [ <a href="#xarServerGetCurrentURL()##viewlog"><xar:mlstring>view log</xar:mlstring></a> ]
   </td>
 </tr>
 <tr>
@@ -120,6 +122,19 @@
   <td>
     <input type="text" name="autocache[maxpages]" id="autocache_maxpages" size="5" value="#$settings['AutoCacheMaxPages']#" />
     <xar:mlstring>pages in cache</xar:mlstring>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <label for="autocache_keepstats"><xar:mlstring>Keep auto-cache statistics</xar:mlstring></label>
+  </td>
+  <td>
+    <xar:if condition="!empty($settings['AutoCacheKeepStats'])">
+      <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" checked="checked" />
+      [ <a href="#xarServerGetCurrentURL()##viewstats"><xar:mlstring>view stats</xar:mlstring></a> ]
+    <xar:else/>
+      <input type="checkbox" name="autocache[keepstats]" id="autocache_keepstats" value="1" />
+    </xar:if>
   </td>
 </tr>
 <tr>
@@ -152,7 +167,7 @@
 </form>
 
 <a name="viewlog"></a>
-<h2><xar:mlstring>Auto-Cache Log</xar:mlstring></h2>
+<h2><xar:mlstring>Current Auto-Cache Log</xar:mlstring> [ <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>up</xar:mlstring></a> ]</h2>
 <xar:if condition="!empty($autocachepages)">
 <p><xar:ml>
   <xar:mlstring>From #(1) to #(2)</xar:mlstring>
@@ -161,14 +176,13 @@
 </xar:ml></p>
 <table border="1" cellpadding="4" cellspacing="0">
 <tr>
-  <th><xar:mlstring>Page</xar:mlstring></th>
   <xar:foreach in="$autocachehits" key="$status">
     <th>#$status#</th>
   </xar:foreach>
+  <th><xar:mlstring>Page</xar:mlstring></th>
 </tr>
 <xar:foreach in="$autocachepages" key="$page" value="$count">
 <tr>
-  <td>#$page#</td>
   <xar:foreach in="$autocachehits" key="$status">
     <xar:if condition="!empty($count[$status])">
       <td>#$count[$status]#</td>
@@ -176,13 +190,14 @@
       <td>-</td>
     </xar:if>
   </xar:foreach>
+  <td>#$page#</td>
 </tr>
 </xar:foreach>
 <tr>
-  <th><xar:mlstring>Total</xar:mlstring></th>
   <xar:foreach in="$autocachehits" key="$status">
     <th>#$autocachehits[$status]#</th>
   </xar:foreach>
+  <th><xar:mlstring>Total</xar:mlstring></th>
 </tr>
 </table>
 <xar:if condition="!empty($autocacheproposed)">
@@ -193,6 +208,39 @@
 </xar:foreach>
 </ol>
 </xar:if>
+</xar:if>
+
+<a name="viewstats"></a>
+<xar:if condition="!empty($autocachestats)">
+<h2><xar:mlstring>Auto-Cache Statistics</xar:mlstring> [ <a href="#xarServerGetCurrentURL()##config"><xar:mlstring>up</xar:mlstring></a> ]</h2>
+<table border="1" cellpadding="4" cellspacing="0">
+<tr>
+  <xar:foreach in="$autocachetotal" key="$status">
+    <th>#$status#</th>
+  </xar:foreach>
+  <th><xar:mlstring>Page</xar:mlstring></th>
+  <th><xar:mlstring>First Seen</xar:mlstring></th>
+  <th><xar:mlstring>Last Seen</xar:mlstring></th>
+</tr>
+<xar:foreach in="$autocachestats" key="$page" value="$count">
+<tr>
+  <xar:foreach in="$autocachetotal" key="$status">
+    <td>#$count[$status]#</td>
+  </xar:foreach>
+  <td>#$page#</td>
+  <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachefirstseen[$page])#</td>
+  <td>#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z',$autocachelastseen[$page])#</td>
+</tr>
+</xar:foreach>
+<tr>
+  <xar:foreach in="$autocachetotal" key="$status">
+    <th>#$autocachetotal[$status]#</th>
+  </xar:foreach>
+  <th><xar:mlstring>Total</xar:mlstring></th>
+  <th>&nbsp;</th>
+  <th>&nbsp;</th>
+</tr>
+</table>
 </xar:if>
 
 </xar:if>

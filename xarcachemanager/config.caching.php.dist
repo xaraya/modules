@@ -32,6 +32,8 @@ $cachingConfiguration['AutoCache.MaxPages'] = 25;
 $cachingConfiguration['AutoCache.Include'] = array();
 // Pages to exclude from the auto-cache
 $cachingConfiguration['AutoCache.Exclude'] = array();
+// Keep historic data for cache statistics
+$cachingConfiguration['AutoCache.KeepStats'] = 0;
 
 // Maximum life time of block cache in seconds
 $cachingConfiguration['Block.TimeExpiration'] = 7200;
