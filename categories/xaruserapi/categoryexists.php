@@ -9,7 +9,9 @@
  * @returns array
  * @return array of category info arrays, false on failure
  */
-function categories_userapi_categoryexists($path) {
+function categories_userapi_categoryexists( $args ) {
+
+    extract($args);
 
     $path_array = explode("/", $path);
 
