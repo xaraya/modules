@@ -35,7 +35,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="name" id="name" size="32" maxlength="32" value="#$name#" /> <xar:if condition="!empty($invalid['name'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -50,7 +50,7 @@
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="name" id="name" size="32" maxlength="32" value="#$item['name']#" />
         <xar:if condition="!empty($invalid['name'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example name</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -66,7 +66,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="number" id="number" size="5" maxlength="5" value="#$number#" /><xar:if condition="!empty($invalid['number'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -80,7 +80,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="number" id="number" size="5" maxlength="5" value="#$item['number']#" /><xar:if condition="!empty($invalid['number'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid example number</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -96,7 +96,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="hours" id="hours" size="5" maxlength="5" value="#$hours#" /><xar:if condition="!empty($invalid['hours'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -110,7 +110,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="hours" id="hours" size="5" maxlength="5" value="#$item['hours']#" /><xar:if condition="!empty($invalid['hours'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -126,7 +126,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="ceu" id="ceu" size="5" maxlength="5" value="#$ceu#" /><xar:if condition="!empty($invalid['ceu'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -140,7 +140,7 @@
     </span>
     <span style="float: right; width: 78%; text-align: left;">
         <input type="text" name="ceu" id="ceu" size="5" maxlength="5" value="#$item['ceu']#" /><xar:if condition="!empty($invalid['ceu'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -157,7 +157,7 @@
     <span style="float: right; width: 78%; text-align: left;">
  <xar:data-input name="startdate" type="8" value="$startdate" />
  <xar:if condition="!empty($invalid['startdate'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -172,7 +172,7 @@
     <span style="float: right; width: 78%; text-align: left;">
     <xar:data-input name="startdate" type="8" value="$startdate" />
     <xar:if condition="!empty($invalid['startdate'])">
-                <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+                <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -190,7 +190,7 @@
     <xar:data-input name="enddate" type="8" value="$enddate" />
     <xar:if condition="!empty($invalid['enddate'])">
 
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course hour</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -206,7 +206,7 @@
     <xar:data-input name="enddate" type="8" value="$enddate" />
     <xar:if condition="!empty($invalid['enddate'])">
 
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid hours number</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -222,7 +222,7 @@
     <span style="float: right; width: 78%; text-align: left;">
      <xar:data-input name="shortdesc" type="202" value="$shortdesc" />
     <xar:if condition="!empty($invalid['shortdesc'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -237,7 +237,7 @@
     <span style="float: right; width: 78%; text-align: left;">
     <xar:data-input name="shortdesc" type="202" value="$shortdesc" />
             <xar:if condition="!empty($invalid['shortdesc'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -253,7 +253,7 @@
     <span style="float: right; width: 78%; text-align: left;">
      <xar:data-input name="longdesc" type="203" value="$longdesc" />
     <xar:if condition="!empty($invalid['longdesc'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
         </xar:if>
     </span>
     </div>
@@ -268,7 +268,7 @@
     <span style="float: right; width: 78%; text-align: left;">
      <xar:data-input name="longdesc" type="203" value="$longdesc" />
             <xar:if condition="!empty($invalid['longdesc'])">
-            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring>
+            <span style="color: red"><xar:mlstring>ERROR! This is not a valid course description</xar:mlstring></span>
         </xar:if>
     </span>
     </div>

@@ -29,7 +29,7 @@
 <!-- some status given by the function using this template -->
 
 <xar:if condition="!empty($status)">
-    #$status#</b>
+    #$status#
 </xar:if>
 
 <table border="1" cellpadding="5" cellspacing="0">

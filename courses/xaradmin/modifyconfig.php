@@ -30,7 +30,7 @@ function courses_admin_modifyconfig()
     $data['authid'] = xarSecGenAuthKey();
     // Specify some labels and values for display
     $data['boldlabel'] = xarVarPrepForDisplay(xarML('Display Course Items In Bold?'));
-    $data['boldchecked'] = xarModGetVar('courses', 'bold') ? 'checked' : '';
+    $data['boldchecked'] = xarModGetVar('courses', 'bold') ? 'checked="checked"' : '';
     $data['itemslabel'] = xarVarPrepForDisplay(xarML('Courses Items Per Page?'));
     $data['itemsvalue'] = xarModGetVar('courses', 'itemsperpage');
     $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
@@ -39,7 +39,7 @@ function courses_admin_modifyconfig()
     // admin-modifyconfig.xard template !
     $data['shorturlslabel'] = xarML('Enable short URLs?');
     $data['shorturlschecked'] = xarModGetVar('courses', 'SupportShortURLs') ?
-    'checked' : '';
+    'checked="checked"' : '';
 
     $hooks = xarModCallHooks('module', 'modifyconfig', 'courses',
         array('module' => 'courses'));

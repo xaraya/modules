@@ -30,7 +30,7 @@
      to show the details of a particular item -->
 
 <xar:if condition="!empty($status)">
-    #$status#</b>
+    #$status#
 <xar:else />
 <!-- some item variables given by the function using this template -->
 
