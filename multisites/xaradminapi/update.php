@@ -77,8 +77,7 @@ function multisites_adminapi_update($args)
     $multisitestable = $xartable['multisites'];
 
     // Update the subsite
-    $query = 'UPDATE ' . $multisitestable . ' SET ' . $set
-            . ' WHERE xar_msid = ?";
+    $query = 'UPDATE ' . $multisitestable . ' SET ' . $set . ' WHERE xar_msid = ?';
 
     $bindvars = array($msid);
     $result =& $dbconn->Execute($query,$bindvars);
