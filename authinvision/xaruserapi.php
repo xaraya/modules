@@ -27,7 +27,7 @@ function authinvision_userapi_has_capability($args)
 
     if (!isset($capability)) {
         $msg = xarML('Empty capability.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -45,7 +45,7 @@ function authinvision_userapi_has_capability($args)
             break;
     }
     $msg = xarML('Unknown capability.');
-    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                    new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
     return;
 }
@@ -65,7 +65,7 @@ function authinvision_userapi_authenticate_user($args)
 
     if (!isset($uname) || !isset($pass) || $pass == "") {
         $msg = xarML('Empty uname (#(1)) or pass (not shown).', $uname);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return XARUSER_AUTH_FAILED;
     }
@@ -181,7 +181,7 @@ function authinvision_userapi_get_user_variable($args)
 
     if (!isset($uid) || !isset($name)) {
         $msg = xarML('Empty uid (#(1)) or name (#(2))', $uid, $name);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -198,7 +198,7 @@ function authinvision_userapi_get_user_variable($args)
         // throw back an exception if the user doesn't exist
         //if (...) {
         //    $msg = xarML('User identified by uid #(1) doesn\'t exist.', $uid);
-        //    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+        //    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
         //                  new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         //    return;
         //}
@@ -229,7 +229,7 @@ function authinvision_userapi_set_user_variable($args)
 
     if (!isset($uid) || !isset($name) || !isset($value)) {
         $msg = xarML('Empty uid (#(1)) or name (#(2)) or value (#(3)).', $uid, $name, $value);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return;
     }
@@ -239,7 +239,7 @@ function authinvision_userapi_set_user_variable($args)
     // throw back an exception if the user doesn't exist
     //if (...) {
     //    $msg = xarML('User identified by uid #(1) doesn\'t exist.', $uid);
-    //    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
+    //    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
     //                  new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
     //    return;
     //}
@@ -370,7 +370,7 @@ function authinvision__open_invision_connection()
 
     if (!$connect) {
         $msg = "Invision: Connection to $server has failed: " . mysql_error();
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'NO_CONNECTION',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         error_log("Invision Error: Connection to $server failed");
         return;
@@ -474,7 +474,7 @@ function authinvision__get_invision_userdata($connect,$username,$pass)
         if (!$result) {
         //incorrect login.
             $msg = "Invision: Query to $table has failed: " . mysql_error();
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'SQL_ERROR',
                 new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
             error_log("Invision Error: Query to $table failed");
             return false;
