@@ -76,7 +76,7 @@ function keywords_admin_newhook($args)
     if (isset($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
-        $keywords = xarVarCleanFromInput('keywords');
+        xarVarFetch('keywords', 'str:1:', $keywords, '', XARVAR_NOT_REQUIRED);
     }
     if (empty($keywords)) {
         $keywords = '';

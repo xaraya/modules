@@ -65,7 +65,7 @@ function keywords_adminapi_createhook($args)
     if (isset($extrainfo['keywords']) && is_string($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
-        $keywords = xarVarCleanFromInput('keywords');
+        xarVarFetch('keywords', 'str:1:', $keywords, '', XARVAR_NOT_REQUIRED);
     }
     if (empty($keywords)) {
         return $extrainfo;

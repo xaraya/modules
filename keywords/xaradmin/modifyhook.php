@@ -90,7 +90,7 @@ function keywords_admin_modifyhook($args)
     if (isset($extrainfo['keywords'])) {
         $keywords = $extrainfo['keywords'];
     } else {
-        $newkeywords = xarVarCleanFromInput('keywords');
+        xarVarFetch('keywords', 'str:1:', $newkeywords, NULL, XARVAR_NOT_REQUIRED);
         if (isset($newkeywords)) {
             $keywords = $newkeywords;
         }
