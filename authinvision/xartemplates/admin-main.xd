@@ -1,0 +1,42 @@
+<table border="0" width="100%">
+    <tr>
+        <th colspan="4" align="center">
+            <xar:mlstring>Authinvision Administration</xar:mlstring>            
+        </th>
+    </tr>
+</table>
+
+<div align="center"><h2><xar:mlstring>Authinvision Module Overview</xar:mlstring></h2></div><br />
+<table border="0" width="100%">
+    <tr>
+        <td align="left" valign="top" width="100px">
+            <b><xar:mlstring>What is it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>The Authinvision module allows you to authenticate a user with your Invision Board database.  The Authinvision module forwards the username and password from the login screen to the Invision database for authentication.</xar:mlstring>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" valign="top" width="100px">
+            <b><xar:mlstring>How to use it?</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+            <xar:mlstring>Authentication by Authinvision is automatically set once the the Authinvision module has been initialized.   You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module.</xar:mlstring>
+            <br /><br />
+            <xar:mlstring>
+			From the menu, you have one choice.  "Modify Config". 
+			</xar:mlstring>
+			<ul>
+				<li><xar:mlstring>Modify Config -- From here, you can configure the authinvision server that will be used for authentication.   A user that has account information in Invision to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+        <td align="left" valign="top" width="100px">
+            <b><xar:mlstring>Included Blocks</xar:mlstring></b>
+        </td>
+        <td align="left" valign="top">
+			<xar:mlstring>usercp: a block that mimics the user links from Invision.</xar:mlstring>
+        </td>
+    </tr>
+</table>

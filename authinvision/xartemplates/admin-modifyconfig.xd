@@ -1,0 +1,91 @@
+<!-- admin menu configuration template -->
+<!-- Formatting table to center the menu -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Authinvision Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
+
+<!-- BL style form for authinvision configuration options -->
+<form method="post" action="#xarModURL('authinvision','admin','updateconfig')#">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<table border="0" width="100%">
+    <tr>
+        <td>
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Server</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="server" value="#$server#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Database</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="database" value="#$database#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>username</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="username" value="#$username#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>password</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="password" name="password" value="#$password#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Invision table prefix</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="prefix" value="#$prefix#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Invision Forum Root</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="forumroot" value="#$forumroot#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Default Xaraya Group</xar:mlstring>
+                    </td>
+                    <td>
+                        <select name="defaultgroup" id="defaultgroup">
+                        <xar:loop name="$groups">
+                            <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+                            <xar:else />
+                                <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                            </xar:if>
+                        </xar:loop>
+                        </select>
+                    </td>
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>Submit Changes</xar:mlstring>
+                    </td>
+                    <td>
+                        <!-- submit button -->
+                        <input type="submit" value="#$submitbutton#" align="middle" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</form>
+</div>

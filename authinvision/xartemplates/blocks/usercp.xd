@@ -1,0 +1,5 @@
+<div class="desc"><strong>Logged in as: #$uname#</strong>(<a href="index.php?module=roles&func=logout">Log Out</a>)
+<span class="xar-sub"><br/><br/></span>
+<a href="#$forumroot#/index.php?act=UserCP&CODE=00" title="Change your settings, avatars, signature and more">My Control Panel</a><br/>
+<a href="#$forumroot#/index.php?act=Msg&CODE=01" title="View Private Messages">#$newmessages# new messages</a> | <a href="#$forumroot#/index.php?act=Search&CODE=getnew"><xar:mlstring>View New Forum Posts</xar:mlstring></a>
+</div>
