@@ -1,27 +1,54 @@
-<table border="0" width="100%">
-  <tr>
-    <th colspan="4" align="center">
-      <xar:mlstring>XML-RPC validator API Administration</xar:mlstring>
-    </th>
-  </tr>
-</table>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XML-RPC validator API Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<p>
+			  <xar:mlstring>The XML-RPC validator API is a XML-RPC API used for to validate a XML-RPC installation
+			  on conformance to the specification. It implements the necessary methods on the server
+			  so test clients can validate whether the server conforms to the specification.</xar:mlstring>
+			</p>
+			<p><xar:mlstring>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+			  needed for this API functionality. This module will not function without
+			  the webservices module activated.</xar:mlstring>
+			</p>
 
-<h1>Overview of the XML-RPC Validator API</h1>
-
-<p>
-  The XML-RPC validator API is a XML-RPC API used for to validate a XML-RPC installation
-  on conformance to the specification. It implements the necessary methods on the server
-  so test clients can validate whether the server conforms to the specification.
-</p>
-<p>In Xaraya the webservices module is responsible for providing the xmlrpc transport
-  needed for this API functionality. This module will not function without
-  the webservices module activated.
-</p>
-
-<p>
-  You can find a validation service at 
-  <a href="http://validator.xmlrpc.com">
-     http://validator.xmlrpc.com.
-  </a> 
-  You can use this to validate whether the Xaraya XML-RPC server conforms to the standard.
-</p>
+			<p>
+			  <xar:mlstring>You can find a validation service at </xar:mlstring>
+			  <a href="http://validator.xmlrpc.com">
+				 http://validator.xmlrpc.com.
+			  </a> 
+			  <xar:mlstring>You can use this to validate whether the Xaraya XML-RPC server conforms to the standard.</xar:mlstring>
+			</p>
+		</div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<b>
+			<xar:mlstring>There are no included blocks.</xar:mlstring>
+            </b>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>There are no included hooks.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>
