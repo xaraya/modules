@@ -12,6 +12,6 @@
 <br />
 <xar:sec mask="AddUploads" catch="false">
     <a name="set_attachments" onClick="AttachmentsDialog('#$local_import_post_url#', '#xarML('Add / Remove Attachments')#'); return false;" />
-		#xarML('Add / Remove Attachments')#
+        #xarML('Add / Remove Attachments')#
     </a>
 </xar:sec>

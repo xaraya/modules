@@ -1,7 +1,7 @@
 <div>
 <form name="upload_form" id="upload_form" action="#$upload_post_url#" method="post" enctype="multipart/form-data">
     <table summary="Files" width="100%" border="1" cellpadding="2" cellspacing="1" class="xar-accent xar-accent-outline">
-		<xar:if condition="isset($orientation) AND $orientation eq 'vertical'">
+        <xar:if condition="isset($orientation) AND $orientation eq 'vertical'">
         <tr>
             <th align="center"><xar:mlstring>Browse for File:</xar:mlstring></th>
         </tr>

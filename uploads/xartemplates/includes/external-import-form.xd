@@ -16,8 +16,8 @@
                 </td>
                 <td class="xar-norm" align="center" width="27%">
                     <input type="submit" name="button" id="button" value="#xarML('Import')#" />
-					<input type="hidden" name="action" id="action" value="2" />
-			        <input type="hidden" name="authid" value="#$authid#" />
+                    <input type="hidden" name="action" id="action" value="2" />
+                    <input type="hidden" name="authid" value="#$authid#" />
                 </td>
             </tr>
         </table>

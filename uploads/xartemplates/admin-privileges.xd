@@ -126,37 +126,37 @@
                             <option value="0" selected="selected"><xar:mlstring>No Access</xar:mlstring></option>
                         <xar:else />
                             <option value="0"><xar:mlstring>No Access</xar:mlstring></option>
-                        </xar:if>						
+                        </xar:if>                        
                         <xar:if condition="$extlevel eq 100">
                             <option value="100" selected="selected"><xar:mlstring>Overview</xar:mlstring></option>
                         <xar:else />
                             <option value="100"><xar:mlstring>Overview</xar:mlstring></option>
-                        </xar:if>						
+                        </xar:if>                        
                         <xar:if condition="$extlevel eq 200">
                             <option value="200" selected="selected"><xar:mlstring>Read</xar:mlstring></option>
                         <xar:else />
                             <option value="200"><xar:mlstring>Read</xar:mlstring></option>
-                        </xar:if>						
+                        </xar:if>                        
                         <xar:if condition="$extlevel eq 300">
                             <option value="300" selected="selected"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
                         <xar:else />
                             <option value="300"><xar:mlstring>Submit (Comment)</xar:mlstring></option>
-                        </xar:if>						
+                        </xar:if>                        
                         <xar:if condition="$extlevel eq 500">
                             <option value="500" selected="selected"><xar:mlstring>Edit / Approve</xar:mlstring></option>
                         <xar:else />
                             <option value="500"><xar:mlstring>Edit / Approve</xar:mlstring></option>
-                        </xar:if>						
+                        </xar:if>                        
                         <xar:if condition="$extlevel eq 700">
                             <option value="700" selected="selected"><xar:mlstring>Delete</xar:mlstring></option>
                         <xar:else />
                             <option value="700"><xar:mlstring>Delete</xar:mlstring></option>
-                        </xar:if>						
+                        </xar:if>                        
                         <xar:if condition="$extlevel eq 800">
                             <option value="800" selected="selected"><xar:mlstring>Admin</xar:mlstring></option>
                         <xar:else />
                             <option value="800"><xar:mlstring>Admin</xar:mlstring></option>
-                        </xar:if>						
+                        </xar:if>                        
                     </select>
                 </td>
             </tr>
