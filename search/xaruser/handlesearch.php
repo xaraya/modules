@@ -83,11 +83,11 @@ function search_user_handlesearch() {
         return;
     }
 
-    // Display the search form again
+    // Display the search form again, can we count on the array having one element?
     $searchform = xarModCallHooks('item','search',$object_id,array(),$search_in_module);
  
     // Pass data to template
-    $data['searchform'] = $searchform['search'];
+    $data['searchform'] = $searchform;
     $data['searchmodule'] = $search_in_module;
     $data['searchterms'] = $search_terms;
     $data['searchresults'] = $searchresults;
