@@ -4,3 +4,4 @@ LadyOfDragons      - Motivation to do this project and initial groundwork on lin
 Gregor J. Rothfuss - Motivation and guidance
 Jim McDonald       - Inspiration
 Doug Daulton       - HTML Design of the Renderings
+hidetaka <gdtjpmw@users.sourceforge.jp> -- Bug 4210
