@@ -93,6 +93,18 @@ function articles_userapi_leftjoin($args)
                    xarVarPrepForStore($allaids) . ')';
     }
     if (!empty($where)) {
+        // find all single-quoted pieces of text and replace them first, to allow where clauses
+        // like : title eq 'this and that' and body eq 'here or there'
+        $idx = 0;
+        $found = array();
+        if (preg_match_all("/'(.*?)'/",$where,$matches)) {
+            foreach ($matches[1] as $match) {
+                $found[$idx] = $match;
+                $where = trim(preg_replace("#'$match'#","'~$idx~'",$where));
+                $idx++;
+            }
+        }
+
         // cfr. BL compiler - adapt as needed (I don't think == and === are accepted in SQL)
         $findLogic      = array(' eq ', ' ne ', ' lt ', ' gt ', ' id ', ' nd ', ' le ', ' ge ');
         $replaceLogic   = array( ' = ', ' != ',  ' < ',  ' > ',  ' = ', ' != ', ' <= ', ' >= ');
@@ -115,7 +127,19 @@ function articles_userapi_leftjoin($args)
             if (isset($leftjoin[$name])) {
             // Note: this is a potential security hole, so don't allow end-users to
             // fill in the where clause without filtering quotes etc. !
-                $mywhere .= $join . ' ' . $leftjoin[$name] . ' ' . join(' ',$pieces) . ' ';
+                if (empty($idx)) {
+                    $mywhere .= $join . ' ' . $leftjoin[$name] . ' ' . join(' ',$pieces) . ' ';
+                } else {
+                    $mywhere .= $join . ' ' . $leftjoin[$name] . ' ';
+                    foreach ($pieces as $piece) {
+                        // replace the pieces again if necessary
+                        if (preg_match("#'~(\d+)~'#",$piece,$matches) && isset($found[$matches[1]])) {
+                            $original = $found[$matches[1]];
+                            $piece = preg_replace("#'~(\d+)~'#","'$original'",$piece);
+                        }
+                        $mywhere .= $piece . ' ';
+                    }
+                }
             }
         }
         if (!empty($mywhere)) {
@@ -129,7 +153,7 @@ function articles_userapi_leftjoin($args)
         if (preg_match_all('#"(.*?)"#',$search,$matches)) {
             foreach ($matches[1] as $match) {
                 $normal[] = $match;
-                $search = trim(preg_replace('#"$match"#','',$search));
+                $search = trim(preg_replace("#\"$match\"#",'',$search));
             }
         }
         if (preg_match_all("/'(.*?)'/",$search,$matches)) {
