@@ -1,9 +1,9 @@
 <?php
 /**
  * File: $Id$
- * 
+ *
  * Change Log initialization functions
- * 
+ *
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
@@ -17,13 +17,13 @@
  * module instance
  */
 function changelog_init()
-{ 
+{
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $xartable = xarDBGetTables();
 
-    $changelogtable = $xartable['changelog']; 
+    $changelogtable = $xartable['changelog'];
 
-    xarDBLoadTableMaintenanceAPI(); 
+    xarDBLoadTableMaintenanceAPI();
     $query = xarDBCreateTable($xartable['changelog'],
                              array('xar_logid'      => array('type'        => 'integer',
                                                            'null'        => false,
@@ -67,10 +67,10 @@ function changelog_init()
                                                             'default'     => '')));
 
     if (empty($query)) return; // throw back
-     
+
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
-    if (!$result) return; 
+    if (!$result) return;
 
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_changelog_combo',
@@ -136,7 +136,7 @@ function changelog_init()
     if (!xarModRegisterHook('item', 'usermenu', 'GUI',
             'changelog', 'user', 'usermenu')) {
         return false;
-    } 
+    }
 */
 
     $instances = array(
@@ -148,35 +148,35 @@ function changelog_init()
     xarDefineInstance('changelog', 'Item', $instances);
 
 // TODO: tweak this - allow viewing changelog of "your own items" someday ?
-    xarRegisterMask('ReadChangeLog', 'All', 'changelog', 'Item', 'All:All:All', ACCESS_READ);
-    xarRegisterMask('AdminChangeLog', 'All', 'changelog', 'Item', 'All:All:All', ACCESS_ADMIN);
+    xarRegisterMask('ReadChangeLog', 'All', 'changelog', 'Item', 'All:All:All', 'ACCESS_READ');
+    xarRegisterMask('AdminChangeLog', 'All', 'changelog', 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
-} 
+}
 
 /**
  * upgrade the changelog module from an old version
  * This function can be called multiple times
  */
 function changelog_upgrade($oldversion)
-{ 
+{
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 1.0: 
+        case 1.0:
             // Code to upgrade from version 1.0 goes here
             if (!xarModRegisterHook('item', 'display', 'GUI',
                                     'changelog', 'user', 'displayhook')) {
                 return false;
             }
             break;
-        case 2.0: 
+        case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
-    } 
+    }
     // Update successful
     return true;
-} 
+}
 
 /**
  * delete the changelog module
@@ -184,19 +184,19 @@ function changelog_upgrade($oldversion)
  * module instance
  */
 function changelog_delete()
-{ 
+{
     list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $xartable = xarDBGetTables();
 
-    xarDBLoadTableMaintenanceAPI(); 
+    xarDBLoadTableMaintenanceAPI();
 
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['changelog']);
     if (empty($query)) return; // throw back
-     
+
     // Drop the table and send exception if returns false.
     $result = &$dbconn->Execute($query);
-    if (!$result) return; 
+    if (!$result) return;
 
     // Delete any module variables
     xarModDelVar('changelog', 'SupportShortURLs'); 
