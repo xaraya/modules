@@ -37,9 +37,15 @@ function xarldap_adminapi_getmenulinks()
 
         $menulinks[] = Array('url'   => xarModURL('xarldap',
                                                   'admin',
-                                                  'testconnection'),
+                                                  'connecttest'),
                              'title' => xarML('Test the connection to the LDAP server'),
                              'label' => xarML('Test Connection'));
+ 
+        $menulinks[] = Array('url'   => xarModURL('xarldap',
+                                                  'admin',
+                                                  'usersearch'),
+                             'title' => xarML('Search for a user on the LDAP server'),
+                             'label' => xarML('User Search'));
     } else {
         $menulinks = '';
     }

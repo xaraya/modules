@@ -1,0 +1,32 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <div style="padding: 1px;" class="xar-norm-outline">
+    <form method="post" action="&xar-modurl-xarldap-admin-search;">
+    <input type="hidden" name="search" id="search" value="#$type#" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>LDAP User Search</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td>
+                        <xar:mlstring>User Name to Search</xar:mlstring>
+                    </td>
+                    <td>
+                        <input type="text" name="value" id="value" value="" size="50" maxlength="255" tabindex="1" />
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td colspan="2">
+                        <br />
+                        <input type="submit" value="Search" align="middle"  tabindex="2" />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    </div>
+</div>

@@ -14,7 +14,7 @@
 */
 
 /**
- * xarldap_admin_connect: 
+ * xarldap_admin_connectstatus: 
  *
  * Connect to an LDAP server
  *
@@ -25,7 +25,7 @@
  * @throws  none
  * @todo    none
 */
-function xarldap_admin_connect()
+function xarldap_admin_connectstatus()
 {
     // Confirm authorization key 
     if (!xarSecConfirmAuthKey()) {
@@ -44,6 +44,10 @@ function xarldap_admin_connect()
 
     // Create new LDAP object
     $ldap = new xarLDAP();
+
+    // Get server
+    $ldap->get_parameters(); 
+    $data['server'] = xarVarPrepForDisplay($ldap->server);
 
     // Make sure LDAP extension exists
     if (!$ldap->exists())

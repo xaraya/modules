@@ -14,7 +14,7 @@
 */
 
 /**
- * xarldap_admin_testconnection: 
+ * xarldap_admin_connecttest: 
  *
  * Test the xarldap connection
  *
@@ -25,7 +25,7 @@
  * @throws  none
  * @todo    none
 */
-function xarldap_admin_testconnection()
+function xarldap_admin_connecttest()
 {
     // Security check
     if(!xarSecurityCheck('AdminXarLDAP')) return;

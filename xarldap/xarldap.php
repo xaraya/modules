@@ -291,6 +291,49 @@ class xarldap {
     } 
 
     /**
+     * user_search
+     *
+     * All in one function to connect to LDAP and search for a user
+     *
+     * @author  Richard Cave <rcave@xaraya.com>
+     * @access  public
+     * @param   'username' the username to search
+     * @return  returns array of entries or false on failure
+     * @throws  none
+     * @todo    none
+    */
+    function user_search($username) {
+
+        // Open ldap connection
+        if (!$this->open())
+            return false;
+
+        // Bind to LDAP server
+        $bindResult = $this->bind_to_server();
+        if (!$bindResult)
+            return false;
+
+        // Search for user information
+        $searchResult=$this->search($this->bind_dn, $this->uid_field."=". $username);
+        if (!$searchResult)
+            return false;
+
+        $userInfo = $this->get_entries($searchResult);
+        if (!$userInfo)
+            return false;
+
+        // ldap_get_entries returns true even if no results
+        // are found, so check for number of rows in array
+        if ($userInfo['count'] == 0)
+            return false;
+
+        // close LDAP connection
+        $this->close();
+
+        return $userInfo;
+    }
+
+    /**
      * get_entries: 
      *
      * 
