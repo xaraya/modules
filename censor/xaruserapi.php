@@ -52,7 +52,7 @@ function censor_userapi_getall($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($cid, $keyword) = $result->fields;
-        if (xarSecAuthAction(0, 'censor::', "$keyword::$cid", ACCESS_READ)) {
+        if (xarSecurityCheck('ReadCensor',0,'All',"$keyword:$cid")) {
             $censors[] = array('cid' => $cid,
                                'keyword' => $keyword);
         }
