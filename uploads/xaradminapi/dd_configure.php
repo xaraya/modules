@@ -119,7 +119,7 @@ function uploads_adminapi_dd_configure($confString = NULL)
     // return the settings
     return array('multiple' => $multiple,
                  'methods'  => $methods,
-                 'output'   => $output
+                 'output'   => $output,
                  'basedir'  => $basedir);
 
 }
