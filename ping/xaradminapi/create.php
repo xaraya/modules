@@ -1,9 +1,9 @@
 <?php
 /**
- * create a new headline
+ * create a new URL
  * @param $args['url'] url of the item
  * @returns int
- * @return headline ID on success, false on failure
+ * @return URL ID on success, false on failure
  */
 function ping_adminapi_create($args)
 {   // Get arguments from argument array

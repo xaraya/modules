@@ -27,7 +27,7 @@ function ping_admin_view()
                                             array('id' => $link['id'],
                                                   'confirmation' => 1,
                                                   'authid' => $data['authid']));
-        $links[$i]['javascript'] = "return confirmLink(this, '" . xarML('Delete Headline Feed') . " $link[url] ?')";
+        $links[$i]['javascript'] = "return confirmLink(this, '" . xarML('Delete Ping URL') . " $link[url] ?')";
         $links[$i]['deletetitle'] = xarML('Delete');
     }
 

@@ -24,7 +24,7 @@ function ping_admin_new()
             }
             $data['url'] = $url;
             $data['method'] = $method;
-            $data['submitlabel'] = xarML('Submit');
+            $data['submitlabel'] = xarML('Create');
             $data['authid'] = xarSecGenAuthKey();
             break;
         case 'update':

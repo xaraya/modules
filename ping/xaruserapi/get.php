@@ -1,7 +1,7 @@
 <?php
 
 /**
- * get a specific headline
+ * get a specific URL
  * @poaram $args['id'] id of item to get
  * @returns array
  * @return link array, or false on failure
@@ -19,7 +19,7 @@ function ping_userapi_get($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pingtable = $xartable['ping'];
-    // Get headline
+    // Get URL
     $query = "SELECT xar_id,
                      xar_url,
                      xar_method

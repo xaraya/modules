@@ -29,7 +29,7 @@ function ping_admin_modify()
             }
             //Load Template
             $data['authid'] = xarSecGenAuthKey();
-            $data['submitlabel'] = xarML('Submit');
+            $data['submitlabel'] = xarML('Update');
             $data['action'] = '1';
             break;
 
