@@ -1,0 +1,30 @@
+<xar:template file="user-menu" type="module"/>
+
+<table class="csets">
+<xar:loop name="$deltalist">
+  <tr>
+    <td class="deltaline">#$loop:item['file']#@#$loop:item['revision']#&nbsp;#$date#&nbsp;#$loop:item['time']#&nbsp;#$loop:item['user']#@#$loop:item['domain']#
+    <xar:if condition="$loop:item['file'] == 'ChangeSet'">
+      <br/>
+      <a href="&xar-modurl-bkview-user-patchview;&amp;repoid=#$repoid#&amp;rev=#$rev#">
+        <xar:mlstring>all diffs</xar:mlstring>
+      </a>
+      <xar:if condition="$loop:item['tag'] != ''">
+        <tr><td>#$loop:item['tag']#</td></tr>
+      </xar:if>
+		<xar:else/>
+      <br/>
+      <a href="&xar-modurl-bkview-user-historyview;&amp;repoid=#$repoid#&amp;file=#$loop:item['file']#">
+        <xar:mlstring>history</xar:mlstring>
+      </a>&nbsp;&nbsp;
+      <a href="&xar-modurl-bkview-user-annotateview;&amp;repoid=#$repoid#&amp;file=#$loop:item['file']#&amp;rev=#$loop:item['revision']#">
+        <xar:mlstring>annotate</xar:mlstring>
+      </a>&nbsp;&nbsp;
+      <a href="&xar-modurl-bkview-user-diffview;&amp;repoid=#$repoid#&amp;file=#$loop:item['file']#&amp;rev=#$loop:item['revision']#">
+        <xar:mlstring>diffs</xar:mlstring>
+			</a>
+    </xar:if>
+  </td></tr>
+  <tr><td class="comments">#$loop:item['comments']#</td></tr>
+</xar:loop>
+</table>

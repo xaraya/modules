@@ -1,0 +1,6 @@
+<xar:template file="admin-menu" type="module"/>
+
+<!-- form for editting or adding a repository -->
+<form method="post" action="&xar-modurl-bkview-admin-create;">
+  <xar:template file="repo-form" type="module"/>
+</form>

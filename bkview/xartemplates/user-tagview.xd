@@ -1,0 +1,31 @@
+<xar:template file="user-menu" type="module"/>
+
+<table class="csets">
+	<tr>
+  	<th><xar:mlstring>Age</xar:mlstring></th>
+    <th><xar:mlstring>Tag</xar:mlstring></th>
+    <th nowrap><xar:mlstring>Earlier csets</xar:mlstring></th>
+    <th nowrap><xar:mlstring>Later csets</xar:mlstring></th>
+    <th width="100%"><xar:mlstring>Comments</xar:mlstring></th>
+  </tr>
+	<xar:loop name="$csetlist">
+		<tr class="csets">
+    	<td class="csets" nowrap>#$loop:item['age']#</td>
+      <td class="bktagged">
+			  <a href="&xar-modurl-bkview-user-deltaview;&amp;repoid=#$repoid#&amp;rev=#$loop:item['rev']#">#$loop:item['rev']#<br />#$loop:item['tag']#</a>
+      </td>
+      <td class="csets" nowrap>
+				<a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=..#$loop:item['rev']#">
+					<xar:mlstring>Earlier csets</xar:mlstring>
+				</a>
+			</td>
+      <td class="csets" nowrap>
+				<a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$loop:item['rev']#..&amp;sort=1">
+					<xar:mlstring>Later csets</xar:mlstring>
+				</a>
+			</td>
+      <td class="comments">#$loop:item['comments']#</td>
+    </tr>
+	</xar:loop>
+</table>
+</div>

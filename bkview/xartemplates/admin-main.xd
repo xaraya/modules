@@ -1,0 +1,5 @@
+<xar:template file="admin-menu" type="module"/>
+
+<div>
+  <span >#$welcome#</span> 
+</div>

@@ -1,0 +1,49 @@
+<!-- temporarily include module level styling until we're done -->
+<style type="text/css">
+   @import url(modules/bkview/bkweb.css);
+</style>
+
+<!-- include the module header on all user pages -->
+<div class="xar-mod-head">
+  <span class="xar-mod-title">
+    <xar:mlstring>BK-view</xar:mlstring>
+  </span>
+</div>
+
+<xar:if condition="!empty($repoid)">
+<div class="xar-menu-section">
+  <span class="xar-menu-item">
+    <a href="&xar-modurl-bkview-user-main;">
+      <xar:mlstring>Index</xar:mlstring>
+    </a>
+  </span>
+  <span class="xar-menu-item">
+    <a href="&xar-modurl-bkview-user-display;&amp;repoid=#$repoid#">
+      <xar:mlstring>Changeset activity</xar:mlstring>
+    </a>
+  </span>
+  <span class="xar-menu-item">
+    <a href="&xar-modurl-bkview-user-tagview;&amp;repoid=#$repoid#">
+      <xar:mlstring>Tags</xar:mlstring>
+    </a>
+  </span>
+  <span class="xar-menu-item">
+    <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#">
+      <xar:mlstring>Browse source tree</xar:mlstring>
+    </a>
+  </span>
+  <span class="xar-menu-item">
+    <a href="&xar-modurl-bkview-user-statsview;&amp;repoid=#$repoid#">
+      <xar:mlstring>User statistics</xar:mlstring>
+    </a>
+  </span>
+</div>
+</xar:if>
+
+<!-- Show a mini breadcrumb -->
+<div class="xarmod-body">
+  <h2><xar:if condition="!empty($name_value)">#$name_value# : </xar:if>#$pageinfo#</h2>
+</div>
+
+
+

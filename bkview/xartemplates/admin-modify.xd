@@ -1,0 +1,7 @@
+<xar:template file="admin-menu" type="module"/>
+
+<!-- insert the form contents -->
+<form method="post" action="&xar-modurl-bkview-admin-update;">
+  <input type="hidden" name="repoid" value="#$repoid#" />
+  <xar:template file="repo-form" type="module"/>
+</form>

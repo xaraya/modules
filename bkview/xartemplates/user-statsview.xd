@@ -1,0 +1,19 @@
+<xar:template file="user-menu" type="module"/>
+
+<table class="csets">
+    <tr>
+      <th><xar:mlstring>Author</xar:mlstring></th>
+    <th><xar:mlstring>Recent changesets</xar:mlstring></th>
+    <th><xar:mlstring>All changesets</xar:mlstring></th>
+  </tr>
+
+    <xar:loop name="$users">    
+        <tr class="csets">
+            <td class="csets">#$loop:item['user']#</td>
+            <td class="csets" width="33%">#$loop:item['recentcsets']#&nbsp;</td>
+            <td class="csets" width="33%">#$loop:item['allcsets']#</td>
+        </tr>    
+    </xar:loop>
+
+</table>
+</div>

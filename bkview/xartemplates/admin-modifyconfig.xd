@@ -1,0 +1,26 @@
+<xar:template file="admin-menu" type="module"/>
+
+<table>
+<form method="post" action="&xar-modurl-example-admin-updateconfig;">
+<input type="hidden" name="authid" value="#$authid#" />
+
+<tr><td>#$boldlabel#</td>
+<td><input type="checkbox" name="bold" value="1" #$boldchecked#></td></tr>
+
+<tr><td>#$itemslabel#</td>
+<td><input type="text" name="itemsperpage" size="3" maxlength="3" value="#$itemsvalue$"></td></tr>
+
+<tr><td>#$shorturlslabel#</td>
+<td><input type="checkbox" name="shorturls" value="1" #$shorturlschecked#></td></tr>
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#"></td></tr>
+</form>
+
+</table>
+</div>
+ 
