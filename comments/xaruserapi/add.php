@@ -173,12 +173,12 @@ function comments_userapi_add($args)
     } else {
         $id = $dbconn->PO_Insert_ID($xartable['comments'], 'xar_cid');
         // CHECKME: find some cleaner way to update the page cache if necessary
-        if (function_exists('xarPageFlushCached') &&
+        if (function_exists('xarOutputFlushCached') &&
             xarModGetVar('xarcachemanager','FlushOnNewComment')) {
             $modinfo = xarModGetInfo($modid);
             // this may not be agressive enough flushing for all sites
             // we could flush "$modinfo[name]-" to remove all output cache associated with a module
-            xarPageFlushCached("$modinfo[name]-user-display-");
+            xarOutputFlushCached("$modinfo[name]-user-display-");
         }
         // Call create hooks for categories, hitcount etc.
         $args['module'] = 'comments';
