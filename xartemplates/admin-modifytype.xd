@@ -58,10 +58,10 @@
             <div>
                 <xar:if condition="$func eq 'modify'">
                     <input type="submit" value="#xarML('Modify')#" />
-                    <input type="hidden" name="creating" id="creating" value="false">
+                    <input type="hidden" name="creating" id="creating" value="false"/>
                 <xar:else />
                     <input type="submit" value="#xarML('Add')#" />
-                    <input type="hidden" name="creating" id="creating" value="true">
+                    <input type="hidden" name="creating" id="creating" value="true"/>
                 </xar:if>
             </div>
         </form>
