@@ -40,7 +40,7 @@ function categories_user_main()
                 $data['parents'][] = array('catid' => $catid, 'name' => $info['name'], 'link' => '');
             } else {
                 $link = xarModURL('categories','user','main',array('catid' => $id));
-                $data['parents'][] = array('catid' => $catid, 'name' => $info['name'], 'link' => $link);
+                $data['parents'][] = array('catid' => $info['cid'], 'name' => $info['name'], 'link' => $link);
                 $title .= ' > ';
             }
         }
