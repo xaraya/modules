@@ -84,7 +84,7 @@ function &timezone_userapi_getTimezoneData($args=array())
     // TODO::Pull this from the default/site timezone
     if(!isset($timezone)) { 
         // TODO : return a user exception, we need a timezone name here
-        xarExceptionSet(
+        xarErrorSet(
             XAR_USER_EXCEPTION,
             xarML('This API function must be called with a timezone name.'),
             NULL
@@ -157,7 +157,7 @@ function &timezone_userapi_getTimezoneData($args=array())
         $resultZones =& $dbconn->Execute($zonesql);
         if(!$resultZones || $resultZones->EOF) {
             // we didn't find any zones, probably an error
-            xarExceptionSet(
+            xarErrorSet(
                 XAR_USER_EXCEPTION,
                 xarML('No TimeZone data was found'),
                 NULL
