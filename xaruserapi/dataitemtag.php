@@ -20,10 +20,12 @@ function reports_userapi_dataitemtag($args)
         $code = ';';
         $code.= '$cachekey = md5("'.$name.'".'.$dataset.'->fields[\''.$unique_id.'\']);';
         $code.= '$cacheFile = "$cachekey.'.$extension.'";';
-        $code.= '$fp = fopen("'.$cacheDir.'$cacheFile","wb");';
-        $code.= 'if (!empty($fp)) {';
-        $code.= '    fwrite($fp,substr('.$dataset.'->fields[\''.$name.'\'],'.$offset.'));';
-        $code.= '    fclose($fp);';
+        $code.= 'if(!file_exists("'.$cacheDir.'$cacheFile")) {';
+        $code.= '    $fp = fopen("'.$cacheDir.'$cacheFile","wb");';
+        $code.= '    if (!empty($fp)) {';
+        $code.= '        fwrite($fp,substr('.$dataset.'->fields[\''.$name.'\'],'.$offset.'));';
+        $code.= '        fclose($fp);';
+        $code.= '    }';
         $code.= '}';
         $code.= '$'.$name.'="$cacheFile";';
         // Deliver the code back, having set the name to the link to the cached file
