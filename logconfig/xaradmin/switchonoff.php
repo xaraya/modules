@@ -22,16 +22,17 @@ function logconfig_admin_switchonoff ()
 
     if (!xarSecConfirmAuthKey()) return;
 
+    $data = xarModAPIFunc('logconfig','admin','menu');
+
     $isLogOn = xarModAPIFunc('logconfig','admin','islogon');
     $data['previousState'] = $isLogOn;
-
+ 
     if ($isLogOn) {
-        xarModAPIFunc('logconfig', 'admin', 'turnoff') return;
+        if (!xarModAPIFunc('logconfig', 'admin', 'turnoff')) return;
     } else {
-        xarModAPIFunc('logconfig', 'admin', 'turnon') return;
+        if (!xarModAPIFunc('logconfig', 'admin', 'turnon')) return;
     }
 
-    $data = xarModAPIFunc('logconfig','admin','menu');
 
     $data['currentState'] = xarModAPIFunc('logconfig','admin','islogon');
     
