@@ -1,13 +1,13 @@
 <xar:template file="admin-menu" type="module"/>
 
 <!-- Initialization of some information -->
-<xar:set name="$mlsmode">#xarConfigGetVar('Site.MLS.MLSMode')#</xar:set>
-<xar:set name="$single_checked">''</xar:set>
-<xar:if condition="$mlsmode == 'SINGLE'"><xar:set name="$single_checked">'CHECKED'</xar:set></xar:if>
-<xar:set name="$boxed_checked">''</xar:set>
-<xar:if condition="$mlsmode == 'BOXED'"><xar:set name="$boxed_checked">'CHECKED'</xar:set></xar:if>
-<xar:set name="$unboxed_checked">''</xar:set>
-<xar:if condition="$mlsmode == 'UNBOXED'"><xar:set name="$unboxed_checked">'CHECKED'</xar:set></xar:if>
+<xar:set name="mlsmode">#xarConfigGetVar('Site.MLS.MLSMode')#</xar:set>
+<xar:set name="single_checked">''</xar:set>
+<xar:if condition="$mlsmode == 'SINGLE'"><xar:set name="single_checked">'CHECKED'</xar:set></xar:if>
+<xar:set name="boxed_checked">''</xar:set>
+<xar:if condition="$mlsmode == 'BOXED'"><xar:set name="boxed_checked">'CHECKED'</xar:set></xar:if>
+<xar:set name="unboxed_checked">''</xar:set>
+<xar:if condition="$mlsmode == 'UNBOXED'"><xar:set name="unboxed_checked">'CHECKED'</xar:set></xar:if>
 
 <div class="xar-mod-body">
   <h2><xar:mlstring>Multi language configuration</xar:mlstring></h2>
@@ -18,7 +18,7 @@
 
     <h4><xar:mlstring>Mode of operation</xar:mlstring></h4>
     <p>
-       <xar:mlstring>In the future the multilanguage system (MLS) will work in three different modes. For now only the SINGLE mode is supported:</xar:mlstring>
+       <xar:mlstring>The multilanguage system (MLS) works in three different modes.</xar:mlstring>
       <dl>
         <dt><input type="radio" name="mlsmode" value="SINGLE" #$single_checked# />
         <span class="xar-title"><xar:mlstring>Single language mode (SINGLE)</xar:mlstring></span>
@@ -28,7 +28,7 @@
         built in. All information is stored coherently with the chosen character set (at installation time), 
         and also user data is meaningful in the chosen character set.
         </xar:mlstring>
-        <dt><input type="radio" name="mlsmode" value="BOXED" #$boxed_checked#/>
+        <dt><input type="radio" name="mlsmode" value="BOXED" #$boxed_checked# />
         <span class="xar-title"><xar:mlstring>Per page mode (BOXED)</xar:mlstring></span>
         <dd>
         <xar:mlstring>
@@ -38,8 +38,12 @@
         language areas (for example an Arabic comment won't be shown in the English area even if 
         they are referring to the same object, e.g. an article available in both English and Arabic). 
         Another point is that every operation involves only a single language. This mode can produce 
-        unexpected results if mb_string is not installed.
-        </xar:mlstring>
+        unexpected results if mb_string is not installed.</xar:mlstring>
+        <xar:if condition="function_exists('mb_strlen')">
+            (<xar:mlstring>It is installed on this server, so you can give this mode a try</xar:mlstring>)
+        <xar:else/>
+            (<xar:mlstring>WARNING: mb_string is NOT installed on this server, proceed with caution</xar:mlstring>)
+        </xar:if>
         <dt><input type="radio" name="mlsmode" value="UNBOXED" #$unboxed_checked# />
         <span class="xar-title"><xar:mlstring>Full multilanguage (UNBOXED) (experimental!)</xar:mlstring></span>
         <dd>
