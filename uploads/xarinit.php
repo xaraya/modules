@@ -69,8 +69,8 @@ function uploads_init()
     unset($mimetypes);
     
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    list($dbconn) =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     
     $file_entry_table = $xartable['file_entry'];
     $file_data_table  = $xartable['file_data'];
@@ -166,7 +166,7 @@ function uploads_upgrade($oldversion)
         case .01:
         case .02:
             // change newhook from API to GUI
-            list($dbconn) = xarDBGetConn();
+            list($dbconn) =& xarDBGetConn();
 
             $hookstable = xarDBGetSiteTablePrefix() . '_hooks';
             $query = "UPDATE $hookstable
@@ -183,7 +183,7 @@ function uploads_upgrade($oldversion)
             
             
             // Had problems with unregister not working in beta testing... So forcefully removing these
-            list($dbconn) = xarDBGetConn();
+            list($dbconn) =& xarDBGetConn();
         
             $hookstable = xarDBGetSiteTablePrefix() . '_hooks';
             $query = "DELETE FROM $hookstable
@@ -201,9 +201,9 @@ function uploads_upgrade($oldversion)
 //            ALTER TABLE `xar_uploads` ADD `ulmime` VARCHAR( 128 ) DEFAULT 'application/octet-stream' NOT NULL ;
 
             // Get database information
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
-            $linkagetable = $xartable['uploads'];
+            list($dbconn) =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $linkagetable =& $xartable['uploads'];
 
             xarDBLoadTableMaintenanceAPI();
             
@@ -229,15 +229,15 @@ function uploads_upgrade($oldversion)
             xarModAPILoad('uploads','user');
             xarDBLoadTableMaintenanceAPI();
             
-            list($dbconn)        = xarDBGetConn();
-            $xartables           = xarDBGetTables();
+            list($dbconn)        =& xarDBGetConn();
+            $xartables           =& xarDBGetTables();
             
             $uploads_table       = xarDBGetSiteTablePrefix() . "_uploads";
             $uploads_blobs_table = xarDBGetSiteTablePrefix() . "_uploadblobs";
  
-            $file_entry_table    = $xartables['file_entry'];
-            $file_assoc_table    = $xartables['file_associations'];
-            $file_data_table     = $xartables['file_data'];
+            $file_entry_table    =& $xartables['file_entry'];
+            $file_assoc_table    =& $xartables['file_associations'];
+            $file_data_table     =& $xartables['file_data'];
             
             
             // Grab all the file entries from the db
@@ -517,8 +517,8 @@ function uploads_delete()
     xarModDelVar('uploads','file.obfuscate-on-upload');
 
     // Get database information
-    list($dbconn)   = xarDBGetConn();
-    $xartables       = xarDBGetTables();
+    list($dbconn)   =& xarDBGetConn();
+    $xartables      =& xarDBGetTables();
     
     //Load Table Maintainance API
     xarDBLoadTableMaintenanceAPI();
