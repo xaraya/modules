@@ -80,7 +80,8 @@ function sitetools_adminapi_backupdb ($args)
     $runningstatus=array();
 
     if (!function_exists('getmicrotime')) {
-	    function getmicrotime() {
+	    function getmicrotime() 
+        {
 	        list($usec, $sec) = explode(' ', microtime());
 	        return ((float) $usec + (float) $sec);
 	    }
