@@ -107,7 +107,7 @@ function reports_upgrade()
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-    case '0.0.1'
+    case '0.0.1':
         // Code to upgrade from version 0.0.1 goes here
         break;
     }
