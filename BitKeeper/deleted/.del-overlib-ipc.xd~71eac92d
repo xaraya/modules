@@ -1,5 +1,5 @@
-<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
-<!--- Legend --->
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment> Legend </xar:comment>
 								<xar:overlib-init />
 								<xar:overlib-popup-open name="$olopen" 
 									caption="IP Address of $item[xar_author]" 
