@@ -24,7 +24,8 @@
  * @author  Marcel van der Boom <marcel@xaraya.com>
  * @access  public
 */
-function search_user_handlesearch() {
+function search_user_handlesearch() 
+{
     // The module we want to search and the search terms are required.
     xarVarFetch('formodule','str:1:',$search_in_module);
 
