@@ -13,11 +13,7 @@
  * @author Jim McDonald; Jason Judge
 */
 
-//Load Table Maintainance API
-xarDBLoadTableMaintenanceAPI();
-
 // Some initialisation constants.
-
 define ('AUTOLINKS_PUNCTUATION', '.!?"\';:');
 
 /**
@@ -37,6 +33,10 @@ function autolinks_init()
     $autolinkstable = $xartable['autolinks'];
     $autolinkstypestable = $xartable['autolinks_types'];
 
+    // Get a data dictionary object with item create methods.
+    // TODO: I'm guessing at the 'CREATE' mode.
+    $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
+
     // Table didn't exist, create table
     /*****************************************************************
     * CREATE TABLE xar_autolinks (
@@ -55,35 +55,34 @@ function autolinks_init()
     * UNIQUE KEY i_xar_autolinks_1 (xar_keyword)
     * );
     *****************************************************************/
-    $fields = array (
-    'xar_lid'           => array ('type'=>'integer', 'null'=>false, 'increment'=>true, 'primary_key'=>true),
-    'xar_name'          => array ('type'=>'varchar', 'size'=>100, 'null'=>false, 'default'=>''),
-    'xar_keyword'       => array ('type'=>'varchar', 'size'=>200, 'null'=>false, 'default'=>''),
-    'xar_title'         => array ('type'=>'varchar', 'size'=>100, 'null'=>true, 'default'=>''),
-    'xar_url'           => array ('type'=>'varchar', 'size'=>200, 'null'=>false, 'default'=>''),
-    'xar_comment'       => array ('type'=>'varchar', 'size'=>200, 'null'=>true, 'default'=>''),
-    'xar_enabled'       => array ('type'=>'integer', 'size'=>'tiny', 'null'=>false, 'default'=>'1'),
-    'xar_match_re'      => array ('type'=>'integer', 'size'=>'tiny', 'null'=>false, 'default'=>'0'),
-    'xar_sample'        => array ('type'=>'varchar', 'size'=>200, 'null'=>true, 'default'=>''),
-    'xar_type_tid'      => array ('type'=>'integer', 'null'=>false, 'default'=>'0'),
-    'xar_cache_replace' => array ('type'=>'text', 'null'=>true)
-    );
 
-    $query = xarDBCreateTable($autolinkstable, $fields);
-    $result =& $dbconn->Execute($query);
+    $flds = "
+        xar_lid             I           AUTO    PRIMARY,
+        xar_name            C(100)      NotNull DEFAULT '',
+        xar_keyword         C(200)      NotNull DEFAULT '',
+        xar_title           C(100)      Null    DEFAULT '',
+        xar_url             C(200)      NotNull DEFAULT '',
+        xar_comment         C(200)      Null    DEFAULT '',
+        xar_enabled         L           NotNull DEFAULT 1,
+        xar_match_re        L           NotNull DEFAULT 0,
+        xar_sample          C(200)      Null    DEFAULT '',
+        xar_type_tid        I           NotNull DEFAULT 0,
+        xar_cache_replace   X           Null
+    ";
+
+    // Create or alter the table as necessary.
+    $result = $datadict->changeTable($autolinkstable, $flds);    
     if (!$result) {return;}
 
-    $index = array(
-        'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_autolinks_1',
-        'fields'    => array ('xar_keyword'),
-        'unique'    => TRUE
+    // Create a unique key on the name column.
+    $result = $datadict->createIndex(
+        'i_' . xarDBGetSiteTablePrefix() . '_autolinks_1',
+        $autolinkstable,
+        'xar_keyword'
     );
-    $query = xarDBCreateIndex($autolinkstable, $index);
-    $result =& $dbconn->Execute($query);
     if (!$result) {return;}
 
 
-    // Table didn't exist, create table
     /*****************************************************************
     * CREATE TABLE xar_autolinks_types (
     * xar_tid int(11) NOT NULL auto_increment,
@@ -95,19 +94,19 @@ function autolinks_init()
     * PRIMARY KEY  (xar_tid)
     * ) 
     *****************************************************************/
-    $fields = array (
-    'xar_tid'           => array ('type'=>'integer', 'null'=>false, 'increment'=>true, 'primary_key'=>true),
-    'xar_type_name'     => array ('type'=>'varchar', 'size'=>60, 'null'=>false, 'default'=>''),
-    'xar_template_name' => array ('type'=>'varchar', 'size'=>60, 'null'=>false, 'default'=>''),
-    'xar_dynamic_replace' => array ('type'=>'integer', 'size'=>'tiny', 'null'=>false, 'default'=>'0'),
-    'xar_link_itemtype' => array ('type'=>'integer', 'null'=>false, 'default'=>'0'),
-    'xar_type_desc'     => array ('type'=>'text', 'null'=>true)
-    );
+    $flds = "
+        xar_tid             I       AUTO    PRIMARY,
+        xar_type_name       C(60)   NotNull DEFAULT '',
+        xar_template_name   C(60)   NotNull DEFAULT '',
+        xar_dynamic_replace L       NotNull DEFAULT 0,
+        xar_link_itemtype   I       NotNull DEFAULT 0,
+        xar_type_desc       X
+    ";
 
-    $query = xarDBCreateTable($autolinkstypestable, $fields);
-    $result =& $dbconn->Execute($query);
+    $result = $datadict->changeTable($autolinkstypestable, $flds);    
     if (!$result) {return;}
     
+
     // Set up module variables
     xarModSetVar('autolinks', 'itemsperpage', 20);
     xarModSetVar('autolinks', 'decoration', '');
@@ -153,11 +152,18 @@ function autolinks_init()
     xarRegisterMask('AdminAutolinks','All','autolinks','All','All','ACCESS_ADMIN');
 
     // Create or update sample data.
-    $result = xarModAPIfunc(
-        'autolinks', 'admin', 'samples',
-        array('action'=>'create')
-    );
-    
+    //$result = xarModAPIfunc(
+    //    'autolinks', 'admin', 'samples',
+    //    array('action'=>'create')
+    //);
+
+    // Enable dynamic data hooks for autolinks
+    if (xarModIsAvailable('dynamicdata')) {
+        xarModAPIFunc('modules', 'admin', 'enablehooks',
+            array('callerModName' => 'autolinks', 'hookModName' => 'dynamicdata')
+        );
+    }
+
     // Initialisation successful
     return true;
 }
@@ -170,6 +176,7 @@ function autolinks_upgrade($oldversion)
     // Set up database tables
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
 
     $autolinkstable = $xartable['autolinks'];
     $autolinkstypestable = $xartable['autolinks_types'];
@@ -204,100 +211,28 @@ function autolinks_upgrade($oldversion)
             // Changes to upgrade from 1.0 to 1.1
 
             // Add columns to the Autolinks table.
-            $queries = array ();
+            $flds = "
+                xar_enabled         L           NotNull DEFAULT 1
+            ";
 
-            $queries[] = xarDBAlterTable(
-                $autolinkstable,
-                array (
-                    'command'   => 'add',
-                    'field'     => 'xar_enabled',
-                    'type'      => 'integer',
-                    'size'      => 'tiny',
-                    'null'      => false,
-                    'first'     => false,
-                    'default'   => '1'
-                )
-            );
-
-            $queries[] = xarDBAlterTable(
-                $autolinkstable,
-                array (
-                    'command'   => 'add',
-                    'field'     => 'xar_valid',
-                    'type'      => 'integer',
-                    'size'      => 'tiny',
-                    'null'      => false,
-                    'first'     => false,
-                    'default'   => '1'
-                )
-            );
-
-            foreach ($queries as $query)
-            {
-                // Pass to ADODB, and send exception if the result isn't valid.
-                $result =& $dbconn->Execute($query);
-                if (!$result) {
-                    //return;
-                    // Until we have a better method of handling errors, it is safer to continue.
-                    xarErrorHandled();
-                }
-            }
+            // Until we have a better method of handling errors, it is safer to continue.
+            $result = $datadict->changeTable($autolinkstable, $flds);    
+            if (!$result) {xarErrorHandled();}
 
         case '1.2':
             // Changes to upgrade from 1.2 to 1.3
 
             // Add columns to the Autolinks table.
-            $queries = array ();
+            $flds = "
+                xar_match_re        L           NotNull DEFAULT 0,
+                xar_sample          C(200)      Null    DEFAULT '',
+                xar_cache_replace   X           Null
+            ";
 
-            $queries[] = xarDBAlterTable(
-                $autolinkstable,
-                array (
-                    'command'   => 'add',
-                    'field'     => 'xar_match_re',
-                    'type'      => 'integer',
-                    'size'      => 'tiny',
-                    'null'      => false,
-                    'first'     => false,
-                    'default'   => '0'
-                )
-            );
-
-            $queries[] = xarDBAlterTable(
-                $autolinkstable,
-                array (
-                    'command'   => 'add',
-                    'field'     => 'xar_sample',
-                    'type'      => 'varchar',
-                    'size'      => '200',
-                    'null'      => true,
-                    'first'     => false,
-                    'default'   => ''
-                )
-            );
-
-            $queries[] = xarDBAlterTable(
-                $autolinkstable,
-                array (
-                    'command'   => 'add',
-                    'field'     => 'xar_cache_replace',
-                    'type'      => 'varchar',
-                    'size'      => '200',
-                    'null'      => true,
-                    'first'     => false
-                )
-            );
-
-            foreach ($queries as $query)
-            {
-                // Pass to ADODB, and send exception if the result isn't valid.
-                $result =& $dbconn->Execute($query);
-                if (!$result) {
-                    //return;
-                    // Until we have a better method of handling errors, it is safer to continue.
-                    xarExceptionFree();
-                }
-            }
-
+            // Until we have a better method of handling errors, it is safer to continue.
+            $result = $datadict->changeTable($autolinkstable, $flds);    
+            if (!$result) {xarErrorHandled();}
+            
             xarModSetVar('autolinks', 'punctuation', AUTOLINKS_PUNCTUATION);
             xarModSetVar('autolinks', 'nbspiswhite', '1');
 
@@ -331,55 +266,29 @@ function autolinks_upgrade($oldversion)
             // TODO: need some serious error handling. But where to go in the
             // event of an error for now? Better probably to just blindly go
             // through to the end, for now.
-            $dict = NewDataDictionary($dbconn);
-
-            $sqlarray = $dict->ChangeTableSQL($autolinkstable, $flds);
+            $sqlarray = $datadict->ChangeTable($autolinkstable, $flds);
 
             // Copy keyword to name column.
-            $sqlarray[] = 'UPDATE ' . $autolinkstable
+            $query = 'UPDATE ' . $autolinkstable
                 . ' SET xar_name = xar_keyword'
                 . ' WHERE xar_name IS NULL OR xar_name = \'\'';
 
-            $sqlarray = array_merge($sqlarray, $dict->ChangeTableSQL($autolinkstable, $flds));
-
-            // Drop an old column on the autolinks table.
-            $droparray = $dict->DropColumnSQL($autolinkstable, "xar_valid");
-
-            // If column exists (i.e. no exception) then add the drop statement to the SQL array.
-            if (!xarExceptionId()) {
-                $sqlarray = array_merge($sqlarray, $droparray);
-            } else {
+            $result =& $dbconn->Execute($query);
+            if (xarCurrentErrorType() <> XAR_NO_EXCEPTION) {
                 xarErrorHandled();
-            }
-
-            // TODO: this would be a neat thing to use in upgrades. We could
-            // do with a xar wrapper for it.
-            // Execute the DDL and SQL we have built up.
-            if (!$dict->ExecuteSQLArray($sqlarray)) {
-                return;
             }
 
             // Make the name column mandatory. Must do this after executing the
             // other changes otherwise the data dictionary creates am 'add column'.
             $flds = "xar_name        C(100)   NotNull";
-            $sqlarray = $dict->ChangeTableSQL($autolinkstable, $flds);
-            if (!$dict->ExecuteSQLArray($sqlarray)) {
-                return;
-            }
-            
+            $result = $datadict->ChangeTable($autolinkstable, $flds);
+            if (!$result) {return;}
+
             // Create a unique index for the autolinks name.
             // TODO?
 
-            // Create autolinks types type.
+            // Create autolinks types table.
             
-            // Create a simple table the legacy way first, so xar knows it exists (not using data dict yet).
-            $fields = array (
-            'xar_tid'           => array ('type'=>'integer', 'null'=>false, 'increment'=>true, 'primary_key'=>true)
-            );
-            $query = xarDBCreateTable($autolinkstypestable, $fields);
-            $result =& $dbconn->Execute($query);
-            if (!$result) {return;}
-
             // Now update the table using the data dictionary.
             $flds = "
                 xar_tid             I       AUTO    PRIMARY,
@@ -390,11 +299,9 @@ function autolinks_upgrade($oldversion)
                 xar_type_desc       X
             ";
 
-            $sqlarray = $dict->ChangeTableSQL($autolinkstypestable, $flds);
+            $result = $datadict->ChangeTable($autolinkstypestable, $flds);
 
-            if (!$dict->ExecuteSQLArray($sqlarray)) {
-                return;
-            }
+            if (!$result) {return;}
 
             xarModSetVar('autolinks', 'templatebase', 'link');
             xarModSetVar('autolinks', 'showerrors', 0);
@@ -432,14 +339,21 @@ function autolinks_upgrade($oldversion)
             // The current version.
 
             // Create or update sample data.
-            $result = xarModAPIfunc(
-                'autolinks', 'admin', 'samples',
-                array('action'=>'create')
-            );
+            //$result = xarModAPIfunc(
+            //    'autolinks', 'admin', 'samples',
+            //    array('action'=>'create')
+            //);
 
             xarModSetVar('autolinks', 'excludeelements', 'a code pre');
 
             return true;
+    }
+
+    // Enable dynamic data hooks for autolinks
+    if (xarModIsAvailable('dynamicdata')) {
+        xarModAPIFunc('modules', 'admin', 'enablehooks',
+            array('callerModName' => 'autolinks', 'hookModName' => 'dynamicdata')
+        );
     }
 
     // Should never reach this point.
@@ -457,18 +371,17 @@ function autolinks_delete()
         'autolinks', 'user', 'transform')
     ) {return;}
 
-    // Drop the table
+    // Drop the tables
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
+    $datadict =& xarDBNewDataDict($dbconn, 'CREATE');
 
     $autolinkstable = $xartable['autolinks'];
-    $query = xarDBDropTable($autolinkstable );
-    $result =& $dbconn->Execute($query);
+    $result = $datadict->dropTable($autolinkstable);
     //if (!$result) {return;}
 
-    $autolinkstypestable = $xartable['autolinkstypes'];
-    $query = xarDBDropTable($autolinkstypestable);
-    $result =& $dbconn->Execute($query);
+    $autolinkstypestable = $xartable['autolinks_types'];
+    $result = $datadict->dropTable($autolinkstypestable);
     //if (!$result) {return;}
 
     // Remove module variables
