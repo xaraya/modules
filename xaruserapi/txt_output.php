@@ -3,7 +3,7 @@
 * Produce text output from the xmldata supplied
  *
  */
-function reports_userapi_text_output($args)
+function reports_userapi_txt_output($args)
 {
     extract($args);
     

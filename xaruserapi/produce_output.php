@@ -30,7 +30,7 @@ function reports_userapi_produce_output($args)
                     $func = 'pdf_output';
                     break;
                 case 'text':
-                    $func = 'text_output';
+                    $func = 'txt_output';
                     break;
                 case 'svg':
                     $func = 'svg_output';
