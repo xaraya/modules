@@ -26,11 +26,11 @@
                 <li><xar:mlstring>Add text to an image file (think buttons here...)</xar:mlstring></li>
                 <li>...</li>
             </ul>
-            
+
             <em>
-                <span style="color: red;"><strong>*</strong></span> -- 
+                <span style="color: red;"><strong>*</strong></span> --
                 <xar:mlstring>Currently, this is the only supported feature - more will come later.</xar:mlstring>
-            </em> 
+            </em>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -42,10 +42,23 @@
                 <xar:mlstring>Image Tags</xar:mlstring>
             </h3>
             <p>
-                <pre><  xar:image src="FILEID" [width="([0-9]+)(px|%)" [height="([0-9]+)(px|%)"]] [constrain="0|1"] label="TEXT" /  ></pre>
+                &lt;xar:image-resize src="FILEID" [width="([0-9]+)(px|%)" [height="([0-9]+)(px|%)"]] [constrain="0|1"] label="TEXT" /&gt;
+                <br />
+                <br />
                 <xar:mlstring>
-                    The IMAGE tag is useful for caching and display images at different proportions. Images are resized according 
-                    to the height/width values you specify with the resulting image cached for faster displaying later on. 
+                    The IMAGE tag is useful for displaying (cached) images at different proportions. Images are resized according
+                    to the height/width values you specify with the resulting image cached for faster displaying later on. Note: Any other attribute
+                    not listed will be passed directly on to the resultant &lt;img&gt; tag.
+                </xar:mlstring>
+            </p>
+            <p>
+                <xar:mlstring>
+                    Examples:
+                    <p>
+                        Resize an image's width while keeping the proportions:<br />
+                        <br />
+                        &lt;xar:image-resize src="23" width="92px" constrain="1" label="my logo" /&gt;
+                    </p>
                 </xar:mlstring>
             </p>
         </div>
