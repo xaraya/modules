@@ -21,6 +21,12 @@ function xarbb_user_searchtopics()
     if(!xarVarFetch('from', 'int', $from, NULL, XARVAR_NOT_REQUIRED)) return;
     // Security Check PROLLY Not good enough as is.
     if(!xarSecurityCheck('ReadxarBB')) return;
+    
+    $xarsettings= xarModGetVar('xarbb', 'settings');
+    if (!empty($xarsettings)) {
+        $settings = unserialize($xarsettings);
+    }
+    $topicsperpage   = !isset($settings['topicsperpage']) ? 20 :$settings['topicsperpage'];
 
     $data['items'] = array();
     $hotTopic       = xarModGetVar('xarbb', 'hottopic');
@@ -32,14 +38,14 @@ function xarbb_user_searchtopics()
                                 'getalltopics_byuid',
                                 array('uid' => $uid,
                                       'startnum' => $startnumitem,
-                                      'numitems' => 20));
+                                      'numitems' => $topicsperpage));
     } elseif (!empty($replies)){
         $data['message'] = xarML('Unanswered topics');
         $topics = xarModAPIFunc('xarbb',
                                 'user',
                                 'getalltopics_byunanswered',
                                 array('startnum' => $startnumitem,
-                                      'numitems' => 20));
+                                      'numitems' => $topicsperpage));
     } elseif (!empty($from)){
         $data['message'] = xarML('Topics since your last visit');
         $topics = xarModAPIFunc('xarbb',
@@ -47,7 +53,7 @@ function xarbb_user_searchtopics()
                                 'getalltopics_bytime',
                                 array('from' => $from,
                                       'startnum' => $startnumitem,
-                                      'numitems' => 20));
+                                      'numitems' => $topicsperpage));
     }
 
     $totaltopics=count($topics);
@@ -169,35 +175,37 @@ function xarbb_user_searchtopics()
         $topics[$i]['name'] = $getname['name'];
 
     }
-
+    //initialize some vars for search
+    $where='';
+    $wherevalue='';
     $data['items'] = $topics;
     $data['totalitems'] = $totaltopics;
-    if ($totaltopics == 20){
+    if ($totaltopics > 0){ //only do this if we need to page else don't worry about it ;)
         if (!empty($uid)){
 
             $data['pager'] = xarTplGetPager($startnumitem,
-                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
+                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics', array('where' =>'uid', 'wherevalue'=>$uid)),
                                             xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
                                                                                              'by' => $uid)),
-                                            20);
+                                            $topicsperpage);
         } elseif (!empty($replies)){
 
             $data['pager'] = xarTplGetPager($startnumitem,
-                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
+                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics', array('wherevalue'=>$replies,'where' =>'replies')),
                                             xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
                                                                                              'replies' => $replies)),
-                                            20);
+                                            $topicsperpage);
         } elseif (!empty($from)){
 
             $data['pager'] = xarTplGetPager($startnumitem,
-                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics'),
+                                            xarModAPIFunc('xarbb', 'user', 'counttotaltopics',array('wherevalue'=>$from,'where' =>'from')),
                                             xarModURL('xarbb', 'user', 'searchtopics', array('startnumitem' => '%%',
                                                                                              'from' => $from)),
-                                            20);
+                                            $topicsperpage);
         }
     }
-    
-    return $data; 
-    //var_dump($topics); return;
+
+    return $data;
+
 }
 ?>
