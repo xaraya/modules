@@ -13,7 +13,7 @@
  * @author Marcel van der Boom <marcel@hsdev.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.inc");
+include_once("modules/bkview/xarincludes/bk.class.php");
 
 
 /**

@@ -13,7 +13,7 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.inc");
+include_once("modules/bkview/xarincludes/bk.class.php");
 
 function bkview_user_relatedview($args)
 {

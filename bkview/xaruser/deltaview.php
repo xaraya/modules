@@ -13,7 +13,7 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
-include_once("modules/bkview/xarincludes/bk.class.inc");
+include_once("modules/bkview/xarincludes/bk.class.php");
 
 function bkview_user_deltaview($args) 
 {
@@ -44,6 +44,19 @@ function bkview_user_deltaview($args)
         $deltalist[$counter]['comments']=$comments;
         $counter++;
     }
+
+    $hooks='';
+    // We have to construct an artificial $hookId because we don't use the database
+    // 1. It needs to include the identification of the repository: ROOTKEY
+    //    example : mrb@duel.hsdev.com|ChangeSet|20020928140945|52607|ce70d3e6fd7d585b
+    // 2. It needs to include the identification of the changeset: KEY
+    //    example:
+    //    - mrb@duel.hsdev.com|ChangeSet|20020928140946|22731
+    // 3. Can we use the cset number for something? 1.xxx.xxx.xxx.xxx problem with cset numbers
+    //    is that they can change on merges, so we can't rely on them
+    // And we have to squeeze all this info in a 11 digit integer
+    
+    //  $hooks = xarModCallHooks('item', 'display', $hookId, $extraInfo, 'bkview', 'changeset')
     
     // Pass data to BL compiler
     $data['pageinfo']=xarML("Changeset details for #(1)",$rev);
@@ -51,6 +64,7 @@ function bkview_user_deltaview($args)
     $data['repoid']=$repoid;
     $data['deltalist']=$deltalist;
     $data['name_value']=$item['reponame'];
+    $data['hooks'] = $hooks;
     return $data;
 }
 
