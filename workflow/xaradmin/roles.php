@@ -101,7 +101,8 @@ if (isset($_REQUEST['save'])) {
         $tplData['users'] = array();
     } else {
         if (!empty($_REQUEST['find_users'])) {
-            $selection = " AND xar_name LIKE '%" . xarVarPrepForStore($_REQUEST['find_users']) . "%'";
+            $dbconn =& xarDBGetConn();
+            $selection = " AND xar_name LIKE " . $dbconn->qstr('%'.$_REQUEST['find_users'].'%');
         } else {
             $selection = '';
         }
