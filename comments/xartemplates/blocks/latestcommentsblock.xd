@@ -1,100 +1,96 @@
 <xar:if condition="count($commentlist)">
-  <table width="100%" border="0" cellspacing="0" cellpadding="4">
-    <xar:foreach in="$commentlist" value="$comment">
-
-        <tr>
-          <td style="width:100%;">               
-            <xar:if condition="$adddaysep=='on'">
-              <xar:if condition="$comment['daychange']">
-                <!-- DAY SEPARATOR -->
-                </td></tr><td align=center>
-                  - <b>#$comment['daychange']#</b> -
-                </td></tr><tr><td>
+    <xar:foreach in="$commentlist" key="$key" value="$comment">
+      <xar:if condition="$adddaysep=='on'">
+        <xar:if condition="$comment['daychange']">
+          <!-- DAY SEPARATOR --> 
+          <xar:comment>Close the list only if not the first message</xar:comment>
+          <xar:if condition="$key ge 1">
+            </ul>
+          </xar:if>
+          <div class="xar-title">
+             #$comment['daychange']# 
+          </div>
+          <ul>
+        </xar:if>          
+      </xar:if>
+      <li>
+        <xar:if condition="$addcomment eq 1">
+          <!-- COMMENT TITLE -->  
+          <span class="xar-title">#$comment['xar_subject']#
+          </span>
+        <xar:elseif condition="$addcomment ge 20" />
+          <span class="xar-title">
+            <xar:if condition="(!empty($comment['objurl']) AND $addcomment ge 21)">
+              <a href="#$comment['objurl']####$comment['xar_cid']#">
+              #$comment['xar_subject']#
+              </a>
+            <xar:else />
+              <a href="#xarModURL('comments','user','display',array('cid' => $comment['xar_cid']))#">
+              #$comment['xar_subject']#</a>
               </xar:if>
-            </xar:if>
-            <xar:if condition="$addcomment eq 1">
-              <!-- COMMENT TITLE -->  
-              <span class="xar-title">#$comment['xar_subject']#
-              </span>
-            <xar:elseif condition="$addcomment ge 20" />
-              <span class="xar-title">
-                <xar:if condition="(!empty($comment['objurl']) AND $addcomment ge 21)">
-                  <a href="#$comment['objurl']####$comment['xar_cid']#">
-                  #$comment['xar_subject']#
-                  </a>
-                <xar:else />
-                  <a href="#xarModURL('comments','user','display',array('cid' => $comment['xar_cid']))#">
-                  #$comment['xar_subject']#</a>
-                  </xar:if>
-              </span>
-            </xar:if>
-            <xar:if condition="!empty($comment['xar_title'])">
-              <xar:if condition="$addobject ge 20">  
-                <!-- OBJECT TITLE -->
-                <xar:mlstring>in</xar:mlstring> 
-                <span class="xar-title">
-                                  <xar:if condition="$addobject ge 21">
-                    <a href="#$comment['objurl']####$comment['xar_cid']#">
-                                  <xar:else/>
-                    <a href="#$comment['objurl']#">
-                                  </xar:if>
-                  #$comment['xar_title']#
-                  </a> 
-                </span>
-              <xar:elseif condition="$addobject eq 1" /> 
-                <xar:mlstring>in</xar:mlstring> 
-                <span class="xar-title">#$comment['xar_title']#</span>
-              </xar:if>
-            </xar:if> 
-            <xar:if condition="$addmodule ge 1">
-              <!-- MODULE NAME--> 
-              <span class="xar-normal">
-                <br /><xar:mlstring>in</xar:mlstring> 
-                <xar:if condition="$addmodule ge 2">
-                  <a href="#$comment['modview']#">
-                </xar:if>
-                #$comment['modname']#
-                <xar:if condition="$addmodule ge 2">
-                  </a>
-                </xar:if>  
-              </span>
-            </xar:if> 
-            <span class="xar-normal">
-              <xar:if condition="$addauthor ge 1">                          
-                <!-- AUTHOR NAME-->  
-                <br /><xar:mlstring>by</xar:mlstring>
-                <xar:if condition="$comment['xar_postanon'] eq 0 or xarModGetVar('comments','AllowPostAsAnon') eq 0">
-                  <xar:if condition="$addauthor ge 2">
-                    <a href="#xarModURL('users','user','view')#">
-                  </xar:if>
-                  &nbsp;#$comment['xar_author']#
-                  <xar:if condition="$addauthor ge 2">
-                    </a>
-                  </xar:if>
-                <xar:else />
-                  &nbsp;<xar:mlstring>Anonymous</xar:mlstring>
-                </xar:if>
-              </xar:if> 
-              <xar:if condition="$adddate=='on'">
-                <!-- DATE -->  
-                <xar:mlstring>on</xar:mlstring>&nbsp;#$comment['xar_date']#
-              </xar:if>
+          </span>
+        </xar:if>
+        <xar:if condition="!empty($comment['xar_title'])">
+          <xar:if condition="$addobject ge 20">  
+            <!-- OBJECT TITLE -->
+            <xar:mlstring>in</xar:mlstring> 
+            <span class="xar-title">
+                              <xar:if condition="$addobject ge 21">
+                <a href="#$comment['objurl']####$comment['xar_cid']#">
+                              <xar:else/>
+                <a href="#$comment['objurl']#">
+                              </xar:if>
+              #$comment['xar_title']#
+              </a> 
             </span>
-          </td>
-          </tr>
-
+          <xar:elseif condition="$addobject eq 1" /> 
+            <xar:mlstring>in</xar:mlstring> 
+            <span class="xar-title">#$comment['xar_title']#</span>
+          </xar:if>
+        </xar:if> 
+        <xar:if condition="$addmodule ge 1">
+          <!-- MODULE NAME--> 
+          <span class="xar-normal">
+            <br /><xar:mlstring>in</xar:mlstring> 
+            <xar:if condition="$addmodule ge 2">
+              <a href="#$comment['modview']#">
+            </xar:if>
+            #$comment['modname']#
+            <xar:if condition="$addmodule ge 2">
+              </a>
+            </xar:if>  
+          </span>
+        </xar:if> 
+        <span class="xar-normal">
+          <xar:if condition="$addauthor ge 1">                          
+            <!-- AUTHOR NAME-->  
+            <xar:mlstring>by</xar:mlstring>
+            <xar:if condition="$comment['xar_postanon'] eq 0 or xarModGetVar('comments','AllowPostAsAnon') eq 0">
+              <xar:if condition="$addauthor ge 2">
+                <a href="#xarModURL('users','user','view')#">
+              </xar:if>
+                #$comment['xar_author']#
+              <xar:if condition="$addauthor ge 2">
+                </a>
+              </xar:if>
+            <xar:else />
+                <xar:mlstring>Anonymous</xar:mlstring>
+            </xar:if>
+          </xar:if> 
+          <xar:if condition="$adddate=='on'">
+            <!-- DATE -->  
+            <xar:mlstring>on</xar:mlstring>&nbsp;#$comment['xar_date']#
+          </xar:if>
+        </span>
+      </li>
     </xar:foreach>
+  </ul>
     <xar:if condition="$addprevious=='on'">
-      <tr>
-        <td style="width:100%;">
           <p><a href="#$olderurl#">
             <xar:mlstring>Older comments</xar:mlstring>
             </a>
           </p>
-        </td>
-      </tr>
     </xar:if>           
-  </table>
 <xar:else />
   <xar:mlstring>There are no comments</xar:mlstring>
 </xar:if>
