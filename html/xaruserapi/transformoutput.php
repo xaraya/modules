@@ -65,10 +65,15 @@ function html_userapi_transformoutput($args)
 function html_userapitransformoutput($text)
 {
     $transformtype = xarModGetVar('html', 'transformtype');
+    if (!strlen(trim($text))) 
+    {
+        return '';
+	}	
     if ($transformtype == 1){
         $text = preg_replace("/\n/si","<br />",$text);
     } elseif ($transformtype == 2){
-        $text = preg_replace("/\n/si","</p><p>",$text);
+//        $text = preg_replace("/\n/si","</p><p>",$text);
+        $text = _clean_paragraphs($text);
     } elseif ($transformtype == 3){
         $text = $text;
     } elseif ($transformtype == 4){
@@ -94,5 +99,101 @@ function html_userapitransformoutput($text)
    $text = str_replace ("<p></p>", "", $text);
     return $text;
 }
+
+
+function _clean_paragraphs($text) 
+{
+    static $clean = array();
+
+    $hash = md5($text);
+    if (isset($clean[$hash]) && $clean[$hash] == TRUE) {
+        return $text;
+    } else {
+        $clean[$hash] = 1;
+    }
+
+    $value = $text;
+
+    $value = preg_replace("/[\n\r]/", ' ', $value);
+
+    // Change double p/br to double newline
+    // Change single p/br to single newline
+    // Change all multispace to one single space
+    $value = preg_replace(array ('/(<[\/ ]*(p|br)[^>]*>[ \n\r]*){2,2}/',
+                                 '/(<[\/ ]*(p|br)[^>]*>)/',
+                                 '/[ ]+/'),
+                          array("\n\n", "\n", ' '),
+                          $value);
+
+    $array = explode("\n", $value);
+    $total = count($array) - 1;
+
+    // If there is only one line, then encapsulate in it a p and return it.
+    if ($total == 0) {
+        return "\n<p>\n$array[0]\n</p>";
+    }
+
+    // otherwise, spool through the array and best guess the correct layout :)
+    foreach ($array as $lineno => $line) {
+        
+        // Test for empty line
+        $test = preg_replace('/\s*/', '', $line);
+        
+        if (!empty($test)) {
+            
+            // We handle the first and last lines differently
+            if ($lineno == 0) {
+                $line = "<p>\n$line";
+            } elseif ($total == $lineno) {
+                $new[] = "$line\n</p>";
+                continue;
+            }
+            
+            //  Here we want to maintain <br /> tags (which we've
+            //  marked as single a single newline character
+            if ($lineno != $total) {
+                $next = trim($array[$lineno+1]);
+                if (!empty($next)) {
+                    $new[] = "$line<br />";
+                } else {
+                    $new[] = $line;
+                }
+            }
+        } else { // This section is for dealing with empty lines
+            
+            // If this line is empty and it's the first, then add the opening
+            // <p> tag - otherwise, if it's the last, add the closing </p> tag
+            // -otherwise-, add a close followed by an open <p> tag
+            
+            if ($lineno == 0) {
+                $new[] = "<p>";
+            } elseif ($lineno == count($array) - 1) {
+                $new[] = "</p>";
+            } else {
+                $new[] = "</p>\n<p>";
+            }
+        }
+    }
+    
+    if (!isset($new) || empty($new)) {
+        return '';
+    } else {
+        // Do some clean up
+        $new = implode("\n", $new);
+        $new = preg_replace("'<p>\n<\/p>'", '<p />', $new);
+        do {
+            // Shrink all double+ <p />'s down to one
+            // Ie: if you have <p />\n<p />\n<p />\n<p /> --> turn it into: <p />\n
+            if (stristr($new, "<p />\n<p />\n")) {
+                $new = str_replace("<p />\n<p />\n", "<p />\n", $new);
+            } else {
+                break;
+            }
+        } while (stristr($new, "<p />\n<p />\n"));
+    }
+    return $new;
+
+}
+
 
 ?>
