@@ -32,7 +32,7 @@ print "<body bgcolor=\"".xarModGetVar('xproject', 'BACKGROUND_COLOR'). "\">";
  */
 function Kalender($Monat,$Jahr)
 {
-    $modurl="modules.php?op=modload&name=tasks&file=calendar";
+    $modurl="modules.php?op=modload&amp;name=tasks&amp;file=calendar";
 
     $Monatsname = explode(' ', _XPROJECT_MONTH_NAMES);
     $Tag = explode(' ', _XPROJECT_SHORT_DAY_NAMES);
@@ -70,9 +70,9 @@ function Kalender($Monat,$Jahr)
     }
     echo "<table border=3 cellpadding=1 cellspacing=1>";
     $Monatskopf = $Monatsname[$Monat-1] . " " . $Jahr;
-    $Monatskopf = $Monatskopf . "<BR><a class=cal href=".$modurl."&m=" . ($Monat-1) ."&dj=" . $Jahr .
+    $Monatskopf = $Monatskopf . "<BR><a class=cal href=".$modurl."&amp;m=" . ($Monat-1) ."&amp;dj=" . $Jahr .
           ">&#60;&#60;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class=cal href=".
-          $modurl."&m=".($Monat+1) ."&dj=" . $Jahr . ">&#62;&#62;</a>";
+          $modurl."&amp;m=".($Monat+1) ."&amp;dj=" . $Jahr . ">&#62;&#62;</a>";
     SchreibeKopf($Monatskopf,$Khgrund,$KSchrFarbe,$KSchrGroesse,$KSchrArt);
     $Tageszahl = 1;
     for($i=0;$i<=5;$i++)
