@@ -34,55 +34,55 @@
     <p><xar:mlstring><b>Description:</b> first enable pubsub hooks for a particular module+itemtype,
 then specify here which template should be used when an item is created, updated or deleted for that module+itemtype.
 Setting a template to 'not supported' means that your users will not receive any notifications for that event.</xar:mlstring></p>
-	<table border="0" cellpadding="8" cellspacing="0">
-	<xar:foreach in="$settings" key="$modname" value="$config">
-		<tr>
-			<td colspan="2"><b>#$config['label']#</b></td>
-		</tr>
-		<tr>
-			<td><label for="settings_#$modname#_create"><xar:mlstring>Template for Create Hook Calls</xar:mlstring></label></td>
-			<td>
-			<select name="settings[#$modname#.create]" id="settings_#$modname#_create">
-			<xar:foreach in="$templates" key="$id" value="$name">
-				<xar:if condition="$config['create'] eq $id">
-					<option value="#$id#" selected="selected">#$name#</option>
-				<xar:else/>
-					<option value="#$id#">#$name#</option>
-				</xar:if>
-			</xar:foreach>
-			</select>
-			</td>
-		</tr>
-		<tr>
-			<td><label for="settings_#$modname#_update"><xar:mlstring>Template for Update Hook Calls</xar:mlstring></label></td>
-			<td>
-			<select name="settings[#$modname#.update]" id="settings_#$modname#_update">
-			<xar:foreach in="$templates" key="$id" value="$name">
-				<xar:if condition="$config['update'] eq $id">
-					<option value="#$id#" selected="selected">#$name#</option>
-				<xar:else/>
-					<option value="#$id#">#$name#</option>
-				</xar:if>
-			</xar:foreach>
-			</select>
-			</td>
-		</tr>
-		<tr>
-			<td><label for="settings_#$modname#_delete"><xar:mlstring>Template for Delete Hook Calls</xar:mlstring></label></td>
-			<td>
-			<select name="settings[#$modname#.delete]" id="settings_#$modname#_delete">
-			<xar:foreach in="$templates" key="$id" value="$name">
-				<xar:if condition="$config['delete'] eq $id">
-					<option value="#$id#" selected="selected">#$name#</option>
-				<xar:else/>
-					<option value="#$id#">#$name#</option>
-				</xar:if>
-			</xar:foreach>
-			</select>
-			</td>
-		</tr>
-	</xar:foreach>
-	</table>
+    <table border="0" cellpadding="8" cellspacing="0">
+    <xar:foreach in="$settings" key="$modname" value="$config">
+        <tr>
+            <td colspan="2"><b>#$config['label']#</b></td>
+        </tr>
+        <tr>
+            <td><label for="settings_#$modname#_create"><xar:mlstring>Template for Create Hook Calls</xar:mlstring></label></td>
+            <td>
+            <select name="settings[#$modname#.create]" id="settings_#$modname#_create">
+            <xar:foreach in="$templates" key="$id" value="$name">
+                <xar:if condition="$config['create'] eq $id">
+                    <option value="#$id#" selected="selected">#$name#</option>
+                <xar:else/>
+                    <option value="#$id#">#$name#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="settings_#$modname#_update"><xar:mlstring>Template for Update Hook Calls</xar:mlstring></label></td>
+            <td>
+            <select name="settings[#$modname#.update]" id="settings_#$modname#_update">
+            <xar:foreach in="$templates" key="$id" value="$name">
+                <xar:if condition="$config['update'] eq $id">
+                    <option value="#$id#" selected="selected">#$name#</option>
+                <xar:else/>
+                    <option value="#$id#">#$name#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="settings_#$modname#_delete"><xar:mlstring>Template for Delete Hook Calls</xar:mlstring></label></td>
+            <td>
+            <select name="settings[#$modname#.delete]" id="settings_#$modname#_delete">
+            <xar:foreach in="$templates" key="$id" value="$name">
+                <xar:if condition="$config['delete'] eq $id">
+                    <option value="#$id#" selected="selected">#$name#</option>
+                <xar:else/>
+                    <option value="#$id#">#$name#</option>
+                </xar:if>
+            </xar:foreach>
+            </select>
+            </td>
+        </tr>
+    </xar:foreach>
+    </table>
 <br/>
 
 <h3><xar:mlstring>Configuration of Scheduled Processing</xar:mlstring></h3>
