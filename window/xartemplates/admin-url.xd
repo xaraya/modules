@@ -7,6 +7,7 @@
             <a href="#xarModURL('window','admin','general')#">
             <xar:mlstring>General Settings</xar:mlstring>
             </a>
+
         </td>
         <td align="center" valign="middle">
             <xar:mlstring>URL Specific Settings</xar:mlstring>
@@ -18,6 +19,7 @@
 <form action="#$action#" method="post" enctype="application/x-www-form-urlencoded">
 <input type="hidden" name="authid" id="authid" value="#$authid#" />
 <input type="hidden" name="id" id="authid" value="#$id#" />
+
 <input type="hidden" name="window_status" id="window_status" value="#$window_status#" />
 <table border="0" width="80%">
 <tr align="left" valign="middle">
@@ -27,17 +29,19 @@
     <td>
         <b><xar:mlstring>Alias</xar:mlstring></b>
     </td>
+
     <td>
         <b><xar:mlstring>Options</xar:mlstring></b>
     </td>
 </tr>
 
-<xar:if condition = "count($urls) eq 0">
+<xar:if condition =" count($urls) eq 0">
 <tr align="left" valign="middle">
     <td colspan="3">
         No URLs defined
     </td>
 </tr>
+
 <xar:else />
 	<xar:loop name="$urls">
 	<xar:if condition="$loop:item['urlid'] eq $id">
@@ -48,6 +52,7 @@
 			<td>
 				#$loop:item['urladdress']#
 			</td>
+
 			<td>
 				#$loop:item['urlalias']#
 			</td>
@@ -57,6 +62,7 @@
 				</a>
 				&nbsp;&nbsp;
 				<a href="#$loop:item['deletelink']#">
+
 				<xar:mlstring>Delete</xar:mlstring>
 				</a>
 			</td>
@@ -67,6 +73,7 @@
 <tr align="left" valign="middle">
     <td colspan="3">
         <hr />
+
     </td>
 </tr>
 <tr align="left" valign="middle">
@@ -77,24 +84,27 @@
         <input type="text" name="alias" id="alias" value="#$alias#" size="30" maxlength="50" tabindex="2" />
     </td>
     <td>
+
     <input type="submit" value="#$lang_action#"  tabindex="3" />
-	<xar:if condition = "$window_status eq 'edit'">
+	<xar:if condition =" $window_status eq 'edit'">
     	&nbsp;&nbsp;<a href="#xarModURL('window','admin','addurl')#">Cancel</a>
-	</xar:if>    
+	</xar:if>
     </td>
 </tr>
 <tr>
     <td colspan="3">
 		<b><xar:mlstring>The values below override the general settings for the URL you are adding.</xar:mlstring></b>
+
     </td>
 </tr>
 <tr>
     <td colspan="2">
-        <xar:mlstring>Only for registered users</xar:mlstring> 
+        <xar:mlstring>Only for registered users</xar:mlstring>
     </td>
-    <td>
-        <xar:if condition = "$reg_user_only eq 1">
+    <td NOWRAP>
+        <xar:if condition =" $reg_user_only eq 1">
 			<input type="radio" name="reg_user_only" id="reg_user_only" value="0" tabindex="11" />
+
 			<xar:mlstring>No</xar:mlstring>
 			<input type="radio" name="reg_user_only" id="reg_user_only" checked value="1" tabindex="12" />
 			<xar:mlstring>Yes</xar:mlstring>
@@ -102,16 +112,18 @@
 			<input type="radio" name="reg_user_only" id="reg_user_only" checked value="0"  tabindex="11" />
 			<xar:mlstring>No</xar:mlstring>
 			<input type="radio" name="reg_user_only" id="reg_user_only" value="1" tabindex="12" />
+
 			<xar:mlstring>Yes</xar:mlstring>
 		</xar:if>
     </td>
 </tr>
 <tr>
     <td colspan="2">
-        <xar:mlstring>Add link for Open in new window</xar:mlstring> 
+        <xar:mlstring>Add link for Open in new window</xar:mlstring>
     </td>
-    <td>
-        <xar:if condition = "$open_direct eq 1">
+    <td NOWRAP>
+
+        <xar:if condition =" $open_direct eq 1">
 			<input type="radio" name="open_direct" id="open_direct" value="0"  tabindex="13" />
 			<xar:mlstring>No</xar:mlstring>
 			<input type="radio" name="open_direct" id="open_direct" value="1" checked tabindex="14" />
@@ -119,6 +131,7 @@
 		<xar:else />
 			<input type="radio" name="open_direct" id="open_direct" value="0" checked tabindex="13" />
 			<xar:mlstring>No</xar:mlstring>
+
 			<input type="radio" name="open_direct" id="open_direct" value="1" tabindex="14" />
 			<xar:mlstring>Yes</xar:mlstring>
 		</xar:if>
@@ -126,16 +139,18 @@
 </tr>
 <tr>
     <td colspan="2">
-        <xar:mlstring>Use fixed title</xar:mlstring> 
+        <xar:mlstring>Use fixed title</xar:mlstring>
     </td>
-    <td>
-        <xar:if condition = "$use_fixed_title eq 1">
+
+    <td NOWRAP>
+        <xar:if condition =" $use_fixed_title eq 1">
 			<input type="radio" name="use_fixed_title" id="use_fixed_title" value="0"  tabindex="15" />
 			<xar:mlstring>No</xar:mlstring>
 			<input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" checked tabindex="16" />
 			<xar:mlstring>Yes</xar:mlstring>
 		<xar:else />
 			<input type="radio" name="use_fixed_title" id="use_fixed_title" value="0" checked tabindex="15" />
+
 			<xar:mlstring>No</xar:mlstring>
 			<input type="radio" name="use_fixed_title" id="use_fixed_title" value="1" tabindex="16" />
 			<xar:mlstring>Yes</xar:mlstring>
@@ -144,15 +159,17 @@
 </tr>
 <tr>
     <td colspan="2">
-        <xar:mlstring>Auto resize window</xar:mlstring> 
+        <xar:mlstring>Auto resize window</xar:mlstring>
+
     </td>
-    <td>
-        <xar:if condition = "$auto_resize eq 1">
+    <td NOWRAP>
+        <xar:if condition =" $auto_resize eq 1">
 			<input type="radio" name="auto_resize" id="auto_resize" value="0"  tabindex="17" />
 			<xar:mlstring>No</xar:mlstring>
 			<input type="radio" name="auto_resize" id="auto_resize" value="1" checked tabindex="18" />
 			<xar:mlstring>Yes</xar:mlstring>
 		<xar:else />
+
 			<input type="radio" name="auto_resize" id="auto_resize" value="0" checked tabindex="17" />
 			<xar:mlstring>No</xar:mlstring>
 			<input type="radio" name="auto_resize" id="auto_resize" value="1" tabindex="18" />
@@ -162,7 +179,8 @@
 </tr>
 <tr>
     <td colspan="2">
-        <xar:mlstring>Height of viewing window in pixels</xar:mlstring> 
+
+        <xar:mlstring>Height of viewing window in pixels</xar:mlstring>
         <br />
         (<xar:mlstring>Only if Auto resize window = No, in which case this is the height of the content window.</xar:mlstring>)
     </td>
@@ -170,15 +188,17 @@
 		<input type="text" name="vsize" id="vsize" value="#$vsize#" size="4" maxlength="4" tabindex="19" />
     </td>
 </tr>
+
 <tr>
     <td colspan="2">
 		<xar:mlstring>Width of viewing window in pixels or percent</xar:mlstring>
-		(<xar:mlstring>If percent use %</xar:mlstring>) 
+		(<xar:mlstring>If percent use %</xar:mlstring>)
     </td>
     <td>
-<input type="text" name="hsize" id="hsize" value="#$hsize#" size="4" maxlength="4" tabindex="20" /> 
+<input type="text" name="hsize" id="hsize" value="#$hsize#" size="4" maxlength="4" tabindex="20" />
     </td>
 </tr>
+
 </form>
 </table>
 </div>
