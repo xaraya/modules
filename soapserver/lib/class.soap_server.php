@@ -13,7 +13,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class soap_server extends nusoap_base {
+ class soap_server extends nusoap_base 
+ {
  
  	var $service = ''; // service name
      var $operations = array(); // assoc array of operations => opData

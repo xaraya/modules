@@ -21,7 +21,8 @@
  * @version  v 0.6.3
  * @access   public
  */
- class soapclient extends nusoap_base  {
+ class soapclient extends nusoap_base  
+ {
  
  	var $username = '';
  	var $password = '';
@@ -393,7 +394,8 @@
  	* @param    string $enc
  	* @access   public
  	*/
- 	function setHTTPEncoding($enc='gzip, deflate'){
+ 	function setHTTPEncoding($enc='gzip, deflate')
+	{
  		$this->http_encoding = $enc;
  	}
  	
