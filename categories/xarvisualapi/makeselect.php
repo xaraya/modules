@@ -33,7 +33,20 @@
  */
 function categories_visualapi_makeselect ($args)
 {
-    $tree_array = xarModAPIFunc('categories','visual','treearray',$args);
+    // Getting categories Array
+    $args['categories'] = xarModAPIFunc('categories', 'user', 'getcat',
+                          array('eid' => (isset($args['eid']))?$args['eid']:false,
+                                'cid' => (isset($args['cid']))?$args['cid']:false,
+                                'return_itself' => (isset($args['return_itself']))?$args['return_itself']:false,
+                                'getchildren' => true,
+                                'maximum_depth' => isset($args['maximum_depth'])?$args['maximum_depth']:null,
+                                'minimum_depth' => isset($args['minimum_depth'])?$args['minimum_depth']:null));
+
+    if ($args['categories'] === false) {// If it returned false
+        $msg = xarML('Error obtaining category.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return;
+    }
 
     if (!isset($args['multiple'])) {
         $args['multiple'] = 0;
@@ -43,69 +56,25 @@ function categories_visualapi_makeselect ($args)
         $args['show_edit'] = 0;
     }
 
-    if (isset($args['name_prefix'])) {
-        $name_prefix = $args['name_prefix'];
+    if (!isset($args['name_prefix'])) {
+        $args['name_prefix'] = '';
+    }
+    if (!isset($args['javascript'])) {
+        $args['javascript'] = '';
+    }
+
+    if (isset($args['template'])) {
+        $template = $args['template'];
     } else {
-        $name_prefix = '';
+        $template = null;
     }
 
-// TODO: templatize !
-// Pass 'size' into the template, so that the list size can be adjusted in context (pretty-please).
-// Or allow different templates to be selected. Likewise for the label etc.
+// Note : $args['values'][$id] will be updated inside the template, so that when several
+//        select boxes are used with overlapping trees, categories will only be selected once
+// This requires that the values are passed by reference : $args['values'] =& $seencids;
 
-    $select = '<select' . (!empty($size) ? ' size="'.$size.'"' : '')
-        . ' name="' . $name_prefix . 'cids[]"' . (($args['multiple'] == 1)?' multiple="multiple"':'').
-               (!empty($args['javascript']) ? ' ' . $args['javascript'] : '').'>'."\n";
-
-    if (!empty($args['select_itself'])) {
-        $select .= '<option value="">' . xarML('Select :') . '</option>'."\n";
-    }
-
-    $already_passed = false;
-    $current_id = 0;
-    foreach ($tree_array as $option)
-    {
-        if (isset($args['cid']) && $option['id'] == $args['cid']) {
-            $name = $option['name'];
-            if (!empty($args['select_itself'])) {
-                if (!empty($args['values'][$option['id']])) {
-                    $select .= '<option value="'.$option['id'].'" selected="selected">' . $name . '</option>'."\n";
-                } else {
-                    $select .= '<option value="'.$option['id'].'">' . $name . '</option>'."\n";
-                }
-            } else {
-                $name = preg_replace('/&nbsp;/','',$name);
-                $name = preg_replace('/^[ +-]*/','',$name);
-                $select .= '<option value="">'.$name;
-                if ($args['multiple'] == 1) {
-                    $select .= ' :';
-                }
-            }
-            continue;
-        }
-        $select .= "<option ";
-        if (isset($args['values']) && isset($args['values'][$option['id']]) &&
-            ($args['multiple'] == 1 || !$already_passed) &&
-            ($args['values'][$option['id']]>0))
-        {
-            $select .= 'selected="selected" ';
-            $args['values'][$option['id']]--;
-            $already_passed = true;
-            $current_id = $option['id'];
-        }
-        $select .= 'value="'.$option['id'].'">'.$option['name'] . '</option>'. "\n";
-    }
-    unset($tree_array);
-    $select .= "</select>\n";
-
-    if (!empty($args['show_edit']) && !empty($current_id) &&
-		xarSecurityCheck('EditCategories',0,'All',"All:$current_id")) {
-        $select .= '&nbsp;[ <a href="' . xarModURL('categories','admin','modifycat',
-                                                array('cid' => $current_id));
-        $select .= '">' . xarML('edit') . '</a> ]';
-    }
-
-    return $select;
+    return xarTplModule('categories','visual','makeselect',
+                        $args, $template);
 }
 
 ?>
