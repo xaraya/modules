@@ -12,10 +12,8 @@ function headlines_adminapi_update($args)
     // Argument check
     if ((!isset($hid)) ||
         (!isset($url))) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'Headlines');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count', join(', ',$invalid), 'admin', 'update', 'Headlines');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -26,26 +24,23 @@ function headlines_adminapi_update($args)
                           array('hid' => $hid));
 
     if ($link == false) return;
-
     // Security Check
 	if(!xarSecurityCheck('EditHeadlines')) return;
-
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $headlinestable = $xartable['headlines'];
 
     // Update the link
     $query = "UPDATE $headlinestable
-            SET xar_url = '" . xarVarPrepForStore($url) . "',
-                xar_title = '" . xarVarPrepForStore($title) . "',
-                xar_desc = '" . xarVarPrepForStore($desc) . "',
-                xar_order = '" . xarVarPrepForStore($order) . "'
-            WHERE xar_hid = " . xarVarPrepForStore($hid);
-    $result =& $dbconn->Execute($query);
+            SET xar_url = ?,
+                xar_title = ?,
+                xar_desc = ?,
+                xar_order = ?
+            WHERE xar_hid = ?";
+    $bindvars = array($url, $title, $desc, $order, $hid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
-
     // Let the calling process know that we have finished successfully
     xarModCallHooks('item', 'update', $hid, '');
     return true;

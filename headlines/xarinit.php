@@ -53,7 +53,22 @@ function headlines_init()
                                    'xar_order'      => array('type'        => 'integer',
                                                              'null'        => false,
                                                              'default'     => '0',
-                                                             'increment'   => false)));
+                                                             'increment'   => false),
+                                   'xar_string'     => array('type'        => 'varchar',
+                                                             'size'        => 255,
+                                                             'null'        => false,
+                                                             'default'     => ''),
+                                   'xar_date'       => array('type'        => 'integer',
+                                                             'unsigned'    => TRUE,
+                                                             'null'        => FALSE,
+                                                             'default'     => '0')));
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+    $index = array('name'      => 'i_' . $headlinesTable . '_hid',
+                   'fields'    => array('xar_hid'),
+                   'unique'    => FALSE);
+    $query = xarDBCreateIndex($headlinesTable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
@@ -63,6 +78,12 @@ function headlines_init()
                        'register_block_type',
                        array('modName'  => 'headlines',
                              'blockType'=> 'rss'))) return;
+
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'headlines',
+                             'blockType'=> 'cloud'))) return;
 
     // Set up module variables
     xarModSetVar('headlines', 'itemsperpage', 20);
@@ -116,13 +137,54 @@ function headlines_upgrade($oldVersion)
         case '0.2':
         case '0.2.0':
             xarModSetVar('headlines', 'SupportShortURLs', 1);
+        case '1.0':
+        case '1.0.0':
+            // Get database setup
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+            $headlinesTable = $xartable['headlines'];
+
+            // Index the hid field
+            $index = array('name'      => 'i_' . $headlinesTable . '_hid',
+                           'fields'    => array('xar_hid'),
+                           'unique'    => FALSE);
+            $query = xarDBCreateIndex($headlinesTable,$index);
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+
+            // Two New Fields for the Cloud
+            $query = xarDBAlterTable($headlinesTable,
+                              array('command' => 'add',
+                                    'field'   => 'xar_string',
+                                    'type'    => 'varchar',
+                                    'size'        => 255,
+                                    'null'        => false,
+                                    'default'     => ''));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            // Two New Fields for the Cloud
+            $query = xarDBAlterTable($headlinesTable,
+                              array('command'     => 'add',
+                                    'field'       => 'xar_date',
+                                    'type'        => 'integer',
+                                    'unsigned'    => TRUE,
+                                    'null'        => FALSE,
+                                    'default'     => '0'));
+            $result = &$dbconn->Execute($query);
+            if (!$result) return;
+
+            if (!xarModAPIFunc('blocks',
+                               'admin',
+                               'register_block_type',
+                               array('modName'  => 'headlines',
+                                     'blockType'=> 'cloud'))) return;
+
         break;
     }
-
     // Update successful
     return true;
 }
-
 /**
  * Delete the headlines module
  *
@@ -130,7 +192,6 @@ function headlines_upgrade($oldVersion)
  */
 function headlines_delete()
 {
-
     // need to drop the module tables too
     // Get database information
     $dbconn =& xarDBGetConn();
@@ -151,14 +212,9 @@ function headlines_delete()
                        array('modName'  => 'headlines',
                              'blockType'=> 'rss'))) return;
 
-    xarModDelVar('headlines', 'itemsperpage');
-
-    // Remove Masks and Instances
+    xarModDelAllVars('headlines');
     xarRemoveMasks('headlines');
     xarRemoveInstances('headlines');
-
     return true;
-
 }
-
 ?>

@@ -25,5 +25,4 @@ function headlines_userapi_getitemlinks($args)
     }  
     return $itemlinks;
 }
-
 ?>

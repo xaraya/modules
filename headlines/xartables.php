@@ -25,16 +25,12 @@ function headlines_xartables()
 {
     // Initialise table array
     $xartable = array();
-
     // Get the name for the example item table.  This is not necessary
     // but helps in the following statements and keeps them readable
     $headlines = xarDBGetSiteTablePrefix() . '_headlines';
-
     // Set the table name
     $xartable['headlines'] = $headlines;
-
     // Return the table information
     return $xartable;
 }
-
 ?>

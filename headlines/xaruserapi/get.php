@@ -21,7 +21,6 @@ function headlines_userapi_get($args)
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $headlinestable = $xartable['headlines'];
 
     // Get headline
@@ -31,8 +30,9 @@ function headlines_userapi_get($args)
                      xar_url,
                      xar_order
             FROM $headlinestable
-            WHERE xar_hid = " . xarVarPrepForStore($hid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_hid = ?";
+    $bindvars = array($hid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     list($hid, $title, $desc, $url, $order) = $result->fields;
@@ -56,7 +56,6 @@ function headlines_userapi_get($args)
             $link['catid'] = join('+',$cids[$hid]);
         }
     }
-
     return $link;
 }
 ?>

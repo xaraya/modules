@@ -17,5 +17,4 @@ function headlines_userapi_getitemtypes($args)
 */
     return $itemtypes;
 }
-
 ?>
