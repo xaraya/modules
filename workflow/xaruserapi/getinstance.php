@@ -11,7 +11,8 @@
 	@param $instaceId (required)
 	@returns workflow Instance
 */
-function workflow_userapi_getInstance($args) {
+function workflow_userapi_getInstance($args) 
+{
 
 	include_once('modules/workflow/tiki-setup.php');
 
