@@ -32,9 +32,9 @@ function mailbag_adminapi_geterrors($args)
     {
         $msgindex[$i]['err_id'] = $msg_id;
         $msgindex[$i]['from'] = $from;
-        $msgindex[$i]['to'] = $to."@".pnModGetVar('MailBag', 'emaildomain');
+        $msgindex[$i]['to'] = $to."@". xarModGetVar('mailbag', 'emaildomain');
         $msgindex[$i]['subject'] = $subject;
-        $msgindex[$i]['date'] = strtotime($msg_time);
+        $msgindex[$i]['date'] = !empty($msg_time) ? strtotime($msg_time) : 0;
         $msgindex[$i]['text'] = $msg_text;
         $msgindex[$i]['header'] = $header;
         $i++;
