@@ -110,12 +110,9 @@ function xarcachemanager_adminapi_updatehook($args)
                                                   xar_page,
                                                   xar_user,
                                                   xar_expire)
-                        VALUES (" . xarVarPrepForStore($objectid) . ",
-                                " . xarVarPrepForStore($nocache) . ",
-                                " . xarVarPrepForStore($pageshared) . ",
-                                " . xarVarPrepForStore($usershared) . ",
-                                " . xarVarPrepForStore($cacheexpire) . ")";
-            $result =& $dbconn->Execute($query);
+                        VALUES (?,?,?,?,?)";
+            $bindvars = array($objectid, $nocache, $pageshared, $usershared, $cacheexpire);
+            $result =& $dbconn->Execute($query,$bindvars);
             
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
