@@ -71,6 +71,8 @@ function html_userapitransforminput($text)
     // Credit to Rabbitt for fixing
     // hexey's (http://www.evilwalrus.com/viewcode.php?codeEx=482)
     // stuff that didn't work - THIS WAS A PITA !!!
+
+    /* Let's comment this out for release and dig back into it later.
     $search  = array ("'(<\/?)(br|hr)([^>]*)( />)'ie",
                       "'(<\/?)(br|hr)([^>]*)(/>)'ie",
                       "'(\w+=)\"([A-Za-z0-9%:;_ -]+)\"'ie",
@@ -87,7 +89,7 @@ function html_userapitransforminput($text)
                      );
 
     $text = preg_replace($search, $replace, $text);
-
+    */
     return $text;
 }
 
