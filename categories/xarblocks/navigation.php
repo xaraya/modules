@@ -42,7 +42,9 @@ function categories_navigationblock_display($blockinfo)
 
     // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
-    extract($vars);
+    if (!empty($vars) {
+        extract($vars);
+    }
 
     // Get requested layout
     if (empty($layout)) {
