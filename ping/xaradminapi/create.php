@@ -16,7 +16,7 @@ function ping_adminapi_create($args)
         return;
     }
     // Security Check
-	if(!xarSecurityCheck('Adminping')) return;
+    if(!xarSecurityCheck('Adminping')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

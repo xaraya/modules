@@ -15,7 +15,7 @@ function ping_userapi_get($args)
         return;
     }
     // Security Check
-	if(!xarSecurityCheck('Readping')) return;
+    if(!xarSecurityCheck('Readping')) return;
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $pingtable = $xartable['ping'];

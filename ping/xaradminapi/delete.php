@@ -23,7 +23,7 @@ function ping_adminapi_delete($args)
 
     if ($link == false) return;
     // Security Check
-	if(!xarSecurityCheck('Adminping')) return;
+    if(!xarSecurityCheck('Adminping')) return;
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();

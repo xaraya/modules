@@ -9,7 +9,7 @@ function ping_userapi_countitems()
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     // Security Check
-	if(!xarSecurityCheck('Readping')) return;
+    if(!xarSecurityCheck('Readping')) return;
     $table = $xartable['ping'];
     $query = "SELECT COUNT(1)
             FROM $table";

@@ -26,8 +26,8 @@ function ping_admin_delete()
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
     if (!xarModAPIFunc('ping',
-		               'admin',
-		               'delete',
+                       'admin',
+                       'delete',
                         array('id' => $id))) return;
     // Redirect
     xarResponseRedirect(xarModURL('ping', 'admin', 'view'));

@@ -4,9 +4,9 @@ function ping_admin_new()
     // Security Check
     if(!xarSecurityCheck('Adminping')) return;
     // Get parameters
-	if (!xarVarFetch('url', 'str:1:', $url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('url', 'str:1:', $url, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('method','checkbox', $method, false, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('phase', 'str:1:', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
 
     switch(strtolower($phase)) {
         case 'form':

@@ -8,7 +8,7 @@
  */
 function ping_adminapi_getmenulinks()
 {   // Security Check
-	if(xarSecurityCheck('Adminping')) {
+    if(xarSecurityCheck('Adminping')) {
         $menulinks[] = Array('url'   => xarModURL('ping',
                                                   'admin',
                                                   'new'),
