@@ -1,5 +1,5 @@
-  <xar:template file="user_bar" type="module"/>
-  <div class="xar-mod-body">
+<xar:template file="user_bar" type="module"/>
+<div class="xar-mod-body">
     <h3><xar:mlstring>Workflow Error</xar:mlstring></h3>
     <div class="xar-norm-outline" style="padding: 0.5 em 1em 0.5em;">
       <p>#$msg#</p>
@@ -7,5 +7,4 @@
     
     <!-- Show a courtesy footer -->
     <xar:template file="galaxfooter"/>
-  </div>
 </div>

@@ -127,10 +127,10 @@
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
                 <th><xar:mlstring>Process</xar:mlstring></th>
-                <th><a href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array("sort_mode" => 'type_asc'))#"><xar:mlstring>Type</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array("sort_mode" => 'isInteractive_asc'))#"><xar:mlstring>Interact</xar:mlstring></a></th>
-                <th><a href="#xarServerGetCurrentURL(array("sort_mode" => 'isAutoRouted_asc'))#"><xar:mlstring>Route</xar:mlstring></a></th>
+                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a></th>
+                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'type_asc'))#"><xar:mlstring>Type</xar:mlstring></a></th>
+                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'isInteractive_asc'))#"><xar:mlstring>Interact</xar:mlstring></a></th>
+                <th><a href="#xarServerGetCurrentURL(array('sort_mode' => 'isAutoRouted_asc'))#"><xar:mlstring>Route</xar:mlstring></a></th>
                 <th><xar:mlstring>Status</xar:mlstring></th>
                 <th><xar:mlstring>Duration of completed activities - min/avg/max</xar:mlstring></th>
               </tr>
@@ -160,10 +160,14 @@
                     </xar:if>
                     <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$items[$ix]['pId']#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                     <xar:if condition="$items[$ix]['type'] eq 'standalone'">
-                      <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#"><img alt='#xarML('run')#' title='#xarML('run activity')#' src='modules/workflow/lib/Galaxia/img/icons/next.gif' border='0' /></a>
+                      <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#">
+                        <img alt="#xarML('run')#" title="#xarML('run activity')#" src="modules/workflow/lib/Galaxia/img/icons/next.gif" border="0"/>
+                      </a>
                     </xar:if>
                     <xar:if condition="$items[$ix]['type'] eq 'start'">
-                      <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#&amp;createInstance=1"><img alt='#xarML('run')#' title='#xarML('run activity')#' src='modules/workflow/lib/Galaxia/img/icons/next.gif' border='0' /></a>
+                      <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#&amp;createInstance=1">
+                        <img alt="#xarML('run')#" title="#xarML('run activity')#" src="modules/workflow/lib/Galaxia/img/icons/next.gif" border="0"/>
+                      </a>
                     </xar:if>
                   </td>
                   <td style="text-align:left;">#$items[$ix]['type']#</td>

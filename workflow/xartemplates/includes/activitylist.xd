@@ -92,8 +92,8 @@
               <xar:else/>
               <th><a href="#$baselink#&amp;sort_mode=isAutoRouted_desc"><xar:mlstring>Autoroute</xar:mlstring></a></th>
             </xar:if>
-            <th><xar:mlstring>Code</xar:mlstring></td>
-            <th><xar:mlstring>Template</xar:mlstring></td>
+            <th><xar:mlstring>Code</xar:mlstring></th>
+            <th><xar:mlstring>Template</xar:mlstring></th>
           </tr>
           <xar:if condition="!empty($items) and count($items) gt 0">
             <xar:foreach in="$items" key="$ix">
@@ -102,17 +102,17 @@
                 <xar:set name="rowclass">'xar-alt'</xar:set>
               </xar:if>
               <tr class="#$rowclass#">
-                <td style="text-align:right;"">
+                <td style="text-align:right;">
                   #$items[$ix]['flowNum']#
                 </td>
-                <td style="text-align:left;"">
+                <td style="text-align:left;">
                   <input type="checkbox" name="activity[#$items[$ix]['activityId']#]" />&nbsp;
                   <a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
                   <xar:if condition="$items[$ix]['roles'] lt 1">
                     <small><xar:mlstring>(no roles)</xar:mlstring></small>
                   </xar:if>
                 </td>
-                <td style="text-align:center;"">
+                <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['type'] eq 'start'">
                     <img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#"  />
                     <xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
@@ -131,14 +131,14 @@
                     #$items[$ix]['type']#
                   </xar:if>
                 </td>
-                <td style="text-align:center;"">
+                <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
                     <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]" checked="checked" />
                     <xar:else/>
                     <input type="checkbox" name="activity_inter[#$items[$ix]['activityId']#]" />
                   </xar:if>
                 </td>
-                <td style="text-align:center;"">
+                <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['isAutoRouted'] eq 'y'">
                     <input type="checkbox" name="activity_route[#$items[$ix]['activityId']#]" checked="checked" />
                     <xar:else/>
@@ -148,13 +148,13 @@
                 
                 <td style="text-align: center;">
                   <a href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#&amp;activityId=#$items[$ix]['activityId']#">
-                    <img src="modules/workflow/lib/Galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('Code to execute when running this activity')#" /></a>
+                    <img src="modules/workflow/lib/Galaxia/img/icons/book.gif" alt="#xarML('code')#" title="#xarML('Code to execute when running this activity')#" />
                   </a>
                 </td>
                 <td style="text-align: center;">
                   <xar:if condition="$items[$ix]['isInteractive'] eq 'y'">
                     <a class="link" href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#&amp;activityId=#$items[$ix]['activityId']#&amp;template=1">
-                      <img src="modules/workflow/lib/Galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#" /></a>
+                      <img src="modules/workflow/lib/Galaxia/img/icons/theme.gif" alt="#xarML('template')#" title="#xarML('Interface template for interactive activity')#" />
                     </a>
                   <xar:else/>
                     &nbsp;

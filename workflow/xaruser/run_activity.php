@@ -8,6 +8,7 @@
  */
 function workflow_user_run_activity()
 {
+    xarLogMessage("Running activity");
     // Security Check
     if (!xarSecurityCheck('ReadWorkflow')) return;
 
@@ -163,7 +164,7 @@ if (!isset($_REQUEST['auto']) && $activity->isInteractive() && $__activity_compl
     $template = $activity->getNormalizedName(). '.tpl';
     $tplData['mid'] =  $process->getNormalizedName(). '/' . $template;
   // not very clean way, but it works :)
-                $output = xarTpl__executeFromFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
+                $output = xarTplFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
                 $tplData['mid'] = $output;
     $template = 'running';
 

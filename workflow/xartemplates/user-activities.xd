@@ -17,7 +17,7 @@
             
             <tr>
               <td >
-                <select onChange='javascript:getElementById("fform").submit();' name="filter_process" onChange='javascript:getElementById("filterf").submit();'>
+                <select onChange='javascript:getElementById("fform").submit();' name="filter_process">
                   <xar:if condition="'' eq $filter_process">
                     <option selected="selected" value=""><xar:mlstring>All</xar:mlstring></option>
                   <xar:else/>
@@ -48,17 +48,17 @@
               <tr>
                 <th>
                   <xar:if condition="$sort_mode eq 'procname_desc'">
-                    <a href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a>
+                    <a href="#xarServerGetCurrentURL(array('sort_mode' => 'procname_asc'))#"><xar:mlstring>Process</xar:mlstring></a>
                     <xar:else/>
-                    <a href="#xarServerGetCurrentURL(array("sort_mode" => 'procname_desc'))#"><xar:mlstring>Process</xar:mlstring></a>
+                    <a href="#xarServerGetCurrentURL(array('sort_mode' => 'procname_desc'))#"><xar:mlstring>Process</xar:mlstring></a>
                   </xar:if>
                 </th>
                 <th><xar:mlstring>Version</xar:mlstring></th>
                 <th>
                   <xar:if condition="$sort_mode eq 'name_desc'">
-                    <a href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a>
+                    <a href="#xarServerGetCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Activity</xar:mlstring></a>
                     <xar:else/>
-                    <a href="#xarServerGetCurrentURL(array("sort_mode" => 'name_desc'))#"><xar:mlstring>Activity</xar:mlstring></a>
+                    <a href="#xarServerGetCurrentURL(array('sort_mode' => 'name_desc'))#"><xar:mlstring>Activity</xar:mlstring></a>
                   </xar:if>
                 </th>
                 <th><xar:mlstring>Instances</xar:mlstring></th>
@@ -96,7 +96,7 @@
                     </xar:if>
                     <xar:if condition="$items[$ix]['isInteractive'] eq 'y' and ($items[$ix]['type'] eq 'start' or $items[$ix]['type'] eq 'standalone')">
                       <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#">
-                        <img src='modules/workflow/lib/Galaxia/img/icons/next.gif' alt='#xarML('run')#' title='#xarML('run activity')#' />
+                        <img src="modules/workflow/lib/Galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#" />
                       </a>          
                     </xar:if>
                   </td>

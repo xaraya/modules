@@ -90,16 +90,16 @@
                 <td style="text-align:right;">#$items[$ix]['version']#</td>
                 <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['isActive'] eq 'y'">
-                    <img src='modules/workflow/lib/Galaxia/img/icons/refresh2.gif' alt=' (#xarML('active')#) ' title='#xarML('active process')#' />
+                    <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt="(#xarML('active')#)" title="#xarML('active process')#" />
                   <xar:else/>
                     &nbsp;
                   </xar:if>
                 </td>
                 <td style="text-align:center;">
                   <xar:if condition="$items[$ix]['isValid'] eq 'n'">
-                    <img src='modules/workflow/lib/Galaxia/img/icons/red_dot.gif' alt=' (#xarML('invalid')#) ' title='#xarML('invalid process')#' />
+                    <img src="modules/workflow/lib/Galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
                   <xar:else/>
-                    <img src='modules/workflow/lib/Galaxia/img/icons/green_dot.gif' alt=' (#xarML('valid')#) ' title='#xarML('valid process')#' />
+                    <img src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
                   </xar:if>  
                 </td>
                 <td style="text-align:center;"><a href="#$baselink#&amp;sort_mode=#$sort_mode#&amp;newminor=#$items[$ix]['pId']#">

@@ -89,10 +89,10 @@
           <table style="border-collapse: separate; width: 99%;">
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
-                <th><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
+                <th><a class="tableheading" href="#xarServerGetCurrentURL(array('sort_mode' => 'name_asc'))#"><xar:mlstring>Process</xar:mlstring></a></th>
                 <th><xar:mlstring>Activities</xar:mlstring></th>
-                <th><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isActive_asc'))#"><xar:mlstring>Active</xar:mlstring></a></th>
-                <th><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isValid_asc'))#"><xar:mlstring>Valid</xar:mlstring></a></th>
+                <th><a class="tableheading" href="#xarServerGetCurrentURL(array('sort_mode' => 'isActive_asc'))#"><xar:mlstring>Active</xar:mlstring></a></th>
+                <th><a class="tableheading" href="#xarServerGetCurrentURL(array('sort_mode' => 'isValid_asc'))#"><xar:mlstring>Valid</xar:mlstring></a></th>
                 <th><xar:mlstring>Instances</xar:mlstring></th>
                 <th><xar:mlstring>Duration of completed processes - min/avg/max</xar:mlstring></th>
               </tr>
@@ -106,16 +106,16 @@
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isActive'] eq 'y'">
-                      <img src='modules/workflow/lib/Galaxia/img/icons/refresh2.gif' alt=' (#xarML('active')#) ' title='#xarML('active process')#' />
+                      <img src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#" />
                         <xar:else/>
                         &nbsp;
                     </xar:if>
                   </td>
                   <td style="text-align:center;">
                     <xar:if condition="$items[$ix]['isValid'] eq 'n'">
-                      <img src='modules/workflow/lib/Galaxia/img/icons/red_dot.gif' alt=' (#xarML('invalid')#) ' title='#xarML('invalid process')#' />
+                      <img src="modules/workflow/lib/Galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#" />
                         <xar:else/>
-                        <img src='modules/workflow/lib/Galaxia/img/icons/green_dot.gif' alt=' (#xarML('valid')#) ' title='#xarML('valid process')#' />
+                        <img src="modules/workflow/lib/Galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#" />
                     </xar:if>
                     
                   </td>

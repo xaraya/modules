@@ -35,7 +35,7 @@
                 <a href="&xar-modurl-workflow-admin-roles;&amp;sort_mode=#$sort_mode#&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode2=description_desc">
                   <xar:mlstring>Description</xar:mlstring>
                 </a>
-              </td>
+              </th>
             </xar:if>
           </tr>
           <xar:if condition="!empty($items) and count($items) gt 0">
