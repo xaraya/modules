@@ -15,7 +15,14 @@
  */
 function pinup_user_main()
 {
-    $url = 'http://www.coolpick.com/img/syn/_babe/' . date('Ymd') . '.jpg';
-    return array('piclocation' => $url);
+    $url    = "http://coolpick.com/way/cool/syn/babe.html";
+    $needle = '7babpol.shtml"\n><img src="';
+
+    $lines_array = file($url);
+    $lines = implode('', $lines_array);
+
+    $match_flg = preg_match("°".$needle."([^\"]+)(\")°", $lines, $matches);
+
+    return array('piclocation' => $matches[1]);
 }
 ?>
