@@ -73,13 +73,13 @@
                 <tr align="left" valign="top">
                     <td colspan=2>
                         <xar:mlstring>If a user exists in SQL but does not have
-						a login account to Xaraya, the user will not be able to
-						login.  By selecting the option below and entering the
-						attribute values, a user that has account information in
-						SQL will be automatically added to the Xaraya database
-						and allowed to login. If this option is left unchecked,
-						the Xaraya Anonymous role is used if authentication is
-						successful (not sure how this is useful?).</xar:mlstring>
+                        a login account to Xaraya, the user will not be able to
+                        login.  By selecting the option below and entering the
+                        attribute values, a user that has account information in
+                        SQL will be automatically added to the Xaraya database
+                        and allowed to login. If this option is left unchecked,
+                        the Xaraya Anonymous role is used if authentication is
+                        successful (not sure how this is useful?).</xar:mlstring>
                     </td>
                 </tr>
                 <tr align="left" valign="top">
