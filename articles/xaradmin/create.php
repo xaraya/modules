@@ -63,19 +63,17 @@ function articles_admin_create()
         // is_uploaded_file() : PHP 4 >= 4.0.3
         && is_uploaded_file($_FILES['bodyfile']['tmp_name']) && $_FILES['bodyfile']['size'] > 0 && $_FILES['bodyfile']['size'] < 1000000) {
         
-        if (xarModIsHooked('uploads')) 
+        if (xarModIsHooked('uploads', 'articles', $ptid)) 
         {
-            
             $magicLink = xarModAPIFunc('uploads',
                                        'user',
                                        'uploadmagic',
-    		  						   array('uploadfile'=>'bodyfile',
-    									     'mod'=>'articles',
-    										 'modid'=>0,
-    										 'utype'=>'file'));
+                                       array('uploadfile'=>'bodyfile',
+                                             'mod'=>'articles',
+                                             'modid'=>0,
+                                             'utype'=>'file'));
             
             $body = $bodytext .' '. $magicLink;
-            
         } else {
             $body = join('', @file($_FILES['bodyfile']['tmp_name']));
         }

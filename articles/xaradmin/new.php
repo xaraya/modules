@@ -148,6 +148,11 @@ function articles_admin_new($args)
     }
     $data['fields'] = $fields;
 
+    if (!empty($ptid) && empty($data['withupload']) &&
+        xarModIsHooked('uploads', 'articles', $ptid)) {
+        $data['withupload'] = 1;
+    }
+
     // Show allowable HTML
     $data['allowedhtml'] = '';
     foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $k=>$v) {
