@@ -62,6 +62,18 @@ function stats_userapi_get_os_data($args)
                         $osname = xarML('Linux');
                         $ospic = 'linux.gif';
                         break;
+                    case 'freebsd':
+                        $osname = xarML('FreeBSD');
+                        $ospic = 'bsd.gif';
+                        break;
+                    case 'bsd':
+                        $osname = xarML('*BSD');
+                        $ospic = 'bsd.gif';
+                        break;
+                    case 'sun':
+                        $osname = xarML('Solaris');
+                        $ospic = 'solaris.png';
+                        break;
                     default:
                         $osname = xarML($ositem['osver']);
                         $ospic = 'question.gif';
