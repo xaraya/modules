@@ -10,12 +10,17 @@ function articles_admin_new($args)
     // Get parameters
     if (!xarVarFetch('ptid',  'id', $ptid, NULL,  XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemtype', 'id', $itemtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($preview) && isset($article)) {
         $ptid = $article['ptid'];
+    } elseif (!isset($ptid) && !empty($itemtype) && is_numeric($itemtype)) {
+        // when we use some categories filter
+        $ptid = $itemtype;
     }
     $data = array();
     $data['ptid'] = $ptid;
+    $data['catid'] = $catid;
 
     if (!isset($article)) {
         $article = array();
@@ -102,7 +107,8 @@ function articles_admin_new($args)
                 continue;
             }
             $pubitem['plink'] = xarModURL('articles','admin','new',
-                                         array('ptid' => $id));
+                                          array('ptid' => $id,
+                                                'catid' => $catid));
         }
         $pubitem['ptitle'] = $pubtype['descr'];
         $pubfilters[] = $pubitem;
