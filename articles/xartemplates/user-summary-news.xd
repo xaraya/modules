@@ -14,11 +14,11 @@
               <xar:mlvar>#$date#</xar:mlvar>
           </xar:ml>
           <xar:if condition="!empty($counter)">
-			<xar:if condition="$counter eq 1">
-				(#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
-			<xar:else />
-				(#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
-			</xar:if>
+            <xar:if condition="$counter eq 1">
+                (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
+            <xar:else />
+                (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
+            </xar:if>
           </xar:if>
           </span></div>
           <div style="text-align: right;">
@@ -32,19 +32,19 @@
               <br />
             Note:<br /><i>#$notes#</i>
           </xar:if>
-			<div style="text-align: right;">
-				<xar:if condition="!empty($words)">
-			<!-- Note : you can use $bytes here too if you prefer the geeky way of counting :) -->
-					<a href="#$link#"><xar:mlstring>Read More</xar:mlstring></a> 
-				<xar:if condition="$words eq 1">
-					(#$words#&nbsp;<xar:mlstring>word</xar:mlstring>)
-				<xar:else />
-					(#$words#&nbsp;<xar:mlstring>words</xar:mlstring>)
-				</xar:if>
-				</xar:if>
-				<xar:if condition="!empty($comments)">
-					#$comments#
-				</xar:if>
+            <div style="text-align: right;">
+                <xar:if condition="!empty($words)">
+            <!-- Note : you can use $bytes here too if you prefer the geeky way of counting :) -->
+                    <a href="#$link#"><xar:mlstring>Read More</xar:mlstring></a> 
+                <xar:if condition="$words eq 1">
+                    (#$words#&nbsp;<xar:mlstring>word</xar:mlstring>)
+                <xar:else />
+                    (#$words#&nbsp;<xar:mlstring>words</xar:mlstring>)
+                </xar:if>
+                </xar:if>
+                <xar:if condition="!empty($comments)">
+                    #$comments#
+                </xar:if>
           </div>
 </div>
 </div>

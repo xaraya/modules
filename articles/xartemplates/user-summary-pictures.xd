@@ -12,11 +12,11 @@
                 <a class="xar-title" href="#$link#">#$title#</a><br />
             </xar:if>
             <xar:if condition="!empty($counter)">
-				<xar:if condition="$counter eq 1">
-					(#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
-				<xar:else />
-					(#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
-				</xar:if>
+                <xar:if condition="$counter eq 1">
+                    (#$counter#&nbsp;<xar:mlstring>read</xar:mlstring>)
+                <xar:else />
+                    (#$counter#&nbsp;<xar:mlstring>reads</xar:mlstring>)
+                </xar:if>
             </xar:if>
         </td>
     </tr>

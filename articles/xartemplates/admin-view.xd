@@ -144,8 +144,8 @@
                         </select>
                         <input type="submit" value="#$changestatuslabel#" />
 <script language="JavaScript" type="text/javascript">
-	document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
-	document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
+    document.write("[ <a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],true)\"><xar:mlstring>Check All</xar:mlstring></a> | ");
+    document.write("<a href=\"javascript:xar_base_checkall(document.forms['viewarticles'],false)\"><xar:mlstring>Uncheck All</xar:mlstring></a> ]");
 </script>
                     </p>
                 </xar:if>

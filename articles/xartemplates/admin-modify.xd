@@ -13,66 +13,66 @@
     <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" #$formhooks['formaction']#>
 </xar:if>
     <div style="float:left;width:100%"> <xar:comment> containing float - quick fix for JC's css layouts [andyv] </xar:comment>
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('This is the publication type that this article will appear in.')#"><xar:mlstring>Publication Type</xar:mlstring>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			#$values['pubtype']#
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('This is the publication type that this article will appear in.')#"><xar:mlstring>Publication Type</xar:mlstring>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            #$values['pubtype']#
+        </span>
+        </div>
 
         <xar:comment>
             Instead of looping over all fields, you can also access individual field definitions
             via $fields['title'], $fields['summary'] etc.
         </xar:comment>
-		<xar:foreach in="$fields" value="$field">
-			<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 20%; text-align: right;">
-				<span class="help" title="#$field['label']#"><label for="#$field['id']#">#$field['label']#</label>:</span>
-			</span>
-			<span style="float: right; width: 78%; text-align: left;">
-				<xar:articles-field definition="$field['definition']" />
-			</span>
-			</div>
-		</xar:foreach>
+        <xar:foreach in="$fields" value="$field">
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#$field['label']#"><label for="#$field['id']#">#$field['label']#</label>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <xar:articles-field definition="$field['definition']" />
+            </span>
+            </div>
+        </xar:foreach>
 
-		<xar:if condition="!empty($formhooks['formdisplay'])">
-			<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 20%; text-align: right;">
-				<span class="help" title="Form Controls as determined by hook selection.')#"><xar:mlstring>Form Controls</xar:mlstring>:</span>
-			</span>
-			<span style="float: right; width: 78%; text-align: left;">
-				#$formhooks['formdisplay']#
-			</span>
-			</div>
-		</xar:if>
+        <xar:if condition="!empty($formhooks['formdisplay'])">
+            <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="Form Controls as determined by hook selection.')#"><xar:mlstring>Form Controls</xar:mlstring>:</span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                #$formhooks['formdisplay']#
+            </span>
+            </div>
+        </xar:if>
 
-		<xar:if condition="!empty($hooks)">
-		<xar:foreach in="$hooks" key="$hookmodule">
-		#$hooks[$hookmodule]#
-		</xar:foreach>
-		</xar:if>
+        <xar:if condition="!empty($hooks)">
+        <xar:foreach in="$hooks" key="$hookmodule">
+        #$hooks[$hookmodule]#
+        </xar:foreach>
+        </xar:if>
 
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('This is the allowed HTML that this website has configured.')#"><xar:mlstring>Allowed HTML tags</xar:mlstring>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			#$allowedhtml#
-		</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('This is the allowed HTML that this website has configured.')#"><xar:mlstring>Allowed HTML tags</xar:mlstring>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            #$allowedhtml#
+        </span>
+        </div>
 
-		<div style="clear: both; padding-top: 10px;">
-			<span style="float: left; width: 30%; text-align: right;">
-				<input type="hidden" name="authid" id="authid" value="#$authid#" />
-				<input type="hidden" name="aid" id="aid" value="#$aid#" />
-				<input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
-				<input type="submit" name="preview" id="preview" value="#$previewlabel#" />
-				&nbsp;&nbsp;&nbsp;
-				<input type="submit" value="#$updatelabel#" />
-			</span>
-		</div>
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <input type="hidden" name="authid" id="authid" value="#$authid#" />
+                <input type="hidden" name="aid" id="aid" value="#$aid#" />
+                <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
+                <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
+                &nbsp;&nbsp;&nbsp;
+                <input type="submit" value="#$updatelabel#" />
+            </span>
+        </div>
     </div>&nbsp; <xar:comment> end of containing float + some dummy content to make sure the outer container wraps up [andyv] </xar:comment>
 </form>
 <br />

@@ -12,45 +12,45 @@
                 <span style="float: left; width: 20%; text-align: right;">
                     <span class="help" title="#xarML('Choose the publication type you want to display with top items.')#"><label for="pubtypeid#$blockid#"><xar:mlstring>Publication Type</xar:mlstring></label>:</span>
                 </span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<select name="pubtypeid" id="pubtypeid#$blockid#">
-				<option value="0"><xar:mlstring>Default / Current</xar:mlstring></option>
-				<xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
-					<xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
-						<option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
-					<xar:else />
-						<option value="#$pubid#">#$pubtype['descr']#</option>
-					</xar:if>
-				</xar:foreach>
-			</select>
+        <span style="float: right; width: 78%; text-align: left;">
+            <select name="pubtypeid" id="pubtypeid#$blockid#">
+                <option value="0"><xar:mlstring>Default / Current</xar:mlstring></option>
+                <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
+                    <xar:if condition="!empty($pubtypeid) and $pubtypeid eq $pubid">
+                        <option value="#$pubid#" selected="selected">#$pubtype['descr']#</option>
+                    <xar:else />
+                        <option value="#$pubid#">#$pubtype['descr']#</option>
+                    </xar:if>
+                </xar:foreach>
+            </select>
                 </span>
             </div>
             </xar:if>
 
             <div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Check this if you want the block to display content from all publication types all the time.')#"><label for="nopublimit#$blockid#"><xar:mlstring>All Publication Types</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="empty($nopublimit)">
-				<input type="checkbox" name="nopublimit" id="nopublimit#$blockid#" value="1" />
-			<xar:else />
-				<input type="checkbox" name="nopublimit" id="nopublimit#$blockid#" value="1" checked="checked" />
-			</xar:if>
-		</span>
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Check this if you want the block to display content from all publication types all the time.')#"><label for="nopublimit#$blockid#"><xar:mlstring>All Publication Types</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="empty($nopublimit)">
+                <input type="checkbox" name="nopublimit" id="nopublimit#$blockid#" value="1" />
+            <xar:else />
+                <input type="checkbox" name="nopublimit" id="nopublimit#$blockid#" value="1" checked="checked" />
+            </xar:if>
+        </span>
             </div>
 
             <div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Check this if you want to include the publication type in the article links.')#"><label for="linkpubtype#$blockid#"><xar:mlstring>Link to Publication Type</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<xar:if condition="empty($linkpubtype)">
-				<input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" />
-			<xar:else />
-				<input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" checked="checked" />
-			</xar:if>
-		</span>
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('Check this if you want to include the publication type in the article links.')#"><label for="linkpubtype#$blockid#"><xar:mlstring>Link to Publication Type</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+            <xar:if condition="empty($linkpubtype)">
+                <input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" />
+            <xar:else />
+                <input type="checkbox" name="linkpubtype" id="linkpubtype#$blockid#" value="1" checked="checked" />
+            </xar:if>
+        </span>
             </div>
 
             <xar:if condition="empty($nocatlimit)">
@@ -186,7 +186,7 @@
                     </select>
                 </span>
             </div>
-		
+        
             <xar:if condition="xarModIsHooked('dynamicdata','articles')">
             <div style="clear: both; padding-top: 10px;">
                 <span style="float: left; width: 20%; text-align: right;">

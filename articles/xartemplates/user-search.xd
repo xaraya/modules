@@ -8,7 +8,7 @@
         <td><label for="q"><xar:mlstring>Search for</xar:mlstring></label></td>
         <td><input type="text" name="q" id="q" value="#$q#" size="20" />
         <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
-	&nbsp;&nbsp;&nbsp; <input type="submit" name="search" value="#$search#" /></td>
+    &nbsp;&nbsp;&nbsp; <input type="submit" name="search" value="#$search#" /></td>
     </tr>
     <tr>
         <td><label for="author"><xar:mlstring>By author</xar:mlstring></label></td>

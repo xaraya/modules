@@ -21,7 +21,7 @@
         </xar:foreach>
     </xar:foreach>
 
-	<xar:template file="navtabs-user-map-extended" type="module" />
+    <xar:template file="navtabs-user-map-extended" type="module" />
 
 <xar:elseif condition="count($catgrid) gt 0"/>
     <xar:if condition="empty($descr)">
@@ -44,7 +44,7 @@
     </xar:foreach>
     </table>
 
-	<xar:template file="navtabs-user-map" type="module" />
+    <xar:template file="navtabs-user-map" type="module" />
 
 <xar:else />
     <h2><xar:mlstring>Article Map by Publication Type</xar:mlstring></h2>
@@ -96,6 +96,6 @@
         </div><br />
     </xar:foreach>
 
-	<xar:template file="navtabs-user-map" type="module" />
+    <xar:template file="navtabs-user-map" type="module" />
 
 </xar:if>
