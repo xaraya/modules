@@ -17,9 +17,9 @@ function keywords_user_main($args)
 {
 if (!xarSecurityCheck('ReadKeywords')) return;
 
-    xarVarFetch('keyword','isset',$keyword,'', XARVAR_DONT_SET);
-    xarVarFetch('id','isset',$id,'', XARVAR_DONT_SET);
-    xarVarFetch('tab','isset',$tab,'0', XARVAR_DONT_SET);
+    xarVarFetch('keyword','str',$keyword,'', XARVAR_DONT_SET);
+    xarVarFetch('id','id',$id,'', XARVAR_DONT_SET);
+    xarVarFetch('tab','int:0:5',$tab,'0', XARVAR_DONT_SET);
     
     //extract($args);
     $displaycolumns= xarModGetVar('keywords','displaycolumns');

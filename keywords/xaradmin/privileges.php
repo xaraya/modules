@@ -18,29 +18,20 @@ function keywords_admin_privileges($args)
     // Security Check
     if (!xarSecurityCheck('AdminKeywords')) return;
 
-    // fixed params
-    list($moduleid,
-         $itemtype,
-         $itemid,
-         $apply,
-         $extpid,
-         $extname,
-         $extrealm,
-         $extmodule,
-         $extcomponent,
-         $extinstance,
-         $extlevel) = xarVarCleanFromInput('moduleid',
-                                           'itemtype',
-                                           'itemid',
-                                           'apply',
-                                           'extpid',
-                                           'extname',
-                                           'extrealm',
-                                           'extmodule',
-                                           'extcomponent',
-                                           'extinstance',
-                                           'extlevel');
     extract($args);
+
+    if (!xarVarFetch('moduleid',     'id', $moduleid,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemtype',     'int:1:', $itemtype,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('itemid',       'id', $itemid,       NULL, XARVAR_DONT_SET)) {return;}   
+    if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extrealm',     'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extmodule',    'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+
 
     if (!empty($extinstance)) {
         $parts = explode(':',$extinstance);

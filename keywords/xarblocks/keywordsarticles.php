@@ -52,9 +52,9 @@ function keywords_keywordsarticlesblock_display(& $blockinfo)
     //$vars = _keywords_keywordsarticlesblock_checkdefaults($vars);
 
     // Allow refresh by setting refreshrandom variable
-    if (xarVarCleanFromInput('refreshrandom') == 1) {
-        $vars['refreshtime'] = 0;
-    }
+    
+     if (!xarVarFetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, XARVAR_DONT_SET)) return;
+    
     // Check cache
     $refresh = (time() - ($vars['refreshtime'] * 60));
     $varDir = xarCoreGetVarDirPath();

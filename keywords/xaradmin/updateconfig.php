@@ -17,8 +17,8 @@ function keywords_admin_updateconfig()
 { 
     
     // Get parameters
-    xarVarFetch('restricted','isset',$restricted,'', XARVAR_DONT_SET);
-    xarVarFetch('useitemtype','isset',$useitemtype,'', XARVAR_DONT_SET);
+    xarVarFetch('restricted','int:0:1',$restricted, NULL, XARVAR_DONT_SET);
+    xarVarFetch('useitemtype','int:0:1',$useitemtype, NULL, XARVAR_DONT_SET);
     xarVarFetch('keywords','isset',$keywords,'', XARVAR_DONT_SET);
     xarVarFetch('isalias','isset',$isalias,'', XARVAR_DONT_SET);
     xarVarFetch('displaycolumns','isset',$displaycolumns,'', XARVAR_DONT_SET);

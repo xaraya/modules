@@ -17,9 +17,9 @@ function keywords_admin_view($args)
 {     
     extract($args);
 
-    if (!xarVarFetch('modid',    'isset', $modid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemid',   'isset', $itemid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('modid',    'id', $modid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('itemid',   'id', $itemid,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     if (!xarSecurityCheck('AdminKeywords')) return;
 

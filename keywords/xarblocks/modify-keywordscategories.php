@@ -32,7 +32,7 @@ function keywords_keywordscategoriesblock_modify($blockinfo)
 function keywords_keywordscategoriesblock_update($blockinfo)
 {
     //MikeC: Make sure we retrieve the new pubtype from the configuration form.
-    $vars['refreshtime'] = xarVarCleanFromInput('refreshtime');
+    if (!xarVarFetch('refreshtime', 'int:1:', $vars['refreshtime'],1,XARVAR_DONT_SET)) return;
     $vars = _keywords_keywordscategoriesblock_checkdefaults($vars);
     $blockinfo['content'] = serialize($vars);
 

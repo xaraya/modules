@@ -22,8 +22,8 @@
  */
 function keywords_admin_modifyconfig()
 { 
-    if (!xarVarFetch('restricted', 'int', $restricted, $restricted, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('useitemtype', 'int', $useitemtype, $useitemtype, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('restricted', 'int:0:1', $restricted, $restricted, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('useitemtype', 'int:0:1', $useitemtype, $useitemtype, XARVAR_NOT_REQUIRED)) return;
     if (!xarSecurityCheck('AdminKeywords')) return;
 
     $data = array();
