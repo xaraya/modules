@@ -1,0 +1,34 @@
+<script language="JavaScript">
+<!--
+    // Enter name of mandatory fields
+    var html_fieldRequired = Array("tagtype");
+    // Enter field description to appear in the dialog box
+    var html_fieldDescription = Array("Tag Type");
+//-->
+</script>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Add Tag Type</xar:mlstring></h2>
+    <div style="margin: auto;">
+
+    <form method="post" action="&xar-modurl-html-admin-createtype;" method="post" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <table width="100%" border="0" cellspacing="1" cellpadding="2">
+        <tr>
+            <td class="xar-norm">
+                <label for="tagtype"><xar:mlstring>Tag Type</xar:mlstring></label>:
+            </td>
+            <td class="xar-norm">
+                <input type="text" name="tagtype" id="tagtype" value="" size="20" maxlength="20" tabindex="1" />
+            </td>
+        </tr>
+        <tr>
+            <td class="xar-norm" colspann="2">
+                <span style="float: left; width: 30%; text-align: right;">
+                    <input type="submit" value="#$createbutton#" />
+                </span>
+            </td>
+        </tr>
+    </table>
+    </form>
+    </div>
+</div>

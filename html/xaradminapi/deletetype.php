@@ -14,37 +14,36 @@
 */
 
 /**
- * Delete an html tag
+ * Delete a tag type
  *
  * @public
- * @author John Cox 
  * @author Richard Cave 
- * @param $args['cid'] ID of the html
+ * @param $args['id'] ID of the tag type
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, MISSING_DATA
  */
-function html_adminapi_delete($args)
+function html_adminapi_deletetype($args)
 {
     // Get arguments from argument array
     extract($args);
 
     // Argument check
-    if (!isset($cid) || !is_numeric($cid)) {
+    if (!isset($id) || !is_numeric($id)) {
         $msg = xarML('Invalid Parameter #(1) for #(2) function #(3)() in module #(4)',
-                     'cid', 'adminapi', 'delete', 'html');
+                     'id', 'adminapi', 'deletetype', 'html');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
     // The user API function is called
-    $html = xarModAPIFunc('html',
+    $type = xarModAPIFunc('html',
                           'user',
-                          'gettag',
-                          array('cid' => $cid));
+                          'gettype',
+                          array('id' => $id));
 
-    if ($html == false) {
-        $msg = xarML('No Such HTML tag Present', 'html');
+    if ($type == false) {
+        $msg = xarML('No Such tag type present');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
@@ -56,39 +55,34 @@ function html_adminapi_delete($args)
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
+    // Set table name
     $htmltable = $xartable['html'];
+    $htmltypestable = $xartable['htmltypes'];
 
-    // Delete the tag
-    $query = "DELETE FROM $htmltable
-              WHERE xar_cid = " . xarVarPrepForStore($cid);
+    // Delete the tag type
+    $query = "DELETE FROM $htmltypestable
+              WHERE xar_id = " . xarVarPrepForStore($id);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // If this is an html tag, then
-    // also delete the tag from the config vars
-    $tagtype = xarModAPIFunc('html',
-                             'user',
-                             'gettype',
-                             array('id' => $html['tid']));
-    
-    if ($tagtype['type'] == 'html') {
+    // Also delete the associated tags from the xar_html table
+    $query = "DELETE FROM $htmltable
+              WHERE xar_tid = " . xarVarPrepForStore($id);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
+
+    // If this is a tag type HTML, then
+    // also delete the tags from the config vars
+    if ($type['type'] == 'html') {
         $allowedhtml = array();
 
-        // Get the current tags from config vars
-        foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $key => $value) {
-            // Remove the deleted html tag from the config vars
-            if ($key != $html['tag']) {
-                $allowedhtml[$key] = $value;
-            }
-        }
-
-        // Set the config vars
+        // Set the config vars to an empty array
         xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
     }
 
-    // Let any hooks know that we have deleted a html
-    xarModCallHooks('item', 'delete', $cid, '');
+    // Let any hooks know that we have deleted a tag type
+    xarModCallHooks('item', 'deletetype', $id, '');
 
     // Let the calling process know that we have finished successfully
     return true;

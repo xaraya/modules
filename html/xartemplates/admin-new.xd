@@ -3,27 +3,60 @@
     // Enter name of mandatory fields
     var html_fieldRequired = Array("tag");
     // Enter field description to appear in the dialog box
-    var html_fieldDescription = Array("HTML Tag");
+    var html_fieldDescription = Array("Tag");
 //-->
 </script>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Add HTML Tag</xar:mlstring></h2>
-	<div style="margin: auto;">
+<div class="xar-mod-body"><h2><xar:mlstring>Add Tag</xar:mlstring></h2>
+    <div style="margin: auto;">
 
-	<form method="post" action="#xarModURL('html', 'admin', 'create')#" method="post" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
-
-		<div style="clear: both; padding-top: 10px;">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Enter the HTML tag that you want Xaraya to recognize.')#"><label for="tag"><xar:mlstring>HTML Tag</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-			<input type="text" name="tag" id="tag" value="" size="32" maxlength="100" />
-		</span>
-		</div>
-
-		<br /><br /><span style="float: left; width: 30%; text-align: right;"><input type="submit" value="#$createbutton#" /></span>
-
-	</form>
-	</div>
+    <form method="post" action="&xar-modurl-html-admin-create;" method="post" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <table width="100%" border="0" cellspacing="1" cellpadding="2">
+        <tr>
+            <td class="xar-norm">
+                <label for="tag"><xar:mlstring>Tag</xar:mlstring></label>:
+            </td>
+            <td class="xar-norm">
+                <input type="text" name="tag" id="tag" value="" size="32" maxlength="100" tabindex="1" />
+            </td>
+        </tr>
+        <tr>
+            <td class="xar-norm">
+                <label for="type"><xar:mlstring>Choose Type</xar:mlstring></label>:
+            </td>
+            <td class="xar-norm">
+                <select name="tagtype" tabindxex="2">
+                <xar:loop name="$types">
+                    <option name="#$loop:item['type']#" value="#$loop:item['type']#">#$loop:item['type']#</option>
+                </xar:loop>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="xar-norm">
+                <xar:mlstring>Choose State</xar:mlstring>
+            </td>
+            <td class="xar-norm">
+                   <input type=radio value="0" name="allowed" id="0" tabindex="3" />
+                   &nbsp;&nbsp;<xar:mlstring>Not Allowed</xar:mlstring>
+                   <br />
+                   <input type=radio value="1" name="allowed" id="1" tabindex="4" />
+                   &nbsp;&nbsp;<xar:mlstring>Allowed</xar:mlstring>
+                   <br />
+                   <input type=radio value="2" name="allowed" id="2" tabindex="5" checked="checked" />
+                   &nbsp;&nbsp;<xar:mlstring>Allowed with Parameters</xar:mlstring>
+                   <br />
+            </td>
+        </tr>
+        <tr>
+            <td class="xar-norm" colspan="2">
+                <span style="float: left; width: 30%; text-align: right;">
+                    <input type="submit" value="#$createbutton#" />
+                </span>
+            </td>
+        </tr>
+    </table>
+    </form>
+    </div>
 </div>

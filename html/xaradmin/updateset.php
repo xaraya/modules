@@ -18,8 +18,8 @@
  *
  * @public
  * @author John Cox
- * @purifiedby Richard Cave 
- * @param $args['htmltags'] an array of the cids and allowed value of the html tags
+ * @author Richard Cave 
+ * @param $args['tags'] an array of the cids and allowed value of the html tags
  * @raise MISSING_DATA
  */
 function html_admin_updateset()
@@ -31,7 +31,7 @@ function html_admin_updateset()
 	if(!xarSecurityCheck('AdminHTML')) return;
 
     // Get parameters from the input
-    if (!xarVarFetch('htmltags', 'array:1:', $htmltags)) {
+    if (!xarVarFetch('tags', 'array:1:', $tags)) {
         $msg = xarML('No HTML tags were selected.');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return false;
@@ -41,27 +41,32 @@ function html_admin_updateset()
     $allowedhtml = array();
 
     // Update HTML tags
-    foreach ($htmltags as $tag=>$allowed) {
+    foreach ($tags as $cid=>$allowed) {
         // Get the cid of the htmltag
-        $html = xarModAPIFunc('html',
-                              'user',
-                              'getbytag',
-                              array('tag' => $tag));
+        $thistag = xarModAPIFunc('html',
+                                 'user',
+                                 'gettag',
+                                 array('cid' => $cid));
 
-        if ($html) {
+        if ($thistag) {
+            $tag = $thistag['tag'];
+
             // Check if update is necessary
-            if ($html['allowed'] != $allowed) {
+            if ($thistag['allowed'] != $allowed) {
                 // Update
                 if (!xarModAPIFunc('html',
                                    'admin',
                                    'update',
-                                   array('cid' => $html['cid'],
+                                   array('cid' => $cid,
                                          'allowed' => $allowed))) 
                     return false;
             }
 
-            // Add to config vars array
-            $allowedhtml[$tag] = $allowed;
+            // If this is an html tag, then
+            // also update the config vars array
+            if ($thistag['type'] == 'html') {
+                $allowedhtml[$tag] = $allowed;
+            }
         }
     }
 

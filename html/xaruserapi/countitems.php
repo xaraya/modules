@@ -18,10 +18,11 @@
  * 
  * @public
  * @author John Cox 
- * @purifiedby Richard Cave 
+ * @author Richard Cave 
  * @param none
  * @returns integer
  * @returns number of HTML tags in the database
+ * @raise none
  */
 function html_userapi_countitems()
 {

@@ -18,12 +18,10 @@
  *
  * @public
  * @author John Cox 
- * @purifiedby Richard Cave 
+ * @author Richard Cave 
  */
 function html_admin_set()
 {
-    $startnum = xarVarCleanFromInput('startnum');
-
     // Initialise the variable
     $data['items'] = array();
 
@@ -32,27 +30,35 @@ function html_admin_set()
     $data['authid'] = xarSecGenAuthKey();
 
     // Security Check
-	if(!xarSecurityCheck('AdminHTML')) return;
+    if(!xarSecurityCheck('AdminHTML')) return;
 
     // The user API function is called.
     $allowed = xarModAPIFunc('html',
-			                 'user',
-			                 'getall');
+                             'user',
+                             'getalltags');
 
     // Check for exceptions
     if (!isset($allowed) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
 
     // Add the edit and delete urls
     for ($idx = 0; $idx < count($allowed); $idx++) {
-        $allowed[$idx]['editurl'] = xarModURL('html',
-                                              'admin',
-                                              'edit',
-                                              array('cid' => $allowed[$idx]['cid']));
+        if (xarSecurityCheck('EditHTML')) { 
+            $allowed[$idx]['editurl'] = xarModURL('html',
+                                                  'admin',
+                                                  'edit',
+                                                  array('cid' => $allowed[$idx]['cid']));
+        } else {
+            $allowed[$idx]['editurl'] = '';
+        }
 
-        $allowed[$idx]['deleteurl'] = xarModURL('html',
-                                                'admin',
-                                                'delete',
-                                                array('cid' => $allowed[$idx]['cid']));
+        if (xarSecurityCheck('DeleteHTML')) { 
+            $allowed[$idx]['deleteurl'] = xarModURL('html',
+                                                    'admin',
+                                                    'delete',
+                                                    array('cid' => $allowed[$idx]['cid']));
+        } else {
+            $allowed[$idx]['deleteurl'] = '';
+        }
     }
 
     // Add the array of items to the template variables

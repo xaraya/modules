@@ -14,11 +14,11 @@
 */
 
 /*
- * Delete an HTML tag
+ * Delete a tag
  *
  * @public
  * @author John Cox 
- * @purifiedby Richard Cave 
+ * @author Richard Cave 
  * @returns array, or false on failure
  * @raise BAD_PARAM
  */
@@ -34,7 +34,7 @@ function html_admin_delete()
     // Get the current html tag 
     $html = xarModAPIFunc('html',
                           'user',
-                          'get',
+                          'gettag',
                           array('cid' => $cid));
 
     // Check for exceptions

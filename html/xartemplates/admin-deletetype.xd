@@ -1,0 +1,22 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Delete Tag Type</xar:mlstring></h2>
+<div align="center">
+<form method="post" action="#xarModURL('html', 'admin', 'deletetype')#" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="authid" value="#$authid#" />
+	<input type="hidden" name="id" id="id" value="#$id#" />
+	<input type="hidden" name="confirm" id="confirm" value="1"/>
+
+	<font class="xar-title"><xar:mlstring>Confirm deletion of the tag type</xar:mlstring></font>
+        <br /><br />
+	<font class="xar-title"><xar:mlstring>Warning!  This will also remove all tags associated with the tag type!</xar:mlstring></font>
+    <br /><br />
+    #$type#
+    <br /><br />
+
+	<input type="submit" value="#$submitlabel#" align="middle" /><br /><br />
+	
+	<a href="#xarModURL('html', 'admin', 'viewtypes')#"><xar:mlstring>Cancel deletion of the tag type</xar:mlstring>.</a>
+</form>        
+</div>
+</div>

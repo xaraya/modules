@@ -1,0 +1,61 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>HTML Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>View Tag Types</xar:mlstring></h2>
+<div align="center">
+<table width="100%" border="0" cellspacing="1" cellpadding="2" class="xar-accent">
+    <tr>
+        <th>
+             <xar:mlstring>Type</xar:mlstring>
+        </th>
+        <th>
+            <xar:mlstring>Options</xar:mlstring>
+        </th>
+    </tr>
+    <xar:loop name="$items">
+        <xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+    <tr>
+        </td>
+        <td class="xar-norm" align="center">
+            #$loop:item['type']#
+        </td>
+        <td align="center" class="xar-norm"> 
+            <xar:if condition="empty($loop:item['editurl'])">
+                <xar:mlstring>Edit</xar:mlstring>
+                <xar:else />
+                    <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+            </xar:if>
+            &nbsp;|&nbsp;
+            <xar:if condition="empty($loop:item['deleteurl'])">
+                <xar:mlstring>Delete</xar:mlstring>
+                <xar:else />
+                    <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+            </xar:if>
+        </td>
+    </tr>
+    <xar:else />
+    <tr>
+        <td class="xar-accent" align="center">
+            #$loop:item['type']#
+        </td>
+        <td align="center" class="xar-accent"> 
+            <xar:if condition="empty($loop:item['editurl'])">
+                <xar:mlstring>Edit</xar:mlstring>
+                <xar:else />
+                    <a href="#$loop:item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a>
+            </xar:if>
+            &nbsp;|&nbsp;
+            <xar:if condition="empty($loop:item['deleteurl'])">
+                <xar:mlstring>Delete</xar:mlstring>
+                <xar:else />
+                    <a href="#$loop:item['deleteurl']#"><xar:mlstring>Delete</xar:mlstring></a>
+            </xar:if>
+        </td>
+    </tr>
+    </tr>
+    </xar:if>
+    </xar:loop>
+</table>
+<br /><br />
+<br />
+</div>
+</div>

@@ -18,6 +18,7 @@
  *
  * @public
  * @author John Cox 
+ * @author Richard Cave 
  * @author the Example module development team
  * @returns array
  * @return array containing the menulinks for the main menu items.
@@ -30,17 +31,32 @@ function html_adminapi_getmenulinks()
         $menulinks[] = Array('url'   => xarModURL('html',
                                                   'admin',
                                                   'new'),
-                              'title' => xarML('Add a new HTML tag into the system'),
+                              'title' => xarML('Add a new tag.'),
                               'label' => xarML('Add Tag'));
+
+        $menulinks[] = Array('url'   => xarModURL('html',
+                                                  'admin',
+                                                  'newtype'),
+                              'title' => xarML('Add a new tag type for use on your site.'),
+                              'label' => xarML('Add Tag Type'));
     }
 
     if (xarSecurityCheck('AdminHTML')) {
         $menulinks[] = Array('url'   => xarModURL('html',
                                                   'admin',
                                                   'set'),
-                              'title' => xarML('Set the allowed html tags for use on your site'),
+                              'title' => xarML('Set the allowed tags for use on your site'),
                               'label' => xarML('Set Tags'));
     }
+
+    if (xarSecurityCheck('ReadHTML')) {
+        $menulinks[] = Array('url'   => xarModURL('html',
+                                                  'admin',
+                                                  'viewtypes'),
+                              'title' => xarML('View and edit tag types.'),
+                              'label' => xarML('View Tag Types'));
+    }
+
 /*
     if (xarSecurityCheck('AdminHTML')) {
         $menulinks[] = Array('url'   => xarModURL('html',

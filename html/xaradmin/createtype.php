@@ -17,19 +17,14 @@
  * Create a new HTML tag
  *
  * @public
- * @author John Cox 
  * @author Richard Cave 
- * @param 'tag' the tag to be created
  * @param 'tagtype' the type of tag to be created
- * @param 'allowed' the state of the tag to be created
  * @raise MISSING_DATA
  */
-function html_admin_create($args)
+function html_admin_createtype($args)
 {
     // Get parameters from input
-    if (!xarVarFetch('tag', 'str:1:', $tag, '')) return;
     if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) return;
-    if (!xarVarFetch('allowed', 'int:0:', $allowed, 0)) return;
 
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return;
@@ -38,21 +33,23 @@ function html_admin_create($args)
 	if(!xarSecurityCheck('AddHTML')) return;
 
     // Check arguments
-    if (empty($tag)) {
-        $msg = xarML('No tag Provided, Please go back and provide a tag');
+    if (empty($tagtype)) {
+        $msg = xarML('No tag type provided, Please go back and provide a tag type.');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
     // The API function is called
-    $cid = xarModAPIFunc('html',
-                         'admin',
-                         'create',
-                         array('tag' => $tag,
-                               'type' => $tagtype,
-                               'allowed' => $allowed));
+    $id = xarModAPIFunc('html',
+                        'admin',
+                        'createtype',
+                        array('tagtype' => $tagtype));
 
-    xarResponseRedirect(xarModURL('html', 'admin', 'set'));
+    if (!$id) {
+        return false; //throw back
+    }
+
+    xarResponseRedirect(xarModURL('html', 'admin', 'viewtypes'));
 
     // Return
     return true;

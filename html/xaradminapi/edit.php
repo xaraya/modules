@@ -14,10 +14,11 @@
 */
 
 /**
- * Edit an html tags word
+ * Edit a tag
  *
  * @author Richard Cave 
- * @param $args['cid'] ID of the html tag
+ * @param $args['cid'] ID of the tag
+ * @param $args['tag'] the name of the tag
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, MISSING_DATA
@@ -47,11 +48,11 @@ function html_adminapi_edit($args)
     // The user API function is called
     $html = xarModAPIFunc('html',
                           'user',
-                          'get',
+                          'gettag',
                           array('cid' => $cid));
 
     if ($html == false) {
-        $msg = xarML('No Such HTML tag Present', 'html');
+        $msg = xarML('No such tag present');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return; 
     }
@@ -64,6 +65,9 @@ function html_adminapi_edit($args)
     $xartable = xarDBGetTables();
     $htmltable = $xartable['html'];
 
+    // Make sure $tag is lowercase
+    $tag = strtolower($tag);
+
     // Update the html
     $query = "UPDATE $htmltable
               SET xar_tag = '" . xarVarPrepForStore($tag) . "'
@@ -71,25 +75,34 @@ function html_adminapi_edit($args)
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-    // Also edit the item in the config vars
-    $allowedhtml = array();
+    // If this is an html tag, then
+    // also edit the item in the config vars
+    $tagtype = xarModAPIFunc('html',
+                             'user',
+                             'gettype',
+                             array('id' => $html['tid']));
+    
+    if ($tagtype['type'] == 'html') {
 
-    // Get the current html tags from config vars
-    foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $key => $value) {
-        // Update html tag from the config vars
-        if ($key != $html['tag']) {
+        $allowedhtml = array();
+
+        // Get the current html tags from config vars
+        foreach (xarConfigGetVar('Site.Core.AllowableHTML') as $key => $value) {
+            // Update html tag from the config vars
+            if ($key != $html['tag']) {
             $allowedhtml[$key] = $value;
+            }
         }
+
+        // Add the new html tag
+        $allowedhtml[$tag] = $html['allowed'];
+
+        // Set the config vars
+        xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
     }
 
-    // Add the new html tag
-    $allowedhtml[$tag] = $html['allowed'];
-
-    // Set the config vars
-    xarConfigSetVar('Site.Core.AllowableHTML', $allowedhtml);
-
     // Let any hooks know that we have deleted a html
-    xarModCallHooks('item', 'delete', $cid, '');
+    xarModCallHooks('item', 'edit', $cid, '');
 
     // Let the calling process know that we have finished successfully
     return true;

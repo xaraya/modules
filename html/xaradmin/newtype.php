@@ -14,29 +14,18 @@
 */
 
 /**
- * Add a new tag
+ * Add new html tag
  *
  * @public
- * @author John Cox 
  * @author Richard Cave 
  */
-function html_admin_new()
+function html_admin_newtype()
 {
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+	if(!xarSecurityCheck('AddHTML')) return;
     
     $data['authid'] = xarSecGenAuthKey();
-    $data['createbutton'] = xarML('Create Tag');
-
-    // Get tag types
-    $types = xarModAPIFunc('html',
-                           'user',
-                           'getalltypes');
-
-    // Check for exceptions
-    if (!isset($types) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
-
-    $data['types'] = $types;
+	$data['createbutton'] = xarML('Create Tag Type');
 
     // Include 'formcheck' JavaScript.
     // TODO: move this to a template widget when available.

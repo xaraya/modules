@@ -18,7 +18,7 @@
  *
  * @public
  * @author John Cox 
- * @purifiedby Richard Cave 
+ * @author Richard Cave 
  * @param $args['cid'] the ID of the html tag
  * @param $args['allowed'] the flag for the html tag
  * @raise BAD_PARAM
