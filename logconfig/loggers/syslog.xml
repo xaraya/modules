@@ -62,7 +62,7 @@
     <property name="timeFormat">
       <label>Time Format</label>
       <type>dateformat</type>
-      <default>%b %d %H:%M:%S</default>
+      <default>%Y/%m/%d %H:%M:%S</default>
       <source>dynamic_data</source>
       <status>1</status>
       <order>6</order>
