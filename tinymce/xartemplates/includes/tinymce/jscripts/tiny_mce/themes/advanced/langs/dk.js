@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Styles';
 tinyMCELang['lang_theme_code_desc'] = 'Rediger html-kode';
 tinyMCELang['lang_theme_code_title'] = 'HTML Kodeeditor';
-tinyMCELang['lang_theme_code_save'] = 'Gem';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'S&#230;nket skrift';
 tinyMCELang['lang_theme_sup_desc'] = 'H&#230;vet skrift';
 tinyMCELang['lang_theme_hr_desc'] = 'Inds&#230;t horisontal linje';

@@ -360,6 +360,14 @@ optional and is not a requierd setting.<br>
     <td><strong>[auto_reset_designmode]</strong></td>
     <td>Becurse there are bugs when showing/hiding a TinyMCE editor by using the style.display none/block method the designmode needs to be resetted, this option enabled this value to be auto resetted each time a area is focused, this option is disabled by default. </td>
   </tr>
+  <tr>
+    <td><strong>[entities]</strong></td>
+    <td>Comma separated list of the entitiy lookup table used to convert char codes into names such as &amp;oring;. This list is in a odd, even format where odd values are the numbers to be converted and the even is the entity name that represents that number. For example: &quot;8205,zwj,8206,lrm,8207,rlm,173,shy&quot;.</td>
+  </tr>
+  <tr>
+    <td><strong>[cleanup_callback]</strong></td>
+    <td>Custom cleanup callback function, this enabled users to add custom cleanup logic to extend the build in one. This callback is called separatly from the default one, it doesn't replace the old one it just extends it. Check the <a href="themes.htm#cleanup">plugin cleanup</a> function for more details.</td>
+  </tr>
   <tr bgcolor="#CCCCCC"> 
     <td colspan="2"><strong>Advanced theme specific settings </strong></td>
   </tr>
@@ -396,6 +404,10 @@ optional and is not a requierd setting.<br>
   <tr>
     <td><strong>[theme_advanced_buttons&lt;N&gt;_add]</strong></td>
     <td>Adds extra controls/buttons to the specified row (N). For example: theme_advaned_buttons3_add : &quot;iespell&quot;.</td>
+  </tr>
+  <tr>
+    <td><strong>[theme_advanced_buttons&lt;N&gt;_add_before]</strong></td>
+    <td>Adds extra controls/buttons to the specified row (N) before the default ones. For example: theme_advaned_buttons3_add_before : &quot;iespell&quot;.</td>
   </tr>
   <tr> 
     <td><strong>[theme_advanced_disable]</strong></td>

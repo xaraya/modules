@@ -4,7 +4,7 @@
 tinyMCELang['lang_theme_style_select'] = 'St&#237;lusok';
 tinyMCELang['lang_theme_code_desc'] = 'HTML k&#243;d szerkeszt&#233;se';
 tinyMCELang['lang_theme_code_title'] = 'HTML k&#243;dszerkezt&#245;';
-tinyMCELang['lang_theme_code_save'] = 'Ment&#233;s';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Als&#243; index';
 tinyMCELang['lang_theme_sup_desc'] = 'Fels&#245; index';
 tinyMCELang['lang_theme_hr_desc'] = 'V&#237;zszintes vonal beilleszt&#233;se';

@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Stijlen';
 tinyMCELang['lang_theme_code_desc'] = 'Toon/bewerk HTML broncode';
 tinyMCELang['lang_theme_code_title'] = 'HTML broncode editor';
-tinyMCELang['lang_theme_code_save'] = 'Opslaan';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Subscript';
 tinyMCELang['lang_theme_sup_desc'] = 'Superscript';
 tinyMCELang['lang_theme_hr_desc'] = 'Invoegen horizontale lijn';

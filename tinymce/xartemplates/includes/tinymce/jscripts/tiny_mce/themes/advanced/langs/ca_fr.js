@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Styles';
 tinyMCELang['lang_theme_code_desc'] = 'Modifier le code source HTML';
 tinyMCELang['lang_theme_code_title'] = '&Eacute;diteur de code source HTML';
-tinyMCELang['lang_theme_code_save'] = 'Enregistrer';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Souscrit';
 tinyMCELang['lang_theme_sup_desc'] = 'Indice sup&eacute;rieur';
 tinyMCELang['lang_theme_hr_desc'] = 'Ins&eacute;rer un s&eacute;parateur horizontal';

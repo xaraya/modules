@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Tyylit';
 tinyMCELang['lang_theme_code_desc'] = 'Muokkaa HTML l‰hdekoodia';
 tinyMCELang['lang_theme_code_title'] = 'HTML L‰hdekoodin muokkaus';
-tinyMCELang['lang_theme_code_save'] = 'Tallenna';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Alam‰‰re';
 tinyMCELang['lang_theme_sup_desc'] = 'Yl‰m‰‰re';
 tinyMCELang['lang_theme_hr_desc'] = 'Lis‰‰ vaakaviiva';

@@ -1,7 +1,7 @@
 /**
  * $RCSfile: tiny_mce_src.js,v $
- * $Revision: 1.144 $
- * $Date: 2004/11/23 20:18:03 $
+ * $Revision: 1.145 $
+ * $Date: 2004/11/28 16:19:27 $
  *
  * @author Moxiecode
  * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
@@ -61,6 +61,7 @@ function TinyMCE() {
 	this.parseURL = TinyMCE_parseURL;
 	this.convertAbsoluteURLToRelativeURL = TinyMCE_convertAbsoluteURLToRelativeURL;
 	this.updateContent = TinyMCE_updateContent;
+	this._customCleanup = TinyMCE__customCleanup;
 	this.getContent = TinyMCE_getContent;
 	this.setContent = TinyMCE_setContent;
 	this.importThemeLanguagePack = TinyMCE_importThemeLanguagePack;
@@ -159,6 +160,8 @@ function TinyMCE_init(settings) {
 	this.settings['inline_styles'] = tinyMCE.getParam("inline_styles", false);
 	this.settings['convert_newlines_to_brs'] = tinyMCE.getParam("convert_newlines_to_brs", false);
 	this.settings['auto_reset_designmode'] = tinyMCE.getParam("auto_reset_designmode", false);
+	this.settings['entities'] = tinyMCE.getParam("entities", "160,nbsp,38,amp,34,quot,162,cent,8364,euro,163,pound,165,yen,169,copy,174,reg,8482,trade,8240,permil,181,micro,183,middot,8226,bull,8230,hellip,8242,prime,8243,Prime,167,sect,182,para,223,szlig,8249,lsaquo,8250,rsaquo,171,laquo,187,raquo,8216,lsquo,8217,rsquo,8220,ldquo,8221,rdquo,8218,sbquo,8222,bdquo,60,lt,62,gt,8804,le,8805,ge,8211,ndash,8212,mdash,175,macr,8254,oline,164,curren,166,brvbar,168,uml,161,iexcl,191,iquest,710,circ,732,tilde,176,deg,8722,minus,177,plusmn,247,divide,8260,frasl,215,times,185,sup1,178,sup2,179,sup3,188,frac14,189,frac12,190,frac34,402,fnof,8747,int,8721,sum,8734,infin,8730,radic,8764,sim,8773,cong,8776,asymp,8800,ne,8801,equiv,8712,isin,8713,notin,8715,ni,8719,prod,8743,and,8744,or,172,not,8745,cap,8746,cup,8706,part,8704,forall,8707,exist,8709,empty,8711,nabla,8727,lowast,8733,prop,8736,ang,180,acute,184,cedil,170,ordf,186,ordm,8224,dagger,8225,Dagger,192,Agrave,193,Aacute,194,Acirc,195,Atilde,196,Auml,197,Aring,198,AElig,199,Ccedil,200,Egrave,201,Eacute,202,Ecirc,203,Euml,204,Igrave,205,Iacute,206,Icirc,207,Iuml,208,ETH,209,Ntilde,210,Ograve,211,Oacute,212,Ocirc,213,Otilde,214,Ouml,216,Oslash,338,OElig,352,Scaron,217,Ugrave,218,Uacute,219,Ucirc,220,Uuml,221,Yacute,376,Yuml,222,THORN,224,agrave,225,aacute,226,acirc,227,atilde,228,auml,229,aring,230,aelig,231,ccedil,232,egrave,233,eacute,234,ecirc,235,euml,236,igrave,237,iacute,238,icirc,239,iuml,240,eth,241,ntilde,242,ograve,243,oacute,244,ocirc,245,otilde,246,ouml,248,oslash,339,oelig,353,scaron,249,ugrave,250,uacute,251,ucirc,252,uuml,253,yacute,254,thorn,255,yuml,914,Beta,915,Gamma,916,Delta,917,Epsilon,918,Zeta,919,Eta,920,Theta,921,Iota,922,Kappa,923,Lambda,924,Mu,925,Nu,926,Xi,927,Omicron,928,Pi,929,Rho,931,Sigma,932,Tau,933,Upsilon,934,Phi,935,Chi,936,Psi,937,Omega,945,alpha,946,beta,947,gamma,948,delta,949,epsilon,950,zeta,951,eta,952,theta,953,iota,954,kappa,955,lambda,956,mu,957,nu,958,xi,959,omicron,960,pi,961,rho,962,sigmaf,963,sigma,964,tau,965,upsilon,966,phi,967,chi,968,psi,969,omega,8501,alefsym,982,piv,8476,real,977,thetasym,978,upsih,8472,weierp,8465,image,8592,larr,8593,uarr,8594,rarr,8595,darr,8596,harr,8629,crarr,8656,lArr,8657,uArr,8658,rArr,8659,dArr,8660,hArr,8756,there4,8834,sub,8835,sup,8836,nsub,8838,sube,8839,supe,8853,oplus,8855,otimes,8869,perp,8901,sdot,8968,lceil,8969,rceil,8970,lfloor,8971,rfloor,9001,lang,9002,rang,9674,loz,9824,spades,9827,clubs,9829,hearts,9830,diams,8194,ensp,8195,emsp,8201,thinsp,8204,zwnj,8205,zwj,8206,lrm,8207,rlm,173,shy");
+	this.settings['cleanup_callback'] = tinyMCE.getParam("cleanup_callback", "");
 
 	// Setup baseHREF
 	var baseHREF = tinyMCE.settings['document_base_url'];
@@ -167,6 +170,9 @@ function TinyMCE_init(settings) {
 	this.settings['base_href'] = baseHREF.substring(0, baseHREF.lastIndexOf('/')) + "/";
 
 	theme = this.settings['theme'];
+
+	// Theme url
+	this.settings['theme_href'] = tinyMCE.baseURL + "/themes/" + theme;
 
 	if (!tinyMCE.isMSIE)
 		this.settings['force_br_newlines'] = false;
@@ -591,6 +597,9 @@ function TinyMCE_setupContent(editor_id) {
 		content = tinyMCE.regexpReplace(content, "\r", "<br />", "gi");
 		content = tinyMCE.regexpReplace(content, "\n", "<br />", "gi");
 	}
+
+	// Call custom cleanup code
+	content = tinyMCE._customCleanup("insert_to_editor", content);
 
 	if (tinyMCE.isMSIE) {
 		var styleSheet = document.frames[editor_id].document.createStyleSheet(instance.settings['content_css']);
@@ -1466,7 +1475,7 @@ function TinyMCE__verifyClass(node) {
 			}
 		}
 
-		if (nonDefinedCSS) {
+		if (nonDefinedCSS && className.indexOf('mce_') != 0) {
 			node.removeAttribute('className');
 			node.removeAttribute('class');
 			return false;
@@ -1651,66 +1660,19 @@ function TinyMCE_cleanupNode(node) {
 }
 
 function TinyMCE_convertStringToXML(html_data) {
-	var output = "";
+    var output = "";
 
 	for (var i=0; i<html_data.length; i++) {
-		var chr = html_data.charAt(i);
+		var chr = html_data.charCodeAt(i);
 
-		// Check and convert to XML format
-		switch (chr) {
-			case ''+String.fromCharCode(8482):
-				output += "&#x2122;";
-			break;
+		// Check if a name exists in lookup table
+		if (typeof(tinyMCE.cleanup_entities["c" + chr]) != 'undefined' && tinyMCE.cleanup_entities["c" + chr] != '')
+			output += '&' + tinyMCE.cleanup_entities["c" + chr] + ';';
+		else
+			output += '' + String.fromCharCode(chr);
+    }
 
-/*			case ''+String.fromCharCode(8211):
-				output += "-";
-			break;*/
-
-/*			case '\u0093':
-			case '\u0094':
-			case ''+String.fromCharCode(8220):
-			case ''+String.fromCharCode(8221):*/
-			case '"':
-				output += "&quot;";
-			break;
-
-/*			case ''+String.fromCharCode(8217):
-			case ''+String.fromCharCode(180):*/
-			case '\'':
-				output += "&#39;";
-				//output += "&apos;"; Breaks in MSIE
-			break;
-
-			case '<':
-				output += "&lt;";
-			break;
-
-			case '>':
-				output += "&gt;";
-			break;
-
-			case '&':
-				output += "&amp;";
-			break;
-
-/*			case ''+String.fromCharCode(8230):
-				output += "...";
-			break;*/
-
-			case '\\':
-				output += "&#92;";
-			break;
-
-			case ''+String.fromCharCode(160):
-				output += "&nbsp;";
-			break;
-
-			default:
-				output += chr;
-		}
-	}
-
-	return output;
+    return output;
 }
 
 function TinyMCE__initCleanup() {
@@ -1810,6 +1772,12 @@ function TinyMCE__initCleanup() {
 	tinyMCE.cleanup_urlconvertor_callback = tinyMCE.settings['urlconvertor_callback'];
 	tinyMCE.cleanup_trim_span_elements = tinyMCE.settings['trim_span_elements'];
 	tinyMCE.cleanup_inline_styles = tinyMCE.settings['inline_styles'];
+
+	// Setup entities
+	tinyMCE.cleanup_entities = new Array();
+	var entities = tinyMCE.getParam('entities', '', true, ',');
+	for (var i=0; i<entities.length; i+=2)
+		tinyMCE.cleanup_entities['c' + entities[i]] = entities[i+1];
 }
 
 function TinyMCE__cleanupHTML(doc, config, element, visual, on_save) {
@@ -1855,6 +1823,9 @@ function TinyMCE__cleanupHTML(doc, config, element, visual, on_save) {
 	// Emtpy node, return empty
 	if (html == "<br />" || html == "<p>&nbsp;</p>")
 		html = "";
+
+	// Call custom cleanup code
+	html = tinyMCE._customCleanup(on_save ? "get_from_editor" : "insert_to_editor", html);
 
 	if (tinyMCE.settings["preformatted"])
 		return "<pre>" + html + "</pre>";
@@ -2263,6 +2234,22 @@ function TinyMCE_triggerNodeChange(focus) {
 		this.selectedInstance.contentWindow.focus();
 }
 
+function TinyMCE__customCleanup(type, content) {
+	// Call custom cleanup
+	var customCleanup = tinyMCE.settings['cleanup_callback'];
+	if (customCleanup != "" && eval("typeof(" + customCleanup + ")") != "undefined")
+		content = eval(customCleanup + "(type, content);");
+
+	// Trigger plugin cleanups
+	var plugins = tinyMCE.getParam('plugins', '', true, ',');
+	for (var i=0; i<plugins.length; i++) {
+		if (eval("typeof(TinyMCE_" + plugins[i] +  "_cleanup)") != "undefined")
+			content = eval("TinyMCE_" + plugins[i] +  "_cleanup(type, content);");
+	}
+
+	return content;
+}
+
 function TinyMCE_getContent(editor_id) {
 	if (typeof(editor_id) != "undefined")
 		tinyMCE.selectedInstance = tinyMCE._getInstanceById(editor_id);
@@ -2278,6 +2265,10 @@ function TinyMCE_getContent(editor_id) {
 function TinyMCE_setContent(html_content) {
 	if (tinyMCE.selectedInstance) {
 		var doc = this.selectedInstance.contentWindow.document;
+
+		// Call custom cleanup code
+		html_content = tinyMCE._customCleanup("insert_to_editor", html_content);
+
 		tinyMCE._setHTML(doc, html_content);
 		doc.body.innerHTML = tinyMCE._cleanupHTML(doc, tinyMCE.settings, doc.body);
 		tinyMCE.handleVisualAid(doc.body, true, tinyMCE.selectedInstance.visualAid);
@@ -2573,7 +2564,7 @@ function TinyMCE_getCSSClasses(editor_id, doc) {
 				var rules = selectorText.split(',');
 				for (var c=0; c<rules.length; c++) {
 					// Invalid rule
-					if (rules[c].indexOf(' ') != -1 || rules[c].indexOf(':') != -1)
+					if (rules[c].indexOf(' ') != -1 || rules[c].indexOf(':') != -1 || rules[c].indexOf('mce_') == 1)
 						continue;
 
 					// Is class rule
@@ -2641,6 +2632,10 @@ function TinyMCEControl_autoResetDesignMode() {
 }
 
 function TinyMCEControl_execCommand(command, user_interface, value) {
+	function getAttrib(elm, name) {
+		return elm.getAttribute(name) ? elm.getAttribute(name) : "";
+	}
+
 	// Mozilla issue
 	if (!tinyMCE.isMSIE && !this.useCSS) {
 		this.contentWindow.document.execCommand("useCSS", false, true);
@@ -2730,6 +2725,25 @@ function TinyMCEControl_execCommand(command, user_interface, value) {
 	}
 
 	switch (command) {
+		case "Cut":
+		case "Copy":
+		case "Paste":
+			var cmdFailed = false;
+
+			// Try executing command
+			eval('try {this.contentDocument.execCommand(command, user_interface, value);} catch (e) {cmdFailed = true;}');
+
+			// Alert error in gecko if command failed
+			if (tinyMCE.isGecko && cmdFailed) {
+				// Confirm more info
+				if (confirm(tinyMCE.getLang('lang_clipboard_msg')))
+					window.open('http://www.mozilla.org/editor/midasdemo/securityprefs.html', 'mceExternal');
+
+				return;
+			} else
+				tinyMCE.triggerNodeChange();
+		break;
+
 		case "mceLink":
 			var selectedText = "";
 
@@ -2750,20 +2764,24 @@ function TinyMCEControl_execCommand(command, user_interface, value) {
 			if (tinyMCE.selectedElement.nodeName.toLowerCase() == "a")
 				tinyMCE.linkElement = tinyMCE.selectedElement;
 
+			// Is anchor not a link
+			if (tinyMCE.linkElement != null && getAttrib(tinyMCE.linkElement, 'href') == "")
+				tinyMCE.linkElement = null;
+
 			if (tinyMCE.linkElement) {
-				href= tinyMCE.linkElement.getAttribute('href') ? tinyMCE.linkElement.getAttribute('href') : "";
-				target = tinyMCE.linkElement.getAttribute('target') ? tinyMCE.linkElement.getAttribute('target') : "";
-				title = tinyMCE.linkElement.getAttribute('title') ? tinyMCE.linkElement.getAttribute('title') : "";
-                onclick = tinyMCE.linkElement.getAttribute('mce_onclick') ? "" + tinyMCE.linkElement.getAttribute('mce_onclick') : "";
+				href = getAttrib(tinyMCE.linkElement, 'href');
+				target = getAttrib(tinyMCE.linkElement, 'target');
+				title = getAttrib(tinyMCE.linkElement, 'title');
+                onclick = getAttrib(tinyMCE.linkElement, 'mce_onclick');
 
 				// Try old onclick to if copy/pasted content
 				if (onclick == "")
-					onclick = tinyMCE.linkElement.getAttribute('onclick') ? "" + tinyMCE.linkElement.getAttribute('onclick') : "";
+					onclick = getAttrib(tinyMCE.linkElement, 'onclick');
 
 				onclick = tinyMCE.cleanupEventStr(onclick);
 
 				// Fix for drag-drop/copy paste bug in Mozilla
-				mceRealHref = tinyMCE.linkElement.getAttribute('mce_real_href') ? tinyMCE.linkElement.getAttribute('mce_real_href') : "";
+				mceRealHref = getAttrib(tinyMCE.linkElement, 'mce_real_href');
 				if (mceRealHref != "")
 					href = mceRealHref;
 
@@ -2789,32 +2807,32 @@ function TinyMCEControl_execCommand(command, user_interface, value) {
 
 			if (tinyMCE.imgElement) {
 				// Is it a internal MCE visual aid image, then skip this one.
-                name = tinyMCE.imgElement.getAttribute('name') ? tinyMCE.imgElement.getAttribute('name') : "";
+                name = getAttrib(tinyMCE.imgElement, 'name');
                 if (name.substring(0, 4)=='mce_')
                     return;
 
-				src = tinyMCE.imgElement.getAttribute('src') ? tinyMCE.imgElement.getAttribute('src') : "";
-				alt = tinyMCE.imgElement.getAttribute('alt') ? tinyMCE.imgElement.getAttribute('alt') : "";
+				src = getAttrib(tinyMCE.imgElement, 'src');
+				alt = getAttrib(tinyMCE.imgElement, 'alt');
 
 				// Try polling out the title
 				if (alt == "")
-					alt = tinyMCE.imgElement.getAttribute('title') ? tinyMCE.imgElement.getAttribute('title') : "";
+					alt = getAttrib(tinyMCE.imgElement, 'title');
 
-				border = tinyMCE.imgElement.getAttribute('border') ? tinyMCE.imgElement.getAttribute('border') : "";
-				hspace = tinyMCE.imgElement.getAttribute('hspace') ? tinyMCE.imgElement.getAttribute('hspace') : "";
-				vspace = tinyMCE.imgElement.getAttribute('vspace') ? tinyMCE.imgElement.getAttribute('vspace') : "";
-				width = tinyMCE.imgElement.getAttribute('width') ? tinyMCE.imgElement.getAttribute('width') : "";
-				height = tinyMCE.imgElement.getAttribute('height') ? tinyMCE.imgElement.getAttribute('height') : "";
-				align = tinyMCE.imgElement.getAttribute('align') ? tinyMCE.imgElement.getAttribute('align') : "";
-                onmouseover = tinyMCE.imgElement.getAttribute('onmouseover') ? "" + tinyMCE.imgElement.getAttribute('onmouseover') : "";
-                onmouseout = tinyMCE.imgElement.getAttribute('onmouseout') ? "" + tinyMCE.imgElement.getAttribute('onmouseout') : "";
-                title = tinyMCE.imgElement.getAttribute('title') ? tinyMCE.imgElement.getAttribute('title') : "";
+				border = getAttrib(tinyMCE.imgElement, 'border');
+				hspace = getAttrib(tinyMCE.imgElement, 'hspace');
+				vspace = getAttrib(tinyMCE.imgElement, 'vspace');
+				width = getAttrib(tinyMCE.imgElement, 'width');
+				height = getAttrib(tinyMCE.imgElement, 'height');
+				align = getAttrib(tinyMCE.imgElement, 'align');
+                onmouseover = getAttrib(tinyMCE.imgElement, 'onmouseover');
+                onmouseout = getAttrib(tinyMCE.imgElement, 'onmouseout');
+                title = getAttrib(tinyMCE.imgElement, 'title');
 
 				onmouseover = tinyMCE.cleanupEventStr(onmouseover);
 				onmouseout = tinyMCE.cleanupEventStr(onmouseout);
 
 				// Fix for drag-drop/copy paste bug in Mozilla
-				mceRealSrc = tinyMCE.imgElement.getAttribute('mce_real_src') ? tinyMCE.imgElement.getAttribute('mce_real_src') : "";
+				mceRealSrc = getAttrib(tinyMCE.imgElement, 'mce_real_src');
 				if (mceRealSrc != "")
 					src = mceRealSrc;
 
@@ -3463,7 +3481,10 @@ function TinyMCE__themeExecCommand(editor_id, element, command, user_interface, 
 	return false;
 }
 
-function TinyMCE__getThemeFunction(suffix) {
+function TinyMCE__getThemeFunction(suffix, skip_plugins) {
+	if (skip_plugins)
+		return 'TinyMCE_' + tinyMCE.settings['theme'] + suffix;
+
 	var themePlugins = tinyMCE.getParam('plugins', '', true, ',');
 	var templateFunction;
 
@@ -3518,7 +3539,7 @@ function TinyMCEControl_onAdd(replace_element, form_element_name) {
 	var deltaHeight = editorTemplate['delta_height'] ? editorTemplate['delta_height'] : 0;
 	var html = '<span id="' + this.editorId + '_parent">' + editorTemplate['html'];
 
-	var templateFunction = tinyMCE._getThemeFunction('_handleNodeChange');
+	var templateFunction = tinyMCE._getThemeFunction('_handleNodeChange', true);
 	if (eval("typeof(" + templateFunction + ")") != 'undefined')
 		this.settings['handleNodeChangeCallback'] = templateFunction;
 

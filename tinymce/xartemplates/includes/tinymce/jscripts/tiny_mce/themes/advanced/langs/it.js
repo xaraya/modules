@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Stili';
 tinyMCELang['lang_theme_code_desc'] = 'Edita il sorgente HTML';
 tinyMCELang['lang_theme_code_title'] = 'Editor Sorgente HTML';
-tinyMCELang['lang_theme_code_save'] = 'Salva';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Pedice';
 tinyMCELang['lang_theme_sup_desc'] = 'Apice';
 tinyMCELang['lang_theme_hr_desc'] = 'Inserisce linea orizzontale';

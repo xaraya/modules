@@ -131,20 +131,6 @@ function TinyMCE_advanced_getControlHTML(button_name) {
  */
 function TinyMCE_advanced_execCommand(editor_id, element, command, user_interface, value) {
 	switch (command) {
-		case "Cut":
-		case "Copy":
-		case "Paste":
-			// Alert error in gecko
-			if (tinyMCE.isGecko) {
-				// Confirm more info
-				if (confirm(tinyMCE.getLang('lang_theme_clipboard_msg')))
-					window.open('http://www.mozilla.org/editor/midasdemo/securityprefs.html', 'mceExternal');
-
-				return true;
-			}
-
-			break;
-
 		case "mceForeColor":
 			var template = new Array();
 			var inputColor = TinyMCE_advanced_foreColor;
@@ -153,8 +139,8 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 				inputColor = "#000000";
 
 			template['file'] = 'color_picker.htm';
-			template['width'] = 190;
-			template['height'] = 235;
+			template['width'] = 210;
+			template['height'] = 200;
 
 			tinyMCE.openWindow(template, {editor_id : editor_id, command : "forecolor", input_color : inputColor});
 			return true;
@@ -163,18 +149,18 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 			var template = new Array();
 
 			template['file'] = 'source_editor.htm';
-			template['width'] = tinyMCE.getParam("theme_advanced_source_editor_width", 440);
-			template['height'] = tinyMCE.getParam("theme_advanced_source_editor_height", 370);
+			template['width'] = tinyMCE.getParam("theme_advanced_source_editor_width", 500);
+			template['height'] = tinyMCE.getParam("theme_advanced_source_editor_height", 400);
 
-			tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "yes"});
+			tinyMCE.openWindow(template, {editor_id : editor_id, resizable : "yes", scrollbars : "no"});
 			return true;
 
 		case "mceCharMap":
 			var template = new Array();
 
 			template['file'] = 'charmap.htm';
-			template['width'] = 320;
-			template['height'] = 210;
+			template['width'] = 550;
+			template['height'] = 280;
 
 			tinyMCE.openWindow(template, {editor_id : editor_id});
 			return true;
@@ -186,7 +172,7 @@ function TinyMCE_advanced_execCommand(editor_id, element, command, user_interfac
 			template['width'] = 320;
 			template['height'] = 130;
 
-			tinyMCE.openWindow(template, {editor_id : editor_id, name : TinyMCE_advanced_anchorName});
+			tinyMCE.openWindow(template, {editor_id : editor_id, name : TinyMCE_advanced_anchorName, action : (TinyMCE_advanced_anchorName == "" ? "insert" : "update")});
 			return true;
 	}
 
@@ -230,6 +216,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	var buttonNamesRow1 = tinyMCE.getParam("theme_advanced_buttons1", "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,styleselect,formatselect", true, ',');
 	buttonNamesRow1 = removeFromArray(buttonNamesRow1, tinyMCE.getParam("theme_advanced_disable", "", true, ','));
 	buttonNamesRow1 = addToArray(buttonNamesRow1, tinyMCE.getParam("theme_advanced_buttons1_add", "", true, ','));
+	buttonNamesRow1 = addToArray(tinyMCE.getParam("theme_advanced_buttons1_add_before", "", true, ','), buttonNamesRow1);
 	for (var i=0; i<buttonNamesRow1.length; i++)
 		toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow1[i]);
 
@@ -240,6 +227,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	var buttonNamesRow2 = tinyMCE.getParam("theme_advanced_buttons2", "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,link,unlink,anchor,image,cleanup,help,code", true, ',');
 	buttonNamesRow2 = removeFromArray(buttonNamesRow2, tinyMCE.getParam("theme_advanced_disable", "", true, ','));
 	buttonNamesRow2 = addToArray(buttonNamesRow2, tinyMCE.getParam("theme_advanced_buttons2_add", "", true, ','));
+	buttonNamesRow2 = addToArray(tinyMCE.getParam("theme_advanced_buttons2_add_before", "", true, ','), buttonNamesRow2);
 	for (var i=0; i<buttonNamesRow2.length; i++)
 		toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow2[i]);
 
@@ -250,6 +238,7 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	var buttonNamesRow3 = tinyMCE.getParam("theme_advanced_buttons3", "table,separator,row_before,row_after,delete_row,separator,col_before,col_after,delete_col,separator,hr,removeformat,visualaid,separator,sub,sup,separator,charmap", true, ',');
 	buttonNamesRow3 = removeFromArray(buttonNamesRow3, tinyMCE.getParam("theme_advanced_disable", "", true, ','));
 	buttonNamesRow3 = addToArray(buttonNamesRow3, tinyMCE.getParam("theme_advanced_buttons3_add", "", true, ','));
+	buttonNamesRow3 = addToArray(tinyMCE.getParam("theme_advanced_buttons3_add_before", "", true, ','), buttonNamesRow3);
 	for (var i=0; i<buttonNamesRow3.length; i++)
 		toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow3[i]);
 
@@ -360,6 +349,10 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 		}
 
 		return false;
+	}
+
+	function getAttrib(elm, name) {
+		return elm.getAttribute(name) ? elm.getAttribute(name) : "";
 	}
 
 	// Get element color
@@ -570,7 +563,8 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
             break;
 
             case "img":
-                tinyMCE.switchClassSticky(editor_id + '_image', 'mceButtonSelected');
+				if (getAttrib(node, 'name').indexOf('mce_') != 0)
+					tinyMCE.switchClassSticky(editor_id + '_image', 'mceButtonSelected');
             break;
 		}
 	} while ((node = node.parentNode));

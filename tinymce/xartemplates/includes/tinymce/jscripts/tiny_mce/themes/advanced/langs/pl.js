@@ -2,7 +2,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Style';
 tinyMCELang['lang_theme_code_desc'] = 'Edytuj ¼ró³o HTML';
 tinyMCELang['lang_theme_code_title'] = 'Edytor ¼ród³a HTML';
-tinyMCELang['lang_theme_code_save'] = 'Zapisz';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Indeks dolny';
 tinyMCELang['lang_theme_sup_desc'] = 'Indeks górny';
 tinyMCELang['lang_theme_hr_desc'] = 'Wstaw liniê poziom±';

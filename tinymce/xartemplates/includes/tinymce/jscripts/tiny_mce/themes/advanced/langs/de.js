@@ -5,7 +5,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Styles';
 tinyMCELang['lang_theme_code_desc'] = 'HTML-Modus';
 tinyMCELang['lang_theme_code_title'] = 'HTML-Code Editor';
-tinyMCELang['lang_theme_code_save'] = 'Speichern';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Tiefergestellt';
 tinyMCELang['lang_theme_sup_desc'] = 'H&ouml;hergestellt';
 tinyMCELang['lang_theme_hr_desc'] = 'Horizontale Linie einf&uuml;gen';

@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Θέματα';
 tinyMCELang['lang_theme_code_desc'] = 'Επεξεργασία HTML κώδικα';
 tinyMCELang['lang_theme_code_title'] = 'Επεξεργαστής HTML';
-tinyMCELang['lang_theme_code_save'] = 'Αποθήκευση';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Δείκτης';
 tinyMCELang['lang_theme_sup_desc'] = 'Εκθέτης';
 tinyMCELang['lang_theme_hr_desc'] = 'Εισαγωγή οριζόντιας γραμμής';

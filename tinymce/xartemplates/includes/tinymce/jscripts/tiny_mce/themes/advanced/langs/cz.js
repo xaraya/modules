@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Styly';
 tinyMCELang['lang_theme_code_desc'] = 'Zobrazit zdroj HTML';
 tinyMCELang['lang_theme_code_title'] = 'Editor HTML zdroje';
-tinyMCELang['lang_theme_code_save'] = 'Ulo&#190;it';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Dopln&#237; index';
 tinyMCELang['lang_theme_sup_desc'] = 'Horn&#237; index';
 tinyMCELang['lang_theme_hr_desc'] = 'Vlo&#190;it vodorovn&#253; odd&#236;lova&#232;';

@@ -22,6 +22,7 @@ tinyMCELang['lang_focus_alert'] = '$B$3$N%3%^%s%I$r;H$&A0$K%(%G%#%?>e$N$I$3$+$r
 tinyMCELang['lang_edit_confirm'] = 'WYSIWYG$B%b!<%I$G$3$N%F%-%9%H%(%j%"$rJT=8$7$^$9$+!)(B';
 tinyMCELang['lang_insert_link_title'] = '$B%j%s%/$NA^F~(B/$BJT=8(B';
 tinyMCELang['lang_insert'] = '$BA^F~(B';
+tinyMCELang['lang_update'] = '$BA^F~(B';
 tinyMCELang['lang_cancel'] = '$B<h$j>C$7(B';
 tinyMCELang['lang_insert_link_url'] = '$B%j%s%/@h(BURL';
 tinyMCELang['lang_insert_link_target'] = '$B%?!<%2%C%H(B';
@@ -34,3 +35,4 @@ tinyMCELang['lang_help_desc'] = '$B%X%k%W(B';
 tinyMCELang['lang_bold_img'] = "bold.gif";
 tinyMCELang['lang_italic_img'] = "italic.gif";
 tinyMCELang['lang_underline_img'] = "underline.gif";
+tinyMCELang['lang_clipboard_msg'] = 'Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?';

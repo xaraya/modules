@@ -64,11 +64,17 @@ td.charmap, td.charmapOver {
 }
 
 td.charmapOver {
-	background-color: #CCCCCC
+	background-color: #CCCCCC;
+	cursor: hand;
 }
 
 a.charmap {
-	cursor: hand;
 	color: #000000;
 	text-decoration: none
+}
+
+.wordWrapCode {
+	vertical-align: middle;
+	border: 1px none #000000;
+	background-color: transparent;
 }

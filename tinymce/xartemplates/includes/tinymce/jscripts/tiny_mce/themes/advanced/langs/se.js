@@ -3,7 +3,7 @@
 tinyMCELang['lang_theme_style_select'] = 'Stilar';
 tinyMCELang['lang_theme_code_desc'] = 'Redigera HTML K&#229;den';
 tinyMCELang['lang_theme_code_title'] = 'HTML K&#228;llk&#229;ds Redigerare';
-tinyMCELang['lang_theme_code_save'] = 'Spara';
+tinyMCELang['lang_theme_code_wordwrap'] = 'Word wrap';
 tinyMCELang['lang_theme_sub_desc'] = 'Subscript';
 tinyMCELang['lang_theme_sup_desc'] = 'Superscript';
 tinyMCELang['lang_theme_hr_desc'] = 'S&#228;tt in horisontell linie';
