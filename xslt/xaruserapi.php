@@ -56,21 +56,36 @@ function xslt_userapi_transform($args)
         }
 
         $xh = xslt_create();
-        //xslt_set_base($xh,'file://' . realpath(xarServerGetVar('SCRIPT_FILENAME')));
+        // Set the base to the location of the xsl file
+        xslt_set_base($xh,'file://' . realpath($xsl));
         xslt_set_error_handler($xh, "xslt_trap_error");
 
         if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
-            foreach ($extrainfo['transform'] as $key) {
+            foreach ($extrainfo['transform'] as $fieldkey) {
+                $key= $fieldkey;
+                if(array_key_exists($fieldkey."_output",$extrainfo)) {
+                    // dd property
+                    $key = $fieldkey ."_output";
+                }
+                       
                 if (!empty($extrainfo[$key]) && preg_match('/^\s*</',$extrainfo[$key])) {
                     $args = array('/_xml' => $extrainfo[$key]);
-                    $transformed = @xslt_process($xh,'arg:/_xml','file://'.realpath($xsl),NULL,$args);
+                    // Pass the absolute minimum on parameters to the stylesheet, so the document
+                    // can be transformed properly
+                    // What will be the uri under which this item will be reachable (so anchors in xsl can be properly transformed)
+                    $xar_docuri = xarServerGetCurrentURL();
+                    // Pass in the web path to the xsl file, so relative links can be resolved from there if needed
+                    $xar_webpath = dirname($xsl);
+                    $params = array('xar_docuri'  => $xar_docuri,
+                                    'xar_webpath' => $xar_webpath);
+                    $transformed = xslt_process($xh,'arg:/_xml','file://'.realpath($xsl),NULL,$args,$params);
                     if ($transformed) {
+                        xarLogMessage("XSLT: transformation successfull");
                         $extrainfo[$key] = $transformed;
                     } else {
-                        $msg = xarML('XSLT error : #(1)',xslt_error($xh));
-                        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                                        new SystemException($msg));
-                        break;
+                        // Error trapper will catch errors and set exception
+                        xslt_free($xh);
+                        return;
                     }
                 }
             }
@@ -87,10 +102,9 @@ function xslt_userapi_transform($args)
                     if ($transformed) {
                         $newinfo[] = $transformed;
                     } else {
-                        $msg = xarML('XSLT error : #(1)',xslt_error($xh));
-                        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                                        new SystemException($msg));
-                        $newinfo[] = $text;
+                        // Error trapper will catch errors and set exception
+                        xslt_free($xh);
+                        return;
                     }
                 }
             }
@@ -109,7 +123,7 @@ function xslt_userapi_transform($args)
         }
 
         $xh = xslt_create();
-        //xslt_set_base($xh,'file://' . realpath(xarServerGetVar('SCRIPT_FILENAME')));
+        xslt_set_base($xh,'file://' . realpath($xsl));
         xslt_set_error_handler($xh, "xslt_trap_error");
 
         $args = array('/_xml' => $extrainfo);
@@ -117,9 +131,9 @@ function xslt_userapi_transform($args)
         if ($transformed) {
             $extrainfo = $transformed;
         } else {
-            $msg = xarML('XSLT error : #(1)',xslt_error($xh));
-            xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                            new SystemException($msg));
+            // Error trapper will catch errors and set exception
+            xslt_free($xh);
+            return;
         }
         xslt_free($xh);
         return $extrainfo;
