@@ -1,10 +1,10 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Contact Administration</xar:mlstring></span></div>
 <div class="xar-mod-body">
     <h2><xar:mlstring>Contact Module Overview</xar:mlstring></h2>
-<p><xar:mlstring>If this is your first visit to this part of your Xaraya site,
-please take a minute to read through the following introduction,
-in order to explore the different possibilities offered by the
-Contact module.</xar:mlstring></p>
+    <p><xar:mlstring>If this is your first visit to this part of your Xaraya site,
+      please take a minute to read through the following introduction,
+      in order to explore the different possibilities offered by the
+      Contact module.</xar:mlstring></p>
     <div style="padding: 1px;" class="xar-norm-outline">
         <div style="float:right;padding:10px;">
             <xar:if condition="file_exists('modules/contact/xarimages/admin.gif')" >
@@ -29,7 +29,7 @@ Contact module.</xar:mlstring></p>
             <xar:mlstring>"Add Company".  From this menu option, you can update the necessary contact information for your company,"NOTE:" In this version of contact you will need to give write permissions to your /modules/contact/xarimages directory so that you may upload a company logo. From here work your way down the list and add cities, locations, departments as necessary, some default items have already been added to the database, feel free to change them.</xar:mlstring>
             <br />
             <xar:mlstring>"Add Contacts" Here you can add contact persons for your company. The information that is added here, is what will be displayed on the business card page. Again to upload a picture for the contact, you will need to give write permission to the /modules/contact/xarimages directory.
-</xar:mlstring>
+            </xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -40,21 +40,23 @@ Contact module.</xar:mlstring></p>
             <xar:mlstring>The Contact Module has no blocks included at this time.</xar:mlstring>
         </div>
         <br />
+        
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
 
-        <br />
-        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
-<div align="center"><strong> #$welcome# </strong></div>
-<div align="center"> #$companyinfo#   </div>
-<div align="center"> #$addcity# </div>
-<div align="center"> #$addlocation# </div>
-<div align="center"> #$addtitles# </div>
-<div align="center"> #$adddepartments# </div><br />
-<div align="center"> #$persons#
-<ul><li>-- #$addpersons#</li>
-<li>-- #$listpersons#</li></ul> </div>
+            <br />
+            <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+                <div style="text-align:center;"><strong> #$welcome# </strong></div>
+                <div style="text-align:center;"> #$companyinfo#   </div>
+                <div style="text-align:center;"> #$addcity# </div>
+                <div style="text-align:center;"> #$addlocation# </div>
+                <div style="text-align:center;"> #$addtitles# </div>
+                <div style="text-align:center;"> #$adddepartments# </div><br />
+                <div style="text-align:center;"> #$persons#
+                    <ul><li>-- #$addpersons#</li>
+                        <li>-- #$listpersons#</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-
 </div>
