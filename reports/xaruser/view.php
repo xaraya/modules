@@ -31,26 +31,4 @@ function reports_user_view($args=array()) {
  	$data['reportlist']=$reportlist;
     return $data;
 }
-
-/**
- * helper function
- *
- */
-function DumpArray(&$array,$indent)
-{
-    for(Reset($array),$node=0;$node<count($array);Next($array),$node++)
-        {
-            echo $indent."\"".Key($array)."\"=";
-            $value=$array[Key($array)];
-            if(GetType($value)=="array")
-                {
-                    echo "<br>".$indent."[<br>";
-                    DumpArray(&$value,$indent.">>");
-                    echo $indent."]<br>";
-                }
-            else
-                echo "\"$value\"<br>";
-        }
-}
-
 ?>
