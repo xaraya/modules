@@ -69,14 +69,14 @@ function images_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 1.0:
-            // Code to upgrade from version 1.0 goes here
+        case '1.0.0':
+            // Code to upgrade from version 1.0.0 goes here
             break;
-        case 2.0:
-            // Code to upgrade from version 2.0 goes here
+        case '2.0':
+            // Code to upgrade from version 2.0.0 goes here
             break;
-        case 2.5:
-            // Code to upgrade from version 2.5 goes here
+        case '2.5':
+            // Code to upgrade from version 2.5.0 goes here
             break;
     }
 }

@@ -3,7 +3,7 @@
     
     $modversion['name'] = 'Images';
     $modversion['id'] = '152';
-    $modversion['version'] = '1.0';
+    $modversion['version'] = '1.0.0';
     $modversion['description'] = 'Handles basic image manipulation - resizing/croping/scaling/rotating';
     $modversion['credits'] = 'docs/credits.txt';
     $modversion['help'] = 'docs/help.txt';
@@ -14,5 +14,6 @@
     $modversion['contact'] = 'http://www.xaraya.com/';
     $modversion['admin'] = 1;
     $modversion['securityschema'] = array();
+    $modversion['dependency'] = array(666);
 
 ?>
