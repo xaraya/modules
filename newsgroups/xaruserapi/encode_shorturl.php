@@ -46,7 +46,7 @@ function newsgroups_userapi_encode_shorturl($args)
         // pager
         if (isset($startnum) && $startnum != 1) {
             $path .= $join . 'startnum=' . $startnum;
-            $join = '&amp;';
+            $join = '&';
         }
     }
 
