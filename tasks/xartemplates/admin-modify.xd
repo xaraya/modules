@@ -1,0 +1,122 @@
+<div class="xar-mod-head">
+  <span class="xar-mod-title"><xar:mlstring>Modify task</xar:mlstring></span>
+</div>
+
+<form action="&xar-modurl-tasks-admin-update; method="post">
+  <input type="hidden" name="id" value="#$id#"/>
+  
+<table >
+  <tr>
+    <td><xar:mlstring>Task name</xar:mlstring></td>
+    <td colspan="2">
+      <input type="text" size="50" name="name" value="#$task['name']#"/>
+    </td>
+  <tr>
+  <td><xar:mlstring>Status</xar:mlstring></td
+    <td>
+      <select name="status" id="status">
+        <xar:loop name="$statusoptions">
+          <xar:if condition="$task['status'] eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Private task</xar:mlstring></td>
+    <td>
+       <input type="checkbox" name="private" value="#$task['private']#" >
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Priority</xar:mlstring></td>
+    <td>
+      <select name="priority" id="priority">
+        <xar:loop name="$prioritydropdown">
+          <xar:if condition="$task['priority'] eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Date planned</xar:mlstring></td>
+    <td>
+      <select name="date_start_planned" >
+        <xar:loop name="$start_planned_dropdown">
+          <xar:if condition="$task['date_start_planned'] eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Date actual</xar:mlstring></td>
+    <td>
+      <select name="date_start_actual" >
+        <xar:loop name="$start_actual_dropdown">
+          <xar:if condition="$task['date_start_actual'] eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Date end planned</xar:mlstring></td>
+    <td>
+      <select name="date_end_planned" >
+        <xar:loop name="$end_planned_dropdown">
+          <xar:if condition="$task['date_end_planned'] eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Date end actual</xar:mlstring></td>
+    <td>
+      <select name="date_end_actual" >
+        <xar:loop name="$end_actual_dropdown">
+          <xar:if condition="$task['date_end_actual'] eq $id">
+            <option value="#$id#" selected="selected">#$name#</option>
+          <xar:else/>
+            <option value="#$id#">#$name#</option>
+          </xar:if>
+        </xar:loop>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Hours planned</xar:mlstring></td>
+    <td><input type="text" name="hours_planned" value="#$task['hours_planned']#" size="6"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Hours spent</xar:mlstring></td>
+    <td><input type="text" name="hours_spent" value="#$task['hours_spent']#" size="6"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Hours remaining</xar:mlstring></td>
+    <td><input type="text" name="hours_remaining" value="#$task['hours_remaining']#" size="6"></td>
+  </tr>
+  <tr>
+    <td><xar:mlstring>Task description</xar:mlstring></td>
+    <td><textarea name="description" value="#$task['description']#"></textarea></td>
+  </tr>
+</table>
+<input type="submit" value="#$submitbutton#"/>
+</form>

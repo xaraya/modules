@@ -66,15 +66,9 @@ function tasks_admin_new($args)
 // 	    $output->Text(tasks_menu());
 // 	}
 
-	$statusoptions = array();    
-	$statusoptions[] = array('id'=>0,'name'=>xarML('Open'));
-	$statusoptions[] = array('id'=>1,'name'=>xarML('Closed'));
+    $statusoptions = xarModAPIFunc('tasks','user','getstatusoptions');
     $data['statusoptions']=$statusoptions;
-
-	$prioritydropdown = array();
-	for($x=0;$x<=9;$x++) {
-		$prioritydropdown[] = array('id' => $x, 'name' => $x);
-	}
+    $prioritydropdown =xarModAPIFunc('tasks','user','getpriorities');
     $data['prioritydropdown']=$prioritydropdown;
 	
     // NEED TO INVESTIGATE THIS
@@ -151,81 +145,51 @@ function tasks_admin_create($args)
     return true;
 }
 
+/**
+ * Modify a task
+ *
+ */
 function tasks_admin_modify($args)
 {
-	$id = pnVarCleanFromInput('id');
+    $data=array();
+	$id = xarVarCleanFromInput('id');
                            
     extract($args);
 
     $output = new pnHTML();
 
-    if (!pnModAPILoad('tasks', 'user')
-			||!pnModLoad('tasks', 'user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        return $output->GetOutput();
-    }
+// 	if($module == "tasks" && $type == "admin" && $func == "modify") {
+// 	    $output->Text(tasks_menu());
+// 	}
 
-    $output->SetInputMode(_PNH_VERBATIMINPUT);
-	if($module == "tasks" && $type == "admin" && $func == "modify") {
-	    $output->Text(tasks_menu());
-	}
-
-    $task = pnModAPIFunc('tasks',
-                         'user',
-                         'get',
-                         array('id' => $id));
+    $task = xarModAPIFunc('tasks','user','get', array('id' => $id));
 
     if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
         $output->Text(tasks_feedback());
 		return $output->GetOutput();
     }
 
-    if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
-        $output->Text(tasks_feedback());
-		return $output->GetOutput();
-    }
+//     if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_EDIT)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
+//         $output->Text(tasks_feedback());
+// 		return $output->GetOutput();
+//     }
+    $statusoptions = xarModAPIFunc('tasks','user','getstatusoptions');
+    $data['statusoptions'] = $statusoptions;
+    $prioritydropdown = xarModAPIFunc('tasks','user','getpriorities');
+    $data['prioritydropdown'] = $prioritydropdown;
 
-	$statusoptions = array();    
-	$statusoptions[] = array('id'=>0,'name'=>'Open');
-	$statusoptions[] = array('id'=>1,'name'=>'Closed');
+//     if($module == "tasks" && $type == "admin" && $func == "create") {
+// 		$output->Text(tasks_feedback());
+// 	}
+    $data['id'] = $id;
 
-	$prioritydropdown = array();
-	for($x=0;$x<=9;$x++) {
-		$prioritydropdown[] = array('id' => $x, 'name' => $x);
-	}
-
-    if($module == "tasks" && $type == "admin" && $func == "create") {
-		$output->Text(tasks_feedback());
-	}
-
-    $output->FormStart(pnModURL('tasks', 'admin', 'update'));
-
-    $output->FormHidden('id', $id);
-
-    $output->TableStart(_TASKS_EDITTASK, array(), 0, 550);
-
-    $output->Text('<tr><td>');
-    $output->Text(_TASKS_TASKNAME);
-    $output->Text('</td><td colspan=2>');
-    $output->FormText('name', $task['name'], 50, 255);
-//    $row[] = $output->Text(_TASKS_TASKSTATUS);
-    $output->Text('</td><td>');
-    $output->FormSelectMultiple('status', $statusoptions, 0, 1, $task['status']);
-    $output->Text('</td></tr>');
-	
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(_TASKS_TASKPRIVATE);
-    $row[] = $output->FormCheckbox('private', $task['private']);
-    $row[] = $output->Text(_TASKS_TASKPRIORITY);
-    $row[] = $output->FormSelectMultiple('priority', $prioritydropdown, 0, 1, $task['priority']);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
+ 
+    xarModLoad('tasks');
 	
 	$dateformatlist = tasks_dateformatlist();
-	$dateformat = $dateformatlist[pnModGetVar('tasks', 'dateformat')];
+	$dateformat = $dateformatlist[xarModGetVar('tasks', 'dateformat')];
 	$formsize = strlen($dateformat) * 2;
 	$oneday = 60 * 60 * 24;
 	$onemonth = $oneday * 30;
@@ -237,50 +201,13 @@ function tasks_admin_modify($args)
 								'name' => strftime($dateformat,$x));
 		$x += $oneday;
 	}
+    $data['start_planned_dropdown'] =$datedropdown;
+    $data['start_actual_dropdown'] = $datedropdown;
+    $data['end_planned_dropdown']=$datedropdown;
+    $data['end_actual_dropdown'] = $datedropdown;
+    $data['submitbutton'] = xarML("Update task");
 
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(_TASKS_TASKSTARTPLANNED);
-    $row[] = $output->FormSelectMultiple('date_start_planned', $datedropdown, 0, 1, $task['date_start_planned']);
-    $row[] = $output->Text(_TASKS_TASKSTARTACTUAL);
-    $row[] = $output->FormSelectMultiple('date_start_actual', $datedropdown, 0, 1, $task['date_start_actual']);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-	
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-    $row[] = $output->Text(_TASKS_TASKENDPLANNED);
-    $row[] = $output->FormSelectMultiple('date_end_planned', $datedropdown, 0, 1, $task['date_end_planned']);
-    $row[] = $output->Text(_TASKS_TASKENDACTUAL);
-    $row[] = $output->FormSelectMultiple('date_end_actual', $datedropdown, 0, 1, $task['date_end_actual']);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-	
-    $row = array();
-    $output->SetOutputMode(_PNH_RETURNOUTPUT);
-	$row[] = $output->Text(_TASKS_TASKHRS);
-	$row[] = $output->FormText('hours_planned', $task['hours_planned'], 6, 11)
-    		.$output->Text(_TASKS_TASKHRSPLANNED);
-	$row[] = $output->FormText('hours_spent', $task['hours_spent'], 6, 11)
-    		.$output->Text(_TASKS_TASKHRSSPENT);
-	$row[] = $output->FormText('hours_remaining', ($task['hours_remaining'] ? $task['hours_remaining'] : "0.00"), 6, 11)
-    		.$output->Text(_TASKS_TASKHRSREMAINING);
-    $output->SetOutputMode(_PNH_KEEPOUTPUT);
-    $output->TableAddrow($row, 'left');
-	
-    $output->Text('<tr><td>');
-    $output->Text(_TASKS_TASKDESCRIPTION);
-    $output->Text('</td><td colspan=3>');
-    $output->FormTextarea('description', $task['description'], 8, 50 + $formsize);
-    $output->Text('</td></tr>');
-
-    $output->TableEnd();
-
-    $output->FormSubmit(_TASKS_UPDATE);
-
-	$output->FormEnd();
-
-    return $output->GetOutput();
+	return $data;
 }
 
 function tasks_admin_update($args)
@@ -299,7 +226,7 @@ function tasks_admin_update($args)
         $date_end_actual,
 		$hours_planned,
 		$hours_spent,
-		$hours_remaining) = pnVarCleanFromInput('id',
+		$hours_remaining) = xarVarCleanFromInput('id',
 										'name',
 										'priority',
 										'status',
@@ -320,13 +247,13 @@ function tasks_admin_update($args)
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $id)));
+    if (!xarModAPILoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
         return true;
     }
 
-    if($returnid = pnModAPIFunc('tasks',
+    if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'update',
 								array('id'	=> $id,
@@ -344,10 +271,10 @@ function tasks_admin_update($args)
 									'hours_planned' => $hours_planned,
 									'hours_spent' 	=> $hours_spent,
 									'hours_remaining' 		=> $hours_remaining))) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
     }
 
-    pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -355,27 +282,27 @@ function tasks_admin_update($args)
 
 function tasks_admin_close($args)
 {
-	$id = pnVarCleanFromInput('id');
+	$id = xarVarCleanFromInput('id');
 
     extract($args);
 
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $id)));
+    if (!xarModAPILoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
         return true;
     }
 
-    if($returnid = pnModAPIFunc('tasks',
+    if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'close',
 								array('id'	=> $id))) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
     }
 
-    pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -383,27 +310,27 @@ function tasks_admin_close($args)
 
 function tasks_admin_open($args)
 {
-	$id = pnVarCleanFromInput('id');
+	$id = xarVarCleanFromInput('id');
 
     extract($args);
 
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $id)));
+    if (!xarModAPILoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
         return true;
     }
 
-    if($returnid = pnModAPIFunc('tasks',
+    if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'open',
 								array('id'	=> $id))) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
     }
 
-    pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -411,27 +338,27 @@ function tasks_admin_open($args)
 
 function tasks_admin_approve($args)
 {
-	$id = pnVarCleanFromInput('id');
+	$id = xarVarCleanFromInput('id');
 
     extract($args);
 
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $id)));
+    if (!xarModAPILoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
         return true;
     }
 
-    if($returnid = pnModAPIFunc('tasks',
+    if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'approve',
 								array('id'	=> $id))) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
     }
 
-    pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -439,27 +366,27 @@ function tasks_admin_approve($args)
 
 function tasks_admin_publish($args)
 {
-	$id = pnVarCleanFromInput('id');
+	$id = xarVarCleanFromInput('id');
 
     extract($args);
 
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $id)));
+    if (!xarModAPILoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
         return true;
     }
 
-    if($returnid = pnModAPIFunc('tasks',
+    if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'publish',
 								array('id'	=> $id))) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
     }
 
-    pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -467,27 +394,27 @@ function tasks_admin_publish($args)
 
 function tasks_admin_accept($args)
 {
-	$id = pnVarCleanFromInput('id');
+	$id = xarVarCleanFromInput('id');
 
     extract($args);
 
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $id)));
+    if (!xarModAPILoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
         return true;
     }
 
-    if($returnid = pnModAPIFunc('tasks',
+    if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'accept',
 								array('id'	=> $id))) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
     }
 
-    pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -498,51 +425,51 @@ function tasks_admin_accept($args)
 function tasks_admin_delete($args)
 {
     list($id,
-         $confirmation) = pnVarCleanFromInput('id',
+         $confirmation) = xarVarCleanFromInput('id',
 										  'confirmation');
 
     extract($args);
 
-	if (!pnModAPILoad('tasks', 'user')
-			|| !pnModLoad('tasks','user')
-			|| !pnModAPILoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+	if (!xarModAPILoad('tasks', 'user')
+			|| !xarModLoad('tasks','user')
+			|| !xarModAPILoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
         return true;
     }
 
-    $task = pnModAPIFunc('tasks',
+    $task = xarModAPIFunc('tasks',
 							 'user',
 							 'get',
 							 array('id' => $id));
 
     if ($task == false) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
         return true;
     }
 
-    if (!pnSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
+    if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_DELETE)) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
         return true;
     }
 
     if (empty($confirmation)) {
-        $output = new pnHTML();
+        $output = new xarHTML();
 
-        $output->SetInputMode(_PNH_VERBATIMINPUT);
+        $output->SetInputMode(_XARH_VERBATIMINPUT);
         $output->Text(tasks_menu());
 
         $output->Title(_TASKS_DELETETASK);
 
 		$output->Text(_TASKS_TASKNAME);
 		$output->Linebreak();
-		$output->BoldText(pnVarPrepForDisplay($task['name']));
+		$output->BoldText(xarVarPrepForDisplay($task['name']));
 
         $output->ConfirmAction(_TASKS_CONFIRMDELETE,
-                               pnModURL('tasks',
+                               xarModURL('tasks',
                                         'admin',
                                         'delete'),
                                _TASKS_CANCELDELETE,
-                               pnModURL('tasks',
+                               xarModURL('tasks',
                                         'user',
                                         'view'),
                                array('id' => $id));
@@ -550,15 +477,15 @@ function tasks_admin_delete($args)
         return $output->GetOutput();
     }
 
-    if (pnModAPIFunc('tasks',
+    if (xarModAPIFunc('tasks',
                      'admin',
                      'delete',
                      array('id' => $id))) {
         // Success
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_TASKDELETED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_TASKDELETED);
     }
 
-    pnRedirect(pnModURL('tasks', 'user', 'view'));
+    xarRedirect(xarModURL('tasks', 'user', 'view'));
     
     return true;
 }
@@ -572,8 +499,8 @@ function tasks_admin_modifyconfig()
         return true;
     }
 	
-//     if (!pnSecAuthAction(0, 'tasks::', '', ACCESS_ADMIN)) {
-//         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
+//     if (!xarSecAuthAction(0, 'tasks::', '', ACCESS_ADMIN)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
 //         return true;
 //     }
 	
@@ -618,7 +545,7 @@ function tasks_admin_updateconfig()
 		$returnfromedit,
 		$returnfromsurface,
 		$returnfrommigrate,
-		$maxdisplaydepth) = pnVarCleanFromInput('dateformat',
+		$maxdisplaydepth) = xarVarCleanFromInput('dateformat',
 												'showoptions',
 												'returnfromadd',
 												'returnfromedit',
@@ -626,15 +553,15 @@ function tasks_admin_updateconfig()
 												'returnfrommigrate',
 												'maxdisplaydepth');
 
-    pnModSetVar('tasks', 'dateformat', $dateformat);
-    pnModSetVar('tasks', 'showoptions', $showoptions);
-    pnModSetVar('tasks', 'returnfromadd', $returnfromadd);
-    pnModSetVar('tasks', 'returnfromedit', $returnfromedit);
-    pnModSetVar('tasks', 'returnfromsurface', $returnfromsurface);
-    pnModSetVar('tasks', 'returnfrommigrate', $returnfrommigrate);
-    pnModSetVar('tasks', 'maxdisplaydepth', $maxdisplaydepth);
+    xarModSetVar('tasks', 'dateformat', $dateformat);
+    xarModSetVar('tasks', 'showoptions', $showoptions);
+    xarModSetVar('tasks', 'returnfromadd', $returnfromadd);
+    xarModSetVar('tasks', 'returnfromedit', $returnfromedit);
+    xarModSetVar('tasks', 'returnfromsurface', $returnfromsurface);
+    xarModSetVar('tasks', 'returnfrommigrate', $returnfrommigrate);
+    xarModSetVar('tasks', 'maxdisplaydepth', $maxdisplaydepth);
 
-    pnRedirect(pnModURL('tasks', 'admin', 'modifyconfig'));
+    xarRedirect(xarModURL('tasks', 'admin', 'modifyconfig'));
 
     return true;
 }
@@ -648,7 +575,7 @@ function tasks_admin_migrate($args)
 		$taskoption,
 		$modname,
 		$objectid,
-		$parentid) =	pnVarCleanFromInput('taskcheck',
+		$parentid) =	xarVarCleanFromInput('taskcheck',
 											'submit',
 											'taskfocus',
 											'id',
@@ -659,14 +586,14 @@ function tasks_admin_migrate($args)
 
     extract($args);
 
-    if (!pnModAPILoad('tasks','admin')
-			|| !pnModLoad('tasks','user')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        pnRedirect(pnModURL('tasks'));
+    if (!xarModAPILoad('tasks','admin')
+			|| !xarModLoad('tasks','user')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+        xarRedirect(xarModURL('tasks'));
         return true;
     }
 
-    if($newid = pnModAPIFunc('tasks',
+    if($newid = xarModAPIFunc('tasks',
 								'admin',
 								'migrate',
 								array('id'		=> $id,
@@ -678,15 +605,15 @@ function tasks_admin_migrate($args)
 									'submit' 		=> $submit,
 									'taskfocus'		=> $taskfocus))) {
 
-		pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_MIGRATIONSUCCESSFUL);
+		xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_MIGRATIONSUCCESSFUL);
 	}
 
 	if(empty($newid) || $newid == 0) {
-		pnRedirect(pnModURL('tasks',
+		xarRedirect(xarModURL('tasks',
 							'user',
 							'view'));
 	} else {
-		pnRedirect(pnModURL('tasks',
+		xarRedirect(xarModURL('tasks',
 							'user',
 							'display',
 							array('id' => $newid,
@@ -705,7 +632,7 @@ function tasks_admin_gantt($args)
 		$type,
 		$func,
 		$filter,
-		$displaydepth) = pnVarCleanFromInput('parentid',
+		$displaydepth) = xarVarCleanFromInput('parentid',
 									'module',
 									'type',
 									'func',
@@ -714,16 +641,16 @@ function tasks_admin_gantt($args)
 
 	extract($args);
 	
-	$output = new pnHTML();
+	$output = new xarHTML();
 	
-	if (!pnModAPILoad('tasks', 'user')
-			|| !pnModLoad('tasks', 'admin')) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
+	if (!xarModAPILoad('tasks', 'user')
+			|| !xarModLoad('tasks', 'admin')) {
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
 		$output->Text(tasks_feedback());
         return $output->GetOutput();
     }
 
-    $tasks = pnModAPIFunc('tasks',
+    $tasks = xarModAPIFunc('tasks',
                           'user',
                           'getall',
 						  array('parentid' => $parentid,
@@ -845,6 +772,6 @@ function tasks_admin_gantt($args)
 	
 	$graph->Stroke();
 
-	$output->SetInputMode(_PNH_VERBATIMINPUT);
+	$output->SetInputMode(_XARH_VERBATIMINPUT);
 }
 ?>

@@ -29,7 +29,7 @@ function tasks_userapi_getall($args)
     $tasks = array();
 	$maxlevel = xarSessionGetVar('maxlevel');
 	if($displaydepth > $maxlevel) {
-		return tasks;
+		return $tasks;
 	}
 	
  //    if (!xarSecAuthAction(0, 'tasks::', '::', ACCESS_OVERVIEW)) {
@@ -315,15 +315,16 @@ function tasks_userapi_countitems($args)
             FROM $taskstable
 			WHERE xar_parentid = $parentid";
 
-	switch($statustype) {
+    if(!empty($statustype)) {
+        switch($statustype) {
 		case "open":
 			$sql .= " AND xar_status = 0";
 			break;
 		case "closed":
 			$sql .= " AND xar_status = 1";
 			break;
-	} // ELSE GET ALL
-
+        } // ELSE GET ALL
+    }
     $result =& $dbconn->Execute($sql);
     if (!$result) return;
 
@@ -364,4 +365,20 @@ function tasks_userapi_getroot($args)
 
     return $parentid;
 }
+
+function tasks_userapi_getstatusoptions() {
+	$statusoptions = array();    
+	$statusoptions[] = array('id'=>0,'name'=>xarML('Open'));
+	$statusoptions[] = array('id'=>1,'name'=>xarML('Closed'));
+    return $statusoptions;
+}
+
+function tasks_userapi_getpriorities() {
+	$priorities = array();
+	for($x=0;$x<=9;$x++) {
+		$priorities[] = array('id' => $x, 'name' => $x);
+	}
+    return $priorities;
+}
+    
 ?>
