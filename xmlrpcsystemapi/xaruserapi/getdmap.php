@@ -20,17 +20,9 @@
 function xmlrpcsystemapi_userapi_getdmap() 
 {
     // Data types for xmlrpc
-    // FIXME: should go to userapi of xmlrpc server module
-    $xmlrpcI4="i4";
-    $xmlrpcInt="int";
-    $xmlrpcBoolean="boolean";
-    $xmlrpcDouble="double";
-    $xmlrpcString="string";
-    $xmlrpcDateTime="dateTime.iso8601";
-    $xmlrpcBase64="base64";
-    $xmlrpcArray="array";
-    $xmlrpcStruct="struct";
-
+    $dataTypes = xarModAPIFunc('xmlrpcserver','user','getdatatypes');
+    extract($dataTypes);
+    
     $listMethods_sig=array(array($xmlrpcArray, $xmlrpcString), array($xmlrpcArray));
     $listMethods_doc='This method lists all the methods that the XML-RPC server knows how to dispatch';
     
