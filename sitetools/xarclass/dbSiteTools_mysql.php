@@ -15,17 +15,23 @@
 
 /**
  * SiteTools Database abstraction class extension for mySQL
- *
- * @author Richard Cave <rcave@xaraya.com>
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @access private
  */
-require_once('modules/sitetools/xarclass/dbSiteTools.php');
+include_once('modules/sitetools/xarclass/dbSiteTools.php');
 
 class dbSiteTools_mysql extends dbSiteTools
 {
     function _optimize()
     {
+    	$tot_data = 0;
+        $tot_idx = 0;
+        $tot_all = 0;
+        $total_gain=0;
+        $total_kbs =0;
+        $gain=0;
+        $rowinfo['total_gain']=0;
+        $rowinfo['total_kbs']=0;
         $local_query = 'SHOW TABLE STATUS FROM '.$this->dbname;
         $result      = @mysql_query($local_query);
         if (@mysql_num_rows($result)) {
@@ -48,15 +54,19 @@ class dbSiteTools_mysql extends dbSiteTools
             $total = $total/1024;
             $total = round($total,3);
             $gain  = $datum['gain']/1024;
-            $rowinfo['total_gain'] += $gain;
-            $rowinfo['total_kbs'] += $total;
+            $total_gain += $gain;
+            $total_kbs  += $total;
             $gain  = round ($gain,3);
             $rowinfo['rowdata'][]=array('total' => $total,
                                         'gain'  => $gain,
                                         'tablename' => $datum['rowname']);
-        }
+         }
+        $rowinfo['total_gain']=$total_gain;
+        $rowinfo['total_kbs']=$total_kbs;
+        $rowinfo['dbname']=$this->dbname;
 
-        return $rowinfo; 
+        return $rowinfo;
+
     }
 }
 

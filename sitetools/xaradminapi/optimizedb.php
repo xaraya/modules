@@ -25,6 +25,9 @@
 function sitetools_adminapi_optimizedb($dbname,$dbtype='')
 {
 	//To do: setup for db type
+    if ($dbtype=='' || !isset($dbtype)){
+    $dbtype='mysql';
+    }
 
     // Security check  - allow scheduler api funcs to run as anon bug #2802
     // if (!xarSecurityCheck('AdminSiteTools')) return;
@@ -34,9 +37,18 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
         $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
     }
-    
+
     $rowinfo=array();//bug #2595
-    
+  // Instantiation of SiteTools class
+
+     include_once("modules/sitetools/xarclass/dbSiteTools_".$dbtype.".php");
+  
+     $classname="dbSiteTools_".$dbtype;
+     $items= new $classname();
+     if (!$rowdata= $items-> optimize($dbname)) {return;}
+
+/** Move all this to db specific classes.
+ ** Remove it when we have cleaned up a little and know it is working without a hitch
     switch ($dbtype) {
     default:
 
@@ -58,7 +70,7 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
 
                 $local_query = 'OPTIMIZE TABLE '.$row[0];
                 $resultat  = mysql_query($local_query);
-                if (!$resultat) {return false;} //TODO: fix bug # 2594 but need still clean up here 
+                if (!$resultat) {return false;} //TODO: fix bug # 2594 but need still clean up here
             }
         }
 
@@ -79,8 +91,8 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
        $items['total_gain']=$total_gain;
        $items['total_kbs']=$total_kbs;
        $items['dbname']=$dbname;
-    }
+*/
     //return
-   return $items;
+   return $rowdata;
 }
 ?>

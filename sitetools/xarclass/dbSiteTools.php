@@ -17,41 +17,39 @@
  * Database abstraction class for SiteTools
  *
  * @author Richard Cave <rcave@xaraya.com>
+ * @author Jo Dalle Nogare <jojodee@xaraya.com>
  * @access private
  */
 class dbSiteTools
 {
     // initialize some vars
-    var $_database_info = array(
-        'type'      => '',
-        'dbconn'    => array(),
-        'dbname'    => '',
-        );
-
-    function init ()
+    var $_database_info;
+    var $dbconn;
+    
+    function dbSiteTools ($dbname='',$dbtype='')
     {
-        if (empty($this->type)) {
-            $this->type = xarDBGetType();
+        if (empty($this->dbconn)) {
+            $this->dbconn =& xarDBGetConn();
+        }
+        if (empty($this->dbtype)) {
+            $this->dbtype = xarDBGetType();
+        } else {
+            $this->dbtype =$dbtype;
         }
         if (empty($this->dbname)) {
             $this->dbname = xarDBGetName();
+        } else {
+            $this->dbname=$dbname;
         }
-        if (empty($this->dbconn)) {
-            list($this->dbconn) = xarDBGetConn();
-        }
+       $this->_database_info =array($this->dbtype,$this->dbconn,$this->dbname);
     }
 
     function optimize()
     {
         $rowinfo = $this->_optimize();
 
-        $items['rowinfo']=$rowinfo['rowdata'];
-        $items['total_gain']=$rowinfo['total_gain'];
-        $items['total_kbs']=$rowinfo['total_kbs'];
-        $items['dbname']=$this->dbname;
-                                                                                           
-        // Return items
-        return $items;
+         // Return items
+        return $rowinfo;
     }
 
     function backup()
@@ -61,6 +59,7 @@ class dbSiteTools
         // Return 
         return $result;
     }
+
 }
 
 ?>

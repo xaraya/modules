@@ -54,10 +54,9 @@ extract($args);
     $query = "INSERT INTO $sitetoolstable (
               xar_stid,
               xar_stgained)
-              VALUES (
-              $nextId,
-              $totalgain)";
-    $result = &$dbconn->Execute($query); 
+              VALUES (?,?)";
+    $bindvars = array($nextId, $totalgain);
+    $result = &$dbconn->Execute($query,$bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return; 

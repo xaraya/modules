@@ -41,8 +41,11 @@ function sitetools_admin_optimize()
 
    // Start optimization api
 
+
         $data=array();
         $tabledata=array();
+        $total_gain=0;
+        $total_kbs=0;
         //optimize and get data for each table's result
         $tabledata= xarModAPIFunc('sitetools','admin','optimizedb');
 
@@ -62,12 +65,13 @@ function sitetools_admin_optimize()
             return $status;
         }
 
-       $data['tabledat']=$tabledata['rowinfo'];
+       $data['tabledat']=$tabledata['rowdata'];
+
        $total_gain=$tabledata['total_gain'];
        $total_kbs=$tabledata['total_kbs'];
        $data['totalgain'] = round ($total_gain,3);
        $data['totalkbs']  = round ($total_kbs,3);
-       $data['dbname']    =$tabledata['dbname'];
+       $data['dbname']    = $tabledata['dbname'];
        //Add this new optimization record to the database
        $optid = xarModAPIFunc('sitetools',
                               'admin',
