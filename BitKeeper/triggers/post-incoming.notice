@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Only run this script on the server
+if [ $BK_SIDE != server ]
+then exit 0
+fi 
+
 # url to web interface
 BKURL=http://www.xaraya.com:15010
 REPO=$(basename ${BKD_ROOT})
@@ -14,11 +19,6 @@ REPO=$(basename ${BKD_ROOT})
 if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING ]
 then exit 0
 fi
-
-# Only run this script on the server
-if [ $BK_SIDE != server ]
-then exit 0
-fi 
 
 (
 # Debug stuff 
@@ -49,5 +49,5 @@ then (
 	echo $(cat $BK_CSETLIST | xargs -n1 echo $BKURL/patch@ | sed 's/ //')
 	
 fi
-
+# FIXME: subject should be: n change(s) applied to <repo>, <first comment trimmed>
 ) | mail -s "$BK_EVENT in ${REPO} repository" xaraya_bk-notices@lists.xaraya.com
