@@ -12,16 +12,14 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;"> 
         <p><em><xar:mlstring>
-            XarTinyMCE is a platform independent web based Javascript
-            HTML WYSIWYG editor control released as Open Source under LGPL by
-            Moxiecode Systems AB.</xar:mlstring></em></p>
-        <p><xar:mlstring>It has a number of nice features over othe similar editors,
-            and has multiple browser support, currently Mozilla, MSIE and FireFox.
-            For futher details see </xar:mlstring> <a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a>
+            XarTinyMCE is a Xaraya Module based on TinyMCE, a platform independent web based Javascript 
+            HTML WYSIWYG editor released as Open Source under LGPL by Moxiecode Systems AB</xar:mlstring></em>
         </p>
-        <p><xar:mlstring>The Xaraya TinyMCE module is currenly not much more than a wrapper for TinyMCE.
-            This module brings the beginnings of configuration options via a user interface
-            in the Xaraya Administration area for TinyMCE, once it is installed.</xar:mlstring>
+        <p><xar:mlstring>xarTinyMCE module integrates the TinyMCE application by </xar:mlstring><a href="http://tinymce.moxiecode.com/" title="Moxiecode">http://tinymce.moxiecode.com</a>
+            <xar:mlstring> for use within your Xaraya web site. This module allows configuration options via the GUI in the Xaraya Administration area for xarTinyMCE.&nbsp; It has a number 
+            of nice features over similar editors, with&nbsp; multiple browser support, (currently Mozilla, MSIE and FireFox) and support for XHTML 1.0 strict markup. There are powerful 
+            features for not only allowing or disallowing xhtml tags (like the Xaraya HTML module), but also what attributes, and&nbsp; attribute values to allow. You can enhance
+            xarTinyMCE further with plugins!</xar:mlstring>
         </p>
         </div>
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
@@ -48,34 +46,36 @@
                   </li>
                 </ul>
               </li>
-              <li><xar:mlstring>In order to make modules in Xaraya use the XarTinyMCE module to display wysiwyg,
-              you need to add the following snippet at the top of any of your page templates. eg usually this is default.xt in themes/yourtheme/pages directory. You may have more than one page template and can choose to add it to one or more. 
-              The code will affect any textareas in the template or included in that template.
-              eg If you add it to default.xt page template it will affect all textareas in all templates that are also used in the default.xt template.
-              If you wish to be more specific, you can just add it at the top of a specific template that
-              contains a textarea field that you wish to convert to WYSIWYG (eg a module template like xarbb
-              newreply.xt or newtopic.xt)</xar:mlstring>
-            <p><code>&lt;xar:if condition=&quot;xarModGetVar('base','editor') eq 'tinymce'&quot;&gt;</code><br />
-               <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;xar:template file=&quot;tinymce_insert&quot; module=&quot;tinymce&quot; type=&quot;module&quot; /&gt;</code><br />
-            <code>&lt;/xar:if&gt;</code>
-            </p>
-           </li>
+   <li><xar:mlstring>You can use XarTinyMCE module to enable wysiwyg in two basic ways (there are variations on these).</xar:mlstring>
+       <ul>
+           <li><xar:mlstring>In <strong><em>all textareas</em></strong> using site wide page template (wysiwyg in all text areas on your site)
+               or in specific templates (xarbb templates, or articles new and modify templates) to only provide wysiwyg in those modules or textareas. 
+               In order to use xarTinyMCE in this way, add the following snippet at the top of any of your page templates.&nbsp;</xar:mlstring>
 
-           <li><xar:mlstring>You can become more specific by choosing the Mode of "Special Labelled Only" in the configuration options. You must then also add the attribute: <code>mce_editable="true"</code> to any "textarea" 
-           or "div" tag that you wish to use as a WYSIWYG textarea.</xar:mlstring>
-             </li>
-             </ol>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>xarTinyMCE WYSIWYG Dynamic Data Property</xar:mlstring>
+               <pre>&lt;xar:if condition=&quot;xarModGetVar('base','editor') eq 'tinymce'&quot;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;xar:template file=&quot;tinymce_insert&quot; module=&quot;tinymce&quot; type=&quot;module&quot; /&gt;<br />&lt;/xar:if&gt;</pre>
+           </li>
+          <li><xar:mlstring>You can become more specific by choosing the Mode of &quot;Special Labelled Only&quot; in the configuration options. You must then also add the attribute: 
+               <code>mce_editable=&quot;true&quot;</code> to any &quot;textarea&quot; or &quot;div&quot; tag that you wish to use as a WYSIWYG textarea. You can do this easily by using the xarTinyMCE Dynamic Data Property (see below).</xar:mlstring>
+          </li>
+       </ul>
+    </li>
+    </ol>
+    </div>
+    <br />
+    <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+     <xar:mlstring>Dynamic Data Property</xar:mlstring>
         </div>
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <p style="margin-left: 1em; margin-right: 1em; text-align:left;"><xar:mlstring>A xarTinyMCE Dynamic Data WYSIWYG textarea is also available and works with All Textareas or
-                  Special Labelled text area mode. Add a XarTinyMCE GUI Dynamic Data property to your
-                  publication type (or other module) in the usual way. No xarTinyMCE tag need be added to your template. Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
-                  If you can't see the xarTinyMCE GUI DD property in your DD list </xar:mlstring>
-                  <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>.</p>
+            <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>A xarTinyMCE Dynamic Data WYSIWYG textarea is also available and works with All Textareas or
+            Special Labelled text area mode. To use this, add a XarTinyMCE GUI Dynamic Data field to your publication type (or other module) in the usual way. You <em><strong>do not add </strong></em>a xarTinyMCE tag
+             to your template when you use a xarTInyMCE DD field.</xar:mlstring>
+            </p>
+           <p style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Set row height and column width in the validation field. eg 20:80 for 20 rows high, 80 columns wide.
+            If you can't see the xarTinyMCE GUI DD property in your DD list then</xar:mlstring>
+             <a href="#$ddflushurl#"><xar:mlstring>flush the Property Cache</xar:mlstring></a>. <xar:mlstring>This causes a re-read of all DD properties available to Xaraya</xar:mlstring>.
+            </p>
         </div>
         <br />
       <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
@@ -90,7 +90,6 @@
                 <li><xar:mlstring>Image Browser (ibrowser) - browse your image libraries and select a file to insert to
                 your textarea. Upload a file if you have allowed uploads in the configuration. See the configuration area for more detail</xar:mlstring></li>
                 <li><xar:mlstring>Emotions - click to add fancy emoticons</xar:mlstring></li>
-                <li><xar:mlstring>Preview and Zoom</xar:mlstring></li>
                 <li><xar:mlstring>ISpell spell checker - only available for IE</xar:mlstring></li>
                 <li><xar:mlstring>Preview and Zoom - zoom is only available in IE</xar:mlstring></li>
                 <li><xar:mlstring>Time - click to add time in configured format</xar:mlstring></li>
@@ -124,11 +123,33 @@
             <p><xar:mlstring>There are no included hooks</xar:mlstring></p>
         </div>
         <br />
+
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Further Information</xar:mlstring>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>Further information on xarTinyMCE can be found at</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        <ul>
+              <li><xar:mlstring>xarTinyMCE Extension page at</xar:mlstring> <a title="xarTinyMCE Xaraya Extension 63" href="http://www.xaraya.com/index.php/release/63.html">http://www.xaraya.com/index.php/release/63.html</a>.
+              <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
+              </li>
+              <li><xar:mlstring>Related tutorials and documentation on xarTinyMCE found</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/xartinymce/" title="Related documentation on XarTinyMCE"><xar:mlstring>HERE</xar:mlstring></a>
+              </li>
+         </ul>
+         </div>
+        <div style="float:right;margin-left: 1em; margin-right: 1em; text-align:left;" class="xar-sub">
+         <p><strong>&nbsp;<xar:mlstring>xarTinyMCE WYSIWYG Editor - Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 2.0.0&nbsp; 2005-01-17 jojodee
+         </p>
+         </div>
+         <div style="clear:both;"><!-- --></div>
+         <br />
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
             <xar:mlstring>And more.. [for module developers]</xar:mlstring>
         </div>
         <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">Keep in mind this is a work in progress. Any bugs reports and feature requests are most appreciated. </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">This is a work in progress. Any bugs reports and feature requests are most appreciated. </div>
         <br />
         <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
             <xar:mlstring>Extended information about this module can be found here. </xar:mlstring>[<a href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a>]
