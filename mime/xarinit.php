@@ -1,12 +1,12 @@
 <?php
 
 /**
- * File: $Id$
+ * File: $Id
  *
- * init file for installing/upgrading MIME module
+ * MIME initialization functions
  *
- * @package modules
- * @copyright (C) 2002 by the Xaraya Development Team.
+ * @copyright (C) 2003 by the Xaraya Development Team.
+ * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.com
  *
  * @subpackage mime
@@ -20,10 +20,9 @@
  */
 
 /**
- * MIME Initialization Function
- *
- * @author Carl P. Corliss (aka Rabbitt)
- *
+ * initialise the mime module
+ * This function is only ever called once during the lifetime of a particular
+ * module instance
  */
 function mime_init() {
 
