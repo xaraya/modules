@@ -55,8 +55,8 @@ function xarbb_adminapi_delete($args)
 
     // Delete the item
     $query = "DELETE FROM $xbbforumstable
-              WHERE xar_fid = " . xarVarPrepForStore($fid);
-    $result =& $dbconn->Execute($query);
+              WHERE xar_fid = ?";
+    $result =& $dbconn->Execute($query, array($fid));
     if (!$result) return;
    // Let any hooks know that we have deleted a forum
     $args['module'] = 'xarbb';
@@ -67,5 +67,4 @@ function xarbb_adminapi_delete($args)
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

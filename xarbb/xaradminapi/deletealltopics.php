@@ -61,8 +61,8 @@ function xarbb_adminapi_deletealltopics($args)
 
     // Delete the topic items themselves
     $query = "DELETE FROM $xbbtopicstable
-              WHERE xar_fid = " . xarVarPrepForStore($fid);
-    $result =& $dbconn->Execute($query);
+              WHERE xar_fid = ?";
+    $result =& $dbconn->Execute($query, array($fid));
     if (!$result) return;
 
     // Let any hooks know that we have deleted topics
@@ -76,5 +76,4 @@ function xarbb_adminapi_deletealltopics($args)
     // Let the calling process know that we have finished successfully
     return true;
 }
-
 ?>

@@ -61,17 +61,16 @@ function xarbb_userapi_gettopic($args)
                      xar_fpostid,
                      xar_fstatus,
                      {$categoriesdef['cid']}
-            FROM $xbbtopicstable LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = $xbbforumstable.xar_fid
+            FROM $xbbtopicstable LEFT JOIN $xbbforumstable ON $xbbtopicstable.xar_fid = ? 
             LEFT JOIN {$categoriesdef['table']} ON {$categoriesdef['field']} = $xbbforumstable.xar_fid
             {$categoriesdef['more']}
-            WHERE {$categoriesdef['where']} AND xar_tid = " . xarVarPrepForStore($tid);
-    $result =& $dbconn->Execute($query);
+            WHERE {$categoriesdef['where']} AND xar_tid = ?";
+    $result =& $dbconn->Execute($query, array($xbbforumstable.xar_fid, $tid));
     if (!$result) return;
 
     if($result->EOF) 	{
-         $msg = xarML('Topic with ID #(1) does not exist',$tid);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST',
-            new SystemException(__FILE__ . '(' . __LINE__ . '): ' . $msg));
+        $msg = xarML('Topic with ID #(1) does not exist',$tid);
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ID_NOT_EXIST', new SystemException($msg));
         return;
     }
   

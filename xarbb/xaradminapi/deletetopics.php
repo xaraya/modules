@@ -43,8 +43,8 @@ function xarbb_adminapi_deletetopics($args)
         if(!xarModAPIFunc('xarbb', 'admin', 'deleteallreplies', array('tid' => $tid))) return;
 	    // Delete the item
 	    $query = "DELETE FROM $xbbtopicstable
-	              WHERE xar_tid = $tid";
-	    $result =& $dbconn->Execute($query);
+	              WHERE xar_tid = ?";
+	    $result =& $dbconn->Execute($query, array($tid));
 	    if (!$result) return;
         // Let any hooks know that we have deleted a topic
         $args['module'] = 'xarbb';

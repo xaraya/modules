@@ -90,15 +90,15 @@ function xarbb_adminapi_create($args)
               xar_fpostid,
               xar_fstatus   )
             VALUES (
-              $nextId, 
-              '" . xarVarPrepForStore($fname) . "',
-              '" . xarVarPrepForStore($fdesc) . "',
-              '" . xarVarPrepForStore($ftopics) . "',
-              '" . xarVarPrepForStore($fposts) . "',
-              '" . xarVarPrepForStore($fposter) . "',
-              '$fpostid',
-              '" . xarVarPrepForStore($fstatus) . "')";
-    $result =& $dbconn->Execute($query);
+              ?, 
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?)";
+    $result =& $dbconn->Execute($query, array($nextId, $fname, $fdesc, $ftopics, $fposts, $fposter, $fpostid, $fstatus));
     if (!$result) return;
 
     // Get the ID of the item that we inserted
@@ -117,6 +117,5 @@ function xarbb_adminapi_create($args)
 
     // Return the id of the newly created link to the calling process
     return $fid;
-}
- 
+} 
 ?>

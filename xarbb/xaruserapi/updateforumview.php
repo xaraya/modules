@@ -81,23 +81,6 @@ function xarbb_userapi_updateforumview($args)
         }
     }
 
-    //oof, i needs to clean this up.  logic is getting murky around here.
-    /*
-    if ((empty($reply)) AND (empty($deletetopic)) AND (empty($deletereply))){
-        $ftopics = $link['ftopics'] + 1;
-        $fposts = $link['fposts'] +1;
-    } elseif (!empty($reply)) {
-        $ftopics = $link['ftopics'];
-        $fposts = $link['fposts'] +1;
-    } elseif (!empty($deletetopic)){
-        $ftopics = $link['ftopics'] - 1;
-        $fposts = $link['fposts'] - 1;
-    } elseif (!empty($deletereply)){
-        $ftopics = $link['ftopics'];
-        $fposts = $link['fposts'] - 1;
-    }
-    */
- 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -107,15 +90,13 @@ function xarbb_userapi_updateforumview($args)
 
     // Update the forum
     $query = "UPDATE $xbbforumstable
-            SET xar_ftopics     = $ftopics,
-                xar_fpostid     = $time,
-                xar_fposts      = $fposts,
-                xar_fposter     = $fposter
-            WHERE xar_fid       = " . xarVarPrepForStore($fid);
-    $result =& $dbconn->Execute($query);
+            SET xar_ftopics     = ?,
+                xar_fpostid     = ?,
+                xar_fposts      = ?,
+                xar_fposter     = ?
+            WHERE xar_fid       = ?";
+    $result =& $dbconn->Execute($query, array($ftopics, $time, $fposts, $fposter, $fid));
     if (!$result) return;
-
-
     // Let the calling process know that we have finished successfully
     return true;
 }

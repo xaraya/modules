@@ -27,10 +27,8 @@ function xarbb_adminapi_update($args)
     if ((!isset($fid)) ||
         (!isset($fname)) ||
         (!isset($fdesc))) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'admin', 'update', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count', '', 'admin', 'update', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
   
@@ -48,11 +46,11 @@ function xarbb_adminapi_update($args)
     $xbbforumstable = $xartable['xbbforums'];
     // Update the forum
     $query = "UPDATE $xbbforumstable
-            SET xar_fname   = '" . xarVarPrepForStore($fname) . "',
-                xar_fdesc   = '" . xarVarPrepForStore($fdesc) . "',
-                xar_fstatus = '" . xarVarPrepForStore($fstatus) . "'
-            WHERE xar_fid = " . xarVarPrepForStore($fid);
-    $result =& $dbconn->Execute($query);
+            SET xar_fname   = ?,
+                xar_fdesc   = ?,
+                xar_fstatus = ?
+            WHERE xar_fid = ?";
+    $result =& $dbconn->Execute($query, array($fname, $fdesc, $fstatus, $fid));
      if (!$result) return;
 
     // Let any hooks know that we have modified a forum itemtype

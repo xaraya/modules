@@ -77,9 +77,9 @@ function xarbb_userapi_updatetopic($args)
     }
 
     // Update item
-    $query = "UPDATE $xbbtopicstable SET ".join(",",$update)." WHERE xar_tid = $tid";
+    $query = "UPDATE $xbbtopicstable SET ".join(",",$update)." WHERE xar_tid = ?";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, array($tid));
     if (!$result) return;
 
     $data = xarModAPIFunc('xarbb',

@@ -22,27 +22,20 @@ function xarbb_userapi_counttopics($args)
     extract($args);
 
     if (!isset($fid)) {
-        $msg = xarML('Invalid Parameter Count', '', 'userapi', 'get', 'xarbb');
+        $msg = xarML('Invalid Parameter Count in #(3)_#(1)_#(2)', '', 'userapi', 'counttopics', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $xbbtopicstable = $xartable['xbbtopics'];
-
     $query = "SELECT COUNT(1)
               FROM $xbbtopicstable            
-              WHERE xar_fid = $fid";
-    $result =& $dbconn->Execute($query);
+              WHERE xar_fid = ?";
+    $result =& $dbconn->Execute($query, array($fid));
     if (!$result) return;
-
     list($numitems) = $result->fields;
-
     $result->Close();
-
     return $numitems;
 }
-
 ?>
