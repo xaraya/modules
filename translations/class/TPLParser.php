@@ -88,8 +88,12 @@ class TPLParser
                 if ($this->_get_token()) {
                     // if (defined('TPLPARSERDEBUG'))
                        // printf("Result: %s<br />\n", $this->_string);
-                    if (!$this->isfunctiontokenarray[$this->_token])
+                    if (!$this->isfunctiontokenarray[$this->_token]) {
+                        // Delete extra whitespaces and spaces around newline
                         $this->_string = trim($this->_string);
+                        $this->_string = preg_replace('/[\t ]+/',' ',$this->_string);
+                        $this->_string = preg_replace('/\s*\n\s*/',"\n",$this->_string);
+                    }
                     if ($this->iskeytokenarray[$this->_token]) {
                         if (!isset($this->transKeyEntries[$this->_string])) {
                             $this->transKeyEntries[$this->_string] = array();
