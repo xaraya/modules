@@ -110,46 +110,8 @@ class Tiki_UsersLib
     }
 }
 
-/**
- * Dummy DB class to trap DB::isError() calls from inside lib/Galaxia
- */
-class DB extends ADOConnection
-{
-    function isError($result)
-    {
-        if (!isset($result)) return true;
-        return false;
-    }
-}
-
-/**
- * Frequent fetchRow() argument used inside lib/Galaxia
- */
-if (!defined('DB_FETCHMODE_ASSOC')) {
-    define('DB_FETCHMODE_ASSOC', 2);
-}
-
-/**
- * Translate strings and variables
- */
-function tra($what)
-{
-    return xarML($what);
-}
-
-function httpPrefix()
-{
-    return xarServerGetBaseURL();
-}
-
-// Specify the location of the lib/Galaxia directory
-define('GALAXIA_DIR', 'modules/workflow/lib/Galaxia');
-
-// Specify the directory where dot and neato are located for GraphViz
-// (see http://www.research.att.com/sw/tools/graphviz/ for download)
-// Note the trailing / here !!!
-define('GRAPHVIZ_DIR', 'd:/wintools/ATT/GraphViz/bin/');
-//define('GRAPVIZ_DIR', '');
+// Configuration of the Galaxia Workflow Engine for Xaraya
+include_once('modules/workflow/lib/Galaxia/config.php');
 
 define('TIKI_LOADED', 1);
 }
@@ -158,24 +120,10 @@ define('TIKI_LOADED', 1);
  * Common Tiki database connection handler
  */
 list($dbconn) = xarDBGetConn();
-$tikilib =& $dbconn;
-$dbTiki =& $dbconn;
-
-/* from db/tiki-db.php
-define('ADODB_FORCE_NULLS', 1);
-define('ADODB_ASSOC_CASE', 2);
-define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
-include_once ('adodb.inc.php');
-//include_once('adodb-error.inc.php');
-//include_once('adodb-errorhandler.inc.php');
-//include_once('adodb-errorpear.inc.php');
-include_once ('adodb-pear.inc.php');
-global $ADODB_FETCH_MODE;
-$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-*/
-
+global $dbGalaxia;
+$dbGalaxia =& $dbconn;
 // Set the fetch mode to assoc by default
-$oldmode = $dbTiki->SetFetchMode(DB_FETCHMODE_ASSOC);
+$oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
 
 // Create a dummy $smarty
 $smarty = new Tiki_Smarty();
@@ -187,13 +135,8 @@ $userlib = new Tiki_UsersLib();
 $style_base = 'test';
 
 // Retrieve the current user
+global $user;
 $user = xarUserGetVar('uid');
-
-/*
-$include_path = ini_get('include_path');
-$include_path .= ';./modules/workflow'; // : on non-Windows
-ini_set('include_path',$include_path);
-*/
 
 // Some other variables used inside Galaxia
 $feature_help = 'n';

@@ -17,7 +17,7 @@ function workflow_admin_monitor_workitems()
 
 // Adapted from tiki-g-monitor_workitems.php
 
-include_once (GALAXIA_DIR.'/ProcessMonitor.php');
+include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");
@@ -55,7 +55,7 @@ if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'orderId_asc';
+	$sort_mode = 'instanceId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -98,6 +98,13 @@ if ($offset > 0) {
 }
 
 foreach (array_keys($items['data']) as $index) {
+    if (!empty($items['data'][$index]['started'])) {
+        $items['data'][$index]['started'] = xarLocaleGetFormattedDate('medium',$items['data'][$index]['started']) . ' '
+                                            . xarLocaleGetFormattedTime('short',$items['data'][$index]['started']);
+    }
+    if (!empty($items['data'][$index]['duration'])) {
+//        $items['data'][$index]['duration'] = strftime('%H:%M:%S',$items['data'][$index]['duration']);
+    }
     if (!is_numeric($items['data'][$index]['user'])) continue;
     $items['data'][$index]['user'] = xarUserGetVar('name',$items['data'][$index]['user']);
 }

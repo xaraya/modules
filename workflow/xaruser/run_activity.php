@@ -17,7 +17,7 @@ function workflow_user_run_activity()
 
 // Adapted from tiki-g-run_activity.php
 
-include (GALAXIA_DIR.'/API.php');
+include (GALAXIA_LIBRARY.'/API.php');
 
 // TODO: evaluate why this is here
 //include_once ("lib/webmail/htmlMimeMail.php");
@@ -89,8 +89,8 @@ foreach ($act_role_names as $role) {
 	}
 }
 
-$source = GALAXIA_DIR.'/processes/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
-$shared = GALAXIA_DIR.'/processes/' . $process->getNormalizedName(). '/code/shared.php';
+$source = GALAXIA_PROCESSES.'/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
+$shared = GALAXIA_PROCESSES.'/' . $process->getNormalizedName(). '/code/shared.php';
 
 // Existing variables here:
 // $process, $activity, $instance (if not standalone)
@@ -137,8 +137,12 @@ $tplData['actname'] =  $activity->getName();
 $tplData['actid'] = $activity->getActivityId();
 
 if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteractive()) {
-	$tplData['mid'] =  'tiki-g-activity_completed.tpl';
-	$template = 'completed';
+    if (empty($instance->instanceId)) {
+        xarResponseRedirect(xarModURL('workflow', 'user', 'activities'));
+    } else {
+        xarResponseRedirect(xarModURL('workflow', 'user', 'instances'));
+    }
+    return true;
 } else {
 	if (!isset($_REQUEST['auto']) && $activity->isInteractive()) {
 		//$section = 'workflow';
@@ -146,7 +150,7 @@ if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteracti
 		$template = $activity->getNormalizedName(). '.tpl';
 		$tplData['mid'] =  $process->getNormalizedName(). '/' . $template;
 	// not very clean way, but it works :)
-                $output = xarTpl__executeFromFile(GALAXIA_DIR.'/processes/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
+                $output = xarTpl__executeFromFile(GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/templates/' . $template, $tplData);
                 $tplData['mid'] = $output;
 		$template = 'running';
 	} else {

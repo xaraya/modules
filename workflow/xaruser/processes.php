@@ -17,7 +17,7 @@ function workflow_user_processes()
 
 // Adapted from tiki-g-user_processes.php
 
-include_once (GALAXIA_DIR.'/GUI.php');
+include_once (GALAXIA_LIBRARY.'/GUI.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");
@@ -47,7 +47,7 @@ if(isset($_REQUEST['filter_process'])&&$_REQUEST['filter_process']) $wheres[]="p
 $where = implode(' and ',$wheres);
 */
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'procname_asc';
+	$sort_mode = 'pId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

@@ -1,4 +1,5 @@
 <?php
+include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 //!! ActivityManager
 //! A class to maniplate process activities and transitions
 /*!
@@ -7,8 +8,6 @@
   Activities are managed in a per-process level, each
   activity belongs to some process.
 */
-
-
 class ActivityManager extends BaseManager {
   var $error='';
       
@@ -31,7 +30,7 @@ class ActivityManager extends BaseManager {
    Asociates an activity with a role
   */
   function add_activity_role($activityId, $roleId) {
-    $query = "replace into `galaxia_activity_roles`(`activityId`,`roleId`) values(?,?)";
+    $query = "replace into `".GALAXIA_TABLE_PREFIX."activity_roles`(`activityId`,`roleId`) values(?,?)";
     $this->query($query,array($activityId, $roleId));
   }
   
@@ -39,7 +38,7 @@ class ActivityManager extends BaseManager {
    Gets the roles asociated to an activity
   */
   function get_activity_roles($activityId) {
-    $query = "select activityId,roles.roleId,roles.name from galaxia_activity_roles gar, galaxia_roles roles where roles.roleId = gar.roleId and activityId=$activityId";
+    $query = "select activityId,roles.roleId,roles.name from ".GALAXIA_TABLE_PREFIX."activity_roles gar, ".GALAXIA_TABLE_PREFIX."roles roles where roles.roleId = gar.roleId and activityId=$activityId";
         $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
@@ -53,7 +52,7 @@ class ActivityManager extends BaseManager {
   */
   function remove_activity_role($activityId, $roleId)
   {
-    $query = "delete from galaxia_activity_roles where activityId=$activityId and roleId=$roleId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=$activityId and roleId=$roleId";
     $this->query($query);
   }
   
@@ -62,7 +61,7 @@ class ActivityManager extends BaseManager {
   */
   function transition_exists($pid,$actFromId,$actToId)
   {
-    return($this->getOne("select count(*) from galaxia_transitions where pId=$pid and actFromId=$actFromId and actToId=$actToId"));
+    return($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where pId=$pid and actFromId=$actFromId and actToId=$actToId"));
   }
   
   /*!
@@ -79,7 +78,7 @@ class ActivityManager extends BaseManager {
     $a2 = $this->get_activity($pId, $actToId);
     if(!$a1 || !$a2) return false;
     if($a1['type'] != 'switch' && $a1['type'] != 'split') {
-      if($this->getOne("select count(*) from galaxia_transitions where actFromId=$actFromId")) {
+      if($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where actFromId=$actFromId")) {
         $this->error = tra('Cannot add transition only split activities can have more than one outbound transition');
         return false;
       }
@@ -93,7 +92,7 @@ class ActivityManager extends BaseManager {
     if($a1['type'] == 'end') return false;
      
     
-    $query = "replace into galaxia_transitions(pId,actFromId,actToId)
+    $query = "replace into ".GALAXIA_TABLE_PREFIX."transitions(pId,actFromId,actToId)
               values($pId,$actFromId,$actToId)";
     $this->query($query);
     return true;
@@ -104,7 +103,7 @@ class ActivityManager extends BaseManager {
   */
   function remove_transition($actFromId, $actToId)
   {
-    $query = "delete from galaxia_transitions where actFromId=$actFromId and actToId=$actToId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."transitions where actFromId=$actFromId and actToId=$actToId";
     $this->query($query);
     return true;
   }
@@ -114,7 +113,7 @@ class ActivityManager extends BaseManager {
   */
   function remove_activity_transitions($pId, $aid)
   {
-    $query = "delete from galaxia_transitions where pId=$pId and (actFromId=$aid or actToId=$aid)";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."transitions where pId=$pId and (actFromId=$aid or actToId=$aid)";
     $this->query($query);
   }
   
@@ -125,9 +124,9 @@ class ActivityManager extends BaseManager {
   function get_process_transitions($pId,$actid=0)
   {
     if(!$actid) {
-        $query = "select a1.name as actFromName, a2.name as actToName, actFromId, actToId from galaxia_transitions gt,galaxia_activities a1, galaxia_activities a2 where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = $pId";
+        $query = "select a1.name as actFromName, a2.name as actToName, actFromId, actToId from ".GALAXIA_TABLE_PREFIX."transitions gt,".GALAXIA_TABLE_PREFIX."activities a1, ".GALAXIA_TABLE_PREFIX."activities a2 where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = $pId";
     } else {
-        $query = "select a1.name as actFromName, a2.name as actToName, actFromId, actToId from galaxia_transitions gt,galaxia_activities a1, galaxia_activities a2 where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = $pId and (actFromId = $actid)";
+        $query = "select a1.name as actFromName, a2.name as actToName, actFromId, actToId from ".GALAXIA_TABLE_PREFIX."transitions gt,".GALAXIA_TABLE_PREFIX."activities a1, ".GALAXIA_TABLE_PREFIX."activities a2 where gt.actFromId = a1.activityId and gt.actToId = a2.activityId and gt.pId = $pId and (actFromId = $actid)";
     }
     $result = $this->query($query);
     $ret = Array();
@@ -142,7 +141,7 @@ class ActivityManager extends BaseManager {
   */
   function activity_is_auto_routed($actid)
   {
-    return($this->getOne("select count(*) from galaxia_activities where activityId=$actid and isAutoRouted='y'"));
+    return($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activities where activityId=$actid and isAutoRouted='y'"));
   }
   
   /*!
@@ -151,7 +150,7 @@ class ActivityManager extends BaseManager {
   */
   function get_process_activities($pId)
   {
-       $query = "select * from galaxia_activities where pId=$pId";
+       $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
@@ -232,29 +231,29 @@ class ActivityManager extends BaseManager {
   {
     $errors = Array();
     // Pre rule no cricular activities
-    $cant = $this->getOne("select count(*) from galaxia_transitions where pId=$pId and actFromId=actToId");
+    $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where pId=$pId and actFromId=actToId");
     if($cant) {
       $errors[] = tra('Circular reference found some activty has a transition leading to itself');
     }
 
     // Rule 1 must have exactly one start and end activity
-    $cant = $this->getOne("select count(*) from galaxia_activities where pId=$pId and type='start'");
+    $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and type='start'");
     if($cant < 1) {
       $errors[] = tra('Process does not have a start activity');
     }
-    $cant = $this->getOne("select count(*) from galaxia_activities where pId=$pId and type='end'");
+    $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and type='end'");
     if($cant != 1) {
       $errors[] = tra('Process does not have exactly one end activity');
     }
     
     // Rule 2 end must be reachable from start
     $nodes = Array();
-    $endId = $this->getOne("select activityId from galaxia_activities where pId=$pId and type='end'");
+    $endId = $this->getOne("select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and type='end'");
     $aux['id']=$endId;
     $aux['visited']=false;
     $nodes[] = $aux;
     
-    $startId = $this->getOne("select activityId from galaxia_activities where pId=$pId and type='start'");
+    $startId = $this->getOne("select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and type='start'");
     $start_node['id']=$startId;
     $start_node['visited']=true;    
     
@@ -263,7 +262,7 @@ class ActivityManager extends BaseManager {
         $node=&$nodes[$i];
         if(!$node['visited']) {
           $node['visited']=true;          
-          $query = "select actFromId from galaxia_transitions where actToId=".$node['id'];
+          $query = "select actFromId from ".GALAXIA_TABLE_PREFIX."transitions where actToId=".$node['id'];
           $result = $this->query($query);
           $ret = Array();
           while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
@@ -285,25 +284,25 @@ class ActivityManager extends BaseManager {
     //Rule 3: interactive activities must have a role
     //assigned.
     //Rule 5: standalone activities can't have transitions
-    $query = "select * from galaxia_activities where pId = $pId";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId = $pId";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
       $aid = $res['activityId'];
       if($res['isInteractive'] == 'y') {
-          $cant = $this->getOne("select count(*) from galaxia_activity_roles where activityId=".$res['activityId']);
+          $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
           if(!$cant) {
             $errors[] = tra('Activity').': '.$res['name'].tra(' is interactive but has no role assigned');
           }
       } else {
         if( $res['type'] != 'end' && $res['isAutoRouted'] == 'n') {
-          $cant = $this->getOne("select count(*) from galaxia_activity_roles where activityId=".$res['activityId']);
+          $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
             if(!$cant) {
               $errors[] = tra('Activity').': '.$res['name'].tra(' is non-interactive and non-autorouted but has no role assigned');
             }
         }
       }
       if($res['type']=='standalone') {
-        if($this->getOne("select count(*) from galaxia_transitions where actFromId=$aid or actToId=$aid")) {
+        if($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where actFromId=$aid or actToId=$aid")) {
            $errors[] = tra('Activity').': '.$res['name'].tra(' is standalone but has transitions');
         }
       }
@@ -312,10 +311,10 @@ class ActivityManager extends BaseManager {
     
     
     //Rule4: roles should be mapped
-    $query = "select * from galaxia_roles where pId = $pId";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."roles where pId = $pId";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {      
-        $cant = $this->getOne("select count(*) from galaxia_user_roles where roleId=".$res['roleId']);
+        $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."user_roles where roleId=".$res['roleId']);
         if(!$cant) {
           $errors[] = tra('Role').': '.$res['name'].tra(' is not mapped');
         }        
@@ -334,7 +333,7 @@ class ActivityManager extends BaseManager {
     
     $isValid = (count($errors)==0) ? 'y' : 'n';
 
-    $query = "update galaxia_processes set isValid='$isValid' where pId=$pId";
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isValid='$isValid' where pId=$pId";
     $this->query($query);
     
     $this->_label_nodes($pId);    
@@ -355,13 +354,13 @@ class ActivityManager extends BaseManager {
   function validate_process_sources($pid)
   {
     $errors=Array();
-    $procname= $this->getOne("select normalized_name from galaxia_processes where pId=$pid");
+    $procname= $this->getOne("select normalized_name from ".GALAXIA_TABLE_PREFIX."processes where pId=$pid");
     
-    $query = "select * from galaxia_activities where pId=$pid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pid";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {          
       $actname = $res['normalized_name'];
-      $source = GALAXIA_DIR."/processes/$procname/code/activities/$actname".'.php';
+      $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php';
       if (!file_exists($source)) {
           continue;
       }
@@ -401,7 +400,7 @@ class ActivityManager extends BaseManager {
   function activity_name_exists($pId,$name)
   {
     $name = addslashes($this->_normalize_name($name));
-    return $this->getOne("select count(*) from galaxia_activities where pId=$pId and normalized_name='$name'");
+    return $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and normalized_name='$name'");
   }
   
   
@@ -410,7 +409,7 @@ class ActivityManager extends BaseManager {
   */
   function get_activity($pId, $activityId)
   {
-      $query = "select * from galaxia_activities where pId=$pId and activityId=$activityId";
+      $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and activityId=$activityId";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
@@ -431,13 +430,13 @@ class ActivityManager extends BaseManager {
     if($where) {
       $mid.= " and ($where) ";
     }
-    $query = "select * from galaxia_activities $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from galaxia_activities $mid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."activities $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res['roles'] = $this->getOne("select count(*) from galaxia_activity_roles where activityId=".$res['activityId']);
+      $res['roles'] = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
       $ret[] = $res;
     }
     $retval = Array();
@@ -456,21 +455,23 @@ class ActivityManager extends BaseManager {
     $pm = new ProcessManager($this->db);
     $proc_info = $pm->get_process($pId);
     $actname = $this->_get_normalized_name($activityId);
-    $query = "delete from galaxia_activities where pId=$pId and activityId=$activityId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and activityId=$activityId";
     $this->query($query);
-    $query = "select actFromId,actToId from galaxia_transitions where actFromId=$activityId or actToId=$activityId";
+    $query = "select actFromId,actToId from ".GALAXIA_TABLE_PREFIX."transitions where actFromId=$activityId or actToId=$activityId";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
       $this->remove_transition($res['actFromId'], $res['actToId']);
     }
-    $query = "delete from galaxia_activity_roles where activityId=$activityId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=$activityId";
     $this->query($query);
     // And we have to remove the user and compiled files
     // for this activity
     $procname = $proc_info['normalized_name'];
-    unlink(GALAXIA_DIR."/processes/$procname/code/activities/$actname".'.php'); 
-    @unlink(GALAXIA_DIR."/processes/$procname/code/templates/$actname".'.tpl'); 
-    unlink(GALAXIA_DIR."/processes/$procname/compiled/$actname".'.php'); 
+    unlink(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php'); 
+    if (file_exists(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl')) {
+      @unlink(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl'); 
+    }
+    unlink(GALAXIA_PROCESSES."/$procname/compiled/$actname".'.php'); 
     return true;
   }
   
@@ -482,7 +483,7 @@ class ActivityManager extends BaseManager {
   */
   function replace_activity($pId, $activityId, $vars)
   {
-    $TABLE_NAME = 'galaxia_activities';
+    $TABLE_NAME = '".GALAXIA_TABLE_PREFIX."activities';
     $now = date("U");
     $vars['lastModif']=$now;
     $vars['pId']=$pId;
@@ -517,16 +518,18 @@ class ActivityManager extends BaseManager {
       // remove the old compiled file and recompile
       // the activity
       
-      $user_file_old = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/code/activities/'.$oldname.'.php';
-      $user_file_new = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/code/activities/'.$newname.'.php';
+      $user_file_old = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$oldname.'.php';
+      $user_file_new = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$newname.'.php';
       rename($user_file_old, $user_file_new);
 
-      $user_file_old = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/code/templates/'.$oldname.'.tpl';
-      $user_file_new = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/code/templates/'.$newname.'.tpl';
-      @rename($user_file_old, $user_file_new);
+      $user_file_old = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$oldname.'.tpl';
+      $user_file_new = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$newname.'.tpl';
+      if ($user_file_old != $user_file_new) {
+        @rename($user_file_old, $user_file_new);
+      }
 
       
-      $compiled_file = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/compiled/'.$oldname.'.php';    
+      $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$oldname.'.php';    
       unlink($compiled_file);
       $this->compile_activity($pId,$activityId);
       
@@ -564,14 +567,16 @@ class ActivityManager extends BaseManager {
       }
       // Should create the code file
       $procname = $proc_info["normalized_name"];
-        $fw = fopen(GALAXIA_DIR."/processes/$procname/code/activities/".$vars['normalized_name'].'.php','w');
+        $fw = fopen(GALAXIA_PROCESSES."/$procname/code/activities/".$vars['normalized_name'].'.php','w');
         fwrite($fw,'<'.'?'.'php'."\n".'?'.'>');
         fclose($fw);
         
          if($vars['isInteractive']=='y') {
-            $fw = fopen(GALAXIA_DIR."/processes/$procname/code/templates/".$vars['normalized_name'].'.tpl','w');
-         //   fwrite($fw,'{'.'*'.'Smarty template'.'*'.'}'."\n");
-               fclose($fw);
+            $fw = fopen(GALAXIA_PROCESSES."/$procname/code/templates/".$vars['normalized_name'].'.tpl','w');
+            if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
+              fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
+            }
+            fclose($fw);
         }
 
          $this->compile_activity($pId,$activityId);
@@ -586,7 +591,7 @@ class ActivityManager extends BaseManager {
   */
   function set_interactivity($pId, $actid, $value)
   {
-    $query = "update galaxia_activities set isInteractive='$value' where pId=$pId and activityId=$actid";
+    $query = "update ".GALAXIA_TABLE_PREFIX."activities set isInteractive='$value' where pId=$pId and activityId=$actid";
     $this->query($query);
     // If template does not exist then create template
     $this->compile_activity($pId,$actid);
@@ -597,7 +602,7 @@ class ActivityManager extends BaseManager {
   */
   function set_autorouting($pId, $actid, $value)
   {
-    $query = "update galaxia_activities set isAutoRouted='$value' where pId=$pId and activityId=$actid";
+    $query = "update ".GALAXIA_TABLE_PREFIX."activities set isAutoRouted='$value' where pId=$pId and activityId=$actid";
     $this->query($query);
   }
 
@@ -611,20 +616,20 @@ class ActivityManager extends BaseManager {
        $actname = $act_info['normalized_name'];
     $pm = new ProcessManager($this->db);
     $proc_info = $pm->get_process($pId);
-    $compiled_file = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/compiled/'.$act_info['normalized_name'].'.php';    
-    $template_file = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/code/templates/'.$actname.'.tpl';    
-    $user_file = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/code/activities/'.$actname.'.php';
-    $pre_file = GALAXIA_DIR.'/compiler/'.$act_info['type'].'_pre.php';
-    $pos_file = GALAXIA_DIR.'/compiler/'.$act_info['type'].'_pos.php';
+    $compiled_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/compiled/'.$act_info['normalized_name'].'.php';    
+    $template_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/templates/'.$actname.'.tpl';    
+    $user_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/activities/'.$actname.'.php';
+    $pre_file = GALAXIA_LIBRARY.'/compiler/'.$act_info['type'].'_pre.php';
+    $pos_file = GALAXIA_LIBRARY.'/compiler/'.$act_info['type'].'_pos.php';
     $fw = fopen($compiled_file,"wb");
     
     // First of all add an include to to the shared code
-    $shared_file = GALAXIA_DIR.'/processes/'.$proc_info['normalized_name'].'/code/shared.php';    
+    $shared_file = GALAXIA_PROCESSES.'/'.$proc_info['normalized_name'].'/code/shared.php';    
     
     fwrite($fw, '<'."?php include_once('$shared_file'); ?".'>'."\n");
     
     // Before pre shared
-    $fp = fopen(GALAXIA_DIR.'/compiler/_shared_pre.php',"rb");
+    $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pre.php',"rb");
     while (!feof($fp)) {
         $data = fread($fp, 4096);
         fwrite($fw,$data);
@@ -656,7 +661,7 @@ class ActivityManager extends BaseManager {
     fclose($fp);
 
     // Shared pos
-    $fp = fopen(GALAXIA_DIR.'/compiler/_shared_pos.php',"rb");
+    $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pos.php',"rb");
     while (!feof($fp)) {
         $data = fread($fp, 4096);
         fwrite($fw,$data);
@@ -669,15 +674,20 @@ class ActivityManager extends BaseManager {
     
     if($act_info['isInteractive']=='y' && !file_exists($template_file)) {
       $fw = fopen($template_file,'w');
-    //  fwrite($fw,'{*Smarty template*}');
+      if (defined('GALAXIA_TEMPLATE_HEADER') && GALAXIA_TEMPLATE_HEADER) {
+        fwrite($fw,GALAXIA_TEMPLATE_HEADER . "\n");
+      }
       fclose($fw);
     }
     if($act_info['isInteractive']!='y' && file_exists($template_file)) {
       @unlink($template_file);
-//      @unlink("templates/".$proc_info['normalized_name']."/$actname.tpl");      
+      if (GALAXIA_TEMPLATES && file_exists(GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl")) {
+        @unlink(GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl");
+      }
     }
-//    @copy($template_file,"templates/".$proc_info['normalized_name']."/$actname.tpl");
-    
+    if (GALAXIA_TEMPLATES && file_exists($template_file)) {
+      @copy($template_file,GALAXIA_TEMPLATES.'/'.$proc_info['normalized_name']."/$actname.tpl");
+    }
   }
   
   /*!
@@ -687,8 +697,8 @@ class ActivityManager extends BaseManager {
   function _get_activity_id_by_name($pid,$name)
   {
     $name = addslashes($name);
-    if($this->getOne("select count(*) from galaxia_activities where pId=$pid and name='$name'")) {
-      return($this->getOne("select activityId from galaxia_activities where pId=$pid and name='$name'"));    
+    if($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activities where pId=$pid and name='$name'")) {
+      return($this->getOne("select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=$pid and name='$name'"));    
     } else {
       return '';
     }
@@ -763,7 +773,7 @@ class ActivityManager extends BaseManager {
   */
   function _get_normalized_name($activityId)
   {
-    return $this->getOne("select normalized_name from galaxia_activities where activityId=$activityId");
+    return $this->getOne("select normalized_name from ".GALAXIA_TABLE_PREFIX."activities where activityId=$activityId");
   }
   
   /*!
@@ -777,22 +787,22 @@ class ActivityManager extends BaseManager {
     ///an empty list of nodes starts the process
     $nodes = Array();
     // the end activity id
-    $endId = $this->getOne("select activityId from galaxia_activities where pId=$pId and type='end'");
+    $endId = $this->getOne("select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and type='end'");
     // and the number of total nodes (=activities)
-    $cant = $this->getOne("select count(*) from galaxia_activities where pId=$pId");
+    $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId");
     $nodes[] = $endId;
     $label = $cant;
     $num = $cant;
     
-    $query = "update galaxia_activities set flowNum=$cant+1 where pId=$pId";
+    $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=$cant+1 where pId=$pId";
     $this->query($query);
     
     while(count($nodes)) {
       $newnodes = Array();
       foreach($nodes as $node) {
-        $query = "update galaxia_activities set flowNum=$num where activityId=$node";
+        $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=$num where activityId=$node";
         $this->query($query);
-        $query = "select actFromId from galaxia_transitions where actToId=".$node;
+        $query = "select actFromId from ".GALAXIA_TABLE_PREFIX."transitions where actToId=".$node;
         $result = $this->query($query);
         $ret = Array();
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
@@ -805,11 +815,11 @@ class ActivityManager extends BaseManager {
       
     }
     
-    $min = $this->getOne("select min(flowNum) from galaxia_activities where pId=$pId");
-    $query = "update galaxia_activities set flowNum=flowNum-$min where pId=$pId";
+    $min = $this->getOne("select min(flowNum) from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId");
+    $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=flowNum-$min where pId=$pId";
     $this->query($query);
     
-    //$query = "update galaxia_activities set flowNum=0 where flowNum=$cant+1";
+    //$query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=0 where flowNum=$cant+1";
     //$this->query($query);
   }
     

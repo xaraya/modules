@@ -163,11 +163,28 @@
 	  <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
 	</td>
 
-	<td style="text-align:center;">
+	<td style="text-align:left;">
 		#$items[$ix]['procname']#
 	</td>
 	
-	<td style="text-align:center;">
+	<td style="text-align:left;">
+	<xar:if condition="$items[$ix]['type'] eq 'start'">
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:else/>
+		#$items[$ix]['type']# 
+	</xar:if>
 		#$items[$ix]['name']#
 	</td>
 	
@@ -176,7 +193,7 @@
 	</td>
 
 
-	<td style="text-align:center;">
+	<td style="text-align:left;">
 		#$items[$ix]['user']#
 	</td>
 	

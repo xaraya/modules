@@ -233,6 +233,40 @@ function workflow_upgrade($oldversion)
                 return false;
             }
             // fall through to next upgrade
+
+        case 1.1:
+            // Code to upgrade from version 1.1 goes here
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+
+            xarDBLoadTableMaintenanceAPI();
+
+            $mytables = array(
+                              'workflow_activities',
+                              'workflow_activity_roles',
+                              'workflow_instance_activities',
+                              'workflow_instance_comments',
+                              'workflow_instances',
+                              'workflow_processes',
+                              'workflow_roles',
+                              'workflow_transitions',
+                              'workflow_user_roles',
+                              'workflow_workitems',
+                             );
+            foreach ($mytables as $mytable) {
+                $oldname = preg_replace('/^workflow_/','galaxia_',$mytable);
+                // Generate the SQL to rename the table using the API
+                $query = xarDBAlterTable($oldname,
+                                         array('command' => 'rename',
+                                               'new_name' => $xartable[$mytable]));
+                if (empty($query)) return; // throw back
+
+                // Rename the table and send exception if returns false.
+                $result = &$dbconn->Execute($query);
+                if (!$result) return;
+            }
+            // fall through to next upgrade
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;

@@ -17,7 +17,7 @@ function workflow_user_activities()
 
 // Adapted from tiki-g-user_activities.php
 
-include_once (GALAXIA_DIR.'/GUI.php');
+include_once (GALAXIA_LIBRARY.'/GUI.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");
@@ -50,7 +50,7 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'flowNum_asc';
+	$sort_mode = 'pId_asc, flowNum_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -107,8 +107,8 @@ if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
     }
     foreach ($tplData['all_procs'] as $info) {
         if ($info['pId'] == $_REQUEST['filter_process'] && !empty($info['normalized_name'])) {
-            $graph = GALAXIA_DIR."/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
-            $mapfile = GALAXIA_DIR."/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
+            $graph = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
+            $mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
             if (file_exists($graph) && file_exists($mapfile)) {
                 $maplines = file($mapfile);
                 $map = '';

@@ -25,19 +25,19 @@ function workflow_xartables()
     // Initialise table array
     $xarTables = array(); 
 
-// Warning : the table names are hard-coded in lib/Galaxia at the moment !
+    $prefix = xarDBGetSiteTablePrefix();
 
     // Get the name for the workflow tables.
-    $xarTables['workflow_activities'] = 'galaxia_activities';
-    $xarTables['workflow_activity_roles'] = 'galaxia_activity_roles';
-    $xarTables['workflow_instance_activities'] = 'galaxia_instance_activities';
-    $xarTables['workflow_instance_comments'] = 'galaxia_instance_comments';
-    $xarTables['workflow_instances'] = 'galaxia_instances';
-    $xarTables['workflow_processes'] = 'galaxia_processes';
-    $xarTables['workflow_roles'] = 'galaxia_roles';
-    $xarTables['workflow_transitions'] = 'galaxia_transitions';
-    $xarTables['workflow_user_roles'] = 'galaxia_user_roles';
-    $xarTables['workflow_workitems'] = 'galaxia_workitems';
+    $xarTables['workflow_activities'] = $prefix . '_workflow_activities';
+    $xarTables['workflow_activity_roles'] = $prefix . '_workflow_activity_roles';
+    $xarTables['workflow_instance_activities'] = $prefix . '_workflow_instance_activities';
+    $xarTables['workflow_instance_comments'] = $prefix . '_workflow_instance_comments';
+    $xarTables['workflow_instances'] = $prefix . '_workflow_instances';
+    $xarTables['workflow_processes'] = $prefix . '_workflow_processes';
+    $xarTables['workflow_roles'] = $prefix . '_workflow_roles';
+    $xarTables['workflow_transitions'] = $prefix . '_workflow_transitions';
+    $xarTables['workflow_user_roles'] = $prefix . '_workflow_user_roles';
+    $xarTables['workflow_workitems'] = $prefix . '_workflow_workitems';
 
     // Return the table information
     return $xarTables;

@@ -117,7 +117,7 @@
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'instanceId_asc'))#">#xarML('Ins')#</a></td>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'orderId_asc'))#">#</a></td>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'started_asc'))#">#xarML('Start')#</a></td>
-<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'duration_asc'))#">#xarML('time')#</a></td>
+<td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'duration_asc'))#">#xarML('Duration')#</a></td>
 <td class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'user_asc'))#">#xarML('User')#</a></td>
 </tr>
 <xar:if condition="!empty($items) and count($items) gt 0">
@@ -132,7 +132,24 @@
 	</td>
 
 	<td style="text-align:left;">
-		#$items[$ix]['type']# #$items[$ix]['actname']# 
+	<xar:if condition="$items[$ix]['type'] eq 'start'">
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_dbl_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'activity'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_rectangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'switch'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_diamond.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'standalone'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_hexagon.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'split'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:elseif condition="$items[$ix]['type'] eq 'join'"/>
+		<img src="modules/workflow/lib/Galaxia/img/icons/mini_inv_triangle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
+	<xar:else/>
+		#$items[$ix]['type']# 
+	</xar:if>
+		#$items[$ix]['actname']# 
 	</td>
 
 	<td>
@@ -147,7 +164,7 @@
 	  #$items[$ix]['started']#
 	</td>
 	
-	<td>
+	<td style="text-align:right;">
 	  #$items[$ix]['duration']#
 	</td>
 

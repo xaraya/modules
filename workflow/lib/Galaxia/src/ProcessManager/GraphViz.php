@@ -88,9 +88,9 @@ class Process_GraphViz {
     function Process_GraphViz($directed = true, $attributes = array()) {
         $this->setDirected($directed);
         $this->setAttributes($attributes);
-        if (defined('GRAPHVIZ_DIR')) {
-            $this->dotCommand = GRAPHVIZ_DIR . $this->dotCommand;
-            $this->neatoCommand = GRAPHVIZ_DIR . $this->neatoCommand;
+        if (defined('GRAPHVIZ_BIN_DIR') && GRAPHVIZ_BIN_DIR) {
+            $this->dotCommand = GRAPHVIZ_BIN_DIR.'/'.$this->dotCommand;
+            $this->neatoCommand = GRAPHVIZ_BIN_DIR.'/'.$this->neatoCommand;
         }
     }
     
@@ -112,7 +112,7 @@ class Process_GraphViz {
             $outputfile2 = $file . '.' . 'map';
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
             $command .= " -T$format -o$outputfile $file";
- 
+
             @`$command`;
             $command = $this->dotCommand;
             $command.= " -Tcmap -o$outputfile2 $file";
@@ -450,7 +450,7 @@ class Process_GraphViz {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
 
-                $file = GALAXIA_DIR.'/processes/'.$this->pid.'/graph/'.$this->pid;
+                $file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
             if ($fp = @fopen($file, 'w')) {
                 @fputs($fp, $parsedGraph);
                 @fclose($fp);

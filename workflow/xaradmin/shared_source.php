@@ -17,7 +17,7 @@ function workflow_admin_shared_source()
 
 // Adapted from tiki-g-admin_shared_source.php
 
-include_once(GALAXIA_DIR.'/ProcessManager.php');
+include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
 // The galaxia source editor for activities and
 // processes.
@@ -51,7 +51,7 @@ if (isset($_REQUEST['code'])) {
 }
 
 $proc_info = $processManager->get_process($_REQUEST['pid']);
-$proc_info['graph']=GALAXIA_DIR."/processes/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
+$proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
 $tplData['proc_info'] =& $proc_info;
 
 $procname = $proc_info['normalized_name'];
@@ -71,11 +71,11 @@ if ($_REQUEST['activityId']) {
 	if (isset($_REQUEST['template'])) {
 		$tplData['template'] =  'y';
 
-		$source = GALAXIA_DIR."/processes/$procname/code/templates/$actname" . '.tpl';
+		$source = GALAXIA_PROCESSES."/$procname/code/templates/$actname" . '.tpl';
 	} else {
 		$tplData['template'] =  'n';
 
-		$source = GALAXIA_DIR."/processes/$procname/code/activities/$actname" . '.php';
+		$source = GALAXIA_PROCESSES."/$procname/code/activities/$actname" . '.php';
 	}
 
 	// Then editing an activity
@@ -84,13 +84,13 @@ if ($_REQUEST['activityId']) {
 	$tplData['template'] =  'n';
 	$tplData['act_info'] =  array('isInteractive' => 'n', 'type' => 'shared');
 	// Then editing shared code
-	$source = GALAXIA_DIR."/processes/$procname/code/shared.php";
+	$source = GALAXIA_PROCESSES."/$procname/code/shared.php";
 }
 
 //First of all save
 if (isset($_REQUEST['source'])) {
 	// security check on paths
-	$basedir = GALAXIA_DIR . "/processes/$procname/code/";
+	$basedir = GALAXIA_PROCESSES . "/$procname/code/";
 	$basepath = realpath($basedir);
 	$sourcepath = realpath($_REQUEST['source_name']);
 	if (substr($sourcepath,0,strlen($basepath)) == $basepath) {

@@ -17,7 +17,7 @@ function workflow_admin_graph()
 
 // Adapted from tiki-g-admin_processes.php
 
-include_once(GALAXIA_DIR.'/ProcessManager.php');
+include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
 // The galaxia process manager PHP script.
 if ($feature_workflow != 'y') {
@@ -41,8 +41,8 @@ if (!isset($_REQUEST['pid']))
 
 if ($_REQUEST["pid"]) {
 	$info = $processManager->get_process($_REQUEST["pid"]);
-	$info['graph'] = GALAXIA_DIR."/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
-	$mapfile = GALAXIA_DIR."/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
+	$info['graph'] = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
+	$mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
         if (file_exists($info['graph']) && file_exists($mapfile)) {
             $map = join('',file($mapfile));
             $url = xarModURL('workflow','admin','activities',

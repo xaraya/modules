@@ -155,7 +155,7 @@
 <input type="hidden" name="sort_mode" value="#$sort_mode#" />
 <table class="normal">
 <tr>
-<td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'type_asc'))#">&nbsp;</a></td>
+<td  class="heading" >#xarML('Process')#</td>
 <td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'name_asc'))#">#xarML('Name')#</a></td>
 <td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'type_asc'))#">#xarML('Type')#</a></td>
 <td  class="heading" ><a class="tableheading" href="#xarServerGetCurrentURL(array("sort_mode" => 'isInteractive_asc'))#">#xarML('int')#</a></td>
@@ -166,7 +166,11 @@
 <xar:if condition="!empty($items) and count($items) gt 0">
 <xar:foreach in="$items" key="$ix">
 <tr>
-	<td style="text-align:center;">
+	<td style="text-align:left;">
+		#$items[$ix]['procname']#
+	</td>
+
+	<td style="text-align:left;">
 	<xar:if condition="$items[$ix]['type'] eq 'start'">
 		<img src="modules/workflow/lib/Galaxia/img/icons/mini_circle.gif" alt="#$items[$ix]['type']#" title="#$items[$ix]['type']#" border="0" />
 	<xar:elseif condition="$items[$ix]['type'] eq 'end'"/>
@@ -184,10 +188,6 @@
 	<xar:else/>
 		#$items[$ix]['type']# 
 	</xar:if>
-	</td>
-
-
-	<td>
 	  <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$items[$ix]['pId']#&amp;activityId=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
 	  <xar:if condition="$items[$ix]['type'] eq 'standalone'">
 	  <a href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$items[$ix]['activityId']#"><img alt='#xarML('run')#' title='#xarML('run activity')#' src='modules/workflow/lib/Galaxia/img/icons/next.gif' border='0' /></a>

@@ -1,12 +1,11 @@
 <?php
+include_once(GALAXIA_LIBRARY.'/src/common/Observer.php');
 //!! Logger
 //! Log
 /*!
 
   blah....
 */
-
-include_once(GALAXIA_DIR.'/src/common/Observer.php');
 class Logger extends Observer {
 	var $_filename;
 	

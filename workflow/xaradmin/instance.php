@@ -17,8 +17,8 @@ function workflow_admin_instance()
 
 // Adapted from tiki-g-admin_instance.php
 
-include_once (GALAXIA_DIR.'/ProcessManager.php');
-include_once (GALAXIA_DIR.'/API.php');
+include_once (GALAXIA_LIBRARY.'/ProcessManager.php');
+include_once (GALAXIA_LIBRARY.'/API.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");

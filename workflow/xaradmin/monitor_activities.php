@@ -17,7 +17,7 @@ function workflow_admin_monitor_activities()
 
 // Adapted from tiki-g-monitor_activities.php
 
-include_once (GALAXIA_DIR.'/ProcessMonitor.php');
+include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");
@@ -58,7 +58,7 @@ if (isset($_REQUEST['filter_type']) && $_REQUEST['filter_type'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'flowNum_asc';
+	$sort_mode = 'pId_asc, flowNum_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -104,6 +104,19 @@ $tplData['items'] =&  $items["data"];
 
 $all_procs = $items = $processMonitor->monitor_list_processes(0, -1, 'name_desc', '', '');
 $tplData['all_procs'] =&  $all_procs["data"];
+
+$pid2name = array();
+foreach ($tplData['all_procs'] as $info) {
+    $pid2name[$info['pId']] = $info['name'];
+}
+foreach (array_keys($tplData['items']) as $index) {
+    $pid = $tplData['items'][$index]['pId'];
+    if (isset($pid2name[$pid])) {
+        $tplData['items'][$index]['procname'] = $pid2name[$pid];
+    } else {
+        $tplData['items'][$index]['procname'] = '?';
+    }
+}
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
 	$where = ' pId=' . $_REQUEST['filter_process'];

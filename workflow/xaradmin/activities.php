@@ -17,7 +17,7 @@ function workflow_admin_activities()
 
 // Adapted from tiki-g-admin_activities.php
 
-include_once(GALAXIA_DIR.'/ProcessManager.php');
+include_once(GALAXIA_LIBRARY.'/ProcessManager.php');
 
 // The galaxia activities manager PHP script.
 if ($feature_workflow != 'y') {
@@ -44,7 +44,7 @@ if (!isset($_REQUEST['pid'])) {
 $tplData['pid'] =  $_REQUEST['pid'];
 
 $proc_info = $processManager->get_process($_REQUEST['pid']);
-$proc_info['graph']=GALAXIA_DIR."/processes/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
+$proc_info['graph']=GALAXIA_PROCESSES."/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
 
 
 

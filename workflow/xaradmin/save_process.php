@@ -17,7 +17,7 @@ function workflow_admin_save_process()
 
 // Adapted from tiki-g-save_process.php
 
-include_once (GALAXIA_DIR.'/ProcessManager.php');
+include_once (GALAXIA_LIBRARY.'/ProcessManager.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");

@@ -17,7 +17,7 @@ function workflow_user_instances()
 
 // Adapted from tiki-g-user_instances.php
 
-include_once (GALAXIA_DIR.'/GUI.php');
+include_once (GALAXIA_LIBRARY.'/GUI.php');
 
 // Check if feature is enabled and permissions
 if ($feature_workflow != 'y') {
@@ -82,7 +82,7 @@ if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'procname_asc';
+	$sort_mode = 'pId_asc, instanceId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -125,6 +125,10 @@ if ($offset > 0) {
 }
 
 foreach (array_keys($items['data']) as $index) {
+    if (!empty($items['data'][$index]['owner']) &&
+        is_numeric($items['data'][$index]['owner'])) {
+        $items['data'][$index]['owner'] = xarUserGetVar('name', $items['data'][$index]['owner']);
+    }
     if (!is_numeric($items['data'][$index]['user'])) {
         $items['data'][$index]['userId'] = $items['data'][$index]['user'];
         continue;

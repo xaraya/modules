@@ -64,7 +64,7 @@ $tplData['cds'] = $items;
 // Find the activity id for requesting CDs
 $pId = $activity->pId;
 $actname = 'Request CD';
-$aid = $process->getOne("select `activityId` from `galaxia_activities` where `pId`=? and `name`=?",array($pId,$actname));
+$aid = $process->getOne("select `activityId` from `".GALAXIA_TABLE_PREFIX."activities` where `pId`=? and `name`=?",array($pId,$actname));
 $tplData['aid'] = $aid;
 
 ?>      ]]></code>      <template><![CDATA[<h3>Listing CDs</h3>

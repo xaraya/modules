@@ -17,7 +17,7 @@ function workflow_admin_monitor_instances()
 
 // Adapted from tiki-g-monitor_instances.php
 
-include_once (GALAXIA_DIR.'/ProcessMonitor.php');
+include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");
@@ -69,9 +69,11 @@ if (isset($_REQUEST['remove_all'])) {
 if (isset($_REQUEST['sendInstance'])) {
 	//activityId indicates the activity where the instance was
 	//and we have to send it to some activity to be determined
-	include_once (GALAXIA_DIR.'/src/API/Instance.php');
+	include_once (GALAXIA_LIBRARY.'/src/API/Instance.php');
 
-	$instance = new Instance($dbTiki);
+	list($dbconn) = xarDBGetConn();
+	$dbconn->SetFetchMode(ADODB_FETCH_ASSOC);
+	$instance = new Instance($dbconn);
 	$instance->getInstance($_REQUEST['sendInstance']);
 	// Do not add a workitem since the instance must be already completed!
 	$instance->complete($_REQUEST['activityId'], true, false);
@@ -99,7 +101,7 @@ if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_asc';
+	$sort_mode = 'instanceId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

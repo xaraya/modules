@@ -17,7 +17,7 @@ function workflow_admin_workitem()
 
 // Adapted from tiki-g-view_workitem.php
 
-include_once (GALAXIA_DIR.'/ProcessMonitor.php');
+include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
 if ($feature_workflow != 'y') {
 	$tplData['msg'] =  xarML("This feature is disabled");

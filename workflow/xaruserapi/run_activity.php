@@ -17,7 +17,7 @@ function workflow_userapi_run_activity($args)
 
 // Adapted from tiki-g-run_activity.php
 
-include (GALAXIA_DIR.'/API.php');
+include (GALAXIA_LIBRARY.'/API.php');
 
 // TODO: evaluate why this is here
 //include_once ("lib/webmail/htmlMimeMail.php");
@@ -39,8 +39,8 @@ if (!isset($args['activityId'])) {
 $activity = $baseActivity->getActivity($args['activityId']);
 $process->getProcess($activity->getProcessId());
 
-$source = GALAXIA_DIR.'/processes/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
-$shared = GALAXIA_DIR.'/processes/' . $process->getNormalizedName(). '/code/shared.php';
+$source = GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
+$shared = GALAXIA_PROCESSES . '/' . $process->getNormalizedName(). '/code/shared.php';
 
 // Existing variables here:
 // $process, $activity, $instance (if not standalone)
