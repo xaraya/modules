@@ -31,6 +31,17 @@ function newsgroups_user_article()
     $data['group'] = $group;
     $data['pager'] = '';
 
+    $user = xarModGetVar('newsgroups', 'user');
+    if (!empty($user)) {
+        $pass = xarModGetVar('newsgroups', 'pass');
+        $rs = $newsgroups->authenticate($user,$pass);
+        if (PEAR::isError($rs)) {
+            $data['error_message'] = $rs->message;
+            $newsgroups->quit();
+            return $data;
+        }
+    }
+
     $counts = $newsgroups->selectGroup($group);
     if (PEAR::isError($counts)) {
         $data['error_message'] = $counts->message;

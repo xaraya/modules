@@ -21,6 +21,8 @@ function newsgroups_init()
 
     xarModSetVar('newsgroups', 'server', 'news.xaraya.com');
     xarModSetVar('newsgroups', 'port', 119);
+    xarModSetVar('newsgroups', 'user', '');
+    xarModSetVar('newsgroups', 'pass', '');
     xarModSetVar('newsgroups', 'numitems', 50);
 
     xarModSetVar('newsgroups', 'wildmat', 'xaraya.*,ddf.*');

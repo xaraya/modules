@@ -24,6 +24,17 @@ function newsgroups_user_main()
         return $data;
     }
 
+    $user = xarModGetVar('newsgroups', 'user');
+    if (!empty($user)) {
+        $pass = xarModGetVar('newsgroups', 'pass');
+        $rs = $newsgroups->authenticate($user,$pass);
+        if (PEAR::isError($rs)) {
+            $data['error_message'] = $rs->message;
+            $newsgroups->quit();
+            return $data;
+        }
+    }
+
 // TODO: pre-load complete list of newsgroups and let admin select
 //       instead of retrieving the list each time here
 

@@ -26,6 +26,18 @@ function newsgroups_user_group()
 
     $newsgroups = new Net_NNTP();
     $newsgroups -> connect($server, $port);
+
+    $user = xarModGetVar('newsgroups', 'user');
+    if (!empty($user)) {
+        $pass = xarModGetVar('newsgroups', 'pass');
+        $rs = $newsgroups->authenticate($user,$pass);
+        if (PEAR::isError($rs)) {
+            $data['error_message'] = $rs->message;
+            $newsgroups->quit();
+            return $data;
+        }
+    }
+
     $counts = $newsgroups -> selectGroup($data['group']);
     if (PEAR::isError($counts)) {
         $data['error_message'] = $counts->message;

@@ -42,6 +42,19 @@ function newsgroups_user_post()
 
             $newsgroups = new Net_NNTP();
             $newsgroups -> connect($server, $port);
+
+            $user = xarModGetVar('newsgroups', 'user');
+            if (!empty($user)) {
+                $pass = xarModGetVar('newsgroups', 'pass');
+                $rs = $newsgroups->authenticate($user,$pass);
+                if (PEAR::isError($rs)) {
+                    $error_message = $rs->message;
+                    $newsgroups->quit();
+                    return array('group' => $group,
+                                 'error_message' => $error_message);
+                }
+            }
+
             $counts = $newsgroups->selectGroup($group);
             $data               = $newsgroups->splitHeaders($article);
             if (PEAR::isError($data)) {
@@ -122,6 +135,19 @@ function newsgroups_user_post()
 
             $newsgroups = new Net_NNTP();
             $newsgroups -> connect($server, $port);
+
+            $user = xarModGetVar('newsgroups', 'user');
+            if (!empty($user)) {
+                $pass = xarModGetVar('newsgroups', 'pass');
+                $rs = $newsgroups->authenticate($user,$pass);
+                if (PEAR::isError($rs)) {
+                    $error_message = $rs->message;
+                    $newsgroups->quit();
+                    return array('group' => $group,
+                                 'error_message' => $error_message);
+                }
+            }
+
             $from = '"' . $name . '" <' . $email . '>';
             $response = $newsgroups->post($subject, $group, $from, $body, $addheader);
             $newsgroups -> quit();

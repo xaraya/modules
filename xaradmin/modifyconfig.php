@@ -44,6 +44,8 @@ function newsgroups_admin_modifyconfig()
             if (!xarVarFetch('wildmat','isset',$wildmat,array(),XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('numitems','int:1:',$itemsperpage,50,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('isalias','int:1:',$isalias,0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('user','isset',$user,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('pass','isset',$pass,'',XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -52,6 +54,10 @@ function newsgroups_admin_modifyconfig()
 
             xarModSetVar('newsgroups', 'server', $server);
             xarModSetVar('newsgroups', 'port', $port);
+            xarModSetVar('newsgroups', 'user', $user);
+            if (!empty($pass)) {
+                xarModSetVar('newsgroups', 'pass', $pass);
+            }
             if (!empty($wildmat) && count($wildmat) > 0) {
                 $cleanmat = array();
                 foreach ($wildmat as $pattern) {
