@@ -37,6 +37,7 @@ function xarbb_userapi_searchreplies($args)
                     $ctable[objectid] as xar_objectid
               FROM  $xartable[comments]
              WHERE  $ctable[modid] = 300
+               AND $ctable[pid] != 0
                AND  (";
                
     $bindvars = array();
