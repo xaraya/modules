@@ -38,7 +38,7 @@ function uploads_userapi_process_files( $args ) {
     switch ($action) {
     
         case _UPLOADS_GET_UPLOAD:
-            if (!isset($upload)) {
+            if (!isset($upload) || empty($upload)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'upload', 'process_files', 'uploads');
                 xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
                 return;
@@ -56,7 +56,6 @@ function uploads_userapi_process_files( $args ) {
             } else {
                 $upload_obfuscate = FALSE;
             }
-     
             $fileList = xarModAPIFunc('uploads','user','prepare_uploads', 
                                        array('savePath'  => $upload_directory,
                                              'obfuscate' => $upload_obfuscate,

@@ -59,9 +59,9 @@ function uploads_userapi_prepare_uploads( $args ) {
             $fileInfo['fileSrc']    = 'missing';
             $fileInfo['fileSize']   = 0;
             $fileInfo['fileName']   = xarML('Missing File!');
-            $fileInfo['errors'][0]['errorMsg'] = xarML('Invalid data format for upload ID: [#(1)]', $fileInfoId);
+            $fileInfo['errors'][0]['errorMesg'] = xarML('Invalid data format for upload ID: [#(1)]', 'upload');
             $fileInfo['errors'][0]['errorId']  = _UPLOADS_ERROR_BAD_FORMAT;
-            return array("$fileInfo[fileLocation]" => $fileInfo);
+            return array("$fileInfo[fileName]" => $fileInfo);
     }
 
     $fileInfo['fileType']   = $fileInfo['type'];
@@ -88,7 +88,7 @@ function uploads_userapi_prepare_uploads( $args ) {
         xarExceptionHandled();
 
         // continue on to the next uploaded file in the list
-        return array("$fileInfo[fileLocation]" => $fileInfo);
+        return array("$fileInfo[fileName]" => $fileInfo);
     }
 
     /** 
@@ -125,7 +125,7 @@ function uploads_userapi_prepare_uploads( $args ) {
         $fileInfo['fileDest'] = $savePath . '/' . $fileInfo['fileName'];
     }
     
-    return array("$fileInfo[fileLocation]" => $fileInfo);
+    return array("$fileInfo[fileName]" => $fileInfo);
 }
  
 ?>

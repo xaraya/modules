@@ -14,35 +14,35 @@ function uploads_admin_get_files() {
     $actionList = 'enum:' . implode(':', $actionList);
 
     if (!xarVarFetch('action',        $actionList, $action, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('fileList',      'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('file_all',      'checkbox', $file_all, '', XARVAR_NOT_REQUIRED)) return;
     
     // StoreType can -only- be one of FSDB or DB_FULL
     $storeTypes = _UPLOADS_STORE_FSDB . ':' . _UPLOADS_STORE_DB_FULL;
     if (!xarVarFetch('storeType',     "enum:$storeTypes", $storeType, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('upload',        'array:1:', $upload, '', XARVAR_NOT_REQUIRED)) return;
 
-    // minimum external import link must be: ftp://a.ws  <-- 10 characters total
-    if (!xarVarFetch('import',        'str:10:', $import, '', XARVAR_NOT_REQUIRED)) return;
     
     // now make sure someone hasn't tried to change our maxsize on us ;-)
     $file_maxsize = xarModGetVar('uploads', 'file.maxsize');
-    if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) return;
 
     if (!isset($action)) {
         $action = NULL;
     }
-
     $args['action']    = $action;
 
     switch ($action) {
         case _UPLOADS_GET_UPLOAD:
+            if (!xarVarFetch('MAX_FILE_SIZE', "int::$file_maxsize", $maxsize)) return;
+            if (!xarVarFetch('', 'array:1:', $_FILES['upload'])) return;
+            $upload = $_FILES['upload'];
             $args['upload'] = $upload;
         case _UPLOADS_GET_EXTERNAL:
+            // minimum external import link must be: ftp://a.ws  <-- 10 characters total
+            if (!xarVarFetch('import', 'regexp:/^(ftp|http)(.{7,})/', $import, '', XARVAR_NOT_REQUIRED)) return;
             $args['import'] = $import;
             break;
         case _UPLOADS_GET_LOCAL:
+            if (!xarVarFetch('fileList', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) return;
+            if (!xarVarFetch('file_all', 'checkbox', $file_all, '', XARVAR_NOT_REQUIRED)) return;
+            
             $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
             foreach ($fileList as $file) {
                 $args['fileList']["$cwd/$file"] = xarModAPIFunc('uploads', 'user', 'file_get_metadata', 
@@ -54,6 +54,7 @@ function uploads_admin_get_files() {
             break;
         default:
         case _UPLOADS_GET_REFRESH_LOCAL:
+            if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) return;
             $cwd = xarModAPIFunc('uploads', 'user', 'import_chdir', array('dirName' => isset($inode) ? $inode : NULL));
 
             $data['storeType']['DB_FULL']   = _UPLOADS_STORE_DB_FULL;
