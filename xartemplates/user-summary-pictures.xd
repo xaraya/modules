@@ -1,4 +1,3 @@
-<xar:if condition="xarTplAddStyleLink('articles', 'gallery')"></xar:if>
 <xar:if condition="!empty($categories) and count($categories) gt 0">
     <p>
         [ 
@@ -35,7 +34,7 @@
                 <a href="#$link#">
                     <img src="#$summary#" alt="#$title#" />
                     <span>
-                        #$notes#
+                        #$title#
                     </span>
                 </a>
             </li>
