@@ -5,45 +5,45 @@
 
 <form method="post" action="#xarModURL('newsgroups', 'user', 'post', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded">
 <table>
-	<tr>
-		<td align="right">
-			<b>Subject:</b> 
-		</td>
-		<td>
-			<input type="text" name="subject" value="#$subject#" size="40" maxlength="80" />
-		</td>
-	</tr>
-	<tr>
-		<td align="right">
-			<b>Name:</b>
-		</td>
-		<td align="left">
-			<input type="text" name="name" value="#$name#" size="40" maxlength="40" />
-		</td>
-	</tr>
-	<tr>
-		<td align="right">
-			<b>eMail:</b>
-		</td>
-		<td align="left">
-			<input type="text" name="email" value="#$email#" size="40" maxlength="40" />
-		</td>
-	</tr>
+    <tr>
+        <td align="right">
+            <b>Subject:</b> 
+        </td>
+        <td>
+            <input type="text" name="subject" value="#$subject#" size="40" maxlength="80" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <b>Name:</b>
+        </td>
+        <td align="left">
+            <input type="text" name="name" value="#$name#" size="40" maxlength="40" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <b>eMail:</b>
+        </td>
+        <td align="left">
+            <input type="text" name="email" value="#$email#" size="40" maxlength="40" />
+        </td>
+    </tr>
 </table>
 <table>
-	<tr>
-		<td>
-			<b>Message</b>
-		<br />
-			<textarea name="body" rows="20" cols="79" >#$message#</textarea>
-		</td>
-	</tr>
+    <tr>
+        <td>
+            <b>Message</b>
+        <br />
+            <textarea name="body" rows="20" cols="79" >#$message#</textarea>
+        </td>
+    </tr>
 </table>
 <p>
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="group" id="group" value="#$group#" />
-	<input type="hidden" name="reference" value="#$reference#" />
-	<input type="submit" value="New Topic" />
+    <input type="hidden" name="reference" value="#$reference#" />
+    <input type="submit" value="New Topic" />
 </p>
 </form>
 </div>

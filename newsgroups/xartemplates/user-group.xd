@@ -12,26 +12,26 @@
 <p><a href="#xarModUrl('newsgroups', 'user', 'post', array('group' => $group, 'phase' => 'new'))#"><xar:mlstring>Post to this newsgroup</xar:mlstring></a></p>
 <div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
 <table>
-	<tr>
-		<th><xar:mlstring>Subject</xar:mlstring></th>
-		<th><xar:mlstring>From</xar:mlstring></th>
-		<th><xar:mlstring>Date</xar:mlstring></th>
-	</tr>
-	<xar:loop name="$items">
-	<xar:if condition="(($loop:index + 1) % 2)">
-	<tr>
-		<td><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#$loop:item['Subject']#</a></span></td>
-		<td>#$loop:item['From']#</td>
-		<td>#$loop:item['Date']#</td>
-	</tr>
-	<xar:else />
-	<tr>
-		<td class="xar-accent"><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#$loop:item['Subject']#</a></span></td>
-		<td class="xar-accent">#$loop:item['From']#</td>
-		<td class="xar-accent">#$loop:item['Date']#</td>
-	</tr>
-	</xar:if>
-	</xar:loop>
+    <tr>
+        <th><xar:mlstring>Subject</xar:mlstring></th>
+        <th><xar:mlstring>From</xar:mlstring></th>
+        <th><xar:mlstring>Date</xar:mlstring></th>
+    </tr>
+    <xar:loop name="$items">
+    <xar:if condition="(($loop:index + 1) % 2)">
+    <tr>
+        <td><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#$loop:item['Subject']#</a></span></td>
+        <td>#$loop:item['From']#</td>
+        <td>#$loop:item['Date']#</td>
+    </tr>
+    <xar:else />
+    <tr>
+        <td class="xar-accent"><span style="margin-left: #$loop:item['depth']*20#px;"> <a href="#xarModUrl('newsgroups', 'user', 'article', array('group' => $group, 'article' => $loop:item['number']))#">#$loop:item['Subject']#</a></span></td>
+        <td class="xar-accent">#$loop:item['From']#</td>
+        <td class="xar-accent">#$loop:item['Date']#</td>
+    </tr>
+    </xar:if>
+    </xar:loop>
 </table>
 </div>
 #$pager#
