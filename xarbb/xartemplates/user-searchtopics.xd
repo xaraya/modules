@@ -94,9 +94,8 @@
 				</xar:if>
 			</td>
 			<td class="xar-accent" align="center" valign="middle" style="border: 1px solid #000;">
-				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
-					#$loop:item['replyname']#
-				</a>
+                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">
+                    #$loop:item['name']#</a>
 			</td>
 			<td class="xar-norm" align="center" valign="middle" style="border: 1px solid #000;">
 				 #$loop:item['treplies']#
@@ -106,7 +105,7 @@
 			</td>
 			<td class="xar-accent" align="center" valign="middle" nowrap="nowrap" style="border: 1px solid #000;">
 				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
-				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
+				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">#$loop:item['replyname']#<a>
 			</td>
 		</tr>
 	</xar:loop>
