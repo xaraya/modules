@@ -102,7 +102,7 @@ if (isset($_REQUEST['filter_status']) && $_REQUEST['filter_status'])
 	$wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
 
 if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
-	$wheres[] = "actstatus='" . $_REQUEST['filter_act_status'] . "'";
+	$wheres[] = "gia.status='" . $_REQUEST['filter_act_status'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
 	$wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
@@ -111,7 +111,7 @@ if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
 	$wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
 
 if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
-	$wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
+	$wheres[] = "gia.user='" . $_REQUEST['filter_user'] . "'";
 
 if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
 	$wheres[] = "owner='" . $_REQUEST['filter_owner'] . "'";

@@ -28,9 +28,6 @@
   <small>#xarML('status')#</small>
 </td>
 <td >
-  <small>#xarML('act status')#</small>
-</td>
-<td >
   <small>#xarML('user')#</small>
 </td>
 <td>
@@ -72,25 +69,6 @@
   <option value="#$statuses[$ix]#">#xarML($statuses[$ix])#</option>
 </xar:if>
   </xar:foreach>
-  </select>
-</td>
-<td >
-  <select name="filter_act_status">
-<xar:if condition="'' eq $filter_act_status">
-  <option selected="selected" value="">#xarML('All')#</option>
-<xar:else/>
-  <option value="">#xarML('All')#</option>
-</xar:if>
-<xar:if condition="'y' eq $filter_act_status">
-  <option value="running" selected="selected">#xarML('running')#</option>
-<xar:else/>
-  <option value="running">#xarML('running')#</option>
-</xar:if>
-<xar:if condition="'n' eq $filter_act_status">
-  <option value="completed" selected="selected">#xarML('completed')#</option>
-<xar:else/>
-  <option value="completed">#xarML('completed')#</option>
-</xar:if>
   </select>
 </td>
 <td >
