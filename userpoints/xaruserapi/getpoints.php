@@ -1,23 +1,55 @@
 <?php
 function userpoints_userapi_getpoints($args)
 {
+    extract($args);
 
-extract($args);
+    // map some old stuff to standard types
+    switch ($paction) {
+        case 'C':
+        case 'create':
+            $type = 'create';
+            break;
 
-    /*if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'object id', 'admin', 'createhook', 'userpoints');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        case 'U':
+        case 'update':
+            $type = 'update';
+            break;
+
+        case 'R':
+        case 'remove':
+        case 'delete':
+            $type = 'delete';
+            break;
+
+        case 'F':
+        case 'frontpage':
+            $type = 'frontpage';
+            break;
+
+        case 'D':
+        case 'display':
+        default:
+            $type = 'display';
+
     }
-    if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'admin', 'createhook', 'userpoints');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
-    }*/
+
+    // try different module variables depending on config and hooks
+    $modname = $pmodule;
+    if (!empty($itemtype)) {
+        $points = xarModGetVar('userpoints', $type."points.$modname.$itemtype");
+        if (!isset($points)) {
+            $points = xarModGetVar('userpoints', $type.'points.'.$modname);
+        }
+    } else {
+        $points = xarModGetVar('userpoints', $type.'points.'.$modname);
+    }
+    if (!isset($points)) {
+        $points = xarModGetVar('userpoints', 'default'.$type);
+    }
+
+    return $points;
+
+/*
 // Get database setup
 
     $dbconn =& xarDBGetConn();
@@ -43,5 +75,6 @@ extract($args);
     }
     
     return $data;
+*/
 }
 ?>

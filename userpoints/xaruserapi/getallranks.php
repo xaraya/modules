@@ -82,7 +82,7 @@ function userpoints_userapi_getallranks($args)
                      xar_rankname,
                      xar_rankminscore
             FROM $ranks
-            ORDER BY xar_rankname";
+            ORDER BY xar_rankminscore DESC";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1); 
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return

@@ -1,23 +1,19 @@
 <?php
 
 /**
- * display rating for a specific item, and request rating
- * @param $args['objectid'] ID of the item this rating is for
- * @param $args['extrainfo'] URL to return to if user chooses to rate
- * @param $args['style'] style to display this rating in (optional)
- * @param $args['itemtype'] item type
- * @returns output
- * @return output with rating information
+ * add user points for displaying an item
+ * @param $args['objectid'] ID of the item this point is for
+ * @param $args['extrainfo'] module, itemtype and return_url of the item
+ * @returns string
+ * @return empty string for display hook here
  */
 function userpoints_user_display($args)
 {
     extract($args);
     if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'admin', 'displayhook', 'userpoints');
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', 'extrainfo', 'user', 'display', 'userpoints');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        return '';
     }
 
     // When called via hooks, the module name may be empty, so we get it from
@@ -34,23 +30,43 @@ function userpoints_user_display($args)
         $itemtype = 0;
     }
 
-      // Need to get the correct itemtype so we send the correct URL to update
-      $uid = xarUserGetVar('uid');
-      if(!xarUserIsLoggedIn()) {return $extrainfo;}
-      $pointsvalues = xarModAPIFunc('userpoints','user','getpoints',array('pmodule'=>$modname,'itemtype'=>$itemtype,'paction'=>'D'));
-      if(!$pointsvalues) {return $extrainfo;}
-        $points = $pointsvalues['tpoints']; 
+    if (!xarUserIsLoggedIn()) {
+        return '';
+    }
+    $uid = xarUserGetVar('uid');
+
+    $points = xarModAPIFunc('userpoints', 'user', 'getpoints',
+                            array('pmodule'=>$modname,
+                                  'itemtype'=>$itemtype,
+                                  'paction'=>'display'));
+    if (empty($points)) {
+        return '';
+    }
+
+    $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',
+                                 array('uid' => $uid,
+                                       'points' => $points));
+
+/*
+    $pointsvalues = xarModAPIFunc('userpoints','user','getpoints',
+                                  array('pmodule'=>$modname,'itemtype'=>$itemtype,'paction'=>'D'));
+    if (!$pointsvalues) {
+        return '';
+    }
+
+    $points = $pointsvalues['tpoints']; 
       
-      $uptid = $pointsvalues['uptid'];
+    $uptid = $pointsvalues['uptid'];
       
-      $args['uptid'] = $uptid;
-      $args['points'] = $points;
-      $args['uid'] = $uid;
-      
-      $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
+    $args['uptid'] = $uptid;
+    $args['points'] = $points;
+    $args['uid'] = $uid;
+
+    $pointsadded = xarModAPIFunc('userpoints', 'admin', 'addpoints',$args);
+*/
     
-    // Return the extra info
-    return $extrainfo;
+    // Nothing to see here
+    return '';
 }
 
 ?>

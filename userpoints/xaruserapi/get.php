@@ -1,61 +1,50 @@
 <?php
 
 /**
- * get a rating for a specific item
- * @param $args['modname'] name of the module this rating is for
- * @param $args['itemtype'] item type (optional)
- * @param $args['objectid'] ID of the item this rating is for
+ * get the score of a particular user
+ * @param $args['uid'] user id
  * @returns int
- * @return rating the corresponding rating, or boid if no rating exists
+ * @return score the current score of this user
  */
-function ratings_userapi_get($args)
+function userpoints_userapi_get($args)
 {
     // Get arguments from argument array
     extract($args);
 
     // Argument check
-    if ((!isset($modname)) ||
-        (!isset($objectid))) {
+    if (empty($uid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    xarML('module name or item id'), 'user', 'get', 'ratings');
+                    xarML('user id'), 'user', 'get', 'userpoints');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
-    }
-    $modid = xarModGetIDFromName($modname);
-    if (empty($modid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    xarML('module id'), 'user', 'get', 'ratings');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
-
-    if (!isset($itemtype)) {
-        $itemtype = 0;
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadRatings')) return;
+    if(!xarSecurityCheck('ReadUserpoints')) return;
 
     // Database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-    $ratingstable = $xartable['ratings'];
+    $scoretable = $xartable['userpoints_score'];
 
     // Get items
-    $query = "SELECT xar_rating
-            FROM $ratingstable
-            WHERE xar_moduleid = ?
-              AND xar_itemid = ?
-              AND xar_itemtype = ?";
-    $result =& $dbconn->Execute($query, array((int)$modid, (int)$objectid, $itemtype));
+    $query = "SELECT xar_totalscore
+            FROM $scoretable
+            WHERE xar_authorid = ?";
+    $result =& $dbconn->Execute($query, array((int)$uid));
     if (!$result) return;
 
-    $rating = $result->fields[0];
-    $result->close();
+    if ($result->EOF) {
+        $score = NULL;
+    } else {
+        $score = $result->fields[0];
+        // FIXME: score is currently saved as x 100 (bigint)
+        $score = (float) $score / 100.0;
+    }
+    $result->Close();
 
-    return $rating;
+    return $score;
 }
 
 ?>

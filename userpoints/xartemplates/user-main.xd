@@ -1,0 +1,2 @@
+<p><xar:ml><xar:mlstring>Your current score is : #(1)</xar:mlstring><xar:mlvar>#$score#</xar:mlvar></xar:ml></p>
+<p><xar:ml><xar:mlstring>Your current rank is : #(1)</xar:mlstring><xar:mlvar>#$rank#</xar:mlvar></xar:ml></p>
