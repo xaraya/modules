@@ -50,7 +50,10 @@ function tinymce_admin_updateconfig()
     xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
     xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
     xarModSetVar('base','editor', $defaulteditor);
-    
+
+    $xarbaseurl=xarServerGetBaseURL();
+    $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
+
     //Turn our settings into javascript for insert into template
     //Let's call the variable jstext
     $jstext='';
@@ -66,7 +69,7 @@ function tinymce_admin_updateconfig()
     // $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",';
 
         if (trim(xarModGetVar('tinymce','tinycsslist')) <> '') {
-            $jstext .='content_css : "'.xarModGetVar('tinymce','tinycsslist').'",';
+            $jstext .='content_css : "'.$xarbaseurl.xarModGetVar('tinymce','tinycsslist').'",';
         }
         if (trim(xarModGetVar('tinymce','tinybuttonsremove')) <> '') {
             $jstext .='theme_advanced_disable : "'.trim(xarModGetVar('tinymce','tinybuttonsremove')).'",';
@@ -86,6 +89,7 @@ function tinymce_admin_updateconfig()
     if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
         $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'",';
     }
+
     if (xarModGetVar('tinymce','tinyask')=='true'){
         $jstext .='ask : "true",';
     }

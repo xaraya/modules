@@ -1,9 +1,10 @@
-<xar:comment>Template for tinycme wysiwyg editor - work in progress</xar:comment>
+<xar:comment>Template for xartinycme wysiwyg editor</xar:comment>
 
 <xar:set name="jsstring">xarModGetVar('tinymce','jstext')</xar:set>
 <xar:set name="currentmod">xarModGetName()</xar:set>
+<xar:set name="serverbaseurl">xarServerGetBaseURL()</xar:set>
 <!-- XarTinyMCE -->
-<script type="text/javascript" src="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="#$serverbaseurl#modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
     <script type="text/javascript">
         tinyMCE.init({
         #$jsstring#
