@@ -1,0 +1,92 @@
+<!-- admin menu configuration template -->
+<!-- Formatting table to center the menu -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2>#$configadmin#</h2>
+
+<!-- BL style form for xarldap configuration options -->
+<form method="post" action="&xar-modurl-xarldap-admin-updateconfig;">
+<input type="hidden" name="authid" id="authid" value="#$authid#" />
+<table border="0" width="100%">
+    <tr>
+        <td>
+            <table border="0" width="100%" cellpadding="4">
+                <tr align="left" valign="top">
+                    <td>
+                        #$ldapserver#
+                    </td>
+                    <td>
+                        <input type="text" name="ldapserver" value="#$ldapservervalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$portnumber#
+                    </td>
+                    <td>
+                        <input type="text" name="portnumber" value="#$portnumbervalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$anonymousbind#
+                    </td>
+                    <td>
+                        <input type="checkbox" name="anonymousbind" value="1" #$anonymousbindvalue# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$binddn#
+                    </td>
+                    <td>
+                        <input type="text" name="binddn" value="#$binddnvalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$uidfield#
+                    </td>
+                    <td>
+                        <input type="text" name="uidfield" value="#$uidfieldvalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$searchuserdn#
+                    </td>
+                    <td>
+                        <input type="checkbox" name="searchuserdn" value="1" #$searchuserdnvalue# />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$adminid#
+                    </td>
+                    <td>
+                        <input type="text" name="adminid" value="#$adminidvalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$adminpasswd#
+                    </td>
+                    <td>
+                        <input type="password" name="adminpasswd" value="#$adminpasswdvalue#" />
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
+                    <td>
+                        #$submitlabel#
+                    </td>
+                    <td>
+                        <!-- submit button -->
+                        <input type="submit" value="#$submitbutton#" align="middle" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</form>
+</div>

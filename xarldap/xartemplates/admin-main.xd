@@ -1,0 +1,47 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>XarLDAP Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+        <xar:if condition="file_exists('modules/xarldap/xarimages/admin.gif')" >
+            <img src="modules/xarldap/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <xar:else />
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The XarLDAP module allows you to configure an LDAP server that Xaraya will use for authentication or searching.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>You must configure XarLDAP before you can successfully authenticate a user with the AuthLDAP module or search the LDAP server.</xar:mlstring>
+            <br /><br />
+            <xar:mlstring>
+			From the menu, you have one choice.  "Modify Config". 
+			</xar:mlstring>
+			<ul>
+				<li><xar:mlstring>Modify Config -- From here, you can configure the LDAP server.</xar:mlstring></li>
+			</ul>
+		</div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<xar:mlstring>There are no included blocks with the XarLDAP Module</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>
