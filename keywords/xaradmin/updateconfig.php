@@ -37,19 +37,19 @@ function keywords_admin_updateconfig()
     }
     if (isset($keywords) && is_array($keywords)) {
 
-    	xarModAPIFunc('keywords',
+        xarModAPIFunc('keywords',
                       'admin',
                       'resetlimited');
 
         foreach ($keywords as $modname => $value) {
             if ($modname == 'default.0' || $modname == 'default') {
                 $moduleid='0';
-		$itemtype = '0';
+        $itemtype = '0';
             } else {
-		$moduleitem = explode(".", $modname);
+        $moduleitem = explode(".", $modname);
                 $moduleid = xarModGetIDFromName($moduleitem[0],'module');
-		if (isset($moduleitem[1]) && is_numeric($moduleitem[1])) $itemtype = $moduleitem[1];
-		else $itemtype = 0;
+        if (isset($moduleitem[1]) && is_numeric($moduleitem[1])) $itemtype = $moduleitem[1];
+        else $itemtype = 0;
             }
             if ($value <> '') {
                 xarModAPIFunc('keywords',
@@ -57,7 +57,7 @@ function keywords_admin_updateconfig()
                               'limited',
                               array('moduleid' => $moduleid,
                                     'keyword'  => $value,
-				    'itemtype' => $itemtype));
+                    'itemtype' => $itemtype));
             } 
         } 
     } 

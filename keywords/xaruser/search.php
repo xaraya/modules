@@ -17,7 +17,7 @@
 function keywords_user_search($args) 
 {
 if (!xarSecurityCheck('ReadKeywords')) return;
-	
+    
     if(!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}

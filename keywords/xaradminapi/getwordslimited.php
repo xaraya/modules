@@ -39,7 +39,7 @@ function keywords_adminapi_getwordslimited($args)
               FROM $keywordstable
               WHERE xar_moduleid = " . xarVarPrepForStore($moduleid);
     if (isset($itemtype)) {
-	      $query .= " AND xar_itemtype = ". xarVarPrepForStore($itemtype);
+          $query .= " AND xar_itemtype = ". xarVarPrepForStore($itemtype);
     }
     $query .= " ORDER BY xar_keyword ASC";
     $result =& $dbconn->Execute($query);

@@ -78,7 +78,7 @@ function keywords_admin_modifyconfig()
                                                    'admin',
                                                    'getwordslimited',
                                                    array('moduleid' => $moduleid,
-						   	 'itemtype' => $itemtype));
+                                'itemtype' => $itemtype));
                             if ($itemtype == 0) {                          
                                 $link = xarModURL($mod,'user','main');
                     } else {
@@ -87,9 +87,9 @@ function keywords_admin_modifyconfig()
                             $label = $item['label'];
                             $data['settings'][$mod][$itemtype] = array('label' => xarML('Keywords for <a href="#(1)">#(2)</a>', $link, $label),
                                                                     'keywords'   => $keywords);
-        		
-  	   	}
-   	   	}
+                
+             }
+              }
                 }
             } else {
 

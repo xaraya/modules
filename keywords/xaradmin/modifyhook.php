@@ -158,7 +158,7 @@ function keywords_admin_modifyhook($args)
                                 'user',
                                 'getwordslimited',
                                  array('moduleid' => $modid,
-				 'itemtype' => $itemtype));
+                 'itemtype' => $itemtype));
                                  
        
                         $wordlist=array_diff($keywords1,$keywords);
