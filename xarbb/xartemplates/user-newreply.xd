@@ -7,6 +7,7 @@
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
 <script language="JavaScript">
 <!--
 	// Enter name of mandatory fields
@@ -86,11 +87,11 @@
                 </td>
                 <td class="xar-norm newtopicfield">
                     <xar:if condition="isset($package['new_title'])">
-                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#xarVarPrepForDisplay($package['new_title'])#" />
-                        <xar:elseif condition="!empty($package['title'])" />
+                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#xarVarPrepForDisplay($package['new_title'])#" tabindex="1" />
+                        <xar:elseif condition="!empty($package['title'])" tabindex="1" />
                         <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="#xarVarPrepForDisplay($package['title'])#" />
                         <xar:else />
-                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="" />
+                        <input type="text" name="package[title]" id="packagetitle" size="45" maxlength="60" value="" tabindex="1" />
                     </xar:if>
                 </td>
             </tr>
@@ -116,9 +117,9 @@
                 </td>
                 <td class="xar-norm newtopicfield">
                     <xar:if condition="isset($package['text'])">
-                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext">#xarVarPrepForDisplay($package['text'])#</textarea>
+                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2">#xarVarPrepForDisplay($package['text'])#</textarea>
                         <xar:else />
-                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext"></textarea>
+                        <textarea rows="15" cols="35" wrap="virtual" name="package[text]" id="packagetext" tabindex="2" </textarea>
                     </xar:if>
                 </td>
             </tr>
@@ -171,11 +172,11 @@
                             Smilies are 
                         </xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies', 'xarbb', $fid)">
-                            <span style="color: green;">
-                                <xar:mlstring>
-                                    On 
-                                </xar:mlstring>
-                            </span>
+							<a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+								<xar:mlstring>
+									On 
+								</xar:mlstring>
+							</a>
                             <xar:else />
                             <span style="color: red;">
                                 <xar:mlstring>
@@ -203,9 +204,9 @@
                     </xar:if>
                     <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#$receipt['returnurl']['decoded']#" />
                     <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#$receipt['returnurl']['encoded']#" />
-                    <input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" />
+                    <input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" tabindex="3" />
                     &nbsp;&nbsp; 
-                    <input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" />
+                    <input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" tabindex="4" />
                     &nbsp;&nbsp; 
                 </td>
             </tr>

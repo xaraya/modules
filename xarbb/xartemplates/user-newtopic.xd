@@ -7,6 +7,7 @@
 <xar:if condition="xarTplAddStyleLink('xarBB', 'xarbb-layout')">
 </xar:if>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
+<script type="text/javascript" src="modules/xarbb/xartemplates/includes/popup.js"></script>
 <script language="JavaScript">
 <!--
 	// Enter name of mandatory fields
@@ -118,7 +119,7 @@
                     : 
                 </td>
                 <td class="xar-norm newtopicfield">
-                    <input type="text" name="ttitle" id="ttitle" value="#xarVarPrepForDisplay($ttitle)#" size="45" maxlength="60" />
+                    <input type="text" name="ttitle" id="ttitle" value="#xarVarPrepForDisplay($ttitle)#" size="45" maxlength="60" tabindex="1" />
                 </td>
             </tr>
             <xar:if condition="xarModIsHooked('bbcode','xarbb',$fid)">
@@ -142,7 +143,7 @@
                     : 
                 </td>
                 <td class="xar-norm newtopicfield">
-                    <textarea name="tpost" id="tpost" rows="15" cols="35">#xarVarPrepForDisplay($tpost)# </textarea>
+                    <textarea name="tpost" id="tpost" rows="15" cols="35"  tabindex="2">#xarVarPrepForDisplay($tpost)# </textarea>
                 </td>
             </tr>
             <tr>
@@ -184,10 +185,12 @@
                             Smilies are 
                         </xar:mlstring>
                         <xar:if condition="xarModIsHooked('smilies','xarbb',$fid)">
-                            <span style="color: green;">
-                                On 
-                            </span>
-                            <xar:else />
+							<a href="#xarModUrl('smilies', 'user', 'main', array('theme' => 'print'))#" onclick="popUp(this.href,'fixed',400,400);return false;" target="newWin" style="color: green;">
+								<xar:mlstring>
+									On 
+								</xar:mlstring>
+							</a>
+                        <xar:else />
                             <span style="color: red;">
                                 Off 
                             </span>
@@ -330,7 +333,7 @@
                     <input type="hidden" name="redirect" id="redirect" value="#$redirect#" />
                     <input type="submit" id="preview" name="preview" value="#$previewlabel#" />
                     &nbsp; 
-                    <input type="submit" value="#$submitlabel#" />
+                    <input type="submit" value="#$submitlabel#"  tabindex="3" />
                 </td>
             </tr>
         </table>
