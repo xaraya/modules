@@ -15,7 +15,7 @@ function _opentracker_exit_urls($buffer)
 {
 	return preg_replace(
     "#<a href=(\"|')(http(s)*?://)([^\"']+)(\"|')#ime",
-    '"<a href=\"".((substr_count(strtolower(\'\\2\\4\'), strtolower(xarServerGetBaseURL())) == 0) ? xarModUrl("opentracker", "user", "exit", array("url" => base64_encode(\'\\4\') ) ) : "\\2\\4" )."\""',
+    '"<a href=\"".((substr_count(strtolower(\'\\2\\4\'), strtolower(xarServerGetBaseURL())) == 0) ? xarModUrl("opentracker", "user", "exit", array("proto"=>base64_encode(\'\\2\'), "url" => base64_encode(\'\\4\') ) ) : "\\2\\4" )."\""',
     $buffer
   );
 }

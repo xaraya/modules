@@ -3,7 +3,9 @@ function opentracker_user_exit() {
 	require_once 'modules/opentracker/xarOpenTracker.php';
 	
 	if (!xarVarFetch('url', 'str:1:', $exitURL)) return; 
+	if (!xarVarFetch('proto', 'str', $protocol, 'aHR0cDovLw==', XARVAR_NOT_REQUIRED)) return; # the hardcoded string is base64 for 'http://'
 	
+  $protocol = base64_decode($protocol);	
 	$exitURL = str_replace('&amp;', '&', base64_decode($exitURL));
 	
 	$config    = &phpOpenTracker_Config::singleton();
@@ -30,7 +32,7 @@ function opentracker_user_exit() {
 			$container['timestamp']
 		)
 	);
-	xarResponseRedirect('http://' . $exitURL);
+	xarResponseRedirect($protocol . $exitURL);
 	return '';
 }
 ?>
