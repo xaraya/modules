@@ -177,11 +177,6 @@ function xarpages_user_display($args)
         }
     }
 
-    // Provide a reference to the 'root' page.
-    // There will only be one root page, possibly empty.
-    $data['root_page'] =& $ancestors[0];
-    //var_dump($data['root_page']);
-
     // Provide a 'rolled up' version of the current page (or page and
     // ancestors) that contain inherited values from the pages before it.
     // i.e. all ancestors and the current page layered over each other.

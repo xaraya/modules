@@ -18,7 +18,7 @@ function xarpages_userapi_getitemtypes($args)
     foreach ($pagetypes as $pagetype) {
         $itemtypes[$pagetype['ptid']] = array(
             'label' => xarVarPrepForDisplay($pagetype['desc']),
-            'title' => xarVarPrepForDisplay(xarML('Display #(1)', $pagetype['descr'])),
+            'title' => xarVarPrepForDisplay(xarML('Display #(1)', $pagetype['desc'])),
             'url'   => xarModURL('xarpages', 'user', 'display', array('ptid' => $pagetype['ptid']))
         );
     }
