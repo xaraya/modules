@@ -20,11 +20,12 @@ $modversion['help']           = '';
 $modversion['changelog']      = 'xardocs/changelog.txt';
 $modversion['license']        = 'xardocs/copying.txt';
 $modversion['official']       = 0;
-$modversion['author']         = 'Jorn Lind-Nielsen (xarayized by Alley)';
-$modversion['contact']        = 'jln@fjeldgruppen.dk';
+$modversion['author']         = 'Chris van de Steeg (alley)';
+$modversion['contact']        = 'alley@xaraya.com';
 $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['securityschema'] = array('Photoshare::' => '::');
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
+$modversion['dependency'] 	= array(666);
 ?>
