@@ -6,18 +6,18 @@
 function xarcachemanager_admin_updateconfig()
 { 
     // Get parameters
-    if (!xarVarFetch('cacheenabled',     'isset', $cacheenabled,     0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachetheme',       'str::24', $cachetheme,     '',  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachesizelimit',   'float:0.1:', $cachesizelimit,  '',  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachepages',       'isset', $cachepages,       0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('pageexpiretime',   'str:1:9', $pageexpiretime,  '0',  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachedisplayview', 'isset', $cachedisplayview, 0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cachetimestamp',   'isset', $cachetimestamp,   0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('expireheader',     'isset', $expireheader,   0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('pagehookedonly',   'isset', $pagehookedonly,   0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('autoregenerate',   'isset', $autoregenerate,   0,  XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('cacheblocks',      'isset', $cacheblocks, 0, XARVAR_NOT_REQUIRED)) { return; }
-    if (!xarVarFetch('blockexpiretime',  'str:1:9', $blockexpiretime, '0',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cacheenabled',     'isset',       $cacheenabled,     0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachetheme',       'str::24',     $cachetheme,       '',   XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachesizelimit',   'float:0.25:', $cachesizelimit,   0.25, XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachepages',       'isset',       $cachepages,       0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pageexpiretime',   'str:1:9',     $pageexpiretime,   '0',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachedisplayview', 'int:0:1',     $cachedisplayview, 0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachetimestamp',   'int:0:1',     $cachetimestamp,   0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('expireheader',     'int:0:1',     $expireheader,     0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pagehookedonly',   'int:0:1',     $pagehookedonly,   0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('autoregenerate',   'isset',       $autoregenerate,   0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cacheblocks',      'isset',       $cacheblocks,      0,    XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('blockexpiretime',  'str:1:9',     $blockexpiretime,  '0',  XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
@@ -39,7 +39,7 @@ function xarcachemanager_admin_updateconfig()
         }
     }
 
-    // turn page level oupt caching on or off
+    // turn page level output caching on or off
     if(!empty($cachepages)) {
         if(!file_exists($outputCacheDir . '/cache.pagelevel')) {
             touch($outputCacheDir . '/cache.pagelevel');
@@ -56,7 +56,7 @@ function xarcachemanager_admin_updateconfig()
         }
     }
 
-    // turn block level ouput caching on or off 
+    // turn block level output caching on or off 
     if ($cacheblocks) {
         if(!file_exists($outputCacheDir . '/cache.blocklevel')) {
             touch($outputCacheDir . '/cache.blocklevel');
@@ -66,15 +66,15 @@ function xarcachemanager_admin_updateconfig()
             include_once('includes/xarCache.php');
             xarCache_init(array('cacheDir' => $outputCacheDir));
         }
-        $cacheKey = "adminpanels-blockid";
-        xarOutputFlushCached($cacheKey);
+        xarOutputFlushCached('adminpanels-block');
     } else {
         if(file_exists($outputCacheDir . '/cache.blocklevel')) {
             unlink($outputCacheDir . '/cache.blocklevel');
         }
     }
 
-    $cachesizelimit *= 1048576;
+    // convert size limit from MB to bytes
+    $cachesizelimit = (intval($cachesizelimit * 1048576));
     
     //turn hh:mm:ss back into seconds
     $pageexpiretime = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
@@ -84,20 +84,6 @@ function xarcachemanager_admin_updateconfig()
                                  array('starttime' => $blockexpiretime,
                                        'direction' => 'to'));
 
-    if(!empty($cachedisplayview)) {
-        $cachedisplayview = 1;
-    } else {
-        $cachedisplayview = 0;
-    }
-    if(!empty($cachetimestamp)) {
-        $cachetimestamp = 1;
-    } else {
-        $cachetimestamp = 0;
-    }
-    if(empty($cachesizelimit)) {
-        $cachesizelimit = 262144;
-    }
-    
     // updated the config.caching settings
     $cachingConfigFile = $varCacheDir . '/config.caching.php';
     
@@ -131,7 +117,7 @@ function xarcachemanager_admin_updateconfig()
         xarModSetVar('xarcachemanager','FlushOnNewRating', 0);
     }
 
-    // see if we need to flush the cache when a new vote is cast on poll hooked to some item
+    // see if we need to flush the cache when a new vote is cast on a poll hooked to some item
     xarVarFetch('cacheflushpollvote','isset',$cacheflushpollvote,0,XARVAR_NOT_REQUIRED);
     if ($cacheflushpollvote && $cachedisplayview) {
         xarModSetVar('xarcachemanager','FlushOnNewPollvote', 1);

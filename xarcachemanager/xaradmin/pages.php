@@ -49,8 +49,8 @@ function xarcachemanager_admin_pages($args)
                 $grouplist[] = $group['uid'];
             }
         }
-        $cachegroups = join(';', $grouplist); 
-    
+        $cachegroups = join(';', $grouplist);
+
         xarVarFetch('sessionless','isset',$sessionless,'',XARVAR_NOT_REQUIRED);
         $sessionlesslist = array();
         if (!empty($sessionless)) {
@@ -112,14 +112,15 @@ function xarcachemanager_admin_pages($args)
             $autocache['keepstats'] = 1;
         }
 
+        // save the new config settings
         $configSettings = array();
-        $configSettings['Page.CacheGroups'] = $cachegroups;
-        $configSettings['Page.SessionLess'] = $sessionlesslist;
-        $configSettings['AutoCache.Period'] = $autocache['period'];
+        $configSettings['Page.CacheGroups']    = $cachegroups;
+        $configSettings['Page.SessionLess']    = $sessionlesslist;
+        $configSettings['AutoCache.Period']    = $autocache['period'];
         $configSettings['AutoCache.Threshold'] = $autocache['threshold'];
-        $configSettings['AutoCache.MaxPages'] = $autocache['maxpages'];
-        $configSettings['AutoCache.Include'] = $includelist;
-        $configSettings['AutoCache.Exclude'] = $excludelist;
+        $configSettings['AutoCache.MaxPages']  = $autocache['maxpages'];
+        $configSettings['AutoCache.Include']   = $includelist;
+        $configSettings['AutoCache.Exclude']   = $excludelist;
         $configSettings['AutoCache.KeepStats'] = $autocache['keepstats'];
         
         xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 

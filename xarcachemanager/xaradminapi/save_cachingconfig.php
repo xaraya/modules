@@ -33,7 +33,7 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
     // place the settings in modvars for safe keeping
     // and replace the cachingConfig with the new values
     foreach ($configSettings as $configKey => $configValue) {
-        if (is_numeric($configValue)) {
+        if (is_integer($configValue)) {
             xarModSetVar('xarcachemanager', $configKey, $configValue);
             $cachingConfig = preg_replace('/\[\'' . $configKey . '\'\]\s*=\s*(|\")(.*)\\1;/', "['$configKey'] = $configValue;", $cachingConfig);
         } elseif (is_array($configValue)) {
@@ -46,6 +46,7 @@ function xarcachemanager_adminapi_save_cachingconfig($args)
         }
     }
     
+    // write the new settings to the config file
     $fp = fopen ($cachingConfigFile, 'wb');
     fwrite ($fp, $cachingConfig);
     fclose ($fp);

@@ -19,26 +19,32 @@ function xarcachemanager_admin_modifyconfig()
 
     $varCacheDir = xarCoreGetVarDirPath() . '/cache';
     
+    // is output caching enabled?
     if (file_exists($varCacheDir . '/output/cache.touch')) {
         $data['CachingEnabled'] = 1;
     } else {
         $data['CachingEnabled'] = 0;
     }
 
+    // is page level output caching enbabled?
     if (file_exists($varCacheDir . '/output/cache.pagelevel')) {
         $data['pageCachingEnabled'] = 1;
     } else {
         $data['pageCachingEnabled'] = 0;
     }
+    
+    // is block level output caching enabled?
     if (file_exists($varCacheDir . '/output/cache.blocklevel')) {
         $data['blockCachingEnabled'] = 1;
     } else {
         $data['blockCachingEnabled'] = 0;
     }
     
+    // get the caching config settings from the config file
     $data['settings'] = xarModAPIFunc('xarcachemanager', 'admin', 'get_cachingconfig',
                                          array('from' => 'file', 'tpl_prep' => TRUE));
 
+    // set some default values
     if(!isset($data['settings']['OutputSizeLimit'])) {
         $data['settings']['OutputSizeLimit'] = 262144;
     }
@@ -58,6 +64,7 @@ function xarcachemanager_admin_modifyconfig()
         $data['settings']['BlockTimeExpiration'] = 7200;
     }
 
+    // convert the size limit from bytes to megabytes
     $data['settings']['OutputSizeLimit'] /= 1048576;
 
     // reformat seconds as hh:mm:ss
@@ -68,6 +75,7 @@ function xarcachemanager_admin_modifyconfig()
                                                              array('starttime' => $data['settings']['BlockTimeExpiration'],
                                                                    'direction' => 'from'));
 
+    // get the themes list
     $filter['Class'] = 2;
     $data['themes'] = xarModAPIFunc('themes',
         'admin',
