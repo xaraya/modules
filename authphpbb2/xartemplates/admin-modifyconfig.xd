@@ -93,6 +93,18 @@
                     <input type="text" name="forumurl" value="#$forumurl#" />
             </span>
         </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <label for="activate"><xar:mlstring>Activate authentication module</xar:mlstring>:</label>
+            </span>
+            <span>
+                <xar:if condition="in_array('authphpbb2',xarConfigGetVar('Site.User.AuthenticationModules'))">
+                    <input type="checkbox" name="activate" id="activate" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="activate" id="activate" value="1" />
+                </xar:if>
+            </span>
+        </div>
         <br />
         <!-- submit button -->
         <span style="padding: 20px; ">

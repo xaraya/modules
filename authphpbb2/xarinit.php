@@ -33,7 +33,8 @@ function authphpbb2_init()
     xarRegisterMask('AdminAuthphpBB2', 'All', 'authphpbb2', 'All', 'All', 'ACCESS_ADMIN');
     xarRegisterMask('ReadAuthphpBB2', 'All', 'authphpbb2', 'All', 'All', 'ACCESS_READ');
 
-    // Add authphpbb2 to Site.User.AuthenticationModules in xar_config_vars
+    // Do not add authphpbb2 to Site.User.AuthenticationModules in xar_config_vars here
+/*
     $authModules = xarConfigGetVar('Site.User.AuthenticationModules');
     $authModules[] = 'authphpbb2';
 
@@ -41,6 +42,7 @@ function authphpbb2_init()
     sort($authModules);
 
     xarConfigSetVar('Site.User.AuthenticationModules',$authModules);
+*/
 
     // Initialization successful
     return true;
