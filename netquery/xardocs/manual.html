@@ -38,13 +38,20 @@
 
 <h2><a name="summary">Summary</a></h2>
 
-<p>The Netquery toolkit of network information utilities includes Whois lookups, DNS queries, server
-port checking, HTTP requests, ICMP pings, traceroutes and Looking Glass router interrogation. Each
-feature can be enabled or disabled individually by the administrator. Local execution and/or a
-remote server script can be used for the ping and traceroute features and are fully configurable.
-The administrator can also configure all entries in the whois and looking glass data tables to add,
-edit and delete Whois server/TLD associations and to specify both default and router-specific settings
-for looking glass feature execution.</p>
+<p>The complete Netquery PHP/SQL toolkit of network information utilities includes the following features:<ul>
+<li>multidomain and IP/AS whois lookups,</li>
+<li>DNS and Dig queries,</li>
+<li>port services and exploits lookup with status check,</li>
+<li>HTTP HEAD and GET requests,</li>
+<li>ICMP pings (local and/or remote),</li>
+<li>traceroutes (local and/or remote), and</li>
+<li>looking glass router interrogation.</li></ul></p>
+
+<p>The administrator can enable or disable each feature individually and can configure local execution
+and/or a remote server script for the ping and traceroute features. The administrator can also configure
+all entries in the whois, port services and looking glass data tables to add, edit and delete whois
+server/TLD associations, to modify port services and vulnerability information, and to specify both
+default and router-specific settings for looking glass feature execution.</p>
 
 <div align="center"><center><h3>Project Sites &amp; Downloads</h3>
 <table border="2" cellspacing="0" cellpadding="4">
@@ -78,17 +85,20 @@ for looking glass feature execution.</p>
 </td></tr>
 </table></center></div>
 
-<blockquote>DOWNLOAD NOTES:<br />
-(1) Windows downloads of .tar.gz files may get renamed with .tar.tar extensions. The downloaded file
+<h3 align="center">Download Notes</h3>
+
+<p>(1) Windows downloads of .tar.gz files may get renamed with .tar.tar extensions. The downloaded file
 itself will be okay; it just needs to be renamed back to tar.gz at your end. (This happens because
 Apache servers flag ALL files ending in .tar, .tgz and .tar.gz as mime type "application/x-tar" and
 Windows thinks they should be renamed accordingly. One of those cases where two wrongs definitely
-do not make a right.)<br />
-(2) Only the Netquery standalone download contains basic administrator login authentication of its
-own. (The CMS editions rely upon module security provided by the CMS.) If you want to control user
-access for the standalone edition, PHP open source authentication add-ons are readily available,
-including <a href="http://www.beanbug.net/">vAuthenticate</a> and
-<a href="http://www.xaviermedia.com/">CookieProtection</a>.</blockquote>
+do not make a right.)</p>
+
+<p>(2) Only the Netquery standalone download contains basic administrator login authentication of its own.
+(The CMS editions rely upon module security provided by the CMS.) If you want to control user access for
+the standalone edition, authentication add-ons are readily available from open source PHP script sites,
+including <a href="http://www.hotscripts.com/PHP/Scripts_and_Programs/User_Authentication/">HotScripts</a>
+and <a href="http://www.refdev.com/free_scripts/PHP/User_Authentication/">RefDev</a>.</p>
+
 
 <h2><a name="whatfor">What Can Netquery Do For Me?</a></h2>
 
@@ -167,7 +177,7 @@ reconfigured to suit your needs and preferences.</p>
     </tr>
     <tr>
         <td class="item">Enable Whois Search</td>
-        <td class="item-desc">Whois lookups are automated based on server->domain data entries. (See below.)</td>
+        <td class="item-desc">Whois domain name lookups up to specified maximum simultaneous entries.</td>
     </tr>
     <tr>
         <td class="item">Enable Whois IP Search</td>
@@ -235,6 +245,19 @@ reconfigured to suit your needs and preferences.</p>
         <td class="item">Add New</td>
         <td class="item-desc">This option allows you to add a new looking glass router.</td>
     </tr>
+    <tr><td class="item-heading" colspan=2>Port Services Configuration</td></tr>
+    <tr>
+        <td class="item">Edit</td>
+        <td class="item-desc">This option for each listed port service allows you to edit its protocol and service notes.</td>
+    </tr>
+    <tr>
+        <td class="item">Delete</td>
+        <td class="item-desc">This option for each listed port service allows you to remove that port service.</td>
+    </tr>
+    <tr>
+        <td class="item">Add New</td>
+        <td class="item-desc">This option allows you to add a new port service and lookup information.</td>
+    </tr>
     <tr>
         <td class="help-desc" colspan=2>
         <p><b>Important Notes</b>:<br />
@@ -268,6 +291,11 @@ populating the looking glass data table you can find lists of routers at
 <a href="http://www.nanog.org/lookingglass.html" target="_blank">Nanog.org</a> and at
 <a href="http://www.bgp4.net/cgi-bin/bgp4wiki.cgi?Route_Server_Wiki" target="_blank">Bgp4.net</a>.</p>
 
+<p>In setting the maximum allowed number of simultaneous whois lookup entries, administrators should
+be aware that whois server operators may set their own limits. If a whois server limit is execeeded,
+your system IP may automatically be "blocked" and no longer be able to obtain whois results from that
+server until the blockage expires or is removed by the server operator.</p>
+
 <p>Because Netquery's looking glass configuration provides both default and individual router settings
 it is important to understand their order of operational precedence.  For entered items (username,
 password, daemon port, daemon password) individual daemon passwords take precedence over the user
@@ -298,10 +326,10 @@ by the owner of the site domain in question to the top level domain (TLD) regist
 enter the name of the site domain (without any "www." or other prefix) and select the TLD (e.g., ".com")
 from the available drop-down listing.</p>
 
-<p>The drop-down TLD listing and associated whois lookup server data is fully under the control of
-the Netquery administrator who may add, delete and change entries to suit his/her web site's purposes
-and its users. If you don't find the TLD you're looking for in the available drop-down listing, you can
-ask this site's administrator to add it.</p>
+<p>The allowed maximum number of simultaneous lookup entries and the drop-down TLD listing is fully
+under the control of the Netquery administrator who may add, delete and change entries to suit his/her
+web site's purposes and its users. If the TLD you're looking for is not available in the drop-down
+listing, you can ask the administrator to add it if an associated whois server is available.</p>
 
 <p>More info:
 <a href="http://www.icann.org/" target="_blank">ICANN</a></p>
@@ -342,9 +370,13 @@ as the DNS lookup feature, but uses the UNIX/Linux command set to execute the ac
 
 <h3><a name="port">Port Checks</a></h3>
 <p>Port checks can be an important part of securing your computing system, especially for those who
-operate with "always connected" (cable, ADSL, etc) Internet services. To use this Netquery feature,
-simply enter the host address and port number you wish to check and the results will tell you whether
-it is open and accepting connections.</p>
+operate with "always connected" (cable, ADSL, etc) Internet services.</p>
+
+<p>Netquery's port check feature has a dual purpose.  First, entering any port number, will provide a
+listing of that port's protocols, services and any known attack exploits such as "trojans" and "back
+doors".  If you also enter a host name or IP address, that host will be checked to determine whether
+the specified port is open and accepting connections.</p>
+
 <p>More info:
 <a href="http://www.iana.org/assignments/port-numbers" target="_blank">IANA</a>
 <a href="http://advice.networkice.com/advice/Exploits/Ports/default.htm" target="_blank">UDP</a>

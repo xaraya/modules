@@ -1,7 +1,4 @@
 <?php
-/**
- * get all whois lookup links
- */
 function netquery_adminapi_getrouters($args)
 {
     extract($args);
@@ -22,29 +19,13 @@ function netquery_adminapi_getrouters($args)
     $result =& $dbconn->SelectLimit($query, (int)$numitems, (int)$startnum-1);
     if (!$result) return;
     for (; !$result->EOF; $result->MoveNext()) {
-        list($router_id,
-             $router,
-             $address,
-             $username,
-             $password,
-             $zebra,
-             $zebra_port,
-             $zebra_password,
-             $ripd,
-             $ripd_port,
-             $ripd_password,
-             $ripngd,
-             $ripngd_port,
-             $ripngd_password,
-             $ospfd,
-             $ospfd_port,
-             $ospfd_password,
-             $bgpd,
-             $bgpd_port,
-             $bgpd_password,
-             $ospf6d,
-             $ospf6d_port,
-             $ospf6d_password,
+        list($router_id, $router, $address, $username, $password,
+             $zebra, $zebra_port, $zebra_password,
+             $ripd, $ripd_port, $ripd_password,
+             $ripngd, $ripngd_port, $ripngd_password,
+             $ospfd, $ospfd_port, $ospfd_password,
+             $bgpd, $bgpd_port, $bgpd_password,
+             $ospf6d, $ospf6d_port, $ospf6d_password,
              $use_argc) = $result->fields;
         $routers[] = array('router_id'       => $router_id,
                            'router'          => $router,

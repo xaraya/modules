@@ -39,9 +39,7 @@ function netquery_admin_lgnew()
             if (!xarVarFetch('router_ospf6d_password', 'str:1:20', $router_ospf6d_password, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('router_use_argc', 'checkbox', $router_use_argc, '0', XARVAR_NOT_REQUIRED)) return;
             if (!xarSecConfirmAuthKey()) return;
-            if (!xarModAPIFunc('netquery',
-                               'admin',
-                               'lgcreate',
+            if (!xarModAPIFunc('netquery', 'admin', 'lgcreate',
                                array('router_router'          => $router_router,
                                      'router_address'         => $router_address,
                                      'router_username'        => $router_username,

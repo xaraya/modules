@@ -18,10 +18,8 @@ function netquery_admin_winew()
             if (!xarVarFetch('whois_ext', 'str:1:100', $whois_ext)) return;
             if (!xarVarFetch('whois_server', 'str:1:100', $whois_server)) return;
             if (!xarSecConfirmAuthKey()) return;
-            if (!xarModAPIFunc('netquery',
-                               'admin',
-                               'wicreate',
-                               array('whois_ext' => $whois_ext,
+            if (!xarModAPIFunc('netquery', 'admin', 'wicreate',
+                               array('whois_ext'    => $whois_ext,
                                      'whois_server' => $whois_server))) return;
             xarResponseRedirect(xarModURL('netquery', 'admin', 'wiview'));
             break;

@@ -1,1 +1,5 @@
 Utility module written by Richard Virtue
+Thanks to "jojodee" for much Xaraya help
+Thanks to "JMorris" for much Xoops help
+Thanks to Colin Tinker and Nick Cross for the ports lookup table
+Thanks to Stephen (Adelphia) for AS##### lookup info

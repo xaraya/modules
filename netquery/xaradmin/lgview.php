@@ -2,12 +2,13 @@
 function netquery_admin_lgview()
 {
     if(!xarSecurityCheck('EditNetquery')) return;
+    if(!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
     $data['authid'] = xarSecGenAuthKey();
-    $routers = xarModAPIFunc('netquery', 'admin', 'getrouters', array('startnum' => '1'));
+    $routers = xarModAPIFunc('netquery', 'admin', 'getrouters', array('startnum' => $startnum));
     if (empty($routers)) {
         $msg = xarML('There are no looking glass routers registered');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     for ($i = 0; $i < count($routers); $i++) {

@@ -1,0 +1,44 @@
+<div class="xar-mod-head">
+<span class="xar-mod-title"><xar:mlstring>Netquery Administration</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+
+<h2><xar:mlstring>Modify a Service on Port </xar:mlstring>#$port#</h2>
+
+<table border=0 cellspacing=0 cellpadding=4>
+<form method="post" action="#xarModURL('netquery', 'admin', 'ptmodify')#" method="post" enctype="application/x-www-form-urlencoded" >
+<input type="hidden" name="authid" value="#$authid#" />
+<input type="hidden" name="phase" id="phase" value="update" />
+<input type="hidden" name="port_id" id="port_id" value="#$port_id#" />
+<input type="hidden" name="port_port" id="port_port" value="#$port#" />
+<tr><td colspan=4>
+<span><xar:mlstring>Editing Data for Port Service Id #</xar:mlstring>#$port_id#<xar:mlstring>, Port #</xar:mlstring>#$port#<xar:mlstring> --</xar:mlstring></span>
+</tr></td><tr><td>
+<span class="help" title="#xarML('The port protocol')#"><label for="port_protocol"><xar:mlstring>Protocol</xar:mlstring></label></span>
+</td><td>
+<span class="help" title="#xarML('The port service')#"><label for="port_service"><xar:mlstring>Service</xar:mlstring></label></span>
+</td><td>
+<span class="help" title="#xarML('Notes and comments')#"><label for="port_comment"><xar:mlstring>Comment</xar:mlstring></label></span>
+</td><td>
+<span class="help" title="#xarML('Flag - 1=trojan, 2=backdoor')#"><label for="port_flag"><xar:mlstring>Flag</xar:mlstring></label></span>
+</tr></td><tr><td>
+<input type="text" name="port_protocol" id="port_protocol" value="#$protocol#" size="3" maxlength="3" />
+</td><td>
+<input type="text" name="port_service" id="port_service" value="#$service#" size="20" maxlength="35" />
+</td><td>
+<input type="text" name="port_comment" id="port_comment" value="#$comment#" size="30" maxlength="50" />
+</td><td>
+<select name="port_flag" id="port_flag" tabindex="0">
+      <option selected value="#$flag#">#$flag#</option>
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      </select>
+</tr></td><tr><td colspan=4 align="center">
+<input type="submit" name="Submit" id="Submit" value="#$submitlabel#" />
+<input type="submit" name="Cancel" id="Cancel" value="#$cancellabel#" />
+</td></tr>
+</form>
+</table>
+
+</div>

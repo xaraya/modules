@@ -1,70 +1,26 @@
 <?php
-/**
- * get a specific looking glass router
- */
 function netquery_adminapi_getrouter($args)
 {
     extract($args);
     if (!isset($router_id)) {
         $msg = xarML('Invalid Parameter Count');
-         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
-    $query = "SELECT router_id,
-                     router,
-                     address,
-                     username,
-                     password,
-                     zebra,
-                     zebra_port,
-                     zebra_password,
-                     ripd,
-                     ripd_port,
-                     ripd_password,
-                     ripngd,
-                     ripngd_port,
-                     ripngd_password,
-                     ospfd,
-                     ospfd_port,
-                     ospfd_password,
-                     bgpd,
-                     bgpd_port,
-                     bgpd_password,
-                     ospf6d,
-                     ospf6d_port,
-                     ospf6d_password,
-                     use_argc
-              FROM $LGRouterTable
-              WHERE router_id = ?";
-    $bindvars=array((int)$router_id);
+    $query = "SELECT * FROM $LGRouterTable WHERE router_id = ?";
+    $bindvars = array((int)$router_id);
     $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
-    list($router_id,
-         $router,
-         $address,
-         $username,
-         $password,
-         $zebra,
-         $zebra_port,
-         $zebra_password,
-         $ripd,
-         $ripd_port,
-         $ripd_password,
-         $ripngd,
-         $ripngd_port,
-         $ripngd_password,
-         $ospfd,
-         $ospfd_port,
-         $ospfd_password,
-         $bgpd,
-         $bgpd_port,
-         $bgpd_password,
-         $ospf6d,
-         $ospf6d_port,
-         $ospf6d_password,
+    list($router_id, $router, $address, $username, $password,
+         $zebra, $zebra_port, $zebra_password,
+         $ripd, $ripd_port, $ripd_password,
+         $ripngd, $ripngd_port, $ripngd_password,
+         $ospfd, $ospfd_port, $ospfd_password,
+         $bgpd, $bgpd_port, $bgpd_password,
+         $ospf6d, $ospf6d_port, $ospf6d_password,
          $use_argc) = $result->fields;
     if(!xarSecurityCheck('OverviewNetquery')) return;
     $router = array('router_id'       => $router_id,

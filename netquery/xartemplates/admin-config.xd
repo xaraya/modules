@@ -31,7 +31,6 @@ routers. LG daemon port passwords take precedence over the default LG user passw
             </td><td>&nbsp;&nbsp;&nbsp;
                 <span class="help" title="#xarML('FORMAT for log date-time entries')#"><label for="logfile_remote"><xar:mlstring>Datetime Fmt:</xar:mlstring></label></span>
                 <input type="text" name="logfile_remote" id="logfile_remote" value="#$logfile['exec_remote']#" size="11" maxlength="100" />
-
             </td></tr><tr align="left"><td>
                     <xar:if condition="$whois_enabled">
                         <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1" checked="checked">
@@ -39,6 +38,15 @@ routers. LG daemon port passwords take precedence over the default LG user passw
                         <input type="checkbox" name="whois_enabled" id="whois_enabled" value="1">
                     </xar:if>
                     <xar:mlstring>Enable Whois Search</xar:mlstring>
+            </td></tr><tr><td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="help" title="#xarML('Maximum simultaneous whois lookups')#"><label for="whois_max_limit"><xar:mlstring>Max Entries:</xar:mlstring></label></span>
+                <select name="whois_max_limit" id="whois_max_limit">
+                <option selected>#$whois_max_limit#</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
             </td></tr><tr align="left"><td>
                     <xar:if condition="$whoisip_enabled">
                         <input type="checkbox" name="whoisip_enabled" id="whoisip_enabled" value="1" checked="checked">
@@ -246,6 +254,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
 
 <p><a href="#$wivlink['url']#">#$wivlink['title']#</a> -
 <a href="#$lgvlink['url']#">#$lgvlink['title']#</a> -
+<a href="#$ptvlink['url']#">#$ptvlink['title']#</a> -
 <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
 <script language="javascript" type="text/javascript">
     function openwindow(hlpfile)

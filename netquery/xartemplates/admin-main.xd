@@ -19,8 +19,8 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>The Netquery module includes whois, DNS, port check, HTTP request, ping, traceroute
-            and Looking Glass router interrogation functions. Availability of each query type, local and remote
-            execution, and all entries in the whois and looking glass data tables are configurable.</xar:mlstring>
+            and looking glass router interrogation functions. Availability of each query type, local and remote
+            execution, and all entries in the whois, port services and looking glass data tables are configurable.</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -40,6 +40,9 @@
             <li><a href="#$lgvlink['url']#">#$lgvlink['label']#</a><xar:mlstring>: From this
             menu option, you can edit, add or delete "looking glass" router entries overriding
             default settings and passwords for individual IPv4 and IPv6 daemons.</xar:mlstring></li>
+            <li><a href="#$ptvlink['url']#">#$ptvlink['label']#</a><xar:mlstring>: From this
+            menu option, you can edit, add or delete port services data entries, including
+            keyword comments on vulnerabilities displayed to port lookup users.</xar:mlstring></li>
             </ul>
         </div>
         <br />

@@ -5,15 +5,18 @@ function netquery_admin_main()
                              'title' => xarML('Return to main configuration'),
                              'label' => xarML('Modify Configuration'));
     $data['wivlink'] = Array('url'   => xarModURL('netquery', 'admin', 'wiview'),
-                             'title' => xarML('View-edit-add whois lookup links'),
+                             'title' => xarML('View-edit whois lookup links'),
                              'label' => xarML('Edit Whois Links'));
     $data['lgvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
-                             'title' => xarML('View-edit-add looking glass routers'),
+                             'title' => xarML('View-edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));
+    $data['ptvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
+                             'title' => xarML('View-edit looking glass routers'),
+                             'label' => xarML('Edit Port Services'));
     $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
-                             'title' => xarML('Netquery online administration manual'),
+                             'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));
-    if (!xarSecurityCheck('EditNetquery')) return;
+    if (!xarSecurityCheck('AdminNetquery')) return;
     if (xarModGetVar('adminpanels', 'overview') == 0) {
         return $data;
     } else {

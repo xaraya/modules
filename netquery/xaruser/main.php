@@ -9,50 +9,57 @@ function netquery_user_main()
     }
     else if ($data['querytype'] == 'whois')
     {
-        $readbuf = '';
-        $nextServer = '';
-        $target = $data['domain'].$data['whois_ext'];
-        $link = xarModAPIFunc('netquery', 'user', 'getlink', array('whois_ext' => $data['whois_ext']));
-        $whois_server = $link['whois_server'];
-        $msg = ('<p><b>Whois Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)){
-            unset($sock);
-            $msg .= "Timed-out connecting to $whois_server (port 43)";
-        } else {
-            fputs($sock, "$target\n");
-            while (!feof($sock)) {
-                $readbuf .= fgets($sock, 10240);
-            }
-        }
-        @fclose($sock);
-        if (! eregi("Whois Server:", $readbuf)) {
-            if (eregi("No match", $readbuf) || eregi("No entries", $readbuf) || eregi("Not found", $readbuf) || eregi("AVAIL", $readbuf))
-                $msg .= "NOT FOUND: No match for $target<br />";
-            else if (! eregi("Timed-out", $msg))
-                $msg .= "Ambiguous query, multiple matches for $target:<br />";
-        } else {
-            $readbuf = split("\n", $readbuf);
-            for ($i=0; $i<sizeof($readbuf); $i++) {
-                if (eregi("Whois Server:", $readbuf[$i]))
-                    $readbuf = $readbuf[$i];
-                }
-            $nextServer = substr($readbuf, 17, (strlen($readbuf)-17));
-            $nextServer = str_replace("1:Whois Server:", "", trim(rtrim($nextServer)));
-            $readbuf = "";
-            if (! $sock = @fsockopen($nextServer, 43, $errnum, $error, 10)) {
+        $domain = $data['domain'];
+        $whois_ext = $data['whois_ext'];
+        $whois_max_limit = $data['whois_max_limit'];
+        $j = 1;
+        while ($j <= $whois_max_limit && !empty($domain[$j])) {
+            $readbuf = '';
+            $nextServer = '';
+            $target = $domain[$j].$whois_ext[$j];
+            $link = xarModAPIFunc('netquery', 'user', 'getlink', array('whois_ext' => $whois_ext[$j]));
+            $whois_server = $link['whois_server'];
+            $msg = ('<p><b>Whois Results '.$j.' [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+            if (! $sock = @fsockopen($whois_server, 43, $errnum, $error, 10)){
                 unset($sock);
-                $msg .= "Timed-out connecting to $nextServer (port 43)";
+                $msg .= "Timed-out connecting to $whois_server (port 43)";
             } else {
                 fputs($sock, "$target\n");
                 while (!feof($sock)) {
                     $readbuf .= fgets($sock, 10240);
                 }
-                @fclose($sock);
             }
+            @fclose($sock);
+            if (! eregi("Whois Server:", $readbuf)) {
+                if (eregi("No match", $readbuf) || eregi("No entries", $readbuf) || eregi("Not found", $readbuf) || eregi("AVAIL", $readbuf))
+                    $msg .= "NOT FOUND: No match for $target<br />";
+                else if (! eregi("Timed-out", $msg))
+                    $msg .= "Ambiguous query, multiple matches for $target:<br />";
+            } else {
+                $readbuf = split("\n", $readbuf);
+                for ($i=0; $i<sizeof($readbuf); $i++) {
+                    if (eregi("Whois Server:", $readbuf[$i]))
+                        $readbuf = $readbuf[$i];
+                    }
+                $nextServer = substr($readbuf, 17, (strlen($readbuf)-17));
+                $nextServer = str_replace("1:Whois Server:", "", trim(rtrim($nextServer)));
+                $readbuf = "";
+                if (! $sock = @fsockopen($nextServer, 43, $errnum, $error, 10)) {
+                    unset($sock);
+                    $msg .= "Timed-out connecting to $nextServer (port 43)";
+                } else {
+                    fputs($sock, "$target\n");
+                    while (!feof($sock)) {
+                        $readbuf .= fgets($sock, 10240);
+                    }
+                    @fclose($sock);
+                }
+            }
+            $msg .= nl2br($readbuf);
+            $msg .= "</blockquote></p>";
+            $data['results'] .= $msg . '<hr>';
+            $j++;
         }
-        $msg .= nl2br($readbuf);
-        $msg .= "</blockquote></p>";
-        $data['results'] .= $msg . '<hr>';
     }
     else if ($data['querytype'] == 'whoisip')
     {
@@ -138,14 +145,34 @@ function netquery_user_main()
     {
         $target = $data['server'];
         $tport = $data['portnum'];
-        $msg = ('<p><b>Port '.$tport.' Check Results [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
-        if (! $sock = @fsockopen($target, $tport, $errnum, $error, 10)) {
-            $msg .= 'Port '.$tport.' does not appear to be open.';
+        $portdata = xarModAPIFunc('netquery', 'user', 'getportdata', array('port' => $tport));
+        $msg = ('<p><b>Port '.$tport.' Services &amp; Exploits [<a href="http://isc.sans.org/port_details.php?port='.$tport.'" target="_blank">Details</a>] [<a href="'.$clrlink['url'].'">'.$clrlink['label'].'</a>]:</b><blockquote>');
+        if (!empty($target) && $target != 'None') {
+            if (! $sock = @fsockopen($target, $tport, $errnum, $error, 10)) {
+                $msg .= 'Port '.$tport.' does not appear to be open.<br />';
+            } else {
+                $msg .= 'Port '.$tport.' is open and accepting connections.<br />';
+                @fclose($sock);
+            }
         } else {
-            $msg .= 'Port '.$tport.' is open and accepting connections.';
-            @fclose($sock);
+            $msg .= "No host specified for port check.";
         }
-        $msg .= '</blockquote></p>';
+        $msg .= '<table border=0 cellspacing=0 cellpadding=4>';
+        $msg .= '<tr><th align="left">Protocol</th><th align="left">Service/Exploit</th><th align="left">Notes (Click to Search)</th></tr>';
+        foreach($portdata as $portdatum)
+        {
+          if (!empty($portdatum['protocol'])) {
+            if ($portdatum['flag'] == 1) {
+                $notes = '<font color="red">[trojan]</font> <a href="http://www.google.com/search?num=20&hl=en&ie=UTF-8&q='.$portdatum['comment'].'+trojan" target="_blank">'.$portdatum['comment'].'</a>';
+            } else if ($portdatum['flag'] == 2) {
+                $notes = '<font color="purple">[backdoor]</font> <a href="http://www.google.com/search?num=20&hl=en&ie=UTF-8&q='.$portdatum['comment'].'+backdoor" target="_blank">'.$portdatum['comment'].'</a>';
+            } else {
+                $notes = '<a href="http://www.google.com/search?num=20&hl=en&ie=UTF-8&q='.$portdatum['comment'].'" target="_blank">'.$portdatum['comment'].'</a>';
+            }
+            $msg .= '<tr><td>'.$portdatum['protocol'].'</td><td>'.$portdatum['service'].'</td><td>'.$notes.'</td></tr>';
+          }
+        }
+        $msg .= '</table></blockquote></p>';
         $data['results'] .= $msg . '<hr>';
     }
     else if ($data['querytype'] == 'http')

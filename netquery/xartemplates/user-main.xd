@@ -15,19 +15,24 @@
 <form method="post" action="&xar-modurl-netquery-user-main;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <input type="hidden" name="querytype" id="querytype" value="whois">
-    <tr>
-    <td colspan="2"><label for="domain">#$domainlabel#</label>
-    <br><input type="text" name="domain" id="domain" value="#$domain#" size="32" maxlength="100"></td>
-    <td><label for="ext">#$extlabel#</label>
-    <br><select name="whois_ext" id="whois_ext">
-                <option selected>#$whois_ext#</option>
+    <tr><td>
+    <label for="domain">#$domainlabel#</label>
+    </td><td colspan="2">
+    <label for="ext">#$extlabel#</label>
+<xar:while condition="(++$j le $whois_max_limit)">
+    </td></tr><tr><td>
+    <input type="text" name="domain_#$j#" id="domain_#$j#" value="#$domain[$j]#" size="32" maxlength="100">
+    </td><td colspan="2">
+    <select name="whois_ext_#$j#" id="whois_ext_#$j#">
+                <option selected>#$whois_ext[$j]#</option>
                 <xar:foreach in="$links" value="$link">
                     <xar:if condition="!empty($link['whois_ext'])">
                         <option value="#$link['whois_ext']#">#$link['whois_ext']#</option>
                     </xar:if>
                 </xar:foreach>
-    </select></td>
-    <td><br>
+    </select>
+</xar:while>
+    </td><td>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>
     </tr>
@@ -84,7 +89,7 @@
     <td colspan="2"><label for="server">#$serverlabel#</label>
     <br><input type="text" name="server" id="server" value="#$server#" size="32" maxlength="100"></td>
     <td><label for="portnum">#$portnumlabel#</label>
-    <br><input type="text" name="portnum" id="portnum" value="#$portnum#" size="3" maxlength="10"></td>
+    <br><input type="text" name="portnum" id="portnum" value="#$portnum#" size="5" maxlength="10"></td>
     <td><br>
     <input type=image height=21 width=35 src="modules/netquery/xarimages/gobutton.gif" align=absMiddle border=0>
     </td>

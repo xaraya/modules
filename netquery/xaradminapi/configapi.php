@@ -15,6 +15,7 @@ function netquery_adminapi_configapi()
     $data['trace_enabled'] = xarModGetVar('netquery', 'trace_enabled');
     $data['trace_remote_enabled'] = xarModGetVar('netquery', 'trace_remote_enabled');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
+    $data['whois_max_limit'] = xarModGetVar('netquery', 'whois_max_limit');
     $data['submitlabel'] = xarML('Submit');
     $data['cancellabel'] = xarML('Cancel');
     $data['pingexec'] = xarModAPIFunc('netquery', 'admin', 'getexec', array('exec_type' => 'ping'));
@@ -30,6 +31,9 @@ function netquery_adminapi_configapi()
     $data['lgvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'lgview'),
                              'title' => xarML('Edit looking glass routers'),
                              'label' => xarML('Edit LG Routers'));
+    $data['ptvlink'] = Array('url'   => xarModURL('netquery', 'admin', 'ptview'),
+                             'title' => xarML('Edit port services data'),
+                             'label' => xarML('Edit Port Services'));
     $data['hlplink'] = Array('url'   => xarML('modules/netquery/xardocs/manual.html#admin'),
                              'title' => xarML('Netquery online manual'),
                              'label' => xarML('Online Manual'));

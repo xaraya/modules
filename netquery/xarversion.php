@@ -1,9 +1,9 @@
 <?php
 $modversion['name']           = 'Netquery';
 $modversion['id']             = '91';
-$modversion['version']        = '1.2.0';
+$modversion['version']        = '1.3.0';
 $modversion['displayname']    = xarML('Netquery');
-$modversion['description']    = 'Whois, DNS, port check, HTTP request, ping, traceroute, looking glass';
+$modversion['description']    = 'MultiWhois, DNS, port check, HTTP request, ping, traceroute, looking glass';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
 $modversion['changelog']      = 'xardocs/changelog.txt';

@@ -1,7 +1,4 @@
 <?php
-/**
- * get all whois lookup links
- */
 function netquery_adminapi_getlinks($args)
 {
     extract($args);
@@ -18,11 +15,7 @@ function netquery_adminapi_getlinks($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
-    $query = "SELECT whois_id,
-                     whois_ext,
-                     whois_server
-            FROM $WhoisTable
-            ORDER BY whois_ext";
+    $query = "SELECT * FROM $WhoisTable ORDER BY whois_ext";
     $result =& $dbconn->SelectLimit($query, (int)$numitems, (int)$startnum-1);
     if (!$result) return;
     for (; !$result->EOF; $result->MoveNext()) {

@@ -20,6 +20,15 @@ function netquery_xartables()
                 'whois_id'      => $netqueryWhoisTable . '.whois_id',
                 'whois_ext'     => $netqueryWhoisTable . '.whois_ext',
                 'whois_server'  => $netqueryWhoisTable . '.whois_server');
+        $netqueryPortsTable = xarDBGetSiteTablePrefix() . '_netquery_ports';
+        $xartable['netquery_ports'] = $netqueryPortsTable;
+        $xartable['netquery_ports_column'] = array(
+                'port_id'      => $netqueryPortsTable . '.port_id',
+                'port'         => $netqueryPortsTable . '.port',
+                'protocol'     => $netqueryPortsTable . '.protocol',
+                'service'      => $netqueryPortsTable . '.service',
+                'comment'      => $netqueryPortsTable . '.comment',
+                'flag'         => $netqueryPortsTable . '.flag');
         $netqueryLGRequestTable = xarDBGetSiteTablePrefix() . '_netquery_lgrequest';
         $xartable['netquery_lgrequest'] = $netqueryLGRequestTable;
         $xartable['netquery_lgrequest_column'] = array(

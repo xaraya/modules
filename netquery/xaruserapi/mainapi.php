@@ -2,20 +2,6 @@
 function netquery_userapi_mainapi()
 {
     $data = array();
-    $data['results'] = '';
-    xarVarFetch('domain', 'str:1:', $data['domain'], 'example', XARVAR_NOT_REQUIRED);
-    xarVarFetch('whois_ext', 'str:1:', $data['whois_ext'], '.com', XARVAR_NOT_REQUIRED);
-    xarVarFetch('addr', 'str:1:', $data['addr'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
-    xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_HOST'], XARVAR_NOT_REQUIRED);
-    xarVarFetch('server', 'str:1:', $data['server'], $_SERVER['SERVER_NAME'], XARVAR_NOT_REQUIRED);
-    xarVarFetch('maxp', 'int:1:', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
-    xarVarFetch('portnum', 'int:1:', $data['portnum'], '80', XARVAR_NOT_REQUIRED);
-    xarVarFetch('httpurl', 'str:1:', $data['httpurl'], 'http://'.$_SERVER['SERVER_NAME'].'/', XARVAR_NOT_REQUIRED);
-    xarVarFetch('httpreq', 'str:1:', $data['httpreq'], 'HEAD', XARVAR_NOT_REQUIRED);
-    xarVarFetch('request', 'str:1:', $data['request'], 'IPv4 BGP neighborship', XARVAR_NOT_REQUIRED);
-    xarVarFetch('lgparam', 'str:1:', $data['lgparam'], '', XARVAR_NOT_REQUIRED);
-    xarVarFetch('router', 'str:1:', $data['router'], 'ATT Public', XARVAR_NOT_REQUIRED);
-    xarVarFetch('querytype', 'str:1:', $data['querytype'], 'none', XARVAR_NOT_REQUIRED);
     $data['capture_log_enabled'] = xarModGetVar('netquery', 'capture_log_enabled');
     $data['whois_enabled'] = xarModGetVar('netquery', 'whois_enabled');
     $data['whoisip_enabled'] = xarModGetVar('netquery', 'whoisip_enabled');
@@ -28,6 +14,7 @@ function netquery_userapi_mainapi()
     $data['trace_enabled'] = xarModGetVar('netquery', 'trace_enabled');
     $data['trace_remote_enabled'] = xarModGetVar('netquery', 'trace_remote_enabled');
     $data['looking_glass_enabled'] = xarModGetVar('netquery', 'looking_glass_enabled');
+    $data['whois_max_limit'] = xarModGetVar('netquery', 'whois_max_limit');
     $data['pingexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'ping'));
     $data['traceexec'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'trace'));
     $data['logfile'] = xarModAPIFunc('netquery', 'user', 'getexec', array('exec_type' => 'log'));
@@ -39,10 +26,10 @@ function netquery_userapi_mainapi()
     $data['subtitle']   = xarVarPrepForDisplay(xarML('Netquery User Options'));
     $data['domainlabel'] = xarVarPrepForDisplay(xarML('Whois Domain Name (No www.)'));
     $data['extlabel'] = xarVarPrepForDisplay(xarML('Domain'));
-    $data['whoisiplabel'] = xarVarPrepForDisplay(xarML('Whois IP Address'));
+    $data['whoisiplabel'] = xarVarPrepForDisplay(xarML('Whois IP Address or AS#####'));
     $data['lookuplabel'] = xarVarPrepForDisplay(xarML('Lookup IP Address or Host Name'));
     $data['diglabel'] = xarVarPrepForDisplay(xarML('Lookup (Dig) IP or Host Name'));
-    $data['serverlabel'] = xarVarPrepForDisplay(xarML('Check Port for Server'));
+    $data['serverlabel'] = xarVarPrepForDisplay(xarML('Port Check Host (Optional)'));
     $data['portnumlabel'] = xarVarPrepForDisplay(xarML('Port'));
     $data['httpurllabel'] = xarVarPrepForDisplay(xarML('HTTP Request Object URL'));
     $data['httpreqlabel'] = xarVarPrepForDisplay(xarML('Request'));
@@ -54,6 +41,31 @@ function netquery_userapi_mainapi()
     $data['lgrequestlabel'] = xarVarPrepForDisplay(xarML('Looking Glass Query'));
     $data['lgparamlabel'] = xarVarPrepForDisplay(xarML('Query Parameter'));
     $data['lgrouterlabel'] = xarVarPrepForDisplay(xarML('Router'));
+    $data['j'] = 0;
+    $data['results'] = '';
+    $wiexample = 'example';
+    $j = 1;
+    while ($j <= $data['whois_max_limit']) {
+        $dom = "domain_".$j;
+        $tld = "whois_ext_".$j;
+        xarVarFetch($dom, 'str:1:', $domain[$j], $wiexample, XARVAR_NOT_REQUIRED);
+        xarVarFetch($tld, 'str:1:', $whois_ext[$j], '.com', XARVAR_NOT_REQUIRED);
+        $wiexample = '';
+        $j++;
+    }
+    $data['domain'] = $domain;
+    $data['whois_ext'] = $whois_ext;
+    xarVarFetch('maxp', 'int:1:', $data['maxp'], '4', XARVAR_NOT_REQUIRED);
+    xarVarFetch('addr', 'str:1:', $data['addr'], $_SERVER['REMOTE_ADDR'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('host', 'str:1:', $data['host'], $_SERVER['REMOTE_HOST'], XARVAR_NOT_REQUIRED);
+    xarVarFetch('server', 'str:1:', $data['server'], 'None', XARVAR_NOT_REQUIRED);
+    xarVarFetch('portnum', 'int:1:', $data['portnum'], '80', XARVAR_NOT_REQUIRED);
+    xarVarFetch('httpurl', 'str:1:', $data['httpurl'], 'http://'.$_SERVER['SERVER_NAME'].'/', XARVAR_NOT_REQUIRED);
+    xarVarFetch('httpreq', 'str:1:', $data['httpreq'], 'HEAD', XARVAR_NOT_REQUIRED);
+    xarVarFetch('request', 'str:1:', $data['request'], 'IPv4 BGP neighborship', XARVAR_NOT_REQUIRED);
+    xarVarFetch('lgparam', 'str:1:', $data['lgparam'], '', XARVAR_NOT_REQUIRED);
+    xarVarFetch('router', 'str:1:', $data['router'], 'ATT Public', XARVAR_NOT_REQUIRED);
+    xarVarFetch('querytype', 'str:1:', $data['querytype'], 'none', XARVAR_NOT_REQUIRED);
     $data['clrlink'] = Array('url' => xarModURL('netquery', 'user', 'main'),
                              'title' => xarML('Clear results and return'),
                              'label' => xarML('Clear'));
@@ -75,7 +87,7 @@ function netquery_userapi_getexec($args)
     $ExecTable = $xartable['netquery_exec'];
 
     $query = "SELECT * FROM $ExecTable WHERE exec_type = ?";
-    $bindvars=array($exec_type);
+    $bindvars = array($exec_type);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($exec_id, $exec_type, $exec_local, $exec_winsys, $exec_remote, $exec_remote_t) = $result->fields;
@@ -126,7 +138,7 @@ function netquery_userapi_getlink($args)
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
     $query = "SELECT * FROM $WhoisTable WHERE whois_ext = ?";
-    $bindvars=array($whois_ext);
+    $bindvars = array($whois_ext);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($whois_id, $whois_ext, $whois_server) = $result->fields;
@@ -136,7 +148,35 @@ function netquery_userapi_getlink($args)
     $result->Close();
     return $link;
 }
-function Netquery_userapi_getlgrequests($args)
+function netquery_userapi_getportdata($args)
+{
+    extract($args);
+    if (!isset($port)) {
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
+    $portdata = array();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $PortsTable = $xartable['netquery_ports'];
+    $query = "SELECT * FROM $PortsTable WHERE port = ?";
+    $bindvars = array($port);
+    $result =& $dbconn->Execute($query,$bindvars);
+    if (!$result) return;
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($port_id, $port, $protocol, $service, $comment, $flag) = $result->fields;
+        $portdata[] = array('port_id'  => $port_id,
+                            'port'     => $port,
+                            'protocol' => $protocol,
+                            'service'  => $service,
+                            'comment'  => $comment,
+                            'flag'     => $flag);
+    }
+    $result->Close();
+    return $portdata;
+}
+function netquery_userapi_getlgrequests($args)
 {
     extract($args);
     if ((!isset($startnum)) || (!is_numeric($startnum))) {
@@ -163,7 +203,7 @@ function Netquery_userapi_getlgrequests($args)
     $result->Close();
     return $lgrequests;
 }
-function Netquery_userapi_getlgrequest($args)
+function netquery_userapi_getlgrequest($args)
 {
     extract($args);
     if (!isset($request)) {
@@ -175,7 +215,7 @@ function Netquery_userapi_getlgrequest($args)
     $xartable = xarDBGetTables();
     $LGRequestTable = $xartable['netquery_lgrequest'];
     $query = "SELECT * FROM $LGRequestTable WHERE request = ?";
-    $bindvars=array($request);
+    $bindvars = array($request);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($request_id, $request, $command, $handler, $argc) = $result->fields;
@@ -187,7 +227,7 @@ function Netquery_userapi_getlgrequest($args)
     $result->Close();
     return $lgrequest;
 }
-function Netquery_userapi_getlgrouters($args)
+function netquery_userapi_getlgrouters($args)
 {
     extract($args);
     if ((!isset($startnum)) || (!is_numeric($startnum))) {
@@ -256,7 +296,7 @@ function Netquery_userapi_getlgrouters($args)
     $result->Close();
     return $lgrouters;
 }
-function Netquery_userapi_getlgrouter($args)
+function netquery_userapi_getlgrouter($args)
 {
     extract($args);
     if (!isset($router)) {
@@ -267,8 +307,9 @@ function Netquery_userapi_getlgrouter($args)
     $dbconn =& xarDBGetConn();
     $xartable = xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
-    $query = "SELECT * FROM $LGRouterTable WHERE router = '" . pnVarPrepForStore($router) . "'";
-    $result =& $dbconn->Execute($query);
+    $query = "SELECT * FROM $LGRouterTable WHERE router = ?";
+    $bindvars = array($router);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     list($router_id,
          $router,

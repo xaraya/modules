@@ -2,34 +2,25 @@
 function netquery_admin_wiview()
 {
     if(!xarSecurityCheck('EditNetquery')) return;
-    if(!xarVarFetch('startnum', 'isset',    $startnum, 1,     XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('startnum', 'isset', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
     $data['items'] = array();
     $data['authid'] = xarSecGenAuthKey();
-    $links = xarModAPIFunc('netquery',
-                           'admin',
-                           'getlinks',
-                           array('startnum' => $startnum));
+    $links = xarModAPIFunc('netquery', 'admin', 'getlinks', array('startnum' => $startnum));
     if (empty($links)) {
         $msg = xarML('There are no whois links registered');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     for ($i = 0; $i < count($links); $i++) {
         $link = $links[$i];
         if (xarSecurityCheck('EditNetquery',0)) {
-            $links[$i]['editurl'] = xarModURL('netquery',
-                                              'admin',
-                                              'wimodify',
-                                              array('whois_id' => $link['whois_id']));
+            $links[$i]['editurl'] = xarModURL('netquery', 'admin', 'wimodify', array('whois_id' => $link['whois_id']));
         } else {
             $links[$i]['editurl'] = '';
         }
         $links[$i]['edittitle'] = xarML('Edit');
         if (xarSecurityCheck('DeleteNetquery',0)) {
-            $links[$i]['deleteurl'] = xarModURL('netquery',
-                                               'admin',
-                                               'widelete',
-                                               array('whois_id' => $link['whois_id']));
+            $links[$i]['deleteurl'] = xarModURL('netquery', 'admin', 'widelete', array('whois_id' => $link['whois_id']));
         } else {
             $links[$i]['deleteurl'] = '';
         }

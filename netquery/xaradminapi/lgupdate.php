@@ -4,16 +4,13 @@ function netquery_adminapi_lgupdate($args)
     extract($args);
     if ((!isset($router_id)) || (!isset($router_router)) || (!isset($router_address))) {
         $msg = xarML('Invalid Parameter Count');
-         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-    $data = xarModAPIFunc('netquery',
-                          'admin',
-                          'getrouter',
-                          array('router_id' => (int)$router_id));
+    $data = xarModAPIFunc('netquery', 'admin', 'getrouter', array('router_id' => (int)$router_id));
     if ($data == false) {
         $msg = xarML('No Such Looking Glass Router Present', 'netquery');
-         xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
     if(!xarSecurityCheck('EditNetquery')) return;
@@ -45,7 +42,7 @@ function netquery_adminapi_lgupdate($args)
             ospf6d_password = ?,
             use_argc        = ?
         WHERE router_id = ?";
-    $bindvars=array($router_router, $router_address, $router_username, $router_password,
+    $bindvars = array($router_router, $router_address, $router_username, $router_password,
                     (int)$router_zebra, (int)$router_zebra_port, $router_zebra_password,
                     (int)$router_ripd, (int)$router_ripd_port, $router_ripd_password,
                     (int)$router_ripngd, (int)$router_ripngd_port, $router_ripngd_password,

@@ -1,7 +1,4 @@
 <?php
-/**
- * count the number of links in the database
- */
 function netquery_adminapi_countitems()
 {
     if(!xarSecurityCheck('OverviewNetquery')) return;
