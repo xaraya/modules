@@ -7,6 +7,8 @@ function release_user_view()
 {
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('phase', 'str:1:', $phase, 'all', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('catid', 'int', $catid, null,  XARVAR_NOT_REQUIRED)) {return;}
+
 
     // Security Check
     if(!xarSecurityCheck('OverviewRelease')) return;
@@ -81,17 +83,13 @@ function release_user_view()
       $items = xarModAPIFunc('release',
                              'user',
                              'getallrids',
-                       array('idtypes' => $idtypes,
+                       array('idtypes'  => $idtypes,
+                             'catid'    => $catid,
                              'startnum' => $startnum,
                              'numitems' => xarModGetUserVar('release',
                                                             'itemsperpage',$uid),
                               ));
 
-    if (empty($items)) {
-        $msg = xarML('There are no items to display in the release module');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
     //Add common definition of the extension state array
     $stateoptions=array();
     $stateoptions[0] = xarML('Planning');
@@ -210,8 +208,9 @@ function release_user_view()
        }
 
     }
-     $data['phase']=$phase;
-     $data['pager'] = xarTplGetPager($startnum,
+    $data['phase']=$phase;
+    $data['catid'] = $catid;
+    $data['pager'] = xarTplGetPager($startnum,
         xarModAPIFunc('release', 'user', 'countitems',array('idtypes'=>$idtypes)),
         xarModURL('release', 'user', 'view', array('startnum' => '%%','phase'=>$phase)),
         xarModGetUserVar('release', 'itemsperpage', $uid));

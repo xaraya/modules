@@ -1,9 +1,9 @@
 <?php
 
 /**
- * get all users
+ * get all extensions
  * @returns array
- * @return array of users, or false on failure
+ * @return array of extensions, or false on failure
  */
 function release_userapi_getallrids($args)
 {
@@ -19,13 +19,6 @@ function release_userapi_getallrids($args)
     if (!isset($idtypes)) {
         $idtypes = 1;
     }
-    if ($idtypes == 3){
-        $whereclause= "WHERE xar_type = '0'";
-    }elseif ($idtypes==2) {
-        $whereclause= "WHERE xar_type = '1'";
-    }else {
-        $whereclause= "WHERE xar_type = '1' or xar_type = '0'";
-    }
 
     $releaseinfo = array();
 
@@ -38,7 +31,17 @@ function release_userapi_getallrids($args)
 
     $releasetable = $xartable['release_id'];
 
-    $query = "SELECT xar_rid,
+    //Joins on Catids
+    if(!empty($catid))
+    {
+        $categoriesdef = xarModAPIFunc('categories', 'user', 'leftjoin', 
+                              array('modid'    => 773,
+                                    'itemtype' => 0,
+                                    'cids'     => array($catid),
+                                    'andcids'  => 1));
+    }
+
+    $query = "SELECT DISTINCT xar_rid,
                      xar_uid,
                      xar_regname,
                      xar_displname,
@@ -48,12 +51,46 @@ function release_userapi_getallrids($args)
                      xar_certified,
                      xar_approved,
                      xar_rstate
-            FROM $releasetable ".
-            $whereclause."
-            ORDER BY xar_rid";
-    if (!empty($certified)) {
-        $query .= " WHERE xar_certified = '" . xarVarPrepForStore($certified). "'";
+            FROM $releasetable ";
+
+    $from ='';
+    $where = array();
+    if (!empty($catid) && count(array($catid)) > 0) 
+    {
+        // add this for SQL compliance when there are multiple JOINs
+        // Add the LEFT JOIN ... ON ... parts from categories
+        $from .= ' LEFT JOIN ' . $categoriesdef['table'];
+        $from .= ' ON ' . $categoriesdef['field'] . ' = ' . 'xar_release_id.xar_rid';
+        
+        if (!empty($categoriesdef['more'])) 
+        {
+            //$from = ' ( ' . $from . ' ) ';
+            $from .= $categoriesdef['more'];
+        }
+        
+        $where[] = $categoriesdef['where'];
+        $query .= $from;
     }
+
+    switch ($idtypes) {
+    case 3: // module
+        $where[] = "xar_type = '0'";
+        break;
+    case 2: // theme
+        $where[] = "xar_type = '1'";
+        break;
+    }
+
+    if (!empty($certified)) {
+        $where[] = " xar_certified = '" . xarVarPrepForStore($certified). "'";
+    }
+
+    if (count($where) > 0)
+    {
+        $query .= ' WHERE ' . join(' AND ', $where);
+    }
+
+    $query .= " ORDER BY xar_rid";
 
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;

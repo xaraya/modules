@@ -10,6 +10,9 @@
   </span>
   <span style="float:left; text-align:left; width:60%;">
   <form action="#xarModURL('release', 'user', 'view')#" method="post" enctype="application/x-www-form-urlencoded">
+      <xar:if condition="!empty($catid)">
+      <input type="hidden" name="catid" value="#$catid#" />
+      </xar:if>
 	  <input type="radio" name="phase" id="phase" value="themes"  />
 	  <xar:mlstring>Themes</xar:mlstring>
 	  &nbsp;&nbsp;<input type="radio" name="phase" id="phase" value="modules"  />
@@ -36,6 +39,13 @@
         </xar:ml>
     </div>
 </xar:if>
+
+<xar:if condition="!empty($catid)">
+    <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="$catid" showcatcount="0" showempty="1" />
+<xar:else />
+   <xar:categories-navigation layout="trails" showchildren="1" module="release" itemtype="" catid="0" showcatcount="0" showempty="1" />
+</xar:if>
+
 <div style="clear:both; text-align:center; margin-top:20px;margin-bottom:20px;width:100%;">
     <div class="xar-accent">
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -74,9 +84,9 @@
 	    <xar:loop name="$items">
 	      <xar:if condition="(($loop:index + 1) % 2)">
           <xar:set name="$rowclass">'xar-norm'</xar:set>
-        <xar:else/>
+          <xar:else/>
           <xar:set name="$rowclass">'xar-accent'</xar:set>
-        </xar:if>
+          </xar:if>
 
 	        <tr>
 		        <td width="5%" class="#$rowclass#">
