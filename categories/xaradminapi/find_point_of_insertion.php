@@ -14,7 +14,8 @@
  * @returns int
  * @return value of left for the new category on success, false on failure
  */
-function categories_adminapi_find_point_of_insertion($args) {
+function categories_adminapi_find_point_of_insertion($args) 
+{
 
     extract($args);
 

@@ -9,7 +9,8 @@
  * @returns array
  * @return array of category info arrays, false on failure
  */
-function categories_userapi_categoryexists( $args ) {
+function categories_userapi_categoryexists( $args ) 
+{
 
     extract($args);
 

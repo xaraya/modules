@@ -77,7 +77,8 @@ define('_CAT_CUTOFF_CONNECTOR',8);
  * @returns bool true on success, false otherwise
  *
  */
-function categories_renderes_array_markdepths_bychildren(&$comments_list) {
+function categories_renderes_array_markdepths_bychildren(&$comments_list) 
+{
     
     // check to make sure we got passed an array,
     // return false if we got no array or it has no items in it
@@ -129,7 +130,8 @@ function categories_renderes_array_markdepths_bychildren(&$comments_list) {
  * @param array   &$comments_list    an array of related (array) items - each item -must- contain a parent id field
  * @returns bool True on success, False otherwise
  */
-function categories_renderer_array_markdepths_bypid(&$comments_list) {
+function categories_renderer_array_markdepths_bypid(&$comments_list) 
+{
 
     if (empty($comments_list) || !count($comments_list)) {
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,BAD_PARAM,'Category list is empty');
@@ -241,7 +243,8 @@ function categories_renderer_array_markdepths_bypid(&$comments_list) {
  * @param integer    $args['cutoff']        depth cutoff point
  * @returns void if no array is passed or the array has no nodes return void
  */
-function categories_renderer_array_prune_excessdepth($args) {
+function categories_renderer_array_prune_excessdepth($args) 
+{
     
     extract($args);
     if (!is_array($array_list) || !count($array_list)) {
@@ -297,7 +300,8 @@ function categories_renderer_array_prune_excessdepth($args) {
  * @returns bool true if the specified depth is set, false otherwise
  */
 
-function categories_renderer_array_depthbuoy($action, $depth, $value=true) {
+function categories_renderer_array_depthbuoy($action, $depth, $value=true) 
+{
     
     static $matrix = array();
     
@@ -327,7 +331,8 @@ function categories_renderer_array_depthbuoy($action, $depth, $value=true) {
  *               that's contains the visual representation for that particular node
  */
 
-function categories_renderer_array_maptree($CommentList) {
+function categories_renderer_array_maptree($CommentList) 
+{
 
     // if $CommentList isn't an array or it is empty,
     // raise an exception and return an empty array
@@ -468,7 +473,8 @@ function categories_renderer_array_maptree($CommentList) {
  * @returns string    a visual (html'ified) map of the matrix
  */
 
-function categories_renderer_array_image_substitution($node) {
+function categories_renderer_array_image_substitution($node) 
+{
     
     switch ($node) {
     case _CAT_O_CONNECTOR:
@@ -516,7 +522,8 @@ function categories_renderer_array_image_substitution($node) {
  * @returns integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
-function categories_renderer_array_fieldrelation_compare ($a, $b) {
+function categories_renderer_array_fieldrelation_compare ($a, $b) 
+{
 
     // get the sort value
     $sort = categories_renderer_array_sortvalue();
@@ -603,7 +610,8 @@ function categories_renderer_array_fieldrelation_compare ($a, $b) {
  * @returns  string  The current sort value
  *
  */
-function categories_renderer_array_sortvalue($value=NULL) {
+function categories_renderer_array_sortvalue($value=NULL) 
+{
     static $sort;
     
     if ($value != NULL) {
@@ -630,7 +638,8 @@ function categories_renderer_array_sortvalue($value=NULL) {
  * @returns   void    nothing
  */
 
-function  categories_renderer_array_sort( &$comment_list, $sortby, $direction) {
+function  categories_renderer_array_sort( &$comment_list, $sortby, $direction) 
+{
     
     if (!isset($comment_list) || !is_array($comment_list)) {
         $msg = xarML('Missing or invalid arguement [#(1)] for #(2) function #(3) in module #(4)',
@@ -731,7 +740,8 @@ function  categories_renderer_array_sort( &$comment_list, $sortby, $direction) {
     return $comment_list;
 }
 
-function categories_renderer_wrap_words(&$str, $chars) {
+function categories_renderer_wrap_words(&$str, $chars) 
+{
     $str = preg_replace('/([^\s\<\>]{'.$chars.','.$chars.'})/', '\1 ', $str);
 }
  

@@ -7,7 +7,8 @@
  * @returns array
  * @return category info array, or array of cat info arrays, false on failure
  */
-function categories_userapi_getcatinfo($args) {
+function categories_userapi_getcatinfo($args) 
+{
     extract($args);
 
     if (!isset($cid) && !isset($cids)) {

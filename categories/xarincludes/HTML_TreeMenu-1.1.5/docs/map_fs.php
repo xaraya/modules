@@ -8,7 +8,8 @@ $map_dir = '.';
 $menu  = new HTML_TreeMenu('menuLayer', 'images', '_self');
 $menu->addItem(recurseDir($map_dir));
 
-function &recurseDir($path) {
+function &recurseDir($path) 
+{
     if (!$dir = opendir($path)) {
         return false;
     }
@@ -40,3 +41,5 @@ function &recurseDir($path) {
 
 </body>
 </html>
+<?php
+?>
