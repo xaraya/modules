@@ -1,0 +1,27 @@
+<table border="0" width="100%">
+  <tr>
+    <th colspan="4" align="center">
+      <xar:mlstring>XML-RPC validator API Administration</xar:mlstring>
+    </th>
+  </tr>
+</table>
+
+<h1>Overview of the XML-RPC Validator API</h1>
+
+<p>
+  The XML-RPC validator API is a XML-RPC API used for to validate a XML-RPC installation
+  on conformance to the specification. It implements the necessary methods on the server
+  so test clients can validate whether the server conforms to the specification.
+</p>
+<p>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+  needed for this API functionality. This module will not function without
+  the webservices module activated.
+</p>
+
+<p>
+  You can find a validation service at 
+  <a href="http://validator.xmlrpc.com">
+     http://validator.xmlrpc.com.
+  </a> 
+  You can use this to validate whether the Xaraya XML-RPC server conforms to the standard.
+</p>
