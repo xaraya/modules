@@ -39,6 +39,7 @@ TODO: layout, security checks etc
     </xar:if>
     <xar:if condition="$vars['adddate'] eq 'on'">
         <xar:mlstring> on </xar:mlstring>#xarLocaleFormatDate('%d %b %Y', $item['ptime'])#
+        <xar:comment>Old format string - "%B %d, %Y %I:%M %p"</xar:comment>
     </xar:if>
 
     <xar:if condition="empty($item['flink']) AND $vars['forumlink'] eq '1'">

@@ -91,7 +91,7 @@
                         <xar:mlstring>
                             Joined 
                         </xar:mlstring>
-                        : #$posterdate# 
+                        : #$posterdatestamp# 
                         <br />
                         <xar:mlstring>
                             Posts 
@@ -270,7 +270,7 @@
                             <xar:mlstring>
                                 Joined 
                             </xar:mlstring>
-                            : #$item['commenterdate']# 
+                            : #xarLocaleFormatDate('%Y-%m-%d',$item['commenterdatestamp'])# 
                             <br />
                             <xar:mlstring>
                                 Posts 

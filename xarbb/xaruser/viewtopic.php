@@ -140,7 +140,7 @@ function xarbb_user_viewtopic()
         $isposter[$comment['xar_uid']] = 1;
 
         //format reply poster's registration date
-        $comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
+        //$comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
         //Add datestamp so users can format in template, existing templates are still OK
         $comments[$i]['commenterdatestamp'] =$comments[$i]['userdata']['date_reg'];
 
@@ -162,9 +162,9 @@ function xarbb_user_viewtopic()
     //$thisdate = new xarDate();
     //if(is_numeric($posterdata['date_reg'])) {
     //    $thisdate->setTimestamp($posterdata['date_reg']);
-     $regdate=xarLocaleFormatDate('%Y-%m-%d',$posterdata['date_reg']);
+    // $regdate=xarLocaleFormatDate('%Y-%m-%d',$posterdata['date_reg']);
     //Add datestamp so users can format in template, existing templates are still OK
-     $regdatestamp=$posterdata['date_reg'];
+    $regdatestamp=$posterdata['date_reg'];
     //}
     // else {
     //     $thisdate->DBtoTS($posterdata['date_reg']);
@@ -173,7 +173,7 @@ function xarbb_user_viewtopic()
     //Forum Name and Links
     // $data['fname']      = $forumdata['fname']; //No need to reassign here
     $data['postername'] = $posterdata['name'];
-    $data['posterdate'] = $regdate;
+    // $data['posterdate'] = $regdate;
     $data['posterdatestamp'] = $regdatestamp;
     $data['usertopics'] = $topiccount;
     $data['xbbname']    = xarModGetVar('themes', 'SiteName');
