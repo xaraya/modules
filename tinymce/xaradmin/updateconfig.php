@@ -86,7 +86,7 @@ function tinymce_admin_updateconfig()
     if (trim(xarModGetVar('tinymce','tinyextended')) <> '') {
         $jstext .='extended_valid_elements : "'.xarModGetVar('tinymce','tinyextended').'",';
     }
-    if (xarModGetVar('tinymce','tinyask')){
+    if (xarModGetVar('tinymce','tinyask')=='true'){
         $jstext .='ask : "true",';
     }
    if (xarModGetVar('tinymce','tinyinlinestyle')){
