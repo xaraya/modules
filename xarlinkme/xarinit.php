@@ -83,50 +83,14 @@ function xarlinkme_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-        case 0.1:
+        case '0.1':
+            break;
         case '0.1.0':
-            // Version 0.5 didn't have a 'number' field, it was added
-            // in version 1.0
-            // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
-            // return arrays but we handle them differently.  For xarDBGetConn()
-            // we currently just want the first item, which is the official
-            // database handle.  For xarDBGetTables() we want to keep the entire
-            // tables array together for easy reference later on
-            // This code could be moved outside of the switch statement if
-            // multiple upgrades need it
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
-            // It's good practice to name the table and column definitions you
-            // are getting - $table and $column don't cut it in more complex
-            // modules
-            // This code could be moved outside of the switch statement if
-            // multiple upgrades need it
-            $exampletable = $xartable['example'];
-            // Add a column to the table
-            // adodb does not provide the functionality to abstract table creates
-            // across multiple databases.  Xaraya offers the xarCreateTable function
-            // contained in the following file to provide this functionality.
-            xarDBLoadTableMaintenanceAPI();
-            // $query = "ALTER TABLE $exampletable
-            // ADD xar_number INTEGER NOT NULL DEFAULT '0'";
-            $query = xarDBAlterTable($exampletable,
-                array('command' => 'add',
-                    'field' => 'xar_number',
-                    'type' => 'integer',
-                    'null' => false,
-                    'default' => '0'));
-            // Pass to ADODB, and send exception if the result isn't valid.
-            $result = &$dbconn->Execute($query);
-            if (!$result) return;
-            // At the end of the successful completion of this function we
-            // recurse the upgrade to handle any other upgrades that need
-            // to be done.  This allows us to upgrade from any version to
-            // the current version with ease
-            return example_upgrade(1.0);
-        case 1.0:
+            // current version
+        case '1.0.0':
             // Code to upgrade from version 1.0 goes here
             break;
-        case 2.0:
+        case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
     }
