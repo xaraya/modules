@@ -1,0 +1,9 @@
+body         { font-family: Verdana; font-size: 12px; background-color: #D4E1AE }
+table		 { font-family: Verdana; font-size: 12px }
+h1           { font-size: 22px }
+h2           { font-size: 18px }
+h3           { color: #660066; font-size: 14px }
+a:link       { color: #660066 }
+a:active     { color: #660066 }
+a:visited    { color: #660066 }
+a:hover      { color: #FFFFFF; text-decoration: none; background-color: #660066   }

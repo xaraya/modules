@@ -51,6 +51,11 @@
             index.php?module=window&page=&lt;your page&gt;
             </pre> 
 			<xar:mlstring>&lt;your page&gt; can be an actual URL, such as <b>http://www.xaraya.com</b>, or an alias you define via your URL specific settings.</xar:mlstring>
+			<xar:mlstring>You can also add other parameters, as in the following example. See the docs/install.txt for more details.</xar:mlstring>			
+            <pre>
+			index.php?module=window&page=http://www.xaraya.com/&height=1000&width=90%
+			&resize=1&title=foobar
+            <pre>
 		</div>
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
             <xar:mlstring>Included Blocks</xar:mlstring>

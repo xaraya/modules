@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>AutoTheme for PostNuke</title>
+<link rel="stylesheet" type="text/css" href="postwrap.css">
+</head>
+
+<body topmargin="0" leftmargin="10">
+
+<body bgcolor="#FFFFFF">
+
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber12">
+  <tr>
+    <td width="100%" bgcolor="#660066">
+    <img border="0" src="postwrap.gif" width="150" height="60" alt="PostWrap"></td>
+  </tr>
+  <tr>
+    <td width="100%" bgcolor="#660066">
+    <img border="0" src="for-pn.gif" alt="for PostNuke" width="150" height="25"></td>
+  </tr>
+</table>
+
+<p align="center"><i>Version: 2.1</i></p>
+
+<h2>What Is It?</h2>
+<p>PostWrap is a PostNuke module that enables virtually any web content such as 
+html, scripts (home pages, galleries, shopping carts, php, perl, asp, etc.) to be 
+easily incorporated into your PostNuke site.&nbsp; Just call the PostWrap module 
+with any URL and it will display it in your PostNuke main area/window. I call it 
+a content wrapper (takes any existing content anywhere and wraps your PostNuke site 
+around it. Uses an &lt;iframe&gt; which must be supported by the browser and JavaScript 
+to resize the &lt;iframe&gt;.</p>
+<h2>Installation</h2>
+<ul>
+  <li>
+  <p>Unzip to your modules/ directory to create the PostWrap/ subdirectory</p>
+  </li>
+  <li>
+  <p>Go to Administration, Modules, and Regenerate</p>
+  </li>
+  <li>
+  <p>Go to PostWrap, Initialize, and then Activate</p>
+  </li>
+</ul>
+<h2>Upgrading</h2>
+  <h3>From 1.x</h3>
+<ul>
+  <li>
+  <p>Delete existing PostWrap/ directory from  modules/</p>
+  </li>
+  <li>
+  <p>Unzip into the modules/ directory</p>
+  </li>
+  <li>
+  <p>Go to Administration, Modules, and Regenerate</p>
+  </li>
+  <li>
+  <p>Go to PostWrap, Initialize, and then Activate</p>
+  </li>
+</ul>
+  <h3>From 2.x</h3>
+<ul>
+  <li>
+  <p>Unzip into the modules/ directory (replace files)</p>
+  </li>
+  <li>
+  <p>Go to Administration, Modules, and Regenerate</p>
+  </li>
+  <li>
+  <p>Go to PostWrap, Update, and then Activate</p>
+  </li>
+</ul>
+<h2>Administration</h2>
+<p>The following options can be set from the PostWrap Administration menu.</p>
+<h3>General</h3>
+<p>The General settings page defines overall settings for the PostWrap module.</p>
+<ul>
+  <li>
+  <p>Display off-site pages, controls whether pages not on your local domain or 
+  server can be displayed.</p>
+  </li>
+  <li>
+  <p>Use buffering of output before sending, buffers the page output.</p>
+  </li>
+  <li>
+  <p>Use compressed output, uses compressed output from the server.</p>
+  </li>
+  <li>
+  <p>Allow input from browser address bar, determines whether the user can enter 
+  the URL in the browser address bar.</p>
+  </li>
+  <li>
+  <p>Compare URL against URL Security, activates URL checking from the URL Security 
+  page. Otherwise, any page can be displayed if it is not restricted by the other 
+  settings.</p>
+  </li>
+  <li>
+  <p>Only for registered users, determines whether a user must be registered and 
+  logged in to see the PostWrap page.</p>
+  </li>
+  <li>
+  <p>Add link for Open in new window, adds a link to open a new window above and 
+  below the page.&nbsp; If one of these links is clicked, the content is opened 
+  in a new browser window.</p>
+  </li>
+  <li>
+  <p>Use fixed title, displays a fixed title above and below the page.</p>
+  </li>
+  <li>
+  <p>Auto resize window, uses JavaScript to resize the content window.</p>
+  </li>
+  <li>
+  <p>Height of viewing window in pixels, is the length of the window that will contain 
+  the page.&nbsp; This value will only be used if Auto resize window = No.</p>
+  </li>
+  <li>
+  <p>Width of viewing window in pixels or percent, is the width of the window 
+  that will <br>
+  contain the page. Default is 100%</p>
+  </li>
+</ul>
+<h3>URL Security</h3>
+<p>If Compare URL against URL Security = Yes in the General settings, then any URL 
+must be entered here in order to be displayed.</p>
+<ul>
+  <li>
+  <p>Add, adds a new URL and alias (either can be used to display the page)</p>
+  </li>
+  <li>
+  <p>Edit, edits an existing URL entry</p>
+  </li>
+  <li>
+  <p>Delete, deletes an existing URL entry</p>
+  </li>
+</ul>
+<p>The following are the same as the General section but override the General setting 
+for the specific URL.</p>
+<ul>
+  <li>
+  <p>Only for registered users</p>
+  </li>
+  <li>
+  <p>Add link for Open in new window</p>
+  </li>
+  <li>
+  <p>Use fixed title</p>
+  </li>
+  <li>
+  <p>Auto resize window</p>
+  </li>
+  <li>
+  <p>Length of viewing window in pixels </p>
+  </li>
+</ul>
+<h3>Miscellaneous</h3>
+<p>The following messages can be easily customized. Just modify the text in your 
+global.php language file in the modules/PostWrap/lang/ directory.</p>
+<p>_NOPAGEMSG No page was defined to display.</p>
+<p>_TITLEMSG The following content is from another site.</p>
+<p>_TITLEMSGEND The END of content from another site.</p>
+<p>_NOTSERMSG Sorry, you are not authorized to use this feature. Please login.</p>
+<p>_NOTAUTHHOSTMSG Sorry, this host is not authorized to display pages here.</p>
+<p>_NOUSERENTRYMSG Sorry, you are not allowed to do that.</p>
+<p>_NOTLOCALMSG Sorry, only local pages may be displayed.</p>
+<p>_OPENDIRECTMSG Open in new window</p>
+<p>_SORRYBROWSER Sorry, your browser does not understand iframes. Here is the
+</p>
+<p>_LINKYOU link</p>
+<p>_SORRYBROWSER1 to the page.</p>
+<h2>How Do I Use It?</h2>
+<p>Just call PostWrap in module fashion with the page variable set to the URL or 
+location that you want to display in PostNuke. If Compare URL against URL Security 
+= Yes, then you may use either the URL or the alias that you defined. For example, 
+an anchor would look like:</p>
+<p><b>URL</b>:&nbsp;&nbsp;&nbsp;&nbsp; &lt;a href=&quot;modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=index.php&quot;&gt;My 
+Site&lt;/a&gt;</p>
+<p><b>Alias</b>:&nbsp;&nbsp;&nbsp; &lt;a href=&quot;modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=mysite&quot;&gt;My 
+Site&lt;/a&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Or in a Generic Menu Block:</i></p>
+<p><b>URL</b>:&nbsp;&nbsp;&nbsp; modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=index.php</p>
+<p><b>Alias</b>:&nbsp;&nbsp; modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=mysite</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Cool! For a remote site you would use:</i></p>
+<p><b>URL</b>:&nbsp;&nbsp;&nbsp; &lt;a href=&quot;modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=http://www.postnuke.org/&quot;&gt;PostNuke 
+Site&lt;/a&gt;</p>
+<p><b>Alias</b>:&nbsp;&nbsp;&nbsp;&lt;a href=&quot;modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=postnuke&quot;&gt;PostNuke 
+Site&lt;/a&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Or in a Generic 
+Menu Block:</i></p>
+<p><b>URL</b>:&nbsp;&nbsp;&nbsp; modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=http://www.postnuke.org/</p>
+<p><b>Alias</b>:&nbsp;&nbsp; modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=postnuke</p>
+<h3>URL Options</h3>
+<p>There are several variables that can be included in the URL that will 
+add to or override the settings in PostWrap Administration:</p>
+<ul>
+  <li>The height (vertical size) of the iframe in pixels can be set using &amp;height=</li>
+  <li>The width (horizontal size) of the iframe in pixels or percent can be set using &amp;width=</li>
+  <li>Auto resize of the page can be set with &amp;resize=1 (this will override the 
+  height value if set)</li>
+  <li>The page title can be set using &amp;title=</li>
+</ul>
+<p><b>Example</b>:&nbsp;&nbsp;&nbsp; modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=http://www.postnuke.org/&amp;height=1000&amp;width=90%</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=http://www.postnuke.org/&amp;resize=1</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=http://www.postnuke.org/&amp;title=.....make 
+it your choice</p>
+<p>Using the PostNuke index variable you can show the center and right blocks if 
+you want by including &amp;index=1.</p>
+<p><b>Example</b>:&nbsp;&nbsp;&nbsp; modules.php?op=modload&amp;name=PostWrap&amp;file=index&amp;page=http://www.postnuke.org/&amp;index=1</p>
+<h2>Where To Use It</h2>
+<p>You can place references in your user home page, linked to the main menu or to 
+sub menus, on user pages and just about anywhere.&nbsp; You can use hrefs img srcs, 
+Javascript dynamic page generation, html redirection, and even php scripts by sending 
+Location: headers. The real magic is that other applications written in php or perl 
+or Javascript or whatever run as if they were a part of PostNuke, seamlessly and 
+with little effort.&nbsp; If you do this, be sure to give proper credit though.&nbsp; 
+ 
+As long as it is pleasant looking running 
+standalone, it will look great running in PostNuke via PostWrap.</p>
+<h2>Bugs and Feedback</h2>
+<p>Please send bug reports or feedback to
+<a href="mailto:abracadaver@mckenzies.net">abracadaver@mckenzies.net</a> or visit
+<a href="http://spidean.mckenzies.net">http://spidean.mckenzies.net</a></p>
+<h2>Credits</h2>
+<p>Based on: ShowInMain for phpWebSite by Jim Flowers
+<a href="mailto:(jflowers@ezo.net">(jflowers@ezo.net</a>) PostNuke port: Shawn McKenzie
+<a href="mailto:(AbraCadaver@mckenzies.net">(abracadaver@mckenzies.net</a>) All 
+administration, database functionality and Bulgarian translations: Yassen Yotov 
+(CyberOto)</p>
+
+<hr noshade color="#FFFFFF" size="1">
+<p>PostWrap<font class="pn-sub"> is Free Software released under the
+<a href="http://www.gnu.org" target="_blank">GNU/GPL license</a>.</font></p>
+
+</body>
+
+</body>
+
+</html>

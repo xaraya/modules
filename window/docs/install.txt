@@ -1,0 +1,178 @@
+// ----------------------------------------------------------------------
+// Xaraya Applications Framework
+// Ported as a Xaraya module by Marc Lutolf.
+// http://www.xaraya.com/
+// ----------------------------------------------------------------------
+// POST-NUKE Content Management System
+// Copyright (C) 2001 by the Post-Nuke Development Team.
+// http://www.postnuke.com/
+// ----------------------------------------------------------------------
+// Based on:
+// ShowInMain for phpWebSite by Jim Flowers (jflowers@ezo.net)
+//
+// PHP-NUKE Web Portal System - http://phpnuke.org/
+// Thatware - http://thatware.org/
+// ----------------------------------------------------------------------
+// LICENSE
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License (GPL)
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// To read the license please visit http://www.gnu.org/copyleft/gpl.html
+// ----------------------------------------------------------------------
+// Filename: install.txt
+// Original Author of file: Shawn McKenzie (AbraCadaver)
+// Purpose of file: Installation instructions for Window module
+// ----------------------------------------------------------------------
+
+
+WHAT IS IT?
+-----------
+Window is a Xaraya module that enables virtually any web content such as
+html, scripts (home pages, galleries, shopping carts, php, perl, asp, etc.) to
+be easily incorporated into your Xaraya site.  Just call the Window module
+with any URL and it will display it in your Xaraya main area/window. I call it
+a content wrapper (takes any existing content anywhere and wraps your Xaraya
+site around it. Uses an <iframe> which must be supported by the browser and
+JavaScript to resize the <iframe>.
+
+
+INSTALLATION
+------------
+- Unzip to your modules/ directory to create the window/ subdirectory.
+- In the Xaraya admin menu go to Modules, View All.
+- Check the Regenerate checkbox and click on Reload.
+- Go to Window and click on Initialise.
+
+
+ADMINISTRATION
+--------------
+The following options can be set from the Window Administration menu.
+
+    GENERAL SETTINGS
+The General settings page defines overall settings for the Window module.
+
+- Display off-site pages, controls whether pages not on your local domain or
+server can be displayed.
+- Use buffering of output before sending, buffers the page output.
+- Use compressed output, uses compressed output from the server.
+- Allow input from browser address bar, determines whether the user can enter
+the url in the browser address bar.
+- Compare URL against URL Security, activates URL checking from the URL Security
+page. Otherwise, any page can be displayed if it is not restricted by the other
+settings.
+- Only for registered users, determines whether a user must be registered and
+logged in to see the Window page.
+- Add link for Open in new window, adds a link to open a new window above and
+below the page.  If one of these links is clicked, the content is opened in a
+new browser window.
+- Use fixed title, displays a fixed title above and below the page.
+- Auto resize window, uses JavaScript to resize the content window.
+- Length of viewing window in pixels, is the length of the window that will
+contain the page.  This value will only be used if Auto resize window = No.
+- Width of viewing window in pixels or percent, is the width of the window that will
+contain the page. Default is 100%
+
+    URL SPECIFIC SETTINGS
+If Compare URL against URL Security = Yes in the General settings, then any URL
+must be entered here in order to be displayed.
+
+- Add, adds a new URL and alias (either can be used to display the page)
+- Edit, edits an existing URL entry
+- Delete, deletes an existing URL entry
+
+The following are the same as the General section but override the General
+setting for the specific URL.
+
+- Only for registered users
+- Add link for Open in new window
+- Use fixed title
+- Auto resize window
+- Length of viewing window in pixels
+
+
+HOW DO I USE IT?
+----------------
+Just call Window in module fashion with the page variable set to the URL or
+location that you want to display in Xaraya. If Compare URL against URL
+Security = Yes, then you may use either the URL or the alias that you defined.
+For example, an anchor would look like:
+
+URL:    <a href="index.php?module=window&page=index.php">My Site</a>
+
+Alias:  <a href="index.php?module=window&page=mysite">My Site</a>
+
+    Or in a Generic Menu Block:
+
+URL:    index.php?module=window&file=index&page=index.php
+Alias:  index.php?module=window&file=index&page=mysite
+
+
+    Cool! For a remote site you would use:
+
+URL:    <a href="index.php?module=window&page=http://www.xaraya.com/">Xaraya Site</a>
+
+Alias:  <a href="index.php?module=window&page=xaraya">Xaraya Site</a>
+
+    Or in a Generic Menu Block:
+
+URL:    index.php?module=window&page=http://www.xaraya.com/
+
+Alias:  index.php?module=window&page=xaraya
+
+And you'll show the Xaraya home page in your main window.
+
+    URL OPTIONS
+There are several variables that can be included in the URL that will override the
+settings in General Settings:
+
+- The height (vertical size) of the iframe in pixels can be set using &height=
+- The width (horizontal size) of the iframe in pixels or percent can be set using &width=
+- Auto resize of the page can be set with &resize=1 (this will override the height value if set)
+- The page title can be set using &title=
+
+Example:
+
+index.php?module=window&page=http://www.xaraya.com/&height=1000&width=90%
+
+index.php?module=window&page=http://www.xaraya.com/&resize=1
+
+index.php?module=window&page=http://www.xaraya.com/&title=.....make it your choice
+
+Example:
+
+index.php?module=window&page=http://www.xaraya.com/&index=1
+
+
+WHERE TO USE IT
+---------------
+You can place references in your user home page, linked to the main menu or to
+sub menus, on user pages and just about anywhere.  You can use hrefs <img srcs,
+Javascript dynamic page generation, html redirection, and even php scripts by
+sending Location: headers.
+
+The real magic is that other applications written in php or perl or Javascript
+or whatever run as if they were a part of Xaraya, seamlessly and with little
+effort. If you do this, be sure to give proper credit though. As long as it is
+pleasant looking running standalone, it will look great running in Xaraya via
+Window.
+
+
+BUGS/FEEDBACK
+-------------
+Please send bug reports to http://bugs.xaraya.com.
+
+
+CREDITS
+-------
+Based on: ShowInMain for phpWebSite by Jim Flowers (jflowers@ezo.net)
+PostNuke port: Shawn McKenzie (AbraCadaver@mckenzies.net)
+All administration, database functionality: Yassen Yotov
+(CyberOto)

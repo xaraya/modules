@@ -1,0 +1,32 @@
+// ----------------------------------------------------------------------
+// Changelog
+//
+// 11-26-2002: 2.1
+//  - Ported to Xaraya
+//
+// 11-26-2002: 2.1
+//  - Fixed problem with editing/deleting URLs starting with the ninth (CyberOto)
+//  - Added Width in pixels or percent to admin
+//  - Added height, width, resize and title vars to be used in URL
+//
+// 10-31-2002: 2.01
+//  - Fixed protocols other than http (works with https, ftp, etc.)
+//
+// 10-07-2002: 2.0
+//  Added
+//  - admin panels
+//  - URL checking via db
+//  - Bulgarian translations
+//
+// 09-08-2002: 1.1
+//  Added
+//  - compression, buffering
+//  - titles and messages in window
+//  - enabel/disable display off-site pages option
+//  - logged in users only option
+//  - enable/disable input from browser address bar option
+//  - open direct link
+//
+// 09-07-2002: 1.0
+//
+// ----------------------------------------------------------------------
