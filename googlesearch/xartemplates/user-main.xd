@@ -2,19 +2,19 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Search Results</xar:mlstring></h2>
 <div style="margin: auto;">
 <form action="#xarModURL('googlesearch', 'user', 'main')#" method="post">
-	<p><label for="googleq"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="googleq" id="googleq" size="20" />
+    <p><label for="googleq"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="googleq" id="googleq" size="20" />
         <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
-	&nbsp;&nbsp;&nbsp; <input type="submit" value="#$search#" />
+    &nbsp;&nbsp;&nbsp; <input type="submit" value="#$search#" />
 <xar:if condition="!empty($links)">
-		<h2><xar:mlstring>Search Results</xar:mlstring></h2>
-		<xar:mlstring>Your search for </xar:mlstring> <b>#$searchQuery#</b> <xar:mlstring>produced</xar:mlstring>&nbsp;#$estimatedTotalResultsCount#&nbsp;<xar:mlstring>hits.  Below are the top ten most relevant determined by</xar:mlstring> <a href="http://www.google.com"><xar:mlstring>Google</xar:mlstring></a>.
-		<br>
-	<ul>
-	<xar:loop name="$links">
-		<li><a href="#$loop:item['URL']#">#$loop:item['title']#</a><br />
-		#$loop:item['snippet']# (#$loop:item['cachedSize']#)<br /><br /></li>
-	</xar:loop>
-	</ul>
+        <h2><xar:mlstring>Search Results</xar:mlstring></h2>
+        <xar:mlstring>Your search for </xar:mlstring> <b>#$searchQuery#</b> <xar:mlstring>produced</xar:mlstring>&nbsp;#$estimatedTotalResultsCount#&nbsp;<xar:mlstring>hits.  Below are the top ten most relevant determined by</xar:mlstring> <a href="http://www.google.com"><xar:mlstring>Google</xar:mlstring></a>.
+        <br>
+    <ul>
+    <xar:loop name="$links">
+        <li><a href="#$loop:item['URL']#">#$loop:item['title']#</a><br />
+        #$loop:item['snippet']# (#$loop:item['cachedSize']#)<br /><br /></li>
+    </xar:loop>
+    </ul>
 <xar:elseif condition="!empty($message)" />
     <h2><xar:mlstring>Search Results</xar:mlstring></h2>
     #$message#
