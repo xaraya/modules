@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * File: $Id$
  *
@@ -47,11 +47,13 @@ function pubsub_userapi_adduser($args)
     if (xarUserIsLoggedIn()) {
         // if no userid was supplied then subscribe the currently logged in user
         if (!isset($userid)) {
-	    $userid = xarSessionGetVar('uid');
-	}
+	        $userid = xarSessionGetVar('uid');
+	    }
     } else {
+        //FIXME: <garrett> Error handling seems a bit primative...
         xarSessionSetVar('errormsg', _PUBSUBANONERROR);
-	return;
+
+        return;
     }
 
     // Security check
@@ -63,24 +65,12 @@ function pubsub_userapi_adduser($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     // check not already subscribed
-    $query = "SELECT xar_pubsubid
- 	          FROM $pubsubregtable
-	          WHERE xar_eventid '" . xarVarPrepForStore($eventid) . "',
-	                xar_userid '" . xarVarPrepForStore($userid) . "'";
+    $query = "SELECT xar_pubsubid FROM $pubsubregtable";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
-    if (count($result) > 0) {
-        pubsub_user_subscribed();
-    //   $msg = xarML('Item already exists in function #(1)() in module #(2)',
-    //               'subscribe', 'Pubsub');
-    //   xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-    //                 new SystemException($msg));
-        return;
-    }
-
     // Get next ID in table
-    $nextId = $dbconn->GenId($pubsubregtable);
+    $nextId = $dbconn->GenID($pubsubregtable);
 
     // Add item
     $query = "INSERT INTO $pubsubregtable (
@@ -90,13 +80,15 @@ function pubsub_userapi_adduser($args)
               xar_actionid)
             VALUES (
               $nextId,
-              '" . xarVarPrepForStore($eventid) . "',
-              '" . xarVarPrepForStore($userid) . "',
-              '" . xarvarPrepForStore($actionid) . "')";
+              " . xarVarPrepForStore($eventid) . ",
+              " . xarVarPrepForStore($userid) . ",
+              " . xarvarPrepForStore($actionid) . ")";
     $dbconn->Execute($query);
     if (!$result) return;
 
-    // return pubsub ID 
+    // return pubsub ID
+    $nextId = $dbconn->PO_Insert_ID($pubsubregtable, 'xar_pubsubid');
+
     return $nextId;
 }
 
@@ -109,6 +101,7 @@ function pubsub_userapi_adduser($args)
  */
 function pubsub_userapi_deluser($args)
 {
+
     // Get arguments from argument array
     extract($args);
 
@@ -127,7 +120,7 @@ function pubsub_userapi_deluser($args)
 
     // Security check
     if (!xarSecurityCheck('DeletePubSub', 1, 'item', 'All::$pubsubid')) return;
-    
+
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -166,7 +159,7 @@ function pubsub_userapi_updatesubscription($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     join(', ',$invalid), 'user', 'updatesubscription', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', 
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -212,7 +205,7 @@ function pubsub_userapi_getsubscriptions($args)
                        new SystemException($msg));
         return;
     }
-    
+
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -229,7 +222,7 @@ function pubsub_userapi_getsubscriptions($args)
 
 /**
  * delete a pubsub user's subscriptions
- * this needs to be done when a user unregisters from the site. 
+ * this needs to be done when a user unregisters from the site.
  * @param $args['userid'] ID of the user whose subscriptions to delete
  * @returns array
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -251,7 +244,7 @@ function pubsub_userapi_delsubscriptions($args)
                        new SystemException($msg));
         return;
     }
-    
+
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -282,11 +275,9 @@ function pubsub_userapi_getall($args)
 
     // Load categories API
     if (!xarModAPILoad('categories', 'user')) {
-        $msg = xarML('Unable to load #(1) #(2) API',
-                     'categories','user');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD',
-                           new SystemException($msg));
-                                                                                               return false;
+        $msg = xarML('Unable to load #(1) #(2) API','categories','user');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'UNABLE_TO_LOAD', new SystemException($msg));
+        return;
     }
 
     list($dbconn) = xarDBGetConn();
@@ -299,23 +290,23 @@ function pubsub_userapi_getall($args)
     $pubsubregtable = $xartable['pubsub_reg'];
 
     $query = "SELECT $modulestable.xar_name AS ModuleName,
-                     $categoriestable.xar_name AS Category,        
-                     COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers, 
-                     $pubsubtemplatetable.xar_template AS Template        
-              FROM $pubsubeventstable, 
+                     $categoriestable.xar_name AS Category,
+                     COUNT($pubsubregtable.xar_userid) AS NumberOfSubscribers,
+                     $pubsubtemplatetable.xar_template AS Template
+              FROM $pubsubeventstable,
                    $pubsubeventcidstable,
-                   $modulestable, 
-                   $categoriestable, 
-                   $pubsubtemplatetable, 
+                   $modulestable,
+                   $categoriestable,
+                   $pubsubtemplatetable,
                    $pubsubregtable
               WHERE $pubsubeventstable.xar_modid = $modulestable.xar_id
               AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
               AND   $pubsubeventcidstable.xar_cid = $categoriestable.xar_cid
               AND   $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
               AND   $pubsubtemplatetable.xar_eventid = $pubsubeventstable.xar_eventid
-              GROUP BY $pubsubeventstable.xar_eventid"; 
+              GROUP BY $pubsubeventstable.xar_eventid";
 
-// ???         $pubsubeventstable.xar_itemtype = $itemstable.xar_id       
+// ???         $pubsubeventstable.xar_itemtype = $itemstable.xar_id
 
     $result =& $dbconn->Execute($query);
     if (!$result) return;
@@ -330,7 +321,7 @@ function pubsub_userapi_getall($args)
                              'template'       => $template);
         }
     }
-    
+
     $result->Close();
 
     return $events;

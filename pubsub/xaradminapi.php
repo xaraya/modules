@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * File: $Id$
- * 
+ *
  * Pubsub Admin API
  *
  * @package Xaraya eXtensible Management System
@@ -16,7 +16,7 @@
 /**
  * create a new pubsub event
  * create event for an item - hook for ('item','create','API')
- * 
+ *
  * @param $args['module'] name of the module this event applies to
  * @param $args['eventtype'] the event type
  * @returns int
@@ -37,9 +37,28 @@ function pubsub_adminapi_createhook($args)
         return;
     }
 
-    $cid = $extrainfo['cid'];
+    //FIXME: <garrett> During an article->create $extrainfo['cid'] does not exist. Instead
+    // the array $extrainfo['cids'] exists. Is this because an article can have multiple categories?
+    // Q: What is hcid? it's in the extrainfo...
+    // Q: If cid is an array, why are we returning a singleton?
+    // Q: should we return an array? which array location do we check?
+    $cid = '';
+    if (isset($extrainfo['cid'])) {
+        $cid = $extrainfo['cid'];
+    } elseif (isset($extrainfo['cids'][0])) {
+        $cid = $extrainfo['cids'][0];
+    } else {
+        // wtf - how'd we get here
+        $msg = xarML('Invalid #(1) in function #(2)() in module #(3)',
+                 'cid', 'createhook', 'pubsub');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+                           new SystemException($msg));
+    }
     $itemtype = $extrainfo['itemtype'];
-    $groupdescr = $extrainfo['groupdescr'];
+    //FIXME: <garrett> groupdescr does not get passed in from article->create
+    //       where should this REALLY come from.
+    //$groupdescr = $extrainfo['groupdescr'];
+    $groupdescr = "Fixme: Group Description";
 
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
@@ -69,11 +88,11 @@ function pubsub_adminapi_createhook($args)
 
 	// if event already exists then just return;
     if (!$result->EOF) {
-        return;
+        return TRUE;
     }
-    
+
     // Get next ID in table
-    $nextId = $dbconn->GenId($pubsubeventstable);
+    $eventid = $dbconn->GenId($pubsubeventstable);
 
     // Add item to events table
     $query = "INSERT INTO $pubsubeventstable (
@@ -82,7 +101,7 @@ function pubsub_adminapi_createhook($args)
 	          xar_itemtype,
 	          xar_groupdescr)
             VALUES (
-              $nextId,
+              $eventId,
               " . xarVarPrepForStore($modid) . ",
               " . xarVarPrepForStore($itemtype) . ",
               '" . xarvarPrepForStore($groupdescr) . "')";
@@ -109,7 +128,7 @@ function pubsub_adminapi_createhook($args)
     if (!$result) return;
 
     // return eventID
-    return $nextId;
+    return $eventid;
 }
 
 /**
@@ -155,11 +174,11 @@ function pubsub_adminapi_deletehook($args)
         AND   $pubsubeventstable.xar_itemtype = " . xarVarPrepForStore($itemtype) . "
         AND   $pubsubeventstable.xar_eventid = $pubsubeventcidstable.xar_eid
         AND   $pubsubeventcidstable.xar_cid = " . xarVarPrepForStore($cid);
-        
+
     $result = $dbconn->Execute($query);
     if (!$result) return;
     $eventid = $result->fields[0];
-    
+
     // call delete function
     return pubsub_adminapi_delevent($eventid);
 }
@@ -295,7 +314,7 @@ function pubsub_adminapi_processevent($args)
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) function #(3)() in module #(4)',
                     join(', ',$invalid), 'processevent', 'Pubsub');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', 
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
     }
@@ -325,6 +344,8 @@ function pubsub_adminapi_processevent($args)
     $dbconn->Execute($query);
     if (!$result) return;
 
+    $nextId = $dbconn->PO_Insert_ID($pubsubprocesstable, 'xar_handlingid');
+
     // TODO implement queuing properly
     // for now we'll just go parse the queue immediately
     pubsub_adminapi_processq();
@@ -345,7 +366,7 @@ function pubsub_adminapi_processq($args)
     extract($args);
 
     // Database information
-    list($dbconn) = xarDBGetConn(); 
+    list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubprocesstable = $xartable['pubsub_process'];
 
@@ -397,9 +418,9 @@ function pubsub_adminapi_runjob($args)
                        new SystemException($msg));
         return;
     }
-    
+
     // Database information
-    list($dbconn) = xarDBGetConn(); 
+    list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $pubsubregtable = $xartable['pubsub_reg'];
 
@@ -431,20 +452,20 @@ function pubsub_adminapi_runjob($args)
   	$template = $result->fields[0];
 	// *** TODO  ***
 	// need to define some variables for user firstname and surname,etc.
-	// might not be able to use the normal BL user vars as they would 
-	// probabaly expand to currently logged in user, not the user for 
+	// might not be able to use the normal BL user vars as they would
+	// probabaly expand to currently logged in user, not the user for
 	// this event.
 	// need to create the $tplData array with all the information in it
 
-									
+
     // Check for exceptions
-    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; 
-   
+    if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return;
+
     // call BL with the template to parse it and generate the HTML
     $html = xarTplString($template, $tplData);
     $plaintext = strip_tags($html);
 
-	if ($action = "htmlmail") { 
+	if ($action = "htmlmail") {
 	    $boundary = "b" . md5(uniqid(time()));
 	    $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
 	    $message .= "Content-type: multipart/mixed; ";
@@ -463,7 +484,7 @@ function pubsub_adminapi_runjob($args)
 	 } else {
 	    // plaintext mail
 	    $message=$plaintext;
-	 }   
+	 }
 	 // Send the mail using the mail module
 	 if (!xarModAPIFunc('mail',
                  'admin',
@@ -516,7 +537,7 @@ function pubsub_adminapi_deljob($args)
 
     // Security check
     if (!xarSecurityCheck('DeletePubSub', 1, 'item', "All:All:$handlingid:All")) return;
-    
+
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -540,14 +561,14 @@ function pubsub_adminapi_deljob($args)
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
- */ 
+ */
 function pubsub_adminapi_updatejob($args)
 {
     // Get arguments from argument array
     extract($args);
-    
+
     // Argument check
-    $invalid = array(); 
+    $invalid = array();
     if (!isset($handlingid) || !is_numeric($handlingid)) {
         $invalid[] = 'handlingid';
     }
@@ -600,7 +621,7 @@ function pubsub_adminapi_addtemplate($args)
 {
     // Get arguments from argument array
     extract($args);
-    $invalid = array(); 
+    $invalid = array();
     if (!isset($template) || !is_string($template)) {
         $invalid[] = 'template';
     }
@@ -652,6 +673,8 @@ function pubsub_adminapi_addtemplate($args)
               '" . xarvarPrepForStore($template) . "')";
     $dbconn->Execute($query);
     if (!$result) return;
+
+    $nextId = $dbconn->PO_Insert_ID($pubsubtemplatetable, 'xar_templateid');
 
     // return eventID
     return $nextId;
@@ -714,7 +737,7 @@ function pubsub_adminapi_updatetemplate($args)
     extract($args);
 
     // Argument check
-    $invalid = array(); 
+    $invalid = array();
     if (!isset($eventid) || !is_numeric($eventid)) {
         $invalid[] = 'eventid';
     }
@@ -762,7 +785,7 @@ function pubsub_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('EditPubSub', 0)) {
 
-        $menulinks[] = Array('url'   => xarModURL('pubsub',
+        $menulinks[] = Array('url'   => xarModURL('Pubsub',
                                                   'admin',
                                                   'view'),
                               'title' => xarML('View and Edit Pubsub Events'),
