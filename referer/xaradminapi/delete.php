@@ -17,8 +17,8 @@ function referer_adminapi_delete()
     // Security Check
     if (!xarSecurityCheck('DeleteReferer')) return; 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $referertable = $xartable['referer']; 
     // Delete the item
     $query = "DELETE FROM $referertable";

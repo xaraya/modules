@@ -53,8 +53,8 @@ function referer_userapi_getall($args)
     // Security Check
     if (!xarSecurityCheck('OverviewReferer')) return; 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $referertable = $xartable['referer'];
 
     $query = "SELECT xar_rid,

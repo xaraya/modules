@@ -40,8 +40,8 @@ function referer_eventapi_OnServerRequest()
             $HTTP_REFERER = 'bookmark';
         }
         // Get database setup
-        list($dbconn) = xarDBGetConn();
-        $xartable = xarDBGetTables();
+        $dbconn =& xarDBGetConn();
+        $xartable =& xarDBGetTables();
 
         $referertable = $xartable['referer'];
         // Check to see if the referer is already in DB

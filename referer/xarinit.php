@@ -19,8 +19,8 @@ function referer_init()
 {
 
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $referertable = $xartable['referer'];
 
@@ -68,8 +68,8 @@ function referer_delete()
 {
 
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $referertable = $xartable['referer'];
 

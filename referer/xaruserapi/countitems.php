@@ -25,8 +25,8 @@ function referer_userapi_countitems()
     // Security Check
     if (!xarSecurityCheck('OverviewReferer')) return; 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $referertable = $xartable['referer']; 
     // Get item
