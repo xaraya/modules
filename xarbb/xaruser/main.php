@@ -14,7 +14,7 @@ function xarbb_user_main()
     // The user API function is called
     $forums = xarModAPIFunc('xarbb',
                             'user',
-                            'getforums',
+                            'getallforums',
                              array('catid' => $data['catid']));
 
     for ($i = 0; $i < count($forums); $i++) {
