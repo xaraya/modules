@@ -40,7 +40,8 @@ function polls_adminapi_updateopt($args)
             SET ".$prefix."_optname = '" . xarVarPrepForStore($option) . "'
             WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
               AND ".$prefix."_optnum = " . xarVarPrepForStore($opt);
-    $result = $dbconn->Execute($sql);
+    $bindvars = array($option, (int)$pid, $opt);
+    $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
         return;

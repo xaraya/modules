@@ -68,19 +68,10 @@ function polls_adminapi_create($args)
               ".$prefix."_itemtype,
               ".$prefix."_itemid,
               ".$prefix."_reset)
-            VALUES (
-              " . xarVarPrepForStore($nextId) . ",
-              '" . xarVarPrepForStore($title) . "',
-              '" . xarVarPrepForStore($polltype) . "',
-              1,
-              '" . xarVarPrepForStore($private) . "',
-              '" . xarVarPrepForStore($votes) . "',
-              '" . xarVarPrepForStore($modid) . "',
-              '" . xarVarPrepForStore($itemtype) . "',
-              '" . xarVarPrepForStore($itemid) . "',
-              ".xarVarPrepForStore($time).")";
+            VALUES (?,?,?,1,?,?,?,?,?,?)";
 
-    $result = $dbconn->Execute($sql);
+    $bindvars = array((int)$nextId, $title, $polltype, $private, $votes, (int)$modid, $itemtype, $itemid, $time);
+    $result = $dbconn->Execute($sql, $bindvars);
 
 
     if (!$result) {

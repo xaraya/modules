@@ -33,8 +33,8 @@ function polls_adminapi_close($args)
 
     $sql = "UPDATE $pollstable
             SET ".$prefix."_open = 0
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
-    $result = $dbconn->Execute($sql);
+            WHERE ".$prefix."_pid = ?";
+    $result = $dbconn->Execute($sql,array((int)$pid));
 
     if (!$result) {
         return;

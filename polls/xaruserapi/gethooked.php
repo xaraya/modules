@@ -46,11 +46,11 @@ function polls_userapi_gethooked($args)
                    ".$prefix."_votes,
                    ".$prefix."_reset
             FROM $pollstable
-            WHERE  ".$prefix."_modid = " . xarVarPrepForStore($modid) . "
-               AND ".$prefix."_itemtype = " . xarVarPrepForStore($itemtype) . "
-               AND ".$prefix."_itemid = " . xarVarPrepForStore($objectid);
-
-    $result =& $dbconn->SelectLimit($sql, 1);
+            WHERE  ".$prefix."_modid = ?
+               AND ".$prefix."_itemtype = ?
+               AND ".$prefix."_itemid = ?";
+    $bindvars = array((int)$modid, $itemtype, $objectid);
+    $result =& $dbconn->SelectLimit($sql, 1, $bindvars);
 
     // Error check
     if (!$result) {
@@ -79,9 +79,9 @@ function polls_userapi_gethooked($args)
                    ".$prefix."_optname,
                    ".$prefix."_votes
             FROM $pollsinfotable
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
+            WHERE ".$prefix."_pid = ?
             ORDER BY ".$prefix."_optnum";
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
         return;

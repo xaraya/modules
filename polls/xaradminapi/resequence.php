@@ -25,9 +25,9 @@ function polls_adminapi_resequence($args)
     // Get the information
     $sql = "SELECT ".$prefix."_optnum
             FROM $pollsinfotable
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
+            WHERE ".$prefix."_pid = ?
             ORDER BY ".$prefix."_optnum";
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql, array((int)$pid));
 
     // Fix sequence numbers
     $seq=1;
@@ -36,10 +36,10 @@ function polls_adminapi_resequence($args)
 
         if ($optnum != $seq) {
             $query = "UPDATE $pollsinfotable
-                SET ".$prefix."_optnum=" . xarVarPrepForStore($seq) . "
-                WHERE ".$prefix."_pid=" . xarVarPrepForStore($pid) . "
-                AND ".$prefix."_optnum=" . xarVarPrepForStore($optnum);
-            $result = $dbconn->Execute($query);
+                SET ".$prefix."_optnum= ?
+                WHERE ".$prefix."_pid= ?
+                AND ".$prefix."_optnum= ?";
+            $result = $dbconn->Execute($query, array($seq, (int)$pid, $optnum));
             if(!$result){
                 return;
             }

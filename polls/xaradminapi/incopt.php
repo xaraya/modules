@@ -47,25 +47,27 @@ function polls_adminapi_incopt($args)
     // Swap positions - three updates
     $sql = "UPDATE $pollsinfotable
             SET ".$prefix."_optnum = ".$prefix."_optnum + 900
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
-            AND ".$prefix."_optnum = " . xarVarPrepForStore($opt);
-    $result = $dbconn->Execute($sql);
+            WHERE ".$prefix."_pid = ?
+            AND ".$prefix."_optnum = ?";
+    $result = $dbconn->Execute($sql, array((int)$pid, $opt));
     if(!$result){
         return;
     }
+    $opt2=$opt - 1;
     $sql = "UPDATE $pollsinfotable
-            SET ".$prefix."_optnum = " . xarVarPrepForStore($opt) . "
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
-            AND ".$prefix."_optnum = " . xarVarPrepForStore($opt - 1);
-    $result = $dbconn->Execute($sql);
+            SET ".$prefix."_optnum = ?
+            WHERE ".$prefix."_pid = ?
+            AND ".$prefix."_optnum = ?";
+    $result = $dbconn->Execute($sql, array($opt, (int)$pid, $opt2));
     if(!$result){
         return;
     }
+    $opt2=$opt + 900;
     $sql = "UPDATE $pollsinfotable
             SET ".$prefix."_optnum = ".$prefix."_optnum - 901
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
-            AND ".$prefix."_optnum = " . xarVarPrepForStore($opt + 900);
-    $result = $dbconn->Execute($sql);
+            WHERE ".$prefix."_pid = ?
+            AND ".$prefix."_optnum = ?";
+    $result = $dbconn->Execute($sql, array((int)$pid, $opt2));
     if(!$result){
         return;
     }

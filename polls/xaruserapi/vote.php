@@ -102,9 +102,9 @@ function polls_userapi_vote($args)
         }
         $sql = "UPDATE $pollsinfotable
                 SET ".$prefix."_votes = ".$prefix."_votes + 1
-                WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
-                  AND ".$prefix."_optnum = " . xarVarPrepForStore($option);
-        $result = $dbconn->Execute($sql);
+                WHERE ".$prefix."_pid = ?
+                  AND ".$prefix."_optnum = ?";
+        $result = $dbconn->Execute($sql, array((int)$pid, $option));
         if (!$result) {
             return;
         }
@@ -130,9 +130,9 @@ function polls_userapi_vote($args)
             }
             $sql = "UPDATE $pollsinfotable
                     SET ".$prefix."_votes = ".$prefix."_votes + 1
-                    WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
-                      AND ".$prefix."_optnum = " . xarVarPrepForStore($option);
-            $result = $dbconn->Execute($sql);
+                    WHERE ".$prefix."_pid = ?
+                      AND ".$prefix."_optnum = ?";
+            $result = $dbconn->Execute($sql, array((int)$pid, $option));
             if (!$result) {
                 return;
             }
@@ -152,8 +152,8 @@ function polls_userapi_vote($args)
 
     $sql = "UPDATE $pollstable
             SET ".$prefix."_votes = ".$prefix."_votes + $voteinc
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
-    $result = $dbconn->Execute($sql);
+            WHERE ".$prefix."_pid = ?";
+    $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
         return;

@@ -36,10 +36,10 @@ function polls_adminapi_deleteopt($args)
     $prefix = xarConfigGetVar('prefix');
 
     $sql = "DELETE FROM $pollsinfotable
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
-              AND ".$prefix."_optnum = " . xarVarPrepForStore($opt);
+            WHERE ".$prefix."_pid = ?
+              AND ".$prefix."_optnum = ?";
 
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql, array((int)$pid, $opt));
 
     if (!$result) {
         return;
@@ -49,9 +49,9 @@ function polls_adminapi_deleteopt($args)
     $pollstable = $xartable['polls'];
     $sql = "UPDATE $pollstable
             SET ".$prefix."_opts = ".$prefix."_opts - 1
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
+            WHERE ".$prefix."_pid = ?";
 
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
         return;

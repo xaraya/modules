@@ -38,11 +38,13 @@ function polls_adminapi_update($args)
     $prefix = xarConfigGetVar('prefix');
 
     $sql = "UPDATE $pollstable
-            SET ".$prefix."_title = '" . xarVarPrepForStore($title) . "',
-            ".$prefix."_type = '" . xarVarPrepForStore($type) . "',
-            ".$prefix."_private = '" . xarVarPrepForStore($private) . "'
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
-    $result = $dbconn->Execute($sql);
+            SET ".$prefix."_title = ?,
+            ".$prefix."_type = ?,
+            ".$prefix."_private = ?
+            WHERE ".$prefix."_pid = ?";
+
+    $bindvars = array($title, $type, $private, (int)$pid);
+    $result = $dbconn->Execute($sql, $bindvars);
 
     if (!$result) {
         return;

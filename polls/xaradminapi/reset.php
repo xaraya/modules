@@ -35,8 +35,8 @@ function polls_adminapi_reset($args)
 
     $sql = "UPDATE $pollsinfotable
             SET ".$prefix."_votes = 0
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
-    $result = $dbconn->Execute($sql);
+            WHERE ".$prefix."_pid = ?";
+    $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
         return;
@@ -46,9 +46,9 @@ function polls_adminapi_reset($args)
 
     $sql = "UPDATE $pollstable
             SET ".$prefix."_votes = 0,
-            ".$prefix."_reset = ".xarVarPrepForStore(time())."
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
-    $result = $dbconn->Execute($sql);
+            ".$prefix."_reset = ".time()."
+            WHERE ".$prefix."_pid = ?";
+    $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
         return;

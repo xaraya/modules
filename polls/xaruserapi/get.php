@@ -17,9 +17,11 @@ function polls_userapi_get($args)
     $pollstable = $xartable['polls'];
     $prefix = xarConfigGetVar('prefix');
 
+    $bindvars  = array();
     // Selection check
     if (!empty($pid)) {
-        $extra = "WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
+        $extra = "WHERE ".$prefix."_pid = ?";
+        $bindvars[]=$pid;
     } else {
         $extra = "WHERE ".$prefix."_modid = " . xarModGetIDFromName('polls');
         $extra .= " ORDER BY ".$prefix."_pid DESC";
@@ -40,7 +42,7 @@ function polls_userapi_get($args)
             FROM $pollstable
             $extra";
 
-    $result = $dbconn->SelectLimit($sql, 1);
+    $result = $dbconn->SelectLimit($sql, 1, $bindvars);
 
     // Error check
     if (!$result) {
@@ -69,9 +71,9 @@ function polls_userapi_get($args)
                    ".$prefix."_optname,
                    ".$prefix."_votes
             FROM $pollsinfotable
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid) . "
+            WHERE ".$prefix."_pid = ?
             ORDER BY ".$prefix."_optnum";
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql, array((int)$pid));
 
     if (!$result) {
         return false;

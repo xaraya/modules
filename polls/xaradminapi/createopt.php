@@ -44,12 +44,10 @@ function polls_adminapi_createopt($args)
               ".$prefix."_optnum,
               ".$prefix."_votes,
               ".$prefix."_optname)
-            VALUES (
-              " . xarVarPrepForStore($pid) . ",
-              " . xarVarPrepForStore($newitemnum) . ",
-              " . xarVarPrepForStore($votes) . ",
-              '" . xarVarPrepForStore($option) . "')";
-    $result = $dbconn->Execute($sql);
+            VALUES (?,?,?,?)";
+
+    $bindvars = array((int)$pid, $newitemnum, $votes, $option);
+    $result = $dbconn->Execute($sql, $bindvars);
 
     if(!$result) {
         return;
@@ -60,9 +58,9 @@ function polls_adminapi_createopt($args)
     // Update poll information
     $sql = "UPDATE $pollstable
             SET ".$prefix."_opts = ".$prefix."_opts +1
-            WHERE ".$prefix."_pid = " . xarVarPrepForStore($pid);
+            WHERE ".$prefix."_pid = ?";
 
-    $result2 = $dbconn->Execute($sql);
+    $result2 = $dbconn->Execute($sql, array((int)$pid));
     if (!$result2) {
         return;
     }
