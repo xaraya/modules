@@ -61,7 +61,7 @@ class PHPParser
         while (!feof($fd)) {
             $buf = fgets($fd, 1024);
             $line++;
-            if (preg_match_all('/(xarML|xarMLByKey)\s*\(\s*\'(.*)\'[,|\)]/', $buf, $matches)) {
+            if (preg_match_all('!(xarML|xarMLByKey)\s*\(\s*\'(.*)\'[,|\)]!', $buf, $matches)) {
                 foreach ($matches[2] as $match) {
 //                    if ($string = $this->parseString($match)) {
                         $string = $match;
@@ -72,7 +72,7 @@ class PHPParser
                     }
 //                }
             }
-            if (preg_match_all('/(xarML|xarMLByKey)\s*\(\s*\"(.*)\"[,|\)]/', $buf, $matches)) {
+            if (preg_match_all('!(xarML|xarMLByKey)\s*\(\s*\"(.*)\"[,|\)]!', $buf, $matches)) {
                 foreach ($matches[2] as $match) {
 //                    if ($string = $this->parseString($match)) {
                       $string = $match;
@@ -102,10 +102,10 @@ class PHPParser
                     }
 //                }
             }
-            if (preg_match('/(include_once|include|require_once|require)\s*\(?\s*(.*)/', $buf, $match)) {
+            if (preg_match('!(include_once|include|require_once|require)\s*\(?\s*(.*)!', $buf, $match)) {
             //disregrd loggers
                 $string = $match[2];
-                if (!preg_match('/loggers/', $string, $match)) {
+                if (!preg_match('!loggers!', $string, $match)) {
                     if (($string = $this->parseString($string)) && strpos($string, '$') === false) {
                         $this->includedFiles[$string] = true;
                     }
