@@ -70,10 +70,10 @@ class bkChangeSet extends bkDelta
     
     function bkGetTag()
    {
-        $cmd = "bk changes -n -r" . $this->rev . " -d':TAG:'";
+        $cmd = "bk changes -t -r" . $this->rev . " -d':TAGS:'";
         $tags = $this->repo->_run($cmd);
         if(!empty($tags)) {
-            return $tags[0];
+            return str_replace('S ', '',implode(',', $tags));
         } else {
             return '';
         }

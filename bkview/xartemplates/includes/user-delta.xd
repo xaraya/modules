@@ -16,7 +16,12 @@
     <xar:set name="csettag">''</xar:set>
     <xar:if condition="!empty($tag)">
         <xar:set name="csetclass">'xar-accent'</xar:set>
-        <xar:set name="csettag">#$tag#</xar:set>
+        <xar:set name="csettag">
+            <xar:ml>
+                <xar:mlstring> [Tags: #(1)] </xar:mlstring>
+                <xar:mlvar>#$tag#</xar:mlvar>
+            </xar:ml>
+        </xar:set>
     </xar:if>
     <div class="#$csetclass#">
         <div>

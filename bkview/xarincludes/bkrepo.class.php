@@ -150,7 +150,7 @@ class bkRepo
         
         // Do we want tagged only csets?
         if($flags & BK_FLAG_TAGGEDONLY) $dspec .= "\$if(:TAG:){";
-        $dspec .= ":TAG:|:AGE:|:P:|:REV:|:UTC:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
+        $dspec .= ":TAGS:|:AGE:|:P:|:REV:|:UTC:|\$each(:C:){(:C:)".BK_NEWLINE_MARKER."}";
         if($flags & BK_FLAG_TAGGEDONLY) $dspec .= "}";
         $dspec .= "'";
         
@@ -171,13 +171,20 @@ class bkRepo
         $cmd="bk changes $params";
         //echo $cmd."<br/>";
         $csetlist = $this->_run($cmd);
-
+        
         $csets=array();
         while (list($key,$val) = each($csetlist)) {
-            list($tag,$age, $author, $rev, $utc, $comments) = explode('|',$val);
+            if(substr($val,0,1) != '|') {
+                // We have a tagline
+                $tags[] = str_replace('S ','',$val);
+                continue;
+            }
+            list(,$age, $author, $rev, $utc, $comments) = explode('|',$val);
+              
             $changeset = (object) null;
             $changeset->file = 'ChangeSet';
-            $changeset->tag = $tag;
+            $changeset->tag = implode(',',$tags);
+            $tags = array(); // reset
             $changeset->age = $age;
             $changeset->author = $author;
             $changeset->rev = $rev;
