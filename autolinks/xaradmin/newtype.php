@@ -8,7 +8,6 @@ function autolinks_admin_newtype($args)
     extract($args);
 
     // Security Check
-    // TODO: AddAutolinksTypes ?
     if (!xarSecurityCheck('AddAutolinks')) {return;}
 
     $data['authid'] = xarSecGenAuthKey();
@@ -27,8 +26,12 @@ function autolinks_admin_newtype($args)
 
     // TODO: provide a list of template names in a drop-down, based on
     // the correct file mask.
-    // A new DD field type would be needed for that as it needs to look
-    // at both the default templates and the theme templates.
+
+    $hooks = xarModCallHooks(
+        'item', 'new', '',
+        array('itemtype' => xarModGetVar('autolinks', 'typeitemtype'), 'module' => 'autolinks')
+    );
+    $data['hooks'] = $hooks;
 
     // Return the output
     return $data;

@@ -17,7 +17,7 @@ function autolinks_userapi_getall($args)
         $startnum = 1;
     }
     if (!isset($numitems)) {
-        $numitems = -1;
+        $numitems = (-1);
     }
 
     // Security Check

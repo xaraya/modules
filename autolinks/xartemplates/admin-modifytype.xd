@@ -2,7 +2,7 @@
 <xar:set name="$addbuttonlabel"><xar:mlstring>Update</xar:mlstring></xar:set>
 <xar:set name="$cachebuttonlabel"><xar:mlstring>Refresh Cache</xar:mlstring></xar:set>
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Modify</xar:mlstring> <xar:mlstring>Autolink Type</xar:mlstring></h2>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Autolink Type</xar:mlstring></h2>
 <div style="margin: auto;">
 
 <xar:if condition="isset($global_error)">
@@ -10,12 +10,12 @@
 </xar:if>
 
 <form method="post" action="#xarModURL('autolinks', 'admin', 'modifytype')#" method="post" enctype="application/x-www-form-urlencoded" />
-    <input type="hidden" name="authid" id="authid" value="#$authid#" />
-    <input type="hidden" name="tid" id="tid" value="#$tid#" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#"/>
+    <input type="hidden" name="tid" id="tid" value="#$tid#"/>
     <table border="0">
 
         <tr align="left" valign="top">
-			<td colspan="2">
+			<td>
 				<label for="type_name"><xar:mlstring>Name</xar:mlstring></label>
 			</td>
 			<td>
@@ -29,17 +29,12 @@
         <tr align="left" valign="top">
 			<td>
 				<label for="template_name"><xar:mlstring>Template Name</xar:mlstring></label>
-			</td>
-			<td align="right">
-				<span style="font-family: Courier New, Courier, mono; font-weight: bold;">
-                    #$moduleinfo['directory']#/#xarModGetVar('autolinks','templatebase', 1)#-
-                </span>
+				<div style="font-family: Courier New, Courier, mono; font-weight: bold; wrap: none;">
+                    #$moduleinfo['directory']#/#xarModGetVar('autolinks','templatebase', 1)#-{<em><xar:mlstring>name</xar:mlstring></em>}.xd
+                </div>
 			</td>
 			<td>
 				<input type="text" name="template_name" id="template_name" value="#xarVarPrepForDisplay($template_name)#" size="32" maxlength="60" />
-				<span style="font-family: Courier New, Courier, mono; font-weight: bold;">
-                    .x[dt]
-                </span>
                 <xar:if condition="!empty($template_name_error)">
                 <div class="xar-error">#xarVarPrepForDisplay($template_name_error)#</div>
                 </xar:if>
@@ -47,7 +42,7 @@
 		</tr>
 
         <tr align="left" valign="top">
-            <td colspan="2">
+            <td>
                 <label for="dynamic_replace"><xar:mlstring>Execute Template Dynamically</xar:mlstring></label>
             </td>
             <td>
@@ -60,7 +55,7 @@
         </tr>
 
         <tr align="left" valign="top">
-			<td colspan="2">
+			<td>
 				<label for="type_desc"><xar:mlstring>Description</xar:mlstring></label>
 			</td>
 			<td>
@@ -71,7 +66,21 @@
 			</td>
 		</tr>
 
+        <xar:if condition="!empty($typehooks)">
+        <xar:foreach in="$typehooks" key="$typehookmodule">
+        #$typehooks[$typehookmodule]#
+        </xar:foreach>
+        </xar:if>
+    
     </table>
+
+    <xar:if condition="!empty($itemhooks)">
+        <h2><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h2>
+        <xar:foreach in="$itemhooks" key="$itemhookmodule">
+            #$itemhooks[$itemhookmodule]#
+        </xar:foreach>
+        <br style="clear: both;"/>
+    </xar:if>
     <input type="submit" name="submit" id="submit" value="#$addbuttonlabel#" align="middle" />
 </form>
 </div>

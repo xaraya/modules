@@ -27,43 +27,43 @@ function autolinks_admin_modifytype($args)
         $tid = $obid;
     }
 
-    if (!empty($submit) || !empty($cache)) {
+    if (!empty($submit)) {
         // Values have been submitted by the form.
         $type = array('tid' => $tid);
 
         if (!xarVarFetch('type_name', 'str:1:', $type['type_name'])) {
             $errorcount += 1;
             $type['type_name_error'] = xarExceptionRender('text');
-            xarExceptionFree();
+            xarExceptionHandled();
         }
 
         // TODO: better validation on template name
         if (!xarVarFetch('template_name', 'str:1:', $type['template_name'])) {
             $errorcount += 1;
             $type['template_name_error'] = xarExceptionRender('text');
-            xarExceptionFree();
+            xarExceptionHandled();
         }
 
         if (!xarVarFetch('dynamic_replace', 'int:0:1', $type['dynamic_replace'], '0')) {
             $errorcount += 1;
             $type['dynamic_replace_error'] = xarExceptionRender('text');
-            xarExceptionFree();
+            xarExceptionHandled();
         }
 
         if (!xarVarFetch('type_desc', 'str:0:400', $type['type_desc'])) {
             $errorcount += 1;
             $type['type_desc_error'] = xarExceptionRender('text');
-            xarExceptionFree();
+            xarExceptionHandled();
         }
 
         // Confirm authorisation code.
         if (!xarSecConfirmAuthKey()) {
             $errorcount += 1;
             $type['global_error'] = xarExceptionRender('text');
-            xarExceptionFree();
+            xarExceptionHandled();
         }
 
-        if ($errorcount == 0 && empty($cache)) {
+        if ($errorcount == 0) {
             // Call the API function if we have not encountered errors.
             $result = xarModAPIFunc(
                 'autolinks', 'admin', 'updatetype', $type
@@ -78,9 +78,10 @@ function autolinks_admin_modifytype($args)
                 }
             } else {
                 // Error in API.
+
                 $errorcount += 1;
                 $type['global_error'] = xarExceptionRender('text');
-                xarExceptionFree();
+                xarExceptionHandled();
             }
 
             return true;
@@ -93,6 +94,19 @@ function autolinks_admin_modifytype($args)
         );
         if (!$type) {return;}
     }
+
+    // Do config hooks for the items.
+    $hooks = xarModCallHooks(
+        'module', 'modifyconfig', 'autolinks',
+        array('itemtype' => $type['itemtype'], 'module' => 'autolinks'));
+    $type['itemhooks'] = $hooks;
+
+    // Do modify hooks for the item type itself.
+    $hooks = xarModCallHooks(
+        'item', 'modify', $tid, 
+        array('itemtype' => xarModGetVar('autolinks', 'typeitemtype'), 'module' => 'autolinks')
+    );
+    $type['typehooks'] = $hooks;
 
     $type['authid'] = xarSecGenAuthKey();
 

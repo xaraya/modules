@@ -79,7 +79,12 @@ function autolinks_admin_createtype()
         );
     }
 
-    xarResponseRedirect(xarModURL('autolinks', 'admin', 'viewtype'));
+    xarResponseRedirect(
+        xarModURL(
+            'autolinks', 'admin', 'modifytype',
+            array('tid' => $tid)
+        )
+    );
 
     // Return
     return true;

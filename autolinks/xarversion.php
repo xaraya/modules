@@ -15,7 +15,7 @@
 
 $modversion['name'] = 'Autolinks';
 $modversion['id'] = '11';
-$modversion['version'] = '1.4';
+$modversion['version'] = '1.5';
 $modversion['description'] = 'Automatically link key words';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';

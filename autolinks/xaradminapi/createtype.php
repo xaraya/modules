@@ -7,7 +7,7 @@
  * @param $args['template_name'] name of the template to use
  * @param $args['dynamic_replace'] flag indicates dynamic replacement; default: 0
  * @param $args['type_desc'] description of the autolink type (optional)
- * @param $args['link_itemtype'] the item type used for hooks for items of this type; default: tid+10
+ * @param $args['itemtype'] the item type used for hooks for items of this type; default: tid+10
  * @returns int
  * @return autolink type ID on success, false or NULL on failure
  */
@@ -27,8 +27,8 @@ function autolinks_adminapi_createtype($args)
         $dynamic_replace = 0;
     }
 
-    if (!isset($link_itemtype) || !is_numeric($link_itemtype)) {
-        $link_itemtype = 0;
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+        $itemtype = 0;
     }
 
     // Argument check - make sure that all required arguments are present,
@@ -66,8 +66,8 @@ function autolinks_adminapi_createtype($args)
     $nextID = $dbconn->GenId($autolinkstypestable);
 
     // If we have an ID, then we can set the link itemtype.
-    if ($nextID > 0 && $link_itemtype == 0) {
-        $link_itemtype = $nextID + 10;
+    if ($nextID > 0 && $itemtype === 0) {
+        $itemtype = $nextID + 10;
     }
 
     // Add item
@@ -83,7 +83,7 @@ function autolinks_adminapi_createtype($args)
               '" . xarVarPrepForStore($type_name) . "',
               '" . xarVarPrepForStore($template_name) . "',
               " . xarVarPrepForStore($dynamic_replace) . ",
-              " . xarVarPrepForStore($link_itemtype) . ",
+              " . xarVarPrepForStore($itemtype) . ",
               '" . xarVarPrepForStore($type_desc) . "')";
     $result =& $dbconn->Execute($query);
     if (!$result) {return;}
@@ -92,19 +92,22 @@ function autolinks_adminapi_createtype($args)
     $tid = $dbconn->PO_Insert_ID($autolinkstypestable, 'xar_tid');
 
     // If we couldn't set the link itemtype before, update it now.
-    if ($tid > 0 && $link_itemtype == 0) {
-        $link_itemtype = $tid + 10;
+    if ($tid > 0 && $itemtype == 0) {
+        $itemtype = $tid + 10;
 
         $query = 'UPDATE ' . $autolinkstypestable 
-              . ' SET xar_link_itemtype = ' . $link_itemtype
+              . ' SET xar_link_itemtype = ' . $itemtype
               . ' WHERE xar_tid = ' . $tid
-              . ' AND xar_link_itemtype <> ' . $link_itemtype;
+              . ' AND xar_link_itemtype <> ' . $itemtype;
         $result =& $dbconn->Execute($query);
         if (!$result) {return;}
     }
 
     // Let any hooks know that we have created a new link type
-    xarModCallHooks('item', 'createtype', $tid, 'tid');
+    xarModCallHooks(
+        'item', 'create', $tid,
+        array('itemtype' => 1, 'module' => 'autolinks')
+    );
 
     // Return the id of the newly created link to the calling process
     return $tid;

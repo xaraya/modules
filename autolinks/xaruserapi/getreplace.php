@@ -57,7 +57,6 @@ function autolinks_userapi_getreplace($args)
     }
     
     // Build an array of data for the template.
-    // TODO: add to this from the DD property values for the autolink item.
 
     // Fixed/standard values available to the template
     $template_data = array(
@@ -75,6 +74,30 @@ function autolinks_userapi_getreplace($args)
         'target' => $target,
         'style' => $style
     );
+
+    // DD items to add to the template too.
+    if (xarModIsHooked('dynamicdata', 'autolinks', $link['itemtype'])) {
+        // We are hooked into DD, so fetch the current fields and values.
+        $dd_data = xarModAPIfunc(
+            'dynamicdata', 'user', 'getitem',
+            array('module'=>'autolinks', 'itemtype'=>$link['itemtype'], 'itemid'=>$link['lid'])
+        );
+
+        // Place each field value into the template array.
+        if (is_array($dd_data)) {
+            foreach ($dd_data as $name => $value) {
+                // TODO: do we need a prep here?
+                // TODO: support nested structure so that fields can be grouped:
+                //    namea => $namea
+                //    namea_nameb => $namea['nameb']
+                // Prefixing a property name with an underscore will prevent it getting
+                // into the template.
+                if ($name{0} != '_') {
+                    $template_data[$name] = xarVarPrepForDisplay($value);
+                }
+            }
+        }
+    }
 
     // Either execute the template now (if cachable) or return the expression used to
     // execute the template in an expression-based preg_replace.

@@ -70,6 +70,14 @@
 		</xar:if>
 	</p>
 
+    <xar:if condition="!empty($hooks)">
+        <h2><xar:mlstring>Configuration of Hooked Modules</xar:mlstring></h2>
+        <xar:foreach in="$hooks" key="$hookmodule">
+            #$hooks[$hookmodule]#
+        </xar:foreach>
+        <br style="clear: both;"/>
+    </xar:if>
+
     <input type="submit" value="#$submit#" align="middle" />
 </form>
 </div>

@@ -55,7 +55,7 @@ function autolinks_userapi_getalltypes($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         list(
-            $tid, $dynamic_replace, $template_name, $type_name, $link_itemtype, $type_desc
+            $tid, $dynamic_replace, $template_name, $type_name, $itemtype, $type_desc
         ) = $result->fields;
 
         // TODO: security on link types?
@@ -64,7 +64,7 @@ function autolinks_userapi_getalltypes($args)
             'dynamic_replace' => $dynamic_replace,
             'template_name' => $template_name,
             'type_name' => $type_name,
-            'link_itemtype' => $link_itemtype,
+            'itemtype' => $itemtype,
             'type_desc' => $type_desc
         );
     }

@@ -39,7 +39,8 @@ function autolinks_userapi_get($args)
                     xar_dynamic_replace,
                     xar_template_name,
                     xar_type_name,
-                    xar_type_desc
+                    xar_type_desc,
+                    xar_link_itemtype
             FROM    ' . $autolinkstable
         . ' LEFT JOIN ' . $autolinkstypestable 
         . ' ON xar_tid = xar_type_tid
@@ -50,7 +51,7 @@ function autolinks_userapi_get($args)
 
     list(
         $lid, $keyword, $title, $url, $comment, $enabled, $match_re, $cache_replace, $sample, $name,
-        $tid, $dynamic_replace, $template_name, $type_name, $type_desc
+        $tid, $dynamic_replace, $template_name, $type_name, $type_desc, $itemtype
     ) = $result->fields;
     $result->Close();
 
@@ -72,7 +73,8 @@ function autolinks_userapi_get($args)
         'dynamic_replace' => $dynamic_replace,
         'template_name' => $template_name,
         'type_name' => $type_name,
-        'type_desc' => $type_desc
+        'type_desc' => $type_desc,
+        'itemtype' => $itemtype
     );
 
     return $link;

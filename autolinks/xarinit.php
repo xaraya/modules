@@ -25,10 +25,10 @@ define ('AUTOLINKS_PUNCTUATION', '.!?"\';:');
  */
 function autolinks_init()
 {
-    // Need Xaraya version 0.9.0.6.1 or above for correct ADOdb version and
+    // Need Xaraya version 0.9.1 or above for correct ADOdb version and
     // to allow APIs to be called while the module is being installed and
     // upgraded.
-    if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.0.6.1'))) {
+    if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1'))) {
         return;
     }
             
@@ -120,6 +120,7 @@ function autolinks_init()
     xarModSetVar('autolinks', 'templatebase', 'link');
     xarModSetVar('autolinks', 'showerrors', 0);
     xarModSetVar('autolinks', 'showsamples', 1);
+    xarModSetVar('autolinks', 'typeitemtype', 1);
 
     // Set up module hooks
     if (!xarModRegisterHook(
@@ -127,17 +128,15 @@ function autolinks_init()
             'autolinks', 'user', 'transform')
     ) {return;}
 
-    $query1 = 'SELECT DISTINCT xar_name FROM ' . $autolinkstable;
-    $query2 = 'SELECT DISTINCT xar_lid FROM ' . $autolinkstable;
     $instances = array (
         array (
             'header' => 'Autolink Name:',
-            'query' => $query1,
+            'query' => 'SELECT DISTINCT xar_name FROM ' . $autolinkstable,
             'limit' => 20
         ),
         array (
             'header' => 'Autolink ID:',
-            'query' => $query2,
+            'query' => 'SELECT DISTINCT xar_lid FROM ' . $autolinkstable,
             'limit' => 20
         )
     );
@@ -240,7 +239,7 @@ function autolinks_upgrade($oldversion)
                 if (!$result) {
                     //return;
                     // Until we have a better method of handling errors, it is safer to continue.
-                    xarExceptionFree();
+                    xarExceptionHandled();
                 }
             }
 
@@ -311,7 +310,7 @@ function autolinks_upgrade($oldversion)
             // - set up some sample data
 
             // Need Xaraya version 0.9.0.6.1 or above for correct ADOdb version.
-            if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.0.6.1'))) {
+            if (!xarModAPIfunc('base', 'versions', 'assert_application', array('0.9.1'))) {
                 return;
             }
             
@@ -407,9 +406,28 @@ function autolinks_upgrade($oldversion)
             xarModSetVar('autolinks', 'showerrors', 0);
             xarModSetVar('autolinks', 'showsamples', 1);
 
-            return true;
-
         case '1.4':
+            // Changes to upgrade from 1.4 to 1.5
+
+            // New itemtype for the autolink types themselves.
+            xarModSetVar('autolinks', 'typeitemtype', 1);
+
+            // The security instance 'keyword' has changed to 'name'. Only
+            // need to update the query and the header.
+            $sitePrefix = xarDBGetSiteTablePrefix();
+            $query = 'update ' . $sitePrefix . '_privileges'
+                . ' set xar_header = \'Autolink Name:\','
+                . ' xar_query = \'SELECT DISTINCT xar_name FROM ' . $autolinkstable . '\''
+                . ' where xar_module = \'autolinks\''
+                . ' and xar_header = \'Autolink Keyword:\''
+                . ' and xar_component = \'Autolinks\'';
+            
+            $result =& $dbconn->Execute($query);
+            if (xarExceptionId()) {
+                xarExceptionHandled();
+            }
+
+        case '1.5':
             // The current version.
             return true;
     }
@@ -455,6 +473,7 @@ function autolinks_delete()
     xarModDelVar('autolinks', 'templatebase');
     xarModDelVar('autolinks', 'showerrors');
     xarModDelVar('autolinks', 'showsamples');
+    xarModDelVar('autolinks', 'typeitemtype');
 
     // Remove Masks and Instances
     xarRemoveMasks('autolinks');

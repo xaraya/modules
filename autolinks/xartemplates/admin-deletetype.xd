@@ -1,0 +1,21 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Delete Autolink Type</xar:mlstring></h2>
+<div style="margin: auto;">
+<form method="post" action="#xarModURL('autolinks', 'admin', 'deletetype')#" method="post" enctype="application/x-www-form-urlencoded" />
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="tid" id="tid" value="#$tid#" />
+    <input type="hidden" name="confirm" id="confirm" value="1" />
+    <input type="hidden" name="confirmation" id="confirmation" value="1" />
+
+    <p class="xar-title"><xar:mlstring>Confirm deletion of autolink type:</xar:mlstring> #$type_name#</p>
+    <xar:if condition="$linkcount gt 0">
+    <p><input type="checkbox" name="cascade" id="cascade" value="1"/>
+    <xar:mlstring>Cascade delete of links</xar:mlstring> (#$linkcount#)</p>
+    </xar:if>
+
+    <p><input type="submit" value="Confirm" align="middle"/></p>
+    
+    <p><a href="#xarModURL('autolinks', 'admin', 'viewtype')#"><xar:mlstring>Cancel</xar:mlstring></a></p>
+</form>        
+</div>
+</div>

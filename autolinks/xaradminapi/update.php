@@ -94,6 +94,11 @@ function autolinks_adminapi_update($args)
     $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('lid' => $lid));
     if (!$result) {return;}
 
+    xarModCallHooks(
+        'item', 'update', $lid,
+        array('itemtype' => $link['itemtype'], 'module' => 'autolinks')
+    );
+    
     // Let the calling process know that we have finished successfully
     return true;
 }

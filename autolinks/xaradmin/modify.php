@@ -43,6 +43,12 @@ function autolinks_admin_modify($args)
 
     $link['authid'] = xarSecGenAuthKey();
 
+    $hooks = xarModCallHooks(
+        'item', 'modify', $lid, 
+        array('itemtype' => $link['itemtype'], 'module' => 'autolinks')
+    );
+    $link['hooks'] = $hooks;
+
     return $link;
 }
 

@@ -6,6 +6,7 @@
 <xar:if condition="!empty($items)">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
+        <th><xar:mlstring>Type</xar:mlstring></th>
         <th><xar:mlstring>Name</xar:mlstring></th>
         <th><xar:mlstring>Matching Key</xar:mlstring></th>
         <th><xar:mlstring>URL</xar:mlstring></th>
@@ -20,7 +21,10 @@
         </xar:if>
 
         <tr style="background-color: #$bgrow#;">
-            <td>#xarVarPrepForDisplay($item['name'])# &nbsp;</td>
+            <td><a href="#$item['edittypeurl']#">#xarVarPrepForDisplay($item['type_name'])#</a></td>
+
+            <td><a href="#$item['editurl']#">#xarVarPrepForDisplay($item['name'])#</a></td>
+
             <td>
                 <xar:if condition="!empty($item['comment'])">
                     <span title="#xarVarPrepForDisplay($item['comment'])#">#xarVarPrepForDisplay($item['keyword'])#</span>
@@ -28,6 +32,7 @@
                     #xarVarPrepForDisplay($item['keyword'])#
                 </xar:if>
             </td>
+
             <td>
                 <xar:if condition="!empty($item['title'])">
                     <span title="#xarVarPrepForDisplay($item['title'])#">#xarVarPrepForDisplay($item['url'])#</span>
@@ -35,6 +40,7 @@
                     #xarVarPrepForDisplay($item['url'])#
                 </xar:if>
             </td>
+
             <td align="center">
                 <xar:if condition="empty($item['enableurl'])">
                     #$item['enablelabel']# |
@@ -46,11 +52,6 @@
                 <xar:else />
                     <a href="#$item['editurl']#"><xar:mlstring>Edit</xar:mlstring></a> |
                 </xar:if>
-                <xar:if condition="empty($item['edittypeurl'])">
-                    <xar:mlstring>Edit</xar:mlstring> |
-                <xar:else />
-                    <a href="#$item['edittypeurl']#"><xar:mlstring>Type</xar:mlstring></a> |
-                </xar:if>
                 <xar:if condition="empty($item['deleteurl'])">
                     <xar:mlstring>Delete</xar:mlstring>
                 <xar:else />
@@ -58,13 +59,14 @@
                 </xar:if>
             </td>
         </tr>
+
         <xar:if condition="xarModGetVar('autolinks', 'showsamples') and !empty($item['sample'])">
-            <tr>
-                <td colspan="2" width="40%"><strong><xar:mlstring>Sample</xar:mlstring>:</strong><br/>
-                #xarVarPrepForDisplay($item['sample'])#</td>
-                <td colspan="2" width="60%"><strong><xar:mlstring>Result</xar:mlstring>:</strong><br/>
-                #$item['sampleresult']#</td>
-            </tr>
+        <tr>
+            <td colspan="3"><strong><xar:mlstring>Sample:</xar:mlstring></strong>
+            <div>#xarVarPrepForDisplay($item['sample'])#</div></td>
+            <td colspan="2"><strong><xar:mlstring>Result:</xar:mlstring></strong>
+            <div>#$item['sampleresult']#</div></td>
+        </tr>
         </xar:if>
     </xar:foreach>
 </table>

@@ -16,7 +16,7 @@ function autolinks_admin_delete($args)
     extract($args);
 
      if (!empty($obid)) {
-         $tid = $obid;
+         $lid = $obid;
      }
 
     // The user API function is called

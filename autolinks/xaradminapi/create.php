@@ -110,7 +110,9 @@ function autolinks_adminapi_create($args)
     if (!$result) {return;}
 
     // Let any hooks know that we have created a new link
-    xarModCallHooks('item', 'create', $lid, 'lid');
+    xarModCallHooks(
+        'item', 'create', $lid,
+        array('itemtype' => $tid, 'module' => 'autolinks'));
 
     // Return the id of the newly created link to the calling process
     return $lid;

@@ -6,6 +6,7 @@
  * @param $args['type_name'] the name of the link type (optional)
  * @param $args['template_name'] name of the link type template (optional)
  * @param $args['type_desc'] description of the link type (optional)
+ * @param $args['itemtype'] the itemtype used for links of this type (optional)
  */
 function autolinks_adminapi_updatetype($args)
 {
@@ -22,22 +23,26 @@ function autolinks_adminapi_updatetype($args)
     {
         if (isset($$parameter))
         {
-            $set[] = "xar_$parameter = '" . xarVarPrepForStore($$parameter) . "'";
+            $set[] = 'xar_' . $parameter . ' = \'' . xarVarPrepForStore($$parameter) . '\'';
         }
     }
     
-    // Numeric parameters.
+    // Numeric (boolean) parameters.
     foreach(array('dynamic_replace'=>0) as $parameter => $default)
     {
         if (isset($$parameter))
         {
-            if ($$parameter == "0" || $$parameter == "1")
+            if ($$parameter == '0' || $$parameter == '1')
             {
-                $set[] = "xar_$parameter = " . xarVarPrepForStore($$parameter) . "";
+                $set[] = 'xar_' . $parameter . ' = ' . xarVarPrepForStore($$parameter);
             } else {
-                $set[] = "xar_$parameter = " . xarVarPrepForStore($default) . "";
+                $set[] = 'xar_' . $parameter . ' = ' . xarVarPrepForStore($default);
             }
         }
+    }
+
+    if (isset($itemtype) && is_numeric($itemtype)) {
+        $set[] = 'xar_link_itemtype = ' . $itemtype;
     }
     
     // Argument check
@@ -78,6 +83,7 @@ function autolinks_adminapi_updatetype($args)
     // Update the link
     $query = 'UPDATE ' . $autolinkstypestable . ' SET ' . $set
           . ' WHERE xar_tid = ' . xarVarPrepForStore($tid);
+
     $result =& $dbconn->Execute($query);
     if (!$result) {return;}
 
@@ -91,6 +97,12 @@ function autolinks_adminapi_updatetype($args)
         $result = xarModAPIfunc('autolinks', 'admin', 'updatecache', array('tid' => $tid));
         if (!$result) {return;}
     }
+
+    // Update hooks - set DD property values etc.
+    xarModCallHooks(
+        'item', 'update', $tid,
+        array('itemtype' => xarModGetVar('autolinks', 'typeitemtype'), 'module' => 'autolinks')
+    );
 
     // Let the calling process know that we have finished successfully
     return true;

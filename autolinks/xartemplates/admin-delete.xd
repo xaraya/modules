@@ -1,5 +1,5 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Delete</xar:mlstring></h2><br />
+<div class="xar-mod-body"><h2><xar:mlstring>Delete Autolink</xar:mlstring></h2>
 <div style="margin: auto;">
 <form method="post" action="#xarModURL('autolinks', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded" />
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
@@ -7,11 +7,11 @@
     <input type="hidden" name="confirm" id="confirm" value="1" />
     <input type="hidden" name="confirmation" id="confirmation" value="1" />
 
-    <span class="xar-title"><xar:mlstring>Confirm deletion of autolink</xar:mlstring></span><br /><br />
+    <p class="xar-title"><xar:mlstring>Confirm deletion of autolink:</xar:mlstring> #$name#</p>
 
-    <input type="submit" value="Confirm" align="middle" tabindex="1" /><br /><br />
+    <p><input type="submit" value="Confirm" align="middle"/></p>
     
-    <a href="#xarModURL('autolinks', 'admin', 'view')#"><xar:mlstring>Cancel deletion of autolink</xar:mlstring></a>
+    <p><a href="#xarModURL('autolinks', 'admin', 'view')#"><xar:mlstring>Cancel</xar:mlstring></a></p>
 </form>        
 </div>
 </div>

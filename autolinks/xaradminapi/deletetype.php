@@ -90,7 +90,10 @@ function autolinks_adminapi_deletetype($args)
     if (!$result) return;
 
     // Let any hooks know that we have deleted a link
-    xarModCallHooks('item', 'delete', $tid, 'tid');
+    xarModCallHooks(
+        'item', 'delete', $tid,
+        array('itemtype' => 1, 'module' => 'autolinks')
+    );
 
     // Let the calling process know that we have finished successfully
     return true;

@@ -5,7 +5,7 @@
 <xar:if condition="!empty($items)">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
-        <th><xar:mlstring>Type Name</xar:mlstring></th>
+        <th><xar:mlstring>Name</xar:mlstring></th>
         <th><xar:mlstring>Template Name</xar:mlstring></th>
         <th><xar:mlstring>Dynamic</xar:mlstring></th>
         <th><xar:mlstring>Description</xar:mlstring></th>
@@ -22,9 +22,9 @@
             </xar:if>
         </td>
         --->
-        <td>#xarVarPrepForDisplay($item['type_name'])# &nbsp;</td>
+        <td><a href="#$item['editurl']#">#xarVarPrepForDisplay($item['type_name'])#</a></td>
         <td><span style="font-family: Courier New, Courier, mono;">
-        #xarModGetVar('autolinks','templatebase', 1)#-#xarVarPrepForDisplay($item['template_name'])#.x[dt]
+        #xarModGetVar('autolinks','templatebase', 1)#-#xarVarPrepForDisplay($item['template_name'])#.xd
         </span></td>
         <td><xar:if condition="!empty($item['dynamic_replace'])">
             <xar:mlstring>Dynamic</xar:mlstring>
