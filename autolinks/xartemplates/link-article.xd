@@ -1,3 +1,7 @@
+<!---
+    Over-ride values (through DD):
+    'linktitle' - the title for the link.
+--->
 <!--- The trigger - the URL - can be used to select different portions of this template. --->
 <xar:if condition="$url eq 'display'">
     <!--- Provide a link to an article, given its aid. --->

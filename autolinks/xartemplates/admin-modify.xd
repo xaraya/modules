@@ -14,6 +14,9 @@
                 <xar:else/>
                 <xar:mlstring>Type</xar:mlstring>
                 </xar:if>
+                <xar:if condition="!empty($moveurl)">
+                [<a href="#$moveurl#" title="#xarML('Move autolink type to a new type')#"><xar:mlstring>Move</xar:mlstring></a>]
+                </xar:if>
             </td>
             <td>
                 #$preptypename#

@@ -40,6 +40,7 @@ function autolinks_admin_modify($args)
     $link['cancelurl'] = xarModURL('autolinks', 'admin', 'view', array('startnumitem' => $startnumitem));
     $link['updateurl'] = xarModURL('autolinks', 'admin', 'update', array('startnumitem' => $startnumitem));
     $link['edittypeurl'] = xarModURL('autolinks', 'admin', 'modifytype', array('tid' => $link['tid']));
+    $link['moveurl'] = xarModURL('autolinks', 'admin', 'move', array('lid' => $link['lid']));
 
     $link['authid'] = xarSecGenAuthKey();
 
