@@ -20,7 +20,7 @@
 //
 // $Id: NNTP.php,v 1.28 2003/10/10 20:37:27 heino Exp $
 
-require_once '/modules/newsgroups/xarclass/Net/NNTP/Protocol.php';
+require_once 'modules/newsgroups/xarclass/Net/NNTP/Protocol.php';
 
 
 /* NNTP Authentication modes */
