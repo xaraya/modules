@@ -87,7 +87,6 @@ function xlink_admin_modifyhook($args)
         $refid = $extrainfo['xlink_id'];
     } else {
         xarVarFetch('xlink_id', 'str:1:', $newrefid, NULL, XARVAR_NOT_REQUIRED);
-        $newrefid = xarVarCleanFromInput('xlink_id');
         if (isset($newrefid)) {
             $refid = $newrefid;
         }
