@@ -259,7 +259,10 @@ function articles_user_display($args)
     // Display article
 
     if (!empty($article['title'])) {
-        xarTplSetPageTitle(xarVarPrepForDisplay($article['title']), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
+        // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
+        $title = strip_tags($article['title']);
+        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$pubtypeid]['descr']));
+
         // Save some variables to (temporary) cache for use in blocks etc.
         xarVarSetCached('Comments.title','title',$article['title']);
     }
