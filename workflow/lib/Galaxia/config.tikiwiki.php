@@ -88,7 +88,7 @@ if (!function_exists('galaxia_execute_activity')) {
       while (!feof($fp)) {
         $data.=fread($fp,8192);
       }
-	  
+      
       /*
       if(!empty($data)) {
         trigger_error(tra("Fatal error: automatic activity produced some output:$data"),E_USER_WARNING);      
