@@ -36,7 +36,7 @@ function pubsub_adminapi_processq($args)
                      xar_objectid,
                      xar_templateid
               FROM $pubsubprocesstable
-              WHERE xar_status = '" . xarVarPrepForStore('pending') . "'";
+              WHERE xar_status = 'pending'";
     $result = $dbconn->Execute($query);
     if (!$result) return;
 

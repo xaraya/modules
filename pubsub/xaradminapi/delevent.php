@@ -49,8 +49,8 @@ function pubsub_adminapi_delevent($args)
 
     // Delete item from events table
     $query = "DELETE FROM $pubsubeventstable
-            WHERE xar_eventid = " . xarVarPrepForStore($eventid);
-    $dbconn->Execute($query);
+            WHERE xar_eventid = ?";
+    $dbconn->Execute($query, array((int)$eventid));
     if (!$result) return;
 
     return true;

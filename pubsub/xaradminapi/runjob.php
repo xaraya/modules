@@ -53,8 +53,8 @@ function pubsub_adminapi_runjob($args)
               FROM $pubsubregtable
               LEFT JOIN $pubsubeventstable
               ON $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-              WHERE xar_pubsubid = " . xarVarPrepForStore($pubsubid);
-    $result   = $dbconn->Execute($query);
+              WHERE xar_pubsubid = ?";
+    $result   = $dbconn->Execute($query, array((int)$pubsubid));
     if (!$result) return;
 
     if ($result->EOF) return;

@@ -38,8 +38,9 @@ function pubsub_adminapi_addtemplate($args)
     // check this template isn't already in the DB
     $query = "SELECT xar_templateid
               FROM $pubsubtemplatestable
-              WHERE xar_name = '" . xarVarPrepForStore($name) . "'";
-    $result = $dbconn->Execute($query);
+              WHERE xar_name = ?";
+
+    $result = $dbconn->Execute($query, array($name));
     if (!$result) return;
 
     if (!$result->EOF) {
@@ -62,12 +63,9 @@ function pubsub_adminapi_addtemplate($args)
               xar_name,
               xar_template,
               xar_compiled)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarvarPrepForStore($template) . "',
-              '" . xarvarPrepForStore($compiled) . "')";
-    $result = $dbconn->Execute($query);
+            VALUES (?,?,?,?)";
+    $bindvars = array((int)$nextId, $name, $template, $compiled);
+    $result = $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     $nextId = $dbconn->PO_Insert_ID($pubsubtemplatestable, 'xar_templateid');

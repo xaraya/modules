@@ -75,12 +75,12 @@ function pubsub_adminapi_processevent($args)
         $query = "SELECT xar_pubsubid, xar_cid
                     FROM $pubsubeventstable, $pubsubregtable
                    WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                     AND $pubsubeventstable.xar_modid = " . xarVarPrepForStore($modid) . "
-                     AND $pubsubeventstable.xar_itemtype = " . xarVarPrepForStore($itemtype);
+                     AND $pubsubeventstable.xar_modid =?
+                     AND $pubsubeventstable.xar_itemtype = ?";
 //                      . "
-//                     AND $pubsubeventstable. = " . xarVarPrepForStore($cid);
+//                     AND $pubsubeventstable. = " . ($cid);
     
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,array((int)$modid, $itemtype));
         if (!$result) return;
 
         for (; !$result->EOF; $result->MoveNext()) 
@@ -109,11 +109,11 @@ function pubsub_adminapi_processevent($args)
         $query = "SELECT xar_pubsubid
                     FROM $pubsubeventstable, $pubsubregtable
                    WHERE $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                     AND $pubsubeventstable.xar_modid = " . xarVarPrepForStore($modid) . "
-                     AND $pubsubeventstable.xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                     AND $pubsubeventstable.xar_cid = " . xarVarPrepForStore($cid);
-    
-        $result =& $dbconn->Execute($query);
+                     AND $pubsubeventstable.xar_modid = ?
+                     AND $pubsubeventstable.xar_itemtype = ?
+                     AND $pubsubeventstable.xar_cid = ?";
+        $bindvars = array((int)$modid, $itemtype, $cid);
+        $result =& $dbconn->Execute($query, $bindvars);
         if (!$result) return;
     
 
@@ -137,13 +137,10 @@ function pubsub_adminapi_processevent($args)
                   xar_objectid,
                   xar_templateid,
               xar_status)
-                VALUES (
-                  $nextId,
-                  " . xarVarPrepForStore($pubsubid) . ",
-                  " . xarvarPrepForStore($objectid) . ",
-                  " . xarvarPrepForStore($templateid) . ",
-                  '" . xarvarPrepForStore('pending') . "')";
-        $result2 = $dbconn->Execute($query);
+                VALUES (?,?,?,?,
+                  'pending')";
+        $bindvars = array((int)$nextId, (int)$pubsubid, (int)$objectid, (int)$templateid);
+        $result2 =& $dbconn->Execute($query, $bindvars);
         if (!$result2) return;
     }
 

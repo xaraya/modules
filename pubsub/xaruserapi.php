@@ -53,9 +53,10 @@ function pubsub_userapi_updatesubscription($args)
 
     // Update the item
     $query = "UPDATE $pubsubregtable
-              SET xar_actionid = '" . xarVarPrepForStore($actionid) . "'
-              WHERE xar_pubsubid = '" . xarVarPrepForStore($pubsubid) . "'";
-    $dbconn->Execute($query);
+              SET xar_actionid = ?
+              WHERE xar_pubsubid = ?";
+    $bindvars=array($actionid, $pubsubid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     return true;
@@ -93,8 +94,9 @@ function pubsub_userapi_delsubscriptions($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubregtable
-              WHERE xar_userid = '" . xarVarPrepForStore($userid) . "'";
-    $dbconn->Execute($query);
+              WHERE xar_userid = ?";
+    $bindvars=array($userid);
+    $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

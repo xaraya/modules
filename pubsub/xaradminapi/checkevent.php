@@ -57,10 +57,11 @@ function pubsub_adminapi_checkevent($args)
     // check this event isn't already in the DB
     $query = "SELECT xar_eventid
               FROM  $pubsubeventstable
-              WHERE xar_modid = " . xarVarPrepForStore($modid) . "
-              AND   xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-              AND   xar_cid = " . xarVarPrepForStore($cid);
-    $result = $dbconn->Execute($query);
+              WHERE xar_modid = ?
+              AND   xar_itemtype = ?
+              AND   xar_cid = ?";
+    $bindvars = array((int)$modid, $ityemtype, $cid);
+    $result = $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // if event already exists then just return the event id;
@@ -83,14 +84,11 @@ function pubsub_adminapi_checkevent($args)
               xar_itemtype,
               xar_cid,
               xar_groupdescr)
-            VALUES (
-              $eventid,
-              " . xarVarPrepForStore($modid) . ",
-              " . xarVarPrepForStore($itemtype) . ",
-              " . xarVarPrepForStore($cid) . ",
-              '" . xarvarPrepForStore($groupdescr) . "')";
+            VALUES (?,?,?,?,?)";
 
-    $result = $dbconn->Execute($query);
+    $bindvars = array((int)$eventid, (int)$modid, $itemtype, $cid, $groupdescr);
+    $result = $dbconn->Execute($query, $bindvars);
+
     if (!$result) return;
 
     // Get the ID of the item that was inserted

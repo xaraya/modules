@@ -35,8 +35,8 @@ function pubsub_adminapi_deltemplate($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubtemplatestable
-              WHERE xar_templateid = " . xarVarPrepForStore($templateid);
-    $result = $dbconn->Execute($query);
+              WHERE xar_templateid = ?";
+    $result = $dbconn->Execute($query, array((int)$templateid));
     if (!$result) return;
 
     return true;

@@ -38,8 +38,8 @@ function pubsub_adminapi_deljob($args)
 
     // Delete item
     $query = "DELETE FROM $pubsubprocesstable
-              WHERE xar_handlingid = " . xarVarPrepForStore($handlingid);
-    $result = $dbconn->Execute($query);
+              WHERE xar_handlingid = ?";
+    $result = $dbconn->Execute($query, array((int)$handlingid));
     if (!$result) return;
 
     return true;

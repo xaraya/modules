@@ -51,9 +51,9 @@ function pubsub_userapi_getsubscriptions($args)
                WHERE $pubsubeventstable.xar_modid = $modulestable.xar_regid
                  AND $pubsubeventstable.xar_cid = $categoriestable.xar_cid
                  AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                 AND $pubsubregtable.xar_userid =  '" . xarVarPrepForStore($userid) . "'";
+                 AND $pubsubregtable.xar_userid =  ?";
 
-    $result = $dbconn->Execute($query);
+    $result = $dbconn->Execute($query, array((int)$userid));
     if (!$result) return;
 
     $items = array();

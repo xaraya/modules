@@ -105,11 +105,11 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
     // compile the template now
     $compiled = xarTplCompileString($template);
 
-    $template = xarVarPrepForStore($template);
-    $compiled = xarVarPrepForStore($compiled);
+
     $query = "INSERT INTO $pubsubtemplatestable (xar_templateid, xar_name, xar_template, xar_compiled)
-              VALUES ($nextId, '$name', '$template', '$compiled')";
-    $result =& $dbconn->Execute($query);
+              VALUES (?,?,?,?)";
+    $bindvars=array($nextId, $name, $template, $compiled);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Set up module hooks
@@ -270,11 +270,10 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
             $compiled = xarTplCompileString($template);
             $nextId = $dbconn->GenId($pubsubtemplatestable);
 
-            $template = xarVarPrepForStore($template);
-            $compiled = xarVarPrepForStore($compiled);
             $query = "INSERT INTO $pubsubtemplatestable (xar_templateid, xar_name, xar_template, xar_compiled)
-                      VALUES ($nextId, '$name', '$template', '$compiled')";
-            $result =& $dbconn->Execute($query);
+                      VALUES (?, ?, ?, ?)";
+            $bindvars=array($nextId, $name, $template, $compiled);
+            $result =& $dbconn->Execute($query,$bindvars);
             if (!$result) return;
 
             // fall through to the next upgrade

@@ -81,15 +81,9 @@ function pubsub_userapi_adduser($args)
               xar_actionid,
               xar_subdate,
               xar_email)
-            VALUES (
-              $nextId,
-              " . xarVarPrepForStore($eventid) . ",
-              " . xarVarPrepForStore($userid) . ",
-              " . xarvarPrepForStore($actionid) . ",
-              " . time() . ", 
-             '" . xarvarPrepForStore($email) . "'
-              " .")";
-    $dbconn->Execute($query);
+            VALUES (?,?,?,?," . time() . ",?)";
+    $bindvars = array((int)$nextId, $eventid, $userid, $actionid, $email);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // return pubsub ID

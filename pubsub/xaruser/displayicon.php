@@ -108,13 +108,14 @@ function pubsub_user_displayicon($args)
 
     $query = "SELECT xar_pubsubid
                 FROM $pubsubeventstable, $pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
-                 AND $pubsubeventstable.xar_itemtype = '" . xarVarPrepForStore($itemtype) . "'
-                 AND $pubsubeventstable.xar_cid = '" . xarVarPrepForStore($cid) . "'
+               WHERE $pubsubeventstable.xar_modid = ?
+                 AND $pubsubeventstable.xar_itemtype = ?
+                 AND $pubsubeventstable.xar_cid = ?
                  AND $pubsubeventstable.xar_eventid = $pubsubregtable.xar_eventid
-                 AND $pubsubregtable.xar_userid = $userid";
+                 AND $pubsubregtable.xar_userid = ?";
 
-    $result = $dbconn->Execute($query);
+        $bindvars = array((int)$modid, $itemtype, $cid, $userid);
+        $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     if ($result->EOF) {
         /**

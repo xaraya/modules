@@ -52,10 +52,10 @@ function pubsub_adminapi_getevent($args)
                      xar_groupdescr,
                      $categoriestable.xar_name
               FROM  $pubsubeventstable, $modulestable, $categoriestable
-              WHERE xar_eventid = " . xarVarPrepForStore($eventid) . "
+              WHERE xar_eventid = ?
               AND   $pubsubeventstable.xar_cid = $categoriestable.xar_cid
               AND   $pubsubeventstable.xar_modid = $modulestable.xar_regid";
-    $result = $dbconn->Execute($query);
+    $result = $dbconn->Execute($query, array((int)$eventid));
     if (!$result) return;
 
     $info = array();

@@ -51,11 +51,12 @@ function pubsub_adminapi_updatejob($args)
 
     // Update the item
     $query = "UPDATE $pubsubprocesstable
-              SET xar_pubsubid = " . xarVarPrepForStore($pubsubid) . ",
-                  xar_objectid = " . xarVarPrepForStore($objectid) . ",
-                  xar_status = '" . xarVarPrepForStore($status) . "'
-            WHERE xar_handlingid = " . xarVarPrepForStore($handlingid);
-    $result = $dbconn->Execute($query);
+              SET xar_pubsubid = ?,
+                  xar_objectid = ?,
+                  xar_status = ?
+            WHERE xar_handlingid = ?";
+        $bindvars = array((int)$pubsubid, (int)$objectid, $status, $handlingid);
+        $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

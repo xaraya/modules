@@ -46,11 +46,12 @@ function pubsub_adminapi_updatetemplate($args)
 
     // Update the item
     $query = "UPDATE $pubsubtemplatestable
-              SET xar_template = '" . xarVarPrepForStore($template) . "',
-                  xar_compiled = '" . xarVarPrepForStore($compiled) . "',
-                  xar_name = '" . xarVarPrepForStore($name) . "'
-              WHERE xar_templateid = " . xarVarPrepForStore($templateid);
-    $result = $dbconn->Execute($query);
+              SET xar_template = ?,
+                  xar_compiled = ?,
+                  xar_name = ?
+              WHERE xar_templateid = ?";
+    $bindvars = array($template, $compiled, $name, (int)$templateid);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

@@ -65,11 +65,12 @@ function pubsub_adminapi_updateevent($args)
 
     // Update the item
     $query = "UPDATE $pubsubeventstable
-              SET xar_modid = " . xarVarPrepForStore($module) . ",
-                  xar_itemtype = " . xarVarPrepForStore($groupdescr) . ",
-                  xar_groupdescr = '" . xarVarPrepForStore($groupdescr) . "'
-              WHERE xar_eventid = " . xarVarPrepForStore($eventid);
-    $result = $dbconn->Execute($query);
+              SET xar_modid = ?,
+                  xar_itemtype = ?,
+                  xar_groupdescr = ?
+              WHERE xar_eventid = ?";
+        $bindvars = array((int)$module, $itemtype, $groupdescr, (int)$eventid);
+        $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     return true;

@@ -50,12 +50,13 @@ function pubsub_userapi_unsubscribe($args)
     // fetch pubsubid to unsubscribe from
     $query = "SELECT xar_pubsubid
                 FROM $pubsubeventstable, $pubsubregtable
-               WHERE $pubsubeventstable.xar_modid = '" . xarVarPrepForStore($modid) . "'
+               WHERE $pubsubeventstable.xar_modid = ?
                  AND $pubsubregtable.xar_eventid = $pubsubeventstable.xar_eventid
-                 AND $pubsubregtable.xar_userid = '" . xarVarPrepForStore($userid) . "'
-                 AND $pubsubeventstable.xar_cid = '" . xarVarPrepForStore($cid) . "'";
+                 AND $pubsubregtable.xar_userid = ?
+                 AND $pubsubeventstable.xar_cid = ?";
 
-    $result = $dbconn->Execute($query);
+    $bindvars = array((int)$modid, (int)$userid, $cid);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result || $result->EOF) return;
 
     list($pubsubid) = $result->fields;
