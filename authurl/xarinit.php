@@ -54,6 +54,20 @@ function authurl_init()
 }
 
 /**
+ * module upgrade function
+ *
+ */
+function authurl_upgrade($oldVersion)
+{
+    switch($oldVersion) {
+    case '1.0':
+        // compatability upgrade, nothing to be done
+        break;
+    }
+    return true;
+}
+
+/**
  * module removal function
 */
 function authurl_delete()
