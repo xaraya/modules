@@ -16,8 +16,9 @@ function censor_xartables()
 { 
     // Initialise table array
     $xartable = array(); 
+    $prefix = xarDBGetSiteTablePrefix();
     // Get the name for the autolinks item table
-    $censor = xarConfigGetVar('prefix') . '_censor'; 
+    $censor = $prefix . '_censor'; 
     // Set the table name
     $xartable['censor'] = $censor; 
     // Return the table information
