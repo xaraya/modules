@@ -26,4 +26,8 @@
   </xar:ml>
 </p>
 
-<a href="#xarModURL('translations', 'admin', 'release')#"><xar:mlkey>GO</xar:mlkey></a><br />
+<!----
+<a href="#xarModURL('translations', 'admin', 'release')#">
+---->
+<a href="#xarModURL('translations', 'admin', 'start')#">
+<xar:mlkey>Release</xar:mlkey></a> (not yet implemented)<br />

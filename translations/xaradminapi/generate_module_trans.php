@@ -61,12 +61,6 @@ function translations_adminapi_generate_module_trans($args)
     foreach ($allcontexts as $context)
         $allCtxNames[$context->getType()] = $backend->getContextNames($context->getType());
 
-/*    $allCtxNames[XARMLS_CTXTYPE_FILE] = $backend->getContextNames(XARMLS_CTXTYPE_FILE);
-    $allCtxNames[XARMLS_CTXTYPE_TEMPLATE] = $backend->getContextNames(XARMLS_CTXTYPE_TEMPLATE);
-    $allCtxNames[XARMLS_CTXTYPE_INCLTEMPL] = $backend->getContextNames(XARMLS_CTXTYPE_INCLTEMPL);
-    $allCtxNames[XARMLS_CTXTYPE_BLKTEMPL] = $backend->getContextNames(XARMLS_CTXTYPE_BLKTEMPL);
-    $allCtxNames[XARMLS_CTXTYPE_BLOCK] = $backend->getContextNames(XARMLS_CTXTYPE_BLOCK);
-*/
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'TranslationsGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
     if (!$gen->bindDomain(XARMLS_DNTYPE_MODULE, $modname)) return;
@@ -79,11 +73,7 @@ function translations_adminapi_generate_module_trans($args)
 
             $context = $GLOBALS['MLS']->getContextByType($ctxType);
             if ($context->getName() != '') $sName = $context->getName() . "::" . $ctxName;
-/*            if ($ctxType == XARMLS_CTXTYPE_TEMPLATE) $sName = 'templates::'.$ctxName;
-            elseif ($ctxType == XARMLS_CTXTYPE_INCLTEMPL) $sName = 'templateincludes::'.$ctxName;
-            elseif ($ctxType == XARMLS_CTXTYPE_BLKTEMPL) $sName = 'templateblocks::'.$ctxName;
-            elseif ($ctxType == XARMLS_CTXTYPE_BLOCK) $sName = 'blocks::'.$ctxName;
-*/            else $sName = $ctxName;
+            else $sName = $ctxName;
 
             $statistics[$sName] = array('entries'=>0, 'keyEntries'=>0);
 
