@@ -27,11 +27,11 @@
                             <xar:loop name="$users">
                                 <xar:if condition="isset($receipient) and $loop:item['uid'] eq $receipient">
                                     <option value="#$loop:item['uid']#" selected="selected">
-                                        #$loop:item['uname']#
+                                        #$loop:item['name'] (#$loop:item['uname']#)
                                     </option>
                                 <xar:else />
                                     <option value="#$loop:item['uid']#">
-                                        #$loop:item['uname']#
+                                        #$loop:item['name'] (#$loop:item['uname']#)
                                     </option>
                                 </xar:if>
                             </xar:loop>
