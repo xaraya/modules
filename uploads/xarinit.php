@@ -17,66 +17,40 @@
 function uploads_init()
 {
 
-    if( isset( $_SERVER['PATH_TRANSLATED'] ) )
-    {
-        $uploads_directory = dirname(realpath($_SERVER['PATH_TRANSLATED'])) . '/var/uploads/';
-    } elseif( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
-        $uploads_directory = dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/var/uploads/';
+    if(xarServerGetVar('PATH_TRANSLATED')) {
+        $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));
+    } elseif(xarServerGetVar('SCRIPT_FILENAME')) {
+        $base_directory = dirname(realpath(xarServerGetVar('SCRIPT_FILENAME')));
     } else {
-        $uploads_directory = 'var/uploads/';
+        $base_directory = './';
     }
-    xarModSetVar('uploads', 'uploads_directory', $uploads_directory);
-    xarModSetVar('uploads', 'maximum_upload_size', '100000');
-    xarModSetVar('uploads', 'allowed_types', 'gif;jpg;zip;tar.gz;tgz');
-    xarModSetVar('uploads', 'confirm_delete', '1');
-
-    xarModSetVar('uploads', 'max_image_width', '600');
-    xarModSetVar('uploads', 'max_image_height', '800');
-    xarModSetVar('uploads', 'thumbnail_setting', '0');
-    xarModSetVar('uploads', 'thumbnail_path', '');
-    xarModSetVar('uploads', 'netpbm_path', '');
-
-    xarModSetVar('uploads', 'import_directory',  '');
-    xarModSetVar('uploads', 'obfuscate_imports', '0');
+    xarModSetVar('uploads', 'path.uploads-directory',   $base_directory . 'var/uploads');
+    xarModSetVar('uploads', 'path.imports-directory',   $base_directory . 'var/imports');
+    xarModSetVar('uploads', 'file.maxsize',             '10000000');
+    xarModSetVar('uploads', 'file.censored-mimetypes',   serialize(array()));
+    xarModSetVar('uploads', 'file.delete-confirmation',  TRUE);
+    xarModSetVar('uploads', 'file.obfuscate-on-import',  FALSE);
+    xarModSetVar('uploads', 'file.obfuscate-on-upload',  TRUE);
         
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
+    
     $uploadstable = $xartable['uploads'];
-    $blobstable = $xartable['blobs'];
+    $blobstable = $xartable['uploads_blobs'];
 
-    // Xaraya offers the xarCreateTable function
-    // contained in the following file to provide create table functionality.
     xarDBLoadTableMaintenanceAPI();
-
-    // Define the table structure in this associative array
-    /*CREATE TABLE `xar_uploads` (
-    `xar_ulid` INT( 32 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    `xar_ulmod` VARCHAR( 32 ) NOT NULL ,
-    `xar_ulmodid` INT NOT NULL ,
-    `xar_uluid` INT( 32 ) UNSIGNED NOT NULL ,
-    `xar_ulfile` VARCHAR( 254 ) NOT NULL ,
-    `xar_ulhash` VARCHAR( 254 ) NOT NULL ,
-    `xar_ulapp` TINYINT( 3 ) DEFAULT '0' NOT NULL ,
-    `xar_ulbid` INT( 32 ) UNSIGNED DEFAULT '0' NOT NULL ,
-    `xar_ultype` CHAR( 1 ) NOT NULL, 
-    INDEX ( `xar_ulmod` ) 
-    );*/
     $uploadsfields = array(
-        'xar_ulid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_ulmod'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
-        'xar_ulmodid'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0'),
-    'xar_uluid'=>array('type'=>'integer','size'=>32,'null'=>FALSE),
-    'xar_ulfile'=>array('type'=>'varchar','size'=>254,'null'=>FALSE),
-    'xar_ulhash'=>array('type'=>'varchar','size'=>254,'null'=>FALSE),
-    'xar_ulapp'=>array('type'=>'integer','size'=>3,'null'=>FALSE,'default'=>'0'),
-    'xar_ulbid'=>array('type'=>'integer','size'=>32,'null'=>FALSE,'default'=>'0'),
-    'xar_ultype'=>array('type'=>'char','size'=>1,'null'=>FALSE),
-    'xar_ulmime'=>array('type' => 'varchar','size' => 128,'null' => false,'default' => 'application/octet-stream')
+        'xar_file_id'    => array('type'=>'integer', 'size'=>32      'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_userid'     => array('type'=>'integer', 'size'=>32,     'null'=>FALSE),
+        'xar_filename'   => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
+        'xar_location'   => array('type'=>'varchar', 'size'=>254,    'null'=>FALSE),
+        'xar_status'     => array('type'=>'tinyint', 'size'=>3,      'null'=>FALSE,  'default'=>'0'),
+        'xar_filesize'   => array('type'=>'integer', 'size'=>64,     'null'=>FALSE);
+        'xar_store_type' => array('type'=>'char',    'size'=>1,      'null'=>FALSE),
+        'xar_mime_type'  => array('type'=>'varchar', 'size' => 128,  'null'=>FALSE,  'default' => 'application/octet-stream')
     );
         
-
-
         
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
@@ -93,9 +67,9 @@ function uploads_init()
      );*/
 
     $blobsfields = array(
-        'xar_ulbid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_ulid'=>array('type'=>'varchar','size'=>32,'null'=>FALSE),
-        'xar_ulblob'=>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0')
+        'xar_upload_blob_id' =>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
+        'xar_file_id'      =>array('type'=>'varchar','size'=>32,'null'=>FALSE),
+        'xar_ulblob'         =>array('type'=>'integer','size'=>'small','null'=>FALSE,'default'=>'0')
     );
         
     // Create the Table - the function will return the SQL is successful or
@@ -166,11 +140,11 @@ function uploads_upgrade($oldversion)
             if (!$result) return;
             
             break;
-		case .04:
-		case .05:
-		default:
-			//Add mimetype column to DB
-//			ALTER TABLE `xar_uploads` ADD `ulmime` VARCHAR( 128 ) DEFAULT 'application/octet-stream' NOT NULL ;
+        case .04:
+        case .05:
+        default:
+            //Add mimetype column to DB
+//            ALTER TABLE `xar_uploads` ADD `ulmime` VARCHAR( 128 ) DEFAULT 'application/octet-stream' NOT NULL ;
 
             // Get database information
             list($dbconn) = xarDBGetConn();
@@ -184,7 +158,7 @@ function uploads_upgrade($oldversion)
                                      array('command' => 'add',
                                            'field' => 'xar_ulmime',
                                            'type' => 'varchar',
-										   'size' => 128,
+                                           'size' => 128,
                                            'null' => false,
                                            'default' => 'application/octet-stream'));
             $result = &$dbconn->Execute($query);
