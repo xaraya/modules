@@ -85,7 +85,7 @@ function articles_randomblock_display($blockinfo)
     if (!empty($vars['alttitle'])) {
             $blockinfo['title'] = $vars['alttitle'];
     }
-    if (!empty($vars['pubtypeid'])) {
+    if (empty($vars['pubtypeid'])) {
             $vars['pubtypeid'] = 0;
     }
     
