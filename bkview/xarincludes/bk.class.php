@@ -221,7 +221,12 @@ class bkRepo {
     }
 
     function bkSearch($term,$what_to_search = BK_SEARCH_CSET) {
-        $cmd = "bk prs -h -d'\$unless(:MERGE:){\$each(:C:){:I:|(:C:)}\n}' | grep $term";
+        $result = array();
+        switch($what_to_search) {
+        case BK_SEARCH_CSET:
+            $cmd = "bk prs -h -d'\$unless(:MERGE:){\$each(:C:){:I:|(:C:)}\n}' | grep $term";
+            break;
+        }
         $result = $this->_run($cmd);
         return $result;
     }
