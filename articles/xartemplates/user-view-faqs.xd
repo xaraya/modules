@@ -1,5 +1,5 @@
 <xar:template file="publinks" type="module" />
-<a name="titles"/>
+<a name="titles"></a>
 <xar:if condition="!empty($ptid) or !empty($catid)">
     <xar:categories-navigation layout="trails" showchildren="1" module="articles" itemtype="$ptid" catid="$catid" />
 </xar:if>
@@ -7,7 +7,7 @@
 <xar:if condition="!empty($titles) and count($titles) gt 0">
 <ul>
 <xar:foreach in="$titles" key="$aid" value="$title">
-<li><a href="#xarServerGetCurrentURL()####$aid#">#$title#</a> </li>
+<li><a href="#xarServerGetCurrentURL()###$aid#">#$title#</a> </li>
 </xar:foreach>
 </ul>
 </xar:if>
