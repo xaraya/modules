@@ -23,7 +23,7 @@ function subitems_adminapi_ddobjectlink_delete($args)
     if (!isset($objectid) && (!isset($modid) || !isset($itemtype)))     {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'invalid count', 'admin', 'delete', 'subitems');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }

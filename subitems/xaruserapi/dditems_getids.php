@@ -22,7 +22,7 @@ function subitems_userapi_dditems_getids($args)
     if (!isset($objectid) || !isset($itemid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'invalid count of params', 'user', 'dditems_getids', 'subitems');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
     }
