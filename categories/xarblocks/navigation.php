@@ -47,7 +47,7 @@ function categories_navigationblock_info()
 function categories_navigationblock_display($blockinfo)
 {
     // Security Check
-    if(!xarSecurityCheck('ViewBaseBlocks',0,'Block',"All:$blockinfo[title]:All")) return;
+    if (!xarSecurityCheck('ReadCategoryBlock', 0, 'Block', "All:$blockinfo[title]:All")) { return; }
 
     // Get variables from content block
     if (!is_array($blockinfo['content'])) {
