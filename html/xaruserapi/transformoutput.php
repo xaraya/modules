@@ -68,7 +68,7 @@ function html_userapitransformoutput($text)
     if (!strlen(trim($text))) 
     {
         return '';
-	}	
+    }    
     if ($transformtype == 1){
         $text = preg_replace("/\n/si","<br />",$text);
     } elseif ($transformtype == 2){
