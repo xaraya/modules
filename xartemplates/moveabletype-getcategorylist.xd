@@ -11,13 +11,19 @@
                       <member>
                         <name>categoryId</name>
                         <value>
-                          <int>#$loop:item.categoryId#</int>
+                          <string>#$loop:item.categoryId#</string>
                         </value>
                       </member>
                       <member>
                         <name>categoryName</name>
                         <value><string>#$loop:item.categoryName#</string></value>
                       </member>
+                      <xar:if condition="isset($loop:item.isPrimary)">
+                        <member>
+                          <name>isPrimary</name>
+                          <value><boolean>#$loop:item.isPrimary#</boolean></value>
+                        </member>
+                      </xar:if>
                     </struct>
                   </value>
                 </xar:loop>  
