@@ -74,7 +74,7 @@ function newsletter_admin_importissueareapub()
                                      'inorout'     => 'in',
                                      'rightorleft' => 'right' 
                                  ))) {
-                $data['error'] = xarML('Error: Could not move category .'.$category['name']);
+                $data['error'] = xarML('Error: Could not move category #(1).', $category['name']);
                 return $data;
             }
         }
@@ -111,7 +111,7 @@ function newsletter_admin_importissueareapub()
     // Import the owners data
     $nwsltrOwners = $nwsltrTables['nwsltrOwners'];
     $iapOwners = $iapTables['iapOwners'];
-    $data['output'][] = xarML('Importing the '.$iapOwners.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapOwners);
 
     // Get the iap owners
     $query = "SELECT xar_uid,
@@ -123,7 +123,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapOwners.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapOwners);
         return $data;
     }
 
@@ -143,9 +143,9 @@ function newsletter_admin_importissueareapub()
         // Check for an error
         if (!$ownerID) { 
             // Skip if the owner already exists
-            $data['output'][] = xarML('Owner ID '.$uid.' already exists in '.$nwsltrOwners.' table - skipping.');
+            $data['output'][] = xarML('Owner ID #(1) already exists in #(2) table - skipping.', $uid, $nwsltrOwners);
         } else {
-            $data['output'][] = xarML('Inserting data into '.$nwsltrOwners.' table. Owner ID = '. $uid);
+            $data['output'][] = xarML('Inserting data into #(1) table. Owner ID = #(2)', $nwsltrOwners, $uid);
         }
     }
 
@@ -155,7 +155,7 @@ function newsletter_admin_importissueareapub()
     // Import the disclaimers table
     $nwsltrDisclaimers = $nwsltrTables['nwsltrDisclaimers'];
     $iapDisclaimers = $iapTables['iapDisclaimers'];
-    $data['output'][] = xarML('Importing the '.$iapDisclaimers.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapDisclaimers);
     $oldDisclaimers = array();
 
     // Get the iap disclaimers
@@ -168,7 +168,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapDisclaimers.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapDisclaimers);
         return $data;
     }
 
@@ -186,12 +186,12 @@ function newsletter_admin_importissueareapub()
 
         // Check for an error
         if (!$disclaimerID) { 
-            $data['error'] = xarML('Error inserting data into '.$nwsltrDisclaimers.' table.');
+            $data['error'] = xarML('Error inserting data into #(1) table.', $nwsltrDisclaimers);
             return $data;
         } else {
             // Set old id to the new id 
             $oldDisclaimers[$id] = $disclaimerID;
-            $data['output'][] = xarML('Inserting data into '.$nwsltrDisclaimers.' table.  Old ID = '.$id.' New ID = '.$disclaimerID);
+            $data['output'][] = xarML('Inserting data into #(1) table.  Old ID = #(2) New ID = #(3)', $nwsltrDisclaimers, $id, $disclaimerID);
         }
     }
 
@@ -201,7 +201,7 @@ function newsletter_admin_importissueareapub()
     // Import the publication data
     $nwsltrPublications = $nwsltrTables['nwsltrPublications'];
     $iapPublications = $iapTables['iapPublications'];
-    $data['output'][] = xarML('Importing the '.$iapPublications.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapPublications);
     $oldPublications = array();
 
     // Get items
@@ -225,7 +225,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapPublications.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapPublications);
         return $data;
     }
 
@@ -269,12 +269,12 @@ function newsletter_admin_importissueareapub()
                                      'subject' => $subject));
         // Check for an error
         if (!$pubID) { 
-            $data['error'] = xarML('Error inserting data into '.$nwsltrPublications.' table.');
+            $data['error'] = xarML('Error inserting data into #(1) table.', $nwsltrPublications);
             return $data;
         } else {
             // Set old id to the new id 
             $oldPublications[$id] = $pubID;
-            $data['output'][] = xarML('Inserting data into '.$nwsltrPublications.' table.  Old ID = '.$id.' New ID = '.$pubID);
+            $data['output'][] = xarML('Inserting data into #(1) table.  Old ID = #(2) New ID = #(3)', $nwsltrPublications, $id, $pubID);
         }
     }
 
@@ -284,7 +284,7 @@ function newsletter_admin_importissueareapub()
     // Import the issues table
     $nwsltrIssues = $nwsltrTables['nwsltrIssues'];
     $iapIssues = $iapTables['iapIssues'];
-    $data['output'][] = xarML('Importing the '.$iapIssues.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapIssues);
     $oldIssues = array();
 
     // Get the owners
@@ -301,7 +301,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapIssues.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapIssues);
         return $data;
     }
 
@@ -327,12 +327,12 @@ function newsletter_admin_importissueareapub()
 
         // Check for an error
         if (!$issueID) { 
-            $data['error'] = xarML('Error inserting data into '.$nwsltrIssues.' table.');
+            $data['error'] = xarML('Error inserting data into #(1) table.', $nwsltrIssues);
             return $data;
         } else {
             // Set old id to the new id 
             $oldIssues[$id] = $issueID;
-            $data['output'][] = xarML('Inserting data into '.$nwsltrIssues.' table. Old ID = '.$id.' New ID = '.$issueID);
+            $data['output'][] = xarML('Inserting data into #(1) table. Old ID = #(2) New ID = #(3)', $nwsltrIssues, $id, $issueID);
         }
     }
 
@@ -342,7 +342,7 @@ function newsletter_admin_importissueareapub()
     // Import the stories table
     $nwsltrStories = $nwsltrTables['nwsltrStories'];
     $iapStories = $iapTables['iapStories'];
-    $data['output'][] = xarML('Importing the '.$iapStories.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapStories);
     $oldStories = array();
 
     // Get the iap stories 
@@ -367,7 +367,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapStories.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapStories);
         return $data;
     }
 
@@ -414,12 +414,12 @@ function newsletter_admin_importissueareapub()
 
         // Check for an error
         if (!$storyID) { 
-            $data['error'] = xarML('Error inserting data into '.$nwsltrStories.' table.');
+            $data['error'] = xarML('Error inserting data into #(1) table.', $nwsltrStories);
             return $data;
         } else {
             // Set old id to the new id 
             $oldStories[$id] = $storyID;
-            $data['output'][] = xarML('Inserting data into '.$nwsltrStories.' table. Old ID = '.$id.' New ID = '.$storyID);
+            $data['output'][] = xarML('Inserting data into #(1) table. Old ID = #(2) New ID = #(3)', $nwsltrStories, $id, $storyID);
         }
     }
 
@@ -429,7 +429,7 @@ function newsletter_admin_importissueareapub()
     // Import the topics table
     $nwsltrTopics = $nwsltrTables['nwsltrTopics'];
     $iapTopics = $iapTables['iapTopics'];
-    $data['output'][] = xarML('Importing the '.$iapTopics.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapTopics);
     
     // Get the iap topics
     $query = "SELECT xar_issueid,
@@ -442,7 +442,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapTopics.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapTopics);
         return $data;
     }
 
@@ -464,11 +464,11 @@ function newsletter_admin_importissueareapub()
 
         // Check for an error
         if (!$topic) { 
-            $data['error'] = xarML('Error inserting data into '.$nwsltrTopics.' table.');
+            $data['error'] = xarML('Error inserting data into #(1) table.', $nwsltrTopics);
             return $data;
         } else {
             // Set old id to the new id 
-            $data['output'][] = xarML('Inserting data into '.$nwsltrTopics.' table. Issue/Story IDs = '.$issueId.'-'.$storyId);
+            $data['output'][] = xarML('Inserting data into #(1) table. Issue/Story IDs = #(2)-#(3)', $nwsltrTopics, $issueId, $storyId);
         }
     }
 
@@ -478,7 +478,7 @@ function newsletter_admin_importissueareapub()
     // Import the subscriptions table
     $nwsltrSubscriptions = $nwsltrTables['nwsltrSubscriptions'];
     $iapSubscriptions = $iapTables['iapSubscriptions'];
-    $data['output'][] = xarML('Importing the '.$iapSubscriptions.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapSubscriptions);
 
     // Get the iap subscriptions
     $query = "SELECT xar_uid,
@@ -490,7 +490,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapSubscriptions.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapSubscriptions);
         return $data;
     }
 
@@ -510,10 +510,10 @@ function newsletter_admin_importissueareapub()
 
         // Check for an error
         if (!$subID) { 
-            $data['error'] = xarML('Error inserting data into '.$nwsltrSubscriptions.' table.');
+            $data['error'] = xarML('Error inserting data into #(1) table.', $nwsltrSubscriptions);
             return $data;
         } else {
-            $data['output'][] = xarML('Inserting data into '.$nwsltrSubscriptions.' table. Subscription ID = '.$uid);
+            $data['output'][] = xarML('Inserting data into #(1) table. Subscription ID = #(2)', $nwsltrSubscriptions, $uid);
         }
     }
 
@@ -523,7 +523,7 @@ function newsletter_admin_importissueareapub()
     // Import the alternative subscriptions table
     $nwsltrAltSubscriptions = $nwsltrTables['nwsltrAltSubscriptions'];
     $iapAltSubscriptions = $iapTables['iapAltSubscriptions'];
-    $data['output'][] = xarML('Importing the '.$iapAltSubscriptions.' table.');
+    $data['output'][] = xarML('Importing the #(1) table.', $iapAltSubscriptions);
 
     // Get the iap alternative subscriptions
     $query = "SELECT xar_id,
@@ -537,7 +537,7 @@ function newsletter_admin_importissueareapub()
 
     // Check for an error
     if (!$result) { 
-        $data['error'] = xarML('Error retrieving data from '.$iapAltSubscriptions.' table.');
+        $data['error'] = xarML('Error retrieving data from #(1) table.', $iapAltSubscriptions);
         return $data;
     }
 
@@ -560,10 +560,10 @@ function newsletter_admin_importissueareapub()
 
         // Check for an error
         if (!$altID) { 
-            $data['error'] = xarML('Error inserting data into '.$nwsltrAltSubscriptions.' table.');
+            $data['error'] = xarML('Error inserting data into #(1) table.', $nwsltrAltSubscriptions);
             return $data;
         } else {
-            $data['output'][] = xarML('Inserting data into '.$nwsltrAltSubscriptions.' table. Alt Subscription ID = '.$altID);
+            $data['output'][] = xarML('Inserting data into #(1) table. Alt Subscription ID = #(2)', $nwsltrAltSubscriptions, $altID);
         }
     }
 
