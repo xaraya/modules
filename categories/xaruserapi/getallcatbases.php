@@ -10,6 +10,21 @@
  * @returns array of category bases
  * @return list of category bases
  */
+
+/*
+ * Explanation of the output formats:
+ * 'cids': an array of category ids only; zero-indexed numeric keys
+ * 'tree': a comprehensive array of category base details; more information below
+ * 'flat': an array of category-base arrays; zero-indexed numeric keys
+ */
+
+/*
+ * NOTE:
+ * This function is over-complicated at the moment as it uses module
+ * variables to store its info. It will be greatly implified when the
+ * data is moved to a table of its own.
+ */
+
 function categories_userapi_getallcatbases($args)
 {
     // Expand arguments from argument array
@@ -154,21 +169,22 @@ function categories_userapi_getallcatbases($args)
                     // includes most expanded information that you may want to use.
                     //
                     // The main category base details are here:
-                    //    [moduleid]['itemtypes'][itemtype]['catbases'][baseid]
+                    //    [$moduleid]['itemtypes'][$itemtype]['catbases'][$baseid]
                     //
                     // The category for the base is expanded here:
-                    //    [moduleid]['itemtypes'][itemtype]['catbases'][baseid]['category']
+                    //    [$moduleid]['itemtypes'][$itemtype]['catbases'][$baseid]['category']
                     //
                     // The module details can be found here:
-                    //    [moduleid]['module']
+                    //    [$moduleid]['module']
                     //
                     // Item type details can be found here:
-                    //    [moduleid]['itemtypes'][itemtype]['itemtype']
+                    //    [$moduleid]['itemtypes'][$itemtype]['itemtype']
                     //
 
                     $result[$modinfo['modid']]['itemtypes'][$currentitemtype]['itemtype'] = $currentitemtypeinfo;
                     $result[$modinfo['modid']]['itemtypes'][$currentitemtype]['catbases'][$bid] = array(
                         'bid' => $bid,
+                        'name' => '',
                         'category' => array(
                             'cid' => $catinfo['cid'],
                             'name' => $catinfo['name'],
@@ -179,7 +195,9 @@ function categories_userapi_getallcatbases($args)
                 } else {
                     $result[] = array(
                         'bid' => $bid,
+                        'name' => '',
                         'cid' => $cid,
+                        'catname' => $catinfo['name'],
                         'module' => $modinfo['module'],
                         'modid' => $modinfo['modid'],
                         'itemtype' => $currentitemtype

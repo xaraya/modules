@@ -1,0 +1,82 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Categories Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>View Category Bases</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<xar:if condition="!empty($catbases)">
+    <table>
+        <xar:loop name="$catbases">
+        <xar:if condition="$loop:index eq 0">
+            <!--- Prepare table headings in the first iteration of the loop --->
+            <caption>
+                <!--- Caption indicates scope: all, module or itemtype --->
+                <xar:mlstring>Category bases</xar:mlstring>
+                <xar:if condition="!empty($modid)">
+                    <xar:mlstring> for module</xar:mlstring> "#$loop:item['module']#"
+                    <xar:if condition="!empty($itemtype)">
+                        <xar:mlstring> and item type</xar:mlstring> "#$loop:item['itemtype']#"
+                        <xar:if condition="!empty($loop:item['itemtypename'])">
+                            (#$loop:item['itemtypename']#)
+                        </xar:if>
+                    </xar:if>
+                </xar:if>
+            </caption>
+
+            <tr>
+                <th scope="col"><xar:mlstring>ID</xar:mlstring></th>
+                <th scope="col"><xar:mlstring>Name</xar:mlstring></th>
+                <xar:if condition="empty($modid)">
+                    <th scope="col"><xar:mlstring>Owning Module</xar:mlstring></th>
+                </xar:if>
+                <xar:if condition="empty($itemtype)">
+                    <th scope="col"><xar:mlstring>Item Type</xar:mlstring></th>
+                </xar:if>
+                <th scope="col"><xar:mlstring>Root Category</xar:mlstring></th>
+                <th scope="col"><xar:mlstring>Options</xar:mlstring></th>
+            </tr>
+        </xar:if>
+
+        <tr>
+            <td>#$loop:item['bid']#</td>
+            <td>#$loop:item['name']#</td>
+            <xar:if condition="empty($modid)">
+                <td>#$loop:item['module']#</td>
+            </xar:if>
+            <xar:if condition="empty($itemtype)">
+                <td>
+                    #$loop:item['itemtype']#
+                    <xar:if condition="!empty($loop:item['itemtypename'])">
+                        (#$loop:item['itemtypename']#)
+                    </xar:if>
+                </td>
+            </xar:if>
+            <td>
+                <a href="#xarModURL('categories', 'admin', 'modifycat', array('cid' => $loop:item['cid']))#" title="#xarML('Modify category')#">#$loop:item['catname']#</a>
+            </td>
+            <td style="text-align: center;">
+                <a href="#xarModURL('categories', 'admin', 'modifycatbase', array('cid' => $loop:item['cid']))#">
+                    <xar:mlstring>Modify</xar:mlstring>
+                </a>
+                &nbsp;|&nbsp;
+                <a href="#xarModURL('categories', 'admin', 'deletecatbase', array('cid' => $loop:item['cid']))#">
+                    <xar:mlstring>Delete</xar:mlstring>
+                </a>
+            </td>
+        </tr>
+        </xar:loop>
+    </table>
+
+<xar:else/>
+    <xar:mlstring><p>No matching category bases defined.</p></xar:mlstring>
+</xar:if>
+
+<xar:if condition="!empty($modid) and !empty($itemtype)">
+    <!--- New allowed where we know the module and item type --->
+    <p>
+        <a href="#xarModURL('categories', 'admin', 'newcatbase', array('modid' => $modid, 'itemtype' => $itemtype))#">
+            <xar:mlstring>New</xar:mlstring>
+        </a>
+    </p>
+</xar:if>
+
+</div>
+</div>
