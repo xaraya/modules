@@ -1,5 +1,5 @@
 <xar:base-include-javascript module="base" filename="formcheck.js" position="head" />
-<script language="JavaScript">
+<script type="text/javascript">
 <!--
     // Enter name of mandatory fields
     var fieldRequired = Array("itemsperpage");
