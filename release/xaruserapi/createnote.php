@@ -22,14 +22,16 @@ function release_userapi_createnote($args)
 
     $releasetable = $xartable['release_notes'];
 
-    if (empty($approved)){
-        $approved = 1;
-    }
-
-    if (empty($certified)){
-        $certified = 1;
-    }
-
+    $certified   = !empty($certified) ? $certified : '1';
+    $approved    = !empty($approved)  ? $approved : '1';
+    $priceterms  = !empty($priceterms)? $priceterms : '';
+    $demolink    = !empty($demolink)? $demolink : '';
+    $dllink      = !empty($dllink)? $dllink : '';
+    $supportlink = !empty($supportlink)? $supportlink : '';
+    $changelog   = !empty($changelog)? $changelog : '';
+    $notes       = !empty($notes)? $notes : '';
+    $type        = !empty($type)? $type : 'Module';
+    $rstate      = !empty($rstate)? $rstate : 0;    
     // Get next ID in table
     $nextId = $dbconn->GenId($releasetable);
     $time = time();
@@ -52,25 +54,11 @@ function release_userapi_createnote($args)
                      xar_type,
                      xar_rstate
               )
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($rid) . "',
-              '" . xarVarPrepForStore($version) . "',
-              '" . xarVarPrepForStore($price) . "',
-              '" . xarVarPrepForStore($priceterms) . "',
-              '" . xarVarPrepForStore($demo) . "',
-              '" . xarVarPrepForStore($demolink) . "',
-              '" . xarVarPrepForStore($dllink) . "',
-              '" . xarVarPrepForStore($supported) . "',
-              '" . xarVarPrepForStore($supportlink) . "',
-              '" . xarVarPrepForStore($changelog) . "',
-              '" . xarVarPrepForStore($notes) . "',
-              $time,
-              '" . xarVarPrepForStore($certified) . "',
-              '" . xarVarPrepForStore($approved) . "',
-              '" . xarVarPrepForStore($type) . "',
-              '" . xarVarPrepForStore($rstate) ."')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    $bindvars = array($nextId,$rid,$version,$price,$priceterms,$demo,$demolink,$dllink,$supported,
+                      $supportlink,$changelog,$notes,$time,$certified,$approved,$type,$rstate);
+    $result =&$dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get the ID of the item that we inserted

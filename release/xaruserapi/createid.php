@@ -37,9 +37,10 @@ function release_userapi_createid($args)
 
     // Check if that regname exists
     $query = "SELECT xar_rid FROM $releasetable
-            WHERE xar_regname='".xarVarPrepForStore($regname)."'
-            AND xar_type='".xarVarPrepForStore($type)."'";
-    $result =& $dbconn->Execute($query);
+            WHERE xar_regname = ?
+            AND xar_type = ?";
+
+    $result =& $dbconn->Execute($query,array($regname,$type));
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
@@ -90,19 +91,10 @@ function release_userapi_createid($args)
               xar_approved,
               xar_rstate
               )
-            VALUES (
-              '" . xarVarPrepForStore($nextid) . "',
-              '" . xarVarPrepForStore($uid) . "',
-              '" . xarVarPrepForStore($regname) . "',
-              '" . xarVarPrepForStore($displname) . "',
-              '" . xarVarPrepForStore($desc) . "',
-              '" . xarVarPrepForStore($type) . "',
-              '" . xarVarPrepForStore($class) . "',
-              '" . xarVarPrepForStore($certified) . "',
-              '" . xarVarPrepForStore($approved) . "',
-              '" . xarVarPrepForStore($rstate)."')";
+            VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array($nextid,$uid,$regname,$displname,$desc,$type,$class,$certified,$approved,$rstate);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Let any hooks know that we have created a new user.

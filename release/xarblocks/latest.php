@@ -64,9 +64,11 @@ function release_latestblock_display($blockinfo)
     // as their own arguments array.
     // Security check 1 - the getall() function only returns items for which the
     // the user has at least OVERVIEW access.
+    // Item must also be approved
     $items = xarModAPIFunc(
         'release', 'user', 'getallnotes',
-        array('numitems' => $vars['numitems'])
+        array('numitems' => $vars['numitems'],
+              'approved' => 2)
     );
     if (!isset($items) && xarCurrentErrorType() != XAR_NO_EXCEPTION) {return;} // throw back
  

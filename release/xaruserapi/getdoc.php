@@ -26,8 +26,8 @@ function release_userapi_getdoc($args)
                      xar_time,
                      xar_approved
             FROM $releasetable
-            WHERE xar_rdid = " . xarVarPrepForStore($rdid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_rdid = ?";
+    $result =& $dbconn->Execute($query,array($rdid));
     if (!$result) return;
 
     list($rdid, $rid, $title, $docs, $type, $time, $approved) = $result->fields;

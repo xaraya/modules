@@ -214,22 +214,27 @@ function release_user_addnotes()
                                   'user',
                                   'getid',
                                   array('rid' => $rid));
+            if ($data['type'] == 0) {
+                $exttype='Module';
+            } elseif ($data['type'] == 1)  {
+                $exttype='Theme';
+            }
 
-            // The user API function is called. 
+            // The user API function is called.
             if (!xarModAPIFunc('release',
                                'user',
                                'createnote',
                                 array('rid'         => $rid,
                                       'version'     => $version,
                                       'price'       => $pricecheck,
+                                      'priceterms'  => $price,
                                       'supported'   => $supportcheck,
                                       'demo'        => $democheck,
                                       'dllink'      => $dllink,
-                                      'priceterms'  => $price,
                                       'demolink'    => $demolink,
                                       'supportlink' => $supportlink,
                                       'changelog'   => $changelog,
-                                      'type'        => $data['type'],
+                                      'type'        => $exttype,
                                       'notes'       => $notes,
                                       'rstate'      => $rstate))) return;
 

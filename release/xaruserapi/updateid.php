@@ -49,17 +49,18 @@ function release_userapi_updateid($args)
 
     // Update the link
     $query = "UPDATE $releasetable
-            SET xar_uid = '" . xarVarPrepForStore($uid) . "',
-                xar_regname = '" . xarVarPrepForStore($regname) . "',
-                xar_displname = '" . xarVarPrepForStore($displname) . "',
-                xar_type = '" . xarVarPrepForStore($type) . "',
-                xar_class = '" . xarVarPrepForStore($class) . "',
-                xar_desc = '" . xarVarPrepForStore($desc) . "',
-                xar_certified = '" . xarVarPrepForStore($certified) . "',
-                xar_approved = '" . xarVarPrepForStore($approved) . "',
-                xar_rstate = '" . xarVarPrepForStore($rstate) . "'
-            WHERE xar_rid = " . xarVarPrepForStore($rid);
-    $result =& $dbconn->Execute($query);
+            SET xar_uid       = ?,
+                xar_regname   = ?,
+                xar_displname = ?,
+                xar_type      = ?,
+                xar_class     = ?,
+                xar_desc      = ?,
+                xar_certified = ?,
+                xar_approved  = ?,
+                xar_rstate    = ?
+            WHERE xar_rid     = ?";
+    $bindvars = array($uid,$regname,$displname,$type,$class,$desc,$certified,$approved,$rstate,$rid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     if (empty($cids)) {

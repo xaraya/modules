@@ -29,8 +29,8 @@ function release_userapi_getid($args)
                      xar_approved,
                      xar_rstate
             FROM $releasetable
-            WHERE xar_rid = " . xarVarPrepForStore($rid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_rid = ?";
+    $result =& $dbconn->Execute($query,array($rid));
     if (!$result) return;
 
     list($rid, $uid, $regname, $displname, $desc, $type, $class, $certified, $approved, $rstate) = $result->fields;

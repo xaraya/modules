@@ -50,8 +50,13 @@
                     </td>
 					<td align="left" valign="top" class="xar-norm">
 						<select name="idtype" id="idtype">
-							<option value="0"><xar:mlstring>Module</xar:mlstring></option>
+						<xar:if condition="$idtype eq '0'">
+							<option value="0" selected="selected"><xar:mlstring>Module</xar:mlstring></option>
 							<option value="1"><xar:mlstring>Theme</xar:mlstring></option>
+						<xar:else />
+							<option value="0"><xar:mlstring>Module</xar:mlstring></option>
+							<option value="1" selected="selected"><xar:mlstring>Theme</xar:mlstring></option>
+						</xar:if>
 						</select>
 					</td>
 				</tr>
@@ -61,8 +66,13 @@
                     </td>
 					<td align="left" valign="top" class="xar-norm">
 						<select name="class" id="class">
-							<option value="0"><xar:mlstring>Core</xar:mlstring></option>
+						<xar:if condition="$class eq '0'">
+							<option value="0" selected="selected"><xar:mlstring>Core</xar:mlstring></option>
 							<option value="1"><xar:mlstring>Non-Core</xar:mlstring></option>
+                        <xar:else />
+							<option value="0"><xar:mlstring>Core</xar:mlstring></option>
+							<option value="1" selected="selected"><xar:mlstring>Non-Core</xar:mlstring></option>
+                        </xar:if>
 						</select>
 					</td>
 				</tr>
@@ -75,8 +85,7 @@
 					<td align="left" valign="top" class="xar-norm">
 	               <select name="rstate" id="rstate" size="1">
                	   <xar:foreach in="$stateoptions" value="$v" key="$k">
- 		    			              <option name="rstate.#$k#" value="#$k#">#$v#</option>
-
+ 		    		    <option name="rstate.#$k#" value="#$k#">#$v#</option>
 		           </xar:foreach>
 	               </select>
 	               </td>

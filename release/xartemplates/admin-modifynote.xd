@@ -11,10 +11,6 @@
 		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
 		<input type="hidden" name="rnid" id="rnid" value="#$rnid#" />	
 		<input type="hidden" name="regname" id="regname" value="#$regname#" />
-		<input type="hidden" name="version" id="version" value="#$version#" />	
-		<input type="hidden" name="price" id="price" value="#$price#" />	
-		<input type="hidden" name="demo" id="demo" value="#$demo#" />	
-		<input type="hidden" name="supported" id="supported" value="#$supported#" />
 		<table border="0" cellpadding="5">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
@@ -42,6 +38,14 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
+					<xar:mlstring>Type</xar:mlstring>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+					#$idtype#
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Version Number</xar:mlstring>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
@@ -56,7 +60,7 @@
 					<a href="#$dllink#">#$dllink#</a>
 				</td>
 			</tr>
-			<xar:if condition="$price eq '2'">
+
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Price</xar:mlstring>
@@ -65,8 +69,7 @@
 					#$priceterms#
 				</td>
 			</tr>
-			</xar:if>
-			<xar:if condition="$demo eq '2'">
+
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Demo Link</xar:mlstring>
@@ -75,7 +78,7 @@
 					<a href="#$demolink#">#$demolink#</a>
 				</td>
 			</tr>
-			</xar:if>
+
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Extension State</xar:mlstring>
@@ -84,7 +87,6 @@
 					#$rstatesel#
 				</td>
 			</tr>
-			<xar:if condition="$supported eq '2'">
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>Support Link</xar:mlstring>
@@ -93,7 +95,6 @@
 					<a href="#$supportlink#">#$supportlink#</a>
 				</td>
 			</tr>
-			</xar:if>
 			<tr>
 				<td align="left" valign="top" class="xar-accent">
 					<xar:mlstring>ChangeLog</xar:mlstring>
@@ -112,6 +113,20 @@
 			</tr>
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
+					<label for="version"><xar:mlstring>Type</xar:mlstring></label>
+				</td>
+				<td align="left" valign="top" class="xar-norm">
+				<xar:if condition="$idtype eq 'Module' or $idtype eq '0'">
+                        <input type="radio" name="idtype" value="Module" checked="checked" /><xar:mlstring>Module</xar:mlstring>
+                        <input type="radio" name="idtype" value="Theme" /><xar:mlstring>Theme</xar:mlstring>
+				<xar:else />
+                        <input type="radio" name="idtype" value="Module" /><xar:mlstring>Module</xar:mlstring>
+                        <input type="radio" name="idtype" value="Theme" checked="checked" /><xar:mlstring>Theme</xar:mlstring>
+				</xar:if>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" class="xar-norm">
 					<label for="version"><xar:mlstring>Version Number</xar:mlstring></label>
 				</td>
 				<td align="left" valign="top" class="xar-norm">
@@ -126,7 +141,7 @@
 					<input type="text" name="dllink" value="#$dllink#" size="30" maxlength="100" />
 				</td>
 			</tr>
-			<xar:if condition="$price eq '2'">
+
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<label for="price"><xar:mlstring>Price</xar:mlstring></label>
@@ -135,8 +150,8 @@
 					<input type="text" name="price" value="#$priceterms#" size="10" maxlength="100" />
 				</td>
 			</tr>
-			</xar:if>
-			<xar:if condition="$demo eq '2'">
+
+
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<label for="demolink"><xar:mlstring>Demo Link</xar:mlstring></label>
@@ -145,8 +160,8 @@
 					<input type="text" name="demolink" value="#$demolink#" size="30" maxlength="100" />
 				</td>
 			</tr>
-			</xar:if>
-			<xar:if condition="$supported eq '2'">
+
+
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
 					<label for="supportlink"><xar:mlstring>Supported Link</xar:mlstring></label>
@@ -155,7 +170,7 @@
 					<input type="text" name="supportlink" value="#$supportlink#" size="30" maxlength="100" />
 				</td>
 			</tr>
-			</xar:if>
+
 			<tr>
 				<td align="left" valign="top" class="xar-norm">
                     <label for="rstate" class="help" title="#xarML('Please enter the current development state of your extension.')#">

@@ -41,15 +41,10 @@ function release_userapi_createdoc($args)
               xar_time,
               xar_approved
               )
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($rid) . "',
-              '" . xarVarPrepForStore($title) . "',
-              '" . xarVarPrepForStore($doc) . "',
-              '" . xarVarPrepForStore($type) . "',
-              $time,
-              '" . xarVarPrepForStore($approved) . "')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?,?,?,?,?,?,?)";
+
+    $bindvars = array($nextId,$rid,$title,$doc,$type,$time,$approved);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get the ID of the item that we inserted

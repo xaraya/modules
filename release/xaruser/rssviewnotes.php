@@ -10,9 +10,8 @@ function release_user_rssviewnotes()
     // The user API function is called.
     $items = xarModAPIFunc('release',
                            'user',
-                           'getallrssmodsnotes',
-                            array('type' => 'module'));
-    
+                           'getallrssextnotes');
+
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];

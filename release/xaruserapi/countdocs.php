@@ -16,8 +16,8 @@ function release_userapi_countdocs($args)
 
     $query = "SELECT COUNT(1)
             FROM $releasetable
-            WHERE xar_rid = " . xarVarPrepForStore($rid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_rid = ?";
+    $result =&$dbconn->Execute($query, array($rid));
     if (!$result) return;
 
     list($numitems) = $result->fields;
