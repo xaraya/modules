@@ -192,6 +192,8 @@ function xarbb_user_viewforum()
                                     xarModURL('xarbb', 'user', 'viewforum', array('startnumitem' => '%%',
                                                                                   'fid'          => $fid)),
                                     $settings['topicsperpage']);
+    $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
+    $data['catname'] = $categories['name'];
 //$pre = var_export($data, true); echo "<pre>$pre</pre>"; return;
     // Return the template variables defined in this function
     return $data;

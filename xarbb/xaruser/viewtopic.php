@@ -209,6 +209,8 @@ function xarbb_user_viewtopic()
                                     xarModGetVar('xarbb', 'postsperpage'));
 
     // Return the template variables defined in this function
+    $categories = xarModAPIFunc('categories', 'user', 'getcatinfo', array('cid' => $data['catid']));
+    $data['catname'] = $categories['name'];
 
     return $data;
 }

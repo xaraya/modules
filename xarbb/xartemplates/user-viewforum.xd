@@ -41,12 +41,15 @@
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
 				<a href="#xarModUrl('xarbb', 'user', 'main')#">
-					#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
 					<xar:mlstring>
 						Forum Index
 					</xar:mlstring>
 				</a> 
 				-> 
+				<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
+					#$catname#
+				</a> 
+				->
 				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
 					#$fname#
 				</a>
@@ -172,12 +175,15 @@
 			<span class="xar-sub">
 				&nbsp;&nbsp;&nbsp;
 				<a href="#xarModUrl('xarbb', 'user', 'main')#">
-					#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
 					<xar:mlstring>
 						Forum Index
 					</xar:mlstring>
 				</a> 
 				-> 
+				<a href="#xarModUrl('xarbb', 'user', 'main', array('catid' => $catid))#">
+					#$catname#
+				</a> 
+				->
 				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
 					#$fname#
 				</a>
