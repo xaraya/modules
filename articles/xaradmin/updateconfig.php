@@ -15,6 +15,7 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('number_of_columns', 'int',   $number_of_columns, 0, XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('shorturls',         'isset', $shorturls,         0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultpubtype',    'isset', $defaultpubtype,    1,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('sortpubtypes',      'isset', $sortpubtypes,   'id',  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('defaultview',       'isset', $defaultview,       1,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showcategories',    'isset', $showcategories,    0,  XARVAR_NOT_REQUIRED)) {return;}
     if(!xarVarFetch('showprevnext',      'isset', $showprevnext,      0,  XARVAR_NOT_REQUIRED)) {return;}
@@ -31,13 +32,11 @@ function articles_admin_updateconfig()
     if(!xarVarFetch('dotransform',       'isset', $dotransform,       0,  XARVAR_NOT_REQUIRED)) {return;}
 
 
-    if (!empty($ptid)) {
-// TODO: do we want this per publication type too ?
-    } else {
+    if (empty($ptid)) {
         xarModSetVar('articles', 'SupportShortURLs', $shorturls);
         xarModSetVar('articles', 'defaultpubtype', $defaultpubtype);
+        xarModSetVar('articles', 'sortpubtypes', $sortpubtypes);
     }
-
 
     $settings = array();
     $settings['itemsperpage'] = $itemsperpage;
@@ -84,6 +83,9 @@ function articles_admin_updateconfig()
                         array('module' => 'articles'));
     }
 
+    if (empty($ptid)) {
+        $ptid = null;
+    }
     xarResponseRedirect(xarModURL('articles', 'admin', 'modifyconfig',
                                   array('ptid' => $ptid)));
 

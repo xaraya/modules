@@ -48,6 +48,26 @@
 		</td>
         <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturls# /></td>
     </tr>
+    <tr>
+        <td><label for="sortpubtypes"><xar:mlstring>Sort order for Publication Types in menus, article map etc.</xar:mlstring></label></td>
+        <td><select name="sortpubtypes" id="sortpubtypes">
+            <xar:if condition="$sortpubtypes eq 'id'">
+                <option value="id" selected="selected"><xar:mlstring>ID</xar:mlstring></option>
+            <xar:else />
+                <option value="id"><xar:mlstring>ID</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="$sortpubtypes eq 'name'">
+                <option value="name" selected="selected"><xar:mlstring>Name</xar:mlstring></option>
+            <xar:else />
+                <option value="name"><xar:mlstring>Name</xar:mlstring></option>
+            </xar:if>
+            <xar:if condition="$sortpubtypes eq 'descr'">
+                <option value="descr" selected="selected"><xar:mlstring>Description</xar:mlstring></option>
+            <xar:else />
+                <option value="descr"><xar:mlstring>Description</xar:mlstring></option>
+            </xar:if>
+            </select></td>
+    </tr>
 </xar:if>
 
     <tr>

@@ -179,10 +179,17 @@ function articles_admin_modifyconfig()
     }
     $data['pubfilters'] = $pubfilters;
 
-    $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? 'checked' : '';
-    $data['defaultpubtype'] = xarModGetVar('articles', 'defaultpubtype');
-    if (empty($data['defaultpubtype'])) {
-        $data['defaultpubtype'] = '';
+    if (empty($ptid)) {
+        $data['shorturls'] = xarModGetVar('articles','SupportShortURLs') ? 'checked' : '';
+        $data['defaultpubtype'] = xarModGetVar('articles', 'defaultpubtype');
+        if (empty($data['defaultpubtype'])) {
+            $data['defaultpubtype'] = '';
+        }
+        $data['sortpubtypes'] = xarModGetVar('articles', 'sortpubtypes');
+        if (empty($data['sortpubtypes'])) {
+            $data['sortpubtypes'] = 'id';
+            xarModSetVar('articles','sortpubtypes','id');
+        }
     }
 
     // Module alias for short URLs
