@@ -36,7 +36,7 @@
 			<!-- Note : you can use $bytes here too if you prefer the geeky way of counting :) -->
 					<a href="#$link#"><xar:mlstring>Read More</xar:mlstring></a> 
           <xar:ml>
-            <xar:mlstring> ((#1) words) </xar:mlstring>
+            <xar:mlstring> (#(1) words) </xar:mlstring>
             <xar:mlvar>#$words#</xar:mlvar>
           </xar:ml>
 				</xar:if>
