@@ -19,6 +19,10 @@ function translations_init()
     xarModSetVar('translations', 'archiver_path', '/bin/tar');
     xarModSetVar('translations', 'archiver_flags', 'czf %f %d');
 
+    xarModSetVar('translations', 'showcontext', 0);
+    xarModSetVar('translations', 'maxreferences', 5);
+    xarModSetVar('translations', 'maxcodelines', 5);
+
     xarRegisterMask('AdminTranslations', 'All', 'translations', 'All', 'All', 'ACCESS_ADMIN');
 
     return true;
@@ -30,8 +34,12 @@ function translations_init()
 function translations_upgrade($oldversion)
 {
     switch($oldversion){
-        case '0.01':
-            break;
+        case '0.1.0':
+            xarModSetVar('translations', 'showcontext', 0);
+            xarModSetVar('translations', 'maxreferences', 5);
+            xarModSetVar('translations', 'maxcodelines', 5);
+        break;
+        case '0.1.1':
     }
     return true;
 }
@@ -46,6 +54,9 @@ function translations_delete()
     xarModDelVar('translations', 'archiver_path');
     xarModDelVar('translations', 'archiver_flags');
 
+    xarModDelVar('translations', 'showcontext');
+    xarModDelVar('translations', 'maxreferences');
+    xarModDelVar('translations', 'maxcodelines');
 
     // Remove Masks and Instances
     xarRemoveMasks('translations');

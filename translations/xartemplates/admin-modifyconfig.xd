@@ -100,9 +100,20 @@
       <label for="showcontext">
         <xar:mlstring>Show a bit of context for the translation. This could be helpfull for determining the exact translation</xar:mlstring>
       </label>
+      <p>
+      <label for="maxreferences">
+        <xar:mlstring>References per translation string</xar:mlstring>
+      </label>
+      <input type="text" name="maxreferences" id="maxreferences" size="3" maxlength="3" value="#$maxreferences#" />
+      </p>
+      <p>
+      <label for="maxcodelines">
+        <xar:mlstring>Number of lines to display in reference</xar:mlstring>
+      </label>
+      <input type="text" name="maxcodelines" id="maxcodelines" size="3" maxlength="3" value="#$maxcodelines#" />
+      </p>
      <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 	  <p><input type="submit" value="#$updatelabel#"  /></p>
     </form>
   </div>
 </div>
-

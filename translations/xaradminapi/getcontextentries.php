@@ -59,7 +59,7 @@ function translations_adminapi_getcontextentries($args)
         $en_backend =& $backend;
     }
 
-    $maxReferences = 5;
+    $maxReferences = xarModGetVar('translations', 'maxreferences');
 
     $numEntries = 0;
     $numEmptyEntries = 0;
@@ -136,11 +136,12 @@ function translations_grab_source_code($references, $maxReferences = NULL)
                 $currentFileData = array();
             }
         }
-        $j = $ref['line'] - 3;
+        $maxCodeLines = xarModGetVar('translations', 'maxcodelines');
+        $j = $ref['line'] - ($maxCodeLines/2) - 1;
         if ($j < 0) $j = 0;
         $source = array('pre'=>'', 'code'=>'', 'post'=>'');
         $linesCount = count($currentFileData);
-        for ($c = 0; $c < 5 && $j < $linesCount; $c++, $j++) {
+        for ($c = 0; $c < $maxCodeLines && $j < $linesCount; $c++, $j++) {
             if ($j < $ref['line'] - 1) {
                 $source['pre'] .= htmlspecialchars($currentFileData[$j]).'<br/>';
             } elseif ($j == $ref['line'] - 1) {

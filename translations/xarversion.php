@@ -2,7 +2,7 @@
 // $Id$
 $modversion['name'] = 'Translations';
 $modversion['id'] = '77';
-$modversion['version'] = '0.1.0';
+$modversion['version'] = '0.1.1';
 $modversion['description'] = 'Translations handling';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';

@@ -28,6 +28,8 @@ function translations_admin_updateconfig()
     if (!xarVarFetch('translationsbackend','str:1:',$translationsBackend)) return;
     if (!xarVarFetch('releasebackend','str:1:',$releaseBackend)) return;
     if (!xarVarFetch('showcontext','checkbox',$showContext,false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxreferences','int',$maxReferences,5,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('maxcodelines','int',$maxCodeLines,5,XARVAR_NOT_REQUIRED)) return;
 
     if (!xarSecConfirmAuthKey()) return;
 
@@ -42,6 +44,8 @@ function translations_admin_updateconfig()
     xarConfigSetVar('Site.MLS.TranslationsBackend', $translationsBackend);
 //    xarModSetVar('translations', 'release_backend_type', $releaseBackend);
     xarModSetVar('translations', 'showcontext',$showContext);
+    xarModSetVar('translations', 'maxreferences',$maxReferences);
+    xarModSetVar('translations', 'maxcodelines',$maxCodeLines);
 
     xarResponseRedirect(xarModURL('translations', 'admin', 'modifyconfig'));
 
