@@ -16,7 +16,7 @@ function comments_admin_delete( )
 
         switch (strtolower($dtype)) {
             case 'object':
-                $objectid = xarVarCleanFromInput('objectid');
+                if (!xarVarFetch('objectid','int:1',$objectid)) return;
 
                 if (!isset($objectid) || empty($objectid)) {
                     $msg = xarML('Invalid or Missing Parameter \'objectid\'');
@@ -30,7 +30,7 @@ function comments_admin_delete( )
             // the module section below cuz we need both
             // the module id and the object id
             case 'module':
-                $modid = xarVarCleanFromInput('modid');
+                if (!xarVarFetch('modid','int:1',$modid)) return;
 
                 if (!isset($modid) || empty($modid)) {
                     $msg = xarML('Invalid or Missing Parameter \'modid\'');
@@ -68,7 +68,7 @@ function comments_admin_delete( )
         if (!xarSecConfirmAuthKey())
             return;
 
-        $choice = xarVarCleanFromInput('choice');
+        if (!xarVarFetch('choice', 'str:1:', $choice)) return;
 
         // if choice isn't set or it has an incorrect value,
         // redirect back to the choice page

@@ -35,7 +35,7 @@ function comments_admin_module_stats( )
     if (empty($numstats)) {
         $numstats = 100;
     }
-    $startnum = xarVarCleanFromInput('startnum');
+    if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_DONT_SET)) return;
     if (empty($startnum)) {
         $startnum = 1;
     }
