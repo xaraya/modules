@@ -119,6 +119,7 @@ function articles_admin_new($args)
     $fields = array();
     $data['withupload'] = 0;
     if (!empty($ptid)) {
+        $settings = unserialize(xarModGetVar('articles', 'settings.'.$ptid));
     // TODO: make order dependent on pubtype or not ?
     //    foreach ($pubtypes[$ptid]['config'] as $field => $value) {}
         $pubfields = xarModAPIFunc('articles','user','getpubfields');
@@ -136,6 +137,9 @@ function articles_admin_new($args)
             } elseif ($field == 'pubdate') {
                 // default publication time is now
                 $input['value'] = time();
+            } elseif ($field == 'status' && isset($settings['defaultstatus'])) {
+                // default status (only if allowed on input)
+                $input['value'] = $settings['defaultstatus'];
             } else {
                 $input['value'] = '';
             }
