@@ -38,7 +38,7 @@ function xarcachemanager_admin_modifyhook($args)
     }
     
     // we are only interested in the config of block output caching for now
-    if (($modname !== 'blocks') || !xarModGetVar('xarcachemanager','CacheBlockOutput')) {
+    if (($modname !== 'blocks') || !file_exists(xarCoreGetVarDirPath() . '/cache/output/cache.blocklevel')) {
         return '';
     }
 
