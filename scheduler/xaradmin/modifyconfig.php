@@ -6,7 +6,7 @@
  */
 function scheduler_admin_modifyconfig()
 { 
-    if (!xarSecurityCheck('Adminscheduler')) return;
+    if (!xarSecurityCheck('AdminScheduler')) return;
 
     $data = array();
     $data['authid'] = xarSecGenAuthKey();
@@ -67,5 +67,4 @@ function scheduler_admin_modifyconfig()
     // Return the template variables defined in this function
     return $data;
 } 
-
 ?>

@@ -30,5 +30,4 @@ function scheduler_admin_search()
     closedir($dh);
     return $data;
 }
-
 ?>

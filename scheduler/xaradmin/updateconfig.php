@@ -6,6 +6,7 @@
  */
 function scheduler_admin_updateconfig()
 {
+    if (!xarSecurityCheck('AdminScheduler')) return;
     if (!xarSecConfirmAuthKey()) return;
 
     if (!xarVarFetch('trigger','str:1:',$trigger,'disabled',XARVAR_NOT_REQUIRED)) return;
@@ -49,5 +50,4 @@ function scheduler_admin_updateconfig()
 
     return true;
 }
-
 ?>
