@@ -1,20 +1,14 @@
-<table border="0" cellpadding="2" cellspacing="0">
-<tr>
-    <td valign="top">
-        #$cattitle# :
-    </td>
-    <td valign="top">
-        [
-        <xar:loop name="$catitems">
-            #$loop:item['catjoin']#
-            <xar:if condition="empty($loop:item['catlink'])">
-                #$loop:item['catlabel']#
+<p>
+    #$cattitle# : [ 
+    <xar:loop name="$catitems">
+        #$loop:item['catjoin']# 
+        <xar:if condition="empty($loop:item['catlink'])">
+            #$loop:item['catlabel']# 
             <xar:else />
-                <a href="#$loop:item['catlink']#">#$loop:item['catlabel']#</a>
-            </xar:if>
-        </xar:loop>
-        ]
-    </td>
-</tr>
-</table>
-<br />
+            <a href="#$loop:item['catlink']#">
+                #$loop:item['catlabel']#
+            </a>
+        </xar:if>
+    </xar:loop>
+    ] 
+</p>
