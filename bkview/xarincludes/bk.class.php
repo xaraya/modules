@@ -13,6 +13,10 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
+define('BK_ITEMTYPE_REPO',  1);
+define('BK_ITEMTYPE_FILE',  2);
+define('BK_ITEMTYPE_CSET',  3);
+define('BK_ITEMTYPE_DELTA', 4);
 
 /**
  *  Class to model a repository

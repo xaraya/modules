@@ -2,29 +2,26 @@
 <xar:template file="user-menu" type="module"/>
 
 <div class="xar-mod-body">
+<table><tr><td>
 <ul>
   <xar:while condition="list($range,$text)= each($rangetext)">
-	  <li><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#">#$text#</a></li>
-	</xar:while>
-	<li>
+    <li><a href="&xar-modurl-bkview-user-csetview;&amp;range=-#$range#&amp;repoid=#$repoid#">#$text#</a></li>
+  </xar:while>
+  <li>
     <a href="&xar-modurl-bkview-user-csetview;&amp;showmerge=1&amp;repoid=#$repoid#">
-    <xar:ml>
-		  <xar:mlstring>All #(1) Changesets ( #(2) empty merges)</xar:mlstring>
- 			<xar:mlvar>#$allsets#</xar:mlvar>
-			<xar:mlvar>#$mrgsets#</xar:mlvar>
-    </xar:ml>
+      <xar:ml>
+        <xar:mlstring>All #(1) Changesets ( #(2) empty merges)</xar:mlstring>
+        <xar:mlvar>#$allsets#</xar:mlvar>
+        <xar:mlvar>#$mrgsets#</xar:mlvar>
+      </xar:ml>
     </a>
   </li>    
 </ul>
-<!--
-<form>
- <input size="26" type="text" name="expr"><br/>
- <input type="hidden" name="nav" value=index>
- <input type="radio" name="search" value="ChangeSet comments" checked><xar:mlstring>Changeset comments</xar:mlstring><br/>
- <input type="radio" name="search" value="file comments"><xar:mlstring>File comments</xar:mlstring><br/>
- <input type="radio" name="search" value="file contents"><xar:mlstring>File contents</xar:mlstring><br/>
- <input type="submit" value="Search">
- <input type="reset" value="Clear search">
-</form>
--->
+</td><td valign="top">
+
+<xar:foreach in="$hooks" key="$hookmod" value="$hookout">
+#$hookout#
+</xar:foreach>
+
+</td></tr></table>
 </div>

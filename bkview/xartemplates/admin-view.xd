@@ -3,17 +3,17 @@
 <xar:if condition="count($items) != 0">
 <table class="csets">
   <tr>
-    <th><xar:mlstring>Repository-ID</xar:mlstring></th>
-  	<th><xar:mlstring>Repository name</xar:mlstring></th>
+  	<th><xar:mlstring>Name</xar:mlstring></th>
     <th><xar:mlstring>Path</xar:mlstring></th>
+    <th><xar:mlstring>Identification</xar:mlstring></th>
     <th><xar:mlstring>Options</xar:mlstring></th>
   </tr>
   
-	<xar:loop name="$items">
+  <xar:loop name="$items">
     <tr class="csets">
-	    <td class="csets">#$loop:item['repoid']#</td>
-    	<td class="csets">#$loop:item['reponame']#</td>
+      <td class="csets">#$loop:item['reponame']#</td>
       <td class="csets">#$loop:item['repopath']#</td>
+      <td class="csets">#$loop:item['repoid']#</td>
       <td class="csets"align="center">
         <xar:if condition="empty($loop:item['editurl'])">
           #$loop:item['edittitle']#
@@ -22,7 +22,7 @@
         </xar:if>
         |
         <xar:if condition="empty($loop:item['deleteurl'])">
-      	  #$loop:item['deletetitle']#
+          #$loop:item['deletetitle']#
         <xar:else />
       	  <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
         </xar:if>
@@ -31,8 +31,8 @@
   </xar:loop>
 </table>
 <xar:else/>
-    <div>
-        No repositories have been registered yet
-    </div>
+  <div>
+    No repositories have been registered yet
+  </div>
 </xar:if>
  

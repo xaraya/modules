@@ -13,23 +13,25 @@
  * @author Marcel van der Boom <marcel@xaraya.com>
 */
 
+include_once("modules/bkview/xarincludes/bk.class.php");
+
 function bkview_userapi_getitemtypes() 
 {
     $itemtypes = array();
-    $itemtypes[1] = array('label' => xarVarPrepForDisplay('Repositories'),
-                          'title' => xarVarPrepForDisplay('Repositories'),
+    $itemtypes[BK_ITEMTYPE_REPO] = array('label' => xarVarPrepForDisplay('Repositories'),
+                          'title' => xarVarPrepForDisplay('Repository information'),
                           'url'   => xarModUrl('bkview','user','view')
                           );
-    $itemtypes[2] = array('label' => xarVarPrepForDisplay('Changesets'),
-                          'title' => xarVarPrepForDisplay('Changesets'),
+    $itemtypes[BK_ITEMTYPE_FILE] = array('label' => xarVarPrepForDisplay('Files'),
+                          'title' => xarVarPrepForDisplay('File contents'),
                           'url'   => xarModUrl('bkview','user','view')
                           );
-    $itemtypes[3] = array('label' => xarVarPrepForDisplay('Deltas'),
-                          'title' => xarVarPrepForDisplay('Deltas'),
+    $itemtypes[BK_ITEMTYPE_CSET] = array('label' => xarVarPrepForDisplay('Changesets'),
+                          'title' => xarVarPrepForDisplay('Changeset comments'),
                           'url'   => xarModUrl('bkview','user','view')
                           );
-    $itemtypes[4] = array('label' => xarVarPrepForDisplay('Files'),
-                          'title' => xarVarPrepForDisplay('Files'),
+    $itemtypes[BK_ITEMTYPE_DELTA] = array('label' => xarVarPrepForDisplay('Deltas'),
+                          'title' => xarVarPrepForDisplay('Delta comments'),
                           'url'   => xarModUrl('bkview','user','view')
                           );
 

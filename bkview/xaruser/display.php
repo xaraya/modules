@@ -57,6 +57,8 @@ function bkview_user_display($args)
     $allsets=$repo->bkCountChangeSets('',true);
     $mrgsets=$allsets - $repo->bkCountChangeSets();
     
+    $data['hooks'] = xarModCallHooks('item','search',$repoid,array(),'bkview');
+    
     // Deliver the data to BL compiler
     $data['pageinfo']=xarML("Changeset activity");
     $data['rangetext'] = $rangetext;

@@ -27,7 +27,7 @@ function bkview_admin_view()
 	$items = xarModAPIFunc('bkview', 'user', 'getall',array());
 	if (!isset($item) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
 	
-	// Check individual permissions for Edit / Delete
+	// TODO: Check individual permissions for Edit / Delete
 	for ($i = 0; $i < count($items); $i++) {
 		$item = $items[$i];
         $items[$i]['editurl'] = xarModURL('bkview','admin','modify',
