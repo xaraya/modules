@@ -3,6 +3,7 @@
 $modversion['name'] = 'Hitcount';
 $modversion['id'] = '177';
 $modversion['version'] = '1.2.1';
+$modversion['displayname']    = xarML('Hitcount');
 $modversion['description'] = 'Count displays of module items';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
