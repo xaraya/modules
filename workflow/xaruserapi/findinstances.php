@@ -10,7 +10,7 @@ function workflow_userapi_findinstances($args)
 {
 // Common setup for Galaxia environment
     include('modules/workflow/tiki-setup.php');
-    include_once (GALAXIA_LIBRARY.'/ProcessMonitor.php');
+    include(GALAXIA_LIBRARY.'/ProcessMonitor.php');
 
     extract($args);
     if (!isset($status)) {
