@@ -89,6 +89,7 @@ function articles_admin_pubtypes()
                                   'showpublinks'         => 0,
                                   'showpubcount'         => 0,
                                   'dotransform'          => 0,
+                                  'titletransform'       => 0,
                                   'prevnextart'          => 0,
                                   'usealias'             => 0,
                                   'page_template'        => '',

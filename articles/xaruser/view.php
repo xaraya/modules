@@ -165,6 +165,13 @@ function articles_user_view($args)
         } else {
             $dotransform = 1;
         }
+        if (!isset($titletransform)) {
+            if (empty($settings['titletransform'])) {
+                $titletransform = 0;
+            } else {
+                $titletransform = 1;
+            }
+        }
     }
     // Page template for frontpage or depending on publication type (optional)
     // Note : this cannot be overridden in templates
@@ -767,8 +774,11 @@ function articles_user_view($args)
         if ($dotransform) {
             $article['itemtype'] = $article['pubtypeid'];
         // TODO: what about transforming DD fields ?
-        //    $article['transform'] = array('title','summary','notes');
-            $article['transform'] = array('summary','notes');
+            if ($titletransform) {
+                $article['transform'] = array('title','summary','notes');
+            } else {
+                $article['transform'] = array('summary','notes');
+            }
             $article = xarModCallHooks('item', 'transform', $article['aid'], $article, 'articles');
         }
 

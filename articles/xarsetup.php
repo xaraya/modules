@@ -320,6 +320,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -346,6 +347,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -370,6 +372,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -394,6 +397,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -418,6 +422,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 1,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -442,6 +447,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -450,6 +456,8 @@
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Web Links',
                                                          'Generic1'));
+
+    // quotes can be in Random Quotes and in new Generic1
     $settings[7] = array('number_of_columns'    => 0,
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
@@ -464,6 +472,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -472,6 +481,8 @@
                          // category names - will be replaced by cids in xarinit.php
                          'categories'           => array('Random Quotes',
                                                          'Generic1'));
+
+    // downloads can be in Downloads and in new Generic1
     $settings[8] = array('number_of_columns'    => 0,
                          'itemsperpage'         => 20,
                          'defaultview'          => 1,
@@ -486,6 +497,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
@@ -510,6 +522,7 @@
                          'showpublinks'         => 0,
                          'showpubcount'         => 1,
                          'dotransform'          => 0,
+                         'titletransform'       => 0,
                          'prevnextart'          => 0,
                          'usealias'             => 0,
                          'page_template'        => '',
