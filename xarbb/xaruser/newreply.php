@@ -67,7 +67,14 @@ function xarbb_user_newreply()
     if(!$topic = xarModAPIFunc('xarbb','user','gettopic',array('tid' => $tid))) return;
 
     // Security Check
-    if($phase == "edit")    {
+    if($phase == "edit"){
+        if (!xarUserIsLoggedIn()){
+            unset($cid);
+            $msg = xarML('You do not have access to modify this topic.');
+            xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+            return;
+        }
+
         $uid = xarUserGetVar('uid');
         if (!xarSecurityCheck('ModxarBB',0,'Forum',$topic['catid'].':'.$topic['fid'])){
             // No Privs, Hows about this is my comment?
