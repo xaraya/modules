@@ -261,7 +261,7 @@ function articles_userapi_getall($args)
         $item = array();
         // loop over all required fields again
         foreach ($required as $field => $val) {
-            if ($field == 'cids' || $fields == 'dynamicdata' || $val != 1) {
+            if ($field == 'cids' || $field == 'dynamicdata' || $val != 1) {
                 continue;
             }
             $value = array_shift($data);
