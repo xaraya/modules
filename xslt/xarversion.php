@@ -28,4 +28,6 @@ $modversion['user']           = 0;
 $modversion['securityschema'] = array();
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Content';
+// this module requires the xslt extension
+$modversion['extensions']     = array('xslt');
 ?>
