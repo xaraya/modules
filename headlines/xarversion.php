@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * File: $Id$
- * 
+ *
  * Xaraya Headlines
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
@@ -15,6 +15,7 @@
 $modversion['name'] = 'Headlines';
 $modversion['id'] = '777';
 $modversion['version'] = '1.0.0';
+$modversion['displayname']    = xarML('Headlines');
 $modversion['description'] = 'Generates a list of feeds.';
 $modversion['official'] = 1;
 $modversion['author'] = 'John Cox';
