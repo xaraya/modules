@@ -14,7 +14,7 @@
 <tr><th valign="top" align="right">
 <xar:mlstring>Publication Type</xar:mlstring>
 </th><td>
-    <select name="ptid" onchange="submit()">
+    <select name="ptid" onchange="javascript:this.form.submit();">
         <option value="0"><xar:mlstring>All</xar:mlstring></option>
         <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
             <xar:if condition="!empty($ptid) and $ptid eq $pubid">
@@ -38,7 +38,7 @@
 <tr><th valign="top" align="right">
 <xar:mlstring>Author</xar:mlstring>
 </th><td>
-    <select name="uid" id="uid" onchange="submit()">
+    <select name="uid" id="uid" onchange="javascript:this.form.submit();">
         <option value="0"><xar:mlstring>All / Other --&gt;</xar:mlstring></option>
     <xar:foreach in="$authorlist" key="$id">
         <xar:if condition="$id eq $uid">
@@ -48,7 +48,7 @@
         </xar:if>
     </xar:foreach>
     </select>
-    <input type="text" name="author" id="author" value="#$author#" size="15" onchange="submit()" />
+    <input type="text" name="author" id="author" value="#$author#" size="15" onchange="javascript:this.form.submit();" />
 </td></tr>
 <xar:else />
     <input type="hidden" name="uid" id="uid" value="0" />
@@ -57,7 +57,7 @@
 <tr><th valign="top" align="right">
 <xar:mlstring>Article</xar:mlstring>
 </th><td>
-    <xar:mlstring>Enter article number</xar:mlstring> : <input type="text" name="aid" id="aid" value="#$aid#" size="10" onchange="submit()" />
+    <xar:mlstring>Enter article number</xar:mlstring> : <input type="text" name="aid" id="aid" value="#$aid#" size="10" onchange="javascript:this.form.submit();" />
     <!-- TODO: show dropdown box for all relevant articles (if not too many) -->
     <xar:if condition="!empty($title)"><br /><xar:mlstring>Title</xar:mlstring> : #$title#</xar:if>
 </td></tr>

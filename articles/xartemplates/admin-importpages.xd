@@ -39,7 +39,7 @@
             <label for="ptid"><xar:mlstring>Publication Type</xar:mlstring></label>
         </td>
         <td style="text-align: left;">
-            <select name="ptid" id="ptid" onchange="submit()">
+            <select name="ptid" id="ptid" onchange="javascript:this.form.submit();">
                 <option value=""></option>
             <xar:foreach in="$pubtypes" key="$pubid" value="$pubtype">
                 <xar:if condition="!empty($ptid) and $pubid eq $ptid">
