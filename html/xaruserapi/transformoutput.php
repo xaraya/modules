@@ -68,7 +68,8 @@ function html_userapitransformoutput($text)
     $text = str_replace(chr(13), "</p>$p" , $text);
     $text = $p . $text . "</p>\n";
     // From Dracos
-    preg_replace("/\s*<p[^>]*>\s*<\/p>\s*/", '', $text);
+    $text = str_replace ("<p>\n</p>", "", $text);
+    //preg_replace("/\s*<p[^>]*>\s*<\/p>\s*/", '', $text);
     return $text;
 }
 
