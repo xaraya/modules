@@ -199,6 +199,7 @@ class xmlrpc_server {
                 }
             } else {
                 // else prepare error response
+                xarLogMessage("Client dispatched unknown method ($methName)", XARLOG_LEVEL_WARNING);
                 $r=new xmlrpcresp(0,
                                   $xmlrpcerr["unknown_method"],
                                   $xmlrpcstr["unknown_method"]);
