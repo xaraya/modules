@@ -7,7 +7,7 @@ function uploads_user_download()
 
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
     
-    if (!isset($fileInfo[0] || empty($fileInfo)) {
+    if (!isset($fileInfo[0]) || empty($fileInfo)) {
         $msg = xarML('Unable to retrieve information on file [#(1)]', $fileId);
         xarExceptionSet(XAR_USER_EXCEPTION, 'INVALID_fileId', new SystemException($msg));
         return;

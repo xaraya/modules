@@ -11,6 +11,10 @@
 function uploads_userapi_process_files( $args ) {
 
     extract($args);
+
+    $fileErrors = array();
+    $filesAdded = array();
+
     // If we have an import then verify the information given
     if (!isset($importFrom)) {
         $importFrom = NULL;
@@ -18,7 +22,7 @@ function uploads_userapi_process_files( $args ) {
     } else {
         if (isset($import_path_override) && file_exists($import_path_override)) {
             $import_directory = $import_path_override;
-	    } else {
+        } else {
             $import_directory = xarModGetVar('uploads','path.imports-directory');
         }
     }
@@ -54,9 +58,9 @@ function uploads_userapi_process_files( $args ) {
     $fileList = array();
     
     if (is_array($_FILES) && count($_FILES) > 0) {
-        foreach ($_FILES as $file) {
+        foreach ($_FILES as $fileInfo) {
             $file = xarModAPIFunc('uploads','user','process_upload', 
-                                   array('fileInfo'  => $file,
+                                   array('fileInfo'  => $fileInfo,
                                          'savePath'  => $upload_directory,
                                          'obfuscate' => $upload_obfuscate));
     
@@ -79,16 +83,16 @@ function uploads_userapi_process_files( $args ) {
          * if the importFrom is an url, then
          * we can't descend (obviously) so set it to FALSE
          */
-        if (eregi('^([a-z]*)?\:\/\/', $importFrom)) {
+        if (eregi('^(http[s]?|ftp)?\:\/\/', $importFrom)) {
             $descend = FALSE;
         } else {
             $descend = TRUE;
         }
                    
         $imports = xarModAPIFunc('uploads','user','import_get_filelist',
-                                  array('fileLocation' => $importFrom,
-                                        'descend'  => $descend));
-          
+                                  array('fileLocation'  => $importFrom,
+                                        'descend'       => $descend));
+        
         $imports = xarModAPIFunc('uploads','user','import_prepare_files',
                                   array('fileList'  => $imports,
                                         'savePath'  => $import_directory,
@@ -99,17 +103,30 @@ function uploads_userapi_process_files( $args ) {
         //       need to think about catching them
     }
     $fileList = array_merge($fileList, $imports);
-    $fileErrors = array();
-    $filesAdded = array();
-    //    echo "<br /><pre> fileList => "; print_r($fileList); echo "</pre>"; exit();        
+
     foreach ($fileList as $fileName => $fileInfo) {
         // If this is just a file dump, return the dump
         if ($store_type & _UPLOADS_STORE_TEXT) {
             return xarModAPIFunc('uploads','user','file_dump', $fileInfo);
         }
         
+        // first, make sure the file isn't already stored in the db/filesystem
+        // if it is, then don't add it.
+        // FIXME: need to rethink how this is handled - maybe give the user a choice
+        //        to rename the file ... (rabbitt)
+        $fInfo = xarModAPIFunc('uploads', 'user', 'db_get_file', 
+                                array('fileName' => $fileInfo['fileName'],
+                                      'fileSize' => $fileInfo['fileSize']));
+
+        if (is_array($fInfo)) {
+            $filesAdded[$fileInfo['fileSrc']] = array('fileLocation' => $fileInfo['fileDest'],
+                                                      'fileName'     => $fileInfo['fileName']);
+            continue;
+        }
+
         if ($store_type & _UPLOADS_STORE_FILESYSTEM) {
-            if (!xarModAPIFunc('uploads','user','file_move', 
+            if (($fileInfo['fileSrc'] != $fileInfo['fileDest']) &&
+                !xarModAPIFunc('uploads','user','file_move', 
                                 array('fileSrc'        => $fileInfo['fileSrc'], 
                                       'fileDest'   => $fileInfo['fileDest']))) {
                 // Catch the exception, and create an error list for each file that

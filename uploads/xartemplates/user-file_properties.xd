@@ -123,7 +123,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <a href="#$fileInfo['fileURL']#" alt="#xarMl('View full sized image')#"> 
+                                    <a href="#$fileInfo['fileDownload']#" alt="#xarMl('View full sized image')#"> 
                                         <img src="#$fileInfo['fileURL']#" height="#$fileInfo['image']['height']#" width="#$fileInfo['image']['width']#" alt="#$fileInfo['fileName']#">
                                     </a>
                                 </td>
