@@ -27,15 +27,23 @@ function xarbb_adminapi_create($args)
 
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
-    if ((!isset($fname)) ||
-        (!isset($fposter)) ||
-        (!isset($fdesc))) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'admin', 'create', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+
+    $invalid = array();
+    if (!isset($fname) || !is_string($fname)) {
+        $invalid[] = 'fname';
+    } 
+    if (!isset($fposter) || !is_numeric($fposter)) {
+        $invalid[] = 'fposter';
+    } 
+    if (!isset($fdesc) || !is_string($fdesc)) {
+        $invalid[] = 'fdesc';
+    } 
+    if (count($invalid) > 0) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', join(', ', $invalid), 'admin', 'create', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
-    }
+    } 
+
     //Let's set defaults so we can pass in values if necessary
     if ((!isset($ftopics)) || (empty($ftopics))){
         $ftopics=0;

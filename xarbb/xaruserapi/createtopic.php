@@ -30,16 +30,22 @@ function xarbb_userapi_createtopic($args)
     // Get arguments from argument array
     extract($args);
 
-    // Argument check - make sure that all required arguments are present,
-    // if not then set an appropriate error message and return
-    if ((!isset($fid)) ||
-        (!isset($ttitle)) ||
-        (!isset($tpost)) ||
-        (!isset($tposter))) {
-        $msg = xarML('Invalid Parameter Count',
-                    '', 'admin', 'create', 'xarbb');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+    $invalid = array();
+    if (!isset($ttitle) || !is_string($ttitle)) {
+        $invalid[] = 'ttitle';
+    } 
+    if (!isset($tpost) || !is_string($tpost)) {
+        $invalid[] = 'tpost';
+    } 
+    if (!isset($fid) || !is_numeric($fid)) {
+        $invalid[] = 'fid';
+    } 
+    if (!isset($tposter) || !is_numeric($tposter)) {
+        $invalid[] = 'fid';
+    } 
+    if (count($invalid) > 0) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)', join(', ', $invalid), 'user', 'createtopic', 'xarbb');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
