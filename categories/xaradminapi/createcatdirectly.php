@@ -42,7 +42,7 @@ function categories_adminapi_createcatdirectly($args)
 
     $SQLquery[2] = "UPDATE $categoriestable
                     SET xar_left = xar_left + 2
-                    WHERE xar_left >= ?"
+                    WHERE xar_left >= ?";
     $bindvars[2][] = $point_of_insertion;
     // Both can be transformed into just one SQL-statement, but i dont know if every database is SQL-92 compliant(?)
 
