@@ -3,58 +3,58 @@
 <div style="margin: auto;">
 
 <xar:if id="title_condition" condition="!empty($message)">
-	<p><b>#$message#</b></p>
+    <p><b>#$message#</b></p>
 </xar:if>
 
 <form action="#xarModUrl('recommend', 'user', 'send')#" method="post" enctype="application/x-www-form-urlencoded">
 <div class="xar-alt" style="margin: 0px 3px 6px 3px;padding: 1px;text-align: left;">
 <div class="xar-norm" style="padding: 3px;">
-	<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<span style="text-align: left;">
-			<xar:if condition = "xarUserIsLoggedIn()">
-				<xar:mlstring>Your Name</xar:mlstring>:
-			<xar:else/>
-				<label for="username"><xar:mlstring>Your Name</xar:mlstring></label>:
-			</xar:if>
-		<br />
-				<xar:if condition = "xarUserIsLoggedIn()">
-				<input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
-				#xarUserGetVar('name')#
-				<xar:else />
-				<input type="text" name="username" id="username" value="" size="25" maxlength="25" />
-				</xar:if>
-		</span><br /><br /><span style="text-align: left;">
-				<xar:if condition = "xarUserIsLoggedIn()">
-					<xar:mlstring>Your Email</xar:mlstring>:
-				<xar:else/>
-					<label for="useremail"><xar:mlstring>Your Email</xar:mlstring></label>:
-				</xar:if>
-		<br />
-				<xar:if condition = "xarUserIsLoggedIn()">
-				<input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
-				#xarUserGetVar('email')#
-				<xar:else />
-				<input type="text" name="useremail" id="useremail" value="" size="25" maxlength="25" />
-				</xar:if>
-		</span><br /><br /><span style="text-align: left;">
-				<label for="fname"><xar:mlstring>Your Friend's Name</xar:mlstring></label>:
-		<br />
-				<input type="text" name="fname" id="fname" value="" size="25" maxlength="25" />
-		</span><br /><br /><span style="text-align: left;">
-				<label for="info"><xar:mlstring>Your Friend's Email Address</xar:mlstring></label>:
-		<br />
-				<input type="text" name="info" id="info" value="" size="35" maxlength="255" />
-		</span><br /><br />
-		<xar:if condition="xarModGetVar('recommend', 'usernote')">
-		<span style="text-align: left;">
-				<label for="usernote"><xar:mlstring>Your Added Notes</xar:mlstring></label>:
-		<br />
-				<textarea name="usernote" id="usernote" rows="10" cols="40"></textarea>
-		</span><br /><br />
-		</xar:if>				 
-	<span style="text-align: left;"><input type="submit" value="#$submit#" /></span>
-	</div>
-	</div>
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <span style="text-align: left;">
+            <xar:if condition = "xarUserIsLoggedIn()">
+                <xar:mlstring>Your Name</xar:mlstring>:
+            <xar:else/>
+                <label for="username"><xar:mlstring>Your Name</xar:mlstring></label>:
+            </xar:if>
+        <br />
+                <xar:if condition = "xarUserIsLoggedIn()">
+                <input type="hidden" name="username" id="username" value="#xarUserGetVar('name')#" />
+                #xarUserGetVar('name')#
+                <xar:else />
+                <input type="text" name="username" id="username" value="" size="25" maxlength="25" />
+                </xar:if>
+        </span><br /><br /><span style="text-align: left;">
+                <xar:if condition = "xarUserIsLoggedIn()">
+                    <xar:mlstring>Your Email</xar:mlstring>:
+                <xar:else/>
+                    <label for="useremail"><xar:mlstring>Your Email</xar:mlstring></label>:
+                </xar:if>
+        <br />
+                <xar:if condition = "xarUserIsLoggedIn()">
+                <input type="hidden" name="useremail" id="useremail" value="#xarUserGetVar('email')#" />
+                #xarUserGetVar('email')#
+                <xar:else />
+                <input type="text" name="useremail" id="useremail" value="" size="25" maxlength="25" />
+                </xar:if>
+        </span><br /><br /><span style="text-align: left;">
+                <label for="fname"><xar:mlstring>Your Friend's Name</xar:mlstring></label>:
+        <br />
+                <input type="text" name="fname" id="fname" value="" size="25" maxlength="25" />
+        </span><br /><br /><span style="text-align: left;">
+                <label for="info"><xar:mlstring>Your Friend's Email Address</xar:mlstring></label>:
+        <br />
+                <input type="text" name="info" id="info" value="" size="35" maxlength="255" />
+        </span><br /><br />
+        <xar:if condition="xarModGetVar('recommend', 'usernote')">
+        <span style="text-align: left;">
+                <label for="usernote"><xar:mlstring>Your Added Notes</xar:mlstring></label>:
+        <br />
+                <textarea name="usernote" id="usernote" rows="10" cols="40"></textarea>
+        </span><br /><br />
+        </xar:if>                 
+    <span style="text-align: left;"><input type="submit" value="#$submit#" /></span>
+    </div>
+    </div>
 </form>
 </div>
 </div>
