@@ -14,7 +14,7 @@ function xarbb_userapi_updateforumview($args)
     // Argument check
     if (!isset($fid)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'xarbb');
+                    '', 'admin', 'update', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

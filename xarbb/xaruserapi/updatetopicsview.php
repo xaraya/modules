@@ -8,7 +8,7 @@ function xarbb_userapi_updatetopicsview($args)
     // Argument check
     if (!isset($tid)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'xarbb');
+                    '', 'admin', 'update', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

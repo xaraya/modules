@@ -1,65 +1,24 @@
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000;">
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
   <tr>
-    <td>
-		<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" />
+    <td colspan="2">
+	<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
     </td>
   </tr>
-</table>
-<br />
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr>
-    <td width="25%" align="center"><!-- Need to do the cat image here. <img border="0" src="images/forum_image.gif" width="200" height="100" /> --></td>
-    <td width="75%" align="center" valign="bottom">
-      <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-          <td width="100%" align="center">
-          <table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-            <tr>
-              <td width="100%" class="xar-accent"><b><xar:mlstring>Forum Title</xar:mlstring>: #$fname#</b></td>
-            </tr>
-            <tr>
-              <td width="100%"><xar:mlstring>Logged in as</xar:mlstring>: #xarUserGetVar('name')# / 
-				<xar:if condition="xarUserIsLoggedIn()">
-					<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Your Account</xar:mlstring></a>
-				<xar:else />
-					<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Log In | Register</xar:mlstring></a>
-				</xar:if>
-			  </td>
-            </tr>
-          </table>
-          </td>
-        </tr>
-      </table>
-		<br />
-      <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-          <td width="70%" align="right" valign="bottom">
- <!-- TODO, need a seperate function in the API for a forum picker
-            <form method="POST">
-              <table border="0" cellpadding="3" cellspacing="0">
-                <tr>
-                  <td align="right"><b><font face="Verdana" size="2">Forums : </font></b></td>
-                  <td align="center">
-                    <select>
-                      <option>Forum Title One</option>
-                      <option>Forum Title Two</option>
-
-                      <option>Forum Title Three</option>
-                      <option>Forum Title Four</option>
-                      <option>Forum Title Five</option>
-                    </select>
-                  </td>
-                  <td><input type="image" name="Go" src="images/go.gif" width="34" height="25"></td>
-                </tr>
-
-              </table>
-            </form>
- -->
-          </td>
-          <td width="30%" align="right"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>Post a New Topic</xar:mlstring></a></td>
-        </tr>
-      </table>
-
+    <td class="xar-accent">
+      <b><xar:mlstring>Forum Title</xar:mlstring>: #$fname#</b>
+    </td>
+    <td class="xar-accent" align="right">
+      <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>Post a New Topic</xar:mlstring></a>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><xar:mlstring>Logged in as</xar:mlstring>: #xarUserGetVar('name')# / 
+	<xar:if condition="xarUserIsLoggedIn()">
+		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Your Account</xar:mlstring></a>
+	<xar:else />
+		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Log In | Register</xar:mlstring></a>
+	</xar:if>
     </td>
   </tr>
 </table>
@@ -86,6 +45,9 @@
     <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Replies</xar:mlstring></b></td>
     <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Views</xar:mlstring></b></td>
     <td width="130" align="center" class="xar-accent"><b><xar:mlstring>Last Post</xar:mlstring></b></td>
+<xar:sec mask="EditxarBB" catch="false">
+    <td width="130" align="center" class="xar-accent"><b><xar:mlstring>Options</xar:mlstring></b></td>
+</xar:sec>
   </tr>
 <xar:loop name="$items">
 <xar:if condition="(($loop:index + 1) % 2)">

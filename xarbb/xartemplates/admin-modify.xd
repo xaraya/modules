@@ -20,6 +20,7 @@
 
 	<div style="clear: both; padding-top: 10px;">
 	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+	<input type="hidden" name="fid" id="fid" value="#$fid#" />
 	<span style="float: left; width: 20%; text-align: right;">
 		<span class="help" title="#xarML('The name of the forum that you are creating.')#"><label for="fname"><xar:mlstring>Forum Name</xar:mlstring></label>:</span>
 	</span>

@@ -19,7 +19,7 @@ function xarbb_adminapi_create($args)
         (!isset($fposter)) ||
         (!isset($fdesc))) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'create', 'xarbb');
+                    '', 'admin', 'create', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

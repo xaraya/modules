@@ -17,7 +17,7 @@ function xarbb_adminapi_deletetopics($args)
     if ( (!isset($tids) || !is_array($tids) || count($tids) == 0) &&
     	 (!isset($tid) || !($tid > 0)) ) {
         $msg = xarML('Invalid Parameter count',
-                    join(', ',$invalid), 'admin', 'delete', 'xarbb');
+                    '', 'admin', 'delete', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

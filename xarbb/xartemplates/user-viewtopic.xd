@@ -1,32 +1,38 @@
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000;">
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
   <tr>
-    <td>
-		<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" />
+    <td colspan="2">
+	<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
     </td>
   </tr>
-</table>
-<br />
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
   <tr>
     <td class="xar-accent">
-      <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-          <td width="45%"><b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b>
-          
-          [ 
-          <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
-          ]&nbsp;
-          <xar:if condition="true">[ 
-          <a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $tid))#" ><xar:mlstring>Delete</xar:mlstring></a> 
-          ]</xar:if>
-          
-          </td>
-          
-		  <td width="40%" align="right">
-			<a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid))#"><xar:mlstring>Back to Forum View</xar:mlstring></a>
-		  </td>
-        </tr>
-      </table>
+      <b><xar:mlstring>Forum Title</xar:mlstring>: #$fname#</b>
+    </td>
+    <td class="xar-accent" align="right">
+      <a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid))#"><xar:mlstring>Back to Forum View</xar:mlstring></a>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><xar:mlstring>Logged in as</xar:mlstring>: #xarUserGetVar('name')# / 
+	<xar:if condition="xarUserIsLoggedIn()">
+		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Your Account</xar:mlstring></a>
+	<xar:else />
+		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Log In | Register</xar:mlstring></a>
+	</xar:if>
+    </td>
+  </tr>
+  <tr><td colspan="2">&nbsp;</td></tr>
+  <tr>
+    <td class="xar-accent">
+      <b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b>
+    </td>
+    <td class="xar-accent" align="right">
+      [ 
+      <a href="#xarModURL('xarbb','user','newtopic',array('tid' => $tid,'redirect' => 'topic'))#"><xar:mlstring>Edit</xar:mlstring></a> 
+      ]&nbsp;
+      <xar:if condition="true">[ 
+      <a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $tid))#" ><xar:mlstring>Delete</xar:mlstring></a> 
+      ]</xar:if>
     </td>
   </tr>
 </table>

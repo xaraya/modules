@@ -12,7 +12,7 @@ function xarbb_userapi_gettopic($args)
 
     if (!isset($tid)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'userapi', 'get', 'xarbb');
+                    '', 'userapi', 'get', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -28,6 +28,8 @@ function xarbb_userapi_gettopic($args)
     $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                    array('cids' => array(),
                                         'modid' => xarModGetIDFromName('xarbb')));
+// CHECKME: this won't work for forums that are assigned to more (or less) than 1 category
+//          Do we want to support that in the future ?
     // make only one query to speed up
     // Get links
     $query = "SELECT xar_tid,

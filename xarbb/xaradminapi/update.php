@@ -16,7 +16,7 @@ function xarbb_adminapi_update($args)
         (!isset($fname)) ||
         (!isset($fdesc))) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'xarbb');
+                    '', 'admin', 'update', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

@@ -146,6 +146,9 @@ function xarbb_init()
 
 function xarbb_activate()
 {
+    // do this stuff only once
+    if (xarModGetVar('xarbb', 'hottopic')) return true;
+
     // Enable categories hooks for xarbb forums (= item type 1)
     xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
                                                          'callerItemType'   => 1,
@@ -165,7 +168,6 @@ function xarbb_activate()
     // modvars
     xarModSetVar('xarbb', 'hottopic', 10);
     xarModSetVar('xarbb', 'redhottopic', 20);
-    xarModSetVar('xarbb', 'number_of_categories', 1);
     xarModSetVar('xarbb', 'topicsperpage', 50);
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
@@ -177,9 +179,10 @@ function xarbb_activate()
         Array('name' => 'xarbb',
             'description' => 'XarBB Categories',
             'parent_id' => 0));
+    // Assign category to item type 1 (= forums)
     // Note: you can have more than 1 mastercid (cfr. articles module)
-    xarModSetVar('xarbb', 'number_of_categories', 1);
-    xarModSetVar('xarbb', 'mastercids', $xarbbcid);
+    xarModSetVar('xarbb', 'number_of_categories.1', 1);
+    xarModSetVar('xarbb', 'mastercids.1', $xarbbcid);
     $xarbbcategories = array();
     $xarbbcategories[] = array('name' => "Forum Category One",
         'description' => "description one");
@@ -212,11 +215,29 @@ function html_upgrade($oldversion)
         case '.9':
             // Set up module hooks
             xarRegisterMask('ViewxarBB','All','xarbb','Forum','All:All','ACCESS_OVERVIEW');
-            return true;
+            break;
+
+        case '0.9.1.0':
+            // Load database tables etc.
+            xarModAPILoad('categories','user');
+
+            // Get database information
+            list($dbconn) = xarDBGetConn();
+            $xartable = xarDBGetTables();
+            $linkagetable = $xartable['categories_linkage'];
+
+            // update item type in categories - you need to upgrade categories first :-)
+            $modid = xarModGetIDFromName('xarbb');
+            $update =  "UPDATE $linkagetable SET xar_itemtype = 1 WHERE xar_modid = $modid";
+            $result =& $dbconn->Execute($update);
+            if (!$result) return;
+            break;
+
+        default:
             break;
     }
 
-    return false;
+    return true;
 }
 
 function xarbb_delete()

@@ -34,7 +34,7 @@ function xarbb_userapi_getallforums($args)
                    xar_fposter,
                    xar_fpostid
             FROM $xbbforumstable";
-    if (!empty($catid) && xarModIsHooked('categories')) {
+    if (!empty($catid) && xarModIsHooked('categories','xarbb',1)) {
         $categoriesdef = xarModAPIFunc('categories','user','leftjoin',
                                        array('cids' => array($catid),
                                             'modid' => xarModGetIDFromName('xarbb')));
@@ -50,6 +50,7 @@ function xarbb_userapi_getallforums($args)
         }
     }
     $query .= " ORDER BY xar_fname";
+
     $result =& $dbconn->SelectLimit($query, $numitems, $startnum-1);
     if (!$result) return;
 

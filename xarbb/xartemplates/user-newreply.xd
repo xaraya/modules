@@ -1,3 +1,38 @@
+<xar:if condition="!empty($tid)">
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+  <tr>
+    <td colspan="2">
+	<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+    </td>
+  </tr>
+  <tr>
+    <td class="xar-accent">
+      <b><xar:mlstring>Forum Title</xar:mlstring>: #$fname#</b>
+    </td>
+    <td class="xar-accent" align="right">
+      <a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $fid))#"><xar:mlstring>Back to Forum View</xar:mlstring></a>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><xar:mlstring>Logged in as</xar:mlstring>: #xarUserGetVar('name')# / 
+	<xar:if condition="xarUserIsLoggedIn()">
+		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Your Account</xar:mlstring></a>
+	<xar:else />
+		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Log In | Register</xar:mlstring></a>
+	</xar:if>
+    </td>
+  </tr>
+  <tr><td colspan="2">&nbsp;</td></tr>
+  <tr>
+    <td class="xar-accent">
+      <b><xar:mlstring>Topic Title</xar:mlstring> : #$ttitle#</b>
+    </td>
+    <td class="xar-accent" align="right">
+      <a href="#xarModURL('xarbb','user','viewtopic',array('tid' => $tid))#"><xar:mlstring>Back to Topic</xar:mlstring></a> 
+    </td>
+  </tr>
+</table>
+</xar:if>
 <xar:sec mask="Comments-Reply" catch="false">
     <div class="xar-accent" style="padding: 1px;">
         <div style="padding: 3px;">

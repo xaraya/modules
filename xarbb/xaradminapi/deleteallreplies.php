@@ -16,7 +16,7 @@ function xarbb_adminapi_deleteallreplies($args)
     // Argument check
     if (!isset($tid))  {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'delete', 'xarbb');
+                    '', 'admin', 'delete', 'xarbb');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;

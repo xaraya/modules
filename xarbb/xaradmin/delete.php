@@ -20,8 +20,12 @@ function xarbb_admin_delete()
 
     // Check for confirmation.
     if (empty($confirmation)) {
-        //Load Template
+        // for forums that lost their category
+        if (!isset($data['fid'])) {
+            $data['fid'] = $fid;
+        }
         $data['authid'] = xarSecGenAuthKey();
+        //Load Template
         return $data;
     }
 
