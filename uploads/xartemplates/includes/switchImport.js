@@ -1,4 +1,4 @@
-function switchImport(sType, iTypeId, iObjectId) {
+function xar_uploads_switchImport(sType, iTypeId, iObjectId) {
 
     switch ( sType ) {
         case 1: // turn on trusted import and off everything else
