@@ -43,7 +43,7 @@ function comments_userapi_get_multiple($args) {
     }
 
     if (!isset($cid) || !is_numeric($cid)) {
-        $id = 0;
+        $cid = 0;
     } else {
         $nodelr = xarModAPIFunc('comments',
                                 'user',

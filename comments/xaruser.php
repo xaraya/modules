@@ -22,37 +22,22 @@
 
 include_once('modules/comments/xarincludes/defines.php');
 
-function comments_user_formhooks()
-{
+/***
+ *
+ * These functions are being saved in the event that I actually decide to use them at
+ * some point - currently however, this functionality is being done using css.
+ *
+ ***
+ *
 
-    $hooks = array();
-    $hooks['formaction']              = xarModCallHooks('item', 'formaction', '', array(), 'comments');
-    $hooks['formdisplay']             = xarModCallHooks('item', 'formdisplay', '', array(), 'comments');
-
-    if (empty($hooks['formaction'])){
-        $hooks['formaction'] = '';
-    } elseif (is_array($hooks['formaction'])) {
-        $hooks['formaction'] = join('',$hooks['formaction']);
-    }
-
-    if (empty($hooks['formdisplay'])){
-        $hooks['formdisplay'] = '';
-    } elseif (is_array($hooks['formdisplay'])) {
-        $hooks['formdisplay'] = join('',$hooks['formdisplay']);
-    }
-
-    return $hooks;
-}
-
-
-/**
+ **
  * Collapse a comment branch and store the parent where
  * the collapsing begins in a uservar
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
  * @returns mixed description of return
- */
+ *
 function comments_userapi_collapse( ) {
 
     $headers = xarRequestGetVar('headers');
@@ -100,13 +85,13 @@ function comments_userapi_collapse( ) {
 }
 
 
-/**
+ **
  * Expand a previously collapsed branch
  *
  * @author Carl P. Corliss (aka rabbitt)
  * @access private
  * @returns mixed description of return
- */
+ *
 function comments_userapi_expand( ) {
 
     $headers = xarRequestGetVar('headers');
@@ -152,5 +137,7 @@ function comments_userapi_expand( ) {
 
     xarResponseRedirect($url);
 }
+
+*/
 
 ?>

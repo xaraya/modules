@@ -78,8 +78,11 @@ function comments_userapi_getitems($args)
         $query .= " AND $ctable[objectid] IN ('" . xarVarPrepForStore($allids) . "')";
     }
     $query .= " GROUP BY $ctable[objectid]
-                ORDER BY (1 + $ctable[objectid])";
+                ORDER BY $ctable[objectid]";
+//                ORDER BY (1 + $ctable[objectid]";
+//
 // CHECKME: dirty trick to try & force integer ordering (CAST and CONVERT are for MySQL 4.0.2 and higher
+// <rabbitt> commented that line out because it won't work with PostgreSQL - not sure about others.
 
     if (!empty($numitems)) {
         if (empty($startnum)) {
