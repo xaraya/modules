@@ -1,3 +1,6 @@
+* Version 0.2.0 23 Nov 04
+- Update with a few fixes eg for width bug
+
 * Version 0.2.0 08 Oct 04
 - Added basic Image Browser integration -still some to do
 - Added height settings
