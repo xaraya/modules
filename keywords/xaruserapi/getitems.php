@@ -73,6 +73,9 @@ function keywords_userapi_getitems($args)
      if (!empty($itemtype) && is_numeric($itemtype) ) {
         $query .= " AND xar_itemtype = '".xarVarPrepForStore($itemtype) ."'";
     }
+    if (!empty($modid) && is_numeric($modid) ) {
+        $query .= " AND xar_moduleid = '".xarVarPrepForStore($modid) ."'";
+    }
     $query .= " ORDER BY xar_moduleid ASC, xar_itemtype ASC, xar_itemid DESC";
 
     if (isset($numitems) && is_numeric($numitems)) {

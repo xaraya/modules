@@ -1,0 +1,24 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<!--
+Global variables : itemid, itemtype, modid
+Available variables for each related categories (items) :
+$item['keyword'],$item['modid'],$item['itemtype'],$item['itemid'],
+$item['name'],$item['description'],$item['image'],$item['parent'],$item['left'],$item['right'],
+-->
+
+<xar:if condition="!empty($items)">
+    <br />
+
+    <div class="xar-block-title"><xar:mlstring>Keywords related categories</xar:mlstring>:</div>
+    <xar:foreach in="$items" value="$item">
+        &bull;#xarVarPrepForDisplay($item['name'])#&nbsp;
+        <xar:if condition="!empty($item['image'])">
+            #$item['image']#<br />
+        </xar:if>
+        <xar:if condition="!empty($item['description'])">
+            #xarVarPrepForDisplay($item['description'])#<br />
+        </xar:if>
+    <a href="#$item['link']#"><xar:mlstring>Read More</xar:mlstring></a>
+    <br /><br />
+    </xar:foreach>
+</xar:if>

@@ -25,19 +25,12 @@
 function keywords_userapi_getwords($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
-    
+
     extract($args);
 
     if (!isset($modid) || !is_numeric($modid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'module id', 'user', 'getwords', 'keywords');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
-    if (!isset($itemtype) || !is_numeric($itemtype)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'item type', 'user', 'getwords', 'keywords');
         xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
@@ -58,9 +51,11 @@ function keywords_userapi_getwords($args)
     $query = "SELECT xar_id,
                      xar_keyword
               FROM $keywordstable
-              WHERE xar_moduleid = " . xarVarPrepForStore($modid) . "
-                AND xar_itemtype = " . xarVarPrepForStore($itemtype) . "
-                AND xar_itemid = " . xarVarPrepForStore($itemid) . "
+              WHERE xar_moduleid = " . xarVarPrepForStore($modid);
+    if (!empty($itemtype) && is_numeric($itemtype) ) {
+        $query .= " AND xar_itemtype = '".xarVarPrepForStore($itemtype) ."'";
+    }
+    $query .= " AND xar_itemid = " . xarVarPrepForStore($itemid) . "
               ORDER BY xar_keyword ASC";
 
     if (isset($numitems) && is_numeric($numitems)) {
