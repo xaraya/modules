@@ -94,7 +94,7 @@ function example_adminapi_update($args)
     // debug operation if it is ever needed
     $query = "UPDATE $exampletable
             SET xar_name =?, xar_number = ?
-            WHERE xar_exid = ?":
+            WHERE xar_exid = ?";
     $bindvars = array($name, $number, $exid);
     $result = &$dbconn->Execute($query,$bindvars); 
     // Check for an error with the database code, adodb has already raised
