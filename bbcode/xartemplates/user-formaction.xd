@@ -1,1 +1,1 @@
-name="post" onsubmit="return checkForm(this)"
+id="post" onsubmit="return checkForm(this)"

@@ -3,31 +3,31 @@
 <table width="450" border="0" cellspacing="0" cellpadding="2">
 	<tr align="center" valign="middle">
 		<td>
-			<input type="button" accesskey="z" name="addbbcode18" value=" p " style="width: 30px" onClick="bbstyle(18)" onMouseOver="helpline('z')" />
+			<input type="button" accesskey="z" name="addbbcode18" value=" p " style="width: 30px" onclick="bbstyle(18)" onmouseover="helpline('z')" />
 		</td>
 		<td>
-			<input type="button" accesskey="b" name="addbbcode0" value=" b " style="font-weight:bold; width: 30px" onClick="bbstyle(0)" onMouseOver="helpline('b')" />
+			<input type="button" accesskey="b" name="addbbcode0" value=" b " style="font-weight:bold; width: 30px" onclick="bbstyle(0)" onmouseover="helpline('b')" />
 		</td>
 		<td>
-			<input type="button" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic; width: 30px" onClick="bbstyle(2)" onMouseOver="helpline('i')" />
+			<input type="button" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic; width: 30px" onclick="bbstyle(2)" onmouseover="helpline('i')" />
 		</td>
 		<td>
-			<input type="button" accesskey="u" name="addbbcode4" value=" u " style="font-style: underline; width: 30px" onClick="bbstyle(4)" onMouseOver="helpline('u')" />
+			<input type="button" accesskey="u" name="addbbcode4" value=" u " style="font-style: underline; width: 30px" onclick="bbstyle(4)" onmouseover="helpline('u')" />
 		</td>
 		<td>
-			<input type="button" accesskey="q" name="addbbcode6" value="Quote" style="width: 50px" onClick="bbstyle(6)" onMouseOver="helpline('q')" />
+			<input type="button" accesskey="q" name="addbbcode6" value="Quote" style="width: 50px" onclick="bbstyle(6)" onmouseover="helpline('q')" />
 		</td>
 		<td>
-			<input type="button" accesskey="c" name="addbbcode8" value="Code" style="width: 40px" onClick="bbstyle(8)" onMouseOver="helpline('c')" />
+			<input type="button" accesskey="c" name="addbbcode8" value="Code" style="width: 40px" onclick="bbstyle(8)" onmouseover="helpline('c')" />
 		</td>
 		<td>
-			<input type="button" accesskey="l" name="addbbcode10" value="List" style="width: 40px" onClick="bbstyle(10)" onMouseOver="helpline('l')" />
+			<input type="button" accesskey="l" name="addbbcode10" value="List" style="width: 40px" onclick="bbstyle(10)" onmouseover="helpline('l')" />
 		</td>
 		<td>
-			<input type="button" accesskey="p" name="addbbcode14" value="Img" style="width: 40px"  onClick="bbstyle(14)" onMouseOver="helpline('p')" />
+			<input type="button" accesskey="p" name="addbbcode14" value="Img" style="width: 40px"  onclick="bbstyle(14)" onmouseover="helpline('p')" />
 		</td>
 		<td>
-			<input type="button" accesskey="w" name="addbbcode16" value="URL" style="text-decoration: underline; width: 40px" onClick="bbstyle(16)" onMouseOver="helpline('w')" />
+			<input type="button" accesskey="w" name="addbbcode16" value="URL" style="text-decoration: underline; width: 40px" onclick="bbstyle(16)" onmouseover="helpline('w')" />
 		</td>
 	</tr>
 	<tr>
@@ -35,7 +35,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td> &nbsp;<xar:mlstring>Font color</xar:mlstring>:
-						<select name="addbbcode20" onChange="bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onMouseOver="helpline('s')">
+						<select name="addbbcode20" onchange="bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover="helpline('s')">
 							<option style="color:black; background-color: #FAFAFA" value="#444444" class="genmed"><xar:mlstring>Default</xar:mlstring></option>
 							<option style="color:darkred; background-color: #FAFAFA" value="darkred" class="genmed"><xar:mlstring>Dark Red</xar:mlstring></option>
 							<option style="color:red; background-color: #FAFAFA" value="red" class="genmed"><xar:mlstring>Red</xar:mlstring></option>
@@ -53,16 +53,16 @@
 							<option style="color:black; background-color: #FAFAFA" value="black" class="genmed"><xar:mlstring>Black</xar:mlstring></option>
 						</select> 
 						&nbsp;<xar:mlstring>Font size</xar:mlstring>:
-						<select name="addbbcode22" onChange="bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onMouseOver="helpline('f')">
+						<select name="addbbcode22" onchange="bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onmouseover="helpline('f')">
 							<option value="7" class="genmed"><xar:mlstring>Tiny</xar:mlstring></option>
 							<option value="9" class="genmed"><xar:mlstring>Small</xar:mlstring></option>
-							<option value="12" selected class="genmed"><xar:mlstring>Normal</xar:mlstring></option>
+							<option value="12" selected="selected" class="genmed"><xar:mlstring>Normal</xar:mlstring></option>
 							<option value="18" class="genmed"><xar:mlstring>Large</xar:mlstring></option>
 							<option  value="24" class="genmed"><xar:mlstring>Huge</xar:mlstring></option>
 						</select>
 					</td>
-					<td nowrap="nowrap" align="right">
-						<a href="javascript:bbstyle(-1)" class="genmed" onMouseOver="helpline('a')">Close Tags</a>
+					<td style="white-space:nowrap; text-align: right;">
+						<a href="javascript:bbstyle(-1)" class="genmed" onmouseover="helpline('a')">Close Tags</a>
 					</td>
 				</tr>
 			</table>
@@ -71,6 +71,7 @@
 	<tr>
 		<td colspan="9"> <span class="gensmall">
 			<input type="text" name="helpbox" size="45" maxlength="100" style="width:450px; font-size:10px; background-color: transparent; border-style: none;" class="helpline" value="Tip: Styles can be applied quickly to selected text." />
+			</span>
 		</td>
 	</tr>
 </table>
