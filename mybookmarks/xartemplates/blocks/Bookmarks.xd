@@ -1,10 +1,17 @@
-<div align="center">
- <xar:if condition="empty($bookmarks)">
-<xar:mlstring>No Bookmarks</xar:mlstring>
-<xar:else/>
-     <xar:loop name="$bookmarks">
-     <br /><a href="#$loop:item['bm_url']#">#$loop:item['bm_name']#</a><br />
-     </xar:loop>
-    <br />
-</xar:if>
-</div>
+<script type="text/javascript" src="modules/mybookmarks/xartemplates/popup.js"></script>
+<ul>
+    <li>
+        <a href="#xarModUrl('mybookmarks', 'user', 'new', array('url' => $url, 'theme' => 'print'))#" onclick="popUp(this.href,'fixed',200,600);return false;">
+            <xar:mlstring>
+                Bookmark This!
+            </xar:mlstring>
+        </a>
+    </li>
+    <li>
+        <a href="#xarModUrl('mybookmarks', 'user', 'view', array('theme' => 'print'))#" onclick="popUp(this.href,'console',400,600);return false;">
+            <xar:mlstring>
+                View Bookmarks
+            </xar:mlstring>
+        </a>
+    </li>
+</ul>

@@ -10,10 +10,9 @@
  * @author Scot Gardner
  */
 
-
 $modversion['name']           = 'mybookmarks';
 $modversion['id']             = '178';
-$modversion['version']        = '0.1.0';
+$modversion['version']        = '1.0.0';
 $modversion['displayname']    = xarML('MyBookmarks');
 $modversion['description']    = 'MyBookmarks share your favorite urls';
 $modversion['credits']        = 'xardocs/credits.txt';
@@ -23,13 +22,9 @@ $modversion['license']        = 'xardocs/license.txt';
 $modversion['official']       = false;
 $modversion['author']         = 'Scot Gardner';
 $modversion['contact']        = 'XarayaGeek@XarayaGeek.com';
-$modversion['admin']          = 1;
-$modversion['user']           = 1;
+$modversion['admin']          = 0;
+$modversion['user']           = 0;
 $modversion['securityschema'] = array();
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-
-/*
- * END OF FILE
- */
 ?>

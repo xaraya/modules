@@ -12,19 +12,13 @@
  * @author Scot Gardner
 */
 
-
+/**
+ * initialise block
+ */
 function mybookmarks_bookmarksblock_init() 
 {
-  $mod = xarRequestGetVar('module');
-    if($mod == "roles")
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-     }
-}
+    return true;
+} 
 
 /**
  * get information on block
@@ -42,7 +36,7 @@ function mybookmarks_bookmarksblock_info()
     return array('text_type' => 'mybookmarks',
                  'module' => 'mybookmarks',
                  'text_type_long' => 'My Bookmarks',
-                 'allow_multiple' => true,
+                 'allow_multiple' => false,
                  'form_content' => false,
                  'form_refresh' => false,
                  'show_preview' => false); }
@@ -59,80 +53,30 @@ function mybookmarks_bookmarksblock_info()
 */
 function mybookmarks_bookmarksblock_display($blockinfo)
 {
+    // Security Check
+    if (!xarSecurityCheck('Viewmybookmarks')) return; 
 
-    $mod = xarRequestGetVar('module');
-    if($mod == "roles" || $mod == "mybookmarks"){
-    // Security check
-    if(!xarSecurityCheck('Viewmybookmarks', 0)) return;
+    // Get current content
+    if (!empty($blockinfo['content'])) {
+        $vars = @unserialize($blockinfo['content']);
+    } else {
+        $vars = array();
     }
-    else
-    {
-    return;
-    }
-
-    // Database information
-    xarModDBInfoLoad('mybookmarks');
-    $dbconn =& xarDBGetConn();
-    $xartable =xarDBGetTables();
-    $mybookmarkstable = $xartable['mybookmarks'];
-    $prefix = xarDBGetSiteTablePrefix();
-
-
-    $blockinfo = array();
-
-
-    // Query
-    $total_result = $dbconn->Execute("SELECT count(".$prefix."_bm_id) FROM $mybookmarkstable");
-    list($total) = $total_result->fields;
-    if ($dbconn->ErrorNo() != 0) {
+    
+    if (!xarUserIsLoggedIn()) {
         return;
     }
 
-    if (empty($total)){
-        $blockinfo['emptymarks'] = xarML('No Bookmarks in Database');
-        $blockinfo['content'] = 'No Bookmarks in Database';
-      if (empty($blockinfo['title'])){
-            $blockinfo['title'] = xarML('My Bookmarks');
-        }
-         return $blockinfo;
-    }
-    $uid = xarUserGetVar('uid');
-    $bookmarks = array();
-    if ($total <= 1){
-        $query = "SELECT ".$prefix."_bm_id,
-                         ".$prefix."_user_name,
-                         ".$prefix."_bm_name,
-                         ".$prefix."_bm_url
-                         FROM $mybookmarkstable
-                         WHERE ".$prefix."_user_name = $uid
-                         ORDER by ".$prefix."_bm_id";
-    }
-    else {
-         $query = "SELECT ".$prefix."_bm_id,
-                          ".$prefix."_user_name,
-                          ".$prefix."_bm_name,
-                          ".$prefix."_bm_url
-                          FROM $mybookmarkstable
-                          WHERE ".$prefix."_user_name = $uid
-                          ORDER by ".$prefix."_bm_name";
-    }
-    $result = $dbconn->Execute($query);
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($bm_id, $user_name, $bm_name, $bm_url) = $result->fields;
-        $bookmarks[] = array('bm_id' => $bm_id,
-                             'user_name' => $user_name,
-                             'bm_name' => $bm_name,
-                             'bm_url' => $bm_url);
-        }
-
-
-    $blockinfo['content']['bookmarks'] = $bookmarks;
+    $args['uid'] = xarUserGetVar('uid');
+    $args['url'] = xarServerGetCurrentURL();
 
     if (empty($blockinfo['title'])){
         $blockinfo['title'] = xarML('My Bookmarks');
     }
 
+    // Used in the templates.
+    $args['blockid'] = $blockinfo['bid'];
+    $blockinfo['content'] = $args;
     return $blockinfo;
 }
-
 ?>

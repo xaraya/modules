@@ -16,3 +16,7 @@
 First release :)
 
 TODO: Complete TopBookmarks, Cleanup
+
+10/30/04 
+
+Little bit of work to make this usable.

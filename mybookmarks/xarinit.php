@@ -17,15 +17,10 @@
  */
 function mybookmarks_init()
 {
-
-
     $dbconn =& xarDBGetConn();
     $xartables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
-
-
     $mybookmarkstable = $xartables['mybookmarks'];
-
     $fields = array(
 
         'xar_bm_id'   =>  array(
@@ -66,7 +61,6 @@ function mybookmarks_init()
     // INIDZES FOR THE TABLE
     $sitePrefix = xarDBGetSiteTablePrefix();
 
-
     // index for name searching
     $index = array(
         'name'      => 'i_' . $sitePrefix . 'mybookmarks_bm_name'
@@ -78,111 +72,17 @@ function mybookmarks_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
 
-
-    // MODULE WARIABLES FOR THIS TABLE
-    xarModSetVar(
-        'mybookmarks'
-        ,'itemsperpage.1'
-        ,10 );
-
-
-
-    /*
-     * REGISTER THE TABLES AT DYNAMICDATA
-     */
-    $objectid = xarModAPIFunc(
-        'dynamicdata'
-        ,'util'
-        ,'import'
-        ,array(
-            'file'  => 'modules/mybookmarks/xarobject.xml'));
-    if (empty($objectid)) return;
-
-    /*
-     * Module Variable for ShortURLSupport!
-     */
-    xarModSetVar(
-        'mybookmarks'
-        ,'SupportShortURLs'
-        ,0 );
-
-    /*
-     * REGISTER BLOCKS
-     */
-
     if (!xarModAPIFunc('blocks',
                        'admin',
                        'register_block_type',
                        array('modName'  => 'mybookmarks',
                              'blockType'=> 'Bookmarks'))) return;
 
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'mybookmarks',
-                             'blockType'=> 'TopBookmarks'))) return;
-
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'register_block_type',
-                       array('modName'  => 'mybookmarks',
-                             'blockType'=> 'RandomBookmarks'))) return;
-
-
-    /*
-     * REGISTER HOOKS
-     */
-
-    // Hook for module hitcount
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
-            'hookModName'       => 'hitcount'
-            ,'callerModName'    => 'mybookmarks'));
-
-    // Hook for module myxaraya
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
-            'hookModName'       => 'myxaraya'
-            ,'callerModName'    => 'mybookmarks'));
-
-    // Hook for module ratings
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
-            'hookModName'       => 'ratings'
-            ,'callerModName'    => 'mybookmarks'));
-
-    // Hook for module comments
-    xarModAPIFunc(
-        'modules'
-        ,'admin'
-        ,'enablehooks'
-        ,array(
-            'hookModName'       => 'comments'
-            ,'callerModName'    => 'mybookmarks'));
-
-
-
-    /*
-     * REGISTER MASKS
-     */
-
     // for module access
     xarRegisterMask( 'Viewmybookmarks' ,'All' ,'mybookmarks' ,'All' ,'All', 'ACCESS_OVERVIEW' );
     xarRegisterMask( 'Editmybookmarks' ,'All' ,'mybookmarks' ,'All' ,'All', 'ACCESS_EDIT' );
     xarRegisterMask( 'Addmybookmarks' ,'All' ,'mybookmarks' ,'All' ,'All', 'ACCESS_ADD' );
     xarRegisterMask( 'Adminmybookmarks' ,'All' ,'mybookmarks' ,'All' ,'All', 'ACCESS_ADMIN' );
-
-
-
     // Initialisation successful
     return true;
 }
@@ -212,17 +112,7 @@ function mybookmarks_delete()
                        array('modName'  => 'mybookmarks',
                              'blockType'=> 'Bookmarks'))) return;
 
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'mybookmarks',
-                             'blockType'=> 'TopBookmarks'))) return;
 
-    if (!xarModAPIFunc('blocks',
-                       'admin',
-                       'unregister_block_type',
-                       array('modName'  => 'mybookmarks',
-                             'blockType'=> 'RandomBookmarks'))) return;
 
 
     /*
@@ -251,33 +141,11 @@ function mybookmarks_delete()
 
     // Drop the table and send exception if returns false.
     $result =& $dbconn->Execute($query);
-    // TODO // CHECK
     if (!$result) return;
-
-    // remove the table from dynamic data
-    $objectinfo = xarModAPIFunc(
-        'dynamicdata'
-        ,'user'
-        ,'getobjectinfo'
-        ,array(
-            'modid'     => xarModGetIDFromName('mybookmarks' )
-            ,'itemtype' => 1 ));
-
-    if (!isset($objectinfo) || empty($objectinfo['objectid'])) {
-        return;
-    }
-    $objectid = $objectinfo['objectid'];
-
-    if (!empty($objectid)) {
-        xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
-    }
-
 
     // Deletion successful
     return true;
 }
-
-
 
 /**
  * upgrade the module from an older version.
@@ -288,15 +156,45 @@ function mybookmarks_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
     case '0.1':
-        // compatability upgrade
+    case '0.1.0':
+
+        if (!xarModAPIFunc('blocks',
+                           'admin',
+                           'unregister_block_type',
+                           array('modName'  => 'mybookmarks',
+                                 'blockType'=> 'TopBookmarks'))) return;
+
+        if (!xarModAPIFunc('blocks',
+                           'admin',
+                           'unregister_block_type',
+                           array('modName'  => 'mybookmarks',
+                                 'blockType'=> 'RandomBookmarks'))) return;
+
+        // remove the table from dynamic data
+        $objectinfo = xarModAPIFunc(
+            'dynamicdata'
+            ,'user'
+            ,'getobjectinfo'
+            ,array(
+                'modid'     => xarModGetIDFromName('mybookmarks' )
+                ,'itemtype' => 1 ));
+
+        if (!isset($objectinfo) || empty($objectinfo['objectid'])) {
+            return;
+        }
+        $objectid = $objectinfo['objectid'];
+
+        if (!empty($objectid)) {
+            xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
+        }
+
+        $modversion['admin']          = 0;
+        $modversion['user']           = 0;
+
         break;
     }
 
     // Update successful
     return true;
 }
-
-/*
- * END OF FILE
- */
 ?>

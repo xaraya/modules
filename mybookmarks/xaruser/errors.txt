@@ -1,0 +1,1 @@
+[30-Oct-2004 13:25:20] PHP Parse error:  parse error in c:\cygwin\home\phpdev\www\dev\export\modules\mybookmarks\xaruser\new.php on line 38

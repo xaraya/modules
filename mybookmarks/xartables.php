@@ -23,20 +23,8 @@ function mybookmarks_xartables()
 {
     // Initialise table array
     $xartables = array();
-
-    // Get the name for the mybookmarks table.
-    // This is not necessary but helps in the following statements and
-    // keeps them readable
-    $mybookmarkstable = xarDBGetSiteTablePrefix() . '_mybookmarks_mybookmarks';
-
-    // Set the table name
+    $mybookmarkstable = xarDBGetSiteTablePrefix() . '_mybookmarks';
     $xartables['mybookmarks'] = $mybookmarkstable;
-
-    // Return the table information
     return $xartables;
 }
-
-/*
- * END OF FILE
- */
 ?>
