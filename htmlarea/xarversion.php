@@ -15,6 +15,6 @@ $modversion['admin'] = 0;
 $modversion['user'] = 0;
 $modversion['class'] = 'Complete';
 $modversion['category'] = 'Miscellaneous';
-// this module depends on the sniffer module
-$modversion['dependency'] = array(775);
+// this module depends on the sniffer and html module
+$modversion['dependency'] = array(775,779);
 ?>
