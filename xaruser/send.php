@@ -100,7 +100,8 @@ function messages_user_send()
             $data['message']['receipient']      = xarUserGetVar('name',$receipient);
             $data['message']['receipient_id']   = $receipient;
             $data['message']['subject']         = $subject;
-            $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', microtime());
+            $data['message']['date']            = xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', time());
+            $data['message']['raw_date']        = time();
             $data['message']['body']            = $body;
 
             $data['receipient']                 = $receipient;

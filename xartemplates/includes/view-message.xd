@@ -11,7 +11,7 @@
                 <br />
                 <xar:mlstring>To:</xar:mlstring> #$message['receipient']#
                 <br />
-                <xar:mlstring>Date:</xar:mlstring> #$message['date']#
+                <xar:mlstring>Date:</xar:mlstring> #xarLocaleFormatDate('%A, %B %d @ %H:%M:%S', $message['raw_date'])#
                 <br />
             </span>
         </div>
