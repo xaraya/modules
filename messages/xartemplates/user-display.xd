@@ -1,0 +1,119 @@
+
+<img src="modules/messages/xarimages/xaraya_logo.gif" width="202" height="69">
+<table cellspacing="0" cellpadding="0" width="50%" border="0">
+    <tr>
+        <td nowrap width="5%" align="center">
+        <xar:if condition="$unread gt 0">
+            <img src="modules/messages/xarimages/green.gif" />
+        <xar:else/>
+            <img src="modules/messages/xarimages/red.gif" />
+        </xar:if>
+        </td>
+        <td nowrap width="15%" align="right">
+            <xar:mlstring>Inbox</xar:mlstring>
+        </td>
+        <td nowrap width="10%"></td>
+
+    <td nowrap width="70%" align="left"> #$unread# / #$total# </td>
+    </tr>
+    <tr>
+        <td nowrap width="5%" align="center">
+
+        <xar:if condition="$sent gt 0">
+            <img src="modules/messages/xarimages/green.gif" />
+        <xar:else/>
+            <img src="modules/messages/xarimages/red.gif" />
+        </xar:if>
+        </td>
+        <td nowrap width="15%" align="right">
+            <xar:mlstring>Sent</xar:mlstring>
+        </td>
+        <td nowrap width="10%"></td>
+        <td nowrap width="70%" align="left">
+            #$sent#
+        </td>
+        </tr>
+<!---
+    <tr>
+        <td nowrap width="5%" align="center">
+            *
+        </td>
+        <td nowrap width="15%" align="right">
+            <xar:mlstring>Drafts</xar:mlstring>
+        </td>
+        <td nowrap width="10%"></td>
+        <td nowrap width="70%" align="left">
+            #$total#
+        </td>
+    </tr>
+--->
+</table>
+<hr>
+<div align="right"><br />
+   <br />
+</div>
+<xar:if condition="!isset($error)">
+    <table cellspacing="0" cellpadding="0" width="100%" border="0">
+        <tr>
+            <th nowrap width="5%" align="center">
+                <img src="#$header_attachment_image#" alt="attachent" valign="bottom" />
+            </th>
+            <th nowrap width="5%" align="center">
+                <img src="#$header_status_image#" alt="attachent" valign="bottom" />
+            </th>
+            <th nowrap width="15%" align="left">
+                <xar:mlstring>From</xar:mlstring>
+            </th>
+            <th nowrap width="50%" align="left">
+                <xar:mlstring>Subject</xar:mlstring>
+            </th>
+            <th nowrap width="25%" align="left">
+                <xar:mlstring>Date</xar:mlstring>
+            </th>
+        </tr>
+        <xar:loop name="$messages">
+            <xar:if condition="(($loop:index + 1) % 2)">
+                <tr valign="center">
+                    <td class="xar-norm" nowrap="nowrap">
+                        <!--- TODO: check for attachements --->
+                    </td>
+                    <td class="xar-norm">
+                        <img src="#$loop:item['status_image']#" alt="#$loop:item['status_alt']#" />
+                    </td>
+                    <td class="xar-norm" nowrap="nowrap" align="left">
+                        <a href="#$loop:item['reply_link']#" title="#xarML('Reply')#">#$loop:item['sender']#</a>
+                    </td>
+                    <td class="xar-norm" nowrap="nowrap" align="left">
+                        <a href="#$loop:item['view_link']#" title="#xarML('View message')#">#$loop:item['subject']#</a>
+                    </td>
+                    <td class="xar-norm" nowrap="nowrap" align="left">
+                        #$loop:item['date']#
+                    </td>
+                </tr>
+            <xar:else />
+                <tr valign="center">
+                    <td class="xar-accent" nowrap="nowrap">
+                        <!--- TODO: check for attachements --->
+                    </td>
+                    <td class="xar-accent">
+                        <img src="#$loop:item['status_image']#" alt="#$loop:item['status_alt']#" />
+                    </td>
+                    <td class="xar-accent" nowrap="nowrap" align="left">
+                        <a href="#$loop:item['reply_link']#" title="#xarML('Reply')#">#$loop:item['sender']#</a>
+                    </td>
+                    <td class="xar-accent" nowrap="nowrap" align="left">
+                        <a href="#$loop:item['view_link']#" title="#xarML('View message')#">#$loop:item['subject']#</a>
+                    </td>
+                    <td class="xar-accent" nowrap="nowrap" align="left">
+                        #$loop:item['date']#
+                    </td>
+                </tr>
+            </xar:if>
+        </xar:loop>
+    </table>
+<xar:else />
+    <br />
+    <div class="xar-norm">
+        #$error#
+    </div>
+</xar:if>

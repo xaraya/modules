@@ -1,0 +1,7 @@
+<!---
+<xar:if condition="$action ne 'post'">
+    <xar:template file="view-message" type="module" />
+    <br /><br />
+</xar:if>
+--->
+<xar:template file="input-box" type="module" />

@@ -1,0 +1,14 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Messages Administration</xar:mlstring></span></div>
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-body">
+<h2><xar:mlstring>Messages Overview</xar:mlstring></h2>
+<div align="center">
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<!-- the specific template for the current admin function comes here -->
+
+<!-- some variable filled in by the admin function using this template -->
+<xar:mlstring>Welcome to the administration part of this Messages module</xar:mlstring>
+</div>
+</div>

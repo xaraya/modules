@@ -1,0 +1,29 @@
+<?php
+function messages_user_display( ) {
+
+    // Security check
+    if (!xarSecurityCheck( 'ViewMessages'))
+        return;
+
+    $read_messages = unserialize(xarModGetUserVar('messages','read_messages'));
+    $messages = xarModAPIFunc('messages', 'user', 'getall', array());
+
+    if (is_array($messages)) {
+
+        krsort($messages);
+
+        $data['messages'] = $messages;
+        $data['header_attachment_image'] = xarTplGetImage('attachment.png');
+        $data['header_status_image']     = xarTplGetImage('check_read.gif');
+        $data['unread'] = xarModAPIFunc('messages','user','count_unread');
+        $data['sent']   = xarModAPIFunc('messages','user','count_sent');
+        $data['total']  = xarModAPIFunc('messages','user','count_total');
+
+    } else {
+        $list = array();
+    }
+
+    return $data;
+}
+
+?>

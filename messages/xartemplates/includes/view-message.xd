@@ -1,0 +1,28 @@
+<xar:if condition="!isset($error)">
+    <div class="xar-norm" style="padding: 1px;margin-bottom: 4px;">
+        <div class="xar-accent" style="padding: 4px;" align="left">
+            <!-- <xar:mlstring>Message-Posting-Host:</xar:mlstring> #$message['posting-host']# -->
+            <span class="xar-sub">
+                <h4 style="display: inline;">
+                    <xar:mlstring>Subject:</xar:mlstring> #$message['subject']#
+                </h4>
+                <br />
+                <xar:mlstring>From:</xar:mlstring> #$message['sender']#
+                <br />
+                <xar:mlstring>To:</xar:mlstring> #$message['receipient']#
+                <br />
+                <xar:mlstring>Date:</xar:mlstring> #$message['date']#
+                <br />
+            </span>
+        </div>
+        <div class="xar-norm" style="padding: 4px;" align="left">
+            #$message['body']# <br />
+        </div>
+    </div>
+<xar:else />
+    <br />
+    <div class="xar-norm">
+        #$error#
+    </div>
+</xar:if>
+
