@@ -1,8 +1,8 @@
 <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<p>
+<dd>
     <a href="#xarModURL('pmember', 'user', 'usermenu', array('phase' => 'form'))#">
         <xar:mlstring>
             Subscribe to
         </xar:mlstring> #xarModGetVar('themes', 'SiteName', 1)#
     </a>
-</p>
+</dd>
