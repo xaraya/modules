@@ -2,9 +2,9 @@
   <name>Music CD Loans 3</name>
   <isValid>y</isValid>
   <version>1.0</version>
-  <isActive>n</isActive>
+  <isActive>y</isActive>
    <description>Borrow CD's, browse CDs, etc...</description>
-  <lastModif>01/10/2003 [09:55:32]</lastModif>
+  <lastModif>02/10/2003 [06:35:32]</lastModif>
   <sharedCode><![CDATA[<?php
 
 ?>  ]]></sharedCode>
@@ -13,7 +13,7 @@
       <name>end</name>
       <type>end</type>
       <description>default end activity</description>
-      <lastModif>01/10/2003 [09:55:32]</lastModif>
+      <lastModif>02/10/2003 [06:35:32]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -25,7 +25,7 @@
       <name>Browse CDs</name>
       <type>standalone</type>
       <description>The user can browse CDs. The title and status is displayed for each CD. A button to request a CD is displayed.</description>
-      <lastModif>02/10/2003 [02:31:23]</lastModif>
+      <lastModif>02/10/2003 [06:35:32]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>n</isAutoRouted>
       <roles>
@@ -95,21 +95,25 @@ if ($actinfo) {
 <xar:if condition="!empty($cds) and count($cds) gt 0">
 <xar:foreach in="$cds" value="$cd">
   <tr>
+<form method="post" action="&xar-modurl-workflow-user-run_activity;">
     <td class="odd">#$cd['title']#</td>
     <td class="odd">#$cd['status']#</td>
     <td class="odd">#$cd['user']#</td>
     <td class="odd">
-<xar:if condition="$cd['status'] eq 'available'">
-    <a class="link" href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$requestId#&amp;cdId=#$cd['cdid']#" >
-Request CD
-    </a>
-</xar:if>
+<input type="hidden" name="return_url" value="#$return_url#"/>
 <xar:if condition="$isadmin">
-    <a class="link" href="&xar-modurl-workflow-user-run_activity;&amp;activityId=#$activityId#&amp;cdId=#$cd['cdid']#&amp;status=#$cd['status']#" >
-Change Status
-    </a>
+<input type="hidden" name="activityId" value="#$activityId#"/>
+<input type="hidden" name="cdId" value="#$cd['cdid']#"/>
+<input type="hidden" name="status" value="#$cd['status']#"/>
+<input type="image" name="whatever" src="modules/workflow/lib/Galaxia/img/icons/refresh2.gif" title="Change Status"/>
+<xar:elseif condition="$cd['status'] eq 'available'"/>
+<input type="hidden" name="activityId" value="#$requestId#"/>
+<input type="hidden" name="cd" value="#$cd['cdid']#"/>
+<input type="hidden" name="request" value="1"/>
+<input type="image" name="whatever" src="modules/workflow/lib/Galaxia/img/icons/next.gif" title="Request CD"/>
 </xar:if>
     </td>
+</form>
   </tr>
 </xar:foreach>
 </xar:if>
@@ -118,12 +122,12 @@ Change Status
       <name>Request CD</name>
       <type>start</type>
       <description>The user requests a CD</description>
-      <lastModif>02/10/2003 [02:31:54]</lastModif>
+      <lastModif>02/10/2003 [06:35:32]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
-        <role>user</role>
         <role>admin</role>
+        <role>user</role>
       </roles>
       <code><![CDATA[<?php
 
@@ -139,7 +143,7 @@ $items = xarModAPIFunc('dynamicdata','user','getitems', $object);
 $tplData['cds'] = $items;
 
 // Execute the request for this CD
-if(isset($_REQUEST['request'])) {
+if(!empty($_REQUEST['request']) && !empty($_REQUEST['cd'])) {
     $instance->set('user',$user);
     $instance->set('cdId',$_REQUEST['cd']);
     $instance->complete();
@@ -174,7 +178,7 @@ There are no CDs available at the moment...
       <name>Approve CD request</name>
       <type>switch</type>
       <description>Approve or reject the CD request</description>
-      <lastModif>01/10/2003 [09:55:32]</lastModif>
+      <lastModif>02/10/2003 [06:35:33]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -236,7 +240,7 @@ Status: #$info['status']# <br/>
       <name>Approve CD</name>
       <type>activity</type>
       <description>Approve the request</description>
-      <lastModif>01/10/2003 [09:55:32]</lastModif>
+      <lastModif>02/10/2003 [06:35:33]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -271,7 +275,7 @@ $cd->updateItem(array('status' => 'not available',
       <name>Reject CD</name>
       <type>activity</type>
       <description>Reject the loan request</description>
-      <lastModif>01/10/2003 [09:55:32]</lastModif>
+      <lastModif>02/10/2003 [06:35:33]</lastModif>
       <isInteractive>n</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>
@@ -294,7 +298,7 @@ if (!empty($sendto)) {
       <name>Ack result</name>
       <type>activity</type>
       <description>The user gets the response</description>
-      <lastModif>02/10/2003 [02:32:16]</lastModif>
+      <lastModif>02/10/2003 [06:35:33]</lastModif>
       <isInteractive>y</isInteractive>
       <isAutoRouted>y</isAutoRouted>
       <roles>

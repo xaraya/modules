@@ -143,7 +143,7 @@ if (!empty($_REQUEST['return_url'])) {
     $tplData['return_url'] = '';
 }
 
-if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteractive()) {
+if (!isset($_REQUEST['auto']) && $activity->isInteractive() && $__activity_completed) {
     if (!empty($_REQUEST['return_url'])) {
         xarResponseRedirect($_REQUEST['return_url']);
     } elseif (empty($instance->instanceId)) {
@@ -151,6 +151,9 @@ if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteracti
     } else {
         xarResponseRedirect(xarModURL('workflow', 'user', 'instances'));
     }
+    return true;
+} elseif (!isset($_REQUEST['auto']) && $activity->isInteractive() && $activity->getType() == 'standalone' && !empty($_REQUEST['return_url'])) {
+    xarResponseRedirect($_REQUEST['return_url']);
     return true;
 } else {
 	if (!isset($_REQUEST['auto']) && $activity->isInteractive()) {

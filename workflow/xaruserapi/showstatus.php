@@ -1,18 +1,14 @@
 <?php
 
 /**
- * show the current status of "your" instances (called via <xar:workflow-status tag)
+ * show the current status of "your" instances, i.e. those that you started and
+ * are the owner of (called via <xar:workflow-status tag)
  * 
  * @author mikespub
  * @access public 
  */
 function workflow_userapi_showstatus($args)
 {
-// TODO: keep track of instances from anonymous visitors via session ?
-    if (!xarUserIsLoggedIn()) {
-        return '';
-    }
-
     // Security Check
     if (!xarSecurityCheck('ReadWorkflow',0)) {
         return '';
@@ -28,6 +24,8 @@ function workflow_userapi_showstatus($args)
         $user = xarUserGetVar('uid');
     }
 
+// TODO: keep track of instances from anonymous visitors via session ?
+
     // retrieve the instances for which you're the owner
     $where = "owner=$user";
     if (!empty($args['status'])) {
@@ -41,7 +39,11 @@ function workflow_userapi_showstatus($args)
     }
     $items = $processMonitor->monitor_list_instances(0, -1, 'started_asc', '', $where, array());
 
-    $seenlist = xarModGetUserVar('workflow','seenlist');
+    if (xarUserIsLoggedIn()) {
+        $seenlist = xarModGetUserVar('workflow','seenlist');
+    } else {
+        $seenlist = xarSessionGetVar('workflow.seenlist');
+    }
     if (!empty($seenlist)) {
         $seen = explode(';',$seenlist);
     } else {
@@ -58,6 +60,9 @@ function workflow_userapi_showstatus($args)
         }
         $tplData['items'][] = $items['data'][$index];
     }
+    if (count($tplData['items']) < 1) {
+        return '';
+    }
 
     $tplData['userId'] = $user;
 
@@ -65,8 +70,8 @@ function workflow_userapi_showstatus($args)
         $tplData['layout'] = $args['layout'];
     }
 
-    // URL to return to if some action is taken - use urlencode() here
-    $tplData['return_url'] = urlencode(xarServerGetCurrentURL());
+    // URL to return to if some action is taken - use htmlspecialchars() here
+    $tplData['return_url'] = htmlspecialchars(xarServerGetCurrentURL());
 
     if (!empty($args['template'])) {
         return xarTplModule('workflow', 'user', 'showstatus', $tplData, $args['template']);

@@ -194,6 +194,11 @@ function workflow_init()
                       array(),
                       'workflow_userapi_handlestatustag');
 
+    // show the instances that are assigned/accessible to you (i.e. your task list)
+    xarTplRegisterTag('workflow', 'workflow-instances',
+                      array(),
+                      'workflow_userapi_handleinstancestag');
+
     // define privilege instances and masks
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
@@ -308,6 +313,13 @@ function workflow_upgrade($oldversion)
             xarModSetVar('workflow','seenlist','');
             // fall through to next upgrade
 
+        case 1.3:
+            // show the instances that are assigned/accessible to you (i.e. your task list)
+            xarTplRegisterTag('workflow', 'workflow-instances',
+                              array(),
+                              'workflow_userapi_handleinstancestag');
+            // fall through to next upgrade
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
@@ -380,6 +392,7 @@ function workflow_delete()
     // Unregister BL tags
     xarTplUnregisterTag('workflow-activity');
     xarTplUnregisterTag('workflow-status');
+    xarTplUnregisterTag('workflow-instances');
 
     // Remove Masks and Instances
     xarRemoveMasks('workflow');

@@ -11,6 +11,36 @@ function workflow_user_instances()
     // Security Check
     if (!xarSecurityCheck('ReadWorkflow')) return;
 
+    if (isset($_REQUEST['run']) || isset($_REQUEST['run_x'])) {
+        return xarModFunc('workflow','user','run_activity');
+    }
+
+    if (isset($_REQUEST['remove']) || isset($_REQUEST['remove_x'])) {
+        xarVarFetch('iid','isset',$iid,'',XARVAR_NOT_REQUIRED);
+        xarVarFetch('return_url','isset',$return_url,'',XARVAR_NOT_REQUIRED);
+        if (!empty($iid)) {
+            if (xarUserIsLoggedIn()) {
+                $seenlist = xarModGetUserVar('workflow','seenlist');
+                if (empty($seenlist)) {
+                    xarModSetUserVar('workflow','seenlist',$iid);
+                } else {
+                    xarModSetUserVar('workflow','seenlist',$seenlist.';'.$iid);
+                }
+            } else {
+                $seenlist = xarSessionGetVar('workflow.seenlist');
+                if (empty($seenlist)) {
+                    xarSessionSetVar('workflow.seenlist',$iid);
+                } else {
+                    xarSessionSetVar('workflow.seenlist',$seenlist.';'.$iid);
+                }
+            }
+            if (!empty($return_url)) {
+                xarResponseRedirect($return_url);
+                return true;
+            }
+        }
+    }
+
 // Common setup for Galaxia environment
     include_once('modules/workflow/tiki-setup.php');
     $tplData = array();
@@ -34,32 +64,35 @@ if ($tiki_p_use_workflow != 'y') {
 	die;
 }
 
+$action = 0;
+
 // Filtering data to be received by request and
 // used to build the where part of a query
 // filter_active, filter_valid, find, sort_mode,
 // filter_process
-if (isset($_REQUEST['send'])) {
+if (isset($_REQUEST['send']) || isset($_REQUEST['send_x'])) {
 	$GUI->gui_send_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-}
-
-if (isset($_REQUEST['abort'])) {
+	$action = 1;
+} elseif (isset($_REQUEST['abort']) || isset($_REQUEST['abort_x'])) {
 	$GUI->gui_abort_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-}
-
-if (isset($_REQUEST['exception'])) {
+	$action = 1;
+} elseif (isset($_REQUEST['exception']) || isset($_REQUEST['exception_x'])) {
 	$GUI->gui_exception_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-}
-
-if (isset($_REQUEST['resume'])) {
+	$action = 1;
+} elseif (isset($_REQUEST['resume']) || isset($_REQUEST['resume_x'])) {
 	$GUI->gui_resume_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
-}
-
-if (isset($_REQUEST['grab'])) {
+	$action = 1;
+} elseif (isset($_REQUEST['grab']) || isset($_REQUEST['grab_x'])) {
 	$GUI->gui_grab_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+	$action = 1;
+} elseif (isset($_REQUEST['release']) || isset($_REQUEST['release_x'])) {
+	$GUI->gui_release_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+	$action = 1;
 }
 
-if (isset($_REQUEST['release'])) {
-	$GUI->gui_release_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+if ($action && !empty($_REQUEST['return_url'])) {
+	xarResponseRedirect($_REQUEST['return_url']);
+	return true;
 }
 
 $where = '';

@@ -45,6 +45,8 @@ To try that out, you should :
 </ol>
 </p>
 
+<p>Version 1.4 also adds the BL tag &lt;xar:workflow-instances .../&gt; to show the instances that are assigned/accessible to you (i.e. your task list).</p>
+
 <p><b>Patches and contributions are most welcome ;-)</b></p>
 </xar:mlstring>
 

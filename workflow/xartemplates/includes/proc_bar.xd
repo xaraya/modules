@@ -19,11 +19,11 @@
 			<td><a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#&amp;activate_proc=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/refresh2.gif' alt='#xarML('activate')#' title='#xarML('activate')#' /></a></td>									
 			</xar:if>
 			</xar:if>
-			<td><a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Activity.gif' alt='#xarML('activities')#' title='#xarML('activities')#' /></a></td>						
 		    <td><a class="link" href="&xar-modurl-workflow-admin-processes;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/change.gif' alt='#xarML('edit')#' title='#xarML('edit')#' /></a></td>				
+			<td><a class="link" href="&xar-modurl-workflow-admin-activities;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/Activity.gif' alt='#xarML('activities')#' title='#xarML('activities')#' /></a></td>						
 		    <td><a class="link" href="&xar-modurl-workflow-admin-shared_source;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/book.gif' alt='#xarML('code')#' title='#xarML('code')#' /></a></td>		
 		    <td><a class="link" href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/myinfo.gif' alt='#xarML('roles')#' title='#xarML('roles')#' /></a></td>		
-			<td><a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#"><img src='modules/workflow/lib/Galaxia/img/icons/Process.gif' border='0' title='#xarML('graph')#' alt='#xarML('graph')#' /></a></td>		
+			<td><a href="&xar-modurl-workflow-admin-graph;&amp;pid=#$pid#"><img src='modules/workflow/lib/Galaxia/img/icons/mode_tree.gif' border='0' title='#xarML('graph')#' alt='#xarML('graph')#' /></a></td>		
 			<td><a class="link" href="&xar-modurl-workflow-admin-save_process;&amp;pid=#$pid#"><img border='0' src='modules/workflow/lib/Galaxia/img/icons/export.gif' alt='#xarML('export')#' title='#xarML('export')#' /></a></td>
 
 		</tr>
