@@ -57,14 +57,14 @@ function articles_userapi_getnext($args)
      // Create the ORDER BY part
     switch($sort) {
     case 'title':
-        $query .= $articlesdef['title'] . ' > ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $articlesdef['title'] . ' ASC, ' . $articlesdef['aid'] . ' DESC';
+        $query .= $articlesdef['title'] . ' > ' . $dbconn->qstr($current['title']) . ' ORDER BY ' . $articlesdef['title'] . ' ASC, ' . $articlesdef['aid'] . ' ASC';
         break;
     case 'aid':
         $query .= $articlesdef['aid'] . ' > ' . $current['aid'] . ' ORDER BY ' . $articlesdef['aid'] . ' ASC';    
         break;
     case 'data':
     default:
-        $query .= $articlesdef['pubdate'] . ' > ' . $dbconn->qstr($current['pubdate']) . ' ORDER BY ' . $articlesdef['pubdate'] . ' DESC, ' . $articlesdef['aid'] . ' DESC';
+        $query .= $articlesdef['pubdate'] . ' > ' . $dbconn->qstr($current['pubdate']) . ' ORDER BY ' . $articlesdef['pubdate'] . ' ASC, ' . $articlesdef['aid'] . ' ASC';
     }
 
     // Run the query - finally :-)
