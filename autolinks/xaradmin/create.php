@@ -38,6 +38,9 @@ function autolinks_admin_create()
         $errorcount += 1;
         $data['keyword_error'] = xarExceptionRender('text');
         xarExceptionHandled();
+        if (trim($keyword) == '' ) {
+            $keyword = NULL;
+        }
     }
 
     if (!xarVarFetch('title', 'str', $title)) {
@@ -58,7 +61,8 @@ function autolinks_admin_create()
         xarExceptionHandled();
     }
 
-    if (!xarVarFetch('name', 'str:1', $name)) {
+    // Default the name to the same as the keyword.
+    if (!xarVarFetch('name', 'str:1', $name, $keyword)) {
         $errorcount += 1;
         $data['name_error'] = xarExceptionRender('text');
         xarExceptionHandled();

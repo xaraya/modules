@@ -44,11 +44,13 @@ function autolinks_userapi__transform_preg($template_name, $matched_text, $templ
         }
  
         // Free up the error since we have handled it here.
-        xarExceptionHandled();
+        // TODO: replace with xarExceptionHandled() when we know
+        // how to handle multiple exceptions on the stack.
+        xarExceptionFree();
     }
 
     // Put a placeholder in the spaces so we don't match it again.
-    return preg_replace('/(\w)/', '$1ALSPACEHOLDER', $replace);
+    return preg_replace('/(\w)/', '$1ALSPACEHOLDER', trim($replace));
 }
 
 /**

@@ -67,14 +67,6 @@ function autolinks_userapi_getreplace($args)
         'target' => $target
     );
 
-    // Additional values for the 'standard' template.
-    $template_data['stdattributes'] = array(
-        'href' => $link['url'],
-        'title' => $link['title'],
-        'target' => $target,
-        'style' => $style
-    );
-
     // DD items to add to the template too.
     if (xarModIsHooked('dynamicdata', 'autolinks', $link['itemtype'])) {
         // We are hooked into DD, so fetch the current fields and values.
@@ -99,6 +91,16 @@ function autolinks_userapi_getreplace($args)
         }
     }
 
+    // Additional values for the 'standard' template.
+    // Pick these back out of the template array, so they can all be
+    // over-ridden by DD property values.
+    $template_data['stdattributes'] = array(
+        'href' => $template_data['url'],
+        'title' => $template_data['title'],
+        'target' => $template_data['target'],
+        'style' => $template_data['style']
+    );
+
     // Either execute the template now (if cachable) or return the expression used to
     // execute the template in an expression-based preg_replace.
     // Executing now will give us a simple replace string, creating the expression
@@ -107,7 +109,8 @@ function autolinks_userapi_getreplace($args)
     if ($link['dynamic_replace']) {
         // Dynamic templates are executed later on, when the link match is made.
 
-        // Create the PHP expression, but don't execute the template at this stage.
+        // Create the PHP expression, used to pass into the template at runtime,
+        // but don't execute the template at this stage.
         $result = xarModAPIfunc('autolinks', 'user', 'varexport', $template_data);
     } else {
         // Non-dynamic templates can be executed and cached for later use.
@@ -125,7 +128,9 @@ function autolinks_userapi_getreplace($args)
             $error = xarExceptionRender('text');
 
             // Free the exception since we have handled it.
-            xarExceptionHandled();
+            // TODO: replace with xarExceptionHandled() when we know
+            // how to handle multiple exceptions on the stack.
+            xarExceptionFree();
 
             // Do we want the error displayed in-line?
             if (xarModGetVar('autolinks', 'showerrors') || xarVarGetCached('autolinks', 'showerrors')) {
@@ -141,9 +146,13 @@ function autolinks_userapi_getreplace($args)
                 );
             } else {
                 // Don't highlight the error - just return the matched text.
-                // This is the normal mode of operation.
+                // This is the normal (i.e. after debugging) mode of operation.
                 $result = '$1';
             }
+        } else {
+            // Trim the template output, at least until we have more control
+            // over whitespace in the rendered template output.
+            $result = trim($result);
         }
     }
 

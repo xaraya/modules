@@ -4,8 +4,9 @@
     the autolink type using this template. This will allow you to
     use different images for, say, HTTP and FTP URIs.
 --->
-<xar:set name="$imgalt"><xar:mlstring>Link to external web site</xar:mlstring></xar:set>
-<xar:if condition="empty($icon) or '' eq xarTplGetImage($icon)">
+<xar:set name="$imgalt"><xar:mlstring>External link icon</xar:mlstring></xar:set>
+<xar:if condition="empty($icon)">
     <xar:set name="$icon">'icon_www.gif'</xar:set>
 </xar:if>
-<a href="#$url#" target="external" title="#$title#" style="text-decoration: underline;"><img src="#xarTplGetImage($icon)#" alt="#$imgalt#" hspace="4">#$match#</a>
+<xar:set name="$imgurl">#xarTplGetImage($icon)#</xar:set>
+<xar:if condition="empty($imgurl)"><a href="#$url#" target="external" title="#$title#">#$match#</a><xar:else/><a href="#$url#" target="external" title="#$title#"><img src="#xarTplGetImage($icon)#" alt="#$imgalt#" hspace="4">#$match#</a></xar:if>
