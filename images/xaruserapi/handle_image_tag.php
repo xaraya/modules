@@ -28,7 +28,13 @@ function images_userapi_handle_image_tag($args)
     } 
     $array = sprintf($format, implode(',', $items));
 
-    $imgTag = sprintf("\$tag = xarModAPIFunc('images', 'user', 'resize', %s); if (!\$tag) { return; } else { echo \$tag; }", $array);   
+    $imgTag = sprintf("
+        \$tag = xarModAPIFunc('images', 'user', 'resize', %s); 
+        if (!\$tag) { 
+            return; 
+        } else { 
+            echo \$tag; 
+        }", $array);   
     return $imgTag;
 }
 
