@@ -38,7 +38,7 @@ function newsletter_init()
     $fields = array(
         'xar_id'            => array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_cid'           => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
-        'xar_altcids'       => array('type'=>'varchar','size'=>255,'null'=>TRUE,'default'=>''),
+        'xar_altcids'       => array('type'=>'text','null'=>TRUE),
         'xar_ownerid'       => array('type'=>'integer','null'=>FALSE,'default'=>'0'),
         'xar_template_html' => array('type'=>'varchar','size'=>50,'null'=>FALSE,'default'=>''),
         'xar_template_text' => array('type'=>'varchar','size'=>50,'null'=>FALSE,'default'=>''),
