@@ -167,11 +167,11 @@ function newsletter_userapi_getstory($args)
                       )
                  ));
 
-
         // put all the article info in an array w/ the story array
         $story['article']['title']=$_article['title'];
         $story['article']['body']=$_article['body'];
         $story['article']['summary']=$_article['summary'];
+        $story['article']['pubtypeid']=$_article['pubtypeid'];
 
         // loop through and get all the images, if any
         // put them in vars the template can use
