@@ -33,8 +33,6 @@ function uploads_userapi_file_store( $args ) {
             $store_type = _UPLOADS_STORE_FSDB;
     }
         
-        echo "<br /><pre> inside: fileInfo => ";print_r($fileInfo); echo "</pre>";
-        echo"<br />STORE_TYPE: $store_type";
     // first, make sure the file isn't already stored in the db/filesystem
     // if it is, then don't add it.
     // FIXME: need to rethink how this is handled - maybe give the user a choice
@@ -45,7 +43,10 @@ function uploads_userapi_file_store( $args ) {
     
     // If we already have the file, then return the info we have on it
     if (is_array($fInfo) && count($fInfo)) {
-        return $fInfo;
+        // Remember, db_get_file returns the files it finds (even if just one)
+        // as an array of files, so - considering we are only expecting one file
+        // return the first one in the list - indice 0
+        return $fInfo[0];
     }
     
     // If this is just a file dump, return the dump

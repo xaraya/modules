@@ -52,9 +52,15 @@ function uploads_userapi_prepare_uploads( &$args ) {
              !isset($fileInfo['name'])  || !isset($fileInfo['type'])  || 
              !isset($fileInfo['error']) || !isset($fileInfo['size'])  || 
              !isset($fileInfo['tmp_name']))  {
-                $msg = xarML('Invalid data format for upload ID: [#(1)]', $uploadId);
-                xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-                return;
+                
+                $fileInfo['fileType']   = 'unknown';
+                $fileInfo['fileSrc']    = 'missing';
+                $fileInfo['fileSize']   = 0;
+                $fileInfo['fileName']   = xarML('Missing File!');
+                $fileInfo['errors'][0]['errorMsg'] = xarML('Invalid data format for upload ID: [#(1)]', $uploadId);
+                $fileInfo['errors'][0]['errorId']  = _UPLOADS_ERROR_BAD_FORMAT;
+                $fileList[] = $fileInfo;
+                continue;
         }
 
         $fileInfo['fileType'] = $fileInfo['type'];
@@ -81,6 +87,7 @@ function uploads_userapi_prepare_uploads( &$args ) {
             xarExceptionHandled();
             
             // continue on to the next uploaded file in the list
+            $fileList[] = $fileInfo;
             continue;
         }
 
@@ -92,7 +99,7 @@ function uploads_userapi_prepare_uploads( &$args ) {
         unset($fileInfo['size']);
         unset($fileInfo['name']);
         unset($fileInfo['type']);
-                unset($fileInfo['error']);
+        unset($fileInfo['error']);
 
         $fileInfo['fileType']   = xarModAPIFunc('mime','user','analyze_file', 
                                                  array('fileName' => $fileInfo['fileSrc']));

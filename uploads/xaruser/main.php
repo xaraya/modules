@@ -18,12 +18,12 @@
     return xarModAPIFunc('uploads',
                           'admin',
                           'download',
-						  array('ulid'=>$ulid
-						  		, 'ulname'=>$ulname
-						  		, 'thumbwidth'=>$thumbwidth
-						  		, 'thumbheight'=>$thumbheight
-						  		, 'thumb'=>$thumb
-								));
+                          array('ulid'=>$ulid
+                                  , 'ulname'=>$ulname
+                                  , 'thumbwidth'=>$thumbwidth
+                                  , 'thumbheight'=>$thumbheight
+                                  , 'thumb'=>$thumb
+                                ));
      
     
 }
