@@ -42,7 +42,7 @@ function comments_userapi_add_rootnode( $args ) {
     $ctable = &$xartable['comments_column'];
 
     // grab the max right value
-    $maxright = xarModAPIFunc('comments','userapi','get_table_maxright');
+    $maxright = xarModAPIFunc('comments','user','get_table_maxright');
 
     // if we couldn't find a maxright then there isn't any
     // comments in the table yet so we start with maxright = 0 :)
