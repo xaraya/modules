@@ -44,7 +44,7 @@ function events_user_usermenu()
 
             // We also need to set the SecAuthKey, in order to stop hackers from setting user
             // vars off site.
-            $authid = xarSecGenAuthKey();
+            $authid = xarSecGenAuthKey('events');
 
             // Lets get the value that we want to override from the preferences. Notice that we are
             // xarModUserGetMod and not xarModGetVar so we can grab the overridden value.  You do
