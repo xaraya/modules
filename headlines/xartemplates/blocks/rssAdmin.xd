@@ -5,10 +5,10 @@
 		<span style="float: right; width: 78%; text-align: left;">
 			<select name="rssurl" id="rssurl#$blockid#">
 			<xar:loop name="$items">
-				<xar:if condition="$rssurl eq $url">
-					<option name="#$url#" id="#$url#" value="#$url#" selected="selected">#$url#</option>
+				<xar:if condition="$rssurl eq $loop:item['url']">
+					<option name="#$loop:item['url']#" id="#$loop:item['url']#" value="#$loop:item['url']#" selected="selected">#$loop:item['url']#</option>
 				<xar:else />
-					<option name="#$url#" id="#$url#" value="#$url#">#$url#</option>
+					<option name="#$loop:item['url']#" id="#$loop:item['url']#" value="#$loop:item['url']#">#$loop:item['url']#</option>
 				</xar:if>
 			</xar:loop>
 			</select>
