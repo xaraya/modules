@@ -21,7 +21,12 @@
 </table>
 <br />
 
-<form method="POST" action="#xarModURL('dyn_example', 'admin', 'update')#">
+<xar:set name="$withupload">#$object->upload#</xar:set>
+<xar:if condition="!empty($withupload)">
+    <form method="POST" action="#xarModURL('dyn_example', 'admin', 'update')#" enctype="multipart/form-data">
+<xar:else/>
+    <form method="POST" action="#xarModURL('dyn_example', 'admin', 'update')#">
+</xar:if>
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
 

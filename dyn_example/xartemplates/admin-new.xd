@@ -22,7 +22,12 @@
 </table>
 </xar:if>
 
-<form method="post" action="#xarModURL('dyn_example','admin','create')#">
+<xar:set name="$withupload">#$object->upload#</xar:set>
+<xar:if condition="!empty($withupload)">
+    <form method="post" action="#xarModURL('dyn_example','admin','create')#" enctype="multipart/form-data">
+<xar:else/>
+    <form method="post" action="#xarModURL('dyn_example','admin','create')#">
+</xar:if>
 <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
 <table width="100%" border="0" cellpadding="4" cellspacing="0">
 
