@@ -40,7 +40,7 @@ function addressbook_userapi_updaterecord($args) {
     $contact_5 = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$contact_5);
     $note = xarModAPIFunc(__ADDRESSBOOK__,'user','securitycheck',$note);
     if (!isset($private)) { $private=0; }
-    $last_updt = xarModAPIFunc(__ADDRESSBOOK__,'util','getusertime');
+    $last_updt = time();
     // custom field values
 
     /**
