@@ -354,6 +354,9 @@ function articles_user_view($args)
     if (xarModIsHooked('dynamicdata','articles',$ptid)) {
         $extra[] = 'dynamicdata';
     }
+    if (xarModIsHooked('uploads', 'articles', $ptid)) {
+        xarVarSetCached('Hooks.uploads','ishooked',1);
+    }
 
     $now = time();
     if (empty($startdate) || !is_numeric($startdate) || $startdate > $now) {

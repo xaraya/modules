@@ -344,6 +344,9 @@ function articles_user_display($args)
     }
     unset($article);
 
+    if (xarModIsHooked('uploads', 'articles', $pubtypeid)) {
+        xarVarSetCached('Hooks.uploads','ishooked',1);
+    }
     // temp. fix to include dynamic data fields without changing templates
     if (xarModIsHooked('dynamicdata','articles',$pubtypeid)) {
         list($properties) = xarModAPIFunc('dynamicdata','user','getitemfordisplay',
