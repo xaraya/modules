@@ -45,6 +45,15 @@ function newsletter_admin_mailissue()
     if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION)
         return; // throw back
 
+    // Determine if issue was already published
+    if ($issue['datePublished']['timestamp'] != 0) {
+        // If this issue was already published, then throw error and return
+        xarExceptionFree();
+        $msg = xarML('This issue has already been published.  You must edit the issue and remove the date published to publish again.');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'FORBIDDEN_OPERATION', new DefaultUserException($msg));
+        return;
+    }
+
     // Get the publication for display
     $publication = xarModAPIFunc('newsletter',
                                  'user',
@@ -136,7 +145,7 @@ function newsletter_admin_mailissue()
     }
 
     if (!$emailResultArray) {
-        return false;
+        return;
     }
 
 
