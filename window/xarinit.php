@@ -31,8 +31,6 @@
 
 function window_init()
 {
-
-
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
@@ -105,28 +103,15 @@ function window_upgrade($oldversion)
         case '1.0.0':
             $modversion['user'] = 1;
             break;
+        case '1.0.1':
+            $modversion['user'] = 0;
+            break;
     }
     return true;
 }
 
 function window_delete()
 {
-    // Delete module variables
-    xarModDelVar('window', 'allow_local_only');
-    xarModDelVar('window', 'use_buffering');
-    xarModDelVar('window', 'reg_user_only');
-    xarModDelVar('window', 'use_auth_hosts');
-    xarModDelVar('window', 'no_user_entry');
-    xarModDelVar('window', 'open_direct');
-    xarModDelVar('window', 'use_fixed_title');
-    xarModDelVar('window', 'auto_resize');
-    xarModDelVar('window', 'auto_resize_type');
-    xarModDelVar('window', 'auto_resize_trim');
-    xarModDelVar('window', 'vsize');
-    xarModDelVar('window', 'hsize');
-    xarModDelVar('window', 'full_screen');
-    xarModDelVar('window', 'table_borders');
-
     $dbconn =& xarDBGetConn();
     $tables =& xarDBGetTables();
     xarDBLoadTableMaintenanceAPI();
@@ -137,7 +122,8 @@ function window_delete()
 
     xarRemoveMasks('window');
     xarRemoveInstances('window');
-
+    // Drop all ModVars
+    xarModDelAllVars('window')
     //Success
     return true;
 }
