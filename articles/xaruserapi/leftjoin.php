@@ -68,6 +68,8 @@ function articles_userapi_leftjoin($args)
     $leftjoin['field'] = $leftjoin['aid'];
 
     // Specify the WHERE part
+    // FIXME: <mrb> someone better informed about this should replace
+    // the xarvarprepforstore with qstr() method where appropriate
     $whereclauses = array();
     if (!empty($authorid) && is_numeric($authorid)) {
         $whereclauses[] = $leftjoin['authorid'] . ' = ' . $authorid;
@@ -181,6 +183,7 @@ function articles_userapi_leftjoin($args)
         }
         $find = array();
         foreach ($normal as $text) {
+            // FIXME: use qstr method or bindvars
             $text = xarVarPrepForStore($text);
         // TODO: use XARADODB to escape wildcards (and use portable ones) ??
             $text = preg_replace('/%/','\%',$text);

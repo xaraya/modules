@@ -43,15 +43,18 @@ function articles_userapi_get($args)
 
 // TODO: put all this in dynamic data and retrieve everything via there (including hooked stuff)
 
+    $bindvars = array();
     if (!empty($aid)) {
-        $where = "WHERE xar_aid = " . xarVarPrepForStore($aid);
+        $where = "WHERE xar_aid = ?";
+        $bindvars[] = $aid;
     } else {
         $wherelist = array();
         $fieldlist = array('title','summary','authorid','pubdate','pubtypeid',
                            'notes','status','body','language');
         foreach ($fieldlist as $field) {
             if (isset($$field)) {
-                $wherelist[] = "xar_$field = '" . xarVarPrepForStore($$field) . "'";
+                $wherelist[] = "xar_$field = ?";
+                $bindvars[] = $$field;
             }
         }
         if (count($wherelist) > 0) {
@@ -80,9 +83,9 @@ function articles_userapi_get($args)
             FROM $articlestable
             $where";
     if (!empty($aid)) {
-        $result =& $dbconn->Execute($query);
+        $result =& $dbconn->Execute($query,$bindvars);
     } else {
-        $result =& $dbconn->SelectLimit($query,1,0);
+        $result =& $dbconn->SelectLimit($query,1,0,$bindvars);
     }
     if (!$result) return;
 
