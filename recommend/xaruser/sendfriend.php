@@ -61,9 +61,13 @@ function recommend_user_sendfriend()
     $message .=xarML('Article Title: ').$title."\n";
     $message .=xarML('Link: ').$textdisplaylink;
 
+    //Prepare to process entities in email message
+    $trans = get_html_translation_table(HTML_ENTITIES);
+    $trans = array_flip($trans);
+
     if (xarModGetVar('recommend', 'usernote')){
         $message .= "\n\n";
-        $message .= xarVarPrepForDisplay($usernote);
+        $message .= strtr($usernote, $trans);
     }
     $htmlmessage = xarML('Hello %%toname%%, your friend %%name%% considered an article at our site interesting and wanted to send it to you.');
     $htmlmessage .='<br /><br />';
@@ -75,7 +79,7 @@ function recommend_user_sendfriend()
 
     if (xarModGetVar('recommend', 'usernote')){
         $htmlmessage .= "<br /><br />";
-        $htmlmessage .= xarVarPrepHTMLDisplay($usernote);
+        $htmlmessage .= strtr(xarVarPrepHTMLDisplay($usernote), $trans);
     }
 
     $message = preg_replace('/%%toname%%/',

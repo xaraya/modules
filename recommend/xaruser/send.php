@@ -37,14 +37,18 @@ function recommend_user_send($args)
     xarModSetVar('recommend', 'username', $username);
     $subject = xarModGetVar('recommend', 'title');
     $message = xarModGetVar('recommend', 'template');
+    //Prepare to process entities in email message
+    $trans = get_html_translation_table(HTML_ENTITIES);
+    $trans = array_flip($trans);
+
     if (xarModGetVar('recommend', 'usernote')){
         $message .= "\n";
-        $message .= xarVarPrepForDisplay($usernote);
+        $message .= strtr($usernote, $trans);
     }
     $htmlmessage = xarModGetVar('recommend', 'template');
     if (xarModGetVar('recommend', 'usernote')){
         $htmlmessage .= "<br /><br />";
-        $htmlmessage .= xarVarPrepHTMLDisplay($usernote);
+        $htmlmessage .= strtr(xarVarPrepHTMLDisplay($usernote), $trans);
     }
 
     $message = preg_replace('/%%toname%%/',
