@@ -54,25 +54,25 @@ function comments_user_displayall($args)
     if (empty($args['truncate'])) {
         $args['truncate']='';
     }
-    if (empty($args['addmodule'])) {
+    if (!isset($args['addmodule'])) {
         $args['addmodule']='off';
     }
-    if (empty($args['addobject'])) {
+    if (!isset($args['addobject'])) {
         $args['addobject']=21;
     }
-    if (empty($args['addcomment'])) {
+    if (!isset($args['addcomment'])) {
         $args['addcomment']=20;
     }
-    if (empty($args['adddate'])) {
+    if (!isset($args['adddate'])) {
         $args['adddate']='on';
     }
-    if (empty($args['adddaysep'])) {
+    if (!isset($args['adddaysep'])) {
         $args['adddaysep']='on';
     }
-    if (empty($args['addauthor'])) {
+    if (!isset($args['addauthor'])) {
         $args['addauthor']=1;
     }
-    if (empty($args['addprevious'])) {
+    if (!isset($args['addprevious'])) {
         $args['addprevious']=0;
     }
 

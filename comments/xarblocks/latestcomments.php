@@ -14,7 +14,19 @@
  */
 function comments_latestcommentsblock_init()
 {
-    return true;
+    // Initial values when the block is created.
+    return array(
+                 'howmany' => 5,
+                 'modid' => array('all'),
+                 'addauthor' => 1,
+                 'addmodule' => 0,
+                 'addcomment' => 20,
+                 'addobject' => 1,
+                 'adddate' => 'on',
+                 'adddaysep' => 'on',
+                 'truncate' => 18,
+                 'addprevious' => 'on'
+                );
 }
 
 /**
@@ -50,38 +62,6 @@ function comments_latestcommentsblock_display($blockinfo)
     // Get variables from content block
     $vars = @unserialize($blockinfo['content']);
 
-    // Defaults
-    if (empty($vars['howmany'])) {
-        $vars['howmany'] = 5;
-    }
-    if (empty($vars['modid'])) {
-        $vars['modid'] = Array('all');
-    }  
-    if (!isset($vars['addauthor'])) {   
-        $vars['addauthor'] = '1';
-    }
-    if (empty($vars['addmodule'])) {
-        $vars['addmodule'] = '0';
-    }
-    if (!isset($vars['addcomment'])) {
-        $vars['addcomment'] = '20';
-    }
-    if (!isset($vars['addobject'])) {
-        $vars['addobject'] = '1';
-    }
-    if (empty($vars['adddate'])) { 
-        $vars['adddate'] = 'on';
-    }
-    if (empty($vars['adddaysep'])) { 
-        $vars['adddaysep'] = 'on';
-    }
-    if (empty($vars['truncate'])) {
-        $vars['truncate'] = 18;
-    }
-    if (empty($vars['addprevious'])) {
-        $vars['addprevious'] = 'on';
-    }
-
     $vars['block_is_calling']=1;
     $vars['first']=1;
     $vars['order']='DESC';
@@ -100,38 +80,6 @@ function comments_latestcommentsblock_modify($blockinfo)
 {
     // Get current content
     $vars = @unserialize($blockinfo['content']);
-
-    // Defaults
-    if (empty($vars['howmany'])) {
-        $vars['howmany'] = 5;
-    }
-    if (empty($vars['modid'])) {
-        $vars['modid'] = Array('all');
-    }
-    if (!isset($vars['addauthor'])) {
-        $vars['addauthor'] = '1';
-    }
-    if (empty($vars['addmodule'])) {
-        $vars['addmodule'] = '0';
-    }
-    if (!isset($vars['addcomment'])) {
-        $vars['addcomment'] = '20';
-    }
-    if (!isset($vars['addobject'])) {
-        $vars['addobject'] = '1';
-    }
-    if (empty($vars['adddate'])) {
-        $vars['adddate'] = 'on';
-    }
-    if (empty($vars['adddaysep'])) {
-        $vars['adddaysep'] = 'on';
-    }
-    if (empty($vars['truncate'])) {
-        $vars['truncate'] = 18;
-    }
-    if (empty($vars['addprevious'])) {
-        $vars['addprevious'] = 'on';
-    }
 
     // get the list of modules+itemtypes that comments is hooked to
     $hookedmodules = xarModAPIFunc('modules', 'admin', 'gethookedmodules',
