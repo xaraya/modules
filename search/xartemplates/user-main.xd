@@ -3,72 +3,72 @@
 <div style="margin: auto;">
 <h4><xar:mlstring>Last 10 Searches Made</xar:mlstring></h4>
 <table>
-	<tr>
-		<th style="width: 20%;">
-			<xar:mlstring>Name</xar:mlstring>
-		</th>
-		<th style="width: 60%;">
-			<xar:mlstring>Keywords</xar:mlstring>
-		</th>
-		<th style="width: 20%;">
-			<xar:mlstring>Date and Time</xar:mlstring>
-		</th>
-	</tr>
-	<xar:loop name="$searchitems">
-	<xar:if condition="(($loop:index + 1) % 2)">
-	<tr>
-		<td style="width: 20%;">
-			#$loop:item['sname']#
-		</td>
-		<td style="width: 60%;">
-			<a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
-		</td>
-		<td style="width: 20%;">
-			#$loop:item['date']#
-		</td>
-	</tr>
-	<xar:else />
-	<tr>
-		<td class="xar-accent" style="width: 20%;">
-			#$loop:item['sname']#
-		</td>
-		<td class="xar-accent" style="width: 60%;">
-			<a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
-		</td>
-		<td class="xar-accent" style="width: 20%;">
-			#$loop:item['date']#
-		</td>
-	</tr>
-	</xar:if>
-	</xar:loop>
+    <tr>
+        <th style="width: 20%;">
+            <xar:mlstring>Name</xar:mlstring>
+        </th>
+        <th style="width: 60%;">
+            <xar:mlstring>Keywords</xar:mlstring>
+        </th>
+        <th style="width: 20%;">
+            <xar:mlstring>Date and Time</xar:mlstring>
+        </th>
+    </tr>
+    <xar:loop name="$searchitems">
+    <xar:if condition="(($loop:index + 1) % 2)">
+    <tr>
+        <td style="width: 20%;">
+            #$loop:item['sname']#
+        </td>
+        <td style="width: 60%;">
+            <a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
+        </td>
+        <td style="width: 20%;">
+            #$loop:item['date']#
+        </td>
+    </tr>
+    <xar:else />
+    <tr>
+        <td class="xar-accent" style="width: 20%;">
+            #$loop:item['sname']#
+        </td>
+        <td class="xar-accent" style="width: 60%;">
+            <a href="#$loop:item['searchurl']#">#$loop:item['term']#</a>
+        </td>
+        <td class="xar-accent" style="width: 20%;">
+            #$loop:item['date']#
+        </td>
+    </tr>
+    </xar:if>
+    </xar:loop>
 </table>
 <br /><br />
 <xar:if condition="!empty($message)">
-	#$message#
+    #$message#
 <xar:else />
 
 
-	<form action="index.php" method="get">
+    <form action="index.php" method="get">
     <input type="hidden" name="module" value="search" />
     <input type="hidden" name="type" value="user" />
     <input type="hidden" name="func" value="main" />
-	<p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" />
+    <p><label for="q"><xar:mlstring>Search for</xar:mlstring>:</label> <input type="text" name="q" id="q" size="20" />
         <xar:set name="$search"><xar:mlstring>Search</xar:mlstring></xar:set>
-	&nbsp;&nbsp;&nbsp; <input type="submit" value="#$search#" />
-	&nbsp;&nbsp;&nbsp;<a href="&xar-modurl-search-user-main;"><xar:mlstring>Reset Form</xar:mlstring></a></p>
-	<p><label for="author"><xar:mlstring>By author</xar:mlstring>:</label> <input type="text" name="author" id="author" size="20" /></p>
+    &nbsp;&nbsp;&nbsp; <input type="submit" value="#$search#" />
+    &nbsp;&nbsp;&nbsp;<a href="&xar-modurl-search-user-main;"><xar:mlstring>Reset Form</xar:mlstring></a></p>
+    <p><label for="author"><xar:mlstring>By author</xar:mlstring>:</label> <input type="text" name="author" id="author" size="20" /></p>
 
-	<xar:if condition="!empty($query)">
-	<p><xar:mlstring>Search term</xar:mlstring> : <b>#$query#</b></p>
-	</xar:if>
-	<xar:if condition="!empty($name)">
-	<p><xar:mlstring>Published by</xar:mlstring> : <b>#$name#</b></p>
-	</xar:if>
+    <xar:if condition="!empty($query)">
+    <p><xar:mlstring>Search term</xar:mlstring> : <b>#$query#</b></p>
+    </xar:if>
+    <xar:if condition="!empty($name)">
+    <p><xar:mlstring>Published by</xar:mlstring> : <b>#$name#</b></p>
+    </xar:if>
 
-	<hr />
-	#$output#
-	<br /><br />
-	</form>
+    <hr />
+    #$output#
+    <br /><br />
+    </form>
 </xar:if>
 </div>
 </div>
