@@ -54,12 +54,12 @@ function xarcachemanager_admin_updateconfig()
             touch($outputCacheDir . '/cache.blocklevel');
         }
         // flush adminpanels blocks to show new options if necessary
-        if (!function_exists('xarPageFlushCached')) {
+        if (!function_exists('xarOutputFlushCached')) {
             include_once('includes/xarCache.php');
             xarCache_init(array('cacheDir' => $outputCacheDir));
         }
         $cacheKey = "adminpanels-blockid";
-        xarPageFlushCached($cacheKey);
+        xarOutputFlushCached($cacheKey);
     } else {
         if(file_exists($outputCacheDir . '/cache.blocklevel')) {
             unlink($outputCacheDir . '/cache.blocklevel');

@@ -80,10 +80,10 @@ function xarcachemanager_admin_blocks($args)
         // blocks could be anywhere, we're not smart enough not know exactly where yet
         // so just flush all pages
         $cacheKey = "-user-";
-        xarPageFlushCached($cacheKey);
+        xarOutputFlushCached($cacheKey);
         // and flush the blocks
         $cacheKey = "-blockid";
-        xarPageFlushCached($cacheKey);
+        xarOutputFlushCached($cacheKey);
     }
 
     // Get all block caching configurations

@@ -21,7 +21,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
         return;
     }
 
-    if (!function_exists('xarPageFlushCached')) {
+    if (!function_exists('xarOutputFlushCached')) {
         // caching is on, but the function isn't available
         // load xarCache to make it so
         include 'includes/xarCache.php';
@@ -68,7 +68,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
         case 'base': // who knows what global impact a config change to base might make
             // flush everything.
             $cacheKey = "";
-            xarPageFlushCached($cacheKey);
+            xarOutputFlushCached($cacheKey);
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin config modified
         case 'comments': // keep falling through
@@ -79,7 +79,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
 
             foreach ($modhooks as $hookedmodname => $hookedmod) {
                 $cacheKey = "$hookedmodname-";
-                xarPageFlushCached($cacheKey);
+                xarOutputFlushCached($cacheKey);
             }
             // no break because we want it to keep going and flush it's own cacheKey too
             // incase it's got a user view, like categories.
@@ -89,7 +89,7 @@ function xarcachemanager_adminapi_updateconfighook($args)
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out
             $cacheKey = "$modname-";
-            xarPageFlushCached($cacheKey);
+            xarOutputFlushCached($cacheKey);
             break;
     }
 

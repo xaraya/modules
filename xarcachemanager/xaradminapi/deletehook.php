@@ -21,7 +21,7 @@ function xarcachemanager_adminapi_deletehook($args)
         return;
     }
 
-    if (!function_exists('xarPageFlushCached')) {
+    if (!function_exists('xarOutputFlushCached')) {
         // caching is on, but the function isn't available
         // load xarCache to make it so
         include 'includes/xarCache.php';
@@ -75,16 +75,16 @@ function xarcachemanager_adminapi_deletehook($args)
             // blocks could be anywhere, we're not smart enough not know exactly where yet
             // so just flush all pages
             $cacheKey = "-user-";
-            xarPageFlushCached($cacheKey);
+            xarOutputFlushCached($cacheKey);
             // and flush the block
             $cacheKey = "-blockid" . $objectid;
-            xarPageFlushCached($cacheKey);
+            xarOutputFlushCached($cacheKey);
             break;
         case 'privileges': // fall-through all modules that should flush the entire cache
         case 'roles':
             // if security changes, flush everything, just in case.
             $cacheKey = "";
-            xarPageFlushCached($cacheKey);
+            xarOutputFlushCached($cacheKey);
             break;
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
@@ -96,7 +96,7 @@ function xarcachemanager_adminapi_deletehook($args)
             
             foreach ($modhooks as $hookedmodname => $hookedmod) {
                 $cacheKey = "$hookedmodname-";
-                xarPageFlushCached($cacheKey);
+                xarOutputFlushCached($cacheKey);
             }
                 // no break because we want it to keep going and flush it's own cacheKey too
                 // incase it's got a user view, like categories.
@@ -106,7 +106,7 @@ function xarcachemanager_adminapi_deletehook($args)
                 // identify pages that include the updated item and delete the cached files
                 // nothing fancy yet, just flush it out
                 $cacheKey = "$modname-";
-                xarPageFlushCached($cacheKey);
+                xarOutputFlushCached($cacheKey);
                 break;
     }
 
