@@ -31,7 +31,7 @@ if (defined('_COM_SORT_ASC')) {
 // can be either ascending or descending
 define('_COM_SORT_ASC', 1);
 define('_COM_SORT_DESC',2);
-	
+    
 // the following four defines specify the sort order which can be any of
 // the following: author, date, topic, lineage 
 // TODO: Add Rank sorting

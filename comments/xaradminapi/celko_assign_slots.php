@@ -23,7 +23,7 @@ function comments_adminapi_celko_assign_slots( $data )
     foreach ($data as $node_id => $node_data) {
         $node_data['xar_depth'] = $depth++;
         $node_data['xar_left']  = $total++;
-	if (isset($node_data['children'])) {
+    if (isset($node_data['children'])) {
             $node_data['children'] = xarModAPIFunc('comments',
                                                    'admin',
                                                    'celko_assign_slots',
