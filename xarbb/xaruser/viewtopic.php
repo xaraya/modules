@@ -174,7 +174,7 @@ function xarbb_user_viewtopic()
     $data['newreply']    = '<img src="' . xarTplGetImage('new/reply.gif') . '" alt="'.xarML('New reply').'" />';
     $data['quoteimg']    = '<img src="' . xarTplGetImage('new/icon_quote.gif') . '" alt="'.xarML('Quote').'" />';
     $data['editimg']     = '<img src="' . xarTplGetImage('new/icon_edit.gif') . '" alt="'.xarML('Edit').'" />';
-    $data['deleteimg']   = '<img src="' . xarTplGetImage('new/icon_delete.gif') . '" alt="'.xarML('Edit').'" />';
+    $data['deleteimg']   = '<img src="' . xarTplGetImage('new/icon_delete.gif') . '" alt="'.xarML('Delete').'" />';
     $data['ipimg']       = '<img src="' . xarTplGetImage('new/icon_ip.gif') . '" alt="'.xarML('IP').'" />';
     $data['closed']      = '<img src="' . xarTplGetImage('new/reply-locked.gif') . '" alt="'.xarML('Closed Topic').'" />';
 

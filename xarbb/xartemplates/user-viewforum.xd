@@ -1,17 +1,5 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
 
-<!--- This template displays all the Topics in a forum.
-      You can easily add icons to this template.
-
-      Icons that are used for actions such as New Post, Edit, Delete and so on.
-      These images must exist with names indicated in your xarbb/xarimages/
-      folder or theme equivalent.
-      
-      If you have images called folder.gif, hot_folder.gif, and hot_red_folder.gif  
-      you can uncomment the lines in two places to display     #$loop:item['folder']#
-      which will display these icons dependent on number of topics - and your config settings.
---->
-
 <xar:if condition="$showcats">
 	<table border="0" cellpadding="3" cellspacing="0" width="100%">
 		<tr>
@@ -81,7 +69,7 @@
 	</tr>
 </table>
 
-<table border="0" cellpadding="4" cellspacing="1" width="100%">
+<table style="border: 0px solid #000;" cellpadding="4" cellspacing="1" width="100%">
 	<tr style="border: 1px solid #000;"> 
 		<th colspan="2" align="center" nowrap="nowrap">
 			<h4>
@@ -90,28 +78,28 @@
 				</xar:mlstring>
 			</h4>
 		</th>
-		<th width="50" align="center" nowrap="nowrap" style="border: 1px solid #000;">
+		<th width="50" align="center" nowrap="nowrap" >
 			<h4>
 				<xar:mlstring>
 					Replies
 				</xar:mlstring>
 			</h4>
 		</th>
-		<th width="100" align="center" nowrap="nowrap" style="border: 1px solid #000;">
+		<th width="100" align="center" nowrap="nowrap" >
 			<h4>
 				<xar:mlstring>
 					Author
 				</xar:mlstring>
 			</h4>
 		</th>
-		<th width="75" align="center" nowrap="nowrap" style="border: 1px solid #000;">
+		<th width="75" align="center" nowrap="nowrap" >
 			<h4>
 				<xar:mlstring>
 					Views
 				</xar:mlstring>
 			</h4>
 		</th>
-		<th width="250" align="center" nowrap="nowrap" style="border: 1px solid #000;">
+		<th width="250" align="center" nowrap="nowrap">
 			<h4>
 				<xar:mlstring>
 					Last Post
@@ -120,44 +108,47 @@
 		</th>
 	</tr>
 <xar:loop name="$items">
-	<tr style="border: 1px solid #000;"> 
-		<td class="xar-norm" align="center" valign="middle" width="20" style="border: 1px solid #000;">
+	<tr >
+		<td class="xar-norm" align="center" valign="middle" width="20" >
 			#$loop:item['timeimage']#
 		</td>
-		<td class="xar-norm" width="100%" style="border: 1px solid #000;">
+		<td class="xar-norm" width="100%" >
 			<span class="xar-title">
 				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => $loop:item['tid']))#">
 				#$loop:item['ttitle']#
 				</a>
 			</span>
 		</td>
-		<td class="xar-accent" align="center" valign="middle" style="border: 1px solid #000;">
+		<td class="xar-accent" align="center" valign="middle" >
 			<span>
 				#$loop:item['comments']#
 			</span>
 		</td>
-		<td class="xar-norm" align="center" valign="middle">
+		<td class="xar-norm" align="center" valign="middle" >
 			<span>
+				<!---#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['tftime'])#<br />
+				<strong>By: </strong> --->
+                <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
+			</span>
+
+		</td>
+		<td class="xar-accent" align="center" valign="middle">
+			<span>
+				#$loop:item['hitcount']#
+			</span>
+		</td>
+		<td class="xar-accent" align="center" valign="middle" nowrap="nowrap" >
+			<span>
+                #xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
 				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
 					#$loop:item['replyname']#
 				</a>
 			</span>
 		</td>
-		<td class="xar-accent" align="center" valign="middle" style="border: 1px solid #000;">
-			<span>
-				#$loop:item['hitcount']#
-			</span>
-		</td>
-		<td class="xar-accent" align="center" valign="middle" nowrap="nowrap" style="border: 1px solid #000;">
-			<span>
-				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
-				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
-			</span>
-		</td>
 	</tr>
 </xar:loop>
-	<tr style="border: 1px solid #000;"> 
-		<td  class="xar-accent" colspan="7" height="28" valign="middle">&nbsp; 
+	<tr >
+		<td  class="xar-accent" colspan="7" height="28" valign="middle">&nbsp;
 		</td>
 	</tr>
 </table>
