@@ -9,7 +9,7 @@ function mybookmarks_userapi_get($args)
 {
     extract($args);
     if (!isset($id)) {
-        $msg = xarML('Invalid Parameter Count);
+        $msg = xarML('Invalid Parameter Count');
         xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
