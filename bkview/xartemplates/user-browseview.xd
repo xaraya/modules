@@ -8,7 +8,7 @@
   <xar:loop name="$dirlist">
 	<div style="float:left; min-width: #$maxlen#em;">
       <img src="#$imgloc#/dir.gif" alt="directory"/>
-      <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">#$loop:item['dirname']#</a>
+      <a style="vertical-align: 20%;" href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$loop:item['newpath']#/">#$loop:item['dirname']#</a>
     </div>
   </xar:loop>
 </div>

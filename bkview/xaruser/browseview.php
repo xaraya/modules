@@ -44,7 +44,7 @@ function bkview_user_browseview($args)
         }
         $counter++;
     }
-    $data['maxlen'] = $maxlen;
+    $data['maxlen'] = 0.8 * $maxlen;
     $filelist=$repo->bkFileList($dir);
     $data['files']=array();
     $files=array();
@@ -68,8 +68,18 @@ function bkview_user_browseview($args)
     
     // Return data to BL
     // FIXME: make this dynamic
+    // $dir is something like /html/modules/bkview/xartemplate/includes/
+    $dirtrace = explode('/', $dir); array_pop($dirtrace);array_shift($dirtrace);
+    $breadcrumb['[root]']='/'; $sofar ='/';
+    $pageinfo = '<a href="'.xarModUrl('bkview','user','browseview',array('repoid'=>$repoid,'dir'=>'/')).'">['.xarML('root').']</a>/';
+    foreach($dirtrace as $crumb) {
+        $sofar .= $crumb . '/';
+        $pageinfo .= '<a href="'.xarModUrl('bkview','user','browseview',array('repoid'=>$repoid,'dir'=>$sofar)).'">'.$crumb.'</a>/';
+    }
+    
+    $data['breadcrumb'] = $breadcrumb;
     $data['imgloc']='modules/bkview/xarimages';
-    $data['pageinfo']=xarML("Sourcedirectory: #(1)",$dir);
+    $data['pageinfo']= $pageinfo;
     $data['dir']=$dir;
     $data['repoid']=$repoid;
     $data['name_value']=$item['reponame'];
