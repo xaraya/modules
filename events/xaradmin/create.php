@@ -12,10 +12,9 @@ function events_admin_create($args)
     // function should be obtained from xarVarCleanFromInput(), getting them
     // from other places such as the environment is not allowed, as that makes
     // assumptions that will not hold in future versions of Xaraya
-    list($name,
-         $number) = xarVarCleanFromInput('name',
-                                        'number');
-
+    if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
+        
     // Admin functions of this type can be called by other modules.  If this
     // happens then the calling module will be able to pass in arguments to
     // this function through the $args parameter.  Hence we extract these

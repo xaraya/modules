@@ -15,18 +15,21 @@
 function events_eventsblock_modify($blockinfo)
 {
     // Get current content
-    $vars = @unserialize($blockinfo['content']);
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Defaults
     if (empty($vars['numitems'])) {
         $vars['numitems'] = 5;
     }
-    
-    // Send content to template
-    $output = xarTplBlock('events','eventsAdmin', array('numitems' => $vars['numitems']));
-
-    // Return output
-    return $output;
+                                                    
+    return array(
+        'numitems' => $vars['numitems'],
+        'blockid' => $blockinfo['bid']
+    );
 }
 
 /**
@@ -34,10 +37,9 @@ function events_eventsblock_modify($blockinfo)
  */
 function events_eventsblock_update($blockinfo)
 {
-    $vars['numitems'] = xarVarCleanFromInput('numitems');
-
-    $blockinfo['content'] = serialize($vars);
-
+    $vars = array();
+    if (!xarVarFetch('numitems', 'int:0', $vars['numitems'], 5, XARVAR_DONT_SET)) {return;}
+    $blockinfo['content'] = $vars;
     return $blockinfo;
 }
 
