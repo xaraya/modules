@@ -74,16 +74,10 @@ function xarcachemanager_adminapi_updatehook($args)
     switch($modname) {
         case 'blocks':
             // first, save the new settings
-            xarVarFetch('nocache', 'checkbox', $nocache, false, XARVAR_NOT_REQUIRED);
-            list(
-                 $pageshared,
-                 $usershared,
-                 $cacheexpire
-                 ) = xarVarCleanFromInput(
-                                          'pageshared',
-                                          'usershared',
-                                          'cacheexpire'
-                                          );
+            xarVarFetch('nocache', 'isset', $nocache, array());
+            xarVarFetch('pageshared', 'isset', $pageshared, array());
+            xarVarFetch('usershared', 'isset', $usershared, array());
+            xarVarFetch('cacheexpire', 'isset', $cacheexpire, array());
 
             if (empty($nocache)) {
                 $nocache = 0;
@@ -94,12 +88,12 @@ function xarcachemanager_adminapi_updatehook($args)
             if (empty($cacheexpire)) {
                 $cacheexpire = 0;
             }
-
             if ($cacheexpire > 0 ) {
                 $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                               array('starttime' => $cacheexpire,
                                                     'direction' => 'to'));
             }
+
             $systemPrefix = xarDBGetSystemTablePrefix();
             $blocksettings = $systemPrefix . '_cache_blocks';
             $dbconn =& xarDBGetConn();

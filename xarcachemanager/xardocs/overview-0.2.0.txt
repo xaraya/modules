@@ -1,0 +1,70 @@
+**xarCacheManager Overview 0.2.0**
+
+- What is it? -
+
+The xarCacheManager module provides an admin user interface to control the settings of the xarCache system of Xaraya. It also provides hooks that allow the cache system to know when changes have happened to modules so that it can respond accordingly (event based cache expiration/invalidation).
+
+The output cache system is designed to reduce the amount of work a server system has to do under heavy load conditions. It saves the output used by Xaraya so that it does not need to go through the entire process to reproduce the same output over and over again. At this point, only page level output caching for anonymous users is available. In time, the output cache system will also support page and module level output caching for all users, as well as more efficient caching of page output for anonymous users. Page level output caching for certain user groups will also be available for sites that can take advantage of this.
+
+Please do not confuse output caching with Xaraya's variable or template caching systems. Each are different. In time, they will likely use the same caching infrastructure, but will still provide different caching for different purposes. For more on the different points of caching in Xaraya, please refer to:
+
+http://xaraya.com/~jsb/cachingPoints.html
+
+
+- How to use it? -
+
+The xarCacheManager module has several tools for managing the xarCache system and your cached output files. The tools are organized under the following menu links:
+
+* Flush Cache - allows you to flush (delete) the output cache of specific Cache Keys. Cache Keys are define by module, type, and function.
+
+* Modify Config - allows you to set the values for the output cache system.
+
+
+- Included Blocks -
+
+The xarCacheManager Module has no blocks included at this time.
+
+
+- Included Hooks -
+
+The xarCacheManager module provides create, update, and delete API hooks. To activate these hooks, go to Admin panel -> Modules -> Configure Hooks and click on the xarcachemanager link. Select the modules you would like to enable the xarCacheManager hook functionality for (articles, categories, autolinks, blocks, html are the most likely candidates) and click the Save Changes button. Once hooked to xarCacheManager, when you create, update, or delete items of the module, the call to the xarCacheManager hooks will flush the appropriate cache to insure that your changes will be instantly available on your site (not masked by cached output files).
+
+
+- Additional Information -
+
+Please note that page level output caching is not appropriate for sites that require the serving of dynamic content to anonymous users. Example: if each page contains data that changes ever second and must be presented to the anonymous viewer in the latest state, you do not want to use page level output caching. However, if it is acceptable to present the data with changes no older than 1 minute, you can enable page level output caching and set the Cache Expiration Time to 60 seconds. If your site serves the same page 100 times per minute this will measurably reduce the load on your systems to do so.
+
+Page level output caching may also affect the expected behavior of certain aspects of Xaraya as cached pages are served without loading the modules. Example: the stats and opentracker modules will not accurately reflect the total number of page views your site receives because they are not invoked when serving cached pages. If your site is under heavy load that needs to be reduced, you may want to consider doing your site statistic tracking via the web server log files or a javascript based solution like that implemented by Hitbox anyway. Either of these methods will accurately work with page level caching enabled.
+
+
+- TODO List -
+
+General output caching related:
+
+* Support multisite configurations.
+
+* Refactor to use more robust, unified caching infrastructure - potential third party candidates: PEAR/cache_lite, PEAR/cache, jpcache.
+
+* Provide an output cache file browser, like the template cache file browser in SiteTools.
+
+
+
+Page level output caching related:
+
+* Support itemtype as a 'name' between cacheKey and page when available.
+
+* Provide Scheduler, getfile/link integration for pre-population of output cache.
+
+* Provide getfile/link regeneration of heavily requested files.
+
+* Provide option of serving cached pages to anonymous users before loading xarCore.
+
+
+
+Block/module level output caching related:
+
+* Add block/function awareness in xarCache, distinguishing between blocks, functions, and pages when appropriate.
+
+* Add xar[Block?]*Cached() calls in xarModFunc() and xarBlocks_renderGroup().
+
+* Provide Admin GUI hooks to Blocks and other modules for the configuration of per block cache settings.

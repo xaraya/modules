@@ -6,25 +6,14 @@
 function xarcachemanager_admin_updateconfig()
 { 
     // Get parameters
-    list(
-         $cacheenabled,
-         $cachetheme,
-         $cachesizelimit,
-         $cachepages,
-         $pageexpiretime,
-         $cachedisplayview,
-         $cachetimestamp,
-         $blockexpiretime
-        ) = xarVarCleanFromInput(
-                                 'cacheenabled',
-                                 'cachetheme',
-                                 'cachesizelimit',
-                                 'cachepages',
-                                 'pageexpiretime',
-                                 'cachedisplayview',
-                                 'cachetimestamp',
-                                 'blockexpiretime'
-                                );
+    if (!xarVarFetch('cacheenabled',     'isset', $cacheenabled,     0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachetheme',       'str::24', $cachetheme,     '',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachesizelimit',   'float:0.1:', $cachesizelimit,  '',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachepages',       'isset', $cachepages,       0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('pageexpiretime',   'str:1:9', $pageexpiretime,  '',  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachedisplayview', 'isset', $cachedisplayview, 0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('cachetimestamp',   'isset', $cachetimestamp,   0,  XARVAR_NOT_REQUIRED)) { return; }
+    if (!xarVarFetch('blockexpiretime',  'str:1:9', $blockexpiretime, '',  XARVAR_NOT_REQUIRED)) { return; }
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return; 
