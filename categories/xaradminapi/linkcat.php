@@ -109,12 +109,10 @@ function categories_adminapi_linkcat($args)
                     xar_iid,
                     xar_itemtype,
                     xar_modid)
-                  VALUES(" . xarVarPrepForStore($cid) . ",
-                         " . xarVarPrepForStore($iid) . ",
-                         " . xarVarPrepForStore($itemtype) . ",
-                         " . xarVarPrepForStore($args['modid']) .")";
-            $result =& $dbconn->Execute($sql);
-            if (!$result) return;
+                  VALUES(?,?,?,?)";
+          $binvars = array($cid, $iid, $itemtype, $args['modid']);
+          $result =& $dbconn->Execute($sql,$bindvars);
+          if (!$result) return;
        }
     }
 

@@ -172,11 +172,10 @@ function categories_adminapi_updatecat($args)
 
     // Update name and description
     $SQLquery = "UPDATE $categoriestable
-                 SET xar_name = '".xarVarPrepForStore($name)."',
-                     xar_description = '".xarVarPrepForStore($description)."',
-                     xar_image = '".xarVarPrepForStore($image)."'
-                 WHERE xar_cid = $cid";
-    $result = $dbconn->Execute($SQLquery);
+                 SET xar_name = ?, xar_description = ?, xar_image = ?
+                 WHERE xar_cid = ?";
+    $bindvars = array($name, $description, $image,$cid);
+    $result = $dbconn->Execute($SQLquery,$bindvars);
     if (!$result) return;
 
 
