@@ -50,7 +50,7 @@ CSCOMMENT=`bk changes -r+ -d':C:'`
 
 echo "Sending notifications..."
 (
-echo Changes were applied by ${BKD_USER} to the module/${REPO} level ${BKD_LEVEL} repository.
+echo Changes were applied by ${BKD_USER} to the modules/${REPO} level ${BKD_LEVEL} repository.
 
 # What is the list of changesets which were incoming?
 if [ X$BK_CSETLIST != X ]
@@ -64,4 +64,4 @@ then (
 		echo Links for the differences:
 		echo $(cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //')
 fi
-) | mail -s "${NUMSETS} ${CHANGETEXT} pushed to module/${REPO}: ${CSCOMMENT:0:40}..." xaraya_bk-notices@lists.xaraya.com
+) | mail -s "${NUMSETS} ${CHANGETEXT} pushed to modules/${REPO}: ${CSCOMMENT:0:40}..." xaraya_bk-notices@lists.xaraya.com
