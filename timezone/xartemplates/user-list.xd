@@ -26,7 +26,7 @@ UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp1)#&nbsp;
 LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
 #xarLocaleGetFormattedTime('long',$currenttime)#
 </p>
-<!---
+<xar:comment>
 <p>
 <xar:set name="timestamp2">gmmktime(7,0,0,10,24,2004)</xar:set>
 <xar:set name="$currenttime">xarModAPIFunc('timezone','user','gettime',array('timezone'=>$selected_tz,'timestamp'=>$timestamp2))</xar:set>
@@ -45,4 +45,4 @@ UTC = #xarLocaleGetFormattedUTCDate('long',$timestamp3)#&nbsp;
 LOCAL = #xarLocaleGetFormattedDate('long',$currenttime)#&nbsp;
 #xarLocaleGetFormattedTime('long',$currenttime)#
 </p>
---->
+</xar:comment>
