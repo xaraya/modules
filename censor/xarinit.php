@@ -36,7 +36,7 @@ function censor_init()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-    $index = array('name' => 'i_xar_censor_1',
+    $index = array('name' => 'i_'.xarDBGetSiteTablePrefix().'_censor_1',
         'fields' => array('xar_keyword'),
         'unique' => true);
     $query = xarDBCreateIndex($censortable, $index);
