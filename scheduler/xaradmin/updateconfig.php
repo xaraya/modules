@@ -18,21 +18,29 @@ function scheduler_admin_updateconfig()
         xarModSetVar('scheduler', 'checkvalue', $checkvalue);
     }
 
+    if (!xarVarFetch('reset','isset',$reset,0,XARVAR_NOT_REQUIRED)) return;
+
     if (!xarVarFetch('jobs','isset',$jobs,array(),XARVAR_NOT_REQUIRED)) return;
     if (empty($jobs)) {
         $jobs = array();
     }
     $savejobs = array();
     foreach ($jobs as $job) {
-        if (!empty($job['module']) && !empty($job['type']) && !empty($job['func'])) {
+        if (!empty($job['module']) && !empty($job['type']) && !empty($job['func']) && !empty($job['interval'])) {
+            if (!empty($reset)) {
+                $job['lastrun'] = 0;
+                $job['result'] = '';
+            }
             $savejobs[] = $job;
         }
     }
     $serialjobs = serialize($savejobs);
     xarModSetVar('scheduler','jobs',$serialjobs);
 
-    if (!xarVarFetch('lastrun','isset',$lastrun,time(),XARVAR_NOT_REQUIRED)) return;
-    xarModSetVar('scheduler','lastrun',$lastrun);
+    if (!empty($reset)) {
+        xarModSetVar('scheduler','lastrun',0);
+        xarModDelVar('scheduler','running');
+    }
 
     xarModCallHooks('module','updateconfig','scheduler',
                     array('module' => 'scheduler'));

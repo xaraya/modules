@@ -57,6 +57,22 @@ function scheduler_user_main()
         return xarML('Wrong trigger');
     }
 
+    // check when we last ran the scheduler
+    $lastrun = xarModGetVar('scheduler', 'lastrun');
+    $now = time() + 60; // add some margin here
+    if (!empty($lastrun) && $lastrun > $now - 60*60) {
+        $diff = time() - $lastrun;
+        return xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
+    }
+
+    // let's run without interruptions for a while :)
+    @ignore_user_abort(true);
+    @set_time_limit(15*60);
+
+    // update the last run time
+    xarModSetVar('scheduler','lastrun',$now - 60); // remove the margin here
+    xarModSetVar('scheduler','running',1);
+
     $output = xarModAPIFunc('scheduler','user','runjobs');
 
 // TODO: dump exceptions ?

@@ -48,10 +48,10 @@ function scheduler_admin_modifyconfig()
     foreach ($modules as $module) {
         $data['modules'][$module['name']] = $module['displayname'];
     }
-    $data['types'] = array(
-                           'admin' => xarML('Admin'),
-                           'scheduler' => xarML('Scheduler'),
-                           'user' => xarML('User'),
+    $data['types'] = array( // don't translate API types
+                           'scheduler' => 'scheduler',
+                           'admin' => 'admin',
+                           'user' => 'user',
                           );
     $data['intervals'] = array(
                                '1h' => xarML('every hour'),

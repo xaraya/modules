@@ -88,9 +88,9 @@
         <option value="external"><xar:mlstring>External Scheduler</xar:mlstring></option>
       </xar:if>
       <xar:if condition="$trigger eq 'block'">
-        <option value="block" selected="selected" disabled="disabled"><xar:mlstring>Trigger Block on Site</xar:mlstring></option>
+        <option value="block" selected="selected"><xar:mlstring>Trigger Block on Site</xar:mlstring></option>
       <xar:else/>
-        <option value="block" disabled="disabled"><xar:mlstring>Trigger Block on Site</xar:mlstring></option>
+        <option value="block"><xar:mlstring>Trigger Block on Site</xar:mlstring></option>
       </xar:if>
       <xar:if condition="$trigger eq 'event'">
         <option value="event" selected="selected" disabled="disabled"><xar:mlstring>Event Handler on Site</xar:mlstring></option>
@@ -102,6 +102,11 @@
   </tr>
 
 <xar:if condition="$trigger eq 'external'">
+  <tr>
+    <td colspan="2">
+      <xar:ml><xar:mlstring>Your scheduler should get the following web page : <a href="#(1)">#(1)</a></xar:mlstring><xar:mlvar>#xarModURL('scheduler')#</xar:mlvar></xar:ml>
+    </td>
+  </tr>
   <tr>
     <td align="right">
       <label for="checktype"><xar:mlstring>Source</xar:mlstring></label>
@@ -145,13 +150,21 @@
 
   <tr>
     <td align="right">
-      <label for="lastrun"><xar:mlstring>Last Run</xar:mlstring></label>
+      <xar:mlstring>Last Run</xar:mlstring>
     </td>
     <td align="left">
       <xar:if condition="!empty($lastrun)">
         #xarLocaleFormatDate('%x %X %z',$lastrun)#<br/>
       </xar:if>
-      <input type="text" name="lastrun" id="lastrun" value="#$lastrun#" />
+    </td>
+  </tr>
+
+  <tr>
+    <td align="right">
+      <label for="reset"><xar:mlstring>Reset Jobs</xar:mlstring></label>
+    </td>
+    <td align="left">
+      <input type="checkbox" name="reset" id="reset" value="1" />
     </td>
   </tr>
 
@@ -164,7 +177,7 @@
   <tr>
     <td colspan="2" align="center">
       <xar:if condition="xarModGetVar('scheduler','running')">
-        <xar:mlstring>Warning: jobs are currently running - any changes you make now may be overwritten</xar:mlstring>
+        <xar:mlstring>Warning: jobs are currently running - any changes you make now may be overwritten</xar:mlstring><br/>
       </xar:if>
       <input type="submit" value="#$updatebutton#" />
     </td>

@@ -27,9 +27,11 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring><p>The scheduler module relies on other modules to actually execute whatever jobs are scheduled, so first you need to find out which <b>module functions</b> can be scheduled. To be continued...</p>
-            <p>Then you need some kind of <b>trigger</b> to wake up the scheduler - this can be done e.g. by requesting a specific webpage automatically from your own system via a Unix cron entry or Windows AT command,
-            or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>, or by relying on web hits from your visitors if your site is relatively busy.</p>
+            <xar:mlstring><p>The scheduler module relies on other modules to actually execute whatever jobs are scheduled, so first you need to find out which <b>module functions</b> can be scheduled.</xar:mlstring>
+            <a href="&xar-modurl-scheduler-admin-search;"><xar:mlstring>Search for scheduler API functions</xar:mlstring></a></p>
+
+            <xar:mlstring><p>Then you need some kind of <b>trigger</b> to wake up the scheduler - this can be done e.g. by requesting a specific webpage automatically from your own system via a Unix cron entry or Windows AT command,
+            or via a web-based scheduler service like <a href="http://webcron.org/">http://webcron.org/</a>, or (if you really have no other choice) by relying on web hits from your visitors if your site is relatively busy.</p>
             <p>The rest will be handled by the scheduler module :-)</p>
             </xar:mlstring>
         </div>
@@ -40,7 +42,7 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ul>
-                <li><xar:mlstring>trigger</xar:mlstring></li>
+                <li><xar:mlstring>trigger block</xar:mlstring></li>
             </ul>
         </div>
         <br />

@@ -5,36 +5,23 @@
  * 
  * @returns string
  */
-function scheduler_userapi_runjobs($args)
+function scheduler_userapi_runjobs($args = array())
 {
-    // check when we last ran the scheduler
-    $lastrun = xarModGetVar('scheduler', 'lastrun');
-    if (!empty($lastrun) && $lastrun > time() - 60*60) {
-        $diff = time() - $lastrun;
-        return xarML('Last run was #(1) minutes #(2) seconds ago', intval($diff / 60), $diff % 60);
-    }
-
-    // let's run without interruptions for a while :)
-    @ignore_user_abort(true);
-    @set_time_limit(15*60);
-
-    // update the last run time
-    xarModSetVar('scheduler','lastrun',time());
-    xarModSetVar('scheduler','running',1);
-
     // run the jobs
-    $log = xarML('Starting jobs') . "<br/>\n";
+    $log = xarML('Starting jobs');
     $serialjobs = xarModGetVar('scheduler','jobs');
     if (!empty($serialjobs)) {
         $jobs = unserialize($serialjobs);
     } else {
         $jobs = array();
     }
+    $now = time() + 60; // add some margin here
     foreach ($jobs as $id => $job) {
-        $now = time();
+        $log .= "<br/>\n" . $job['module'] . ' ' . $job['type'] . ' ' . $job['func'] . ' ';
         $lastrun = $job['lastrun'];
         if (!empty($lastrun)) {
             if (!preg_match('/(\d+)(\w)/',$job['interval'],$matches)) {
+                $log .= xarML('invalid interval');
                 continue;
             }
             $count = $matches[1];
@@ -68,27 +55,28 @@ function scheduler_userapi_runjobs($args)
                     break;
             }
             if ($skip) {
+                $log .= xarML('skipped');
                 continue;
             }
         }
-        $log .= $job['module'] . ' ' . $job['type'] . ' ' . $job['func'] . ' ';
 // TODO: handle arguments ?
-        if (!xarModAPIFunc($job['module'], $job['type'], $job['func'], array(), 0)) {
+        $output = xarModAPIFunc($job['module'], $job['type'], $job['func'], array(), 0);
+        if (empty($output)) {
             $jobs[$id]['result'] = xarML('failed');
             $log .= xarML('failed');
         } else {
             $jobs[$id]['result'] = xarML('OK');
-            $log .= xarML('succeeded');
+            $log .= xarML('succeeded') . " : <br/>\n";
+            $log .= $output;
         }
-        $jobs[$id]['lastrun'] = $now;
-        $log .= "<br/>\n";
+        $jobs[$id]['lastrun'] = $now - 60; // remove the margin here
     }
     $serialjobs = serialize($jobs);
+// FIXME: this may overwrite changes done via modifyconfig
     xarModSetVar('scheduler','jobs',$serialjobs);
     xarModDelVar('scheduler','running');
 
-    $log .= xarML('Done');
-
+    $log .= "<br/>\n" . xarML('Done');
     return $log; 
 }
 

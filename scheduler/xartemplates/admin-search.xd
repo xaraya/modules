@@ -1,0 +1,16 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Scheduler Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Scheduler API Functions</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<xar:if condition="!empty($found) and count($found) gt 0">
+    <ul>
+    <xar:foreach in="$found" value="$api">
+        <li>#$api['module']# - #$api['type']# - #$api['func']#</li>
+    </xar:foreach>
+    </ul>
+<xar:else/>
+    <xar:mlstring>No scheduler API functions found...</xar:mlstring>
+</xar:if>
+<p><xar:mlstring>Note: there may be other API functions available for use by the scheduler - check your module documentation or try it out</xar:mlstring></p>
+</div>
+</div>

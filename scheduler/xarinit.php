@@ -23,6 +23,10 @@ function scheduler_init()
 
     xarRegisterMask('AdminScheduler', 'All', 'scheduler', 'All', 'All', 'ACCESS_ADMIN');
 
+    if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                       array('modName' => 'scheduler',
+                             'blockType' => 'trigger'))) return;
+
     // Initialisation successful
     return true;
 }
@@ -37,7 +41,11 @@ function scheduler_upgrade($oldversion)
     switch ($oldversion) {
         case 1.0:
             // Code to upgrade from version 1.0 goes here
-            break;
+            if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
+                               array('modName' => 'scheduler',
+                                     'blockType' => 'trigger'))) return;
+            // fall through to the next upgrade
+
         case 2.0:
             // Code to upgrade from version 2.0 goes here
             break;
@@ -58,6 +66,10 @@ function scheduler_delete()
     xarModDelVar('scheduler', 'jobs');
 
     xarRemoveMasks('scheduler');
+
+    if (!xarModAPIFunc('blocks', 'admin', 'unregister_block_type',
+                       array('modName' => 'scheduler',
+                             'blockType' => 'trigger'))) return;
 
     // Deletion successful
     return true;
