@@ -43,9 +43,7 @@
             </select></td>
     </tr>
     <tr>
-        <td>
-			<label for="shorturls"><xar:mlstring>Support short URLs</xar:mlstring></label>
-		</td>
+        <td><label for="shorturls"><xar:mlstring>Support short URLs</xar:mlstring></label></td>
         <td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturls# /></td>
     </tr>
     <tr>
@@ -74,9 +72,7 @@
         <td colspan="2"><h3><xar:mlstring>Website Configuration</xar:mlstring></h3></td>
     </tr>
     <tr>
-        <td>
-			<label for="usealias"><xar:ml><xar:mlstring>Use '#(1)' as alias in short URLs</xar:mlstring><xar:mlvar>#$alias#</xar:mlvar></xar:ml></label>
-		</td>
+        <td><label for="usealias"><xar:ml><xar:mlstring>Use '#(1)' as alias in short URLs</xar:mlstring><xar:mlvar>#$alias#</xar:mlvar></xar:ml></label></td>
         <td>
             <xar:if condition="$usealias">
                <input type="checkbox" name="usealias" id="usealias" checked="checked" />
@@ -113,73 +109,55 @@
         <td><input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#$itemsperpage#" /></td>
     </tr>
     <tr>
-        <td><label for="showcategories"><xar:mlstring>Show category links in article summaries</xar:mlstring> <i>($categories)</i></label>
-		</td>
+        <td><label for="showcategories"><xar:mlstring>Show category links in article summaries</xar:mlstring> <i>($categories)</i></label></td>
         <td><input type="checkbox" name="showcategories" id="showcategories" value="1" #$showcategories# /></td>
     </tr>
     <tr>
-        <td><label for="showprevnext"><xar:mlstring> Show previous/next category</xar:mlstring> <i>($showprevnext)</i></label>
-			</label>
-		</td>
+        <td><label for="showprevnext"><xar:mlstring> Show previous/next category</xar:mlstring> <i>($showprevnext)</i></label></td>
         <td><input type="checkbox" name="showprevnext" id="showprevnext" value="1" #$showprevnext# /></td>
     </tr>
 
+    <tr>
+        <td><label for="showcomments"><xar:mlstring>Show number of comments</xar:mlstring> <i>($comments)</i></label></td>
 <xar:if condition="$showcommentsoptions">
-    <tr>
-        <td>
-			<label for="showcomments"><xar:mlstring>Show number of comments</xar:mlstring> <i>($comments)</i></label>
-		</td>
         <td><input type="checkbox" name="showcomments" id="showcomments" value="1" #$showcomments# /></td>
-    </tr>
 <xar:else />
-<input type="hidden" name="showcomments" id="showcomments" value="#$showcomments#" />
+        <td><input type="hidden" name="showcomments" id="showcomments" value="#$showcomments#" /><xar:mlstring>N/A</xar:mlstring></td>
 </xar:if>
+    </tr>
 
+    <tr>
+        <td><label for="showhitcounts"><xar:mlstring>Show hit counts</xar:mlstring> <i>($counter)</i></label></td>
 <xar:if condition="$showhitcountsoptions">
-    <tr>
-        <td>
-			<label for="showhitcounts"><xar:mlstring>Show hit counts</xar:mlstring> <i>($counter)</i></label>		
-		</td>
         <td><input type="checkbox" name="showhitcounts" id="showhitcounts" value="1" #$showhitcounts# /></td>
-    </tr>
 <xar:else />
-<input type="hidden" name="showhitcounts" id="showhitcounts" value="#$showhitcounts#" />
+        <td><input type="hidden" name="showhitcounts" id="showhitcounts" value="#$showhitcounts#" /><xar:mlstring>N/A</xar:mlstring></td>
 </xar:if>
+    </tr>
 
+    <tr>
+        <td><label for="showratings"><xar:mlstring>Show ratings</xar:mlstring> <i>($rating)</i></label></td>
 <xar:if condition="$showratingsoptions">
-    <tr>
-        <td>
-			<label for="showratings"><xar:mlstring>Show ratings</xar:mlstring> <i>($rating)</i></label>
-		</td>
         <td><input type="checkbox" name="showratings" id="showratings" value="1" #$showratings# /></td>
-    </tr>
 <xar:else />
-<input type="hidden" name="showratings" id="showratings" value="#$showratings#" />
+        <td><input type="hidden" name="showratings" id="showratings" value="#$showratings#" /><xar:mlstring>N/A</xar:mlstring></td>
 </xar:if>
+    </tr>
 
     <tr>
-        <td>
-			<label for="showpublinks"><xar:mlstring>Show links to publication types</xar:mlstring> <i>($showpublinks + includes/publinks.xd)</i>
-			</label>
-		</td>
+        <td><label for="showpublinks"><xar:mlstring>Show links to publication types</xar:mlstring> <i>($showpublinks + includes/publinks.xd)</i></label></td>
         <td><input type="checkbox" name="showpublinks" id="showpublinks" value="1" #$showpublinks# /></td>
     </tr>
     <tr>
-        <td>
-			<label for="showarchives"><xar:mlstring>Show link to archives</xar:mlstring> <i>($archivelink + $archivelabel)</i></label>
-		</td>
+        <td><label for="showarchives"><xar:mlstring>Show link to archives</xar:mlstring> <i>($archivelink + $archivelabel)</i></label></td>
         <td><input type="checkbox" name="showarchives" id="showarchives" value="1" #$showarchives# /></td>
     </tr>
     <tr>
-        <td>
-			<label for="showmap"><xar:mlstring>Show link to article map</xar:mlstring> <i>($maplink + $maplabel)</i></label>
-		</td>
+        <td><label for="showmap"><xar:mlstring>Show link to article map</xar:mlstring> <i>($maplink + $maplabel)</i></label></td>
         <td><input type="checkbox" name="showmap" id="showmap" value="1" #$showmap# /></td>
     </tr>
     <tr>
-        <td>
-			<label for="dotransform"><xar:mlstring>Call transform hooks in summaries</xar:mlstring> </label>
-		</td>
+        <td><label for="dotransform"><xar:mlstring>Call transform hooks in summaries</xar:mlstring></label></td>
         <td><input type="checkbox" name="dotransform" id="dotransform" value="1" #$dotransform# /></td>
     </tr>
 
@@ -187,9 +165,7 @@
         <td colspan="2"><h3><xar:mlstring>Article Display Configuration</xar:mlstring></h3></td>
     </tr>
     <tr>
-        <td>
-			<label for="prevnextart"><xar:mlstring>Show link to previous/next article in display</xar:mlstring> <i>($prevart + $nextart)</i></label>
-		</td>
+        <td><label for="prevnextart"><xar:mlstring>Show link to previous/next article in display</xar:mlstring> <i>($prevart + $nextart)</i></label></td>
         <td><input type="checkbox" name="prevnextart" id="prevnextart" value="1" #$prevnextart# /></td>
     </tr>
 
@@ -197,14 +173,12 @@
         <td colspan="2"><i><xar:mlstring>Note: the ($...) indicates the name of the variable used in the different templates</xar:mlstring></i></td>
     </tr>
 
-<xar:if condition="!empty($withstatus)">
     <tr>
-        <td colspan="2"><h3><xar:mlstring>Article Create Options</xar:mlstring></h3></td>
+        <td colspan="2"><h3><xar:mlstring>Article Status Options</xar:mlstring></h3></td>
     </tr>
     <tr>
-        <td>
-	<label for="defaultstatus"><xar:mlstring>Default start status</xar:mlstring></label>
-	</td>
+        <td><label for="defaultstatus"><xar:mlstring>Default start status</xar:mlstring></label></td>
+<xar:if condition="!empty($withstatus)">
         <td><select name="defaultstatus" id="defaultstatus">
             <xar:foreach in="$statusoptions" value="$statusoption">
                 <xar:if condition="$statusoption['value'] eq $defaultstatus">
@@ -215,10 +189,10 @@
             </xar:foreach>
             </select>
         </td>
-    </tr>
 <xar:else/>
-     <input type="hidden" name="defaultstatus" value="2" />
+        <td><input type="hidden" name="defaultstatus" value="2" /><xar:mlstring>N/A</xar:mlstring></td>
 </xar:if>
+    </tr>
 
 <xar:if condition="!empty($hooks)">
     <tr>
