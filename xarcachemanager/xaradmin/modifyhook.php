@@ -66,13 +66,6 @@ function xarcachemanager_admin_modifyhook($args)
     $systemPrefix = xarDBGetSystemTablePrefix();
     $blocksettings = $systemPrefix . '_cache_blocks';
     $dbconn =& xarDBGetConn();
-    // I either need to 1) add the creation of the xar_cache_blocks to the upgrade script.
-    //                  2) get xar_cache_blocks recorts into xar_tables
-    //                  3) use a different method of verifying the tables presence.
-    //$xartable =& xarDBGetTables();
-    //error_log('tables = ' . serialize($xartable));
-    //if (!empty($xartable['cache_blocks'])) {
-    //$blocksettings = $xartable['cache_blocks'];
     $query = "SELECT xar_nocache,
              xar_page,
              xar_user,

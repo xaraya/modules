@@ -73,18 +73,18 @@ function xarcachemanager_adminapi_updatehook($args)
 
     switch($modname) {
         case 'blocks':
-            // first save the new settings
+            // first, save the new settings
+            xarVarFetch('nocache', 'checkbox', $nocache, false, XARVAR_NOT_REQUIRED);
             list(
-                 $nocache,
                  $pageshared,
                  $usershared,
                  $cacheexpire
                  ) = xarVarCleanFromInput(
-                                          'nocache',
                                           'pageshared',
                                           'usershared',
                                           'cacheexpire'
                                           );
+            
             if ($cacheexpire > 0 ) {
                 $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',
                                               array('starttime' => $cacheexpire,
