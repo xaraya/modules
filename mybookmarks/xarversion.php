@@ -14,6 +14,7 @@
 $modversion['name']           = 'mybookmarks';
 $modversion['id']             = '178';
 $modversion['version']        = '0.1.0';
+$modversion['displayname']    = xarML('MyBookmarks');
 $modversion['description']    = 'MyBookmarks share your favorite urls';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/docs.txt';
