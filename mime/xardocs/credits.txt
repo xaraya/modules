@@ -1,0 +1,4 @@
+Original idea for MIME module functions,  analyze_file(), extension_to_mime(), mime_to_extension():
+    Horde (www.horde.org)
+MimeType Icons gleaned from:
+    Gnome (www.gnome.org)
