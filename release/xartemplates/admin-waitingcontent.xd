@@ -1,10 +1,10 @@
 <p><strong><xar:mlstring>In Releases</xar:mlstring> : </strong>
 <xar:if condition="empty($loop)">
-	<xar:mlstring>None</xar:mlstring></p>
+    <xar:mlstring>None</xar:mlstring></p>
 <xar:else />
-	<strong>#$counted#</strong></p>
+    <strong>#$counted#</strong></p>
     <xar:foreach in="$loop" value="$item">
-	&nbsp;&nbsp;<a href="#$item['link']#" title="#$item['regname']#">#$item['regname']#</a>
-	<br />
-	</xar:foreach>
+    &nbsp;&nbsp;<a href="#$item['link']#" title="#$item['regname']#">#$item['regname']#</a>
+    <br />
+    </xar:foreach>
 </xar:if>

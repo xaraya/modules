@@ -4,116 +4,116 @@
 <h2><xar:mlstring>Release Module :: Further Details</xar:mlstring></h2>
 
 <div align="center">
-	<br /><br />
-	<form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="phase" id="phase" value="preview" />	
-		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
-		<input type="hidden" name="regname" id="regname" value="#$regname#" />
-		<input type="hidden" name="version" id="version" value="#$version#" />	
-		<input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />	
-		<input type="hidden" name="democheck" id="democheck" value="#$democheck#" />	
-		<input type="hidden" name="supportcheck" id="supportcheck" value="#$supportcheck#" />
-		<table border="0" cellpadding="5">
-			<tr>
-				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Extension ID</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					#$rid#
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Extension Registered Name</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					#$regname#
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Version Number</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					#$version#
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="dllink"><xar:mlstring>Download Link</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="dllink" value="" size="30" maxlength="100" />
-				</td>
-			</tr>
-			<xar:if condition="$pricecheck eq '2'">
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="price"><xar:mlstring>Price</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="price" value="" size="10" maxlength="100" />
-				</td>
-			</tr>
-			</xar:if>
-			<xar:if condition="$democheck eq '2'">
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="demolink"><xar:mlstring>Demo Link</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="demolink" value="" size="30" maxlength="100" />
-				</td>
-			</tr>
-			</xar:if>
-			<xar:if condition="$supportcheck eq '2'">
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="supportlink"><xar:mlstring>Supported Link</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="supportlink" value="" size="30" maxlength="100" />
-				</td>
-			</tr>
+    <br /><br />
+    <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="phase" id="phase" value="preview" />    
+        <input type="hidden" name="rid" id="rid" value="#$rid#" />    
+        <input type="hidden" name="regname" id="regname" value="#$regname#" />
+        <input type="hidden" name="version" id="version" value="#$version#" />    
+        <input type="hidden" name="pricecheck" id="pricecheck" value="#$pricecheck#" />    
+        <input type="hidden" name="democheck" id="democheck" value="#$democheck#" />    
+        <input type="hidden" name="supportcheck" id="supportcheck" value="#$supportcheck#" />
+        <table border="0" cellpadding="5">
+            <tr>
+                <td align="left" valign="top" class="xar-accent">
+                    <xar:mlstring>Extension ID</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    #$rid#
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-accent">
+                    <xar:mlstring>Extension Registered Name</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    #$regname#
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-accent">
+                    <xar:mlstring>Version Number</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    #$version#
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="dllink"><xar:mlstring>Download Link</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="dllink" value="" size="30" maxlength="100" />
+                </td>
+            </tr>
+            <xar:if condition="$pricecheck eq '2'">
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="price"><xar:mlstring>Price</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="price" value="" size="10" maxlength="100" />
+                </td>
+            </tr>
+            </xar:if>
+            <xar:if condition="$democheck eq '2'">
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="demolink"><xar:mlstring>Demo Link</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="demolink" value="" size="30" maxlength="100" />
+                </td>
+            </tr>
+            </xar:if>
+            <xar:if condition="$supportcheck eq '2'">
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="supportlink"><xar:mlstring>Supported Link</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="supportlink" value="" size="30" maxlength="100" />
+                </td>
+            </tr>
             </xar:if>
 
-				<tr>
-					<td align="left" valign="top" class="xar-norm">
+                <tr>
+                    <td align="left" valign="top" class="xar-norm">
                     <label for="rstate" class="help" title="#xarML('Current development status of your extension')#">
                        <xar:mlstring>Extension Status:</xar:mlstring>
                      </label>
                    </td>
-					<td align="left" valign="top" class="xar-norm">
-	               <select name="rstate" id="rstate" size="1">
-               	   <xar:foreach in="$stateoptions" value="$v" key="$k">
- 		    			              <option name="rstate.#$k#" value="#$k#">#$v#</option>
+                    <td align="left" valign="top" class="xar-norm">
+                   <select name="rstate" id="rstate" size="1">
+                      <xar:foreach in="$stateoptions" value="$v" key="$k">
+                                       <option name="rstate.#$k#" value="#$k#">#$v#</option>
 
-		           </xar:foreach>
-	               </select>
-	               </td>
-	            </tr>
+                   </xar:foreach>
+                   </select>
+                   </td>
+                </tr>
 
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<textarea name="changelog" cols="60" rows="5" class="xar-normal"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="notes"><xar:mlstring>Additional Notes</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<textarea name="notes" cols="60" rows="5" class="xar-normal"></textarea>
-				</td>
-			</tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="changelog"><xar:mlstring>ChangeLog</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <textarea name="changelog" cols="60" rows="5" class="xar-normal"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="notes"><xar:mlstring>Additional Notes</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <textarea name="notes" cols="60" rows="5" class="xar-normal"></textarea>
+                </td>
+            </tr>
 
-		</table>			
-		<br /><br />
-		<input type="submit" value="Continue"  tabindex="6" />
-	</form>
+        </table>            
+        <br /><br />
+        <input type="submit" value="Continue"  tabindex="6" />
+    </form>
 </div>
 </div>

@@ -3,10 +3,10 @@
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
 <script language="JavaScript">
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("version");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Version");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("version");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Version");
 //-->
 </script>
 
@@ -15,90 +15,90 @@
 <h2><xar:mlstring>Release Module :: Basic Details</xar:mlstring></h2>
 
 <div align="center">
-	<br /><br />
-	<form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="phase" id="phase" value="getdetails" />
-		<input type="hidden" name="rid" id="rid" value="#$rid#" />
-		<input type="hidden" name="regname" id="regname" value="#$regname#" />
-		<table border="0" cellpadding="5">
-			<tr>
-				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Extension ID</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					#$rid#
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-accent">
-					<xar:mlstring>Extension Registered Name</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					#$regname#
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>New Version Number</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="version" value="" size="10" maxlength="100" />
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="pricecheck"><xar:mlstring>Commercial or Free?</xar:mlstring></label>
-				</td>
-					<td align="left" valign="top" class="xar-norm">
-						<select name="pricecheck" id="pricecheck">
+    <br /><br />
+    <form action="#xarModURL('release', 'user', 'addnotes')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="phase" id="phase" value="getdetails" />
+        <input type="hidden" name="rid" id="rid" value="#$rid#" />
+        <input type="hidden" name="regname" id="regname" value="#$regname#" />
+        <table border="0" cellpadding="5">
+            <tr>
+                <td align="left" valign="top" class="xar-accent">
+                    <xar:mlstring>Extension ID</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    #$rid#
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-accent">
+                    <xar:mlstring>Extension Registered Name</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    #$regname#
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <xar:mlstring>New Version Number</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="version" value="" size="10" maxlength="100" />
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="pricecheck"><xar:mlstring>Commercial or Free?</xar:mlstring></label>
+                </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <select name="pricecheck" id="pricecheck">
                        <xar:if condition="$pricecheck eq '2'">
-							<option value="1"><xar:mlstring>Free</xar:mlstring></option>
-							<option value="2" selected="selected"><xar:mlstring>Commercial</xar:mlstring></option>
-					   <xar:else />
-							<option value="1" selected="selected"><xar:mlstring>Free</xar:mlstring></option>
-							<option value="2"><xar:mlstring>Commercial</xar:mlstring></option>
-					   </xar:if>
-						</select>
-					</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="democheck"><xar:mlstring>Have a Demo?</xar:mlstring></label>
-				</td>
-					<td align="left" valign="top" class="xar-norm">
-						<select name="democheck" id="democheck">
-						    <xar:if condition="$democheck eq '2'">
-						    	<option value="1"><xar:mlstring>No</xar:mlstring></option>
-							    <option value="2" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                            <xar:else />
-						    	<option value="1" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-							    <option value="2"><xar:mlstring>Yes</xar:mlstring></option>
-                            </xar:if>
-						</select>
-					</td>
-            </tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="supportcheck"><xar:mlstring>Is this Extension Supported?</xar:mlstring></label>
-				</td>
-					<td align="left" valign="top" class="xar-norm">
-						<select name="supportcheck" id="supportcheck">
-						    <xar:if condition="$supportcheck eq '2'">
-						    	<option value="1"><xar:mlstring>No</xar:mlstring></option>
-							    <option value="2" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
-                            <xar:else />
-						    	<option value="1" selected="selected"><xar:mlstring>No</xar:mlstring></option>
-							    <option value="2"><xar:mlstring>Yes</xar:mlstring></option>
-                            </xar:if>						
+                            <option value="1"><xar:mlstring>Free</xar:mlstring></option>
+                            <option value="2" selected="selected"><xar:mlstring>Commercial</xar:mlstring></option>
+                       <xar:else />
+                            <option value="1" selected="selected"><xar:mlstring>Free</xar:mlstring></option>
+                            <option value="2"><xar:mlstring>Commercial</xar:mlstring></option>
+                       </xar:if>
                         </select>
-					</td>
+                    </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="democheck"><xar:mlstring>Have a Demo?</xar:mlstring></label>
+                </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <select name="democheck" id="democheck">
+                            <xar:if condition="$democheck eq '2'">
+                                <option value="1"><xar:mlstring>No</xar:mlstring></option>
+                                <option value="2" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                            <xar:else />
+                                <option value="1" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                                <option value="2"><xar:mlstring>Yes</xar:mlstring></option>
+                            </xar:if>
+                        </select>
+                    </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="supportcheck"><xar:mlstring>Is this Extension Supported?</xar:mlstring></label>
+                </td>
+                    <td align="left" valign="top" class="xar-norm">
+                        <select name="supportcheck" id="supportcheck">
+                            <xar:if condition="$supportcheck eq '2'">
+                                <option value="1"><xar:mlstring>No</xar:mlstring></option>
+                                <option value="2" selected="selected"><xar:mlstring>Yes</xar:mlstring></option>
+                            <xar:else />
+                                <option value="1" selected="selected"><xar:mlstring>No</xar:mlstring></option>
+                                <option value="2"><xar:mlstring>Yes</xar:mlstring></option>
+                            </xar:if>                        
+                        </select>
+                    </td>
             </tr>
 
 
-		</table>			
-		<br /><br />
-		<input type="submit" value="Continue"  tabindex="6" />
-	</form>
+        </table>            
+        <br /><br />
+        <input type="submit" value="Continue"  tabindex="6" />
+    </form>
 </div>
 </div>

@@ -4,14 +4,14 @@
 <h2><xar:mlstring>Delete an ID</xar:mlstring></h2>
 <form method="post" action="#xarModURL('release', 'admin', 'deleteid')#" method="post" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
-	<input type="hidden" name="rid" id="rid" value="#$rid#" />
-	<input type="hidden" name="confirm" id="confirm" value="1" />
-	<input type="hidden" name="confirmation" id="confirmation" value="1" />
+    <input type="hidden" name="rid" id="rid" value="#$rid#" />
+    <input type="hidden" name="confirm" id="confirm" value="1" />
+    <input type="hidden" name="confirmation" id="confirmation" value="1" />
 
-	<span class="xar-title"><xar:mlstring>Confirm deletion of release id</xar:mlstring></span><br /><br />
+    <span class="xar-title"><xar:mlstring>Confirm deletion of release id</xar:mlstring></span><br /><br />
 
-	<input type="submit" value="Confirm"  tabindex="1" /><br /><br />
-	
-	<a href="#xarModURL('release', 'admin', 'viewids')#"><xar:mlstring>Cancel deletion of release id</xar:mlstring></a>
+    <input type="submit" value="Confirm"  tabindex="1" /><br /><br />
+    
+    <a href="#xarModURL('release', 'admin', 'viewids')#"><xar:mlstring>Cancel deletion of release id</xar:mlstring></a>
 </form>        
 </div>

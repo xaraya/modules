@@ -3,123 +3,123 @@
 <div class="xar-mod-body">
 <h2><xar:mlstring>Release Module :: Modify A Release ID</xar:mlstring></h2>
 <div style="margin: auto;">
-	<form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
-		<input type="hidden" name="authid" id="authid" value="#$authid#" />
-		<input type="hidden" name="phase" id="phase" value="update" />	
-		<input type="hidden" name="rid" id="rid" value="#$rid#" />	
-		<input type="hidden" name="certified" id="certified" value="#$certified#" />	
-		<table border="0" cellpadding="5">
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Extension ID</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					#$rid#
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
+    <form action="#xarModURL('release', 'user', 'modifyid')#" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="phase" id="phase" value="update" />    
+        <input type="hidden" name="rid" id="rid" value="#$rid#" />    
+        <input type="hidden" name="certified" id="certified" value="#$certified#" />    
+        <table border="0" cellpadding="5">
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <xar:mlstring>Extension ID</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    #$rid#
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="regname"><xar:mlstring>Extension Registered Name</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
                     <xar:sec id="checkregname" mask="AdminRelease" catch="false" >
                         <input type="text" name="regname" id="regname" value="#$regname#" size="25" maxlength="60" tabindex="2" />
                     <xar:else/>
                         <input type="hidden" name="regname" id="regname" value="#$regname#" />
                         #$regname#
                     </xar:sec>
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Type</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-				<xar:if condition="$type eq '0'">
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <xar:mlstring>Type</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                <xar:if condition="$type eq '0'">
                     <xar:sec id="checktype1" mask="AdminRelease" catch="false">
                         <input type="radio" name="idtype" value="0" checked="checked" /><xar:mlstring>Module</xar:mlstring>
                         <input type="radio" name="idtype" value="1" /><xar:mlstring>Theme</xar:mlstring>
                     <xar:else/>
                         <xar:mlstring>Module</xar:mlstring>
-                    	<input type="hidden" name="idtype" id="idtype" value="0" />
+                        <input type="hidden" name="idtype" id="idtype" value="0" />
                     </xar:sec>
-				<xar:else />
+                <xar:else />
                     <xar:sec id="checktype2" mask="AdminRelease" catch="false" component="release" >
                         <input type="radio" name="idtype" value="0" /><xar:mlstring>Module</xar:mlstring>
                         <input type="radio" name="idtype" value="1" checked="checked" /><xar:mlstring>Theme</xar:mlstring>
                     <xar:else/>
-                    	<input type="hidden" name="idtype" id="idtype" value="1" />
+                        <input type="hidden" name="idtype" id="idtype" value="1" />
                         <xar:mlstring>Theme</xar:mlstring>
                     </xar:sec>
-				</xar:if>
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="uid"><xar:mlstring>New owner User ID</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<input type="text" name="uid" id="uid" value="#$uid#" size="5" maxlength="10" tabindex="2" />
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<textarea name="displname" id="displname" tabindex="4" rows="10" cols="50">#$displname#</textarea> 
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<label for="desc"><xar:mlstring>Description</xar:mlstring></label>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-					<textarea name="desc" id="desc" tabindex="4" rows="10" cols="50">#$desc#</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
-					<xar:mlstring>Class</xar:mlstring>
-				</td>
-				<td align="left" valign="top" class="xar-norm">
-				<xar:if condition="$class eq '0'">
+                </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="uid"><xar:mlstring>New owner User ID</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <input type="text" name="uid" id="uid" value="#$uid#" size="5" maxlength="10" tabindex="2" />
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="displname"><xar:mlstring>Display Name</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <textarea name="displname" id="displname" tabindex="4" rows="10" cols="50">#$displname#</textarea> 
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <label for="desc"><xar:mlstring>Description</xar:mlstring></label>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                    <textarea name="desc" id="desc" tabindex="4" rows="10" cols="50">#$desc#</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
+                    <xar:mlstring>Class</xar:mlstring>
+                </td>
+                <td align="left" valign="top" class="xar-norm">
+                <xar:if condition="$class eq '0'">
                     <input type="radio" name="class" value="0" checked="checked" /><xar:mlstring>Core</xar:mlstring>
                     <input type="radio" name="class" value="1" /><xar:mlstring>Non-Core</xar:mlstring>
-				<xar:else />
+                <xar:else />
                     <input type="radio" name="class" value="0" /><xar:mlstring>Core</xar:mlstring>
                     <input type="radio" name="class" value="1" checked="checked" /><xar:mlstring>Non-Core</xar:mlstring>
-				</xar:if>
-				</td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm">
+                </xar:if>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm">
                     <label for="rstate" class="help" title="#xarML('Please enter the current development state of your extension.')#">
                         <xar:mlstring>Extension State:</xar:mlstring>
                     </label>&nbsp;&nbsp;
-				</td>
-				<td align="left" valign="top" class="xar-norm">
+                </td>
+                <td align="left" valign="top" class="xar-norm">
                     
-	                <select name="rstate" id="rstate" size="1">
-		            <xar:foreach in="$stateoptions" value="$v" key="$k">
-		                <xar:if condition="$k eq $rstate">
-			                <option value="#$k#" selected="selected">#$v#</option>
-		                <xar:else />
-			                <option value="#$k#">#$v#</option>
-		                </xar:if>
-		            </xar:foreach>
-	                </select>
-			    </td>
-			</tr>
-			<tr>
-				<td align="left" valign="top" class="xar-norm" colspan="2">
+                    <select name="rstate" id="rstate" size="1">
+                    <xar:foreach in="$stateoptions" value="$v" key="$k">
+                        <xar:if condition="$k eq $rstate">
+                            <option value="#$k#" selected="selected">#$v#</option>
+                        <xar:else />
+                            <option value="#$k#">#$v#</option>
+                        </xar:if>
+                    </xar:foreach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" class="xar-norm" colspan="2">
                     #$cathook#
-				</td>
-			</tr>
-		</table>			
+                </td>
+            </tr>
+        </table>            
         <p>
             <input type="submit" value="Modify ID"  tabindex="6" />
         </p>
-	</form>
+    </form>
 </div>
 </div>

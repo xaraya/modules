@@ -6,27 +6,27 @@
   <br /><br />
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-		  <td width="30%">
-		  	<a href="#xarModURL('release', 'admin', 'viewnotes')#">Pending</a><br /><br />
-		  </td>
-	  </tr>
-	  <tr>
-		  <td width="30%">
-			  <xar:mlstring>Certification Status</xar:mlstring>:<br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Certified</a> <br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Non-Certified</a>
-		  </td>
-		  <td width="30%">
-		  	<xar:mlstring>Price</xar:mlstring>:<br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '2'))#">Commercial</a> <br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '1'))#">Free</a>
-		  </td>
-		  <td width="30%">
-			  <xar:mlstring>Support</xar:mlstring>:<br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '2'))#">Supported</a> <br />
-			  &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '1'))#">Not Supported</a> 
-		  </td>
-	  </tr>
+          <td width="30%">
+              <a href="#xarModURL('release', 'admin', 'viewnotes')#">Pending</a><br /><br />
+          </td>
+      </tr>
+      <tr>
+          <td width="30%">
+              <xar:mlstring>Certification Status</xar:mlstring>:<br />
+              &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '2'))#">Certified</a> <br />
+              &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'certified', 'filter' => '1'))#">Non-Certified</a>
+          </td>
+          <td width="30%">
+              <xar:mlstring>Price</xar:mlstring>:<br />
+              &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '2'))#">Commercial</a> <br />
+              &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'price', 'filter' => '1'))#">Free</a>
+          </td>
+          <td width="30%">
+              <xar:mlstring>Support</xar:mlstring>:<br />
+              &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '2'))#">Supported</a> <br />
+              &nbsp;&nbsp;<a href="#xarModURL('release', 'admin', 'viewnotes', array('phase' => 'supported', 'filter' => '1'))#">Not Supported</a> 
+          </td>
+      </tr>
   </table>
 
  <xar:if condition="isset($phase)">
@@ -40,25 +40,25 @@
 </xar:if>
 
   <xar:if condition="!empty($message)">
-	  <b>#$message#</b>
+      <b>#$message#</b>
   <xar:else />
     <table width="100%" border="0" cellspacing="0" cellpadding="4">
       <tr>
         <th>
-			    <xar:mlstring>Type</xar:mlstring>
-		    </th>
+                <xar:mlstring>Type</xar:mlstring>
+            </th>
         <th>
-			    <xar:mlstring>Name</xar:mlstring>
-		    </th>
+                <xar:mlstring>Name</xar:mlstring>
+            </th>
         <th>
-			    <xar:mlstring>Description</xar:mlstring>
-		    </th>
+                <xar:mlstring>Description</xar:mlstring>
+            </th>
         <th>
-			    <xar:mlstring>Options</xar:mlstring>
-		    </th>
-	    </tr>
+                <xar:mlstring>Options</xar:mlstring>
+            </th>
+        </tr>
       <xar:loop name="$items">
-	      <xar:if condition="(($loop:index + 1) % 2)">
+          <xar:if condition="(($loop:index + 1) % 2)">
           <xar:set name="$rowclass">'xar-norm'</xar:set>
         <xar:else/>
           <xar:set name="$rowclass">'xar-alt'</xar:set>
@@ -70,14 +70,14 @@
             <xar:else />        
               <h3><xar:mlstring>Theme</xar:mlstring>:</h3>
             </xar:if>
-	      </td>
+          </td>
           <td class="#$rowclass#">
-			      #$loop:item['regname']#
-		      </td>
+                  #$loop:item['regname']#
+              </td>
           <td class="#$rowclass#">
-			      #$loop:item['desc']#
-		      </td>
-		      <td align="center" class="#$rowclass#">
+                  #$loop:item['desc']#
+              </td>
+              <td align="center" class="#$rowclass#">
             <xar:if condition="empty($loop:item['editurl'])">
               #$loop:item['edittitle']#
             <xar:else />

@@ -5,25 +5,25 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="4">
     <tr>
         <th>
-			<xar:mlstring>Doc Type</xar:mlstring>
-		</th>
+            <xar:mlstring>Doc Type</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Title</xar:mlstring>
-		</th>
+            <xar:mlstring>Title</xar:mlstring>
+        </th>
         <th>
-			<xar:mlstring>Options</xar:mlstring>
-		</th>
-	</tr>
+            <xar:mlstring>Options</xar:mlstring>
+        </th>
+    </tr>
     <xar:loop name="$items">
-	<xar:if condition="(($_bl_loop_index1 + 1) % 2)">
+    <xar:if condition="(($_bl_loop_index1 + 1) % 2)">
     <tr>
         <td class="xar-norm">
-			#$type#
-		</td>
+            #$type#
+        </td>
         <td class="xar-norm">
-			#$title#
-		</td>
-		<td align="center" class="xar-norm">
+            #$title#
+        </td>
+        <td align="center" class="xar-norm">
            <xar:if condition="empty($editurl)">
                #$edittitle#
                <xar:else />
@@ -37,15 +37,15 @@
            </xar:if>
         </td>
     </tr>
-	<xar:else />
+    <xar:else />
     <tr>
         <td class="xar-accent">
-			#$type#
-		</td>
+            #$type#
+        </td>
         <td class="xar-accent">
-			#$title#
-		</td>
-		<td align="center" class="xar-accent">
+            #$title#
+        </td>
+        <td align="center" class="xar-accent">
            <xar:if condition="empty($editurl)">
                #$edittitle#
                <xar:else />
@@ -59,7 +59,7 @@
            </xar:if>
         </td>
     </tr>
-	</xar:if>
+    </xar:if>
     </xar:loop>
 </table>
 </div>
