@@ -1,8 +1,9 @@
-<!--- $Id --->
+<!--- $Id$ --->
 
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Autolinks Administration</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>View Autolinks</xar:mlstring></h2><br />
 <div style="margin: auto;">
+<xar:if condition="!empty($items)">
 <table width="100%" border="1" cellspacing="0" cellpadding="4">
     <tr>
         <th><xar:mlstring>Name</xar:mlstring></th>
@@ -71,5 +72,9 @@
 
 <!-- add the pager here -->
 #$pager#
+
+<xar:else/>
+<xar:mlstring>No Autolinks defined</xar:mlstring>
+</xar:if>
 </div>
 </div>

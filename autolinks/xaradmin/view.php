@@ -23,72 +23,69 @@ function autolinks_admin_view()
     if(!xarSecurityCheck('EditAutolinks')) return;
 
     // The user API function is called
-    $links = xarModAPIFunc('autolinks',
-                          'user',
-                          'getall',
-                          array('startnum' => $startnumitem,
-                                'numitems' => xarModGetVar('autolinks',
-                                                          'itemsperpage')));
-
-    if (empty($links)) {
-        $msg = xarML('No Autolinks in database.', 'autolinks');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
+    $links = xarModAPIFunc(
+        'autolinks', 'user', 'getall',
+        array(
+            'startnum' => $startnumitem,
+            'numitems' => xarModGetVar('autolinks', 'itemsperpage')
+        )
+    );
 
     // Check individual permissions for Edit/Delete/Enable
     $authid = xarSecGenAuthKey();
 
-    foreach($links as $lid => $link) {
-        if (xarSecurityCheck('EditAutolinks',0)) {
-            $links[$lid]['editurl'] = xarModURL(
-                'autolinks', 'admin', 'modify',
-                array('lid' => $lid, 'startnumitem' => $startnumitem)
-            );
-            $links[$lid]['edittypeurl'] = xarModURL(
-                'autolinks', 'admin', 'modifytype',
-                array('tid' => $link['tid'])
-            );
-            $links[$lid]['enableurl'] = xarModURL(
-                'autolinks', 'admin', 'enable',
-                array(
-                    'lid' => $lid,
-                    'startnumitem' => $startnumitem,
-                    'authid' => $authid
-                )
-            );
-        } else {
-            $links[$lid]['editurl'] = '';
-        }
-        $links[$lid]['enablelabel'] = xarML(empty($link['enabled']) ? 'Enable' : 'Disable');
-        if (xarSecurityCheck('DeleteAutolinks',0)) {
-            $links[$lid]['deleteurl'] = xarModURL('autolinks',
-                                               'admin',
-                                               'delete',
-                                               array('lid' => $lid));
-        } else {
-            $links[$lid]['deleteurl'] = '';
-        }
-
-        // If we are displaying samples, then autolink match the samples.
-        if (xarModGetVar('autolinks', 'showsamples')) {
-            // Set a session var to indicate errors should be shown.
-            xarVarSetCached('autolinks', 'showerrors', '1');
-            if (!empty($links[$lid]['sample'])) {
-                // We need to perform a single autolink on the sample.
-                // TODO: not sure how to do that yet. The links are all transformed in a loop.
-                $links[$lid]['sampleresult'] = xarModAPIfunc(
-                    'autolinks', 'user', '_transform',
-                    array('text' => $links[$lid]['sample'], 'lid' => $lid)
+    if (is_array($links)) {
+        foreach($links as $lid => $link) {
+            if (xarSecurityCheck('EditAutolinks',0)) {
+                $links[$lid]['editurl'] = xarModURL(
+                    'autolinks', 'admin', 'modify',
+                    array('lid' => $lid, 'startnumitem' => $startnumitem)
+                );
+                $links[$lid]['edittypeurl'] = xarModURL(
+                    'autolinks', 'admin', 'modifytype',
+                    array('tid' => $link['tid'])
+                );
+                $links[$lid]['enableurl'] = xarModURL(
+                    'autolinks', 'admin', 'enable',
+                    array(
+                        'lid' => $lid,
+                        'startnumitem' => $startnumitem,
+                        'authid' => $authid
+                    )
                 );
             } else {
-                $links[$lid]['sampleresult'] = '';
+                $links[$lid]['editurl'] = '';
+            }
+            // TODO: get these tables into the template.
+            $links[$lid]['enablelabel'] = xarML(empty($link['enabled']) ? 'Enable' : 'Disable');
+            if (xarSecurityCheck('DeleteAutolinks',0)) {
+                $links[$lid]['deleteurl'] = xarModURL(
+                    'autolinks', 'admin', 'delete',
+                    array('lid' => $lid)
+                );
+            } else {
+                $links[$lid]['deleteurl'] = '';
+            }
+
+            // If we are displaying samples, then autolink match the samples.
+            if (xarModGetVar('autolinks', 'showsamples')) {
+                // Set a session var to indicate errors should be shown.
+                xarVarSetCached('autolinks', 'showerrors', '1');
+                if (!empty($links[$lid]['sample'])) {
+                    // We need to perform a single autolink on the sample.
+                    // TODO: not sure how to do that yet. The links are all transformed in a loop.
+                    $links[$lid]['sampleresult'] = xarModAPIfunc(
+                        'autolinks', 'user', '_transform',
+                        array('text' => $links[$lid]['sample'], 'lid' => $lid)
+                    );
+                } else {
+                    $links[$lid]['sampleresult'] = '';
+                }
             }
         }
+        // Add the array of items to the template variables
+        $data['items'] = $links;
     }
-
-    // Add the array of items to the template variables
-    $data['items'] = $links;
 
     // Return the template variables defined in this function
     return $data;
