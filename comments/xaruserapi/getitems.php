@@ -71,14 +71,17 @@ function comments_userapi_getitems($args)
     }
 
     // Get items
+    $bindvars = array();
     $query = "SELECT $ctable[objectid], COUNT(*)
                 FROM $commentstable
-               WHERE $ctable[modid] = '" . xarVarPrepForStore($modid) . "'
-                 AND $ctable[itemtype] = '" . xarVarPrepForStore($itemtype) . "'
+               WHERE $ctable[modid] = ?
+                 AND $ctable[itemtype] = ?
                  AND $where_status ";
+    $bindvars[] = $modid; $bindvars[] = $itemtype;
     if (isset($itemids) && count($itemids) > 0) {
-        $allids = join(', ',$itemids);
-        $query .= " AND $ctable[objectid] IN ('" . xarVarPrepForStore($allids) . "')";
+        $bindmarkers = '?' . str_repeat(',?', count($itemids)-1);
+        array_merge($bindvars, $itemids)
+        $query .= " AND $ctable[objectid] IN ($bindmarkers)";
     }
     $query .= " GROUP BY $ctable[objectid]
                 ORDER BY $ctable[objectid]";
@@ -91,9 +94,9 @@ function comments_userapi_getitems($args)
         if (empty($startnum)) {
             $startnum = 1;
         }
-        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1);
+        $result = $dbconn->SelectLimit($query, $numitems, $startnum - 1,$bindvars);
     } else {
-        $result = $dbconn->Execute($query);
+        $result = $dbconn->Execute($query,$bindvars);
     }
     if (!$result) return;
 

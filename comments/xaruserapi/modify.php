@@ -73,12 +73,14 @@ function comments_userapi_modify($args)
     $text .= "\n</p>\n";
 
     $sql =  "UPDATE $xartable[comments]
-                SET xar_title    = '". xarVarPrepForStore($title) ."',
-                    xar_text  = '". xarVarPrepForStore($text) ."',
-                    xar_anonpost = '". (empty($postanon) ? 0 : 1) ."'
-              WHERE xar_cid='$cid'";
+                SET xar_title    = ?, 
+                    xar_text     = ?,
+                    xar_anonpost = ?
+              WHERE xar_cid      = ?";
+    $bpostanon = empty($postanon) ? 0 : 1;
+    $bindvars = array($title, $text, $bpostanon, $cid);
 
-    $result = &$dbconn->Execute($sql);
+    $result = &$dbconn->Execute($sql,$bindvars);
 
     if (!$result) {
         return;

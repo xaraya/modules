@@ -75,10 +75,9 @@ function comments_user_search( $args )
 
         // Get user information
         $rolestable = $xartable['roles'];
-        $query = "SELECT xar_uid
-                  FROM $rolestable
-                  WHERE xar_uname = '" . xarVarPrepForStore($author) . "'";
-        $result =& $dbconn->Execute($query);
+        $query = "SELECT xar_uid FROM $rolestable
+                  WHERE xar_uname = ?";
+        $result =& $dbconn->Execute($query,array($author));
         if (!$result) return;
 
         // if we found the uid add it to the search list,

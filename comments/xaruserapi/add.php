@@ -136,7 +136,7 @@ function comments_userapi_add($args)
     }
 
     $sql = "INSERT INTO $xartable[comments]
-                (xar_cid,
+                (xar_cid, 
                  xar_modid,
                  xar_itemtype,
                  xar_objectid,
@@ -150,23 +150,12 @@ function comments_userapi_add($args)
                  xar_pid,
                  xar_status,
                  xar_anonpost)
-          VALUES ("
-        .xarVarPrepForStore($id).",'"
-        .xarVarPrepForStore($modid)."','"
-        .xarVarPrepForStore($itemtype)."','"
-        .xarVarPrepForStore($objectid)."','"
-        .xarVarPrepForStore($author)."','"
-        .xarVarPrepForStore($title)."',"
-        . (isset($date) ? "'".xarVarPrepForStore($date)."'" : "'".xarVarPrepForStore($cdate)."'") . ",'"
-        .xarVarPrepForStore($hostname)."','"
-        .xarVarPrepForStore($comment)."','"
-        .xarVarPrepForStore($left)."','"
-        .xarVarPrepForStore($right)."','"
-        .xarVarPrepForStore($pid)."','"
-        .xarVarPrepforStore($status)."','"
-        . (empty($postanon) ? 0 : 1) ."')";
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $bdate = (isset($date)) ? $date : $cdate;
+    $bpostanon = (empty($postanon)) ? 0 : 1;
+    $bindvars = array($id, $modid, $itemtype, $objectid, $author, $title, $bdate, $hostname, $comment, $left, $right, $pid, $status, $bpostanon);
 
-    $result = &$dbconn->Execute($sql);
+    $result = &$dbconn->Execute($sql,$bindvars);
 
     if (!$result) {
         return;
