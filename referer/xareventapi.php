@@ -35,6 +35,7 @@ function referer_eventapi_OnServerRequest()
      * Check to make sure that we do not log our own domain.
      */
 
+    $time = time();
     if (!ereg("$HTTP_HOST", $HTTP_REFERER)) {
         if ($HTTP_REFERER == '') {
             $HTTP_REFERER = 'bookmark';
@@ -56,7 +57,7 @@ function referer_eventapi_OnServerRequest()
                           SET xar_frequency = xar_frequency + 1
                           SET xar_time = ?
                           WHERE xar_url = ?";
-            $result =& $dbconn->Execute($query, array(time(), $HTTP_REFERER));
+            $result =& $dbconn->Execute($query, array($time, $HTTP_REFERER));
              
         } else {
             // Get next ID in table
@@ -71,7 +72,7 @@ function referer_eventapi_OnServerRequest()
                                        ?,
                                        ?,
                                        ?)";
-            $result =& $dbconn->Execute($query, array($nextId, $HTTP_REFERER, 1, time()));
+            $result =& $dbconn->Execute($query, array($nextId, $HTTP_REFERER, 1, $time));
         }
     if (!$result) return;
     }
