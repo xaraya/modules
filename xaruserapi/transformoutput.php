@@ -79,7 +79,7 @@ function html_userapitransformoutput($text)
     } elseif ($transformtype == 4){
         // If the string contains end of line type tags, assume the user
         // wants to provide html markup manually
-        if( strpos($text,"<b") OR strpos($text,"<p") )
+        if( (strpos($text,"<br") !== FALSE ) OR (strpos($text,"<p")!== FALSE) )
         {
             $text = $text;
         } else {
