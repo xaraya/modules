@@ -82,7 +82,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -114,7 +114,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -155,7 +155,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -202,7 +202,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -249,7 +249,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -294,7 +294,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -333,7 +333,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -369,7 +369,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -405,7 +405,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }
@@ -451,7 +451,7 @@ function workflow_init()
     // Check for an error with the database
     if ($dbconn->ErrorNo() != 0) {
         $msg = xarMLByKey('DATABASE_ERROR', $query);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'DATABASE_ERROR',
                     new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return false;
     }

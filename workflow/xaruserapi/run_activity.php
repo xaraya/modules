@@ -31,7 +31,7 @@ $__activity_completed = false;
 // load then the compiled version of the activity
 if (!isset($args['activityId'])) {
   $msg = xarML("No workflow activity indicated");
-  xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+  xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
       new SystemException($msg));
   return;
 }
@@ -39,7 +39,7 @@ if (!isset($args['activityId'])) {
 $activity = $baseActivity->getActivity($args['activityId']);
 if (empty($activity)) {
   $msg = xarML("Invalid workflow activity specified");
-  xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+  xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
       new SystemException($msg));
   return;
 }
