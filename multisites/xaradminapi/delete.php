@@ -22,10 +22,8 @@ function multisites_adminapi_delete($args)
 
     // Argument check
     if (!isset($msid)) {
-      $msg = xarML('Invalid Parameter',
-            'item ID', 'admin', 'delete', 'Multisites');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+      $msg = xarML('Invalid Parameter');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -36,11 +34,8 @@ function multisites_adminapi_delete($args)
                              array('msid' => $msid));
 
     if ($subsite == false) {
-        $msg = xarML('No Such Subsite Exists',
-                    'multisites');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No Such Subsite Exists');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -55,8 +50,10 @@ function multisites_adminapi_delete($args)
 
     // Delete the subsite
     $query = "DELETE FROM $multisitestable
-            WHERE xar_msid = " . xarVarPrepForStore($msid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_msid = ?";
+
+    $bindvars = array($msid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Let any hooks know that we have deleted a link

@@ -7,13 +7,12 @@ function multisites_adminapi_msconfiggetvar($args)
     extract($args);
     if (empty($name)) {
         $msg = xarML('Empty name.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     return;
     }
    // Connect to master db - and get the config table
-   $dbconn =& xarDBGetConn();
-   $xartable         =& xarDBGetTables();
+   $dbconn          =& xarDBGetConn();
+   $xartable        =& xarDBGetTables();
    $configtable     = $xartable['config_vars'];
    $olddbtype       = xarDBGetType();
    if (!isset($newdbtype) || ($newdbtype='')) {
@@ -33,8 +32,10 @@ function multisites_adminapi_msconfiggetvar($args)
     $$config_varsTable         = str_replace($masterprefix,$msprefix,$config_varsTable);
     $query = "SELECT xar_value
               FROM $config_varsTable
-              WHERE xar_name='" . xarVarPrepForStore($name) . "'";
-    $result =& $dbsiteconn->Execute($query);
+              WHERE xar_name=?";
+
+    $bindvars = array($name);
+    $result =& $dbsiteconn->Execute($query,$bindvars);
     if (!$result) return;
 
     if ($result->EOF) {

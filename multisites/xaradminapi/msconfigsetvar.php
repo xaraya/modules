@@ -8,13 +8,12 @@ function multisites_adminapi_msconfigsetvar($args)
     extract($args);
     if (empty($name)) {
         $msg = xarML('Empty name.');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     return $msg;
     }
    // Connect to master db - and get the config table
-   $dbconn =& xarDBGetConn();
-   $xartable         =& xarDBGetTables();
+   $dbconn          =& xarDBGetConn();
+   $xartable        =& xarDBGetTables();
    $configtable     = $xartable['config_vars'];
    $olddbtype       = xarDBGetType();
 
@@ -33,9 +32,9 @@ function multisites_adminapi_msconfigsetvar($args)
    //check the var exists already
    $query = "SELECT xar_value
               FROM $configtable
-              WHERE xar_name = '" . xarVarPrepForStore($name) . "'
-              ";
-    $result = $dbsiteconn->Execute($query);
+              WHERE xar_name = ?";
+    $bindvars = array($name);
+    $result =& $dbsiteconn->Execute($query,$bindvars);
     if ((!$result) || ($result->EOF)) {
        $mustInsert = true;
     } else {
@@ -55,17 +54,20 @@ function multisites_adminapi_msconfigsetvar($args)
                   (xar_id,
                    xar_name,
                    xar_value)
-                  VALUES ('$seqId',
-                          '" . xarVarPrepForStore($name) . "',
-                          '" . xarVarPrepForStore($value). "')";
+                  VALUES (?,
+                          ?,
+                          ?)";
+
+                $bindvars = array($seqId, $name, $value);
     } else {
          //Update
          $query = "UPDATE $configtable
-                   SET xar_value='" . xarVarPrepForStore($value) . "'
-                   WHERE xar_name='" . xarVarPrepForStore($name) . "'";
+                   SET xar_value=?
+                   WHERE xar_name=?";
+                $bindvars = array($value, $name);
      }
 
-    $result =& $dbsiteconn->Execute($query);
+    $result =& $dbsiteconn->Execute($query,$bindvars);
     if (!$result) return;
 
     //force return to master database

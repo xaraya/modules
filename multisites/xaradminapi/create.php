@@ -32,10 +32,8 @@ function multisites_adminapi_create($args)
     if ((!isset($mssite))   ||
         (!isset($msprefix)) ||
         (!isset($msdb)))   {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'create', 'multisites');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -50,8 +48,10 @@ function multisites_adminapi_create($args)
 
     // Check if the subsite already exists
     $query = "SELECT xar_msid FROM $multisitestable
-            WHERE xar_mssite='".xarVarPrepForStore($mssite)."';";
-    $result =& $dbconn->Execute($query);
+            WHERE xar_mssite=?";
+
+    $bindvars = array($mssite);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     if ($result->RecordCount() > 0) {
@@ -73,14 +73,15 @@ function multisites_adminapi_create($args)
               xar_msstatus,
               xar_sitefolder)
             VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($mssite) . "',
-              '" . xarVarPrepForStore($msprefix) . "',
-              '" . xarVarPrepForStore($msdb) . "',
-              '" . xarVarPrepForStore($msshare) . "',
-              '" . xarVarPrepForStore($msstatus) . "',
-              '" . xarVarPrepForStore($sitefolder) . "')";
-    $result =& $dbconn->Execute($query);
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?,
+              ?)";
+    $bindvars = array($nextId, $mssite, $msprefix, $msdb, $msshare, $msstatus, $sitefolder);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     // Get the ID of the subsite

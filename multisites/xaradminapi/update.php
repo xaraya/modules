@@ -27,7 +27,8 @@ function multisites_adminapi_update($args)
     {
         if (isset($$parameter))
         {
-            $set[] = "xar_$parameter = '" . xarVarPrepForStore($$parameter) . "'";
+            $set[] = "xar_$parameter = ?";
+            $bindvar[] = $$parameter;
         }
     }
   // Numeric parameters.
@@ -37,18 +38,18 @@ function multisites_adminapi_update($args)
         {
             if ($$parameter == "0" || $$parameter == "1")
             {
-                $set[] = "xar_$parameter = " . xarVarPrepForStore($$parameter) . "";
+                $set[] = "xar_$parameter = ?";
+                $bindvar[] = $$parameter;
             } else {
-                $set[] = "xar_$parameter = " . xarVarPrepForStore($default) . "";
+                $set[] = "xar_$parameter = ?";
+                $bindvar[] = $default;
             }
         }
     }
     // Argument check
     if (!isset($msid) || empty($set)) {
-        $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'multisites');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -62,11 +63,8 @@ function multisites_adminapi_update($args)
                           array('msid' => $msid));
 
     if ($subsite == false) {
-        $msg = xarML('No Such Subsite Exists',
-                    'multisites');
-        xarErrorSet(XAR_USER_EXCEPTION,
-                    'MISSING_DATA',
-                     new DefaultUserException($msg));
+        $msg = xarML('No Such Subsite Exists');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
         return;
     }
 
@@ -80,8 +78,10 @@ function multisites_adminapi_update($args)
 
     // Update the subsite
     $query = 'UPDATE ' . $multisitestable . ' SET ' . $set
-            . ' WHERE xar_msid = ' . xarVarPrepForStore($msid);
-    $result =& $dbconn->Execute($query);
+            . ' WHERE xar_msid = ?";
+
+    $bindvars = array($msid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) {return;}
 
     // Let the calling process know that we have finished successfully

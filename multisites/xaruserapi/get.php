@@ -22,10 +22,8 @@ function multisites_userapi_get($args)
 {
     extract($args);
     if (!isset($msid)) {
-        $msg = xarML('Invalid Parameter Count',
-                    'userapi', 'get', 'multisites');
-        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+        $msg = xarML('Invalid Parameter Count');
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
 
@@ -42,8 +40,10 @@ function multisites_userapi_get($args)
                      xar_msshare,
                      xar_msstatus
             FROM $multisitestable
-            WHERE xar_msid = " . xarVarPrepForStore($msid);
-    $result =& $dbconn->Execute($query);
+            WHERE xar_msid = ?";
+
+    $bindvars = array($msid);
+    $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
 
     list($msid, $mssite, $msprefix, $msdb, $msshare, $msstatus) = $result->fields;
