@@ -8,7 +8,7 @@
  */
 function contact_admin_createcompanyinfo($args)
 {
-    global $HTTP_POST_FILES;
+   if (phpversion() >="4.2.0") extract($_POST);
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $companytable = $xartable['contact_company'];
@@ -96,10 +96,11 @@ function contact_admin_createcompanyinfo($args)
 
             $CompCity = xarModAPIFunc('contact',
                         'admin',
-                        'addCityCompany',
+                        'addcitycompany',
                         array('id' => $company_id,
                                'name' => $newCityName,
                                'number' => $number));
+
             // The return value of the function is checked here, and if the function
             // suceeded then an appropriate message is posted.  Note that if the
             // function did not succeed then the API function should have already
