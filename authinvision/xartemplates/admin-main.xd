@@ -22,7 +22,7 @@
             <b><xar:mlstring>How to use it?</xar:mlstring></b>
         </td>
         <td align="left" valign="top">
-            <xar:mlstring>Authentication by Authinvision is automatically set once the the Authinvision module has been initialized.   You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module.</xar:mlstring>
+            <xar:mlstring>Authentication by Authinvision is automatically set once the the Authinvision module has been initialized.   You must configure Authinvision before a user will be able to login to Xaraya.  To remove Authinvision authentication, you must remove the module or disable it in the modify config screen.</xar:mlstring>
             <br /><br />
             <xar:mlstring>
             From the menu, you have one choice.  "Modify Config". 
