@@ -60,15 +60,19 @@ function xarcachemanager_adminapi_createhook($args)
     // nothing fancy yet, just flush it out the cacheKeys
     
     switch($modname) {
-        case 'privileges': // fall-through all modules that should flush the entire cache
         case 'blocks':
             // blocks could be anywhere, we're not smart enough not know exactly where yet
-            // so just flush everything
+            // so just flush all pages
+            $cacheKey = "-user-";
+            xarPageFlushCached($cacheKey);
+            break;
+        case 'privileges': // fall-through all modules that should flush the entire cache
+        case 'roles':
+            // if security changes, flush everything, just in case.
             $cacheKey = "";
             xarPageFlushCached($cacheKey);
             break;
         case 'articles':
-            error_log("article status is " . $extrainfo['status']);
             if ($extrainfo['status'] == 0) {
                 break;
             }
@@ -78,22 +82,21 @@ function xarcachemanager_adminapi_createhook($args)
         case 'autolinks': // fall-through all hooked utility modules that are admin modified
         case 'categories': // keep falling through
         case 'html': // keep falling through
+        case 'keywords': // keep falling through
                      // delete cachekey of each module autolinks is hooked to.
             $hooklist = xarModAPIFunc('modules','admin','gethooklist');
             $modhooks = reset($hooklist[$modname]);
             
             foreach ($modhooks as $hookedmodname => $hookedmod) {
-                $cacheKey = "$hookedmodname-user-";
+                $cacheKey = "$hookedmodname-";
                 xarPageFlushCached($cacheKey);
             }
                 // no break because we want it to keep going and flush it's own cacheKey too
                 // incase it's got a user view, like categories.
-        case 'articles': // fall-through
-            //nothing special yet
         default:
             // identify pages that include the updated item and delete the cached files
             // nothing fancy yet, just flush it out
-            $cacheKey = "$modname-user-";
+            $cacheKey = "$modname-";
             xarPageFlushCached($cacheKey);
             break;
     }

@@ -54,40 +54,53 @@ function xarcachemanager_init()
         return false;  // todo: give a meaningful error
     }
 
-/*
-    if (!xarModRegisterHook('item', 'new', 'GUI',
-                           'xarcachemanager', 'admin', 'newhook')) {
-        return false;
-    }
-*/
     if (!xarModRegisterHook('item', 'create', 'API',
-                           'xarcachemanager', 'admin', 'createhook')) {
+                            'xarcachemanager', 'admin', 'createhook')) {
         return false;
     }
-/*
-    if (!xarModRegisterHook('item', 'modify', 'GUI',
-                           'xarcachemanager', 'admin', 'modifyhook')) {
-        return false;
-    }
-*/
     if (!xarModRegisterHook('item', 'update', 'API',
-                           'xarcachemanager', 'admin', 'updatehook')) {
+                            'xarcachemanager', 'admin', 'updatehook')) {
         return false;
     }
     if (!xarModRegisterHook('item', 'delete', 'API',
-                           'xarcachemanager', 'admin', 'deletehook')) {
+                            'xarcachemanager', 'admin', 'deletehook')) {
         return false;
     }
-/*
-    if (!xarModRegisterHook('module', 'remove', 'API',
-                           'xarcachemanager', 'admin', 'removehook')) {
+    if (!xarModRegisterHook('module', 'updateconfig', 'API',
+                            'xarcachemanager', 'admin', 'updateconfighook')) {
         return false;
     }
-    if (!xarModRegisterHook('item', 'display', 'GUI',
-                           'xarcachemanager', 'user', 'displayhook')) {
-        return false;
+
+    // Enable xarcachemanager hooks for articles
+    if (xarModIsAvailable('articles')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'articles', 'hookModName' => 'xarcachemanager'));
     }
-*/
+    // Enable xarcachemanager hooks for base
+    if (xarModIsAvailable('base')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'base', 'hookModName' => 'xarcachemanager'));
+    }
+    // Enable xarcachemanager hooks for blocks
+    if (xarModIsAvailable('blocks')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'blocks', 'hookModName' => 'xarcachemanager'));
+    }
+    // Enable xarcachemanager hooks for categories
+    if (xarModIsAvailable('categories')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'categories', 'hookModName' => 'xarcachemanager'));
+    }
+    // Enable xarcachemanager hooks for roles
+    if (xarModIsAvailable('roles')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'roles', 'hookModName' => 'xarcachemanager'));
+    }
+    // Enable xarcachemanager hooks for privileges
+    if (xarModIsAvailable('privileges')) {
+        xarModAPIFunc('modules','admin','enablehooks',
+                      array('callerModName' => 'privileges', 'hookModName' => 'xarcachemanager'));
+    }
 
     // set up permissions masks.
     xarRegisterMask('ReadXarCache', 'All', 'xarcachemanager', 'Item', 'All:All:All', 'ACCESS_READ');
@@ -160,42 +173,20 @@ function xarcachemanager_delete()
     }
 
     // Remove module hooks
-/*
-    if (!xarModUnregisterHook('item', 'new', 'GUI',
-                           'xarcachemanager', 'admin', 'newhook')) {
-        return false;
-    }
-*/
+
     if (!xarModUnregisterHook('item', 'create', 'API',
-                           'xarcachemanager', 'admin', 'createhook')) {
+                              'xarcachemanager', 'admin', 'createhook')) {
         return false;
     }
-/*
-    if (!xarModUnregisterHook('item', 'modify', 'GUI',
-                           'xarcachemanager', 'admin', 'modifyhook')) {
-        return false;
-    }
-*/
+
     if (!xarModUnregisterHook('item', 'update', 'API',
-                           'xarcachemanager', 'admin', 'updatehook')) {
+                              'xarcachemanager', 'admin', 'updatehook')) {
         return false;
     }
     if (!xarModUnregisterHook('item', 'delete', 'API',
-                           'xarcachemanager', 'admin', 'deletehook')) {
+                              'xarcachemanager', 'admin', 'deletehook')) {
         return false;
     }
-/*
-    // when a whole module is removed, e.g. via the modules admin screen
-    // (set object ID to the module name !)
-    if (!xarModUnregisterHook('module', 'remove', 'API',
-                           'xarcachemanager', 'admin', 'removehook')) {
-        return false;
-    }
-    if (!xarModUnregisterHook('item', 'display', 'GUI',
-                           'xarcachemanager', 'user', 'displayhook')) {
-        return false;
-    }
-*/
 
     // Remove Masks and Instances
     xarRemoveMasks('xarcachemanager');

@@ -1,17 +1,16 @@
 <?php
 
 /**
- * update entry for a module item - hook for ('item','update','API')
+ * update entry for a module item - hook for ('item','updateconfig','API')
  * Optional $extrainfo['xarcachemanager_remark'] from arguments, or 'xarcachemanager_remark' from input
  *
- * @param $args['objectid'] ID of the object
  * @param $args['extrainfo'] extra information
  * @returns bool
  * @return true on success, false on failure
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * todo - actually raise errors, get intelligent and specific about cache files to remove
  */
-function xarcachemanager_adminapi_updatehook($args)
+function xarcachemanager_adminapi_updateconfighook($args)
 {
     extract($args);
     
@@ -19,14 +18,7 @@ function xarcachemanager_adminapi_updatehook($args)
         // caching is not enabled and xarCache will not be available
         return;
     }
-    
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                    'object ID', 'admin', 'updatehook', 'xarcachemanager');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
-        return;
-    }
+
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = array();
     }
@@ -58,25 +50,15 @@ function xarcachemanager_adminapi_updatehook($args)
     }
 
     switch($modname) {
-        case 'blocks':
-            // blocks could be anywhere, we're not smart enough not know exactly where yet
-            // so just flush all pages
-            $cacheKey = "-user-";
-            xarPageFlushCached($cacheKey);
-            // and flush the block
-            $cacheKey = "-blockid" . $objectid;
-            xarPageFlushCached($cacheKey);
-            break;
-        case 'privileges': // fall-through all modules that should flush the entire cache
-        case 'roles':
-            // if security changes, flush everything, just in case.
+
+        case 'base': // who knows what global impact a config change to base might make
+            // flush everything.
             $cacheKey = "";
             xarPageFlushCached($cacheKey);
             break;
-        case 'autolinks': // fall-through all hooked utility modules that are admin modified
-        case 'categories': // keep falling through
+        case 'autolinks': // fall-through all hooked utility modules that are admin config modified
+        case 'comments': // keep falling through
         case 'keywords': // keep falling through
-        case 'html': // keep falling through
             // delete cachekey of each module autolinks is hooked to.
             $hooklist = xarModAPIFunc('modules','admin','gethooklist');
             $modhooks = reset($hooklist[$modname]);
