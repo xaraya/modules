@@ -20,7 +20,7 @@ function mime_userapi_analyze_file( $args )
 
     if (!isset($fileName)) {
         $msg = xarML('Unable to retrieve mime type. No filename supplied!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 
@@ -65,7 +65,7 @@ function mime_userapi_analyze_file( $args )
     // Otherwise, actually test the contents of the file
     if (!($fp = @fopen($fileName, 'rb'))) {
         $msg = xarML('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_OPEN', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_OPEN', new SystemException($msg));
         return FALSE;
     } else {
         $mime_list = xarModAPIFunc('mime', 'user', 'getall_magic');
@@ -91,7 +91,7 @@ function mime_userapi_analyze_file( $args )
                     if (@fseek($fp, $magicInfo['offset'], SEEK_SET)) {
                         $msg = xarML('Unable to seek to offset [#(1)] within file: [#(2)]',
                                       $magicInfo['offset'], $fileName);
-                        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SEEK', new SystemException($msg));
+                        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_SEEK', new SystemException($msg));
                         return FALSE;
                     }
                 }
@@ -99,7 +99,7 @@ function mime_userapi_analyze_file( $args )
                 if (!($value = @fread($fp, $magicInfo['length']))) {
                     $msg = xarML('Unable to read (#(1) bytes) from file: [#(2)].',
                                  $magicInfo['length'], $fileName);
-                    xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
+                    xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
                     return FALSE;
                 }
 
@@ -126,13 +126,13 @@ function mime_userapi_analyze_file( $args )
 
         if (!rewind($fp)) {
             $msg = xarML('Unable to rewind to beginning of file: [#(1)]', $fileName);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_REWIND', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_REWIND', new SystemException($msg));
             return FALSE;
         }
 
         if (!($value = @fread($fp, 256))) {
             $msg = xarML('Unable to read (256 bytes) from file: [#(1)]', $fileName);
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_READ', new SystemException($msg));
             return FALSE;
         }
 

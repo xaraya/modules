@@ -18,13 +18,13 @@ function mime_userapi_add_extension( $args )
     if (!isset($subtypeId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                      'subtypeId','userapi_add_extension','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     if (!isset($extensionName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                      'extensionName','userapi_add_extension','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     // Get database setup

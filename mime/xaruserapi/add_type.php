@@ -21,7 +21,7 @@ function mime_userapi_add_type( $args )
     if (!isset($typeName) || empty($typeName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                      'typeName','userapi_add_type','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     // table and column definitions

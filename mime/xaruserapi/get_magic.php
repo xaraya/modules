@@ -17,7 +17,7 @@ function mime_userapi_get_magic( $args )
     
     if (!isset($magicId) && !isseT($magicValue)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module[#(3)].', 'magicId','userapi_get_magic','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     // Get database setup

@@ -20,7 +20,7 @@ function mime_userapi_get_mime_image( $args )
     if (!isset($mimeType)) {
         // API location handled centrally.
         $msg = xarML('Missing parameter [#(1)].', 'mimeType');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
 
     // Defaults.

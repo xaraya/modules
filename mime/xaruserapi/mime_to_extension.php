@@ -18,7 +18,7 @@ function mime_userapi_mime_to_extension( $args )
 
     if (!isset($mime_type) || empty($mime_type)) {
         $msg = xarML('Missing \'mime_type\' parameter!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     }
 

@@ -20,7 +20,7 @@ function mime_userapi_getall_magic( $args )
         } else {
             $msg = xarML('Supplied parameter [#(1)] for function [#(2)], is not an integer!', 
                          'subtypeId','mime_userapi_getall_magic');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
     } else {

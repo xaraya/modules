@@ -17,25 +17,25 @@ function mime_userapi_add_magic( $args )
     if (!isset($subtypeId)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                       'subtypeId','userapi_add_magic','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     if (!isset($magicValue)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                       'magicValue','userapi_add_magic','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     if (!isset($magicOffset)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                       'magicOffset','userapi_add_magic','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     if (!isset($magicLength)) {
         $msg =  xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                       'magicLength','userapi_add_magic','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     // Get database setup

@@ -20,7 +20,7 @@ function mime_userapi_extension_to_mime( $args )
 
     if (!isset($fileName) || empty($fileName)) {
         $msg = xarML('Missing fileName parameter!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return FALSE;
     } 
 

@@ -17,7 +17,7 @@ function mime_userapi_get_extension( $args )
     
     if (!isset($extensionId) && !isset($extensionName)) {
         $msg = xarML('No (usable) parameter to work with (#(1)::#(2)::#(3))', 'mime','userapi','get_extension');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     // Get database setup

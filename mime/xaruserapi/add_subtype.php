@@ -18,13 +18,13 @@ function mime_userapi_add_subtype( $args )
     if (!isset($typeId)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                      'typeId','userapi_add_subtypes','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     if (!isset($subtypeName)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)].', 
                      'subtypeName','userapi_add_subtype','mime');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
     }
     
     // Get database setup

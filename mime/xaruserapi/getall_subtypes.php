@@ -21,7 +21,7 @@ function mime_userapi_getall_subtypes( $args )
         } else {
             $msg = xarML('Supplied parameter [#(1)] for function [#(2)], is not an integer!', 
                          'typeId','mime_userapi_getall_subtypes');
-            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+            xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
             return;
         }
     } else {
