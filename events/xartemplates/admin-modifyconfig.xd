@@ -1,0 +1,166 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from events_admin_menu() -->
+
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br />
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from events_admin_menu() -->
+
+    <tr>
+        <th align="center">#$globaltitle#</th>
+    </tr>
+</table>
+<br />
+
+<!-- the specific template for the current admin function comes here -->
+
+<table width="0" border="0" cellspacing="1" cellpadding="8">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form method="post" action="&xar-modurl-events-admin-updateconfig;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+ 
+<tr><td>#$eventsperpagelabel#</td>
+<td><input type="text" name="eventsperpage" id="eventsperpage" size="3" maxlength="3" value="#$eventsperpagevalue#" /></td></tr>
+
+<tr><td>#$eventcurrencylabel#</td>
+
+<td><select name="eventcurrency" id="eventcurrency">
+				<xar:foreach in="$eventcurrencyoptions" value="$eventcurrencyoption">
+			<xar:if condition="$eventcurrencyoption eq $eventcurrencyvalue">
+						<option value="#$eventcurrencyoption#" selected>#$eventcurrencyoption#</option>
+			<xar:else />
+			                        <option value="#$eventcurrencyoption#">#$eventcurrencyoption#</option>
+		        </xar:if>
+				</xar:foreach>
+				</select> </td></tr>
+
+
+<tr><td>#$ticketsperuserlabel#</td>
+<td><input type="text" name="ticketsperuser" id="ticketsperuser" size="3" maxlength="3" value="#$ticketsperuservalue#" /></td></tr>
+
+<tr><td>#$imageuploadpathlabel#</td>
+<td><input type="text" name="imageuploadpath" id="imageuploadpath" size="32" maxlength="255" value="#$imageuploadpathvalue#" /></td></tr>
+
+<tr><td>#$headerimagesizelabel#</td>
+<td><input type="text" name="headerimagesize" id="headerimagesize" size="15" maxlength="255" value="#$headerimagesizevalue#" /></td></tr>
+
+<tr><td>#$bodyimagesizelabel#</td>
+<td><input type="text" name="bodyimagesize" id="bodyimagesize" size="15" maxlength="255" value="#$bodyimagesizevalue#" /></td></tr>
+
+<tr><td>#$headerimagedimensionslabel#</td>
+<td><input type="text" name="headerimagewidth" id="headerimagewidth" size="4" maxlength="4" value="#$headerimagewidthvalue#" /> x <input type="text" name="headerimageheight" id="headerimageheight" size="4" maxlength="4" value="#$headerimageheightvalue#" /></td></tr>
+
+<tr><td>#$bodyimagedimensionslabel#</td>
+<td><input type="text" name="bodyimagewidth" id="bodyimagewidth" size="4" maxlength="4" value="#$bodyimagewidthvalue#" /> x <input type="text" name="bodyimageheight" id="bodyimageheight" size="4" maxlength="4" value="#$bodyimageheightvalue#" /></td></tr>
+
+<tr><td>#$notificationemaillabel#</td>
+<td><input type="text" name="notificationemail" id="notificationemail" size="32" maxlength="255" value="#$notificationemailvalue#" /></td></tr>
+
+<tr><td>#$sendadminemaillabel#</td>
+<td><input type="checkbox" name="sendadminemail" id="sendadminemail" value="1" #$sendadminemailchecked# /></td></tr>
+
+<tr><td>#$senduseremaillabel#</td>
+<td><input type="checkbox" name="senduseremail" id="senduseremail" value="1" #$senduseremailchecked# /></td></tr>
+
+<tr><td>#$shorturlslabel#</td>
+<td><input type="checkbox" name="shorturls" id="shorturls" value="1" #$shorturlschecked# /></td></tr>
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+</table>
+<br />
+
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from events_admin_menu() -->
+
+    <tr>
+        <th align="center">#$requiredtitle#</th>
+    </tr>
+</table>
+<br />
+
+<table width="0" border="0" cellspacing="1" cellpadding="8">
+<tr><td>#$opeventnamelabel#</td>
+<td><input type="checkbox" name="opeventname" id="bold" value="1" #$opeventnamechecked# /></td></tr>
+
+<tr><td>#$opcompanynamelabel#</td>
+<td><input type="checkbox" name="opcompanyname" id="opcompanyname" value="1" #$opcompanynamechecked# /></td></tr>
+
+<tr><td>#$opspeakernamelabel#</td>
+<td><input type="checkbox" name="opspeakername" id="opspeakername" value="1" #$opspeakernamechecked# /></td></tr>
+
+<tr><td>#$opeventstartdatelabel#</td>
+<td><input type="checkbox" name="opeventstartdate" id="opeventstartdate" value="1" #$opeventstartdatechecked# /></td></tr>
+
+<tr><td>#$opeventenddatelabel#</td>
+<td><input type="checkbox" name="opeventenddate" id="bold" value="1" #$opeventenddatechecked# /></td></tr>
+
+<tr><td>#$opeventstarttimelabel#</td>
+<td><input type="checkbox" name="opeventstarttime" id="opeventstarttime" value="1" #$opeventstarttimechecked# /></td></tr>
+
+<tr><td>#$opeventendtimelabel#</td>
+<td><input type="checkbox" name="opeventendtime" id="opeventendtime" value="1" #$opeventendtimechecked# /></td></tr>
+
+<tr><td>#$opeventregistrationtimelabel#</td>
+<td><input type="checkbox" name="opeventregistrationtime" id="opeventregistrationtime" value="1" #$opeventregistrationtimechecked# /></td></tr>
+
+<tr><td>#$opeventaddresslabel#</td>
+<td><input type="checkbox" name="opeventaddress" id="opeventaddress" value="1" #$opeventaddresschecked# /></td></tr>
+
+<tr><td>#$opeventsummarylabel#</td>
+<td><input type="checkbox" name="opeventsummary" id="opeventsummary" value="1" #$opeventsummarychecked# /></td></tr>
+
+<tr><td>#$opeventheadertextlabel#</td>
+<td><input type="checkbox" name="opeventheadertext" id="opeventheadertext" value="1" #$opeventheadertextchecked# /></td></tr>
+
+<tr><td>#$opeventbodytextlabel#</td>
+<td><input type="checkbox" name="opeventbodytext" id="opeventbodytext" value="1" #$opeventbodytextchecked# /></td></tr>
+
+<tr><td>#$opeventprintticketslabel#</td>
+<td><input type="checkbox" name="opeventprinttickets" id="opeventprinttickets" value="1" #$opeventprintticketschecked# /></td></tr>
+
+<tr><td>#$opeventticketsavailablelabel#</td>
+<td><input type="checkbox" name="opeventticketsavailable" id="opeventticketsavailable" value="1" #$opeventticketsavailablechecked# /></td></tr>
+
+<tr><td>#$opeventcostlabel#</td>
+<td><input type="checkbox" name="opeventcost" id="opeventcost" value="1" #$opeventcostchecked# /></td></tr>
+
+<tr><td>#$opeventtelephonelabel#</td>
+<td><input type="checkbox" name="opeventtelephone" id="opeventtelephone" value="1" #$opeventtelephonechecked# /></td></tr>
+
+<tr><td>#$opeventheaderimagelabel#</td>
+<td><input type="checkbox" name="opeventheaderimage" id="opeventheaderimage" value="1" #$opeventheaderimagechecked# /></td></tr>
+
+<tr><td>#$opeventbodyimagelabel#</td>
+<td><input type="checkbox" name="opeventbodyimage" id="opeventbodyimage" value="1" #$opeventbodyimagechecked# /></td></tr>
+
+    <tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#" /></td></tr>
+</form>
+</table>
+<br />
+
+
+
+ 

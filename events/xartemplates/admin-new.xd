@@ -1,0 +1,275 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from events_admin_menu() -->
+
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+</table>
+<br /><br />
+<!-- Display the status message if set -->
+#$statusmsg#
+
+<!-- the specific template for the current admin function comes here -->
+
+<table width="" border="0" cellspacing="1" cellpadding="8">
+<!--
+    // Start form - note the use of xarModURL() to create the recipient URL of
+    // this form.  All URLs should be generated through xarModURL() to ensure
+    // compatibility with future versions of Xaraya
+-->
+<form enctype="multipart/form-data" method="post" action="&xar-modurl-events-admin-create;">
+<!--
+    // Add an authorisation ID - this adds a hidden field in the form that
+    // contains an authorisation ID.  The authorisation ID is very important in
+    // preventing certain attacks on the website
+-->
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+<tr><td colspan="2">
+#$hooks#
+</td></tr>
+<xar:if condition="xarModGetVar('events', 'opeventname') eq 1">
+<tr><td>#$eventnamelabel#</td>
+<td><input type="text" name="eventname" id="eventname" size="32" value="#$eventname#" maxlength="255" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventnamelabel#</td>
+<td><input type="text" name="eventname" id="eventname" size="32" value="#$eventname#" maxlength="255" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opcompanyname') eq 1">
+<tr><td>#$companynamelabel#</td>
+<td><input type="text" name="companyname" id="companyname" size="32" value="#$companyname#" maxlength="255" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$companynamelabel#</td>
+<td><input type="text" name="companyname" id="companyname" size="32" value="#$companyname#" maxlength="255" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opspeakername') eq 1">
+<tr><td>#$speakernamelabel#</td>
+<td><input type="text" name="speakername" id="speakername" size="32" value="#$speakername#" maxlength="255" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$speakernamelabel#</td>
+<td><input type="text" name="speakername" id="speakername" size="32" value="#$speakername#" maxlength="255" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventstartdate') eq 1">
+<tr><td>#$eventstartdatelabel#</td>
+
+<td><select name="eventstartdatedays" id="eventstartdatedays">
+				<xar:foreach in="$eventstartdatedays" value="$eventstartdatedaysv">
+						<option value="#$eventstartdatedaysv#">#$eventstartdatedaysv#</option>
+				</xar:foreach>
+				</select> <select name="eventstartdatemonths" id="eventstartdatemonths">
+				<xar:foreach in="$eventstartdatemonths" value="$eventstartdatemonthsv">
+						<option value="#$eventstartdatemonthsv#">#$eventstartdatemonthsv#</option>
+				</xar:foreach>
+				</select> <input type="text" name="eventstartdateyear" id="eventstartdateyear" size="4" value="#$eventstartdateyear#" maxlength="4" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventstartdatelabel#</td>
+<td><select name="eventstartdatedays" id="eventstartdatedays">
+				<xar:foreach in="$eventstartdatedays" value="$eventstartdatedaysv">
+						<option value="#$eventstartdatedaysv#">#$eventstartdatedaysv#</option>
+				</xar:foreach>
+				</select> <select name="eventstartdatemonths" id="eventstartdatemonths">
+				<xar:foreach in="$eventstartdatemonths" value="$eventstartdatemonthsv">
+						<option value="#$eventstartdatemonthsv#">#$eventstartdatemonthsv#</option>
+				</xar:foreach>
+				</select> <input type="text" name="eventstartdateyear" id="eventstartdateyear" size="4" value="#$eventstartdateyear#" maxlength="4" /></td></tr>
+
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventenddate') eq 1">
+<tr><td>#$eventenddatelabel#</td>
+
+<td><select name="eventenddatedays" id="eventenddatedays">
+				<xar:foreach in="$eventenddatedays" value="$eventenddatedaysv">
+						<option value="#$eventenddatedaysv#">#$eventenddatedaysv#</option>
+				</xar:foreach>
+				</select> <select name="eventenddatemonths" id="eventenddatemonths">
+				<xar:foreach in="$eventenddatemonths" value="$eventenddatemonthsv">
+						<option value="#$eventenddatemonthsv#">#$eventenddatemonthsv#</option>
+				</xar:foreach>
+				</select> <input type="text" name="eventenddateyear" id="eventenddateyear" size="4" value="#$eventenddateyear#" maxlength="4" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventenddatelabel#</td>
+<td><select name="eventenddatedays" id="eventenddatedays">
+				<xar:foreach in="$eventenddatedays" value="$eventenddatedaysv">
+						<option value="#$eventenddatedaysv#">#$eventenddatedaysv#</option>
+				</xar:foreach>
+				</select> <select name="eventenddatemonths" id="eventenddatemonths">
+				<xar:foreach in="$eventenddatemonths" value="$eventenddatemonthsv">
+						<option value="#$eventenddatemonthsv#">#$eventenddatemonthsv#</option>
+				</xar:foreach>
+				</select> <input type="text" name="eventenddateyear" id="eventenddateyear" size="4" value="#$eventenddateyear#" maxlength="4" /></td></tr>
+
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventstarttime') eq 1">
+<tr><td>#$eventstarttimelabel#</td>
+
+<td><select name="eventstarttimehour" id="eventstarttimehour">
+				<xar:foreach in="$eventstarttimehour" value="$eventstarttimehourv">
+						<option value="#$eventstarttimehourv#">#$eventstarttimehourv#</option>
+				</xar:foreach>
+				</select> <select name="eventstarttimeminute" id="eventstarttimeminute">
+				<xar:foreach in="$eventstarttimeminute" value="$eventstarttimeminutev">
+						<option value="#$eventstarttimeminutev#">#$eventstarttimeminutev#</option>
+				</xar:foreach>
+				</select> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventstarttimelabel#</td>
+<td><select name="eventstarttimehour" id="eventstarttimehour">
+				<xar:foreach in="$eventstarttimehour" value="$eventstarttimehourv">
+						<option value="#$eventstarttimehourv#">#$eventstarttimehourv#</option>
+				</xar:foreach>
+				</select> <select name="eventstarttimeminutes" id="eventstarttimeminutess">
+				<xar:foreach in="$eventstarttimeminute" value="$eventstarttimeminutev">
+						<option value="#$eventstarttimeminutev#">#$eventstarttimeminutev#</option>
+				</xar:foreach>
+				</select> </td></tr>
+
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventendtime') eq 1">
+<tr><td>#$eventendtimelabel#</td>
+
+<td><select name="eventendtimehour" id="eventendtimehour">
+				<xar:foreach in="$eventendtimehour" value="$eventendtimehourv">
+						<option value="#$eventendtimehourv#">#$eventendtimehourv#</option>
+				</xar:foreach>
+				</select> <select name="eventendtimeminute" id="eventendtimeminute">
+				<xar:foreach in="$eventendtimeminute" value="$eventendtimeminutev">
+						<option value="#$eventendtimeminutev#">#$eventendtimeminutev#</option>
+				</xar:foreach>
+				</select> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventendtimelabel#</td>
+<td><select name="eventendtimehour" id="eventendtimehour">
+				<xar:foreach in="$eventendtimehour" value="$eventendtimehourv">
+						<option value="#$eventendtimehourv#">#$eventendtimehourv#</option>
+				</xar:foreach>
+				</select> <select name="eventendtimeminutes" id="eventendtimeminutess">
+				<xar:foreach in="$eventendtimeminute" value="$eventendtimeminutev">
+						<option value="#$eventendtimeminutev#">#$eventendtimeminutev#</option>
+				</xar:foreach>
+				</select> </td></tr>
+
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventregistrationtime') eq 1">
+<tr><td>#$eventregistrationtimelabel#</td>
+
+<td><select name="eventregistrationtimehour" id="eventregistrationtimehour">
+				<xar:foreach in="$eventregistrationtimehour" value="$eventregistrationtimehourv">
+						<option value="#$eventregistrationtimehourv#">#$eventregistrationtimehourv#</option>
+				</xar:foreach>
+				</select> <select name="eventregistrationtimeminute" id="eventregistrationtimeminute">
+				<xar:foreach in="$eventregistrationtimeminute" value="$eventregistrationtimeminutev">
+						<option value="#$eventregistrationtimeminutev#">#$eventregistrationtimeminutev#</option>
+				</xar:foreach>
+				</select> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventregistrationtimelabel#</td>
+<td><select name="eventregistrationtimehour" id="eventregistrationtimehour">
+				<xar:foreach in="$eventregistrationtimehour" value="$eventregistrationtimehourv">
+						<option value="#$eventregistrationtimehourv#">#$eventregistrationtimehourv#</option>
+				</xar:foreach>
+				</select> <select name="eventregistrationtimeminutes" id="eventregistrationtimeminutess">
+				<xar:foreach in="$eventregistrationtimeminute" value="$eventregistrationtimeminutev">
+						<option value="#$eventregistrationtimeminutev#">#$eventregistrationtimeminutev#</option>
+				</xar:foreach>
+				</select> </td></tr>
+
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventaddress') eq 1">
+<tr><td>#$eventaddresslabel#</td>
+<td><input type="text" name="eventaddress" id="eventaddress" size="32" value="#$eventaddress#" maxlength="255" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventaddresslabel#</td>
+<td><input type="text" name="eventaddress" id="eventaddress" size="32" value="#$eventaddress#" maxlength="255" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventsummary') eq 1">
+<tr><td>#$eventsummarylabel#</td>
+<td><textarea name="eventsummary" cols="70" rows="8" value="#$eventsummary#"></textarea> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventaddresslabel#</td>
+<td><textarea name="eventsummary" cols="70" rows="8" value="#$eventsummary#"></textarea></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventheadertext') eq 1">
+<tr><td>#$eventheadertextlabel#</td>
+<td><textarea name="eventheadertext" cols="70" rows="15" value="#$eventheadertext#"></textarea> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventheadertextlabel#</td>
+<td><textarea name="eventheadertext" cols="70" rows="15" value="#$eventheadertext#"></textarea></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventbodytext') eq 1">
+<tr><td>#$eventbodytextlabel#</td>
+<td><textarea name="eventbodytext" cols="70" rows="15" value="#$eventbodytext#"></textarea> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventbodytextlabel#</td>
+<td><textarea name="eventbodytext" cols="70" rows="15" value="#$eventbodytext#"></textarea></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventbodytext') eq 1">
+<tr><td>#$eventprintticketslabel#</td>
+<td><input type="checkbox" name="eventprinttickets" id="eventprinttickets" value="1" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$printticketslabel#</td>
+<td><input type="checkbox" name="eventprinttickets" id="eventprinttickets" value="1" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventticketsavailable') eq 1">
+<tr><td>#$eventticketsavailablelabel#</td>
+<td><input type="text" name="eventticketsavailable" id="eventticketsavailable" size="32" value="#$eventticketsavailable#" maxlength="255" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventticketsavailablelabel#</td>
+<td><input type="text" name="eventticketsavailable" id="eventticketsavailable" size="32" value="#$eventticketsavailable#" maxlength="255" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventcost') eq 1">
+<tr><td>#$eventcostlabel#</td>
+<td><input type="text" name="eventcost" id="eventcost" size="32" value="#$eventcost#" maxlength="255" /> #$eventcostvalue# (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventcostlabel#</td>
+<td><input type="text" name="eventcost" id="eventcost" size="32" value="#$eventcost#" maxlength="255" /> #$eventcostvalue#</td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventtelephone') eq 1">
+<tr><td>#$eventtelephonelabel#</td>
+<td><input type="text" name="eventtelephone" id="eventtelephone" size="32" value="#$eventtelephone#" maxlength="255" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventtelephonelabel#</td>
+<td><input type="text" name="eventtelephone" id="eventtelephone" size="32" value="#$eventtelephone#" maxlength="255" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventheaderimage') eq 1">
+<tr><td>#$eventheaderimagelabel#</td>
+<td><input type="file" name="eventheaderimage" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventheaderimagelabel#</td>
+<td><input type="file" name="eventheaderimage" /></td></tr>
+              </xar:if>
+
+<xar:if condition="xarModGetVar('events', 'opeventbodyimage') eq 1">
+<tr><td>#$eventbodyimagelabel#</td>
+<td><input type="file" name="eventbodyimage" /> (*)</td></tr>
+              <xar:else />
+<tr><td>#$eventbodyimagelabel#</td>
+<td><input type="file" name="eventbodyimage" /></td></tr>
+              </xar:if>
+
+<tr><td colspan="2" align="center">
+    <input type="submit" value="#$addbutton#" /></td></tr>
+</form>
+
+</table>
+<br />
+

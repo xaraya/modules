@@ -1,0 +1,16 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from events_admin_menu() -->
+
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+
+</table>
+<br />
+
+<!-- the specific template for the current admin function comes here -->
+

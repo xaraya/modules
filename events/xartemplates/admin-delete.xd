@@ -1,0 +1,50 @@
+
+<!-- common admin menu for this module - remove link to the current function -->
+
+<table border="0" width="100%" cellspacing="1" cellpadding="8">
+
+    <!-- the variables used in this menu come from events_admin_menu() -->
+
+    <tr>
+        <th align="center">#$menutitle#</th>
+    </tr>
+
+</table>
+<br />
+
+<!-- the specific template for the current admin function comes here -->
+
+
+<div align="center">#$confirmtext#</div><br />
+
+<div align="center">
+<form method="post" action="&xar-modurl-events-admin-delete;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" id="confirm" value="true" />
+    <input type="hidden" name="exid" id="exid" value="#$exid#" />
+
+    <table border="0" width="300">
+        <tr>
+            <td>
+                #$itemid#:
+            </td>
+            <td>
+                #$exid#
+            </td>
+        </tr>
+        <tr>
+            <td>
+                #$namelabel#:
+            </td>
+            <td>
+                #$namevalue#
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                    <input type="submit" value="#$confirmbutton#" align="middle" />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
