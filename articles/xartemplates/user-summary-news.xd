@@ -37,7 +37,7 @@
 					<a href="#$link#"><xar:mlstring>Read More</xar:mlstring></a> 
           <xar:ml>
             <xar:mlstring> ((#1) words) </xar:mlstring>
-            <xar:mlvar>#$word#</xar:mlvar>
+            <xar:mlvar>#$words#</xar:mlvar>
           </xar:mlvar>
 				</xar:if>
 				<xar:if condition="!empty($comments)">
