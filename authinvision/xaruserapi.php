@@ -487,19 +487,19 @@ function authinvision__get_invision_publicuserdata($username)
     if($connect)  //just double-checking the connection.
     {
         // connect to the invision database and get the user data
-		//$inv_db = mysql_select_db($database, $connect);
-		$sql = "SELECT id, name, mgroup, email, joined, avatar, posts, aim_name, icq_number, location, signature, website, yahoo, title, time_offset, interests, hide_email FROM $database.$table WHERE name='$username'";
-		$result = mysql_query($sql,$connect);
-
-		if (!$result) {
-			//incorrect login.
-			return false;
-		} else {
-		    //correct login.  return userdata.
-			while ($row = mysql_fetch_array($result)) {
-				$invision_user_info = $row;
-			}
-        }
+  		//$inv_db = mysql_select_db($database, $connect);
+  		$sql = "SELECT id, name, mgroup, email, joined, avatar, posts, aim_name, icq_number, location, signature, website, yahoo, title, time_offset, interests, hide_email FROM $database.$table WHERE name='$username'";
+  		$result = mysql_query($sql,$connect);
+  
+  		if (!$result || mysql_num_rows($result)==0) {
+  			//incorrect login.
+  			return false;
+  		} else {
+  		    //correct login.  return userdata.
+  			while ($row = mysql_fetch_array($result)) {
+  				$invision_user_info = $row;
+  			}
+      }
     }
 	
 	//reset us back to the xaraya database.	
