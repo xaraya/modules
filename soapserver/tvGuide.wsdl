@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by et8 (et8) -->
+<definitions targetNamespace="http://www.nodetraveller.com">
+	<types>
+		<xsd:schema targetNamespace="http://www.nodetraveller.com">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+			<xsd:complexType name="Listings">
+				<xsd:complexContent>
+					<xsd:restriction base="SOAP-ENC:Array">
+						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Listing[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="Programme">
+				<xsd:all>
+					<xsd:element name="channel" type="xsd:string"/>
+					<xsd:element name="date" type="xsd:string"/>
+					<xsd:element name="title" type="xsd:string"/>
+					<xsd:element name="description" type="xsd:string"/>
+					<xsd:element name="subtitle" type="xsd:string"/>
+					<xsd:element name="infourl" type="xsd:string"/>
+					<xsd:element name="start" type="xsd:string"/>
+					<xsd:element name="end" type="xsd:string"/>
+					<xsd:element name="type" type="xsd:string"/>
+					<xsd:element name="duration" type="xsd:string"/>
+					<xsd:element name="progOrder" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Listing">
+				<xsd:complexContent>
+					<xsd:restriction base="SOAP-ENC:Array">
+						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Programme[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="Image">
+				<xsd:all>
+					<xsd:element name="title" type="xsd:string"/>
+					<xsd:element name="url" type="xsd:string"/>
+					<xsd:element name="link" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Images">
+				<xsd:complexContent>
+					<xsd:restriction base="SOAP-ENC:Array">
+						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Image[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="Channel">
+				<xsd:all>
+					<xsd:element name="channel" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Channels">
+				<xsd:complexContent>
+					<xsd:restriction base="SOAP-ENC:Array">
+						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Channel[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="stringArray">
+				<xsd:complexContent>
+					<xsd:restriction base="SOAP-ENC:Array">
+						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+		</xsd:schema>
+	</types>
+	<message name="getChannelsRequest">
+		<part name="date" type="xsd:string"/>
+	</message>
+	<message name="getChannelsResponse">
+		<part name="return" type="tns:stringArray"/>
+	</message>
+	<message name="getChannelListingsRequest">
+		<part name="channels" type="tns:stringArray"/>
+		<part name="date" type="xsd:string"/>
+		<part name="timeSlots" type="xsd:string"/>
+	</message>
+	<message name="getChannelListingsResponse">
+		<part name="return" type="tns:Listings"/>
+	</message>
+	<portType name="tvGuideServicePortType">
+		<operation name="getChannels">
+			<input message="tns:getChannelsRequest"/>
+			<output message="tns:getChannelsResponse"/>
+		</operation>
+		<operation name="getChannelListings">
+			<input message="tns:getChannelListingsRequest"/>
+			<output message="tns:getChannelListingsResponse"/>
+		</operation>
+	</portType>
+	<binding name="tvGuideServiceBinding" type="tns:tvGuideServicePortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="getChannels">
+			<soap:operation soapAction="http://www.nodetraveller.com" style="rpc"/>
+			<input>
+				<soap:body use="encoded" namespace="http://www.nodetraveller.com/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://www.nodetraveller.com/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="getChannelListings">
+			<soap:operation soapAction="http://www.nodetraveller.com" style="rpc"/>
+			<input>
+				<soap:body use="encoded" namespace="http://www.nodetraveller.com/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://www.nodetraveller.com/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="tvGuideService">
+		<port name="tvGuideServicePort" binding="tns:tvGuideServiceBinding">
+			<soap:address location="http://www.nodetraveller.com/webservices/tvGuide/tvGuideService.php"/>
+		</port>
+	</service>
+</definitions>

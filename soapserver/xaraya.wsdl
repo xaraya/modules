@@ -1,63 +1,92 @@
-<?xml version="1.0"?>
-<!-- TODO: clean this up and make it work "out of the box" for generic SOAP clients -->
-<definitions name="Soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://www.xaraya.com/2003/xaraya.xsd" xmlns:tns="http://www.xaraya.com/2003/xaraya.xsd" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsdl="http://www.xaraya.com/2003/xaraya.xsd">
-	<types>
-		<xsd:schema targetNamespace="http://www.xaraya.com/2003/xaraya.xsd" 
-            xmlns="http://schemas.xmlsoap.org/wsdl/"
-            xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
-            xmlns:tns="http://www.xaraya.com/2003/xaraya.xsd"
-            xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-			<xsd:element minOccurs="1" maxOccurs="unbounded" name="myelement0" ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]" />
-			<xsd:complexType name="wsModAPIFuncRequest">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by et8 (et8) -->
+<wsdl:definitions xmlns:xar="http://www.xaraya.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.xaraya.com/" name="XarayaSoap">
+	<wsdl:types>
+		<xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.xaraya.com/">
+			<xsd:complexType name="wsRequest">
 				<xsd:sequence>
-					<xsd:element name="module" type="xsd:string" />
-					<xsd:element name="func" type="xsd:string" />
-					<xsd:element name="type" type="xsd:string" />
-					<xsd:element name="args" type="xsd:xsdl:myelement0" />
+					<xsd:element name="module" type="xsd:string" minOccurs="1"/>
+					<xsd:element name="func" type="xsd:string" minOccurs="1"/>
+					<xsd:element name="type" type="xsd:string" minOccurs="1"/>
+					<xsd:element name="args" type="xar:argsArray"/>
+					<xsd:element name="username" type="xar:string" minOccurs="1"/>
+					<xsd:element name="password" type="xar:string" minOccurs="1"/>
 				</xsd:sequence>
 			</xsd:complexType>
-			<!--xsd:element minOccurs="1" maxOccurs="unbounded" name="wsModAPIFuncResponse" wsdl:arrayType="xsd:string[]" /-->
-			<xsd:complexType name="wsModAPIFuncResponse">
+			<xsd:complexType name="argsArray">
 				<xsd:complexContent>
 					<xsd:restriction base="soapenc:Array">
-						<xsd:element ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
 					</xsd:restriction>
 				</xsd:complexContent>
 			</xsd:complexType>
+			<xsd:complexType name="wsResponse">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xar:item[,]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="item">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[,]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="simpleResponse">
+				<xsd:all>
+					<xsd:element name="response" type="xsd:string"/>
+				</xsd:all>
+			</xsd:complexType>
 		</xsd:schema>
-	</types>
-	<message name="wsModAPIFuncRequest">
-		<part name="wsModAPIFuncRequestSoapMsg" element="xsdl:wsModAPIFuncRequest"/>
+	</wsdl:types>
+	<message name="wsModApiFuncRequest">
+		<part name="wsModApiFuncRequest" type="xar:wsRequest"/>
 	</message>
-	<message name="wsModAPIFuncResponse">
-		<part name="wsModAPIFuncResponseSoapMsg" element="xsdl:wsModAPIFuncResponse"/>
+	<message name="wsModApiFuncSimpleRequest">
+		<part name="wsModApiFuncSimpleRequest" type="xar:wsRequest"/>
 	</message>
-	<portType name="XarayaSoapPortType">
+	<message name="wsModApiFuncResponse">
+		<part name="wsModApiFuncResponse" type="xar:wsResponse"/>
+	</message>
+	<message name="wsModApiFuncSimpleResponse">
+		<part name="wsModApiFuncSimpleResponse" type="xar:simpleResponse"/>
+	</message>
+	<portType name="wsXarSoapPort">
 		<operation name="wsModAPIFunc">
-			<documentation>Generic Xaraya SOAP Interface</documentation>
-			<input message="tns:wsModAPIFuncRequest" />
-			<output message="tns:wsModAPIFuncResponse" />
+			<input message="xar:wsModApiFuncRequest"/>
+			<output message="xar:wsModApiFuncResponse"/>
+		</operation>
+		<operation name="wsModAPISimpleFunc">
+			<input message="xar:wsModApiFuncSimpleRequest"/>
+			<output message="xar:wsModApiFuncSimpleResponse"/>
 		</operation>
 	</portType>
-	<binding name="XarayaSoapBinding" type="tns:XarayaSoapPortType">
-		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-			<operation name="wsModAPIFunc">
-				<soap:operation style="document" soapAction=""/>
-				<input>
-					<soap:body use="literal"/>
-				</input>
-				<output>
-					<soap:body use="literal"/>
-				</output>
-			</operation>
+	<binding name="wsXarSoapBinding" type="xar:wsXarSoapPort">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="wsModAPIFunc">
+			<soap:operation soapAction="http://127.0.0.1/xaraya/ws.php"/>
+			<input>
+				<soap:body use="encoded"/>
+			</input>
+			<output>
+				<soap:body use="encoded"/>
+			</output>
+		</operation>
+		<operation name="wsModAPISimpleFunc">
+			<soap:operation soapAction="http://127.0.0.1/xaraya/ws.php"/>
+			<input>
+				<soap:body use="encoded"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
 	</binding>
-	<service name="Soap">
-		<documentation>
-			Generic Xaraya SOAP Service
-		</documentation>
-		<port name="XarayaSoapPort" binding="tns:XarayaSoapBinding">
-			<soap:address location="http://brumdall2m.bru.fsc.net/xaraya/ws.php?type=soap"/>
+	<service name="XarayaSoap">
+		<port name="wsXarSoapPort" binding="xar:wsXarSoapBinding">
+			<soap:address location="http://127.0.0.1/xaraya/ws.php?type=soap"/>
 		</port>
 	</service>
-</definitions>
+</wsdl:definitions>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by et8 (et8) -->
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://127.0.0.1/xaraya/" xmlns:tns="http://127.0.0.1/xaraya/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsdl="http://127.0.0.1/xaraya/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+	<wsdl:types>
+		<xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://127.0.0.1/xaraya/">
+			<xsd:element minOccurs="1" maxOccurs="unbounded" name="myelement0" ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+			<xsd:complexType name="wsModAPIFuncRequest">
+				<xsd:sequence>
+					<xsd:element name="module" type="xsd:string"/>
+					<xsd:element name="func" type="xsd:string"/>
+					<xsd:element name="type" type="xsd:string"/>
+					<xsd:element name="args" minOccurs="1" maxOccurs="unbounded" ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="wsModAPIFuncResponse">
+				<xsd:complexContent>
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:string[]"/>
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<message name="wsModAPIFuncRequest">
+		<part name="wsModAPIFuncRequestSoapMsg" type="tns:wsModAPIFuncRequest"/>
+	</message>
+	<message name="wsModAPIFuncResponse">
+		<part name="wsModAPIFuncResponseSoapMsg" type="tns:wsModAPIFuncResponse"/>
+	</message>
+	<portType name="XarayaSoapPortType">
+		<operation name="wsModAPIFunc">
+			<documentation>Generic Xaraya SOAP Interface</documentation>
+			<input message="tns:wsModAPIFuncRequest"/>
+			<output message="tns:wsModAPIFuncResponse"/>
+		</operation>
+	</portType>
+	<binding name="XarayaSoapBinding" type="tns:XarayaSoapPortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="wsModAPIFunc">
+			<soap:operation style="http://127.0.0.1/xaraya/ws.php" soapAction="rpc"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="XarayaSoap">
+		<documentation>
+ 			Generic Xaraya SOAP Service
+ 		</documentation>
+		<port name="XarayaSoapPort" binding="tns:XarayaSoapBinding">
+			<soap:address location="http://127.0.0.1/xaraya/ws.php?type=soap"/>
+		</port>
+	</service>
+</definitions>

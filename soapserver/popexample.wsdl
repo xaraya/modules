@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by et8 (et8) -->
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:si="http://soapinterop.org/xsd" xmlns:tns="http://www.cosme.nu/services/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.cosme.nu/services/">
+	<message name="countmessagesRequest">
+		<part name="popserver" type="xsd:string"/>
+		<part name="popserverport" type="xsd:string"/>
+		<part name="login" type="xsd:string"/>
+		<part name="password" type="xsd:string"/>
+	</message>
+	<message name="countmessagesResponse">
+		<part name="return" type="xsd:string"/>
+	</message>
+	<message name="viewmessagesRequest">
+		<part name="popserver" type="xsd:string"/>
+		<part name="popserverport" type="xsd:string"/>
+		<part name="login" type="xsd:string"/>
+		<part name="password" type="xsd:string"/>
+	</message>
+	<message name="viewmessagesResponse">
+		<part name="return" type="xsd:string"/>
+	</message>
+	<portType name="popPortType">
+		<operation name="countmessages">
+			<input message="tns:countmessagesRequest"/>
+			<output message="tns:countmessagesResponse"/>
+		</operation>
+		<operation name="viewmessages">
+			<input message="tns:viewmessagesRequest"/>
+			<output message="tns:viewmessagesResponse"/>
+		</operation>
+	</portType>
+	<binding name="popBinding" type="tns:popPortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="countmessages">
+			<soap:operation soapAction="http://www.cosme.nu/services/pop.php" style="rpc"/>
+			<input>
+				<soap:body use="encoded" namespace="http://www.cosme.nu/services/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://www.cosme.nu/services/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+		<operation name="viewmessages">
+			<soap:operation soapAction="http://www.cosme.nu/services/pop.php" style="rpc"/>
+			<input>
+				<soap:body use="encoded" namespace="http://www.cosme.nu/services/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="http://www.cosme.nu/services/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="pop">
+		<port name="popPort" binding="tns:popBinding">
+			<soap:address location="http://www.cosme.nu/services/pop.php"/>
+		</port>
+	</service>
+</definitions>
