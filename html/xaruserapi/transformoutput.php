@@ -67,7 +67,7 @@ function html_userapitransformoutput($text)
     $p = "<p>";
     $text = str_replace(chr(13), "</p>$p" , $text);
     $text = $p . $text . "</p>\n";
-    $text = preg_replace('/<p></p>/', '', $text);
+    $text = preg_replace('"/<p><\/p>/s"', '', $text);
     return $text;
 }
 
