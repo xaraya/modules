@@ -13,7 +13,7 @@
   <h2><xar:mlstring>Multi language configuration</xar:mlstring></h2>
 
   <div style="margin: auto;">
-    <form method="post" action="&xar-modurl-translations-admin-updateconfig;" enctype="application/x-www-form-urlencoded" />
+    <form method="post" action="&xar-modurl-translations-admin-updateconfig;" enctype="application/x-www-form-urlencoded" >
     <input type="hidden" name="authid" value="&xar-var-authid;" />
 
     <h4><xar:mlstring>Mode of operation</xar:mlstring></h4>
