@@ -7,6 +7,7 @@
  * @param $args['eid'] =Integer= do not output this category and its sibblings (default none)
  * @param $args['maximum_depth'] =Integer= return categories with the given depth or less
  * @param $args['minimum_depth'] =Integer= return categories with the given depth or more
+ * @param $args['indexby'] =string= specify the index type for the result array (default 'default')
  *  They only change the output IF 'cid' is set:
  *    @param $args['getchildren'] =Boolean= get children of category (default false)
  *    @param $args['getparents'] =Boolean= get parents of category (default false)
@@ -31,6 +32,8 @@ function categories_userapi_getcat($args)
     if (!isset($return_itself)) {
         $return_itself = false;
     }
+
+    if (empty($indexby)) {$indexby = 'default';}
 
     if (!isset($getchildren)) {
         $getchildren = false;
@@ -197,30 +200,23 @@ function categories_userapi_getcat($args)
         if (!xarSecurityCheck('ViewCategories',0,'Category',"$name:$cid")) {
              continue;
         }
-/*
-        // FIXME: Move max/min depth into the SQL
-        if ((
-             (!isset($minimum_depth)) ||
-             ($indentation >= $minimum_depth)
-            ) && (
-              (!isset($maximum_depth)) ||
-             ($indentation <= $maximum_depth)
-           ))
-        {
-*/
-            $categories[] = Array(
-                                  'indentation' => $indentation,
-                                  'cid'         => $cid,
-                                  'name'        => $name,
-                                  'description' => $description,
-                                  'image'       => $image,
-                                  'parent'      => $parent,
-                                  'left'        => $left,
-                                  'right'       => $right
-                               );
-/*
+
+        if ($indexby == 'cid') {
+            $index = $cid;
+        } else {
+            $index = $result->currentrow() - 1;
         }
-*/
+
+        $categories[$index] = Array(
+            'indentation' => $indentation,
+            'cid'         => $cid,
+            'name'        => $name,
+            'description' => $description,
+            'image'       => $image,
+            'parent'      => $parent,
+            'left'        => $left,
+            'right'       => $right
+        );
     }
     $result->Close();
 
