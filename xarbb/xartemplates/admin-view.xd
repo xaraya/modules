@@ -1,36 +1,43 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html 
+</xar:comment>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            xarbb Module
+        </xar:mlstring>
+    </span>
+</div>
 <!-- common admin menu for this module - remove link to the current function -->
 <div class="xar-mod-body">
-<h2><xar:mlstring>View Forums</xar:mlstring></h2>
-
-<xar:if condition="!$isforums">
-	<div style="width:98%; font-weight:bold; text-align:center;">
-		<p>
-			<xar:mlstring>
-				There are no forums currently registered.
-			</xar:mlstring>
-		</p>
-		<a href="#$addforum#">
-			<xar:mlstring>
-				Please click here to add a forum.
-			</xar:mlstring>
-		</a>
-	</div>
-<xar:else />
-
-<xar:template file="navtabs" type="module" />
-
-<div style="width:98%; font-weight:bold; margin-top:20px;">
-	<p>
-		<a href="#$addforum#">
-			<xar:mlstring>
-				Add a forum
-			</xar:mlstring>
-		</a>
-	</p>
-</div>
-
-<br />
-</xar:if>
+    <h2>
+        <xar:mlstring>
+            View Forums
+        </xar:mlstring>
+    </h2>
+    <xar:if condition="!$isforums">
+        <div style="width:98%; font-weight:bold; text-align:center;">
+            <p>
+                <xar:mlstring>
+                    There are no forums currently registered. 
+                </xar:mlstring>
+            </p>
+            <a href="#$addforum#">
+                <xar:mlstring>
+                    Please click here to add a forum. 
+                </xar:mlstring>
+            </a>
+        </div>
+        <xar:else />
+        <xar:template file="navtabs" type="module" />
+        <div style="width:98%; font-weight:bold; margin-top:20px;">
+            <p>
+                <a href="#$addforum#">
+                    <xar:mlstring>
+                        Add a forum 
+                    </xar:mlstring>
+                </a>
+            </p>
+        </div>
+    </xar:if>
 </div>

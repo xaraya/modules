@@ -1,194 +1,305 @@
-<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:comment>
+    License: GPL http://www.gnu.org/copyleft/gpl.html 
+</xar:comment>
 <script type="text/javascript" src="modules/base/xartemplates/functions.js"></script>
-<script language="JavaScript">
+<script type="text/javascript" >
 <!--
-	// Enter name of mandatory fields
-	var fieldRequired = Array("fname", "fdesc");
-	// Enter field description to appear in the dialog box
-	var fieldDescription = Array("Forum Name", "Forum Description");
+    // Enter name of mandatory fields
+    var fieldRequired = Array("fname", "fdesc");
+    // Enter field description to appear in the dialog box
+    var fieldDescription = Array("Forum Name", "Forum Description");
 //-->
 </script>
-<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarbb Module</xar:mlstring></span></div>
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>
+            xarbb Module
+        </xar:mlstring>
+    </span>
+</div>
 <!-- common admin menu for this module - remove link to the current function -->
-
 <xar:template file="navtabs" type="module" />
 <xar:template file="navtabs-action" type="module" />
-
-
-	<h2><xar:mlstring>Modify Existing Forum</xar:mlstring></h2>
-    <div style="clear: both; padding-top: 10px; width:98%;">
-	<xar:if condition="!empty($warning)">
-		<p>#$warning#</p>
-	</xar:if>
-	<form method="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
-
-    <div style="clear: both; padding-top: 10px; width:98%;">
-	<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-	<input type="hidden" name="fid" id="fid" value="#$fid#" />
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The name of the forum that you are creating.')#"><label for="fname"><xar:mlstring>Forum Name</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" />
-	</span>
-	</div>
-
-	<div style="clear: both; padding-top: 10px;width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The description of the forum that is being created.')#"><label for="fname"><xar:mlstring>Forum Description</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<textarea name="fdesc" rows="10" cols="50">#$fdesc#</textarea>
-	</span>
-	</div>
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The status of the forum that is being created.')#"><label for="fstatus"><xar:mlstring>Forum Status</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<select name="fstatus" id="fstatus" size="1">
-			<xar:if condition="$fstatus eq 0">
-				<option value="0" selected="selected"><xar:mlstring>Ready</xar:mlstring></option>
-				<option value="1"><xar:mlstring>Locked</xar:mlstring></option>
-			<xar:else />
-				<option value="0"><xar:mlstring>Ready</xar:mlstring></option>
-				<option value="1" selected="selected"><xar:mlstring>Locked</xar:mlstring></option>
-			</xar:if>
-		</select>
-	</span>
-	</div>
-	#$hooks#
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Threshhold for individual topics to be considered hot.')#"><label for="hottopic"><xar:mlstring>Hot Topic</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
-	</span>
-	</div>
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The number of topics to show per page in this forum.')#"><label for="topicsperpage"><xar:mlstring>Topics per page</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
-	</span>
-	</div>
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The number of topics to show per page in this forum.')#"><label for="postsperpage"><xar:mlstring>Posts per page</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
-	</span>
-	</div>
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Allow HTML in this forum.')#"><label for="allowhtml"><xar:mlstring>Allow HTML</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-	<xar:if condition="xarModIsAvailable('html')">
-        <xar:if condition="$allowhtml">
-		   <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
-		<xar:else />
-		   <input type="checkbox" name="allowhtml" id="allowhtml" />
-		</xar:if>
-    <xar:else />
-		<span style="float: right; width: 78%; text-align: left;">
-		<em><xar:mlstring>HTML Module is not available.</xar:mlstring></em>
-		</span>
+<h2>
+    <xar:mlstring>
+        Modify Existing Forum
+    </xar:mlstring>
+</h2>
+<div style="float:left; padding-top: 10px; width:100%;">
+    <xar:if condition="!empty($warning)">
+        <p>
+            #$warning#
+        </p>
     </xar:if>
-	</span>
-	</div> 
-
-
-		<div style="clear: both; padding-top: 10px;">
-		<span style="float: left; width: 20%; text-align: right;">
-			<span class="help" title="#xarML('Allow BBCode in this forum.')#"><label for="allowbbcode"><xar:mlstring>Allow BBCode</xar:mlstring></label>:</span>
-		</span>
-		<span style="float: right; width: 78%; text-align: left;">
-            <xar:if condition="xarModIsAvailable('bbcode')">
-                <xar:if condition="$allowbbcode">
-		            <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
-                <xar:else />
-                    <input type="checkbox" name="allowbbcode" id="allowbbcode"  />
+    <form method="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="fid" id="fid" value="#$fid#" />
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('The name of the forum that you are creating.')#">
+                    <label for="fname">
+                        <xar:mlstring>
+                            Forum Name
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <input type="text" name="fname" id="fname" value="#$fname#" size="32" maxlength="100" />
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px;width:98%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('The description of the forum that is being created.')#">
+                    <label for="fname">
+                        <xar:mlstring>
+                            Forum Description
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <textarea name="fdesc" rows="10" cols="50">
+                    #$fdesc#
+                </textarea>
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('The status of the forum that is being created.')#">
+                    <label for="fstatus">
+                        <xar:mlstring>
+                            Forum Status
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <select name="fstatus" id="fstatus" size="1">
+                    <xar:if condition="$fstatus eq 0">
+                        <option value="0" selected="selected">
+                            <xar:mlstring>
+                                Ready
+                            </xar:mlstring>
+                        </option>
+                        <option value="1">
+                            <xar:mlstring>
+                                Locked
+                            </xar:mlstring>
+                        </option>
+                        <xar:else />
+                        <option value="0">
+                            <xar:mlstring>
+                                Ready
+                            </xar:mlstring>
+                        </option>
+                        <option value="1" selected="selected">
+                            <xar:mlstring>
+                                Locked
+                            </xar:mlstring>
+                        </option>
+                    </xar:if>
+                </select>
+            </span>
+        </div>
+        #$hooks# 
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Threshhold for individual topics to be considered hot.')#">
+                    <label for="hottopic">
+                        <xar:mlstring>
+                            Hot Topic
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <input type="text" name="hottopic" id="hottopic" value="#$hottopic#" size="2" maxlength="4" />
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('The number of topics to show per page in this forum.')#">
+                    <label for="topicsperpage">
+                        <xar:mlstring>
+                            Topics per page
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <input type="text" name="topicsperpage" id="topicsperpage" value="#$topicsperpage#" size="2" maxlength="4" />
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('The number of topics to show per page in this forum.')#">
+                    <label for="postsperpage">
+                        <xar:mlstring>
+                            Posts per page
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <input type="text" name="postsperpage" id="postsperpage" value="#$postsperpage#" size="2" maxlength="4" />
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Allow HTML in this forum.')#">
+                    <label for="allowhtml">
+                        <xar:mlstring>
+                            Allow HTML
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <xar:if condition="xarModIsAvailable('html')">
+                    <xar:if condition="$allowhtml">
+                        <input type="checkbox" name="allowhtml" id="allowhtml" checked="checked" />
+                        <xar:else />
+                        <input type="checkbox" name="allowhtml" id="allowhtml" />
+                    </xar:if>
+                    <xar:else />
+                    <span style="float: right; width: 78%; text-align: left;">
+                        <em>
+                            <xar:mlstring>
+                                HTML Module is not available.
+                            </xar:mlstring>
+                        </em>
+                    </span>
                 </xar:if>
-            <xar:else />
- 		        <span style="float: right; width: 78%; text-align: left;">
-		        <em><xar:mlstring>BBCode Module is not available.</xar:mlstring></em>
-		        </span>
-            </xar:if>
-		</span>
-		</div>
-
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Show category trails')#"><label for="showcats"><xar:mlstring>Show Categories</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<xar:if condition="$showcats">
-		   <input type="checkbox" name="showcats" id="showcats" checked="checked" />
-		<xar:else />
-		   <input type="checkbox" name="showcats" id="showcats" />
-		</xar:if>
-	</span>
-	</div>
-
-	<xar:if condition="xarModIsAvailable('nntp')">
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('Link this forum to nntp.')#"><label for="linknntp"><xar:mlstring>Link to NNTP</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<xar:if condition="$linknntp">
-		   <input type="checkbox" name="linknntp" id="linknntp" checked="checked" />
-		<xar:else />
-		   <input type="checkbox" name="linknntp" id="linknntp" />
-		</xar:if>
-	</span>
-	</div>
-
-	</xar:if>
-
-<xar:if condition="$linknntp">
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('NNTP Server to link')#"><label for="nntpserver"><xar:mlstring>NNTP Server</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="nntpserver" id="nntpserver" value="#$nntpserver#" size="25" maxlength="255" />
-	</span>
-	</div>
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The port of the NNTP server that you are linking')#"><label for="nntpport"><xar:mlstring>NNTP Port</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="nntpport" id="nntpport" value="#$nntpport#" size="3" maxlength="4" />
-	</span>
-	</div>
-
-	<div style="clear: both; padding-top: 10px; width:98%;">
-	<span style="float: left; width: 20%; text-align: right;">
-		<span class="help" title="#xarML('The group on the server you are linking')#"><label for="nntpgroup"><xar:mlstring>NNTP Group</xar:mlstring></label>:</span>
-	</span>
-	<span style="float: right; width: 78%; text-align: left;">
-		<input type="text" name="nntpgroup" id="nntpgroup" value="#$nntpgroup#" size="25" maxlength="255" />
-	</span>
-	</div>
-</xar:if>
-	<div style="clear: both; padding-top: 10px; width:98%;">
-		<span style="float: left; width: 30%; text-align: right;">
-			<input type="submit" value="#$createlabel#" />
-		</span>
-	</div>
-</form>
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Allow BBCode in this forum.')#">
+                    <label for="allowbbcode">
+                        <xar:mlstring>
+                            Allow BBCode
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <xar:if condition="xarModIsAvailable('bbcode')">
+                    <xar:if condition="$allowbbcode">
+                        <input type="checkbox" name="allowbbcode" id="allowbbcode" checked="checked" />
+                        <xar:else />
+                        <input type="checkbox" name="allowbbcode" id="allowbbcode" />
+                    </xar:if>
+                    <xar:else />
+                    <span style="float: right; width: 78%; text-align: left;">
+                        <em>
+                            <xar:mlstring>
+                                BBCode Module is not available.
+                            </xar:mlstring>
+                        </em>
+                    </span>
+                </xar:if>
+            </span>
+        </div>
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <span style="float: left; width: 20%; text-align: right;">
+                <span class="help" title="#xarML('Show category trails')#">
+                    <label for="showcats">
+                        <xar:mlstring>
+                            Show Categories
+                        </xar:mlstring>
+                    </label>
+                    :
+                </span>
+            </span>
+            <span style="float: right; width: 78%; text-align: left;">
+                <xar:if condition="$showcats">
+                    <input type="checkbox" name="showcats" id="showcats" checked="checked" />
+                    <xar:else />
+                    <input type="checkbox" name="showcats" id="showcats" />
+                </xar:if>
+            </span>
+        </div>
+        <xar:if condition="xarModIsAvailable('nntp')">
+            <div style="clear: both; padding-top: 10px; width:98%;">
+                <span style="float: left; width: 20%; text-align: right;">
+                    <span class="help" title="#xarML('Link this forum to nntp.')#">
+                        <label for="linknntp">
+                            <xar:mlstring>
+                                Link to NNTP
+                            </xar:mlstring>
+                        </label>
+                        :
+                    </span>
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                    <xar:if condition="$linknntp">
+                        <input type="checkbox" name="linknntp" id="linknntp" checked="checked" />
+                        <xar:else />
+                        <input type="checkbox" name="linknntp" id="linknntp" />
+                    </xar:if>
+                </span>
+            </div>
+        </xar:if>
+        <xar:if condition="$linknntp">
+            <div style="clear: both; padding-top: 10px; width:98%;">
+                <span style="float: left; width: 20%; text-align: right;">
+                    <span class="help" title="#xarML('NNTP Server to link')#">
+                        <label for="nntpserver">
+                            <xar:mlstring>
+                                NNTP Server
+                            </xar:mlstring>
+                        </label>
+                        :
+                    </span>
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                    <input type="text" name="nntpserver" id="nntpserver" value="#$nntpserver#" size="25" maxlength="255" />
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px; width:98%;">
+                <span style="float: left; width: 20%; text-align: right;">
+                    <span class="help" title="#xarML('The port of the NNTP server that you are linking')#">
+                        <label for="nntpport">
+                            <xar:mlstring>
+                                NNTP Port
+                            </xar:mlstring>
+                        </label>
+                        :
+                    </span>
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                    <input type="text" name="nntpport" id="nntpport" value="#$nntpport#" size="3" maxlength="4" />
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px; width:98%;">
+                <span style="float: left; width: 20%; text-align: right;">
+                    <span class="help" title="#xarML('The group on the server you are linking')#">
+                        <label for="nntpgroup">
+                            <xar:mlstring>
+                                NNTP Group
+                            </xar:mlstring>
+                        </label>
+                        :
+                    </span>
+                </span>
+                <span style="float: right; width: 78%; text-align: left;">
+                    <input type="text" name="nntpgroup" id="nntpgroup" value="#$nntpgroup#" size="25" maxlength="255" />
+                </span>
+            </div>
+        </xar:if>
+        <div style="clear: both; padding-top: 10px; width:98%;">
+            <span style="float: left; width: 30%; text-align: right;">
+                <input type="submit" value="#$createlabel#" />
+            </span>
+        </div>
+    </form>
 </div>
