@@ -36,3 +36,7 @@
   </xar:if>
 </xar:loop>
 </table>
+<!-- add the pager here -->
+<xar:if condition="!empty($pager)">
+#$pager#
+</xar:if>

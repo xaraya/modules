@@ -19,9 +19,9 @@
 */
 function xarbb_admin_view()
 {
-
     // Get parameters from whatever input we need
-    $startnum = xarVarCleanFromInput('startnum');
+    if (!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
+
     $data['items'] = array();
 
     // Specify some labels for display
@@ -31,13 +31,15 @@ function xarbb_admin_view()
     // Security Check
     if(!xarSecurityCheck('EditxarBB',1,'Forum')) return;
 
+    $forumsperpage=xarModGetVar('xarbb','forumsperpage');
+
     // The user API function is called
     $links = xarModAPIFunc('xarbb',
                            'user',
                            'getallforums',
                            array('startnum' => $startnum,
                                  'numitems' => xarModGetVar('xarbb',
-                                                            'itemsperpage')));
+                                                            'forumsperpage')));
 
     if (empty($links)) {
         $msg = xarML('There are no Forums registered.  Please add a forum.');
@@ -45,8 +47,10 @@ function xarbb_admin_view()
         return;
     }
 
+    $totlinks=count($links);
+    
     // Check individual permissions for Edit / Delete
-    for ($i = 0; $i < count($links); $i++) {
+    for ($i = 0; $i < $totlinks; $i++) {
         $link = $links[$i];
         if (xarSecurityCheck('EditxarBB', 0)) {
             $links[$i]['editurl'] = xarModURL('xarbb',
@@ -72,7 +76,10 @@ function xarbb_admin_view()
     $data['items'] = $links;
 
     // TODO : add a pager (once it exists in BL)
-    $data['pager'] = '';
+    $data['pager'] = xarTplGetPager($startnum,
+        xarModAPIFunc('xarbb', 'user', 'countforums'),
+        xarModURL('xarbb', 'admin', 'view', array('startnum' => '%%')),
+        xarModGetVar('xarbb', 'forumsperpage'));
 
     // Return the template variables defined in this function
     return $data;

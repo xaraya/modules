@@ -136,7 +136,8 @@ function xarbb_init()
     // Initialisation successful
 
     // do this stuff only once
-    if (xarModGetVar('xarbb', 'hottopic')) return true;
+    // <jojodee> What is this? I'm commenting out for now.
+    // if (xarModGetVar('xarbb', 'hottopic')) return true;
 
     // Enable categories hooks for xarbb forums (= item type 1)
     xarModAPIFunc('modules','admin','enablehooks', array('callerModName'    => 'xarbb',
@@ -168,6 +169,7 @@ function xarbb_init()
     xarModSetVar('xarbb', 'hottopic', 10);
     xarModSetVar('xarbb', 'redhottopic', 20);
     xarModSetVar('xarbb', 'topicsperpage', 50);
+    xarModSetVar('xarbb', 'forumsperpage', 20);    
     // If your module supports short URLs, the website administrator should
     // be able to turn it on or off in your module administration
     xarModSetVar('xarbb', 'SupportShortURLs', 0);
@@ -238,6 +240,8 @@ function xarbb_upgrade($oldversion)
             return xarbb_upgrade('1.0.0');
             break;
         case '1.0.0':
+        // New modvars
+            xarModSetVar('xarbb', 'forumsperpage', 20);
        // Get database information
             list($dbconn) = xarDBGetConn();
             $xartable = xarDBGetTables();
@@ -297,7 +301,11 @@ function xarbb_delete()
 
     // Delete any module variables
     xarModDelVar('xarbb', 'SupportShortURLs');
-
+    xarModDelVar('xarbb', 'hottopic');
+    xarModDelVar('xarbb', 'redhottopic');
+    xarModDelVar('xarbb', 'topicsperpage');
+    xarModDelVar('xarbb', 'forumsperpage');
+    
     // Remove Masks and Instances
     xarRemoveMasks('xarbb');
     xarRemoveInstances('xarbb');

@@ -48,6 +48,7 @@ function xarbb_admin_modifyconfig()
             if (!xarVarFetch('hottopic','int:1:',$hotTopic,10,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('redhottopic','int:1:',$redhotTopic,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage,20,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('forumsperpage','int:1:',$forumsperpage,20,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('supportshorturls','checkbox', $supportshorturls,false,XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
@@ -57,6 +58,7 @@ function xarbb_admin_modifyconfig()
             xarModSetVar('xarbb', 'hottopic', $hotTopic);
             xarModSetVar('xarbb', 'redhottopic', $redhotTopic);
             xarModSetVar('xarbb', 'topicsperpage', $topicsperpage);
+            xarModSetVar('xarbb', 'forumsperpage', $forumsperpage);
             xarModSetVar('xarbb', 'SupportShortURLs', $supportshorturls);
             xarModCallHooks('module','updateconfig','xarbb',
                            array('module' => 'xarbb',
