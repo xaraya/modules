@@ -34,12 +34,12 @@ function courses_admin_new($args)
     // assumptions that will not hold in future versions of Xaraya
     if (!xarVarFetch('number', 'str:1:', $number, $number,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name, $name, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('hours', 'str:1:', $hours, $hours, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('ceu', 'str:1:', $ceu, $ceu, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('startdate', 'str:1:', $startdate, $startdate, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('enddate', 'str:1:', $enddate, $enddate, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, $shortdesc, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('longdesc', 'str:1:', $longdesc, $longdesc, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours', 'str:1:', $hours, $hours, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ceu', 'str:1:', $ceu, $ceu, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate', 'str:1:', $startdate, $startdate, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'str:1:', $enddate, $enddate, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, $shortdesc, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('longdesc', 'str:1:', $longdesc, $longdesc, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('invalid', 'str:1:', $invalid, $invalid, XARVAR_NOT_REQUIRED)) return;
     // Initialise the $data variable that will hold the data to be used in
     // the blocklayout template, and get the common menu configuration - it
@@ -55,12 +55,12 @@ function courses_admin_new($args)
     // Specify some labels for display
     $data['namelabel'] = xarVarPrepForDisplay(xarML('Course Name:'));
     $data['numberlabel'] = xarVarPrepForDisplay(xarML('Course Number:'));
-	$data['hourslabel'] = xarVarPrepForDisplay(xarML('Course Hours:'));
-	$data['ceulabel'] = xarVarPrepForDisplay(xarML('Course Credit Hours:'));
-	$data['startdatelabel'] = xarVarPrepForDisplay(xarML('Course Start Date:'));
-	$data['enddatelabel'] = xarVarPrepForDisplay(xarML('Course End Date:'));
-	$data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description:'));
-	$data['longdesclabel'] = xarVarPrepForDisplay(xarML('Course Description:'));
+    $data['hourslabel'] = xarVarPrepForDisplay(xarML('Course Hours:'));
+    $data['ceulabel'] = xarVarPrepForDisplay(xarML('Course Credit Hours:'));
+    $data['startdatelabel'] = xarVarPrepForDisplay(xarML('Course Start Date:'));
+    $data['enddatelabel'] = xarVarPrepForDisplay(xarML('Course End Date:'));
+    $data['shortdesclabel'] = xarVarPrepForDisplay(xarML('Short Course Description:'));
+    $data['longdesclabel'] = xarVarPrepForDisplay(xarML('Course Description:'));
     $data['addbutton'] = xarVarPrepForDisplay(xarML('Add Course'));
 
     $item = array();
@@ -88,43 +88,43 @@ function courses_admin_new($args)
         $data['number'] = $number;
     }
 
-	 if (empty($hours)) {
+     if (empty($hours)) {
         $data['hours'] = '';
     } else {
         $data['hours'] = $hours;
     }
 
-	 if (empty($ceu)) {
+     if (empty($ceu)) {
         $data['ceu'] = '';
     } else {
         $data['ceu'] = $ceu;
     }
 
-	 if (empty($startdate)) {
+     if (empty($startdate)) {
         $data['startdate'] = '';
     } else {
         $data['startdate'] = $startdate;
     }
 
-	 if (empty($enddate)) {
+     if (empty($enddate)) {
         $data['enddate'] = '';
     } else {
         $data['enddate'] = $enddate;
     }
 
-	 if (empty($shortdesc)) {
+     if (empty($shortdesc)) {
         $data['shortdesc'] = '';
     } else {
         $data['shortdesc'] = $shortdesc;
     }
 
-	if (empty($longdesc)) {
+    if (empty($longdesc)) {
         $data['longdesc'] = '';
     } else {
         $data['longdesc'] = $longdesc;
     }
 
-	// Return the template variables defined in this function
+    // Return the template variables defined in this function
     return $data;
 }
 

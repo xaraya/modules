@@ -23,7 +23,7 @@ function courses_user_view()
     if (!xarSecurityCheck('ViewCourses', 0)) {
         return $data['error'] = xarML('You must be a rgisters user to view courses..');
     }
-	// Get parameters from whatever input we need.  All arguments to this
+    // Get parameters from whatever input we need.  All arguments to this
     // function should be obtained from xarVarFetch(), xarVarCleanFromInput()
     // is a degraded function.  xarVarFetch allows the checking of the input
     // variables as well as setting default values if needed.  Getting vars
@@ -40,14 +40,14 @@ function courses_user_view()
     // Prepare the array variable that will hold all items for display
     $data['items'] = array();
     // Specify some other variables for use in the function template
-	$data['name_label'] = xarVarPrepForDisplay(xarML('Course Name'));
+    $data['name_label'] = xarVarPrepForDisplay(xarML('Course Name'));
     $data['number_label'] = xarVarPrepForDisplay(xarML('Course Number'));
-	$data['hours_label'] = xarVarPrepForDisplay(xarML('Course Hours'));
-	$data['ceu_label'] = xarVarPrepForDisplay(xarML('Course Credit Hours'));
-	$data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date'));
-	$data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date'));
-	$data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description'));
-	$data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
+    $data['hours_label'] = xarVarPrepForDisplay(xarML('Course Hours'));
+    $data['ceu_label'] = xarVarPrepForDisplay(xarML('Course Credit Hours'));
+    $data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date'));
+    $data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date'));
+    $data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description'));
+    $data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
     $data['pager'] = '';
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
@@ -95,7 +95,7 @@ function courses_user_view()
         }
         // Clean up the item text before display
         $item['name'] = xarVarPrepForDisplay($item['name']);
-	    $item['shortdesc'] = xarVarPrepHTMLDisplay($item['shortdesc']);
+        $item['shortdesc'] = xarVarPrepHTMLDisplay($item['shortdesc']);
         // Add this item to the list of items to be displayed
         $data['items'][] = $item;
     }

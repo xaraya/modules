@@ -54,12 +54,12 @@ function courses_userapi_get($args)
     // if it is ever needed
     $query = "SELECT xar_name,
                    xar_number,
-				   xar_hours,
-				   xar_ceu,
-				   xar_startdate,
-				   xar_enddate,
-				   xar_shortdesc,
-				   xar_longdesc
+                   xar_hours,
+                   xar_ceu,
+                   xar_startdate,
+                   xar_enddate,
+                   xar_shortdesc,
+                   xar_longdesc
             FROM $coursestable
             WHERE xar_courseid = " . xarVarPrepForStore($courseid);
     $result = &$dbconn->Execute($query);
@@ -88,18 +88,18 @@ function courses_userapi_get($args)
         return;
     }
     // Create the item array
-	$dateformat = '%Y-%m-%d %H:%M:%S';
+    $dateformat = '%Y-%m-%d %H:%M:%S';
     $startdate = xarLocaleFormatDate($dateformat, $startdate);
     $enddate = xarLocaleFormatDate($dateformat, $enddate);
     $item = array('courseid' => $courseid,
         'name' => $name,
         'number' => $number,
-		'hours' => $hours,
-		'ceu' => $ceu,
-		'startdate' => $startdate,
-		'enddate' => $enddate,
-		'shortdesc' => $shortdesc,
-		'longdesc' => $longdesc);
+        'hours' => $hours,
+        'ceu' => $ceu,
+        'startdate' => $startdate,
+        'enddate' => $enddate,
+        'shortdesc' => $shortdesc,
+        'longdesc' => $longdesc);
     // Return the item array
     return $item;
 }

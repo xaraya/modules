@@ -28,7 +28,7 @@ function courses_userapi_getall_names($args)
     // should be obtained from the $args array, getting them from other places
     // such as the environment is not allowed, as that makes assumptions that
     // will not hold in future versions of Xaraya
-	extract($args);
+    extract($args);
 
     // Optional arguments.
     // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
@@ -95,7 +95,7 @@ function courses_userapi_getall_names($args)
     // the details of the item, this *must* be verified by your function.
     for (; !$result->EOF; $result->MoveNext()) {
         list($name) = $result->fields;
-		if (xarSecurityCheck('ViewCourses', 0, 'Item', "All:All:$name")) {
+        if (xarSecurityCheck('ViewCourses', 0, 'Item', "All:All:$name")) {
             $items[] = array('name' => $name);
        }
     }

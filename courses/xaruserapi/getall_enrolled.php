@@ -28,7 +28,7 @@ function courses_userapi_getall_enrolled($args)
     // should be obtained from the $args array, getting them from other places
     // such as the environment is not allowed, as that makes assumptions that
     // will not hold in future versions of Xaraya
-	extract($args);
+    extract($args);
     // Optional arguments.
     // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
     // replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
@@ -73,7 +73,7 @@ function courses_userapi_getall_enrolled($args)
     $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you are
     // using - $table doesn't cut it in more complex modules
-	$coursestable = $xartable['courses'];
+    $coursestable = $xartable['courses'];
     $courses_studentstable = $xartable['courses_students'];
     // TODO: how to select by cat ids (automatically) when needed ???
     // Get items - the formatting here is not mandatory, but it does make the
@@ -82,8 +82,8 @@ function courses_userapi_getall_enrolled($args)
     // operation if it is ever needed
     $query = "SELECT $coursestable.xar_name, $coursestable.xar_courseid
             FROM $coursestable, $courses_studentstable
-			WHERE $courses_studentstable.xar_uid = $uid
-			AND $coursestable.xar_courseid = $courses_studentstable.xar_course";
+            WHERE $courses_studentstable.xar_uid = $uid
+            AND $coursestable.xar_courseid = $courses_studentstable.xar_course";
 
      $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised

@@ -27,7 +27,7 @@ function courses_userapi_check_enrolled($args)
     // should be obtained from the $args array, getting them from other places
     // such as the environment is not allowed, as that makes assumptions that
     // will not hold in future versions of Xaraya
-	extract($args);
+    extract($args);
     if (!isset($courseid) || !is_numeric($courseid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             'item ID', 'user', 'check_enrolled', 'courses');
@@ -50,7 +50,7 @@ function courses_userapi_check_enrolled($args)
     $xartable =& xarDBGetTables();
     // It's good practice to name the table definitions you are
     // using - $table doesn't cut it in more complex modules
-	$coursestable = $xartable['courses'];
+    $coursestable = $xartable['courses'];
     $courses_studentstable = $xartable['courses_students'];
 
     $sql = "SELECT $coursestable.xar_name AS name,

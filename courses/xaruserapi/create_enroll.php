@@ -39,7 +39,7 @@ function courses_userapi_create_enroll($args)
         $invalid[] = 'uid';
     }
 
-	 if (!isset($courseid) || !is_numeric($courseid)) {
+     if (!isset($courseid) || !is_numeric($courseid)) {
         $invalid[] = 'courseid';
     }
 
@@ -82,7 +82,7 @@ function courses_userapi_create_enroll($args)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($uid) . "',
-			  '" . xarVarPrepForStore($courseid) . "')";
+              '" . xarVarPrepForStore($courseid) . "')";
 
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised

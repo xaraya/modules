@@ -28,7 +28,7 @@ function courses_userapi_getall($args)
     // should be obtained from the $args array, getting them from other places
     // such as the environment is not allowed, as that makes assumptions that
     // will not hold in future versions of Xaraya
-	extract($args);
+    extract($args);
     // Optional arguments.
     // FIXME: (!isset($startnum)) was ignoring $startnum as it contained a null value
     // replaced it with ($startnum == "") (thanks for the talk through Jim S.) NukeGeek 9/3/02
@@ -82,12 +82,12 @@ function courses_userapi_getall($args)
     $query = "SELECT xar_courseid,
                    xar_name,
                    xar_number,
-				   xar_hours,
-				   xar_ceu,
-				   xar_startdate,
-				   xar_enddate,
-				   xar_shortdesc,
-				   xar_longdesc
+                   xar_hours,
+                   xar_ceu,
+                   xar_startdate,
+                   xar_enddate,
+                   xar_shortdesc,
+                   xar_longdesc
             FROM $coursestable
             ORDER BY xar_name";
     $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
@@ -105,12 +105,12 @@ function courses_userapi_getall($args)
             $items[] = array('courseid' => $courseid,
                 'name' => $name,
                 'number' => $number,
-				'hours' => $hours,
-				'ceu' => $ceu,
-				'startdate' => $startdate,
-				'enddate' => $enddate,
-				'shortdesc' => $shortdesc,
-				'longdesc' => $longdesc);
+                'hours' => $hours,
+                'ceu' => $ceu,
+                'startdate' => $startdate,
+                'enddate' => $enddate,
+                'shortdesc' => $shortdesc,
+                'longdesc' => $longdesc);
         }
     }
     // All successful database queries produce a result set, and that result

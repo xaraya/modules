@@ -27,16 +27,16 @@ function courses_user_usermenu()
     // variable is set, we will load the correct page in the loop.
     if (!xarVarFetch('phase', 'str:1:100', $phase, 'menu', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('startnum', 'str:1:', $startnum, '1', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('uid', 'isset:', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('uid', 'isset:', $uid, NULL, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('coursename', 'str:1:', $coursename, '1', XARVAR_NOT_REQUIRED)) return;
 
 // Now we need to get the course information that the user is enrolled in so we can
-	// pass the information to the template
+    // pass the information to the template
     $uid = xarUserGetVar('uid');
-	$data1 = '';
-//	$data['items'] = array();
-//	$data['pager'] = '';
-	$items = xarModAPIFunc('courses',
+    $data1 = '';
+//    $data['items'] = array();
+//    $data['pager'] = '';
+    $items = xarModAPIFunc('courses',
          'user',
          'getall_enrolled',
          array('startnum' => $startnum,
@@ -77,9 +77,9 @@ function courses_user_usermenu()
             $item['link'] = '';
         }
         // Clean up the item text before display
-		$item['name'] = xarVarPrepForDisplay($item['name']);
+        $item['name'] = xarVarPrepForDisplay($item['name']);
         $item['courseid'] = xarVarPrepForDisplay($item['courseid']);
-	    // Add this item to the list of items to be displayed
+        // Add this item to the list of items to be displayed
         $data1['items'][] = $item;
     }
 
@@ -94,7 +94,7 @@ function courses_user_usermenu()
 
         case 'form':
 
-			// Its good practice for the user menu to be personalized.  In order to do so, we
+            // Its good practice for the user menu to be personalized.  In order to do so, we
             // need to get some information about the user.
             $uname = xarUserGetVar('name');
             $uid = xarUserGetVar('uid');
@@ -115,7 +115,7 @@ function courses_user_usermenu()
                     'uname' => $uname,
                     'uid' => $uid,
                     'value' => $value,
-					'data1' => $data1));
+                    'data1' => $data1));
 
             break;
 
@@ -126,7 +126,7 @@ function courses_user_usermenu()
             if (!xarVarFetch('uid', 'int:1:', $uid)) return;
             if (!xarVarFetch('itemsperpage', 'str:1:100', $itemsperpage, '20', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('name', 'str:1:100', $name, '', XARVAR_NOT_REQUIRED)) return;
-		    if (!xarVarFetch('coursename', 'str:1:100', $coursename, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('coursename', 'str:1:100', $coursename, '', XARVAR_NOT_REQUIRED)) return;
             // Confirm authorisation code.
             if (!xarSecConfirmAuthKey()) return;
 

@@ -44,27 +44,27 @@ function courses_adminapi_update($args)
         $invalid[] = 'number';
     }
 
-	 if (empty($hours) || !is_numeric($hours)) {
+     if (empty($hours) || !is_numeric($hours)) {
         $invalid['hours'] = 1;
-		$hours = '';
+        $hours = '';
     }
 
-	 if (empty($ceu) || !is_numeric($ceu)) {
+     if (empty($ceu) || !is_numeric($ceu)) {
         $invalid['ceu'] = 1;
-		$ceu = '';
+        $ceu = '';
     }
 
-	 if (empty($startdate) || !is_string($startdate)) {
+     if (empty($startdate) || !is_string($startdate)) {
         $invalid['startdate'] = 1;
-		$startdate = '';
+        $startdate = '';
     }
 
-	 if (empty($enddate) || !is_string($enddate)) {
+     if (empty($enddate) || !is_string($enddate)) {
         $invalid['enddate'] = 1;
-		$enddate = '';
+        $enddate = '';
     }
 
-	
+    
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'admin', 'update', 'Courses');
@@ -117,11 +117,11 @@ function courses_adminapi_update($args)
     $query = "UPDATE $coursestable
             SET xar_name = '" . xarVarPrepForStore($name) . "',
                   xar_number = '" . xarVarPrepForStore($number) . "',
-				  xar_hours = '" . xarVarPrepForStore($hours) . "',
-				  xar_ceu = '" . xarVarPrepForStore($ceu) . "',
-				  xar_startdate = '" . xarVarPrepForStore($startdate) . "',
-				  xar_enddate = '" . xarVarPrepForStore($enddate) . "',
-				  xar_shortdesc = '" . xarVarPrepForStore($shortdesc) . "',
+                  xar_hours = '" . xarVarPrepForStore($hours) . "',
+                  xar_ceu = '" . xarVarPrepForStore($ceu) . "',
+                  xar_startdate = '" . xarVarPrepForStore($startdate) . "',
+                  xar_enddate = '" . xarVarPrepForStore($enddate) . "',
+                  xar_shortdesc = '" . xarVarPrepForStore($shortdesc) . "',
                 xar_longdesc = '" . xarVarPrepForStore($longdesc) . "'
             WHERE xar_courseid = " . xarVarPrepForStore($courseid);
     $result = &$dbconn->Execute($query);

@@ -42,22 +42,22 @@ function courses_adminapi_create($args)
         $invalid[] = 'number';
     }
 
-	 if (!isset($hours) || !is_numeric($hours)) {
+     if (!isset($hours) || !is_numeric($hours)) {
         $invalid[] = 'hours';
     }
 
-	 if (!isset($ceu) || !is_numeric($ceu)) {
+     if (!isset($ceu) || !is_numeric($ceu)) {
         $invalid[] = 'ceu';
     }
 
  if (empty($startdate) || !is_string($startdate)) {
         $invalid['startdate'] = 1;
-		$startdate = '';
+        $startdate = '';
     }
 
-	 if (empty($enddate) || !is_string($enddate)) {
+     if (empty($enddate) || !is_string($enddate)) {
         $invalid['enddate'] = 1;
-		$enddate = '';
+        $enddate = '';
     }
 
 
@@ -96,21 +96,21 @@ function courses_adminapi_create($args)
               xar_courseid,
               xar_name,
               xar_number,
-			  xar_hours,
-			  xar_ceu,
-			  xar_startdate,
-			  xar_enddate,
-			  xar_shortdesc,
-			  xar_longdesc)
+              xar_hours,
+              xar_ceu,
+              xar_startdate,
+              xar_enddate,
+              xar_shortdesc,
+              xar_longdesc)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($name) . "',
-			  '" . xarVarPrepForStore($number) . "',
-			  '" . xarVarPrepForStore($hours) . "',
-			  '" . xarVarPrepForStore($ceu) . "',
-			  '" . xarVarPrepForStore($startdate) . "',
-			  '" . xarVarPrepForStore($enddate) . "',
-			  '" . xarVarPrepForStore($shortdesc) . "',
+              '" . xarVarPrepForStore($number) . "',
+              '" . xarVarPrepForStore($hours) . "',
+              '" . xarVarPrepForStore($ceu) . "',
+              '" . xarVarPrepForStore($startdate) . "',
+              '" . xarVarPrepForStore($enddate) . "',
+              '" . xarVarPrepForStore($shortdesc) . "',
               '" . xarvarPrepForStore($longdesc) . "')";
     $result = &$dbconn->Execute($query);
     // Check for an error with the database code, adodb has already raised

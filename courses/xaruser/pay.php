@@ -94,21 +94,21 @@ function courses_user_pay($args)
     // bold type or not
     $data['name_label'] = xarVarPrepForDisplay(xarML('Course Name:'));
     $data['number_label'] = xarVarPrepForDisplay(xarML('Course Number:'));
-	$data['hours_label'] = xarVarPrepForDisplay(xarML('Course Hours:'));
-	$data['ceu_label'] = xarVarPrepForDisplay(xarML('Course Credit Hours:'));
-	$data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date:'));
-	$data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date:'));
-	$data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description:'));
-	$data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
+    $data['hours_label'] = xarVarPrepForDisplay(xarML('Course Hours:'));
+    $data['ceu_label'] = xarVarPrepForDisplay(xarML('Course Credit Hours:'));
+    $data['startdate_label'] = xarVarPrepForDisplay(xarML('Course Start Date:'));
+    $data['enddate_label'] = xarVarPrepForDisplay(xarML('Course End Date:'));
+    $data['shortdesc_label'] = xarVarPrepForDisplay(xarML('Short Course Description:'));
+    $data['longdesc_label'] = xarVarPrepForDisplay(xarML('Course Description:'));
     $data['payment_options_label'] = xarVarPrepForDisplay(xarML('Payment Options:'));
     $data['name_value'] = $item['name'];
     $data['number_value'] = $item['number'];
-	$data['hours_value'] = $item['hours'];
-	$data['ceu_value'] = $item['ceu'];
-	$data['startdate_value'] = $item['startdate'];
-	$data['enddate_value'] = $item['enddate'];
-	$data['shortdesc_value'] = xarVarPrepHTMLDisplay($item['shortdesc']);
-//	$data['longdesc_value'] = xarVarPrepHTMLDisplay($item['longdesc']);
+    $data['hours_value'] = $item['hours'];
+    $data['ceu_value'] = $item['ceu'];
+    $data['startdate_value'] = $item['startdate'];
+    $data['enddate_value'] = $item['enddate'];
+    $data['shortdesc_value'] = xarVarPrepHTMLDisplay($item['shortdesc']);
+//    $data['longdesc_value'] = xarVarPrepHTMLDisplay($item['longdesc']);
 
     $data['courseid'] = $courseid;
 

@@ -46,28 +46,28 @@ function courses_init()
     // data type and associated parameters
     $fields = array('xar_courseid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
         'xar_name' => array('type' => 'varchar', 'size' => 32, 'null' => false),
-		'xar_number' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_number' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
         'xar_hours' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-	    'xar_ceu' => array('type'=>'float'),
-		'xar_startdate'=>array('type'=>'datetime'),
-		'xar_enddate'=>array('type'=>'datetime'),
-		'xar_shortdesc'=>array('null'=>FALSE, 'type'=>'text'),
-		'xar_longdesc'=>array('null'=>FALSE, 'type'=>'text')
+        'xar_ceu' => array('type'=>'float'),
+        'xar_startdate'=>array('type'=>'datetime'),
+        'xar_enddate'=>array('type'=>'datetime'),
+        'xar_shortdesc'=>array('null'=>FALSE, 'type'=>'text'),
+        'xar_longdesc'=>array('null'=>FALSE, 'type'=>'text')
         );
 
-	 $query = xarDBCreateTable($coursestable, $fields);
+     $query = xarDBCreateTable($coursestable, $fields);
     if (empty($query)) return; // throw back
 
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-	$courses_studentsTable = $xartable['courses_students'];
+    $courses_studentsTable = $xartable['courses_students'];
 
-	$fields = array('xar_sid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
-		'xar_uid' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
-		'xar_course' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0')
-		);
+    $fields = array('xar_sid' => array('type' => 'integer', 'null' => false, 'increment' => true, 'primary_key' => true),
+        'xar_uid' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0'),
+        'xar_course' => array('type' => 'integer', 'size' => 'small', 'null' => false, 'default' => '0')
+        );
 
     // $query = "CREATE TABLE $exampletable (
     // xar_exid int(10) NOT NULL auto_increment,
@@ -197,7 +197,7 @@ function courses_init()
         ,array(
             'hookModName'       => 'search'
             ,'callerModName'    => 'courses'));
-	// Hook for module comments
+    // Hook for module comments
     xarModAPIFunc(
         'modules'
         ,'admin'
@@ -291,7 +291,7 @@ function courses_init()
     xarRegisterMask('DeleteCourses', 'All', 'courses', 'Item', 'All:All:All', 'ACCESS_DELETE');
     xarRegisterMask('AdminCourses', 'All', 'courses', 'Item', 'All:All:All', 'ACCESS_ADMIN');
     // Initialisation successful
-	 xarRegisterPrivilege('EditCourses','All','courses','item','All','ACCESS_EDIT',xarML('Enroll in Courses'));
+     xarRegisterPrivilege('EditCourses','All','courses','item','All','ACCESS_EDIT',xarML('Enroll in Courses'));
     return true;
 }
 
@@ -410,13 +410,13 @@ function courses_delete()
     // from the database. This is not strictly necessary, but it's good housekeeping.
     xarRemoveMasks('courses');
     xarRemoveInstances('courses');
-	xarRemovePrivileges('courses');
+    xarRemovePrivileges('courses');
 
   if (xarModIsAvailable('categories')) {
         xarModDelVar('courses', 'number_of_categories');
         xarModDelVar('courses', 'mastercids');
 
-	}
+    }
 
 
        // Hook for module search
@@ -485,7 +485,7 @@ function courses_delete()
         xarModAPIFunc('dynamicdata','admin','deleteobject',array('objectid' => $objectid));
     }
 
-	// Deletion successful
+    // Deletion successful
     return true;
 }
 

@@ -44,9 +44,9 @@ function courses_admin_update($args)
     if (!xarVarFetch('hours', 'int:1:', $hours, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('ceu', 'int:1:', $ceu, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('startdate', 'str:1:', $startdate, $startdate, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('enddate', 'str:1:', $enddate, $enddate, XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('shortdesc', 'isset:', $shortdesc, NULL, XARVAR_DONT_SET)) return;
-	if (!xarVarFetch('longdesc', 'str:1:', $longdesc, $longdesc, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'str:1:', $enddate, $enddate, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc', 'isset:', $shortdesc, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('longdesc', 'str:1:', $longdesc, $longdesc, XARVAR_NOT_REQUIRED)) return;
 
     // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.  This could have been passed in by a hook or
@@ -74,31 +74,31 @@ function courses_admin_update($args)
     $invalid = array();
     if (empty($number) || !is_numeric($number)) {
         $invalid['number'] = 1;
-		$number = '';
+        $number = '';
     }
     if (empty($name) || !is_string($name)) {
         $invalid['name'] = 1;
-		$name = '';
+        $name = '';
     }
 
-	 if (empty($hours) || !is_numeric($hours)) {
+     if (empty($hours) || !is_numeric($hours)) {
         $invalid['hours'] = 1;
-		$hours = '';
+        $hours = '';
     }
 
-	 if (empty($ceu) || !is_numeric($ceu)) {
+     if (empty($ceu) || !is_numeric($ceu)) {
         $invalid['ceu'] = 1;
-		$ceu = '';
+        $ceu = '';
     }
 
-	 if (empty($startdate) || !is_string($startdate)) {
+     if (empty($startdate) || !is_string($startdate)) {
         $invalid['startdate'] = 1;
-		$startdate = '';
+        $startdate = '';
     }
 
-	 if (empty($enddate) || !is_string($enddate)) {
+     if (empty($enddate) || !is_string($enddate)) {
         $invalid['enddate'] = 1;
-		$enddate = '';
+        $enddate = '';
     }
 
     // check if we have any errors
@@ -108,12 +108,12 @@ function courses_admin_update($args)
         return xarModFunc('courses', 'admin', 'modify',
                           array('name'     => $name,
                                 'number'   => $number,
-								'hours' => $hours,
-								'ceu' => $ceu,
-								'startdate' => $startdate,
-								'enddate' => $enddate,
-								'shortdesc' => $shortdesc,
-								'longdesc' => $longdesc,
+                                'hours' => $hours,
+                                'ceu' => $ceu,
+                                'startdate' => $startdate,
+                                'enddate' => $enddate,
+                                'shortdesc' => $shortdesc,
+                                'longdesc' => $longdesc,
                                 'invalid'  => $invalid));
     }
 
@@ -132,12 +132,12 @@ function courses_admin_update($args)
                        array('courseid'   => $courseid,
                              'name'   => $name,
                              'number' => $number,
-							 'hours' => $hours,
-							 'ceu' => $ceu,
-							 'startdate' => $startdate,
-							 'enddate' => $enddate,
-							 'shortdesc' => $shortdesc,
-							 'longdesc' => $longdesc))) {
+                             'hours' => $hours,
+                             'ceu' => $ceu,
+                             'startdate' => $startdate,
+                             'enddate' => $enddate,
+                             'shortdesc' => $shortdesc,
+                             'longdesc' => $longdesc))) {
         return; // throw back
     }
     xarSessionSetVar('statusmsg', xarML('Course Was Successfully Updated!'));

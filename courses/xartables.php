@@ -37,7 +37,7 @@ function courses_xartables()
     // Set the table name
     $xarTables['courses'] = $coursesTable;
 
-	$courses_studentsTable = xarDBGetSiteTablePrefix() . '_courses_students';
+    $courses_studentsTable = xarDBGetSiteTablePrefix() . '_courses_students';
     // Set the second table name
     $xarTables['courses_students'] = $courses_studentsTable;
     // Return the table information

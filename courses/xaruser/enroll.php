@@ -57,7 +57,7 @@ function courses_user_enroll($args)
     }
     // Get the username so we can pass it to the enrollment function
     $uid = xarUserGetVar('uid');
-	//Check to see if this user is already enrolled in this course
+    //Check to see if this user is already enrolled in this course
     $courses = xarModAPIFunc('courses',
                           'user',
                           'check_enrolled',

@@ -40,12 +40,12 @@ function courses_admin_create($args)
     if (!xarVarFetch('invalid', 'str:1:', $invalid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('number', 'str:1:', $number, '',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('name', 'str:1:', $name, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('hours', 'str:1:', $hours, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('ceu', 'str:1:', $ceu, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('startdate', 'str:1:', $startdate, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('enddate', 'str:1:', $enddate, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
-	if (!xarVarFetch('longdesc', 'str:1:', $longdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('hours', 'str:1:', $hours, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('ceu', 'str:1:', $ceu, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startdate', 'str:1:', $startdate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'str:1:', $enddate, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('shortdesc', 'str:1:', $shortdesc, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('longdesc', 'str:1:', $longdesc, '', XARVAR_NOT_REQUIRED)) return;
     // Argument check - make sure that all required arguments are present
     // and in the right format, if not then return to the add form with the
     // values that are there and a message with a session var.  If you perform
@@ -60,36 +60,36 @@ function courses_admin_create($args)
     $invalid = array();
     if (empty($number) || !is_numeric($number)) {
         $invalid['number'] = 1;
-		$number = '';
+        $number = '';
     }
     if (empty($name) || !is_string($name)) {
         $invalid['name'] = 1;
-		$name = '';
+        $name = '';
     }
 
-	 if (!empty($name) && $item['name'] == $name) {
+     if (!empty($name) && $item['name'] == $name) {
         $invalid['duplicatename'] = 1;
         $duplicatename = '';
     }
 
-	if (empty($hours) || !is_numeric($hours)) {
+    if (empty($hours) || !is_numeric($hours)) {
         $invalid['hours'] = 1;
-		$hours = '';
+        $hours = '';
     }
 
-	if (empty($ceu) || !is_numeric($ceu)) {
+    if (empty($ceu) || !is_numeric($ceu)) {
         $invalid['ceu'] = 1;
-		$ceu = '';
+        $ceu = '';
     }
 
  if (empty($startdate) || !is_string($startdate)) {
         $invalid['startdate'] = 1;
-		$startdate = '';
+        $startdate = '';
     }
 
-	 if (empty($enddate) || !is_string($enddate)) {
+     if (empty($enddate) || !is_string($enddate)) {
         $invalid['enddate'] = 1;
-		$enddate = '';
+        $enddate = '';
     }
     // check if we have any errors
     if (count($invalid) > 0) {
@@ -98,12 +98,12 @@ function courses_admin_create($args)
         return xarModFunc('courses', 'admin', 'new',
                           array('name' => $name,
                                 'number' => $number,
-								 'hours' => $hours,
-								 'ceu' => $ceu,
-								 'startdate' => $startdate,
-								 'enddate' => $enddate,
-								 'shortdesc' => $shortdesc,
-								 'longdesc' => $longdesc,
+                                 'hours' => $hours,
+                                 'ceu' => $ceu,
+                                 'startdate' => $startdate,
+                                 'enddate' => $enddate,
+                                 'shortdesc' => $shortdesc,
+                                 'longdesc' => $longdesc,
                                 'invalid' => $invalid));
     }
     // Confirm authorisation code.  This checks that the form had a valid
@@ -123,12 +123,12 @@ function courses_admin_create($args)
                           'create',
                           array('name' => $name,
                                 'number' => $number,
-								'hours' => $hours,
-								'ceu' => $ceu,
-								'startdate' => $startdate,
-								'enddate' => $enddate,
-								'shortdesc' => $shortdesc,
-								'longdesc' => $longdesc));
+                                'hours' => $hours,
+                                'ceu' => $ceu,
+                                'startdate' => $startdate,
+                                'enddate' => $enddate,
+                                'shortdesc' => $shortdesc,
+                                'longdesc' => $longdesc));
     // The return value of the function is checked here, and if the function
     // suceeded then an appropriate message is posted.  Note that if the
     // function did not succeed then the API function should have already

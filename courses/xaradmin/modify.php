@@ -43,9 +43,9 @@ function courses_admin_modify($args)
     if (!xarVarFetch('hours', 'int:1:', $hours, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('ceu', 'int:1:', $ceu, NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('startdate', 'isset:', $startdate, NULL, XARVAR_DONT_SET)) return;
-	if (!xarVarFetch('enddate', 'isset:', $enddate, NULL, XARVAR_DONT_SET)) return;
-	if (!xarVarFetch('shortdesc', 'isset:', $shortdesc, NULL, XARVAR_DONT_SET)) return;
-	if (!xarVarFetch('longdesc', 'str:1:', $longdesc, $longdesc, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('enddate', 'isset:', $enddate, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('shortdesc', 'isset:', $shortdesc, NULL, XARVAR_DONT_SET)) return;
+    if (!xarVarFetch('longdesc', 'str:1:', $longdesc, $longdesc, XARVAR_NOT_REQUIRED)) return;
 
    // At this stage we check to see if we have been passed $objectid, the
     // generic item identifier.  This could have been passed in by a hook or
@@ -89,27 +89,27 @@ function courses_admin_modify($args)
         $hooks = join('', $hooks);
     }
     // Return the template variables defined in this function
-	$dateformat = '%Y-%m-%d %H:%M:%S';
+    $dateformat = '%Y-%m-%d %H:%M:%S';
     $startdate = xarLocaleFormatDate($dateformat, $startdate);
     $enddate = xarLocaleFormatDate($dateformat, $enddate);
     return array('authid'       => xarSecGenAuthKey(),
                  'namelabel'    => xarVarPrepForDisplay(xarML('Course Name:')),
-	             'name'         => $name,
+                 'name'         => $name,
                  'numberlabel'  => xarVarPrepForDisplay(xarML('Course Number:')),
-	             'number'       => $number,
-				 'hourslabel'  => xarVarPrepForDisplay(xarML('Course Hours:')),
-				 'hours'  => $hours,
-				 'ceulabel'  => xarVarPrepForDisplay(xarML('Course Credit Hours:')),
-				 'ceu' => $ceu,
-				 'startdatelabel'  => xarVarPrepForDisplay(xarML('Start Date:')),
-				 'startdate' => $startdate,
-				 'enddatelabel'  => xarVarPrepForDisplay(xarML('End Date:')),
-				 'enddate' => $enddate,
-				 'shortdesclabel'  => xarVarPrepForDisplay(xarML('Short Description:')),
-				 'shortdesc' => $item['shortdesc'],
-				 'longdesclabel'  => xarVarPrepForDisplay(xarML('Long Description:')),
-				 'longdesc' => $item['longdesc'],
-				 'invalid'      => $invalid,
+                 'number'       => $number,
+                 'hourslabel'  => xarVarPrepForDisplay(xarML('Course Hours:')),
+                 'hours'  => $hours,
+                 'ceulabel'  => xarVarPrepForDisplay(xarML('Course Credit Hours:')),
+                 'ceu' => $ceu,
+                 'startdatelabel'  => xarVarPrepForDisplay(xarML('Start Date:')),
+                 'startdate' => $startdate,
+                 'enddatelabel'  => xarVarPrepForDisplay(xarML('End Date:')),
+                 'enddate' => $enddate,
+                 'shortdesclabel'  => xarVarPrepForDisplay(xarML('Short Description:')),
+                 'shortdesc' => $item['shortdesc'],
+                 'longdesclabel'  => xarVarPrepForDisplay(xarML('Long Description:')),
+                 'longdesc' => $item['longdesc'],
+                 'invalid'      => $invalid,
                  'updatebutton' => xarVarPrepForDisplay(xarML('Update Course')),
                  'hooks'        => $hooks,
                  'item'         => $item);
