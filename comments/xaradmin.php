@@ -132,6 +132,9 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'numstats', $numstats);
     xarModSetVar('comments', 'showtitle', $showtitle);
 
+    // Call updateconfig hooks
+    xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
+
     //Redirect
     xarResponseRedirect(xarModURL('comments', 'admin', 'modifyconfig'));
 
