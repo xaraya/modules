@@ -1,0 +1,127 @@
+<div style="font-size: xx-small; text-align: center">
+<a href="#$url###item_statistics"> #$item_statistics_title# </a> | 
+<a href="#$url###pages"> <xar:mlstring>Top Pages</xar:mlstring> </a> | 
+<a href="#$url###xarmod"> <xar:mlstring>Top Modules</xar:mlstring> </a> | 
+<a href="#$url###referers"> <xar:mlstring>Top Referers</xar:mlstring> </a> | 
+<a href="#$url###entry_pages"> <xar:mlstring>Top Entry Pages</xar:mlstring> </a> | 
+<a href="#$url###exit_pages"> <xar:mlstring>Top Exit Pages</xar:mlstring> </a> | 
+<a href="#$url###exit_targets"> <xar:mlstring> Top Exit Targets</xar:mlstring> </a> |
+<a href="#$url###hosts"> <xar:mlstring>Top Hosts</xar:mlstring> </a>
+<br />
+<a href="#$url###operating_systems"> <xar:mlstring>Top Operating Systems</xar:mlstring> </a> | 
+<a href="#$url###user_agents"> <xar:mlstring>Top User Agents</xar:mlstring> </a> | 
+<a href="#$url###search_engines"> <xar:mlstring>Top Search Engines</xar:mlstring> </a> | 
+<a href="#$url###search_keywords"> <xar:mlstring>Top Search Keywords</xar:mlstring> </a>
+</div>
+<br />
+<br />
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr valign="middle">
+    <th align="center" colspan="2">
+      #$maintitle#
+    </th>
+  </tr>
+  <tr valign="baseline">
+    <td align="left"width="75%" class="xar-norm-outline xar-mod-title" style="border-width: 0px 0px 1px 1px;">
+      <xar:mlstring>Total Page Impressions</xar:mlstring>
+    </td>
+    <td align="right" width="25%" class="xar-norm-outline" style="border-width: 0px 1px 1px 1px;">
+      #$totalPageImpressions#
+    </td>
+  </tr>
+  <tr valign="baseline">
+    <td align="left" class="xar-norm-outline xar-mod-title" style="border-width: 0px 0px 1px 1px;">
+      <xar:mlstring>Total Visitors</xar:mlstring>
+    </td>
+    <td align="right" class="xar-norm-outline" style="border-width: 0px 1px 1px 1px;">
+      #$totalVisitors#
+    </td>
+  </tr>
+</table>
+<br />
+
+<a id="item_statistics" name="item_statistics"></a>
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr valign="middle">
+    <th align="center" colspan="5">
+      #$item_statistics_title#
+      <xar:if condition="isset($graphurl)">
+      <br />
+      <img src="#$graphurl#" border="0" alt="" width="700" height="260" />
+      </xar:if>
+    </th>
+  </tr>
+  <tr valign="baseline">
+    <td width="20%" class="xar-alt">
+      &nbsp;
+    </td>
+    <td align="center" colspan="2" width="40%" class="xar-alt xar-mod-title" >
+      <xar:mlstring>Page Impressions</xar:mlstring>
+    </td>
+    <td align="center" colspan="2" width="40%" class="xar-alt xar-mod-title" >
+      <xar:mlstring>Visitors</xar:mlstring>
+    </td>
+  </tr>
+  <xar:loop name="$statisticitems">
+	<tr valign="baseline">
+	  <td align="left" class="xar-alt xar-mod-title" style="border-width: 0px 0px 1px 0px;">
+	    <xar:if condition="$href"><a href="#$href#" class="xar-mod-title"></xar:if>#$displayname#<xar:if condition="$href"></a></xar:if>
+	  </td>
+	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 0px;">
+	    #$pi_number#
+	  </td>
+	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 1px;">
+	    #$pi_percent#%
+	  </td>
+	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 1px;">
+	    #$visitors_number#
+	  </td>
+	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 1px 1px 1px;">
+	    #$visitors_percent#%
+	  </td>
+	</tr>
+  </xar:loop>
+</table>
+
+<br />
+<!--xar:foreach key="$key" value="$value" in="$top" -->
+<xar:loop name="$top">
+<a name="#$loop:key#"></a>
+  <table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr valign="middle">
+    <th align="center" colspan="4">
+      #$title#
+    </th>
+  </tr>
+  <tr valign="baseline">
+    <td width="10%" class="xar-alt">
+      &nbsp;
+    </td>
+    <td align="center" colspan="2" width="20%" class="xar-alt xar-mod-title">
+      #$subtitle1#
+    </td>
+    <td align="center" width="70%" class="xar-alt xar-mod-title">
+      #$subtitle2#
+    </td>
+  </tr>
+  <xar:if condition="is_array($top_items)">
+    <xar:loop name="$top_items">
+		<tr valign="baseline">
+		  <td align="left" class="xar-alt">
+		    #$rank#
+		  </td>
+		  <td align="left" width="10%" class="xar-norm-outline" style="border-width: 0px 1px 1px 0px;">
+		    #$count#
+		  </td>
+		  <td align="left" width="10%" class="xar-norm-outline"  style="border-width: 0px 1px 1px 0px;">
+		    #$percent#%
+		  </td>
+		  <td align="left" class="xar-norm-outline"  style="border-width: 0px 1px 1px 0px;">
+		    #$string#
+		  </td>
+		</tr>
+  </xar:loop>
+  </xar:if>
+</table>
+<br />
+</xar:loop>
