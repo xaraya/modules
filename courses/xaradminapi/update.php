@@ -115,16 +115,18 @@ function courses_adminapi_update($args)
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "UPDATE $coursestable
-            SET xar_name = '" . xarVarPrepForStore($name) . "',
-                  xar_number = '" . xarVarPrepForStore($number) . "',
-                  xar_hours = '" . xarVarPrepForStore($hours) . "',
-                  xar_ceu = '" . xarVarPrepForStore($ceu) . "',
-                  xar_startdate = '" . xarVarPrepForStore($startdate) . "',
-                  xar_enddate = '" . xarVarPrepForStore($enddate) . "',
-                  xar_shortdesc = '" . xarVarPrepForStore($shortdesc) . "',
-                xar_longdesc = '" . xarVarPrepForStore($longdesc) . "'
-            WHERE xar_courseid = " . xarVarPrepForStore($courseid);
-    $result = &$dbconn->Execute($query);
+            SET xar_name = ?,
+                  xar_number = ?,
+                  xar_hours = ?,
+                  xar_ceu = ?,
+                  xar_startdate = ?,
+                  xar_enddate = ?,
+                  xar_shortdesc = ?,
+                xar_longdesc = ?
+            WHERE xar_courseid = ?";
+
+    $bindvars = array($name, $number, $hours, $ceu, $startdata, $enddate, $shortdesc, $longdesc, $courseid);
+    $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

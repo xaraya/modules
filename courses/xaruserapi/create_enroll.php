@@ -79,12 +79,9 @@ function courses_userapi_create_enroll($args)
               xar_sid,
               xar_uid,
               xar_course)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($uid) . "',
-              '" . xarVarPrepForStore($courseid) . "')";
+            VALUES (?,?,?)";
 
-    $result = &$dbconn->Execute($query);
+    $result = &$dbconn->Execute($query, array((int)$nextId, (int)$uid, (int)$courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

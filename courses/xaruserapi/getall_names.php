@@ -83,8 +83,8 @@ function courses_userapi_getall_names($args)
     // operation if it is ever needed
     $query = "SELECT xar_name
             FROM $coursestable
-            WHERE xar_courseid = " . xarVarPrepForStore($courseid);
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+            WHERE xar_courseid = ?";
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, array((int)$courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

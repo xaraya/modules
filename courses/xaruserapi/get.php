@@ -61,8 +61,8 @@ function courses_userapi_get($args)
                    xar_shortdesc,
                    xar_longdesc
             FROM $coursestable
-            WHERE xar_courseid = " . xarVarPrepForStore($courseid);
-    $result = &$dbconn->Execute($query);
+            WHERE xar_courseid = ?";
+    $result = &$dbconn->Execute($query, array((int)$courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

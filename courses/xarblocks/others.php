@@ -47,6 +47,10 @@ function courses_othersblock_display($blockinfo)
         // if not, we don't show this
         return;
     }
+    // Optional arguments.
+    if (!isset($startnum)) {
+        $startnum = 1;
+    }
 
     $current_courseid = xarVarGetCached('Blocks.courses', 'courseid');
     if (empty($current_courseid) || !is_numeric($current_courseid)) {
@@ -69,9 +73,9 @@ function courses_othersblock_display($blockinfo)
     $sql = "SELECT xar_courseid,
                    xar_name
             FROM $coursestable
-            WHERE xar_courseid != '" . xarVarPrepForStore($current_courseid) . "'
+            WHERE xar_courseid != ?
             ORDER by xar_courseid DESC";
-    $result = $dbconn->SelectLimit($sql, $vars['numitems']);
+    $result = $dbconn->SelectLimit($sql, $vars['numitems'] , $startnum-1, array($current_courseid));
 
     if ($dbconn->ErrorNo() != 0) {
         return;

@@ -73,8 +73,8 @@ function courses_adminapi_delete($args)
     // out the sql statement from the Execute() command allows for simpler
     // debug operation if it is ever needed
     $query = "DELETE FROM $coursestable
-            WHERE xar_courseid = " . xarVarPrepForStore($courseid);
-    $result = &$dbconn->Execute($query);
+            WHERE xar_courseid = ?";
+    $result = &$dbconn->Execute($query, array((int)$courseid));
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;

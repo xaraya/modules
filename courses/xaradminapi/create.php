@@ -102,17 +102,9 @@ function courses_adminapi_create($args)
               xar_enddate,
               xar_shortdesc,
               xar_longdesc)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($name) . "',
-              '" . xarVarPrepForStore($number) . "',
-              '" . xarVarPrepForStore($hours) . "',
-              '" . xarVarPrepForStore($ceu) . "',
-              '" . xarVarPrepForStore($startdate) . "',
-              '" . xarVarPrepForStore($enddate) . "',
-              '" . xarVarPrepForStore($shortdesc) . "',
-              '" . xarvarPrepForStore($longdesc) . "')";
-    $result = &$dbconn->Execute($query);
+            VALUES (?,?,?,?,?,?,?,?,?)";
+    $bindvars = array((int)$nextId, $name, $number, $hours, $ceu, $startdate, $enddate, $shortdesc, $longdesc);
+    $result = &$dbconn->Execute($query, $bindvars);
     // Check for an error with the database code, adodb has already raised
     // the exception so we just return
     if (!$result) return;
