@@ -21,9 +21,24 @@ function xarbb_user_updatetopic()
 
     if (!xarVarFetch('tid','int:1:',$tid,10,XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('modify','int:1:',$modify, 0,XARVAR_NOT_REQUIRED)) return;
-    // Start by updating the topic stats.
     
-    $uid = xarUserGetVar('uid');
+    // Start by updating the topic stats.
+    $modid        = xarModGetIDFromName('xarbb');
+    $comments = xarModAPIFunc('comments',
+                              'user',
+                              'get_multiple',
+                              array('modid'       => $modid,
+                                    'objectid'    => $tid));
+
+
+     $isanon=$comments[0]['xar_postanon'];
+     $anonuid = xarConfigGetVar('Site.User.AnonymousUID');
+    // Start by updating the topic stats.
+    if ($isanon==1) {
+        $uid=$anonuid;
+    } else {
+        $uid = xarUserGetVar('uid');
+    }
     //Don't count up if the topic is being edited ? Need to add modify test here.
     if ($modify != 1){
          if (!xarModAPIFunc('xarbb',
