@@ -407,7 +407,8 @@
  		<script language="JavaScript" type="text/javascript">
  		<!--
  		// POP-UP CAPTIONS...
- 		function lib_bwcheck(){ //Browsercheck (needed)
+ 		function lib_bwcheck()
+		{ //Browsercheck (needed)
  		    this.ver=navigator.appVersion
  		    this.agent=navigator.userAgent
  		    this.dom=document.getElementById?1:0
@@ -424,7 +425,8 @@
  		}
  		var bw = new lib_bwcheck()
  		//Makes crossbrowser object.
- 		function makeObj(obj){
+ 		function makeObj(obj)
+		{
  		    this.evnt=bw.dom? document.getElementById(obj):bw.ie4?document.all[obj]:bw.ns4?document.layers[obj]:0;
  		    if(!this.evnt) return false
  		    this.css=bw.dom||bw.ie4?this.evnt.style:bw.ns4?this.evnt:0;
@@ -434,13 +436,15 @@
  		}
  		// A unit of measure that will be added when setting the position of a layer.
  		//var px = bw.ns4||window.opera?"":"px";
- 		function b_writeIt(text){
+ 		function b_writeIt(text)
+		{
  		    if (bw.ns4){this.wref.write(text);this.wref.close()}
  		    else this.wref.innerHTML = text
  		}
  		//Shows the messages
  		var oDesc;
- 		function popup(divid){
+ 		function popup(divid)
+		{
  		    if(oDesc = new makeObj(divid)){
  			oDesc.css.visibility = "visible"
  		    }
