@@ -32,9 +32,9 @@ function photoshare_userapi_getnewposition($args)
     $imagesTable  = $xartable['photoshare_images'];
 
     $sql = "SELECT MAX(ps_position), COUNT(*) FROM $imagesTable
-            WHERE ps_parentfolder = " . xarVarPrepForStore($folderID);
+            WHERE ps_parentfolder = ?";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,array($folderID));
 
     if (!isset($result)) return;
 

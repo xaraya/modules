@@ -119,15 +119,16 @@ function photoshare_userapi_updateimage($args)
     $imagesTable = $xartable['photoshare_images'];
 
     $sql = "UPDATE $imagesTable SET
-                ps_owner = ".xarVarPrepForStore($owner).",
-                ps_title = '".xarVarPrepForStore($title)."',
-                ps_description = '".xarVarPrepForStore($description)."',
-                ps_uploadid = ".xarVarPrepForStore($ulid).",
-                ps_parentfolder = ".xarVarPrepForStore($folderID).",
-                ps_bytesize = ".xarVarPrepForStore($bytesize)."
-            WHERE ps_id = ".xarVarPrepForStore($imageID);
+                ps_owner = ?,
+                ps_title = ?,
+                ps_description = ?,
+                ps_uploadid = ?,
+                ps_parentfolder = ?,
+                ps_bytesize = ?
+            WHERE ps_id = ?";
 
-    $result =& $dbconn->Execute($sql);
+    $bindvars = array($owner, $title, $description, $ulid, $folderID, $bytesize, $imageID);
+    $result =& $dbconn->Execute($sql,$bindvars);
     if (!$result) {
         if (isset($fileInfo) && ($fileInfo['size'] > 0)) {
             xarModAPIFunc(    'uploads',

@@ -27,10 +27,14 @@ function photoshare_userapi_getimages($args)
     $xartables =& xarDBGetTables();
     $imagesTable  = $xartables['photoshare_images'];
 
-    if (isset($imageID))
-        $where = " ps_id = ".xarVarPrepForStore($imageID);
-    else
-        $where = " ps_parentfolder = ".xarVarPrepForStore($folderID);
+    $bindvars = array();
+    if (isset($imageID)) {
+        $where = " ps_id = ?";
+        $bindvars[] = $imageID;
+    } else {
+        $where = " ps_parentfolder = ?";
+        $bindvars[] = $folderID;
+    }
 
     $sql = "SELECT ps_id,
                    ps_title,
@@ -46,7 +50,7 @@ function photoshare_userapi_getimages($args)
           WHERE     $where
           ORDER BY ps_position";
 
-    $result =& $dbconn->execute($sql);
+    $result =& $dbconn->execute($sql,$bindvars);
     if (!$result) return;
 
     $images = array();

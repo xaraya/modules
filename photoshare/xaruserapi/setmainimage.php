@@ -32,10 +32,10 @@ function photoshare_userapi_setmainimage($args)
     $foldersTable = $xartable['photoshare_folders'];
 
     $sql = "UPDATE $foldersTable
-            SET ps_mainimage = " . xarVarPrepForStore($image['id']) . "
-            WHERE ps_id = " . xarVarPrepForStore($image['parentfolder']);
+            SET ps_mainimage = ?
+            WHERE ps_id = ?";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,array($image['id'],$image['parentfolder']));
     if (!$result) return;
 
     return true;

@@ -66,19 +66,9 @@ function photoshare_userapi_createfolder($args)
                 ps_parentFolder,
                 ps_createdDate,
                 ps_viewKey)
-            VALUES (
-                $nextId,
-                '" . xarVarPrepForStore($owner) . "',
-                '" . xarVarPrepForStore($title) . "',
-                '" . xarVarPrepForStore($description) . "',
-                '" . xarVarPrepForStore(xarVarPrepForOS($viewTemplate)) . "',
-                '" . xarVarPrepForStore($hideframe) . "',
-                '" . xarVarPrepForStore($blockfromlist) . "',
-                '" . xarVarPrepForStore($parentFolderID) . "',
-                NOW(),
-                round(rand()*9000000000000 + 1000000000000))";
-
-    $result =& $dbconn->Execute($sql);
+            VALUES (?,?,?,?,?,?,?,?,NOW(),round(rand()*9000000000000 + 1000000000000))";
+    $bindvars = array($nextId, $owner, $title, $description, xarVarPrepForOS($viewTemplate), $hidefram, $blockfromlist, $parentFolderID);
+    $result =& $dbconn->Execute($sql,$bindvars);
     if (!$result) return;
 
     $id = $dbconn->PO_Insert_ID($foldersTable, 'ps_id');

@@ -34,9 +34,9 @@ function photoshare_userapi_deleteimage($args)
     $foldersTable = $xartable['photoshare_folders'];
 
     $sql = "DELETE FROM $imagesTable
-            WHERE ps_id = " . xarVarPrepForStore($imageID);
+            WHERE ps_id = ?";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,array($imageID));
     if (!isset($result)) return;
 
     //remove upload
@@ -49,16 +49,16 @@ function photoshare_userapi_deleteimage($args)
     unset($result);
     $sql = "UPDATE $imagesTable SET
             ps_position = ps_position - 1
-            WHERE ps_parentfolder = " . xarVarPrepForStore($image['parentfolder']) .
-            " AND ps_position > " . xarVarPrepForStore($image['position']);
-    $result =& $dbconn->Execute($sql);
+            WHERE ps_parentfolder = ?
+            AND ps_position > ?";;
+    $result =& $dbconn->Execute($sql,array($image['parentfolder'],$image['position']));
     if (!isset($result)) return;
 
     unset($result);
     $sql = "UPDATE $foldersTable
             SET ps_mainimage = NULL
-            WHERE ps_mainimage = " . xarVarPrepForStore($imageID);
-    $result =& $dbconn->Execute($sql);
+            WHERE ps_mainimage = ?";
+    $result =& $dbconn->Execute($sql,array($imageID));
     if (!isset($result)) return;
 
     return true;

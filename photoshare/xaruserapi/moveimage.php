@@ -47,25 +47,25 @@ function photoshare_userapi_moveimage($args)
     // First update moves all images after current image one to the left.
     $sql = "UPDATE $imagesTable SET
             ps_position = ps_position - 1
-            WHERE ps_parentfolder = " . xarVarPrepForStore($image['parentfolder']).
-            " AND ps_position >= " . xarVarPrepForStore($srcPosition+1);
-    $result =& $dbconn->Execute($sql);
+            WHERE ps_parentfolder = ?
+            AND ps_position >= ?";
+    $result =& $dbconn->Execute($sql,array($image['parentfolder'], $srcPosition+1));
     if (!$result) return;
 
     // Next update moves all images after new position one to the right.
     unset($result);
     $sql = "UPDATE $imagesTable SET
             ps_position = ps_position + 1
-            WHERE ps_parentfolder = " . xarVarPrepForStore($image['parentfolder']) .
-            " AND ps_position >= " . xarVarPrepForStore($position);
-    $result =& $dbconn->Execute($sql);
+            WHERE ps_parentfolder = ?
+            AND ps_position >= ?";
+    $result =& $dbconn->Execute($sql,array($image['parentfolder'], $position));
     if (!$result) return;
 
     unset($result);
     $sql = "UPDATE $imagesTable SET
-            ps_position = " . xarVarPrepForStore($position) .
-        " WHERE ps_id = " . xarVarPrepForStore($image['id']);
-    $result =& $dbconn->Execute($sql);
+            ps_position = ?
+            WHERE ps_id = ?";
+    $result =& $dbconn->Execute($sql,array($position, $image['id']));
     if (!$result) return;
 
     return true;

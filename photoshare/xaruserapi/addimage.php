@@ -114,17 +114,9 @@ function photoshare_userapi_addimage($args)
                 ps_createddate,
                 ps_bytesize,
                 ps_position)
-            VALUES ("
-                .$nextId.","
-                .xarVarPrepForStore($owner) . ",'"
-                .xarVarPrepForStore($title) . "','"
-                .xarVarPrepForStore($description) . "',"
-                .xarVarPrepForStore($upload['ulid']) . ","
-                .xarVarPrepForStore($folderID) . ",NOW(),"
-                .xarVarPrepForStore($upload['filesize']).","
-                .xarVarPrepForStore($newpos).')';
-
-    $result =& $dbconn->Execute($sql);
+            VALUES (?,?,?,?,?,?,NOW(),?,?)";
+    $bindvars = array($nextId, $owner, $title, $description, $upload['ulid'],$folderID,$upload['filesize'],$newpos);
+    $result =& $dbconn->Execute($sql,$bindvars);
     if (!$result) {
         xarModAPIFunc(    'uploads',
                         'admin',

@@ -51,9 +51,9 @@ function photoshareGetFolderTrailRecursive(&$dbconn, $foldersTable, $folderID, &
   $sql = "SELECT   ps_parentFolder,
                    ps_title
           FROM     $foldersTable
-          WHERE    ps_id = " . xarVarPrepForStore($folderID);
+          WHERE    ps_id = ?";
 
-  $result = $dbconn->execute($sql);
+  $result = $dbconn->execute($sql,array($folderID));
 
   if (!$result) return;
 

@@ -52,10 +52,10 @@ function photoshare_userapi_deletefolder($args)
 
         // Set sub-folder's parent to current parent
         $sql = "UPDATE $foldersTable SET
-                ps_parentfolder = " . xarVarPrepForStore($parentFolder) . "
-                WHERE ps_parentfolder = " . xarVarPrepForStore($folderID);
-
-        $result =& $dbconn->execute($sql);
+                ps_parentfolder = ?
+                WHERE ps_parentfolder =?";
+        $bindvars = array($parentFolder, $folderID);
+        $result =& $dbconn->execute($sql,$bindvars);
         if (!isset($result)) return;
     }
 
@@ -73,9 +73,9 @@ function photoshare_userapi_deletefolder($args)
 
     // Delete the current folder
     $sql = "DELETE FROM $foldersTable
-            WHERE ps_id = '" . xarVarPrepForStore($folderID) . "'";
+            WHERE ps_id = ?";
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,array($folderID));
     if (!isset($result)) return;
 
     return true;

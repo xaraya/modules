@@ -34,9 +34,9 @@ function photoshare_userapi_getusersetup($args)
     
     $sql = "SELECT MAX(ps_storage)
              FROM   $setupTable
-            WHERE  ps_id = " . xarVarPrepForStore($uid);
+            WHERE  ps_id = ?";
 
-    $result =& $dbconn->execute($sql);
+    $result =& $dbconn->execute($sql,array($uid));
     if (!$result) return; 
     
     if ($result->EOF) {

@@ -46,14 +46,14 @@ function photoshare_userapi_updatefolder($args)
     $foldersTable = $xartable['photoshare_folders'];
 
     $sql = "UPDATE $foldersTable SET
-                ps_title = '" . xarVarPrepForStore($title) . "',
-                ps_description = '" . xarVarPrepForStore($description) . "',
-                ps_template = '" . xarVarPrepForStore(pnVarPrepForOS($viewTemplate)) . "',
-                ps_hideframe = '" . xarVarPrepForStore($hideframe) . "',
-                ps_blockfromlist = '" . xarVarPrepForStore($blockfromlist) . "'
-            WHERE ps_id = " . xarVarPrepForStore($folderID);
-
-    $result =& $dbconn->Execute($sql);
+                ps_title = ?,
+                ps_description = ?,
+                ps_template = ?,
+                ps_hideframe = ?,
+                ps_blockfromlist = ?
+            WHERE ps_id = ?";
+    $bindvars = array($title, $description, xarVarPrepForOs($viewTemplate), $hideframe, $blockfromlist, $folderID);
+    $result =& $dbconn->Execute($sql,$bindvars);
     if (!$result) return;
 
     return true;

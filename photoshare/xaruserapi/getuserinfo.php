@@ -26,9 +26,9 @@ function photoshare_userapi_getuserinfo($args)
     
     $sql = "SELECT     SUM(ps_bytesize)
               FROM     $imagesTable 
-              WHERE    ps_owner = " . xarVarPrepForStore($uid);
+              WHERE    ps_owner = ?";
     
-    $result =& $dbconn->execute($sql);
+    $result =& $dbconn->execute($sql,array($uid));
     
     if (!$result) return; 
     

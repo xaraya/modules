@@ -33,7 +33,8 @@ function photoshare_userapi_getfolders($args)
     
     $whereSQL = ($getForList ? "NOT f.ps_blockfromlist " : "");
     //TODO : topics
-    //$topicRestriction = (isset($topic) ? "ps_topic = " . xarVarPrepForStore($topic) : '');
+    //$topicRestriction = (isset($topic) ? "ps_topic = ? ": '');
+    // $bindvars ADAPT NEEDED
     
     $topicsJoin = "";
     
@@ -53,28 +54,33 @@ function photoshare_userapi_getfolders($args)
         //}
     }
     // Open up for use of view key
+    $bindvars = array();
     if (isset($viewKey)) {
         if (strlen($whereSQL) > 0)
             $whereSQL .= " AND ";
-        $whereSQL .= "f.ps_viewkey = '" . xarVarPrepForStore($viewKey) ."'";
+        $whereSQL .= "f.ps_viewkey = ? ";
+        $bindvars[] = $viewKey;
     }
 
     if (isset($folderID)){
         if (strlen($whereSQL) > 0)
             $whereSQL .= " AND ";
-        $whereSQL .= "f.ps_id = " . xarVarPrepForStore($folderID);
+        $whereSQL .= "f.ps_id = ?";
+        $bindvars[] = $folderID;
     }
     
     if (isset($ownerID)){
         if (strlen($whereSQL) > 0)
             $whereSQL .= " AND ";
-        $whereSQL .= "f.ps_owner = " . xarVarPrepForStore($ownerID);
+        $whereSQL .= "f.ps_owner = ?";
+        $bindvars[] = $ownerID;
     }
     
     if (isset($parentFolderID)) {
         if (strlen($whereSQL) > 0)
             $whereSQL .= " AND ";
-        $whereSQL .= "f.ps_parentfolder = " . xarVarPrepForStore($parentFolderID);
+        $whereSQL .= "f.ps_parentfolder = ?";
+        $bindvars[] = $parentFolderID;
     }
 
     //TODO: Topics
@@ -112,7 +118,7 @@ function photoshare_userapi_getfolders($args)
     if (strlen($whereSQL) > 0)
         $whereSQL = 'WHERE '.$whereSQL;
     $sql .= ' '.$whereSQL.' GROUP BY f.ps_id '.$orderBySQL;
-    $result =& $dbconn->execute($sql);
+    $result =& $dbconn->execute($sql,$bindvars);
 
     if (!$result) return;
 
