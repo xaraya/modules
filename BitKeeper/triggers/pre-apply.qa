@@ -3,6 +3,11 @@
 # Trigger which does sanity checking to the merged changes
 # this runs in the RESYNC tree.
 
+# Override switch
+if [ X$BK_RUNQA == Xno ]; then
+exit 0
+fi
+
 # Only run this script on the server
 if [ X$BK_SIDE != Xserver ]
 then exit 0
