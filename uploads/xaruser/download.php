@@ -1,8 +1,8 @@
 <?php
 function uploads_user_download()
 {
-    //get filter
-    //TODO: Place correct filters, only fileId OR filename is required, not both.  filename is a string
+    if (!xarSecurityCheck('ViewUploads')) return;
+    
     if (!xarVarFetch('fileId', 'int:1:', $fileId)) return;
 
     $fileInfo = xarModAPIFunc('uploads','user','db_get_file', array('fileId' => $fileId));
@@ -24,7 +24,7 @@ function uploads_user_download()
     $instance = implode(':', $instance);
     
     if (xarSecurityCheck('ViewUploads', 1, 'File', $instance)) {
-        if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM) {
+        if ($fileInfo['storeType'] & _UPLOADS_STORE_FILESYSTEM || ($fileInfo['storeType'] == _UPLOADS_STORE_DB_ENTRY)) {
             if (!file_exists($fileInfo['fileLocation'])) {
                 $msg = xarML('File [#(1)] does not exist in FileSystem.', $fileInfo['fileName']);
                 xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new SystemException($msg));
@@ -36,7 +36,8 @@ function uploads_user_download()
                 xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_ERR_NO_FILE', new SystemException($msg));
                 return;
             }
-        }
+        }        
+        
         $result = xarModAPIFunc('uploads', 'user', 'file_push', $fileInfo);
         
         if (!$result || xarCurrentErrorType() !== XAR_NO_EXCEPTION) {

@@ -21,12 +21,14 @@ function uploads_xartables()
     // Get the name for the uploads item table.  This is not necessary 
     // but helps in the following statements and keeps them readable 
     $fileEntry_table = xarDBGetSiteTablePrefix() . '_file_entry'; 
-    $fileData_table   = xarDBGetSiteTablePrefix() . '_file_data'; 
- 
+    $fileData_table  = xarDBGetSiteTablePrefix() . '_file_data'; 
+    $fileAssoc_table = xarDBGetSiteTablePrefix() . '_file_assoc';
+    
     // Set the table name 
-    $xartable['file_entry'] = $fileEntry_table; 
-    $xartable['file_data'] = $fileData_table; 
- 
+    $xartable['file_entry']         = $fileEntry_table; 
+    $xartable['file_data']          = $fileData_table; 
+    $xartable['file_associations']  = $fileAssoc_table;
+    
     // Return the table information 
     return $xartable; 
 } 

@@ -70,7 +70,7 @@ function uploads_userapi_file_push( $args ) {
     // Start buffering for the file
     ob_start();
     
-    if ($storeType & _UPLOADS_STORE_FILESYSTEM) {
+    if ($storeType & _UPLOADS_STORE_FILESYSTEM || ($storeType == _UPLOADS_STORE_DB_ENTRY)) {
         
         $fp = @fopen($fileLocation, 'rb');
         if(is_resource($fp))   {

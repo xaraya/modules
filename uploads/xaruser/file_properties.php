@@ -7,6 +7,7 @@ xarModAPILoad('uploads','user');
 
 function uploads_user_file_properties( $args ) {
 
+    if (!xarSecurityCheck('ViewUploads')) return;
     if (!xarVarFetch('fileId', 'int:1', $fileId)) return;
     
     if (!isset($fileId)) {

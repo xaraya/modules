@@ -67,11 +67,13 @@ function uploads_init()
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     
-    $fileEntry_table = $xartable['file_entry'];
-    $fileData_table = $xartable['file_data'];
-
+    $file_entry_table = $xartable['file_entry'];
+    $file_data_table  = $xartable['file_data'];
+    $file_assoc_table = $xartable['file_associations'];
+    
     xarDBLoadTableMaintenanceAPI();
-    $fileEntry_fields = array(
+    
+    $file_entry_fields = array(
         'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
         'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>FALSE),
@@ -85,11 +87,10 @@ function uploads_init()
         
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
-    $query   =  xarDBCreateTable($fileEntry_table, $fileEntry_fields);
+    $query   =  xarDBCreateTable($file_entry_table, $file_entry_fields);
     $result  =& $dbconn->Execute($query);
-    if (!$result) return;
-
-    $fileData_fields = array(
+    
+    $file_data_fields = array(
         'xar_fileData_id'  => array('type'=>'integer','size'=>'big','null'=>FALSE,'increment'=>TRUE, 'primary_key'=>TRUE),
         'xar_fileEntry_id' => array('type'=>'integer','size'=>'big','null'=>FALSE),
         'xar_fileData'     => array('type'=>'blob','size'=>'medium','null'=>FALSE)
@@ -97,11 +98,22 @@ function uploads_init()
         
     // Create the Table - the function will return the SQL is successful or
     // raise an exception if it fails, in this case $sql is empty
-    $query  =  xarDBCreateTable($fileData_table, $fileData_fields);
+    $query  =  xarDBCreateTable($file_data_table, $file_data_fields);
     $result =& $dbconn->Execute($query);
-    if (!$result) return;
  
-    $xartable = xarDBGetTables();
+    $file_assoc_fields = array(
+        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+        'xar_modid'        => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+        'xar_itemtype'     => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE, 'default'=>'0'),
+        'xar_objectid'       => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE, 'default'=>'0'),
+    );
+        
+        
+    // Create the Table - the function will return the SQL is successful or
+    // raise an exception if it fails, in this case $sql is empty
+    $query   =  xarDBCreateTable($file_assoc_table, $file_assoc_fields);
+    $result  =& $dbconn->Execute($query);
+    
     $instances[0]['header'] = 'external';
     $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
     $instances[0]['limit']  = 0;
@@ -125,6 +137,14 @@ function uploads_init()
          return;
     }
     
+    
+    if (xarCurrentErrorType() !== XAR_NO_EXCEPTION) {
+        // if there was an error, make sure to remove the tables 
+        // so the user can try the install again
+        uploads_delete();
+        return;
+    }
+
     return true;
 }
 
@@ -172,7 +192,6 @@ function uploads_upgrade($oldversion)
             $result =& $dbconn->Execute($query);
             if (!$result) return;
             
-            break;
         case .04:
         case .05:
             //Add mimetype column to DB
@@ -215,6 +234,7 @@ function uploads_upgrade($oldversion)
             $uploads_blobs_table = xarDBGetSiteTablePrefix() . "_uploadblobs";
  
             $file_entry_table    = $xartables['file_entry'];
+            $file_assoc_table    = $xartables['file_associations'];
             $file_data_table     = $xartables['file_data'];
             
             
@@ -258,26 +278,25 @@ function uploads_upgrade($oldversion)
             }
             
             // Create the new tables
-            $fileEntry_fields = array(
-		        'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
-        		'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
-        		'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>FALSE),
-        		'xar_location'     => array('type'=>'varchar', 'size'=>255,   'null'=>FALSE),
-        		'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE,  'default'=>'0'),
-        		'xar_filesize'     => array('type'=>'integer', 'size'=>'big',    'null'=>FALSE),
-        		'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny',     'null'=>FALSE),
-        		'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
+            $file_entry_fields = array(
+                'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
+                'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+                'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>FALSE),
+                'xar_location'     => array('type'=>'varchar', 'size'=>255,   'null'=>FALSE),
+                'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE,  'default'=>'0'),
+                'xar_filesize'     => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+                'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE),
+                'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
             );
 
 
             // Create the Table - the function will return the SQL is successful or
             // raise an exception if it fails, in this case $sql is empty
-            $query   =  xarDBCreateTable($file_entry_table, $fileEntry_fields);
+            $query   =  xarDBCreateTable($file_entry_table, $file_entry_fields);
             $result  =& $dbconn->Execute($query);
             if (!$result) { 
-                // if there was an error, make sure to remove the table 
-                // so the user can try the upgrade again
-                xarDBDropTable($file_entry_table);
+                $query = xarDBDropTable($file_entry_table);
+                $result =& $dbconn->Execute($query);
                 return;
             }
             
@@ -313,7 +332,7 @@ function uploads_upgrade($oldversion)
                 }
             }
             
-            $fileData_fields = array(
+            $file_data_fields = array(
                 'xar_fileData_id'  => array('type'=>'integer','size'=>'big','null'=>FALSE,'increment'=>TRUE, 'primary_key'=>TRUE),
                 'xar_fileEntry_id' => array('type'=>'integer','size'=>'big','null'=>FALSE),
                 'xar_fileData'     => array('type'=>'blob','size'=>'medium','null'=>FALSE)
@@ -321,13 +340,37 @@ function uploads_upgrade($oldversion)
 
             // Create the Table - the function will return the SQL is successful or
             // raise an exception if it fails, in this case $sql is empty
-            $query  =  xarDBCreateTable($file_data_table, $fileData_fields);
+            $query  =  xarDBCreateTable($file_data_table, $file_data_fields);
             $result =& $dbconn->Execute($query);
             if (!$result) {
                 // if there was an error, make sure to remove the tables 
                 // so the user can try the upgrade again
                 $query[] = xarDBDropTable($file_entry_table);
                 $query[] = xarDBDropTable($file_data_table);
+                foreach ($query as $run) {
+                    $result =& $dbconn->Execute($run);
+                }
+                return;
+            }
+
+            $file_assoc_fields = array(
+                'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+                'xar_modid'        => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
+                'xar_itemtype'     => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE, 'default'=>'0'),
+                'xar_objectid'       => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE, 'default'=>'0'),
+            );
+
+
+            // Create the Table - the function will return the SQL is successful or
+            // raise an exception if it fails, in this case $sql is empty
+            $query   =  xarDBCreateTable($file_assoc_table, $file_assoc_fields);
+            $result  =& $dbconn->Execute($query);
+            if (!$result) {
+                // if there was an error, make sure to remove the tables 
+                // so the user can try the upgrade again
+                $query[] = xarDBDropTable($file_entry_table);
+                $query[] = xarDBDropTable($file_data_table);
+                $query[] = xarDBDropTable($file_assoc_table);
                 foreach ($query as $run) {
                     $result =& $dbconn->Execute($run);
                 }
@@ -491,6 +534,15 @@ function uploads_delete()
     $result =& $dbconn->Execute($query);
     xarExceptionHandled();
 
+    // Generate the SQL to drop the table using the API
+    $query = xarDBDropTable($xartables['file_associations']);
+    if (empty($query)) 
+        return; // throw back
+
+    // Drop the table and send exception if returns false.
+    $result =& $dbconn->Execute($query);
+    xarExceptionHandled();
+    
     return true;
 }
 

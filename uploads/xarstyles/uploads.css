@@ -1,0 +1,29 @@
+.xar-uploads-attachment-wrapper
+{
+    float: left;
+    width: 100%;
+}
+
+.xar-uploads-clearer
+{
+    clear: left;
+    display: block;
+    line-height: 14px;
+    height: 0;
+}
+
+.xar-uploads-icon
+{
+    float: left;
+    width: 60px;
+    border: 0px solid #999;
+    margin: 0 15px 15px 0;
+    padding: 5px;
+}
+
+.xar-uploads-icon img
+{
+    float: left;
+    width: 24;
+    height: 26;
+}

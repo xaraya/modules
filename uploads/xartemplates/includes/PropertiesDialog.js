@@ -1,6 +1,11 @@
-function PropertiesDialog(sLocation, sFileName) {
+function openDialog(sLocation, sTitle, iWidth, iHeight) {
         
     window.open(sLocation, 
-                sFileName, 
-                'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=500,height=375,left=20,top=20');
+                sTitle, 
+                'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=' + iWidth + ',height=' + iHeight + ',left=20,top=20');
 }
+
+function PropertiesDialog(sLocation, sFileName) {
+    openDialog(sLocation, sFileName, 500, 375);
+}
+

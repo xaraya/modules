@@ -32,7 +32,7 @@ function uploads_userapi_db_get_file( $args )  {
     
     if (isset($fileId)) {
         if (is_array($fileId)) {
-            $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileIds) . ')';
+            $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileId) . ')';
         } elseif (!empty($fileId)) {
             $where[] = "xar_fileEntry_id = $fileId";
         }
@@ -41,7 +41,7 @@ function uploads_userapi_db_get_file( $args )  {
     if (isset($fileName) && !empty($fileName)) {
         $where[] = "(xar_filename LIKE '$fileName')";
     }
-        
+
     if (isset($fileStatus) && !empty($fileStatus)) {
         $where[] = "(xar_status = $fileStatus)";
     }
@@ -114,19 +114,20 @@ function uploads_userapi_db_get_file( $args )  {
     while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         
-        $fileInfo['fileId']       = $row['xar_fileentry_id'];
-        $fileInfo['userId']       = $row['xar_user_id'];
-        $fileInfo['userName']     = xarUserGetVar('name',$row['xar_user_id']);
-        $fileInfo['fileName']     = $row['xar_filename'];
-        $fileInfo['fileLocation'] = $row['xar_location'];
-        $fileInfo['fileSize']     = $row['xar_filesize'];
-        $fileInfo['fileStatus']   = $row['xar_status'];
-        $fileInfo['fileType']     = $row['xar_mime_type'];
-        $fileInfo['fileTypeInfo'] = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
-        $fileInfo['storeType']    = $row['xar_store_type'];
-        $fileInfo['mimeImage']    = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
-        $fileInfo['fileURL']      = xarServerGetBaseURL() . str_replace($base_directory, '', $fileInfo['fileLocation']);
-        $fileInfo['fileDownload'] = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
+        $fileInfo['fileId']        = $row['xar_fileentry_id'];
+        $fileInfo['userId']        = $row['xar_user_id'];
+        $fileInfo['userName']      = xarUserGetVar('name',$row['xar_user_id']);
+        $fileInfo['fileName']      = $row['xar_filename'];
+        $fileInfo['fileLocation']  = $row['xar_location'];
+        $fileInfo['fileSize']      = $row['xar_filesize'];
+        $fileInfo['fileStatus']    = $row['xar_status'];
+        $fileInfo['fileType']      = $row['xar_mime_type'];
+        $fileInfo['fileTypeInfo']  = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
+        $fileInfo['storeType']     = $row['xar_store_type'];
+        $fileInfo['mimeImage']     = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
+        $fileInfo['fileURL']       = xarServerGetBaseURL() . str_replace($base_directory, '', $fileInfo['fileLocation']);
+        $fileInfo['fileDownload']  = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
+        $fileInfo['DownloadLabel'] = xarML('Download file: #(1)', $fileInfo['fileName']);
         
         if (stristr($fileInfo['fileLocation'], $importDir)) {
             $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'imports', $fileInfo['fileLocation']));

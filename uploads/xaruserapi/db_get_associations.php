@@ -8,27 +8,29 @@
  * @param   integer fileId    The id of the file we are going to associate with an item
  * @param   integer modId     The id of module this file is associated with
  * @param   integer itemType  The item type within the defined module 
- * @param   integer itemId    The id of the item types item
+ * @param   integer objectId    The id of the item types item
  *
- * @returns array   A list of associations, including the fileId -> ModId -> ItemType -> ItemId
+ * @returns array   A list of associations, including the fileId -> ModId -> ItemType -> objectId
  */
  
-function uploads_userapi_db_get_file( $args )  {
+function uploads_userapi_db_get_associations( $args )  {
     
     extract($args);
     
+    $whereList = array();
+    
     if (isset($fileId)) {
-        $whereList[] = ' (xar_fileEntry_id = $fileId) ';
+        $whereList[] = " (xar_fileEntry_id = $fileId) ";
     }
     
     if (isset($modId)) {
-        $whereList[] .= ' AND (xar_modid = $modId)';
+        $whereList[] .= " (xar_modid = $modId) ";
         
         if (isset($itemType)) {
-            $whereList[] .= ' AND (xar_itemtype = $itemType)';
+            $whereList[] .= " (xar_itemtype = $itemType) ";
             
-            if (isset($itemId)) {
-                $whereList[] .= ' AND (xar_itemid = $itemId)';
+            if (isset($objectId)) {
+                $whereList[] .= " (xar_objectid = $objectId) ";
             }
         } 
     }
@@ -46,14 +48,18 @@ function uploads_userapi_db_get_file( $args )  {
         // table and column definitions
     $file_assoc_table = $xartable['file_associations'];
     
-    $sql = "SELECT COUNT(xar_fileEntry_id) AS total
+    $sql = "SELECT 
+                    xar_fileEntry_id,
+                    xar_modid,
+                    xar_itemtype,
+                    xar_objectid
               FROM $file_assoc_table
             $where";
     
     $result = $dbconn->Execute($sql);
-
+    
     if (!$result)  {
-        return;
+        return array();
     }
 
     // if no record found, return an empty array        
@@ -67,12 +73,11 @@ function uploads_userapi_db_get_file( $args )  {
         $fileAssoc['fileId']   = $row['xar_fileentry_id'];
         $fileAssoc['modId']    = $row['xar_modid'];
         $fileAssoc['itemType'] = $row['xar_itemtype'];
-        $fileAssoc['itemId']   = $row['xar_itemid'];
+        $fileAssoc['objectId']   = $row['xar_objectid'];
         
         $fileList[$fileAssoc['fileId']] = $fileAssoc;
         $result->MoveNext();
     }
-    
     return $fileList;
 }
 

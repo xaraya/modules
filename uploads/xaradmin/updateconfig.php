@@ -26,14 +26,15 @@ function uploads_admin_updateconfig()
         foreach ($path as $varname => $value) {
             // check to make sure that the value passed in is 
             // a real uploads module variable
+            $value = ereg_replace('\/$', '', $value);
             if (NULL !== xarModGetVar('uploads', 'path.' . $varname)) {
                 xarModSetVar('uploads', 'path.' . $varname, $value);
             }
         }
     }
 
-	// FIXME: change only if the imports-directory was changed? <rabbitt>
-	// Now update the 'current working imports directory' in case the 
+    // FIXME: change only if the imports-directory was changed? <rabbitt>
+    // Now update the 'current working imports directory' in case the 
     // imports directory was changed. We do this by first deleting the modvar
     // and then recreating it to ensure that the user's version is cleared
     xarModDelVar('uploads', 'path.imports-cwd');

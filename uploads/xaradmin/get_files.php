@@ -42,6 +42,16 @@ function uploads_admin_get_files() {
         case _UPLOADS_GET_LOCAL:
             if (!xarVarFetch('fileList', 'list:regexp:/(?<!\.{2,2}\/)[\w\d]*/', $fileList)) return;
             if (!xarVarFetch('file_all', 'checkbox', $file_all, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('addbutton', 'str:1', $addbutton, '',  XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('delbutton', 'str:1', $delbutton, '',  XARVAR_NOT_REQUIRED)) return;
+            
+            if (empty($addbutton) && empty($delbutton)) {
+                $msg = xarML('Unsure how to proceed - missing button action!');
+                xarExceptionSet(XAR_SYSTME_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+                return;
+            } else {
+                $args['bAction'] = (!empty($addbutton)) ? $addbutton : $delbutton;
+            }
             
             $cwd = xarModGetUserVar('uploads', 'path.imports-cwd');
             foreach ($fileList as $file) {
@@ -55,18 +65,20 @@ function uploads_admin_get_files() {
         default:
         case _UPLOADS_GET_REFRESH_LOCAL:
             if (!xarVarFetch('inode', 'regexp:/(?<!\.{2,2}\/)[\w\d]*/', $inode, '', XARVAR_NOT_REQUIRED)) return;
+            
             $cwd = xarModAPIFunc('uploads', 'user', 'import_chdir', array('dirName' => isset($inode) ? $inode : NULL));
 
-            $data['storeType']['DB_FULL']   = _UPLOADS_STORE_DB_FULL;
-            $data['storeType']['FSDB']      = _UPLOADS_STORE_FSDB;
-            $data['inodeType']['DIRECTORY'] = _INODE_TYPE_DIRECTORY;
-            $data['inodeType']['FILE']      = _INODE_TYPE_FILE;
-            $data['getAction']['LOCAL']     = _UPLOADS_GET_LOCAL;
-            $data['getAction']['EXTERNAL']  = _UPLOADS_GET_EXTERNAL;
-            $data['getAction']['UPLOAD']    = _UPLOADS_GET_UPLOAD;
-            $data['getAction']['REFRESH']   = _UPLOADS_GET_REFRESH_LOCAL;
-            
-            $data['local_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
+            $data['storeType']['DB_FULL']     = _UPLOADS_STORE_DB_FULL;
+            $data['storeType']['FSDB']        = _UPLOADS_STORE_FSDB;
+            $data['inodeType']['DIRECTORY']   = _INODE_TYPE_DIRECTORY;
+            $data['inodeType']['FILE']        = _INODE_TYPE_FILE;
+            $data['getAction']['LOCAL']       = _UPLOADS_GET_LOCAL;
+            $data['getAction']['EXTERNAL']    = _UPLOADS_GET_EXTERNAL;
+            $data['getAction']['UPLOAD']      = _UPLOADS_GET_UPLOAD;
+            $data['getAction']['REFRESH']     = _UPLOADS_GET_REFRESH_LOCAL;
+            $data['local_add_button']         = xarML('Add Files');
+            $data['local_del_button']         = xarML('Delete Files');
+            $data['local_import_post_url']    = xarModURL('uploads', 'admin', 'get_files');
             $data['external_import_post_url'] = xarModURL('uploads', 'admin', 'get_files');
             $data['upload_post_url'] = xarModURL('uploads', 'admin', 'get_files');
             $data['fileList'] = xarModAPIFunc('uploads', 'user', 'import_get_filelist', 

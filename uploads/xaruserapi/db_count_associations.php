@@ -8,7 +8,7 @@
  * @param   integer fileId    The id of the file 
  * @param   integer modId     The id of module this file is associated with
  * @param   integer itemType  The item type within the defined module 
- * @param   integer itemId    The id of the item types item
+ * @param   integer objectId    The id of the item types item
  
  * @returns integer           The total number of assocations for particular file/module/itemtype/item combination
  */
@@ -29,8 +29,8 @@ function uploads_userapi_db_count_assocations( $args )  {
         if (isset($itemType)) {
             $whereList[] .= ' AND (xar_itemtype = $itemType)';
             
-            if (isset($itemId)) {
-                $whereList[] .= ' AND (xar_itemid = $itemId)';
+            if (isset($objectId)) {
+                $whereList[] .= ' AND (xar_objectid = $objectId)';
             }
         } 
     }

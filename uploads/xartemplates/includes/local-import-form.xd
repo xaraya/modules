@@ -65,7 +65,7 @@
                             </td>
                             <td width="65%" class="xar-norm" align="left">&nbsp;
                                 <xar:if condition="$loop:item['inodeType'] eq $inodeType['DIRECTORY']">
-                                    <a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => $loop:item['fileName'], 'action' => $getAction['REFRESH']))#"
+                                    <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                                        alt="#xarML('Open Folder')#"
                                        title="#xarML('Open Folder')#">
                                         <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">
@@ -90,7 +90,7 @@
                             </td>
                             <td width="65%" class="xar-accent" align="left">&nbsp;
                                 <xar:if condition="$loop:item['inodeType'] eq $inodeType['DIRECTORY']">
-                                    <a href="#xarModURL('uploads', 'admin', 'get_files', array('inode' => $loop:item['fileName'], 'action' => $getAction['REFRESH']))#"
+                                    <a href="#$local_import_post_url#&amp;inode=#$loop:item['fileName']#&amp;action=#$getAction['REFRESH']#"
                                        alt="#xarML('Open Folder')#"
                                        title="#xarML('Open Folder')#">
                                         <img src="#xarTplGetImage('folder.png', 'uploads')#" width="16" height="18">
@@ -113,7 +113,8 @@
                 <tr>
                     <td colspan="3" class="xar-accent xar-accent-outline">
                         <div class="xar-norm">
-                            <input type="submit" name="button" id="button" value="#xarML('Import')#" />
+                            <input type="submit" name="addbutton" id="addbutton" value="#$local_add_button#" />
+                            <input type="submit" name="delbutton" id="delbutton" value="#$local_del_button#" />
                             <input type="hidden" name="action" id="action" value="#$getAction['LOCAL']#" />
                             <input type="hidden" name="authid" value="#$authid#" />
                         </div>
