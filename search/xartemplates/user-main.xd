@@ -53,7 +53,6 @@
 	&nbsp;&nbsp;&nbsp; <input type="submit" value="Search" />
 	&nbsp;&nbsp;&nbsp;<input type="reset" value="Reset Form" /></p>
 	<p><label for="author"><xar:mlstring>By author</xar:mlstring>:</label> <input type="text" name="author" id="author" size="20" /></p>
-	</form>
 
 	<xar:if condition="!empty($query)">
 	<p><xar:mlstring>Search term</xar:mlstring> : <b>#$query#</b></p>
@@ -65,6 +64,7 @@
 	<hr />
 	#$output#
 	<br /><br />
+	</form>
 </xar:if>
 </div>
 </div>
