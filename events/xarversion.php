@@ -1,8 +1,8 @@
 <?php 
-// $Id: xarversion.php,v 1.2 2002/08/09 18:46:29 johnny Exp $
+// $Id$
 $modversion['name'] = 'Events';
 $modversion['id'] = '69';
-$modversion['version'] = '0.1';
+$modversion['version'] = '0.1.0';
 $modversion['description'] = 'Events showcase &amp; tickets booking module for Xaraya';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
