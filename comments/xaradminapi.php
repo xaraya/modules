@@ -161,8 +161,11 @@ function comments_adminapi_delete_branch( $args )
 
     $sql = "DELETE
               FROM  $xartable[comments]
-             WHERE  $ctable[left]   >= $left
-               AND  $ctable[right]  <= $right";
+             WHERE  $ctable[left]    >= $left
+               AND  $ctable[right]   <= $right
+               AND  $ctable[modid]    = $modid
+               AND  $ctable[itemtype] = $itemtype
+               AND  $ctable[objectid] = '$objectid'";
 
     $result =& $dbconn->Execute($sql);
 
@@ -217,16 +220,26 @@ function comments_adminapi_delete_object_nodes( $args )
         $itemtype = 0;
     }
 
-    // Grab the root node's values for the specified modid/objectid combo
-    $args = array('modid'    => $modid, 
-                  'objectid' => $objectid, 
-                  'itemtype' => $itemtype);
-    $root_node = xarModAPIFunc('comments','user','get_node_root', $args);
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
-    // Delete the entire branch in the tree for this objectid
-    return xarModAPIFunc('comments','admin','delete_branch',
-                          array('node' => $root_node['xar_cid']));
+    $ctable = &$xartable['comments_column'];
 
+    $sql = "DELETE
+              FROM  $xartable[comments]
+             WHERE  $ctable[modid]    = $modid
+               AND  $ctable[itemtype] = $itemtype
+               AND  $ctable[objectid] = '$objectid'";
+
+    $result =& $dbconn->Execute($sql);
+
+    if (!isset($result)) {
+        return;
+    } elseif (!$dbconn->Affected_Rows()) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
 }
 
 /**
