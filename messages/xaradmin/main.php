@@ -19,8 +19,8 @@ function messages_admin_main() {
     xarResponseRedirect(
         xarModURL(
             'messages'
-            ,'user'
-            ,'view' ));
+            ,'admin'
+            ,'config' ));
     return true;
 
 }
