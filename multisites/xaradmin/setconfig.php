@@ -195,7 +195,8 @@ global $HTTP_SERVER_VARS;
 
 return true;
 }
-function lengthcompare ($a, $b) {
+function lengthcompare ($a, $b) 
+{
     if (strlen($a) > strlen($b)) return 0;
     return ($a > $b) ? -1 : 1;
 }

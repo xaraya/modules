@@ -96,7 +96,8 @@ function multisites_upgrade($oldversion)
     return true;
 }
 
-function multisites_delete() {
+function multisites_delete() 
+{
 global $HTTP_HOST;
 
     //Remove the multisites database

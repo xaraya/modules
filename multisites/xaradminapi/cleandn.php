@@ -23,7 +23,8 @@ function multisites_adminapi_cleandn($sitedn)
 
 return $sitedn;
 }
-function lengthcmp ($a, $b) {
+function lengthcmp ($a, $b) 
+{
     if (strlen($a) > strlen($b)) return 0;
     return ($a > $b) ? -1 : 1;
 }
