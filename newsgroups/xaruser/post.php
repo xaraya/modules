@@ -104,7 +104,8 @@ function newsgroups_user_post()
 
             $newsgroups = new Net_NNTP();
             $newsgroups -> connect($server, $port);
-            $response = $newsgroups->post($subject, $group, $email .'('. $name .')', $body, $addheader);
+            $from = '"' . $name .'" <' . $email '>';
+            $response = $newsgroups->post($subject, $group, $from, $body, $addheader);
             $newsgroups -> quit();
 
 
