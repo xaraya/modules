@@ -1,0 +1,95 @@
+<!-- admin menu configuration template -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthphpBB2 Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2>#$configadmin#</h2>
+
+<!-- BL style form for authphpbb2 configuration options -->
+<div style="marigin: auto;">
+    <form method="post" action="&xar-modurl-authphpbb2-admin-updateconfig;">
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span><xar:mlstring>Server</xar:mlstring>: </span>
+            </span>
+            <span>
+                    <input type="text" name="server" value="#$server#" />
+            </span>
+        </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span><xar:mlstring>DB type (ADOdb "driver": 'mysql', 'postgres' etc)</xar:mlstring>: </span>
+            </span>
+            <span>
+                    <input type="text" name="dbtype" value="#$dbtype#" />
+            </span>
+        </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span><xar:mlstring>Database</xar:mlstring>: </span>
+            </span>
+            <span>
+                    <input type="text" name="database" value="#$database#" />
+            </span>
+        </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span> <xar:mlstring>Username</xar:mlstring>: </span>
+            </span>
+            <span>
+                    <input type="text" name="username" value="#$username#" />
+            </span>
+        </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span> <xar:mlstring>Password</xar:mlstring>: </span>
+            </span>
+            <span>
+                    <input type="password" name="password" value="#$password#" />
+            </span>
+        </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span><xar:mlstring>phpBB2 table prefix</xar:mlstring>: </span>
+            </span>
+            <span>
+                    <input type="text" name="prefix" value="#$prefix#" />
+            </span>
+        </div>
+
+        <div style="clear: both; padding: 5px;">
+            <span>
+                <span class="help" title="#$adduserhelp#"><label for="adduservalue">#$adduser#:</label></span>
+            </span>
+            <span>
+                <xar:if condition="$adduservalue eq 'checked' ">
+                    <input type="checkbox" name="adduser" value="1" checked="checked" />
+                <xar:else />
+                    <input type="checkbox" name="adduser" value="1" />
+                </xar:if>
+            </span>
+        </div>
+        <div style="clear: both; padding: 5px;">
+            <span>
+                #$defaultgrouplabel#:
+            </span>
+            <span>
+                <select name="defaultgroup" id="defaultgroup">
+                <xar:loop name="$groups">
+                    <xar:if condition="$loop:item['name'] eq $defaultgroup">
+                        <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+                    <xar:else />
+                        <option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+                    </xar:if>
+                </xar:loop>
+                </select>
+            </span>
+        </div>
+        <br />
+        <!-- submit button -->
+        <span style="padding: 20px; ">
+            <input type="submit" value="#$submitbutton#" />
+        </span>
+</form>
+</div>
+</div>

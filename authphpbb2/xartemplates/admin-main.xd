@@ -1,0 +1,69 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>AuthphpBB2 Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+        <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+        <xar:if condition="file_exists('modules/authphpbb2/xarimages/admin.gif')" >
+            <img src="modules/authphpbb2/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        <xar:else />
+            <img src="modules/base/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+        </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The AuthphpBB2 module allows Xaraya to automatically log users authenticated by the phpBB2 into Xaraya.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>Authentication by AuthphpBB2 is automatically enabled/available once the AuthphpBB2 module has been initialized.  To disable AuthphpBB2 authentication, you must remove the module. But if your phpBB2 settins differ from the defautl ones (they are, sure) you need to set them up in "Admin panel/authphpbb2/Modify Config".</xar:mlstring>
+            <br />
+            <xar:mlstring>Notices:</xar:mlstring>
+            <ul>
+            <li><xar:mlstring>When user logs in using this module new record appears in Xaraya's roles table. And user can change this table using Roles module. But all that changes wouldn't be synchronized back to phpBB2.</xar:mlstring></li>
+            <li><xar:mlstring>Xaraya uses username (login) to refer to phpBB2 users. So if user changes there names in phpBB2 they will get problems in Xaraya account.</xar:mlstring></li>
+            </ul>
+            <br />
+            <xar:mlstring>
+                From the menu, you have one choice.  "Modify Config". 
+            </xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Modify Config -- Here you should set your phpBB2 settings to allow Xaraya to connect to phpBB2 db and get user's info from there. You can also allow a user that has been authenticated by the web server to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
+            </ul>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>No blocks yet. It's possible to add some like "Last messages", "Registered users" etc.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The AuthphpBB2 module has no hooks included at this time.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <xar:mlstring>TODO List</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>The 0.01 version of the AuthphpBB2 module is just a copy/paste-made module. If there will be realized some usefull functionality in any other Auth module, it will be added here too. Now I just don't know clearly how Xaraya works with all that stuff.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>

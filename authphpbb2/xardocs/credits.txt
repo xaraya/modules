@@ -1,0 +1,5 @@
+Credits goes to authors of authsystem, AuthSSO, AuthInvision and AuthLDAP:
+Marie Altobelli
+Andreas Jeitler | Chris Dudley | Richard Cave
+Jonn Beames | Richard Cave
+Marco Canini
