@@ -8,7 +8,7 @@
  * @package modules
  * @copyright (C) 2003 by the Xaraya Development Team.
  * @link http://www.xaraya.com
- * 
+ *
  * @subpackage translations
  * @author Marco Canini
  * @author Marcel van der Boom <marcel@xaraya.com>
@@ -54,13 +54,13 @@ function translations_adminapi_generate_core_skels($args)
     // Load core translations
     $core_backend = xarModAPIFunc('translations','admin','create_backend_instance',array('interface' => 'ReferencesBackend', 'locale' => $locale));
     if (!isset($core_backend)) return;
-    if ($core_backend->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya') &&
+    if ($core_backend->bindDomain(XARMLS_DNTYPE_CORE) &&
         !$core_backend->loadContext(XARMLS_CTXTYPE_FILE, 'core')) return;
 
     // Generate translations skels
     $gen = xarModAPIFunc('translations','admin','create_generator_instance',array('interface' => 'ReferencesGenerator', 'locale' => $locale));
     if (!isset($gen)) return;
-    if (!$gen->bindDomain(XARMLS_DNTYPE_CORE, 'xaraya')) return;
+    if (!$gen->bindDomain(XARMLS_DNTYPE_CORE)) return;
     if (!$gen->create(XARMLS_CTXTYPE_FILE, 'core')) return;
 
     $statistics['core'] = array('entries'=>0, 'keyEntries'=>0);

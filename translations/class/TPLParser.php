@@ -172,10 +172,4 @@ class TPLParser
 
 }
 
-/*
-$p = new TPLParser();
-$p->parse('/home/marco/src/xaraya/html/modules/translations/xartemplates/admin-translate_subtype.xd');
-
-var_dump($p);
-*/
 ?>

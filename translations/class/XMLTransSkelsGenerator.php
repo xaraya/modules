@@ -18,7 +18,7 @@ class XMLTranslationsSkelsGenerator {
         $this->locale = $locale;
     }
 
-    function bindDomain($dnType, $dnName)
+    function bindDomain($dnType, $dnName='xaraya')
     {
         $varDir = xarCoreGetVarDirPath();
 
@@ -71,36 +71,9 @@ class XMLTranslationsSkelsGenerator {
     {
         assert('!empty($this->baseDir)');
         $this->fileName = $this->baseDir;
-        switch ($ctxType) {
-            case XARMLS_CTXTYPE_FILE:
-                $this->fileName .= $ctxName;
-            break;
-            case XARMLS_CTXTYPE_TEMPLATE:
-                $this->fileName .= "templates/$ctxName";
-            break;
-            case XARMLS_CTXTYPE_INCLTEMPL:
-                $this->fileName .= "templates/includes/$ctxName";
-            break;
-            case XARMLS_CTXTYPE_BLKTEMPL:
-                $this->fileName .= "templates/blocks/$ctxName";
-            break;
-            case XARMLS_CTXTYPE_BLOCK:
-                $this->fileName .= "blocks/$ctxName";
-            break;
-            case XARMLS_CTXTYPE_ADMIN:
-                $this->fileName .= "admin/$ctxName";
-            break;
-            case XARMLS_CTXTYPE_ADMINAPI:
-                $this->fileName .= "adminapi/$ctxName";
-            break;
-            case XARMLS_CTXTYPE_USER:
-                $this->fileName .= "user/$ctxName";
-            break;
-            case XARMLS_CTXTYPE_USERAPI:
-                $this->fileName .= "userapi/$ctxName";
-            break;
-        }
-        $this->fileName .= '.xml';
+        $context = $GLOBALS['MLS']->getContextByType($ctxType);
+        if ($context->getDir() != "") $fileName .= $context->getDir() . "/";
+        $this->fileName .= $ctxName . ".xml";
 
         $this->fp = fopen($this->fileName.'.swp', 'w');
 
