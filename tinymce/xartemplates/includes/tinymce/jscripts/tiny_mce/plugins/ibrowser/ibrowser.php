@@ -22,8 +22,18 @@
 unset($tinyMCE_imglib_include);
 
 // include image library config settings
-include 'config.php';
+if (is_file('../../../../../../../../../var/ibrowser/ibrowserconfig.inc')) {
+    include '../../../../../../../../../var/ibrowser/ibrowserconfig.inc';
+} else {
+   //  include '../../../../../ibrowserconfig.inc';
+}
 
+$tinyMCE_dir = 'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/';
+
+if (!ereg('/$', $_SERVER["DOCUMENT_ROOT"]))
+  $tinyMCE_root = $_SERVER["DOCUMENT_ROOT"].$tinyMCE_dir;
+else
+  $tinyMCE_root = $_SERVER["DOCUMENT_ROOT"].substr($tinyMCE_dir,1,strlen($tinyMCE_dir)-1);
 $request_uri = urldecode(empty($_SERVER["REQUEST_URI"])?(empty($_SERVER['REQUEST_URI'])?'':$_SERVER['REQUEST_URI']):$_SERVER['REQUEST_URI']);
 
 // if set include file specified in $tinyMCE_imglib_include
