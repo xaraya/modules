@@ -36,7 +36,7 @@
                     </xar:sec>
                 </span>
             </div>
-            <div class="xar-norm" style="padding: 4px;" align="left">
+            <div class="xar-norm" style="padding: 4px; text-align: left;">
                 #$loop:item['xar_text']#
                 <xar:if condition="$loop:item['xar_branchout'] eq 1">
                     <br />
@@ -44,7 +44,7 @@
                     <a href="#$receipt['returnurl']['decoded']#&amp;header[modid]=#$header['modid']#&amp;header[objectid]=#$header['objectid']#&amp;header[branchout]=1&amp;header[cid]=#$loop:item['xar_cid']#&amp;receipt[returnurl][encoded]=#$receipt['returnurl']['encoded']#"> #$loop:item['nested_text']# </a> &nbsp;&nbsp;&nbsp;
                 </xar:if>
             </div>
-            <div class="xar-norm" style="padding: 1px;" align="left">
+            <div class="xar-norm" style="padding: 1px; text-align: left;">
 				<p>
                 <xar:sec catch="false" mask="Comments-Reply" instance="$header[modid]:$header[objectid]:ALL">
                     <form action="#xarModUrl('comments', 'user', 'reply')#" method="post" style="display: inline;">
@@ -53,7 +53,7 @@
 						<input type="hidden" name="header[pid]" value="#$loop:item['xar_cid']#" />
 						<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
 						<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
-						<input type="submit" name="submit" id="submit" value="reply" />
+						<input type="submit" name="submit" id="submit-reply" value="reply" />
                     </form>
                 </xar:sec>
                 <xar:if condition="xarUserIsLoggedIn()">
@@ -65,7 +65,7 @@
 							<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
 							<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
 							<input type="hidden" name="receipt[action]" value="modify" />
-							<input type="submit" name="submit" id="submit" value="#xarML('Modify')#" />
+							<input type="submit" name="submit" id="submit-modify" value="#xarML('Modify')#" />
                         </form>
                     </xar:if>
                 </xar:if>
@@ -78,7 +78,7 @@
 						<input type="hidden" name="receipt[returnurl][decoded]" value="#$receipt['returnurl']['decoded']#" />
 						<input type="hidden" name="receipt[returnurl][encoded]" value="#$receipt['returnurl']['encoded']#" />
 						<input type="hidden" name="receipt[action]" value="confirm-delete" />
-						<input type="submit" name="submit" id="submit" value="#xarML('Delete')#" />
+						<input type="submit" name="submit" id="submit-delete" value="#xarML('Delete')#" />
                     </form>
                 </xar:sec>
 				</p>
