@@ -9,6 +9,10 @@ function subitems_admin_ddobjectlink_view($args)	{
     for($i = 0; $i < count($items); $i++) 	{
         if(xarModIsAvailable($items[$i]['module']))
 	    	$items[$i]['modinfo'] = xarModGetInfo(xarModGetIdFromName($items[$i]['module']));
+        $objectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                    array('objectid' => $items[$i]['objectid']));
+        if (!empty($objectinfo))
+	    	$items[$i]['label'] = $objectinfo['label'];
     }
 
     $data['ddobjects'] = $items;

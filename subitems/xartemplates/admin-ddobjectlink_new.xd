@@ -12,16 +12,16 @@
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
 <tr>
 <td>
-	Dynamicdata ObjectId:
+	<xar:mlstring>Subitems Object:</xar:mlstring>
 </td>
 <td>
-	<input type="text" name="objectid" value="#$objectid['value']#" />
+	<xar:data-input name="objectid" value="$objectid['value']" type="object" />
 	<span style="color:red">#$objectid['error']->msg#</span>	
 </td>
 </tr>
 <tr>
 <td>
-	Hook-Module Name:
+	<xar:mlstring>Hooked Module Name:</xar:mlstring>
 </td>
 <td>
 	<input type="text" name="modid" value="#$module['value']#" />
@@ -30,7 +30,7 @@
 </tr>
 <tr>
 <td>
-	Hook-Module Itemtype:
+	<xar:mlstring>Hooked Item Type:</xar:mlstring>
 </td>
 <td>
 	<input type="text" name="itemtype" value="#$itemtype['value']#" />
@@ -39,7 +39,7 @@
 </tr>
 <tr>
 <td>
-	Hook-Module Template:
+	<xar:mlstring>Template to use:</xar:mlstring>
 </td>
 <td>
 	<input type="text" name="template" value="#$template['value']#" />

@@ -43,7 +43,7 @@ function subitems_admin_ddobjectlink_new($args)
     $data = xarModAPIFunc('subitems','admin','menu');
     $data = array_merge($result_array,$data);
     $data['submitbutton'] = xarML("Create New DDSubobjectlink");
-    $data['heading'] = xarML("Add Link to Dynamicdata Object");
+    $data['heading'] = xarML("Add Link to Subitems");
 
     return $data;
 }

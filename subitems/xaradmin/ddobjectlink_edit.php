@@ -44,7 +44,14 @@ function subitems_admin_ddobjectlink_edit($args)
     $data = xarModAPIFunc('subitems','admin','menu');
     $data = array_merge($result_array,$data);
     $data['submitbutton'] = xarML("Update DDSubobjectlink");
-    $data['heading'] = xarML("Edit Link to Dynamicdata Object");
+    $objectinfo = xarModAPIFunc('dynamicdata','user','getobjectinfo',
+                                array('objectid' => $objectid));
+    if (!empty($objectinfo)) {
+        $data['label'] = $objectinfo['label'];
+    } else {
+        $data['label'] = xarML('Unknown');
+    }
+    $data['heading'] = xarML('Edit Link to #(1)',$data['label']);
     $data['objectid'] = $objectid;
 
     return $data;

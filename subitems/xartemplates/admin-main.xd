@@ -12,13 +12,26 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <em><xar:mlstring>Example is the documented Xaraya Example Module.</xar:mlstring></em>
-            <xar:mlstring>It is currently responsible for accomplishing these tasks:</xar:mlstring>
-            <ul>
-                <li><xar:mlstring>Gives examples of code commented in plain terms.</xar:mlstring></li>
-                <li><xar:mlstring>Gives examples of templates.</xar:mlstring></li>
-                <li><xar:mlstring>Gives examples of hooks.</xar:mlstring></li>
-            </ul>
+            <em><xar:mlstring>This module allows you to create and display sub-items for any module item. In the words of the author :</xar:mlstring></em>
+            <xar:mlstring>
+<p>For example, if you want to have a pubtype "cooking recipe". This 
+pubtype could be to store the ingredients of the meal, thus there would 
+be required a list of input fields: ingredient1, quantity1, 
+pic1(extended info :-) ) , ingredient2, quantity2, pic2,...</p>
+<p>The disadvantage of this is the high number of fields to ensure, that 
+there your users aren't going against the limit. Furthermore there are 
+always displayed all input fields. And of  course it's not a very nice 
+way to do it.</p>
+<p>As I didn't know how to do this better, I had a dream about a module, 
+which can be hooked from any other module and which is able to display / 
+provide editing / etc. for subitems to an item. I had a dream about a 
+table, which saves the information, which DD-Object stores the subitems 
+of "module" / "itemtype" combination and another table containing which 
+DD-Itemids belong to "module" / "itemtype" / "itemid" in this DD-Object 
+(1 to n Relation). I had the dream to share my module with the community.
+Now, the module is here, and all dreams got true. If you didn't get my 
+technical information, don't worry. </p>
+            </xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
@@ -26,8 +39,20 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>This module is intended as a reference for other modules to use.  Its output is just a basic non-usable output in many cases.</xar:mlstring>
-
+            <xar:mlstring>
+<ol>
+<li> install module</li>
+<li> goto dynamicdata admin area, new object, create a dynamic data object 
+, which should hold the subitem information (you must have one field 
+with the ItemID, default 0, display only) -> remember the objectid, edit 
+label (used for display) and name (used for custom default template)</li>
+<li> goto subitems module, admin area -> add link -> type in objectid (from 
+previsously created dd-object), module name, itemtype</li>
+<li> goto module modules, hooks -> subitems -> enable the hook for the 
+module /itemtype combination, you created the link for</li>
+</ol>
+-> now it should work (tested with custom pubtype)
+            </xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
@@ -35,10 +60,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <ul>
-                <li><xar:mlstring>first</xar:mlstring></li>
-                <li><xar:mlstring>example</xar:mlstring></li>
-            </ul>
+            <xar:mlstring>none</xar:mlstring>
         </div>
         <br />
         <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
@@ -47,17 +69,9 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <ul>
-                <li><xar:mlstring>usermenu -- Allows interface with the "My Account Page"</xar:mlstring></li>
-                <li><xar:mlstring>search -- Allows interface with Search Module</xar:mlstring></li>
+                <li><xar:mlstring>new/create/modify/update/delete -- Allows you to create/update sub-items</xar:mlstring></li>
+                <li><xar:mlstring>display -- Allows you to display sub-items</xar:mlstring></li>
             </ul>
-        </div>
-        <br />
-        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
-            <xar:mlstring>And more.. [for module developers]</xar:mlstring>
-        </div>
-        <br />
-        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Please use this consistent template for your module overview.</xar:mlstring>
         </div>
         <br />
         <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">

@@ -1,6 +1,6 @@
 <xar:template type="module" file="menu" />
 
-<div class="xar-mod-body"><h2><xar:mlstring>Delete Item?</xar:mlstring></h2><br />
+<div class="xar-mod-body"><h2><xar:ml><xar:mlstring>Delete Link to #(1) ?</xar:mlstring><xar:mlvar>#$label#</xar:mlvar></xar:ml></h2><br />
 
 <table width="100%" border="0" cellspacing="1" cellpadding="8">
 <form action="" method="POST" enctype="multipart/form-data">
@@ -12,15 +12,15 @@
     <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />    
 <tr>
 <td>
-	Dynamicdata ObjectId:
+	<xar:mlstring>Subitems Object:</xar:mlstring>
 </td>
 <td>
-	#$objectid#
+	(#$objectid#) #$label#
 </td>
 </tr>
 <tr>
 <td>
-	Hook-Module Id:
+	<xar:mlstring>Hooked Module Name:</xar:mlstring>
 </td>
 <td>
 	#$module#
@@ -28,7 +28,7 @@
 </tr>
 <tr>
 <td>
-	Hook-Module Itemtype:
+	<xar:mlstring>Hooked Item Type:</xar:mlstring>
 </td>
 <td>
 	#$itemtype#
@@ -36,7 +36,7 @@
 </tr>
 <tr>
 <td>
-	Hook-Module Template:
+	<xar:mlstring>Template to use:</xar:mlstring>
 </td>
 <td>
 	#$template#
