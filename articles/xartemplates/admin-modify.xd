@@ -7,6 +7,30 @@
 </div>
 </xar:if>
 
+<xar:comment>retrieve the previous article in publication type ptid (with any status here)</xar:comment>
+<xar:comment>
+<xar:set name="prevartinfo">#xarModAPIFunc('articles','user','getprevious',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#</xar:set>
+</xar:comment>
+
+<xar:comment>retrieve the next article in publication type ptid (with any status here)</xar:comment>
+<xar:comment>
+<xar:set name="nextartinfo">#xarModAPIFunc('articles','user','getnext',array('ptid' => $ptid, 'aid' => $aid, 'status' => array(0,1,2,3)))#</xar:set>
+</xar:comment>
+
+<xar:comment>show a link to modify the previous article with title</xar:comment>
+<xar:comment>
+<xar:if condition="!empty($prevartinfo['aid'])">
+    <a href="#xarModURL('articles','admin','modify',array('aid' => $prevartinfo['aid']))#">&lt;&lt; #xarVarPrepHTMLDisplay($prevartinfo['title'])#</a>
+</xar:if>
+</xar:comment>
+
+<xar:comment>show a link to modify the next article with title</xar:comment>
+<xar:comment>
+<xar:if condition="!empty($nextartinfo['aid'])">
+    <a href="#xarModURL('articles','admin','modify',array('aid' => $nextartinfo['aid']))#">#xarVarPrepHTMLDisplay($nextartinfo['title'])# &gt;&gt;</a>
+</xar:if>
+</xar:comment>
+
 <xar:if condition="!empty($withupload)">
     <form method="post" name="post" id="post" action="&xar-modurl-articles-admin-update;" enctype="multipart/form-data" #$formhooks['formaction']#>
 <xar:else />
@@ -71,6 +95,13 @@
                 <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
                 &nbsp;&nbsp;&nbsp;
                 <input type="submit" value="#$updatelabel#" />
+            <xar:comment>show a link to delete the article</xar:comment>
+            <xar:comment>
+                <xar:sec mask="DeleteArticles" catch="false">
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="#xarModURL('articles','admin','delete',array('aid' => $aid))#"><xar:mlstring>Delete Article</xar:mlstring></a>
+                </xar:sec>
+            </xar:comment>
             </span>
         </div>
     </div>&nbsp; <xar:comment> end of containing float + some dummy content to make sure the outer container wraps up [andyv] </xar:comment>
