@@ -3,6 +3,7 @@
 $modversion['name'] = 'Contact';
 $modversion['id'] = '136';
 $modversion['version'] = '0.2.8';
+$modversion['displayname']      = xarML('Contact');
 $modversion['description'] = 'Xaraya Contact Module';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
