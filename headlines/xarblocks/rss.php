@@ -19,7 +19,11 @@
  */
 function headlines_rssblock_init()
 {
-    return true;
+    return array(
+        'rssurl' => '',
+        'maxitems' => 5,
+        'showdescriptions' => false
+    );
 }
 
 /**
@@ -27,14 +31,16 @@ function headlines_rssblock_init()
  */
 function headlines_rssblock_info()
 {
-    return array('text_type' => 'RSS',
-		 'text_type_long' => 'RSS Newsfeed',
-		 'module' => 'headlines',
-		 'func_update' => 'headlines_rssblock_insert',
-		 'allow_multiple' => true,
-		 'form_content' => false,
-		 'form_refresh' => false,
-		 'show_preview' => true);
+    return array(
+        'text_type' => 'RSS',
+        'text_type_long' => 'RSS Newsfeed',
+        'module' => 'headlines',
+        'func_update' => 'headlines_rssblock_insert',
+        'allow_multiple' => true,
+        'form_content' => false,
+        'form_refresh' => false,
+        'show_preview' => true
+    );
 }
 
 /**
@@ -44,18 +50,19 @@ function headlines_rssblock_info()
 function headlines_rssblock_display($blockinfo)
 {
 
-    // Break out options from our content field
-    $vars = unserialize($blockinfo['content']);
-    $blockinfo['content'] = '';
-
-    if (empty($blockinfo['bid'])){
-        $blockinfo['bid'] = '';
+    // Break out options from our content field.
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
     }
 
+    $blockinfo['content'] = '';
+
     // Check and see if a feed has been supplied to us.
-    if(empty($vars['rssurl'])) {
+    if (empty($vars['rssurl'])) {
         $blockinfo['title'] = xarML('Headlines');
-        $blockinfo['content'] = xarML('No Feed Url Specified');
+        $blockinfo['content'] = xarML('No Feed URL Specified');
         return $blockinfo;
     } else {
         $feedfile = $vars['rssurl'];
@@ -67,8 +74,8 @@ function headlines_rssblock_display($blockinfo)
 
     // Sanitize the URL provided to us since
     // some people can be very mean.
-    $feedfile = preg_replace("/\.\./","donthackthis",$feedfile);
-    $feedfile = preg_replace("/^\//","ummmmno",$feedfile);
+    $feedfile = preg_replace("/\.\./", "donthackthis", $feedfile);
+    $feedfile = preg_replace("/^\//", "ummmmno", $feedfile);
 
     // Require the xmlParser class
     require_once('modules/base/xarclass/xmlParser.php');
@@ -77,12 +84,17 @@ function headlines_rssblock_display($blockinfo)
     require_once('modules/base/xarclass/feedParser.php');
 
     // Get the feed file (from cache or from the remote site)
-    $feeddata = xarModAPIFunc('base', 'user', 'getfile',
-                              array('url' => $feedfile,
-                                    'cached' => true,
-                                    'cachedir' => 'cache/rss',
-                                    'refresh' => 3600,
-                                    'extension' => '.xml'));
+    $feeddata = xarModAPIFunc(
+        'base', 'user', 'getfile',
+        array(
+            'url' => $feedfile,
+            'cached' => true,
+            'cachedir' => 'cache/rss',
+            'refresh' => 3600,
+            'extension' => '.xml'
+        )
+    );
+
     if (!$feeddata) {
         return; // throw back
     }
@@ -97,7 +109,7 @@ function headlines_rssblock_display($blockinfo)
     // print_r($info);
     // print_r($blockinfo['bid']);
 
-    if(isset($info['warning'])) {
+    if (isset($info['warning'])) {
         $blockinfo['title'] = xarML('Headlines');
         $blockinfo['content'] = xarML('Problem with supplied feed');
         return $blockinfo;
@@ -105,7 +117,7 @@ function headlines_rssblock_display($blockinfo)
         foreach ($info as $content){
              $content = array_slice($content, 0, $vars['maxitems']);
              foreach ($content as $newline){
-                    if(is_array($newline)) {
+                    if (is_array($newline)) {
                         if ((isset($newline['description'])) && (!empty($vars['showdescriptions']))){
                             $description = $newline['description'];
                         } else {
@@ -135,51 +147,14 @@ function headlines_rssblock_display($blockinfo)
     $chanlink   =   $info['channel']['link'];
     $chandesc   =   $info['channel']['description'];
 
-    if (empty($blockinfo['template'])) {
-        $template = 'rss';
-    } else {
-        $template = $blockinfo['template'];
-    }
+    $blockinfo['content'] = array(
+        'feedcontent'  => $feedcontent,
+        'blockid'      => $blockinfo['bid'],
+        'chantitle'    => $chantitle,
+        'chanlink'     => $chanlink,
+        'chandesc'     => $chandesc
+    );
 
-    $feed = xarTplBlock('headlines',$template,  array('feedcontent'  => $feedcontent,
-                                                      'blockid'      => $blockinfo['bid'],
-                                                      'chantitle'    => $chantitle,
-                                                      'chanlink'     => $chanlink,
-                                                      'chandesc'     => $chandesc));
-
-    $blockinfo['content'] = $feed;
-    return $blockinfo;
-}
-
-/**
- * Updates the Block config from the Blocks Admin
- * @param $blockinfo array containing title,content
- */
-function headlines_rssblock_insert($blockinfo) 
-{
-    if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('maxitems', 'int', $vars['maxitems'], 5, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], false, XARVAR_NOT_REQUIRED)) return;
-
-/*
-    list($vars['rssurl'],
-         $vars['maxitems'],
-         $vars['showimage'],
-         $vars['showsearch'],
-         $vars['showdescriptions'],
-         $vars['altstyle']) = xarVarCleanFromInput('rssurl',
-                                                  'maxitems',
-                                                  'showimage',
-                                                  'showsearch',
-                                                  'showdescriptions',
-                                                  'altstyle');
-*/
-
-    // Define a default block title
-    if (empty($blockinfo['title'])) {
-        $blockinfo['title'] = xarML('Headlines');
-    }
-    $blockinfo['content']= serialize($vars);
     return $blockinfo;
 }
 
@@ -189,11 +164,13 @@ function headlines_rssblock_insert($blockinfo)
  */
 function headlines_rssblock_modify($blockinfo)
 {
-    $dbconn =& xarDBGetConn();
-    $xartable =& xarDBGetTables();
-
-    // Break out options from our content field
-    $vars = unserialize($blockinfo['content']);
+    // Break out options from our content field.
+    // Prepare for when content is passed in as an array.
+    if (!is_array($blockinfo['content'])) {
+        $vars = unserialize($blockinfo['content']);
+    } else {
+        $vars = $blockinfo['content'];
+    }
 
     // Migrate $row['rssurl'] to content if present
     if (!empty($vars['url'])) {
@@ -203,10 +180,9 @@ function headlines_rssblock_modify($blockinfo)
 
     // Get parameters from whatever input we need
     $vars['items'] = array();
+
     // The user API function is called
-    $links = xarModAPIFunc('headlines',
-                           'user',
-                           'getall');
+    $links = xarModAPIFunc('headlines', 'user', 'getall');
     $vars['items'] = $links;
 
     // Defaults
@@ -224,8 +200,24 @@ function headlines_rssblock_modify($blockinfo)
     }
 
     $vars['blockid'] = $blockinfo['bid'];
-    $content = xarTplBlock('headlines','rssAdmin', $vars);
 
-    return $content;
+    // Just return the template variables.
+    return $vars;
 }
+
+/**
+ * Updates the Block config from the Blocks Admin
+ * @param $blockinfo array containing title,content
+ */
+function headlines_rssblock_insert($blockinfo) 
+{
+    $vars = array();
+    if (!xarVarFetch('rssurl', 'str:1:', $vars['rssurl'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('maxitems', 'int:0', $vars['maxitems'], 5, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVarFetch('showdescriptions', 'checkbox', $vars['showdescriptions'], false, XARVAR_NOT_REQUIRED)) {return;}
+
+    $blockinfo['content'] = $vars;
+    return $blockinfo;
+}
+
 ?>
