@@ -92,7 +92,7 @@ function autolinks_userapi_getall($args)
             $lid, $keyword, $title, $url, $comment, $enabled, $match_re, $cache_replace, $sample, $name,
             $tid, $dynamic_replace, $template_name, $type_name, $type_desc, $itemtype
         ) = $result->fields;
-    	if (xarSecurityCheck('ReadAutolinks', 0, 'All', $name.':'.$lid)) {
+        if (xarSecurityCheck('ReadAutolinks', 0, 'All', $name.':'.$lid)) {
             $links[$lid] = array(
                 'lid' => $lid,
                 'keyword' => $keyword,

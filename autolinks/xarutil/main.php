@@ -6,7 +6,7 @@
 function autolinks_util_main()
 {
     // Security Check
-	if(!xarSecurityCheck('AdminAutolinks')) {return;}
+    if(!xarSecurityCheck('AdminAutolinks')) {return;}
 
     $data = array();
 
