@@ -29,7 +29,7 @@ function keywords_adminapi_separekeywords($args)
     str_replace(':', '', $delimiters);
 
     // Ensure we can fall back to a default.
-    if (empty($delimitors)) {
+    if (empty($delimiters)) {
         // Provide a default.
         $delimiters = ';';
     }
