@@ -1,6 +1,6 @@
 Top Priority:
 -------------
-1. Fix Config options to allow selection of valid methods for 
+1. [DONE] Fix Config options to allow selection of valid methods for
    DD upload properties on per instance basis
 2. Fix storage of absolute path for files to be relative
 3. Add ability to overwrite preexisting files with the same
@@ -10,17 +10,28 @@ Top Priority:
 Med Priority:
 -------------
 
-1. Add hooking functionality to download routines for uploads 
+1. Add hooking functionality to download routines for uploads
    module so that hitcount can be used to monitor downloads
 
 Low Priority: (won't necessarily get done anytime soon)
 ------------
 
-1. Rethink User Interface for the file selection dialogs on 
-   showinput for the dd upload properties  
-2. Allow symlinks to be followed on local import or in trusted dir
+1. Rethink User Interface for the file selection dialogs on
+   showinput for the dd upload properties
+2. [DONE] Allow symlinks to be followed on local import or in trusted dir
 3. Consolidate and standardize uploads nomenclature
     a. change 'Uploads Directory' references to 'Untrusted Directory'
     b. change 'local import sandbox' references to 'Trusted Directory'
 
-    
+
+File Attributes (xar_store_type values):
+
+Bit : Attribute Function             : Name
+ 0  : MetaData Entry in DB           : _UPLOADS_STORE_DB_ENTRY
+ 1  : Contents Stored in FileSystme  : _UPLOADS_STORE_FILESYSTEM
+ 2  : Contents Stored in DB          : _UPLOADS_STORE_DB_DATA
+ 3  : Contents not Saved             : _UPLOADS_STORE_NO_STORE
+ 4  : File Location Trusted          : _UPLOADS_LOCATION_TRUSTED
+ 5  : File Location Untrusted        : _UPLOADS_LOCATION_UNTRUSTED
+ 6  : File Location Other            : _UPLOADS_LOCATION_OTHER
+ 0

@@ -8,15 +8,18 @@
  * ----------------------------------------------------------------------
  * Original Author of file: Marie Altobelli (Ladyofdragons)
  * Purpose of file:  uploads user API
- * ---------------------------------------------------------------------- 
- */ 
- 
-define('_UPLOADS_STORE_DB_ENTRY',   1<<0);
-define('_UPLOADS_STORE_FILESYSTEM', 1<<1);
-define('_UPLOADS_STORE_FSDB',       _UPLOADS_STORE_FILESYSTEM | _UPLOADS_STORE_DB_ENTRY);
-define('_UPLOADS_STORE_DB_DATA',    1<<2);
-define('_UPLOADS_STORE_DB_FULL',    _UPLOADS_STORE_DB_ENTRY | _UPLOADS_STORE_DB_DATA);
-define('_UPLOADS_STORE_TEXT',       1<<3);
+ * ----------------------------------------------------------------------
+ */
+
+define('_UPLOADS_STORE_DB_ENTRY',     1<<0);
+define('_UPLOADS_STORE_FILESYSTEM',   1<<1);
+define('_UPLOADS_STORE_FSDB',         _UPLOADS_STORE_FILESYSTEM | _UPLOADS_STORE_DB_ENTRY);
+define('_UPLOADS_STORE_DB_DATA',      1<<2);
+define('_UPLOADS_STORE_DB_FULL',      _UPLOADS_STORE_DB_ENTRY | _UPLOADS_STORE_DB_DATA);
+define('_UPLOADS_STORE_TEXT',         1<<3);
+define('_UPLOADS_LOCATION_TRUSTED',   1<<4);
+define('_UPLOADS_LOCATION_UNTRUSTED', 1<<5);
+define('_UPLOADS_LOCATION_OTHER',     1<<6);
 
 define('_UPLOADS_STATUS_SUBMITTED', 1);      // File has been recently submitted and needs approving
 define('_UPLOADS_STATUS_APPROVED',  2);      // File has been approved and is ready for system use
