@@ -1,100 +1,77 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>New Project</xar:mlstring></h2>
+<div align="center">
 
-<!-- common admin menu for this module - remove link to the current function -->
-
-<table border="0" width="100%" cellspacing="1" cellpadding="8">
-
-    <!-- the variables used in this menu come from xproject_admin_menu() -->
-
-    <tr>
-        <th align="center">&xar-var-menutitle;</th>
-    </tr>
-    <tr><td>
-        <table border="0" width="100%" cellspacing="1" cellpadding="8">
-        <tr align="center" valign="middle">
-
-        <!-- links to particular menu items -->
-
-        <!-- Simple URLs can be specified directly in the template -->
-
-        <td> <strong>&xar-var-menulabel_new;</strong> </td>
-        <td><a href="&xar-modurl-xproject-user-view;">&xar-var-menulabel_view;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-search;">&xar-var-menulabel_search;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-modifyconfig;">&xar-var-menulabel_config;</a></td>
-
-        <!-- more menu items come here... -->
-
-        <!-- Note : you can also specify the links in xproject_admin_menu()
-             and pass them on as variables : e.g. &xar-var-menulink_view; -->
-        </tr>
-        </table>
-    </td></tr>
-</table>
-<br />
-
-<!-- the specific template for the current admin function comes here -->
-
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
 <!--
     // Start form - note the use of xarModURL() to create the recipient URL of
     // this form.  All URLs should be generated through xarModURL() to ensure
-    // compatibility with future versions of PostNuke
+    // compatibility with future versions of Xaraya
 -->
 <form method="post" action="&xar-modurl-xproject-admin-create;">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
 <!--
     // Add an authorisation ID - this adds a hidden field in the form that
     // contains an authorisation ID.  The authorisation ID is very important in
     // preventing certain attacks on the website
 -->
-    <input type="hidden" name="authid" value="&xar-var-authid;" />
+    <input type="hidden" name="authid" value="#$authid#" />
 
-<tr><td colspan="2">
-&xar-var-hooks;
-</td></tr>
-
-<tr><td>&xar-var-namelabel;</td>
-<td colspan=3><input type="text" name="name" size=50 maxlength=255></td></tr>
-
-<tr><td>&xar-var-displaydates;</td>
-<td><input type="checkbox" name="displaydates" value="1"></td>
-<td>&xar-var-displayhours;</td>
-<td><input type="checkbox" name="displayhours" value="1"></td></tr>
-
-<tr><td>&xar-var-displayfreq;</td>
-<td><input type="checkbox" name="displayfreq" value="1"></td>
-<td>&xar-var-private;</td>
-<td><input type="checkbox" name="private" value="1"></td></tr>
-
-<tr><td>&xar-var-sendmails;</td>
-<td colspan=3><select name="sendmails">
+<tr>
+<td width="25%"><label for="name">#$namelabel#</label></td>
+<td width="75%" colspan="3"><input type="text" name="name" id="name" size="50" maxlength="255"></td>
+</tr>
+<tr>
+<td width="25%"><label for="displaydates">#$displaydates#</label></td>
+<td width="20%"><input type="checkbox" name="displaydates" id="displaydates" value="1"></td>
+<td width="25%"><label for="displayhours">#$displayhours#</label></td>
+<td width="30%"><input type="checkbox" name="displayhours" id="displayhours" value="1"></td>
+</tr>
+<tr>
+<td width="25%"><label for="displayfreq">#$displayfreq#</label></td>
+<td width="20%"><input type="checkbox" name="displayfreq" id="displayfreq" value="1"></td>
+<td width="25%"><label for="private">#$private#</label></td>
+<td width="30%"><input type="checkbox" name="private" id="private" value="1"></td>
+</tr>
+<tr>
+<td width="25%"><label for="sendmails">#$sendmails#</label></td>
+<td width="75%" colspan="3"><select name="sendmails" id="sendmails">
 	<xar:loop name="$sendmailoptions">
-      	<option name="sendmails" value="&xar-var-id;">&xar-var-name;</option>
-	</xar:loop>
-	</select>
-</td></tr>
-
-<tr><td>&xar-var-importantdays;</td>
-<td><select name="importantdays">
-	<xar:loop name="$importantdaysdropdown">
-      	<option name="importantdays" value="&xar-var-id;">&xar-var-name;</option>
+      	<option name="sendmails" value="#$id#">#$name#</option>
 	</xar:loop>
 	</select>
 </td>
-<td>&xar-var-criticaldays;</td>
-<td><select name="criticaldays">
-	<xar:loop name="$criticaldaysdropdown">
-      	<option name="criticaldays" value="&xar-var-id;">&xar-var-name;</option>
+</tr>
+<tr>
+<td width="25%"><label for="importantdays">#$importantdays#</label></td>
+<td width="20%"><select name="importantdays" id="importantdays">
+	<xar:loop name="$importantdaysdropdown">
+      	<option name="importantdays" value="#$id#">#$name#</option>
 	</xar:loop>
 	</select>
-</td></tr>
-
-<tr><td colspan=2>&xar-var-descriptionlabel;</td><td>&xar-var-billable;</td>
-<td><input type="checkbox" name="billable" value="1"></td></tr>
-<tr><td colspan=4><textarea name="description" cols="60" rows="5"></textarea></td></tr>
-
-<tr><td colspan="2" align="center">
-    <input type="submit" value="&xar-var-addbutton;"></td></tr>
-</form>
-
+</td>
+<td width="25%"><label for="criticaldays">#$criticaldays#</label></td>
+<td width="30%"><select name="criticaldays" id="criticaldays">
+	<xar:loop name="$criticaldaysdropdown">
+      	<option name="criticaldays" value="#$id#">#$name#</option>
+	</xar:loop>
+	</select>
+</td>
+</tr>
+<tr>
+<td width="25%"><label for="billable">#$billable#</label></td>
+<td width="75%" colspan="3"><input type="checkbox" name="billable" id="billable" value="1"></td>
+</tr>
+<tr>
+<td width="25%" valign="top"><label for="description">#$descriptionlabel#</label></td>
+<td width="75%" colspan="3"><textarea name="description" id="description" cols="60" rows="5"></textarea></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><br /><input type="submit" value="#$addbutton#"></td>
+</tr>
 </table>
-<br />
-
+</form>
+</div>
+</div>
+<div class="xar-mod-foot">#$hooks#</div>

@@ -1,62 +1,52 @@
-<table border="0" width="100%">
-
-    <tr><th align="center">&xar-var-menutitle;</th></tr>
-    <tr><td>
-        <table border="0" width="100%"><tr align="center" valign="middle">
-
-        <td><a href="&xar-modurl-xproject-admin-new;">&xar-var-menulabel_new;</a></td>
-        <td><strong>&xar-var-menulabel_view;</strong></td>
-        <td><a href="&xar-modurl-xproject-user-search;">&xar-var-menulabel_search;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-modifyconfig;">&xar-var-menulabel_config;</a></td>
-
-        </tr></table>
-    </td></tr>
-</table>
-<br />
-
-<xar:blockgroup name="toxarav" id="toxarav" />
-
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>View Projects</xar:mlstring></h2>
+<div align="center">
 <xar:if condition="!empty($status)">
-    <strong>&xar-var-status;</strong>
+    <div>#$status#</div>
 </xar:if>
 
-<table border="1" cellpadding="5" cellspacing="0">
+<table border="0" cellpadding="2" cellspacing="1" class="xar-accent">
     <tr>
-        <th> &xar-var-title; </th>
+        <th><xar:mlstring>Name</xar:mlstring></th>
+        <th><xar:mlstring>Description</xar:mlstring></th>
+        <th><xar:mlstring>Tasks</xar:mlstring></th>
+        <th><xar:mlstring>Options</xar:mlstring></th>
     </tr>
-
     <xar:loop name="$xprojects" prefix="project">
-    <tr align="center"><td>
+    <tr><td class="xar-norm">
 
         <xar:if condition="empty($project_link)">
-            &xar-var-project_name;
+            #$project_name#
             <xar:else />
-               <a href="&xar-var-project_link;">&xar-var-project_name;</a>
+               <a href="#$project_link#">#$project_name#</a>
         </xar:if>
 
     </td>
-    <td>&xar-var-project_description;
+    <td class="xar-norm">#$project_description#
     </td>
-    <td>&xar-var-project_numtasks;
+    <td class="xar-norm" align="center">#$project_numtasks#
     </td>
-        <td>
+        <td class="xar-norm" align="center">[ 
            <xar:if condition="empty($project_editurl)">
-               &xar-var-project_edittitle;
+               #$project_edittitle#
            <xar:else />
-                   <a href="&xar-var-project_editurl;">&xar-var-project_edittitle;</a>
+                   <a href="#$project_editurl#">#$project_edittitle#</a>
            </xar:if>
            |
            <xar:if condition="empty($project_deleteurl)">
-               &xar-var-project_deletetitle;
+               #$project_deletetitle#
            <xar:else />
-                   <a href="&xar-var-project_deleteurl;">&xar-var-project_deletetitle;</a>
-           </xar:if>
+                   <a href="#$project_deleteurl#">#$project_deletetitle#</a>
+           </xar:if> ]
         </td>
   </tr>
     </xar:loop>
 
 </table>
 <br />
-
-&xar-var-pager;
-
+</div>
+</div>
+<div class="xar-mod-foot">
+#$pager#
+</div>

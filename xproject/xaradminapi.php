@@ -1,31 +1,16 @@
 <?php
-//
-// ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2002 by the PostNuke Development Team.
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phxaruke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WIthOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Chad Kraeft
-// Purpose of file:  task administration API
-// ----------------------------------------------------------------------
+/**
+ * 
+ *
+ * Administration System
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2002 by the Xaraya Development Team.
+ * @link http://www.xaraya.com
+ * 
+ * @subpackage xproject module
+ * @author Chad Kraeft <stego@xaraya.com>
+*/
 
 function xproject_adminapi_create($args)
 {
@@ -403,4 +388,64 @@ function xproject_adminapi_migrate($args)
 
     return $taskid;
 }
+
+/**
+ * utility function pass individual menu items to the main menu
+ *
+ * @author the Example module development team
+ * @returns array
+ * @return array containing the menulinks for the main menu items.
+ */
+function xproject_adminapi_getmenulinks()
+{
+
+    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_OVERVIEW)) {
+
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                   'admin',
+                                                   'main'),
+                              'title' => xarML('The overview of this module and its functions'),
+                              'label' => xarML('Overview'));
+    }
+
+    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_ADD)) {
+
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                   'admin',
+                                                   'new'),
+                              'title' => xarML('Create a new project'),
+                              'label' => xarML('New Project'));
+    }
+
+    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_READ)) {
+
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                   'user',
+                                                   'view'),
+                              'title' => xarML('List of current projects'),
+                              'label' => xarML('View Projects'));
+
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                   'user',
+                                                   'search'),
+                              'title' => xarML('Query project entries'),
+                              'label' => xarML('Search Projects'));
+    }
+
+    if (xarSecAuthAction(0, 'xproject::', '::', ACCESS_ADMIN)) {
+
+        $menulinks[] = Array('url'   => xarModURL('xproject',
+                                                   'admin',
+                                                   'modifyconfig'),
+                              'title' => xarML('Modify the configuration for the Admin Panels'),
+                              'label' => xarML('Modify Config'));
+    }
+
+    if (empty($menulinks)){
+        $menulinks = '';
+    }
+
+    return $menulinks;
+}
+
 ?>

@@ -1,72 +1,110 @@
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
-    <tr>
-        <th colspan="3" align="center">xproject Administration</th>
-    </tr>
-    <tr>
-<!-- TODO : waiting for xar:ml* stuff to work again -->
-        <td><a href="&xar-modurl-xproject-admin-new;">&xar-var-menulabel_new;</a></td>
-        <td><a href="&xar-modurl-xproject-user-view;">&xar-var-menulabel_view;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-search;">&xar-var-menulabel_search;</a></td>
-        <td><a href="&xar-modurl-xproject-admin-modifyconfig;">&xar-var-menulabel_config;</a></td>
-    </tr>
-</table>
-<br />
-
-<table width="100%" border="0" cellspacing="1" cellpadding="8">
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xProject Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<h2><xar:mlstring>Modify Project</xar:mlstring></h2>
+<div align="center">
 
 <form method="post" action="&xar-modurl-xproject-admin-update;">
 
-    <input type="hidden" name="authid" value="&xar-var-authid;" />
-    <input type="hidden" name="projectid" value="&xar-var-project.projectid;" />
-
-<tr><td colspan="2">
-&xar-var-hooks;
-</td></tr>
-
-<tr><td>&xar-var-namelabel;</td>
-<td colspan=3><input type="text" name="name" value="&xar-var-project.name;" size=50 maxlength=255></td></tr>
-
-<tr><td>&xar-var-displaydates;</td>
-<td><input type="checkbox" name="displaydates" value="1" &xar-var-displaydatescheck;></td>
-<td>&xar-var-displayhours;</td>
-<td><input type="checkbox" name="displayhours" value="1" &xar-var-displayhourscheck;></td></tr>
-
-<tr><td>&xar-var-displayfreq;</td>
-<td><input type="checkbox" name="displayfreq" value="1" &xar-var-displayfreqcheck;></td>
-<td>&xar-var-private;</td>
-<td><input type="checkbox" name="private" value="1" &xar-var-privatecheck;></td></tr>
-
-<tr><td>&xar-var-sendmails;</td>
-<td colspan=3><select name="sendmailfreq">
+    <input type="hidden" name="authid" value="#$authid#" />
+    <input type="hidden" name="projectid" value="#$projectid#" />
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<tr>
+<td width="25%"><label for="name">Project</label></td>
+<td width="75%" colspan="3"><input type="text" name="name" id="name" value="#$name#" size="50" maxlength="255"></td>
+</tr>
+<tr>
+<td width="25%"><label for="displaydates">Use Date Fields</label></td>
+<td width="20%">
+<xar:if condition="$usedatefields eq 1">
+<input type="checkbox" name="displaydates" id="displaydates" value="1" checked="checked"/>
+<xar:else/>
+<input type="checkbox" name="displaydates" id="displaydates" value="1"/>
+</xar:if>
+</td>
+<td width="25%"><label for="displayhours">Use Hours Fields</label></td>
+<td width="30%">
+<xar:if condition="$usehoursfields eq 1">
+<input type="checkbox" name="displayhours" id="displayhours" value="1" checked="checked"/>
+<xar:else/>
+<input type="checkbox" name="displayhours" id="displayhours" value="1"/>
+</xar:if>
+</td>
+</tr>
+<tr>
+<td><label for="displayfreq">Use Frequency Fields</label></td>
+<td>
+<xar:if condition="$usefreqfields eq 1">
+<input type="checkbox" name="displayfreq" id="displayfreq" value="1" checked="checked"/>
+<xar:else/>
+<input type="checkbox" name="displayfreq" id="displayfreq" value="1"/>
+</xar:if>
+</td>
+<td><label for="private">Make Private</label></td>
+<td>
+<xar:if condition="$allowprivate eq 1">
+<input type="checkbox" name="private" id="private" value="1" checked="checked"/>
+<xar:else/>
+<input type="checkbox" name="private" id="private" value="1"/>
+</xar:if>
+</td>
+</tr>
+<tr>
+<td><label for="sendmailfreq">Email group</label></td>
+<td colspan="3"><select name="sendmailfreq" id="sendmailfreq">
 	<xar:loop name="$sendmailoptions">
-      	<option name="sendmailfreq" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;</option>
-	</xar:loop>
-	</select>
-</td></tr>
-
-<tr><td>&xar-var-importantdays;</td>
-<td><select name="importantdays">
-	<xar:loop name="$importantdaysdropdown">
-      	<option name="importantdays" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;</option>
+		<xar:if condition="$selected eq 1">
+      	<option value="#$id#" selected="selected">#$name#</option>
+		<xar:else/>
+      	<option value="#$id#">#$name#</option>
+		</xar:if>
 	</xar:loop>
 	</select>
 </td>
-<td>&xar-var-criticaldays;</td>
-<td><select name="criticaldays">
-	<xar:loop name="$criticaldaysdropdown">
-      	<option name="criticaldays" value="&xar-var-id;" &xar-var-selected;>&xar-var-name;</option>
-	</xar:loop>
+</tr>
+<tr>
+<td><label for="importantdays">Important Days</label></td>
+<td><select name="importantdays" id="importantdays">
+	<xar:for start="$i = 0" test="$i <= 9" iter="$i++">
+		<xar:if condition="$i eq $importantdays">
+      	<option value="#$i#" selected="selected">#$i#</option>
+		<xar:else/>
+      	<option value="#$i#">#$i#</option>
+		</xar:if>
+	</xar:for>
 	</select>
-</td></tr>
-
-<tr><td colspan=2>&xar-var-descriptionlabel;</td><td>&xar-var-billable;</td>
-<td><input type="checkbox" name="billable" value="1" &xar-var-billablecheck;></td></tr>
-<tr><td colspan=4><textarea name="description" cols="60" rows="5">&xar-var-project.description;</textarea></td></tr>
-
-<tr><td colspan="2" align="center">
-    <input type="submit" value="&xar-var-updatebutton;"></td></tr>
-</form>
-
+</td>
+<td><label for="criticaldays">Critical Days</label></td>
+<td><select name="criticaldays" id="criticaldays">
+	<xar:for start="$i = 0" test="$i <= 9" iter="$i++">
+		<xar:if condition="$i eq $criticaldays">
+      	<option value="#$i#" selected="selected">#$i#</option>
+		<xar:else/>
+      	<option value="#$i#">#$i#</option>
+		</xar:if>
+	</xar:for>
+	</select>
+</td>
+</tr>
+<tr>
+<td width="25%"><label for="billable">Billable</label></td>
+<td colspan="3">
+<xar:if condition="$billable eq 1">
+<input type="checkbox" name="billable" id="billable" value="1" checked="checked"/>
+<xar:else/>
+<input type="checkbox" name="billable" id="billable" value="1"/>
+</xar:if>
+</td>
+</tr>
+<tr>
+<td width="25%" valign="top"><label for="description">Description</label></td>
+<td colspan="3"><textarea name="description" id="description" cols="60" rows="5">#$description#</textarea></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><br />
+    <input type="submit" value="#$updatebutton#"></td>
+</tr>
 </table>
-<br />
-
+</form>
+</div>
+</div>
+<div class="xar-mod-foot">#$hooks#</div>

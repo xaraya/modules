@@ -153,43 +153,31 @@ function xproject_admin_modify($args)
     }
 	
 	xarModLoad('xproject','user');
-	$data = xproject_user_menu();
+	$data = array();
+
+	$data['projectid'] = $project['projectid'];
+	$data['name'] = $project['name'];
+	$data['description'] = $project['description'];
+	$data['usedatefields'] = $project['usedatefields'];
+	$data['usehoursfields'] = $project['usehoursfields'];
+	$data['usefreqfields'] = $project['usefreqfields'];
+	$data['allowprivate'] = $project['allowprivate'];
+	$data['importantdays'] = $project['importantdays'];
+	$data['criticaldays'] = $project['criticaldays'];
+	$data['sendmailfreq'] = $project['sendmailfreq'];
+	$data['billable'] = $project['billable'];
 	
-	$data['project'] = $project;
     $data['authid'] = xarSecGenAuthKey();
 
-    $data['namelabel'] = xarVarPrepForDisplay(xarMLByKey('Project'));
-    $data['displaydates'] = xarVarPrepForDisplay(xarMLByKey('Use Date Fields'));
-	$data['displaydatescheck'] = $project['usedatefields'] ? 'checked' : '';
-    $data['displayhours'] = xarVarPrepForDisplay(xarMLByKey('Use Hours Fields'));
-	$data['displayhourscheck'] = $project['usehoursfields'] ? 'checked' : '';
-    $data['displayfreq'] = xarVarPrepForDisplay(xarMLByKey('Use Frequency Fields'));
-	$data['displayfreqcheck'] = $project['usefreqfields'] ? 'checked' : '';
-    $data['private'] = xarVarPrepForDisplay(xarMLByKey('Make Private'));
-	$data['privatecheck'] = $project['allowprivate'] ? 'checked' : '';
     $sendmailoptions = array();    
-    $sendmailoptions[] = array('id'=>0,'name'=>'Please choose an email option','selected'=>"");
-    $sendmailoptions[] = array('id'=>1,'name'=>"any changes",'selected'=>"");
-    $sendmailoptions[] = array('id'=>2,'name'=>"major changes",'selected'=>"");
-    $sendmailoptions[] = array('id'=>3,'name'=>"weekly summaries",'selected'=>"");
-    $sendmailoptions[] = array('id'=>4,'name'=>"Do NOT send email",'selected'=>"");
-	$sendmailoptions[$project['sendmailfreq']]['selected'] = "selected";
+    $sendmailoptions[] = array('id'=>0,'name'=>xarML("Please choose an email option"),'selected'=>"");
+    $sendmailoptions[] = array('id'=>1,'name'=>xarML("any changes"),'selected'=>"");
+    $sendmailoptions[] = array('id'=>2,'name'=>xarML("major changes"),'selected'=>"");
+    $sendmailoptions[] = array('id'=>3,'name'=>xarML("weekly summaries"),'selected'=>"");
+    $sendmailoptions[] = array('id'=>4,'name'=>xarML("Do NOT send email"),'selected'=>"");
+	$sendmailoptions[$project['sendmailfreq']]['selected'] = "1";
 	$data['sendmailoptions'] = $sendmailoptions;
-    $data['sendmails'] = xarVarPrepForDisplay(xarMLByKey('Email group'));
-	for($x=0;$x<=9;$x++) {
-		$data['importantdaysdropdown'][] = array('id' => $x, 'name' => $x,'selected'=>"");
-	}
-	$data['importantdaysdropdown'][$project['importantdays']]['selected'] = "selected";
-    $data['importantdays'] = xarVarPrepForDisplay(xarMLByKey('Important Days'));
-	for($x=0;$x<=9;$x++) {
-		$data['criticaldaysdropdown'][] = array('id' => $x, 'name' => $x,'selected'=>"");
-	}
-	$data['criticaldaysdropdown'][$project['criticaldays']]['selected'] = "selected";
-    $data['criticaldays'] = xarVarPrepForDisplay(xarMLByKey('Critical Days'));
-    $data['billable'] = xarVarPrepForDisplay(xarMLByKey('Billable'));
-	$data['billablecheck'] = $project['billable'] ? 'checked' : '';
 	
-    $data['descriptionlabel'] = xarVarPrepForDisplay(xarMLByKey('Description'));
     $data['updatebutton'] = xarVarPrepForDisplay(xarMLByKey('Update'));
 
     $item = array();
