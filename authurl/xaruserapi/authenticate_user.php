@@ -30,7 +30,7 @@ function authurl_userapi_authenticate_user($args)
     # Empty username and/or password always fails
     if (!isset($uname) || !isset($pass) || $pass == "") {
         $msg = xarML('Empty uname (#(1)) or pass (not shown).', $uname);
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
         return XARUSER_AUTH_FAILED;
     }// if
@@ -53,7 +53,7 @@ function authurl_userapi_authenticate_user($args)
 
     if (trim($result) == '') {
       $msg = xarML("The site is experiencing trouble authenticating users....please try back again in a few minutes");
-      xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'ERROR',
+      xarErrorSet(XAR_SYSTEM_EXCEPTION, 'ERROR',
                      new SystemException(__FILE__.'('.__LINE__.'): '.$msg));
       return XARUSER_AUTH_FAILED;
 

@@ -21,7 +21,7 @@ function authurl_init()
     # Make sure the CURL PHP extension is available
     if (!extension_loaded('curl')) {
         $msg=xarML('Your PHP configuration does not seem to include the required CURL extension. Please refer to http://www.php.net/manual/en/ref.curl.php on how to install it.');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+        xarErrorSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
                         new SystemException($msg));
         return;
     }// if
