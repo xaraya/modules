@@ -84,7 +84,7 @@
                         <xar:mlstring>Click "Submit" to change configuration:</xar:mlstring>
                     </td>
                     <td>
-                        <input type="submit" value="Submit" align="middle" />
+                        <input type="submit" value="Submit"  />
                     </td>
                 </tr>
             </table>
