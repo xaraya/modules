@@ -1,7 +1,7 @@
 <?php
 $modversion['name'] = 'htmlarea';
 $modversion['id'] = '3009';
-$modversion['version'] = '1.0';
+$modversion['version'] = '1.0.0';
 $modversion['description'] = 'Incorporate the HTMLArea editor into Xaraya modules';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
