@@ -14,7 +14,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Paypal Set-Up will set-up the necessary variables for use with the PayPal merchant tools such as the cart, pay now buttons, subscriptions.  This module just sets up the defaults.  To use the individual buttons and functionality, Dynamic Data must be hooked to your displays.</xar:mlstring>
+            <xar:mlstring>The Paypal IPN module will provide an instant payment notification for Xaraya in the event that someone has purchased something and paid through Paypal.  The module itself only notifies any other module that are hooked to it based on a create hook that an event has happened.  It is up to the individual modules themselves to track whether the event was correct as in payment price, etc.  This is a utility module to be used with multiple modules as a pass through for collecting payment information.</xar:mlstring>
 		</div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -23,7 +23,7 @@
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
             <xar:mlstring>From the menu, you have one choice. </xar:mlstring>
-            <p><xar:mlstring>"Modify Configuration".  From this menu option, you can update the necessary configuration options, such as your paypal account, and prefered currency.</xar:mlstring></p>
+            <p><xar:mlstring>"Modify Configuration".  From this menu option, you can update the necessary configuration options, such as your whether to send you an email on receipt or to test the module before going live on a production basis.</xar:mlstring></p>
         </div>
         <br />
         <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
@@ -39,7 +39,7 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>There are no hooks included at this time.</xar:mlstring>
+            <xar:mlstring>The Paypal IPN module will send a create hook throughout the system to notify other modules that an event has happened.  Check your hook configuration if problems exists on notification.</xar:mlstring>
         </div>
         <br />
         <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">

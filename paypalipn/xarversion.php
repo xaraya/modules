@@ -12,7 +12,7 @@
  */
 $modversion['name']           = 'PayPal IPN';
 $modversion['id']             = '806';
-$modversion['version']        = '1.0.0';
+$modversion['version']        = '1.0.1';
 $modversion['description']    = 'Recieve PayPal IPN Notification';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';
