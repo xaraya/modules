@@ -95,6 +95,8 @@ function sitecontact_user_contactus()
         xarModSetVar('mail','html',0);
     }
 
+
+
     $adminname= xarModGetVar('mail','adminname');
     $sitename = xarModGetVar('themes','SiteName');
     $siteurl = xarServerGetBaseURL();
@@ -105,15 +107,15 @@ function sitecontact_user_contactus()
         $htmlmessage .='<br /><br />';
         $htmlmessage .=xarML('You submitted the following information:');
         $htmlmessage .='<br />';
-        $htmlmessage .= xarML('Name:').' '.xarVarPrepHTMLDisplay($username);
+        $htmlmessage .= xarML('Name:').' '.($username);
         $htmlmessage .='<br />';
         $htmlmessage .= xarML('Email:').' '.$useremail;
         $htmlmessage .='<br />';
-        $htmlmessage .= xarML('Organization:').' '.xarVarPrepHTMLDisplay($company);
+        $htmlmessage .= xarML('Organization:').' '.html_entity_decode(xarVarPrepHTMLDisplay($company));
         $htmlmessage .='<br />';
-        $htmlmessage .= xarML('Subject: ').xarVarPrepHTMLDisplay($requesttext);
+        $htmlmessage .= xarML('Subject: ').html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
         $htmlmessage .='<br /><br />';
-        $htmlmessage .= xarML('Comments:').'<br />'.xarVarPrepHTMLDisplay($usermessage);
+        $htmlmessage .= xarML('Comments:').'<br />'.html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
         $htmlmessage .='<br /><br />';
         $htmlmessage .=('____________________________________________________________');
         $htmlmessage .='<br /><br />';
@@ -164,16 +166,16 @@ function sitecontact_user_contactus()
     $htmladminmessage .='<br /><br />';
     $htmladminmessage  .= ('____________________________________________________________');
     $htmladminmessage  .='<br /><br />';
-    $htmladminmessage  .= xarML('Name:').' '.xarVarPrepHTMLDisplay($username);
+    $htmladminmessage  .= xarML('Name:').' '.($username);
     $htmladminmessage  .='<br />';
     $htmladminmessage  .= xarML('Email:').' '.$useremail;
     $htmladminmessage  .='<br />';
-    $htmladminmessage  .= xarML('Organization:').' '.xarVarPrepHTMLDisplay($company);
+    $htmladminmessage  .= xarML('Organization:').' '.html_entity_decode(xarVarPrepHTMLDisplay($company));
     $htmladminmessage  .='<br />';
-    $htmladminmessage  .= xarML('Subject: ').xarVarPrepHTMLDisplay($requesttext);
+    $htmladminmessage  .= xarML('Subject: ').' '.html_entity_decode(xarVarPrepHTMLDisplay($requesttext));
     $htmladminmessage  .='<br /><br />';
     $htmladminmessage  .= xarML('Comments:').'<br />';
-    $htmladminmessage  .= xarVarPrepHTMLDisplay($usermessage);
+    $htmladminmessage  .= html_entity_decode(xarVarPrepHTMLDisplay($usermessage));
     $htmladminmessage  .='<br /><br />';
     $htmladminmessage  .=('____________________________________________________________');
     $htmladminmessage  .='<br /><br />';
