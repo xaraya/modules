@@ -49,8 +49,8 @@ function pubsub_init()
     $pubsubregtable = $xartable['pubsub_reg'];
     $regfields = array(
         'xar_pubsubid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_eventid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'xar_userid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_eventid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_userid'=>array('type'=>'integer','null'=>FALSE),
         'xar_actionid'=>array('type'=>'varchar','size'=>100,'null'=>FALSE,'default'=>'0'),
         'xar_subdate'=>array('type'=>'integer','null'=>FALSE, 'default'=>'0'),
         'xar_email'=>array('type'=>'varchar','size'=>255,'null'=>TRUE, 'default'=>'')
@@ -62,9 +62,9 @@ function pubsub_init()
     $pubsubprocesstable = $xartable['pubsub_process'];
     $processfields = array(
         'xar_handlingid'=>array('type'=>'integer','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE),
-        'xar_pubsubid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'xar_objectid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
-        'xar_templateid'=>array('type'=>'integer','size'=>'medium','null'=>FALSE),
+        'xar_pubsubid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_objectid'=>array('type'=>'integer','null'=>FALSE),
+        'xar_templateid'=>array('type'=>'integer','null'=>FALSE),
         'xar_status'=>array('type'=>'varchar','size'=>100,'null'=>FALSE)
     );
     $query = xarDBCreateTable($pubsubprocesstable,$processfields);
@@ -316,7 +316,6 @@ Use the following link to view it : <a href="#(3)">#(4)</a></xar:mlstring>
                                      array('command' => 'add',
                                            'field' => 'xar_templateid',
                                            'type' => 'integer',
-                                           'size' => 'medium',
                                            'null' => false));
             $result = &$dbconn->Execute($query);
             if (!$result) return;
