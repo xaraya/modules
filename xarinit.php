@@ -135,6 +135,7 @@ function html_init()
                       'basefont' => 0,
                       'bdo' =>      0,
                       'big' =>      0,
+                      'blink' =>    0,
                       'blockquote' => 2,
                       'br' =>       2,
                       'button' =>   0,
