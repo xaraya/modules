@@ -3,7 +3,7 @@
 /**
  * Manage definition of instances for privileges (unfinished)
  */
-function changelog_admin_privileges()
+function changelog_admin_privileges($args)
 { 
     // Security Check
     if (!xarSecurityCheck('AdminChangeLog')) return;
