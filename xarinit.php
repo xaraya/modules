@@ -136,8 +136,8 @@ function xarcachemanager_upgrade($oldversion)
             include($cachingConfigFile);
             $cachingConfiguration['Output.SizeLimit'] = $cachingConfiguration['Output.SizeLimit'] * 1048576;
             xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
-                  array('configSettings' => $cachingConfiguration,
-                        'cachingConfigFile' => $cachingConfigFile));
+                array('configSettings' => $cachingConfiguration,
+                      'cachingConfigFile' => $cachingConfigFile));
         case 0.2:
         case '0.2.0':
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
@@ -154,8 +154,8 @@ function xarcachemanager_upgrade($oldversion)
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
                 xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
-                  array('configSettings' => $configSettings,
-                        'cachingConfigFile' => $cachingConfigFile));
+                    array('configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile));
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
@@ -176,8 +176,8 @@ function xarcachemanager_upgrade($oldversion)
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
                 xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
-                  array('configSettings' => $configSettings,
-                        'cachingConfigFile' => $cachingConfigFile));                
+                    array('configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile));                
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
@@ -201,8 +201,8 @@ function xarcachemanager_upgrade($oldversion)
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
                 xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
-                  array('configSettings' => $configSettings,
-                        'cachingConfigFile' => $cachingConfigFile));                
+                    array('configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile));                
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
@@ -235,8 +235,8 @@ function xarcachemanager_upgrade($oldversion)
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
                 xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
-                  array('configSettings' => $configSettings,
-                        'cachingConfigFile' => $cachingConfigFile));                
+                    array('configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile));                
             } else {
                 copy($defaultConfigFile, $cachingConfigFile);
             }
@@ -255,10 +255,19 @@ function xarcachemanager_upgrade($oldversion)
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile); 
                 xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
-                  array('configSettings' => $configSettings,
-                        'cachingConfigFile' => $cachingConfigFile));                
+                    array('configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile));                
             } else {
-                copy($defaultConfigFile, $cachingConfigFile);
+                // as of version 0.3.3 we can restore the config from modvars
+                $configSettings = xarModAPIFunc('xarcachemanager',
+                                                'admin',
+                                                'get_cachingconfig',
+                                                array('from' => 'db',
+                                                      'cachingConfigFile' => $cachingConfigFile));
+                copy($defaultConfigFile, $cachingConfigFile); 
+                xarModAPIFunc('xarcachemanager', 'admin', 'save_cachingconfig', 
+                    array('configSettings' => $configSettings,
+                          'cachingConfigFile' => $cachingConfigFile));
             }
 
         case '0.4.0':
