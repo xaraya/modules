@@ -21,7 +21,8 @@ class xarOpenTracker extends phpOpenTracker
   * @access public
   * @static
   */
-  function log($parameters = array()) {
+  function log($parameters = array())
+  {
     include_once POT_INCLUDE_PATH . 'LoggingEngine.php';
 
     $le = new xarOpenTracker_LoggingEngine($parameters);
@@ -40,7 +41,8 @@ class xarOpenTracker_LoggingEngine extends phpOpenTracker_LoggingEngine
   *
   * @access private
   */
-  function _storeRequestData() {
+  function _storeRequestData()
+  {
     if (!$this->container['first_request']) {
       $this->_runPostPlugins();
     }
