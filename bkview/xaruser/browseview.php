@@ -56,26 +56,19 @@ function bkview_user_browseview($args)
         $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
         $files[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $files[$counter]['file']=substr($dir,0,strlen($dir)-1)."/".basename($name);
-        $files[$counter]['available'] = file_exists($name);
+        $files[$counter]['checkedout'] = file_exists($name);
         $files[$counter]['icon'] = xarModAPIFunc('bkview','user','geticon',array('file' => $name));
         $files[$counter]['tag'] = $tag;
         $counter++;
     }
     
-    // Return data to BL
-    // FIXME: make this dynamic
-    // $dir is something like /html/modules/bkview/xartemplate/includes/
     $dirtrace = explode('/', $dir); array_pop($dirtrace);array_shift($dirtrace);
-    $breadcrumb['[root]']='/'; $sofar ='/';
-    // FIXME: get rid of the html here.
-    $pageinfo = '<a href="'.xarModUrl('bkview','user','browseview',array('repoid'=>$repoid,'dir'=>'/')).'">['.xarML('root').']</a>/';
-    foreach($dirtrace as $crumb) {
-        $sofar .= $crumb . '/';
-        $pageinfo .= '<a href="'.xarModUrl('bkview','user','browseview',array('repoid'=>$repoid,'dir'=>$sofar)).'">'.$crumb.'</a>/';
-    }
-    
+    $breadcrumb['[root]']='/'; 
+
+    $data['sofar']      = '/';
+    $data['dirtrace']   = $dirtrace;
     $data['breadcrumb'] = $breadcrumb;
-    $data['pageinfo']   = $pageinfo;
+    $data['pageinfo']   = '';
     $data['dir']        = $dir;
     $data['repoid']     = $repoid;
     $data['name_value'] = $item['reponame'];

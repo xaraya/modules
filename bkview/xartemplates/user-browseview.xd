@@ -1,5 +1,12 @@
 <xar:template file="user-menu"/>
 
+<a href="&xar-modurl-bkview-user-browserview;&amp;repoid=#$repoid#&amp;dir=/">
+[<xar:mlstring>root</xar:mlstring>]</a>/
+<xar:foreach in="$dirtrace" value="$crumb">
+    <xar:set name="sofar">$sofar . $crumb . '/'</xar:set>
+    <a href="&xar-modurl-bkview-user-browseview;&amp;repoid=#$repoid#&amp;dir=#$sofar#">#$crumb#</a>/
+</xar:foreach>
+
 <div style="float:left; margin-top: 1em;width: 100%;">
 
   <!-- Header for the folder list -->
