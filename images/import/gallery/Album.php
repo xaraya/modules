@@ -19,7 +19,8 @@
  */
 ?>
 <?php
-class Album {
+class Album 
+{
 	var $fields;
 	var $photos;
 	var $dir;
@@ -34,7 +35,8 @@ class Album {
 	 */
 	var $transient;
 
-	function Album() {
+	function Album() 
+    {
 		global $gallery;
 
 		$this->fields["title"] = "Untitled";
