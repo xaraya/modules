@@ -61,21 +61,18 @@ function ratings_userapi_leftjoin($args)
     $leftjoin['table'] = $xartable['ratings'];
     $leftjoin['field'] = '';
     if (!empty($modid)) {
-        $leftjoin['field'] .= $xartable['ratings'] . ".xar_moduleid = ?";
+        $leftjoin['field'] .= $xartable['ratings'] . ".xar_moduleid = " . $modid;
         $leftjoin['field'] .= ' AND ';
-        $bindvars[] = $modid;
     }
     if (!empty($itemtype)) {
-        $leftjoin['field'] .= $xartable['ratings'] . ".xar_itemtype = ?";
+        $leftjoin['field'] .= $xartable['ratings'] . ".xar_itemtype = " . $itemtype;
         $leftjoin['field'] .= ' AND ';
-        $bindvars[] = $itemtype;
     }
     $leftjoin['field'] .= $xartable['ratings'] . '.xar_itemid';
 
     if (count($itemids) > 0) {
         $allids = join(', ', $itemids);
-        $leftjoin['where'] = $xartable['ratings'] . '.xar_itemid IN (?)';
-        $bindvars[] = $allids;
+        $leftjoin['where'] = $xartable['ratings'] . '.xar_itemid IN (' . $allids . ')';
     } else {
         $leftjoin['where'] = '';
     }
