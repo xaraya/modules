@@ -15,7 +15,7 @@ function timezone_init()
     ksort($Links);
     
     // get a database connection
-    list($dbconn) = xarDBGetConn();
+    $dbconn =& xarDBGetConn();
     // load the database table maintenance api
     xarDBLoadTableMaintenanceAPI();
     
@@ -23,12 +23,12 @@ function timezone_init()
     //  GET TIMEZONE DB TABLE INFORMATION
     //======================================================================
     $xartable           =& xarDBGetTables();
-    $zones_table        =& $xartable['timezone_zones'];
-    $zones_data_table   =& $xartable['timezone_zones_data'];
-    $links_table        =& $xartable['timezone_links'];
-    $rules_table        =& $xartable['timezone_rules'];
-    $rules_data_table   =& $xartable['timezone_rules_data'];
-    $zones_data_has_rules_table   =& $xartable['timezone_zones_data_has_rules'];
+    $zones_table        = $xartable['timezone_zones'];
+    $zones_data_table   = $xartable['timezone_zones_data'];
+    $links_table        = $xartable['timezone_links'];
+    $rules_table        = $xartable['timezone_rules'];
+    $rules_data_table   = $xartable['timezone_rules_data'];
+    $zones_data_has_rules_table   = $xartable['timezone_zones_data_has_rules'];
     
     //======================================================================
     //  ZONES TABLE FIELDS
