@@ -8,8 +8,8 @@
 */
 function helpdesk_userapi_getticket($args)
 {
-    //
     extract($args);
+    
     if (!isset($tid)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                      'ticket id', 'userapi', 'getticket', 'helpdesk');
@@ -17,32 +17,33 @@ function helpdesk_userapi_getticket($args)
                        new SystemException($msg));
         return false;
     }
+    
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
-    $db_column = &$xartable['helpdesk_tickets_column'];
-    $sql = "SELECT  $db_column[ticket_priorityid],
-                    $db_column[ticket_sourceid],
-                    $db_column[ticket_openedby],
-                    $db_column[ticket_subject],
+
+    $sql = "SELECT  xar_priorityid,
+                    xar_sourceid,
+                    xar_openedby,
+                    xar_subject,
                     xar_domain,
-                    $db_column[ticket_date],
-                    $db_column[ticket_statusid],
-                    $db_column[ticket_assignedto],
-                    $db_column[ticket_closedby],
-                    $db_column[ticket_id],
-                    $db_column[ticket_lastupdate],
+                    xar_date,
+                    xar_statusid,
+                    xar_assignedto,
+                    xar_closedby,
+                    xar_id,
+                    xar_updated,
                     xar_name,
                     xar_phone
             FROM    $db_table
-            WHERE   $db_column[ticket_id] = $tid";
+            WHERE   xar_id = ?";
 
-    $results = $dbconn->Execute($sql);
+    $results = $dbconn->Execute($sql, array($tid));
     if (!$results) { return false; }
     
-    list($priorityid, $sourceid, $openedby,  $subject,    $domain,
+    list($priorityid, $sourceid, $openedby,   $subject,  $domain,
          $ticketdate, $statusid, $assignedto, $closedby, $ticket_id, 
-         $lastupdate, $name, $phone) = $results->fields;
+         $lastupdate, $name,     $phone) = $results->fields;
 
 
     $cats = xarModAPIFunc('categories', 'user', 'getitemcats', 

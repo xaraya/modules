@@ -55,21 +55,7 @@ function helpdesk_xartables()
     // Name for dq_helpdesk database entities
     $coprefix = xarConfigGetVar('prefix') . '_helpdesk';
 
-    $xartable['helpdesk_tickets'] = $coprefix.'_tickets';
-    $xartable['helpdesk_tickets_column'] = array (
-                'ticket_id'         => "xar_id",
-                'ticket_date'       => "xar_date",
-                'ticket_statusid'   => "xar_statusid",
-                'ticket_priorityid' => "xar_priorityid",
-                'ticket_sourceid'   => "xar_sourceid",
-                'ticket_openedby'   => "xar_openedby",
-                'ticket_assignedto' => "xar_assignedto",
-                'ticket_closedby'   => "xar_closedby",
-                'ticket_subject'    => "xar_subject",
-                'ticket_domain'     => "xar_domain",
-                'ticket_lastupdate' => "xar_updated"
-                );
-                
+    $xartable['helpdesk_tickets'] = $coprefix.'_tickets';                
     $xartable['helpdesk_status'] = $coprefix . '_status';
     $xartable['helpdesk_source'] = $coprefix . '_source';
     $xartable['helpdesk_priority'] = $coprefix . '_priority';

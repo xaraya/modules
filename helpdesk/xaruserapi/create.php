@@ -13,7 +13,6 @@ function helpdesk_userapi_create($args)
     $dbconn    =& xarDBGetConn();
     $xartable  =& xarDBGetTables();
     $db_table  = $xartable['helpdesk_tickets'];
-    $db_column = &$xartable['helpdesk_tickets_column'];
     $time = date("Y-m-d H:i:s");
 
     if (empty($name)){ $name = xarUserGetVar('name', $whosubmit); }
@@ -21,47 +20,35 @@ function helpdesk_userapi_create($args)
     if (empty($phone)){ $phone = ''; }
 
     // Get next ID inserted into table
-    $nextid = $dbconn->GenID($db_column['ticket_id']);
+    $nextid = $dbconn->GenID('xar_id');
 
     // Insert ticket
     $sql = "INSERT INTO $db_table  (xar_id,
                                     xar_domain,
-                                    $db_column[ticket_statusid],
-                                    $db_column[ticket_priorityid],
-                                    $db_column[ticket_sourceid],
-                                    $db_column[ticket_openedby],
-                                    $db_column[ticket_subject],
-                                    $db_column[ticket_date],
-                                    $db_column[ticket_lastupdate],
-                                    $db_column[ticket_assignedto],
-                                    $db_column[ticket_closedby],
+                                    xar_statusid,
+                                    xar_priorityid,
+                                    xar_sourceid,
+                                    xar_openedby,
+                                    xar_subject,
+                                    xar_date,
+                                    xar_updated,
+                                    xar_assignedto,
+                                    xar_closedby,
                                     xar_name,
                                     xar_phone,
                                     xar_email
                                    ) 
-                           VALUES  ($nextid,
-                                    '".xarVarPrepForStore($domain)."',
-                                    '".xarVarPrepForStore($status)."',
-                                    '".xarVarPrepForStore($priority)."',
-                                    '".xarVarPrepForStore($source)."',
-                                    '".xarVarPrepForStore($whosubmit)."',
-                                    '".xarVarPrepForStore($subject)."',
-                                    '".xarVarPrepForStore($time)."',
-                                    '".xarVarPrepForStore($time)."',
-                                    '".xarVarPrepForStore($assignedto)."',
-                                    '".xarVarPrepForStore($closedby)."',
-                                    '".xarVarPrepForStore($name)."',
-                                    '".xarVarPrepForStore($phone)."',
-                                    '".xarVarPrepForStore($email)."'                                    
-                                )";
-
-    $result = $dbconn->Execute($sql);
+                           VALUES  ( $nextid, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+    $bindvars = array($domain, $status, $priority, $source, $whosubmit, $subject, $time, $time, $assignedto,
+                      $closedby, $name, $phone, $email
+                     );
+    $result = $dbconn->Execute($sql, $bindvars);
 
     // Check for an error
     if (!$result) return false;
 
     // Get the ID of the item that was inserted
-    $nextid = $dbconn->PO_Insert_ID($db_table, $db_column['ticket_id']);
+    $nextid = $dbconn->PO_Insert_ID($db_table, 'xar_id');
 
     // To see their results, we redirect them to the Manage category page:
     return $nextid;

@@ -17,12 +17,13 @@ function helpdesk_userapi_ticketowner($args)
     $dbconn   =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $table    = $xartable['helpdesk_tickets'];
-    $column   = $xartable['helpdesk_tickets_column'];
     
-    $sql = "SELECT $column[ticket_id], $column[ticket_openedby]
-        FROM $table
-        WHERE $column[ticket_id] = $ticket_id AND $column[ticket_openedby] = " . xarUserGetVar('uid');
-    $result = $dbconn->Execute($sql);
+    $sql = "SELECT xar_id, xar_openedby
+            FROM $table
+            WHERE xar_id = ? AND 
+                  xar_openedby = ?";
+    $bindvars =  array($ticket_id, xarUserGetVar('uid'));
+    $result = $dbconn->Execute($sql, $bindvars);
     
     return $result->Rowcount();
 }

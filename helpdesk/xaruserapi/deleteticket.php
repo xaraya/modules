@@ -1,6 +1,6 @@
 <?php
 //=========================================================================
-// Deletes the ticket and the history which goes with that ticket
+// Deletes the ticket 
 //=========================================================================
 function helpdesk_userapi_deleteticket($args)
 {
@@ -10,29 +10,14 @@ function helpdesk_userapi_deleteticket($args)
     $dbconn =& xarDBGetConn();
     $xartable       =& xarDBGetTables();
     $helpdesktable  = $xartable['helpdesk_tickets'];
-    $helpdeskcolumn = &$xartable['helpdesk_tickets_column'];
 
     $sql = "DELETE FROM  $helpdesktable 
-                   WHERE $helpdeskcolumn[ticket_id] = ".$ticket_id;
+                   WHERE xar_id = ?";
 
-    $result = $dbconn->Execute($sql);
-    if (!$result) return;
-        /*$msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
-                     'ticket ID', 'userapi', 'deleteticket', 'helpdesk');
-        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));*/
-
-    $result->Close();
-
-    $helpdesktable  = $xartable['helpdesk_histories'];
-    $helpdeskcolumn = &$xartable['helpdesk_histories_column'];
-
-    $sql = "DELETE FROM  $helpdesktable 
-                   WHERE $helpdeskcolumn[ticket_id] = ".$ticket_id;
-    $result = $dbconn->Execute($sql);
+    $result = $dbconn->Execute($sql, array($ticket_id));
     if (!$result) return;
     $result->Close();
-    
+
     xarResponseRedirect(xarModURL('helpdesk', 'user', 'main'));
 }
 ?>

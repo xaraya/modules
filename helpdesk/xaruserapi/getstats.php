@@ -8,9 +8,8 @@ function helpdesk_userapi_getstats()
     $dbconn =& xarDBGetConn();
     $xartable     =& xarDBGetTables();
     $helpdesktable  = $xartable['helpdesk_tickets'];
-    $helpdeskcolumn = &$xartable['helpdesk_tickets_column'];
 
-    $sql = "SELECT count($helpdeskcolumn[ticket_id])
+    $sql = "SELECT count('xar_id')
             FROM $helpdesktable";
     $results = $dbconn->Execute($sql);
     if (!$results) return;

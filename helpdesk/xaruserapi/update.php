@@ -28,46 +28,63 @@ function helpdesk_userapi_update($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $db_table = $xartable['helpdesk_tickets'];
-    $db_column = &$xartable['helpdesk_tickets_column'];
+
     $time = date("Y-m-d H:i:s");
 
-    $sql = "UPDATE $db_table SET
-        $db_column[ticket_priorityid]    = '".xarVarPrepForStore($priority)."',
-        $db_column[ticket_subject]      = '".xarVarPrepForStore($subject)."',
-        $db_column[ticket_domain]       = '".xarVarPrepForStore($domain)."',
-        $db_column[ticket_openedby]     = '".xarVarPrepForStore($openedby)."',
-        $db_column[ticket_lastupdate]    = '".xarVarPrepForStore($time)."'";
-    if(!empty($name)) { $sql .= " , xar_name = '" . xarVarPrepForStore($name) . "'"; }
-    if(!empty($phone)) { $sql .= " , xar_phone = '" . xarVarPrepForStore($phone) . "'"; }
-        // The following If block is only executed if the user has EDIT access
-        // Regular users may not change any of these fields
-        // NOTE: I don't like this I am going to change this, with the way Xaraya
-        //       is set up I don't think half of this is needed
+    $sql = "UPDATE $db_table 
+            SET    xar_priorityid   = ?,
+                   xar_subject      = ?,
+                   xar_domain       = ?,
+                   xar_openedby     = ?,
+                   xar_updated      = ? ";
+    $bindvars = array($priority, $subject, $domain, $openedby, $time);
+    
+    if(!empty($name)) 
+    { 
+        $sql .= " , xar_name = ? "; 
+        $bindvars[] = $name;
+    }
+    if(!empty($phone)) 
+    { 
+        $sql .= " , xar_phone = ?"; 
+        $bindvars[] = $phone;
+    }
+    
+    // The following If block is only executed if the user has EDIT access
+    // Regular users may not change any of these fields
     if (!empty($assignedto) && !empty($source)){
-        $sql .=",        
-            $db_column[ticket_sourceid]        = '".xarVarPrepForStore($source)."',
-            $db_column[ticket_assignedto]    = '".xarVarPrepForStore($assignedto)."'";
+        $sql .=", xar_sourceid      = ?
+                , xar_assignedto    = ?";
+        $bindvars[] = $source;
+        $bindvars[] = $assignedto;
     }
 
-    if ($statusid =='3' && empty($closedby)){
-    // User has changed status to closed but not specified closer
-    // so, set current user as closer
-    $closer = $userid;
+    if ($statusid =='3' && empty($closedby))
+    {
+        // User has changed status to closed but not specified closer
+        // so, set current user as closer
+        $closer = $userid;
     } 
-    if (!empty($closedby)) {
-    // If a closer was specified but status wasn't changed to closed, then we need to set to close
-    $closer        = $closedby;
-    $statusid     = 3;
+    
+    if (!empty($closedby)) 
+    {
+        // If a closer was specified but status wasn't changed to closed, then we need to set to close
+        $closer        = $closedby;
+        $statusid     = 3;
     }
-    if ($statusid == '3'){
-    $sql .=", $db_column[ticket_closedby]        = '".xarVarPrepForStore($closer)."'";
+    
+    if ($statusid == '3')
+    {
+        $sql .=", xar_closedby = ?";
+        $bindvars[] = $closer;
     }
 
-    $sql .=", $db_column[ticket_statusid]    = '".xarVarPrepForStore($statusid)."'";
-    $sql .=" WHERE $db_column[ticket_id]     = '$tid'";
-    // Uncomment the following line to debug
-    //return false;
-    $dbconn->Execute($sql);
+    $sql .=", xar_statusid    = ?";
+    $bindvars[] = $statusid;
+    $sql .=" WHERE xar_id     = ?";
+    $bindvars[] = $tid;
+
+    $dbconn->Execute($sql, $bindvars);
     
     // Check for an error with the database code, and if so set an
     // appropriate error message and return

@@ -9,14 +9,13 @@ function helpdesk_userapi_getuserticketstats($args)
     $dbconn =& xarDBGetConn();
     $xartable     =& xarDBGetTables();
     $helpdesktable  = $xartable['helpdesk_tickets'];
-    $helpdeskcolumn = &$xartable['helpdesk_tickets_column'];
     
     // First Get Closed Ticket Count
-    $sql = "SELECT count($helpdeskcolumn[ticket_id])
+    $sql = "SELECT count(xar_id)
             FROM $helpdesktable
-            WHERE ($helpdeskcolumn[ticket_statusid] = 3 
-            AND $helpdeskcolumn[ticket_openedby] = $userid)";
-    $results = $dbconn->Execute($sql);
+            WHERE (xar_statusid = ? AND xar_openedby = ?)";
+    $bindvars = array(3, $userid);
+    $results = $dbconn->Execute($sql, $bindvars);
     if (!$results) {
         $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
                      'null', 'userapi', 'getuserticketstats', 'helpdesk');
@@ -29,10 +28,11 @@ function helpdesk_userapi_getuserticketstats($args)
     $results->Close();
     
     // Now Get total count
-    $sql = "SELECT count($helpdeskcolumn[ticket_id])
+    $sql = "SELECT count(xar_id)
             FROM  $helpdesktable
-            WHERE $helpdeskcolumn[ticket_openedby] = $userid";
-    $results = $dbconn->Execute($sql);
+            WHERE xar_openedby = ?";
+    $bindvars = array($userid);
+    $results = $dbconn->Execute($sql, $bindvars);
     if (!$results) {
         $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
                      'null', 'userapi', 'getuserticketstats', 'helpdesk');
@@ -45,11 +45,11 @@ function helpdesk_userapi_getuserticketstats($args)
     $results->Close();
     
     // Now, let's get the assigned ticket information:
-    $sql = "SELECT count($helpdeskcolumn[ticket_id])
+    $sql = "SELECT count(xar_id)
             FROM  $helpdesktable
-            WHERE ($helpdeskcolumn[ticket_statusid] <> 3 
-            AND $helpdeskcolumn[ticket_assignedto] = $userid)";
-    $results = $dbconn->Execute($sql);
+            WHERE (xar_statusid <> ? AND xar_assignedto = ?)";
+    $bindvars = array(3, $userid);
+    $results = $dbconn->Execute($sql, $bindvars);
     if (!$results) {
         $msg = xarML('DB query failed for #(2) function #(3)() in module #(4)',
                      'null', 'userapi', 'getuserticketstats', 'helpdesk');
