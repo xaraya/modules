@@ -41,9 +41,6 @@ function articles_adminapi_deletepubtype($args)
         return false;
     }
 
-    // Don't call deletion hooks here...
-    //xarModCallHooks('item', 'delete', $ptid, 'ptid');
-
     // Get database setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -54,6 +51,19 @@ function articles_adminapi_deletepubtype($args)
             WHERE xar_pubtypeid = " . xarVarPrepForStore($ptid);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
+
+    $articlestable = $xartable['articles'];
+
+    // Delete all articles for this publication type
+    $query = "DELETE FROM $articlestable
+            WHERE xar_pubtypeid = " . xarVarPrepForStore($ptid);
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+
+// TODO: call some kind of itemtype delete hooks here, once we have those
+    //xarModCallHooks('itemtype', 'delete', $ptid,
+    //                array('module' => 'articles',
+    //                      'itemtype' =>'ptid'));
 
     return true;
 }

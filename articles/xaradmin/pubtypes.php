@@ -138,6 +138,10 @@ function articles_admin_pubtypes()
                 xarModDelAlias($pubtypes[$ptid]['name'],'articles');
                 xarModDelVar('articles', 'number_of_categories.'.$ptid);
                 xarModDelVar('articles', 'mastercids.'.$ptid);
+                $default = xarModGetVar('articles','defaultpubtype');
+                if ($ptid == $default) {
+                    xarModSetVar('articles','defaultpubtype','');
+                }
 
                 // Redirect to the admin view page
                 xarSessionSetVar('statusmsg',
@@ -155,6 +159,8 @@ function articles_admin_pubtypes()
             $pubtypes[$id]['editurl'] = '';
             $pubtypes[$id]['deleteurl'] = '';
             $pubtypes[$id]['configurl'] = '';
+            $pubtypes[$id]['viewurl'] = '';
+            $pubtypes[$id]['addurl'] = '';
             continue;
         }
         $pubtypes[$id]['editurl'] = xarModURL('articles',
@@ -170,6 +176,14 @@ function articles_admin_pubtypes()
         $pubtypes[$id]['configurl'] = xarModURL('articles',
                                                'admin',
                                                'modifyconfig',
+                                               array('ptid' => $id));
+        $pubtypes[$id]['viewurl'] = xarModURL('articles',
+                                               'admin',
+                                               'view',
+                                               array('ptid' => $id));
+        $pubtypes[$id]['addurl'] = xarModURL('articles',
+                                               'admin',
+                                               'new',
                                                array('ptid' => $id));
     }
     $data['pubtypes'] = $pubtypes;
@@ -236,33 +250,6 @@ function articles_admin_pubtypes()
 
     $data['action'] = $action;
     $data['ptid'] = $ptid;
-
-/* // dump the current configuration in xarinit.php format
-$dump = "\n\n";
-foreach ($pubtypes as $id => $val) {
-    $name = $val['name'];
-    $dump .= "    \$config['$name'] = array(\n";
-    $config = $val['config'];
-    foreach ($config as $field => $value) {
-        $dump .= "        '$field' => array('label'  => ";
-        if (empty($value['label'])) {
-            $dump .= "'',\n";
-        } else {
-            $dump .= "xarML('" . $value['label'] . "'),\n";
-        }
-        $dump .= "                         'format' => '" . $value['format'] . "',\n";
-        $dump .= "                         'input'  => ";
-        if (empty($value['input'])) {
-            $dump .= "0),\n";
-        } else {
-            $dump .= "1),\n";
-        }
-    }
-    $dump .= "    );\n";
-}
-$data['status'] .= $dump;
-*/
-
 
     // Return the template variables defined in this function
     return $data;

@@ -131,6 +131,18 @@
             <xar:else />
                 <xar:mlstring>Article Config</xar:mlstring>
             </xar:if>
+            |
+            <xar:if condition="!empty($pubtype['viewurl'])">
+                <a href="#$pubtype['viewurl']#"><xar:mlstring>View Articles</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>View Articles</xar:mlstring>
+            </xar:if>
+            |
+            <xar:if condition="!empty($pubtype['addurl'])">
+                <a href="#$pubtype['addurl']#"><xar:mlstring>Add Article</xar:mlstring></a>
+            <xar:else />
+                <xar:mlstring>Add Article</xar:mlstring>
+            </xar:if>
         </td>
     </tr>
     </xar:foreach>
