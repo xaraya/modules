@@ -19,7 +19,7 @@ function tasks_adminapi_publish($args)
             
     if ($task == false) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_publish: ' . xarML("No such item"));
-        return $output->GetOutput();
+        return;
     }
 
 //     if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)

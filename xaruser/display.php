@@ -40,7 +40,12 @@ function tasks_user_display($args)
     }
 
     if($module == "tasks" && ($type == "user" || $type == "") && $func == "display" && $id == $mainid) {
-        //$output->Text(tasks_menu());
+        if(isset($filter)) xarSessionSetVar('filter', $filter);
+        //  if(isset($id)) {
+        //     $columns[] = '<a href="#task">Task</a>');
+        //     $columns[] = '<a href="#addtask">New Subtask</a>';
+        //     $columns[] = '<a href="#tasklist">Subtask List</a>';
+        //  }
     }
 
     // Get the task information from the database
@@ -50,8 +55,7 @@ function tasks_user_display($args)
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Getting task failed"));
         // WHAT DOES THIS DO?
         if($id == $mainid) {
-            //$output->Text(tasks_feedback());
-            //return $output->GetOutput();
+            return;
         }
     }
 
@@ -64,8 +68,7 @@ function tasks_user_display($args)
     //          ($task['creator'] == $userID || $task['owner'] == $userID || $task['assigner'] == $userID) /* && */
     //         /*(!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE))*/ ) {
     //         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
-    //         $output->Text(tasks_feedback());
-    //         return $output->GetOutput();
+    //         return;
     //     }
 
     if($id == $mainid) {
@@ -90,10 +93,6 @@ function tasks_user_display($args)
         // Add form for adding a new task
         xarModLoad('tasks','admin');
         $data['addtaskform'] = xarModFunc('tasks', 'admin', 'new', array('parentid' => $id));           
-
-        // TODO: investigate this
-        //$output->Text(tasks_feedback());
-
     }
 
     $options = array();
@@ -136,60 +135,6 @@ function tasks_user_display($args)
     $data['id']=$id;
     $data['mainid']=$mainid;
     return $data;
-}
-
-/**
- * Construct the menu
- *
- */
-function tasks_menu()
-{
-//     $output = new pnHTML();
-
-//     list($filter,$id,$module,$type,    $func) = xarVarCleanFromInput('filter',
-//                                     'id',
-//                                     'module',
-//                                     'type',
-//                                     'func');
-                                    
-//     if(isset($filter)) xarSessionSetVar('filter', $filter);
-
-//     $output->SetInputMode(_PNH_VERBATIMINPUT);
-//     $output->TableStart(_TASKS);
-//     $output->SetOutputMode(_PNH_RETURNOUTPUT);
-//     $columns = array();
-//     if(isset($id) && $module == "tasks" && $func == "display") {
-//         $columns[] = $output->Text('<a href="#task">Task</a>');    
-//         $columns[] = $output->Text('<a href="#addtask">New Subtask</a>');    
-//         $columns[] = $output->Text('<a href="#tasklist">Subtask List</a>');    
-//     }
-//     $columns[] = $output->URL(xarmodurl('tasks',
-//                                        'user',
-//                                        'view'),
-//                               _TASKS_VIEW);
-//     if (xarSecAuthAction(0, 'tasks::task', '::', ACCESS_ADD)) {
-//         $columns[] = $output->URL(xarmodurl('tasks',
-//                                            'admin',
-//                                            'new'),
-//                                   _TASKS_ADD);
-//     }
-//     $output->SetOutputMode(_PNH_KEEPOUTPUT);
-//     $output->Text('<tr><td align=center>' . implode(" | ",$columns) . '</td></tr>');
-//     $output->TableEnd();
-
-    return '';
-
-}
-
-/**
- * Give feedback
- *
- */
-function tasks_feedback()
-{
-    $feedback = xarGetStatusMsg();
-    if(empty($feedback)) $feedback="";
-    return $feedback;
 }
 
 ?>

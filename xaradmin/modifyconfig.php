@@ -12,8 +12,6 @@ function tasks_admin_modifyconfig()
 //         return true;
 //     }
     
-    //$output->Text(tasks_menu());
-
     // Construct maximum depth combobox
     $maxdepthdropdown = array();
     for($x=0; $x<10; $x++) {

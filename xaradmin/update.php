@@ -43,24 +43,23 @@ function tasks_admin_update($args)
     if($returnid = xarModAPIFunc('tasks',
                                 'admin',
                                 'update',
-                                array('id'    => $id,
-                                    'name'             => $name,
-                                    'status'         => $status,
-                                    'priority'         => $priority,
-                                    'description'    => $description,
-                                    'private'         => $private,
-                                    'owner'         => $owner,
-                                    'assigner'         => $assigner,
-                                    'date_start_planned'     => $date_start_planned,
-                                    'date_start_actual'     => $date_start_actual,
-                                    'date_end_planned'         => $date_end_planned,
-                                    'date_end_actual'         => $date_end_actual,
-                                    'hours_planned' => $hours_planned,
-                                    'hours_spent'     => $hours_spent,
-                                    'hours_remaining'         => $hours_remaining))) {
+                                array('id'               => $id,
+                                    'name'               => $name,
+                                    'status'             => $status,
+                                    'priority'           => $priority,
+                                    'description'        => $description,
+                                    'private'            => $private,
+                                    'owner'              => $owner,
+                                    'assigner'           => $assigner,
+                                    'date_start_planned' => $date_start_planned,
+                                    'date_start_actual'  => $date_start_actual,
+                                    'date_end_planned'   => $date_end_planned,
+                                    'date_end_actual'    => $date_end_actual,
+                                    'hours_planned'      => $hours_planned,
+                                    'hours_spent'        => $hours_spent,
+                                    'hours_remaining'    => $hours_remaining))) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Tasks updated"));
     }
-
     xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
                                                             '' => '#tasklist')));
 

@@ -19,7 +19,7 @@ function tasks_adminapi_approve($args)
             
     if ($task == false) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_approve: ' . xarML("No such item"));
-        return $output->GetOutput();
+        return;
     }
 
 //     if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)

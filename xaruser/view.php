@@ -5,41 +5,37 @@
  */
 function tasks_user_view($args)
 {
-    $data=array();
-    list($parentid,$module,$type,$func,$filter,$displaydepth) = 
-        xarVarCleanFromInput('parentid','module','type',
-                             'func', 'filter', 'displaydepth');
-    
+    $data = array();
+    if (!xarVarFetch('parentid', 'int:1', $parentid, 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('module', 'str:1:', $module, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('type', 'str:1:', $type, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('func', 'str:1:', $func, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('filter', 'str:1:', $filter, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('displaydepth', 'int:1', $displaydepth, -1, XARVAR_NOT_REQUIRED)) return;
     extract($args);
-    
-//     if($module == "tasks"
-//        && ($type == "user" || $type == "")
-//        && ($func == "view" || $func == "")) {
-//         $output->Text(tasks_menu());
-//     }
-    
-    $maxlevel = xarSessionGetVar('maxlevel');
-    if(!isset($displaydepth)) {
-        $displaydepth = ($maxlevel ? $maxlevel : 1);
+
+    if (isset($filter)) {
+        $filter = 0;
+        xarSessionSetVar('filter', $filter);
     }
+
+    //$maxlevel = xarSessionGetVar('maxlevel');
+    $maxlevel = 9;
+    if ($displaydepth == -1) $displaydepth = ($maxlevel ? $maxlevel : 1);
+
     xarSessionSetVar('maxlevel', $displaydepth);
 
     $tasks = xarModAPIFunc('tasks','user','getall',
                            array('parentid' => $parentid,
                                  'modname' => $module,
-                                 //                                 'objectid' => $objectid,
+                                 // 'objectid' => $objectid,
                                  'displaydepth' => 1));
-    
     if ($tasks == false) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Getting tasks failed"));
     }
     
     $basetaskid = xarModAPIFunc('tasks', 'user', 'getroot', array('id' => $parentid));
   
-//     if($module == "tasks" && ($type == "user" || $type == "") && $func == "view") {
-//         $output->Text(tasks_feedback());
-//     }
-
     $data['filterformtarget']=xarModURL('tasks','user',
                                         ($parentid ? 'display':'view'),
                                         array('' => '#tasklist'));
@@ -75,11 +71,11 @@ function tasks_user_view($args)
     $data['maxdepth']= xarSessionGetVar('maxlevel');
     $data['filtersubmit']=xarML("Filter");
 
-    if($filter == 1 || $filter == 2 || $filter == 3) {
-        //$output->Text(_TASKS_OPENTASKSONLY);
+    if ($filter == 1 || $filter == 2 || $filter == 3) {
+        // echo _TASKS_OPENTASKSONLY;
     }
                             
-    if(is_array($tasks) && count($tasks) > 0) {
+    if (is_array($tasks) && count($tasks) > 0) {
         foreach($tasks as $key => $task) {
             $dateformat = xarModGetVar('tasks', 'dateformat');
             $dateformatlist = xarModAPIFunc('tasks','user','dateformatlist',array());
@@ -142,15 +138,15 @@ function tasks_user_view($args)
         }
     }
     $data['tasks']=$tasks;
-
     // Construct the task options
-    $taskoptionslist = array(1 => xarML("Surface tasks"),
-                            2 => xarML("Delete") . ' (' . xarML("delete subtasks") . ')',
-                            3 => xarML("Delete") . ' (' . xarML("surface subtasks"). ')');
+    $taskoptionslist = array(
+        1 => xarML("Surface tasks"),
+        2 => xarML("Delete") . ' (' . xarML("delete subtasks") . ')',
+        3 => xarML("Delete") . ' (' . xarML("surface subtasks"). ')');
     $taskoptions = array();
     foreach($taskoptionslist as $optionid=>$option) {
         $taskoptions[] = array('id' => $optionid,
-                                'name' => $option);
+                               'name' => $option);
     }
     $data['taskoptions']=$taskoptions;
     $data['tasksubmitbutton']=xarML("X");

@@ -2,7 +2,7 @@
   <span class="xar-mod-title"><xar:mlstring>Modify task</xar:mlstring></span>
 </div>
 
-<form action="&xar-modurl-tasks-admin-update; method="post">
+<form action="#xarModURL('tasks','admin','update')#" method="post">
   <input type="hidden" name="id" value="#$id#"/>
   
 <table >

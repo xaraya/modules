@@ -19,7 +19,7 @@ function tasks_adminapi_open($args)
             
     if ($task == false) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . xarML("No such item"));
-        return $output->GetOutput();
+        return;
     }
 
 //     if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {

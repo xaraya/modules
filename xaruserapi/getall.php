@@ -7,22 +7,24 @@ function tasks_userapi_getall($args)
 {
     extract($args);
     
-    if ($modname = "tasks") {
-        $modname = "";
+    if (!isset($modname) || (empty($modname))) {
+        $modname = "tasks";
     }
     
-    if(empty($parentid) || !is_numeric($parentid)) $parentid = "0";
-    
+    if(!isset($parentid) || empty($parentid) || !is_numeric($parentid)) {
+        $parentid = 0;
+    }
+
     $tasks = array();
     $maxlevel = xarSessionGetVar('maxlevel');
     if($displaydepth > $maxlevel) {
         return $tasks;
     }
     
- //    if (!xarSecAuthAction(0, 'tasks::', '::', ACCESS_OVERVIEW)) {
-//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_getall: ' . _TASKS_NOAUTH);
-//         return $tasks;
-//     }
+    //if (!xarSecAuthAction(0, 'tasks::', '::', ACCESS_OVERVIEW)) {
+    //    xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_getall: ' . _TASKS_NOAUTH);
+    //    return $tasks;
+    //}
 
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -53,8 +55,8 @@ function tasks_userapi_getall($args)
                    xar_hours_spent,
                    xar_hours_remaining
             FROM $taskstable
-            WHERE xar_modname = ?
-            " . ((!empty($objectid)) ? " AND xar_objectid = " . $objectid : "");
+            WHERE xar_modname = ? " .
+            ((!empty($objectid)) ? " AND xar_objectid = " . $objectid : "");
     $bindvars[] = $modname;
 
     // IMPLEMENT FILTER CODE FOR WHERE CLAUSE
@@ -64,65 +66,63 @@ function tasks_userapi_getall($args)
     $filter = xarSessionGetVar('filter');
     switch($filter) {
         case 1: // My Tasks
-            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") . "
-                     AND (xar_creator = " . ($userId ? $userId : "0") . "
+            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") .
+                    " AND (xar_creator = " . ($userId ? $userId : "0") . "
                         OR xar_owner = " . ($userId ? $userId : "0") . "
                         OR xar_assigner = " . ($userId ? $userId : "0") . ")
                     AND xar_status = 0
                     ORDER BY xar_priority DESC, xar_name";
             break;
         case 2: // Available Tasks
-            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") . "
-                     AND xar_owner = 0
+            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") .
+                    " AND xar_owner = 0
                     AND xar_status = 0
                     ORDER BY xar_priority DESC, xar_name";
             break;
         case 3: // Priority List
-            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") . "
-                     AND xar_status = 0
+            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") .
+                    " AND xar_status = 0
                     ORDER BY xar_priority DESC, xar_name";
             break;
         case 4: // Recent Activity - NEED DATE RANGE CRAP FROM CONFIG
-            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") . "
-                     ORDER BY xar_status, xar_priority DESC, xar_name";
+            $sql .= ($parentid ? " AND xar_parentid = " . $parentid : "") .
+                     " ORDER BY xar_status, xar_priority DESC, xar_name";
             break;
         case 5:
-            $sql .= " AND xar_parentid = " . ($parentid ? $parentid : "0") . "
-                     ORDER BY xar_status, xar_priority DESC, xar_name";
+            $sql .= " AND xar_parentid = " . ($parentid ? $parentid : 0) .
+                     " ORDER BY xar_status, xar_priority DESC, xar_name";
             break;
         case 0:
         default:
-            $sql .= " AND xar_parentid = " . ($parentid ? $parentid : "0") . "
-                     ORDER BY xar_status, xar_priority DESC, xar_name";
-    
+            $sql .= " AND xar_parentid = " . ($parentid ? $parentid : 0) .
+                     " ORDER BY xar_status, xar_priority DESC, xar_name";
     }
-
-    $result =& $dbconn->SelectLimit($sql, -1, 0, $bindvars);
+    $result =& $dbconn->Execute($sql, $bindvars);
     if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($id,
-               $parentid,
-               $modname,
-               $objectid,
-               $name,
-               $description,
-               $status,
-               $priority,
-               $private,
-               $creator,
-               $owner,
-               $assigner,
-               $date_created,
-               $date_approved,
-               $date_changed,
-               $date_start_planned,
-               $date_start_actual,
-               $date_end_planned,
-               $date_end_actual,
-               $hours_planned,
-               $hours_spent,
-               $hours_remaining) = $result->fields;
+             $parentid,
+             $modname,
+             $objectid,
+             $name,
+             $description,
+             $status,
+             $priority,
+             $private,
+             $creator,
+             $owner,
+             $assigner,
+             $date_created,
+             $date_approved,
+             $date_changed,
+             $date_start_planned,
+             $date_start_actual,
+             $date_end_planned,
+             $date_end_actual,
+             $hours_planned,
+             $hours_spent,
+             $hours_remaining) = $result->fields;
         $basetaskid = xarModAPIFunc('tasks', 'user', 'getroot', array('id' => $id));
         //if (xarSecAuthAction(0, 'tasks::task', '$modname:$objectid:$basetaskid', ACCESS_READ)) {
         $ttlsubtasks = xarModAPIFunc('tasks', 'user', 'countitems', array('parentid' => $id));
@@ -173,7 +173,6 @@ function tasks_userapi_getall($args)
     
 
     $result->Close();
-
     return $tasks;
 }
 

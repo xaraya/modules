@@ -19,8 +19,6 @@ function tasks_admin_gantt($args)
 
     extract($args);
     
-    $output = new xarHTML();
-    
     $tasks = xarModAPIFunc('tasks',
                           'user',
                           'getall',
@@ -142,7 +140,5 @@ function tasks_admin_gantt($args)
     }
     
     $graph->Stroke();
-
-    $output->SetInputMode(_XARH_VERBATIMINPUT);
 }
 ?>

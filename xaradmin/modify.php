@@ -10,35 +10,23 @@ function tasks_admin_modify($args)
                            
     extract($args);
 
-    //$output = new pnHTML();
-
-//     if($module == "tasks" && $type == "admin" && $func == "modify") {
-//         $output->Text(tasks_menu());
-//     }
-
     $task = xarModAPIFunc('tasks','user','get', array('id' => $id));
 
     if ($task == false) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("No such item"));
-        //$output->Text(tasks_feedback());
-        return false; //$output->GetOutput();
+        return false;
     }
 
 //     if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_EDIT)) {
 //         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
-//         $output->Text(tasks_feedback());
-//         return $output->GetOutput();
+//         return;
 //     }
     $statusoptions = xarModAPIFunc('tasks','user','getstatusoptions');
     $data['statusoptions'] = $statusoptions;
     $prioritydropdown = xarModAPIFunc('tasks','user','getpriorities');
     $data['prioritydropdown'] = $prioritydropdown;
 
-//     if($module == "tasks" && $type == "admin" && $func == "create") {
-//         $output->Text(tasks_feedback());
-//     }
     $data['id'] = $id;
-
  
     $dateformatlist = xarModAPIFunc('tasks','user','dateformatlist');
     $dateformat = $dateformatlist[xarModGetVar('tasks', 'dateformat')];

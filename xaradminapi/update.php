@@ -19,7 +19,7 @@ function tasks_adminapi_update($args)
             
     if ($task == false) {
         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_update: ' . xarML("No such item"));
-        return $output->GetOutput();
+        return;
     }
 
 //     if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
@@ -29,7 +29,6 @@ function tasks_adminapi_update($args)
             
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
-
     $taskstable = $xartable['tasks'];
 
     $sql = "UPDATE $taskstable
@@ -37,14 +36,15 @@ function tasks_adminapi_update($args)
                   xar_status = ?,
                   xar_priority = ?,
                   xar_description = ?
-            WHERE xar_id = $id";
-    $bindvars = array($name, $status, $priority, $description);
-
-    $res =& $dbconn->Execute($sql);
+            WHERE xar_id = ?";
+    $bindvars = array($name, $status, $priority, $description, $id);
+    $res =& $dbconn->Execute($sql, $bindvars);
     if (!$res) return;
 
-    $returnid = (xarModGetVar('tasks','returnfromedit') ? $id : $task['parentid']);
-    return $returnid;
+    $returnid = xarModGetVar('tasks','returnfromedit') ? $id : $task['parentid'];
+    xarResponseRedirect(xarModURL('tasks', 'user', 'display', 
+        array('id' => $returnid)));
+    return true;
 }
 
 ?>

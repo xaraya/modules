@@ -20,21 +20,12 @@ function tasks_admin_new($args)
 //         return;
 //     }
 
-// NEED TO INVESTIGATE THIS
-//     if($module == "tasks" && $type == "admin" && $func == "new") {
-//         $output->Text(tasks_menu());
-//     }
-
     $statusoptions = xarModAPIFunc('tasks','user','getstatusoptions');
     $data['statusoptions']=$statusoptions;
     $prioritydropdown =xarModAPIFunc('tasks','user','getpriorities');
     $data['prioritydropdown']=$prioritydropdown;
     
-    // NEED TO INVESTIGATE THIS
-//     if($module == "tasks" && $type == "admin" && $func == "new") {
-//         $output->Text(tasks_feedback());
-//     }
-    //$data['feedback']=tasks_feedback();
+    $data['feedback'] = xarGetStatusMsg();
 
     $data['parentid']= (empty($parentid))? 0: $parentid;
     $data['modname']= (empty($module)) ? '' : $module;

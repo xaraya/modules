@@ -61,32 +61,32 @@
           <!-- TODO: base background color on depth -->
           <tr valign="middle">
             <td align="left" width="100%" colspan="2">
-              <b>#$indent#<a href="#$url#">#$name#</a></b>
+              <b>#$loop:item['indent']#<a href="#$loop:item['url']#">#$loop:item['name']#</a></b>
             </td>
-            <td align="center">#$private#</td>
-            <td align="center">#$priority#</td>
-            <td align="center">#$closed#</td>
-            <td align="center">#$closedsubtasks# / #$ttlsubtasks# </td>
+            <td align="center">#$loop:item['private']#</td>
+            <td align="center">#$loop:item['priority']#</td>
+            <td align="center">#$loop:item['closed']#</td>
+            <td align="center">#$loop:item['closedsubtasks']# / #$loop:item['ttlsubtasks']# </td>
             <td align="center">
-              <input type="checkbox" name="taskcheck[#$id#]" id="taskcheck[#$id#]" value="1"/>
-              <input type="submit" name="taskfocus[#$id#" value=" + "/>
+              <input type="checkbox" name="taskcheck[#$loop:item['id']#]" id="taskcheck[#$loop:item['id']#]" value="1"/>
+              <input type="submit" name="taskfocus[#$loop:item['id']#" value=" + "/>
             </td>
           </tr>
           <!-- TODO: base background color on depth -->
           <tr>
             <td align="left" valign="top" width="30%">
-              <xar:if condition="$depth eq 1">
-                #$indent#[<xar:mlstring>created</xar:mlstring>:#$date_created#]<br/>
-                #$indent#[<xar:mlstring>modified</xar:mlstring>:#$date_changed#]<br/>
+              <xar:if condition="$loop:item['depth'] eq 1">
+                #$loop:item['indent']#[<xar:mlstring>created</xar:mlstring>:#$loop:item['date_created']#]<br/>
+                #$loop:item['indent']#[<xar:mlstring>modified</xar:mlstring>:#$loop:item['date_changed']#]<br/>
               </xar:if>
-              <xar:if condition="$depth <=2">
-                #$indent#[<xar:mlstring>creator</xar:mlstring>: #$creator#]<br/>
-                #$indent#[<xar:mlstring>assigned to</xar:mlstring>: #$owner#]
+              <xar:if condition="$loop:item['depth'] <=2">
+                #$loop:item['indent']#[<xar:mlstring>creator</xar:mlstring>: #$loop:item['creator']#]<br/>
+                #$loop:item['indent']#[<xar:mlstring>assigned to</xar:mlstring>: #$loop:item['owner']#]
               </xar:if>
               &nbsp;
             </td>
             <td align="left" valign="top" width="100% colspan="6">
-              #$description#
+              #$loop:item['description']#
               <xar:if condition="xarModGetVar('tasks','showoptions')">
                 [<i>
                 <xar:foreach in="$options" value="$link">
