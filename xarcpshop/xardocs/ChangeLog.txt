@@ -1,0 +1,6 @@
+Version 0.0.1
+ * 2004-11-08 jojodee: Initial Xaraya Versions
+                       Simple integration of cafepress shop into Xaraya
+                       Random and featured item block
+
+

@@ -1,0 +1,15 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Xaraya CafePress Shop Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+<!--<h2>#$menutitle#</h2>-->
+<div style="margin: auto;">
+    <xar:loop name="$menuitems">
+    <div style="float:left;width:25%;">
+        <a href="#$loop:item['menulink']#">#$loop:item['menulabel']#</a>
+    </div>
+    </xar:loop>
+</div>
+
+</div>
+
+

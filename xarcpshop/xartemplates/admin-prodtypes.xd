@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div style="margin: auto;padding-bottom:20px;">
+    <xar:template file="admin-menu" type="module"/>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View All Product Types</xar:mlstring></h2>
+    <div style="margin: auto;">
+    <p><xar:mlstring>At the moment, this section loads and removes a set of all cafepress product types. <br />Nothing else but a 
+    big TODO here :)</xar:mlstring></p>
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <th>#$prodidlabel#</th>
+        <th>#$prodtypelabel#</th>
+        <th>#$desclabel#</th>
+        <th>#$optionslabel#</th>
+    </tr>
+    <xar:foreach in="$items" value="$item">
+    <tr>
+        <td>#$item['prodtypeid']#</td>
+        <td>#$item['prodtype']#</td>
+        <td>#$item['description']#</td>
+        <td>
+           <xar:if condition="empty($item['editurl'])">
+               #$item['edittitle']#
+           <xar:else />
+               <a href="#$item['editurl']#">#$item['edittitle']#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($item['deleteurl'])">
+               #$item['deletetitle']#
+           <xar:else />
+               <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+    <table style="border:0;">
+    <tr>
+        <td>
+            <a href="#$loadlink#"><xar:mlstring>Load All Products</xar:mlstring></a>
+        </td>
+        <td>
+             <a href="#$removelink#"><xar:mlstring>Remove All Products</xar:mlstring></a>
+        </td>
+    </tr>
+    </table>
+<br />
+
+<!-- add the pager here -->
+#$pager#
+</div>
+</div>

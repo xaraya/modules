@@ -1,0 +1,43 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div style="margin: auto;padding-bottom:20px;">
+    <xar:template file="admin-menu" type="module"/>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Delete Stores</xar:mlstring></h2>
+<div style="margin: auto;">
+
+<!-- the specific template for the current admin function comes here -->
+
+
+
+<form method="post" action="&xar-modurl-xarcpshop-admin-delete;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+    <input type="hidden" name="confirm" id="confirm" value="true" />
+    <input type="hidden" name="storeid" id="storeid" value="#$storeid#" />
+
+    <table border="0" width="300">
+        <tr>
+            <td>
+                #$itemidlabel#:
+            </td>
+            <td>
+                <strong>#$storeid#</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                #$namelabel#:
+            </td>
+            <td><strong>#$namevalue#</strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+<div align="center">#$confirmtext#</div><br />
+                    <input type="submit" value="#$confirmbutton#"  />
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+</div>

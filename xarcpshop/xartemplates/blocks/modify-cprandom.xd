@@ -1,0 +1,29 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('The maximum number of random items to display.')#">
+            <label for="numitems#$blockid#"><xar:mlstring>Max. No. of Items</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+             <input type="text" name="numitems" id="numitems#$blockid#" value="#$numitems#" size="5" maxlength="5" />
+        </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+        <span style="float: left; width: 20%; text-align: right;">
+            <span class="help" title="#xarML('ID of the Store to feature the items from')#">
+            <label for="featuredstore#$blockid#"><xar:mlstring>Selected Store:</xar:mlstring></label>:</span>
+        </span>
+        <span style="float: right; width: 78%; text-align: left;">
+                 <select name="featuredstore" id="featuredstore" size="1">
+                    <xar:foreach in="$shopdata" key="$k" value="$v">
+                        <xar:if condition="$k['id'] eq $featuredstore">
+                            <option value="#$v['id']#" selected="selected">#$v['name']#</option>
+                        <xar:else />
+                            <option value="#$v['id']#">#$v['name']#</option>
+                        </xar:if>
+                    </xar:foreach>
+                    </select>
+        </span>
+    </div>
+

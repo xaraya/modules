@@ -1,0 +1,6 @@
+xarCafePress module written by jojodee (jojodee@xaraya.com)
+
+Based in part on GPL code in the simple cafepress module code that is found in
+Postnuke cplite module by Ed Grosvener at http://www.xarcpshop.com.
+This is similar to code also supplied by admin@notonebit.com in their cpshop script.
+

@@ -1,0 +1,23 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<xar:set name="base">xarServerGetBaseURL()</xar:set>
+
+<div style="margin: auto;padding-bottom:20px;">
+    <xar:template file="user-menu" type="module"/>
+</div>
+
+<div style="margin: auto; width:98%;">
+    <xar:if condition="$closed eq '1'">
+    <p style="margin:auto; width:100%; text-align:center;">
+    <xar:mlstring>Our Cafe Press Shop is currently closed for maintenance. Please call back later.</xar:mlstring>
+    </p>
+    <p style="margin:auto; width:100%; text-align:center;">
+    <xar:mlstring>Thank you for your patience.</xar:mlstring>
+    </p>
+    <xar:else />
+    <div style="clear:both; width:98$;">
+        <p>#$js#</p>
+ <p>    #$content#</p>
+    </div>
+    </xar:if>
+</div>
+

@@ -1,0 +1,40 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div style="margin: auto;padding-bottom:20px;">
+    <xar:template file="admin-menu" type="module"/>
+</div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>View Stores</xar:mlstring></h2>
+    <div style="margin: auto;">
+
+    <table width="100%" border="1" cellspacing="0" cellpadding="4">
+    <tr>
+        <th>#$nicklabel#</th>
+        <th>#$namelabel#</th>
+        <th>#$optionslabel#</th>
+    </tr>
+    <xar:foreach in="$items" value="$item">
+    <tr>
+        <td>#$item['storeid']# : #$item['nickname']#</td>
+        <td>#$item['name']#/#$item['toplevel']#</td>
+        <td>
+           <xar:if condition="empty($item['editurl'])">
+               #$item['edittitle']#
+           <xar:else />
+               <a href="#$item['editurl']#">#$item['edittitle']#</a>
+           </xar:if>
+           |
+           <xar:if condition="empty($item['deleteurl'])">
+               #$item['deletetitle']#
+           <xar:else />
+               <a href="#$item['deleteurl']#">#$item['deletetitle']#</a>
+           </xar:if>
+        </td>
+    </tr>
+    </xar:foreach>
+</table>
+<br />
+
+<!-- add the pager here -->
+#$pager#
+</div>
+</div>
