@@ -103,7 +103,7 @@ function tasks_user_view($args)
 	if(is_array($tasks) && count($tasks) > 0) {
 		foreach($tasks as $key => $task) {
 			$dateformat = xarModGetVar('tasks', 'dateformat');
-			$dateformatlist = tasks_dateformatlist();
+			$dateformatlist = xarModAPIFunc('tasks','user','dateformatlist',array());
 			if(empty($dateformat)) $dateformat = 1;
 			$tasks[$key]['date_created'] = strftime($dateformatlist[$dateformat],$task['date_created']);
 			$tasks[$key]['date_changed'] = strftime($dateformatlist[$dateformat],$task['date_changed']);
@@ -359,23 +359,4 @@ function tasks_feedback()
 	return $feedback;
 }
 
-function tasks_dateformatlist() {
-	$dateformatlist = array(xarML('Please choose a Date/Time Format'),
-							'%m/%d/%Y',
-							'%m.%d.%y',
-							'%B %d, %Y',
-							'%a, %B %d, %Y',
-							'%A, %B %d, %Y',
-							'%m/%d/%Y %H:%M',
-							'%m.%d.%y %H:%M',
-							'%B %d, %Y %H:%M',
-							'%a, %B %d, %Y %H:%M',
-							'%A, %B %d, %Y %H:%M',
-							'%m/%d/%Y %I:%M %p',
-							'%m.%d.%y %I:%M %p',
-							'%B %d, %Y %I:%M %p',
-							'%a, %B %d, %Y %I:%M %p',
-							'%A, %B %d, %Y %I:%M %p');
-	return $dateformatlist;
-}
 ?>
