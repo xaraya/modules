@@ -55,7 +55,7 @@ if(status){
 <div align="center">
 #$hooks#
 
-    <table border="1" width="50% cellspacing="0" cellpadding="0" align="center">
+    <table border="1" width="50%" cellspacing="0" cellpadding="0" align="center">
     <tr><td align="center">&xar-var-contactmenu;</td>
     <td align="center">&xar-var-addpersons;</td>
     <td align="center">&xar-var-listpersons;</td></tr>
@@ -71,7 +71,7 @@ if(status){
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td valign="top" align="right" nowrap="nowrap"><strong>#$department_label#</strong>&nbsp;</td>
+<td valign="top" align="right" nowrap="nowrap"><label for="department">#$department_label#</label></td>
 <td><select name="department">
 <xar:loop name="$departments">
  <xar:if condition="$loop:item['name'] eq $depname">
@@ -81,11 +81,11 @@ if(status){
  </xar:if>
  </xar:loop>
 </select></td>
-<td><strong>#$visable_label#</strong>
+<td><label for="showdepartment">#$visable_label#</label>
 <xar:if condition="$showdepartment">
-<input type="checkbox" name="showdepartment" value=1 CHECKED>
+<input type="checkbox" name="showdepartment" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showdepartment" value=1>
+<input type="checkbox" name="showdepartment" value="1"/>
 </xar:if>
  </td>
 <td>&nbsp;</td>
@@ -93,7 +93,7 @@ if(status){
 <td>&nbsp;</td>
 </tr>
 <tr>
-<td align="right" nowrap="nowrap"><strong>#$title_label#</strong></td>
+<td align="right" nowrap="nowrap"><label for="titleID">#$title_label#</label></td>
 <td><select name="titleID">
 <xar:loop name="$titles">
   <xar:if condition="$loop:item['name'] eq $titleName">
@@ -103,68 +103,68 @@ if(status){
  </xar:if>
 </xar:loop>
 </select></td>
-<td><strong>#$visable_label#</strong>
+<td><label for="showtitle">#$visable_label#</label>
 
 <xar:if condition="$showtitle">
-<input type="checkbox" name="showtitle" value=1 CHECKED>
+<input type="checkbox" name="showtitle" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showtitle" value=1>
+<input type="checkbox" name="showtitle" value="1"/>
 </xar:if>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$firstname_label#</strong></td>
-<td><input type="text" size="20" maxlength="60" name="firstname" value=#$firstname#></td>
+<td align="right" nowrap="nowrap"><label for="firstname">#$firstname_label#</label></td>
+<td><input type="text" size="20" maxlength="60" name="firstname" value="#$firstname#"/></td>
 <td></td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$lastname_label#</strong></td>
-<td><input type="text" name="lastname" size="20" maxlength="60" value=#$lastname#></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="lastname">#$lastname_label#</label></td>
+<td><input type="text" name="lastname" size="20" maxlength="60" value="#$lastname#"/></td>
+<td><label for="showname">#$visable_label#</label>
 
 <xar:if condition="$showname">
-<input type="checkbox" name="showname" value=1 CHECKED>
+<input type="checkbox" name="showname" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showname" value=1>
+<input type="checkbox" name="showname" value="1"/>
 </xar:if>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$address_label#</strong></td>
-<td><input type="text" name="address" size="20" maxlength="60" value="#$address#"> </td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="address">#$address_label#</label></td>
+<td><input type="text" name="address" size="20" maxlength="60" value="#$address#"/> </td>
+<td><label for="showaddress">#$visable_label#</label>
 
 <xar:if condition="$showaddress">
-<input type="checkbox" name="showaddress" value=1 CHECKED>
+<input type="checkbox" name="showaddress" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showaddress" value=1>
+<input type="checkbox" name="showaddress" value="1"/>
 </xar:if>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$address2_label#</strong></td>
-<td><input type="text" name="address2" size="20" maxlength="80" value="#$address2#"></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="address2">#$address2_label#</label></td>
+<td><input type="text" name="address2" size="20" maxlength="80" value="#$address2#"/></td>
+<td><label for="showaddress2">#$visable_label#</label>
 
 <xar:if condition="$showaddress2">
-<input type="checkbox" name="showaddess2" value=1 CHECKED>
+<input type="checkbox" name="showaddess2" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showaddress2" value=1>
+<input type="checkbox" name="showaddress2" value="1" />
 </xar:if>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$city_label#</strong></td>
+<td align="right" nowrap="nowrap"><label for="city">#$city_label#</label></td>
 <td><select name="city">
 <xar:loop name="$city">
  <xar:if condition="$loop:item['name'] eq $editcity">
@@ -174,40 +174,40 @@ if(status){
  </xar:if>
 </xar:loop>
 </select></td>
-<td><strong>#$visable_label#</strong>
+<td><label for="showcity">#$visable_label#</label>
 
 <xar:if condition="$showcity">
-<input type="checkbox" name="showcity" value=1 CHECKED>
+<input type="checkbox" name="showcity" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showcity" value=1>
+<input type="checkbox" name="showcity" value="1" />
 </xar:if>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$state_label#</strong></td>
-<td><input type="text" name="state" size="20" maxlength="60" value="#$state#"></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="state">#$state_label#</label></td>
+<td><input type="text" name="state" size="20" maxlength="60" value="#$state#"/></td>
+<td><label for="showstate">#$visable_label#</label>
 
 <xar:if condition="$showstate">
-<input type="checkbox" name="showstate" value=1 CHECKED>
+<input type="checkbox" name="showstate" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showstate" value=1>
+<input type="checkbox" name="showstate" value="1" />
 </xar:if>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$postalcode_label#</strong></td>
-<td><input type="text" name="zip" size="20" maxlength="60"  value="#$zip#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="zip">#$postalcode_label#</label></td>
+<td><input type="text" name="zip" size="20" maxlength="60"  value="#$zip#" /></td>
+<td><label for="showzip">#$visable_label#</label>
 
 <xar:if condition="$showzip">
-<input type="checkbox" name="showzip" value=1 CHECKED>
+<input type="checkbox" name="showzip" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showzip" value=1>
+<input type="checkbox" name="showzip" value="1" />
 </xar:if>
 
 </td>
@@ -215,18 +215,18 @@ if(status){
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$country_label#</strong></td>
+<td align="right" nowrap="nowrap"><label for="country">#$country_label#</label></td>
 <td><select name="country">
 <xar:loop name="$country">
-<option value=#$loop:item['name']#>#$loop:item['name']#</option>
+<option value="#$loop:item['name']#">#$loop:item['name']#</option>
 </xar:loop>
 </select></td>
-<td><strong>#$visable_label#</strong>
+<td><label for="showcountry">#$visable_label#</label>
 
 <xar:if condition="$showcountry">
-<input type="checkbox" name="showcountry" value=1 CHECKED>
+<input type="checkbox" name="showcountry" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showcountry" value=1>
+<input type="checkbox" name="showcountry" value="1" />
 </xar:if>
 </td>
 <td>&nbsp;</td>
@@ -236,13 +236,13 @@ if(status){
 <td colspan="6"><hr/></td>
 </tr><tr>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$newtitle_label#</strong>&nbsp;</td>
-<td colspan-"2" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newtitles"></td>
+<td align="right" nowrap="nowrap"><label for="newtitles">#$newtitle_label#</label>&nbsp;</td>
+<td colspan="2" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newtitles"/></td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
-<tr><td align="right" nowrap="nowrap"><strong>#$addcity_label#</strong>&nbsp;</td>
-<td colspan-"2" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newcity"></td>
+<tr><td align="right" nowrap="nowrap"><label for="newcity">#$addcity_label#</label></td>
+<td colspan="2" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newcity"/></td>
 </tr><tr>
 <td colspan="6"><hr/></td>
 </tr><tr>
@@ -251,98 +251,98 @@ if(status){
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$phone_label#</strong></td>
-<td><input type="text" name="phone" size="20" maxlength="60" value=#$phone#></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="phone">#$phone_label#</label></td>
+<td><input type="text" name="phone" size="20" maxlength="60" value="#$phone#"/></td>
+<td><label for="showphone">#$visable_label#</label>
 
 <xar:if condition="$showphone">
-<input type="checkbox" name="showphone" value=1 CHECKED>
+<input type="checkbox" name="showphone" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showphone" value=1>
+<input type="checkbox" name="showphone" value="1" />
 </xar:if>
 </td>
-<td align="right" nowrap="nowrap"><strong>#$type_label#</strong></td>
+<td align="right" nowrap="nowrap"><label for="typephone">#$type_label#</label></td>
 <td><select name="typephone">
 <xar:loop name="$items">
 
 <xar:if condition="$loop:item['name'] eq $TypePhone">
- <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
- <option value = "#$loop:item['number']#">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#">#$loop:item['name']#</option>
  </xar:if>
 
 </xar:loop>
 </select></td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$fax_label#</strong></td>
-<td><input type="text" name="fax" size="20" maxlength="60" value="#$fax#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="fax">#$fax_label#</label></td>
+<td><input type="text" name="fax" size="20" maxlength="60" value="#$fax#" /></td>
+<td><label for="showfax">#$visable_label#</label>
 
 <xar:if condition="$showfax">
-<input type="checkbox" name="showfax" value=1 CHECKED>
+<input type="checkbox" name="showfax" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showfax" value=1>
+<input type="checkbox" name="showfax" value="1" />
 </xar:if>
 </td>
-<td align="right" nowrap="nowrap"><strong>#$type_label#</strong></td>
+<td align="right" nowrap="nowrap"><label for="typefax">#$type_label#</label></td>
 <td><select name="typefax">
 <xar:loop name="$items">
 
 <xar:if condition="$loop:item['name'] eq $TypeFax">
- <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
- <option value = "#$loop:item['number']#">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#">#$loop:item['name']#</option>
  </xar:if>
 
 </xar:loop>
 </select></td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$mobile_label#</strong></td>
-<td><input type="text" name="mobile" size="20" maxlength="60" value="#$mobile#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="mobile">#$mobile_label#</label></td>
+<td><input type="text" name="mobile" size="20" maxlength="60" value="#$mobile#" /></td>
+<td><label for="showmobile">#$visable_label#</label>
 
 <xar:if condition="$showmobile">
-<input type="checkbox" name="showmobile" value=1 CHECKED>
+<input type="checkbox" name="showmobile" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showmobile" value=1>
+<input type="checkbox" name="showmobile" value="1" />
 </xar:if>
 </td>
-<td align="right" nowrap="nowrap"><strong>#$type_label#</strong></td>
+<td align="right" nowrap="nowrap"><label for="typemobile">#$type_label#</label></td>
 <td><select name="typemobile">
 <xar:loop name="$items">
 
 <xar:if condition="$loop:item['name'] eq $TypeMobile">
- <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
 
- <option value = "#$loop:item['number']#">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#">#$loop:item['name']#</option>
  </xar:if>
 
 </xar:loop>
 </select></td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$pager_label#</strong></td>
-<td><input type="text" name="pager" size="20" maxlength="60" value="#$pager#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="pager">#$pager_label#</label></td>
+<td><input type="text" name="pager" size="20" maxlength="60" value="#$pager#" /></td>
+<td><label for="showpager">#$visable_label#</label>
 
 <xar:if condition="$showpager">
-<input type="checkbox" name="showpager" value=1 CHECKED>
+<input type="checkbox" name="showpager" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showpager" value=1>
+<input type="checkbox" name="showpager" value="1" />
 </xar:if>
 </td>
-<td align="right" nowrap="nowrap"><strong>#$type_label#</strong></td>
+<td align="right" nowrap="nowrap"><label for="typepager">#$type_label#</label></td>
 <td><select name="typepager">
 <xar:loop name="$items">
 
 <xar:if condition="$loop:item['name'] eq $TypePager">
- <option value = "#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#" selected="selected">#$loop:item['name']#</option>
  <xar:else/>
 
- <option value = "#$loop:item['number']#">#$loop:item['name']#</option>
+ <option value="#$loop:item['number']#">#$loop:item['name']#</option>
  </xar:if>
 
 </xar:loop>
@@ -350,14 +350,14 @@ if(status){
 <td>&nbsp;</td>
 </tr><tr>
 
-<td align="right" nowrap="nowrap"><strong>#$email_label#</strong></td>
-<td><input type="text" name="mail" size="20" maxlength="60" value="#$mail#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="mail">#$email_label#</label></td>
+<td><input type="text" name="mail" size="20" maxlength="60" value="#$mail#" /></td>
+<td><label for="showemail">#$visable_label#</label>
 
 <xar:if condition="$showemail">
-<input type="checkbox" name="showemail" value=1 CHECKED>
+<input type="checkbox" name="showemail" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showemail" value=1>
+<input type="checkbox" name="showemail" value="1" />
 </xar:if>
 </td>
 <td>&nbsp;</td>
@@ -371,28 +371,28 @@ if(status){
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$icq_label#</strong></td>
-<td><input type="text" name="ICQ" size="20" maxlength="60"  value="#$ICQ#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="ICQ">#$icq_label#</label></td>
+<td><input type="text" name="ICQ" size="20" maxlength="60"  value="#$ICQ#" /></td>
+<td><label for="showICQ">#$visable_label#</label>
 
 <xar:if condition="$showICQ">
-<input type="checkbox" name="showICQ" value=1 CHECKED>
+<input type="checkbox" name="showICQ" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showICQ" value=1>
+<input type="checkbox" name="showICQ" value="1" />
 </xar:if>
 </td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$aim_label#</strong></td>
-<td><input type="text" name="AIM" size="20" maxlength="60"  value="#$AIM#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="AIM">#$aim_label#</label></td>
+<td><input type="text" name="AIM" size="20" maxlength="60"  value="#$AIM#" /></td>
+<td><label for="showAIM">#$visable_label#</label>
 
 <xar:if condition="$showAIM">
-<input type="checkbox" name="showAIM" value=1 CHECKED>
+<input type="checkbox" name="showAIM" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showAIM" value=1>
+<input type="checkbox" name="showAIM" value="1" />
 </xar:if>
 </td>
 
@@ -400,14 +400,14 @@ if(status){
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$yim_label#</strong></td>
-<td><input type="text" name="YIM" size="20" maxlength="60"  value="#$YIM#"  ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="YIM">#$yim_label#</label></td>
+<td><input type="text" name="YIM" size="20" maxlength="60"  value="#$YIM#" /></td>
+<td><label for="showYIM">#$visable_label#</label>
 
 <xar:if condition="$showYIM">
-<input type="checkbox" name="showYIM" value=1 CHECKED>
+<input type="checkbox" name="showYIM" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showYIM" value=1>
+<input type="checkbox" name="showYIM" value="1" />
 </xar:if>
 </td>
 
@@ -415,14 +415,14 @@ if(status){
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
-<td align="right" nowrap="nowrap"><strong>#$msnm_label#</strong></td>
-<td><input type="text" name="MSNM" size="20" maxlength="60" value="#$MSNM#" ></td>
-<td><strong>#$visable_label#</strong>
+<td align="right" nowrap="nowrap"><label for="MSNM">#$msnm_label#</label></td>
+<td><input type="text" name="MSNM" size="20" maxlength="60" value="#$MSNM#" /></td>
+<td><label for="showMSNM">#$visable_label#</label>
 
 <xar:if condition="$showMSNM">
-<input type="checkbox" name="showMSNM" value=1 CHECKED>
+<input type="checkbox" name="showMSNM" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showMSNM" value=1>
+<input type="checkbox" name="showMSNM" value="1" />
 </xar:if>
 </td>
 
@@ -433,44 +433,43 @@ if(status){
 <td colspan="6"><hr/></td>
 </tr><tr>
 <td colspan="3" nowrap="nowrap"><strong>#$options_label#</strong></td>
-<td align="right" nowrap="nowrap">&nbsp;</td>
+<td>&nbsp;</td>
 <td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr><tr>
 <td colspan="4"><div align="center">
-<xar:if condition="(is_file($image))"><img src="#$image#" alt="" /></xar:if></td></div>
-<tr><td align="right" nowrap="nowrap"><strong>#$image_label#</strong></td>
-<td><input type="file" name="image" id="image" value=#$image# size=20 maxlength=250></td>
-<td><strong>#$visable_label#</strong>
+<xar:if condition="(is_file($image))"><img src="#$image#" alt="" /></xar:if></div></td>
+<tr><td align="right" nowrap="nowrap"><label for="image">#$image_label#</label></td>
+<td><input type="file" name="image" id="image" value="#$image#" size="20" maxlength="250"/></td>
+<td><label for="showimage">#$visable_label#</label>
 
 <xar:if condition="$showimage">
-<input type="checkbox" name="showimage" value=1 CHECKED>
+<input type="checkbox" name="showimage" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="showimage" value=1>
+<input type="checkbox" name="showimage" value="1" />
 </xar:if>
 </td>
 </tr><tr>
-<td align="right" valign="bottom" nowrap="nowrap"><br /></td>
-<td colspan="5"><em>#$note_label#</span>&nbsp;</em></td>
+<td><br /></td>
+<td colspan="5"><em>#$note_label#</em></td>
 </tr><tr>
-<td align="right" valign="bottom" nowrap="nowrap"><input type="checkbox" name="displayall" onClick="checkAll(this.checked);" value="1"></td>
-<td colspan="5"><strong>#$displayall_label#</strong></td>
+<td align="right" valign="bottom" nowrap="nowrap"><input type="checkbox" name="displayall" onClick="checkAll(this.checked);" value="1"/></td>
+<td colspan="5"><label for="displayall">#$displayall_label#</label></td>
 </tr><tr>
 <td align="right" valign="bottom" nowrap="nowrap">
 
 <xar:if condition="$active">
-<input type="checkbox" name="active" value=1 CHECKED>
+<input type="checkbox" name="active" value="1" checked="checked"/>
 <xar:else/>
-<input type="checkbox" name="active" value=1>
+<input type="checkbox" name="active" value="1" />
 </xar:if>
 </td>
-<td colspan="5"><strong>#$active_label#</strong></td>
-</tr><tr>
-<td colspan="4"><input type="submit" name="addcontact" value="#$addcontact_label#"></td>
-<input type="hidden" name="id" value=#$contact_id#></td></tr>
-<input type="hidden" name="lastimage" value="#$image#"></td></tr>
-<td>&nbsp;</td>
+<td colspan="5"><label for="active">#$active_label#</label></td>
 </tr>
+<tr><td colspan="4"><input type="submit" name="addcontact" value="#$addcontact_label#"/></td>
+<input type="hidden" name="id" value="#$contact_id#"/>
+<input type="hidden" name="lastimage" value="#$image#"/>
+<td>&nbsp;</td></tr>
 </table>
 </form>
 </div>

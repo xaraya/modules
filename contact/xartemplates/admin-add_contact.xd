@@ -80,7 +80,7 @@ if(status){
 <option value="#$loop:item['id']#">#$loop:item['name']#</option>
 </xar:loop>
 </select></td>
-<td colspan="3"><label for="showdepartment">#$visable_label#</label></strong><input type="checkbox" name="showdepartment" id="showdepartment" value="1"></td>
+<td colspan="3"><label for="showdepartment">#$visable_label#</label><input type="checkbox" name="showdepartment" id="showdepartment" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="titleID">#$title_label#</label></td>
@@ -89,26 +89,26 @@ if(status){
 <option value="#$loop:item['id']#">#$loop:item['name']#</option>
 </xar:loop>
 </select></td>
-<td colspan="3"><label for="showtitle">#$visable_label#</label><input type="checkbox" name="showtitle" id="showtitle" value="1"></td>
+<td colspan="3"><label for="showtitle">#$visable_label#</label><input type="checkbox" name="showtitle" id="showtitle" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="firstname">#$firstname_label#</label></td>
-<td colspan="1"><input type="text" size="20" maxlength="60" name="firstname" id="firstname" value=""></td>
+<td colspan="1"><input type="text" size="20" maxlength="60" name="firstname" id="firstname" value="" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="lastname">#$lastname_label#</label></td>
-<td><input type="text" name="lastname" id="lastname" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showname">#$visable_label#</label><input type="checkbox" name="showname" id="showname" value="1"></td>
+<td><input type="text" name="lastname" id="lastname" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showname">#$visable_label#</label><input type="checkbox" name="showname" id="showname" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="address">#$address_label#</label></td>
-<td><input type="text" name="address" id="address" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showaddress">#$visable_label#</label><input type="checkbox" name="showaddress" id="showaddress" value="1"></td>
+<td><input type="text" name="address" id="address" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showaddress">#$visable_label#</label><input type="checkbox" name="showaddress" id="showaddress" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="address">#$address2_label#</label></td>
-<td><input type="text" name="address2" id="address2" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showaddress2">#$visable_label#</label><input type="checkbox" name="showaddress2" id="showaddress2" value="1"></td>
+<td><input type="text" name="address2" id="address2" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showaddress2">#$visable_label#</label><input type="checkbox" name="showaddress2" id="showaddress2" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="city">#$city_label#</label></td>
@@ -117,17 +117,17 @@ if(status){
 <option value="#$loop:item['name']#">#$loop:item['name']#</option>
 </xar:loop>
 </select></td>
-<td colspan="3"><label for="showcity">#$visable_label#</label><input type="checkbox" name="showcity" id="showcity" value="1"></td>
+<td colspan="3"><label for="showcity">#$visable_label#</label><input type="checkbox" name="showcity" id="showcity" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="state">#$state_label#</label></td>
-<td><input type="text" name="state" id="state" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showstate">#$visable_label#</label><input type="checkbox" name="showstate" id="showstate" value="1"></td>
+<td><input type="text" name="state" id="state" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showstate">#$visable_label#</label><input type="checkbox" name="showstate" id="showstate" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="zip">#$postalcode_label#</label></td>
-<td><input type="text" name="zip" id="zip" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showpostalcode">#$visable_label#</label><input type="checkbox" name="showpostalcode" id="showpostalcode" value="1"></td>
+<td><input type="text" name="zip" id="zip" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showpostalcode">#$visable_label#</label><input type="checkbox" name="showpostalcode" id="showpostalcode" value="1" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="country">#$country_label#</label></td>
@@ -136,32 +136,32 @@ if(status){
 <option value="#$loop:item['name']#">#$loop:item['name']#</option>
 </xar:loop>
 </select></td>
-<td colspan="3"><label for="showcountry">#$visable_label#</label><input type="checkbox" name="showcountry" id="showcountry" value="1"></td>
+<td colspan="3"><label for="showcountry">#$visable_label#</label><input type="checkbox" name="showcountry" id="showcountry" value="1" /></td>
 </tr>
 <tr>
-<td colspan="5"><hr noshade="noshade"></td>
+<td colspan="5"><hr noshade="noshade"/></td>
 </tr>
 <tr>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="newtitles">#$newtitle_label#</label></td>
-<td colspan="4" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newtitles" id="newtitles"></td>
+<td colspan="4" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newtitles" id="newtitles" /></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="newcity">#$addcity_label#</label></td>
-<td colspan="4" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newcity" id="newcity"></td>
+<td colspan="4" nowrap="nowrap"><input type="text" size="40" maxlength="60" name="newcity" id="newcity" /></td>
 </tr>
 <tr>
-<td colspan="5"><hr noshade="noshade"></td>
+<td colspan="5"><hr noshade="noshade"/></td>
 </tr>
 <tr>
 <td colspan="5" nowrap="nowrap"><b>#$howtocontact_label#</b></td>
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="phone">#$phone_label#</label></td>
-<td><input type="text" name="phone" id="phone" size="20" maxlength="60"></td>
-<td><label for="showphone">#$visable_label#</label><input type="checkbox" name="showphone" id="showphone" value="1"></td>
-<td align="right" nowrap="nowrap"><label for="typephone">#$type_label#</strong></td>
+<td><input type="text" name="phone" id="phone" size="20" maxlength="60" /></td>
+<td><label for="showphone">#$visable_label#</label><input type="checkbox" name="showphone" id="showphone" value="1" /></td>
+<td align="right" nowrap="nowrap"><label for="typephone">#$type_label#</label></td>
 <td><select name="typephone" id="typephone">
 <xar:loop name="$items">
 <option value="#$loop:item['number']#">#$loop:item['name']#</option>
@@ -170,8 +170,8 @@ if(status){
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="fax">#$fax_label#</label></td>
-<td><input type="text" name="fax" id="fax" size="20" maxlength="60"></td>
-<td><label for="showfax">#$visable_label#</label><input type="checkbox" name="showfax" id="showfax" value="1"></td>
+<td><input type="text" name="fax" id="fax" size="20" maxlength="60" /></td>
+<td><label for="showfax">#$visable_label#</label><input type="checkbox" name="showfax" id="showfax" value="1" /></td>
 <td align="right" nowrap="nowrap"><label for="typefax">#$type_label#</label></td>
 <td><select name="typefax" id="typefax">
 <xar:loop name="$items">
@@ -181,8 +181,8 @@ if(status){
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="mobile">#$mobile_label#</label></td>
-<td><input type="text" name="mobile" id="mobile" size="20" maxlength="60"></td>
-<td><label for="showmobile">#$visable_label#</label><input type="checkbox" name="showmobile" id="showmobile" value="1"></td>
+<td><input type="text" name="mobile" id="mobile" size="20" maxlength="60" /></td>
+<td><label for="showmobile">#$visable_label#</label><input type="checkbox" name="showmobile" id="showmobile" value="1" /></td>
 <td align="right" nowrap="nowrap"><label for="typemobile">#$type_label#</label></td>
 <td><select name="typemobile" id="typemobile">
 <xar:loop name="$items">
@@ -192,8 +192,8 @@ if(status){
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="pager">#$pager_label#</label></td>
-<td><input type="text" name="pager" id="pager" size="20" maxlength="60"></td>
-<td><label for="showpager">#$visable_label#</label><input type="checkbox" name="showpager" id="showpager" value="1"></td>
+<td><input type="text" name="pager" id="pager" size="20" maxlength="60" /></td>
+<td><label for="showpager">#$visable_label#</label><input type="checkbox" name="showpager" id="showpager" value="1" /></td>
 <td align="right" nowrap="nowrap"><label for="typepager">#$type_label#</label></td>
 <td><select name="typepager" id="typepager">
 <xar:loop name="$items">
@@ -203,63 +203,62 @@ if(status){
 </tr>
 <tr>
 <td align="right" nowrap="nowrap"><label for="mail">#$email_label#</label></td>
-<td><input type="text" name="mail" id="mail" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showemail">#$visable_label#</label><input type="checkbox" name="showemail" id="showemail" value="1"></td>
+<td><input type="text" name="mail" id="mail" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showemail">#$visable_label#</label><input type="checkbox" name="showemail" id="showemail" value="1" /></td>
 </tr>
 <tr>
-<td colspan="5"><hr noshade="noshade"></td>
+<td colspan="5"><hr noshade="noshade"/></td>
 </tr>
 <tr>
 <td colspan="5" nowrap="nowrap"><b>#$imcontact_label#</b></td>
 </tr>
 <tr>
-<td align="right" nowrap="nowrap"><label for="ICQ">#$icq_label#</strong></td>
-<td><input type="text" name="ICQ" id="ICQ" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showICQ">#$visable_label#</strong><input type="checkbox" name="showICQ" id="showICQ" value="1"></td>
+<td align="right" nowrap="nowrap"><label for="ICQ">#$icq_label#</label></td>
+<td><input type="text" name="ICQ" id="ICQ" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showICQ">#$visable_label#</label><input type="checkbox" name="showICQ" id="showICQ" value="1" /></td>
 </tr>
 <tr>
-<td align="right" nowrap="nowrap"><label for="AIM">#$aim_label#</strong></td>
-<td><input type="text" name="AIM" id="AIM" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showAIM">#$visable_label#</strong><input type="checkbox" name="showAIM" id="showAIM" value="1"></td>
+<td align="right" nowrap="nowrap"><label for="AIM">#$aim_label#</label></td>
+<td><input type="text" name="AIM" id="AIM" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showAIM">#$visable_label#</label><input type="checkbox" name="showAIM" id="showAIM" value="1" /></td>
 </tr>
 <tr>
-<td align="right" nowrap="nowrap"><label for="YIM">#$yim_label#</strong></td>
-<td><input type="text" name="YIM" id="YIM" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showYIM">#$visable_label#</strong><input type="checkbox" name="showYIM" id="showYIM" value="1"></td>
+<td align="right" nowrap="nowrap"><label for="YIM">#$yim_label#</label></td>
+<td><input type="text" name="YIM" id="YIM" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showYIM">#$visable_label#</label><input type="checkbox" name="showYIM" id="showYIM" value="1" /></td>
 </tr>
 <tr>
-<td align="right" nowrap="nowrap"><label for="MSNM">#$msnm_label#</strong></td>
-<td><input type="text" name="MSNM" id="MSNM" size="20" maxlength="60"></td>
-<td colspan="3"><label for="showMSNM">#$visable_label#</strong><input type="checkbox" name="showMSNM" id="showMSNM" value="1"></td>
+<td align="right" nowrap="nowrap"><label for="MSNM">#$msnm_label#</label></td>
+<td><input type="text" name="MSNM" id="MSNM" size="20" maxlength="60" /></td>
+<td colspan="3"><label for="showMSNM">#$visable_label#</label><input type="checkbox" name="showMSNM" id="showMSNM" value="1" /></td>
 </tr>
 <tr>
-<td colspan="5"><hr noshade="noshade"></td>
+<td colspan="5"><hr noshade="noshade"/></td>
 </tr>
 <tr>
 <td colspan="5" nowrap="nowrap"><b>#$options_label#</b></td>
 </tr>
-<tr>
 <tr><td align="right" nowrap="nowrap"><label for="image">#$image_label#</label></td>
-<td><input type="file" name="image" id="image" size="20" maxlength="250"></td>
-<td colspan="3"><label for="showimage">#$visable_label#</label><input type="checkbox" name="showimage" id="showimage" value="1"></td>
+<td><input type="file" name="image" id="image" size="20" maxlength="250" /></td>
+<td colspan="3"><label for="showimage">#$visable_label#</label><input type="checkbox" name="showimage" id="showimage" value="1" /></td>
 </tr>
 <tr>
 <td align="right" valign="bottom" nowrap="nowrap"><br /></td>
-<td colspan="4"><em>#$note_label#</span>&nbsp;</em></td>
+<td colspan="4"><em>#$note_label#&nbsp;</em></td>
 </tr>
 <tr>
 <td><label for="displayall">#$displayall_label#</label></td>
-<td colspan="4" nowrap="nowrap"><input type="checkbox" name="displayall" id="displayall" onClick="checkAll(this.checked);" value="1"></td>
+<td colspan="4" nowrap="nowrap"><input type="checkbox" name="displayall" id="displayall" onClick="checkAll(this.checked);" value="1" /></td>
 </tr>
 <tr>
 <td><label for="active">#$active_label#</label></td>
-<td colspan="4" nowrap="nowrap"><input type="checkbox" name="active" id="active" value="1"></td>
+<td colspan="4" nowrap="nowrap"><input type="checkbox" name="active" id="active" value="1" /></td>
 </tr>
 <tr>
-<td colspan="5" align="center"><br /><input type="submit" name="addcontact" value="#$addcontact_label#"></td>
+<td colspan="5" align="center"><br /><input type="submit" name="addcontact" value="#$addcontact_label#" /></td>
 </tr>
 
-<input type="hidden" name="lastimage" value=""></td></tr>
+<input type="hidden" name="lastimage" value="" />
 </table>
 </form>
 </div>

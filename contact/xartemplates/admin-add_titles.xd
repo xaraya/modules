@@ -16,19 +16,19 @@
         </tr>
         <xar:loop name="$items">
             <tr>
-                <td colspan="2" align="center"><input type="text" name="titlesname[]" value="#$loop:item['name']#" size="40" maxlength="60"></td>
-                <td colspan="2" align="center"><input type="checkbox" name="cid[]" value="#$loop:item['id']#"></td>
+                <td colspan="2" align="center"><input type="text" name="titlesname[]" value="#$loop:item['name']#" size="40" maxlength="60"/></td>
+                <td colspan="2" align="center"><input type="checkbox" name="cid[]" value="#$loop:item['id']#"/></td>
             </tr>
         </xar:loop>
         <tr>
             <td colspan="2" align="center"><hr/></td>
         </tr>
         <tr>
-            <td><strong>#$titleslabel#</strong></td>
-            <td><input type="text" size="40" maxlength="60" name="newtitles"></td>
+            <td><label for="newtitles">#$titleslabel#</label></td>
+            <td><input type="text" size="40" maxlength="60" name="newtitles"/></td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><input type="submit" name="addtitles" value="#$addtitlesbutton#"></td>
+            <td colspan="2" align="center"><input type="submit" name="addtitles" value="#$addtitlesbutton#"/></td>
         </tr>
     </table>
 </form>

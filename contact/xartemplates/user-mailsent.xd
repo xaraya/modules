@@ -1,13 +1,7 @@
 
-<!-- common user menu for this module - remove link to the current function -->
+<p></p>
 
 
-<br />
-
-<!-- the specific template for the current function comes here -->
-
-<!-- some variable filled in by the function using this template -->
-<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td>#$thankyou# #$fname#<br />
+<p>#$thankyou# #$fname#<br />
 #$willreply# <br /> <xar:if condition="$copy eq 1">#$copysent#</xar:if><br /><br />
 #$enjoy#</p>
-</table>

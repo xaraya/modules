@@ -12,18 +12,18 @@
     <table border="0" cellpadding="2" cellspacing="0">
 <tr><td colspan="2" align="center"><strong>City</strong></td><td><strong>Delete</strong></td></tr>
 <xar:loop name="$city">
-<input type="hidden" name="id[]" value="#$loop:item['id']#">
-<tr><td colspan="2" align="center"><input type="text" name="cityname[]" value="#$loop:item['name']#" size="40" maxlength="60"></td>
-<td colspan="2" align="center"><input type="checkbox" name="cid[]" value="#$loop:item['id']#"></td></tr>
+<input type="hidden" name="id[]" value="#$loop:item['id']#" />
+<tr><td colspan="2" align="center"><input type="text" name="cityname[]" value="#$loop:item['name']#" size="40" maxlength="60" /></td>
+<td colspan="2" align="center"><input type="checkbox" name="cid[]" value="#$loop:item['id']#" /></td></tr>
 
 </xar:loop>
-</td>
-</tr><tr><td colspan="2" align="center"><hr/></td>
+
+<tr><td colspan="2" align="center"><hr/></td></tr>
 
 <tr><td><strong>&xar-var-citylabel;</strong></td>
-<td><input type="text" size="40" maxlength="60" name="newcity"></td>
-</tr><tr>
-<td colspan="2" align="center"><input type="submit" name="addcity" value="#$addcitybutton#"></td></tr>
+<td><input type="text" size="40" maxlength="60" name="newcity" /></td>
+</tr>
+<tr><td colspan="2" align="center"><input type="submit" name="addcity" value="#$addcitybutton#" /></td></tr>
 </table>
 </form>
 </div>

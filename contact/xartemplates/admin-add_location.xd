@@ -25,18 +25,18 @@
 </tr>
 <xar:loop name="$items">
 <tr>
-<td><input type="hidden" name="id[]" value="#$loop:item['id']#">&nbsp;</td>
-<td><input type="text" name="locationname[]" value="#$loop:item['name']#" size="40" maxlength="60"></td>
-<td><input type="checkbox" name="cid[]" id="ck_#$loop:item['id']#" value="#$loop:item['id']#">&nbsp;<label for="ck_#$loop:item['id']#">Delete</label></td>
+<td><input type="hidden" name="id[]" value="#$loop:item['id']#"/>&nbsp;</td>
+<td><input type="text" name="locationname[]" value="#$loop:item['name']#" size="40" maxlength="60"/></td>
+<td><input type="checkbox" name="cid[]" id="ck_#$loop:item['id']#" value="#$loop:item['id']#"/>&nbsp;<label for="ck_#$loop:item['id']#">Delete</label></td>
 </tr>
 </xar:loop>
-<tr><td colspan="3" align="center"><hr noshade="noshade"></td></tr>
+<tr><td colspan="3" align="center"><hr noshade="noshade"/></td></tr>
 <tr>
 <td><label for="newlocation">#$locationlabel#</label></td>
-<td colspan="2"><input type="text" size="40" maxlength="60" name="newlocation" id="newlocation"></td>
+<td colspan="2"><input type="text" size="40" maxlength="60" name="newlocation" id="newlocation"/></td>
 </tr>
 <tr>
-<td colspan="3" align="center"><input type="submit" name="addlocation" value="#$addlocationbutton#"></td>
+<td colspan="3" align="center"><input type="submit" name="addlocation" value="#$addlocationbutton#"/></td>
 </tr>
 </table>
 </form>

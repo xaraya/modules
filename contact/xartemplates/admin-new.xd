@@ -31,16 +31,16 @@
 #$hooks#
 </td></tr>
 
-<tr><td>#$namelabel#</td>
-<td><input type="text" name="name" value="#$name#" size=32 maxlength=32></td></tr>
+<tr><td><label for="name">#$namelabel#</label></td>
+<td><input type="text" name="name" value="#$name#" size="32" maxlength="32"/></td></tr>
 
-<tr><td>#$addresslabel#</td>
-<td><input type="text" name="address" value="#$address#" size=40 maxlength=40></td></tr>
+<tr><td><label for="address">#$addresslabel#</label></td>
+<td><input type="text" name="address" value="#$address#" size="40" maxlength="40"/></td></tr>
 
 
-<tr><td>#$address2label#</td>
-<td><input type="text" name="address2" value="#$address2#" size=40 maxlength=40></td></tr>
-<tr><td>#$citylabel#</td>
+<tr><td><label for="address2">#$address2label#</label></td>
+<td><input type="text" name="address2" value="#$address2#" size="40" maxlength="40"/></td></tr>
+<tr><td><label for="city">#$citylabel#</label></td>
 <td><select name="city">
 <xar:loop name="$city">
  <xar:if condition="$city eq $city">
@@ -52,41 +52,41 @@
 </select>
 </td></tr>
 
-<input type="hidden" name="number" value="">
-<td>Add New City:</td>
-    <td><input type="text" name="AddNewCity" maxlength="90"></td>
+<input type="hidden" name="number" value=""/>
+<td><label for="AddNewCity"><xar:mlstring>Add New City</xar:mlstring></label>:</td>
+    <td><input type="text" name="AddNewCity" maxlength="90"/></td>
     </tr>
 
-<tr><td>#$statelabel#</td>
-<td><input type="text" name="state" value="#$state#" size=20 maxlength=60></td></tr>
+<tr><td><label for="state">#$statelabel#</label></td>
+<td><input type="text" name="state" value="#$state#" size="20" maxlength="60"/></td></tr>
 
 
-<tr><td>#$ziplabel#</td>
-<td><input type="text" name="zipcode" value="#$zip#" size=10 maxlength=20></td></tr>
+<tr><td><label for="zipcode">#$ziplabel#</label></td>
+<td><input type="text" name="zipcode" value="#$zip#" size="10" maxlength="20"/></td></tr>
 
 
-<tr><td>#$countrylabel#</td>
-<td><input type="text" name="country" value="#$country#" size=20 maxlength=60></td></tr>
+<tr><td><label for="country">#$countrylabel#</label></td>
+<td><input type="text" name="country" value="#$country#" size="20" maxlength="60"/></td></tr>
 
 
-<tr><td>#$phonelabel#</td>
-<td><input type="text" name="phone" value="#$phone#" size=20 maxlength=20></td></tr>
+<tr><td><label for="phone">#$phonelabel#</label></td>
+<td><input type="text" name="phone" value="#$phone#" size="20" maxlength="20"/></td></tr>
 
 
-<tr><td>#$faxlabel#</td>
-<td><input type="text" name="fax" value="#$fax#" size=20 maxlength=20></td></tr>
+<tr><td><label for="fax">#$faxlabel#</label></td>
+<td><input type="text" name="fax" value="#$fax#" size="20" maxlength="20"/></td></tr>
 
 
-<tr><td>#$emaillabel#</td>
-<td><input type="text" name="email" value="#$mail#"size=20 maxlength=250></td></tr>
+<tr><td><label for="email">#$emaillabel#</label></td>
+<td><input type="text" name="email" value="#$mail#" size="20" maxlength="250"/></td></tr>
 
 
-<tr><td>#$logolabel#</td>
-<td><input type="file" name="company_logo_upload" value="#$companylogo#" size=20 maxlength=250></td></tr>
+<tr><td><label for="company_logo_upload">#$logolabel#</label></td>
+<td><input type="file" name="company_logo_upload" value="#$companylogo#" size="20" maxlength="250"/></td></tr>
 
 <tr><td colspan="2" align="center">
-    <input type="submit" name="UpgradeCompanyInfo" value="#$addbutton#">
-    <input type="hidden" name="lastlogo" value="#$companylogo#"></td></tr>
+    <input type="submit" name="UpgradeCompanyInfo" value="#$addbutton#"/>
+    <input type="hidden" name="lastlogo" value="#$companylogo#"/></td></tr>
 </form>
 </td><td valign="top">
 <xar:if condition="(is_file($companylogo))"><img src="#$companylogo#" alt="" /></xar:if></td></tr>
