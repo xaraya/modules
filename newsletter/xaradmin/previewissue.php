@@ -22,7 +22,7 @@
  * @returns string
  * @return $issueHTML
  */
-function newsletter_user_previewissue($args)
+function newsletter_admin_previewissue($args)
 {
     // Extract args
     extract ($args);
@@ -51,14 +51,6 @@ function newsletter_user_previewissue($args)
         return; // throw back
     }
 
-    // Check if this issue has been published.  If it has not been published,
-    // then return an error.
-    if ($issue['datePublished']['timestamp'] == 0) {
-        $msg = xarML('Invalid issue.');
-        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return;
-    }
-    
     // Get publication for display
     $publication = xarModAPIFunc('newsletter',
                                  'user',

@@ -137,7 +137,7 @@ function newsletter_admin_viewissue($args)
 
         if(xarSecurityCheck('ReadNewsletter', 0)) { 
             $issues[$i]['previewurl'] = xarModURL('newsletter',
-                                                  'user',
+                                                  'admin',
                                                   'previewissue',
                                                   array('issueId' => $issue['id']));
         } else {

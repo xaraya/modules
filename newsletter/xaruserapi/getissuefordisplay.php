@@ -54,6 +54,13 @@ function newsletter_userapi_getissuefordisplay($args)
     if (!isset($issue) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 
         return; // throw back
 
+    // Check if anything was returned
+    if (!$issue) {
+        $msg = xarML('Invalid issue.');
+        xarErrorSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
+        return; // throw back
+    }
+
     // Change date formats from UNIX timestamp to something readable
     if ($issue['datePublished']['timestamp'] == 0) {
         $issue['datePublished']['mon'] = "";
