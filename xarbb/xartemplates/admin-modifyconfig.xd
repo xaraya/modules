@@ -17,7 +17,7 @@
 
 #$hooks#
 
-<p><input type="submit" value="Update Configuration" align="middle" tabindex="3" /></p>
+<p><input type="submit" value="Update Configuration"  tabindex="3" /></p>
 </form>
 </div>
 </div>
