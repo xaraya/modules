@@ -7,7 +7,7 @@ function comments_user_usermenu($args)
     // Security Check
     if (xarSecurityCheck('Comments-Read',0)) {
 
-    if(!xarVarFetch('phase','notempty', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVarFetch('phase','str', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
 
         xarTplSetPageTitle(xarModGetVar('themes', 'SiteName').' :: '.
                            xarVarPrepForDisplay(xarML('Comments'))
