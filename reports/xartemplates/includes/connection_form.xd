@@ -16,10 +16,14 @@
     <td>
       <select name="conn_type" id="conn_type">
         <xar:if condition="$type eq 'mysql'">
-          <option selected="selected" value="mysql">MySql</option>
+          <option selected="selected" value="mysql"><xar:mlstring>MySql</xar:mlstring></option>
+        <xar:else/>
+          <option value="mysql"><xar:mlstring>MySql</xar:mlstring></option>
         </xar:if>
-        <xar:if condition="$type eq 'mysql'">
-          <option selected="selected" value="odbc">ODBC</option>
+        <xar:if condition="$type eq 'odbc'">
+          <option selected="selected" value="odbc"><xar:mlstring>ODBC</xar:mlstring></option>
+        <xar:else/>
+          <option value="odbc"><xar:mlstring>ODBC</xar:mlstring></option>
         </xar:if>
       </select>
     </td>

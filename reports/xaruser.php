@@ -14,14 +14,17 @@
 */
 
 
-
+/**
+ * Main user function
+ *
+ */
 function reports_user_main() {
     return reports_user_view();
 }
 
-//
-// Produce a list of available reports
-//
+/**
+ * Produce a list of available reports
+ */
 function reports_user_view($args=array()) {
 	// FIXME: move this to reports_user_getall_reports();
 	list($dbconn) = xarDbGetConn();
@@ -52,7 +55,10 @@ function reports_user_view($args=array()) {
     return $data;
 }
 
-
+/**
+ * helper function
+ *
+ */
 function DumpArray(&$array,$indent)
 {
     for(Reset($array),$node=0;$node<count($array);Next($array),$node++)
@@ -70,6 +76,10 @@ function DumpArray(&$array,$indent)
         }
 }
 
+/**
+ * Generate a report
+ *
+ */
 function reports_user_generate($args) {
     
     $rep_id = xarVarCleanFromInput('rep_id');

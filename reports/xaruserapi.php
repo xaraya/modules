@@ -51,7 +51,10 @@ function reports_userapi_connection_get($args) {
 		return false;
 	}
 }
-
+/**
+ * Get all connections
+ *
+ */
 function reports_userapi_connection_getall() {
 	list($dbconn) = xarDBGetConn();
 	$xartables = xarDBGetTables();
@@ -82,6 +85,10 @@ function reports_userapi_connection_getall() {
 	}
 }
 
+/**
+ * Get a report
+ *
+ */
 function reports_userapi_report_get($args) {
 	list($rep_id) = xarVarCleanFromInput('rep_id');
 	extract($args);
@@ -109,6 +116,10 @@ function reports_userapi_report_get($args) {
 	}
 }
 
+/**
+ * Get all reports
+ *
+ */
 function reports_userapi_report_getall() {
 	list($dbconn) = xarDBGetConn();
 	$xartables = xarDBGetTables();

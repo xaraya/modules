@@ -14,13 +14,12 @@
 */
 
 
-//-----------------------------------------------------------------
-//
-//  Config administrative functions
-//
-// Only the update functions exists, config cannot be deleted and is
-// the only instance of the object
-//-----------------------------------------------------------------
+/**
+ * Config administrative functions
+ *
+ * Only the update functions exists, config cannot be deleted and is
+ * the only instance of the object
+ */
 function reports_adminapi_update_config($args) {
 	// Get parameters
 	extract($args);
@@ -33,11 +32,10 @@ function reports_adminapi_update_config($args) {
 }
 
 
-//-----------------------------------------------------------------
-//
-//  Report administrative functions
-//
-//-----------------------------------------------------------------
+/**
+ *  Report administrative functions
+ *
+ */
 function reports_adminapi_create_report($args) {
 	//Get arguments
 	extract($args);
@@ -64,6 +62,10 @@ function reports_adminapi_create_report($args) {
 	return true;
 }
 
+/**
+ * Update report
+ *
+ */
 function reports_adminapi_update_report($args) {
 	//Get arguments
 	extract($args);
@@ -89,6 +91,10 @@ function reports_adminapi_update_report($args) {
 	return true;
 }
 
+/*
+ * Delete report
+ *
+ */
 function reports_adminapi_delete_report($args) {
 	//Get arguments
 	extract($args);
@@ -107,11 +113,10 @@ function reports_adminapi_delete_report($args) {
 	return true;
 }
 
-//-----------------------------------------------------------------
-//
-//  Connection administrative operational functions
-//
-//-----------------------------------------------------------------
+/**
+ * Connection admin
+ *
+ */
 function reports_adminapi_create_connection($args) {
 	//Get arguments
 	extract($args);
@@ -143,6 +148,10 @@ function reports_adminapi_create_connection($args) {
 	return true;
 }
 
+/**
+ * Update connection
+ *
+ */
 function reports_adminapi_update_connection($args) {
 	//Get arguments
 	extract($args);
@@ -171,6 +180,10 @@ function reports_adminapi_update_connection($args) {
 	return true;
 }
 
+/*
+ * Delete connection
+ *
+ */
 function reports_adminapi_delete_connection($args) {
 	//Get arguments
 	extract($args);
@@ -189,6 +202,10 @@ function reports_adminapi_delete_connection($args) {
 	return true;
 }
 
+/**
+ * Get menu links
+ *
+ */
 function reports_adminapi_getmenulinks() {
     $menulinks[] = array('url'   => xarModURL('reports','admin','view_connections'),
                          'label' => xarML('View connections'),

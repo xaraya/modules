@@ -14,7 +14,7 @@
 */
 
 
-/*
+/**
  * Entry function, just display the menu
  */
 function reports_admin_main() {
@@ -30,7 +30,7 @@ function reports_admin_view() {
     return true;
 }
 
-/*
+/**
  * Display a list of defined connections
  *
  */
@@ -65,7 +65,7 @@ function reports_admin_view_reports() {
     return $data;
 }
 
-/*
+/**
  * Show form to define a new connection
  */
 function reports_admin_new_connection() {
@@ -83,7 +83,7 @@ function reports_admin_new_connection() {
 	return $data;
 }
 
-/*
+/**
  * Gather entered info and let admin api process creation of new connection
  */
 function reports_admin_create_connection($args) {
@@ -113,7 +113,7 @@ function reports_admin_create_connection($args) {
     return true;
 }
 
-/* 
+/** 
  * Modify a connection
  */
 function reports_admin_modify_connection($args) {
@@ -137,7 +137,7 @@ function reports_admin_modify_connection($args) {
 	return $data;
 }
 
-/*
+/**
  * Pass update to admin api
  */
 function reports_admin_update_connection($args) {
@@ -166,7 +166,7 @@ function reports_admin_update_connection($args) {
 	return true;
 }
 
-/*
+/**
  * Process a delete request for connections
  */
 function reports_admin_delete_connection($args) {
@@ -180,7 +180,7 @@ function reports_admin_delete_connection($args) {
 	xarResponseRedirect(xarModUrl('reports','admin','view_connections',array()));
 }
 
-/*
+/**
  * Show form to define a new report
  */
 function reports_admin_new_report() {
@@ -199,7 +199,7 @@ function reports_admin_new_report() {
     return $data;
 }
 
-/*
+/**
  * Gather entered info and let admin api process new report creation
  */
 function reports_admin_create_report($args) {
@@ -233,7 +233,7 @@ function reports_admin_create_report($args) {
 	return true;
 }
 
-/* 
+/** 
  * Modify a report
  */
 function reports_admin_modify_report($args) {
@@ -254,7 +254,7 @@ function reports_admin_modify_report($args) {
 	return $data;
 }
 
-/*
+/**
  * Pass update to admin api
  */
 function reports_admin_update_report($args) {
@@ -288,7 +288,7 @@ function reports_admin_update_report($args) {
     return true;
 }
 
-/*
+/**
  * Process a delete request for reports
  */
 function reports_admin_delete_report($args) {
