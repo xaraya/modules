@@ -31,7 +31,7 @@
             #$warning#
         </p>
     </xar:if>
-    <form method="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+    <form method="post" name="post" id="post" action="#xarModURL('xarbb', 'admin', 'modify', array('phase' => 'update'))#" enctype="application/x-www-form-urlencoded" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
         <div style="clear: both; padding-top: 10px; width:98%;">
             <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
             <input type="hidden" name="fid" id="fid" value="#$fid#" />
