@@ -31,7 +31,7 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
        $items=array();
 
     if (($dbname='') || (empty($dbname))){
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
     }
     

@@ -43,8 +43,8 @@ extract($args);
         return;
     }
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $sitetoolstable = $xartable['sitetools'];
 
     // Get next ID in table

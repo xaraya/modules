@@ -25,7 +25,7 @@ function sitetools_schedulerapi_optimize($args)
     // DO LATER: get some configuration info here if necessary
     // for now lets just use current database
     if (empty($dbname)){
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
     }
 

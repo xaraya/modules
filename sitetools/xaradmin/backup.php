@@ -49,7 +49,7 @@ function sitetools_admin_backup($args)
     $data['authid']     = xarSecGenAuthKey();
     //Setup the current database for backup - until there is option to choose it TODO
     if (($dbname='') || (empty($dbname))){
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
             $dbtype= xarDBGetType();
     }

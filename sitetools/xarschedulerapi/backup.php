@@ -23,7 +23,7 @@ function sitetools_schedulerapi_backup($args)
     extract ($args);
 
     if (!isset($dbname) || ($dbname='') || (empty($dbname))){
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
             $dbtype= xarDBGetType();
     }

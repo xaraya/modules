@@ -25,7 +25,7 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
     if (!xarSecurityCheck('AdminSiteTools')) return;
 
     if (($dbname='') || (empty($dbname))){
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
         $dbname= xarDBGetName();
     }
 
@@ -35,7 +35,7 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
 
     default:
             $dbtables=array();
-            list($dbconn) = xarDBGetConn();
+            $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
             $tables = mysql_list_tables($dbname);
             $i=0;

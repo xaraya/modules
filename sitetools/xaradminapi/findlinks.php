@@ -36,8 +36,8 @@ function sitetools_adminapi_findlinks($args)
         xarModAPILoad('articles','user');
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $linkstable = $xartable['sitetools_links'];
 

@@ -21,8 +21,8 @@ function sitetools_init()
 {
     // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
     // return arrays but we handle them differently.
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $sitetoolstable = $xartable['sitetools'];
 
@@ -167,8 +167,8 @@ function sitetools_upgrade($oldversion)
     switch ($oldversion) {
         case 0.1:
             // Code to upgrade from version 0.1 goes here
-            list($dbconn) = xarDBGetConn();
-            $xartable = xarDBGetTables();
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
 
             xarDBLoadTableMaintenanceAPI();
 
@@ -271,8 +271,8 @@ function sitetools_upgrade($oldversion)
 function sitetools_delete()
 {
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API

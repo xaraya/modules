@@ -47,8 +47,8 @@ function sitetools_adminapi_getall($args)
     $items = array();
 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
 
     $sitetoolstable = $xartable['sitetools'];
 

@@ -39,7 +39,7 @@ function sitetools_adminapi_backupdb ($args)
     if ($screen=='') $screen==false;
 
     if (!isset($dbname) || ($dbname='') || (empty($dbname))){
-        list($dbconn) = xarDBGetConn();
+        $dbconn =& xarDBGetConn();
             $dbname= xarDBGetName();
             $dbtype= xarDBGetType();
     }

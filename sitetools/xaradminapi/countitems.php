@@ -21,8 +21,8 @@
 function sitetools_adminapi_countitems()
 { 
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
 
     $sitetoolstable = $xartable['sitetools'];
 

@@ -31,8 +31,8 @@ function sitetools_adminapi_checklinks($args)
     if (!isset($skiplocal)) $skiplocal = false;
    
     // Get database setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables(); 
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables(); 
 
     $linkstable = $xartable['sitetools_links'];
 
