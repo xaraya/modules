@@ -25,64 +25,51 @@ function sitetools_admin_optimize()
     if (empty($confirm)) {
         // No confirmation yet - display a suitable form to obtain confirmation
         // of this action from the user
-    $data['optimized']=false;
+        $data['optimized']=false;
          // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSecGenAuthKey();
        // Return the template variables defined in this function
         return $data;
     }
     // If we get here it means that the user has confirmed the action
-
+    $data=array();
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
-    $data['optimized']=true;
+    if (!xarSecConfirmAuthKey()) return
+   
+   // Start optimization api
 
-    list($dbconn) = xarDBGetConn();
-        $dbname= xarDBGetName();
-        $data['dbname'] =$dbname;
-        $tot_data = 0;
-        $tot_idx = 0;
-        $tot_all = 0;
-        $total_gain=0;
-        $total_kbs =0;
-        $local_query = 'SHOW TABLE STATUS FROM '.$dbname;
-        $result      = @mysql_query($local_query);
+        $data=array();
+        $tabledata=array();
+        //optimize and get data for each table's result
+        $tabledata= xarModAPIFunc('sitetools','admin','optimizedb');
 
-        $rowdata=array();
-        if (@mysql_num_rows($result)) {
-            while ($row = mysql_fetch_array($result)) {
-                    $rowdata[]=array('rowname' => $row[0],
-                                     'totaldata'  => $row[5],
-                                     'totalidx'   => $row[7],
-                                     'gain'       => $row[8]);
-
-                $local_query = 'OPTIMIZE TABLE '.$row[0];
-                $resultat  = mysql_query($local_query);
+        if ($tabledata == false) {
+            // Throw back any system exceptions (e.g. database failure)
+            if (xarExceptionMajor() == XAR_SYSTEM_EXCEPTION) {
+                return; // throw back
             }
+            // Handle the user exceptions yourself
+            $status = xarML('Optimizing database failed');
+            $reason = xarExceptionValue();
+            if (!empty($reason)) {
+                $status .= '<br /><br />'. xarML('Reason') .' : '. $reason->toString();
+            }
+            // Free the exception to tell Xaraya that you handled it
+            xarExceptionFree();
+            return $status;
         }
 
-        foreach ($rowdata as $datum) {
-            $total = $datum['totaldata'] + $datum['totalidx'];
-            $total = $total/1024;
-            $total = round($total,3);
-            $gain  = $datum['gain']/1024;
-            $total_gain += $gain;
-            $total_kbs += $total;
-            $gain  = round ($gain,3);
-            $data['tabledat'][]=array('total' => $total,
-                                      'gain'  => $gain,
-                                      'tablename' => $datum['rowname']);
-       }
-       $total_gain = round ($total_gain,3);
-       $total_kbs  = round ($total_kbs,3);
-       $data['totalgain'] = $total_gain;
-       $data['totalkbs']=$total_kbs;
-
+       $data['tabledat']=$tabledata['rowinfo'];
+       $total_gain=$tabledata['total_gain'];
+       $total_kbs=$tabledata['total_kbs'];
+       $data['totalgain'] = round ($total_gain,3);
+       $data['totalkbs']  = round ($total_kbs,3);
+       $data['dbname']    =$tabledata['dbname'];
        //Add this new optimization record to the database
        $optid = xarModAPIFunc('sitetools',
                               'admin',
                               'create',
-                              array('totalgain' => $total_gain));
+                              array('totalgain' => $data['totalgain']));
 
       if (!isset($optid) && xarExceptionMajor() != XAR_NO_EXCEPTION) return; // throw back
 
@@ -96,9 +83,10 @@ function sitetools_admin_optimize()
        }
 
        $data['totalruns']=$runtimes;
-       $data['gaintd']=round ($gaintd,3);
+       $data['gaintd']=$gaintd;
+       $data['optimized']=true;
 
     //return
-    return $data;
+return $data;
 }
 ?>
