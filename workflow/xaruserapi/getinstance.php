@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 	Addition to the workflow module when there is a need
