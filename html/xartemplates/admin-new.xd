@@ -10,7 +10,7 @@
 <div class="xar-mod-body"><h2><xar:mlstring>Add Tag</xar:mlstring></h2>
     <div style="margin: auto;">
 
-    <form class="xar-fullwidth" method="post" action="&xar-modurl-html-admin-create;" method="post" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
+    <form class="xar-fullwidth" method="post" action="&xar-modurl-html-admin-create;" onsubmit="return xar_base_formCheck(this, html_fieldRequired, html_fieldDescription);" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <table class="xar-fullwidth xar-noborder" cellspacing="1" cellpadding="2">
         <tr>
@@ -38,13 +38,13 @@
                 <xar:mlstring>Choose State</xar:mlstring>
             </td>
             <td class="xar-norm">
-                   <input type=radio value="0" name="allowed" id="0" tabindex="3" />
+                   <input type="radio" value="0" name="allowed" id="0" tabindex="3" />
                    &nbsp;&nbsp;<xar:mlstring>Not Allowed</xar:mlstring>
                    <br />
-                   <input type=radio value="1" name="allowed" id="1" tabindex="4" />
+                   <input type="radio" value="1" name="allowed" id="1" tabindex="4" />
                    &nbsp;&nbsp;<xar:mlstring>Allowed</xar:mlstring>
                    <br />
-                   <input type=radio value="2" name="allowed" id="2" tabindex="5" checked="checked" />
+                   <input type="radio" value="2" name="allowed" id="2" tabindex="5" checked="checked" />
                    &nbsp;&nbsp;<xar:mlstring>Allowed with Parameters</xar:mlstring>
                    <br />
             </td>
