@@ -181,7 +181,7 @@ function articles_userapi_getall($args)
     // FIXME: <rabbitt> PostgreSQL requires that all fields in an 'Order By' be in the SELECT
     //        this has been added to remove the error that not having it creates
     $select[] = $articlesdef['pubdate'];
-    
+
     // we need distinct for multi-category OR selects where articles fit in more than 1 category
     if (count($cids) > 0) {
         $query = 'SELECT DISTINCT ' . join(', ', $select);
@@ -402,16 +402,24 @@ function articles_userapi_getall($args)
                                                            'itemids'  => $itemids,
                                                            // ignore the display-only properties
                                                            'status'   => 1));
+
             if (empty($properties) || count($properties) == 0) continue;
             foreach ($articles as $key => $article) {
+
+                // otherwise articles (of different pub types) with dd properties having the same
+                // names reset previously set values to empty string for each iteration based on the pubtype
+                if ($article['pubtypeid'] != $pubtype) continue;
+
                 foreach (array_keys($properties) as $name) {
                     if (isset($items[$article['aid']]) && isset($items[$article['aid']][$name])) {
                         $value = $items[$article['aid']][$name];
                     } else {
                         $value = $properties[$name]->default;
                     }
+
                     $articles[$key][$name] = $value;
-                // TODO: clean up this temporary fix
+
+                    // TODO: clean up this temporary fix
                     if (!empty($value)) {
                         $articles[$key][$name.'_output'] = $properties[$name]->showOutput(array('value' => $value));
                     }
