@@ -25,14 +25,14 @@
 function bbcode_admin_main()
 {
     // Security Check
-	if(!xarSecurityCheck('EditBBCode')) return;
-	if (xarModGetVar('adminpanels', 'overview') == 0) {
-		// Return the output
-		return array();
-	} else {
-		xarResponseRedirect(xarModURL('bbcode', 'admin', 'modifyconfig'));
-	} 
-	// success
-	return true;
+    if(!xarSecurityCheck('EditBBCode')) return;
+    if (xarModGetVar('adminpanels', 'overview') == 0) {
+        // Return the output
+        return array();
+    } else {
+        xarResponseRedirect(xarModURL('bbcode', 'admin', 'modifyconfig'));
+    } 
+    // success
+    return true;
 }
 ?>

@@ -219,14 +219,14 @@ function bbcode_encode_quote($message)
     else{
       //If we have a pending start tag, we have a matach
       if(!empty($stack)) {
-	array_pop($stack);
+    array_pop($stack);
 
       }
       //If we don't have a pending start tag, mark string
       //as malformed and remove extranneous end tag from our list.
       else {
-	$is_well_formed = FALSE;
-	unset($tags_found[$k]); //This is safe because 'foreach' operates on a copy
+    $is_well_formed = FALSE;
+    unset($tags_found[$k]); //This is safe because 'foreach' operates on a copy
       }
     }
   }
