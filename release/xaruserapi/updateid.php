@@ -13,7 +13,7 @@ function release_userapi_updateid($args)
         (!isset($type)) ||
         (!isset($class))) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'Autolinks');
+                    join(', ',$invalid), 'admin', 'updateid', 'Release');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
