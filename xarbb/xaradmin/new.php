@@ -28,7 +28,10 @@ function xarbb_admin_new()
     if (!xarVarFetch('cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('new_cids',     'array',    $cids,    NULL, XARVAR_DONT_SET)) return;
     if (!xarVarFetch('postsperpage','int:1:',$postsperpage, 20 ,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('postsortorder', 'str:1:', $postsortorder, 'ASC', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('topicsortby', 'str:1:', $topicsortby, 'time', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('topicsortorder', 'str:1:', $topicsortorder, 'DESC', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('hottopic','int:1:',$hottopic, 20, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
@@ -49,7 +52,10 @@ function xarbb_admin_new()
                 $settings = unserialize($xarsettings);
             }
             $data['postsperpage']    = !isset($settings['postsperpage']) ? 20 :$settings['postsperpage'];
+            $data['postsortorder']   = !isset($settings['postsortorder']) ? 'ASC' :$settings['postsortorder'];
             $data['topicsperpage']   = !isset($settings['topicsperpage']) ? 20 :$settings['topicsperpage'];
+            $data['topicsortby']     = !isset($settings['topicsortby']) ? 'time' :$settings['topicsortby'];
+            $data['topicsortorder']  = !isset($settings['topicsortorder']) ? 'DESC' :$settings['topicsortorder'];
             $data['hottopic']        = !isset($settings['hottopic']) ? 20 :$settings['hottopic'];
             $data['editstamp']       = !isset($settings['editstamp']) ? 0 :$settings['editstamp'];
             $data['allowhtml']       = !isset($settings['allowhtml']) ? false :$settings['allowhtml'];
@@ -153,7 +159,10 @@ function xarbb_admin_new()
 
             $settings = array();
             $settings['postsperpage']       = $postsperpage;
+            $settings['postsortorder']      = $postsortorder;
             $settings['topicsperpage']      = $topicsperpage;
+            $settings['topicsortby']        = $topicsortby;
+            $settings['topicsortorder']     = $topicsortorder;
             $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
             $settings['allowbbcode']        = $allowbbcode;

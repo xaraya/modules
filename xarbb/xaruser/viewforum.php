@@ -54,10 +54,18 @@ function xarbb_user_viewforum()
     // TODO, should be a forum setting
     $hotTopic               = $settings['hottopic'];
 
-// TODO: retrieve from session variable, module user variable, forum setting or URL param
-//       depending on how customisable/cacheable we want to make this ?
-    $topicsortby = 'time';
-    $topicsortorder = 'DESC';
+// CHECKME: retrieve from session variable, module user variable or URL param
+//          depending on how customisable/cacheable we want to make this ?
+    if (!empty($settings['topicsortby'])) {
+        $topicsortby = $settings['topicsortby'];
+    } else {
+        $topicsortby = 'time';
+    }
+    if (!empty($settings['topicsortorder'])) {
+        $topicsortorder = $settings['topicsortorder'];
+    } else {
+        $topicsortorder = 'DESC';
+    }
 
     // The user API function is called
     $topics = xarModAPIFunc('xarbb',

@@ -120,10 +120,14 @@ function xarbb_user_viewtopic($args)
 
     $data['items'] = array();
 
-// TODO: retrieve from session variable, module user variable, forum setting or URL param
-//       depending on how customisable/cacheable we want to make this ?
+// CHECKME: retrieve from session variable, module user variable or URL param
+//          depending on how customisable/cacheable we want to make this ?
 //    $postsortby = 'celko'; // unsupported - see below
-    $postsortorder = 'ASC';
+    if (!empty($settings['postsortorder'])) {
+        $postsortorder = $settings['postsortorder'];
+    } else {
+        $postsortorder = 'ASC';
+    }
 
 // TODO: support threaded/nested display too - cfr. bug 1443
 //    $postrender = 'flat';

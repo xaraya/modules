@@ -61,7 +61,10 @@ function xarbb_admin_modify()
             }
             if (isset($settings) && is_array($settings)) {
                 $data['topicsperpage']          = empty($settings['topicsperpage']) ? 20 : $settings['topicsperpage'];
+                $data['topicsortby']            = empty($settings['topicsortby']) ? 'time' :$settings['topicsortby'];
+                $data['topicsortorder']         = empty($settings['topicsortorder']) ? 'DESC' :$settings['topicsortorder'];
                 $data['postsperpage']           = empty($settings['postsperpage']) ? 20 : $settings['postsperpage'];
+                $data['postsortorder']          = empty($settings['postsortorder']) ? 'ASC' :$settings['postsortorder'];
                 $data['hottopic']               = empty($settings['hottopic']) ? 20 : $settings['hottopic'];
                 $data['allowhtml']              = !empty($settings['allowhtml']) ? 'checked="checked"' : '';
                 $data['allowbbcode']            = !empty($settings['allowbbcode']) ? 'checked="checked"' : '';
@@ -77,6 +80,9 @@ function xarbb_admin_modify()
             }
             if (!isset($data['postsperpage'])) {
                 $data['postsperpage'] = 20;
+            }
+            if (!isset($data['postsortorder'])) {
+                $data['postsortorder'] = 'ASC';
             }
             if (!isset($data['hottopic'])) {
                 $data['hottopic'] = 20;
@@ -151,8 +157,11 @@ function xarbb_admin_modify()
             if (!xarVarFetch('fdesc', 'str:1:', $fdesc, '', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('fstatus','int', $fstatus, 0)) return;
             if (!xarVarFetch('postsperpage','int:1:',$postsperpage, 20 ,XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('postsortorder', 'str:1:', $postsortorder, 'ASC', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('hottopic','int:1:',$hottopic, 20 ,XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('topicsperpage','int:1:',$topicsperpage, 20, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('topicsortby', 'str:1:', $topicsortby, 'time', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('topicsortorder', 'str:1:', $topicsortorder, 'DESC', XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowhtml','checkbox', $allowhtml, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('allowbbcode','checkbox', $allowbbcode, false, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('editstamp','int:1:', $editstamp, 0 ,XARVAR_NOT_REQUIRED)) return;
@@ -178,7 +187,10 @@ function xarbb_admin_modify()
 
             $settings = array();
             $settings['postsperpage']       = $postsperpage;
+            $settings['postsortorder']      = $postsortorder;
             $settings['topicsperpage']      = $topicsperpage;
+            $settings['topicsortby']        = $topicsortby;
+            $settings['topicsortorder']     = $topicsortorder;
             $settings['hottopic']           = $hottopic;
             $settings['allowhtml']          = $allowhtml;
             $settings['allowbbcode']        = $allowbbcode;

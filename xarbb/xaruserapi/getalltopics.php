@@ -146,6 +146,14 @@ function xarbb_userapi_getalltopics($args)
             }
             break;
 
+        case 'tid':
+            if (!empty($order) && strtoupper($order) == 'ASC') {
+                $query .= " ORDER BY xar_tid ASC";
+            } else {
+                $query .= " ORDER BY xar_tid DESC"; // default descending
+            }
+            break;
+
         case 'time':
         default:
             if (!empty($order) && strtoupper($order) == 'ASC') {
