@@ -104,9 +104,6 @@ global $HTTP_HOST;
     //Remove the multisites database
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
-    // adodb does not provide the functionality to abstract table creates
-    // across multiple databases.  Xaraya offers the xarDropeTable function
-    // contained in the following file to provide this functionality.
     xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API
     $query = xarDBDropTable($xartable['multisites']);
@@ -136,52 +133,47 @@ global $HTTP_HOST;
     // Remove the multisite config.system.php file - must be chmod 666
     // Write back the single site version
   //Check the master config data folder is writable
+  //if so return it to normal state. Don't throw an error, let remove finish to completion
     $var = is_writeable('./var/config.system.php');
     if ($var == true) {
           // echo "The file is writable";
-    } else {
-            $msg = xarML('The master config.system.php file  /var/config.system.php is not writeable!\n
-                          Please chmod 666 and try again.');
-            xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NON-WRITABLE', new DefaultUserException($msg));
-    return false;
-    }
-
-    $oldConfig=file('./var/config.system.php');
-    $fd = fopen('./var/config.system.php','r');
-    while (list ($line_num, $line) = each ($oldConfig)) {
-        if ((strstr($line,"<?php")) ||
-            (strstr($line,"?>")) ||
-            (strstr($line,"GLOBALS")) ||
-            (strstr($line,"file_exists")) ||
-            (strstr($line,"else")) ||
-            (strstr($line,"}")) ||
-            (strstr($line,"Multisites")) ||
-            (strstr($line,"'MS."))) {
+        $oldConfig=file('./var/config.system.php');
+        $fd = fopen('./var/config.system.php','r');
+        while (list ($line_num, $line) = each ($oldConfig)) {
+            if ((strstr($line,"<?php")) ||
+                (strstr($line,"?>")) ||
+                (strstr($line,"GLOBALS")) ||
+                (strstr($line,"file_exists")) ||
+                (strstr($line,"else")) ||
+                (strstr($line,"}")) ||
+                (strstr($line,"Multisites")) ||
+                (strstr($line,"'MS."))) {
            // do nothing
-        }else{
-          $holdConfig[$line_num]=$oldConfig[$line_num];
-        }
-     }
-     fclose($fd);
+            }else{
+              $holdConfig[$line_num]=$oldConfig[$line_num];
+            }
+         }
+         fclose($fd);
 
-     //Create the new config data for the master site
-     $newConf=file('./var/config.system.php');
-     $oldumask = umask(0);
-     $IOk=fopen('./var/config.system.php','w');
-     if ($IOk) {
-        fwrite($IOk, "<?php\n");
-         while (list ($line_num, $line) = each($holdConfig)) {
-            fwrite($IOk,$line);
+        //Create the new config data for the master site
+        $newConf=file('./var/config.system.php');
+        $oldumask = umask(0);
+        $IOk=fopen('./var/config.system.php','w');
+        if ($IOk) {
+            fwrite($IOk, "<?php\n");
+            while (list ($line_num, $line) = each($holdConfig)) {
+                fwrite($IOk,$line);
         }
-        fwrite($IOk, "?>\n");
-        fclose($IOk);
-     } else {
+            fwrite($IOk, "?>\n");
+            fclose($IOk);
+        } else {
         //echo "Can't modify the old config file";
-        return false;
-     }
-     umask($oldumask);
-     // Removed
-
+        //return false; No - let uninstall complete
+        }
+        umask($oldumask);
+    } else { // No - don't do anything atm if not writeable - let uninstall complete
+    // return false;
+    }
 
 return true;
 
