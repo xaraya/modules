@@ -30,7 +30,7 @@
         <a href="#xarModURL('articles','user','view')#"><xar:ml><xar:mlstring>#(1)-column display</xar:mlstring><xar:mlvar>#$showcols#</xar:mlvar></xar:ml></a>
     </xar:if>
 </xar:if>
-<p><div style="text-align: center;">#$pager#</div></p>
+<div style="text-align: center;">#$pager#</div>
 
 <xar:if condition="!empty($showprevnext)">
     <xar:categories-navigation layout="prevnext" />
