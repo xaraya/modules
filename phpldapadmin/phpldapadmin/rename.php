@@ -100,7 +100,7 @@ else
         <head>
             <!-- refresh the tree view (with the new DN renamed)
                  and redirect to the edit_dn page -->
-            <script language="javascript">
+            <script type="text/javascript">
             parent.left_frame.location.reload();
             location.href='<?php echo $edit_url; ?>';
             </script>

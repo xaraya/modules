@@ -23,7 +23,7 @@ include realpath( 'header.php' );
 
 <html>
 <head>
-<script language="javascript">
+<script type="text/javascript">
     parent.left_frame.location.reload();
 </script>
 <link rel="stylesheet" href="style.css" />

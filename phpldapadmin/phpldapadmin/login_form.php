@@ -23,7 +23,7 @@ include 'header.php'; ?>
 
 <body>
 
-<script language="javascript">
+<script type="text/javascript">
 <!--
     function toggle_disable_login_fields( anon_checkbox )
     {

@@ -88,7 +88,7 @@ $return_form_element = $formpart . ".elements[\"" . $elmpart . "\"]";
 
 ?>
 
-<script language="javascript">
+<script type="text/javascript">
     function returnDN( dn )
     {
         opener.document.<?php echo $return_form_element; ?>.value = dn;

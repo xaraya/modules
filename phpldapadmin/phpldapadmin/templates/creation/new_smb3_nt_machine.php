@@ -26,7 +26,7 @@ if( get_schema_objectclass( $server_id, 'sambaSamAccount' ) == null )
     pla_error( "You LDAP server does not have schema support for the sambaSamAccount objectClass. Cannot continue." );
 
 ?>
-<script language="javascript">
+<script type="text/javascript">
 
     function autoFillSambaRID( form ){
         var sambaSID;

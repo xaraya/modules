@@ -115,7 +115,7 @@ if( $confirmed == true ) {
         session_write_close();
         
         ?>
-        <script language="javascript">
+        <script type="text/javascript">
             parent.left_frame.location.reload();
         </script>
         <?php

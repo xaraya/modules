@@ -87,7 +87,7 @@ if( $copy_result )
     ?>
         <!-- refresh the tree view (with the new DN renamed)
         and redirect to the edit_dn page -->
-        <script language="javascript">
+        <script type="text/javascript">
             parent.left_frame.location.reload();
         </script>
         <br />

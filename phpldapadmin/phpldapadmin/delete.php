@@ -65,7 +65,7 @@ if( $del_result )
 
     ?>
 
-    <script language="javascript">
+    <script type="text/javascript">
         parent.left_frame.location.reload();
     </script>
 

@@ -639,7 +639,7 @@ if( $show_internal_attrs ) {
 </table>
 
 <?php /* If this entry has a binary attribute, we need to provide a form for it to submit when deleting it. */ ?>
-<script language="javascript">
+<script type="text/javascript">
 //<!--
 function deleteAttribute( attrName )
 {

@@ -111,7 +111,7 @@ session_write_close();
 
 <html>
 <head>
-<script language="javascript">
+<script type="text/javascript">
     parent.left_frame.location.reload();
     <?php if( $redirect ) { ?>
         location.href='<?php echo $redirect; ?>';

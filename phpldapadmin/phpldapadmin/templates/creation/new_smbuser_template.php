@@ -19,7 +19,7 @@
     have_auth_info( $server_id ) or pla_error( "Not enough information to login to server. Please check your configuration." );
 ?>
 
-<script language="javascript">
+<script type="text/javascript">
     <!--
     function autoFillUserName( form ) {
         var first_name;

@@ -17,7 +17,7 @@ have_auth_info( $server_id ) or pla_error( "Not enough information to login to s
 
 ?>
 
-<script language="javascript">
+<script type="text/javascript">
 <!--
 
 /*

@@ -23,7 +23,7 @@ if( get_schema_objectclass( $server_id, 'sambaGroupMapping' ) == null )
     pla_error( "You LDAP server does not have schema support for the sambaGroupMapping objectClass. Cannot continue." );
 
 ?>
-<script language="javascript">
+<script type="text/javascript">
 /**
  * Populate the display name field from the group name field
  */
