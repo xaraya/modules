@@ -324,30 +324,42 @@ Class telnet
     //------------------------------------------------------------------------
     //set the prompt for whatever host
 
-    function set_prompt($s) { $this->prompt = $s; return TELNET_OK; }
+    function set_prompt($s) 
+    { $this->prompt = $s; return TELNET_OK; 
+    }
     //------------------------------------------------------------------------
     //set remote computer to connect to
 
-    function set_host($s) { $this->host = $s;}
+    function set_host($s) 
+    { $this->host = $s;
+    }
 
     //------------------------------------------------------------------------
     //set the port to connect to
 
-    function set_port($s) { $this->port = $s;}
+    function set_port($s) 
+    { $this->port = $s;
+    }
 
     //------------------------------------------------------------------------
     //set the timeout interval
 
-    function set_timeout($s) { $this->timeout = $s;}
+    function set_timeout($s) 
+    { $this->timeout = $s;
+    }
 
     //------------------------------------------------------------------------
     //set the log directory
 
-    function set_log_dir($s) { $this->log_dir = $s;}
+    function set_log_dir($s) 
+    { $this->log_dir = $s;
+    }
     //------------------------------------------------------------------------
     // echo last error
 
-    function get_last_error() { return $this->get_error; }
+    function get_last_error() 
+    { return $this->get_error; 
+    }
 
     //------------------------------------------------------------------------
     //create the logging stuff
