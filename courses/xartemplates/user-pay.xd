@@ -31,7 +31,8 @@
 
 <xar:if condition="!empty($status)">
     #$status#
-<xar:else />
+</xar:if>
+
 <!-- some item variables given by the function using this template -->
 
 <xar:blockgroup name="topnav" id="topnav" />
@@ -52,8 +53,8 @@
 
         <xar:if condition="!empty($is_bold)">
             <td><b>#$name_value#</b> </td>
-            <xar:else />
-                <td>#$name_value# </td>
+        <xar:else />
+             <td>#$name_value# </td>
         </xar:if>
 
     </tr>
@@ -102,5 +103,3 @@
 
 </table>
 <br />
-
-
