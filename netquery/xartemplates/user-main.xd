@@ -186,7 +186,7 @@
 </div>
 </table>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 function pingwindow(target)
 {
         var pingsite = "#$pingexec['remote']#?#$pingexec['remote_t']#=" + target;

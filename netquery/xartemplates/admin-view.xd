@@ -67,7 +67,7 @@
 <p><a href="#$wialink['url']#">#$wialink['title']#</a> -
 <a href="#$cfglink['url']#">#$cfglink['title']#</a> -
 <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
     function openwindow(hlpfile)
     {
         window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");

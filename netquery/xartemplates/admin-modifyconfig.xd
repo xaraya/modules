@@ -233,7 +233,7 @@ routers. LG daemon port passwords take precedence over the default LG user passw
 <p><a href="#$wivlink['url']#">#$wivlink['title']#</a> -
 <a href="#$lgvlink['url']#">#$lgvlink['title']#</a> -
 <a href=javascript:openwindow("#$hlplink['url']#");>#$hlplink['label']#</a></p>
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
     function openwindow(hlpfile)
     {
         window.open (hlpfile,"Help","toolbar=no,location=yes,directories=no,status=no,scrollbars=yes,resizable=no,copyhistory=no,width=600,height=400");
