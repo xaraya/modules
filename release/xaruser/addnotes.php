@@ -75,14 +75,19 @@ function release_user_addnotes()
                                                  'regname');
 
            //if (!xarSecConfirmAuthKey()) return;
-
-
+           //<jojodee> Set some defaults
+           $democheck=1;
+           $supportcheck=1;
+           $pricecheck=1;
             xarTplSetPageTitle(xarVarPrepForDisplay($regname));
 
            $authid = xarSecGenAuthKey();
            $data = xarTplModule('release','user', 'addnote_getbasics', array('rid'      => $rid,
                                                                              'regname'  => $regname,
-                                                                             'authid'   => $authid));
+                                                                             'authid'   => $authid,
+                                                                             'democheck' => $democheck,
+                                                                             'supportcheck' => $supportcheck,
+                                                                             'pricecheck' => $pricecheck));
             break;
 
         case 'getdetails':
