@@ -86,7 +86,7 @@ function xarcachemanager_adminapi_updatehook($args)
                 $pageshared = 0;
             }
             if (!isset($cacheexpire)) {
-                $cacheexpire = 'NULL';
+                $cacheexpire = NULL;
             }
             if ($cacheexpire > 0 ) {
                 $cacheexpire = xarModAPIFunc( 'xarcachemanager', 'admin', 'convertseconds',

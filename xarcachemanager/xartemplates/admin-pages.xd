@@ -5,7 +5,7 @@
 <xar:if condition="empty($pages) or count($pages) lt 1">
 <xar:mlstring>Page caching is currently disabled...</xar:mlstring>
 <xar:else/>
-<form method="post">
+<form action="#xarModURL('xarcachemanager', 'admin', 'pages')#" method="post">
 <xar:mlstring>This page is reserved for future extensions...</xar:mlstring>
 
 <xar:comment>this just shows the current rules for now</xar:comment>
