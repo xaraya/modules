@@ -29,10 +29,12 @@ function mybookmarks_user_delete($args)
     // Confirm authorisation code.
     if (!xarSecConfirmAuthKey()) return; 
     // The API function is called.
+    $uid = xarUserGetVar('uid');
     if (!xarModAPIFunc('mybookmarks',
                        'user',
                        'delete',
-                       array('id' => $id))) {
+                       array('id' => $id,
+                             'uid'=> $uid))) {
         return;
     } 
     xarResponseRedirect(xarModURL('mybookmarks', 'user', 'view', array('theme' => 'print'))); 

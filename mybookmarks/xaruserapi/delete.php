@@ -23,8 +23,9 @@ function mybookmarks_userapi_delete($args)
     $table = $xartable['mybookmarks'];
     // Delete the item
     $query = "DELETE FROM $table
-            WHERE xar_bm_id = ?";
-    $bindvars = array($id);
+            WHERE xar_bm_id = ?
+            AND xar_user_name = ?";
+    $bindvars = array($id, $uid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
     // Let any hooks know that we have deleted a link
