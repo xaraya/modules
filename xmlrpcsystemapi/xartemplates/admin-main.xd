@@ -1,0 +1,35 @@
+<table border="0" width="100%">
+  <tr>
+    <th colspan="4" align="center">
+      <xar:mlstring>XML-RPC system API Administration</xar:mlstring>
+    </th>
+  </tr>
+</table>
+
+<h1>Overview of the XML-RPC System API</h1>
+
+<p>
+  The XML-RPC system API implements the reserved methods for a XML-RPC server.
+  These methods are always named system.something and are assumed to be reserved
+  names. This means that other apis cannot use the "system" prefix for their registered
+  methods.
+</p>
+<p>In Xaraya the webservices module is responsible for providing the xmlrpc transport
+  needed for this API functionality. This module will not function without
+  the webservices module activated.
+</p>
+
+<p>
+  You can find the specification for the system API at: 
+  <a href="http://scripts.incutio.com/xmlrpc/introspection.html">
+     http://scripts.incutio.com/xmlrpc/introspection.html
+  </a> 
+</p>
+<p>
+  Commonly implemented methods are:
+</p>
+<ul>
+  <li>system.listMethods</li>
+  <li>system.methodSignature</li>
+  <li>system.methodHelp</li>
+</ul>
