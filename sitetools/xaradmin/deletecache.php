@@ -1,6 +1,6 @@
 <?php
 /*
- * File: $Id:
+ * File: $Id$
  *
  * Clear cache files
  *
@@ -60,7 +60,6 @@ function sitetools_admin_deletecache($args)
       
         $var = is_dir($adopath);
         if ($var) {
-            //chmod($adopath,0755); path should already be writable
             if (!is_writable($adopath)) {
                 $msg = xarML("The ADODB cache directory and files in ".$adopath." could not be deleted!");
                 xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
@@ -73,9 +72,9 @@ function sitetools_admin_deletecache($args)
                         $subhandle=opendir("{$adopath}/{$file}");
                         // iansym::these are the files we do not want to delete
                         $skip_array2 = array('.','..','SCCS');
-                        while (false !== ($file = readdir($subhandle))) {
+                        while (false !== ($sfile = readdir($subhandle))) {
                             // check the skip array and delete files that are not in it
-                            if(!in_array($file,$skip_array2)) {
+                            if(!in_array($sfile,$skip_array2)) {
                                 unlink("{$adopath}/{$file}/{$sfile}");
                             }
                         }
