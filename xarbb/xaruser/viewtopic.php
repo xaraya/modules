@@ -72,7 +72,6 @@ function xarbb_user_viewtopic()
                                                        $data['ttitle']),
                                                        'xarbb',
                                                        $data['fid']);
-
     // The user API function is called
     $posterdata = xarModAPIFunc('roles',
                                 'user',
@@ -84,6 +83,10 @@ function xarbb_user_viewtopic()
                                 'user',
                                 'countposts',
                                 array('uid' => $data['tposter']));
+
+    // Build up the list of posters
+    $isposter = array();
+    $isposter[$data['tposter']] = 1;
 
     // Get the individual posts for the topic
     $header['modid']        = xarModGetIDFromName('xarbb');
@@ -120,17 +123,21 @@ function xarbb_user_viewtopic()
                                                             'xarbb',
                                                             $data['fid']);
 
+// TODO: retrieve all post counts at once ?
         // The user API function is called
         $comments[$i]['usertopics'] = xarModAPIFunc('xarbb',
                                                     'user',
                                                     'countposts',
                                                     array('uid' => $comment['xar_uid']));
 
+// TODO: retrieve all user info at once ?
         // The user API function is called
         $comments[$i]['userdata'] = xarModAPIFunc('roles',
                                              'user',
                                              'get',
                                               array('uid' => $comment['xar_uid']));
+
+        $isposter[$comment['xar_uid']] = 1;
 
         //format reply poster's registration date
         $comments[$i]['commenterdate'] = xarLocaleFormatDate('%Y-%m-%d',$comments[$i]['userdata']['date_reg']);
@@ -144,6 +151,8 @@ function xarbb_user_viewtopic()
     }
 
     $data['items'] = $comments;
+
+    $data['posterlist'] = array_keys($isposter);
 
     // End individual Replies
 

@@ -18,6 +18,7 @@
  */
 function xarbb_userapi_countposts($args)
 {
+    static $countcache = array();
     extract($args);
 
     if (!isset($uid)) {
@@ -26,6 +27,10 @@ function xarbb_userapi_countposts($args)
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
                        new SystemException($msg));
         return;
+    }
+
+    if (isset($countcache[$uid])) {
+        return $countcache[$uid];
     }
 
     $dbconn =& xarDBGetConn();
@@ -42,6 +47,7 @@ function xarbb_userapi_countposts($args)
     // While we are here, how many replies have been made as well?
     $replies = xarModAPIFunc('comments', 'user', 'get_author_count', array('modid' => xarModGetIdFromName('xarbb'), 'author' => $uid));
     $total = $numitems + $replies;
+    $countcache[$uid] = $total;
     return $total;
 }
 ?>
