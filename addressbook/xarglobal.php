@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarglobal.php,v 1.8 2003/07/19 06:18:28 garrett Exp $
+ * File: $Id: xarglobal.php,v 1.10 2003/09/15 00:29:58 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -299,9 +299,6 @@ define('_AB_MRS',               'Mrs.');
  */
 define('_AB_DEVQA_NAME',	__ADDRESSBOOK__."QualityControl");
 define('_AB_DEVQA_EMAIL',	__ADDRESSBOOK__."@blacktower.com");
-// I use this to track individual builds in the event I push files that
-// do not require the user to upgrade
-define('_AB_BUILD_VER',	  '1.2.1.4'); 
 
 ////////////////
 //

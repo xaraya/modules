@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: handleexception.php,v 1.10 2003/07/23 20:13:45 garrett Exp $
+ * File: $Id: handleexception.php,v 1.11 2003/09/07 23:40:41 garrett Exp $
  *
  * AddressBook utilapi handleException
  *
@@ -103,7 +103,6 @@ function AddressBook_utilapi_handleException ($args) {
 
                         $message .= "**** Exception Details ****\n";
                         $message .= "Version: ".$abModInfo['version']."\n";
-                        $message .= "Build "._AB_BUILD_VER."\n\n";
                         $message .= "The following error(s) occurred.\n\n";
                         $message .= $xarException['text'];
 
