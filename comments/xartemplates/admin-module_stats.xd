@@ -23,29 +23,29 @@
     <div align="center">
         <table border="0" width="100%" cellpadding="0" cellspacing="0">
             <tr>
-                <th align="center" valign="center" width="25%">
-                    <xar:mlstring><b>Page<br />Id</b></xar:mlstring>
+                <th align="center" valign="center" width="50%">
+                    <xar:mlstring><b>Item<br />Id</b></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="25%">
+                <th align="center" valign="center" width="15%">
                     <xar:mlstring><b>Total<br />Comments</b></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="25%">
+                <th align="center" valign="center" width="15%">
                     <xar:mlstring><b>Inactive<br />Comments</b></xar:mlstring>
                 </th>
-                <th align="center" valign="center" width="25%">
+                <th align="center" valign="center" width="20%">
                     <xar:mlstring><b>Action</b></xar:mlstring>
                 </th>
             </tr>
 
             <tr>
-                <td colspan="5">
+                <td colspan="4">
                     &nbsp;
                 </td>
             </tr>
 
             <xar:if condition="!isset($data) or empty($data) or count($data) eq '0'">
                 <tr>
-                    <td colspan="5" align="center">
+                    <td colspan="4" align="center">
                         <br />
                         <xar:mlstring>
                             There are currently no comments attached to this module...
@@ -56,53 +56,65 @@
                 </tr>
             <xar:else />
                 <tr>
-                    <td colspan="5">
+                    <td colspan="4">
                         <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
                     </td>
                 </tr>
                 <xar:loop name="$data">
                     <tr>
-                        <td align="center" valign="center" width="25%">
+                        <xar:if condition="!empty($loop:item['title']) and !empty($loop:item['link'])">
+                        <td valign="center" width="50%">
+                            #$loop:item['pageid']# - <a href="#$loop:item['link']#">#$loop:item['title']#</a>
+                        </td>
+                        <xar:else/>
+                        <td align="center" valign="center" width="50%">
                             #$loop:item['pageid']#
                         </td>
-                        <td align="center" valign="center" width="25%">
+                        </xar:if>
+                        <td align="center" valign="center" width="15%">
                             #$loop:item['total']#
                         </td>
-                        <td align="center" valign="center" width="25%">
+                        <td align="center" valign="center" width="15%">
                             #$loop:item['inactive']#
                         </td>
-                        <td align="center" valign="center" width="25%">
+                        <td align="center" valign="center" width="20%">
                             <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5">
+                        <td colspan="4">
                         <div class="xar-norm-outline" style="margin-left: 1em; margin-right: 1em; width: auto;border-style: dotted none none none;"></div>
                         </td>
                     </tr>
                 </xar:loop>
                 <tr>
-                    <td align="right" valign="center" width="25%">
-                        <b><xar:mlstring>Grand Total</xar:mlstring></b>:
+                    <td align="right" valign="center" width="50%">
+                        <b><xar:mlstring>Total</xar:mlstring></b>:
                     </td>
-                    <td align="center" valign="center" width="25%">
+                    <td align="center" valign="center" width="15%">
                         <b>#$gt_total#</b>
                     </td>
-                    <td align="center" valign="center" width="25%">
+                    <td align="center" valign="center" width="15%">
                         <b>#$gt_inactive#</b>
                     </td>
-                    <td align="center" valign="center" width="25%">
+                    <td align="center" valign="center" width="20%">
                         <a href="#$delete_all_url#"><xar:mlstring>Delete All</xar:mlstring></a>
                     </td>
                 </tr>
             </xar:if>
-
+            <xar:if condition="!empty($pager)">
             <tr>
-                <td colspan="5">
+                <td colspan="4" align="center">
+                    #$pager#
+                </td>
+            </tr>
+            </xar:if>
+            <tr>
+                <td colspan="4">
                     <div class="xar-accent xar-norm-outline" style="text-align: justify;padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
                         <xar:mlstring>
                             By clicking on <b>Delete</b> you can delete all comments associated with a particular
-                            module's page.
+                            module's item.
                         </xar:mlstring>
                     </div>
                 </td>

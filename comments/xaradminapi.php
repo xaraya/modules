@@ -52,6 +52,7 @@ function comments_adminapi_getmenulinks()
     return $menulinks;
 }
 
+/* replaced by getmodules
 function comments_adminapi_get_stats( ) {
 
     $modules = xarModAPIFunc('comments','admin','get_module_list');
@@ -81,7 +82,9 @@ function comments_adminapi_get_stats( ) {
 
     return $modules;
 }
+*/
 
+/* replaced by getitems
 function comments_adminapi_get_module_stats( $args ) {
 
     extract($args);
@@ -91,9 +94,11 @@ function comments_adminapi_get_module_stats( $args ) {
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
-
+    if (empty($itemtype)) {
+        $itemtype = 0;
+    }
     xarModAPILoad('comments','user');
-    $pages = comments_userapi_get_object_list( $modid );
+    $pages = comments_userapi_get_object_list( $modid, $itemtype );
 
     if (!count($pages) || empty($pages)) {
         return array();
@@ -103,12 +108,14 @@ function comments_adminapi_get_module_stats( $args ) {
         $pages[$pageid]['total']    = xarModAPIFunc('comments','admin','count_comments',
                                             array('type'    => 'object',
                                                   'modid'   => $modid,
+                                                  'itemtype'=> $itemtype,
                                                   'objectid'=> $pageid,
                                                   'status'  => 'all'));
 
         $pages[$pageid]['inactive'] = xarModAPIFunc('comments','admin','count_comments',
                                             array('type'    => 'object',
                                                   'modid'   => $modid,
+                                                  'itemtype'=> $itemtype,
                                                   'objectid'=> $pageid,
                                                   'status'  => 'inactive'));
     }
@@ -116,7 +123,9 @@ function comments_adminapi_get_module_stats( $args ) {
     return $pages;
 
 }
+*/
 
+/* replaced by getmodules
 function comments_adminapi_get_module_list( ) {
 
     list($dbconn) = xarDBGetConn();
@@ -151,7 +160,9 @@ function comments_adminapi_get_module_list( ) {
     return $ret;
 
 }
+*/
 
+/* replaced by getitems
 function comments_adminapi_count_module_pages( $args ) {
     extract($args);
 
@@ -186,6 +197,7 @@ function comments_adminapi_count_module_pages( $args ) {
     return $total;
 
 }
+*/
 
 /**
  * Delete a node from the tree and reassign it's children to it's parent
@@ -310,6 +322,7 @@ function comments_adminapi_delete_branch( $args ) {
  * @author Carl P. Corliss (aka rabbitt)
  * @access  private
  * @param   integer     $modid      the id of the module that the comments are associated with
+ * @param   integer     $modid      the item type that the comments are associated with
  * @param   integer     $objectid   the id of the object within the specified module that the comments are attached to
  * @returns bool true on success, false otherwise
  */
@@ -328,10 +341,14 @@ function comments_adminapi_delete_object_nodes( $args ) {
         return;
     }
 
+    if (!isset($itemtype)) {
+        $itemtype = 0;
+    }
+
     xarModAPILoad('comments','user');
 
     // Grab the root node's values for the specified modid/objectid combo
-    $args = array('modid' => $modid, 'objectid' => $objectid);
+    $args = array('modid' => $modid, 'objectid' => $objectid, 'itemtype' => $itemtype);
     $root_node = comments_userapi_get_node_root($args);
 
     // Delete the entire branch in the tree for this objectid
@@ -346,6 +363,7 @@ function comments_adminapi_delete_object_nodes( $args ) {
  * @author Carl P. Corliss (aka rabbitt)
  * @access  private
  * @param   integer     $modid      the id of the module that the comments are associated with
+ * @param   integer     $itemtype   the item type that the comments are associated with
  * @returns bool true on success, false otherwise
  */
 function comments_adminapi_delete_module_nodes( $args ) {
@@ -356,11 +374,14 @@ function comments_adminapi_delete_module_nodes( $args ) {
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
         return;
     }
+    if (!isset($itemtype)) {
+        $itemtype = 0;
+    }
 
     $return_value = TRUE;
 
     xarModAPILoad('comments','user');
-    $pages = comments_userapi_get_object_list( $modid );
+    $pages = comments_userapi_get_object_list( $modid, $itemtype );
 
     if (count($pages) <= 0 || empty($pages)) {
         return $return_value;
@@ -368,6 +389,7 @@ function comments_adminapi_delete_module_nodes( $args ) {
         foreach ($pages as $object) {
             xarModAPIFunc('comments','admin','delete_object_nodes',
                           array('modid'     => $modid,
+                                'itemtype'  => $itemtype,
                                 'objectid'  => $object['pageid']));
         }
     }
@@ -382,6 +404,7 @@ function comments_adminapi_delete_module_nodes( $args ) {
  * @param   string  type     What to gather for: ALL, MODULE, or OBJECT (object == modid/objectid pair)
  * @param   string  status   What status' to count: ALL (minus root nodes), ACTIVE, INACTIVE
  * @param   integer modid    Module to gather info on (only used with type == module|object)
+ * @param   integer itemtype Item type in that module to gather info on (only used with type == module|object)
  * @param   integer objectid ObjectId to gather info on (only used with type == object)
  * @returns integer total comments
  */
@@ -427,6 +450,10 @@ function comments_adminapi_count_comments( $args ) {
                 }
 
                 $where_type .= "$ctable[modid] = '$modid'";
+
+                if (isset($itemtype) && is_numeric($itemtype)) {
+                    $where_type .= " AND $ctable[itemtype] = '$itemtype'";
+                }
                 break;
 
             default:
@@ -507,6 +534,8 @@ function comments_adminapi_remove_module( $args ) {
     // avoid potential security holes or just too much wasted processing
     // if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"All:All:$objectid")) return;
 
+// FIXME: we need to remove the comments for items of all types here, so a direct DB call
+//        would be better than this "delete recursively" trick
     xarModAPIFunc('comments','admin','delete_module_nodes',array('modid'=>$modid));
 
     return $extrainfo;
