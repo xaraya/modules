@@ -3,7 +3,8 @@
 define('_NEWS_SORT_ASC', 'asc');
 define('_NEWS_SORT_DESC', 'desc');
 
-function newsgroups_userapi_create_threads( $articles , $direction=_NEWS_SORT_DESC) {
+function newsgroups_userapi_create_threads( $articles , $direction=_NEWS_SORT_DESC) 
+{
 
     if (!is_array($articles)) {
         return $articles;
@@ -68,7 +69,8 @@ function newsgroups_userapi_create_threads( $articles , $direction=_NEWS_SORT_DE
  * @returns integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
-function array_fieldrelation_compare ($a, $b) {
+function array_fieldrelation_compare ($a, $b) 
+{
 
     // get the sort value
     $sort = array_sortvalue();
@@ -155,7 +157,8 @@ function array_fieldrelation_compare ($a, $b) {
  * @returns  string  The current sort value
  *
  */
-function array_sortvalue($value=NULL) {
+function array_sortvalue($value=NULL) 
+{
     static $sort;
 
     if ($value != NULL) {

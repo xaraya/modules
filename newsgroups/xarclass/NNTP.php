@@ -369,7 +369,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function split_headers($article) {
+    function split_headers($article) 
+    {
         return $this->splitHeaders($article);
     }
 
@@ -405,7 +406,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function get_body($article) {
+    function get_body($article) 
+    {
         return $this->getBody($article);
     }
 
@@ -433,7 +435,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function get_data() {
+    function get_data() 
+    {
         return $this->_getData();
     }
 
@@ -462,7 +465,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function select_group($newsgroup) {
+    function select_group($newsgroup) 
+    {
         return $this->selectGroup($newsgroup);
     }
 
@@ -509,7 +513,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function get_groups($fetch=true) {
+    function get_groups($fetch=true) 
+    {
         return $this->getGroups($fetch);
     }
 
@@ -537,7 +542,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function get_overview_fmt() {
+    function get_overview_fmt() 
+    {
         return $this->getOverviewFmt();
     }
 
@@ -554,7 +560,8 @@ class Net_NNTP extends PEAR
     *                there headers
     * @access public
     */
-    function getOverview($first,$last) {
+    function getOverview($first,$last) 
+    {
         $format = $this->getOverviewFmt();
         $messages = array();
         $this->command("XOVER $first-$last");
@@ -598,7 +605,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function get_overview($first,$last) {
+    function get_overview($first,$last) 
+    {
         return $this->getOverview($first, $last);
     }
 
@@ -670,7 +678,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function is_connected() {
+    function is_connected() 
+    {
         return $this->isConnected();
     }
 
@@ -713,7 +722,8 @@ class Net_NNTP extends PEAR
     /**
     * @deprecated
     */
-    function set_debug($on = true) {
+    function set_debug($on = true) 
+    {
         return $this->setDebug();
     }
 

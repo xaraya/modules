@@ -171,7 +171,8 @@ class PEAR
      * @access public
      * @return void
      */
-    function _PEAR() {
+    function _PEAR() 
+    {
         if ($this->_debug) {
             printf("PEAR destructor called, class=%s\n", get_class($this));
         }
@@ -225,7 +226,8 @@ class PEAR
      * @access  public
      * @return  bool    true if parameter is an error
      */
-    function isError($data) {
+    function isError($data) 
+    {
         return (bool)(is_object($data) &&
                       (get_class($data) == 'pear_error' ||
                       is_subclass_of($data, 'pear_error')));
@@ -763,7 +765,8 @@ class PEAR_Error
      * @return int error mode
      * @access public
      */
-    function getMode() {
+    function getMode() 
+    {
         return $this->mode;
     }
 
@@ -776,7 +779,8 @@ class PEAR_Error
      * @return mixed callback function or object/method array
      * @access public
      */
-    function getCallback() {
+    function getCallback() 
+    {
         return $this->callback;
     }
 
@@ -892,7 +896,8 @@ class PEAR_Error
      * @return string a string with an object summary
      * @access public
      */
-    function toString() {
+    function toString() 
+    {
         $modes = array();
         $levels = array(E_USER_NOTICE  => 'notice',
                         E_USER_WARNING => 'warning',
