@@ -15,7 +15,7 @@
     <xar:set name="$configpage"><xar:mlstring>CLICK to set cache paths in SiteTools Configuration</xar:mlstring></xar:set>
    <xar:set name="$response"><xar:mlstring>Warning! Check your selection before continuing.</xar:mlstring></xar:set>
 
- <form action="#xarModURL('sitetools', 'admin', 'deletecache')#" method="post" enctype="application/x-www-form-urlencoded" />
+ <form action="#xarModURL('sitetools', 'admin', 'deletecache')#" method="post" enctype="application/x-www-form-urlencoded">
     <div style="clear: both; padding-top: 10px;">
 	    <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="confirm" id="confirm" value="true" />

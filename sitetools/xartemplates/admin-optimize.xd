@@ -15,7 +15,7 @@
 <div style="margin: auto;">
  <xar:if condition="$optimized eq false">
     <span style="float: left; width: 98%; text-align: right;">
-       <form action="#xarModURL('sitetools', 'admin', 'optimize')#" method="post" enctype="application/x-www-form-urlencoded" />
+       <form action="#xarModURL('sitetools', 'admin', 'optimize')#" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="authid" id="authid" value="#$authid#" />
         <input type="hidden" name="confirm" id="confirm" value="true" />
     </span>
