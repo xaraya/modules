@@ -77,7 +77,7 @@ function xarbb_user_movetopic()
             if (!empty($numtopics)) {
                 $list = xarModAPIFunc('xarbb', 'user', 'getalltopics',
                                       array('fid' => $data['fid'],
-                                            'startnum' => $count,
+                                            'startnum' => 1, // already sorted by xar_ttime DESC
                                             'numitems' => 1));
                 if (!empty($list)) {
                     $last = $list[0];
