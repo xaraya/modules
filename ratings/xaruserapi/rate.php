@@ -70,7 +70,6 @@ function ratings_userapi_rate($args)
     } elseif ($seclevel == 'medium') {
         // Check to see if user has already voted
         if (xarUserIsLoggedIn()) {
-            xarModSetVar('ratings',$modname.':'.$itemtype.':'.$objectid,0);
             $rated = xarModGetUserVar('ratings',$modname.':'.$itemtype.':'.$objectid);
             if (!empty($rated) && $rated > time() - 24*60*60) {
                 return;
