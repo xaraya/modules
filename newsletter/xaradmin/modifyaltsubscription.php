@@ -34,7 +34,8 @@ function newsletter_admin_modifyaltsubscription()
     $publications = xarModAPIFunc('newsletter',
                                   'user',
                                   'get',
-                                  array('phase' => 'publication'));
+                                  array('phase' => 'publication',
+                                        'sortby' => 'title'));
 
     // Check for exceptions
     if (!isset($publications) && xarCurrentErrorType() != XAR_NO_EXCEPTION) 

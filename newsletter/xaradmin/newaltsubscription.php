@@ -37,10 +37,7 @@ function newsletter_admin_newaltsubscription()
     $publications = xarModAPIFunc('newsletter',
                                   'user',
                                   'get',
-                                  array('startnum' => $startnum,
-                                        'numitems' => xarModGetVar('newsletter',
-                                                                  'itemsperpage'),
-                                        'phase' => 'publication',
+                                  array('phase' => 'publication',
                                         'sortby' => 'title'));
 
     // Check for exceptions
