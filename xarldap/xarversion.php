@@ -29,4 +29,6 @@ $modversion['user']           = 0;
 $modversion['securityschema'] = array('xarldap::all' => '::');
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Global';
+// this module requires the ldap extension
+$modversion['extensions']     = array('ldap');
 ?>
