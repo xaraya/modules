@@ -61,6 +61,9 @@ function articles_admin_modifyconfig()
     if (!isset($data['itemsperpage'])) {
         $data['itemsperpage'] = 20;
     }
+    if (!isset($data['adminitemsperpage'])) {
+        $data['adminitemsperpage'] = 20;
+    }
     if (!isset($data['numcols'])) {
         $data['numcols'] = 0;
     }
@@ -126,6 +129,9 @@ function articles_admin_modifyconfig()
         $data['withstatus'] = 0;
     } else {
         $data['withstatus'] = 1;
+    }
+    if (!isset($data['usetitleforurl'])) {
+        $data['usetitleforurl'] = '';
     }
     if (!isset($data['defaultsort'])) {
         $data['defaultsort'] = 'date';
