@@ -24,6 +24,12 @@ function xarcachemanager_admin_flushcache($args)
     $outputCacheDir = xarCoreGetVarDirPath() . '/cache/output/';
     $outputDirs = xarModAPIFunc( 'xarcachemanager', 'admin', 'getcachedirs', $outputCacheDir);
 
+    //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
+    if (!defined('XARCACHE_IS_ENABLED')) {
+        include_once('includes/xarCache.php');
+        xarCache_init(array('cacheDir' => $outputCacheDir));
+    }
+
     if (empty($confirm)) {
 
         $data = array();
@@ -48,12 +54,6 @@ function xarcachemanager_admin_flushcache($args)
 
         // Confirm authorisation code.
         if (!xarSecConfirmAuthKey()) return;
-        
-        //Make sure xarCache is included so you can delete cacheKeys even if caching is disabled
-        if (!file_exists($outputCacheDir . 'cache.touch')) {
-            include_once('includes/xarCache.php');
-            xarCache_init(array('cacheDir' => $outputCacheDir));
-        }
 
         //Make sure their is an authkey selected
         if ($flushkey == '-') {
