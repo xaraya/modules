@@ -18,8 +18,9 @@
  * 
  * @param  $phase is the which part of the loop you are on
  */
-function example_user_usermenu()
+function example_user_usermenu($args)
 { 
+    extract($args);
     // Security check  - if the user has read access to the menu, show a
     // link to display the details of the item
     if (!xarSecurityCheck('ViewExample')) return; 
