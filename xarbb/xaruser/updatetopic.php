@@ -78,7 +78,6 @@ function xarbb_user_updatetopic()
                                  'replies'  => 1,
                                  'move'     => 'positive',
                                  'fposter'  => $poster,
-                                 'tid'      => $tid,
                                  'ttitle'   => $data['ttitle']))) return;
     }
 
