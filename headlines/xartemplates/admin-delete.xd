@@ -11,7 +11,7 @@
 
     <p><xar:mlstring>Confirm deletion of Headline</xar:mlstring></p>
 
-    <input type="submit" value="#$submitlabel#" align="middle" tabindex="1" /><br /><br />
+    <input type="submit" value="#$submitlabel#"  tabindex="1" /><br /><br />
     <a href="#xarModURL('headlines', 'admin', 'view')#"><xar:mlstring>Cancel deletion of Headline</xar:mlstring></a>
 </form>
 </div>
