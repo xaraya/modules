@@ -5030,13 +5030,13 @@ class RGB {
 class Image {
     var $img_format;
     var $expired=true;
-    var $img;
+    var $img = null;
     var $left_margin=30,$right_margin=30,$top_margin=20,$bottom_margin=30;
     var $plotwidth=0,$plotheight=0;
     var $rgb=null;
     var $current_color,$current_color_name;
     var $lastx=0, $lasty=0;
-    var $width, $height;
+    var $width=0, $height=0;
     var $line_weight=1;
     var $line_style=1;    // Default line style is solid
     var $obs_list=array();

@@ -45,7 +45,7 @@
   <tr valign="middle">
     <th align="center" colspan="5">
       #$item_statistics_title#
-      <xar:if condition="isset($graphurl)">
+      <xar:if condition="!empty($graphurl)">
       <br />
       <img src="#$graphurl#" border="0" alt="" width="700" height="260" />
       </xar:if>
@@ -65,7 +65,7 @@
   <xar:loop name="$statisticitems">
     <tr valign="baseline">
       <td align="left" class="xar-alt xar-mod-title" style="border-width: 0px 0px 1px 0px;">
-        <xar:if condition="isset($loop:item['href'])">
+        <xar:if condition="!empty($loop:item['href'])">
             <a href="#$loop:item['href']#" class="xar-mod-title">#$loop:item['displayname']#</a>
         <xar:else/>
             #$loop:item['displayname']#
@@ -88,7 +88,6 @@
 </table>
 
 <br />
-<!--xar:foreach key="$key" value="$value" in="$top" -->
 <xar:loop name="$top">
 <a name="#$loop:key#"></a>
   <table border="0" width="100%" cellspacing="0" cellpadding="2">
