@@ -35,8 +35,9 @@ function sitetools_adminapi_optimizedb($dbname,$dbtype='')
             $dbname= xarDBGetName();
     }
     
+    $rowinfo=array();//bug #2595
+    
     switch ($dbtype) {
-
     default:
 
         $tot_data = 0;
