@@ -132,7 +132,7 @@
         </xar:if>
         <p />
         <xar:comment> CHOOSE SORTING ORDER </xar:comment>
-        sorted by
+        <xar:mlstring>sorted by</xar:mlstring>
         <select name="order">    
           <xar:if condition="$order eq 'ASC'">
             <option value="ASC" selected="selected"><xar:mlstring>Ascending</xar:mlstring></option>
@@ -144,7 +144,7 @@
           <xar:else />
             <option value="DESC"><xar:mlstring>Descending</xar:mlstring></option>
           </xar:if>
-        </select> date
+        </select> <xar:mlstring>date</xar:mlstring>
         &nbsp;&nbsp;        
         <input type="submit" value="#xarML('Refresh')#">
         <br />
