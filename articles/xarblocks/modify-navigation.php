@@ -82,7 +82,7 @@ function articles_navigationblock_modify($blockinfo)
 
     foreach($allcatbases as $modulecatbases) {
         // Module label for the option group in the list.
-        $modlabel = xarML('#(1)', ucwords($modulecatbases['module']));
+        $modlabel = ucwords($modulecatbases['module']);
 
         $vars['modules'][] = array(
             'label' => $modlabel
