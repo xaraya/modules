@@ -129,6 +129,12 @@ function sitetools_admin_links()
     xarModSetVar('sitetools','links_count',serialize($data['count']));
     xarModSetVar('sitetools','links_skiplocal',$skiplocal);
 
+    // some clean-up of previous link checks
+    if (!empty($data['checked'])) {
+        $data['checked'] = '';
+        xarModDelVar('sitetools','links_checked');
+    }
+
     // Generate a one-time authorisation code for this operation
     $data['authid'] = xarSecGenAuthKey();
 
