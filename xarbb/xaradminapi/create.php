@@ -70,7 +70,7 @@ function xarbb_adminapi_create($args)
 
     // Get Time
     if ((!isset($fpostid)) || (empty($fpostid))){
-        $fpostid= date('Y-m-d G:i:s');
+        $fpostid= time();
     }
     // Add item
     $query = "INSERT INTO $xbbforumstable (

@@ -24,7 +24,7 @@ function xarbb_user_main()
     $data = array();
     $data['pager'] = '';    
     $data['catid'] = xarVarCleanFromInput('catid');
-
+    $data['uid']    = xarUserGetVar('uid');
     $data['items'] = array();
 
     // The user API function is called
@@ -35,7 +35,8 @@ function xarbb_user_main()
                                    'startnum' => $startnum,
                                     'numitems' => xarModGetVar('xarbb',
                                                             'forumsperpage')));
-    $totalforums=count($forums);
+
+    $totalforums = count($forums);
     for ($i = 0; $i < $totalforums; $i++) {
         $forum = $forums[$i];
 
@@ -45,6 +46,25 @@ function xarbb_user_main()
                                  array('uid' => $forum['fposter']));
 
         $forums[$i]['name'] = $getname['name'];
+
+        // Images
+        if (isset($_COOKIE["xarbb_all"])){
+            $alltimecompare = unserialize($_COOKIE["xarbb_all"]);
+        } else {
+            $alltimecompare = '';
+        }
+        $fid = $forum['fid'];
+        if (isset($_COOKIE["xarbb_f_$fid"])){
+            $forumtimecompare = unserialize($_COOKIE["xarbb_f_$fid"]);
+        } else {
+            $forumtimecompare = '';
+        }
+
+        if (($alltimecompare > $forum['fpostid']) || ($forumtimecompare > $forum['fpostid'])){
+            $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+        } else {
+            $forums[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+        }
     }
 
     // TODO, need to check if new topics have been updated since last visit.
@@ -58,6 +78,22 @@ function xarbb_user_main()
 
     // Add the array of items to the template variables
     $data['items'] = $forums;
+
+    // User Specifics
+    $data['now']    = time();
+    //xarModSetVar('xarbb', 'lastvisitdate', $data['now']);
+    $sitename = xarModGetVar('themes', 'SiteName', 0);
+    $data['lastvisitdate'] = xarModGetUserVar('xarbb', 'lastvisitdate', $data['uid']); 
+
+    // Images
+    // These are dependant on the time functions being changed
+    $data['newpost']    = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+    $data['nonewpost']  = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+    $data['locked']     = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New post').'" />';
+
+    // Login
+    $data['return_url']      = xarModURL('xarbb', 'user', 'main');
+    $data['submitlabel']    = xarML('Submit');
 
     // Return the template variables defined in this function
     return $data;

@@ -51,16 +51,19 @@ function xarbb_userapi_createtopic($args)
     $nextId = $dbconn->GenId($xbbtopicstable);
     // let's set times only if times are not passed in
     if (!isset($ttime) || empty($ttime)) {
-        $ttime = date('Y-m-d G:i:s');
+        $ttime = time();
     }
     if (!isset($tftime) || empty($tftime)) {
-        $tftime = date('Y-m-d G:i:s');
+        $tftime = time();
     }
     if (!isset($treplies) || empty($treplies)) {
         $treplies=0;
     }
     if (!isset($treplier) || empty($treplier)) {
         $treplier=0;
+    }
+    if (!isset($tstatus) || empty($tstatus)) {
+        $tstatus = 0;
     }
     // Add item
     $query = "INSERT INTO $xbbtopicstable (

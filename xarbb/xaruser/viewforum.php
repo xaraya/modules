@@ -29,6 +29,9 @@ function xarbb_user_viewforum()
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$data['catid'].':'.$data['fid'])) return;
 
+    // This is needed for the redirect function to set the cookie for the main page.
+    $data['fid']    = $fid;
+
     $data['items'] = array();
 
     // The user API function is called
@@ -45,9 +48,42 @@ function xarbb_user_viewforum()
         $topics[$i]['comments'] = xarVarPrepHTMLDisplay($topic['treplies']);
 
         // While we are here, lets do the hot topics, etc.
-        $redhotTopic    = xarModGetVar('xarbb', 'redhottopic');
+        // $redhotTopic    = xarModGetVar('xarbb', 'redhottopic');
         $hotTopic       = xarModGetVar('xarbb', 'hottopic');
+        // Images
+        if (isset($_COOKIE["xarbb_all"])){
+            $alltimecompare = unserialize($_COOKIE["xarbb_all"]);
+        } else {
+            $alltimecompare = '';
+        }
+        $tid = $topic['tid'];
+        if (isset($_COOKIE["xarbb_t_$tid"])){
+            $topictimecompare = unserialize($_COOKIE["xarbb_t_$tid"]);
+        } else {
+            $topictimecompare = '';
+        }
+        // We also have to get the status fields in.
+        // First lets look at the non-new items
+        if (($alltimecompare > $topic['ttime']) || ($topictimecompare > $topic['ttime'])){
+            // More comments than our hottopic setting, therefore should be hot, but not new.
+            if ($topics[$i]['comments'] > $hotTopic){
+                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+            // Else should be a regular old boring topic
+            } else {
+                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+            }
+        } else {
+            // OOF, look at this topic, hot and new.
+            if ($topics[$i]['comments'] > $hotTopic){
+                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+            // Else should be a regular old boring topic that has a new post
+            } else {
+                $topics[$i]['timeimage'] = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+            }
+        }
+        
 
+/*
         if (($topics[$i]['comments']) >= ($hotTopic)){
             $topics[$i]['folder']       = '<img src="' . xarTplGetImage('hot_folder.gif') . '" />';
         } else if (($topics[$i]['comments']) >= ($redhotTopic)){
@@ -55,6 +91,9 @@ function xarbb_user_viewforum()
         } else {
             $topics[$i]['folder']       = '<img src="' . xarTplGetImage('folder.gif') . '" />';
         }
+
+*/
+
 
         $topics[$i]['hitcount'] = xarModAPIFunc('hitcount',
                                                 'user',
@@ -108,12 +147,31 @@ function xarbb_user_viewforum()
     $data['items'] = $topics;
     $data['fname'] = $forums['fname'];
 
-    //images
-    $data['newtopic'] = '<img src="' . xarTplGetImage('newpost.gif') . '" alt="'.xarML('New post').'" />';
-    $data['edit']       = '<img src="' . xarTplGetImage('edit.gif') . '" alt="'.xarML('Edit').'" />';
-    $data['delete']     = '<img src="' . xarTplGetImage('delete.gif') . '" alt="'.xarML('Delete').'" />';
-    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
-    $data['subscribe']  = '<img src="' . xarTplGetImage('forumsubscribe.gif') . '" alt="'.xarML('Subscribe to this forum').'" />';
+    // Images
+    // These are dependant on the time functions being changed
+    $data['newtopic']    = '<img src="' . xarTplGetImage('new/post.gif') . '" alt="'.xarML('New topic').'" />';
+    $data['newpost']    = '<img src="' . xarTplGetImage('new/folder_new.gif') . '" alt="'.xarML('New post').'" />';
+    $data['nonewpost']  = '<img src="' . xarTplGetImage('new/folder.gif') . '" alt="'.xarML('No New post').'" />';
+    $data['locked']     = '<img src="' . xarTplGetImage('new/folder_lock.gif') . '" alt="'.xarML('No New post').'" />';
+    $data['newlocked']     = '<img src="' . xarTplGetImage('new/folder_lock_new.gif') . '" alt="'.xarML('No New post').'" />';
+    $data['announcetopic']  = '<img src="' . xarTplGetImage('new/folder_announce.gif') . '" alt="'.xarML('Announcement').'" />';
+    $data['newannouncetopic']  = '<img src="' . xarTplGetImage('new/folder_announce_new.gif') . '" alt="'.xarML('New Announcement').'" />';
+    $data['hottopic']  = '<img src="' . xarTplGetImage('new/folder_hot.gif') . '" alt="'.xarML('Hot Topic').'" />';
+    $data['newhottopic']  = '<img src="' . xarTplGetImage('new/folder_new_hot.gif') . '" alt="'.xarML('New Hot Topic').'" />';
+    $data['stickytopic']  = '<img src="' . xarTplGetImage('new/folder_sticky.gif') . '" alt="'.xarML('Sticky Topic').'" />';
+    $data['newstickytopic']  = '<img src="' . xarTplGetImage('new/folder_sticky_new.gif') . '" alt="'.xarML('New Sticky Topic').'" />';
+
+
+    // User Specifics
+    $data['uid']    = xarUserGetVar('uid');
+    $data['now']    = time();
+    xarModSetVar('xarbb', 'lastvisitdate', $data['now']);
+    xarModSetVar('xarbb', 'lastvisitdate.'.$fid, $data['now']);
+    $data['lastvisitdate'] = xarModGetUserVar('xarbb', 'lastvisitdate', $data['uid']);
+    // need to think about this a bit
+    if ($data['lastvisitdate'] != $data['now']){
+        xarModSetUserVar('xarbb', 'lastvisitdate.'.$fid, $data['now'], $data['uid']);
+    }
 
     // Call the xarTPL helper function to produce a pager in case of there
     // being many items to display.

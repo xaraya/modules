@@ -21,136 +21,278 @@
       you can uncomment the lines in two places to display     #$loop:item['folder']#
       which will display these icons dependent on number of topics - and your config settings.
 --->
-
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-  <tr>
-    <td colspan="2">
-	<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
-    </td>
-  </tr>
-  <tr>
-    <td class="xar-accent">
-      <b><xar:mlstring>Forum Title</xar:mlstring>: #$fname#</b>
-    </td>
-	<xar:sec mask="PostxarBB" catch="false">
-    <td class="xar-accent" align="right">
-      <a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>Post a New Topic</xar:mlstring></a>
-    </td>
-	</xar:sec>
-  </tr>
-  <tr>
-    <td colspan="2"><xar:mlstring>Logged in as</xar:mlstring>: #xarUserGetVar('name')# / 
-	<xar:if condition="xarUserIsLoggedIn()">
-		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Your Account</xar:mlstring></a>
-	<xar:else />
-		<a href="#xarModUrl('roles', 'user', 'account')#"><xar:mlstring>Log In | Register</xar:mlstring></a>
-	</xar:if>
-    </td>
-  </tr>
+	<tr>
+		<td colspan="2">
+			<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" catid="$catid" />
+		</td>
+	</tr>
 </table>
-<br />
-<xar:if condition="!empty($pager)">
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-  <tr>
-    <td class="xar-accent">
-      <table border="0" cellpadding="4" cellspacing="0" width="100%">
-        <tr>
-          <td width="45%"><b>#$pager#</b></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-<br />
-</xar:if>
 
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-  <tr>
-    <td align="center" colspan="3" class="xar-accent"><b><xar:mlstring>Topic</xar:mlstring></b></td>
-    <td width="100" align="center" class="xar-accent"><b><xar:mlstring>Last Poster</xar:mlstring></b></td>
-    <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Replies</xar:mlstring></b></td>
-    <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Views</xar:mlstring></b></td>
-    <td width="130" align="center" class="xar-accent"><b><xar:mlstring>Last Post</xar:mlstring></b></td>
-<xar:sec mask="EditxarBB" catch="false">
-    <td width="130" align="center" class="xar-accent"><b><xar:mlstring>Options</xar:mlstring></b></td>
-</xar:sec>
-  </tr>
+<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+	<tr> 
+		<td align="left" valign="bottom" colspan="2">
+			<h1>
+				<a class="xar-title" href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+					#$fname#
+				</a><br />
+			</h1>
+		</td>
+		<xar:if condition="!empty($pager)">
+			<td align="right" valign="bottom" nowrap="nowrap">
+				<span class="xar-sub">
+					<b>
+						#$pager#
+					</b>  
+				</span>
+			</td>
+		</xar:if>
+	</tr>
+	<tr> 
+		<td align="left" valign="middle" width="50">
+			<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+				#$newtopic#
+			</a>
+		</td>
+		<td align="left" valign="middle" width="100%">
+			<span class="xar-sub">
+				&nbsp;&nbsp;&nbsp;
+				<a href="#xarModUrl('xarbb', 'user', 'main')#">
+					#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
+					<xar:mlstring>
+						Forum Index
+					</xar:mlstring>
+				</a> 
+				-> 
+				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+					#$fname#
+				</a>
+			</span>
+		</td>
+		<td align="right" valign="bottom" nowrap="nowrap">
+			<span class="xar-sub">
+				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+					<xar:mlstring>
+					    Mark all topics as read
+					</xar:mlstring>
+				</a><br />
+				<a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#">
+					<xar:mlstring>
+						Syndicate This Forum
+					</xar:mlstring>
+				</a>
+			</span>
+		</td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="4" cellspacing="1" width="100%" class="forumline">
+	<tr> 
+		<th colspan="2" align="center" nowrap="nowrap">
+			&nbsp; 
+			<xar:mlstring>
+			    Topics
+			</xar:mlstring> 
+			&nbsp;
+		</th>
+		<th width="50" align="center" nowrap="nowrap">
+			&nbsp;
+			<xar:mlstring>
+			    Replies
+			</xar:mlstring>
+			&nbsp;
+		</th>
+		<th width="100" align="center" nowrap="nowrap">
+			&nbsp;
+			<xar:mlstring>
+			    Author
+			</xar:mlstring> 
+			&nbsp;
+		</th>
+		<th width="75" align="center" nowrap="nowrap">
+			&nbsp;
+			<xar:mlstring>
+			    Views
+			</xar:mlstring>
+			&nbsp;
+		</th>
+		<th width="250" align="center" nowrap="nowrap">
+			&nbsp;
+			<xar:mlstring>
+			    Last Post
+			</xar:mlstring> 
+			&nbsp;
+		</th>
+	</tr>
 <xar:loop name="$items">
-<xar:if condition="(($loop:index + 1) % 2)">
-  <tr>
-    <td width="21" class="xar-accent">&nbsp;</td>
-    <td width="21">
-    <!--- Uncomment to display folder icon, hot topic, and hottest topic icons
-    #$loop:item['folder']#
-    --->
-    &nbsp;
-    </td>
-    <td><a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#">#$loop:item['ttitle']#</a></td>
-    <td width="100" align="center"><a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">#$loop:item['replyname']#</a></td>
-    <td width="75" align="center">#$loop:item['comments']#</td>
-    <td width="75" align="center">#$loop:item['hitcount']#</td>
-    <td width="130" align="right" valign="top">#$loop:item['ttime']#</td>
-	<xar:sec mask="EditxarBB" catch="false">
-    <td width="130" align="right" valign="top">
-    	<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Edit</xar:mlstring></a> | 
-    	<a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Delete</xar:mlstring></a>
-    </td>
-	</xar:sec>
-  </tr>
-<xar:else />
-  <tr>
-    <td width="21" class="xar-accent">&nbsp;</td>
-    <td width="21">
-    <!--- Uncomment to display folder icon, hot topic, and hottest topic icons  
-    #$loop:item['folder']#
-    --->
-    &nbsp;
-    </td>
-    <td><a href="#xarModURL('xarbb', 'user', 'viewtopic', array('tid' => $loop:item['tid']))#">#$loop:item['ttitle']#</a></td>
-    <td width="100" align="center"><a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">#$loop:item['replyname']#</a></td>
-    <td width="75" class="xar-accent" align="center">#$loop:item['comments']#</td>
-    <td width="75" class="xar-accent" align="center">#$loop:item['hitcount']#</td>
-    <td width="130" class="xar-accent" align="right" valign="top">#$loop:item['ttime']#</td>
-	<xar:sec mask="EditxarBB" catch="false">
-    <td class="xar-accent" align="right" valign="top">
-    	<a href="#xarModURL('xarbb','user','newtopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Edit</xar:mlstring></a> | 
-    	<a href="#xarModURL('xarbb','user','deletetopic',array('tid' => $loop:item['tid']))#"><xar:mlstring>Delete</xar:mlstring></a>
-    </td>
-	</xar:sec>
-  </tr>
-</xar:if>
+	<tr> 
+		<td class="xar-norm" align="center" valign="middle" width="20">
+			#$loop:item['timeimage']#
+		</td>
+		<td class="xar-norm" width="100%">
+			<span class="topictitle">
+				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $fid, 'tid' => $loop:item['tid']))#">
+					#$loop:item['ttitle']#
+				</a>
+			</span>
+		</td>
+		<td class="xar-accent" align="center" valign="middle">
+			<span class="postdetails">
+				#$loop:item['comments']#
+			</span>
+		</td>
+		<td class="xar-norm" align="center" valign="middle">
+			<span class="name">
+				<a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['authorid']))#">
+					#$loop:item['replyname']#
+				</a>
+			</span>
+		</td>
+		<td class="xar-accent" align="center" valign="middle">
+			<span class="postdetails">
+				#$loop:item['hitcount']#
+			</span>
+		</td>
+		<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
+			<span class="postdetails">
+				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['ttime'])#<br />
+				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
+			</span>
+		</td>
+	</tr>
 </xar:loop>
 </table>
-<br />
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-	<xar:sec mask="PostxarBB" catch="false">
-    <td width="50%"><a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#"><xar:mlstring>Post a New Topic</xar:mlstring></a></td>
-	</xar:sec>
-	<xar:if condition="xarThemeIsAvailable('rss')">
-    <td width="50%"><a href="#xarModURL('xarbb', 'user', 'viewforumrss', array('fid' => $fid, 'theme' => 'rss'))#"><xar:mlstring>Syndicate This Forum</xar:mlstring></a></td>
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+	<tr> 
+		<td align="left" valign="middle" width="50">
+			<a href="#xarModURL('xarbb', 'user', 'newtopic', array('fid' => $fid))#">
+				#$newtopic#
+			</a>
+		</td>
+		<td align="left" valign="middle" width="100%">
+			<span class="xar-sub">
+				&nbsp;&nbsp;&nbsp;
+				<a href="#xarModUrl('xarbb', 'user', 'main')#">
+					#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
+					<xar:mlstring>
+						Forum Index
+					</xar:mlstring>
+				</a> 
+				-> 
+				<a href="#xarModUrl('xarbb', 'user', 'viewforum', array('fid' => $fid))#">
+					#$fname#
+				</a>
+			</span>
+		</td>
+	<xar:if condition="!empty($pager)">	
+		<td align="right" valign="middle" nowrap="nowrap">
+				<span class="xar-sub">
+					<b>
+						#$pager#
+					</b>  
+				</span>
+			</td>
 	</xar:if>
-<!--  Need an API Forum Picker.
-	<form method="POST">
-        <table border="0" cellpadding="3" cellspacing="0">
+		<!--  Need an API Forum Picker. 
+		<td align="right" valign="bottom" nowrap="nowrap">
+			<span class="xar-sub">
+				TODO Picker
+			</span>
+		</td> -->
+	</tr>
+</table>
 
-          <tr>
-            <td align="right"><b><font face="Verdana" size="2">Forums : </font></b></td>
-            <td align="center">
-              <select>
-                <option>Forum Title One</option>
-                <option>Forum Title Two</option>
-                <option>Forum Title Three</option>
-
-                <option>Forum Title Four</option>
-                <option>Forum Title Five</option>
-              </select>
-            </td>
-            <td><input type="image" name="Go" src="images/go.gif" width="34" height="25"></td>
-          </tr>
-        </table>
-      </form>
- -->
-    </td>
-  </tr>
+<table width="100%" cellspacing="0" border="0" align="center" cellpadding="0">
+	<tr>
+		<td align="left" valign="top">
+			<table cellspacing="3" cellpadding="0" border="0">
+				<tr>
+					<td width="20" align="left">
+						#$newpost#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							New post
+						</xar:mlstring>
+					</td>
+					<td>
+						&nbsp;&nbsp;
+					</td>
+					<td width="20" align="center">
+						#$nonewpost#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							No new post
+						</xar:mlstring>
+					</td>
+					<td>
+						&nbsp;&nbsp;
+					</td>
+					<td width="20" align="center">
+						#$announcetopic#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							Announcement
+						</xar:mlstring>
+					</td>
+				</tr>
+				<tr> 
+					<td width="20" align="left">
+						#$newhottopic#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							New post hot topic
+						</xar:mlstring>
+					</td>
+					<td>
+						&nbsp;&nbsp;
+					</td>
+					<td width="20" align="center">
+						#$hottopic#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							Hot topic
+						</xar:mlstring>
+					</td>
+					<td>
+						&nbsp;&nbsp;
+					</td>
+					<td width="20" align="center">
+						#$stickytopic#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							Sticky
+						</xar:mlstring>
+					</td>
+				</tr>
+				<tr>
+					<td class="xar-sub">
+						#$newstickytopic#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							New sticky
+						</xar:mlstring>
+					</td>
+					<td>
+						&nbsp;&nbsp;
+					</td>
+					<td class="xar-sub">
+						#$locked#
+					</td>
+					<td class="xar-sub">
+						<xar:mlstring>
+							Locked
+						</xar:mlstring>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 </table>

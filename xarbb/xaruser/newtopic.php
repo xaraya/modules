@@ -119,7 +119,7 @@ function xarbb_user_newtopic()
             }
 
             if(isset($tid))    {
-                 $modified_date=date('F d, Y g:i A');
+                 $modified_date= time();
                  $tpost .= "\n";
                  $tpost .=xarML('[Modified by: #(1) (#(2)) on #(3)]',
                      xarUserGetVar('name'),

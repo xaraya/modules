@@ -1,42 +1,248 @@
 <!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<!-- TODO Put this in the forum list and stop using this tag -->
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-  <tr>
-    <td><!--- we show the category count here too --->
-	<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" showcatcount="1" />
-    </td>
-  </tr>
+	<tr>
+		<td><!--- we show the category count here too --->
+			<xar:categories-navigation layout="trails" showchildren="1" module="xarbb" itemtype="1" func="main" showcatcount="1" />
+		</td>
+	</tr>
 </table>
-<br />
-<table border="1" cellpadding="3" cellspacing="0" width="100%" style="border-color: #000000; border-collapse: collapse;">
-  <tr>
-    <td align="center" colspan="2" class="xar-accent"><b><xar:mlstring>Forum name and description</xar:mlstring></b></td>
-    <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Topics</xar:mlstring></b></td>
-    <td width="75" align="center" class="xar-accent"><b><xar:mlstring>Posts</xar:mlstring></b></td>
-    <td width="35%" align="center" class="xar-accent"><b><xar:mlstring>Last Post</xar:mlstring></b></td>
+<table width="100%" cellspacing="0" cellpadding="2">
+	<tr> 
+		<td align="left" valign="bottom">
+			<p>
+				<xar:if condition="xarUserIsLoggedIn()">
+					<span class="xar-sub">
+						<xar:mlstring>
+							You last visited on
+						</xar:mlstring>
+							#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $lastvisitdate)#
+							<br />
+						<xar:mlstring>
+							The current time is
+						</xar:mlstring>
+						#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $now)#
+						<br />
+					</span>
+				</xar:if>
+				<span>
+					<a class="xar-title" href="#xarModURL('xarbb', 'user', 'main')#">
+						#xarModGetVar('themes', 'SiteName', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)#  #xarModGetVar('themes', 'SiteSlogan', 0)# #xarModGetVar('themes', 'SiteTitleSeparator', 0)# 
+						<xar:mlstring>
+							Forum Index
+						</xar:mlstring>
+					</a><br />
+				</span>
+			</p>
+		</td>
+		<td align="right" valign="bottom" class="xar-sub">
+			<p>
+				<xar:if condition="xarUserIsLoggedIn()">
+					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('from' => $lastvisitdate, 'to' => $now))#">
+						<xar:mlstring>
+						    View topics since last visit (TODO)
+						</xar:mlstring>
+					</a><br />
+					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('by' => $uid))#">
+						<xar:mlstring>
+						    View your topics (TODO)
+						</xar:mlstring>
+					</a><br />
+					<a href="#xarModURL('xarbb', 'user', 'searchtopics', array('replies' => 0))#">
+						<xar:mlstring>
+						    View unanswered topics (TODO)
+						</xar:mlstring>
+					</a>
+				</xar:if>
+			</p>
+		</td>
+	</tr>
+</table>
+<table width="100%" cellpadding="2" cellspacing="1">
+	<tr> 
+		<th colspan="2" nowrap="nowrap">
+			<xar:mlstring>
+				Forum
+			</xar:mlstring>
+		</th>
+		<th width="50" nowrap="nowrap">
+			<xar:mlstring>
+				Topics
+			</xar:mlstring>
+		</th>
+		<th width="50" nowrap="nowrap">
+			<xar:mlstring>
+				Posts
+			</xar:mlstring>
+		</th>
+		<th nowrap="nowrap">
+			<xar:mlstring>
+				Last Post
+			</xar:mlstring>
+		</th>
+	</tr>
+<!-- THIS IS HOW PHPBB DOES THE CAT ROW
+	<tr> 
+		<td colspan="2">
+			<span>
+				<a href="caturl">
+					category
+				</a>
+			</span>
+		</td>
+		<td colspan="3" align="right">
+			&nbsp;
+		</td>
   </tr>
-	<xar:loop name="$items">
-	<xar:if condition="(($loop:index + 1) % 2)">
-  <tr>
-    <td width="21">&nbsp;</td>
-    <td><b><a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $loop:item['fid'], 'catid' => $catid))#">#$loop:item['fname']#</a></b><br />#$loop:item['fdesc']#</td>
-    <td width="75" align="center">#$loop:item['ftopics']#</td>
-    <td width="75" align="center">#$loop:item['fposts']#</td>
-    <td width="35%" align="center">#$loop:item['fpostid']#<br />
-			<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a></td>
+-->
+
+  <!-- BEGIN FORUMS -->
+<xar:loop name="$items">
+	<tr> 
+		<td class="xar-norm" align="center" valign="middle">
+			#$loop:item['timeimage']#
+		</td>
+		<td class="xar-norm" width="100%" height="50">
+			<span class="xar-title">
+				<a href="#xarModURL('xarbb', 'user', 'redirect', array('fid' => $loop:item['fid']))#" title="#$loop:item['fname']#">
+					#$loop:item['fname']#
+				</a><br />
+			</span> 
+			<span class="xar-norm">
+				#$loop:item['fdesc']#<br />
+			</span>
+		</td>
+		<td class="xar-accent" align="center" valign="middle">
+			<span class="xar-sub">
+				#$loop:item['ftopics']#
+			</span>
+		</td>
+		<td class="xar-accent" align="center" valign="middle">
+			<span class="xar-sub">
+				#$loop:item['fposts']#
+			</span>
+		</td>
+		<td class="xar-accent" align="center" valign="middle" nowrap="nowrap">
+			<span class="gensmall">
+				#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $loop:item['fpostid'])#<br />
+				<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a>
+			</span>
+		</td>
   </tr>
-  <xar:else />
-  <tr>
-    <td width="21">&nbsp;</td>
-    <td><b><a href="#xarModURL('xarbb', 'user', 'viewforum', array('fid' => $loop:item['fid'], 'catid' => $catid))#">#$loop:item['fname']#</a></b><br />#$loop:item['fdesc']#</td>
-    <td width="75" align="center" class="xar-accent">#$loop:item['ftopics']#</td>
-    <td width="75" align="center" class="xar-accent">#$loop:item['fposts']#</td>
-    <td width="35%" align="center" class="xar-accent">#$loop:item['fpostid']#<br />
-			<strong>By: </strong> <a href="#xarModUrl('roles', 'user', 'display', array('uid' => $loop:item['fposter']))#">#$loop:item['name']#</a></td>
-  </tr>
-  </xar:if>
 </xar:loop>
+  <!-- END forumrow -->
+  <!-- END catrow -->
 </table>
-<!-- add the pager here -->
+
+<table width="100%" cellspacing="0" border="0" align="center" cellpadding="2">
+	<tr> 
+		<td align="left">
+			<span class="xar-sub">
+				<a href="#xarModURL('xarbb', 'user', 'redirect')#">
+					<xar:mlstring>
+					    Mark all forums as read
+					</xar:mlstring>
+				</a>
+			</span>
+		</td>
+		<td align="right">
+			<span class="xar-sub">
+				<xar:mlstring>
+				    All times are GMT
+				</xar:mlstring>
+			</span>
+		</td>
+	</tr>
+</table>
+<xar:if condition="!xarUserIsLoggedIn()">
+	<form action="#xarModURL('roles', 'user', 'login')#" method="post" enctype="application/x-www-form-urlencoded">
+		<table width="100%" cellpadding="3" cellspacing="1">
+			<tr> 
+				<th height="28" align="left">
+					<span class="xar-title">
+						<xar:mlstring>
+							Log in
+						</xar:mlstring>
+					</span>
+				</th>	
+			</tr>
+			<tr> 
+				<td align="center" valign="middle" height="28">
+					<span class="xar-sub">
+						<label for="uname">
+							<xar:mlstring>
+								Username
+							</xar:mlstring>: 
+						</label>
+						<input type="text" name="uname" id="uname" maxlength="64" size="10" />
+						&nbsp;&nbsp;&nbsp;
+						<label for="pass">
+							<xar:mlstring>
+								Password
+							</xar:mlstring>: 
+						</label>
+						<input type="password" name="pass" id="pass" maxlength="64" size="10" />
+						<xar:if condition="xarConfigGetVar('Site.Session.SecurityLevel') ne 'High'">
+							<label for="rememberme">
+								<xar:mlstring>
+									Remember me
+								</xar:mlstring>
+							</label>
+							<input type="checkbox" name="rememberme" id="rememberme" value="1" />
+						</xar:if>
+						&nbsp;&nbsp;&nbsp; 
+						<input type="hidden" name="redirecturl" id="returnurl" value="#$return_url#" />
+						<input type="submit" value="#$submitlabel#" />
+					</span> 
+				</td>
+			</tr>
+		</table>
+	</form>
+</xar:if>
+
+<br clear="all" />
+
+<table cellspacing="3" border="0" align="center" cellpadding="0">
+	<tr> 
+		<td width="20" align="center">
+			#$newpost#
+		</td>
+		<td>
+			<span class="xar-sub">
+				<xar:mlstring>
+				    New posts
+				</xar:mlstring>
+			</span>
+		</td>
+		<td>
+			&nbsp;&nbsp;
+		</td>
+		<td width="20" align="center">
+			#$nonewpost#
+		</td>
+		<td>
+			<span class="xar-sub">
+				<xar:mlstring>
+				    No new posts
+				</xar:mlstring>
+			</span>
+		</td>
+		<td>
+			&nbsp;&nbsp;
+		</td>
+		<td width="20" align="center">
+			#$locked#
+		</td>
+		<td>
+			<span class="xar-sub">
+				<xar:mlstring>
+				    Forum Locked
+				</xar:mlstring>
+			</span>
+		</td>
+	</tr>
+</table>
+
 <xar:if condition="!empty($pager)">
 #$pager#
 </xar:if>

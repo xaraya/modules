@@ -63,7 +63,7 @@ function xarbb_userapi_updateforumview($args)
     $xartable =& xarDBGetTables();
 
     $xbbforumstable = $xartable['xbbforums'];
-    $time = date('Y-m-d G:i:s');
+    $time = time();
 
     // Update the forum
     $query = "UPDATE $xbbforumstable

@@ -72,7 +72,7 @@ function xarbb_userapi_updatetopic($args)
     $xbbtopicstable = $xartable['xbbtopics'];
 
     // now
-    $time = date('Y-m-d G:i:s');
+    $time = time();
 
     foreach($params as $vvar => $field)	{
     	if(isset($$vvar))

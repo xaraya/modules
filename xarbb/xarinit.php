@@ -41,8 +41,9 @@ function xarbb_init()
     'xar_fdesc'        => array('type'=>'text'),
     'xar_ftopics'      => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_fposts'       => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
-    'xar_fposter'      => array('type'=>'integer', 'null'=>false,'default'=>'0','increment'=>false,'primary_key'=>false),
-    'xar_fpostid'      => array('type'=>'datetime','null'=>false,'default'=>'1970-01-01 00:00')
+    'xar_fposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment' => false, 'primary_key' => false),
+    'xar_fpostid'      => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
+    //'xar_fpostid'      => array('type'=>'datetime','null'=>false,'default'=>'1970-01-01 00:00')
     );
 
     // TODO NEED FORUM STATUS
@@ -70,8 +71,10 @@ function xarbb_init()
     'xar_ttitle'       => array('type'=>'varchar', 'null'=>false, 'default'=>'','size'=>255 ),
     'xar_tpost'        => array('type'=>'text'),
     'xar_tposter'      => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>false,'primary_key'=>false),
-    'xar_ttime'        => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
-    'xar_tftime'       => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
+    'xar_ttime'        => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
+    'xar_tftime'       => array('type'=>'integer', 'unsigned'=>TRUE, 'null'=>FALSE, 'default'=>'0'),
+    //'xar_ttime'        => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
+    //'xar_tftime'       => array('type'=>'datetime','null'=>false, 'default'=>'1970-01-01 00:00'),
     'xar_treplies'     => array('type'=>'integer', 'null'=>false, 'default'=>'0','increment'=>false,'primary_key'=>false),
     'xar_treplier'     => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'increment'=>false,'primary_key'=>false),
     'xar_tstatus'      => array('type'=>'integer', 'null'=>false, 'default'=>'0', 'size'=>'tiny')
@@ -174,6 +177,9 @@ function xarbb_init()
     // be able to turn it on or off in your module administration
     xarModSetVar('xarbb', 'SupportShortURLs', 0);
 
+    // Personal Configuration
+    xarModSetVar('xarbb', 'lastvisitdate', '');
+
     $xarbbcid = xarModAPIFunc('categories',
         'admin',
         'create',
@@ -266,6 +272,9 @@ function xarbb_upgrade($oldversion)
             $dotopicstable=xarbb_updatetopicstable();
             if (!$dotopicstable)  return;
 
+            break;
+        case '1.0.1':
+            xarModSetVar('xarbb', 'lastvisitdate', '');
             break;
         default:
             break;
