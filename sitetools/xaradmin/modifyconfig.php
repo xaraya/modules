@@ -40,6 +40,29 @@ function sitetools_admin_modifyconfig()
     $data['defrsspath']   = xarCoreGetVarDirPath()."/cache/rss";
     $data['deftemplpath'] = xarCoreGetVarDirPath()."/cache/templates";
 
+    // scheduler functions available in sitetools at the moment
+    $schedulerapi = array('optimize','backup');
+
+    if (xarModIsAvailable('scheduler')) {
+        $data['intervals'] = xarModAPIFunc('scheduler','user','intervals');
+        $data['interval'] = array();
+        foreach ($schedulerapi as $func) {
+            // see if we have a scheduler job running to execute this function
+            $job = xarModAPIFunc('scheduler','user','get',
+                                 array('module' => 'sitetools',
+                                       'type' => 'scheduler',
+                                       'func' => $func));
+            if (empty($job) || empty($job['interval'])) {
+                $data['interval'][$func] = '';
+            } else {
+                $data['interval'][$func] = $job['interval'];
+            }
+        }
+    } else {
+        $data['intervals'] = array();
+        $data['interval'] = array();
+    }
+
     $hooks = xarModCallHooks('module', 'modifyconfig', 'sitetools',
         array('module' => 'sitetools'));
     if (empty($hooks)) {

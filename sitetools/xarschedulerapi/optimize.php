@@ -6,12 +6,13 @@
  * @author jojodee <http://xaraya.athomeandabout.com >
  * @access private
  */
-function sitetools_schedulerapi_optimize($dbname,$dbtype='')
+function sitetools_schedulerapi_optimize($args)
 {
+    extract($args);
 
     // DO LATER: get some configuration info here if necessary
     // for now lets just use current database
-    if (($dbname='') || (empty($dbname))){
+    if (empty($dbname)){
         list($dbconn) = xarDBGetConn();
             $dbname= xarDBGetName();
     }

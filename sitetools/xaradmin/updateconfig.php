@@ -42,6 +42,41 @@ function sitetools_admin_updateconfig()
     xarModSetVar('sitetools','colnumber',$colnumber);  
     xarModSetVar('sitetools','defaultbktype',$defaultbktype);
 
+    if (xarModIsAvailable('scheduler')) {
+        if (!xarVarFetch('interval', 'isset', $interval, array(), XARVAR_NOT_REQUIRED)) return;
+        // for each of the functions specified in the template
+        foreach ($interval as $func => $howoften) {
+            // see if we have a scheduler job running to execute this function
+            $job = xarModAPIFunc('scheduler','user','get',
+                                 array('module' => 'sitetools',
+                                       'type' => 'scheduler',
+                                       'func' => $func));
+            if (empty($job) || empty($job['interval'])) {
+                if (!empty($howoften)) {
+                    // create a scheduler job
+                    xarModAPIFunc('scheduler','admin','create',
+                                  array('module' => 'sitetools',
+                                        'type' => 'scheduler',
+                                        'func' => $func,
+                                        'interval' => $howoften));
+                }
+            } elseif (empty($howoften)) {
+                // delete the scheduler job
+                xarModAPIFunc('scheduler','admin','delete',
+                              array('module' => 'sitetools',
+                                    'type' => 'scheduler',
+                                    'func' => $func));
+            } elseif ($howoften != $job['interval']) {
+                // update the scheduler job
+                xarModAPIFunc('scheduler','admin','update',
+                              array('module' => 'sitetools',
+                                    'type' => 'scheduler',
+                                    'func' => $func,
+                                    'interval' => $howoften));
+            }
+        }
+    }
+
     xarModCallHooks('module','updateconfig','sitetools',
                    array('module' => 'sitetools'));
 
