@@ -552,28 +552,28 @@
 </xar:sec>
 
 <xar:if condition="$post ne '1'">
-	<form action="#xarModUrl('comments', 'user', 'reply', array('tid' => $tid))#" method="post" name="post" id="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
-		<p>
-			<div class="xar-sub">
-				<xar:mlstring>
-					Quick Reply
-				</xar:mlstring>:
-			</div>
-			<textarea name='package[text]' rows='4' cols='60' wrap='virtual' id="packagetext" tabindex="2"></textarea>
-			<input type="hidden" name="package[title]" id="packagetitle" value="#xarVarPrepForDisplay($ttitle)#" />
-			<input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-			<input type="hidden" name="header[modid]" id="header-modid" value="#xarModGetIDFromName('xarbb')#" />
-			<input type="hidden" name="header[objectid]" id="header-objectid" value="#$tid#" />
-			<input type="hidden" name="header[pid]" id="header-pid" value="0" />
-			<input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid))#" />
-			<input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#rawurlencode(xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid)))#" />
-			<div>
-				<input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" tabindex="3" />
-				&nbsp;&nbsp; 
-				<input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" tabindex="4" />
-			</div>
-		</p>
-	</form>
+    <form action="#xarModUrl('comments', 'user', 'reply', array('tid' => $tid))#" method="post" name="post" id="post" onsubmit="return formCheck(this, fieldRequired, fieldDescription);">
+        <p>
+            <div class="xar-sub">
+                <xar:mlstring>
+                    Quick Reply
+                </xar:mlstring>:
+            </div>
+            <textarea name='package[text]' rows='4' cols='60' wrap='virtual' id="packagetext" tabindex="2"></textarea>
+            <input type="hidden" name="package[title]" id="packagetitle" value="#xarVarPrepForDisplay($ttitle)#" />
+            <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+            <input type="hidden" name="header[modid]" id="header-modid" value="#xarModGetIDFromName('xarbb')#" />
+            <input type="hidden" name="header[objectid]" id="header-objectid" value="#$tid#" />
+            <input type="hidden" name="header[pid]" id="header-pid" value="0" />
+            <input type="hidden" name="receipt[returnurl][decoded]" id="receipt-returnurl-decoded" value="#xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid))#" />
+            <input type="hidden" name="receipt[returnurl][encoded]" id="receipt-returnurl-encoded" value="#rawurlencode(xarModUrl('xarbb', 'user', 'updatetopic', array('tid' => $tid)))#" />
+            <div>
+                <input type="submit" name="receipt[action]" id="receipt-action-preview" value="preview" tabindex="3" />
+                &nbsp;&nbsp; 
+                <input type="submit" name="receipt[action]" id="receipt-action-submit" value="submit" tabindex="4" />
+            </div>
+        </p>
+    </form>
 </xar:if>
 
 <xar:if condition="!empty($hooks) and count($hooks) gt 0">
