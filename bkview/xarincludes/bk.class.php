@@ -54,6 +54,7 @@ class bkRepo {
         
         $out=array();$retval='';
         $out = shell_exec($cmd);
+        xarLogMessage("BK: $cmd");
         $out = str_replace("\r\n","\n",$out);
         $out = explode("\n", $out);
         $out = array_filter($out,'notempty');
@@ -224,8 +225,17 @@ class bkRepo {
         $result = array();
         switch($what_to_search) {
         case BK_SEARCH_CSET:
-            $cmd = "bk prs -h -d'\$unless(:MERGE:){\$each(:C:){:I:|(:C:)}\n}' | grep $term";
+            $cmd = "bk changes -nm -d'\$each(:C:){:I:|(:C:)}' -/".$term."/i";
             break;
+        case BK_SEARCH_DELTAS:
+            // FIXME: the grep should only be on the comments of the delta, not on the rest
+            $cmd = "bk sfind -U | prs -h -d'\$each(:C:){:GFILE:|:I:|(:C:)}\n' - | grep '$term'";
+            break;
+        case BK_SEARCH_FILE:
+            $cmd = "bk sfind -U | bk grep -a -r+ -fm '$term' -";
+            break;
+        default: 
+            return array();
         }
         $result = $this->_run($cmd);
         return $result;
