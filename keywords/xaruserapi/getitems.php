@@ -15,6 +15,8 @@
  *
  * @param $args['id'] id(s) of the keywords entry(ies), or
  * @param $args['keyword'] keyword
+ * @param $args['modid'] modid
+ * @param $args['itemtype'] itemtype
  * @param $args['numitems'] number of entries to retrieve (optional)
  * @param $args['startnum'] starting number (optional)
  * @returns array
@@ -24,7 +26,7 @@
 function keywords_userapi_getitems($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
-    
+
     extract($args);
 
     if (!empty($id)) {
@@ -51,10 +53,10 @@ function keywords_userapi_getitems($args)
 
     // Get module item for this id
     $query = "SELECT xar_id,
+                     xar_itemid,
                      xar_keyword,
                      xar_moduleid,
-                     xar_itemtype,
-                     xar_itemid
+                     xar_itemtype
               FROM $keywordstable";
     if (!empty($id)) {
         if (is_array($id)) {
@@ -63,9 +65,15 @@ function keywords_userapi_getitems($args)
             $query .= " WHERE xar_id = '" . xarVarPrepForStore($id) . "'";
         }
     } else {
-        $query .= " WHERE xar_keyword = '" . xarVarPrepForStore($keyword) . "'
-                     ORDER BY xar_moduleid ASC, xar_itemtype ASC, xar_itemid DESC";
+        $query .= " WHERE xar_keyword = '" . xarVarPrepForStore($keyword) . "'";
     }
+    if (!empty($itemid) && is_numeric($itemid) ) {
+        $query .= " AND xar_itemid = '".xarVarPrepForStore($itemid) ."'";
+    }
+     if (!empty($itemtype) && is_numeric($itemtype) ) {
+        $query .= " AND xar_itemtype = '".xarVarPrepForStore($itemtype) ."'";
+    }
+    $query .= " ORDER BY xar_moduleid ASC, xar_itemtype ASC, xar_itemid DESC";
 
     if (isset($numitems) && is_numeric($numitems)) {
         if (empty($startnum)) {
@@ -85,10 +93,10 @@ function keywords_userapi_getitems($args)
     while (!$result->EOF) {
         $item = array();
         list($item['id'],
+             $item['itemid'],
              $item['keyword'],
              $item['moduleid'],
-             $item['itemtype'],
-             $item['itemid']) = $result->fields;
+             $item['itemtype']) = $result->fields;
         $items[$item['id']] = $item;
         $result->MoveNext();
     }

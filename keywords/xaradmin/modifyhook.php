@@ -154,12 +154,11 @@ function keywords_admin_modifyhook($args)
                                  'itemtype' => $itemtype,
                                  'itemid' => $itemid));
         
-        
-        
                 $keywords1 = xarModAPIFunc('keywords',
-                                'admin',
-                                'getallkey',
-                                 array('moduleid' => $modid));
+                                'user',
+                                'getwordslimited',
+                                 array('moduleid' => $modid,
+				 'itemtype' => $itemtype));
                                  
        
                         $wordlist=array_diff($keywords1,$keywords);

@@ -22,7 +22,7 @@
 function keywords_userapi_getwordslimited($args)
 {
     if (!xarSecurityCheck('ReadKeywords')) return;
-	
+
     extract($args);
 
     if (!isset($moduleid) || !is_numeric($moduleid)) {
@@ -35,29 +35,35 @@ function keywords_userapi_getwordslimited($args)
     }
 
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
-
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
     $keywordstable = $xartable['keywords_restr'];
 
     // Get restricted keywords for this module item
     $query = "SELECT xar_id,
                      xar_keyword
               FROM $keywordstable
-              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid) . "
-              ORDER BY xar_keyword ASC";
-    
-    
-        $result =& $dbconn->Execute($query);
-    
+              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid);
+    if (isset($itemtype)) {
+              $query .= " AND xar_itemtype = ". xarVarPrepForStore($itemtype);
+    }
+    $query .= " ORDER BY xar_keyword ASC";
+    $result =& $dbconn->Execute($query);
     if (!$result) return;
-
+    if ($result->EOF) {
+        $result->Close();
+        $query = "SELECT xar_id,
+                     xar_keyword
+              FROM $keywordstable
+              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid) . " ORDER BY xar_keyword ASC";
+        $result =& $dbconn->Execute($query);
+    }
     $keywords = array();
-    
+
     while (!$result->EOF) {
         list($id,
              $word) = $result->fields;
-        $keywordwords[$id] = $word;
+        $keywords[$id] = $word;
         $result->MoveNext();
     }
     $result->Close();

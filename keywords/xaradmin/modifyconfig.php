@@ -57,7 +57,8 @@ function keywords_admin_modifyconfig()
                          $keywords = xarModAPIFunc('keywords',
                                                    'admin',
                                                    'getwordslimited',
-                                                   array('moduleid' => $moduleid));
+                                                   array('moduleid' => $moduleid,
+						   	 'itemtype' => $itemtype));
 
 
                     if (isset($mytypes[$itemtype])) {

@@ -32,22 +32,27 @@ function keywords_admin_updateconfig()
 
     if (isset($keywords) && is_array($keywords)) {
 
-    xarModAPIFunc('keywords',
-                  'admin',
-                  'resetlimited');
+    	xarModAPIFunc('keywords',
+                      'admin',
+                      'resetlimited');
 
-    foreach ($keywords as $modname => $value) {
-        if ($modname == 'default') {
-            $moduleid='0';
-        } else {
-            $moduleid = xarModGetIDFromName($modname,'module');
+        foreach ($keywords as $modname => $value) {
+            if ($modname == 'default') {
+                $moduleid='0';
+		$itemtype = '0';
+            } else {
+		$moduleitem = explode(".", $modname);
+                $moduleid = xarModGetIDFromName($moduleitem[0],'module');
+		if (isset($moduleitem[1]) && is_numeric($moduleitem[1])) $itemtype = $moduleitem[1];
+		else $itemtype = 0;
             }
-         if ($value <> '') {
-             xarModAPIFunc('keywords',
-                           'admin',
-                           'limited',
-                            array('moduleid' => $moduleid,
-                                  'keyword'  => $value));
+            if ($value <> '') {
+                xarModAPIFunc('keywords',
+                              'admin',
+                              'limited',
+                              array('moduleid' => $moduleid,
+                                    'keyword'  => $value,
+				    'itemtype' => $itemtype));
             } 
         } 
     } 

@@ -22,7 +22,10 @@ $invalid = array();
     } 
     if (!isset($keyword) || !is_string($keyword)) {
         $invalid[] = 'keyword';
-    } 
+    }
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+        $invalid[] = 'itemtype';
+    }
     if (count($invalid) > 0) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
             join(', ', $invalid), 'admin', 'update limited', 'Keywords');
@@ -49,11 +52,13 @@ $invalid = array();
  $query = "INSERT INTO $keywordstable (
               xar_id,
               xar_keyword,
-              xar_moduleid)
+              xar_moduleid,
+	      xar_itemtype)
               VALUES (
               $nextId,
               '" . xarVarPrepForStore($keyres) . "',
-              " . xarvarPrepForStore($moduleid) . ")";
+              " . xarvarPrepForStore($moduleid) . ",
+	      " . xarVarPrepForStore($itemtype) . ")";
     $result = &$dbconn->Execute($query); 
     if (!$result) return; 
 }

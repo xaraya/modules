@@ -139,9 +139,10 @@ function keywords_admin_newhook($args)
 
      if ($restricted == '1') {
       $keywords = xarModAPIFunc('keywords',
-                               'admin',
-                               'getallkey',
-                               array('moduleid' => $modid));
+                               'user',
+                               'getwordslimited',
+                               array('moduleid' => $modid,
+			       	     'itemtype' => $itemtype));
      }
 
    

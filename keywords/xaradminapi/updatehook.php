@@ -71,7 +71,7 @@ function keywords_adminapi_updatehook($args)
         return $extrainfo;
     }
 
-    if (!empty($extrainfo['itemtype'])) {
+    if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
         $itemtype = $extrainfo['itemtype'];
     } else {
         $itemtype = 0;

@@ -14,6 +14,7 @@
  * get entries for a module item
  *
  * @param $args['modid'] module id
+ * @param $args['itemtype'] itemtype
  * @returns array
  * @return array of keywords
  * @raise BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
@@ -36,8 +37,11 @@ function keywords_adminapi_getwordslimited($args)
     $query = "SELECT xar_id,
                      xar_keyword
               FROM $keywordstable
-              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid) . "
-              ORDER BY xar_keyword ASC";
+              WHERE xar_moduleid = " . xarVarPrepForStore($moduleid);
+    if (isset($itemtype)) {
+	      $query .= " AND xar_itemtype = ". xarVarPrepForStore($itemtype);
+    }
+    $query .= " ORDER BY xar_keyword ASC";
     $result =& $dbconn->Execute($query);
     if (!$result) return;
     $keywords = array();

@@ -74,7 +74,7 @@ function keywords_init()
     $query = xarDBCreateIndex($keywordstable,$index);
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-   
+
 
     $query = xarDBCreateTable($xartable['keywords_restr'],
                              array('xar_id'         => array('type'        => 'integer',
@@ -89,6 +89,10 @@ function keywords_init()
                                    'xar_moduleid'   => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
+                                                            'default'     => '0'),
+                                  'xar_itemtype'   => array('type'        => 'integer',
+                                                            'unsigned'    => true,
+                                                            'null'        => false,
                                                             'default'     => '0')
                                   ));
 
@@ -97,7 +101,7 @@ function keywords_init()
     // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
     $result = &$dbconn->Execute($query);
     if (!$result) return;
-    
+
      // avoid duplicate keywords for the same module item
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_keywords',
@@ -141,7 +145,7 @@ function keywords_init()
                            'keywords', 'user', 'displayhook')) {
         return false;
     }
-    
+
     if (!xarModRegisterHook('item', 'search', 'GUI',
                            'keywords', 'user', 'search')) {
         return;
@@ -153,6 +157,17 @@ function keywords_init()
         return false;
     }
 */
+    // Register blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'keywords',
+                             'blockType'=> 'keywordsarticles'))) return;
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'register_block_type',
+                       array('modName'  => 'keywords',
+                             'blockType'=> 'keywordscategories'))) return;
 
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
@@ -214,11 +229,34 @@ function keywords_upgrade($oldversion)
                 // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
                 $result = &$dbconn->Execute($query);
                 if (!$result) return;
-                
-                 if (!xarModRegisterHook('item', 'search', 'GUI',
-                           'keywords', 'user', 'search')) {
-        return;
-    }
+
+                if (!xarModRegisterHook('item', 'search', 'GUI',
+                        'keywords', 'user', 'search')) {
+                    return;
+                }
+                return keywords_upgrade('1.0.2');
+            break;
+        case '1.0.2':
+            //Alter table restr to add itemtype
+            // Get database information
+            $dbconn =& xarDBGetConn();
+            $xartable =& xarDBGetTables();
+
+            $query = "ALTER TABLE $xartable[keywords_restr]
+                        ADD COLUMN xar_itemtype integer NOT NULL";
+            $result =& $dbconn->Execute($query);
+            if (!$result) return;
+            // Register blocks
+            if (!xarModAPIFunc('blocks',
+                    'admin',
+                    'register_block_type',
+                    array('modName'  => 'keywords',
+                            'blockType'=> 'keywordsarticles'))) return;
+            if (!xarModAPIFunc('blocks',
+                    'admin',
+                    'register_block_type',
+                    array('modName'  => 'keywords',
+                            'blockType'=> 'keywordscategories'))) return;
 
             break;
         case '2.0.0':
@@ -285,13 +323,13 @@ function keywords_delete()
                            'keywords', 'admin', 'deletehook')) {
         return false;
     }
-    
+
     if (!xarModUnregisterHook('item', 'search', 'GUI',
                               'keywords', 'user', 'search')) {
         return;
     }
-    
-    
+
+
     // when a whole module is removed, e.g. via the modules admin screen
     // (set object ID to the module name !)
     if (!xarModUnregisterHook('module', 'remove', 'API',
@@ -306,15 +344,26 @@ function keywords_delete()
     if (!xarModUnregisterHook('item', 'usermenu', 'GUI',
             'keywords', 'user', 'usermenu')) {
         return false;
-    } 
+    }
 */
+    // Unregister blocks
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'keywords',
+                             'blockType'=> 'keywordsarticles'))) return;
+    if (!xarModAPIFunc('blocks',
+                       'admin',
+                       'unregister_block_type',
+                       array('modName'  => 'keywords',
+                             'blockType'=> 'keywordscategories'))) return;
 
     // Remove Masks and Instances
     xarRemoveMasks('keywords');
-    xarRemoveInstances('keywords'); 
+    xarRemoveInstances('keywords');
 
     // Deletion successful
     return true;
-} 
+}
 
 ?>
