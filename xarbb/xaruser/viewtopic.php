@@ -18,7 +18,7 @@ include 'includes/xarDate.php';
 function xarbb_user_viewtopic()
 {
    // Get parameters from whatever input we need
-    if(!xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED)) return;
+    if(!xarVarFetch('startnum', 'id', $startnum,1, XARVAR_NOT_REQUIRED)) return;
     if(!xarVarFetch('tid', 'id', $tid)) return;
 
     //$tid = xarVarCleanFromInput('tid');
@@ -38,7 +38,7 @@ function xarbb_user_viewtopic()
     //                          array('tid' => $tid));
 
     $data['pager'] = '';
-    
+
     list($data['transformedtext'],
          $data['transformedtitle']) = xarModCallHooks('item',
                                                       'transform',
