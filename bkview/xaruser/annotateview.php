@@ -29,6 +29,14 @@ function bkview_user_annotateview($args)
     $repo =& $item['repo'];
 
     $delta = new bkDelta($repo, $file, $rev);
+    if(xarModIsAvailable('mime') && $delta->checkedout) {
+        $mime_type = xarModAPIFunc('mime','user','analyze_file',array('fileName' => $delta->repo->_root . '/' . $delta->file));
+        $delta->icon = xarModApiFunc('mime','user','get_mime_image',array('mimeType' => $mime_type));
+    } else {
+        $delta->icon = xarTplGetImage('file.gif','bkview');
+    }
+    $delta->repoid = $repoid;
+    $data['delta'] = (array) $delta;
     $annotate = $delta->bkAnnotate();
     $annolines =array();
     $data['annolines']=array();

@@ -36,7 +36,7 @@ function bkview_user_deltaview($args)
     
     // This creates a property array with the deltas in the cset in the cset object
     $changeset= new bkChangeSet($repo,$rev);
-    $dlist = $changeset->bkDeltaList();
+    $dlist = $changeset->deltas;
     if(!empty($dlist)) {
         foreach($dlist as $delta_id => $delta) {
             // Repo id is a xaraya thing, add it sneaky to the object because we dont
@@ -82,21 +82,21 @@ function bkview_user_deltaview($args)
     // FIXME: this sucks
     $data['pageinfo']=xarML("Changeset details for #(1)",$rev);
     $data['rev']=$rev;
-    $data['author'] = $changeset->bkGetAuthor();
-    $data['comments'] = $changeset->bkGetComments();
-    $data['key'] = $changeset->bkGetKey();
-    $data['tag'] = $changeset->bkGetTag();
+    $data['author'] = $changeset->author;
+    $data['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
+    $data['key'] = $changeset->key;
+    $data['tag'] = $changeset->tag;
     $data['repoid']=$repoid;
     $data['name_value']=$item['reponame'];
     $data['hooks'] = $hooks;
     $data['cset']['file'] = 'ChangeSet';
     $data['cset']['rev'] = $rev;
     $data['cset']['repoid'] = $repoid;
-    $data['cset']['age'] = $changeset->bkGetAge();
-    $data['cset']['range'] = bkAgeToRangeCode($changeset->bkGetAge());
-    $data['cset']['author'] = $changeset->bkGetAuthor();
+    $data['cset']['age'] = $changeset->age;
+    $data['cset']['range'] = bkAgeToRangeCode($changeset->age);
+    $data['cset']['author'] = $changeset->author;
     $data['cset']['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
-    $data['cset']['tag'] = $changeset->bkGetTag();
+    $data['cset']['tag'] = $changeset->tag;
     return $data;
 }
 

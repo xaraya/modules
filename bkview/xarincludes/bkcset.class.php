@@ -16,9 +16,9 @@
  */
 class bkChangeSet extends bkDelta
 {
-    var $deltas;   // array of file/rev combos which hold the deltas in this cset
-    var $tag;      // tag, if any
-    var $key;      // cset key
+    var $deltas = array();   // array of file/rev combos which hold the deltas in this cset
+    var $tag    = '';        // tag, if any
+    var $key    = '';        // cset key
     
     function bkChangeset($repo,$rev='+') 
    {
@@ -28,43 +28,27 @@ class bkChangeSet extends bkDelta
         $this->key = $this->bkGetKey();
         
         // Fill delta array with identification of deltas
-        $this->deltas=NULL;
-        $this->_deltas();
+        $this->deltas=$this->bkDeltaList();
    }
     
     // Private function to initialize delta array
-    function _deltas() 
+    function bkDeltaList() 
    {
         $cmd="bk changes -vn -r".$this->rev." -d':GFILE:|:REV:'";
         $tmp = $this->repo->_run($cmd);
         while (list(,$did) = each($tmp)) {
             list($file,$rev) = explode('|',$did);
             if (strtolower($file)!="changeset") {
-                $this->deltas[$did]=new bkDelta($this->repo,$file,$rev);
+                $deltas[$did]=new bkDelta($this->repo,$file,$rev);
             }
         }
+        return $deltas;
    }
-    
-    function bkDeltaList() 
-   {
-        return $this->deltas;
-   }
-    
     
     function bkDeltas($formatstring="':GFILE:|:REV:'") 
    {
         $cmd="bk changes -vn -r".$this->rev." -d$formatstring";
         return $this->repo->_run($cmd);
-   }
-    
-    function bkRev() 
-   {
-        return $this->rev;
-   }
-    
-    function bkGetAuthor()
-   {
-        return $this->author;
    }
     
     function bkGetComments()
@@ -92,11 +76,6 @@ class bkChangeSet extends bkDelta
         } else {
             return '';
         }
-   }
-    
-    function bkGetAge()
-   {
-        return $this->age;
    }
 }
 ?>

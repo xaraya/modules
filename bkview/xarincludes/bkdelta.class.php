@@ -59,16 +59,6 @@ class bkDelta
         $cmd="bk annotate -aum -r".$this->rev." ".$this->file;
         return $this->repo->_run($cmd);
    }
-    
-    function bkFile() 
-   {
-        return $this->file;
-   }
-    
-    function bkRev() 
-   {
-        return $this->rev;
-   }
 }
 
 ?>

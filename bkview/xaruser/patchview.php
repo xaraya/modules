@@ -42,7 +42,7 @@ function bkview_user_patchview($args)
         $delta = new bkDelta($repo, $file, $deltarev);
         $dlist[$deltarev] = $delta;
     } else {
-        $dlist = $changeset->bkDeltaList();
+        $dlist = $changeset->deltas;
     }
     
     if(!is_null($dlist)) {
@@ -85,11 +85,11 @@ function bkview_user_patchview($args)
     $data['cset']['file'] = 'ChangeSet';
     $data['cset']['repoid'] = $repoid;
     $data['cset']['rev'] = $rev;
-    $data['cset']['age'] = $changeset->bkGetAge();
-    $data['cset']['range'] = bkAgeToRangeCode($changeset->bkGetAge());
-    $data['cset']['author'] = $changeset->bkGetAuthor();
+    $data['cset']['age'] = $changeset->age;
+    $data['cset']['range'] = bkAgeToRangeCode($changeset->age);
+    $data['cset']['author'] = $changeset->author;
     $data['cset']['comments'] = nl2br(xarVarPrepForDisplay($changeset->bkGetComments()));
-    $data['cset']['tag'] = $changeset->bkGetTag();
+    $data['cset']['tag'] = $changeset->tag;
     return $data;
 }
 

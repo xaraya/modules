@@ -49,11 +49,9 @@ function bkview_user_relatedview($args)
         $csets[$counter]['age']=$age;
         $csets[$counter]['author']=$author;
         $csets[$counter]['rev']=$rev;
-        $csets[$counter]['comments']=$comments;
+        $csets[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $csets[$counter]['repoid'] = $repoid;
         $csets[$counter]['range'] = bkAgeToRangeCode($age);
-        // $comments=str_replace("<br />","\n",$comments);
-        // nl2br(htmlspecialchars($comments))
         $counter++;
     }
     
