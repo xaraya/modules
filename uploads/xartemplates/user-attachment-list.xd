@@ -5,14 +5,20 @@
         <xar:set name="$stylesheet">xarTplAddStyleLink('uploads', 'uploads')</xar:set>
 
         <xar:loop name="$Attachments">
-            <div class="xar-uploads-icon">
+            <xar:if condition="isset($style) AND $style eq 'icon'">
+                <div class="xar-uploads-icon">
+                    <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
+                            <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
+                            #$loop:item['fileName']#
+                    </a>
+                </div>
+            <xar:else />
                 <a href="#$loop:item['fileDownload']#" alt="#$loop:item['fileName']#" title="#$loop:item['DownloadLabel']#">
-                        <img src="#$loop:item['mimeImage']#" alt="#$loop:item['fileType']#" />
-                        #$loop:item['fileName']#
+                    #$loop:item['fileName']#
                 </a>
-            </div>
+                <br />
+            </xar:if>
         </xar:loop>
         <div class="xar-uploads-clearer">&nbsp;</div>
     </xar:if>
 </xar:if>
-
