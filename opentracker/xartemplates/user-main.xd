@@ -63,23 +63,23 @@
     </td>
   </tr>
   <xar:loop name="$statisticitems">
-	<tr valign="baseline">
-	  <td align="left" class="xar-alt xar-mod-title" style="border-width: 0px 0px 1px 0px;">
-	    <xar:if condition="isset($loop:item['href'])"><a href="#$loop:item['href']#" class="xar-mod-title"></xar:if>#$loop:item['displayname']#<xar:if condition="$loop:item['href']"></a></xar:if>
-	  </td>
-	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 0px;">
-	    #$loop:item['pi_number']#
-	  </td>
-	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 1px;">
-	    #$loop:item['pi_percent']#%
-	  </td>
-	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 1px;">
-	    #$loop:item['visitors_number']#
-	  </td>
-	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 1px 1px 1px;">
-	    #$loop:item['visitors_percent']#%
-	  </td>
-	</tr>
+    <tr valign="baseline">
+      <td align="left" class="xar-alt xar-mod-title" style="border-width: 0px 0px 1px 0px;">
+        <xar:if condition="isset($loop:item['href'])"><a href="#$loop:item['href']#" class="xar-mod-title"></xar:if>#$loop:item['displayname']#<xar:if condition="$loop:item['href']"></a></xar:if>
+      </td>
+      <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 0px;">
+        #$loop:item['pi_number']#
+      </td>
+      <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 1px;">
+        #$loop:item['pi_percent']#%
+      </td>
+      <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 1px;">
+        #$loop:item['visitors_number']#
+      </td>
+      <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 1px 1px 1px;">
+        #$loop:item['visitors_percent']#%
+      </td>
+    </tr>
   </xar:loop>
 </table>
 
@@ -106,20 +106,20 @@
   </tr>
   <xar:if condition="is_array($loop:item['top_items'])">
     <xar:loop name="$loop:item['top_items']">
-		<tr valign="baseline">
-		  <td align="left" class="xar-alt">
-		    #$loop:item['rank']#
-		  </td>
-		  <td align="left" width="10%" class="xar-norm-outline" style="border-width: 0px 1px 1px 0px;">
-		    #$loop:item['count']#
-		  </td>
-		  <td align="left" width="10%" class="xar-norm-outline"  style="border-width: 0px 1px 1px 0px;">
-		    #$loop:item['percent']#%
-		  </td>
-		  <td align="left" class="xar-norm-outline"  style="border-width: 0px 1px 1px 0px;">
-		    #$loop:item['string']#
-		  </td>
-		</tr>
+        <tr valign="baseline">
+          <td align="left" class="xar-alt">
+            #$loop:item['rank']#
+          </td>
+          <td align="left" width="10%" class="xar-norm-outline" style="border-width: 0px 1px 1px 0px;">
+            #$loop:item['count']#
+          </td>
+          <td align="left" width="10%" class="xar-norm-outline"  style="border-width: 0px 1px 1px 0px;">
+            #$loop:item['percent']#%
+          </td>
+          <td align="left" class="xar-norm-outline"  style="border-width: 0px 1px 1px 0px;">
+            #$loop:item['string']#
+          </td>
+        </tr>
   </xar:loop>
   </xar:if>
 </table>
