@@ -1,0 +1,227 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<script language="JavaScript">
+<!--
+	// Enter name of mandatory fields
+	var pmember_fieldRequired = Array("adminname", "adminmail");
+	// Enter field description to appear in the dialog box
+	var pmember_fieldDescription = Array("Admin Name", "Admin Email");
+//-->
+</script>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Paid Membership Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Paid Membership Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+<form method="post" action="#xarModUrl('pmember', 'admin', 'modifyconfig')#" method="post" onsubmit="return xar_base_formCheck(this, mail_fieldRequired, mail_fieldDescription);" enctype="application/x-www-form-urlencoded" >
+
+		<div style="clear: both; padding-top: 10px;">
+		<input type="hidden" name="authid" id="authid" value="#$authid#" />
+		<input type="hidden" name="phase" id="phase" value="update" />
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('The default group to place the members that pay for membership')#"><label for="defaultgroup"><xar:mlstring>Default Group</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<select name="defaultgroup" id="defaultgroup">
+			<xar:loop name="$groups">
+				<xar:if condition="$loop:item['name'] eq $defaultgroup">
+					<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#" selected="selected">#$loop:item['name']#</option>
+				<xar:else />
+					<option name="#$loop:item['name']#" id="#$loop:item['name']#" value="#$loop:item['name']#">#$loop:item['name']#</option>
+				</xar:if>
+			</xar:loop>
+			</select>
+		</span>
+		</div>
+
+		<div style="clear: both; padding-top: 10px;">
+		<span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Use a subscription basis or one time fee')#"><label for="type"><xar:mlstring>Type of Payment Schedule</xar:mlstring></label>:</span>
+		</span>
+		<span style="float: right; width: 78%; text-align: left;">
+			<xar:if condition="$typeoffee eq 'subscription'">
+				<xar:mlstring>
+				    Subscription
+				</xar:mlstring> <input type="radio" name="typeoffee" value="subscription" checked> 
+				<xar:mlstring>
+				    One time fee
+				</xar:mlstring> <input type="radio" name="typeoffee" value="fee"> 
+			<xar:else />
+				<xar:mlstring>
+				    Subscription
+				</xar:mlstring> <input type="radio" name="typeoffee" value="subscription"> 
+				<xar:mlstring>
+				    One time fee
+				</xar:mlstring> <input type="radio" name="typeoffee" value="fee" checked>
+			</xar:if>
+		</span>
+		</div>
+
+		<xar:if condition="$typeoffee eq 'subscription'">
+			<div style="clear: both; padding-top: 10px;">
+			<span style="float: left; width: 20%; text-align: right;">
+				<span class="help" title="#xarML('Price for subscription.')#"><label for="price"><xar:mlstring>Price for Subscription</xar:mlstring></label>:</span>
+			</span>
+			<span style="float: right; width: 78%; text-align: left;">
+				$ <input type="text" name="price" id="price" value="#$price#" size="10" maxlength="10" />
+			</span>
+			</div>
+
+			<div style="clear: both; padding-top: 10px;">
+			<span style="float: left; width: 20%; text-align: right;">
+				<span class="help" title="#xarML('This is the amount of time you wish to have the subscription set to in periods.  IE every month you will select Month and place a 1 in the time field below.')#"><label for="period"><xar:mlstring>Time Period</xar:mlstring></label>:</span>
+			</span>
+			<span style="float: right; width: 78%; text-align: left;">
+				<xar:if condition="$period eq 'D'">
+					<xar:mlstring>
+						Day
+					</xar:mlstring> <input type="radio" name="period" value="D" checked> 
+					<xar:mlstring>
+						Week
+					</xar:mlstring> <input type="radio" name="period" value="W"> 
+					<xar:mlstring>
+						Month
+					</xar:mlstring> <input type="radio" name="period" value="M"> 
+					<xar:mlstring>
+						Year
+					</xar:mlstring> <input type="radio" name="period" value="Y">
+				<xar:elseif condition="$period eq 'W'" />
+					<xar:mlstring>
+						Day
+					</xar:mlstring> <input type="radio" name="period" value="D"> 
+					<xar:mlstring>
+						Week
+					</xar:mlstring> <input type="radio" name="period" value="W" checked> 
+					<xar:mlstring>
+						Month
+					</xar:mlstring> <input type="radio" name="period" value="M"> 
+					<xar:mlstring>
+						Year
+					</xar:mlstring> <input type="radio" name="period" value="Y">
+				<xar:elseif condition="$period eq 'M'" />
+					<xar:mlstring>
+						Day
+					</xar:mlstring> <input type="radio" name="period" value="D"> 
+					<xar:mlstring>
+						Week
+					</xar:mlstring> <input type="radio" name="period" value="W"> 
+					<xar:mlstring>
+						Month
+					</xar:mlstring> <input type="radio" name="period" value="M" checked> 
+					<xar:mlstring>
+						Year
+					</xar:mlstring> <input type="radio" name="period" value="Y">
+				<xar:else />
+					<xar:mlstring>
+						Day
+					</xar:mlstring> <input type="radio" name="period" value="D"> 
+					<xar:mlstring>
+						Week
+					</xar:mlstring> <input type="radio" name="period" value="W"> 
+					<xar:mlstring>
+						Month
+					</xar:mlstring> <input type="radio" name="period" value="M"> 
+					<xar:mlstring>
+						Year
+					</xar:mlstring> <input type="radio" name="period" value="Y" checked>
+				</xar:if>
+			</span>
+			</div>
+
+			<div style="clear: both; padding-top: 10px;">
+			<span style="float: left; width: 20%; text-align: right;">
+				<span class="help" title="#xarML('The amount of time between periods, IE 30 if you want 30 days.')#"><label for="time"><xar:mlstring>Time Between Periods</xar:mlstring></label>:</span>
+			</span>
+			<span style="float: right; width: 78%; text-align: left;">
+				<input type="text" name="time" id="time" value="#$time#" size="5" maxlength="5" />
+			</span>
+			</div>
+		<xar:else />
+			<div style="clear: both; padding-top: 10px;">
+			<span style="float: left; width: 20%; text-align: right;">
+				<span class="help" title="#xarML('Price for subscription.')#"><label for="price"><xar:mlstring>Price for one time fee</xar:mlstring></label>:</span>
+			</span>
+			<span style="float: right; width: 78%; text-align: left;">
+				$ <input type="text" name="price" id="price" value="#$price#" size="10" maxlength="10" />
+			</span>
+			</div>
+		</xar:if>
+
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+				<span class="help" title="#xarML('Message to display in the account details.  HTML allowed')#">
+					 <label for="message"><xar:mlstring>Benefits of subscription</xar:mlstring></label>:
+				</span>
+			</span>
+			<span style="float: right; width: 78%; text-align: left;">
+				<textarea name="benefits" id="benefits" rows="20" cols="60">#$benefits#</textarea>
+			</span>
+		 </div>
+
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+				<span class="help" title="#xarML('Message to send as a thank you note')#">
+					 <label for="message"><xar:mlstring>Thank You Message</xar:mlstring></label>:
+				</span>
+			</span>
+			<span style="float: right; width: 78%; text-align: left;">
+				<textarea name="message" id="message" rows="20" cols="60">#$message#</textarea>
+			</span>
+		 </div>
+		<div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Your Site Name')#">
+			<h3>
+			<xar:mlstring>
+			    Variables available for Email Message
+			</xar:mlstring></h3></span>
+		    </span>
+		</div>
+		
+		<div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Your Site Name')#">%%sitename%%</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;"><xar:mlstring>Name of the site</xar:mlstring></span>
+		 </div>
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Your Name')#">%%siteadmin%%</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;"><xar:mlstring>Name of the administrator</xar:mlstring></span>
+		 </div>
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Your Email')#">%%adminmail%%</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;"><xar:mlstring>Email address of the administrator</xar:mlstring></span>
+		 </div>
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Your URL')#">%%siteurl%%</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;"><xar:mlstring>URL of the site</xar:mlstring>(#xarServerGetBaseURL()#)</span>
+		 </div>
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('Name of the user')#">%%name%%</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;"><xar:mlstring>Name of the user</xar:mlstring></span>
+		 </div>
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('User name of the user')#">%%username%%</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;"><xar:mlstring>Username of the user</xar:mlstring></span>
+		 </div>
+		 <div style="clear: both; padding-top: 10px;">
+		    <span style="float: left; width: 20%; text-align: right;">
+			<span class="help" title="#xarML('The users email address')#">%%useremail%%</span>
+		    </span>
+		    <span style="float: right; width: 78%; text-align: left;"><xar:mlstring>Email address of the user</xar:mlstring></span>
+		 </div>
+
+
+		<div style="float: left; width: 30%; text-align: right; margin-top: 5px;">
+			<input type="submit" value="#$submitlabel#" />
+		</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,53 @@
+<xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Paid Membership Administration</xar:mlstring></span></div>
+<div class="xar-mod-body">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="padding: 1px;" class="xar-norm-outline">
+        <div style="float:right;padding:10px;">
+            <xar:if condition="file_exists('modules/pmember/xarimages/admin.gif')" >
+                <img src="modules/pmember/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+            <xar:else />
+                <img src="modules/pmember/xarimages/admin_generic.gif" alt="official icon" width="96" height="96" />
+            </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>What is it?</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>The paid membership modules will work behind the scenes in managing your paid membership to your website.  It will take a confirmation from a credit card or money management service (tested against PayPal) and will upgrade the account of the user who paid.  It will also work behind the scenes with the scheduler module to downgrade subscriptions that are past the expiration date (need to install the scheduler for functionality).</xar:mlstring></p>
+		</div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>How to use it?</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>From the menu, you have two choices. </xar:mlstring></p>
+            <p><xar:mlstring>"Modify Configuration".  From this menu option, you can update the necessary configuration options, such as the type of payment (subscription or one time fee) and price of payment.</xar:mlstring></p>
+			<p><xar:mlstring>"View Subscriptions".  From this menu option you view the users who have paid, when they subscribed, and when their subscription will run out.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Scheduling deactivations</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:if condition="!xarModIsAvailable('scheduler')">
+                 <p><xar:mlstring>This will have no effect unless you install the 'scheduler' module first.</xar:mlstring></p>
+            <xar:else/>
+                 <p><xar:mlstring>You will want to trigger the module to look for expired subscriptions on at least a daily basis.</xar:mlstring></p>
+            </xar:if>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Blocks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+			<p><xar:mlstring>There are no blocks included at this time.</xar:mlstring></p>
+        </div>
+        <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
+            <p><xar:mlstring>Included Hooks</xar:mlstring></p>
+        </div>
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <p><xar:mlstring>User Menu hook is activated against the roles module to allow a user to subscribe to the website.</xar:mlstring></p>
+        </div>
+        <div class="xar-norm-outline xar-accent" style="text-align: center; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <p><xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring></p>
+        </div>
+    </div>
+</div>
