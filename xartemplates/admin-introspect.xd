@@ -17,7 +17,7 @@
 <xar:if condition="isset($listmethods)">
   <form action="&xar-modurl-xmlrpcsystemapi-admin-introspect;" method="post">
     <input type="hidden" name="listmethods" value="1"/>
-    <input type="hidden" name="methodhelp" value="1">
+    <input type="hidden" name="methodhelp" value="1"/>
     <div style="border: thin solid black; margin: 10pt; padding: 5pt;">
       <xar:mlstring>Methods available on this server:</xar:mlstring>
       <select name="method">
@@ -50,6 +50,7 @@
      </xar:foreach>
     )<br/>
   </xar:foreach>
+  </p>
 </xar:if>
 
 
