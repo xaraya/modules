@@ -1,5 +1,5 @@
 <?php
-// modules infomation file
+// pinup module: infomation file
 $modversion['name']           = 'Pinup';
 $modversion['id']             = '6969';
 $modversion['version']        = '2.00';
