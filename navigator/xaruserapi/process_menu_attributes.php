@@ -28,6 +28,12 @@ function navigator_userapi_process_menu_attributes( $args )
         return;
     }
 
+    if (isset($oneblock) && (strtoupper($oneblock) == 'TRUE' || strtoupper($oneblock) == 'YES')) {
+        $oneblock = TRUE;
+    } else {
+        $oneblock = FALSE;
+    }
+
     if (!isset($exclude) || empty($exclude)) {
         $exclude = array();
     } else {
@@ -158,6 +164,19 @@ function navigator_userapi_process_menu_attributes( $args )
         }
     }
 
+    if ($oneblock == TRUE) {
+        $first = TRUE;
+        foreach ($tree as $key => $item) {
+            if ($first) {
+                $first = FALSE;
+                continue;
+            } else {
+                if ($item['parent'] && $item['indent'] == 0) {
+                    unset($tree[$key]);
+                }
+            }
+        }
+    }
 
     $data['matrix']   = $matrix;
     $data['primary']  = $primary;
