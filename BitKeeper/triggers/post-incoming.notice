@@ -45,6 +45,7 @@ fi
 # Get the first changeset comment
 CSCOMMENT=`bk changes -r+ -d':C:'`
 
+echo "Sending notifications..."
 (
 echo Changes were applied by ${BKD_USER} to the ${REPO} level ${BKD_LEVEL} repository.
 
