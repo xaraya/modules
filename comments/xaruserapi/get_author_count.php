@@ -49,7 +49,7 @@ function comments_userapi_get_author_count($args)
 
     $sql = "SELECT  COUNT($ctable[cid]) as numitems
               FROM  $xartable[comments]
-             WHERE  ($ctable[author]=? AND $ctable[modid]=?)
+             WHERE  $ctable[author]=? AND $ctable[modid]=?
                AND  $ctable[status]=?";
     $bindvars = array((int) $author, (int) $modid, (int) $status);
 

@@ -44,14 +44,17 @@ function comments_userapi_get_count($args)
 
     $sql = "SELECT  COUNT($ctable[cid]) as numitems
               FROM  $xartable[comments]
-             WHERE  ($ctable[objectid]='$objectid' AND $ctable[modid]='$modid')
-               AND  $ctable[status]='"._COM_STATUS_ON."'";
+             WHERE  $ctable[objectid]=? AND $ctable[modid]=?
+               AND  $ctable[status]=?";
+// Note: objectid is not an integer here (yet ?)
+    $bindvars = array((string) $objectid, (int) $modid, (int) _COM_STATUS_ON);
 
     if (isset($itemtype) && is_numeric($itemtype)) {
-        $sql .= " AND $ctable[itemtype]='$itemtype'";
+        $sql .= " AND $ctable[itemtype]=?";
+        $bindvars[] = (int) $itemtype;
     }
 
-    $result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql,$bindvars);
     if (!$result)
         return;
 
