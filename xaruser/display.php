@@ -42,6 +42,31 @@ function xarpages_user_display($args)
         }
     }
 
+    // Security check on the page and page type.
+    $noprivspage = xarModGetVar('xarpages', 'noprivspage');
+    if (!empty($current_page) && !xarSecurityCheck(
+        'ReadPage', (empty($noprivspage) ? 1 : 0), 'Page',
+        $current_page['name'] . ':' . $current_page['pagetype']['name'], 'xarpages'
+    )) {
+        // If we don't have a special page reserved for handling lack of
+        // privileges, then return now with a generic error.
+        if (empty($noprivspage)) {return;}
+
+        // No privileges to read this page.
+        // Direct to a 'no privs' page, so an admin can notify the
+        // visitor of restricted areas of the site.
+        $current_page = NULL;
+        $pid = $noprivspage;
+
+        if (!empty($pid)) {
+            $current_page = xarModAPIfunc(
+                'xarpages', 'user', 'getpage',
+                array('pid' => $pid, 'status' => 'ACTIVE')
+            );
+//var_dump($current_page); die;
+        }
+    }
+
     if (empty($current_page)) {
         // Get the PID for the 'error' page.
         $pid = xarModGetVar('xarpages', 'errorpage');
@@ -182,9 +207,7 @@ function xarpages_user_display($args)
     // Use rolled-up page here so templates are inherited, i.e. so that setting a
     // template on a branch will apply to all pages within that branch, except
     // where sub-branches are explicitly over-ridden.
-    $content = xarTplModule('xarpages', 'page', $inherited['pagetype']['name'], $data, $inherited['template']);
-
-    return "$content";
+    return xarTplModule('xarpages', 'page', $inherited['pagetype']['name'], $data, $inherited['template']);
 }
 
 ?>

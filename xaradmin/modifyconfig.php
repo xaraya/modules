@@ -27,6 +27,7 @@ function xarpages_admin_modifyconfig()
         $data['defaultpage'] = xarModGetVar('xarpages', 'defaultpage');
         $data['errorpage'] = xarModGetVar('xarpages', 'errorpage');
         $data['notfoundpage'] = xarModGetVar('xarpages', 'notfoundpage');
+        $data['noprivspage'] = xarModGetVar('xarpages', 'noprivspage');
 
         $data['shorturl'] = xarModGetVar('xarpages', 'SupportShortURLs');
     } else {
@@ -36,7 +37,7 @@ function xarpages_admin_modifyconfig()
         if (!xarSecConfirmAuthKey()) {return;}
 
         // Get the special pages.
-        foreach(array('defaultpage', 'errorpage', 'notfoundpage') as $special_name) {
+        foreach(array('defaultpage', 'errorpage', 'notfoundpage', 'noprivspage') as $special_name) {
             unset($special_id);
             if (!xarVarFetch($special_name, 'id', $special_id, 0, XARVAR_NOT_REQUIRED)) {return;}
             xarModSetVar('xarpages', $special_name, $special_id);

@@ -112,6 +112,7 @@ function xarpages_init()
     xarModSetVar('xarpages', 'defaultpage', 0);
     xarModSetVar('xarpages', 'errorpage', 0);
     xarModSetVar('xarpages', 'notfoundpage', 0);
+    xarModSetVar('xarpages', 'noprivspage', 0);
 
     // Switch short URL support on by default, as that is largely
     // the purpose of this module.

@@ -86,6 +86,20 @@
                         </xar:loop>
                     </select>
                 </p>
+
+                <p class="param">
+                    <label for="noprivspage"><xar:mlstring>No privileges page</xar:mlstring></label>
+                    <select name="noprivspage" id="noprivspage">
+                        <option value="0"><xar:mlstring>-- None --</xar:mlstring></option>
+                        <xar:loop name="$tree.pages">
+                            <xar:if condition="$loop:item.pid eq $noprivspage">
+                                <option value="#$loop:item.pid#" selected="selected">#$loop:item.slash_separated#</option>
+                            <xar:else />
+                                <option value="#$loop:item.pid#">#$loop:item.slash_separated#</option>
+                            </xar:if>
+                        </xar:loop>
+                    </select>
+                </p>
             </fieldset>
 
             <xar:if condition="!empty($confighooks)">

@@ -28,6 +28,16 @@ function xarpages_admin_modifypage()
             array('pid' => $pid)
         );
 
+        // Check we have minimum privs to edit this page.
+        if (!xarSecurityCheck('EditPage', 1, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
+            return;
+        }
+
+        // Check the level of access we have. Are we allowed to rename or delete this page?
+        if (xarSecurityCheck('DeletePage', 0, 'Page', $data['page']['name'] . ':' . $data['page']['pagetype']['name'])) {
+            $data['delete_allowed'] = true;
+        }
+    
         $data['ptid'] = $data['page']['pagetype']['ptid'];
 
         // We need all pages, but with the current page tree pruned.
@@ -48,6 +58,11 @@ function xarpages_admin_modifypage()
         );
     } else {
         // Adding a new page
+
+        // Check we are allowed to create pages.
+        if (!xarSecurityCheck('AddPage', 1, 'Page', 'All')) {
+            return;
+        }
 
         if (!xarVarFetch('ptid', 'id', $ptid, 0, XARVAR_DONT_SET)) {return;}
         if (!xarVarFetch('insertpoint', 'id', $insertpoint, 0, XARVAR_DONT_SET)) {return;}
