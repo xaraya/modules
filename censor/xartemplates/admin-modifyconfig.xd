@@ -3,31 +3,8 @@
 <h2><xar:mlstring>Modify Configuration</xar:mlstring></h2>
 <form method="post" action="#xarModURL('censor', 'admin', 'updateconfig')#" method="post" enctype="application/x-www-form-urlencoded" />
     <input type="hidden" name="authid" value="#$authid#" />
-	<table border="0" width="100%">
-		<tr>
-			<td>
-				<table border="0" width="100%">
-					<tr align="left" valign="middle">
-						<td>
-							<xar:mlstring>Replace Censored Word with?</xar:mlstring>
-						</td>
-						<td>
-							<input type="text" name="replace" id="replace" value="#xarModGetVar('censor', 'replace')#" size="32" maxlength="100" tabindex="1" />
-						</td>
-					</tr>
-					<tr>
-						<td align="left" valign="middle">
-							<xar:mlstring>Items Per Page</xar:mlstring>
-						</td>
-						<td align="left" valign="middle">
-							<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('censor', 'itemsperpage')#" />
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<br /><br />
-	<input type="submit" value="<xar:mlstring>Update Censor Configuration</xar:mlstring>" align="middle" tabindex="3" />
+	<p><xar:mlstring>Replace Censored Word with?</xar:mlstring>&nbsp;&nbsp;<input type="text" name="replace" id="replace" value="#xarModGetVar('censor', 'replace')#" size="32" maxlength="100" tabindex="1" /></p>
+	<p><xar:mlstring>Items Per Page</xar:mlstring>&nbsp;&nbsp;<input type="text" name="itemsperpage" id="itemsperpage" size="3" maxlength="3" value="#xarModGetVar('censor', 'itemsperpage')#" /></p>
+	<p><input type="submit" value="#$submitlabel#" align="middle" /></p>
 </form>
 </div>

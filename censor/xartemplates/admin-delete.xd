@@ -9,7 +9,7 @@
 
 	<font class="xar-title"><xar:mlstring>Confirm deletion of censored word</xar:mlstring></font><br /><br />
 
-	<input type="submit" value="<xar:mlstring>Confirm</xar:mlstring>" align="middle" tabindex="1" /><br /><br />
+	<input type="submit" value="#$submitlabel#" align="middle" tabindex="1" /><br /><br />
 	
 	<a href="#xarModURL('censor', 'admin', 'view')#"><xar:mlstring>Cancel deletion of censored word</xar:mlstring>.</a>
 </form>        

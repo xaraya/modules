@@ -190,7 +190,7 @@ function censor_admin_delete($args)
 
     // Check for confirmation.
     if (empty($confirmation)) {
-
+    $censor['submitlabel'] = xarML('Submit');
     $censor['authid'] = xarSecGenAuthKey();
 
     return $censor;
@@ -293,6 +293,7 @@ function censor_admin_modifyconfig()
 	if(!xarSecurityCheck('AdminCensor')) return;
 
     $data['authid'] = xarSecGenAuthKey();
+    $data['submitlabel'] = xarML('Submit');
     return $data;
 }
 
