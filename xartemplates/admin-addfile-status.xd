@@ -27,7 +27,7 @@
             <table width="100%">
                 <tr>
                     <th><xar:mlstring>File Name</xar:mlstring></th>
-                    <th><var:mlstring>Status</var;mlstring></th>
+                    <th><xar:mlstring>Status</xar:mlstring></th>
                 </tr>
                 <xar:loop name="$fileList">
                     <tr>
@@ -58,7 +58,7 @@
                                         </xar:mlstring>
                                     </strong>
                                     <br />
-                                    <table width="100%" cellspacing="1" cellpadding="1" border=0">
+                                    <table width="100%" cellspacing="1" cellpadding="1" border="0">
                                         <tr>
                                             <xar:loop name="$loop:item['errors']">
                                                 <xar:if condition="(($loop:index + 1) % 2)">
@@ -109,7 +109,7 @@
                                         </xar:mlstring>
                                     </strong>
                                     <br />
-                                    <table width="100%" cellspacing="1" cellpadding="1" border=0">
+                                    <table width="100%" cellspacing="1" cellpadding="1" border="0">
                                         <tr>
                                             <xar:loop name="$loop:item['errors']">
                                                 <xar:if condition="(($loop:index + 1) % 2)">

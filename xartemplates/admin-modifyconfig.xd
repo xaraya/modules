@@ -11,10 +11,10 @@
     <div style="margin: auto;">
 
         <form method="post" action="#xarModUrl('uploads', 'admin', 'updateconfig')#">
-            <input type="hidden" name="authid" value="#$authid#">
+            <input type="hidden" name="authid" value="#$authid#"/>
             <p>
                 <strong><xar:mlstring>Uploads Directory</xar:mlstring>:</strong>&nbsp;&nbsp;
-                <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="70">
+                <input type="text" name="path[uploads-directory]" value="#$path['uploads-directory']#" size="70"/>
                 <br />
                 <xar:mlstring>
                     This is the full path to the directory where uploaded and external import files will be placed. 
@@ -28,7 +28,7 @@
                         Trusted Directory:
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;
-                <input type="text" name="path[imports-directory]" value="#$path['imports-directory']#" size="70">
+                <input type="text" name="path[imports-directory]" value="#$path['imports-directory']#" size="70"/>
                 <br />
                 <xar:mlstring>
                     This is the full path to the local trusted directory. Files located in this directory will 
@@ -38,13 +38,13 @@
                     <br />NOTE: This directory MUST be readable and should also be writable by the webserver.
                 </xar:mlstring>
             </p>
-
+            <p>
                 <strong>
                     <xar:mlstring>
                         Maximum Upload Size in bytes (commas are fine):
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;
-                <input type="text" name="file[maxsize]" value="#$file['maxsize']#">
+                <input type="text" name="file[maxsize]" value="#$file['maxsize']#"/>
                 <br />
                 <xar:mlstring>
                     This is the maximum size an uploaded file may be.<br />
@@ -59,17 +59,17 @@
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;
                 <xar:if condition="$file['auto-approve'] eq $approveList['noone']">
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"> <xar:mlstring>No one</xar:mlstring>     
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"> <xar:mlstring>Admin</xar:mlstring>      
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"> <xar:mlstring>Everyone</xar:mlstring>   
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#" checked="true"/> <xar:mlstring>No one</xar:mlstring>     
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>      
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>   
                 <xar:elseif condition="$file['auto-approve'] eq $approveList['admin']" />
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"><xar:mlstring>No one</xar:mlstring>     
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#" checked="true"> <xar:mlstring>Admin</xar:mlstring>      
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"> <xar:mlstring>Everyone</xar:mlstring>   
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/><xar:mlstring>No one</xar:mlstring>     
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#" checked="true"/> <xar:mlstring>Admin</xar:mlstring>      
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#"/> <xar:mlstring>Everyone</xar:mlstring>   
                 <xar:else />
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"> <xar:mlstring>No one</xar:mlstring>     
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"> <xar:mlstring>Admin</xar:mlstring>      
-                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#" checked="true"> <xar:mlstring>Everyone</xar:mlstring>   
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['noone']#"/> <xar:mlstring>No one</xar:mlstring>     
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['admin']#"/> <xar:mlstring>Admin</xar:mlstring>      
+                    <input type="radio" name="file[auto-approve]" value="#$approveList['everyone']#" checked="true"/> <xar:mlstring>Everyone</xar:mlstring>   
                 </xar:if>
                 <p>
                 <xar:mlstring>
@@ -85,11 +85,11 @@
                 </strong>&nbsp;&nbsp;
                 
                 <xar:if condition="$file['delete-confirmation'] eq FALSE">
-                    <input type="radio" name="file[delete-confirmation]" value="1"> Yes
-                    <input type="radio" name="file[delete-confirmation]" value="0" checked="true"> No
+                    <input type="radio" name="file[delete-confirmation]" value="1"/> Yes
+                    <input type="radio" name="file[delete-confirmation]" value="0" checked="true"/> No
                 <xar:else />
-                    <input type="radio" name="file[delete-confirmation]" value="1" checked="true"> Yes
-                    <input type="radio" name="file[delete-confirmation]" value="0"> No
+                    <input type="radio" name="file[delete-confirmation]" value="1" checked="true"/> Yes
+                    <input type="radio" name="file[delete-confirmation]" value="0"/> No
                 </xar:if>
                 <br/>
                 <xar:mlstring>
@@ -104,11 +104,11 @@
                 </strong>&nbsp;&nbsp;
                     
                 <xar:if condition="$file['auto-purge'] eq FALSE">
-                    <input type="radio" name="file[auto-purge]" value="1"> Yes
-                    <input type="radio" name="file[auto-purge]" value="0" checked="true"> No
+                    <input type="radio" name="file[auto-purge]" value="1"/> Yes
+                    <input type="radio" name="file[auto-purge]" value="0" checked="true"/> No
                 <xar:else />
-                    <input type="radio" name="file[auto-purge]" value="1" checked="true"> Yes
-                    <input type="radio" name="file[auto-purge]" value="0"> No
+                    <input type="radio" name="file[auto-purge]" value="1" checked="true"/> Yes
+                    <input type="radio" name="file[auto-purge]" value="0"/> No
                 </xar:if>
                 <br/>
                 <xar:mlstring>
@@ -124,11 +124,11 @@
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;
                 <xar:if condition="$file['obfuscate-on-import'] eq FALSE">
-                    <input type="radio" name="file[obfuscate-on-import]" value="1"> Yes
-                    <input type="radio" name="file[obfuscate-on-import]" value="0" checked="true"> No
+                    <input type="radio" name="file[obfuscate-on-import]" value="1"/> Yes
+                    <input type="radio" name="file[obfuscate-on-import]" value="0" checked="true"/> No
                 <xar:else />
-                    <input type="radio" name="file[obfuscate-on-import]" value="1" checked="true"> Yes
-                    <input type="radio" name="file[obfuscate-on-import]" value="0"> No        
+                    <input type="radio" name="file[obfuscate-on-import]" value="1" checked="true"/> Yes
+                    <input type="radio" name="file[obfuscate-on-import]" value="0"/> No        
                 </xar:if>
                 <br />
                 <xar:mlstring>
@@ -142,11 +142,11 @@
                     </xar:mlstring>
                 </strong>&nbsp;&nbsp;
                 <xar:if condition="$file['obfuscate-on-upload'] eq FALSE">
-                    <input type="radio" name="file[obfuscate-on-upload]" value="1"> Yes
-                    <input type="radio" name="file[obfuscate-on-upload]" value="0" checked="true"> No
+                    <input type="radio" name="file[obfuscate-on-upload]" value="1"/> Yes
+                    <input type="radio" name="file[obfuscate-on-upload]" value="0" checked="true"/> No
                 <xar:else />
-                    <input type="radio" name="file[obfuscate-on-upload]" value="1" checked="true"> Yes
-                    <input type="radio" name="file[obfuscate-on-upload]" value="0"> No        
+                    <input type="radio" name="file[obfuscate-on-upload]" value="1" checked="true"/> Yes
+                    <input type="radio" name="file[obfuscate-on-upload]" value="0"/> No        
                 </xar:if>
                 <br />
                 <xar:mlstring>
@@ -162,30 +162,29 @@
             <h2>
                 <xar:mlstring>Dynamic File Upload Property Configuration</xar:mlstring>
             </h2>
-            <xar:mlstring>
-                <p>
+            <p>
+                <xar:mlstring>
                     These settings allow you to redefine certain characteristics of the FileUpload DynamicData Property. 
                     These settings only take effect if you have 'hooked' the uploads module to the module using the 
                     FileUpload property.
-                </p>
-            </xar:mlstring>
-            
+                </xar:mlstring>
+            </p>
             <strong>
                 <xar:mlstring>
                     Select available file sources for the FileUpload Property:
                 </xar:mlstring>
             </strong>
-            <xar:mlstring>
-                <p>
-                Note: be sure to choose at <strong>least</strong> one!
-                </p>
-            </xar:mlstring>
+            <p>
+                <xar:mlstring>
+                    Note: be sure to choose at <strong>least</strong> one!
+                </xar:mlstring>
+            </p>
             <div>
                 <span>
                     <xar:if condition="$ddprop['trusted'] eq TRUE">
-                        <input type="checkbox" name="ddprop[trusted]" value="1" checked="checked">
+                        <input type="checkbox" name="ddprop[trusted]" value="1" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="ddprop[trusted]" value="1">
+                        <input type="checkbox" name="ddprop[trusted]" value="1"/>
                     </xar:if>
                 </span>
                 <span>
@@ -195,9 +194,9 @@
             <div>
                 <span>
                     <xar:if condition="$ddprop['external'] eq TRUE">
-                        <input type="checkbox" name="ddprop[external]" value="1" checked="checked">
+                        <input type="checkbox" name="ddprop[external]" value="1" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="ddprop[external]" value="1">
+                        <input type="checkbox" name="ddprop[external]" value="1"/>
                     </xar:if>
                 </span>
                 <span>
@@ -207,9 +206,9 @@
             <div>
                 <span>
                     <xar:if condition="$ddprop['upload'] eq TRUE">
-                        <input type="checkbox" name="ddprop[upload]" value="1" checked="checked">
+                        <input type="checkbox" name="ddprop[upload]" value="1" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="ddprop[upload]" value="1">
+                        <input type="checkbox" name="ddprop[upload]" value="1"/>
                     </xar:if>
                 </span>
                 <span>
@@ -219,9 +218,9 @@
             <div>
                 <span>
                     <xar:if condition="$ddprop['stored'] eq TRUE">
-                        <input type="checkbox" name="ddprop[stored]" value="1" checked="checked">
+                        <input type="checkbox" name="ddprop[stored]" value="1" checked="checked"/>
                     <xar:else />
-                        <input type="checkbox" name="ddprop[stored]" value="1">
+                        <input type="checkbox" name="ddprop[stored]" value="1"/>
                     </xar:if>
                 </span>
                 <span>
@@ -229,8 +228,7 @@
                 </span>
             </div>
 
-                <input type="submit" name="update" value="#xarMl('Update Configuration')#">
-            </p>
+            <input type="submit" name="update" value="#xarMl('Update Configuration')#"/>
         </form>
     </div>
 </div>
