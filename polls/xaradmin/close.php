@@ -12,14 +12,10 @@ function polls_admin_close()
     if (!xarSecConfirmAuthKey()) return;
 
     // Pass to API
-    if (xarModAPIFunc('polls',
+    if (!xarModAPIFunc('polls',
                      'admin',
                      'close',
-                     array('pid' => $pid))) {
-        // Success
-        xarSessionSetVar('statusmsg', _POLLSCLOSEDPOLL);
-
-    }
+                     array('pid' => $pid))) return;
 
     xarResponseRedirect(xarModURL('polls', 'admin', 'list'));
 
