@@ -167,7 +167,11 @@ function xarpages_user_display($args)
         $transformfields = xarModGetVar('xarpages', 'transformfields');
         if (!empty($transformfields)) {
             $data['current_page']['dd']['transform'] = explode(' ', $transformfields);
+            //var_dump($data['current_page']['dd']['transform']);
         }
+
+        // Set the itemtype for the transform hook system.
+        $data['current_page']['dd']['itemtype'] = $data['current_page']['ptid'];
 
         $data['current_page']['dd'] = xarModCallHooks(
             'item', 'transform', $pid, $data['current_page']['dd'], 'xarpages'
