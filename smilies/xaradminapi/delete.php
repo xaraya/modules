@@ -33,7 +33,7 @@ function smilies_adminapi_delete($args)
     $smiliestable = $xartable['smilies'];
     // Delete the item
     $query = "DELETE FROM $smiliestable
-            WHERE xar_sid = ?;
+            WHERE xar_sid = ?";
     $bindvars = array($sid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;

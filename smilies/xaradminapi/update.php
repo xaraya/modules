@@ -46,7 +46,7 @@ function smilies_adminapi_update($args)
             SET xar_code    = ?,
                 xar_icon    = ?,
                 xar_emotion = ?
-            WHERE xar_sid = ?;
+            WHERE xar_sid = ?";
     $bindvars = array($code, $icon, $emotion, $sid);
     $result =& $dbconn->Execute($query,$bindvars);
     if (!$result) return;
