@@ -16,7 +16,7 @@
 		</td>
 		</tr>
 	</table><br />
-	<input type="submit" value="#$editbutton#" align="middle" tabindex="2" />
+	<input type="submit" value="#$editbutton#"  tabindex="2" />
     <br /><br />
 	<a href="#xarModURL('html', 'admin', 'viewtypes')#"><xar:mlstring>Cancel edit of the tag</xar:mlstring>.</a>
 </form>

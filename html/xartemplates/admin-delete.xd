@@ -12,7 +12,7 @@
     #$tag#
     <br /><br />
 
-	<input type="submit" value="#$submitlabel#" align="middle" /><br /><br />
+	<input type="submit" value="#$submitlabel#"  /><br /><br />
 	
 	<a href="#xarModURL('html', 'admin', 'set')#"><xar:mlstring>Cancel deletion of the tag</xar:mlstring>.</a>
 </form>        

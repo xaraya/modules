@@ -14,7 +14,7 @@
     #$type#
     <br /><br />
 
-	<input type="submit" value="#$submitlabel#" align="middle" /><br /><br />
+	<input type="submit" value="#$submitlabel#"  /><br /><br />
 	
 	<a href="#xarModURL('html', 'admin', 'viewtypes')#"><xar:mlstring>Cancel deletion of the tag type</xar:mlstring>.</a>
 </form>        
