@@ -87,11 +87,15 @@
                 </span>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 30%; text-align: right;">
+                <span style="float: left; width: 50%; text-align: right;">
             <xar:comment> These need to be in elements for xhtml </xar:comment>
                     <input type="hidden" name="authid" id="authid" value="#$authid#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="submit" name="preview" id="preview" value="#$previewlabel#" />
+                    &nbsp;&nbsp;&nbsp; 
+                    <xar:if condition="xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')">
+                        <input type="submit" name="save" id="save" value="#xarML('Save and Edit')#" />
+                    </xar:if>
                     &nbsp;&nbsp;&nbsp; 
                     <input type="submit" value="#$addlabel#" />
                 </span>

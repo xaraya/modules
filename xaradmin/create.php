@@ -9,7 +9,7 @@ function articles_admin_create()
     if (!xarVarFetch('ptid',     'id',    $ptid)) {return;}
     if (!xarVarFetch('new_cids', 'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
     if (!xarVarFetch('preview',  'str',   $preview, NULL, XARVAR_NOT_REQUIRED)) {return;}
-
+    if (!xarVarFetch('save',     'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
@@ -140,6 +140,17 @@ function articles_admin_create()
 
     // Success
     xarSessionSetVar('statusmsg', xarML('Article Created'));
+
+    // Save and continue editing via feature request.
+    if (isset($save)){
+        if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
+            xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
+                                          array('aid' => $aid)));
+        } else {
+            xarResponseRedirect(xarModURL('articles', 'user', 'view',
+                                          array('ptid' => $ptid)));
+        }
+    }
 
     // if we can edit articles, go to admin view, otherwise go to user view
     if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {

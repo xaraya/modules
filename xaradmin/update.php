@@ -10,7 +10,7 @@ function articles_admin_update()
     if(!xarVarFetch('ptid',     'isset', $ptid,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('modify_cids', 'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
     if(!xarVarFetch('preview',  'isset', $preview,   NULL, XARVAR_DONT_SET)) {return;}
-
+    if(!xarVarFetch('save',     'isset', $save,   NULL, XARVAR_DONT_SET)) {return;}
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
@@ -158,6 +158,17 @@ function articles_admin_update()
                                                 'status' => $status,
                                                 'startnum' => $startnum)));
             return true;
+        }
+    }
+
+    // Save and continue editing via feature request.
+    if (isset($save)){
+        if (xarSecurityCheck('EditArticles',0,'Article',$ptid.':All:All:All')) {
+            xarResponseRedirect(xarModURL('articles', 'admin', 'modify',
+                                          array('aid' => $aid)));
+        } else {
+            xarResponseRedirect(xarModURL('articles', 'user', 'view',
+                                          array('ptid' => $ptid)));
         }
     }
 
