@@ -110,7 +110,8 @@ function pubsub_user_subscribe($args)
     $result = $dbconn->Execute($query);
     if (!$result) return;
     $eventid = $result->fields[0];
-    
+
+    if (!xarModAPILoad('pubsub','user')) return;    
     pubsub_userapi_adduser($eventid);
 
     return;
@@ -162,6 +163,7 @@ function pubsub_user_unsubscribe($args)
     if (!$result) return;
     $eventid = $result->fields[0];
     
+    if (!xarModAPILoad('pubsub','user')) return;    
     pubsub_userapi_deluser($eventid);
 
     return;
@@ -190,6 +192,7 @@ function pubsub_user_remove($args)
         return;
     }
 		    
+    if (!xarModAPILoad('pubsub','user')) return;    
     pubsub_userapi_deluser($eventid);
 
     return;
