@@ -35,8 +35,8 @@ function mime_userapi_add_type( $args )
                    xar_mime_type_name
                  )
             VALUES (?, ?)";
-
-    $bindvars = array((int) $typeId, (string) $typeName);
+    
+    $bindvars = array($typeId, (string) $typeName);
 
     $result = $dbconn->Execute($sql, $bindvars);
 

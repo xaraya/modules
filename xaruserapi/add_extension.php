@@ -42,7 +42,7 @@ function mime_userapi_add_extension( $args )
                    xar_mime_extension_name
                  )
             VALUES (?, ?, ?)";
-    $bindvars = array((int) $subtypeId, (int) $extensionId, (string) strtolower($extensionName));
+    $bindvars = array((int) $subtypeId, $extensionId, (string) strtolower($extensionName));
 
     $result = $dbconn->Execute($sql,$bindvars);
     

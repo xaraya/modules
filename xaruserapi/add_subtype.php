@@ -43,8 +43,8 @@ function mime_userapi_add_subtype( $args )
                    xar_mime_subtype_name
                  )
             VALUES (?, ?, ?)";
-
-    $bindvars = array((int) $typeId, (int) $subtypeId, (string) $subtypeName);
+    
+    $bindvars = array((int) $typeId, $subtypeId, (string) $subtypeName);
 
     $result = $dbconn->Execute($sql, $bindvars);
 
