@@ -1,0 +1,1 @@
+onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);"

@@ -1,0 +1,6 @@
+Version 1.00: January 17th 2003
+   - minor fix for br2nl function
+
+Version 0.99: January 11th 2003
+   - initial version
+
