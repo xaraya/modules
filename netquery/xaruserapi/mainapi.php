@@ -78,9 +78,9 @@ function netquery_userapi_getexec($args)
                      exec_winsys,
                      exec_remote,
                      exec_remote_t
-              FROM $ExecTable
-              WHERE exec_type = '" . xarVarPrepForStore($exec_type) . "'";
-    $result =& $dbconn->Execute($query);
+                FROM $ExecTable
+               WHERE exec_type = ?";
+    $result =& $dbconn->Execute($query, array((string) $exec_type));
     if (!$result) return;
     list($exec_id, $exec_type, $exec_local, $exec_winsys, $exec_remote, $exec_remote_t) = $result->fields;
     if(!xarSecurityCheck('OverviewNetquery')) return;
@@ -136,9 +136,9 @@ function netquery_userapi_getlink($args)
     $query = "SELECT whois_id,
                      whois_ext,
                      whois_server
-            FROM $WhoisTable
-            WHERE whois_ext = '" . xarVarPrepForStore($whois_ext) . "'";
-    $result =& $dbconn->Execute($query);
+                FROM $WhoisTable
+               WHERE whois_ext = ?";
+    $result =& $dbconn->Execute($query, array((string) $whois_ext));
     if (!$result) return;
     list($whois_id, $whois_ext, $whois_server) = $result->fields;
     $link = array('whois_id'     => $whois_id,
@@ -196,9 +196,9 @@ function Netquery_userapi_getlgrequest($args)
                      command,
                      handler,
                      argc
-              FROM $LGRequestTable
-              WHERE request = '" . xarVarPrepForStore($request) . "'";
-    $result =& $dbconn->Execute($query);
+                FROM $LGRequestTable
+               WHERE request = ?";
+    $result =& $dbconn->Execute($query, array((int) $request));
     if (!$result) return;
     list($request_id, $request, $command, $handler, $argc) = $result->fields;
     $lgrequest = array('request_id' => $request_id,
@@ -339,9 +339,9 @@ function Netquery_userapi_getlgrouter($args)
                      ospf6d_port,
                      ospf6d_password,
                      use_argc
-              FROM $LGRouterTable
-              WHERE router = '" . pnVarPrepForStore($router) . "'";
-    $result =& $dbconn->Execute($query);
+                FROM $LGRouterTable
+               WHERE router = ?";
+    $result =& $dbconn->Execute($query, array((int) $router));
     if (!$result) return;
     list($router_id,
          $router,

@@ -38,8 +38,8 @@ function netquery_adminapi_getrouter($args)
                      ospf6d_password,
                      use_argc
               FROM $LGRouterTable
-              WHERE router_id =  " . xarVarPrepForStore($router_id);
-    $result =& $dbconn->Execute($query);
+              WHERE router_id =  ?";
+    $result =& $dbconn->Execute($query, array((int) $router_id));
     if (!$result) return;
     list($router_id,
          $router,

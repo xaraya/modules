@@ -17,8 +17,8 @@ function netquery_adminapi_getlink($args)
                      whois_ext,
                      whois_server
             FROM $WhoisTable
-            WHERE whois_id = " . xarVarPrepForStore($whois_id);
-    $result =& $dbconn->Execute($query);
+            WHERE whois_id = ?";
+    $result =& $dbconn->Execute($query, array((int) $whois_id));
     if (!$result) return;
     list($whois_id, $whois_ext, $whois_server) = $result->fields;
     if(!xarSecurityCheck('OverviewNetquery')) return;

@@ -24,31 +24,58 @@ function netquery_adminapi_lgupdate($args)
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
     $query = "UPDATE $LGRouterTable
-        SET router          = '" . xarVarPrepForStore($router_router) . "',
-            address         = '" . xarVarPrepForStore($router_address) . "',
-            username        = '" . xarVarPrepForStore($router_username) . "',
-            password        = '" . xarVarPrepForStore($router_password) . "',
-            zebra           = '" . xarVarPrepForStore($router_zebra) . "',
-            zebra_port      = '" . xarVarPrepForStore($router_zebra_port) . "',
-            zebra_password  = '" . xarVarPrepForStore($router_zebra_password) . "',
-            ripd            = '" . xarVarPrepForStore($router_ripd) . "',
-            ripd_port       = '" . xarVarPrepForStore($router_ripd_port) . "',
-            ripd_password   = '" . xarVarPrepForStore($router_ripd_password) . "',
-            ripngd          = '" . xarVarPrepForStore($router_ripngd) . "',
-            ripngd_port     = '" . xarVarPrepForStore($router_ripngd_port) . "',
-            ripngd_password = '" . xarVarPrepForStore($router_ripngd_password) . "',
-            ospfd           = '" . xarVarPrepForStore($router_ospfd) . "',
-            ospfd_port      = '" . xarVarPrepForStore($router_ospfd_port) . "',
-            ospfd_password  = '" . xarVarPrepForStore($router_ospfd_password) . "',
-            bgpd            = '" . xarVarPrepForStore($router_bgpd) . "',
-            bgpd_port       = '" . xarVarPrepForStore($router_bgpd_port) . "',
-            bgpd_password   = '" . xarVarPrepForStore($router_bgpd_password) . "',
-            ospf6d          = '" . xarVarPrepForStore($router_ospf6d) . "',
-            ospf6d_port     = '" . xarVarPrepForStore($router_ospf6d_port) . "',
-            ospf6d_password = '" . xarVarPrepForStore($router_ospf6d_password) . "',
-            use_argc        = '" . xarVarPrepForStore($router_use_argc) . "'
-        WHERE router_id = " . xarVarPrepForStore($router_id);
-    $result =& $dbconn->Execute($query);
+                 SET router          = ?,
+                     address         = ?,
+                     username        = ?,
+                       password        = ?,
+                     zebra           = ?,
+                     zebra_port      = ?,
+                     zebra_password  = ?,
+                     ripd            = ?,
+                     ripd_port       = ?,
+                     ripd_password   = ?,
+                     ripngd          = ?,
+                     ripngd_port     = ?,
+                     ripngd_password = ?,
+                     ospfd           = ?,
+                     ospfd_port      = ?,
+                     ospfd_password  = ?,
+                     bgpd            = ?,
+                     bgpd_port       = ?,
+                     bgpd_password   = ?,
+                     ospf6d          = ?,
+                     ospf6d_port     = ?,
+                     ospf6d_password = ?,
+                     use_argc        = ?
+               WHERE router_id = ?";
+
+
+    $bindvars = array((string)  $router_router,
+                      (string)  $router_address,
+                      (string)  $router_username,
+                      (string)  $router_password,
+                      (int)     $router_zebra,
+                      (int)     $router_zebra_port,
+                      (string)  $router_zebra_password,
+                      (int)     $router_ripd,
+                      (int)     $router_ripd_port,
+                      (string)  $router_ripd_password,
+                      (int)     $router_ripngd,
+                      (int)     $router_ripngd_port,
+                      (string)  $router_ripngd_password,
+                      (int)     $router_ospfd,
+                      (int)     $router_ospfd_port,
+                      (string)  $router_ospfd_password,
+                      (int)     $router_bgpd,
+                      (int)     $router_bgpd_port,
+                      (string)  $router_bgpd_password,
+                      (int)     $router_ospf6d,
+                      (int)     $router_ospf6d_port,
+                      (string)     $router_ospf6d_password,
+                      (int)     $router_use_argc,
+                      (int)     $router_id);
+
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     return true;
 }

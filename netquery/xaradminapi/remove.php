@@ -24,8 +24,8 @@ function netquery_adminapi_remove($args)
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
     $query = "DELETE FROM $WhoisTable
-            WHERE whois_id = " . xarVarPrepForStore($whois_id);
-    $result =& $dbconn->Execute($query);
+            WHERE whois_id = ?";
+    $result =& $dbconn->Execute($query, array((int) $whois_id));
     if (!$result) return;
     return true;
 }

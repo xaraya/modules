@@ -24,10 +24,10 @@ function netquery_adminapi_update($args)
     $xartable =& xarDBGetTables();
     $WhoisTable = $xartable['netquery_whois'];
     $query = "UPDATE $WhoisTable
-            SET whois_ext    = '" . xarVarPrepForStore($whois_ext) . "',
-                whois_server = '" . xarVarPrepForStore($whois_server) . "'
-            WHERE whois_id = " . xarVarPrepForStore($whois_id);
-    $result =& $dbconn->Execute($query);
+                 SET whois_ext    = ?,
+                      whois_server = ?
+               WHERE whois_id = ?";
+    $result =& $dbconn->Execute($query, array((string) $whois_ext, (string) $whois_server, (int) $whois_id));
     if (!$result) return;
     return true;
 }

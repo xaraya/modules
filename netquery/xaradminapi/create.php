@@ -20,11 +20,10 @@ function netquery_adminapi_create($args)
               whois_id,
               whois_ext,
               whois_server)
-            VALUES (
-              $nextId,
-              '" . xarVarPrepForStore($whois_ext) . "',
-              '" . xarVarPrepForStore($whois_server) . "')";
-    $result =& $dbconn->Execute($query);
+            VALUES (?, ?, ?)";
+
+	$bindvars = array((int) $nextId, (string) $whois_ext, (string) $whois_Server);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
     $whois_id = $dbconn->PO_Insert_ID($WhoisTable, 'whois_id');
     return $whois_id;

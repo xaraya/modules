@@ -13,7 +13,7 @@ function netquery_adminapi_getlgrdata($args)
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
     $LGRouterTable = $xartable['netquery_lgrouter'];
-    $query = "SELECT router_id,
+    $query = "SELECT router_id, 
                      router,
                      address,
                      username,
@@ -38,8 +38,8 @@ function netquery_adminapi_getlgrdata($args)
                      ospf6d_password,
                      use_argc
               FROM $LGRouterTable
-              WHERE router =  '" . xarVarPrepForStore($router) . "'";
-    $result =& $dbconn->Execute($query);
+              WHERE router =  ?";
+    $result =& $dbconn->Execute($query, array((string) $router));
     if (!$result) return;
     list($router_id,
          $router,
