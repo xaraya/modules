@@ -14,7 +14,7 @@ function opentracker_userapi_get_top_items($args)
   $batchKeys = array(
     'referers',
     'pages',
-    'xarmod',
+    'mods',
     'entry_pages',
     'exit_pages',
     'exit_targets',
@@ -26,7 +26,7 @@ function opentracker_userapi_get_top_items($args)
   $batchWhat = array(
     'referer',
     'document',
-    'xarmod',
+    'mods',
     'entry_document',
     'exit_document',
     'exit_target',
@@ -40,7 +40,7 @@ function opentracker_userapi_get_top_items($args)
   // Loop through $batchKeys / $batchWhat
   for ($i = 0; $i < sizeof($batchKeys); $i++) {
     // Query Top <$limit> items of category <$batchWhat[$i]>
-    if ($batchWhat[$i] == 'xarmod')
+    if ($batchWhat[$i] == 'mods')
     {
 	    $result = xarOpenTracker::get(
 		      array(

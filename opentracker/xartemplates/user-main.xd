@@ -1,16 +1,16 @@
 <div style="font-size: xx-small; text-align: center">
-<a href="#$url###item_statistics"> #$item_statistics_title# </a> | 
-<a href="#$url###pages"> <xar:mlstring>Top Pages</xar:mlstring> </a> | 
-<a href="#$url###xarmod"> <xar:mlstring>Top Modules</xar:mlstring> </a> | 
-<a href="#$url###referers"> <xar:mlstring>Top Referers</xar:mlstring> </a> | 
-<a href="#$url###entry_pages"> <xar:mlstring>Top Entry Pages</xar:mlstring> </a> | 
-<a href="#$url###exit_pages"> <xar:mlstring>Top Exit Pages</xar:mlstring> </a> | 
+<a href="#$url###item_statistics"> #$item_statistics_title# </a> |
+<a href="#$url###pages"> <xar:mlstring>Top Pages</xar:mlstring> </a> |
+<a href="#$url###mods"> <xar:mlstring>Top Modules</xar:mlstring> </a> |
+<a href="#$url###referers"> <xar:mlstring>Top Referers</xar:mlstring> </a> |
+<a href="#$url###entry_pages"> <xar:mlstring>Top Entry Pages</xar:mlstring> </a> |
+<a href="#$url###exit_pages"> <xar:mlstring>Top Exit Pages</xar:mlstring> </a> |
 <a href="#$url###exit_targets"> <xar:mlstring> Top Exit Targets</xar:mlstring> </a> |
 <a href="#$url###hosts"> <xar:mlstring>Top Hosts</xar:mlstring> </a>
 <br />
-<a href="#$url###operating_systems"> <xar:mlstring>Top Operating Systems</xar:mlstring> </a> | 
-<a href="#$url###user_agents"> <xar:mlstring>Top User Agents</xar:mlstring> </a> | 
-<a href="#$url###search_engines"> <xar:mlstring>Top Search Engines</xar:mlstring> </a> | 
+<a href="#$url###operating_systems"> <xar:mlstring>Top Operating Systems</xar:mlstring> </a> |
+<a href="#$url###user_agents"> <xar:mlstring>Top User Agents</xar:mlstring> </a> |
+<a href="#$url###search_engines"> <xar:mlstring>Top Search Engines</xar:mlstring> </a> |
 <a href="#$url###search_keywords"> <xar:mlstring>Top Search Keywords</xar:mlstring> </a>
 </div>
 <br />
@@ -65,7 +65,7 @@
   <xar:loop name="$statisticitems">
 	<tr valign="baseline">
 	  <td align="left" class="xar-alt xar-mod-title" style="border-width: 0px 0px 1px 0px;">
-	    <xar:if condition="$href"><a href="#$loop:item['href']#" class="xar-mod-title"></xar:if>#$loop:item['displayname']#<xar:if condition="$loop:item['href']"></a></xar:if>
+	    <xar:if condition="isset($loop:item['href'])"><a href="#$loop:item['href']#" class="xar-mod-title"></xar:if>#$loop:item['displayname']#<xar:if condition="$loop:item['href']"></a></xar:if>
 	  </td>
 	  <td align="left" width="22%" class="xar-norm-outline" style="border-width: 0px 0px 1px 0px;">
 	    #$loop:item['pi_number']#
@@ -105,7 +105,7 @@
     </td>
   </tr>
   <xar:if condition="is_array($loop:item['top_items'])">
-    <xar:loop name="$top_items">
+    <xar:loop name="$loop:item['top_items']">
 		<tr valign="baseline">
 		  <td align="left" class="xar-alt">
 		    #$loop:item['rank']#
