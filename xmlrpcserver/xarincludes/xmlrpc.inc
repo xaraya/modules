@@ -806,12 +806,12 @@ class xmlrpcval {
 		global $xmlrpcTypes, $xmlrpcBoolean;
         
 		if ($this->mytype==1) {
-			echo "<B>xmlrpcval</B>: scalar can have only one value<BR>";
+			echo "<b>xmlrpcval</b>: scalar can have only one value<br/>";
 			return 0;
 		}
 		$typeof=$xmlrpcTypes[$type];
 		if ($typeof!=1) {
-			echo "<B>xmlrpcval</B>: not a scalar type (${typeof})<BR>";
+			echo "<b>xmlrpcval</b>: not a scalar type (${typeof})<br/>";
 			return 0;
 		}
 		
@@ -841,8 +841,8 @@ class xmlrpcval {
     function addArray($vals) {
 		global $xmlrpcTypes;
 		if ($this->mytype!=0) {
-			echo "<B>xmlrpcval</B>: already initialized as a [" . 
-				$this->kindOf() . "]<BR>";
+			echo "<b>xmlrpcval</b>: already initialized as a [" . 
+				$this->kindOf() . "]<br/>";
 			return 0;
 		}
         
@@ -854,8 +854,8 @@ class xmlrpcval {
     function addStruct($vals) {
         global $xmlrpcTypes;
         if ($this->mytype!=0) {
-            echo "<B>xmlrpcval</B>: already initialized as a [" . 
-                $this->kindOf() . "]<BR>";
+            echo "<b>xmlrpcval</b>: already initialized as a [" . 
+                $this->kindOf() . "]<br/>";
             return 0;
         }
         $this->mytype=$xmlrpcTypes["struct"];
