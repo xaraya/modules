@@ -1,0 +1,30 @@
+div.navigator-listmenu-wrapper {
+    margin: 0 1px 8px 10px;
+    background-color: #cc6600;
+    background-image: url(../images/boxcorner.gif);
+    background-repeat: no-repeat;
+}
+div.navigator-listmenu-wrapper .navigator-listmenu-title {
+    margin-left: 6px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+div.navigator-listmenu-link {
+    padding-left: .6em;
+    background-color: #cccc99;
+}
+div.navigator-listmenu-link span.navigator-listmenu-link {
+    color: #cc6600;
+    font-weight: bold;
+}
+
+a.navigator-listmenu-link {
+    color: #336699;
+    font-weight: bold;
+}
+
+a.navigator-listmenu-link:visited {
+    color: #336699;  /* same color */
+}
+

@@ -1,0 +1,18 @@
+
+<xar:set name="$catlist">$trail['raw']</xar:set>
+
+<xar:if condition="$matrix">
+    [<a href="#xarModURL('articles', 'user', 'view', array('cids' => array($catlist['primary']['id'], $secondary_default), 'andcids' => TRUE))#">
+        #$catlist['primary']['name']#
+    </a>]
+    <xar:if condition="$secondary_default ne $catlist['secondary']['id']">
+        <strong>></strong>
+        <a href="#xarModURL('articles', 'user', 'view', array('cids' => array($catlist['primary']['id'], $catlist['secondary']['id']), 'andcids' => TRUE))#">
+            #$catlist['secondary']['name']#
+        </a>
+    </xar:if>
+<xar:else />
+    [<a href="#xarModURL('articles', 'user', 'view', array('cids' => array($catlist['primary']['id'])))#">
+        #$catlist['primary']['name']#
+    </a>]
+</xar:if>

@@ -1,0 +1,16 @@
+<div>
+    <xar:if condition="isset($image_input)">
+        <span><strong>#$image_input['label']#</strong></span>
+        <span>#$image_input['definition']#</span>
+    </xar:if>
+</div>
+<div>
+    <xar:if condition="isset($caption_input)">
+        <span>
+            <strong>#$caption_input['label']#</strong>
+        </span>
+        <span>#$caption_input['definition']#</span>
+    </xar:if>
+</div>
+<br />
+<br />

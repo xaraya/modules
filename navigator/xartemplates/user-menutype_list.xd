@@ -1,0 +1,54 @@
+<xar:if condition="xarTplAddStyleLink('navigator','navigator-listmenu')"></xar:if>
+
+<xar:set name="$total">count($tree)</xar:set>
+
+<xar:for start="$index = 1" test="isset($tree[$index]) AND $index le $total" iter="">
+    <div class="navigator-listmenu-wrapper">
+
+        <xar:if condition="!$tree[$index]['indent']">
+            <span class="xar-contentnav-title">
+                #$tree[$index]['name']#
+            </span>
+        </xar:if>
+
+        <xar:while condition="(++$index le $total) AND isset($tree[$index]) AND $tree[$index]['indent']">
+
+            <xar:if condition="isset($tree[$index]['startpoint']) AND $tree[$index]['startpoint']">
+                <xar:continue />
+            </xar:if>
+
+            <xar:if condition="isset($maxdepth) AND $tree[$index]['indent'] gt $maxdepth">
+                <xar:continue />
+            </xar:if>
+
+            <xar:if condition="isset($emptygroups) AND $emptygroups eq 'hide' AND $tree[$index]['total'] le 0">
+                <xar:continue />
+            </xar:if>
+
+            <xar:if condition="$matrix">
+                <xar:set name="$url">
+                    xarModURL('articles', 'user', 'view',
+                            array('cids' => array($primary['id'], $tree[$index]['cid']),
+                                  'andcids' => TRUE))
+                </xar:set>
+            <xar:else />
+                <xar:set name="$url">
+                    xarModURL('articles', 'user', 'view',
+                            array('cids' => array($tree[$index]['cid'])))
+                </xar:set>
+            </xar:if>
+
+            <div class="navigator-listmenu-link">
+                <xar:if condition="$tree[$index]['cid'] eq $current_cid">
+                    <span class="navigator-listmenu-link">
+                        &gt;
+                    </span>
+                </xar:if>
+                <a class="navigator-listmenu-link" href="#$url#">
+                    #$tree[$index]['name']#
+                </a>
+            </div>
+
+        </xar:while>
+    </div>
+</xar:for>

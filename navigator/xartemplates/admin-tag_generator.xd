@@ -1,0 +1,127 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring><strong>Navigator Administration</strong></xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring><strong>Navigator Tag Creation</strong></xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+        <xar:if condition="isset($tag) AND ($tag eq 'menu') AND ($tagtype eq 'images')">
+            <p>
+                <xar:mlstring>
+                    <strong>Note:</strong> In order for the Menu Images tag to display properly
+                    you <strong>must</strong> have the following tag in the HEAD section of both your
+                    default and admin page template (and any other page templates in which this tag
+                    might appear):  <strong>&lt;xar:navigator-inline-styles id="some_id" /&gt;</strong>
+                </xar:mlstring>
+            </p>
+        </xar:if>
+        <form method="post" action="#xarModUrl('navigator', 'admin', 'tag_generator')#">
+            <p>
+                <xar:mlstring>Your tag:</xar:mlstring>
+                <br />
+                <strong>#$current_tag#</strong>
+            </p>
+            <p>
+                <input type="submit" value="#xarML('update')#" />
+            </p>
+
+            <div style="width: 350px; float: left;">
+                <p>
+
+                    <span style="width: 150px;">
+                        <xar:mlstring><strong>Choose a tag:</strong></xar:mlstring>
+                    </span>
+                    <span style="width: 250px;">
+                        <span style="width: 25px; display: block; float: left;">
+                            &nbsp;
+                        </span>
+                        <xar:if condition="isset($tag) AND $tag eq 'menu'">
+                            <span style="width: 75px; display: block; float: left;">
+                                <label for="tagMenu"><span style="color: blue;">Menu</span></label><br />
+                                <input id="tagMenu"
+                                       type="radio"
+                                       name="tag"
+                                       value="menu"
+                                       checked="checked"
+                                       onChange="javascript:this.form.submit()">
+                            </span>
+                        <xar:else />
+                            <span style="width: 75px; display: block; float: left;">
+                                <label for="tagMenu">Menu</label><br />
+                                <input  id="tagMenu"
+                                        type="radio"
+                                        name="tag"
+                                        value="menu"
+                                        onChange="javascript:this.form.submit()">
+                            </span>
+                        </xar:if>
+
+                        <xar:if condition="isset($tag) AND $tag eq 'location'">
+                            <span style="width: 75px; display: block; float: left;">
+                                <label for="tagLocation"><span style="color: blue;">Location</span></label><br />
+                                <input id="tagLocation"
+                                    type="radio"
+                                    name="tag"
+                                    value="location"
+                                    checked="checked"
+                                    onChange="javascript:this.form.submit()">
+                            </span>
+                        <xar:else />
+                            <span style="width: 75px; display: block; float: left;">
+                                <label for="tagLocation">Location</label><br />
+                                <input id="tagLocation"
+                                    type="radio"
+                                    name="tag"
+                                    value="location"
+                                    onChange="javascript:this.form.submit()">
+                            </span>
+                        </xar:if>
+
+                        <xar:if condition="isset($tag) AND $tag eq 'image'">
+                            <span style="width: 75px; display: block; float: left;">
+                                <label for="tagImage"><span style="color: blue;">Image</span></label><br />
+                                <input id="tagImage"
+                                    type="radio"
+                                    name="tag"
+                                    value="image"
+                                    checked="checked"
+                                    onChange="javascript:this.form.submit()">
+                            </span>
+                        <xar:else />
+                            <span style="width: 75px; display: block; float: left;">
+                                <label for="tagImage">Image</label><br />
+                                <input id="tagImage"
+                                       type="radio"
+                                       name="tag"
+                                       value="image"
+                                       onChange="javascript:this.form.submit()">
+                            </span>
+                        </xar:if>
+                        <br style="clear: both;" />
+                    </span>
+                </p>
+                <xar:if condition="isset($tag) AND !empty($tag)">
+                    <xar:if condition="$tag eq 'menu'">
+                        <xar:template file="tag-creation-menu" type="module" />
+                    <xar:elseif condition="$tag eq 'location'" />
+                        <xar:template file="tag-creation-location" type="module" />
+                    </xar:if>
+                </xar:if>
+
+            </div>
+            <div style="width: 150px; float: right;">
+                <xar:if condition="isset($sample_block) AND !empty($sample_block)">
+                    #$sample_block#
+                <xar:else />
+                    <p style="text-align: center;">
+                        Sample block will display here.
+                    </p>
+                </xar:if>
+            </div>
+        </form>
+    </div>
+</div>

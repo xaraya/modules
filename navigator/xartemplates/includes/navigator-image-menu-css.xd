@@ -1,0 +1,59 @@
+div##navigator-#$tagId#-imagemenu   { width: 150px; }
+div##navigator-#$tagId#-imagemenu  a img { display: none; }
+
+<xar:foreach in="$tree" key="$num" value="$menu_item">
+a##navigator-#$tagId#-menuitem-#$num# {
+
+    display: block;
+    background-image: url(#$menu_item['image-normal-url']#);
+
+<xar:if condition="isset($menu_item['image-normal-width'])">
+    width: #$menu_item['image-normal-width']#px;
+<xar:else />
+    width: 150;
+</xar:if>
+
+<xar:if condition="isset($menu_item['image-normal-height'])">
+    height: #$menu_item['image-normal-height']#px;
+<xar:else />
+    height: 24;
+</xar:if>
+}
+
+a##navigator-#$tagId#-menuitem-#$num#:hover {
+
+    display: block;
+    background-image: url(#$menu_item['image-hover-url']#);
+
+<xar:if condition="isset($menu_item['image-hover-width'])">
+    width: #$menu_item['image-hover-width']#px;
+<xar:else />
+    width: 150;
+</xar:if>
+
+<xar:if condition="isset($menu_item['image-hover-height'])">
+    height: #$menu_item['image-hover-height']#px;
+<xar:else />
+    height: 24;
+</xar:if>
+}
+
+a##navigator-#$tagId#-menuitem-#$num#-selected {
+
+    display: block;
+    background-image: url(#$menu_item['image-hover-url']#);
+
+<xar:if condition="isset($menu_item['image-hover-width'])">
+    width: #$menu_item['image-hover-width']#px;
+<xar:else />
+    width: 150;
+</xar:if>
+
+<xar:if condition="isset($menu_item['image-hover-height'])">
+    height: #$menu_item['image-hover-height']#px;
+<xar:else />
+    height: 24;
+</xar:if>
+}
+
+</xar:foreach>

@@ -1,0 +1,13 @@
+<div id="navigator-#$tagId#-imagemenu">
+<xar:foreach in="$tree" key="$menu_num" value="$menu_item">
+
+    <xar:if condition="$menu_item['selected']">
+    <a id="navigator-#$tagId#-menuitem-#$menu_num#-selected" href="#$menu_item['url']#">
+    <xar:else />
+    <a id="navigator-#$tagId#-menuitem-#$menu_num#" href="#$menu_item['url']#">
+    </xar:if>
+        <img alt="#$menu_item['alt-text']#" src="" />
+    </a>
+
+</xar:foreach>
+</div>

@@ -1,0 +1,236 @@
+<p>
+    <span style="width: 150px;">
+        <xar:mlstring><strong>Choose source:</strong></xar:mlstring>
+    </span>
+    <span style="width: 250px;">
+        <span style="width: 25px; display: block; float: left;">
+            &nbsp;
+        </span>
+        <span style="width: 75px; display: block; float: left;">
+            <xar:if condition="isset($base) AND $base eq 'primary'">
+                <label for="basePrimary"><span style="color: blue;">Primary</span></label>
+                <br />
+                <input id="basePrimary"
+                        type="radio"
+                        name="base"
+                        value="primary"
+                        checked="checked"
+                        onChange="javascript:this.form.submit()">
+            <xar:else />
+                <label for="basePrimary">Primary</label>
+                <br />
+                <input id="basePrimary"
+                        type="radio"
+                        name="base"
+                        value="primary"
+                        onChange="javascript:this.form.submit()">
+            </xar:if>
+        </span>
+        <span style="width: 75px; display: block; float: left;">
+            <xar:if condition="isset($matrix) AND $matrix eq TRUE">
+                <xar:if condition="isset($base) AND $base eq 'secondary'">
+                    <label for="baseSecondary"><span style="color: blue;">Secondary</span></label>
+                    <br />
+                    <input id="baseSecondary"
+                            type="radio"
+                            name="base"
+                            value="secondary"
+                            checked="checked"
+                            onChange="javascript:this.form.submit()">
+                <xar:else />
+                    <label for="baseSecondary">Secondary</label>
+                    <br />
+                    <input id="baseSecondary"
+                            type="radio"
+                            name="base"
+                            value="secondary"
+                            onChange="javascript:this.form.submit()">
+                </xar:if>
+            <xar:else />
+                <label for="baseSecondary">Secondary</label>
+                <br />
+                <input disabled="true"
+                        id="baseSecondary"
+                        type="radio"
+                        name="base"
+                        value="secondary"
+                        onChange="javascript:this.form.submit()">
+            </xar:if>
+        </span>
+    </span>
+    <br style="clear: both;" />
+</p>
+<p>
+    <span style="width: 100px;">
+        <xar:mlstring><strong>Choose type:</strong></xar:mlstring>
+    </span>
+    <span style="width: 250px;">
+        <span style="width: 25px; display: block; float: left;">
+            &nbsp;
+        </span>
+        <span style="width: 75px; display: block; float: left;">
+            <xar:if condition="isset($tagtype) AND $tagtype eq 'list'">
+                <label for=tagtypeList"><span style="color: blue;">List</span></label>
+                <br />
+                <input id="tagtypeList"
+                        type="radio"
+                        name="tagtype"
+                        value="list"
+                        checked="checked"
+                        onChange="javascript:this.form.submit()">
+            <xar:else />
+                <label for="tagtypeList">List</label>
+                <br />
+                <input id="tagtypeList"
+                        type="radio"
+                        name="tagtype"
+                        value="list"
+                        onChange="javascript:this.form.submit()">
+            </xar:if>
+        </span>
+        <span style="width: 75px; display: block; float: left;">
+            <xar:if condition="isset($tagtype) AND $tagtype eq 'images'">
+                <label for="tagtypeImages"><span style="color: blue;">Images</span></label>
+                <br />
+                <input id="tagtypeImages"
+                        type="radio"
+                        name="tagtype"
+                        value="images"
+                        checked="checked"
+                        onChange="javascript:this.form.submit()">
+            <xar:else />
+                <label for="tagtypeImages">Images</label>
+                <br />
+                <input id="tagtypeImages"
+                        type="radio"
+                        name="tagtype"
+                        value="images"
+                        onChange="javascript:this.form.submit()">
+            </xar:if>
+        </span>
+    </span>
+</p>
+<br style="clear: both;" />
+<p>
+    <span style="width: 100px;">
+        <xar:mlstring><strong>Hide empty categories?</strong></xar:mlstring>
+    </span>
+    <span style="width: 250px;">
+        <span style="width: 25px; display: block; float: left;">
+            &nbsp;
+        </span>
+        <span style="width: 75px; display: block; float: left;">
+            <xar:if condition="isset($emptygroups) AND $emptygroups eq 'hide'">
+                <label for="emptygroupHide"><span style="color: blue;">Yes</span></label>
+                <br />
+                <input  id="emptygroupHide"
+                        type="radio"
+                        name="emptygroups"
+                        value="hide"
+                        checked="checked"
+                        onChange="javascript:this.form.submit()" />
+            <xar:else />
+                <label for="emptygroupHide">Yes</label>
+                <br />
+                <input  id="emptygroupHide"
+                        type="radio"
+                        name="emptygroups"
+                        value="hide"
+                        onChange="javascript:this.form.submit()" />
+            </xar:if>
+        </span>
+        <span style="width: 75px; display: block; float: left;">
+            <xar:if condition="isset($emptygroups) AND $emptygroups eq 'show'">
+                <label for="emptygroupShow"><span style="color: blue;">No</span></label>
+                <br />
+                <input  id="emptygroupShow"
+                        type="radio"
+                        name="emptygroups"
+                        value="show"
+                        checked="checked"
+                        onChange="javascript:this.form.submit()" />
+            <xar:else />
+                <label for="emptygroupShow">No</label>
+                <br />
+                <input  id="emptygroupShow"
+                        type="radio"
+                        name="emptygroups"
+                        value="show"
+                        onChange="javascript:this.form.submit()" />
+            </xar:if>
+        </span>
+    </span>
+</p>
+
+<xar:if condition="'secondary' eq $base">
+    <br style="clear: both;" />
+    <p>
+        <span style="width: 100px;">
+            <xar:mlstring><strong>Select Primary Intersections:</strong></xar:mlstring>
+        </span>
+        <span style="width: 250px;">
+            <span style="width: 25px; display: block; float: left;">
+                &nbsp;
+            </span>
+            <span style="width: 75px; display: block; float: left;">
+                <select multiple="true" name="intersects[]">
+                    <xar:foreach in="$primary_list" key="$cid" value="$item">
+                        <xar:if condition="in_array($cid, $intersects)">
+                            <option value="#$cid#" selected="selected">#$item['name']#</option>
+                        <xar:else />
+                            <option value="#$cid#">#$item['name']#</option>
+                        </xar:if>
+                    </xar:foreach>
+                </select>
+            </span>
+        </span>
+    </p>
+</xar:if>
+<br style="clear: both;" />
+<br />
+<table width="100%">
+    <tr>
+        <td>Name</td>
+        <td>New Name</td>
+        <td>Exclude</td>
+    </tr>
+    <xar:foreach in="$list" key="$cid" value="$item">
+        <tr>
+            <xar:if condition="in_array($cid, array_keys($rename)) OR in_array($cid, $exclude)">
+                <td style="color: blue;">#$item['name']#</td>
+            <xar:else />
+                <td>#$item['name']#</td>
+            </xar:if>
+            <xar:if condition="in_array($cid, array_keys($rename))">
+                <td>
+                    <input type="textbox"
+                           name="rename[#$cid#]"
+                           value="#$rename[$cid]#"
+                           onChange="javascript:this.form.submit();" />
+                </td>
+            <xar:else />
+                <td>
+                    <input type="textbox"
+                           name="rename[#$cid#]"
+                           value=""
+                           onChange="javascript:this.form.submit();" />
+                </td>
+            </xar:if>
+            <xar:if condition="in_array($cid, $exclude)">
+                <td>
+                    <input type="checkbox"
+                           name="exclude[#$cid#]"
+                           value="#$cid#"
+                           checked="true"
+                           onChange="javascript:this.form.submit();" />
+                </td>
+            <xar:else />
+                <td><input type="checkbox"
+                           name="exclude[#$cid#]"
+                           value="#$cid#"
+                           onChange="javascript:this.form.submit();" />
+                </td>
+            </xar:if>
+        </tr>
+    </xar:foreach>
+</table>

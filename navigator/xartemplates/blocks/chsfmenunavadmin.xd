@@ -1,0 +1,721 @@
+<!--- License: GPL http://www.gnu.org/copyleft/gpl.html --->
+<h4>
+    <xar:mlstring>
+        Dynamic Menu Settings 
+    </xar:mlstring>
+</h4>   
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Menu orientation - horizontal or vertical')#">
+                <label for="firstlinehorizontal">
+                    <xar:mlstring>
+                           Menu orientation:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <select name="firstlinehorizontal">
+                <xar:if condition="$firstlinehorizontal eq 0">
+                    <option name="id" value="0" selected>vertical</option>
+                <xar:else />
+                    <option name="id" value="0">vertical</option>
+                </xar:if>
+                <xar:if condition="$firstlinehorizontal eq 1">
+                    <option name="id" value="1" selected>horizontal</option>
+                <xar:else />
+                    <option name="id" value="1">horizontal</option>
+                </xar:if>
+            </select>
+        </span>
+</p> 
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' span id for relative positioning')#">
+                <label for="targetloc">
+                    <xar:mlstring>
+                           Span id for positioning (optional):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="targetloc" value="#$targetloc#" size="10" />
+        </span>
+</p>  
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Width seting for dynamic menus.')#">
+                <label for="menumaxwidth">
+                    <xar:mlstring>
+                        Menu Width:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="menumaxwidth" value="#$menumaxwidth#" size="10" />
+        </span>
+    </p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Height seting for dynamic menus.')#">
+                <label for="menumaxheight">
+                    <xar:mlstring>
+                        Menu Height:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="menumaxheight" value="#$menumaxheight#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Background color when mouse is not over.')#">
+                <label for="lowbgcolor">
+                    <xar:mlstring>
+                        Background color:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="lowbgcolor" value="#$lowbgcolor#" size="10" />
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Submenu background color when mouse is not over.')#">
+                <label for="lowbgcolor">
+                    <xar:mlstring>
+                        Submenu Background color:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="lowsubbgcolor" value="#$lowsubbgcolor#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Background color when mouse is over.')#">
+                <label for="highbgcolor">
+                    <xar:mlstring>
+                        Background color (mouse over):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="highbgcolor" value="#$highbgcolor#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Submenu background color when mouse is over.')#">
+                <label for="highsubbgcolor">
+                    <xar:mlstring>
+                        SubMenu Background color (mouse over):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="highsubbgcolor" value="#$highsubbgcolor#" size="10" />
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Font color when mouse is not over.')#">
+                <label for="fontlowcolor">
+                    <xar:mlstring>
+                        Font color:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="fontlowcolor" value="#$fontlowcolor#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Background color when mouse is over.')#">
+                <label for="fonthighcolor">
+                    <xar:mlstring>
+                        Font color (mouse over):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="fonthighcolor" value="#$fonthighcolor#" size="10" />
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Submenu font color when mouse is not over.')#">
+                <label for="fontsublowcolor">
+                    <xar:mlstring>
+                        Submenu Font color:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="fontsublowcolor" value="#$fontsublowcolor#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Submenu background color when mouse is over.')#">
+                <label for="fontsubhighcolor">
+                    <xar:mlstring>
+                        Submenu Font color (mouse over):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="fontsubhighcolor" value="#$fontsubhighcolor#" size="10" />
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Border color.')#">
+                <label for="bordercolor">
+                    <xar:mlstring>
+                         Border color:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="bordercolor" value="#$bordercolor#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Submenu border color.')#">
+                <label for="bordersubcolor">
+                    <xar:mlstring>
+                         Submenu Border color:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="bordersubcolor" value="#$bordersubcolor#" size="10" />
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('  Border width.')#">
+                <label for="borderwidth">
+                    <xar:mlstring>
+                          Border width:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="borderwidth" value="#$borderwidth#" size="10" />
+        </span>
+</p>        
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Border between elements.')#">
+                <label for="borderbtwnelmnts">
+                    <xar:mlstring>
+                          Border between elements:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+        <xar:if condition="$borderbtwnelmnts eq 1">
+            <input type="checkbox" value="1" name="borderbtwnelmnts" checked="checked" />
+            <xar:else />
+            <input type="checkbox" value="1" name="borderbtwnelmnts" />
+        </xar:if>
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Font family menu items.')#">
+                <label for="fontfamily">
+                    <xar:mlstring>
+                          Font family:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="fontfamily" value="#$fontfamily#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Font size menu items.')#">
+                <label for="fontsize">
+                    <xar:mlstring>
+                          Font size:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="fontsize" value="#$fontsize#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+    <span style="float: left; width: 60%; text-align: right;">
+        <span class="help" title="#xarML('Select if you would like bold menu items.')#">
+            <label for="fontbold">
+                <xar:mlstring>
+                     Bold menu items:
+                </xar:mlstring>
+            </label>
+        </span>
+    </span>
+    <span style="float: right; width: 40%; text-align: left;">
+        <xar:if condition="$fontbold eq 1">
+            <input type="checkbox" value="1" name="fontbold" checked="checked" />
+        <xar:else />
+            <input type="checkbox" value="1" name="fontbold" />
+        </xar:if>
+    </span>
+</p>
+<p style="float:left; width:100%;">
+    <span style="float: left; width: 60%; text-align: right;">
+        <span class="help" title="#xarML('Select if you would like italic menu items.')#">
+            <label for="fontitalic">
+                <xar:mlstring>
+                     Italic menu items:
+                </xar:mlstring>
+            </label>
+        </span>
+    </span>
+    <span style="float: right; width: 40%; text-align: left;">
+        <xar:if condition="$fontitalic eq 1">
+            <input type="checkbox" value="1" name="fontitalic" checked="checked" />
+            <xar:else />
+            <input type="checkbox" value="1" name="fontitalic" />
+        </xar:if>
+    </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Item text position left, center or right.')#">
+                <label for="menutextcentered">
+                    <xar:mlstring>
+                          Item text position
+                    </xar:mlstring>
+                </label>
+                : 
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <select name="menutextcentered">
+                <xar:if condition="$menutextcentered eq 'left'">
+                    <option name="id" value="left" selected>left</option>
+                <xar:else />
+                    <option name="id" value="left">left</option>
+                </xar:if>
+                <xar:if condition="$menutextcentered eq 'center'">
+                    <option name="id" value="center" selected>center</option>
+                <xar:else />
+                    <option name="id" value="center">center</option>
+                </xar:if>
+                <xar:if condition="$menutextcentered eq 'right'">
+                    <option name="id" value="right" selected>right</option>
+                <xar:else />
+                    <option name="id" value="right">right</option>
+                </xar:if>
+            </select>
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Menu horizontal position left, center or right.')#">
+                <label for="menucentered">
+                    <xar:mlstring>
+                           Menu horizontal position:
+                    </xar:mlstring>
+                </label>
+                : 
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <select name="menucentered">
+                <xar:if condition="$menucentered eq 'left'">
+                    <option name="id" value="left" selected>left</option>
+                <xar:else />
+                    <option name="id" value="left">left</option>
+                </xar:if>
+                <xar:if condition="$menucentered eq 'center'">
+                    <option name="id" value="center" selected>center</option>
+                <xar:else />
+                    <option name="id" value="center">center</option>
+                </xar:if>
+                <xar:if condition="$menucentered eq 'right'">
+                    <option name="id" value="right" selected>right</option>
+                <xar:else />
+                    <option name="id" value="right">right</option>
+                </xar:if>
+            </select>
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('  Menu vertical position top, middle,bottom or static')#">
+                <label for="menuvertcentered">
+                    <xar:mlstring>
+                           Menu vertical position:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <select name="menuvertcentered">
+                <xar:if condition="$menuvertcentered eq 'top'">
+                    <option name="id" value="top" selected>top</option>
+                <xar:else />
+                    <option name="id" value="top">top</option>
+                </xar:if>
+                <xar:if condition="$menuvertcentered eq 'middle'">
+                    <option name="id" value="middle" selected>middle</option>
+                <xar:else />
+                    <option name="id" value="middle">middle</option>
+                </xar:if>
+                <xar:if condition="$menuvertcentered eq 'bottom'">
+                    <option name="id" value="bottom" selected>bottom</option>
+                <xar:else />
+                    <option name="id" value="bottom">bottom</option>
+                </xar:if>
+            </select>
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('horizontal overlap child/ parent')#">
+                <label for="childoverlap">
+                    <xar:mlstring>
+                           Horizontal overlap child/parent:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="childoverlap" value="#$childoverlap#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('vertical overlap child/ parent')#">
+                <label for="childverticaloverlap">
+                    <xar:mlstring>
+                           Vertical overlap child/ parent:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="childverticaloverlap" value="#$childverticaloverlap#" size="10" />
+        </span>
+</p>   
+  
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Menu offset y coordinate')#">
+                <label for="starttop">
+                    <xar:mlstring>
+                          Offset top:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="starttop" value="#$starttop#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Menu offset x coordinate')#">
+                <label for="startleft">
+                    <xar:mlstring>
+                          Offset left:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="startleft" value="#$startleft#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Multiple frames y correction')#">
+                <label for="vercorrect">
+                    <xar:mlstring>
+                           Multiple frames y correction:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="vercorrect" value="#$vercorrect#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Multiple frames x correction')#">
+                <label for="horcorrect">
+                    <xar:mlstring>
+                           Multiple frames x correction:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="horcorrect" value="#$horcorrect#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Top padding')#">
+                <label for="toppadding">
+                    <xar:mlstring>
+                          Top padding:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="toppadding" value="#$toppadding#" size="10" />
+        </span>
+</p>    
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML(' Left padding')#">
+                <label for="leftpadding">
+                    <xar:mlstring>
+                           Left padding:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="leftpadding" value="#$leftpadding#" size="10" />
+        </span>
+</p>    
+
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('  delay before menu folds in')#">
+                <label for="disappeardelay">
+                    <xar:mlstring>
+                           Delay before menu folds in:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <input type="text" name="disappeardelay" value="#$disappeardelay#" size="10" />
+        </span>
+</p>       
+<p style="float:left; width:100%;">
+    <span style="float: left; width: 60%; text-align: right;">
+        <span class="help" title="#xarML('Enable menu item unfold on click.')#">
+            <label for="unfoldsonclick">
+                <xar:mlstring>
+                     Enable menu item unfold on click:
+                </xar:mlstring>
+            </label>
+        </span>
+    </span>
+    <span style="float: right; width: 40%; text-align: left;">
+        <xar:if condition="$unfoldsonclick eq 1">
+            <input type="checkbox" value="1" name="unfoldsonclick" checked="checked" />
+            <xar:else />
+            <input type="checkbox" value="1" name="unfoldsonclick" />
+        </xar:if>
+    </span>
+</p>    
+<p style="float:left; width:100%;">
+    <span style="float: left; width: 60%; text-align: right;">
+        <span class="help" title="#xarML('Menu tree checking on or off 1 or 0.')#">
+            <label for="webmastercheck">
+                <xar:mlstring>
+                    Menu tree checking (turn off when running):
+                </xar:mlstring>
+            </label>
+        </span>
+    </span>
+    <span style="float: right; width: 40%; text-align: left;">
+        <xar:if condition="$webmastercheck eq 1">
+            <input type="checkbox" value="1" name="webmastercheck" checked="checked" />
+            <xar:else />
+            <input type="checkbox" value="1" name="webmastercheck" />
+        </xar:if>
+    </span>
+</p>    
+<p style="float:left; width:100%;">
+    <span style="float: left; width: 60%; text-align: right;">
+        <span class="help" title="#xarML('Keep selected path highligthed.')#">
+            <label for="keephilite">
+                <xar:mlstring>
+                     Keep selected path highligthed:
+                </xar:mlstring>
+            </label>
+        </span>
+    </span>
+    <span style="float: right; width: 40%; text-align: left;">
+        <xar:if condition="$keephilite eq 1">
+            <input type="checkbox" value="1" name="keephilite" checked="checked" />
+            <xar:else />
+            <input type="checkbox" value="1" name="keephilite" />
+        </xar:if>
+    </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 60%; text-align: right;">
+            <span class="help" title="#xarML('Show arrow gifs.)')#">
+                <label for="showarrow">
+                    <xar:mlstring>
+                           Show arrow gifs:
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 40%; text-align: left;">
+            <xar:if condition="$showarrow eq 1">
+            <input type="checkbox" value="1" name="showarrow" checked="checked" />
+            <xar:else />
+            <input type="checkbox" value="1" name="showarrow" />
+        </xar:if>
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 30%; text-align: right;">
+            <span class="help" title="#xarML('Arrow gif.)')#">
+                <label for="arrowgif">
+                    <xar:mlstring>
+                           Arrow gif (name, width, height):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 70%; text-align: left;">
+            <input type="text" name="arrowgifname" value="#$arrowgif['name']#" size="10" />&nbsp;&nbsp;
+            <input type="text" name="arrowgifwidth" value="#$arrowgif['width']#" size="4" />&nbsp;&nbsp;
+            <input type="text" name="arrowgifheight" value="#$arrowgif['height']#" size="4" />
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 30%; text-align: right;">
+            <span class="help" title="#xarML('Arrow gif.)')#">
+                <label for="downarrowgif">
+                    <xar:mlstring>
+                           Arrow down gif (name, width, height):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 70%; text-align: left;">
+            <input type="text" name="downarrowgifname" value="#$downarrowgif['name']#" size="10" />&nbsp;&nbsp;
+            <input type="text" name="downarrowgifwidth" value="#$downarrowgif['width']#" size="4" />&nbsp;&nbsp;
+            <input type="text" name="downarrowgifheight" value="#$downarrowgif['height']#" size="4" />
+        </span>
+</p>
+<p style="float:left; width:100%;">
+        <span style="float: left; width: 30%; text-align: right;">
+            <span class="help" title="#xarML('Arrow gif.)')#">
+                <label for="leftarrowgif">
+                    <xar:mlstring>
+                           Arrow left gif (name, width, height):
+                    </xar:mlstring>
+                </label>
+            </span>
+        </span>
+        <span style="float: right; width: 70%; text-align: left;">
+            <input type="text" name="leftarrowgifname" value="#$leftarrowgif['name']#" size="10" />&nbsp;&nbsp;
+            <input type="text" name="leftarrowgifwidth" value="#$leftarrowgif['width']#" size="4" />&nbsp;&nbsp;
+            <input type="text" name="leftarrowgifheight" value="#$leftarrowgif['height']#" size="4" />
+        </span>
+</p>
+     
+<p>
+    <xar:mlstring>Menu Content</xar:mlstring> 
+    <br />
+    <xar:mlstring>
+        For rollover images set "Title" to:  "rollover:Image1.jpg:Image2.jpg"
+    </xar:mlstring>
+</p>
+
+<table class="xar-norm-outline">
+    <tr>
+        <th align="center">
+            <xar:mlstring>Title</xar:mlstring>
+        </th>
+        <th align="center">
+            <xar:mlstring>URL</xar:mlstring>
+        </th>
+        <th align="center">
+            <xar:mlstring>Description (optional)</xar:mlstring>
+        </th>
+        <th align="center">
+            <xar:mlstring>Delete</xar:mlstring>
+        </th>
+        <th align="center">
+            <xar:mlstring>Child</xar:mlstring>
+        </th>
+    </tr>
+    <xar:if condition="!empty($menu)">
+        <xar:loop name="$menulines">
+            <tr>
+                <td valign="top">
+                    <input type="text" name="linkname[#$loop:index#]" maxlength="255" value="#$loop:item[1]#" class="xar-norm" />
+                </td>
+                <td valign="top">
+                    <input type="text" name="linkurl[#$loop:index#]" maxlength="255" value="#$loop:item[0]#" class="xar-norm" />
+                </td>
+                <td valign="top">
+                    <input type="text" name="linkdesc[#$loop:index#]" maxlength="255" value="#$loop:item[2]#" class="xar-norm" />
+                </td>
+                <td valign="top">
+                    <input type="checkbox" name="linkdelete[#$loop:index#]" value="1" class="xar-norm" />
+                </td>
+                <td valign="top">
+                    <xar:if condition="empty($loop:item[3])">
+                        <input type="checkbox" name="linkchild[#$loop:index#]" value="1" class="xar-norm" />
+                        <xar:else />
+                        <input type="checkbox" name="linkchild[#$loop:index#]" value="1" class="xar-norm" checked="checked" />
+                    </xar:if>
+                </td>
+            </tr>
+        </xar:loop>
+    </xar:if>
+    <tr>
+        <td>
+            <input type="text" name="new_linkname" maxlength="255" class="xar-norm" />
+        </td>
+        <td>
+            <input type="text" name="new_linkurl" maxlength="255" class="xar-norm" />
+        </td>
+        <td class="xar-norm">
+            <input type="text" name="new_linkdesc" maxlength="255" class="xar-norm" />
+        </td>
+        <td align="center" class="xar-norm">
+            <xar:mlstring>
+                New Line 
+            </xar:mlstring>
+        </td>
+        <td class="xar-norm">
+            <input type="checkbox" name="new_linkinsert" value="1" class="xar-norm" />
+        </td>
+    </tr>
+</table>

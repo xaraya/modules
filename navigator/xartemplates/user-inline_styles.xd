@@ -1,0 +1,12 @@
+<style type="text/css">
+<xar:foreach in="$styles" key="$name" value="$style">
+
+/* Styles for ID: #$name# */
+
+#$style#
+
+/* end of styles for ID: #$name# */
+
+</xar:foreach>
+
+</style>

@@ -1,0 +1,20 @@
+<div id="chsf-chsfsubscribe-wrapper">
+    <h2 class="xar-subscribe-title">
+        #$title# 
+    </h2>
+    <p class="xar-subscribe-body">
+        #$description# 
+    </p>
+    <p class="xar-subscribe-link">
+        <a href="#$subscribe_link#">
+            #$subscribe_text#
+        </a>
+    </p>
+    <xar:if condition="!empty($archive_link)">
+        <p class="xar-subscribe-link">
+            <a href="#$archive_link#">
+                #$archive_text#
+            </a>
+        </p>
+    </xar:if>
+</div>

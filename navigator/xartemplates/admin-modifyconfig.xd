@@ -1,0 +1,95 @@
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Navigator Administration</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>Modify Navigator Configuration</xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+
+        <form method="post" action="#xarModUrl('navigator', 'admin', 'updateconfig')#">
+            <input type="hidden" name="authid" value="#$authid#">
+            <p>
+                <strong><xar:mlstring>Use Category Matrix</xar:mlstring>:</strong>&nbsp;&nbsp;
+                <xar:if condition="$matrix">
+                    <input type="checkbox" name="matrix" value="true" checked="checked" onChange="javascript:this.form.submit()">
+                <xar:else />
+                    <input type="checkbox" name="matrix" value="true" onChange="javascript:this.form.submit()">
+                </xar:if>
+                <br />
+                <xar:mlstring>
+                    Selecting Matrix will allow you to organize your navigation in a matrix style where you have
+                    one primary category and a secondary category. If you think of your categories as
+                    being represented by a graph, the primary category would be the on the X plane, and
+                    the secondary category group would be on the Y plane. Default is SIMPLE mode with only the
+                    primary category available.<br />
+                </xar:mlstring>
+            </p>
+            <p>
+                <strong><xar:mlstring>Primary Category</xar:mlstring>:</strong>&nbsp;&nbsp;
+                #$primarySelect#
+                <br />
+                <xar:mlstring>
+                    [ ENTER DESCRIPTION HERE ]
+                </xar:mlstring>
+            </p>
+
+            <xar:if condition="$matrix">
+                <div style="width: 200px; float: left;">
+                    <p>
+                        <strong><xar:mlstring>Secondary Category</xar:mlstring>:</strong>&nbsp;&nbsp;
+                    </p>
+                    <p>
+                        #$secondarySelect#
+                    </p>
+                </div>
+                <xar:if condition="isset($secDefSelect) AND !empty($secDefSelect)">
+                    <div style="float: left; width: 200px;">
+                        <p>
+                            <strong><xar:mlstring>Secondary Default Start Point</xar:mlstring>:</strong>&nbsp;&nbsp;
+                        </p>
+                        <p>
+                            #$secDefSelect#
+                        </p>
+                    </div>
+                </xar:if>
+                <p style="clear: both;">
+                    <xar:mlstring>
+                        [ ENTER DESCRIPTION HERE ]
+                    </xar:mlstring>
+                </p>
+            </xar:if>
+            <p>
+                <input type="submit" name="update" value="#xarMl('Update Configuration')#">
+            </p>
+        </form>
+        <hr />
+        <xar:if condition="!empty($secondary_list) AND is_array($secondary_list)">
+            <p>
+                <xar:mlstring>
+                    Secondary Category List:
+                </xar:mlstring>
+                <ul>
+                <xar:foreach in="$secondary_list" key="$catId" value="$type">
+                    <li style="list-style-type: none;">
+                        <xar:if condition="isset($type['startpoint']) AND $type['startpoint']">
+                            <span style="margin-left: #$type['indent'] * 20#px; color: red;">
+                        <xar:else />
+                            <span style="margin-left: #$type['indent'] * 20#px;">
+                        </xar:if>
+                            <xar:if condition="isset($type['parent']) AND $type['parent']">
+                                <strong>#$type['name']#</strong>
+                            <xar:else />
+                                #$type['name']#
+                            </xar:if>
+                        </span>
+                    </li>
+                </xar:foreach>
+                </ul>
+            </p>
+        </xar:if>
+    </div>
+</div>

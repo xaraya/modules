@@ -1,0 +1,133 @@
+<xar:base-include-javascript filename="navigator_image_changer.js" />
+<div class="xar-mod-head">
+    <span class="xar-mod-title">
+        <xar:mlstring>Navigator Dynamic Images</xar:mlstring>
+    </span>
+</div>
+
+<div class="xar-mod-body">
+    <h2>
+        <xar:mlstring>Modify Block Images</xar:mlstring>
+    </h2>
+    <div style="margin: auto;">
+
+        <p>
+            <strong>
+                <xar:mlstring>Block Id:</xar:mlstring>:
+            </strong>&nbsp;&nbsp;
+
+            <xar:if condition="isset($left_url)">
+                <a href="#$left_url#">#$left_label#</a>
+            <xar:else />
+                #$left_label#
+            </xar:if>
+            |
+            <xar:if condition="isset($right_url)">
+                <a href="#$right_url#">#$right_label#</a>
+            <xar:else />
+                #$right_label#
+            </xar:if>
+        </p>
+
+        <xar:if condition="is_array($categories) AND count($categories)">
+            <p>
+                <strong>
+                    <xar:mlstring>Select Program Area</xar:mlstring>:
+                </strong>
+            </p>
+            <p>
+                <xar:foreach in="$categories" value="$cat">
+                    <span style="margin-left: 20px;">
+                        <xar:if condition="isset($cat['url'])">
+                            <a href="#$cat['url']#">#$cat['name']#</a>
+                        <xar:else />
+                            #$cat['name']#
+                        </xar:if>
+                    </span>
+                    <br />
+                </xar:foreach>
+            </p>
+            <form method="post" action="#xarModUrl('navigator', 'admin', 'dynimages')#" name="post" id="post">
+                <p style="display: none;">
+                    <input type="hidden" name="authid" value="$authid">
+                </p>
+
+                <h2>
+                    Working in: [<strong>#$categories[$catid]['name']#</strong>]<br /> Block Id: [<strong>#$Id#</strong>]
+                </h2>
+
+                <div>
+                    <xar:if condition="!isset($secondary_list['error'])">
+
+                        <xar:foreach in="$secondary_list" key="$typeId" value="$type">
+                            <xar:if condition="isset($paImageList[$typeId][$Id])">
+                                <xar:set name="$imageId">$paImageList[$typeId][$Id]</xar:set>
+                            <xar:elseif condition="isset($paImageList[0][$Id])" />
+                                <xar:set name="$imageId">$paImageList[0][$Id]</xar:set>
+                            <xar:elseif condition="isset($defSiteImages[$Id])" />
+                                <xar:set name="$imageId">$defSiteImages[$Id]</xar:set>
+                            </xar:if>
+                            <div style="clear: left; height: 16px; display: block;">&nbsp;</div>
+                            <div>
+                                <span style="float: left; width: 50%;">
+                                    <div style="margin-left: #$type['indent']#px;">
+                                        <span style="font-size: 16px;">
+                                            <xar:if condition="$type['indent'] eq 0">
+                                                <strong>#$type['name']#</strong>
+                                            <xar:elseif condition="$type['indent'] eq 1" />
+                                                <em>#$type['name']#</em>
+                                            <xar:else />
+                                                #$type['name']#
+                                            </xar:if>
+                                        </span>
+                                    </div>
+                                    <div style="margin-left: #$type['indent']#px;">
+                                        <select name="dynimages[#$typeId#][#$Id#]" onChange="javascript:navigator_image_changer('#$jsURL#', #$typeId#, '#$Id#');">
+                                            <option value="0">Default</option>
+                                            <!--- The Default has a type == 0 so, if we are on that one,
+                                                  we use a different image list --->
+                                            <xar:if condition="$typeId eq 0">
+                                                <xar:foreach in="$fileListAll" value="$file">
+                                                    <xar:if condition="isset($imageId) AND $imageId eq $file['fileId']">
+                                                        <option value="#$file['fileId']#" selected="selected">#$file['fileName']#</option>
+                                                    <xar:else />
+                                                        <option value="#$file['fileId']#">#$file['fileName']#</option>
+                                                    </xar:if>
+                                                </xar:foreach>
+                                            <xar:else />
+                                                <xar:foreach in="$fileList" value="$file">
+                                                    <xar:if condition="isset($imageId) AND $imageId eq $file['fileId']">
+                                                        <option value="#$file['fileId']#" selected="selected">#$file['fileName']#</option>
+                                                    <xar:else />
+                                                        <option value="#$file['fileId']#">#$file['fileName']#</option>
+                                                    </xar:if>
+                                                </xar:foreach>
+                                            </xar:if>
+                                        </select>
+                                    </div>
+                                </span>
+                                <span style="float: left; width: 50%;">
+                                    <xar:if condition="!empty($imageId)">
+                                        <xar:image-resize src="$imageId" width="64px" id="thumb_$typeId" constrain="1" label="random picture" />
+                                    <xar:else />
+                                         <img src="" id="thumb_#$typeId#" width="64px" height="64" />
+                                    </xar:if>
+                                </span>
+                            </div>
+                        </xar:foreach>
+                        <div style="clear: left; height: 16px; display: block;">&nbsp;</div>
+                    <xar:else />
+                        <p>
+                            #$secondary_list['error']#
+                        </p>
+                    </xar:if>
+                </div>
+                <p>
+                    <input type="hidden" name="Id" value="#$Id#" />
+                    <input type="hidden" name="catid" value="#$catid#" />
+                    <input type="submit" name="update" value="#xarMl('Update Configuration')#" />
+                </p>
+            </form>
+        </xar:if>
+    </div>
+</div>

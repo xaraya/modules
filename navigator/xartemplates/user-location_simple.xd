@@ -1,0 +1,3 @@
+<xar:if condition="!empty($header)">
+    <span class="xar-header" id="#$id#">#$header#</span>
+</xar:if>
