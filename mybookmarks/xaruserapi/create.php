@@ -22,7 +22,7 @@ function mybookmarks_userapi_create($args)
         return;
     }
     // Security Check
-    if(!xarSecurityCheck('EditBBCode')) return;
+    if(!xarSecurityCheck('Viewmybookmarks')) return;
 
     // Get datbase setup
     $dbconn =& xarDBGetConn();
