@@ -74,53 +74,20 @@ function comments_admin_view()
  */
 function comments_admin_updateconfig()
 {
+    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSecurityCheck('Comments-Admin')) return;
 
-  if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
-
-    // Security Check
-    if(!xarSecurityCheck('Comments-Admin'))
-        return;
-
-    // Get parameters
-    $xar_depth      = xarVarCleanFromInput('xar_depth');
-    $xar_render     = xarVarCleanFromInput('xar_render');
-    $xar_sortby     = xarVarCleanFromInput('xar_sortby');
-    $xar_order      = xarVarCleanFromInput('xar_order');
-    $xar_postanon   = xarVarCleanFromInput('xar_postanon');
-    $xar_authorize  = xarVarCleanFromInput('xar_authorize');
-
-    // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey())
-        return;
-
-    // Update module variables.
-    if (isset($xar_postanon) && $xar_postanon == 'on') {
-        $xar_postanon = 1;
-    } else {
-        $xar_postanon = 0;
-    }
-
-    if (isset($xar_authorize) && $xar_authorize == 'on') {
-        $xar_authorize = 1;
-    } else {
-        $xar_authorize = 0;
-    }
-
-    if (!isset($xar_depth)) {
-        $xar_depth = _COM_MAX_DEPTH;
-    }
-
-    if (!isset($xar_render)) {
-        $xar_render = _COM_VIEW_THREADED;
-    }
-
-    if (!isset($xar_sortby)) {
-        $xar_sortby = _COM_SORTBY_THEAD;
-    }
-
-    if (!isset($xar_order)) {
-        $xar_order = _COM_SORT_ASC;
-    }
+    if (!xarVarFetch('editstamp','int:1',$editstamp,0,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_wrap','checkbox', $xar_wrap, false,XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('showoptions', 'checkbox', $showoptions, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_postanon', 'checkbox', $xar_postanon, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_depth', 'str:1:', $xar_depth, _COM_MAX_DEPTH, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_render', 'str:1:', $xar_render, _COM_VIEW_THREADED, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_sortby', 'str:1:', $xar_sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_order', 'str:1:', $xar_order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('xar_authorize', 'checkbox', $xar_authorize, false, XARVAR_NOT_REQUIRED)) return;
 
     xarModSetVar('comments', 'AllowPostAsAnon', $xar_postanon);
     xarModSetVar('comments', 'AuthorizeComments', $xar_authorize);
@@ -129,20 +96,12 @@ function comments_admin_updateconfig()
     xarModSetVar('comments', 'sortby', $xar_sortby);
     xarModSetVar('comments', 'order', $xar_order);
     xarModSetVar('comments', 'editstamp', $editstamp);
-
-    if (!xarVarFetch('numstats', 'int', $numstats, 100, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('showtitle', 'checkbox', $showtitle, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('showoptions', 'checkbox', $showoptions, false, XARVAR_NOT_REQUIRED)) return;
+    xarModSetVar('comments', 'wrap', $xar_wrap);
     xarModSetVar('comments', 'numstats', $numstats);
     xarModSetVar('comments', 'showtitle', $showtitle);
     xarModSetVar('comments', 'showoptions', $showoptions);
-    // Call updateconfig hooks
     xarModCallHooks('module', 'updateconfig', 'comments', array('module' => 'comments'));
-
-    //Redirect
     xarResponseRedirect(xarModURL('comments', 'admin', 'modifyconfig'));
-
-    // Return
     return true;
 }
 
