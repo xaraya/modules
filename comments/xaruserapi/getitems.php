@@ -47,7 +47,10 @@ function comments_userapi_getitems($args)
     $status = strtolower($status);
 
     // Security check
-    if (!xarSecurityCheck('Comments-Read')) return;
+    if (!isset($mask)){
+        $mask = 'Comments-Read';
+    }
+    if (!xarSecurityCheck($mask)) return;
 
     // Database information
     $dbconn =& xarDBGetConn();
@@ -101,8 +104,6 @@ function comments_userapi_getitems($args)
         $result->MoveNext();
     }
     $result->close();
-
     return $getitems;
 }
-
 ?>
