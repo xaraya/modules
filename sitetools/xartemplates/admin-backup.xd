@@ -1,0 +1,49 @@
+<xar:set name="$confirmbutton"><xar:mlstring>Backup Now!</xar:mlstring></xar:set>
+<xar:set name="$backuptitle"><xar:mlstring>Backing Up Database:</xar:mlstring></xar:set>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Backup Database Tables</xar:mlstring></h2>
+<div style="margin: auto;">
+
+    <span style="float: left; width: 98%; text-align: right;">
+       <form action="#xarModURL('sitetools', 'admin', 'backup')#" method="post" enctype="application/x-www-form-urlencoded" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="confirm" id="confirm" value="true" />
+    </span>
+
+     <div style="clear: both; padding-top: 10px;">
+         <span class="xar-mod-title" style="float: left; padding-bottom: 10px; padding-top: 0px; width: 98%; text-align: center;">
+            #$backuptitle# #$dbname#
+         </span>
+    </div>
+<!---    <div style="clear: both; padding-top: 10px;">
+	    <table width="100%" border="0" cellspacing="1" cellpadding="1">
+            <tr>
+                <th nowrap="nowrap">
+                    <label class="xar-mod-title"><xar:mlstring>Table</xar:mlstring></label>
+                </th>
+                <th nowrap="nowrap">
+                    <label class="xar-mod-title"><xar:mlstring>Backup</xar:mlstring></label>
+                </th>
+               </tr>
+        <xar:foreach in="$tabledat" value="$tableinfo">
+           <tr>
+              <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                  #$tableinfo['name']#
+              </td>
+              <td class="xar-norm-outline" style="text-align: right;margin-top:2px; margin-bottom:2px;width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+               <input type="hidden" name="#$tableinfo['name']#" id="#$tableinfo['name']#" value="true" />
+                  <input type="checkbox" value="1" name="#$tableinfo['id']#" />
+              </td>
+
+             </tr>
+        </xar:foreach>
+        </table>
+    </div> --->
+       <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
+            <input type="submit" value="#$confirmbutton#" align="center" />
+        </span>
+     </form>
+
+</div>
+</div>

@@ -1,0 +1,92 @@
+<xar:set name="$optibutton"><xar:mlstring>Optimize Now!</xar:mlstring></xar:set>
+<xar:set name="$optinote"><xar:mlstring>This option will optimize your MySQL database tables.
+                                        </xar:mlstring></xar:set>
+<xar:set name="$optititle"><xar:mlstring>Optimizing Database:</xar:mlstring></xar:set>
+<xar:set name="$alreadyopt"><xar:mlstring>Already optimized!</xar:mlstring></xar:set>
+<xar:set name="$nowopt"><xar:mlstring>Optimized</xar:mlstring></xar:set>
+<xar:set name="$kbs"><xar:mlstring>kb</xar:mlstring></xar:set>
+<xar:set name="$runtext"><xar:mlstring>Number of times this optimization has run: </xar:mlstring></xar:set>
+<xar:set name="$savedtext"><xar:mlstring>Running optimization has saved a total of </xar:mlstring></xar:set>
+<xar:set name="$totaltext"><xar:mlstring>The database is currently a total size of </xar:mlstring></xar:set>
+
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Optimize Database Tables</xar:mlstring></h2>
+<div style="margin: auto;">
+ <xar:if condition="$optimized eq false">
+    <span style="float: left; width: 98%; text-align: right;">
+       <form action="#xarModURL('sitetools', 'admin', 'optimize')#" method="post" enctype="application/x-www-form-urlencoded" />
+        <input type="hidden" name="authid" id="authid" value="#$authid#" />
+        <input type="hidden" name="confirm" id="confirm" value="true" />
+    </span>
+    <span style="float: left; padding-bottom: 20px; padding-top: 30px; width: 98%; text-align: center;">
+       #$optinote#
+    </span>
+    <span style="float: left; padding-top: 30px; width: 98%; text-align: center;">
+        <input type="submit" value="#$optibutton#" align="center" />
+    </span>
+
+
+ <xar:elseif condition="$optimized eq true" />
+     <div style="clear: both; padding-top: 10px;">
+         <span class="xar-mod-title" style="float: left; padding-bottom: 10px; padding-top: 0px; width: 98%; text-align: center;">
+            #$optititle#&nbsp;#$dbname#
+         </span>
+    </div>
+    <div style="clear: both; padding-top: 10px;">
+	    <table width="100%" border="0" cellspacing="1" cellpadding="1">
+            <tr>
+                <th nowrap="nowrap">
+                    <label class="xar-mod-title"><xar:mlstring>Table</xar:mlstring></label>
+                </th>
+                <th nowrap="nowrap">
+                    <label class="xar-mod-title"><xar:mlstring>Size</xar:mlstring></label>
+                </th>
+                <th nowrap="nowrap">
+                    <label class="xar-mod-title"><xar:mlstring>Saved</xar:mlstring></label>
+                </th>
+                <th nowrap="nowrap">
+                    <label class="xar-mod-title"><xar:mlstring>State</xar:mlstring></label>
+                </th>
+            </tr>
+        <xar:foreach in="$tabledat" value="$tableinfo">
+           <tr>
+              <td class="xar-norm-outline" style="text-align: left;margin-left:2px; margin-top:2px; margin-bottom:2px;width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                  #$tableinfo['tablename']#
+              </td>
+              <td class="xar-norm-outline" style="text-align: right;margin-top:2px; margin-bottom:2px;width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                  #$tableinfo['total']# #$kbs#
+              </td>
+              <td class="xar-norm-outline" style="text-align: right;margin-top:2px; margin-bottom:2px;width: 100px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                      #$tableinfo['gain']# #$kbs#
+              </td>
+              <td class="xar-norm-outline" style="text-align: right;margin-top:2px; margin-bottom:2px;width: 110px;border-width: 0px 0px 1px 0px;border-style: dotted;">
+                  <xar:if condition="$tableinfo['gain'] gt 0">
+                      #$nowopt#
+                  <xar:else />
+                      #$alreadyopt#
+                  </xar:if>
+              </td>
+             </tr>
+        </xar:foreach>
+        </table>
+    </div>
+     <div style="clear: both; padding-top: 5px;">
+         <span class="xar-txttitle" style="float: left; padding-bottom: 0px; padding-top: 5px; width: 98%; text-align: center; font:bold;">
+            #$runtext# #$totalruns#
+         </span>
+    </div>
+     <div style="clear: both; padding-top: 5px;">
+         <span class="xar-txttitle" style="float: left; padding-bottom: 20px; padding-top: 5px; width: 98%; text-align: center;">
+            #$totaltext# <span class="xar-accent">#$totalkbs#</span> #$kbs#
+         </span>
+    </div>
+
+     <div style="clear: both; padding-top: 5px;">
+         <span class="xar-txttitle" style="float: left; padding-bottom: 20px; padding-top: 5px; width: 98%; text-align: center;">
+            #$savedtext# <span class="xar-accent">#$totalgain#</span> #$kbs#
+         </span>
+    </div>
+
+</xar:if>
+</div>
+</div>

@@ -1,0 +1,2 @@
+jojodee (jojodee@xaraya.com) - author
+Michaelius (michaelius@nukeland.de) for basis of the Optimize function (from MySQL_Tools)

@@ -1,0 +1,151 @@
+<?php
+/*
+ * File: $Id: $
+ *
+ * SiteTools Module
+ *
+ * @package Xaraya eXtensible Management System
+ * @copyright (C) 2003 by Jo Dalle Nogare
+ * @link http://xaraya.athomeandabout.com
+ *
+ * @subpackage SiteTools module
+ * @author jojodee <http://xaraya.athomeandabout.com >
+*/
+
+/**
+ * Clear cache files
+ * @param  $ 'confirm' confirm that this item can be deleted
+ */
+function sitetools_admin_deletecache($args)
+{
+    // Get parameters from whatever input we need.
+    if (!xarVarFetch('delrss', 'checkbox', $delrss, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('delado', 'checkbox', $delado, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('deltempl', 'checkbox', $deltempl, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return; 
+
+    // Security check - important to do this as early as possible
+    if (!xarSecurityCheck('DeleteSiteTools')) {
+        return;
+    }
+    $data[]=array();
+    // Check for confirmation.
+    if (empty($confirm)) {
+        // No confirmation yet - display a suitable form to obtain confirmation
+        // of this action from the user
+
+        $data = xarModAPIFunc('sitetools', 'admin', 'menu');
+        $data['adopath']   = xarModGetVar('sitetools','adocachepath');
+        $data['rsspath']   = xarModGetVar('sitetools','rsscachepath');
+        $data['templpath'] = xarModGetVar('sitetools','templcachepath');
+        $data['delado']    = 0;
+        $data['delrss']    = 0;
+        $data['deltempl']  = 0;
+        $data['delfin']    = false;
+        // Generate a one-time authorisation code for this operation
+        $data['authid'] = xarSecGenAuthKey();
+        // Return the template variables defined in this function
+        return $data;
+    }
+    // If we get here it means that the user has confirmed the action
+
+    // Confirm authorisation code.
+    if (!xarSecConfirmAuthKey()) return;
+  if ($delado || $delrss || $deltempl) {
+    if ($delado==1) {
+        // recursively delete all adodb cache files
+        // Get site folder name
+        $adopath = xarModGetVar('sitetools','adocachepath');
+      
+        $var = is_dir($adopath);
+        if ($var) {
+            //chmod($adopath,0755); path should already be writable
+            if (!is_writable($adopath)) {
+                $msg = xarML("The ADODB cache directory and files in ".$adopath." could not be deleted!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
+                    return $msg;
+            } else { //making a few assumptions about structure of adodb cache subdirs and files here
+                $handle=opendir($adopath);
+                while (false !== ($file = readdir($handle))) {
+                    if (($file==".") || ($file == "..") || ($file == "index.html")) {
+                       //do nothing
+                    } else {
+                            $subhandle=opendir("{$adopath}/{$file}");
+                            while (false !== ($sfile = readdir($subhandle))){
+                                if (($sfile==".") || ($sfile == "..")) {
+                                //nothing
+                                }else {
+                                   unlink("{$adopath}/{$file}/{$sfile}");
+                                }
+                            }
+                            closedir($subhandle);
+                    rmdir("{$adopath}/{$file}");
+                     }
+                }
+                closedir($handle);
+                $data['delfin']    = true;                
+            }
+        }
+     }
+     if ($delrss==1) {
+        // delete all rss cache files
+        // Get site folder name
+        $rsspath = xarModGetVar('sitetools','rsscachepath');
+
+        $var = is_dir($rsspath);
+        if ($var) {
+            //chmod($templpath,0755); path should already be writable
+            if (!is_writable($rsspath)) {
+                $msg = xarML("The RSS cache directory and files in ".$rsspath." could not be deleted!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
+                    return $msg;
+             } else {
+                $handle=opendir($rsspath);
+                while (false !== ($file = readdir($handle))) {
+                  if ($file == "." || $file == ".." || $file == "index.htm"  || $file == "index.html") {
+                   //do nothing
+                  } else {
+                    unlink($rsspath."/".$file);//delete the file
+                  }
+                }
+                closedir($handle);
+                $data['delfin']    = true;
+            }
+        }
+     }
+
+     if ($deltempl==1) {
+        //  delete all template cache files
+        // Get site folder name
+        $templpath = xarModGetVar('sitetools','templcachepath');
+
+        $var = is_dir($templpath);
+        if ($var) {
+            //chmod($templpath,0755); ath should already be writable
+            if (!is_writable($templpath)) {
+                $msg = xarML("The Template cache directory and files in ".$templpath." could not be deleted!");
+                xarExceptionSet(XAR_USER_EXCEPTION, 'FILE_NOT_WRITEABLE', new DefaultUserException($msg));
+                    return $msg;
+            } else {
+                $handle=opendir($templpath);
+                while (false !== ($file = readdir($handle))) {
+                  if ($file == "." || $file == ".." || $file == "index.htm"  || $file == "index.html") {
+                   //do nothing
+                  } else {
+                    unlink($templpath."/".$file);//delete the file
+                  }
+                }
+                closedir($handle);
+                $data['delfin']    = true;                   
+            }
+        }
+     }
+     return $data;
+    }
+    // This function generated no output, and so now it is complete we redirect
+    // the user to an appropriate page for them to carry on their work
+   xarResponseRedirect(xarModURL('sitetools', 'admin', 'deletecache'));
+    // Return
+    return true;
+}
+?>

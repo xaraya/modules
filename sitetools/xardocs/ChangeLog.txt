@@ -1,0 +1,6 @@
+ChangeLog
+Version 0.0.1
+ * 2003-09-08 jojodee: Initial version - optimize and cache deletion routines.
+   To do: finish backup routines, wrappers for db functions so they are cross db compatible???
+
+

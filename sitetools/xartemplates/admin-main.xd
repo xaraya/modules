@@ -1,0 +1,43 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Administration - SiteTools</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+
+<h2><xar:mlstring>Overview</xar:mlstring></h2>
+
+<div style="float:right;display:block;padding:10px;">
+            <img src="modules/adminpanels/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div><div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-style: none none dotted none; padding-top: 10px;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div><div style="margin-left: 1.5em; margin-right: 1em; text-align:left; padding-top:10px;">
+            <em><xar:mlstring>SiteTools is a utility module that provides a number of related site 'housekeeping' utilities</xar:mlstring></em><xar:mlstring>:</xar:mlstring>
+            <p>By choosing an option from the SiteTools menu. At the present time you can:</p>
+        <ul>
+            <li><xar:mlstring>Optimize your MySQL database tables</xar:mlstring></li>
+            
+        <li><xar:mlstring>Delete Template, RSS or ADOdb cache files</xar:mlstring></li>
+            
+        <li><xar:mlstring>Backup your MySQL database tables //TO DO</xar:mlstring></li>
+            </ul>
+        
+     </div>
+    <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-style: none none dotted none; padding-top: 10px;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div><div style="margin-left: 1.5em; margin-right: 1em; text-align:left; padding-top:10px;">
+            <p><xar:mlstring>SiteTools only provides Administration options requiring administration priviledges.</xar:mlstring></p>
+            <p><xar:mlstring>Start by checking settings in the SiteTools configuration options.</xar:mlstring>
+            <p><xar:mlstring>Warning: Configuration should only be changed if you have already changed default cache paths in your Xaraya installation. If you really need to change the paths for this module you can do so in <em>SiteTools-ModifyConfig.</em> The 
+            cache directories should already exist and be chmod 777.</xar:mlstring></p></div>
+            <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px;  border-style: none none dotted none; padding-top:20px;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div><div style="margin-left: 1.5em; margin-right: 1em; text-align:left; padding-top:10px;">
+            <xar:mlstring>There are no included blocks at this time.</xar:mlstring></div><div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px;  border-style: none none dotted none; padding-top:20px;">
+            <xar:mlstring>Included Hooks</xar:mlstring></div><div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+        </div>
+        <div style="margin-left: 1.5em; margin-right: 1em; text-align:left; padding-top:10px;">
+            <xar:mlstring>There are no included hooks at this time.</xar:mlstring></div><div class="xar-mod-body" style="display:block;">
+		</div>
+
+		<div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; padding: 0.5em 1em 0.5em 1em; margin-top: 20px;">
+            <xar:mlstring>Extended information about this module can be found at&nbsp;</xar:mlstring><a href="http://xaraya.athomeandabout.com">http://xaraya.athomeandabout.com</a>
+        </div>
+    </div>
+</div>
