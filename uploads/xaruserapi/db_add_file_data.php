@@ -35,6 +35,12 @@ function uploads_userapi_db_add_file_data( $args ) {
         return FALSE;
     }
     
+	if (sizeof($fileData) >= (1024 * 64)) {
+		$msg = xarML('#(1) exceeds maximum storage limit of 64K per data chunk.', 'fileData');
+		xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'DATA_GT_BUFFER', SystemException($msg));
+		return FALSE;
+	}
+
     //add to uploads table
     // Get database setup
     list($dbconn) = xarDBGetConn();

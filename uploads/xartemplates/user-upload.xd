@@ -45,9 +45,7 @@
                                         This ID can be used in the content field of any module that this module is hooked to,
                                         in the format: 
                                     </xar:mlstring>
-                                        <pre> 
-                                            ##file:#$loop:item['fileId']###
-                                        </pre>
+                                        <pre>##file:#$loop:item['fileId']###</pre>
                                     <xar:mlstring>
                                         Doing so will create a link to the item for downloading purposes.
                                     </xar:mlstring>
@@ -110,9 +108,7 @@
                                         This ID can be used in the content field of any module that this module is hooked to,
                                         in the format: 
                                     </xar:mlstring>
-                                        <pre> 
-                                            ##file:#$loop:item['fileId']###
-                                        </pre>
+                                        <pre>##file:#$loop:item['fileId']###</pre>
                                     <xar:mlstring>
                                         Doing so will create a link to the item for downloading purposes.
                                     </xar:mlstring>

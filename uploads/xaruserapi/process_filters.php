@@ -7,6 +7,10 @@ function uploads_userapi_process_filters( $args ) {
      *  Set up the filter data for the template to use
      */
      
+    if (!isset($storeOptions)) {
+        $storeOptions = TRUE;
+    }
+    
     $options   =  unserialize(xarModGetVar('uploads', 'view.filter'));
     $data      =  $options['data'];
     $filter    =  $options['filter'];   
@@ -100,8 +104,11 @@ function uploads_userapi_process_filters( $args ) {
     unset($statuses);
     $filterInfo = array('data' => $data, 'filter' => $filter);
     
-    // Save the filter settings for later use
-    xarModSetUserVar('uploads','view.filter', serialize($filterInfo));
+    
+    if ($storeOptions) {
+        // Save the filter settings for later use
+        xarModSetUserVar('uploads','view.filter', serialize($filterInfo));
+    }
     
     return $filterInfo;
 }

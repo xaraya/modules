@@ -33,7 +33,7 @@ function uploads_userapi_db_get_file( $args )  {
     if (isset($fileId)) {
         if (is_array($fileId)) {
             $where[] = 'xar_fileEntry_id IN (' . implode(',', $fileIds) . ')';
-        } else {
+        } elseif (!empty($fileId)) {
             $where[] = "xar_fileEntry_id = $fileId";
         }
     }
@@ -82,7 +82,7 @@ function uploads_userapi_db_get_file( $args )  {
              WHERE $where";
     
     $result = $dbconn->Execute($sql);
-
+    
     if (!$result)  {
         return;
     }
@@ -91,8 +91,6 @@ function uploads_userapi_db_get_file( $args )  {
     if ($result->EOF) {
         return array();
     }
-    
-    $row = $result->GetRowAssoc(false);
     
     $importDir = xarModGetVar('uploads','path.imports-directory');
     $uploadDir = xarModGetVar('uploads','path.uploads-directory');
@@ -120,12 +118,11 @@ function uploads_userapi_db_get_file( $args )  {
         $fileInfo['fileSize']     = $row['xar_filesize'];
         $fileInfo['fileStatus']   = $row['xar_status'];
         $fileInfo['fileType']     = $row['xar_mime_type'];
+        $fileInfo['fileTypeInfo'] = xarModAPIFunc('mime', 'user', 'get_rev_mimetype', array('mimeType' => $fileInfo['fileType']));
         $fileInfo['storeType']    = $row['xar_store_type'];
         $fileInfo['mimeImage']    = xarModAPIFunc('mime', 'user', 'get_mime_image', array('mimeType' => $fileInfo['fileType']));
         $fileInfo['fileURL']      = xarServerGetBaseURL() . str_replace($base_directory, '', $fileInfo['fileLocation']);
         $fileInfo['fileDownload'] = xarModURL('uploads', 'user', 'download', array('fileId' => $fileInfo['fileId']));
-        
-        $row = $result->GetRowAssoc(false);
         
         if (stristr($fileInfo['fileLocation'], $importDir)) {
             $fileInfo['fileDirectory'] = dirname(str_replace($importDir, 'imports', $fileInfo['fileLocation']));
@@ -155,14 +152,11 @@ function uploads_userapi_db_get_file( $args )  {
                 break;
         }
         
-        $fileList[] = $fileInfo;
+        $fileList[$fileInfo['fileId']] = $fileInfo;
         $result->MoveNext();
     }
-
-    $result->Close();
-
-                                                                    
-   return $fileList;
+    
+    return $fileList;
 }
 
 ?>

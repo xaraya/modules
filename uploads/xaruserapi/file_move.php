@@ -24,12 +24,17 @@ function uploads_userapi_file_move( $args ) {
     
     // if it wasn't specified, assume TRUE
     if (!isset($isUpload)) {
-        $isUpload = TRUE;
-        $isLocal  = TRUE;
-    } elseif ($isUpload) {
+        $isUpload = FALSE;
+    }
+    
+    if (!isset($isLocal)) {
         $isLocal = TRUE;
     } 
     
+	if (!isset($isExternal)) {
+		$isExternal = FALSE;
+	}
+
     if (!isset($fileSrc)) {
         $msg = xarML('Missing parameter [#(1)] for function [#(2)] in module [#(3)]',
                      'fileSrc','file_move','uploads');
@@ -86,7 +91,7 @@ function uploads_userapi_file_move( $args ) {
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
             return FALSE;
         }
-    } elseif($isLocal) {
+    } elseif ($isLocal) {
         if (!copy($fileSrc, $fileDest)) {
             $msg = xarML('Unable to move file [#(1)] to destination [#(2)].',$fileSrc, $fileDest);
             xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_MOVE', new SystemException($msg));
@@ -94,8 +99,13 @@ function uploads_userapi_file_move( $args ) {
         } 
         // TODO: Think about unlinking the file after it's been copied and the 
         // potential ramifications of doing so.
-    } else {
-        // TODO: Grab remote file (web page?) and save it locally
+    } elseif ($isExternal) {
+        $args = array('fileSrc' => $fileSrc, 'fileDest' => $fileDest);    
+        
+        if (!xarModAPIFunc('uploads', 'user', 'file_save_external', $args)) {
+        
+		}    
+            // TODO: Grab remote file (web page?) and save it locally
     }
             
     

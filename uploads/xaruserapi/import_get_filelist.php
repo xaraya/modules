@@ -11,6 +11,7 @@
 
 function uploads_userapi_import_get_filelist( $args ) {
     
+    
     extract($args);
     
     $fileList    = array();
@@ -27,9 +28,39 @@ function uploads_userapi_import_get_filelist( $args ) {
     }
     
     if (!file_exists($fileLocation)) {
-        $msg = xarML('Unable to acquire list of files to import - Location does not exist!');
-        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_EXIST', new SystemException($msg));
-        return;
+        
+        // check to see if it's actually an external location that was passed in
+        if (eregi('^(http|ftp)\:\/\/([a-zA-Z.-]*/){1}([^.?&#]*/)?([^?&#/]*)?', $fileLocatoin, $matches)) {
+            
+            // The last indice in the matches array should 
+            // be the filename, or empty if we don't find one
+            $fileName = end($matches);
+            
+            // reset the internal array pointer to it's first element
+            reset($matches);
+            
+            if (empty($fileName)) {
+                // if we didn't get a filename, then this is an html file most likely
+                // so, we set the fileName to domain.com-index.html
+                $fileName = str_replace(array('.','/'), array('-',''), $matches[2]) . '-index.html';
+            }
+                
+            $fileList[$fileName]['fileSize'] = xarModAPIFunc('uploads','user','file_remote_filesize', 
+                                                              array('remoteLocation' => $fileLocation));
+            $fileList[$fileName]['fileName'] = $fileName;
+            // here we have to rely on the file extension to figure out the mime type
+            $fileList[$fileName]['fileType'] = xarModAPIFunc('mime', 'user', 'get_extension', 
+                                                              array('extensionName' => end(explode('.', $fileName))));
+			$fileList[$fileName]['fileSrc']  = $fileLocation;
+			$fileList[$fileName]['isExternal'] = TRUE;
+			$fileList[$fileName]['isUpload']   = FALSE;
+			$fileList[$fileName]['isLocal']    = FALSE;
+			return $fileList;
+        } else {
+            $msg = xarML('Unable to acquire list of files to import - Location does not exist!');
+            xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_NO_EXIST', new SystemException($msg));
+            return;
+        }
     }
     
     if (is_file($fileLocation)) {
@@ -94,3 +125,4 @@ function uploads_userapi_import_get_filelist( $args ) {
 }
 
 ?>
+

@@ -64,11 +64,11 @@ function uploads_init()
         'xar_fileEntry_id' => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE,  'increment'=>TRUE,'primary_key'=>TRUE),
         'xar_itemtype_id'  => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
         'xar_user_id'      => array('type'=>'integer', 'size'=>'big', 'null'=>FALSE),
-        'xar_filename'     => array('type'=>'varchar', 'size'=>254,   'null'=>FALSE),
-        'xar_location'     => array('type'=>'varchar', 'size'=>254,   'null'=>FALSE),
+        'xar_filename'     => array('type'=>'varchar', 'size'=>128,   'null'=>FALSE),
+        'xar_location'     => array('type'=>'varchar', 'size'=>256,   'null'=>FALSE),
         'xar_status'       => array('type'=>'integer', 'size'=>'tiny','null'=>FALSE,  'default'=>'0'),
-        'xar_filesize'     => array('type'=>'integer', 'size'=>64,    'null'=>FALSE),
-        'xar_store_type'   => array('type'=>'varchar', 'size'=>1,     'null'=>FALSE),
+        'xar_filesize'     => array('type'=>'integer', 'size'=>'big',    'null'=>FALSE),
+        'xar_store_type'   => array('type'=>'integer', 'size'=>'tiny',     'null'=>FALSE),
         'xar_mime_type'    => array('type'=>'varchar', 'size' =>128,  'null'=>FALSE,  'default' => 'application/octet-stream')
     );
         
@@ -91,16 +91,24 @@ function uploads_init()
     $result =& $dbconn->Execute($query);
     if (!$result) return;
  
-    xarRegisterMask('UploadsView',  'All','uploads','Upload','All:All:All','ACCESS_READ');
-    xarRegisterMask('UploadsAdd',   'All','uploads','Upload','All:All:All','ACCESS_ADD');
-    xarRegisterMask('UploadsEdit',  'All','uploads','Upload','All:All:All','ACCESS_EDIT');
-    xarRegisterMask('UploadsDelete','All','uploads','Upload','All:All:All','ACCESS_DELELE');
-    xarRegisterMask('UploadsAdmin', 'All','uploads','Upload','All:All:All','ACCESS_ADMIN');
+    $xartable = xarDBGetTables();
+    $instances[0]['header'] = 'external';
+    $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
+    $instances[0]['limit']  = 0;
+    
+    xarDefineInstance('uploads', 'File', $instances);
+
+
+    xarRegisterMask('ViewUploads',  'All','uploads','Upload','All:All:All:All','ACCESS_READ');
+    xarRegisterMask('AddUploads',   'All','uploads','Upload','All:All:All:All','ACCESS_ADD');
+    xarRegisterMask('EditUploads',  'All','uploads','Upload','All:All:All:All','ACCESS_EDIT');
+    xarRegisterMask('DeleteUploads','All','uploads','Upload','All:All:All:All','ACCESS_DELELE');
+    xarRegisterMask('AdminUploads', 'All','uploads','Upload','All:All:All:All','ACCESS_ADMIN');
 
     /**
      * Register hooks
      */
-    if (!xarModRegisterHook('item', 'transform', 'API',
+    if (!xarModRegisterHook('item', 'transform', 'AkilPI',
                             'uploads', 'user', 'transformhook')) {
          $msg = xarML('Could not register hook');
          xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
@@ -310,26 +318,6 @@ function uploads_upgrade($oldversion)
             }
 
             /*
-             * need to change these to the new priv structure
-             *
-             
-                xarRegisterMask('ViewUploads','All','uploads','Upload','All','ACCESS_OVERVIEW');
-                xarRegisterMask('ReadUploads','All','uploads','Upload','All','ACCESS_READ');
-                xarRegisterMask('EditUploads','All','uploads','Upload','All','ACCESS_EDIT');
-                xarRegisterMask('AdminUploads','All','uploads','Upload','All','ACCESS_ADMIN');
-             
-             *
-             * And these need to be switched as well:
-             *
-
-                xarModSetVar('uploads', 'uploads_directory', $uploads_directory);
-                xarModSetVar('uploads', 'maximum_upload_size', '100000');
-                xarModSetVar('uploads', 'allowed_types', 'gif;jpg;zip;tar.gz;tgz');
-                xarModSetVar('uploads', 'confirm_delete', '1');
-                xarModSetVar('uploads', 'import_directory',  '');
-                xarModSetVar('uploads', 'obfuscate_imports', '0');
-
-                
              * Note: the ones below need to be moved over to the image module...
              
                 xarModSetVar('uploads', 'max_image_width', '600');
@@ -340,6 +328,22 @@ function uploads_upgrade($oldversion)
 
              *
              */
+             
+            xarRemoveMasks('uploads');
+            xarRemoveInstances('uploads');
+
+            xarRegisterMask('ViewUploads',  'All','uploads','Upload','All:All:All:All','ACCESS_READ');
+            xarRegisterMask('AddUploads',   'All','uploads','Upload','All:All:All:All','ACCESS_ADD');
+            xarRegisterMask('EditUploads',  'All','uploads','Upload','All:All:All:All','ACCESS_EDIT');
+            xarRegisterMask('DeleteUploads','All','uploads','Upload','All:All:All:All','ACCESS_DELELE');
+            xarRegisterMask('AdminUploads', 'All','uploads','Upload','All:All:All:All','ACCESS_ADMIN');
+                         
+            $xartable = xarDBGetTables();
+            $instances[0]['header'] = 'external';
+            $instances[0]['query']  = xarModURL('uploads', 'admin', 'privileges');
+            $instances[0]['limit']  = 0;
+
+            xarDefineInstance('uploads', 'File', $instances);
             
             if(xarServerGetVar('PATH_TRANSLATED')) {
                 $base_directory = dirname(realpath(xarServerGetVar('PATH_TRANSLATED')));

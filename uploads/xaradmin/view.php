@@ -72,6 +72,7 @@ function uploads_admin_view( ) {
                     if (xarModGetVar('uploads', 'file.delete-confirmation')) {
                         return xarModFunc('uploads', 'user', 'purge_rejected');
                     } else {
+                        $_GET['authid'] = xarSecGenAuthKey());
                         return xarModFunc('uploads', 'user', 'purge_rejected', array('confirmation' => TRUE));
                     }
                 }
