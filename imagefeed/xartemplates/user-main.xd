@@ -8,7 +8,7 @@
 <!-- module body template -->
 <div align="center">
     <a href="#$link#">
-       <img src="#$piclocation#">
+       <img src="#$piclocation#" alt="" />
        <br /><br />
        #$title#</a>
 </div>
