@@ -28,10 +28,12 @@
             </table>
         </div>
         <xar:if condition="$selstyle eq 'compact'">
-            <xar:template file="compact" type="module" />
-        <xar:else />
-			<xar:template file="plain" type="module" />
-		</xar:if>
+            <xar:template file="compact" type="module"/>
+       <xar:elseif condition="$selstyle eq 'plain'"/>
+	    <xar:template file="plain" type="module"/>
+	<xar:else/>
+	    <xar:template file="icons" type="module"/>	
+	</xar:if>
         </div>
     </form>
 	#$pager#

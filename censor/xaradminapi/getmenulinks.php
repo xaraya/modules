@@ -8,6 +8,18 @@
  */
 function censor_adminapi_getmenulinks()
 {
+    
+    if (xarSecurityCheck('EditCensor')) {
+        $menulinks[] = Array('url' => xarModURL('censor',
+                'admin',
+                'view'),
+            'title' => xarML('View and Edit Censored Words'),
+            'label' => xarML('View'));
+    } 
+    
+    
+    
+    
     if (xarSecurityCheck('AddCensor')) {
         $menulinks[] = Array('url' => xarModURL('censor',
                 'admin',
@@ -16,13 +28,7 @@ function censor_adminapi_getmenulinks()
             'label' => xarML('Add'));
     } 
 
-    if (xarSecurityCheck('EditCensor')) {
-        $menulinks[] = Array('url' => xarModURL('censor',
-                'admin',
-                'view'),
-            'title' => xarML('View and Edit Censored Words'),
-            'label' => xarML('View'));
-    } 
+    
 
     if (xarSecurityCheck('AdminCensor')) {
         $menulinks[] = Array('url' => xarModURL('censor',

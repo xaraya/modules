@@ -31,5 +31,5 @@ function censor_admin_update($args)
     xarResponseRedirect(xarModURL('censor', 'admin', 'view')); 
     // Return
     return true;
-} 
+}
 ?>

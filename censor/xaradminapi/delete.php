@@ -45,6 +45,6 @@ function censor_adminapi_delete($args)
     xarModCallHooks('item', 'delete', $cid, ''); 
     // Let the calling process know that we have finished successfully
     return true;
-} 
+}
 
 ?>

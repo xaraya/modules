@@ -12,8 +12,10 @@ function censor_admin_delete($args)
     if (!xarVarFetch('obid', 'str:1:', $obid, '', XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('confirm','str:1:',$confirm,'',XARVAR_NOT_REQUIRED)) return;
     extract($args);
+
     if (!empty($obid)) {
-        $tid = $obid;
+        $cid = $obid;
+        //$tid = $obid;
     } 
     // The user API function is called
     $censor = xarModAPIFunc('censor',
@@ -41,5 +43,5 @@ function censor_admin_delete($args)
     xarResponseRedirect(xarModURL('censor', 'admin', 'view')); 
     // Return
     return true;
-} 
+}
 ?>

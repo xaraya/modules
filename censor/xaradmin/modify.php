@@ -21,12 +21,12 @@ function censor_admin_modify($args)
         'get',
         array('cid' => $cid));
 
-    if ($data == false) return; 
+    if ($data == false) return;
 
     // Security Check
     if (!xarSecurityCheck('EditCensor')) return;
     $data['authid'] = xarSecGenAuthKey();
     $data['createlabel'] = xarML('Submit');
     return $data;
-} 
+}
 ?>

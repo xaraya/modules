@@ -39,8 +39,8 @@ function censor_userapi_getall($args)
     for (; !$result->EOF; $result->MoveNext()) {
         list($cid, $keyword) = $result->fields;
         if (xarSecurityCheck('ReadCensor',0,'All',"$keyword:$cid")) {
-            $censors[] = array('cid' => $cid,
-                               'keyword' => $keyword);
+        $censors[] = array('cid' => $cid,
+                           'keyword' => $keyword);
         }
     }
 

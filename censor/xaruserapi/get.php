@@ -34,11 +34,10 @@ function censor_userapi_get($args)
     if (!$result) return;
 
     list($cid, $keyword) = $result->fields;
-    $result->Close();
-
+   
     $censor = array('cid' => $cid,
-                  'keyword' => $keyword);
-
+                    'keyword' => $keyword);
+    $result->Close();
     return $censor;
 }
 ?>

@@ -7,9 +7,9 @@
  * @return censor ID on success, false on failure
  */
 function censor_adminapi_create($args)
-{ 
+{
     // Get arguments from argument array
-    extract($args); 
+    extract($args);
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
     if (!isset($keyword)) {
@@ -20,12 +20,12 @@ function censor_adminapi_create($args)
         return;
     } 
     // Security Check
-    if (!xarSecurityCheck('AddCensor')) return; 
+    if (!xarSecurityCheck('AddCensor')) return;
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $censortable = $xartable['censor']; 
+    $censortable = $xartable['censor'];
     // Get next ID in table
     $nextId = $dbconn->GenId($censortable); 
     // Add item
@@ -36,13 +36,13 @@ function censor_adminapi_create($args)
               $nextId,
               '" . xarVarPrepForStore($keyword) . "')";
     $result = &$dbconn->Execute($query);
-    if (!$result) return; 
+    if (!$result) return;
     // Get the ID of the item that we inserted
-    $cid = $dbconn->PO_Insert_ID($censortable, 'xar_cid'); 
+    $cid = $dbconn->PO_Insert_ID($censortable, 'xar_cid');
     // Let any hooks know that we have created a new link
-    xarModCallHooks('item', 'create', $cid, 'cid'); 
+    xarModCallHooks('item', 'create', $cid, 'cid');
     // Return the id of the newly created link to the calling process
     return $cid;
-} 
+}
 
 ?>

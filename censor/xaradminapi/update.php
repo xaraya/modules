@@ -6,7 +6,7 @@
  * @param  $args ['keyword'] the new keyword of the link
  */
 function censor_adminapi_update($args)
-{ 
+{
     // Get arguments from argument array
     extract($args);
 
@@ -21,7 +21,7 @@ function censor_adminapi_update($args)
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
             new SystemException($msg));
         return;
-    } 
+    }
     // The user API function is called
     $link = xarModAPIFunc('censor',
         'user',
@@ -48,7 +48,7 @@ function censor_adminapi_update($args)
     if (!$result) return; 
     // Let the calling process know that we have finished successfully
     return true;
-} 
+}
 
 
 ?>
