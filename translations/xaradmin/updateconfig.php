@@ -36,7 +36,8 @@ function translations_admin_updateconfig()
 
     // MLS variables
     xarLogVariable('mls mode',$MLSMode);
-    xarConfigSetVar('Site.MLS.MLSMode', $MLSMode);
+//    xarConfigSetVar('Site.MLS.MLSMode', $MLSMode);
+    xarConfigSetVar('Site.MLS.MLSMode', 'SINGLE');
     xarConfigSetVar('Site.MLS.TranslationsBackend', $translationsBackend);
 //    xarModSetVar('translations', 'release_backend_type', $releaseBackend);
 

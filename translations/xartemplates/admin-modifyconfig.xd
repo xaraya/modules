@@ -18,7 +18,7 @@
 
     <h4><xar:mlstring>Mode of operation</xar:mlstring></h4>
     <p>
-       The multilanguage system (MLS) can work in three different modes: 
+       In the future the multilanguage system (MLS) will work in three different modes. For now only the SINGLE mode is supported: 
       <dl>
         <dt><input type="radio" name="mlsmode" value="SINGLE" #$single_checked# />
         <span class="xar-title"><xar:mlstring>Single language mode (SINGLE)</xar:mlstring></span>
