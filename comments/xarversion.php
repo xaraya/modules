@@ -15,7 +15,7 @@
 
     $modversion['name'] = 'Comments API';
     $modversion['id'] = '14';
-    $modversion['version'] = '1.2';
+    $modversion['version'] = '1.2.0';
     $modversion['description'] = 'Allows users to post comments on items';
     $modversion['credits'] = 'xardocs/credits.txt';
     $modversion['help'] = '';

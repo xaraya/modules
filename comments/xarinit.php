@@ -272,14 +272,14 @@ function comments_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             // Register blocks
             if (!xarModAPIFunc('blocks', 'admin', 'register_block_type',
                                array('modName'  => 'comments',
                                      'blockType'=> 'latestcomments'))) return;
             // fall through to the next upgrade
-        case 1.1:
+        case '1.1':
             // Code to upgrade from version 1.1 goes here
             if (xarModIsAvailable('articles')) {
                 // load API for table definition etc.
@@ -339,10 +339,12 @@ function comments_upgrade($oldversion)
             if (!$result) return;
 
             // fall through to the next upgrade
-        case 2.0:
+        case '1.2':
+            // compatability upgrade
+        case '2.0':
             // Code to upgrade from version 2.0 goes here
             // fall through to the next upgrade
-        case 2.5:
+        case '2.5':
             // Code to upgrade from version 2.5 goes here
             break;
     }
