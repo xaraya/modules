@@ -43,10 +43,13 @@ function release_user_viewids()
         return;
     }
 
+    $uid = xarUserGetVar('uid');
+
     // Check individual permissions for Edit / Delete
     for ($i = 0; $i < count($items); $i++) {
         $item = $items[$i];
-        
+
+        $uid = xarUserGetVar('uid');
         $items[$i]['rid'] = xarVarPrepForDisplay($item['rid']);
         $items[$i]['name'] = xarVarPrepForDisplay($item['name']);
         $items[$i]['desc'] = nl2br(xarVarPrepHTMLDisplay($item['desc']));
@@ -59,7 +62,7 @@ function release_user_viewids()
                                               array('uid' => $item['uid']));
 
 
-        if (($uid = $item['uid']) || (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
+        if (($uid == $item['uid']) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
             $items[$i]['editurl'] = xarModURL('release',
                                               'user',
                                               'modifyid',
@@ -68,7 +71,7 @@ function release_user_viewids()
             $items[$i]['editurl'] = '';
         }
 
-        if (($uid = $item['uid']) && (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
+        if (($uid == $item['uid']) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
             $items[$i]['addurl'] = xarModURL('release',
                                               'user',
                                               'addnotes',
@@ -257,22 +260,17 @@ function release_user_addnotes()
                                   array('rid' => $rid));
 
             
-            //TODO FIX ME!!!
-            if ($data == false){
-                $message = xarML('There is no assigned ID for your module or theme.  You must first register module ID before you can add a release notification');
-            }
+            $uid = xarUserGetVar('uid');
 
-
-            $users = xarModAPIFunc('users',
-                                   'user',
-                                   'get',
-                                   array('uid' => $data['uid']));
-
-            if (($data['uid'] = $users['uid']) || (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
+            if (($data['uid'] == $uid) or (xarSecAuthAction(0, 'release::', "::", ACCESS_EDIT))) {
                 $message = '';
-                
             } else {
                 $message = xarML('You are not allowed to add a release notification to this module');               
+            }
+
+            //TODO FIX ME!!!
+            if (empty($data['name'])){
+                $message = xarML('There is no assigned ID for your module or theme.');
             }
 
             xarTplSetPageTitle(xarConfigGetVar('Site.Core.SiteName').' :: '.
