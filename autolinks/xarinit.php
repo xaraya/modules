@@ -154,10 +154,11 @@ function autolinks_init()
     xarRegisterMask('DeleteAutolinks','All','autolinks','All','All','ACCESS_DELETE');
     xarRegisterMask('AdminAutolinks','All','autolinks','All','All','ACCESS_ADMIN');
 
-    // Create the first autolinks type data.
-    if (!autolinks_init_upgrade_data()) {
-        return;
-    }
+    // Create or update sample data.
+    $result = xarModAPIfunc(
+        'autolinks', 'admin', 'samples',
+        array('action'=>'create')
+    );
     
     // Initialisation successful
     return true;
