@@ -10,7 +10,7 @@
  */
 $modversion['name']           = 'xarlinkme';
 $modversion['id']             = '889';
-$modversion['version']        = '0.1';
+$modversion['version']        = '0.1.0';
 $modversion['description']    = 'Site Banner Ad Link Page';
 $modversion['credits']        = 'xardocs/credits.txt';
 $modversion['help']           = 'xardocs/help.txt';

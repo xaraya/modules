@@ -84,6 +84,7 @@ function xarlinkme_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch ($oldversion) {
         case 0.1:
+        case '0.1.0':
             // Version 0.5 didn't have a 'number' field, it was added
             // in version 1.0
             // Get datbase setup - note that both xarDBGetConn() and xarDBGetTables()
