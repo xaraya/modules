@@ -53,8 +53,7 @@ function uploads_userapi_prepare_uploads( $args )
     // here, so return immediately with an exception set  
     if ((!isset($fileInfo)          || !is_array($fileInfo))      || 
          !isset($fileInfo['name'])  || !isset($fileInfo['type'])  || 
-         !isset($fileInfo['error']) || !isset($fileInfo['size'])  || 
-         !isset($fileInfo['tmp_name']))  {
+         !isset($fileInfo['size'])  || !isset($fileInfo['tmp_name']))  {
 
             $fileInfo['fileType']   = 'unknown';
             $fileInfo['fileSrc']    = 'missing';
@@ -69,6 +68,10 @@ function uploads_userapi_prepare_uploads( $args )
     $fileInfo['fileSrc']    = $fileInfo['tmp_name'];
     $fileInfo['fileSize']   = $fileInfo['size'];
     $fileInfo['fileName']   = $fileInfo['name'];
+    // PHP 4.1.2 doesn't support this field yet
+    if (!isset($fileInfo['error'])) {
+        $fileInfo['error'] = 0;
+    }
 
     // Check to see if we're importing and, if not, check the file and ensure that it 
     // meets any requirements we might have for it. If it doesn't pass the tests,
