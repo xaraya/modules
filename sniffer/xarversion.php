@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * File: $Id: s.xaradmin.php 1.28 03/02/08 17:38:40-05:00 John.Cox@mcnabb. $
- * 
+ *
  * Sniffer System
- * 
+ *
  * @package Xaraya eXtensible Management System
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @link http://www.xaraya.com
@@ -13,6 +13,7 @@
 $modversion['name']             = 'Sniffer';
 $modversion['id']                 = '775';
 $modversion['version']             = '1.0.0';
+$modversion['displayname']    = xarML('Sniffer');
 $modversion['description']        = 'Used for browser detection';
 $modversion['credits']             = 'xardocs/credits.txt';
 $modversion['help']             = 'xardocs/help.txt';
