@@ -66,27 +66,27 @@ function sitetools_admin_deletecache($args)
                     return $msg;
             } else { //making a few assumptions about structure of adodb cache subdirs and files here
                 $handle=opendir($adopath);
+                $skip_array = array('.','..','SCCS','index.htm','index.html');
                 while (false !== ($file = readdir($handle))) {
-                    if (($file==".") || ($file == "..") || ($file == "index.html")) {
-                       //do nothing
-                    } else {
-                            $subhandle=opendir("{$adopath}/{$file}");
-                            while (false !== ($sfile = readdir($subhandle))){
-                                if (($sfile==".") || ($sfile == "..")) {
-                                //nothing
-                                }else {
-                                   unlink("{$adopath}/{$file}/{$sfile}");
-                                }
+                    if (!in_array($file,$skip_array)) {
+                        $subhandle=opendir("{$adopath}/{$file}");
+                        // iansym::these are the files we do not want to delete
+                        $skip_array2 = array('.','..','SCCS');
+                        while (false !== ($file = readdir($subhandle))) {
+                            // check the skip array and delete files that are not in it
+                            if(!in_array($file,$skip_array2)) {
+                                unlink("{$adopath}/{$file}/{$sfile}");
                             }
-                            closedir($subhandle);
-                    rmdir("{$adopath}/{$file}");
-                     }
+                        }
+                        closedir($subhandle);
+                        rmdir("{$adopath}/{$file}");
+                    }
                 }
                 closedir($handle);
-                $data['delfin']    = true;                
+                $data['delfin']    = true;
             }
         }
-     }
+     }  
      if ($delrss==1) {
         // delete all rss cache files
         // Get site folder name
@@ -101,10 +101,11 @@ function sitetools_admin_deletecache($args)
                     return $msg;
              } else {
                 $handle=opendir($rsspath);
+                // iansym::these are the files we do not want to delete
+                $skip_array = array('.','..','SCCS','index.htm','index.html');
                 while (false !== ($file = readdir($handle))) {
-                  if ($file == "." || $file == ".." || $file == "index.htm"  || $file == "index.html") {
-                   //do nothing
-                  } else {
+                  // check the skip array and delete files that are not in it
+                  if (!in_array($file,$skip_array)) {
                     unlink($rsspath."/".$file);//delete the file
                   }
                 }
@@ -128,10 +129,8 @@ function sitetools_admin_deletecache($args)
                     return $msg;
             } else {
                 $handle=opendir($templpath);
-                
                 // iansym::these are the files we do not want to delete
                 $skip_array = array('.','..','index.htm','index.html','SCCS');
-                
                 while (false !== ($file = readdir($handle))) {
                   // check the skip array and delete files that are not in it
                   if(!in_array($file,$skip_array)) {
