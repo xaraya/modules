@@ -1,0 +1,36 @@
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <array>
+          <data>
+            <xar:loop name="$categories">
+              <value>
+                <struct>
+                  <member>
+                    <name>description</name>
+                    <value>
+                      <string>#$loop:item['description']#</string>
+                    </value>
+                  </member>
+                  <member>
+                    <name>htmlUrl</name>
+                    <value>
+                      <string>#$loop:item['htmlUrl']#</string>
+                    </value>
+                  </member>
+                  <member>
+                    <name>rssUrl</name>
+                    <value>
+                      <string>#$loop:item['rssUrl']#</string>
+                    </value>
+                  </member>
+                </struct>
+              </value>
+            </xar:loop>
+          </data>
+        </array>
+      </value>
+    </param>
+  </params>
+</methodResponse>
