@@ -18,8 +18,6 @@
 */
 function authinvision_init()
 {
-    // Make sure that LDAP is available before trying to connect
-   
     // Set up module variables
     xarModSetVar('authinvision','server', 'localhost');
     xarModSetVar('authinvision','database', 'iboard');
