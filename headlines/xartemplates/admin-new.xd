@@ -5,20 +5,22 @@
 <!-- NOTE: target="_blank" is not XHTML compliant -->
 <a href="http://www.syndic8.com/" target="_blank"><xar:mlstring>List of available feeds</xar:mlstring><a>
 <br /><br />
-<div align="center">
+
 <form method="post" action="#xarModURL('headlines', 'admin', 'create')#" method="post" enctype="application/x-www-form-urlencoded" />
-    <input type="hidden" name="authid" value="#$authid#" />
-    <table border="0" cellpadding="2" cellspacing="0">
-        <tr align="left" valign="middle">
-            <td>
-                <label for="url"><xar:mlstring>URL</xar:mlstring></label>
-            </td>
-            <td>
-                <input type="text" name="url" id="url" value="" size="40" maxlength="200" tabindex="3" />
-            </td>
-        </tr>
-    </table><br/>
-    <input type="submit" value="Create Headline" align="middle" tabindex="5" />
+	<div style="clear: both; padding-top: 10px;">
+	<input type="hidden" name="authid" id="authid" value="#$authid#" />
+	<span style="float: left; width: 100px; text-align: right;">
+		<span class="help" title="#xarML('The url of the feed that you are wanting to add to your system')#"><label for="url"><xar:mlstring>URL</xar:mlstring></label></span>
+	</span>
+	<span style="float: right; width: 335px; text-align: left;">
+		<input type="text" name="url" id="url" value="" size="40" maxlength="200" />
+	</span>
+	</div>
+	<br /><br />
+	<table>
+	#$hooks#
+	</table>
+	<br /><br />
+    <input type="submit" value="Create Headline"/>
 </form>
-</div>
 </div>

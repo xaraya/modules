@@ -1,19 +1,24 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Headlines</xar:mlstring></span></div>
 <div class="xar-mod-body"><h2><xar:mlstring>Syndicated Headlines</xar:mlstring></h2>
 <div style="margin: auto;">
-<p><xar:mlstring>Below are predefined syndicated headlines for your browsing pleasure</xar:mlstring></p>
+
+<xar:categories-navigation layout="trails" showchildren="0" module="headlines" func="main" />
 
 <xar:loop name="$indlinks">
-<div class="xar-norm-outline">
-	<span style="text-align: left;"><a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a> -- #$loop:item['chandesc']#</span>
-	<span style="text-align: right; float: right;"><a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a></span>
+<div class="xar-norm-outline" style="margin: 0px 3px 6px 3px;padding: 3px;text-align: left;">
+<div class="xar-norm" style="padding: 3px;">
+	<span style="float: left; text-align: left; width: 79%;"><a href="#$loop:item['chanlink']#">#$loop:item['chantitle']#</a> -- #$loop:item['chandesc']#</span>
+	<span style="float: right; text-align: right; width: 19%;"><a href="#$loop:item['viewlink']#"><xar:mlstring>Latest Headlines</xar:mlstring></a></span>
 	<br />
-	<span style="text-align: right; float: right;">#$loop:item['comments']#</span>
-	<br />
+	<xar:if condition="!empty($loop:item['comments'])"> 
+		<span style="float: right; text-align: right; width: 19%;">#$loop:item['comments']#</span>
+		<br />
+	</xar:if>
 	<xar:if condition="xarSecurityCheck('EditHeadlines', 0)">
 		<span style="text-align: right; float: right;"><a href="#$loop:item['importlink']#"><xar:mlstring>Import Headlines to News Queue</xar:mlstring></a></span>
 		<br />
 	</xar:if>
+</div>
 </div>
 </xar:loop>
 

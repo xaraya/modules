@@ -15,7 +15,8 @@
 
 function headlines_user_main()
 {
-    $startnum = xarVarCleanFromInput('startnum');
+    xarVarFetch('startnum', 'id', $startnum, '1', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
+    xarVarFetch('catid', 'id', $data['catid'], '', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY);
 
     // Security Check
     if(!xarSecurityCheck('OverviewHeadlines')) return;
@@ -162,6 +163,7 @@ function headlines_user_main()
                                     xarModAPIFunc('headlines', 'user', 'countitems'),
                                     xarModURL('headlines', 'user', 'main', array('startnum' => '%%')),
                                     xarModGetVar('headlines', 'itemsperpage'));
+
     return $data;
 }
 
@@ -170,8 +172,7 @@ function headlines_user_view()
     // Security Check
     if(!xarSecurityCheck('ReadHeadlines')) return;
 
-    // Get parameters from whatever input we need
-    $hid = xarVarCleanFromInput('hid');
+    xarVarFetch('hid', 'id', $hid, XARVAR_PREP_FOR_DISPLAY);
 
     $hooks = xarModCallHooks('item',
                              'display',
@@ -275,6 +276,8 @@ function headlines_user_view()
             $data['chandesc']   =   $info['channel']['description'];
         }
         $data['chanlink']   =   $info['channel']['link'];
+
+        xarTplSetPageTitle(xarVarPrepForDisplay($data['chantitle']));
 
     } else {
         $msg = xarML('There is a problem with a feed.');

@@ -30,7 +30,7 @@
                    <a href="#$loop:item['editurl']#">#$loop:item['edittitle']#</a>
            </xar:if>
            |
-           <xar:if condition="empty($deleteurl)">
+           <xar:if condition="empty($loop:item['deleteurl'])">
                #$loop:item['deletetitle']#
                <xar:else />
                    <a href="#$loop:item['deleteurl']#">#$loop:item['deletetitle']#</a>
