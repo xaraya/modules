@@ -76,7 +76,8 @@ function navigator_userapi_nested_tree_remove_node( $args )
             if (isset($branch['children']) && count($branch['children'])) {
                 navigator_userapi_nested_tree_remove_node(array('cids' => $cids,
                                                                 'tree' => &$tree[$key]['children'],
-                                                                'type' => $type));
+                                                                'type' => $type,
+                                                                'keep-parent' => $keep_parent));
             }
         }
     }
