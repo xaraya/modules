@@ -32,8 +32,8 @@ function hitcount_user_main()
         $mod =& $moduleList[$modinfo['displayname']];
         $mod['numitems'] = 0;
         $mod['numhits']  = 0;
-        $mod['tophits']  = NULL;
-        $mod['toplinks'] = NULL;
+        $mod['tophits']  = array();
+        $mod['toplinks'] = array();
 
         foreach ($itemtypes as $itemtype => $stats) {
             $moditem = array();
@@ -69,6 +69,7 @@ function hitcount_user_main()
                     $itemids[] = $tophit['itemid'];
                     $itemid2hits[$tophit['itemid']] = $tophit['hits'];
                 }
+
                 xarModAPILoad($modinfo['name'], 'user');
                 if (function_exists($modinfo['name'].'_userapi_getitemlinks') ||
                     file_exists("modules/$modinfo[osdirectory]/xaruserapi/getitemlinks.php")){
@@ -79,6 +80,8 @@ function hitcount_user_main()
                         if (!isset($itemid2hits[$itemid])) continue;
                         $moditem['toplinks'][$itemid]['hits'] = $itemid2hits[$itemid];
                     }
+                } else {
+                    $moditem['toplinks'] = array();
                 }
 
                 foreach($moditem['toplinks'] as $itemid => $toplink) {
