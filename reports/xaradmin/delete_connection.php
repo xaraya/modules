@@ -2,7 +2,8 @@
 /**
  * Process a delete request for connections
  */
-function reports_admin_delete_connection($args) {
+function reports_admin_delete_connection($args) 
+{
 	list($conn_id) = xarVarCleanFromInput('conn_id');
 	extract($args);
     

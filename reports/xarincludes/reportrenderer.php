@@ -23,7 +23,8 @@ require(PDF_WRAPPER."/PDFWrapper.php");
 /*
  * When something goes really wrong we die with a reason
  */
-function PDF_die($location, $errmsg) {
+function PDF_die($location, $errmsg) 
+{
   die("<font color='red' size='4' face='Arial, Helvetica, sans-serif'>"
 			.PDF_VERSION."</font><br/><font color='blue' face='Arial, Helvetica, sans-serif'><b>"
 			.($location)."</b></font> <font color='red' face='Arial, Helvetica, sans-serif'>".($errmsg)."</font>");
@@ -32,20 +33,23 @@ function PDF_die($location, $errmsg) {
 /*
  * Check wheter a value on a certain location is a value of arrays (this should be handled by xml-parser when it's validating)
  */
-function PDF_in($location, $value, $inarray) {
+function PDF_in($location, $value, $inarray) 
+{
   if ( !in_array($value,$inarray) ) PDF_die($location, "XML-ERROR: Value in node not in: <b>( ".implode(", ",$inarray)." )</b>.");
 }
 
 /*
  * Check whether a value is numeric
  */
-function PDF_numeric($location, $value) {
+function PDF_numeric($location, $value) 
+{
   if ( !is_numeric($value) ) PDF_die($location, "XML-ERROR: Value in node not numeric.");
 }
 /*
  * Check wheter an item at a certain location contains the right stuff
  */
-function PDF_contain($location, $item) {
+function PDF_contain($location, $item) 
+{
   PDF_die($location,  "XML-ERROR: Element cannot contain type: [".strtoupper($item)."].");  
 }
 
@@ -53,7 +57,8 @@ function PDF_contain($location, $item) {
  * check wheter an value is an value unit specification
  *
  */
-function PDF_unit($location, $item) {
+function PDF_unit($location, $item) 
+{
     $expr = '/^([-|+]*[0-9]*.*[0-9]+)(mm|pt)*$/';
     if (!preg_match($expr, $item, $matches)) {
         PDF_DIE($location, "XML-ERROR: Wrong unit specification: [".strtoupper($item)."].");
@@ -89,7 +94,8 @@ function toPoints($value, $unit_from)
  * For each tag encountered in the document an instance of this
  * class is made
  */
-class XMLTag {
+class XMLTag 
+{
 	var $name;
 	var $nodes;
 	var $attrs;
@@ -97,14 +103,16 @@ class XMLTag {
 	var $n;
 	var $cdata;
     
-	function XMLTag($name) {
+	function XMLTag($name) 
+    {
 		$this->name=$name;
 		$this->nodes=array();
 		$this->attrs=array();
 		$this->n=0;
 		$this->cdata="";
 	}
-	function getNode($name, $force=0) {
+	function getNode($name, $force=0) 
+    {
 		$ret=-1;
 		for ($i=0;$i<$this->n && $ret==-1;$i++) {
 			if ($this->nodes[$i]->name==$name) {
@@ -124,7 +132,8 @@ class XMLTag {
  * Entry point for parsing the xml report definition
  * The xml file is passed in and the root tag is created
  */
-function getRootNode($file) {
+function getRootNode($file) 
+{
 	global $d;
 	global $ROOT;
 	$d=0;
@@ -151,7 +160,8 @@ function getRootNode($file) {
  * For each start element encountered a new instance
  * of xmltag is created with the appropriate properties
  */
-function startElement($parser, $name, $attrs) {
+function startElement($parser, $name, $attrs) 
+{
     global $d;
     global $ROOT;
     $nn=new XMLTag($name);
@@ -169,7 +179,8 @@ function startElement($parser, $name, $attrs) {
 /*
  * End element is found, 
  */
-function endElement($parser, $name) {
+function endElement($parser, $name) 
+{
     global $d;
     global $ROOT;    
    	$c=&$ROOT;
@@ -181,7 +192,8 @@ function endElement($parser, $name) {
 /*
  * Character data
  */
-function charData($parser,$data) {
+function charData($parser,$data) 
+{
     global $d;
     global $ROOT;   	    
    	$c=&$ROOT;
@@ -194,7 +206,8 @@ function charData($parser,$data) {
 /* 
  * Handle the report element
  */
-class report {
+class report 
+{
 	// Subelements of report element
 	var $datasource;
 	var $documentheader;
@@ -204,7 +217,8 @@ class report {
 	var $detail;
     
 	// Constructor
-	function report($node, &$db, $filter="") {
+	function report($node, &$db, $filter="") 
+    {
 		//		echo "report element <br/>";
 		$t=&$node->nodes[$node->getNode("DATASOURCE",1)];
 		if ($filter!="\"\"") {
@@ -228,7 +242,8 @@ class report {
 /* 
  * Handle the document tag
  */
-class document {
+class document 
+{
 	// Attributes of document element
 	var $page;
 	var $pagelist=array("A6"=>array("width"=>"297","height"=>"421"),
@@ -249,7 +264,8 @@ class document {
 	// Subelements of document
 	var $report;
 	
-	function document($node, &$db, $filter="") {
+	function document($node, &$db, $filter="") 
+    {
 		//		echo "document element<br/>";
 		// Default page is A4
 		$this->page=(strlen($node->attrs["PAGE"])>0)?strtoupper($node->attrs["PAGE"]):"A4";
@@ -276,7 +292,8 @@ class document {
 	}
 }
 
-class datasource {
+class datasource 
+{
 	var $db;	
 	var $fields;
 	var $table;
@@ -290,7 +307,8 @@ class datasource {
 	var $rs_current;
 	var $repeat;
 	
-	function datasource($node, &$db) {
+	function datasource($node, &$db) 
+    {
 		//		echo "datasource element<br/>";
 		$this->db=$db;
 		$this->fields=$node->nodes[$node->getNode("FIELDS",1)]->cdata;
@@ -309,7 +327,8 @@ class datasource {
 			$this->sql.=".\" ORDER BY \".".$this->orderby;
 		}
 	}
-	function getData(&$renderer, &$datasource) {
+	function getData(&$renderer, &$datasource) 
+    {
 //		echo $renderer->solveexp($this->sql,$datasource)."<br/>";
 		$this->rs=$this->db->Execute($renderer->solveexp($this->sql,$datasource)) or PDF_die("[DOCUMENT]::[DATASOURCE]:getData()",$this->db->ErrorMsg());
 		$this->rs_current=0;
@@ -319,21 +338,25 @@ class datasource {
 		$this->repeat=0;
 	}
 	
-	function closeData() {
+	function closeData() 
+    {
 		$this->ok=-2;
 		$this->rs->Close();
 	}
-	function dbClose() {
+	function dbClose() 
+    {
 		$this->db->Close();
 	}
 }
 
-class headerfooter {
+class headerfooter 
+{
 	var $height;
 	
 	var $container;
 	var $n;
-	function headerfooter($node,$tagstring) {
+	function headerfooter($node,$tagstring) 
+    {
 		$this->height = PDF_unit("$tagstring[HEIGHT]",$node->attrs["HEIGHT"]);
 		$this->container=array();
 		$this->n=0;
@@ -363,43 +386,54 @@ class headerfooter {
 	}
 }
 
-class documentheader extends headerfooter {
-	function documentheader($node) {
+class documentheader extends headerfooter 
+{
+	function documentheader($node) 
+    {
 		//		echo "docheader<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[DOCUMENTHEADER]");
 	}
 }
 
-class documentfooter extends headerfooter {
-	function documentfooter($node) {
+class documentfooter extends headerfooter 
+{
+	function documentfooter($node) 
+    {
 		//		echo "docfooter<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[DOCUMENTFOOTER]");
 	}
 }
 
-class pageheader extends headerfooter {
-	function pageheader($node) {
+class pageheader extends headerfooter 
+{
+	function pageheader($node) 
+    {
 		//		echo "pageheader<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[PAGEHEADER]");
 	}
 }
 
-class pagefooter extends headerfooter {
-	function pagefooter($node) {
+class pagefooter extends headerfooter 
+{
+	function pagefooter($node) 
+    {
 		//		echo "pagefooter<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[PAGEFOOTER]");
 	}
 }
 
-class detailheader extends headerfooter {
-	function detailheader($node) {
+class detailheader extends headerfooter 
+{
+	function detailheader($node) 
+    {
 		//		echo "detailheader<br/>";
 		parent::headerfooter($node,"[DOCUMENT]::[DETAIL]::[HEADER]");
 	}
 }
 
 
-class detail {
+class detail 
+{
 	var $width;
 	var $height;
 	var $repeat;
@@ -410,7 +444,8 @@ class detail {
 	var $n;
 	var $hasSub;
 	
-	function detail($node, &$db) {
+	function detail($node, &$db) 
+    {
 		$this->width = PDF_unit("[DOCUMENT]::[DETAIL][WIDTH]" ,$node->attrs["WIDTH"]);
 		$this->height= PDF_unit("[DOCUMENT]::[DETAIL][HEIGHT]",$node->attrs["HEIGHT"]);
 
@@ -455,7 +490,8 @@ class detail {
 	}
 }
 
-class text {
+class text 
+{
 	var $x;
 	var $y;
 	var $width;
@@ -477,7 +513,8 @@ class text {
 	var $text;
     var $position;
 	
-	function text($node) {
+	function text($node) 
+    {
         // If font tag omitted, default to Helvetica
         $this->font="Helvetica";
         if (array_key_exists("FONT",$node->attrs)) {
@@ -571,7 +608,8 @@ class text {
 	}
 }
 
-class image {
+class image 
+{
 	var $x;
 	var $y;
 	var $width;
@@ -580,7 +618,8 @@ class image {
 	var $type;
     var $position;
 	
-	function image($node) {
+	function image($node) 
+    {
         // Default positioning is relative
         $this->position='RELATIVE';
         if(array_key_exists("POSITION", $node->attrs)) {
@@ -603,7 +642,8 @@ class image {
 }
 
 
-class rectangle {
+class rectangle 
+{
 	var $x;
 	var $y;
 	var $width;
@@ -620,7 +660,8 @@ class rectangle {
 	var $bblue;
     var $position;
 	
-	function rectangle($node) {
+	function rectangle($node) 
+    {
         // Default positioning is relative
         $this->position='RELATIVE';
         if(array_key_exists("POSITION", $node->attrs)) {
@@ -662,7 +703,8 @@ class rectangle {
 	}
 }
 
-class line {
+class line 
+{
 	var $y;
 	var $x1;
 	var $y1;
@@ -677,7 +719,8 @@ class line {
 	var $height;
     var $position;
 	
-	function line($node) {
+	function line($node) 
+    {
         // Default positioning is relative
         $this->position='RELATIVE';
         if(array_key_exists("POSITION", $node->attrs)) {
@@ -722,17 +765,20 @@ class line {
 	}
 }
 
-class breakpage {
+class breakpage 
+{
 	var $y;
 	var $height;
 	
-	function breakpage($node) {
+	function breakpage($node) 
+    {
 		$this->y=0;
 		$this->height=0;
 	}
 }
 
-class renderer {
+class renderer 
+{
 	var $width;
 	var $height;
 	var $left;
@@ -754,7 +800,8 @@ class renderer {
 	var $xrel;
 	var $yrel;
 	
-	function renderer($width, $height, $left, $right, $top, $bottom, &$pageheader, &$pagefooter, $vars) {
+	function renderer($width, $height, $left, $right, $top, $bottom, &$pageheader, &$pagefooter, $vars) 
+    {
 		$this->width=$width;
 		$this->height=$height;
 		$this->left=$left;
@@ -770,7 +817,8 @@ class renderer {
 		$this->xrel=0;
 		$this->yrel=0;
 	}
-	function writePDF(&$doc) {
+	function writePDF(&$doc) 
+    {
 		// Render the first time to calculate the Total No of Pages but do not write document
 		// FIXME: can this be optimized if we don't need to know total no of pages?
 		$this->totalpages=0;
@@ -785,7 +833,8 @@ class renderer {
 		$this->report->datasource->dbClose();
         return $content;
 	}
-	function openPDF(&$document,$doWrite) {
+	function openPDF(&$document,$doWrite) 
+    {
 		$document->report->datasource->getData($this,$this->report->datasource);
 		$this->report->datasource=&$document->report->datasource;		
 		$this->doWrite=$doWrite;
@@ -799,7 +848,8 @@ class renderer {
 		$this->currentpage++;
 		$this->renderpageheader();
 	}
-	function closePDF() {
+	function closePDF() 
+    {
 		$this->renderpagefooter();
 		$this->totalpages=$this->currentpage;
 		if ($this->doWrite==1) {
@@ -809,7 +859,8 @@ class renderer {
 		$this->report->datasource->closeData();
         return $content;
 	}
-	function render(&$document,$x=0,$y=0,$width=0) {
+	function render(&$document,$x=0,$y=0,$width=0) 
+    {
 		$document->report->datasource->getData($this,$this->report->datasource);
         
 		if ($x==0 && $y==0 && $width==0) {
@@ -832,7 +883,8 @@ class renderer {
                                $document->report->detail->flow, $document->report->detail->width);
 		}
 	}
-	function renderblock(&$block, $x, $y, $width, $height, &$datasource, $flow, $flowwidth) {
+	function renderblock(&$block, $x, $y, $width, $height, &$datasource, $flow, $flowwidth) 
+    {
 		$this->xrel=0;
 		$this->yrel=0;
 		// De scos in cazul in care vreau afisare chiar daca rs-ul e gol !
@@ -846,7 +898,8 @@ class renderer {
 			$this->y-=$height;
 		}
 	}
-	function renderdetail(&$detail, $x, $y, $width, $height, &$datasource, $flow, $flowwidth) {
+	function renderdetail(&$detail, $x, $y, $width, $height, &$datasource, $flow, $flowwidth) 
+    {
 		$this->xrel=0;
 		$this->yrel=0;
 		$initx=$x;
@@ -887,7 +940,8 @@ class renderer {
 		$datasource->rs->MoveLast();
 		$datasource->rs_current--;
 	}
-	function renderElement(&$element,$from="",&$datasource,$x=0,$y=0,$width=0) {
+	function renderElement(&$element,$from="",&$datasource,$x=0,$y=0,$width=0) 
+    {
         $this->report->datasource=&$datasource;
 		switch (get_class($element)) {
         case "text":
@@ -938,7 +992,7 @@ class renderer {
             $this->xrel=$element->x2;
             $this->yrel=$element->y2;
 
-            if ($this->doWrite==1) {					
+            if ($this->doWrite==1) {				
                 $this->p->SetColor($element->red, $element->green, $element->blue);
                 $this->p->SetLineStyle($element->width,1,0);
                 $this->p->Line($this->left + $element->x1 + $x,$this->y - $element->y1 - $y,$this->left + $element->x2 +$x,$this->y - $element->y2);
@@ -963,21 +1017,24 @@ class renderer {
         default:
 		}
 	}
-	function renderpageheader() {
+	function renderpageheader() 
+    {
 		$this->y=$this->height-$this->top;
 		for ($i=0;$i<$this->pageheader->n;$i++) {
 			$this->renderElement($this->pageheader->container[$i],"pageheader",$this->report->datasource);
 		}
 		$this->y=$this->height - $this->top - $this->pageheader->height;
 	}
-	function renderpagefooter() {
+	function renderpagefooter() 
+    {
 		$this->y=$this->bottom + $this->pagefooter->height;
 		for ($i=0;$i<$this->pagefooter->n;$i++) {
 			$this->renderElement($this->pagefooter->container[$i],"pagefooter",$this->report->datasource);
 		}		
 		$this->y=$this->bottom;
 	}
-	function newpage(&$datasource) {
+	function newpage(&$datasource) 
+    {
 		$this->renderpagefooter();
 		if ($this->doWrite==1) {
 			$this->p->EndPage();
@@ -990,7 +1047,8 @@ class renderer {
 		$this->renderpageheader();
 	}
 
-	function solveexp($exp, &$datasource) {
+	function solveexp($exp, &$datasource) 
+    {
 		//		$exp=$this->putthis($exp);
 		//echo "In solveexp exp=".$exp."<br/>";
 		if ($exp!="") {
@@ -1019,21 +1077,25 @@ class renderer {
 			return "";
 		}
 	}
-	function vars($exp) {
+	function vars($exp) 
+    {
 		return $this->vara[$exp];
 	}
-	function chvars($exp,$exp2) {
+	function chvars($exp,$exp2) 
+    {
 		$datasource=&$this->report->datasource;
 		$this->vara[$exp]=$this->solveexp($exp2,$datasource);
 		return $this->vara[$exp];
 	}
-	function fields($exp) {
+	function fields($exp) 
+    {
 		$datasource=&$this->report->datasource;
         // FIXME: don't allow expressions in fields jus yet
 		//return $datasource->rs->Fields($this->solveexp($exp,$datasource));
 		return $datasource->rs->Fields($exp);
 	}
-	function sum($exp) {
+	function sum($exp) 
+    {
 		$datasource=&$this->report->datasource;
 		$ret=0;
 		$datasource->rs->MoveFirst();
@@ -1044,7 +1106,8 @@ class renderer {
 		$datasource->rs->MoveLast();
 		return $ret;
 	}
-	function avg($exp) {
+	function avg($exp) 
+    {
 		$datasource=&$this->report->datasource;
 		$ret=0;
 		$datasource->rs->MoveFirst();
@@ -1056,21 +1119,26 @@ class renderer {
 		$datasource->rs->MoveLast();
 		return $ret/$cnt;
 	}
-	function rcount($exp) {
+	function rcount($exp) 
+    {
 		$datasource=&$this->report->datasource;
 		return $datasource->rs->RecordCount();
 	}
-	function page() {
+	function page() 
+    {
 		return $this->currentpage;	
 	}                           
-	function pages() {
+	function pages() 
+    {
 		return $this->totalpages;
 	}
-	function putthis($exp) {
+	function putthis($exp) 
+    {
 		$ret=$exp;
 		return $ret;
 	}
-	function date($format) {
+	function date($format) 
+    {
 		return date($format);
 	}
 }
@@ -1081,40 +1149,48 @@ class renderer {
 // ***
 // Renderer classes & functions
 // ***
-// function vars($exp) {
+// function vars($exp) 
+//{
 //     global $KT_renderer;
 //     return $KT_renderer->vars($exp);
 // }
-// function chvars($exp,$exp2) {
+// function chvars($exp,$exp2) 
+//{
 //     global $KT_renderer;
 //     return $KT_renderer->chvars($exp, $exp2);
 // }
-// function fields($exp) {
+// function fields($exp) 
+//{
 //     global $KT_renderer;
 //    	return $KT_renderer->fields($exp);
 // }
 
-// function sum($exp) {
+// function sum($exp) 
+//{
 //     global $KT_renderer;
 //     return $KT_renderer->sum($exp);
 // }
 
-// function avg($exp) {
+// function avg($exp) 
+//{
 //     global $KT_renderer;
 //     return $KT_renderer->avg($exp);
 // }
 
-// function rcount($exp) {
+// function rcount($exp) 
+//{
 //     global $KT_renderer;
 //     return $KT_renderer->rcount($exp);
 // }
 
-// function page() {
+// function page() 
+//{
 //     global $KT_renderer;
 //    	return $KT_renderer->page();
 // }
 
-// function pages() {
+// function pages() 
+//{
 //     global $KT_renderer;
 //    	return $KT_renderer->pages();
 // }

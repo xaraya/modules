@@ -3,7 +3,8 @@
  * Get a report
  *
  */
-function reports_userapi_report_get($args) {
+function reports_userapi_report_get($args) 
+{
 	list($rep_id) = xarVarCleanFromInput('rep_id');
 	extract($args);
     

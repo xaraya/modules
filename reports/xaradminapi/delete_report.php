@@ -3,7 +3,8 @@
  * Delete report
  *
  */
-function reports_adminapi_delete_report($args) {
+function reports_adminapi_delete_report($args) 
+{
 	//Get arguments
 	extract($args);
 

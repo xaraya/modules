@@ -6,7 +6,8 @@ if (!defined('YTMP_DIR')) define('YTMP_DIR',"/tmp");
 // Complete GhostScript filename
 if (!defined('YGS_DIR')) define('YGS_DIR',"/usr/bin/gs");
 
-class Yapser {
+class Yapser 
+{
   var $PSFile = "";
   var $PSFileName = "";
   var $PDFFileName = "";
@@ -17,11 +18,13 @@ class Yapser {
   var $align="LEFT";
   var $underline="";
   var $fonts = "";
-  function Yapser() {    
+  function Yapser() 
+  {    
     $this->fonts=array();          
   }
   // File Handling functions
-  function Open($filename="") {
+  function Open($filename="") 
+  {
     if ($filename=="") {
       $this->PSFileName = tempnam(YTMP_DIR, "yaps");
     } else {
@@ -73,10 +76,12 @@ class Yapser {
   %%EndProlog
   initgraphics");
   }
-  function Close() {
+  function Close() 
+  {
     fclose($this->PSFile);
   }
-  function CloseWeb() {
+  function CloseWeb() 
+  {
     $this->PStoPDF("");
     $fp=fopen($this->PDFFileName,'r');
     $data = fread($fp,filesize($this->PDFFileName));
@@ -88,7 +93,8 @@ class Yapser {
 		header("Content-Disposition: inline; filename=Yaps.pdf");    
     echo $data;   
   }
-  function CloseWebPS() {
+  function CloseWebPS() 
+  {
     $fp=fopen($this->PSFileName,'r');
     $data = fread($fp,filesize($this->PSFileName));
     fclose($fp);
@@ -98,7 +104,8 @@ class Yapser {
 		header("Content-Disposition: inline; filename=Yaps.ps");    
     echo $data;   
   }
-  function PStoPDF($pdffile="") {
+  function PStoPDF($pdffile="") 
+  {
     if ($pdffile=="") {
       $this->PDFFileName = tempnam(YTMP_DIR, "yaps");
     } else {
@@ -108,26 +115,31 @@ class Yapser {
     system($Command);
     $this->DelPS();
   }
-  function DelPDF() {
+  function DelPDF() 
+  {
     system(sprintf("rm %s", $this->PDFFileName));
   }
-  function DelPS() {
+  function DelPS() 
+  {
     system(sprintf("rm %s", $this->PSFileName));
   }
-  function SetInfo($info, $value) {
+  function SetInfo($info, $value) 
+  {
     $this->out("
   %%".$info.": ".$value);
   }
 
   // Page functions
-  function BeginPage ($width, $height) {
+  function BeginPage ($width, $height) 
+  {
     $this->out("
   <<  /PageSize [".$width." ".$height."]
         /ImagingBBox null
   >> setpagedevice
   gsave");
   }
-  function EndPage() {
+  function EndPage() 
+  {
     $this->out("
   grestore
   stroke
@@ -136,30 +148,37 @@ class Yapser {
 
   // Graphic functions
   // Function setting the autoStroke (automatically stokes the paths you create). Warning: filled objects are stroked independent of the autoStroke's value
-  function SetAutoStroke($autoStroke) {  // $autoStroke is "true" or "false"
+  function SetAutoStroke($autoStroke) 
+  {  // $autoStroke is "true" or "false"
     $this->autoStroke=$autoStroke;
   }   
-  function SetColor($red, $green, $blue) {
+  function SetColor($red, $green, $blue) 
+  {
     $this->out("
   ".$red." ".$green." ".$blue." KTSetColor");
   } 
-  function SetLineWidth($width) {
+  function SetLineWidth($width) 
+  {
     $this->out("
   ".$width." KTSetLineWidth");
   }
-  function SetDash($array, $offset) { // Sets the line dash. $array is a space-sepparated string containing non-zero integers
+  function SetDash($array, $offset) 
+  { // Sets the line dash. $array is a space-sepparated string containing non-zero integers
     $this->out("
   [".$array."] ".$offset." KTSetDash");
   }
-  function SetLineCap($cap) { // Set shape of line ends for stroke (0 = butt, 1 = round, 2 = square)
+  function SetLineCap($cap) 
+  { // Set shape of line ends for stroke (0 = butt, 1 = round, 2 = square)
     $this->out("
   ".$cap." KTSetLineCap");
   }
-  function SetLineJoin($join) { //Set shape of corners for stroke (0 = miter, 1 = round, 2 = bevel)
+  function SetLineJoin($join) 
+  { //Set shape of corners for stroke (0 = miter, 1 = round, 2 = bevel)
     $this->out("
   ".$join." KTSetLineJoin");
   }
-  function Line($x1, $y1, $x2, $y2) {
+  function Line($x1, $y1, $x2, $y2) 
+  {
     $this->out("
   ".$x1." ".$y1." ".$x2." ".$y2." KTLine");
     if ($this->autoStroke=="TRUE") {
@@ -167,7 +186,8 @@ class Yapser {
   stroke");
     }
   }
-  function Curve($x1, $y1, $x2, $y2, $x3, $y3) {
+  function Curve($x1, $y1, $x2, $y2, $x3, $y3) 
+  {
     $this->out("
   ".$x1." ".$y1." ".$x2." ".$y2." ".$x3." ".$y3." KTCurve");
     if ($this->autoStroke=="TRUE") {
@@ -175,11 +195,13 @@ class Yapser {
   stroke");
     }
   }
-  function MoveTo($x, $y) {
+  function MoveTo($x, $y) 
+  {
     $this->out("
   ".$x." ".$y." moveto");
   }
-  function LineTo($x, $y) {
+  function LineTo($x, $y) 
+  {
     $this->out("
   ".$x." ".$y." lineto");
     if ($this->autoStroke=="TRUE") {
@@ -187,7 +209,8 @@ class Yapser {
   stroke");
     }
   }
-  function Rectangle($x, $y, $width, $height) {
+  function Rectangle($x, $y, $width, $height) 
+  {
     $this->out("
   ".$x." ".$y." ".($x+$width)." ".$y." ".($x+$width)." ".($y+$height)." ".$x." ".($y+$height)." KTRect");
     if ($this->autoStroke=="TRUE") {
@@ -195,14 +218,16 @@ class Yapser {
   stroke");
     }
   } 
-  function Bar($x, $y, $width, $height) {
+  function Bar($x, $y, $width, $height) 
+  {
     $this->out("
   newpath
   ".$x." ".$y." ".($x+$width)." ".$y." ".($x+$width)." ".($y+$height)." ".$x." ".($y+$height)." KTRect
   closepath
   fill");
   }
-  function Circle($x, $y, $radius) {
+  function Circle($x, $y, $radius) 
+  {
     $this->out("
   ".$x." ".$y." ".$radius." KTCircle");
     if ($this->autoStroke=="TRUE") {
@@ -210,14 +235,16 @@ class Yapser {
   stroke");
     }
   }
-  function Disc($x, $y, $radius) {
+  function Disc($x, $y, $radius) 
+  {
     $this->out("
   newpath
   ".$x." ".$y." ".$radius." KTCircle
   closepath
   fill");
   }
-  function Arc($x, $y, $radius, $startangle, $endangle) {
+  function Arc($x, $y, $radius, $startangle, $endangle) 
+  {
     $this->out("
   ".$x." ".$y." ".$radius." ".$startangle." ".$endangle." KTArc");
     if ($this->autoStroke=="TRUE") {
@@ -225,7 +252,8 @@ class Yapser {
   stroke");
     }
   }  
-  function Pie($x, $y, $radius, $startangle, $endangle) {
+  function Pie($x, $y, $radius, $startangle, $endangle) 
+  {
     $this->out("
   ".$x." ".$y." ".$radius." ".$startangle." ".$endangle." KTPie");
     if ($this->autoStroke=="TRUE") {
@@ -233,7 +261,8 @@ class Yapser {
   stroke");
     }
   }    
-  function FullPie($x, $y, $radius, $startangle, $endangle) {
+  function FullPie($x, $y, $radius, $startangle, $endangle) 
+  {
     $this->out("
   newpath
   ".$x." ".$y." ".$radius." ".$startangle." ".$endangle." KTPie
@@ -242,47 +271,56 @@ class Yapser {
   }
 
   // Path functions
-  function Stroke() {
+  function Stroke() 
+  {
     $this->out("
   stroke");
   }
-  function NewPath() {
+  function NewPath() 
+  {
     $this->out("
   newpath");
   }
-  function ClosePath() {
+  function ClosePath() 
+  {
     $this->out("
   closepath");
   }
 
   // Clipping functions
-  function BeginClip() {
+  function BeginClip() 
+  {
     $this->out("
   clipsave
   clip");
   }
-  function BeginEOClip() {
+  function BeginEOClip() 
+  {
     $this->out("
   clipsave
   eoclip");
   }
-  function EndClip() {
+  function EndClip() 
+  {
     $this->out("
   cliprestore");
   }
 
   // Coordinate functions
-  function Rotate($angle) {
+  function Rotate($angle) 
+  {
     $this->out("
   ".$angle." KTRotate");
   }
-  function Translate($tx, $ty) {
+  function Translate($tx, $ty) 
+  {
     $this->out("
   ".$tx." ".$ty." KTTranslate");
   }
 
   // Font functions
-  function SetFont($fontname, $size) {
+  function SetFont($fontname, $size) 
+  {
     $this->fontSize=$size;
     $this->fontName=$fontname;
     if (!in_array($fontname,$this->fonts)) {
@@ -305,13 +343,16 @@ class Yapser {
     $this->out("
   ".$size." /".$fontname." KTSetFont");
   }
-  function GetFontSize() {
+  function GetFontSize() 
+  {
     return $this->fontSize;
   }
-  function GetFontName() {
+  function GetFontName() 
+  {
     return $this->fontName;
   }  
-  function SetUnderline($underline="FALSE") {
+  function SetUnderline($underline="FALSE") 
+  {
     $this->isUnderline=strtoupper($underline);
     if ($this->isUnderline=="TRUE") {
       $this->underline="Underline";
@@ -319,19 +360,23 @@ class Yapser {
       $this->underline="";
       }
   }
-  function GetUnderline() {
+  function GetUnderline() 
+  {
     return $this->isUnderline;
   }
-  function SetAlign($align="LEFT") {
+  function SetAlign($align="LEFT") 
+  {
     $this->align=strtoupper($align);
   }
-  function GetAlign() {
+  function GetAlign() 
+  {
     return $this->align;
   }
     
     
   // Text functions
-  function ShowAt($text, $x, $y){
+  function ShowAt($text, $x, $y)
+  {
     $this->out("
     (".$text.") ".$x." ".$y." KTShowAt".$this->underline."
 ");
@@ -341,7 +386,8 @@ class Yapser {
     }
   }
 
-  function ShowBoxed($text, $x, $y, $width, $height) {
+  function ShowBoxed($text, $x, $y, $width, $height) 
+  {
     $this->out("
   % KTShowBoxed
   clipsave
@@ -522,7 +568,8 @@ class Yapser {
   }
 
   // Image functions
-  function ShowImage($src, $x, $y, $width="0", $height="0") {
+  function ShowImage($src, $x, $y, $width="0", $height="0") 
+  {
     $size=getimagesize($src);    
     if ($width=="0" || $height=="0") {
       $width=$size[0];
@@ -604,7 +651,8 @@ class Yapser {
   }
   
 
-  function ShowAtUnderline($text, $x, $y){
+  function ShowAtUnderline($text, $x, $y)
+  {
     $this->out("
     (".$text.") ".$x." ".$y." KTShowAtUnderline");
     if ($this->autoStroke=="TRUE") {
@@ -614,7 +662,8 @@ class Yapser {
   }   
   
   // Private functions. Do NOT call these functions from outside of object. Use this ONLY if you have strong knoledge of PostScript Language
-  function out($outtext) {
+  function out($outtext) 
+  {
 //    echo $outtext."<br>";
     fwrite($this->PSFile, $outtext);
   }  

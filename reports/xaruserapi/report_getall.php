@@ -3,7 +3,8 @@
  * Get all reports
  *
  */
-function reports_userapi_report_getall() {
+function reports_userapi_report_getall() 
+{
 	$dbconn =& xarDBGetConn();
 	$xartables =& xarDBGetTables();
 	$tab = $xartables['reports'];

@@ -2,7 +2,8 @@
 /**
  * Process a delete request for reports
  */
-function reports_admin_delete_report($args) {
+function reports_admin_delete_report($args) 
+{
 	list($rep_id) = xarVarCleanFromInput('rep_id');
 	extract($args);
     

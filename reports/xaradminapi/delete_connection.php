@@ -3,7 +3,8 @@
  * Delete connection
  *
  */
-function reports_adminapi_delete_connection($args) {
+function reports_adminapi_delete_connection($args) 
+{
 	//Get arguments
 	extract($args);
     

@@ -2,7 +2,8 @@
 /**
  * Show form to define a new report
  */
-function reports_admin_new_report() {
+function reports_admin_new_report() 
+{
     // Get all connections
     $connections = xarModAPIFunc('reports','user','connection_getall',array());
 	

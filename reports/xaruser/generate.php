@@ -3,7 +3,8 @@
  * Generate a report
  *
  */
-function reports_user_generate($args) {
+function reports_user_generate($args) 
+{
     
     $rep_id = xarVarCleanFromInput('rep_id');
 	$xmlfile = xarVarCleanFromInput('xmlfile');

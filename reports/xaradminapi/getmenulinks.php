@@ -3,7 +3,8 @@
  * Get menu links
  *
  */
-function reports_adminapi_getmenulinks() {
+function reports_adminapi_getmenulinks() 
+{
     $menulinks[] = array('url'   => xarModURL('reports','admin','view_connections'),
                          'label' => xarML('View connections'),
                          'title' => xarML('List registered report connections'));

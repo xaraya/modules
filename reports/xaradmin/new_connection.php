@@ -2,7 +2,8 @@
 /**
  * Show form to define a new connection
  */
-function reports_admin_new_connection() {
+function reports_admin_new_connection() 
+{
     $data=array(
                 'authid' => xarSecGenAuthKey(),
                 'conn_id' => 0,

@@ -2,7 +2,8 @@
 /**
  * Pass update to admin api
  */
-function reports_admin_update_connection($args) {
+function reports_admin_update_connection($args) 
+{
 	list($conn_name, $conn_desc,$conn_type,$conn_server,$conn_database,$conn_user,$conn_password,$conn_id) = 
 		xarVarCleanFromInput('conn_name','conn_desc','conn_type','conn_server','conn_database','conn_user','conn_password','conn_id');
 	extract($args);

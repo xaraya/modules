@@ -3,7 +3,8 @@
  * Display a list of defined connections
  *
  */
-function reports_admin_view_connections() {
+function reports_admin_view_connections() 
+{
 	// Get a list of connections
 	$connections = xarModAPIFunc('reports','user','connection_getall',array());
 

@@ -1,5 +1,6 @@
 <?php
-function reports_admin_modify_config() {
+function reports_admin_modify_config() 
+{
 	$backends= array( array('id'=>'ezpdf',
                             'name'=> xarML('EzPDF (pure PHP)')), 
                       array('id'=>'yaps',

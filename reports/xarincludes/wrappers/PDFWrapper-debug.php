@@ -1,97 +1,124 @@
 <?php
 
-class PDFWrapper_Debug extends PDFWrapper {
+class PDFWrapper_Debug extends PDFWrapper 
+{
   var $type='Debug';
   var $p;  
 
-  function PDFWrapper_Debug() {
+  function PDFWrapper_Debug() 
+  {
     echo "Debug instantiated !<br>";
   }
 
   // Instantiation functions                  
-  function Open($file) {
+  function Open($file) 
+  {
 		echo "Open<br>";
   }                      
-  function Close() {
+  function Close() 
+  {
 		echo "Close<br>";
   }
-  function CloseWeb($redir="") {
+  function CloseWeb($redir="") 
+  {
 		echo "CloseWeb<br>";
   }
   
   // Page functions
-  function BeginPage ($width, $height) {
+  function BeginPage ($width, $height) 
+  {
 		echo "BeginPage<br>";
   }                                   
-  function EndPage() {
+  function EndPage() 
+  {
 		echo "EndPage<br>";
   }
   
   // Image functions
-  function PlaceImage($type, $src, $x, $y) {
+  function PlaceImage($type, $src, $x, $y) 
+  {
 		echo "PlaceImage<br>";
   }
-  function PlaceScaledImage($type, $src, $x, $y, $width, $height) {
+  function PlaceScaledImage($type, $src, $x, $y, $width, $height) 
+  {
 		echo "PlaceScaledImage<br>";
   }
 
   // Graphic functions
-  function SetColor($red, $green, $blue) {
+  function SetColor($red, $green, $blue) 
+  {
 		echo "SetColor<br>";
   } 
-  function SetBGColor($red, $green, $blue) {
+  function SetBGColor($red, $green, $blue) 
+  {
 		echo "SeteBGColor<br>";
   }
-  function SetAllColor($red, $green, $blue) {
+  function SetAllColor($red, $green, $blue) 
+  {
 		echo "SetAllColor<br>";
   }
-  function SetLineStyle($width, $black, $white) {
+  function SetLineStyle($width, $black, $white) 
+  {
 		echo "SetLineStyle<br>";
   }
-  function Line($x1, $y1, $x2, $y2) {
+  function Line($x1, $y1, $x2, $y2) 
+  {
 		echo "Line<br>";
   }
-  function MoveTo($x, $y) {
+  function MoveTo($x, $y) 
+  {
 		echo "MoveTo<br>";
   }
-  function LineTo($x, $y) {
+  function LineTo($x, $y) 
+  {
 		echo "LineTo<br>";
   }
-  function Rectangle($x, $y, $width, $height) {
+  function Rectangle($x, $y, $width, $height) 
+  {
 		echo "Rectangle<br>";
   } 
-  function Bar($x, $y, $width, $height) {
+  function Bar($x, $y, $width, $height) 
+  {
 		echo "Bar<br>";
   }
-  function Circle($x, $y, $radius) {
+  function Circle($x, $y, $radius) 
+  {
 		echo "Circle<br>";
   }
-  function Disc($x, $y, $radius) {
+  function Disc($x, $y, $radius) 
+  {
 		echo "Disc<br>";
   }
-  function Arc($x, $y, $radius, $startangle, $endangle) {
+  function Arc($x, $y, $radius, $startangle, $endangle) 
+  {
 		echo "Arce<br>";
   }  
-  function Pie($x, $y, $radius, $startangle, $endangle) {
+  function Pie($x, $y, $radius, $startangle, $endangle) 
+  {
 		echo "Pie<br>";
   }    
-  function FullPie($x, $y, $radius, $startangle, $endangle) {
+  function FullPie($x, $y, $radius, $startangle, $endangle) 
+  {
 		echo "FullPie<br>";
   }
 
   // Font functions
-  function SetFont($fontname, $size, $bold, $italic, $underline) {
+  function SetFont($fontname, $size, $bold, $italic, $underline) 
+  {
 		echo "Setfont<br>";
   }
   
   // Text functions
-  function ShowText($text, $x, $y, $width, $height, $align){
+  function ShowText($text, $x, $y, $width, $height, $align)
+  {
 		echo "Showtext<br>";
   }
-	function GetTextWidth($text,$size) {
-		echo "GetTextWidth<br>";
-		return 0;
-	}
+  
+  function GetTextWidth($text,$size) 
+  {
+      echo "GetTextWidth<br>";
+      return 0;
+  }
 
 }
 ?>

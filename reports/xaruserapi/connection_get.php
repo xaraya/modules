@@ -9,7 +9,8 @@
  * @param   conn_id integer identification of connection
  * @return  boolean 
 */
-function reports_userapi_connection_get($args) {
+function reports_userapi_connection_get($args) 
+{
 	list($conn_id) = xarVarCleanFromInput('conn_id');
 	extract($args);
     

@@ -5,7 +5,8 @@
  * Only the update functions exists, config cannot be deleted and is
  * the only instance of the object
  */
-function reports_adminapi_update_config($args) {
+function reports_adminapi_update_config($args) 
+{
 	// Get parameters
 	extract($args);
 	

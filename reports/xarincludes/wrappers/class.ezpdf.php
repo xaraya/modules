@@ -2,7 +2,8 @@
 
 include_once('class.pdf.php');
 
-class Cezpdf extends Cpdf {
+class Cezpdf extends Cpdf 
+{
 //==============================================================================
 // this class will take the basic interaction facilities of the Cpdf class
 // and make more useful functions so that the user does not have to 
@@ -25,7 +26,8 @@ var $ezPageCount=0;
 
 // ------------------------------------------------------------------------------
 
-function Cezpdf($paper='a4',$orientation='portrait'){
+function Cezpdf($paper='a4',$orientation='portrait')
+{
 	// Assuming that people don't want to specify the paper size using the absolute coordinates
 	// allow a couple of options:
 	// orientation can be 'portrait' or 'landscape'
@@ -131,7 +133,8 @@ function Cezpdf($paper='a4',$orientation='portrait'){
 // ------------------------------------------------------------------------------
 // 2002-07-24: Nicola Asuni (info@tecnick.com)
 // Set Margins in centimeters
-function ezSetCmMargins($top,$bottom,$left,$right){
+function ezSetCmMargins($top,$bottom,$left,$right)
+{
 	$top = ( $top / 2.54 ) * 72;
 	$bottom = ( $bottom / 2.54 ) * 72;
 	$left = ( $left / 2.54 ) * 72;
@@ -141,7 +144,8 @@ function ezSetCmMargins($top,$bottom,$left,$right){
 // ------------------------------------------------------------------------------
 
 
-function ezColumnsStart($options=array()){
+function ezColumnsStart($options=array())
+{
   // start from the current y-position, make the set number of columne
   if (isset($this->ez['columns']) && $this->ez['columns']==1){
     // if we are already in a column mode then just return.
@@ -174,7 +178,8 @@ function ezColumnsStart($options=array()){
   
 }
 // ------------------------------------------------------------------------------
-function ezColumnsStop(){
+function ezColumnsStop()
+{
   if (isset($this->ez['columns']) && $this->ez['columns']['on']==1){
     $this->ez['columns']['on']=0;
     $this->ez['leftMargin']=$this->ez['columns']['margins'][0];
@@ -184,7 +189,8 @@ function ezColumnsStop(){
   }
 }
 // ------------------------------------------------------------------------------
-function ezInsertMode($status=1,$pageNum=1,$pos='before'){
+function ezInsertMode($status=1,$pageNum=1,$pos='before')
+{
   // puts the document into insert mode. new pages are inserted until this is re-called with status=0
   // by default pages wil be inserted at the start of the document
   switch($status){
@@ -201,7 +207,8 @@ function ezInsertMode($status=1,$pageNum=1,$pos='before'){
 }
 // ------------------------------------------------------------------------------
 
-function ezNewPage(){
+function ezNewPage()
+{
   $pageRequired=1;
   if (isset($this->ez['columns']) && $this->ez['columns']['on']==1){
     // check if this is just going to a new column
@@ -243,7 +250,8 @@ function ezNewPage(){
 
 // ------------------------------------------------------------------------------
 
-function ezSetMargins($top,$bottom,$left,$right){
+function ezSetMargins($top,$bottom,$left,$right)
+{
   // sets the margins to new values
   $this->ez['topMargin']=$top;
   $this->ez['bottomMargin']=$bottom;
@@ -263,14 +271,16 @@ function ezSetMargins($top,$bottom,$left,$right){
 
 // ------------------------------------------------------------------------------
 
-function ezGetCurrentPageNumber(){
+function ezGetCurrentPageNumber()
+{
   // return the strict numbering (1,2,3,4..) number of the current page
   return $this->ezPageCount;
 }
 
 // ------------------------------------------------------------------------------
 
-function ezStartPageNumbers($x,$y,$size,$pos='left',$pattern='{PAGENUM} of {TOTALPAGENUM}',$num=''){
+function ezStartPageNumbers($x,$y,$size,$pos='left',$pattern='{PAGENUM} of {TOTALPAGENUM}',$num='')
+{
   // put page numbers on the pages from here.
   // place then on the 'pos' side of the coordinates (x,y).
   // pos can be 'left' or 'right'
@@ -296,7 +306,8 @@ function ezStartPageNumbers($x,$y,$size,$pos='left',$pattern='{PAGENUM} of {TOTA
 
 // ------------------------------------------------------------------------------
 
-function ezWhatPageNumber($pageNum,$i=0){
+function ezWhatPageNumber($pageNum,$i=0)
+{
   // given a particular generic page number (ie, document numbered sequentially from beginning),
   // return the page number under a particular page numbering scheme ($i)
   $num=0;
@@ -328,7 +339,8 @@ function ezWhatPageNumber($pageNum,$i=0){
 
 // ------------------------------------------------------------------------------
 
-function ezStopPageNumbers($stopTotal=0,$next=0,$i=0){
+function ezStopPageNumbers($stopTotal=0,$next=0,$i=0)
+{
   // if stopTotal=1 then the totalling of pages for this number will stop too
   // if $next=1, then do this page, but not the next, else do not do this page either
   // if $i is set, then stop that particular pagenumbering sequence.
@@ -357,7 +369,8 @@ function ezStopPageNumbers($stopTotal=0,$next=0,$i=0){
 
 // ------------------------------------------------------------------------------
 
-function ezPRVTpageNumberSearch($lbl,&$tmp){
+function ezPRVTpageNumberSearch($lbl,&$tmp)
+{
   foreach($tmp as $i=>$v){
     if (is_array($v)){
       if (isset($v[$lbl])){
@@ -374,7 +387,8 @@ function ezPRVTpageNumberSearch($lbl,&$tmp){
 
 // ------------------------------------------------------------------------------
 
-function ezPRVTaddPageNumbers(){
+function ezPRVTaddPageNumbers()
+{
   // this will go through the pageNumbering array and add the page numbers are required
   if (isset($this->ez['pageNumbering'])){
     $totalPages1 = $this->ezPageCount;
@@ -445,27 +459,31 @@ function ezPRVTaddPageNumbers(){
 
 // ------------------------------------------------------------------------------
 
-function ezPRVTcleanUp(){
+function ezPRVTcleanUp()
+{
   $this->ezPRVTaddPageNumbers();
 }
 
 // ------------------------------------------------------------------------------
 
-function ezStream($options=''){
+function ezStream($options='')
+{
   $this->ezPRVTcleanUp();
   $this->stream($options);
 }
 
 // ------------------------------------------------------------------------------
 
-function ezOutput($options=0){
+function ezOutput($options=0)
+{
   $this->ezPRVTcleanUp();
   return $this->output($options);
 }
 
 // ------------------------------------------------------------------------------
 
-function ezSetY($y){
+function ezSetY($y)
+{
   // used to change the vertical position of the writing point.
   $this->y = $y;
   if ( $this->y < $this->ez['bottomMargin']){
@@ -476,7 +494,8 @@ function ezSetY($y){
 
 // ------------------------------------------------------------------------------
 
-function ezSetDy($dy,$mod=''){
+function ezSetDy($dy,$mod='')
+{
   // used to change the vertical position of the writing point.
   // changes up by a positive increment, so enter a negative number to go
   // down the page
@@ -494,7 +513,8 @@ function ezSetDy($dy,$mod=''){
 
 // ------------------------------------------------------------------------------
 
-function ezPrvtTableDrawLines($pos,$gap,$x0,$x1,$y0,$y1,$y2,$col,$inner,$outer,$opt=1){
+function ezPrvtTableDrawLines($pos,$gap,$x0,$x1,$y0,$y1,$y2,$col,$inner,$outer,$opt=1)
+{
   $x0=1000;
   $x1=0;
   $this->setStrokeColor($col[0],$col[1],$col[2]);
@@ -523,7 +543,8 @@ function ezPrvtTableDrawLines($pos,$gap,$x0,$x1,$y0,$y1,$y2,$col,$inner,$outer,$
 
 // ------------------------------------------------------------------------------
 
-function ezPrvtTableColumnHeadings($cols,$pos,$maxWidth,$height,$decender,$gap,$size,&$y,$optionsAll=array()){
+function ezPrvtTableColumnHeadings($cols,$pos,$maxWidth,$height,$decender,$gap,$size,&$y,$optionsAll=array())
+{
   // uses ezText to add the text, and returns the height taken by the largest heading
   // this page will move the headings to a new page if they will not fit completely on this one
   // transaction support will be used to implement this
@@ -588,7 +609,8 @@ function ezPrvtTableColumnHeadings($cols,$pos,$maxWidth,$height,$decender,$gap,$
 
 // ------------------------------------------------------------------------------
 
-function ezPrvtGetTextWidth($size,$text){
+function ezPrvtGetTextWidth($size,$text)
+{
   // will calculate the maximum width, taking into account that the text may be broken
   // by line breaks.
   $mx=0;
@@ -604,7 +626,8 @@ function ezPrvtGetTextWidth($size,$text){
 
 // ------------------------------------------------------------------------------
 
-function ezTable(&$data,$cols='',$title='',$options=''){
+function ezTable(&$data,$cols='',$title='',$options='')
+{
   // add a table of information to the pdf document
   // $data is a two dimensional array
   // $cols (optional) is an associative array, the keys are the names of the columns from $data
@@ -1192,7 +1215,8 @@ function ezTable(&$data,$cols='',$title='',$options=''){
 }
 
 // ------------------------------------------------------------------------------
-function ezProcessText($text){
+function ezProcessText($text)
+{
   // this function will intially be used to implement underlining support, but could be used for a range of other
   // purposes
   $search = array('<u>','<U>','</u>','</U>');
@@ -1202,7 +1226,8 @@ function ezProcessText($text){
 
 // ------------------------------------------------------------------------------
 
-function ezText($text,$size=0,$options=array(),$test=0){
+function ezText($text,$size=0,$options=array(),$test=0)
+{
   // this will add a string of text to the document, starting at the current drawing
   // position.
   // it will wrap to keep within the margins, including optional offsets from the left
@@ -1298,7 +1323,8 @@ function ezText($text,$size=0,$options=array(),$test=0){
 
 // ------------------------------------------------------------------------------
 
-function ezImage($image,$pad = 5,$width = 0,$resize = 'full',$just = 'center',$border = ''){
+function ezImage($image,$pad = 5,$width = 0,$resize = 'full',$just = 'center',$border = '')
+{
 	//beta ezimage function
 	if (stristr($image,'://'))//copy to temp file
 	{
@@ -1420,7 +1446,8 @@ function ezImage($image,$pad = 5,$width = 0,$resize = 'full',$just = 'center',$b
 
 // note that templating code is still considered developmental - have not really figured
 // out a good way of doing this yet.
-function loadTemplate($templateFile){
+function loadTemplate($templateFile)
+{
   // this function will load the requested template ($file includes full or relative pathname)
   // the code for the template will be modified to make it name safe, and then stored in 
   // an array for later use
@@ -1457,7 +1484,8 @@ function loadTemplate($templateFile){
 
 // ------------------------------------------------------------------------------
 
-function execTemplate($id,$data=array(),$options=array()){
+function execTemplate($id,$data=array(),$options=array())
+{
   // execute the given template on the current document.
   if (!isset($this->ez['templates'][$id])){
     return;
@@ -1466,11 +1494,13 @@ function execTemplate($id,$data=array(),$options=array()){
 }
 
 // ------------------------------------------------------------------------------
-function ilink($info){
+function ilink($info)
+{
   $this->alink($info,1);
 }
 
-function alink($info,$internal=0){
+function alink($info,$internal=0)
+{
   // a callback function to support the formation of clickable links within the document
   $lineFactor=0.05; // the thickness of the line as a proportion of the height. also the drop of the line.
   switch($info['status']){
@@ -1515,7 +1545,8 @@ function alink($info,$internal=0){
 
 // ------------------------------------------------------------------------------
 
-function uline($info){
+function uline($info)
+{
   // a callback function to support underlining
   $lineFactor=0.05; // the thickness of the line as a proportion of the height. also the drop of the line.
   switch($info['status']){

@@ -2,7 +2,8 @@
 /**
  * Pass update to admin api
  */
-function reports_admin_update_report($args) {
+function reports_admin_update_report($args) 
+{
 	list($rep_id, $rep_name, $rep_desc,$rep_conn,$rep_xmlfile) = 
 		xarVarCleanFromInput('rep_id','rep_name','rep_desc','rep_conn_id','rep_xmlfile');
 	extract($args);

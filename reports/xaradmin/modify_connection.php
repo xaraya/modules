@@ -2,7 +2,8 @@
 /** 
  * Modify a connection
  */
-function reports_admin_modify_connection($args) {
+function reports_admin_modify_connection($args) 
+{
 	list($conn_id) = xarVarCleanFromInput('conn_id');
 	extract($args);
 

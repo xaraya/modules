@@ -3,7 +3,8 @@
  * Connection admin
  *
  */
-function reports_adminapi_create_connection($args) {
+function reports_adminapi_create_connection($args) 
+{
 	//Get arguments
 	extract($args);
 

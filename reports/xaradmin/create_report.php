@@ -2,7 +2,8 @@
 /**
  * Gather entered info and let admin api process new report creation
  */
-function reports_admin_create_report($args) {
+function reports_admin_create_report($args) 
+{
 	list($rep_id, $rep_name, $rep_desc,$rep_xmlfile, $rep_conn_id) = 
 		xarVarCleanFromInput('rep_id','rep_name','rep_desc','rep_xmlfile', 'rep_conn_id');
 	extract($args);

@@ -2,7 +2,8 @@
 /**
  * Gather entered info and let admin api process creation of new connection
  */
-function reports_admin_create_connection($args) {
+function reports_admin_create_connection($args) 
+{
     list($conn_name, $conn_desc,$conn_type,$conn_server,$conn_database,$conn_user,$conn_password) = 
 		xarVarCleanFromInput('conn_name','conn_desc','conn_type','conn_server','conn_database','conn_user','conn_password');
 	extract($args);

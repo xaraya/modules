@@ -3,7 +3,8 @@
  * Update connection
  *
  */
-function reports_adminapi_update_connection($args) {
+function reports_adminapi_update_connection($args) 
+{
 	//Get arguments
 	extract($args);
 

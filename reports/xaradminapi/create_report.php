@@ -3,7 +3,8 @@
  *  Report administrative functions
  *
  */
-function reports_adminapi_create_report($args) {
+function reports_adminapi_create_report($args) 
+{
 	//Get arguments
 	extract($args);
 

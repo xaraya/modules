@@ -2,7 +2,8 @@
 /*
  * Display a list of defined reports
  */
-function reports_admin_view_reports() {
+function reports_admin_view_reports() 
+{
 	// Get a list of reports
 	$reports = xarModAPIFunc('reports','user','report_getall',array());
     

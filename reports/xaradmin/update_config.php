@@ -2,7 +2,8 @@
 /**
  * Update configuration
  */
-function reports_admin_update_config($args) {
+function reports_admin_update_config($args) 
+{
 	// Get parameters
 	list($config_replocation, $config_imglocation, $config_pdfbackend) =
 		xarVarCleanFromInput('config_replocation','config_imglocation','config_pdfbackend');

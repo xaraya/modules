@@ -13,7 +13,8 @@
 */
 
 
-function reports_init() {
+function reports_init() 
+{
     // Get database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
@@ -101,7 +102,8 @@ function reports_init() {
     return true;
 }
 
-function reports_upgrade() {
+function reports_upgrade() 
+{
     // Upgrade dependent on old version number
     switch($oldversion) {
     case 1.0:
@@ -117,7 +119,8 @@ function reports_upgrade() {
 	return true;
 }
 
-function reports_delete() {
+function reports_delete() 
+{
     // Get database information
     $dbconn =& xarDBGetConn();
     $xartable =& xarDBGetTables();
