@@ -39,8 +39,8 @@ function paypalipn_userapi_get($args)
     $query = "SELECT xar_id,
                    xar_log
             FROM $table
-            WHERE xar_id = " . xarVarPrepForStore($id);
-    $result = &$dbconn->Execute($query); 
+            WHERE xar_id = ?";
+    $result = &$dbconn->Execute($query, array($id)); 
     if (!$result) return; 
 
     // Check for no rows found, and if so, close the result set and return an exception
