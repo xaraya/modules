@@ -141,6 +141,8 @@ function sitetools_admin_backup($args)
         } else {
             $data['runningstatus'] =$bkupdata['runningstatus'];
         }
+        
+
         $data['bkfiletype'] =$bkupdata['bkfiletype'];
         $data['bkfilename'] =$bkupdata['bkfilename'];
         $data['bkname'] =$bkupdata['bkname'];
@@ -148,8 +150,13 @@ function sitetools_admin_backup($args)
         $data['completetime'] =$bkupdata['completetime'];
         $data['backuptype'] =$bkupdata['backuptype'];
         $data['btype'] =$bkupdata['btype'];
-       // $data['startbackup'] =$bkupdata['startbackup'];
+ //       $downloadfile=$bkupdata['bkname'];
+       //Generate download, view and delete URLS
 
+        $data['downloadurl']= xarModURL('sitetools','admin','downloadbkup',
+                                     array('savefile' => $data['bkname']));
+        $data['deleteurl']= xarModURL('sitetools','admin','downloaddel',
+                                     array('savefile' => $data['bkname']));
     }
 
  //end if start backup
@@ -157,6 +164,7 @@ function sitetools_admin_backup($args)
 
    //Return data for display
   return $data;
+
 }
 
 ?>

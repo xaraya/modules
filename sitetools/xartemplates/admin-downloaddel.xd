@@ -1,0 +1,18 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Site Tools Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Backup Database Tables</xar:mlstring></h2>
+<xar:set name="$resultstring"><xar:mlstring>Your backup file:</xar:mlstring></xar:set>
+<xar:set name="$success"><xar:mlstring>has been successfully deleted.</xar:mlstring></xar:set>
+<xar:set name="$failure"><xar:mlstring>still exists as there was a problem deleting it.</xar:mlstring></xar:set>
+<div style="margin: auto;">
+    <!-- First get choice of backup type -->
+
+<div style="text-align:center">
+   <div>#$resultstring# <span style="font-weight:bold;">#$filedeleted#</span></div>
+       <xar:if condition="$outcome eq 1">
+           <div style="padding-top:10px; font-weight:bold;">#$success#</div>
+       <xar:else />
+           <div style="padding-top:10px; font-weight:bold;">#$failure#</div>
+       </xar:if>
+</div>
+</div>
+</div>

@@ -9,11 +9,8 @@
 <xar:set name="$screenhelp"><xar:mlstring>If checked, a running status of backup progress is displayed.</xar:mlstring></xar:set>
 <xar:set name="$usegzlabel"><xar:mlstring>Create GZ backup file(if gz available)?</xar:mlstring></xar:set>
 <xar:set name="$usegzhelp"><xar:mlstring>If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.</xar:mlstring></xar:set>
-<xar:set name="$securitymessage"><xar:mlstring><b>WARNING:</b><br />Do not leave your backup file in a web browsable directory.<br />
+<xar:set name="$securitymessage"><xar:mlstring><b>SECURITY WARNING:</b><br />Do not leave your backup file in a web browsable directory.<br />
                                  Remember to delete it, or move it to a secure directory.</xar:mlstring></xar:set>
-<xar:set name="$savefile"><xar:mlstring>To save the file from the above link, right click on backup file link and save.<br />
-                                        A GZ encoded file will uncompress and save as an uncompressed text file with this method,<br />or if you download by clicking on the link.<br />
-                                        So change the file extension to .sql only for the saved file - not .gz</xar:mlstring></xar:set>
 <div style="margin: auto;">
     <!-- First get choice of backup type -->
 <xar:if condition="$warning eq 1">
@@ -136,17 +133,19 @@
         <td valign='middle' align='left'>#$btype#</td>
     </tr>
     <tr>
-        <td valign='middle' align='left'><xar:mlstring>File:</xar:mlstring></td>
+        <td valign='middle' align='left'><xar:mlstring>Click to download:</xar:mlstring></td>
         <td valign='middle' align='left'>
-           <a href="#$bkfilename#" onclick="window.open(this.href, 'popupwindow', 'width=640,height=300,scrollbars,resizable'); return false;">#$bkname#</a> (#$bkfilesize#)</p>
-        </td>
+        <a href="#$downloadurl#">#$bkname#</a> (#$bkfilesize#)
+       </td>
     </tr>
-    <tr><td valign='middle' colspan='2' align='center'>#$savefile#</td></tr>
-    <tr><td valign='middle' colspan='2' align='center'>#$securitymessage#</td></tr>
+   <tr><td valign='middle' colspan='2' align='center'>#$securitymessage#</td></tr>
+    <tr>
+        <td valign='middle' align='left'><xar:mlstring>Click to Delete:</xar:mlstring></td>
+        <td valign='middle' align='left'><a href="#$deleteurl#">#$bkname#</a></td>
+    </tr>
+  
     </table>
     </div>
-    <br />
-    <!--#$deleteurl# -->//TODO: Download GZ, delete and move functions. More configs and tidy up.
 
 </xar:if>
 
