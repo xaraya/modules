@@ -24,7 +24,7 @@ function sitetools_admin_backup($args)
    if (!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('startbackup', 'str:1:', $startbackup, '', XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('usegz', 'int:1', $usegz, 0, XARVAR_NOT_REQUIRED)) return;
-   if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) return;
+  if (!xarVarFetch('screen', 'int:1', $screen, 0, XARVAR_NOT_REQUIRED)) return;
    if (!xarVarFetch('SelectedTables', 'array:', $SelectedTables, '', XARVAR_NOT_REQUIRED)) return;
    // Security check
     if (!xarSecurityCheck('AdminSiteTools')) return;
@@ -42,11 +42,12 @@ function sitetools_admin_backup($args)
     $backupabsolutepath= xarModGetVar('sitetools','backuppath').'/';
     $data['warning']=0;
 
-    if (($data['usegz']==1) && (function_exists('gzopen'))) {
+    if (($data['usegz']==1) && (bool)(function_exists('gzopen'))) {
          $GZ_enabled =true;
     } else {
        $GZ_enabled = false;
     }
+
     if (xarModGetVar('sitetools','timestamp') ==1) {
         $data['backuptimestamp'] = '.'.date('Y-m-d');
     } else {
@@ -136,10 +137,9 @@ function sitetools_admin_backup($args)
         if (!xarSecConfirmAuthKey()) {return;}
         @set_time_limit(600);
 
-        //Open up files for write and setup up file headers
+         //Open up files for write and setup up file headers
         if (($GZ_enabled && ($zp = gzopen($backupabsolutepath.$tempbackupfilename, 'wb'))) || (!$GZ_enabled && ($fp = fopen($backupabsolutepath.$tempbackupfilename, 'wb')))) {
 		    $fileheaderline = "# Xaraya SiteToolsBackup v".$xarbackupversion."\n# mySQL backup (".date('F j, Y g:i a').")   Type = ";
-
 		    if ($GZ_enabled) {
 			    gzwrite($zp, $fileheaderline, strlen($fileheaderline));
 		    } else {

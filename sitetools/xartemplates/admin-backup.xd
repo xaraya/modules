@@ -11,7 +11,7 @@
 <xar:set name="$usegzhelp"><xar:mlstring>If checked the backup file will be in GZ format, if available. Otherwise, a text sql file will be created.</xar:mlstring></xar:set>
 <xar:set name="$securitymessage"><xar:mlstring><b>WARNING:</b><br />Do not leave your backup file in a web browsable directory.
                                  Remember to delete it, or move it to a secure directory.</xar:mlstring></xar:set>
-<xar:set name="$savefile"><xar:mlstring>Right click on backup file link to save and download</xar:mlstring></xar:set>
+<xar:set name="$savefile"><xar:mlstring>For TEXT sql file, right click on backup file link to save.</xar:mlstring></xar:set>
 <div style="margin: auto;">
     <!-- First get choice of backup type -->
 <xar:if condition="$warning eq 1">
@@ -59,7 +59,7 @@
         </span>
 		</span>
 		<span style="float: right; width: 58%; text-align: left;">
-            <xar:if condition="$usegz eq true">
+            <xar:if condition="$screen eq true">
                 <input type="checkbox" name="screen" id="screen" value="1" checked="checked" />
             <xar:else />
                 <input type="checkbox" name="screen" id="screen" value="1" />
