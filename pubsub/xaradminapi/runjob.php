@@ -106,8 +106,8 @@ function pubsub_adminapi_runjob($args)
         // Get the (compiled) template to use
         $query = "SELECT xar_compiled
                   FROM $pubsubtemplatestable
-                  WHERE xar_templateid = " . xarVarPrepForStore($templateid);
-        $result   = $dbconn->Execute($query);
+                  WHERE xar_templateid = ?";
+        $result   = $dbconn->Execute($query, array((int)$templateid));
         if (!$result) return;
 
         if ($result->EOF) {

@@ -31,14 +31,11 @@ function pubsub_user_unsubscribe($args)
     } else {
         return;
     }
+    if (!xarVarFetch('modid', 'int:1:', $modid, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('cid', 'int:1:', $cid, '', XARVAR_NOT_REQUIRED)) return;  
+    if (!xarVarFetch('itemtype', 'int:1:', $itemtype, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('returnurl', 'str:1:', $returnurl, '', XARVAR_NOT_REQUIRED)) return;
 
-    list($modid,
-         $cid,
-         $itemtype,
-         $returnurl) = xarVarCleanFromInput('modid',
-                                            'cid',
-                                            'itemtype',
-                                            'returnurl');
 
     $returnurl = rawurldecode($returnurl);
 
