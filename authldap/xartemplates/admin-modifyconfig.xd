@@ -34,6 +34,11 @@
                     </td>
                 </tr>
                 <tr align="left" valign="top">
+                    <td colspan="2">
+                        <b><xar:mlstring>Note: </xar:mlstring></b><xar:mlstring>If the server name contains "ldap://" or "ldaps://", then the port number is ignored.  Instead, append the port number to the server name as in "ldaps://server:port".</xar:mlstring>
+                    </td>
+                </tr>
+                <tr align="left" valign="top">
                     <td>
                         <xar:mlstring>Anonymously Bind to Server</xar:mlstring> 
                     </td>
