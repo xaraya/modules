@@ -19,11 +19,12 @@ function release_userapi_getallrssmodsnotes($args)
                      xar_rid,
                      xar_version
             FROM $releasenotes
-            WHERE xar_certified = 2
-            AND xar_type = '" . xarVarPrepForStore($type) . "'
+            WHERE xar_certified = ?
+            AND xar_type = ?
             ORDER by xar_time DESC";
 
-    $result =& $dbconn->Execute($query);
+    $bindvars = array(2, $type);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // Put users into result array

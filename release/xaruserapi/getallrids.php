@@ -62,6 +62,7 @@ function release_userapi_getallrids($args)
                      xar_approved,
                      xar_rstate
             FROM $releasetable ";
+    $bindvars = array();
 
     $from ='';
     $where = array();
@@ -91,7 +92,8 @@ function release_userapi_getallrids($args)
     }
 
     if (!empty($certified)) {
-        $where[] = " xar_certified = '" . xarVarPrepForStore($certified). "'";
+        $where[] = " xar_certified = ?";
+        $bindvars[] = $certified;
     }
    if (count($where) > 0)
     {
@@ -120,16 +122,15 @@ function release_userapi_getallrids($args)
             }
         }
 
-      $query .= ' ORDER BY ' . join(', ',$sortparts);
+        $query .= ' ORDER BY ' . join(', ',$sortparts);
     } else { // default is 'rid
         $query .= ' ORDER BY  xar_rid ASC';
     }
 
 
+    //  $query .= " ORDER BY xar_rid";
 
-  //  $query .= " ORDER BY xar_rid";
-
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     // Put users into result array

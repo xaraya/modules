@@ -23,6 +23,7 @@ function release_userapi_getdocs($args)
 
     $releasedocstable = $xartable['release_docs'];
 
+    $bindvars = array();
     $query = "SELECT xar_rdid,
                      xar_rid,
                      xar_title,
@@ -34,20 +35,19 @@ function release_userapi_getdocs($args)
 
                      /*";
     if (!empty($apporved)) {
-        $query .= " WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
-                    AND xar_approved = '" . xarVarPrepForStore($approved) . "'
-                    AND xar_type = '" . xarVarPrepForStore($type) . "'";
+        $query .= " WHERE xar_rid = ? AND xar_approved = ? AND xar_type = ?";
+        array_push($bindvars, $rid, $approved, $type);
     } elseif(empty($type)) {
-        $query .= " WHERE xar_approved = '" . xarVarPrepForStore($approved) . "'";
+        $query .= " WHERE xar_approved = ?";
+        array_push($bindvars, $approved);
     } else {
-        $query .= "*/ 
-        WHERE xar_rid = '" . xarVarPrepForStore($rid) . "'
-                    AND xar_type = '" . xarVarPrepForStore($type) . "'";
+        $query .= "*/ WHERE xar_rid = ? AND xar_type = ?";
+        array_push($bindvars, $rid, $type);
     }
 
     $query .= " ORDER BY xar_rdid";
 
-    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1);
+    $result = $dbconn->SelectLimit($query, $numitems, $startnum-1, $bindvars);
     if (!$result) return;
 
     // Put users into result array

@@ -42,8 +42,9 @@ function release_userapi_countitems($args)
                                     'andcids'  => 1));
     }
 
-     $query = "SELECT COUNT(1)
+    $query = "SELECT COUNT(1)
              FROM $releasetable";
+    $bindvars = array();
 
     $from ='';
     $where = array();
@@ -74,7 +75,8 @@ function release_userapi_countitems($args)
     }
 
     if (!empty($certified)) {
-        $where[] = " xar_certified = '" . xarVarPrepForStore($certified). "'";
+        $where[] = " xar_certified = ?";
+        $bindvars[] = $certified;
     }
 
     if (count($where) > 0)
@@ -84,7 +86,7 @@ function release_userapi_countitems($args)
 
     $query .= " ORDER BY xar_rid";
 
-    $result =& $dbconn->Execute($query);
+    $result =& $dbconn->Execute($query, $bindvars);
     if (!$result) return;
 
     // Check for an error with the database code, adodb has already raised
