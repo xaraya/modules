@@ -8,45 +8,39 @@
  * @copyright (C) 2002 by the Xaraya Development Team.
  * @license GPL <http://www.gnu.org/licenses/gpl.html>
  * @link http://www.xaraya.org
- *
  * @subpackage Censor Module
- * @author John Cox
-*/
+ * @author John Cox 
+ */
 
 /**
  * create a new censored word
- * @param $args['keyword'] keyword of the item
+ * 
+ * @param  $args ['keyword'] keyword of the item
  * @returns int
  * @return censor ID on success, false on failure
  */
 function censor_adminapi_create($args)
-{
-
+{ 
     // Get arguments from argument array
-    extract($args);
-
+    extract($args); 
     // Argument check - make sure that all required arguments are present,
     // if not then set an appropriate error message and return
-    if (!isset($keyword)){
+    if (!isset($keyword)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'create', 'censor');
+            join(', ', $invalid), 'admin', 'create', 'censor');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+            new SystemException($msg));
         return;
-    }
-
+    } 
     // Security Check
-	if(!xarSecurityCheck('AddCensor')) return;
-
+    if (!xarSecurityCheck('AddCensor')) return; 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $censortable = $xartable['censor'];
-
+    $censortable = $xartable['censor']; 
     // Get next ID in table
-    $nextId = $dbconn->GenId($censortable);
-
+    $nextId = $dbconn->GenId($censortable); 
     // Add item
     $query = "INSERT INTO $censortable (
               xar_cid,
@@ -54,167 +48,153 @@ function censor_adminapi_create($args)
             VALUES (
               $nextId,
               '" . xarVarPrepForStore($keyword) . "')";
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
+    $result = &$dbconn->Execute($query);
+    if (!$result) return; 
     // Get the ID of the item that we inserted
-    $cid = $dbconn->PO_Insert_ID($censortable, 'xar_cid');
-
+    $cid = $dbconn->PO_Insert_ID($censortable, 'xar_cid'); 
     // Let any hooks know that we have created a new link
-    xarModCallHooks('item', 'create', $cid, 'cid');
-
+    xarModCallHooks('item', 'create', $cid, 'cid'); 
     // Return the id of the newly created link to the calling process
     return $cid;
-}
+} 
 
 /**
  * delete an censored word
- * @param $args['cid'] ID of the link
+ * 
+ * @param  $args ['cid'] ID of the link
  * @returns bool
  * @return true on success, false on failure
  */
 function censor_adminapi_delete($args)
-{
+{ 
     // Get arguments from argument array
-    extract($args);
-
+    extract($args); 
     // Argument check
     if (!isset($cid)) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'delete', 'censor');
+            join(', ', $invalid), 'admin', 'delete', 'censor');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+            new SystemException($msg));
         return;
-    }
-
+    } 
     // The user API function is called
     $link = xarModAPIFunc('censor',
-                         'user',
-                         'get',
-                         array('cid' => $cid));
+        'user',
+        'get',
+        array('cid' => $cid));
 
     if ($link == false) {
         $msg = xarML('No Such Word Present', 'censor');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return; 
-    }
-
+        return;
+    } 
     // Security Check
-	if(!xarSecurityCheck('DeleteCensor')) return;
-
+    if (!xarSecurityCheck('DeleteCensor')) return; 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $censortable = $xartable['censor'];
-
+    $censortable = $xartable['censor']; 
     // Delete the item
     $query = "DELETE FROM $censortable
             WHERE xar_cid = " . xarVarPrepForStore($cid);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
+    $result = &$dbconn->Execute($query);
+    if (!$result) return; 
     // Let any hooks know that we have deleted a link
-    xarModCallHooks('item', 'delete', $cid, '');
-
+    xarModCallHooks('item', 'delete', $cid, ''); 
     // Let the calling process know that we have finished successfully
     return true;
-}
+} 
 
 /**
  * update an censored word
- * @param $args['cid'] the ID of the link
- * @param $args['keyword'] the new keyword of the link
+ * 
+ * @param  $args ['cid'] the ID of the link
+ * @param  $args ['keyword'] the new keyword of the link
  */
 function censor_adminapi_update($args)
-{
+{ 
     // Get arguments from argument array
     extract($args);
 
     if (!isset($comment)) {
         $comment = '';
-    }
+    } 
     // Argument check
     if ((!isset($cid)) ||
-        (!isset($keyword))) {
+            (!isset($keyword))) {
         $msg = xarML('Invalid Parameter Count',
-                    join(', ',$invalid), 'admin', 'update', 'censor');
+            join(', ', $invalid), 'admin', 'update', 'censor');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM',
-                       new SystemException($msg));
+            new SystemException($msg));
         return;
-    }
-
+    } 
     // The user API function is called
     $link = xarModAPIFunc('censor',
-                         'user',
-                         'get',
-                         array('cid' => $cid));
+        'user',
+        'get',
+        array('cid' => $cid));
 
     if ($link == false) {
         $msg = xarML('No Such Link Present', 'censor');
         xarExceptionSet(XAR_USER_EXCEPTION, 'MISSING_DATA', new DefaultUserException($msg));
-        return; 
-    }
-
+        return;
+    } 
     // Security Check
-	if(!xarSecurityCheck('EditCensor')) return;
-
+    if (!xarSecurityCheck('EditCensor')) return; 
     // Get datbase setup
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
 
-    $censortable = $xartable['censor'];
-
+    $censortable = $xartable['censor']; 
     // Update the link
     $query = "UPDATE $censortable
             SET xar_keyword = '" . xarVarPrepForStore($keyword) . "'
             WHERE xar_cid = " . xarVarPrepForStore($cid);
-    $result =& $dbconn->Execute($query);
-    if (!$result) return;
-
+    $result = &$dbconn->Execute($query);
+    if (!$result) return; 
     // Let the calling process know that we have finished successfully
     return true;
-}
+} 
 
 /**
  * utility function pass individual menu items to the main menu
- *
- * @author the Example module development team
+ * 
+ * @author the Example module development team 
  * @returns array
  * @return array containing the menulinks for the main menu items.
  */
 function censor_adminapi_getmenulinks()
 {
     if (xarSecurityCheck('AddCensor')) {
-
-        $menulinks[] = Array('url'   => xarModURL('censor',
-                                                   'admin',
-                                                   'new'),
-                              'title' => xarML('Add a new censored word into the system'),
-                              'label' => xarML('Add'));
-    }
+        $menulinks[] = Array('url' => xarModURL('censor',
+                'admin',
+                'new'),
+            'title' => xarML('Add a new censored word into the system'),
+            'label' => xarML('Add'));
+    } 
 
     if (xarSecurityCheck('EditCensor')) {
-
-        $menulinks[] = Array('url'   => xarModURL('censor',
-                                                   'admin',
-                                                   'view'),
-                              'title' => xarML('View and Edit Censored Words'),
-                              'label' => xarML('View'));
-    }
+        $menulinks[] = Array('url' => xarModURL('censor',
+                'admin',
+                'view'),
+            'title' => xarML('View and Edit Censored Words'),
+            'label' => xarML('View'));
+    } 
 
     if (xarSecurityCheck('AdminCensor')) {
-        $menulinks[] = Array('url'   => xarModURL('censor',
-                                                   'admin',
-                                                   'modifyconfig'),
-                              'title' => xarML('Modify the configuration for the Censor Module'),
-                              'label' => xarML('Modify Config'));
-    }
+        $menulinks[] = Array('url' => xarModURL('censor',
+                'admin',
+                'modifyconfig'),
+            'title' => xarML('Modify the configuration for the Censor Module'),
+            'label' => xarML('Modify Config'));
+    } 
 
-    if (empty($menulinks)){
+    if (empty($menulinks)) {
         $menulinks = '';
-    }
+    } 
 
     return $menulinks;
-}
+} 
+
 ?>

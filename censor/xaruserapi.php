@@ -33,7 +33,7 @@ function censor_userapi_getall($args)
     $censors = array();
     // Security Check
 
-	if(!xarSecurityCheck('ReadCensor')){
+    if(!xarSecurityCheck('ReadCensor')){
         return $censors;
     }
 
@@ -85,7 +85,7 @@ function censor_userapi_get($args)
     $xartable = xarDBGetTables();
 
     // Security Check
-	if(!xarSecurityCheck('ReadCensor')) return;
+    if(!xarSecurityCheck('ReadCensor')) return;
 
     $censortable = $xartable['censor'];
 
