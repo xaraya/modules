@@ -227,7 +227,7 @@ function dyn_example_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch($oldversion) {
-        case 0.5:
+        case '0.5':
             // Version 0.5 didn't have a 'picture' field, it was added
             // in version 1.0
 
@@ -263,10 +263,10 @@ function dyn_example_upgrade($oldversion)
             // to be done.  This allows us to upgrade from any version to
             // the current version with ease
             return dyn_example_upgrade(1.0);
-        case 1.0:
+        case '1.0':
             // Code to upgrade from version 1.0 goes here
             break;
-        case 2.0:
+        case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;
     }

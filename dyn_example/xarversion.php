@@ -2,7 +2,7 @@
 // $Id: xarversion.php,v 1.2 2002/08/09 18:46:29 johnny Exp $
 $modversion['name'] = 'Dynamic Data Example';
 $modversion['id'] = '66';
-$modversion['version'] = '1.0';
+$modversion['version'] = '1.0.0';
 $modversion['description'] = 'Dynamic Data Example for new modules';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
