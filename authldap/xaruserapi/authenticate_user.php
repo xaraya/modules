@@ -44,54 +44,53 @@ function authldap_userapi_authenticate_user($args)
     $ldapconfig['add_user_uname'] = xarModGetVar('authldap','add_user_uname');
     $ldapconfig['add_user_email'] = xarModGetVar('authldap','add_user_email');
     $ldapconfig['store_user_password'] = xarModGetVar('authldap','store_user_password');
-    $ldapconfig['failover'] = xarModGetVar('authldap','failover');
 
     // Create new LDAP object
     $ldap = new xarLDAP();
 
     // Make sure LDAP extension exists
     if (!$ldap->exists()) {
-        return authldap_authentication_failover($uname);
+        return authldap_authentication_failover($uname, $pass);
     }
 
     // Open ldap connection
     if (!$ldap->open()) {
-        return authldap_authentication_failover($uname);
+        return authldap_authentication_failover($uname, $pass);
     }
 
     // Bind to LDAP server
    $bindResult = $ldap->bind_to_server();
     if (!$bindResult) {
-        return authldap_authentication_failover($uname);
+        return authldap_authentication_failover($uname, $pass);
     }
 
     // Bind to LDAP directory successful so search for user info
     $user_dn = $ldap->search_user_dn($uname);
     if (!$user_dn) {
-        return authldap_authentication_failover($uname);
+        return XARUSER_AUTH_FAILED;
     }
 
     // Try to bind with user and password
    $bindResult = $ldap->bind($user_dn, $pass);
     if (!$bindResult) {
-        return authldap_authentication_failover($uname);
+        return XARUSER_AUTH_FAILED;
     }
 
     // Search for user information
     $searchResult=$ldap->search($ldap->bind_dn, $ldap->uid_field."=". $uname);
     if (!$searchResult) {
-        return authldap_authentication_failover($uname);
+        return XARUSER_AUTH_FAILED;
     }
 
     $userInfo = $ldap->get_entries($searchResult);
     if (!$userInfo) {
-        return authldap_authentication_failover($uname);
+        return XARUSER_AUTH_FAILED;
     }
 
     // ldap_get_entries returns true even if no results
     // are found, so check for number of rows in array
     if($userInfo['count']==0) {
-        return authldap_authentication_failover($uname);
+        return XARUSER_AUTH_FAILED;
     }
      
     // close LDAP connection
@@ -175,11 +174,11 @@ function authldap_userapi_authenticate_user($args)
 
         // Check if we need to synchronize passwords
         if ($ldapconfig['store_user_password']) {
-            // md5 encrypt the password used for login
-            $password = md5($pass);
 
-            // Compare current password with encrypted password
-            if (strcmp($userRole['pass'], $password)) {
+            // Compare new and old password
+            $md5password = xarUserComparePasswords($pass, $userRole['pass'], $userRole['uname']);
+
+            if (!$md5password) {
                 // Update Xaraya database with new password
                 $res = xarModAPIFunc('roles',
                                      'admin',
@@ -190,7 +189,7 @@ function authldap_userapi_authenticate_user($args)
                                            'email' => $userRole['email'], 
                                            'state' => $userRole['state'], 
                                            'valcode' => $userRole['valcode'], 
-                                           'pass' => $password));
+                                           'pass' => $pass));
                 if (!$res)
                     return XARUSER_AUTH_FAILED;
             }
@@ -203,33 +202,28 @@ function authldap_userapi_authenticate_user($args)
 /**
  * authldap_authentication_failover
  *
- * Check if failover specified
+ * Authenticate user if failover to Xaraya specified
  *
  * @public
  * @author Richard Cave
  * @param args['uname'] user name of user
+ * @param args['pass'] password of user
  * @returns int
  * @return uid on success, XARUSER_AUTH_FAILED on failure
  */
-function authldap_authentication_failover($uname)
+function authldap_authentication_failover($uname, $pass)
 {
     // Check if failover requested
     $failover = xarModGetVar('authldap','failover');
     
     if ($failover == 'true') {
-        // Get user information from roles 
-        $userRole = xarModAPIFunc('roles',
-                                  'user',
-                                  'get',
-                                  array('uname' => $uname));
-    
-        if (!$userRole) {
-            // Return authentication failed
-            return XARUSER_AUTH_FAILED;
-        } else {
-            // Return user id
-            return $userRole['uid'];
-        }
+        // Authenticate with Xaraya authsystem
+        $uid = xarModAPIFunc('authsystem',
+                             'user',
+                             'authenticate_user',
+                             array('uname' => $uname,
+                                   'pass' => $pass));
+        return $uid;
     } else {
         // Return authentication failed
         return XARUSER_AUTH_FAILED;
