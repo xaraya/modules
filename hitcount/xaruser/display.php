@@ -27,10 +27,13 @@ function hitcount_user_display($args)
             $args['itemtype'] = $extrainfo['itemtype'];
         }
     }
-    $hitcount = xarModAPIFunc('hitcount',
-                             'admin',
-                             'update',
-                             $args);
+
+    if (xarVarIsCached('Hooks.hitcount','nocount') ||
+        (xarSecurityCheck('AdminPanel', 0) && xarModGetVar('hitcount', 'countadmin') == FALSE) ) {
+        $hitcount = xarModAPIFunc('hitcount', 'user', 'get', $args);
+    } else {
+        $hitcount = xarModAPIFunc('hitcount', 'admin', 'update', $args);
+    }
 
     if (isset($hitcount)) {
         // Display current hitcount or set the cached variable

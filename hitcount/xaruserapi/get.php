@@ -13,24 +13,39 @@ function hitcount_userapi_get($args)
     // Get arguments from argument array
     extract($args);
 
-    // Argument check
-    if ((!isset($modname)) ||
-        (!isset($objectid))) {
-        xarSessionSetVar('errormsg', _MODARGSERROR);
+    if (!isset($objectid) || !is_numeric($objectid)) {
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'object ID', 'user', 'get', 'Hitcount');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
         return;
     }
-    if (empty($itemtype)) {
-        $itemtype = 0;
+
+    // When called via hooks, modname wil be empty, but we get it from the
+    // current module
+    if (empty($modname)) {
+        $modname = xarModGetName();
     }
-
-    // Security check
-	if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$objectid")) return;
-
     $modid = xarModGetIDFromName($modname);
     if (empty($modid)) {
-        xarSessionSetVar('errormsg', _MODARGSERROR);
+        $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
+                    'module name', 'user', 'get', 'Hitcount');
+        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
+                       new SystemException($msg));
         return;
     }
+    if (!isset($itemtype) || !is_numeric($itemtype)) {
+         if (isset($extrainfo) && is_array($extrainfo) &&
+             isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
+             $itemtype = $extrainfo['itemtype'];
+         } else {
+             $itemtype = 0;
+         }
+    }
+
+// TODO: re-evaluate this for hook calls !!
+    // Security check
+	if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:$objectid")) return;
 
     // Database information
     list($dbconn) = xarDBGetConn();

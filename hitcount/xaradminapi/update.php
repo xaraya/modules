@@ -72,10 +72,6 @@ function hitcount_adminapi_update($args)
         }
     }
 
-	if ((xarSecurityCheck('AdminPanel', 0)) AND (xarModGetVar('hitcount', 'countadmin') == FALSE)) {
-        return $oldhits;
-    }
-
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
     $hitcounttable = $xartable['hitcount'];
