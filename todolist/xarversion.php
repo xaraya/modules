@@ -2,6 +2,7 @@
 $modversion['name'] = 'Todolist';
 $modversion['id'] = '67';
 $modversion['version'] = '0.9.14';
+$modversion['displayname']    = xarML('TodoList');
 $modversion['description'] = 'Todolist';
 $modversion['credits'] = 'docs/credits.txt';
 $modversion['help'] = 'docs/help.txt';
