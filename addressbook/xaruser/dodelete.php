@@ -19,8 +19,8 @@
 //=========================================================================
 //  Delete a record
 //=========================================================================
-function addressbook_user_dodelete() {
-
+function addressbook_user_dodelete() 
+{
     if (!xarVarFetch ('id','int::',$id, FALSE)) return FALSE;
 
     // save menu settings
