@@ -39,8 +39,10 @@ function timezone_userapi_get_time($args=array())
     }
     
     $zone =& $Zones[$timezone][$zone_num];
-    // free up some memory - maybe
+
+    // free up some memory
     unset($Zones,$Leaps,$Links);
+    
     //mydump($zone);
     // Zone::   GMTOFF	RULES	FORMAT	[UNTIL]
     // Rule::   FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
@@ -201,13 +203,10 @@ function parseTime($in)
 function parseStartTime($in)
 {
     if($in <= 0) { return array(0,0); }
-    $in = explode(':',$in);
-    $hours =& $in[0];
-    $minutes =& $in[1];
-    return array($hours,$minutes);
+    return explode(':',$in);
 }
 
-function &getoffset($in)
+function getoffset($in)
 {
     if(!is_numeric($in))
         $offset = xarModAPIFunc('timezone','user','parseoffset',$in);

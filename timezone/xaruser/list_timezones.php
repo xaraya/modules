@@ -5,11 +5,11 @@ function timezone_user_list_timezones()
 {
     $timezones = array();
     include('modules/timezone/tzdata.php');
-    while(list($k,$v) = each($Zones)) {
-        array_push($timezones,$k);
+    foreach($Zones as $k=>$v) {
+        $timezones[] = $k;
     }
-    while(list($k,$v) = each($Links)) {
-        array_push($timezones,$k);
+    foreach($Links as $k=>$v) {
+        $timezones[] = $k;
     }
     // get rid of the large arrays from memory
     unset($Zones,$Rules,$Leaps,$Links);

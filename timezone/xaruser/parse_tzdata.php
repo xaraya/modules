@@ -42,7 +42,7 @@ function timezone_user_parse_tzdata()
 // ok, now we can parse this array
 // Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
 // Zone	NAME    GMTOFF	RULES	FORMAT	[UNTIL]
-//      GMTOFF  RULES   FORMAT  UNTILYEAR   UNTILMONTH  UNTILDAY    UNTILTIME  
+//              GMTOFF  RULES   FORMAT  UNTILYEAR   UNTILMONTH  UNTILDAY    UNTILTIME  
 // Link NAME    OLD NAME
 // Leap	YEAR	MONTH	DAY	HH:MM:SS	CORR	R/S
 function parse_data(&$tzdata) {
@@ -111,7 +111,7 @@ function parse_data(&$tzdata) {
                 }
                 $old_name = array_shift($data); 
                 $links[$old_name] = $name;
-                $links_script .= "\$Links['{$old_name}'] =& \$Zones['{$name}'];\n";
+                $links_script .= "\$Links['{$old_name}'] = '{$name}';\n";
                 break;
 
             case 'leap':
