@@ -1,11 +1,11 @@
-<div>
+<div class="xar-accent-outline xar-accent">
     <span class="xar-title">
         <xar:mlstring>Search data in </xar:mlstring> "#$callingmodule#"
     </span>
 </div>
 
-<div class="xar-mod-body">
-<form action="#$formaction#" method="post">
+<div class="xar-accent-outline xar-accent">
+<form  action="#$formaction#" method="post">
     <!-- However we do stuff, the search form needs an input field to enter the keywords to search on -->
     <label for="searchterms"><xar:mlstring>Search for</xar:mlstring>:</label>
     <input id="searchterms" size="26" type="text" name="searchterms"><br/>

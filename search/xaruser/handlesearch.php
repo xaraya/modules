@@ -106,7 +106,7 @@ function search_user_handlesearch() {
     $data['searchterms'] = $search_terms;
     $data['searchresults'] = $searchresults;
     $data['searchtotal'] = $total;
-    $data['searchstart'] = $startnum + 1;
+    $data['searchstart'] = ($startnum !=0)?$startnum + 1:$startnum;
     $data['searchend'] = $startnum + $itemsperpage;
     return $data;
 }
