@@ -382,7 +382,7 @@ function html_upgrade($oldversion)
             if (!$result) return;
 
             // Drop current index
-            $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_tag',
+            $index = array('name'      => 'i_'.xarDBGetSiteTablePrefix().'_html_1',
                            'fields'    => array('xar_tag'));
             $query = xarDBDropIndex($htmltable, $index);
             $result = & $dbconn->Execute($query);
