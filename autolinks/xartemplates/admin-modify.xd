@@ -106,7 +106,7 @@
         </label>
     </div>
     <div style="text-align: left; vertical-align: text-top; clear: right; float: left; left: 14em;">
-        <textarea name="comment" id="comment" cols="32" rows="5" wrap="virtual">#$prepcomment#</textarea>
+        <textarea name="comment" id="comment" cols="32" rows="5" >#$prepcomment#</textarea>
     </div>
     <br style="clear: both; height=0;"/>
 
