@@ -48,6 +48,10 @@ function newsgroups_userapi_encode_shorturl($args)
             $path .= $join . 'startnum=' . $startnum;
             $join = '&';
         }
+        if (!empty($sortby)) {
+            $path .= $join . 'sortby=' . $sortby;
+            $join = '&';
+        }
     }
 
     return $path;

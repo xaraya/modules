@@ -6,60 +6,77 @@
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
 
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+                <span style="float: left; width: 30%; text-align: right;">
                     <label for="server"><xar:mlstring>News Server</xar:mlstring></label>
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                <span style="float: right; width: 68%; text-align: left;">
                     <input type="text" name="server" id="server" value="#xarModGetVar('newsgroups', 'server', 1)#" size="25" maxlength="255" />
                 </span>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+                <span style="float: left; width: 30%; text-align: right;">
                     <label for="port"><xar:mlstring>Port</xar:mlstring></label>
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                <span style="float: right; width: 68%; text-align: left;">
                     <input type="text" name="port" id="port" value="#xarModGetVar('newsgroups', 'port', 1)#" size="2" maxlength="4" />
                 </span>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+                <span style="float: left; width: 30%; text-align: right;">
                     <label for="user"><xar:mlstring>Username</xar:mlstring></label>
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                <span style="float: right; width: 68%; text-align: left;">
                     <input type="text" name="user" id="user" value="#xarModGetVar('newsgroups', 'user', 1)#" size="25" maxlength="255" />
                 </span>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+                <span style="float: left; width: 30%; text-align: right;">
                     <label for="pass"><xar:mlstring>Password</xar:mlstring></label>
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                <span style="float: right; width: 68%; text-align: left;">
                     <input type="password" name="pass" id="pass" value="" size="25" maxlength="255" />
                 </span>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+                <span style="float: left; width: 30%; text-align: right;">
                     <label for="wildmat_0"><xar:mlstring>Wildcard Match</xar:mlstring></label>
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                <span style="float: right; width: 68%; text-align: left;">
                     <xar:foreach in="$wildmat" key="$idx" value="$value">
                     <input type="text" name="wildmat[]" id="wildmat_#$idx#" value="#$value#" size="25" maxlength="255" /><br/>
                     </xar:foreach>
                 </span>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+                <span style="float: left; width: 30%; text-align: right;">
                     <label for="numitems"><xar:mlstring>Messages Per Page</xar:mlstring></label>
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                <span style="float: right; width: 68%; text-align: left;">
                     <input type="text" name="numitems" id="numitems" value="#xarModGetVar('newsgroups', 'numitems')#" size="2" maxlength="4" />
                 </span>
             </div>
             <div style="clear: both; padding-top: 10px;">
-                <span style="float: left; width: 20%; text-align: right;">
+                <span style="float: left; width: 30%; text-align: right;">
+                    <label for="sortby"><xar:mlstring>Sort Messages in Page By</xar:mlstring></label>
+                </span>
+                <span style="float: right; width: 68%; text-align: left;">
+                    <xar:set name="sortby">xarModGetVar('newsgroups','sortby')</xar:set>
+                    <select name="sortby" id="sortby">
+                        <xar:if condition="empty($sortby) or $sortby eq 'thread'">
+                            <option value="thread" selected="selected"><xar:mlstring>Newest Thread</xar:mlstring></option>
+                            <option value="article"><xar:mlstring>Newest Article</xar:mlstring></option>
+                        <xar:else/>
+                            <option value="thread"><xar:mlstring>Newest Thread</xar:mlstring></option>
+                            <option value="article" selected="selected"><xar:mlstring>Newest Article</xar:mlstring></option>
+                        </xar:if>
+                    </select>
+                </span>
+            </div>
+            <div style="clear: both; padding-top: 10px;">
+                <span style="float: left; width: 30%; text-align: right;">
                     <label for="isalias"><xar:mlstring>Enable Short URLs</xar:mlstring></label>
                 </span>
-                <span style="float: right; width: 78%; text-align: left;">
+                <span style="float: right; width: 68%; text-align: left;">
                     <xar:if condition="xarModGetVar('newsgroups','SupportShortURLs')">
                         <input type="checkbox" name="isalias" id="isalias" value="1" checked="checked" />
                     <xar:else/>

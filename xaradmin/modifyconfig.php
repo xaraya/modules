@@ -46,6 +46,7 @@ function newsgroups_admin_modifyconfig()
             if (!xarVarFetch('isalias','int:1:',$isalias,0, XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('user','isset',$user,'',XARVAR_NOT_REQUIRED)) return;
             if (!xarVarFetch('pass','isset',$pass,'',XARVAR_NOT_REQUIRED)) return;
+            if (!xarVarFetch('sortby','enum:thread:article', $sortby, '', XARVAR_NOT_REQUIRED)) return;
 
             // Confirm authorisation code
             if (!xarSecConfirmAuthKey()) return;
@@ -71,6 +72,7 @@ function newsgroups_admin_modifyconfig()
                 xarModSetVar('newsgroups', 'wildmat', '');
             }
             xarModSetVar('newsgroups', 'numitems', $itemsperpage);
+            xarModSetVar('newsgroups', 'sortby', $sortby);
             if (empty($isalias)) {
                 xarModSetVar('newsgroups','SupportShortURLs',0);
             } else {

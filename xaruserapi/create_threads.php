@@ -10,24 +10,23 @@ function newsgroups_userapi_create_threads( $articles , $direction=_NEWS_SORT_DE
         return $articles;
     }
 
-    array_sortvalue($direction);
+    newsgroups_array_sortvalue($direction);
     $new_list = array();
 
     foreach ($articles as $id => $article) {
         unset($keytime);
         $refs = array();
 
-        if (isset($article['References'])) {
+        if (!empty($article['References'])) {
             $refs = explode(' ',$article['References']);
         }
 
-        $article['depth'] = count($refs) - 1;
+        $article['depth'] = count($refs);
         array_push($refs, $id);
 
+        // set the keytime to the oldest available message in this thread
         foreach ($refs as $key => $refid) {
-
             if ($refid != $id) {
-                $refid = md5($refid);
                 if (isset($articles[$refid])) {
                     $articles[$refid]['isparent'] = true;
                     if (!isset($keytime) || empty($keytime)) {
@@ -35,13 +34,14 @@ function newsgroups_userapi_create_threads( $articles , $direction=_NEWS_SORT_DE
                     }
                 }
             }
+            $refid = md5($refid);
 
-            if (!isset($keytime) || empty($keytime)) {
-                $keytime = strtotime($article['Date']);
-            }
             $refs[$key] = $refid;
         }
 
+        if (!isset($keytime) || empty($keytime)) {
+            $keytime = strtotime($article['Date']);
+        }
 
         $key = $keytime.':'.implode(':',$refs);
 
@@ -50,7 +50,8 @@ function newsgroups_userapi_create_threads( $articles , $direction=_NEWS_SORT_DE
     }
     unset($articles);
 
-    uksort($new_list, 'array_fieldrelation_compare');
+    // this sorts by newest thread first, and then by the reference list
+    uksort($new_list, 'newsgroups_array_fieldrelation_compare');
 
     return $new_list;
 
@@ -69,11 +70,11 @@ function newsgroups_userapi_create_threads( $articles , $direction=_NEWS_SORT_DE
  * @returns integer  -1 if a < b, 0 if a == b, 1 if a > b
  *
  */
-function array_fieldrelation_compare ($a, $b) 
+function newsgroups_array_fieldrelation_compare ($a, $b) 
 {
 
     // get the sort value
-    $sort = array_sortvalue();
+    $sort = newsgroups_array_sortvalue();
 
     // first we start off by putting the array key into
     // array format with each id that makes up
@@ -157,7 +158,7 @@ function array_fieldrelation_compare ($a, $b)
  * @returns  string  The current sort value
  *
  */
-function array_sortvalue($value=NULL) 
+function newsgroups_array_sortvalue($value=NULL) 
 {
     static $sort;
 

@@ -7,6 +7,10 @@ function newsgroups_user_group()
 
     xarVarFetch('group', 'str:1', $group);
     xarVarFetch('startnum', 'id', $startnum, NULL, XARVAR_NOT_REQUIRED);
+    xarVarFetch('sortby', 'enum:thread:article', $sortby, '', XARVAR_NOT_REQUIRED);
+    if (empty($sortby)) {
+        $sortby = xarModGetVar('newsgroups','sortby');
+    }
 
     // Fix the input
     $group = xarVarPrepForDisplay($group);
@@ -17,7 +21,8 @@ function newsgroups_user_group()
     $data = xarModAPIFunc('newsgroups','user','getoverview',
                           array('group'    => $group,
                                 'startnum' => $startnum,
-                                'numitems' => $numitems));
+                                'numitems' => $numitems,
+                                'sortby'   => $sortby));
     if (!isset($data)) return;
 
     if (empty($startnum)){

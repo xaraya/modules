@@ -24,6 +24,7 @@ function newsgroups_init()
     xarModSetVar('newsgroups', 'user', '');
     xarModSetVar('newsgroups', 'pass', '');
     xarModSetVar('newsgroups', 'numitems', 50);
+    xarModSetVar('newsgroups', 'sortby', '');
 
     xarModSetVar('newsgroups', 'wildmat', 'xaraya.*,ddf.*');
     xarModSetVar('newsgroups', 'SupportShortURLs', 0);

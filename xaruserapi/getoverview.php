@@ -15,10 +15,12 @@
 /**
  * Get overview of messages from a newsgroup
  * 
- * @param $args['gid'] group id (future), or
- * @param $args['group'] news group
- * @param $args['startnum'] start number
- * @param $args['numitems'] number of items
+ * @param $args['gid'] int group id (future), or
+ * @param $args['group'] string news group
+ * @param $args['startnum'] int start number
+ * @param $args['numitems'] int number of items
+ * @param $args['sortby'] string optional sort field (default 'thread')
+ * @param $args['order'] string optional sort order (default 'DESC')
  * @returns misc
  * @return array of counts and items, or void on failure
  */
@@ -108,7 +110,25 @@ function newsgroups_userapi_getoverview($args)
     }
 
     $newsgroups->quit();
-    $messages = xarModAPIFunc('newsgroups','user','create_threads', $messages);
+
+    if (empty($sortby) || $sortby == 'thread') {
+        // this sorts by newest thread first, and then by the reference list
+        $messages = xarModAPIFunc('newsgroups','user','create_threads', $messages);
+
+    } elseif ($sortby == 'article') {
+        // reverse the order of the messages (from newest to oldest)
+        $messages = array_reverse($messages, true);
+        // calculate the message depth based on the number of references
+        foreach ($messages as $id => $message) {
+            if (!empty($message['References'])) {
+                $refs = explode(' ',$message['References']);
+                $messages[$id]['depth'] = count($refs);
+            } else {
+                $messages[$id]['depth'] = 0;
+            }
+        }
+    }
+
     $data['items'] = $messages;
 
     return $data;
