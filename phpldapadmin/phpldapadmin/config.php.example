@@ -55,10 +55,10 @@ $servers[$i]['enable_auto_uid_numbers'] = false;
 $servers[$i]['auto_uid_number_mechanism'] = 'search'; 
                           /* The mechanism to use when finding the next available uidNumber.
                              Two possible values: 'uidpool' or 'search'. The 'uidpool'
-							 mechanism uses an existing uidPool entry in your LDAP server
-							 to blindly lookup the next available uidNumber. The 'search' 
-							 mechanism searches for entries with a uidNumber value and finds
-							 the first available uidNumber (slower). */
+                             mechanism uses an existing uidPool entry in your LDAP server
+                             to blindly lookup the next available uidNumber. The 'search' 
+                             mechanism searches for entries with a uidNumber value and finds
+                             the first available uidNumber (slower). */
 $servers[$i]['auto_uid_number_search_base'] = 'ou=People,dc=example,dc=com'; 
                          /* The DN of the search base when the 'search'
                             mechanism is used above. */

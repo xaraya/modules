@@ -33,7 +33,7 @@ funcionando de:
   Escribidores de los parches:
 
   - Bayu Irawan         userPassword hash, arreglos html, arreglos ldap_modify
-  - Uwe Ebel         	arreglo short_open_tags
+  - Uwe Ebel             arreglo short_open_tags
   - Andrew Tipton       soporte SUP en el parseador del esquema
   - Eigil Bjørgum       soporte UTF-8
   - Brandon Lederer     plantilla de entrada de DNS

@@ -11,8 +11,8 @@
  * Changes:
     As this was primarily a bug-fix release, here's the list of significant
     fixes:
-   	862225 an E_NOTICE on delete fixed
-	861730 (and many duplicates of it) an E_NOTICE on determining the
+       862225 an E_NOTICE on delete fixed
+    861730 (and many duplicates of it) an E_NOTICE on determining the
                language in 'auto' lanuage mode for browsers who don't
                set HTTP_ACCEPT_LANGUAGE (like Opera).
         861491 (and many duplicates of it) Anonymous form-based logins 

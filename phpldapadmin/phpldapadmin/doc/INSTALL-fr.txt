@@ -30,8 +30,8 @@ Les instructions suivantes supposent une installation en état de marche de:
   Auteurs de patchs:
 
   - Bayu Irawan         hachage pour le mot de passe utilisateur, 
-			corrections html, corrections pour ldap_modiy
-  - Uwe Ebel         	Corrections pour short_open_tags
+            corrections html, corrections pour ldap_modiy
+  - Uwe Ebel             Corrections pour short_open_tags
   - Andrew Tipton       Support pour SUP dans le parseur de schémas
   - Eigil Bjørgum       Support pour UTF-8
   - Brandon Lederer     Patron pour les entrées DNS

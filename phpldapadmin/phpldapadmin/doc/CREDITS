@@ -9,7 +9,7 @@
  * Patch writers:
 
   - Bayu Irawan         userPassword hash, html fixes, ldap_modify fixes
-  - Uwe Ebel         	short_open_tags fix
+  - Uwe Ebel             short_open_tags fix
   - Andrew Tipton       SUP support in schema parser
   - Eigil Bjørgum       UTF-8 support
   - Brandon Lederer     DNS entry template
