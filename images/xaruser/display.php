@@ -73,13 +73,17 @@ function images_user_display( $args )
         xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'FILE_MISSING', new SystemException($msg));
         return FALSE;
     }
-
     // Close the buffer, saving it's current contents for possible future use
     // then restart the buffer to store the file
-    while (ob_get_level()) {
-        $pageBuffer[ob_get_level() - 1] = ob_get_contents();
-        ob_end_clean();
+    $pageBuffer[] = ob_get_contents();
+
+    while (@ob_end_clean()) {
+        $pageBuffer[] = ob_get_contents();
     }
+
+    $buffer = array_reverse($pageBuffer);
+    $pageBuffer = $buffer;
+    unset($buffer);
 
     // Start buffering for the file
     ob_start();
