@@ -251,7 +251,7 @@ function keywords_upgrade($oldversion)
                                            'field' => 'xar_itemtype',
                                            'type' => 'integer',
                                            'null' => false,
-                                           'default' => 0));
+                                           'default' => '0'));
             $result = & $dbconn->Execute($query);
             if (!$result) return;
 
