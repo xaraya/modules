@@ -57,7 +57,7 @@ function xmlrpcserver_userapi_initxmlrpcserver()
     // MetaWebLog API
     //include_once 'modules/xmlrpcserver/api/metaweblog.php';
     // merge meta weblog functions
-	//$functions = array_merge($functions, $_xmlrpc_metaweblog_dmap);
+    //$functions = array_merge($functions, $_xmlrpc_metaweblog_dmap);
     
     //create server instance
     $server = new xmlrpc_server($functions);

@@ -20,7 +20,7 @@
 function xmlrpcserver_admin_main()
 {
     // Security Check
-	if(!xarSecurityCheck('AdminXmlRpcServer')) return;
+    if(!xarSecurityCheck('AdminXmlRpcServer')) return;
 
     //return the output
     return array();
