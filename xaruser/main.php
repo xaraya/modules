@@ -167,7 +167,7 @@ function xarbb_user__getforuminfo($args)
 
             $forums[$i]['name'] = $getname['name'];
         }
-        if (!empty($forum['foptions'])){
+        if (!empty($forum['foptions']) && is_string($forum['foptions'])){
             $forums[$i]['foptions'] = unserialize($forum['foptions']);
         }
 

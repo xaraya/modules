@@ -170,6 +170,7 @@ function xarbb_userapi_getalltopics($args)
     } else {
         $result =& $dbconn->Execute($query,$bindvars);
     }
+    if (!$result) return;
  
     $topics = array();
     for (; !$result->EOF; $result->MoveNext()) {
