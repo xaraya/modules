@@ -60,7 +60,8 @@ Class telnet
     var $debug = '';
     var $add_html_to_newline = '1';
 
-    function set_defaults() {
+    function set_defaults() 
+    {
 	$this->host = xarModGetVar('xartelnet','host');
 	$this->debug = xarModGetVar('xartelnet','debug');	
         $this->port = xarModGetVar('xartelnet','port');

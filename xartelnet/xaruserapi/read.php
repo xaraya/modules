@@ -1,5 +1,5 @@
 <?php
-//we require the text to stop reading at, like the prompt
+//we require the text to stop reading at, for example the prompt
 function xartelnet_userapi_read($args = array('input' => NULL, 'socket' => NULL))
 {
     extract($args);
@@ -9,6 +9,7 @@ function xartelnet_userapi_read($args = array('input' => NULL, 'socket' => NULL)
     $q = '';
     if($run) $run->socket = $socket;
     for ($r = false; $r = $run->read($input);)
+    {
 	if($r) {
 	    $q .= ob_get_contents();
 	    ob_end_clean(); flush();

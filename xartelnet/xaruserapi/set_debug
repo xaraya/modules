@@ -1,0 +1,6 @@
+<?php
+function xartelnet_userapi_set_debug($args = NULL)
+{
+    return true;
+}
+?>
