@@ -1,7 +1,7 @@
 <xar:if condition="!empty($links)">
     <h2><xar:mlstring>Google Search Results</xar:mlstring></h2>
     <xar:mlstring>Your search for </xar:mlstring> <b>#$searchQuery#</b> <xar:mlstring>produced</xar:mlstring>&nbsp;#$estimatedTotalResultsCount#&nbsp;<xar:mlstring>hits.  Below are the top ten most relevant determined by</xar:mlstring> <a href="http://www.google.com"><xar:mlstring>Google</xar:mlstring></a>.
-    <br>
+    <br/>
   <ul>
   <xar:loop name="$links">
     <li><a href="#$loop:item['URL']#">#$loop:item['title']#</a><br />

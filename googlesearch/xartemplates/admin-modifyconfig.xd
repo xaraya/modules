@@ -6,7 +6,7 @@
     <div style="clear: both; padding-top: 10px;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('Your Google API Key.')#"><label for="license-key"><a href="https://www.google.com/accounts/NewAccount?continue=http://api.google.com/createkey&followup=http://api.google.com/createkey"><xar:mlstring>Google API Key</xar:mlstring></a></label>:</span>
+      <span class="help" title="#xarML('Your Google API Key.')#"><label for="license-key"><a href="https://www.google.com/accounts/NewAccount?continue=http://api.google.com/createkey&amp;followup=http://api.google.com/createkey"><xar:mlstring>Google API Key</xar:mlstring></a></label>:</span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
       <input type="text" name="license-key" id="license-key" value="#xarModGetVar('googlesearch', 'license-key', 1)#" size="30" maxlength="100" />
@@ -16,7 +16,7 @@
     <div style="clear: both; padding-top: 10px;">
     <input type="hidden" name="authid" id="authid" value="#$authid#" />
     <span style="float: left; width: 20%; text-align: right;">
-      <span class="help" title="#xarML('The maximum queries allowed in a single day')#"><label for="maxQueries"><a href="https://www.google.com/accounts/NewAccount?continue=http://api.google.com/createkey&followup=http://api.google.com/createkey"><xar:mlstring>Max Queries / Day</xar:mlstring></a></label>:</span>
+      <span class="help" title="#xarML('The maximum queries allowed in a single day')#"><label for="maxQueries"><a href="https://www.google.com/accounts/NewAccount?continue=http://api.google.com/createkey&amp;followup=http://api.google.com/createkey"><xar:mlstring>Max Queries / Day</xar:mlstring></a></label>:</span>
     </span>
     <span style="float: right; width: 78%; text-align: left;">
       <input type="text" name="maxQueries" id="maxQueries" value="#xarModGetVar('googlesearch', 'maxQueries')#" size="4" maxlength="4" />
@@ -41,15 +41,15 @@
 
     <fieldset>
       <legend>Reset Module Variables</legend>
-      <div><input type="checkbox" name="reset[cacheQuery]"> cacheQuery</div>
-      <div><input type="checkbox" name="reset[cacheGoogleSearchResponse]"> cacheGoogleSearchResponse</div>
-      <div><input type="checkbox" name="reset[cacheGoogleSearchPage]"> cacheGoogleSearchPage</div>
-      <div><input type="checkbox" name="reset[cacheLinks]"> cacheLinks</div>
-      <div><input type="checkbox" name="reset[cacheRetrievedPages]"> cacheRetrievedPages</div>
-      <div><input type="checkbox" name="reset[cacheRemoteURL]"> cacheRemoteURL</div>
-      <div><input type="checkbox" name="reset[cacheRemoteFiles]"> cacheRemoteFiles</div>
-      <div><input type="checkbox" name="reset[cachePageIndex]"> cachePageIndex</div>
-      <div><input type="checkbox" name="reset[cachePageHash]"> cachePageHash</div>
+      <div><input type="checkbox" name="reset[cacheQuery]"/> cacheQuery</div>
+      <div><input type="checkbox" name="reset[cacheGoogleSearchResponse]"/> cacheGoogleSearchResponse</div>
+      <div><input type="checkbox" name="reset[cacheGoogleSearchPage]"/> cacheGoogleSearchPage</div>
+      <div><input type="checkbox" name="reset[cacheLinks]"/> cacheLinks</div>
+      <div><input type="checkbox" name="reset[cacheRetrievedPages]"/> cacheRetrievedPages</div>
+      <div><input type="checkbox" name="reset[cacheRemoteURL]"/> cacheRemoteURL</div>
+      <div><input type="checkbox" name="reset[cacheRemoteFiles]"/> cacheRemoteFiles</div>
+      <div><input type="checkbox" name="reset[cachePageIndex]"/> cachePageIndex</div>
+      <div><input type="checkbox" name="reset[cachePageHash]"/> cachePageHash</div>
     </fieldset>
 
 

@@ -35,12 +35,12 @@
     <form method="get" action="index.php">
     <fieldset>
       <legend class="subsection">a. <xar:mlstring>Query Google: </xar:mlstring></legend>
-      <input type="hidden" name="module" value="googlesearch">
-      <input type="hidden" name="type" value="admin">
-      <input type="hidden" name="func" value="getcached">
-      <input type="text"  name="q" value="#$q#" size="50">
+      <input type="hidden" name="module" value="googlesearch"/>
+      <input type="hidden" name="type" value="admin"/>
+      <input type="hidden" name="func" value="getcached"/>
+      <input type="text"  name="q" value="#$q#" size="50"/>
       &nbsp;
-      <input type="submit" value="GoogleIt">
+      <input type="submit" value="GoogleIt"/>
       <xar:mlstring>You have run </xar:mlstring>#xarModGetVar('googlesearch', 'queryCount')# <xar:mlstring> out of </xar:mlstring>#xarModGetVar('googlesearch', 'maxQueries')# <xar:mlstring> today</xar:mlstring>
     </fieldset>
     </form>
@@ -49,13 +49,13 @@
     <form method="get" action="index.php">
     <fieldset>
       <legend class="subsection">b. <xar:mlstring>Add URL manually: </xar:mlstring></legend>
-      <input type="hidden" name="module" value="googlesearch">
-      <input type="hidden" name="type" value="admin">
-      <input type="hidden" name="func" value="getcached">
-      <input type="text"  name="url" value="#$url#" size="50">
+      <input type="hidden" name="module" value="googlesearch"/>
+      <input type="hidden" name="type" value="admin"/>
+      <input type="hidden" name="func" value="getcached"/>
+      <input type="text"  name="url" value="#$url#" size="50"/>
       &nbsp;
-      <input type="submit" value="Add URL">
-      <input type="submit" name="action" value="Fetch">
+      <input type="submit" value="Add URL"/>
+      <input type="submit" name="action" value="Fetch"/>
     </fieldset>
     </form>
   </div>
@@ -82,11 +82,11 @@
       </xar:if>
     </div>
 
-    <div><input type="button" value="Select All" onclick="checkAll(this, this.value == 'Select All');"></div>
+    <div><input type="button" value="Select All" onclick="checkAll(this, this.value == 'Select All');"/></div>
     <xar:foreach in="$googlelinks" value="$item">
       <div>
         <xar:if condition="$item['cachedSize'] gt 0">
-        <input type="checkbox" name="googleURLs[#$item['URL']#]" value="1"> <span class="help" title="#$item['title']#">#$item['URL']#</span> (#$item['cachedSize']#)
+        <input type="checkbox" name="googleURLs[#$item['URL']#]" value="1"/> <span class="help" title="#$item['title']#">#$item['URL']#</span> (#$item['cachedSize']#)
         &nbsp;
         <xar:if condition="isset($savedPages[$item['URL']]) and file_exists('var/cache/google/'.$savedPages[$item['URL']].'.html')">
           [<a title="View the saved cache for: #$item['URL']#" href="var/cache/google/#$savedPages[$item['URL']]#.html">View</a>]
@@ -94,13 +94,13 @@
           [<a title="Retrieve and save the cache for: #$item['URL']#" href="#xarModURL('googlesearch', 'admin', 'getcached', array('url'=>$item['URL'], 'action'=>'Fetch'))###googlelinks">Fetch</a>]
         </xar:if>
         <xar:else />
-        <input type="checkbox" disabled> <span style="text-decoration: line-through">#$item['URL']#</span> (<xar:mlstring>Cache is not available</xar:mlstring>)
+        <input type="checkbox" disabled="disabled"/> <span style="text-decoration: line-through"/>#$item['URL']#</span> (<xar:mlstring>Cache is not available</xar:mlstring>)
         </xar:if>
       </div>
     </xar:foreach>
 
-    <input type="submit" value="Add Selected URL's">
-    <input type="submit" name="action" value="Fetch">
+    <input type="submit" value="Add Selected URL's"/>
+    <input type="submit" name="action" value="Fetch"/>
   </fieldset>
   </form>
   </xar:if>
@@ -113,10 +113,10 @@
 <fieldset>
   <legend class="section"><a name="links">&nbsp;</a>2. <xar:mlstring>Double-check the list of pages to retrieve </xar:mlstring> (#$linkcount#):</legend>
 
-    <div><input type="button" value="Select All" onclick="checkAll(this, this.value == 'Select All');"></div>
+    <div><input type="button" value="Select All" onclick="checkAll(this, this.value == 'Select All');"/></div>
     <xar:foreach in="$links" value="$item">
       <div>
-        <input type="checkbox" name="savedlinks[#$item#]" value="1"><a target="view" title="Visit the url: #$item#" href="#$item#">#$item#</a>
+        <input type="checkbox" name="savedlinks[#$item#]" value="1"/><a target="view" title="Visit the url: #$item#" href="#$item#">#$item#</a>
         &nbsp; [
         <xar:if condition="isset($savedPages[$item]) and file_exists('var/cache/google/'.$savedPages[$item].'.html')">
           <a title="View the saved cache for: #$item#" href="#xarModURL('googlesearch', 'admin', 'managecached', array('cache'=>$savedPages[$item]))#">View</a>
@@ -129,8 +129,8 @@
       </div>
     </xar:foreach>
 
-    <input type="submit" name="action" value="Delete">
-    <input type="submit" name="action" value="Fetch">
+    <input type="submit" name="action" value="Delete"/>
+    <input type="submit" name="action" value="Fetch"/>
     &nbsp; [<a href="#xarModURL('googlesearch', 'admin', 'getcached', array('action'=>'sortlinks'))###links">Sort Links</a>]
     <xar:if condition="isset($errors['Fetch']) and is_array($errors['Fetch'])">
     <xar:foreach in="$errors['Fetch']" key="$url" value="$error">
