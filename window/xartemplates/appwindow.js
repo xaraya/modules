@@ -27,7 +27,7 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 // Filename: postwrap.js
-// Original Author of file:	Shawn McKenzie (AbraCadaver)
+// Original Author of file:    Shawn McKenzie (AbraCadaver)
 // Purpose of file: Auto resize IFRAME
 // ----------------------------------------------------------------------
 
@@ -43,19 +43,19 @@
 
   while(i != docTD.length)
   {
-	theTD = docTD[i];
+    theTD = docTD[i];
 
-	if(theTD.offsetHeight > theHeight)
-	{
-		var theHeight = theTD.offsetHeight;
-	}
+    if(theTD.offsetHeight > theHeight)
+    {
+        var theHeight = theTD.offsetHeight;
+    }
 
-	i++;
+    i++;
 
   }
 
 // Size the IFRAME
   if(theHeight != 0)
   {
-	theIframe.height = theHeight;
+    theIframe.height = theHeight;
   }
