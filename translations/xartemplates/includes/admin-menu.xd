@@ -32,7 +32,7 @@
 		<td width="45%" valign="top">
 			<span><xar:mlstring>Translating</xar:mlstring></span>
 			<span class="xar-title">
-				#$menu_dntypetext# #xarSessionGetVar('translations_dnName')#
+				#$menu_dntypetext#&nbsp;#xarSessionGetVar('translations_dnName')#
 			</span>
 			<span><xar:mlstring>to:</xar:mlstring></span>
 			<span class="xar-title">
