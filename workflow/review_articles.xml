@@ -129,8 +129,11 @@ if (!empty($edit)) {
 <div style="margin: auto;">
 <xar:ml><xar:mlstring>Article submitted by #(1) on #(2)</xar:mlstring><xar:mlvar>#$user#</xar:mlvar><xar:mlvar>#$date#</xar:mlvar></xar:ml>
 
-<form method="post">
+<form method="post" action="&xar-modurl-workflow-user-run_activity;">
 <div>
+<input type="hidden" name="activityId" value="#$activityId#"/>
+<input type="hidden" name="iid" value="#$iid#"/>
+<input type="hidden" name="return_url" value="#$return_url#"/>
 <br/><br/><textarea name="reason" rows="4" cols="40"></textarea><br/><br/>
 <input type="submit" name="approve" value="#xarML('Approve')#" />
 <input type="submit" name="frontpage" value="#xarML('Frontpage')#" />
