@@ -45,12 +45,13 @@ function bkview_user_browseview($args)
     $files=array();
     $counter=1;
     while (list(,$file) = each($filelist)) {
-        list($name,$rev,$author,$age,$comments) = explode('|',$file);
+        list($name,$rev,$age,$author,$comments) = explode('|',$file);
         $files[$counter]['name']=$name;
         $files[$counter]['basename']=basename($name);
         $files[$counter]['rev']=$rev;
         $files[$counter]['author']=$author;
         $files[$counter]['age']=$age;
+        $files[$counter]['age_code'] = bkAgeToRangeCode($age);
         $comments = str_replace(BK_NEWLINE_MARKER,"\n",$comments);
         $files[$counter]['comments']=nl2br(xarVarPrepForDisplay($comments));
         $files[$counter]['relfile']=substr($dir,0,strlen($dir)-1)."/".basename($name);

@@ -73,6 +73,8 @@ function bkview_user_csetview($args)
             $data['user'] = $user;
         }
     }
+
+    $data['showmerge'] = $showmerge;
     $data['taggedonly'] = $taggedonly;
     $data['range'] = $range;
     $data['csets'] = $csets;

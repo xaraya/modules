@@ -1,5 +1,6 @@
 <xar:template file="user-menu" type="module"/>
 
+<xar:if condition="count($csets) gt 0">
 <table class="csets">
   <tr>
     <th><xar:mlstring>Age</xar:mlstring></th>
@@ -29,3 +30,19 @@
      </tr>
    </xar:loop>
 </table>
+<xar:else/>
+    <div>
+        <xar:mlstring>I didn't find any changesets matching the criteria.</xar:mlstring>
+    </div>
+    <xar:if condition="!$showmerge">
+        <xar:if condition="!isset($user)">
+            <xar:set name="$user">''</xar:set>
+        </xar:if>
+        <div>
+            <xar:mlstring>Merge changesets were not included in this view.</xar:mlstring><br/>
+            <a href="&xar-modurl-bkview-user-csetview;&amp;repoid=#$repoid#&amp;range=#$range#&amp;user=#$user#&amp;taggedonly=#$taggedonly#&amp;showmerge=1">        
+                <xar:mlstring>Retry with them turned on?</xar:mlstring>
+            </a>
+        </div>
+    </xar:if>
+</xar:if>
