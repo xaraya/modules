@@ -1,0 +1,71 @@
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarLinkMe Administration</xar:mlstring></span></div>
+<div class="xar-mod-body" style="display:block;">
+    <h2><xar:mlstring>Overview</xar:mlstring></h2>
+    <div style="border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 1px;">
+        <div style="float:right;display:block;background-color:#ffffff;padding:10px;">
+            <img src="modules/xarlinkme/xarimages/admin.gif" alt="official icon" width="96" height="96" />
+        </div>
+        <div class="xar-mod-title" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>What is it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <em><xar:mlstring>xarLinkMe</xar:mlstring></em>&nbsp;<xar:mlstring>is a simple script to display your site's banners, and allow others to link to 
+            your site with them.</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Displays the image of each of your site's banners.</xar:mlstring></li>
+                <li><xar:mlstring>Provides a text box containing the HTML to display the banner and link to your site.</xar:mlstring></li>
+                <li><xar:mlstring>Provides instructions to users for linking to your site with one of your banners</xar:mlstring></li>
+            </ul>
+            <em><xar:mlstring>NOTE:</xar:mlstring></em>&nbsp;
+            <xar:mlstring>This module currently serves the banners directly from your web server.</xar:mlstring>
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>How to use it?</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>There is one main option for administration - Modify Configuration. Prior to configuration, prepare your banner files and 
+            directory:</xar:mlstring>
+            <ul>
+                <li><xar:mlstring>Copy all of your site's banners into a directory which is in your web site path. This is the banner image directory
+                that you can specify in the configuration setup. By default it is set to a subdirectory of the xarimages directory in the xarLinkMe 
+                directory.</xar:mlstring></li>
+                <li><xar:mlstring>Make sure that the only files in your banner directory are your banner image files. For security, you can have a blank index.htm(l) file
+                as well.</xar:mlstring></li>
+                <li><xar:mlstring>When naming your banner image files, give them a descriptive name, usually including the dimensions of the banner eg</xar:mlstring>
+                <em>Set1_468x60.gif</em></li>
+                <li><xar:mlstring>Fill in the required information in the Modify Configuration Option</xar:mlstring></li>
+                <li><xar:mlstring>Go to the&nbsp;</xar:mlstring><a href="&xar-modurl-xarlinkme-user-view;"><xar:mlstring>user view of xarLinkMe</xar:mlstring></a>
+                <xar:mlstring>&nbsp;to see the resulting banner list.</xar:mlstring></li>
+            </ul>
+
+
+        </div>
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Blocks</xar:mlstring>
+        </div>
+        <br />
+         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>There are no blocks included.</xar:mlstring>
+
+        </div>
+
+        <br />
+        <div class="xar-mod-title" style="margin-left: 1em; margin-right: 1em; width: auto; border-width: 1px; border-color: #B3B3B3; border-style: none none dotted none;">
+            <xar:mlstring>Included Hooks</xar:mlstring>
+        </div>
+        <br />
+        <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
+            <xar:mlstring>This module has no hooks provided.</xar:mlstring>
+
+        </div>
+
+         <br />
+        <div class="xar-accent" style="text-align: center; border-width: 1px; border-style: solid; border-color: #B3B3B3; padding: 0.5em 1em 0.5em 1em; margin-top: 5px;">
+            <xar:mlstring>Extended information about this module can be found here. [modules module]</xar:mlstring>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+ChangeLog
+Version 0.0.1
+ * 2003-07-29 jojodee: Initial version.
+ * 2003-07-30 jojodee: Added admin modify configuration screen.

@@ -1,0 +1,41 @@
+<!-- common admin menu for this module - remove link to the current function -->
+<div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>xarLinkMe Administration</xar:mlstring></span></div>
+<div class="xar-mod-body"><h2><xar:mlstring>Modify Configuration</xar:mlstring></h2><br />
+<div style="margin: auto;">
+
+<table width="100%" border="0" cellspacing="1" cellpadding="8">
+
+<form method="post" action="&xar-modurl-xarlinkme-admin-updateconfig;">
+    <input type="hidden" name="authid" id="authid" value="#$authid#" />
+
+   <tr><td><label for="itemsperpage">#$itemsperpagelabel#</label></td>
+        <td><input type="text" name="itemsperpage" id="itemsperpage" size="3"  maxlength="3" value="#$itemsperpage#" />/ Not functional atm</td>
+   </tr>
+   <tr><td><label for="imagedir">#$imagedirlabel#</label></td>
+       <td><input type="text" name="imagedir" id="imagedir" size="40"  maxlength="128" value="#$imagedir#" /></td>
+   </tr>
+   <tr><td><label for="pagetitle">#$pagetitlelabel#</label></td>
+       <td><input type="text" name="pagetitle" id="pagetitle" size="40"  maxlength="40" value="#$pagetitle#" /></td>
+   </tr>
+   <tr><td><label for="pagetitle">#$instructionslabel#</label></td>
+       <td><textarea name="instructions" wrap="soft" rows="4" cols="40" />#$instructions#</textarea></td>
+   </tr>
+   <tr><td><label for="instructions2">#$instructions2label#</label></td>
+       <td><textarea name="instructions2" wrap="soft" rows="3" cols="40" />#$instructions2#</textarea></td>
+   </tr>
+   <tr><td><label for="txtintro">#$txtintrolabel#</label></td>
+       <td><input type="text" name="txtintro" id="txtintro" value="#$txtintro#" size="40"  maxlength="60" /></td>
+   </tr>
+   <tr><td><label for="txtadlead">#$txtadleadlabel#</label></td>
+       <td><input type="text" name="txtadlead" id="txtadlead" size="40"  maxlength="40" value="#$txtadlead#" /><br />#$sitename#</td>
+   </tr>
+     <tr><td colspan="2">
+    #$hooks#
+   </td></tr>
+   <tr><td colspan="2" align="center">
+    <input type="submit" value="#$updatebutton#" /></td></tr>
+</form>
+</table>
+<br />
+</div>
+</div>
