@@ -14,31 +14,31 @@
 
 function photoshare_userapi_setmainimage($args)
 {
-	extract($args);
+    extract($args);
 
-	if (!isset($imageID) && !isset($image)) {
-		$msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
-		'imageID', 'userapi', 'moveimage', 'Photoshare');
-		xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-		return;
-	}
+    if (!isset($imageID) && !isset($image)) {
+        $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
+        'imageID', 'userapi', 'moveimage', 'Photoshare');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
 
-	if (!isset($image))
-		$image = xarModAPIFunc('photoshare', 'user', 'getimages', array('imageID' => $imageID));
+    if (!isset($image))
+        $image = xarModAPIFunc('photoshare', 'user', 'getimages', array('imageID' => $imageID));
 
-	// Get database setup
-	$dbconn =& xarDBGetConn();
-	$xartable =& xarDBGetTables();
-	$foldersTable = $xartable['photoshare_folders'];
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $foldersTable = $xartable['photoshare_folders'];
 
-	$sql = "UPDATE $foldersTable
-			SET ps_mainimage = " . xarVarPrepForStore($image['id']) . "
-			WHERE ps_id = " . xarVarPrepForStore($image['parentfolder']);
+    $sql = "UPDATE $foldersTable
+            SET ps_mainimage = " . xarVarPrepForStore($image['id']) . "
+            WHERE ps_id = " . xarVarPrepForStore($image['parentfolder']);
 
-	$result =& $dbconn->Execute($sql);
+    $result =& $dbconn->Execute($sql);
     if (!$result) return;
 
-	return true;
+    return true;
 }
 
 ?>

@@ -28,11 +28,11 @@ function photoshare_userapi_getmenulinks()
                          'label' => xarML('All albums'));
 
     if (xarSecurityCheck('EditFolder',0)) {
-	    $menulinks[] = Array('url'   => xarModURL('photoshare',
-	                                              'user',
-	                                              'view'),
-	                         'title' => xarML('Edit your own album'),
-	                         'label' => xarML('My Albums'));
+        $menulinks[] = Array('url'   => xarModURL('photoshare',
+                                                  'user',
+                                                  'view'),
+                             'title' => xarML('Edit your own album'),
+                             'label' => xarML('My Albums'));
     }
     return $menulinks;
 }

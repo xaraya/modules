@@ -15,9 +15,9 @@
 
 function photoshare_userapi_getfoldertrail($args)
 {
-	extract($args);
-	
-	    // Argument check
+    extract($args);
+    
+        // Argument check
     if (!isset($folderID) || !is_numeric($folderID)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'folder ID', 'user', 'get',
@@ -27,23 +27,23 @@ function photoshare_userapi_getfoldertrail($args)
         return false;
     }
 
-	$dbconn =& xarDBGetConn();
-	$xartable =& xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
-	$foldersTable  = $xartable['photoshare_folders'];
+    $foldersTable  = $xartable['photoshare_folders'];
 
-	$trail = array();
+    $trail = array();
 
-	$tmp = photoshareGetFolderTrailRecursive($dbconn, $foldersTable, $folderID, $trail);
-	if (!isset($tmp))
-		return;
-	else if ($tmp === false)
-		return array();
-	
-	// Add "top" link to trail
-	//$trail[] = array( 'id' => -1, 'title' => xarMl('Top'));
-	
-	return array_reverse($trail);
+    $tmp = photoshareGetFolderTrailRecursive($dbconn, $foldersTable, $folderID, $trail);
+    if (!isset($tmp))
+        return;
+    else if ($tmp === false)
+        return array();
+    
+    // Add "top" link to trail
+    //$trail[] = array( 'id' => -1, 'title' => xarMl('Top'));
+    
+    return array_reverse($trail);
 }
 
 function photoshareGetFolderTrailRecursive(&$dbconn, $foldersTable, $folderID, &$trail)
@@ -67,11 +67,11 @@ function photoshareGetFolderTrailRecursive(&$dbconn, $foldersTable, $folderID, &
 
   $tmp = photoshareGetFolderTrailRecursive($dbconn, $foldersTable, $result->fields[0], $trail);
   if (!isset($tmp))
-  	return;
+      return;
   else if ($tmp === false)
     return false;
   else
-  	return true;
+      return true;
 }
 
 ?>

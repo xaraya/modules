@@ -14,30 +14,30 @@
  
 function photoshare_userapi_getuserinfo($args)
 {
-	$uid = xarUserGetVar('uid');
-	extract($args);
+    $uid = xarUserGetVar('uid');
+    extract($args);
     
-	$dbconn =& xarDBGetConn();
-	$xartables =& xarDBGetTables();
-	
-	$imagesTable  = $xartables['photoshare_images'];
-	
-	// FIXME: what if not logged in - how about 'owner' ???
-	
-	$sql = "SELECT 	SUM(ps_bytesize)
-	      	FROM 	$imagesTable 
-	      	WHERE	ps_owner = " . xarVarPrepForStore($uid);
-	
-	$result =& $dbconn->execute($sql);
-	
-	if (!$result) return; 
-	
-	$userSetup = xarModAPIFunc('photoshare', 'user', 'getusersetup', array( 'uid' => $uid ));
-	
-	return array( 'totalCapacityUsed'  => $result->fields[0],
-	            'imageSizeLimitSingle' => xarModGetVar('photoshare', 'imageSizeLimitSingle'),
-	            'imageSizeLimitTotal'  => $userSetup['storage'] );
-	
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
+    
+    $imagesTable  = $xartables['photoshare_images'];
+    
+    // FIXME: what if not logged in - how about 'owner' ???
+    
+    $sql = "SELECT     SUM(ps_bytesize)
+              FROM     $imagesTable 
+              WHERE    ps_owner = " . xarVarPrepForStore($uid);
+    
+    $result =& $dbconn->execute($sql);
+    
+    if (!$result) return; 
+    
+    $userSetup = xarModAPIFunc('photoshare', 'user', 'getusersetup', array( 'uid' => $uid ));
+    
+    return array( 'totalCapacityUsed'  => $result->fields[0],
+                'imageSizeLimitSingle' => xarModGetVar('photoshare', 'imageSizeLimitSingle'),
+                'imageSizeLimitTotal'  => $userSetup['storage'] );
+    
 }
  
 ?>

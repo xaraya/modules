@@ -14,60 +14,60 @@
 
 function photoshare_user_addfolder()
 {
-	if (!xarSecurityCheck('AddFolder')) return;
-	if(!xarVarFetch('fid', 'int', $folderID,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarSecurityCheck('AddFolder')) return;
+    if(!xarVarFetch('fid', 'int', $folderID,  NULL, XARVAR_DONT_SET)) {return;}
 
-	$data = array();
+    $data = array();
 
-	if (!isset($folderID)){
-		$parentFolderID = 'all';
-		$data['trail'] = array();
-		$data['parentFolderID'] = -1;
-	} else {
-		$data['parentFolderID'] = $parentFolderID = $folderID;
-		$data['trail'] = xarModAPIFunc('photoshare',
-								'user',
-								'getfoldertrail',
-								array( 'folderID' => $folderID ));
-	}
+    if (!isset($folderID)){
+        $parentFolderID = 'all';
+        $data['trail'] = array();
+        $data['parentFolderID'] = -1;
+    } else {
+        $data['parentFolderID'] = $parentFolderID = $folderID;
+        $data['trail'] = xarModAPIFunc('photoshare',
+                                'user',
+                                'getfoldertrail',
+                                array( 'folderID' => $folderID ));
+    }
 
-	if (!xarSecurityCheck('AddFolder', 1, 'folder', "all:all:$parentFolderID")) return;
+    if (!xarSecurityCheck('AddFolder', 1, 'folder', "all:all:$parentFolderID")) return;
 
-	//create empty folder
-	$data['folder'] = array(	'id'    => '',
-								'title' => '',
-								'owner' => '',
-								'parentFolder' => '',
-								'createdDate'   => '',
-								'ownername'     => '',
-								'modifiedDate'   => '',
-								'description'   => '',
-								'template' 		=> '',
-								'hideframe'	=> '',
-								'blockfromlist' => '',
-								'viewkey' 		=> '',
-								'mainImage'     => '',
-								'imageCount'    => ''
-				                );
+    //create empty folder
+    $data['folder'] = array(    'id'    => '',
+                                'title' => '',
+                                'owner' => '',
+                                'parentFolder' => '',
+                                'createdDate'   => '',
+                                'ownername'     => '',
+                                'modifiedDate'   => '',
+                                'description'   => '',
+                                'template'         => '',
+                                'hideframe'    => '',
+                                'blockfromlist' => '',
+                                'viewkey'         => '',
+                                'mainImage'     => '',
+                                'imageCount'    => ''
+                                );
 
 
-	// Add top menu
-	$data['menuitems'] = xarModAPIFunc('photoshare', 'user', 'makemainmenu',
-			array(	'menuSettings' => array( 'gotoCurrentFolder' => true ),
-					'menuHide' => false
-				)
-		);
+    // Add top menu
+    $data['menuitems'] = xarModAPIFunc('photoshare', 'user', 'makemainmenu',
+            array(    'menuSettings' => array( 'gotoCurrentFolder' => true ),
+                    'menuHide' => false
+                )
+        );
 
-	$data['actionUrl'] = xarModURL('photoshare', 'user', 'createfolder', array('fid' => $folderID));
-	$data['title'] = xarMl('Add album');
+    $data['actionUrl'] = xarModURL('photoshare', 'user', 'createfolder', array('fid' => $folderID));
+    $data['title'] = xarMl('Add album');
 
-	$templateName = xarModGetVar('photoshare', 'defaultTemplate');
-	$data['viewTemplates'] = xarModAPIFunc(	'photoshare',
-											'user',
-											'gettemplates',
-											array('currentTemplate' => $templateName) );
+    $templateName = xarModGetVar('photoshare', 'defaultTemplate');
+    $data['viewTemplates'] = xarModAPIFunc(    'photoshare',
+                                            'user',
+                                            'gettemplates',
+                                            array('currentTemplate' => $templateName) );
 
-	return xarTplModule('photoshare', 'user', 'editfolder', $data);
+    return xarTplModule('photoshare', 'user', 'editfolder', $data);
 }
 
 ?>

@@ -14,54 +14,54 @@
 
 function photoshare_userapi_deleteimage($args)
 {
-	extract($args);
+    extract($args);
 
-	if (!isset($imageID)) {
-		$msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
-		'imageID', 'userapi', 'deleteeimage', 'Photoshare');
-		xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
-		return;
-	}
+    if (!isset($imageID)) {
+        $msg = xarML('Bad param #(1) for #(2) function #(3)() in module #(4)',
+        'imageID', 'userapi', 'deleteeimage', 'Photoshare');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION, 'BAD_PARAM', new SystemException($msg));
+        return;
+    }
 
-	$image = xarModAPIFunc('photoshare', 'user', 'getimages', array('imageID' => $imageID ));
-	if (!isset($image)) return;
+    $image = xarModAPIFunc('photoshare', 'user', 'getimages', array('imageID' => $imageID ));
+    if (!isset($image)) return;
 
 
-	// Get database setup
-	$dbconn =& xarDBGetConn();
-	$xartable =& xarDBGetTables();
-	$imagesTable = $xartable['photoshare_images'];
-	$foldersTable = $xartable['photoshare_folders'];
+    // Get database setup
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
+    $imagesTable = $xartable['photoshare_images'];
+    $foldersTable = $xartable['photoshare_folders'];
 
-	$sql = "DELETE FROM $imagesTable
-			WHERE ps_id = " . xarVarPrepForStore($imageID);
+    $sql = "DELETE FROM $imagesTable
+            WHERE ps_id = " . xarVarPrepForStore($imageID);
 
-	$result =& $dbconn->Execute($sql);
-	if (!isset($result)) return;
+    $result =& $dbconn->Execute($sql);
+    if (!isset($result)) return;
 
-	//remove upload
-	$ok = xarModAPIFunc(	'uploads',
-							'admin',
-							'reject',
-							array(	'ulid'=>$image['uploadid']));
-	if (!isset($ok)) return;
+    //remove upload
+    $ok = xarModAPIFunc(    'uploads',
+                            'admin',
+                            'reject',
+                            array(    'ulid'=>$image['uploadid']));
+    if (!isset($ok)) return;
 
-	unset($result);
-	$sql = "UPDATE $imagesTable SET
-			ps_position = ps_position - 1
-			WHERE ps_parentfolder = " . xarVarPrepForStore($image['parentfolder']) .
-			" AND ps_position > " . xarVarPrepForStore($image['position']);
-	$result =& $dbconn->Execute($sql);
-	if (!isset($result)) return;
+    unset($result);
+    $sql = "UPDATE $imagesTable SET
+            ps_position = ps_position - 1
+            WHERE ps_parentfolder = " . xarVarPrepForStore($image['parentfolder']) .
+            " AND ps_position > " . xarVarPrepForStore($image['position']);
+    $result =& $dbconn->Execute($sql);
+    if (!isset($result)) return;
 
-	unset($result);
-	$sql = "UPDATE $foldersTable
-			SET ps_mainimage = NULL
-			WHERE ps_mainimage = " . xarVarPrepForStore($imageID);
-	$result =& $dbconn->Execute($sql);
-	if (!isset($result)) return;
+    unset($result);
+    $sql = "UPDATE $foldersTable
+            SET ps_mainimage = NULL
+            WHERE ps_mainimage = " . xarVarPrepForStore($imageID);
+    $result =& $dbconn->Execute($sql);
+    if (!isset($result)) return;
 
-	return true;
+    return true;
 }
 
 ?>

@@ -14,18 +14,18 @@
 
 function photoshare_init()
 {
-	// Verify that we have the GD extension installed
-	if (!extension_loaded('gd')) 
-	{
-	    $msg=xarML('Your server does unfortunately not have the image library "GD" installed, so Photoshare cannot be installed. Please contact your web administrator in order to get GD installed.');
-	    xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
-	                    new SystemException($msg));
-	    return;
-	}
-	
-	$dbconn =& xarDBGetConn();
-	$xartables =& xarDBGetTables();
-	xarDBLoadTableMaintenanceAPI();
+    // Verify that we have the GD extension installed
+    if (!extension_loaded('gd')) 
+    {
+        $msg=xarML('Your server does unfortunately not have the image library "GD" installed, so Photoshare cannot be installed. Please contact your web administrator in order to get GD installed.');
+        xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
+                        new SystemException($msg));
+        return;
+    }
+    
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
+    xarDBLoadTableMaintenanceAPI();
 
     // It's good practice to name the table and column definitions you
     // are getting - $table and $column don't cut it in more complex
@@ -33,30 +33,30 @@ function photoshare_init()
 
     // Folder creation
 
-	$folderTable = $xartables['photoshare_folders'];
-	$fields = array(
-		'ps_id' 		   => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-		'ps_owner'         => array('type'=>'integer','null'=>false),
-		'ps_createddate'   => array('type'=>'datetime','null'=>false),
-		'ps_modifieddate'  => array('type'=>'timestamp','null'=>false),
-		'ps_title'         => array('type'=>'varchar', 'size' => 255,'null'=>true),
-		'ps_description'   => array('type'=>'text','null'=>true),
-		//'ps_topic'         => array('type'=>'integer','null'=>false),
-		'ps_template'      => array('type'=>'varchar', 'size'=>255,'null'=>false,'default'=>'slideshow'),
-		'ps_blockfromlist' => array('type'=>'boolean','null'=>false, 'default'=>'0'),
-		'ps_hideframe'   => array('type'=>'boolean','null'=>false, 'default'=>'0'),
-		'ps_parentfolder'  => array('type'=>'integer','null'=>false),
-		'ps_accesslevel'   => array('type'=>'integer','size'=>'small','null'=>false),
-		'ps_viewkey'       => array('type'=>'varchar', 'size' => 32,'null'=>true),
-		'ps_mainimage'     => array('type'=>'integer','null'=>true)
-		);
+    $folderTable = $xartables['photoshare_folders'];
+    $fields = array(
+        'ps_id'            => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+        'ps_owner'         => array('type'=>'integer','null'=>false),
+        'ps_createddate'   => array('type'=>'datetime','null'=>false),
+        'ps_modifieddate'  => array('type'=>'timestamp','null'=>false),
+        'ps_title'         => array('type'=>'varchar', 'size' => 255,'null'=>true),
+        'ps_description'   => array('type'=>'text','null'=>true),
+        //'ps_topic'         => array('type'=>'integer','null'=>false),
+        'ps_template'      => array('type'=>'varchar', 'size'=>255,'null'=>false,'default'=>'slideshow'),
+        'ps_blockfromlist' => array('type'=>'boolean','null'=>false, 'default'=>'0'),
+        'ps_hideframe'   => array('type'=>'boolean','null'=>false, 'default'=>'0'),
+        'ps_parentfolder'  => array('type'=>'integer','null'=>false),
+        'ps_accesslevel'   => array('type'=>'integer','size'=>'small','null'=>false),
+        'ps_viewkey'       => array('type'=>'varchar', 'size' => 32,'null'=>true),
+        'ps_mainimage'     => array('type'=>'integer','null'=>true)
+        );
 
-	$query = xarDBCreateTable($folderTable,$fields);
-	if (empty($query)) return; // throw back
-	
-	$result =& $dbconn->Execute($query);
-	if (!$result) return;
-		
+    $query = xarDBCreateTable($folderTable,$fields);
+    if (empty($query)) return; // throw back
+    
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+        
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_owner',
         'fields'    => array('ps_owner'),
@@ -78,23 +78,23 @@ function photoshare_init()
     if (!$result) return;
 
     $imagetable = $xartables['photoshare_images'];
-	$fields = array(
-		'ps_id' 		   => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-		'ps_owner'         => array('type'=>'integer','null'=>false),
-		'ps_createddate'   => array('type'=>'datetime','null'=>false),
-		'ps_modifieddate'  => array('type'=>'timestamp','null'=>false),
-		'ps_title'         => array('type'=>'varchar', 'size' => 255,'null'=>true),
-		'ps_description'   => array('type'=>'text','null'=>true),
-		'ps_parentfolder'  => array('type'=>'integer','null'=>false),
-		'ps_bytesize'      => array('type'=>'integer','null'=>false),
-		'ps_uploadid'      => array('type'=>'integer','null'=>false),
-		'ps_position'      => array('type'=>'integer','null'=>false));
+    $fields = array(
+        'ps_id'            => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+        'ps_owner'         => array('type'=>'integer','null'=>false),
+        'ps_createddate'   => array('type'=>'datetime','null'=>false),
+        'ps_modifieddate'  => array('type'=>'timestamp','null'=>false),
+        'ps_title'         => array('type'=>'varchar', 'size' => 255,'null'=>true),
+        'ps_description'   => array('type'=>'text','null'=>true),
+        'ps_parentfolder'  => array('type'=>'integer','null'=>false),
+        'ps_bytesize'      => array('type'=>'integer','null'=>false),
+        'ps_uploadid'      => array('type'=>'integer','null'=>false),
+        'ps_position'      => array('type'=>'integer','null'=>false));
 
-	$query = xarDBCreateTable($imagetable,$fields);
-	if (empty($query)) return; // throw back
-	
-	$result =& $dbconn->Execute($query);
-	if (!$result) return;
+    $query = xarDBCreateTable($imagetable,$fields);
+    if (empty($query)) return; // throw back
+    
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
 
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . '_owner',
@@ -117,19 +117,19 @@ function photoshare_init()
     if (!$result) return;
 
     $setuptable = $xartables['photoshare_setup'];
-	$fields = array(
-		'ps_setupid'	  => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
-		//not necessary in xaraya: everything's a role:
-		//'ps_kind'         => array('type'=>'integer','null'=>false, 'size'=>'small'),
-		'ps_storage'      => array('type'=>'integer'),
-		'ps_id'			  => array('type'=>'integer','null'=>false)
-		);
-	$query = xarDBCreateTable($setuptable,$fields);
-	if (empty($query)) return; // throw back
-		
-	$result =& $dbconn->Execute($query);
-	if (!$result) return;
-	
+    $fields = array(
+        'ps_setupid'      => array('type'=>'integer','null'=>false,'increment'=>true,'primary_key'=>true),
+        //not necessary in xaraya: everything's a role:
+        //'ps_kind'         => array('type'=>'integer','null'=>false, 'size'=>'small'),
+        'ps_storage'      => array('type'=>'integer'),
+        'ps_id'              => array('type'=>'integer','null'=>false)
+        );
+    $query = xarDBCreateTable($setuptable,$fields);
+    if (empty($query)) return; // throw back
+        
+    $result =& $dbconn->Execute($query);
+    if (!$result) return;
+    
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . 'psstorage',
         'fields'    => array('ps_storage'),
@@ -139,7 +139,7 @@ function photoshare_init()
     if (empty($query)) return; // throw back
     $result =& $dbconn->Execute($query);
     if (!$result) return;
-	
+    
     $index = array(
         'name'      => 'i_' . xarDBGetSiteTablePrefix() . 'ps_id',
         'fields'    => array('ps_id'),
@@ -151,15 +151,15 @@ function photoshare_init()
     if (!$result) return;
 
     xarModSetVar('photoshare', 'SupportShortURLs', 1);
-  	xarModSetVar('photoshare', 'tmpdirname', '*');
-  	xarModSetVar('photoshare', 'imagedirname', '*');
-	xarModSetVar('photoshare', 'useImageDirectory', '1');
-	xarModSetVar('photoshare', 'thumbnailsize', '80');
-	xarModSetVar('photoshare', 'imageSizeLimitSingle', 250000);
-	xarModSetVar('photoshare', 'imageSizeLimitTotal', 5000000);
-	xarModSetVar('photoshare', 'allowframeremove', false);
- 	xarModSetVar('photoshare', 'defaultTemplate', 'unknown');
-  	xarModSetVar('photoshare', 'mainlist', 'flat');
+      xarModSetVar('photoshare', 'tmpdirname', '*');
+      xarModSetVar('photoshare', 'imagedirname', '*');
+    xarModSetVar('photoshare', 'useImageDirectory', '1');
+    xarModSetVar('photoshare', 'thumbnailsize', '80');
+    xarModSetVar('photoshare', 'imageSizeLimitSingle', 250000);
+    xarModSetVar('photoshare', 'imageSizeLimitTotal', 5000000);
+    xarModSetVar('photoshare', 'allowframeremove', false);
+     xarModSetVar('photoshare', 'defaultTemplate', 'unknown');
+      xarModSetVar('photoshare', 'mainlist', 'flat');
 
     $query1 = "SELECT DISTINCT ps_id FROM " . $xartables['photoshare_folders'];
     $query2 = "SELECT DISTINCT ps_owner FROM " . $xartables['photoshare_folders'];
@@ -198,7 +198,7 @@ function photoshare_init()
             )
         );
     xarDefineInstance('photoshare', 'item', $instances);
-	
+    
     xarRegisterMask('ViewFolder', 'All', 'photoshare', 'folder', 'All:All:All', 'ACCESS_OVERVIEW');
     xarRegisterMask('ReadFolder', 'All', 'photoshare', 'folder', 'All:All:All', 'ACCESS_READ');
     xarRegisterMask('EditFolder', 'All', 'photoshare', 'folder', 'All:All:All', 'ACCESS_EDIT');
@@ -215,7 +215,7 @@ function photoshare_init()
     xarRegisterPrivilege('AdminOwnItems', 'All', 'photoshare', 'All', 'All:MySelf:All', 'ACCESS_ADMIN');
     
     // Initialisation successful
-	return true;
+    return true;
 }
 
 // -----------------------------------------------------------------------
@@ -227,7 +227,7 @@ function photoshare_upgrade($oldversion)
         case '3.0a':
 
     }
-	return true;
+    return true;
 }
 
 // -----------------------------------------------------------------------
@@ -235,8 +235,8 @@ function photoshare_upgrade($oldversion)
 // -----------------------------------------------------------------------
 function photoshare_delete()
 {
-	$dbconn =& xarDBGetConn();
-	$xartables =& xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartables =& xarDBGetTables();
 
     xarDBLoadTableMaintenanceAPI();
     // Generate the SQL to drop the table using the API
@@ -246,7 +246,7 @@ function photoshare_delete()
     $result = &$dbconn->Execute($query);
     if (!$result) return;
 
-	// Drop the images table
+    // Drop the images table
     $query = xarDBDropTable($xartables['photoshare_images']);
     if (empty($query)) return; // throw back
     $result = &$dbconn->Execute($query);
@@ -254,33 +254,33 @@ function photoshare_delete()
 
     //TODO: Delete optional image files on disc
     /*
-	if (xarModGetVar('photoshare', 'useImageDirectory'))	{
-		$dirName = xarModGetVar('photoshare', 'imagedirname');
-		$dirHandle = opendir($dirName);
-		if ($dirHandle != false) {
-			while (($filename=readdir($dirHandle)) !=  false) {
-				if (substr($filename,0,3) == 'img'  ||  substr($filename,0,3) == 'tmb') {
-					unlink($dirName . '/' . $filename);
-				}
-		    }
-		}
-		  closedir($dirHandle);
-	}*/
+    if (xarModGetVar('photoshare', 'useImageDirectory'))    {
+        $dirName = xarModGetVar('photoshare', 'imagedirname');
+        $dirHandle = opendir($dirName);
+        if ($dirHandle != false) {
+            while (($filename=readdir($dirHandle)) !=  false) {
+                if (substr($filename,0,3) == 'img'  ||  substr($filename,0,3) == 'tmb') {
+                    unlink($dirName . '/' . $filename);
+                }
+            }
+        }
+          closedir($dirHandle);
+    }*/
 
-	xarModDelVar('photoshare', 'tmpdirname');
-	xarModDelVar('photoshare', 'imagedirname');
-	xarModDelVar('photoshare', 'useImageDirectory');
-	xarModDelVar('photoshare', 'thumbnailsize');
-	xarModDelVar('photoshare', 'imageSizeLimitSingle');
-	xarModDelVar('photoshare', 'imageSizeLimitTotal');
-	xarModDelVar('photoshare', 'allowframeremove');
-	xarModDelVar('photoshare', 'defaultTemplate');
+    xarModDelVar('photoshare', 'tmpdirname');
+    xarModDelVar('photoshare', 'imagedirname');
+    xarModDelVar('photoshare', 'useImageDirectory');
+    xarModDelVar('photoshare', 'thumbnailsize');
+    xarModDelVar('photoshare', 'imageSizeLimitSingle');
+    xarModDelVar('photoshare', 'imageSizeLimitTotal');
+    xarModDelVar('photoshare', 'allowframeremove');
+    xarModDelVar('photoshare', 'defaultTemplate');
 
     xarRemoveMasks('example');
     xarRemoveInstances('example');
     xarRemovePrivileges('photoshare');
 
     // Deletion successful
-	return true;
+    return true;
 }
 ?>

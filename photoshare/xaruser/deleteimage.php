@@ -14,32 +14,32 @@
 
 function photoshare_user_deleteimage()
 {
-	if(!xarVarFetch('iid', 'isset:int', $imageID,  NULL, XARVAR_GET_OR_POST)) {return;}
-	// Confirm authorisation code
+    if(!xarVarFetch('iid', 'isset:int', $imageID,  NULL, XARVAR_GET_OR_POST)) {return;}
+    // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-	if (!xarSecurityCheck('DeletePhoto')) return;
+    if (!xarSecurityCheck('DeletePhoto')) return;
 
-	$data = array();
+    $data = array();
 
-	$image = xarModAPIFunc('photoshare',
-						'user',
-						'getimages',
-						array( 'imageID' => $imageID, 'getForList' => false));
+    $image = xarModAPIFunc('photoshare',
+                        'user',
+                        'getimages',
+                        array( 'imageID' => $imageID, 'getForList' => false));
 
-	if (!isset($image)) return;
+    if (!isset($image)) return;
 
-	if (!xarSecurityCheck('DeletePhoto', 1, 'item', "$image[id]:$image[owner]:$image[parentfolder]")) return;
+    if (!xarSecurityCheck('DeletePhoto', 1, 'item', "$image[id]:$image[owner]:$image[parentfolder]")) return;
 
-	$ok = xarModAPIFunc('photoshare',
-						'user',
-						'deleteimage',
-						array( 'imageID' => $imageID ));
+    $ok = xarModAPIFunc('photoshare',
+                        'user',
+                        'deleteimage',
+                        array( 'imageID' => $imageID ));
 
-	if (!isset($ok)) return;
+    if (!isset($ok)) return;
 
-	xarResponseRedirect(xarModURL('photoshare', 'user', 'view', array('fid' => $image['parentfolder'])));
-	return true;
+    xarResponseRedirect(xarModURL('photoshare', 'user', 'view', array('fid' => $image['parentfolder'])));
+    return true;
 }
 
 ?>

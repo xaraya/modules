@@ -27,5 +27,5 @@ $modversion['user']           = 1;
 $modversion['securityschema'] = array('Photoshare::' => '::');
 $modversion['class']          = 'Complete';
 $modversion['category']       = 'Content';
-$modversion['dependency'] 	= array(666);
+$modversion['dependency']     = array(666);
 ?>

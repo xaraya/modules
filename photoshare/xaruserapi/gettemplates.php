@@ -14,31 +14,31 @@
 
 function photoshare_userapi_gettemplates($args)
 {
-	extract($args);
-	if (!isset($templatetype))
-		$templatetype="viewimages";
+    extract($args);
+    if (!isset($templatetype))
+        $templatetype="viewimages";
 
-	$templates         = array();
-	$templateDirectory = "modules/photoshare/xartemplates";
+    $templates         = array();
+    $templateDirectory = "modules/photoshare/xartemplates";
 
-	$shouldStartWith = "user-$templatetype-";
-	$len =strlen($shouldStartWith);
-	$dh = opendir($templateDirectory);
-	while ($f = readdir($dh))
-	{
-		if (substr(strtolower($f), 0, $len) == $shouldStartWith)
-		{
-			$tmp = split('\.', substr($f, $len));
-			$templateName = $tmp[0];
-			$templates[] = array( 'id'       => $templateName,
-								'name'     => $templateName,
-								'selected' => ($templateName == $currentTemplate ) ? 'selected="selected" ': '');
+    $shouldStartWith = "user-$templatetype-";
+    $len =strlen($shouldStartWith);
+    $dh = opendir($templateDirectory);
+    while ($f = readdir($dh))
+    {
+        if (substr(strtolower($f), 0, $len) == $shouldStartWith)
+        {
+            $tmp = split('\.', substr($f, $len));
+            $templateName = $tmp[0];
+            $templates[] = array( 'id'       => $templateName,
+                                'name'     => $templateName,
+                                'selected' => ($templateName == $currentTemplate ) ? 'selected="selected" ': '');
 
-		}
-	}
-	closedir($dh);
+        }
+    }
+    closedir($dh);
 
-	return $templates;
+    return $templates;
 }
 
 ?>
