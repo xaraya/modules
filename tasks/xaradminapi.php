@@ -21,7 +21,7 @@ function tasks_adminapi_create($args)
     extract($args);
 
     if (empty($name)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_create: ' . _TASKS_MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_create: ' . xarML("Module argument error"));
         return false;
     }
 	
@@ -100,7 +100,7 @@ function tasks_adminapi_update($args)
     extract($args);
 
     if (!isset($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_update: ' . _MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_update: ' . xarML("Module argument error"));
         return false;
     }
 
@@ -110,14 +110,14 @@ function tasks_adminapi_update($args)
 						array('id' => $id));
 			
 	if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_update: ' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_update: ' . xarML("No such item"));
         return $output->GetOutput();
     }
 
-    if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_update: ' . _TASKS_NOAUTH);
-        return false;
-    }
+//     if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_update: ' . _TASKS_NOAUTH);
+//         return false;
+//     }
 			
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -143,7 +143,7 @@ function tasks_adminapi_close($args)
     extract($args);
 
     if (!isset($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_close: ' . _MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_close: ' . xarML("Module argument error"));
         return false;
     }
 
@@ -153,14 +153,14 @@ function tasks_adminapi_close($args)
 						array('id' => $id));
 			
 	if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_close: ' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_close: ' . xarML("No such item"));
         return $output->GetOutput();
     }
 
-    if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_close: ' . _TASKS_NOAUTH);
-        return false;
-    }
+//     if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_close: ' . _TASKS_NOAUTH);
+//         return false;
+//     }
 			
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -184,7 +184,7 @@ function tasks_adminapi_open($args)
     extract($args);
 
     if (!isset($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . _MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . xarML("Module argument error"));
         return false;
     }
 
@@ -194,14 +194,14 @@ function tasks_adminapi_open($args)
 						array('id' => $id));
 			
 	if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . xarML("No such item"));
         return $output->GetOutput();
     }
 
-    if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . _TASKS_NOAUTH);
-        return false;
-    }
+//     if (!xarSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_MODERATE)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_open: ' . _TASKS_NOAUTH);
+//         return false;
+//     }
 			
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -225,7 +225,7 @@ function tasks_adminapi_approve($args)
     extract($args);
 
     if (!isset($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_approve: ' . xarML("Module argument error"));
         return false;
     }
 
@@ -235,15 +235,15 @@ function tasks_adminapi_approve($args)
 						array('id' => $id));
 			
 	if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_approve: ' . xarML("No such item"));
         return $output->GetOutput();
     }
 
-    if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
-			|| !xarSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _TASKS_NOAUTH);
-        return false;
-    }
+//     if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
+// 			|| !xarSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_approve: ' . _TASKS_NOAUTH);
+//         return false;
+//     }
 			
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -267,7 +267,7 @@ function tasks_adminapi_publish($args)
     extract($args);
 
     if (!isset($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_publish: ' . xarML("Module argument error"));
         return false;
     }
 
@@ -277,15 +277,15 @@ function tasks_adminapi_publish($args)
 						array('id' => $id));
 			
 	if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_publish: ' . xarML("No such item"));
         return $output->GetOutput();
     }
 
-    if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
-			|| !xarSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _TASKS_NOAUTH);
-        return false;
-    }
+//     if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
+// 			|| !xarSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_publish: ' . _TASKS_NOAUTH);
+//         return false;
+//     }
 			
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -311,7 +311,7 @@ function tasks_adminapi_accept($args)
     extract($args);
 
     if (!isset($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_accept: ' . xarML("Module argument error"));
         return false;
     }
 
@@ -321,15 +321,15 @@ function tasks_adminapi_accept($args)
 						array('id' => $id));
 			
 	if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_accept: ' . xarML("No such item"));
         return $output->GetOutput();
     }
 
-    if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
-			|| !xarSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _TASKS_NOAUTH);
-        return false;
-    }
+ //    if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_EDIT)
+// 			|| !xarSecAuthAction(0, 'tasks::', "$name::$id", ACCESS_EDIT)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_accept: ' . _TASKS_NOAUTH);
+//         return false;
+//     }
 			
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();
@@ -369,7 +369,7 @@ function tasks_adminapi_migrate($args)
 	}
 	
 	if(count($affectedtasks) <= 0) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_migrate: ' . _TASKS_NOAFFECTEDTASKS);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_migrate: ' . xarML("No tasks affected"));
         return false;
 	}
 	
@@ -384,14 +384,14 @@ function tasks_adminapi_migrate($args)
 							array('id' => $id));
 			
 	if ($parenttask == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("No such item"));
         return false;
     }
 
-    if (!xarSecAuthAction(0, 'tasks::task', '::$parenttask[basetaskid]', ACCESS_MODERATE)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_migrate: ' . $parenttask['basetaskid'] .  _TASKS_NOAUTH);
-        return false;
-    }
+//     if (!xarSecAuthAction(0, 'tasks::task', '::$parenttask[basetaskid]', ACCESS_MODERATE)) {
+//         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_adminapi_migrate: ' . $parenttask['basetaskid'] .  _TASKS_NOAUTH);
+//         return false;
+//     }
 
     list($dbconn) = xarDBGetConn();
     $xartable = xarDBGetTables();

@@ -48,12 +48,7 @@ function tasks_admin_new($args)
 
 	extract($args);
 	
-	if (!xarModLoad('tasks', 'user')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarResponseRedirect(xarModURL('tasks','user','view'));
-		return;
-    }
-	
+
   // DISPLAY ONLY IF COMMENT AUTH FOR BASETASKID, OR MOD AUTH FOR NO BASETASKID
 //     if (!pnSecAuthAction(0, 'tasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_ADD)) {
 //         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
@@ -77,9 +72,9 @@ function tasks_admin_new($args)
 // 	}
     //$data['feedback']=tasks_feedback();
 
-    $data['parentid']= $parentid;
-    $data['modname']= $module;
-    $data['objectid']= $objectid;
+    $data['parentid']= (empty($parentid))? 0: $parentid;
+    $data['modname']= (empty($module)) ? '' : $module;
+    $data['objectid']= (empty($objectid))? 0: $objectid;
 
     $data['submitbutton']=xarML('Add task');
     return $data;
@@ -136,10 +131,10 @@ function tasks_admin_create($args)
 
     if ($returnid != false) {
         // Success
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_TASKCREATED);
+        //xarSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_TASKCREATED);
     }
 
-	pnRedirect(pnModURL('tasks', 'user', 'display', array('id' => $returnid,
+	xarResponseRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#addtask')));
 
     return true;
@@ -165,7 +160,7 @@ function tasks_admin_modify($args)
     $task = xarModAPIFunc('tasks','user','get', array('id' => $id));
 
     if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("No such item"));
         $output->Text(tasks_feedback());
 		return $output->GetOutput();
     }
@@ -265,7 +260,7 @@ function tasks_admin_update($args)
 									'hours_planned' => $hours_planned,
 									'hours_spent' 	=> $hours_spent,
 									'hours_remaining' 		=> $hours_remaining))) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Tasks updated"));
     }
 
     xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
@@ -283,20 +278,14 @@ function tasks_admin_close($args)
 	// SECAUTH KEY CHECK REMOVED DUE TO MULTIPLE FORM OCCURRENCES CONFLICTING ON KEY USAGE
 	// PERMISSIONS CHECK SHOULD BE SUFFICIENT TO PREVENT MALICIOUS USAGE
 
-    if (!xarModAPILoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $id)));
-        return true;
-    }
-
     if($returnid = xarModAPIFunc('tasks',
 								'admin',
 								'close',
 								array('id'	=> $id))) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Tasks updated"));
     }
 
-    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarResponseRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -315,10 +304,10 @@ function tasks_admin_open($args)
 								'admin',
 								'open',
 								array('id'	=> $id))) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Tasks updated"));
     }
 
-    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarResponseRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -337,10 +326,10 @@ function tasks_admin_approve($args)
 								'admin',
 								'approve',
 								array('id'	=> $id))) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Tasks updated"));
     }
 
-    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarResponseRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -359,10 +348,10 @@ function tasks_admin_publish($args)
 								'admin',
 								'publish',
 								array('id'	=> $id))) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Tasks updated"));
     }
 
-    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarResponseRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
@@ -381,94 +370,19 @@ function tasks_admin_accept($args)
 								'admin',
 								'accept',
 								array('id'	=> $id))) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_UPDATED);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Tasks updated"));
     }
 
-    xarRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
+    xarResponseRedirect(xarModURL('tasks', 'user', 'display', array('id' => $returnid,
 															'' => '#tasklist')));
 
     return true;
 }
 
-// DEPRECATED
-/*
-function tasks_admin_delete($args)
-{
-    list($id,
-         $confirmation) = xarVarCleanFromInput('id',
-										  'confirmation');
-
-    extract($args);
-
-	if (!xarModAPILoad('tasks', 'user')
-			|| !xarModLoad('tasks','user')
-			|| !xarModAPILoad('tasks', 'admin')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        return true;
-    }
-
-    $task = xarModAPIFunc('tasks',
-							 'user',
-							 'get',
-							 array('id' => $id));
-
-    if ($task == false) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOSUCHITEM);
-        return true;
-    }
-
-    if (!xarSecAuthAction(0, 'tasks::task', '::$task[basetaskid]', ACCESS_DELETE)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
-        return true;
-    }
-
-    if (empty($confirmation)) {
-        $output = new xarHTML();
-
-        $output->SetInputMode(_XARH_VERBATIMINPUT);
-        $output->Text(tasks_menu());
-
-        $output->Title(_TASKS_DELETETASK);
-
-		$output->Text(_TASKS_TASKNAME);
-		$output->Linebreak();
-		$output->BoldText(xarVarPrepForDisplay($task['name']));
-
-        $output->ConfirmAction(_TASKS_CONFIRMDELETE,
-                               xarModURL('tasks',
-                                        'admin',
-                                        'delete'),
-                               _TASKS_CANCELDELETE,
-                               xarModURL('tasks',
-                                        'user',
-                                        'view'),
-                               array('id' => $id));
-
-        return $output->GetOutput();
-    }
-
-    if (xarModAPIFunc('tasks',
-                     'admin',
-                     'delete',
-                     array('id' => $id))) {
-        // Success
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_TASKDELETED);
-    }
-
-    xarRedirect(xarModURL('tasks', 'user', 'view'));
-    
-    return true;
-}
-*/
 function tasks_admin_modifyconfig()
 {
     $data=array();
  	
-	if (!xarModLoad('tasks','user')) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_LOADFAILED);
-        return true;
-    }
-	
 //     if (!xarSecAuthAction(0, 'tasks::', '', ACCESS_ADMIN)) {
 //         xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_NOAUTH);
 //         return true;
@@ -568,13 +482,13 @@ function tasks_admin_migrate($args)
 									'submit' 		=> $submit,
 									'taskfocus'		=> $taskfocus))) {
 
-		xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . _TASKS_MIGRATIONSUCCESSFUL);
+		xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>' . xarML("Task migration successfull"));
 	}
 
 	if(empty($newid) || $newid == 0) {
-		xarRedirect(xarModURL('tasks','user','view'));
+		xarResponseRedirect(xarModURL('tasks','user','view'));
 	} else {
-		xarRedirect(xarModURL('tasks','user','display',
+		xarResponseRedirect(xarModURL('tasks','user','display',
 							array('id' => $newid,
 									'modname' => $modname,
 									'objectid' => $objectid,
@@ -610,8 +524,8 @@ function tasks_admin_gantt($args)
 						  		'objectid' => $objectid,
 						  		'displaydepth' => 1));
 
-	include ("gantt/jpgraph.php");
-	include ("gantt/jpgraph_gantt.php");
+	include ("html/modules/tasks/gantt/jpgraph.php");
+	include ("html/modules/tasks/gantt/jpgraph_gantt.php");
 	
 	// Some global configs
 	$heightfactor=0.5;

@@ -66,7 +66,7 @@ function tasks_userapi_getall($args)
                    xar_hours_remaining
             FROM $taskstable
 			WHERE xar_modname = '" . xarVarPrepForStore($modname) . "'
-			" . ($objectid ? " AND xar_objectid = " . $objectid : "");
+			" . ((!empty($objectid)) ? " AND xar_objectid = " . $objectid : "");
 
 	// IMPLEMENT FILTER CODE FOR WHERE CLAUSE
 	// FORCING PARENT ID CHECK FOR USE IN DRILLDOWNS
@@ -193,7 +193,7 @@ function tasks_userapi_get($args)
     extract($args);
 
     if (!isset($id) || !is_numeric($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_get: ' . _TASKS_MODARGSERROR);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_get: ' . xarML("Module argument error"));
         return false;
     }
 
@@ -230,7 +230,7 @@ function tasks_userapi_get($args)
     if (!$result) return;
 
     if ($result->EOF) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_get: ' . _TASKS_NOSUCHITEM . ': ' . $id);
+        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_get: ' . xarML("No such item") . ': ' . $id);
         return false;
     }
 
@@ -340,7 +340,7 @@ function tasks_userapi_getroot($args)
 	extract($args);
 	
 	if (!isset($id) || !is_numeric($id)) {
-        xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_getroot: ' . _TASKS_MODARGSERROR);
+        //xarSessionSetVar('errormsg', xarGetStatusMsg() . '<br>tasks_userapi_getroot: ' . _TASKS_MODARGSERROR);
         return false;
     }
 	
