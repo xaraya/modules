@@ -16,6 +16,7 @@
  * @param integer    $cid       (optional) the id of a comment
  * @param integer    $status    (optional) only pull comments with this status
  * @param integer    $author    (optional) only pull comments by this author
+ * @param boolean    $reverse   (optional) reverse sort order from the database
  * @returns array     an array of comments or an empty array if no comments
  *                   found for the particular modid/objectid pair, or raise an
  *                   exception and return false.
@@ -116,7 +117,11 @@ function comments_userapi_get_multiple($args)
         $bindvars[] = (int) $nodelr['xar_right'];
     }
 
-    $sql .= " ORDER BY $ctable[left]";
+    if (!empty($reverse)) {
+        $sql .= " ORDER BY $ctable[right] DESC";
+    } else {
+        $sql .= " ORDER BY $ctable[left]";
+    }
 
 // cfr. xarcachemanager - this approach might change later
     $expire = xarModGetVar('comments','cache.userapi.get_multiple');
