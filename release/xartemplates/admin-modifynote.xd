@@ -202,6 +202,6 @@
 			</tr>
 		</table>			
 		<br /><br />
-		<input type="submit" value="Announce!" align="middle" tabindex="6" />
+		<input type="submit" value="Announce!"  tabindex="6" />
 	</form>
 </div>
