@@ -1,5 +1,5 @@
 <div class="xar-mod-head"><span class="xar-mod-title"><xar:mlstring>Recommend Us</xar:mlstring></span></div>
-<div class="xar-mod-body"><h2><xar:mlstring>Please, recommend us to a friend.</h2>
+<div class="xar-mod-body"><h2><xar:mlstring>Please, recommend us to a friend</xar:mlstring>.</h2>
 <div style="margin: auto;">
 
 <xar:if id="title_condition" condition="!empty($message)">
