@@ -140,38 +140,46 @@ function wiki_userapi_transform($args)
         $XARAllowedProtocols = xarModGetVar('wiki', 'AllowedProtocols');
     } 
     // Argument check
-    if ((!isset($objectid)) ||
-            (!isset($extrainfo))) {
+    if ((!isset($objectid)) || (!isset($extrainfo))) {
         xarSessionSetVar('errormsg', _MODARGSERROR);
         return;
     } 
 
+    // What does qualify as wiki content
+    // FIXME: This regexp is a nice attemp to quality the wiki format, but it fails
+    // silently without telling the user anything at all, rethink this. For now
+    // let the regexp just match anything
+    $regexp = "/('''|\t+\*|\t+1|\t+\s:|---|__|(\[[\w ]+\|$XARAllowedProtocols))/";
+    $regexp ="/.*/";
     if (is_array($extrainfo)) {
+        // if extrainfo['transform'] contains the stuff, transform that
         if (isset($extrainfo['transform']) && is_array($extrainfo['transform'])) {
             foreach ($extrainfo['transform'] as $key) {
-                if (isset($extrainfo[$key]) &&
-                        preg_match("/('''|\t+\*|\t+1|\t+\s:|---|__|(\[[\w ]+\|$XARAllowedProtocols))/", $extrainfo[$key])) {
+                if (isset($extrainfo[$key]) && preg_match($regexp, $extrainfo[$key])) {
+                    // Put the transformed stuff back into the extrainfo array
                     $extrainfo[$key] = wiki_userapitransform($extrainfo[$key]);
                 } 
             } 
             return $extrainfo;
         } 
+        
+        // Otherwise transform the extrainfo array itself
         $transformed = array();
         foreach($extrainfo as $text) {
-            if (preg_match("/('''|\t+\*|\t+1|\t+\s:|---|__|(\[[\w ]+\|$XARAllowedProtocols))/", $text)) {
+            if (preg_match($regexp, $text)) {
                 $transformed[] = wiki_userapitransform($text);
             } else {
+                // Didnt qualify, return verbatim
                 $transformed[] = $text;
             } 
         } 
     } else {
-        if (preg_match("/('''|\t+\*|\t+1|\t+\s:|---|__|(\[[\w ]+\|$XARAllowedProtocols))/", $extrainfo)) {
+        // if extrainfo is no array, transform it directly
+        $transformed = $extrainfo; // default, return verbatim
+        if (preg_match($regexp, $extrainfo)) {
             $transformed = wiki_userapitransform($extrainfo);
-        } else {
-            $transformed = $text;
         } 
     } 
-
     return $transformed;
 } 
 
