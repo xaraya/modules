@@ -52,6 +52,7 @@ function articles_userapi_leftjoin($args)
 
     // Table definition
     $xartable =& xarDBGetTables();
+    $dbconn   =& xarDBGetConn();
     $articlestable = $xartable['articles'];
 
     $leftjoin = array();
@@ -92,12 +93,11 @@ function articles_userapi_leftjoin($args)
         $whereclauses[] = $leftjoin['pubdate'] . ' < ' . $enddate;
     }
     if (!empty($language) && is_string($language)) {
-        $whereclauses[] = $leftjoin['language'] . " = '" . xarVarPrepForStore($language) . "'";
+        $whereclauses[] = $leftjoin['language'] . " = " . $dbconn->qstr($language);
     }
     if (count($aids) > 0) {
         $allaids = join(', ', $aids);
-        $whereclauses[] = $articlestable . '.xar_aid IN (' .
-                   xarVarPrepForStore($allaids) . ')';
+        $whereclauses[] = $articlestable . '.xar_aid IN (' . $allaids .')';
     }
     if (!empty($where)) {
         // find all single-quoted pieces of text and replace them first, to allow where clauses
@@ -187,7 +187,7 @@ function articles_userapi_leftjoin($args)
         $find = array();
         foreach ($normal as $text) {
             // FIXME: use qstr method or bindvars
-            $text = xarVarPrepForStore($text);
+            $text = $dbconn->qstr($text);
         // TODO: use XARADODB to escape wildcards (and use portable ones) ??
             $text = preg_replace('/%/','\%',$text);
             $text = preg_replace('/_/','\_',$text);
