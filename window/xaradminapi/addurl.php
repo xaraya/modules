@@ -64,10 +64,10 @@ function window_adminapi_addurl($args)
         // This check should happen regardless of either an edit or 
         // an add was we don't won't duplicate values in the database.
         $query = "SELECT xar_id FROM $urltable
-                  WHERE xar_name = '" . xarVarPrepForStore($host) . "'
-                  OR xar_alias = '" . xarVarPrepForStore($alias) . "'";
-
-        $result =& $dbconn->Execute($query);
+                  WHERE xar_name = ?
+                  OR xar_alias = ?";
+        $bindvars = array($host, $alias);
+        $result =& $dbconn->Execute($query,$bindvars);
         if (!$result) return false;
 
         /*
@@ -92,31 +92,33 @@ function window_adminapi_addurl($args)
                     INTO $urltable
                     (xar_id, xar_name, xar_alias, xar_reg_user_only, xar_open_direct, xar_use_fixed_title, xar_auto_resize, xar_vsize, xar_hsize)
                     VALUES ($nextId,
-                            '".xarVarPrepForStore($host)."',
-                            '".xarVarPrepForStore($alias)."',
-                            '".xarVarPrepForStore($reg_user_only)."',
-                            '".xarVarPrepForStore($open_direct)."',
-                            '".xarVarPrepForStore($use_fixed_title)."',
-                            '".xarVarPrepForStore($auto_resize)."',
-                            '".xarVarPrepForStore($vsize)."',
-                            '".xarVarPrepForStore($hsize)."')";
+                            ?,
+                            ?,
+                            ?,
+                            ?,
+                            ?,
+                            ?,
+                            ?,
+                            ?)";
+            $bindvars = array($host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize);
         }
         else
         {
             $query = "UPDATE
                     $urltable
-                    SET xar_name            = '".xarVarPrepForStore($host)."',
-                        xar_alias           = '".xarVarPrepForStore($alias)."',
-                        xar_reg_user_only   = '".xarVarPrepForStore($reg_user_only)."',
-                        xar_open_direct     = '".xarVarPrepForStore($open_direct)."',
-                        xar_use_fixed_title = '".xarVarPrepForStore($use_fixed_title)."',
-                        xar_auto_resize     = '".xarVarPrepForStore($auto_resize)."',
-                        xar_vsize           = '".xarVarPrepForStore($vsize)."',
-                        xar_hsize           = '".xarVarPrepForStore($hsize)."'
-                    WHERE xar_id=$id";
+                    SET xar_name            = ?,
+                        xar_alias           = ?,
+                        xar_reg_user_only   = ?,
+                        xar_open_direct     = ?,
+                        xar_use_fixed_title = ?,
+                        xar_auto_resize     = ?,
+                        xar_vsize           = ?,
+                        xar_hsize           = ?
+                    WHERE xar_id = ?";
+            $bindvars = array($host, $alias, $reg_user_only, $open_direct, $use_fixed_title, $auto_resize, $vsize, $hsize, $id);
         }
-        if(!$dbconn->Execute($query)) return;
-
+        $result =& $dbconn->Execute($query,$bindvars);
+        if (!$result) return false;
     }
         xarResponseRedirect(xarModURL('window', 'admin', 'addurl'));
 }
