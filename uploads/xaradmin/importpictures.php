@@ -11,6 +11,9 @@ function uploads_admin_importpictures( $args )
 	$image_import_dir 			 = '/home/epicsaga/public_html/var/uploads/images';
 	$Picture_Publication_Type_ID = 5;
 
+    xarModSetVar('uploads', 'obfuscate_imports', 0);
+
+
 	echo "Import Pictures here<br>";
 	
 	// Kick mod available
@@ -27,7 +30,7 @@ function uploads_admin_importpictures( $args )
 	$FilesInDir = getFileList( $image_import_dir );
 	
 	// Prune out dupes, and ones already in the system
-	$prunedFiles = pruneFiles( $FilesInDir );
+	$prunedFiles = pruneFiles( $FilesInDir, $image_import_dir );
 
 
 	// Setup Article Defaults
@@ -60,16 +63,20 @@ function uploads_admin_importpictures( $args )
 	// Loop through files and import
 	foreach ($prunedFiles as $filename) 
 	{
-		echo "File: ".$filename."<br>";
+		
 		$lastSlash = strlen($filename) - strpos( strrev( $filename ), '/' );
 		$title = ucwords(str_replace( "_", " ", substr ($filename, $lastSlash, strpos( $filename, '.')-1 ) ));
+
+		$shortname = substr ($filename, $lastSlash, strlen( $filename));
+		echo "File: ".$filename."<br>";
+
 
 		// import file into Uploads
 		$filepath = $image_import_dir.$filename;
 		
 		if (is_file($filepath))
 		{
-			$data = array('ulfile'   => $filename
+			$data = array('ulfile'   => $shortname
 						 ,'filepath' => $filepath
 						 ,'utype'    => 'file'
 						 ,'mod'      => 'uploads'
@@ -79,6 +86,9 @@ function uploads_admin_importpictures( $args )
 
 			echo "About to store<br>";	
 			$info = xarModAPIFunc('uploads','user','store',$data);
+			echo '<pre>';
+			print_r( $info );
+			echo '</pre>';
 			echo "Stored<br>";	
 
 		}		
@@ -133,7 +143,7 @@ function getFileList( $import_directory )
 	return $FilesInDir;
 }
 
-function pruneFiles( $FilesInDir )
+function pruneFiles( $FilesInDir, $image_import_dir )
 {
 	// Now check to see if any of those files are already in the system
 	if( isset($FilesInDir) )
@@ -159,7 +169,7 @@ function pruneFiles( $FilesInDir )
 							xar_ulhash,
 							xar_ulapp
 					FROM $uploadstable
-					WHERE xar_ulfile = '$filename' OR xar_ulhash = '$filename' ;";
+					WHERE xar_ulfile = '$filename' OR xar_ulhash = '$filename' OR xar_ulhash = '$image_import_dir$filename';";
 			$result = $dbconn->Execute($sql);
 			
 			// Check for an error with the database code, and if so set an appropriate
