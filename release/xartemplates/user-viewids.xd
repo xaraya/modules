@@ -136,7 +136,7 @@
 #$pager#
 </p>
 <div style="clear: both;">
-    <span style="float: left; width: 50%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+    <span style="float: left; width: 50%; margin-top:10px;text-align: left;">
         <h3><xar:mlstring>Syndicate this list</xar:mlstring></h3>
         <ol>
     	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('theme' => 'rss'))#"><xar:mlstring>Entire List</xar:mlstring></a></li>
@@ -144,7 +144,7 @@
     	<li><a href="#xarModUrl('release', 'user', 'rssviewids', array('phase' => 'themes', 'theme' => 'rss'))#"><xar:mlstring>Themes</xar:mlstring></a></li>
         </ol>
     </span>
-    <span style="float: right; width: 50%; margin-top:10px;text-align: left; font-size:larger; font-weight:bold;">
+    <span style="float: right; width: 50%; margin-top:10px;text-align: left;">
         <h3><xar:mlstring>Check the Documentation</xar:mlstring></h3>
         <ol>
     	<li><a href="#$extdocsurldev#"><xar:mlstring>Module API Guides</xar:mlstring></a></li>
