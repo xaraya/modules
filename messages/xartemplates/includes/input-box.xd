@@ -76,9 +76,9 @@
                     <td colspan="2">
                         <br />
                         <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-                        <input type=hidden name="action">
-                        <input type="submit" id="preview" value="#xarML('preview')#" onClick="document.inputbox.action.value='preview'" />&nbsp;&nbsp;
-                        <input type="submit" id="submit" value="#xarML('submit')#" onClick="document.inputbox.action.value='submit'" />&nbsp;&nbsp;
+                        <input type="hidden" name="action" id="action">
+                        <input type="submit" id="preview" value="#xarML('preview')#" onclick="document.getelementById('action').value='preview'" />&nbsp;&nbsp;
+                        <input type="submit" id="submit" value="#xarML('submit')#" onclick="document.getelementById('action').value='submit'" />&nbsp;&nbsp;
                     </td>
                 </tr>
             </table>
