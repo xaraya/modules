@@ -17,10 +17,10 @@ function tasks_userapi_getall($args)
 		return tasks;
 	}
 	
-    if (!pnSecAuthAction(0, 'tasks::', '::', ACCESS_OVERVIEW)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_userapi_getall: ' . _TASKS_NOAUTH);
-        return $tasks;
-    }
+ //    if (!pnSecAuthAction(0, 'tasks::', '::', ACCESS_OVERVIEW)) {
+//         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_userapi_getall: ' . _TASKS_NOAUTH);
+//         return $tasks;
+//     }
 
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
@@ -93,12 +93,8 @@ function tasks_userapi_getall($args)
 	
 	}
 
-    $result = $dbconn->SelectLimit($sql, -1, 0);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_userapi_getall: ' . _TASKS_GETFAILED . '<br>' . $sql);
-        return false;
-    }
+    $result =& $dbconn->SelectLimit($sql, -1, 0);
+    if (!$result) return;
 
     for (; !$result->EOF; $result->MoveNext()) {
         list($id,
@@ -215,12 +211,8 @@ function tasks_userapi_get($args)
                    xar_hours_remaining
 			FROM $taskstable
             WHERE xar_id = " . $id;
-    $result = $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_userapi_get: ' . _TASKS_GETFAILED . '<br>' . $sql);
-        return false;
-    }
+    $result =& $dbconn->Execute($sql);
+    if (!$result) return;
 
     if ($result->EOF) {
         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>tasks_userapi_get: ' . _TASKS_NOSUCHITEM . ': ' . $id);
@@ -317,11 +309,8 @@ function tasks_userapi_countitems($args)
 			break;
 	} // ELSE GET ALL
 
-    $result = $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
+    $result =& $dbconn->Execute($sql);
+    if (!$result) return;
 
     list($numtasks) = $result->fields;
 
@@ -350,13 +339,9 @@ function tasks_userapi_getroot($args)
 					$taskscolumn[parentid]
 				FROM $taskstable
 				WHERE xar_id = $rootid";
-		$result = $dbconn->Execute($sql);
-	
-		if ($dbconn->ErrorNo() != 0) {
-	        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>' . _TASKS_ROOTFAILED . '<br>' . $sql);
-			return $id;
-		}
-	
+		$result =& $dbconn->Execute($sql);
+        if (!$result) return;
+
 		list($parentid, $rootid) = $result->fields;
 	}
 	

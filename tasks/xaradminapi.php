@@ -8,10 +8,10 @@ function xtasks_adminapi_create($args)
         return false;
     }
 	
-    if (!pnSecAuthAction(0, 'xTasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_create: ' . _XTASKS_NOAUTH);
-        return false;
-    }
+//     if (!pnSecAuthAction(0, 'xTasks::task', '$task[modname]:$task[objectid]:$task[basetaskid]', ACCESS_COMMENT)) {
+//         pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_create: ' . _XTASKS_NOAUTH);
+//         return false;
+//     }
 		
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
@@ -69,12 +69,8 @@ function xtasks_adminapi_create($args)
 
 // PRIVATE INITIALLY SET BASED ON USER PREFERENCE
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_create: ' . _XTASKS_CREATEFAILED . '<br>' . $sql);
-        return false;
-    }
+    $res =& $dbconn->Execute($sql);
+    if (!$res) return;
 
     $id = $dbconn->PO_Insert_ID($xtaskstable, 'xar_id');
 
@@ -123,12 +119,8 @@ function xtasks_adminapi_update($args)
 				  xar_description = '" . pnVarPrepForStore($description) . "'
 			WHERE xar_id = $id";
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_update: ' . _XTASKS_UPDATEFAILED . '<br>' . $sql);
-        return false;
-    }
+    $res =& $dbconn->Execute($sql);
+    if (!$res) return;
 
     $returnid = (pnModGetVar('xtasks','returnfromedit') ? $id : $task['parentid']);
 	return $returnid;
@@ -173,12 +165,8 @@ function xtasks_adminapi_close($args)
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_close: ' . _XTASKS_CLOSEFAILED . '<br>' . $sql);
-        return false;
-    }
+    $res =& $dbconn->Execute($sql);
+    if (!$res) return;
 
     $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $task['parentid'];
@@ -223,12 +211,8 @@ function xtasks_adminapi_open($args)
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_open: ' . _XTASKS_OPENFAILED . '<br>' . $sql);
-        return false;
-    }
+    $res =& $dbconn->Execute($sql);
+    if (!$res) return;
 
     $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $task['parentid'];
@@ -274,12 +258,8 @@ function xtasks_adminapi_approve($args)
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_approve: ' . _XTASKS_APPROVEFAILED . '<br>' . $sql);
-        return false;
-    }
+    $res =& $dbconn->Execute($sql);
+    if (!$res) return;
 
     $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $returnid;
@@ -327,12 +307,8 @@ function xtasks_adminapi_publish($args)
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_publish: ' . _XTASKS_PUBLISHFAILED . '<br>' . $sql);
-        return false;
-    }
+    $res = & $dbconn->Execute($sql);
+    if (!$res) return;
 
     $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $returnid;
@@ -379,12 +355,8 @@ function xtasks_adminapi_accept($args)
 			  		xar_date_changed = '" . time() . "'
 			WHERE xar_id = $id";
 
-    $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_accept: ' . _XTASKS_ACCEPTFAILED . '<br>' . $sql);
-        return false;
-    }
+    $res =& $dbconn->Execute($sql);
+    if (!$res) return;
 
     $returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $id : $task['parentid']);
 	return $returnid;
@@ -430,22 +402,14 @@ function xtasks_adminapi_delete($args)
     $sql = "DELETE FROM $xtaskstable
             WHERE xar_id = " . pnVarPrepForStore($id);
     $result = $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_delete: ' . _XTASKS_DELETEFAILED . '<br>' . $sql);
-        return false;
-    }
+    if (!$result) return;
 
     $switchboardtable = $pntable['xtasks_switchboard'];
 
     $sql = "DELETE FROM $switchboardtable
             WHERE xar_id = " . pnVarPrepForStore($id);
     $result = $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_delete: ' . _XTASKS_SWITCHBOARDDELETEFAILED . '<br>' . $sql);
-        return false;
-    }
+    if (!$result) return;
 
     return true;
 }
@@ -508,12 +472,9 @@ function xtasks_adminapi_migrate($args)
 		// - 1 => Migrate selected tasks under taskfocus (taskfocus[any] = 1)
 		$sql = "UPDATE $taskstable SET xar_parentid = " . ($targetfocus ? $targetfocus : "0") . " WHERE xar_id IN (" . implode(",",$affectedtasks) . ")";
 
-		$dbconn->Execute($sql);
-	
-		if ($dbconn->ErrorNo() != 0) {
-			pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_REFOCUSFAILED . '<br>' . $sql);
-			return false;
-		}
+		$res =& $dbconn->Execute($sql);
+	    if (!$res) return;
+
 		$returnid = (pnModGetVar('xtasks','returnfrommigrate') ? $targetfocus : $parentid);
 		return $returnid;
 
@@ -522,12 +483,9 @@ function xtasks_adminapi_migrate($args)
 		// UH, THERE IS NO PARENTID PASSED
 		$sql = "UPDATE $taskstable SET xar_parentid = " . ($parenttask['parentid'] ? $parenttask['parentid'] : "0") . " WHERE xar_id IN (" . implode(",",$affectedtasks) . ")";
 
-		$dbconn->Execute($sql);
-	
-		if ($dbconn->ErrorNo() != 0) {
-			pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_SURFACEFAILED . '<br>' . $sql);
-			return false;
-		}
+		$res =& $dbconn->Execute($sql);
+	    if (!$res) return;
+
 		$returnid = (pnModGetVar('xtasks','returnfromsurface') ? $parentid : $parenttask['parentid']);
 		return $returnid;
 	
@@ -541,11 +499,7 @@ function xtasks_adminapi_migrate($args)
 			$sql = "SELECT xar_id FROM $taskstable WHERE xar_parentid IN (" . implode(",",$selectedids) . ")";
 
 			$result = $dbconn->SelectLimit($sql, -1, 0);
-			
-			if ($dbconn->ErrorNo() != 0) {
-				pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_DELETEFAILED . '<br>' . $sql);
-				return false;
-			}
+			if (!$result) return;
 			
 			$selectedids = array();
 			for (; !$result->EOF; $result->MoveNext()) {
@@ -560,12 +514,9 @@ function xtasks_adminapi_migrate($args)
 			if(is_array($tasklist) && count($tasklist) > 0) {
 				$sql = "DELETE FROM $taskstable WHERE xar_id IN (" . implode(",",$tasklist) . ")";
 	
-				$dbconn->Execute($sql);
-			
-				if ($dbconn->ErrorNo() != 0) {
-					pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_DELETEFAILED . '<br>' . $sql);
-					return false;
-				}
+				$res =& $dbconn->Execute($sql);
+			    if (!$res) return;
+
 			}
 		}
 		
@@ -580,22 +531,14 @@ function xtasks_adminapi_migrate($args)
 		// HANDLE THAT AS PREVIOUSLY NOTED
 		$sql = "UPDATE $taskstable SET xar_parentid = " . ($parentid ? $parentid : "0") . " WHERE xar_parentid IN (" . implode(",",$affectedtasks) . ")";
 
-		$dbconn->Execute($sql);
-	
-		if ($dbconn->ErrorNo() != 0) {
-			pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_SURFACEFAILED . '<br>' . $sql);
-			return false;
-		}
+		$res =& $dbconn->Execute($sql);
+        if (!$res) return;
 
 		$sql = "DELETE FROM $taskstable WHERE xar_id IN (" . implode(",",$affectedtasks) . ")";
 
-		$dbconn->Execute($sql);
-	
-		if ($dbconn->ErrorNo() != 0) {
-			pnSessionSetVar('errormsg', pnGetStatusMsg() . '<br>xtasks_adminapi_migrate: ' . _XTASKS_DELETEFAILED . '<br>' . $sql);
-			return false;
-		}
-		
+		$res =& $dbconn->Execute($sql);
+        if (!$res) return;
+
 		return $parentid;
 		
 	} else $sql = "(no query)";
