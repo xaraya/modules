@@ -194,11 +194,9 @@
                 </select>
             </div>
             <div class="xar-cm-settings">
-                <label for="reload">
                     <xar:mlstring>
                         Action 
                     </xar:mlstring>
-                </label>
                 <br />
                 <input type="hidden" id="header-modid" name="header[modid]" value="#$header['modid']#" />
                 <input type="hidden" id="header-objectid" name="header[objectid]" value="#$header['objectid']#" />
