@@ -15,7 +15,7 @@
 
 :initial
 
-set patchfile=amoro.patch
+set patchfile=batchgen.patch
 
 if "%1" == "-help" goto help
 if "%1" == "" goto defaultrange
