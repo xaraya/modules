@@ -22,16 +22,35 @@ fi
 # If we don't want to do anything set DRYRUN of NOTHING
 # NOTHING is also set automatically when there is nothing to do
 # DRYRUN is set when it was a test run (e.g. pull -n)
-if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING  -o X$BK_STATUS = XCONFLICTS ]
+# CONFLICTS is set when there is a RESYNC directory, also usefull for freeze mode
+if [ X$BK_STATUS = XDRYRUN -o X$BK_STATUS = XNOTHING -o X$BK_STATUS = XCONFLICTS ]
 then exit 0
 fi
 
-# url to web interface
-# this takes the directory, not good enough for us
+# Some config vars
+# When using mail
+#POSTPROGRAM="mail"
+#SUBJECTSWITCH="-s"
+#DESTINATION="xaraya_bk-notices@lists.xaraya.com"
 
+# Using nntp
+POSTPROGRAM="/usr/lib/news/bin/inews"
+SUBJECTSWITCH="-t"
+DESTINATION="-n xaraya.bk-notices"
+
+# url to web interface
+# repositories are at /var/bk/xaraya/core/stable
+# we want the last two, i.e. core/stable in $VIRGIN/$REPO
+VIRGIN=$(basename $(dirname ${BKD_ROOT}))
 REPO=$(basename ${BKD_ROOT})
-# temporary fix, hardcode
-BKURL=http://www.xaraya.com:15000/modules
+BKURL=http://xaraya.com:15000/$VIRGIN/$REPO
+
+# if we're in the patches repository, do not send mail
+# this is handled by another trigger
+# FIXME: use repository id instead of directory name.
+if [ $REPO == patches ]
+then exit 0
+fi
 
 # post-incoming event, send out notices, changes have
 # already been applied so we don't need to test for
@@ -41,16 +60,16 @@ BKURL=http://www.xaraya.com:15000/modules
 NUMSETS=`wc -l < $BK_CSETLIST`
 if [ $NUMSETS -gt 1 ]
 then
-CHANGETEXT="changesets were"
+CHANGETEXT="csets were"
 else
-CHANGETEXT="changeset was"
+CHANGETEXT="cset was"
 fi
 # Get the first changeset comment
 CSCOMMENT=`bk changes -r+ -d':C:'`
 
 echo "Sending notifications..."
 (
-echo Changes were applied by ${BKD_USER} to the modules/${REPO} level ${BKD_LEVEL} repository.
+echo Changes were applied by ${BKD_USER} to ${VIRGIN}/${REPO} level ${BKD_LEVEL}.
 
 # What is the list of changesets which were incoming?
 if [ X$BK_CSETLIST != X ]
@@ -62,6 +81,6 @@ then (
 		# FIXME: when pushing a merge changest this gives an ambigious redirect
 		# BK_CSETLIST is not empty we check for that, what's happening?
 		echo Links for the differences:
-		echo $(cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //')
+		cat $BK_CSETLIST | xargs -n1 echo -e $BKURL/patch@ | sed 's/ //'
 fi
-) | mail -s "${NUMSETS} ${CHANGETEXT} pushed to modules/${REPO}: ${CSCOMMENT:0:40}..." xaraya_bk-notices@lists.xaraya.com
+) | $POSTPROGRAM $SUBJECTSWITCH"${NUMSETS} ${CHANGETEXT} pushed to core/${REPO}: ${CSCOMMENT:0:40}..." $DESTINATION
