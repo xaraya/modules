@@ -443,8 +443,12 @@ function xarbb_upgrade($oldversion)
                                    'xarbb', 'admin', 'newhook')) {
                 return false;
             }
+            return xarbb_upgrade('1.1.0');
             continue;
         case '1.1.0':
+            return xarbb_upgrade('1.1.1');
+            break;
+        case '1.1.1':
             // search hook
             if (!xarModRegisterHook('item', 'search', 'GUI', 'xarbb', 'user', 'search')) {
                 return false;
