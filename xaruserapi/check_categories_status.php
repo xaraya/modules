@@ -10,18 +10,18 @@
 //  (c) 2003  nextcommerce (nextcommerce.sql,v 1.76 2003/08/25); www.nextcommerce.org
 // ----------------------------------------------------------------------
 
-function commerce_userapi_check_stock_attributes($args)
+function commerce_userapi_check_categories_status($args)
 {
     extract($args);
-    if (!isset($categories_id) || $categories_id ==0) return 0;
+    if (!isset($categories_id) || $categories_id == 0) return 0;
 
     include_once 'modules/xen/xarclasses/xenquery.php';
     $xartables = xarDBGetTables();
     $q = new xenQuery('SELECT');
-    $q->addtable(xartables['categories'],'xc')
-    $q->addtable(xartables['commerce_categories'],'c')
-    $q->addfields('xc.xar_parent AS parent_id,
-                  'c.categories_status AS categories_status);
+    $q->addtable($xartables['categories'],'xc');
+    $q->addtable($xartables['commerce_categories'],'c');
+    $q->addfields(array('xc.xar_parent AS parent_id',
+                  'c.categories_status AS categories_status'));
     $q->eq('categories_id', $categories_id);
     if(!$q->run()) return;
     $categorie_data = $q->row();

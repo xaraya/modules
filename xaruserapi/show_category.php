@@ -23,15 +23,13 @@ function commerce_userapi_show_category($args)
     // image for first level
     $img_1='<img src="' . xarTplGetImage('icon_arrow.jpg', 'commerce') . '">&nbsp;';
 
-    if (isset($foo[$counter]['level'])) {
-        for ($a=0; $a<$foo[$counter]['level']; $a++) {
-            if ($foo[$counter]['level'] == 1) {
-                $categories_string .= "&nbsp;-&nbsp;";
-            }
-            $categories_string .= "&nbsp;&nbsp;";
+    for ($a=0; $a<$foo[$counter]['level']; $a++) {
+        if ($foo[$counter]['level'] == $a+1) {
+            $categories_string .= "&nbsp;-&nbsp;";
         }
+        $categories_string .= "&nbsp;&nbsp;";
     }
-    if ($foo[$counter]['level'] == '') {
+    if ($foo[$counter]['level'] == 0) {
         if (strlen($categories_string)=='0') {
             $categories_string .='<div width="100%"><span class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)">';
         }
@@ -49,27 +47,22 @@ function commerce_userapi_show_category($args)
     }
     if ($foo[$counter]['parent'] == 0) {
         $cPath_new = $counter;
-    }
-    else {
+    } else {
         $cPath_new = $foo[$counter]['path'];
     }
 
     $categories_string .= xarModURL('commerce','user','default', array('cPath' => $cPath_new));
     $categories_string .= '">';
 
-    if ( ($cid) && (in_array($counter, $cid)) ) {
-        $categories_string .= '<b>';
-    }
-
     // display category name
-    $categories_string .= $foo[$counter]['name'];
-
     if ( ($cid) && (in_array($counter, $cid)) ) {
-        $categories_string .= '</b>';
+        $categories_string .= '<b>' . $foo[$counter]['name'] . '</b>';
+    } else {
+        $categories_string .= $foo[$counter]['name'];
     }
 
     if (xarModAPIFunc('commerce','user','has_category_subcategories', array('cid' => $counter))) {
-        $categories_string .= '';
+        $categories_string .= '-&gt;';
     }
     if ($foo[$counter]['level']=='') {
         $categories_string .= '</a></b>';
@@ -84,10 +77,14 @@ function commerce_userapi_show_category($args)
         }
     }
 
-    $categories_string .= '</span></div><br>';
+    if ($foo[$counter]['level'] == 0) {
+        $categories_string .= '</span></div>';
+    } else {
+        $categories_string .= '<br />';
+    }
 
-    if (isset($foo[$counter]['next_cid'])) {
-        $categories_string .= xarModAPIFunc('commerce','user','show_category', array('cid' => $foo[$counter]['next_cid'], 'foo' => $foo, 'counter' => $counter));
+    if ($foo[$counter]['next_id']) {
+        $categories_string .= xarModAPIFunc('commerce','user','show_category', array('cid' => $cid, 'foo' => $foo, 'counter' => $foo[$counter]['next_id']));
     }
     return $categories_string;
 }
