@@ -2,6 +2,7 @@
 $modversion['name'] = 'AuthSSO';
 $modversion['id'] = '51';
 $modversion['version'] = '0.2.0';
+$modversion['displayname'] = xarML('AuthSSO');
 $modversion['description'] = 'Xaraya Single Sign On authentication module';
 $modversion['credits'] = 'xardocs/credits.txt';
 $modversion['help'] = 'xardocs/help.txt';
