@@ -12,11 +12,14 @@ function xarbb_user_viewtopic()
     // Security Check
     if(!xarSecurityCheck('ReadxarBB',1,'Forum',$topic['catid'].':'.$topic['fid'])) return;
 
-    // The user API function is called
-    $data = xarModAPIFunc('xarbb',
-                          'user',
-                          'gettopic',
-                          array('tid' => $tid));
+    // The user API function is called and returns all forum and topic data
+    //<jojodee> Do we need to call this again?
+    $data=$topic; //to cover us for any use of $data
+  
+    //   $data = xarModAPIFunc('xarbb',
+    //                          'user',
+    //                          'gettopic',
+    //                          array('tid' => $tid));
 
 
     list($data['transformedtext'],
@@ -27,10 +30,11 @@ function xarbb_user_viewtopic()
                                                     $data['ttitle']));
 
     // The user API function is called
-    $forumdata = xarModAPIFunc('xarbb',
-                               'user',
-                               'getforum',
-                               array('fid' => $data['fid']));
+    // <jojodee> Do we need to call this? - is not same data returned in gettopic call above
+    //  $forumdata = xarModAPIFunc('xarbb',
+    //                              'user',
+    //                              'getforum',
+    //                               array('fid' => $data['fid']));
 
     // The user API function is called
     $posterdata = xarModAPIFunc('roles',
@@ -51,7 +55,8 @@ function xarbb_user_viewtopic()
     $data['items'] = array();
 
     // Need to load the renderer since we are making a direct call to the API
-    if (!xarModLoad('comments','renderer')) return;
+    //<jojodee> Do we really need to load this here? Not just for display?
+        if (!xarModLoad('comments','renderer')) return;
 
     $comments = xarModAPIFunc('comments',
                               'user',
@@ -81,7 +86,10 @@ function xarbb_user_viewtopic()
                                              'get',
                                               array('uid' => $comment['xar_uid']));
 
-        $comments[$i]['commenterdate'] = $comments[$i]['userdata']['date_reg'];
+        //format reply poster's registration date
+        $comments[$i]['commenterdate'] = xarLocaleFormatDate('%m/%d/%Y',$comments[$i]['userdata']['date_reg']);
+        //format the post reply date consistently with topic post date
+        $comments[$i]['xar_date']=xarLocaleFormatDate('%Y-%m-%d %H:%M:%S',$comments[$i]['xar_date']);
     }
 
     $data['items'] = $comments;
@@ -100,21 +108,21 @@ function xarbb_user_viewtopic()
     $regdate = $thisdate->display("m-d-Y");
 
     //Forum Name and Links
-    $data['fname']      = $forumdata['fname'];
+   // $data['fname']      = $forumdata['fname']; //No need to reassign here
     $data['postername'] = $posterdata['name'];
     $data['posterdate'] = $regdate;
     $data['usertopics'] = $topiccount;
     $data['xbbname']    = xarModGetVar('themes', 'SiteName');
 
-    //images
-    $data['newtopic']   = '<img src="' . xarTplGetImage('newpost.gif') . '" />';
-    $data['emailicon']  = '<img src="' . xarTplGetImage('emailicon.gif') . '" />';
-    $data['newreply']   = '<img src="' . xarTplGetImage('replypost.gif') . '" />';
-    $data['quote']      = '<img src="' . xarTplGetImage('quote.gif') . '" />';
-    $data['edit']       = '<img src="' . xarTplGetImage('edit.gif') . '" />';
-    $data['delete']     = '<img src="' . xarTplGetImage('delete.gif') . '" />';
-    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" />';
-    $data['pm']         = '<img src="' . xarTplGetImage('pm.gif') . '" />';
+    //images - add some alt text
+    $data['newtopic']   = '<img src="' . xarTplGetImage('newpost.gif') . '" alt="'.xarML('New Topic').'" />';
+    $data['emailicon']  = '<img src="' . xarTplGetImage('emailicon.gif') . '" alt="'.xarML('Email').'" />';
+    $data['newreply']   = '<img src="' . xarTplGetImage('replypost.gif') . '" alt="'.xarML('New Reply').'" />';
+    $data['quote']      = '<img src="' . xarTplGetImage('quote.gif') . '" alt="'.xarML('Quote').'" />';
+    $data['edit']       = '<img src="' . xarTplGetImage('edit.gif') . '" alt="'.xarML('Edit').'" />';
+    $data['delete']     = '<img src="' . xarTplGetImage('delete.gif') . '" alt="'.xarML('Delete').'" />';
+    $data['profile']    = '<img src="' . xarTplGetImage('infoicon.gif') . '" alt="'.xarML('Profile').'" />';
+    $data['pm']         = '<img src="' . xarTplGetImage('pm.gif') . '" alt="'.xarML('PM').'" />';
 
     $item = array();
     $item['module'] = 'xarbb';
