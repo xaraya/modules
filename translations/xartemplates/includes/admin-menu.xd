@@ -47,6 +47,13 @@
 					#xarConfigGetVar('Site.MLS.TranslationsBackend')#
 				</a>
 			</span>
+			<br/>
+			<span><xar:mlstring>Release Backend</xar:mlstring>:</span>
+			<span class="xar-title">
+				<a href="#xarModURL('translations','admin','modifyconfig')#">
+					#xarModGetVar('translations', 'release_backend_type')#
+				</a>
+			</span>
 		</td>
 		<td width="10%">
 			&nbsp;

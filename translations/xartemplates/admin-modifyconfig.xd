@@ -63,6 +63,19 @@
 		    </xar:if>
 	    </select>
     </p>
+    <p>
+      <label for="releasebackend"><xar:mlstring>Release Backend</xar:mlstring></label>:
+	    <select name="releasebackend" id="releasebackend" size="1">
+		    <xar:if condition="xarModGetVar('translations', 'release_backend_type') eq 'xml'">
+			    <option value="xml" selected="selected"><xar:mlstring>XML (good for interoperability)</xar:mlstring></option>
+			    <option value="php"><xar:mlstring>PHP (good for programmed access)</xar:mlstring></option>
+		    <xar:elseif condition="xarModGetVar('translations', 'release_backend_type') eq 'php'" />
+			    <option value="xml">XML (good for interoperability)</option>
+			    <option value="php" selected="selected">PHP (good for programmed access)</option>
+		    </xar:if>
+	    </select>
+	    (only PHP allowed for now)
+    </p>
 
     <xar:set name="$updatelabel"><xar:mlstring>Update configuration</xar:mlstring></xar:set>
 	  <p><input type="submit" value="#$updatelabel#" align="middle" /></p>

@@ -96,6 +96,7 @@
         $bt = xarModAPIFunc('translations','admin','release_backend_type');
     }
     if (!$bt) return;
+
     switch ($bt) {
         case 'php':
         include_once 'modules/translations/class/PHPTransGenerator.php';
