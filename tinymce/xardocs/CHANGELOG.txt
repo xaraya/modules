@@ -1,3 +1,9 @@
+* Version 0.1.0 30 Sept 04
+- Upgrade to TinyMCE 1.33
+- Addition of Arabic language pack
+- Configuration for text direction
+- Image, and various bug fixes. 
+
 * Version 0.1.0
 - Upgrade to TinyMCE 1.31
 - Multiple bug fixes

@@ -9,13 +9,13 @@
 
 <table width="100%" border="0" cellpadding="1" cellspacing="3" class="pageheader">
   <tr> 
-    <td class="title">Creating themes</td>
+    <td class="title">Creating themes and plugins</td>
     <td align="right"><a href="index.htm">TOC</a></td>
   </tr>
 </table>
 <hr noshade>
 <br>
-<span class="subtitle">Creating your own Themes</span><br>
+<span class="subtitle">Creating your own Themes and plugins</span><br>
 <br>
 Creating you own themes for the TinyMCE application is fairly easy if you know 
 the basics of HTML, CSS and Javascript. The most easy way is to copy the &quot;default&quot; or the &quot;advanced&quot; 
@@ -106,7 +106,7 @@ Example of external template file:
 </table>
 <hr noshade>
 <br>
-<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_getEditorTemplate(settings) 
+<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;<font color="#CC0000">theme or plugin</font>&gt;</font>_getEditorTemplate(settings) 
 function</span></p> 
 <p>This function is responsible for the layout of the editor instance within the 
   page it should return a name/value based array with some specific names. These 
@@ -184,7 +184,7 @@ function</span></p>
 </p>
 <hr noshade>
 <br>
-<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_getInsertLinkTemplate(settings) 
+<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;<font color="#CC0000">theme or plugin</font>&gt;</font>_getInsertLinkTemplate(settings) 
 function</span> 
 <p>This function is responsible for the layout of the insert link popup window 
   and it should return a name/value based array with some specific names. These 
@@ -243,7 +243,7 @@ function</span>
   a insert button is pressed.</p>
 <hr noshade>
 <br>
-<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_getInsertImageTemplate(settings) 
+<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;<font color="#CC0000">theme or plugin</font>&gt;</font>_getInsertImageTemplate(settings) 
 function</span> 
 <p>This function is responsible for the layout of the insert image dialog, it should return a name/value based array with some specific names. These 
   are explained below, notice names included in [] characters are optional. The settings parameter to this function is a name/value array containing tinyMCE:s settings/options. </p>
@@ -329,7 +329,7 @@ function</span>
   and should be called when for example a insert button is pressed.</p>
 <hr noshade>
 <br>
-<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_getInsertTableTemplate(settings) function</span>
+<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;<font color="#CC0000">theme or plugin</font>&gt;</font>_getInsertTableTemplate(settings) function</span>
 <span class="subtitle">(Optional)</span>
 <p>This function is responsible for the layout of the insert table dialog, it should return a name/value based array with some specific names. These are explained below, notice names included in [] characters are optional. The settings parameter to this function is a name/value array containing tinyMCE:s settings/options. </p>
 <strong>Template data:<br>
@@ -396,7 +396,7 @@ function</span>
 </table>
 <br>
 <hr noshade>
-<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_handleNodeChange 
+<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;<font color="#CC0000">theme or plugin</font>&gt;</font>_handleNodeChange 
 function (Optional)</span> 
 <p>This function is called when the cursor/selection of a editor instance changes. 
   Then the currenly selected/focused node is passed to this function. This can 
@@ -421,14 +421,18 @@ function (Optional)</span>
     <td><strong>undo_levels</strong></td>
     <td>Current number of undo levels, this value is -1 if the custom undo/redo support is disabled.</td>
   </tr>
-  <tr> 
-    <td width="150"><strong>visual_aid</strong></td>
+  <tr>
+    <td><strong>visual_aid</strong></td>
     <td>True/false state of visual aid/guidelines mode.</td>
+  </tr>
+  <tr> 
+    <td width="150"><strong>any_selection</strong></td>
+    <td>Is any text or image selected.</td>
   </tr>
 </table>
 <br>
 <hr noshade>
-<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme&gt;</font>_execCommand function (Optional)</span>
+<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;<font color="#CC0000">theme or plugin</font>&gt;</font>_execCommand function (Optional)</span>
 <p>This function is called when a command is executed for example &quot;bold&quot; or &quot;createlink&quot; this callback/theme/plugin function may then intercept theme specific commands and do custom logic. If this command returns true the command handling is terminated and the default tinyMCE command handeling never gets executed. </p>
 <strong>Parameters:<br>
 <br>
@@ -457,6 +461,20 @@ function (Optional)</span>
 </table>
 <br>
 <strong>Returns:</strong> true - Command intercepted and handled do not continue with command handling. false - Continue with execCommand handling, bubble. <br>
+<hr noshade>
+<span class="subtitle">The TinyMCE_<font color="#CC0000">&lt;theme or plugin&gt;</font>_getControlHTML(control_name) function (Optional)</span>
+<p>This function is called when a editor needs to render a specific control/button. This function should return the HTML template of that control or a empty string if the control_name wasn't recognized. Notice the variable {$pluginurl} gets replaced with the URL prefix for the current plugin directory. </p>
+<strong>Parameters:<br>
+<br>
+</strong>
+<table border="1" cellspacing="0">
+  <tr>
+    <td width="150"><span class="subtitle">control_name</span></td>
+    <td>Control name to match agains for example &quot;iespell&quot; for the iespell plugin.</td>
+  </tr>
+</table>
+<br>
+<strong>Returns:</strong> return the HTML template of that control or a empty string if the control_name wasn't recognized.<br>
 <hr noshade>
 <table width="100%" border="0" cellpadding="1" cellspacing="3" class="pagefooter">
   <tr> 

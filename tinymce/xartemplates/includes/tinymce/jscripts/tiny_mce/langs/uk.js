@@ -14,9 +14,9 @@ tinyMCELang['lang_outdent_desc'] = 'Outdent';
 tinyMCELang['lang_indent_desc'] = 'Indent';
 tinyMCELang['lang_undo_desc'] = 'Undo';
 tinyMCELang['lang_redo_desc'] = 'Redo';
-tinyMCELang['lang_link_desc'] = 'Insert link';
+tinyMCELang['lang_link_desc'] = 'Insert/edit link';
 tinyMCELang['lang_unlink_desc'] = 'Unlink';
-tinyMCELang['lang_image_desc'] = 'Insert image';
+tinyMCELang['lang_image_desc'] = 'Insert/edit image';
 tinyMCELang['lang_cleanup_desc'] = 'Cleanup messy code';
 tinyMCELang['lang_focus_alert'] = 'A editor instance must be focused before using this command.';
 tinyMCELang['lang_edit_confirm'] = 'Do you want to use the WYSIWYG mode for this textarea?';
@@ -33,4 +33,3 @@ tinyMCELang['lang_insert_image_alt'] = 'Image description';
 tinyMCELang['lang_help_desc'] = 'Help';
 tinyMCELang['lang_bold_img'] = "bold.gif";
 tinyMCELang['lang_italic_img'] = "italic.gif";
-

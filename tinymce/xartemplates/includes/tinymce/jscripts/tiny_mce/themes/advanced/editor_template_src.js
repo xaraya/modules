@@ -41,15 +41,14 @@ var TinyMCE_advanced_buttons = [
 		['forecolor', 'forecolor.gif', '{$lang_theme_forecolor_desc}', 'mceForeColor'],
 		['charmap', 'charmap.gif', '{$lang_theme_charmap_desc}', 'mceCharMap'],
 		['visualaid', 'visualaid.gif', '{$lang_theme_visualaid_desc}', 'mceToggleVisualAid'],
-		['anchor', 'anchor.gif', '{$lang_theme_anchor_desc}', 'mceInsertAnchor'],
-		['custom1', 'custom_1.gif', '{$lang_theme_custom1_desc}', 'mceRemoveEditor']
+		['anchor', 'anchor.gif', '{$lang_theme_anchor_desc}', 'mceInsertAnchor']
 	];
 
 /**
  * Returns HTML code for the specificed control.
  */
 function TinyMCE_advanced_getControlHTML(button_name) {
-	// Lockup button in button list
+	// Lookup button in button list
 	for (var i=0; i<TinyMCE_advanced_buttons.length; i++) {
 		var but = TinyMCE_advanced_buttons[i];
 		if (but[0] == button_name)
@@ -182,6 +181,13 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 		return outArray; 
 	}
 
+	function addToArray(in_array, add_array) {
+		for (var i=0; i<add_array.length; i++)
+			in_array.push(add_array[i]);
+
+		return in_array; 
+	}
+
 	var template = new Array();
 	var toolbarHTML = "";
 	var toolbarLocation = tinyMCE.getParam("theme_advanced_toolbar_location", "bottom");
@@ -189,8 +195,9 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	// Render row 1
 	var buttonNamesRow1 = tinyMCE.getParam("theme_advanced_buttons1", "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,styleselect,formatselect").split(',');
 	buttonNamesRow1 = removeFromArray(buttonNamesRow1, tinyMCE.getParam("theme_advanced_disable", "").split(','));
+	buttonNamesRow1 = addToArray(buttonNamesRow1, tinyMCE.getParam("theme_advanced_buttons1_add", "").split(','));
 	for (var i=0; i<buttonNamesRow1.length; i++)
-		toolbarHTML += TinyMCE_advanced_getControlHTML(buttonNamesRow1[i]);
+		toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow1[i]);
 
 	if (buttonNamesRow1.length > 0)
 		toolbarHTML += "<br>";
@@ -198,8 +205,9 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	// Render row 2
 	var buttonNamesRow2 = tinyMCE.getParam("theme_advanced_buttons2", "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,link,unlink,anchor,image,cleanup,help,code").split(',');
 	buttonNamesRow2 = removeFromArray(buttonNamesRow2, tinyMCE.getParam("theme_advanced_disable", "").split(','));
+	buttonNamesRow2 = addToArray(buttonNamesRow2, tinyMCE.getParam("theme_advanced_buttons2_add", "").split(','));
 	for (var i=0; i<buttonNamesRow2.length; i++)
-		toolbarHTML += TinyMCE_advanced_getControlHTML(buttonNamesRow2[i]);
+		toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow2[i]);
 
 	if (buttonNamesRow2.length > 0)
 		toolbarHTML += "<br>";
@@ -207,8 +215,9 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	// Render row 3
 	var buttonNamesRow3 = tinyMCE.getParam("theme_advanced_buttons3", "table,separator,row_before,row_after,delete_row,separator,col_before,col_after,delete_col,separator,hr,removeformat,visualaid,separator,sub,sup,separator,charmap").split(',');
 	buttonNamesRow3 = removeFromArray(buttonNamesRow3, tinyMCE.getParam("theme_advanced_disable", "").split(','));
+	buttonNamesRow3 = addToArray(buttonNamesRow3, tinyMCE.getParam("theme_advanced_buttons3_add", "").split(','));
 	for (var i=0; i<buttonNamesRow3.length; i++)
-		toolbarHTML += TinyMCE_advanced_getControlHTML(buttonNamesRow3[i]);
+		toolbarHTML += tinyMCE.getControlHTML(buttonNamesRow3[i]);
 
 	// Setup template html
 	template['html'] = '<table class="mceEditor" border="0" cellpadding="0" cellspacing="0" width="{$width}" height="{$height}">';
@@ -216,8 +225,11 @@ function TinyMCE_advanced_getEditorTemplate(settings) {
 	if (toolbarLocation == "top")
 		template['html'] += '<tr><td class="mceToolbarTop" align="center" height="1">' + toolbarHTML + '</td></tr>';
 
-	template['html'] += '<tr><td align="center">\
+/*	template['html'] += '<tr><td align="center">\
 		<iframe id="{$editor_id}" class="mceEditorArea" border="1" frameborder="0" src="{$default_document}" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" style="width:{$area_width};height:{$area_height}" width="{$area_width}" height="{$area_height}"></iframe>\
+		</td></tr>';*/
+	template['html'] += '<tr><td align="center">\
+		<span id="{$editor_id}"></span>\
 		</td></tr>';
 
 	if (toolbarLocation == "bottom")
@@ -302,7 +314,7 @@ function TinyMCE_advanced_getInsertTableTemplate(settings) {
 /**
  * Node change handler.
  */
-function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid) {
+function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_levels, visual_aid, any_selection) {
 	function selectByValue(select_elm, value) {
 		if (select_elm) {
 			for (var i=0; i<select_elm.options.length; i++) {
@@ -336,8 +348,8 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 	tinyMCE.switchClassSticky(editor_id + '_sup', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_table', 'mceButtonNormal');
 	tinyMCE.switchClassSticky(editor_id + '_anchor', 'mceButtonNormal');
-	tinyMCE.switchClassSticky(editor_id + '_link', 'mceButtonNormal');
-	tinyMCE.switchClassSticky(editor_id + '_unlink', 'mceButtonNormal');
+	tinyMCE.switchClassSticky(editor_id + '_link', 'mceButtonDisabled', true);
+	tinyMCE.switchClassSticky(editor_id + '_unlink', 'mceButtonDisabled', true);
 	tinyMCE.switchClassSticky(editor_id + '_row_before', 'mceButtonDisabled', true);
 	tinyMCE.switchClassSticky(editor_id + '_row_after', 'mceButtonDisabled', true);
 	tinyMCE.switchClassSticky(editor_id + '_delete_row', 'mceButtonDisabled', true);
@@ -356,9 +368,9 @@ function TinyMCE_advanced_handleNodeChange(editor_id, node, undo_index, undo_lev
 
 	// Get link
 	var anchorLink = tinyMCE.getParentElement(node, "a", "href");
-	if (anchorLink) {
-		tinyMCE.switchClassSticky(editor_id + '_link', 'mceButtonSelected');
-		tinyMCE.switchClassSticky(editor_id + '_unlink', 'mceButtonSelected');
+	if (anchorLink || any_selection) {
+		tinyMCE.switchClassSticky(editor_id + '_link', anchorLink ? 'mceButtonSelected' : 'mceButtonNormal', false);
+		tinyMCE.switchClassSticky(editor_id + '_unlink', anchorLink ? 'mceButtonSelected' : 'mceButtonNormal', false);
 	}
 
 	// Handle visual aid

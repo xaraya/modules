@@ -34,6 +34,8 @@ function tinymce_init()
    xarModSetVar('tinymce', 'tinycsslist','./themes/Xaraya_Classic/style/style.css');
    xarModSetVar('tinymce', 'tinytoolbar','bottom');
    xarModSetVar('tinymce', 'tinywidth','');
+   xarModSetVar('tinymce', 'tinydirection','ltr');
+   xarModSetVar('tinymce', 'tinyencode','');   
    xarModSetVar('tinymce', 'tinyinlinestyle','true');
    xarModSetVar('tinymce', 'tinyundolevel',10);
 //Set masks
@@ -89,7 +91,13 @@ function tinymce_upgrade($oldversion)
     xarModSetVar('tinymce', 'tinyundolevel',10);
     return tinymce_upgrade('0.1.0');
     break;
-    case '0.0.4':
+    case '0.1.0':
+    // Set up new module vars
+    xarModSetVar('tinymce', 'tinydirection','ltr');
+    xarModSetVar('tinymce', 'tinyencode','');
+    return tinymce_upgrade('0.1.1');
+    break;
+    case '0.1.1':
     // Current version
     break;
     }

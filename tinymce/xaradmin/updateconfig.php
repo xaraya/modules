@@ -33,6 +33,9 @@ function tinymce_admin_updateconfig()
     if (!xarVarFetch('tinyinlinestyle','str:1:',$tinyinlinestyle,'true',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('tinyundolevel','int:1:3',$tinyundolevel,'10',XARVAR_NOT_REQUIRED)) return;
     if (!xarVarFetch('defaulteditor','str:1:',$defaulteditor,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tinydirection','str:1:3',$tinydirection,'ltr',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('tinyencode','str:0:',$tinyencode,'',XARVAR_NOT_REQUIRED)) return;
+
     if (!xarSecConfirmAuthKey()) return;
     //set mode to all textareas for now
     xarModSetVar('tinymce', 'tinymode', $tinymode);
@@ -50,6 +53,8 @@ function tinymce_admin_updateconfig()
     xarModSetVar('tinymce', 'tinyinlinestyle',$tinyinlinestyle);
     xarModSetVar('tinymce', 'tinyundolevel',$tinyundolevel);
     xarModSetVar('base','editor', $defaulteditor);
+    xarModSetVar('tinymce','tinydirection', $tinydirection);
+    xarModSetVar('tinymce','tinyencode', $tinyencode);
 
     $xarbaseurl=xarServerGetBaseURL();
     $tinybasepath="'.$xarbaseurl.'modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/tiny_mce.js";
@@ -59,7 +64,6 @@ function tinymce_admin_updateconfig()
     $jstext='';
     //start the string
     $jstext = 'mode : "'.xarModGetVar('tinymce','tinymode').'",';
-
     $jstext .='theme : "'.xarModGetVar('tinymce','tinytheme').'",';
 
     if (xarModGetVar('tinymce','tinytheme') =='advanced') {
@@ -68,16 +72,17 @@ function tinymce_admin_updateconfig()
 
     // $jstext .= 'theme_advanced_styles : "'.trim(xarModGetVar('tinymce','tinyexstyle')).'",';
 
-        if (trim(xarModGetVar('tinymce','tinycsslist')) <> '') {
-            $jstext .='content_css : "'.$xarbaseurl.xarModGetVar('tinymce','tinycsslist').'",';
-        }
         if (trim(xarModGetVar('tinymce','tinybuttonsremove')) <> '') {
             $jstext .='theme_advanced_disable : "'.trim(xarModGetVar('tinymce','tinybuttonsremove')).'",';
         }
         if (trim(xarModGetVar('tinymce','tinybuttons')) <> '') {
-          $jstext .='theme_advanced_buttons3 : "'.trim(xarModGetVar('tinymce','tinybuttons')).'",';
+          $jstext .='theme_advanced_buttons2_add : "'.trim(xarModGetVar('tinymce','tinybuttons')).'",';
         }
     }
+    if (trim(xarModGetVar('tinymce','tinycsslist')) <> '') {
+        $jstext .='content_css : "'.$xarbaseurl.xarModGetVar('tinymce','tinycsslist').'",';
+    }
+
     if (xarModGetVar('tinymce','tinywidth') > 0) {
         $jstext .='width : "'.xarModGetVar('tinymce','tinywidth').'px",';
     }
@@ -99,6 +104,11 @@ function tinymce_admin_updateconfig()
    if (xarModGetVar('tinymce','tinyundolevel') > 0){
         $jstext .='custom_undo_redo_levels : "'.xarModGetVar('tinymce','tinyundolevel').'",';
     }
+    if (xarModGetVar('tinymce','tinyencode')){
+        $jstext .='encoding : "'.xarModGetVar('tinymce','tinyencode').'",';
+    }
+   // $jstext .='force_br_newlines : "",';    //works only for IE at the moment
+    $jstext .='directionality : "'.xarModGetVar('tinymce','tinydirection').'",';
     //add known requirement last to ensure proper syntax with no trailing comma
     $jstext .='language : "'.xarModGetVar('tinymce','tinylang').'"';
 

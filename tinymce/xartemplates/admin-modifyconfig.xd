@@ -62,8 +62,27 @@
             </select>
         </span>
     </div>
-
      <div style="clear: both; width: 98%; padding-top: 10px;">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Select direction of text input - defaults left to right')#">
+            <label for="tinydirection"><xar:mlstring>Text input direction</xar:mlstring></label>
+        </span>
+        </span>
+
+        <span style="float:right; width: 68%; text-align: left;">
+         <select name="tinydirection" id="tinydirection" size="1">
+            <xar:if condition="$tinydirection eq 'rtl'">
+               <option value="rtl" selected="selected"><xar:mlstring>Right to left</xar:mlstring></option>
+               <option value="ltr"><xar:mlstring>Left to right</xar:mlstring></option>
+            <xar:else />
+               <option value="rtl"><xar:mlstring>Right to left</xar:mlstring></option>
+               <option value="ltr" selected="selected"><xar:mlstring>Left to right</xar:mlstring></option>
+            </xar:if>
+        </select>
+       </span>
+    </div>
+
+    <div style="clear: both; width: 98%; padding-top: 10px;">
         <span style="float: left; width: 30%; text-align: right;">
         <span class="help" title="#xarML('Select default Theme Edit Panel for TinyMCE')#">
             <label for="tinytheme"><xar:mlstring>Default Theme Editor Panel</xar:mlstring></label>
@@ -166,6 +185,26 @@
         </select>
         </span>
     </div>
+     <xar:comment> Use later when we have additional options
+     <div style="clear: both; width: 98%; padding-top: 10px;">
+        <span style="float: left; width: 30%; text-align: right;">
+        <span class="help" title="#xarML('Encoding - only HTML that converts specialchars to entities, or none')#">
+            <label for="tinyencode"><xar:mlstring>Encoding - HTML (convert special chars to entities) or none</xar:mlstring></label>
+        </span>
+        </span>
+        <span style="float: right; width: 68%; text-align: left;">
+         <select name="tinyencode" id="tinyencode" size="1">
+            <xar:if condition="$tinyencode eq 'html'">
+               <option value="html" selected="selected"><xar:mlstring>Convert special chars</xar:mlstring></option>
+               <option value=""><xar:mlstring>None</xar:mlstring></option>
+            <xar:elseif condition="$tinyencode eq ''" />
+               <option value="html"><xar:mlstring>Convert special chars</xar:mlstring></option>
+               <option value="" selected="selected"><xar:mlstring>None</xar:mlstring></option>
+            </xar:if>
+        </select>
+        </span>
+    </div>
+    </xar:comment>
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 30%; text-align: right;">
         <span class="help" title="#xarML('Defaults to width of individual textareas if left blank')#">
@@ -188,20 +227,32 @@
     </span>
     </div>
 
-<div style="clear: both; width: 98%; padding-top: 10px;">
-<strong><xar:mlstring>Options for Advanced Theme Panel</xar:mlstring></strong>
-</div>
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 30%; text-align: right;">
-        <span class="help" title="#xarML('Additional html tags you want to allow separated by commas')#">
-                <label for="tinyextended"><xar:mlstring>Additional tags:</xar:mlstring></label>
+        <span class="help" title="#xarML('Additional html tags, forced or alternate attributes and so on, separated by commas')#">
+                <label for="tinyextended"><xar:mlstring>Additional or alternate tags and attributes:</xar:mlstring></label>
         </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
-        <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="60" maxlength="240" />
+        <input type="text" name="tinyextended" id="tinyextended" value="#$tinyextended#" size="80" maxlength="240" />
     </span>
     </div>
 
+    <div style="clear: both; padding-top: 10px;">
+    <span style="float: left; width: 30%; text-align: right;">
+    <span class="help" title="#xarML('CSS file name for editor and class dropdown list, relative to index.php')#">
+            <label for="tinycsslist"><xar:mlstring>CSS file for wysiwyg area and class drop down list</xar:mlstring></label>
+        </span>
+    </span>
+    <span style="float: right; width: 68%; text-align: left;">
+    <input type="text" name="tinycsslist" id="tinycsslist" value="#$tinycsslist#" size="60" maxlength="120" />
+    </span>
+    </div>
+<div style="clear: both; width: 98%; padding-top: 10px;">
+<strong><xar:mlstring>Options for Advanced Theme Panel</xar:mlstring></strong>
+</div>
+
+    <xar:comment> Remove until supported
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 30%; text-align: right;">
         <span class="help" title="#xarML('List of instances, separated by commas, to replace if specific area mode selected')#">
@@ -212,17 +263,9 @@
         <input type="text" name="tinyinstances" id="tinyinstances" value="#$tinyinstances#" size="60" maxlength="240" />
     </span>
     </div>
+    </xar:comment>
 
-    <div style="clear: both; padding-top: 10px;">
-    <span style="float: left; width: 30%; text-align: right;">
-    <span class="help" title="#xarML('CSS file name relative to index.php')#">
-            <label for="tinycsslist"><xar:mlstring>CSS file name</xar:mlstring></label>
-        </span>
-    </span>
-    <span style="float: right; width: 68%; text-align: left;">
-    <input type="text" name="tinycsslist" id="tinycsslist" value="#$tinycsslist#" size="60" maxlength="120" />
-    </span>
-    </div>
+
 <xar:comment>jojodee - Fix this when i get time
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 30%; text-align: right;">
@@ -238,7 +281,7 @@
     <div style="clear: both; padding-top: 10px;">
     <span style="float: left; width: 30%; text-align: right;">
     <span class="help" title="#xarML('Additional buttons for this theme - see manual')#">
-            <label for="tinybuttons"><xar:mlstring>Additional buttons</xar:mlstring></label>
+            <label for="tinybuttons"><xar:mlstring>Additional controls and buttons added to row2</xar:mlstring></label>
        </span>
     </span>
     <span style="float: right; width: 68%; text-align: left;">
@@ -247,7 +290,7 @@
     </div>
     <div style="float: right; width: 68%; text-align: left; ">
         <p><xar:mlstring>The following are valid button names (separate names by comma):</xar:mlstring></p>
-        <p><strong> bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor,charmap,visualaid</strong></p>
+        <p><strong> bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, styleselect, bullist, numlist, outdent, indent, undo,redo, link, unlink, image, cleanup, help, code, table, row_before, row_after, delete_row, separator, rowseparator, col_before, col_after, delete_col, hr, removeformat, sub, sup, formatselect, fontselect, fontsizeselect, forecolor, charmap, visualaid, iespell</strong></p>
     </div>
 
     <div style="clear: both; padding-top: 10px;">

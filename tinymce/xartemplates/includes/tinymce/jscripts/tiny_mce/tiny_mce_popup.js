@@ -11,6 +11,10 @@ if (typeof tinyMCELang[title] != "undefined") {
 	document.title = divElm.innerHTML;
 }
 
+// Setup dir
+if (tinyMCELang['lang_dir'])
+	document.dir = tinyMCELang['lang_dir'];
+
 function TinyMCEPlugin_onLoad() {
 	document.body.innerHTML = tinyMCE.applyTemplate(document.body.innerHTML, tinyMCE.windowArgs);
 }

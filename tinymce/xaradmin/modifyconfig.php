@@ -38,7 +38,8 @@ function tinymce_admin_modifyconfig()
     $data['tinyinlinestyle'] = xarModGetVar('tinymce', 'tinyinlinestyle');
     $data['tinyundolevel'] = xarModGetVar('tinymce', 'tinyundolevel');
     $data['defaulteditor'] = xarModGetVar('base','editor');
-
+    $data['tinydirection'] = xarModGetVar('tinymce','tinydirection');    
+    $data['tinyencode'] = xarModGetVar('tinymce','tinyencode');   
      //get list of valid themes
     $tinythemepath="./modules/tinymce/xartemplates/includes/tinymce/jscripts/tiny_mce/themes";
     $themelist=array();

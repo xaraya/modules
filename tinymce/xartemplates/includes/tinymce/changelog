@@ -1,7 +1,25 @@
+Version 1.33 (2004-09-29)
+	Removed the need of loading blank.html, iframes are now created dynamicly.
+	Fixed bug when selecting tables, MSIE was casting errors.
+	Fixed bug with pluginurl variable.
+	Fixed bug when tinyMCE.selectedElement error was cast in Mozilla.
+	Added new Arabic language pack contributed by Hani Suleiman.
+	Added "lang_dir" support to language packs like Arabic.
+Version 1.32 (2004-09-25)
+	Added new ieSpell plugin, only works in MSIE.
+	Added new "theme_advanced_buttons<N>_add" option.
+	Added new importPluginLanguagePack function.
+	Added new Danish language pack contributed by Jan Moelgaard.
+	Added updated German language pack contributed by Christopher Müller.
+	Added new any_selection to handleNodeChange callback.
+	Modified so link/unlink is dimmed if nothing is selected.
+	Fixed bug when deleting images in Firefox.
+	Changed the plugin location to a new plugin directory.
+	Renamed the "theme_plugins" option to "plugins".
 Version 1.31 (2004-09-18)
-	Added Canadian French lnaguage pack, contributed by Virtuelcom.
+	Added Canadian French language pack, contributed by Virtuelcom.
 	Added so link/unlink buttons gets selected when user enters a link element.
-	Fxied URL bug when drag dropping/copy pasting images in Mozilla.
+	Fixed URL bug when drag dropping/copy pasting images in Mozilla.
 	Fixed so mso style attribs don't get trimmed if auto_cleanup_word option is set to false.
 	Fixed bug with text alignment buttons.
 	Fixed bug with CSS auto import function in MSIE.
