@@ -28,32 +28,7 @@ function authldap_admin_modifyconfig()
     // prepare labels and values for display by the template
     $data['title'] = xarVarPrepForDisplay(xarML('Administration'));
     $data['configadmin'] = xarVarPrepForDisplay(xarML('Configure AuthLDAP'));
-    $data['ldapserver'] = xarVarPrepForDisplay(xarML('LDAP Server Name or IP'));
-    $data['ldapservervalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','server'));
-    $data['binddn'] = xarVarPrepForDisplay(xarML('LDAP bind DN'));
-    $data['binddnvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','bind_dn'));
-    $data['uidfield'] = xarVarPrepForDisplay(xarML('LDAP UserID Field Name'));
-    $data['uidfieldvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','uid_field'));
-    $data['searchuserdn'] = xarVarPrepForDisplay(xarML('Search User DN'));
-    if (xarModGetVar('authldap','search_user_dn') == 'true') {    
-    $data['searchuserdnvalue'] = xarVarPrepForDisplay("checked");
-    } else {
-    $data['searchuserdnvalue'] = "";
-    }
-    $data['adminid'] = xarVarPrepForDisplay(xarML('LDAP Admin ID'));
-    $data['adminidvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','admin_login'));
-    $data['adminpasswd'] = xarVarPrepForDisplay(xarML('LDAP Admin Password'));
-    $data['adminpasswdvalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','admin_password'));
-    $data['submitlabel'] = xarVarPrepForDisplay(xarML('Click "Submit" to change configuration:'));
-    $data['submitbutton'] = xarVarPrepForDisplay(xarML('Submit'));
-    $data['portnumber'] = xarVarPrepForDisplay(xarML('LDAP Server Port Number'));
-    $data['portnumbervalue'] = xarVarPrepForDisplay(xarModGetVar('authldap','port_number'));
-    $data['anonymousbind'] = xarVarPrepForDisplay(xarML('Anonymously Bind to Server'));
-    if (xarModGetVar('authldap','anonymous_bind') == 'true') {    
-        $data['anonymousbindvalue'] = xarVarPrepForDisplay("checked");
-    } else {
-        $data['anonymousbindvalue'] = "";
-    }
+
     $data['adduser'] = xarVarPrepForDisplay(xarML('Add LDAP User to Xaraya Database on Login'));
     if (xarModGetVar('authldap','add_user') == 'true') {    
         $data['adduservalue'] = xarVarPrepForDisplay("checked");
@@ -87,6 +62,10 @@ function authldap_admin_modifyconfig()
     }
     $data['groups'] = $groups;
 
+    // Submit button
+    $data['submitlabel'] = xarVarPrepForDisplay(xarML('Click "Submit" to change configuration:'));
+    $data['submitbutton'] = xarVarPrepForDisplay(xarML('Submit'));
+       
     // everything else happens in Template for now
     return $data;
 }

@@ -18,7 +18,7 @@
 */
 function authldap_init()
 {
-    // Make sure that LDAP is available before trying to connect
+    // Make sure the LDAP PHP extension is available
     if (!extension_loaded('ldap')) {
         $msg=xarML('Your PHP configuration does not seem to include the required LDAP extension. Please refer to http://www.php.net/manual/en/ref.ldap.php on how to install it.');
         xarExceptionSet(XAR_SYSTEM_EXCEPTION,'MODULE_DEPENDENCY',
@@ -27,14 +27,6 @@ function authldap_init()
     }
 
     // Set up module variables
-    xarModSetVar('authldap','server', '127.0.0.1');
-    xarModSetVar('authldap','port_number', '389');
-    xarModSetVar('authldap','bind_dn','o=dept');
-    xarModSetVar('authldap','uid_field', 'cn');
-    xarModSetVar('authldap','search_user_dn', 'true');
-    xarModSetVar('authldap','admin_login', '');
-    xarModSetVar('authldap','admin_password', '');
-    xarModSetVar('authldap','anonymous_bind', 'true');
     xarModSetVar('authldap','add_user', 'true');
     xarModSetVar('authldap','add_user_uname', 'sn');
     xarModSetVar('authldap','add_user_email', 'mail');
@@ -61,14 +53,7 @@ function authldap_init()
 */
 function authldap_delete()
 {
-    xarModDelVar('authldap','server');
-    xarModDelVar('authldap','port_number');
-    xarModDelVar('authldap','bind_dn');
-    xarModDelVar('authldap','uid_field');
-    xarModDelVar('authldap','search_user_dn');
-    xarModDelVar('authldap','admin_login');
-    xarModDelVar('authldap','admin_password');
-    xarModDelVar('authldap','anonymous_bind');
+    // Remove module variables
     xarModDelVar('authldap','add_user');
     xarModDelVar('authldap','add_user_uname');
     xarModDelVar('authldap','add_user_email');

@@ -21,53 +21,17 @@ function authldap_admin_updateconfig()
 {
     // Get parameters
     
-    list($ldapserver,
-        $binddn,
-        $uidfield,
-        $searchuserdn,
-        $adminid,
-        $adminpasswd,
-        $portnumber,
-        $anonymousbind,
-        $adduser,
-        $adduseruname,
-        $adduseremail,
-        $defaultgroup ) = xarVarCleanFromInput('ldapserver',
-                                              'binddn', 
-                                              'uidfield', 
-                                              'searchuserdn', 
-                                              'adminid', 
-                                              'adminpasswd', 
-                                              'portnumber', 
-                                              'anonymousbind', 
-                                              'adduser', 
-                                              'adduseruname', 
-                                              'adduseremail', 
-                                              'defaultgroup');
+    list($adduser,
+         $adduseruname,
+         $adduseremail,
+         $defaultgroup ) = xarVarCleanFromInput('adduser', 
+                                                'adduseruname', 
+                                                'adduseremail', 
+                                                'defaultgroup');
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
 
-    // update the data
-    if(!$searchuserdn){
-        xarModSetVar('authldap', 'search_user_dn', 'false');
-    } else {
-        xarModSetVar('authldap', 'search_user_dn', 'true');
-    }
-    
-    xarModSetVar('authldap', 'server', $ldapserver);
-    xarModSetVar('authldap', 'bind_dn', $binddn);
-    xarModSetVar('authldap', 'uid_field', $uidfield);
-    xarModSetVar('authldap', 'admin_login', $adminid);
-    xarModSetVar('authldap', 'admin_password', $adminpasswd);
-    xarModSetVar('authldap', 'port_number', $portnumber);
-
-    if(!$anonymousbind){
-        xarModSetVar('authldap', 'anonymous_bind', 'false');
-    } else {
-        xarModSetVar('authldap', 'anonymous_bind', 'true');
-    }
-    
     if(!$adduser){
         xarModSetVar('authldap', 'add_user', 'false');
     } else {

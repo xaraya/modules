@@ -22,13 +22,13 @@
         </div>
         <br />
         <div style="margin-left: 1em; margin-right: 1em; text-align:left;">
-            <xar:mlstring>Authentication by AuthLDAP is automatically set once the the AuthLDAP module has been initialized.   You must configure AuthLDAP before a user will be able to login to Xaraya.  To remove AuthLDAP authentication, you must remove the module.</xar:mlstring>
+            <xar:mlstring>Authentication by AuthLDAP is automatically set once the the AuthLDAP module has been initialized.   You must configure XarLDAP before a user will be able to login to Xaraya.  To remove AuthLDAP authentication, you must remove the module.</xar:mlstring>
             <br /><br />
             <xar:mlstring>
 			From the menu, you have one choice.  "Modify Config". 
 			</xar:mlstring>
 			<ul>
-				<li><xar:mlstring>Modify Config -- From here, you can configure the LDAP server that will be used for authentication.   You can also allow a user that has account information in LDAP to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
+				<li><xar:mlstring>Modify Config -- From here, you can allow a user that has account information in LDAP to be automatically added to the Xaraya database and allowed to login.</xar:mlstring></li>
 			</ul>
 		</div>
         <br />

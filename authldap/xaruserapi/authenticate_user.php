@@ -24,6 +24,7 @@
  */
 function authldap_userapi_authenticate_user($args)
 {
+    // Extract args
     extract($args);
 
     if (!isset($uname) || !isset($pass) || $pass == "") {
@@ -33,25 +34,57 @@ function authldap_userapi_authenticate_user($args)
         return XARUSER_AUTH_FAILED;
     }
 
+    // Include xarldap class
+    include_once 'modules/xarldap/xarldap.php';
+    
+    // Get module variables and set in array
+    $ldapconfig = array();
     $ldapconfig['add_user'] = xarModGetVar('authldap','add_user');
     $ldapconfig['add_user_uname'] = xarModGetVar('authldap','add_user_uname');
     $ldapconfig['add_user_email'] = xarModGetVar('authldap','add_user_email');
 
-    // open ldap connection
-    $connect = xarModAPIFunc('authldap',
-                             'user',
-                             'open_ldap_connection');
-    if (!$connect) return XARUSER_AUTH_FAILED;
+    // Create new LDAP object
+    $ldap = new xarLDAP();
 
-    // get user information
-    $user_info = xarModAPIFunc('authldap',
-                               'user',
-                               'get_ldap_userdata',
-                               array('connect' => $connect,
-                                     'uname' => $uname,
-                                     'pass' => $pass)); 
+    // Make sure LDAP extension exists
+    if (!$ldap->exists())
+        return XARUSER_AUTH_FAILED;
 
-    if (!$user_info) return XARUSER_AUTH_FAILED;
+    // Open ldap connection
+    if (!$ldap->open())
+        return XARUSER_AUTH_FAILED;
+
+    // Bind to LDAP server
+   $bindResult = $ldap->bind_to_server();
+    if (!$bindResult)
+        return XARUSER_AUTH_FAILED;
+
+    // Bind to LDAP directory successful so search for user info
+    $user_dn = $ldap->search_user_dn($uname);
+    if (!$user_dn)
+        return XARUSER_AUTH_FAILED;
+
+    // Try to bind with user and password
+   $bindResult = $ldap->bind($user_dn, $pass);
+    if (!$bindResult)
+        return XARUSER_AUTH_FAILED;
+
+    // Search for user information
+    $searchResult=$ldap->search($ldap->bind_dn, $ldap->uid_field."=". $uname);
+    if (!$searchResult) 
+        return XARUSER_AUTH_FAILED;
+
+    $userInfo = $ldap->get_entries($searchResult);
+    if (!$userInfo) 
+        return XARUSER_AUTH_FAILED;
+
+    // ldap_get_entries returns true even if no results
+    // are found, so check for number of rows in array
+    if($userInfo['count']==0)
+        return XARUSER_AUTH_FAILED;
+     
+    // close LDAP connection
+    $ldap->close();
 
     // OK, authentication worked
     // now we still have to fetch the $uid for return
@@ -71,22 +104,13 @@ function authldap_userapi_authenticate_user($args)
             $realname = "";
             $email = "";
             if ($ldapconfig['add_user_uname']) {
-                // get username from LDAP
-                $realname = xarModAPIFunc('authldap',
-                                          'user',
-                                          'get_attribute_value',
-                                          array('connect' => $connect,
-                                                'entry' => $user_info,
-                                                'attribute' => $ldapconfig['add_user_uname'])); 
+                // get username from LDAP user info
+                $realname = $ldap->get_attribute_value($userInfo, $ldapconfig['add_user_uname']);
             }
+
             if ($ldapconfig['add_user_email']) {
                 // get email from LDAP
-                $email = xarModAPIFunc('authldap',
-                                          'user',
-                                          'get_attribute_value',
-                                          array('connect' => $connect,
-                                                'entry' => $user_info,
-                                                'attribute' => $ldapconfig['add_user_email'])); 
+                $email = $ldap->get_attribute_value($userInfo, $ldapconfig['add_user_email']);
             }
 
             // call role module to create new user role
@@ -109,7 +133,8 @@ function authldap_userapi_authenticate_user($args)
             $usergroup = xarModGetVar('authldap','defaultgroup');
 
             // Get the list of groups
-            if (!$groupRoles = xarGetGroups()) return; // throw back
+            if (!$groupRoles = xarGetGroups()) 
+                return XARUSER_AUTH_FAILED;
 
             $groupId = 0;
             while (list($key,$group) = each($groupRoles)) {
@@ -119,7 +144,8 @@ function authldap_userapi_authenticate_user($args)
                 }
             }
 
-            if ($groupId == 0) return; // throw back
+            if ($groupId == 0)
+                return XARUSER_AUTH_FAILED;
 
             // Insert the user into the default users group
             if( !xarMakeRoleMemberByID($rid, $groupId))
@@ -128,15 +154,9 @@ function authldap_userapi_authenticate_user($args)
         } else {
             $rid = XARUSER_AUTH_FAILED;
         }
-   } else {
+    } else {
         $rid = $userRole['uid'];
     }
-
-    // close LDAP connection
-    $connect = xarModAPIFunc('authldap',
-                             'user',
-                             'open_ldap_connection',
-                             array('connect' => $connect));
 
     return $rid;
 }

@@ -15,4 +15,6 @@ $modversion['user'] = 0;
 $modversion['securityschema'] = array('authldap::' => '::');
 $modversion['class'] = 'Miscellaneous';
 $modversion['category'] = 'Global';
+// this module depends on the xarldap module
+$modversion['dependency'] = array(25);
 ?>
