@@ -51,6 +51,9 @@ function categories_admin_updatecat()
             array_push ($cids, $cid);
         }
     }
+    if (count($cids) > $repeat) {
+        $cids = array_slice($cids,0,$repeat);
+    }
     foreach ($cids as $cid) {
         if (empty($name[$cid])) {
             continue;
