@@ -36,8 +36,8 @@ function smilies_userapi_getall($args)
         return $links;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
 
@@ -84,8 +84,8 @@ function smilies_userapi_get($args)
         return;
     }
 
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
 
@@ -120,8 +120,8 @@ function smilies_userapi_get($args)
  */
 function smilies_userapi_countitems()
 {
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     // Security Check
 	if(!xarSecurityCheck('OverviewSmilies')) return;

@@ -43,8 +43,8 @@ function smilies_adminapi_create($args)
 	if(!xarSecurityCheck('AddSmilies')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
 
@@ -111,8 +111,8 @@ function smilies_adminapi_delete($args)
 	if(!xarSecurityCheck('DeleteSmilies')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
 
@@ -169,8 +169,8 @@ function smilies_adminapi_update($args)
 	if(!xarSecurityCheck('EditSmilies')) return;
 
     // Get datbase setup
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
 

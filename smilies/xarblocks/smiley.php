@@ -49,8 +49,8 @@ function smilies_smileyblock_display($blockinfo)
     }
 
     xarModDBInfoLoad('smilies');
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
 

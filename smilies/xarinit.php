@@ -22,8 +22,8 @@ function smilies_init()
 {
 
     // Set up database tables
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
 
@@ -148,8 +148,8 @@ function smilies_delete()
     }
 
     // Drop the table
-    list($dbconn) = xarDBGetConn();
-    $xartable = xarDBGetTables();
+    $dbconn =& xarDBGetConn();
+    $xartable =& xarDBGetTables();
 
     $smiliestable = $xartable['smilies'];
     $query = xarDBDropTable($smiliestable);
