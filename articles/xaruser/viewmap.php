@@ -10,11 +10,11 @@ function articles_user_viewmap($args)
     //return xarModFunc('categories', 'user', 'viewmap');
 
     // Get parameters
-    if(!xarVarFetch('ptid',  'isset', $ptid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('by',    'isset', $by,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('go',    'isset', $go,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('catid', 'isset', $catid,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',  'isset', $cids,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVarFetch('ptid',  'isset', $ptid,   NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if(!xarVarFetch('by',    'isset', $by,     NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if(!xarVarFetch('go',    'isset', $go,     NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if(!xarVarFetch('catid', 'isset', $catid,  NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
+    if(!xarVarFetch('cids',  'isset', $cids,   NULL, XARVAR_DONT_SET, XARVAR_PREP_FOR_DISPLAY)) {return;}
 
     // Override if needed from argument array
     extract($args);
