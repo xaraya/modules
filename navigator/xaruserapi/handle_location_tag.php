@@ -18,21 +18,21 @@ function navigator_userapi_handle_location_tag( $args )
     if (!isset($id)) {
         $msg = xarML('Required attribute \'#(1)\' for tag <xar:navigator-location> is missing.', 'id');
         $msg .= $errorAddendum;
-        xarExceptionSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
         return '';
     }
 
     if (!isset($type)) {
         $msg =  xarML('Required attribute \'#(1)\' for tag <xar:navigator-location> is missing.', 'type');
         $msg .= $errorAddendum;
-        xarExceptionSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
         return '';
     } else {
         if (!eregi('^(crumbtrail|simple)$', $type)) {
             $msg =  xarML('Incorrect \'#(1)\' attribute value [\'#(2)\'] for tag <xar:navigator-location>.', 'type', $type);
             $msg .= xarML('Attribute must be either "crumbtrail" or "simple" - ');
             $msg .= $errorAddendum;
-            xarExceptionSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
+            xarErrorSet(XAR_USER_EXCEPTION, xarML('Missing Attributes'), new DefaultUserException($msg));
             return '';
         } else {
             // we don't need to pass this to the actual function, so we can

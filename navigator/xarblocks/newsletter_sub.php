@@ -78,7 +78,7 @@ function navigator_newsletter_subblock_display($blockinfo)
                                          'getchildren' => false));
 
     // Check for exceptions
-    if (!isset($research_cat) && xarExceptionMajor() != XAR_NO_EXCEPTION) {
+    if (!isset($research_cat) && xarErrorMajor() != XAR_NO_EXCEPTION) {
         return; // throw back
     }
 

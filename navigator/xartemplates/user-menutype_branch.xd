@@ -14,7 +14,9 @@
 
 
             <xar:if condition="count($node['children'])">
-                <li id="navigator_category_#$node['cid']#" class="xar-navigator-root-branch">
+                <li id="navigator_category_#$node['cid']#" class="xar-navigator-branch-child xar-navigator-root-branch" 
+                    onmouseover="navigator_branch_showSubMenu('navigator_category_#$node['cid']#')"
+                    onmouseout="navigator_branch_hideSubMenu('navigator_category_#$node['cid']#')">
 
                     <a href="#$url#">#$node['name']#</a>
 
@@ -24,7 +26,9 @@
 
                 </li>
             <xar:else />
-                <li id="navigator_category_#$node['cid']#" class="xar-navigator-branch-child">
+                <li id="navigator_category_#$node['cid']#" class="xar-navigator-branch-child"
+                    onmouseover="navigator_branch_showSubMenu('navigator_category_#$node['cid']#')"
+                    onmouseout="navigator_branch_hideSubMenu('navigator_category_#$node['cid']#')">
 
                     <a href="#$url#">#$node['name']#</a>
 

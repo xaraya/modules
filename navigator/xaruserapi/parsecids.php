@@ -33,7 +33,7 @@ function navigator_userapi_parsecids($args)
     if (!isset($cids) || !is_array($cids)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'cids', 'userapi', 'parsecids', 'navigator');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_DATA', new SystemException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_DATA', new SystemException($msg));
         return;
     }
 

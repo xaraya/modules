@@ -12,21 +12,30 @@ ul.xar-navigator-tree li {
   list-style-type: none;
   margin: 0px;
 }
-ul.xar-navigator-tree li > ul {
+ul.xar-navigator-tree li ul {
   display: none;
   margin-left: 20px;
 
 }
 
 ul.xar-navigator-tree ul.xar-navigator-show-submenu {
+  z-index: 100;
   display: block;
-  z-index: 10;
+  border: 1px solid lightblue;
+  background: #FFF;
+  position: absolute;
+  margin-left: 100px;
+  margin-top: -20px;
+  padding: 2px;
 }
 
+/*
 ul.xar-navigator-tree li:hover > ul {
   display: block;
   z-index: 10;
 }
+*/
+
 /* and some link styles */
 ul.xar-navigator-tree li a {
     display: block;

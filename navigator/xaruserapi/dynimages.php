@@ -5,7 +5,7 @@ function navigator_userapi_dynimages($args)
 
     if (!isset($Id) || empty($Id) || ($Id != 'left' && $Id != $Id)) {
         $msg = xarML('You must provide a Id (left/right) for dynimages to display on!');
-        xarExceptionSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
+        xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM', new DefaultUserException($msg));
         return;
     }
 
