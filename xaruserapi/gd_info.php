@@ -13,9 +13,14 @@ function images_userapi_gd_info()
         'JPG Support'         => FALSE,
         'PNG Support'         => FALSE,
         'WBMP Support'        => FALSE,
-        'XBM Support'         => FALSE,
-        'typesBitmask'        => imagetypes());
+        'XBM Support'         => FALSE);
     
+    if (function_exists('imagetypes')) {
+        $gd_info['typesBitmask'] = imagetypes();
+    } else {
+        $gd_info['typesBitmask'] = 0;
+    }
+
     ob_start();
     phpinfo(INFO_MODULES);
     $string = ob_get_contents();
