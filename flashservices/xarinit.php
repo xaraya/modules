@@ -1,13 +1,13 @@
 <?php
 
-function flashservicesapi_init() 
+function flashservices_init() 
 {
-  $path = './modules/'.xarModGetName().'/';
+  $path = './modules/flashservices/';
   $gatewayPath = $path.'classes/app/Gateway.php';
   $servicesPath = $path.'services/';
-  
-  xarModSetVar('flashservicesapi','gatewayPath', $gatewayPath);
-  xarModSetVar('flashservicesapi','servicesPath', $servicesPath);
+
+  xarModSetVar('flashservices','gatewayPath', $gatewayPath);
+  xarModSetVar('flashservices','servicesPath', $servicesPath);
   
   return file_exists($gatewayPath) && file_exists($servicesPath); 
 }
@@ -16,7 +16,7 @@ function flashservicesapi_init()
  * upgrade the flashservicesapi module from an old version
  * This function can be called multiple times
  */
-function flashservicesapi_upgrade($oldversion) 
+function flashservices_upgrade($oldversion) 
 { 
   return true; 
 }
@@ -26,15 +26,15 @@ function flashservicesapi_upgrade($oldversion)
  * This function is only ever called once during the lifetime of a particular
  * module instance
  */
-function flashservicesapi_delete()
+function flashservices_delete()
 {
 
-  xarModDelVar('flashservicesapi','gatewayPath');
-  xarModDelVar('flashservicesapi','servicesPath');
+  xarModDelVar('flashservices','gatewayPath');
+  xarModDelVar('flashservices','servicesPath');
 
   // Remove Masks and Instances
-  xarRemoveMasks('flashservicesapi');
-  xarRemoveInstances('flashservicesapi');
+  xarRemoveMasks('flashservices');
+  xarRemoveInstances('flashservices');
 
   return true;
 }
