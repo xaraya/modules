@@ -39,6 +39,7 @@ class TPLParser
         $this->endtokenarray = array(array("</xar:mlstring>"), array("</xar:mlkey>"), array("')","',"), array("')","',"), array('")','",'), array('")','",'));
         $this->isfunctiontokenarray = array(0, 0, 1, 1, 1, 1);
         $this->iskeytokenarray = array(0, 1, 0, 1, 0, 1);
+        $this->strslasharray = array(0, 0, 1, 1, 0, 0);
         $this->strlentokenarray = array(14, 11, 7, 12, 7, 12);
         $this->strlenendtokenarray = array(15, 12, 2, 2, 2, 2);
     }
@@ -66,7 +67,7 @@ class TPLParser
                 continue;
             if (($p<$this->_pos)||($this->_pos==-1)) {
                 $this->_pos = $p;
-                $this->_token = $n;
+                if ($this->_right != true) $this->_token = $n;
             }
         }
         if ($this->_pos != -1) {
@@ -85,16 +86,20 @@ class TPLParser
                 $this->_string ='';
                 $this->_right = true;
                 $this->lasttokenarray = $this->endtokenarray[$this->_token];
+                $token = $this->_token;
                 if ($this->_get_token()) {
                     // if (defined('TPLPARSERDEBUG'))
-                       // printf("Result: %s<br />\n", $this->_string);
-                    if (!$this->isfunctiontokenarray[$this->_token]) {
-                        // Delete extra whitespaces and spaces around newline
-                        $this->_string = trim($this->_string);
-                        $this->_string = preg_replace('/[\t ]+/',' ',$this->_string);
-                        $this->_string = preg_replace('/\s*\n\s*/',"\n",$this->_string);
+                        // printf("Result: %s<br />\n", $this->_string);
+//                  if (!$this->isfunctiontokenarray[$token]) {
+                    // Delete extra whitespaces and spaces around newline
+                    $this->_string = trim($this->_string);
+                    $this->_string = preg_replace('/[\t ]+/',' ',$this->_string);
+                    $this->_string = preg_replace('/\s*\n\s*/',"\n",$this->_string);
+                    if ($this->strslasharray[$token]) {
+                        $this->_string = str_replace('\\\'','\'',$this->_string);
                     }
-                    if ($this->iskeytokenarray[$this->_token]) {
+//                  }
+                    if ($this->iskeytokenarray[$token]) {
                         if (!isset($this->transKeyEntries[$this->_string])) {
                             $this->transKeyEntries[$this->_string] = array();
                         }

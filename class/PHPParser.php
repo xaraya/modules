@@ -70,7 +70,7 @@ class PHPParser
                 continue;
             if (($p<$this->_pos)||($this->_pos==-1)) {
                 $this->_pos = $p;
-                $this->_token = $n;
+                if ($this->_right != true) $this->_token = $n;
             }
         }
         if ($this->_pos != -1) {
