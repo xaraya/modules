@@ -36,16 +36,16 @@
     <xar:loop name="$items">
     <tr>
         <td>
-            #$modname#
+            #$loop:item['modname']#
         </td>
         <td>
-            #$catname#
+            #$loop:item['catname']#
         </td>
         <td>
-            #$numsubscribers#
+            #$loop:item['numsubscribers']#
         </td>
         <td>
-            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('catname'=>$catname,'cid'=>$cid))#"><xar:mlstring>Subscribers</xar:mlstring></a>
+            <a href="#xarModURL('pubsub','admin','viewsubscribers',array('catname'=>$loop:item['catname'],'cid'=>$loop:item['cid']))#"><xar:mlstring>Subscribers</xar:mlstring></a>
         </td>
      </tr>
      </xar:loop>

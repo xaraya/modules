@@ -36,13 +36,13 @@
     <xar:loop name="$items">
     <tr>
         <td>
-            #$username#
+            #$loop:item['username']#
         </td>
         <td>
-            #$subdate#
+            #$loop:item['subdate']#
         </td>
         <td>
-            #$modname#
+            #$loop:item['modname']#
         </td>
         <td>
             <a href="#xarModURL('pubsub','admin','removeuser')#">Remove</a>
