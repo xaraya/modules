@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: xarinit.php,v 1.4 2003/07/18 19:41:39 garrett Exp $
+ * File: $Id: xarinit.php,v 1.5 2003/07/19 06:18:28 garrett Exp $
  *
  * AddressBook utility functions
  *
@@ -37,8 +37,8 @@ function AddressBook_init()
     $abAddressTable = $xarTables['addressbook_address'];
     $fields = array(
          'nr'       =>  array('type'=>'integer','size'=>'medium','null'=>FALSE,'increment'=>TRUE,'primary_key'=>TRUE)
-        ,'cat_id'   =>  array('type'=>'integer','size'=>'medium','null'=>TRUE,'default'=>'NULL')
-        ,'prefix'   =>  array('type'=>'integer','size'=>'medium','null'=>TRUE,'default'=>'NULL')
+        ,'cat_id'   =>  array('type'=>'integer','size'=>'small','null'=>TRUE,'default'=>'NULL')
+        ,'prefix'   =>  array('type'=>'integer','size'=>'small','null'=>TRUE,'default'=>'NULL')
         ,'lname'    =>  array('type'=>'varchar','size'=>100,'null'=>TRUE,'default'=>'NULL')
         ,'fname'    =>  array('type'=>'varchar','size'=>60,'null'=>TRUE,'default'=>'NULL')
         ,'sortname' =>  array('type'=>'varchar','size'=>180,'null'=>TRUE,'default'=>'NULL')
@@ -68,9 +68,9 @@ function AddressBook_init()
         ,'custom_3' =>  array('type'=>'varchar','size'=>60,'null'=>TRUE,'default'=>'NULL')
         ,'custom_4' =>  array('type'=>'varchar','size'=>60,'null'=>TRUE,'default'=>'NULL')
         ,'note'     =>  array('type'=>'blob','null'=>TRUE,'default'=>'NULL')
-        ,'user_id'  =>  array('type'=>'integer','size'=>'medium','null'=>TRUE,'default'=>'NULL')
+        ,'user_id'  =>  array('type'=>'integer','null'=>TRUE,'default'=>'NULL')
         ,'private'  =>  array('type'=>'integer','size'=>'tiny','null'=>FALSE)
-        ,'last_updt'=>  array('type'=>'integer','size'=>'medium','null'=>FALSE)
+        ,'last_updt'=>  array('type'=>'integer','null'=>FALSE)
     );
     $query = xarDBCreateTable($abAddressTable,$fields);
     if (empty($query)) return; // throw back
@@ -268,8 +268,23 @@ function AddressBook_upgrade($oldversion) {
             if (!$result) return;
 			
 		case '1.2':
-		case '1.3':
-		case '1.4':
+			// Fix the 
+		    list($dbconn) = xarDBGetConn();
+		    $xarTables = xarDBGetTables();
+
+		    $abAddressTable = $xarTables['addressbook_address'];
+
+			// FIXME: <garrett> non-portable SQL
+			$sql = "ALTER TABLE $abAddressTable
+			             CHANGE user_id user_id INTEGER DEFAULT NULL
+			            ,CHANGE last_updt last_updt INTEGER NOT NULL";
+			             
+			$result =& $dbconn->Execute($sql);
+            if (!$result) return;
+			
+		case '1.2.1':
+		case '1.3.0':
+		case '1.4.0':
                     
 			break;
 	}

@@ -1,6 +1,6 @@
 <?php
 /**
- * File: $Id: viewdetail.php,v 1.4 2003/07/09 17:52:58 garrett Exp $
+ * File: $Id: viewdetail.php,v 1.5 2003/07/19 06:18:29 garrett Exp $
  *
  * AddressBook user viewDetail
  *
@@ -30,7 +30,7 @@ function AddressBook_user_viewdetail() {
     /**
      * Retrieve any config values needed to configure the page
      */
-    $output['zipbeforecity'] = pnModGetVar(__ADDRESSBOOK__,'zipbeforecity');
+    $output['zipbeforecity'] = xarModGetVar(__ADDRESSBOOK__,'zipbeforecity');
 
     // Get detailed values from database
     $details = xarModAPIFunc(__ADDRESSBOOK__,'user','getDetailValues',array('id'=>$output['id']));
@@ -59,9 +59,10 @@ function AddressBook_user_viewdetail() {
 
     if ($output['last_updt'] > 0) {
         $output['info'] .= ' | '.xarVarPrepHTMLDisplay(_AB_LASTCHANGED)
-                               .xarModAPIFunc(__ADDRESSBOOK__,'util','ml_ftime',
-                                                            array ('datefmt' =>_DATETIMEBRIEF
-                                                                  ,'timestamp'=>$output['last_updt']));
+                               .xarLocaleFormatDate ('',$output['last_updt']);
+//                               .xarModAPIFunc(__ADDRESSBOOK__,'util','ml_ftime',
+//                                                            array ('datefmt' =>_DATETIMEBRIEF
+///                                                                  ,'timestamp'=>$output['last_updt']));
     }
 
     // Format the Contat info for display
